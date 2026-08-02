@@ -11,8 +11,10 @@ import {
   ArrowUpRight,
   HelpCircle,
 } from 'lucide-react';
+import { useOperations } from '../context/OperationsContext';
 
 export const AnalyticsView: React.FC = () => {
+  const { brain, activeCampaign, createCampaign } = useOperations();
   const [period, setPeriod] = React.useState('Últimos 30 Dias');
   const [aiAnalysis, setAiAnalysis] = React.useState<any>(null);
   const [isLoadingAnalysis, setIsLoadingAnalysis] = React.useState(false);
@@ -28,6 +30,8 @@ export const AnalyticsView: React.FC = () => {
           reachChange: 18.4,
           engagementRate: 6.8,
           topPost: '5 Regras da IA Enterprise em 2026',
+          brainContext: brain,
+          strategyContext: activeCampaign,
         }),
       });
 
@@ -43,6 +47,27 @@ export const AnalyticsView: React.FC = () => {
   React.useEffect(() => {
     fetchAiAnalysis();
   }, [period]);
+
+  const turnInsightIntoCampaign = () => {
+    if (!aiAnalysis) return;
+    createCampaign({
+      name: `Oportunidade de performance — ${period}`,
+      objective: aiAnalysis.recommendation || aiAnalysis.insight,
+      startDate: new Date().toISOString().slice(0, 10),
+      endDate: new Date(Date.now() + 21 * 86_400_000).toISOString().slice(0, 10),
+      budget: 'A definir',
+      kpis: ['Alcance qualificado', 'Engajamento', 'Conversões'],
+      products: brain.products,
+      audience: brain.audience,
+      offer: 'Conteúdo derivado do melhor padrão de performance',
+      channels: ['instagram', 'linkedin'],
+      importantDates: '',
+      funnel: 'Descoberta → Consideração → Conversão',
+      ctas: ['Conhecer a solução'],
+      executionPlan: aiAnalysis.keyTakeaways || ['Replicar o padrão vencedor', 'Testar variações', 'Medir resultados'],
+      status: 'planned',
+    });
+  };
 
   return (
     <div className="p-6 space-y-6 max-w-7xl mx-auto">
@@ -106,6 +131,7 @@ export const AnalyticsView: React.FC = () => {
                 </ul>
               </div>
             )}
+            <button onClick={turnInsightIntoCampaign} className="flex items-center gap-2 rounded-lg bg-[#8bd132] px-4 py-2.5 text-[10px] font-bold text-[#14200e]"><Sparkles className="h-4 w-4" />Criar campanha a partir deste insight</button>
           </div>
         ) : (
           <div className="p-4 text-center text-white/40 text-xs">Carregando diagnóstico...</div>

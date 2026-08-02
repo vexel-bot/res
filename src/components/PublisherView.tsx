@@ -11,8 +11,10 @@ import {
 } from 'lucide-react';
 import { ConnectedAccount } from '../types';
 import { CONNECTED_ACCOUNTS } from '../data/mockData';
+import { useOperations } from '../context/OperationsContext';
 
 export const PublisherView: React.FC = () => {
+  const { posts, campaigns } = useOperations();
   const [accounts, setAccounts] = React.useState<ConnectedAccount[]>(CONNECTED_ACCOUNTS);
 
   const toggleConnect = (id: string) => {
@@ -39,6 +41,11 @@ export const PublisherView: React.FC = () => {
         <button className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs flex items-center gap-1.5 shadow-lg shadow-indigo-600/20">
           <Plus className="w-4 h-4" /> Conectar Nova Conta
         </button>
+      </div>
+
+      <div className="rounded-xl border border-white/[0.07] bg-[#182126] p-4">
+        <div className="flex items-center justify-between"><div><h3 className="text-[11px] font-semibold text-white">Fila rastreável de publicação</h3><p className="mt-1 text-[9px] text-[#7f8a90]">Cada conteúdo mantém vínculo com estratégia, campanha e revisão do Brain.</p></div><span className="rounded-full bg-[#8bd132]/10 px-2.5 py-1 text-[9px] text-[#8bd132]">{posts.filter((post) => ['scheduled', 'approved'].includes(post.status)).length} prontos</span></div>
+        <div className="mt-3 grid gap-2 md:grid-cols-3">{posts.filter((post) => ['scheduled', 'approved', 'published'].includes(post.status)).slice(0, 3).map((post) => <div key={post.id} className="rounded-lg border border-white/[0.05] bg-black/20 p-3"><div className="flex items-center justify-between gap-2"><span className="truncate text-[10px] font-medium text-white">{post.title}</span><span className="text-[7px] uppercase text-[#8bd132]">{post.status}</span></div><p className="mt-2 truncate text-[8px] text-[#78848a]">{campaigns.find((campaign) => campaign.id === post.campaignId)?.name || 'Conteúdo avulso'} · Brain rev. {post.brainRevision || '—'}</p></div>)}</div>
       </div>
 
       {/* Connected Channels Grid */}

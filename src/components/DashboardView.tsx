@@ -1,28 +1,27 @@
 import React from 'react';
 import {
-  Sparkles,
-  Calendar,
-  Clock,
-  TrendingUp,
-  ArrowUpRight,
+  ArrowRight,
+  BarChart3,
+  Box,
+  CalendarDays,
+  ChartNoAxesCombined,
   CheckCircle2,
+  ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+  CircleHelp,
+  ClipboardList,
+  Clock3,
+  FileText,
+  Instagram,
+  Layers3,
+  Pencil,
   Plus,
   Send,
-  Eye,
-  Heart,
-  MessageSquare,
-  Share2,
-  Layers,
-  ChevronRight,
-  AlertCircle,
-  Play,
+  Sparkles,
 } from 'lucide-react';
-import {
-  NavigationTab,
-  Post,
-  AIActionSuggestion,
-  Workspace,
-} from '../types';
+import { NavigationTab, Post, AIActionSuggestion, Workspace } from '../types';
+import { useOperations } from '../context/OperationsContext';
 
 interface DashboardViewProps {
   posts: Post[];
@@ -34,335 +33,248 @@ interface DashboardViewProps {
   onSelectPost: (post: Post) => void;
 }
 
-export const DashboardView: React.FC<DashboardViewProps> = ({
-  posts,
-  suggestions,
-  activeWorkspace,
-  onNavigate,
-  onOpenCampaignWizard,
-  onNewPost,
-  onSelectPost,
-}) => {
-  const scheduledPosts = posts.filter((p) => p.status === 'scheduled');
-  const pendingPosts = posts.filter((p) => p.status === 'pending_approval');
+type CalendarItem = {
+  day: number;
+  row: number;
+  title: string;
+  subtitle: string;
+  time: string;
+  accent: string;
+  image: string;
+};
 
+const calendarItems: CalendarItem[] = [
+  { day: 1, row: 1, title: 'Carrossel', subtitle: 'Saúde', time: '10:00', accent: '#c7a13c', image: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?auto=format&fit=crop&w=120&q=80' },
+  { day: 1, row: 3, title: 'Stories', subtitle: 'Dicas', time: '16:00', accent: '#3d91a6', image: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=120&q=80' },
+  { day: 1, row: 5, title: 'Reels', subtitle: 'Depoimento', time: '20:00', accent: '#8a5bc1', image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=120&q=80' },
+  { day: 2, row: 1, title: 'Post feed', subtitle: 'Promoção', time: '10:00', accent: '#a9515a', image: 'https://images.unsplash.com/photo-1549068106-b024baf5062d?auto=format&fit=crop&w=120&q=80' },
+  { day: 2, row: 2, title: 'Reels', subtitle: 'Procedimentos', time: '14:00', accent: '#a9515a', image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=120&q=80' },
+  { day: 2, row: 5, title: 'Stories', subtitle: 'Bastidores', time: '20:00', accent: '#5b87b6', image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=120&q=80' },
+  { day: 3, row: 1, title: 'Reels', subtitle: 'Resultados', time: '10:00', accent: '#754fb2', image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80' },
+  { day: 3, row: 3, title: 'Post feed', subtitle: 'Educação', time: '16:00', accent: '#897048', image: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=120&q=80' },
+  { day: 4, row: 1, title: 'Carrossel', subtitle: 'Mitos e Verdades', time: '10:00', accent: '#a48e39', image: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=120&q=80' },
+  { day: 4, row: 2, title: 'Carrossel', subtitle: 'Dicas rápidas', time: '14:00', accent: '#a48e39', image: 'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=120&q=80' },
+  { day: 4, row: 5, title: 'Stories', subtitle: 'Perguntas', time: '20:00', accent: '#69ad31', image: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=120&q=80' },
+  { day: 5, row: 1, title: 'Post feed', subtitle: 'Benefícios', time: '10:00', accent: '#8054b0', image: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=120&q=80' },
+  { day: 5, row: 3, title: 'Reels', subtitle: 'Antes e Depois', time: '16:00', accent: '#9b5555', image: 'https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?auto=format&fit=crop&w=120&q=80' },
+  { day: 6, row: 1, title: 'Carrossel', subtitle: 'Cuidados', time: '10:00', accent: '#4e9aad', image: 'https://images.unsplash.com/photo-1538108149393-fbbd81895907?auto=format&fit=crop&w=120&q=80' },
+  { day: 6, row: 2, title: 'Stories', subtitle: 'Depoimento', time: '14:00', accent: '#9b5555', image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80' },
+  { day: 6, row: 5, title: 'Reels', subtitle: 'FAQ', time: '20:00', accent: '#9b5555', image: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=120&q=80' },
+  { day: 7, row: 1, title: 'Post feed', subtitle: 'Lifestyle', time: '10:00', accent: '#8150a5', image: 'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=120&q=80' },
+  { day: 7, row: 3, title: 'Stories', subtitle: 'Dica do dia', time: '16:00', accent: '#9b742d', image: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=120&q=80' },
+];
+
+const days = [
+  ['DOM', '18 MAI'],
+  ['SEG', '19 MAI'],
+  ['TER', '20 MAI'],
+  ['QUA', '21 MAI'],
+  ['QUI', '22 MAI'],
+  ['SEX', '23 MAI'],
+  ['SÁB', '24 MAI'],
+];
+
+const metricCards = [
+  { label: 'Conteúdos gerados', value: '128', change: '+24%', detail: 'vs semana anterior', icon: FileText, tone: 'green' },
+  { label: 'Publicações agendadas', value: '32', change: '+18%', detail: 'vs semana anterior', icon: CalendarDays, tone: 'green' },
+  { label: 'Aprovações pendentes', value: '5', change: '', detail: '3 precisam de revisão', icon: Clock3, tone: 'amber' },
+  { label: 'Engajamento (médio)', value: '4,82%', change: '+11%', detail: 'vs semana anterior', icon: ChartNoAxesCombined, tone: 'purple' },
+];
+
+const quickFlow = [
+  { label: '1. Briefing', text: 'Defina o objetivo\nda semana', icon: ClipboardList },
+  { label: '2. Estratégia', text: 'IA cria o plano\nde conteúdo', icon: CheckCircle2 },
+  { label: '3. Geração', text: 'Conteúdos criados\nem lote', icon: Box },
+  { label: '4. Edição', text: 'Edite e personalize\nse necessário', icon: Pencil },
+  { label: '5. Aprovação', text: 'Envie para o cliente\naprovar', icon: Sparkles },
+  { label: '6. Agendamento', text: 'Programe e publique\nautomaticamente', icon: CalendarDays },
+  { label: '7. Análise', text: 'Acompanhe e otimize\nresultados', icon: BarChart3 },
+];
+
+const approvals = [
+  { title: 'Carrossel - Mitos e Verdades', time: '09:30', image: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=100&q=80' },
+  { title: 'Reels - Depoimento', time: '09:15', image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=100&q=80' },
+  { title: 'Post feed - Promoção', time: '08:50', image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=100&q=80' },
+];
+
+const MiniSparkline = ({ tone }: { tone: string }) => (
+  <svg viewBox="0 0 70 24" className="h-6 w-[70px]" aria-hidden="true">
+    <path d="M1 20 C12 20 13 12 22 13 C31 15 35 22 45 13 C53 7 58 14 69 3" fill="none" stroke={tone === 'purple' ? '#9556d8' : '#8bd132'} strokeWidth="1.6" />
+  </svg>
+);
+
+export const DashboardView: React.FC<DashboardViewProps> = ({ onNewPost, onNavigate }) => {
+  const { activeCampaign, brainCompleteness, assets, posts } = useOperations();
   return (
-    <div className="p-6 space-y-6 max-w-7xl mx-auto">
-      {/* Top Welcome & AI Proactive Banner */}
-      <div className="relative overflow-hidden rounded-2xl bg-[#0A0A0A] border border-white/5 p-6 shadow-sm">
-        <div className="absolute -right-10 -bottom-10 w-64 h-64 bg-indigo-600/5 rounded-full blur-3xl pointer-events-none"></div>
-
-        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div className="space-y-1.5">
-            <div className="flex items-center gap-2">
-              <span className="text-[10px] uppercase font-semibold tracking-wider px-2.5 py-0.5 rounded-full bg-indigo-500/15 text-indigo-300 border border-indigo-500/25">
-                IA Central Ativa
-              </span>
-              <span className="text-xs text-white/40">
-                • {activeWorkspace.brandProfile.name}
-              </span>
-            </div>
-            <h2 className="text-lg font-semibold text-[#ededed] tracking-tight">
-              Sua presença digital está em ritmo acelerado hoje.
-            </h2>
-            <p className="text-xs text-neutral-400 max-w-2xl leading-relaxed">
-              Você possui <strong className="text-indigo-300 font-medium">{scheduledPosts.length} conteúdos programados</strong> para
-              esta semana e <strong className="text-amber-300 font-medium">{pendingPosts.length} aprovação pendente</strong>. A IA sugeriu um novo
-              plano de 3 carrosséis.
-            </p>
+    <div className="vexel-dashboard px-6 pb-5 pt-1 2xl:px-10">
+      <div className="grid grid-cols-1 gap-4 min-[1100px]:grid-cols-[minmax(0,1fr)_300px] 2xl:grid-cols-[minmax(0,1fr)_390px]">
+        <section className="min-w-0 space-y-4">
+          <div className="pt-1">
+            <h1 className="text-[21px] font-semibold tracking-[-0.03em] text-white">Olá, Pedro! <span className="text-[17px]">👋</span></h1>
+            <div className="mt-1 flex flex-wrap items-center gap-2 text-[10px] text-[#a2aaaf]"><span>Aqui está o resumo da sua operação hoje.</span><span className="rounded-full bg-[#8bd132]/10 px-2 py-1 text-[8px] text-[#8bd132]">Brain {brainCompleteness}%</span>{activeCampaign && <button onClick={() => onNavigate('strategy')} className="rounded-full bg-white/[0.045] px-2 py-1 text-[8px] text-[#b9c0c3]">{activeCampaign.name}</button>}<button onClick={() => onNavigate('library')} className="rounded-full bg-white/[0.045] px-2 py-1 text-[8px] text-[#b9c0c3]">{assets.length + posts.length} ativos</button></div>
           </div>
 
-          <div className="flex items-center gap-3 shrink-0">
-            <button
-              onClick={onOpenCampaignWizard}
-              className="flex items-center gap-2 px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-medium text-xs shadow-sm shadow-indigo-600/20 border border-indigo-500/30 transition-all duration-150 active:scale-[0.98]"
-            >
-              <Sparkles className="w-3.5 h-3.5 text-amber-300" />
-              <span>Gerar Campanha com IA</span>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Quick Executive Stats Bar */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="p-4 rounded-2xl bg-[#0A0A0A] border border-white/5 flex flex-col justify-between">
-          <div className="flex items-center justify-between text-white/40">
-            <span className="text-xs font-medium">Alcance Total (30d)</span>
-            <Eye className="w-4 h-4 text-indigo-400" />
-          </div>
-          <div className="mt-3 flex items-baseline justify-between">
-            <span className="text-2xl font-bold text-[#ededed]">184.2K</span>
-            <span className="text-xs font-medium text-emerald-400 flex items-center gap-0.5">
-              <ArrowUpRight className="w-3.5 h-3.5" /> +18.4%
-            </span>
-          </div>
-          <span className="text-[10px] text-white/40 mt-1">Impulsionado por Carrosséis</span>
-        </div>
-
-        <div className="p-4 rounded-2xl bg-[#0A0A0A] border border-white/5 flex flex-col justify-between">
-          <div className="flex items-center justify-between text-white/40">
-            <span className="text-xs font-medium">Taxa de Engajamento</span>
-            <Heart className="w-4 h-4 text-rose-400" />
-          </div>
-          <div className="mt-3 flex items-baseline justify-between">
-            <span className="text-2xl font-bold text-[#ededed]">6.8%</span>
-            <span className="text-xs font-medium text-emerald-400 flex items-center gap-0.5">
-              <ArrowUpRight className="w-3.5 h-3.5" /> +1.2%
-            </span>
-          </div>
-          <span className="text-[10px] text-white/40 mt-1">3.2x acima da média da indústria</span>
-        </div>
-
-        <div className="p-4 rounded-2xl bg-[#0A0A0A] border border-white/5 flex flex-col justify-between">
-          <div className="flex items-center justify-between text-white/40">
-            <span className="text-xs font-medium">Agendamentos Ativos</span>
-            <Calendar className="w-4 h-4 text-amber-400" />
-          </div>
-          <div className="mt-3 flex items-baseline justify-between">
-            <span className="text-2xl font-bold text-[#ededed]">{scheduledPosts.length + pendingPosts.length}</span>
-            <span className="text-xs font-medium text-indigo-300">Próximos 7 dias</span>
-          </div>
-          <span className="text-[10px] text-white/40 mt-1">Frequência garantida</span>
-        </div>
-
-        <div className="p-4 rounded-2xl bg-[#0A0A0A] border border-white/5 flex flex-col justify-between">
-          <div className="flex items-center justify-between text-white/40">
-            <span className="text-xs font-medium">Pontuação da Marca IA</span>
-            <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-          </div>
-          <div className="mt-3 flex items-baseline justify-between">
-            <span className="text-2xl font-bold text-[#ededed]">96 / 100</span>
-            <span className="text-xs font-medium text-emerald-400">Consistente</span>
-          </div>
-          <span className="text-[10px] text-white/40 mt-1">Tom de voz alinhado ao guia</span>
-        </div>
-      </div>
-
-      {/* Main Grid: AI Suggestions + Scheduled Posts Queue */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Left 2 Cols: AI Proactive Suggestions & Scheduled Queue */}
-        <div className="lg:col-span-2 space-y-6">
-          {/* AI Suggestions Box */}
-          <div className="p-5 rounded-2xl bg-[#0A0A0A] border border-white/5 space-y-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-indigo-400" />
-                <h3 className="text-sm font-bold text-[#ededed]">Ações Recomendadas pela IA Central</h3>
-              </div>
-              <button
-                onClick={() => onNavigate('ai-central')}
-                className="text-xs text-indigo-400 hover:text-indigo-300 flex items-center gap-1 font-medium"
-              >
-                Ver todas <ChevronRight className="w-3.5 h-3.5" />
-              </button>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              {suggestions.map((sug) => (
-                <div
-                  key={sug.id}
-                  onClick={onOpenCampaignWizard}
-                  className="p-3.5 rounded-xl bg-white/[0.02] hover:bg-white/[0.05] border border-white/5 hover:border-indigo-500/30 cursor-pointer transition-all flex flex-col justify-between group"
-                >
-                  <div className="space-y-1">
-                    <span className="text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
-                      {sug.badge}
-                    </span>
-                    <h4 className="text-xs font-semibold text-[#ededed] group-hover:text-indigo-300 transition-colors mt-2">
-                      {sug.title}
-                    </h4>
-                    <p className="text-[11px] text-white/40 line-clamp-2 mt-1">
-                      {sug.description}
-                    </p>
+          <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+            {metricCards.map((metric) => {
+              const Icon = metric.icon;
+              const iconClass = metric.tone === 'amber' ? 'bg-[#5b4115] text-[#f2b63b]' : metric.tone === 'purple' ? 'bg-[#36234c] text-[#a969db]' : 'bg-[#273f22] text-[#8bd132]';
+              return (
+                <article key={metric.label} className="vexel-card flex h-[116px] flex-col justify-between p-[18px]">
+                  <div className="flex items-start justify-between">
+                    <span className="text-[11px] text-[#c5cace]">{metric.label}</span>
+                    <span className={`grid h-9 w-9 place-items-center rounded-full ${iconClass}`}><Icon className="h-[18px] w-[18px]" strokeWidth={1.7} /></span>
                   </div>
-                  <div className="mt-3 pt-2 border-t border-white/5 flex items-center justify-between text-[10px]">
-                    <span className="text-emerald-400 font-medium">{sug.impact}</span>
-                    <ChevronRight className="w-3.5 h-3.5 text-white/40 group-hover:text-indigo-400 transform group-hover:translate-x-0.5 transition-all" />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Scheduled & Pending Posts Queue */}
-          <div className="p-5 rounded-2xl bg-[#0A0A0A] border border-white/5 space-y-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <Clock className="w-4 h-4 text-indigo-400" />
-                <h3 className="text-sm font-bold text-[#ededed]">Conteúdos Programados e Pendências</h3>
-              </div>
-              <button
-                onClick={() => onNavigate('calendar')}
-                className="text-xs text-indigo-400 hover:text-indigo-300 flex items-center gap-1 font-medium"
-              >
-                Ver Calendário Completo <ChevronRight className="w-3.5 h-3.5" />
-              </button>
-            </div>
-
-            <div className="space-y-2.5">
-              {posts.map((post) => (
-                <div
-                  key={post.id}
-                  onClick={() => onSelectPost(post)}
-                  className="p-3.5 rounded-xl bg-white/[0.02] hover:bg-white/[0.05] border border-white/5 hover:border-white/10 transition-all flex items-center justify-between gap-4 cursor-pointer group"
-                >
-                  <div className="flex items-center gap-3.5 min-w-0">
-                    <div className="relative shrink-0">
-                      <img
-                        src={post.imageUrl || 'https://picsum.photos/seed/post/100/100'}
-                        alt={post.title}
-                        className="w-12 h-12 rounded-lg object-cover ring-1 ring-white/10"
-                        referrerPolicy="no-referrer"
-                      />
-                      <span className="absolute -bottom-1 -right-1 px-1 py-0.2 rounded text-[9px] font-bold uppercase bg-[#0A0A0A] border border-white/10 text-indigo-300">
-                        {post.platform.slice(0, 2)}
-                      </span>
-                    </div>
-
-                    <div className="min-w-0">
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs font-semibold text-[#ededed] group-hover:text-indigo-300 truncate">
-                          {post.title}
-                        </span>
-                        <span className="text-[10px] uppercase px-2 py-0.2 rounded font-medium bg-white/5 text-white/60 shrink-0">
-                          {post.format}
-                        </span>
-                      </div>
-                      <p className="text-[11px] text-white/40 truncate mt-0.5">{post.copy}</p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-4 shrink-0 text-right">
+                  <div className="flex items-end justify-between">
                     <div>
-                      <span
-                        className={`inline-block text-[10px] font-bold px-2 py-0.5 rounded-full ${
-                          post.status === 'scheduled'
-                            ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
-                            : post.status === 'pending_approval'
-                            ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
-                            : 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30'
-                        }`}
-                      >
-                        {post.status === 'scheduled'
-                          ? 'Programado'
-                          : post.status === 'pending_approval'
-                          ? 'Pendente'
-                          : 'Publicado'}
-                      </span>
-                      <div className="text-[10px] text-white/40 mt-1">
-                        {post.scheduledAt ? new Date(post.scheduledAt).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' }) : 'Publicado'}
+                      <div className="text-[26px] font-light leading-none tracking-[-0.03em] text-[#f4f5f5]">{metric.value}</div>
+                      <div className="mt-2 whitespace-nowrap text-[9px] text-[#899297]">
+                        {metric.change && <span className="mr-1 text-[#8bd132]">{metric.change}</span>}{metric.detail}
                       </div>
                     </div>
-                    <ChevronRight className="w-4 h-4 text-white/40 group-hover:text-white transition-colors" />
+                    {(metric.tone === 'green' || metric.tone === 'purple') && <MiniSparkline tone={metric.tone} />}
                   </div>
-                </div>
-              ))}
-            </div>
+                </article>
+              );
+            })}
           </div>
-        </div>
 
-        {/* Right Col: Mini Calendar & Recent Team Activity */}
-        <div className="space-y-6">
-          {/* Quick Schedule Overview Card */}
-          <div className="p-5 rounded-2xl bg-[#0A0A0A] border border-white/5 space-y-4">
-            <div className="flex items-center justify-between">
-              <h3 className="text-sm font-bold text-[#ededed] flex items-center gap-2">
-                <Calendar className="w-4 h-4 text-indigo-400" /> Esta Semana
-              </h3>
-              <span className="text-[10px] text-white/40">Julho / Agosto 2026</span>
+          <section className="vexel-card overflow-hidden p-[18px]">
+            <div className="mb-3 flex items-center justify-between">
+              <div className="flex items-center gap-2.5">
+                <h2 className="text-[15px] font-semibold text-white">Calendário de publicações</h2>
+                <CircleHelp className="h-4 w-4 text-[#8c959a]" />
+              </div>
+              <div className="flex items-center gap-3">
+                <button className="flex h-9 items-center gap-2 rounded-lg bg-[#242c31] px-3 text-[10px] text-[#aab1b5]">Visualização: <span className="font-medium text-white">Semana</span><ChevronDown className="h-3.5 w-3.5" /></button>
+                <button onClick={onNewPost} className="flex h-9 items-center gap-2 rounded-lg bg-[#8bd132] px-4 text-[10px] font-bold text-[#15200f] hover:bg-[#9be24d]"><Plus className="h-4 w-4" />Novo conteúdo</button>
+              </div>
             </div>
 
-            <div className="grid grid-cols-7 gap-1 text-center text-[10px]">
-              {['S', 'T', 'Q', 'Q', 'S', 'S', 'D'].map((d, i) => (
-                <div key={i} className="text-white/40 font-bold py-1">
-                  {d}
+            <div className="grid grid-cols-[42px_repeat(7,minmax(62px,1fr))] border-b border-white/[0.055] 2xl:grid-cols-[48px_repeat(7,minmax(90px,1fr))]">
+              <div className="flex items-center justify-center"><button className="grid h-8 w-8 place-items-center rounded-lg bg-[#252d32] text-[#c6cbce]"><ChevronLeft className="h-4 w-4" /></button></div>
+              {days.map(([name, date], index) => (
+                <div key={date} className={`relative flex h-[48px] flex-col items-center justify-center border-l border-white/[0.04] text-[10px] ${index === 3 ? 'rounded-t-lg border-x border-t border-[#8bd132] bg-[#111b18]' : ''}`}>
+                  <span className={index === 3 ? 'font-semibold text-[#8bd132]' : 'text-[#d5d9db]'}>{name}</span>
+                  <span className={`mt-0.5 text-[9px] ${index === 3 ? 'text-[#8bd132]' : 'text-[#a5adb1]'}`}>{date}</span>
+                  {index === 6 && <ChevronRight className="absolute right-3 top-[17px] h-4 w-4 text-[#9da5aa]" />}
                 </div>
               ))}
-              {[27, 28, 29, 30, 31, 1, 2].map((day, idx) => (
-                <div
-                  key={idx}
-                  className={`p-2 rounded-lg flex flex-col items-center gap-1 ${
-                    day === 30
-                      ? 'bg-indigo-600 text-white font-bold ring-1 ring-indigo-400'
-                      : 'bg-white/[0.03] text-neutral-300 hover:bg-white/[0.07]'
-                  }`}
+            </div>
+
+            <div className="relative grid grid-cols-[42px_repeat(7,minmax(62px,1fr))] grid-rows-5 2xl:grid-cols-[48px_repeat(7,minmax(90px,1fr))]">
+              {[8, 10, 12, 14, 16].map((time, index) => (
+                <div key={time} style={{ gridColumn: 1, gridRow: index + 1 }} className="pr-3 pt-1.5 text-right text-[9px] text-[#a5adb1]">{String(time).padStart(2, '0')}:00</div>
+              ))}
+              {Array.from({ length: 35 }).map((_, index) => {
+                const day = (index % 7) + 1;
+                const row = Math.floor(index / 7) + 1;
+                return <div key={index} style={{ gridColumn: day + 1, gridRow: row }} className={`h-[54px] border-b border-l border-white/[0.045] ${day === 4 ? 'bg-[#101a17]' : 'bg-[#131a1e]/60'} ${day === 4 && row === 5 ? 'border-b-[#8bd132]' : ''}`} />;
+              })}
+              <div className="pointer-events-none z-10 rounded-[10px] border border-[#8bd132]" style={{ gridColumn: 5, gridRow: '1 / 6' }} />
+              {calendarItems.map((item, index) => (
+                <button
+                  key={`${item.day}-${item.row}-${index}`}
+                  type="button"
+                  style={{ gridColumn: item.day + 1, gridRow: item.row, borderColor: item.accent }}
+                  className="z-20 m-[3px] flex min-w-0 items-center gap-1.5 rounded-[7px] border bg-[#222a2f] px-1.5 text-left shadow-sm transition hover:-translate-y-px hover:bg-[#293237]"
                 >
-                  <span>{day}</span>
-                  {day === 30 || day === 31 || day === 1 ? (
-                    <span className="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
-                  ) : null}
-                </div>
+                  <img src={item.image} alt="" className="h-9 w-7 shrink-0 rounded-[5px] object-cover" />
+                  <span className="min-w-0 flex-1">
+                    <span className="block truncate text-[8px] font-semibold text-white">{item.title}</span>
+                    <span className="block truncate text-[8px] text-[#e2e5e6]">{item.subtitle}</span>
+                    <span className="block text-[8px] text-[#abb2b6]">{item.time}</span>
+                  </span>
+                  <Instagram className="h-3 w-3 shrink-0 text-[#e780a8]" />
+                </button>
               ))}
             </div>
 
-            <div className="p-3 rounded-xl bg-white/[0.02] border border-white/5 text-xs text-neutral-300 flex items-center gap-2">
-              <AlertCircle className="w-4 h-4 text-amber-400 shrink-0" />
-              <span>
-                Melhor horário de hoje: <strong className="text-white">18:30 (Instagram)</strong>.
-              </span>
+            <div className="mt-3 flex items-center gap-8 pl-2 text-[9px] text-[#aab1b5]">
+              {[['#8bd132', 'Agendado'], ['#f2b33d', 'Pendente'], ['#6ba7e8', 'Aprovado'], ['#e35d63', 'Reprovado']].map(([color, label]) => (
+                <span key={label} className="flex items-center gap-2"><i className="h-2 w-2 rounded-full" style={{ backgroundColor: color }} />{label}</span>
+              ))}
             </div>
-          </div>
+          </section>
 
-          {/* Recent Activity Stream */}
-          <div className="p-5 rounded-2xl bg-[#0A0A0A] border border-white/5 space-y-4">
+          <section className="vexel-card p-[18px]">
+            <h2 className="text-[14px] font-semibold text-white">Fluxo rápido</h2>
+            <div className="mt-4 flex items-start justify-between gap-2">
+              {quickFlow.map((step, index) => {
+                const Icon = step.icon;
+                return (
+                  <React.Fragment key={step.label}>
+                    <button className="group flex min-w-0 flex-1 flex-col items-center text-center">
+                      <span className="grid h-[54px] w-[54px] place-items-center rounded-[12px] border border-[#3d5637] bg-[#19231e] text-[#8bd132] transition group-hover:bg-[#22301f]"><Icon className="h-7 w-7" strokeWidth={1.7} /></span>
+                      <span className="mt-2 text-[10px] font-semibold text-white">{step.label}</span>
+                      <span className="mt-0.5 whitespace-pre-line text-[9px] leading-[1.35] text-[#b2b9bd]">{step.text}</span>
+                    </button>
+                    {index < quickFlow.length - 1 && <ArrowRight className="mt-5 h-4 w-4 shrink-0 text-[#8bd132]" />}
+                  </React.Fragment>
+                );
+              })}
+            </div>
+          </section>
+        </section>
+
+        <aside className="space-y-4 pt-[2px]">
+          <section className="vexel-card p-[18px]">
             <div className="flex items-center justify-between">
-              <h3 className="text-sm font-bold text-[#ededed] flex items-center gap-2">
-                <Layers className="w-4 h-4 text-indigo-400" /> Últimas Atividades
-              </h3>
-              <button
-                onClick={() => onNavigate('collaboration')}
-                className="text-[11px] text-white/40 hover:text-white"
-              >
-                Ver time
-              </button>
+              <h2 className="text-[13px] font-semibold text-white">Aprovações pendentes</h2>
+              <button onClick={() => onNavigate('approvals')} className="text-[10px] font-medium text-[#8bd132]">Ver todas</button>
             </div>
-
-            <div className="space-y-3 text-xs">
-              <div className="flex items-start gap-3">
-                <img
-                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=80&q=80"
-                  alt="Marcus"
-                  className="w-7 h-7 rounded-full object-cover shrink-0 mt-0.5"
-                  referrerPolicy="no-referrer"
-                />
-                <div>
-                  <div className="text-[#ededed] font-medium">
-                    Marcus Thorne <span className="text-white/40 font-normal">aprovou o carrossel</span>
-                  </div>
-                  <div className="text-[10px] text-white/40 mt-0.5">Há 15 minutos • "5 Regras da IA Enterprise"</div>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-3">
-                <div className="w-7 h-7 rounded-full bg-indigo-600/20 text-indigo-300 flex items-center justify-center shrink-0 mt-0.5 font-bold text-[10px]">
-                  IA
-                </div>
-                <div>
-                  <div className="text-[#ededed] font-medium">
-                    IA Central <span className="text-white/40 font-normal">gerou 3 opções de imagens HD</span>
-                  </div>
-                  <div className="text-[10px] text-white/40 mt-0.5">Há 1 hora • Estúdio de Imagens</div>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-3">
-                <img
-                  src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=80&q=80"
-                  alt="Gabriel"
-                  className="w-7 h-7 rounded-full object-cover shrink-0 mt-0.5"
-                  referrerPolicy="no-referrer"
-                />
-                <div>
-                  <div className="text-[#ededed] font-medium">
-                    Gabriel Santos <span className="text-white/40 font-normal">agendou post no LinkedIn</span>
-                  </div>
-                  <div className="text-[10px] text-white/40 mt-0.5">Há 2 horas • "Por que centralizar seu workflow"</div>
-                </div>
-              </div>
+            <div className="mt-4 space-y-3.5">
+              {approvals.map((item) => (
+                <button key={item.title} onClick={() => onNavigate('approvals')} className="flex w-full items-center gap-3 text-left">
+                  <img src={item.image} alt="" className="h-[53px] w-[53px] rounded-[8px] object-cover" />
+                  <span className="min-w-0 flex-1">
+                    <span className="block truncate text-[10px] font-medium text-white">{item.title}</span>
+                    <span className="mt-1 block text-[9px] text-[#a4adb1]">Clínica Vitalis</span>
+                    <span className="mt-0.5 block text-[8px] text-[#7f898e]">Solicitado em 21/05 às {item.time}</span>
+                  </span>
+                  <span className="rounded-full bg-[#514017] px-2.5 py-1.5 text-[8px] font-medium text-[#f4bd3d]">Pendente</span>
+                </button>
+              ))}
             </div>
-          </div>
-        </div>
+          </section>
+
+          <section className="vexel-card p-[18px]">
+            <div className="flex items-center justify-between">
+              <h2 className="text-[13px] font-semibold text-white">Desempenho <span className="font-normal text-[#8e979c]">(últimos 7 dias)</span></h2>
+              <button onClick={() => onNavigate('analytics')} className="text-[10px] font-medium text-[#8bd132]">Ver relatório</button>
+            </div>
+            <div className="mt-4 space-y-3">
+              {[
+                ['Alcance', '128.7K', '+14,5%'],
+                ['Impressões', '256.3K', '+11,2%'],
+                ['Engajamento', '4,82%', '+11,0%'],
+                ['Cliques no link', '3.265', '+8,7%'],
+              ].map(([label, value, gain], index) => (
+                <div key={label} className="grid grid-cols-[18px_1fr_auto_auto] items-center gap-2 text-[10px]">
+                  {index === 0 ? <Sparkles className="h-3.5 w-3.5 text-[#d4d9db]" /> : index === 1 ? <Layers3 className="h-3.5 w-3.5 text-[#d4d9db]" /> : index === 2 ? <ChartNoAxesCombined className="h-3.5 w-3.5 text-[#d4d9db]" /> : <Send className="h-3.5 w-3.5 text-[#d4d9db]" />}
+                  <span className="text-[#c0c6c9]">{label}</span><span className="text-white">{value}</span><span className="w-14 text-right text-[#8bd132]">{gain}</span>
+                </div>
+              ))}
+            </div>
+            <div className="relative mt-4 h-[120px] border-b border-l border-white/[0.05]">
+              {[0, 1, 2, 3].map((line) => <i key={line} className="absolute left-0 right-0 border-t border-white/[0.045]" style={{ top: `${line * 33}%` }} />)}
+              <svg viewBox="0 0 330 112" className="absolute inset-0 h-full w-full" preserveAspectRatio="none">
+                <defs><linearGradient id="area" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#8bd132" stopOpacity=".28"/><stop offset="1" stopColor="#8bd132" stopOpacity="0"/></linearGradient></defs>
+                <path d="M6 67 C34 48 44 55 69 67 C91 78 109 42 137 48 C169 55 181 86 215 72 C244 61 254 71 282 54 C304 41 318 38 326 35 L326 112 L6 112 Z" fill="url(#area)" />
+                <path d="M6 67 C34 48 44 55 69 67 C91 78 109 42 137 48 C169 55 181 86 215 72 C244 61 254 71 282 54 C304 41 318 38 326 35" fill="none" stroke="#8bd132" strokeWidth="2" />
+                {[['6','67'],['69','67'],['137','48'],['215','72'],['282','54'],['326','35']].map(([cx,cy]) => <circle key={cx} cx={cx} cy={cy} r="3" fill="#8bd132" />)}
+              </svg>
+              <div className="absolute -bottom-5 left-0 right-0 flex justify-between text-[8px] text-[#818b90]"><span>15/mai</span><span>16/mai</span><span>17/mai</span><span>18/mai</span><span>19/mai</span><span>20/mai</span><span>21/mai</span></div>
+            </div>
+            <div className="h-4" />
+          </section>
+
+          <section className="vexel-card relative min-h-[170px] overflow-hidden p-[18px]">
+            <div className="flex items-center gap-2 text-[#8bd132]"><Sparkles className="h-4 w-4" /><h2 className="text-[13px] font-semibold text-white">Dica da IA</h2></div>
+            <p className="mt-4 max-w-[245px] text-[10px] leading-relaxed text-[#d0d5d7]">Seus Reels com depoimentos tiveram 27% mais engajamento que a média. Que tal gerar mais conteúdos nesse formato?</p>
+            <button className="mt-4 rounded-lg bg-[#2d4527] px-4 py-2 text-[9px] font-semibold text-[#9ae14d]">Gerar variações</button>
+            <div className="absolute bottom-5 right-5 grid h-[94px] w-[94px] place-items-center rounded-full border-2 border-[#8bd132] text-[#8bd132]"><Sparkles className="h-11 w-11" fill="currentColor" strokeWidth={1.2} /></div>
+          </section>
+        </aside>
       </div>
     </div>
   );

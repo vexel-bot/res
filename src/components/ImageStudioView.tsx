@@ -13,8 +13,10 @@ import {
   Check,
   Zap,
 } from 'lucide-react';
+import { useOperations } from '../context/OperationsContext';
 
 export const ImageStudioView: React.FC = () => {
+  const { brain, activeCampaign } = useOperations();
   const [prompt, setPrompt] = React.useState(
     'Minimalist dark mode 3D render of glowing violet neon crystal geometric shapes, high resolution, soft volumetric lighting, sleek social media cover banner'
   );
@@ -44,6 +46,8 @@ export const ImageStudioView: React.FC = () => {
         body: JSON.stringify({
           prompt: `${prompt}, style: ${stylePreset}`,
           aspectRatio,
+          brainContext: brain,
+          strategyContext: activeCampaign,
         }),
       });
 
@@ -81,7 +85,7 @@ export const ImageStudioView: React.FC = () => {
             onClick={() => {
               const link = document.createElement('a');
               link.href = generatedImageUrl;
-              link.download = 'nexus-generated-asset.jpg';
+              link.download = 'clicko-ai-studios-asset.jpg';
               link.click();
             }}
             className="px-4 py-2 rounded-xl bg-white/[0.03] hover:bg-white/10 text-[#ededed] font-bold text-xs flex items-center gap-1.5 border border-white/5 shadow-sm"

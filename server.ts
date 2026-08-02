@@ -4,6 +4,7 @@ import { fileURLToPath } from 'url';
 import { createServer as createViteServer } from 'vite';
 import { GoogleGenAI, Type } from '@google/genai';
 import dotenv from 'dotenv';
+import { createGovernanceRouter } from './server/governance';
 
 dotenv.config();
 
@@ -12,9 +13,11 @@ const __dirname = path.dirname(__filename);
 
 async function startServer() {
   const app = express();
-  const PORT = 3000;
+  const PORT = Number(process.env.PORT) || 3000;
+  const isProduction = process.env.NODE_ENV === 'production' || path.basename(__dirname).toLowerCase() === 'dist';
 
   app.use(express.json({ limit: '10mb' }));
+  app.use('/api/governance', createGovernanceRouter());
 
   // Helper to initialize Gemini SDK on server-side
   const getAiClient = () => {
@@ -58,6 +61,13 @@ async function startServer() {
     res.json({ status: 'ok', timestamp: new Date().toISOString() });
   });
 
+  const operatingContext = (body: any) => {
+    const brain = body?.brainContext;
+    const strategy = body?.strategyContext;
+    if (!brain && !strategy) return '';
+    return `\n\nCONTEXTO OPERACIONAL OBRIGATÓRIO (fonte única de verdade):\n${brain ? `BRAIN revisão ${brain.revision}:\nEmpresa: ${brain.company}\nProdutos: ${brain.products}\nServiços: ${brain.services}\nTom: ${brain.toneOfVoice}\nPúblico: ${brain.audience}\nPersonas: ${brain.personas}\nObjetivos: ${brain.objectives}\nDiferenciais: ${brain.differentiators}\nDores: ${brain.pains}\nDesejos: ${brain.desires}\nObjeções: ${brain.objections}\nIdentidade visual: ${brain.visualIdentity}\nPalavras obrigatórias: ${brain.requiredWords}\nPalavras proibidas: ${brain.forbiddenWords}` : ''}${strategy ? `\nESTRATÉGIA ATIVA: ${strategy.name}\nObjetivo: ${strategy.objective}\nOferta: ${strategy.offer}\nPúblico: ${strategy.audience}\nFunil: ${strategy.funnel}\nCTAs: ${strategy.ctas?.join(', ')}` : ''}\nNão contradiga este contexto e preserve a rastreabilidade da resposta.`;
+  };
+
   // 1. AI Central Chat Endpoint
   app.post('/api/ai/chat', async (req, res) => {
     try {
@@ -75,12 +85,12 @@ async function startServer() {
         });
       }
 
-      const systemInstruction = `Você é o estrategista chefe e assistente de IA Central da plataforma SaaS Nexus AI Social.
+      const systemInstruction = `Você é o consultor estratégico da plataforma Clicko AI Studios.
 Sua marca atual: ${brandProfile?.name || 'Marca Padrão'}.
 Tom de voz: ${brandProfile?.tone || 'Profissional, moderno e direto'}.
 Público-alvo: ${brandProfile?.targetAudience || 'Empreendedores e profissionais digitais'}.
 Seu objetivo é ajudar o usuário a planejar, criar, organizar e otimizar campanhas e posts de mídia social.
-Responda em português (BR), de forma concisa, elegante e acionável. Siga o estilo minimalista e direto da plataforma.`;
+Responda em português (BR), de forma concisa, elegante e acionável. Em modo briefing, faça uma pergunta consultiva por vez e converta as respostas em objetivo, campanha, calendário, formatos, funil, CTAs e plano de execução.${operatingContext(req.body)}`;
 
       try {
         const response = await generateContentWithFallback(ai, {
@@ -121,7 +131,7 @@ Responda em português (BR), de forma concisa, elegante e acionável. Siga o est
           format: 'Carrossel',
           title: `5 Regras para Dominar ${productOrTopic || 'seu mercado'}`,
           copy: `A maioria das marcas comete o erro de postar sem estratégia. Deslize para o lado para ver como transformar o interesse do público em vendas ativas. 🚀\n\nQual desses 5 pontos você já aplica no seu negócio?`,
-          hashtags: ['#MarketingDigital', '#Estrategia', '#SocialMedia', '#NexusAI'],
+          hashtags: ['#MarketingDigital', '#Estrategia', '#SocialMedia', '#ClickoStudio'],
           suggestedTime: 'Terça-feira, 18:30',
           imagePrompt: 'Minimalist dark graphic with glowing indigo typography showing step 1 of 5'
         },
@@ -178,7 +188,7 @@ Retorne obrigatoriamente um objeto JSON com a seguinte estrutura:
 
       try {
         const response = await generateContentWithFallback(ai, {
-          contents: prompt,
+          contents: `${prompt}${operatingContext(req.body)}`,
           config: {
             responseMimeType: 'application/json',
             responseSchema: {
@@ -229,7 +239,7 @@ Retorne obrigatoriamente um objeto JSON com a seguinte estrutura:
 
     const fallbackCopyData = {
       copy: `🔥 ${topic}\n\nPara alcançar resultados reais na plataforma ${platform}, o segredo está em alinhar uma mensagem clara a uma chamada de ação direta.\n\n3 Pilares Fundamentais:\n1. Hook forte nos primeiros 2 segundos\n2. Conteúdo prático e acionável no corpo\n3. Chamada de ação direta\n\n👉 ${callToAction}`,
-      hashtags: ['#MarketingDigital', '#SocialMedia', '#ConteudoInteligente', '#NexusAI'],
+      hashtags: ['#MarketingDigital', '#SocialMedia', '#ConteudoInteligente', '#ClickoStudio'],
       slides: format === 'Carrossel' || format === 'carousel' ? [
         { slideNumber: 1, headline: 'O Segredo da Criação de Conteúdo', text: 'Como atrair e reter atenção qualificada.' },
         { slideNumber: 2, headline: '1. Clareza Visual e Textual', text: 'Sem mensagem direta, o usuário apenas rola a tela.' },
@@ -261,7 +271,7 @@ Retorne um JSON com:
 
       try {
         const response = await generateContentWithFallback(ai, {
-          contents: prompt,
+          contents: `${prompt}${operatingContext(req.body)}`,
           config: {
             responseMimeType: 'application/json'
           }
@@ -318,7 +328,7 @@ Gere uma explicação contextual inteligente (em português) focando em motivos 
 
       try {
         const response = await generateContentWithFallback(ai, {
-          contents: prompt,
+          contents: `${prompt}${operatingContext(req.body)}`,
           config: {
             responseMimeType: 'application/json'
           }
@@ -355,7 +365,7 @@ Gere uma explicação contextual inteligente (em português) focando em motivos 
       try {
         const response = await ai.models.generateContent({
           model: 'gemini-3.1-flash-lite-image',
-          contents: prompt,
+          contents: `${prompt}${operatingContext(req.body)}`,
           config: {
             imageConfig: {
               aspectRatio: aspectRatio as any
@@ -391,7 +401,7 @@ Gere uma explicação contextual inteligente (em português) focando em motivos 
   });
 
   // Vite middleware for development vs static serve for production
-  if (process.env.NODE_ENV !== 'production') {
+  if (!isProduction) {
     const vite = await createViteServer({
       server: { middlewareMode: true },
       appType: 'spa',
@@ -406,7 +416,7 @@ Gere uma explicação contextual inteligente (em português) focando em motivos 
   }
 
   app.listen(PORT, '0.0.0.0', () => {
-    console.log(`Nexus AI Server running on http://0.0.0.0:${PORT}`);
+    console.log(`Clicko AI Studios Server running on http://0.0.0.0:${PORT}`);
   });
 }
 

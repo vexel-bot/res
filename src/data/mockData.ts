@@ -2,7 +2,6 @@ import {
   Workspace,
   Post,
   AutomationFlow,
-  TeamMember,
   ConnectedAccount,
   AIActionSuggestion,
 } from '../types';
@@ -10,12 +9,12 @@ import {
 export const INITIAL_WORKSPACES: Workspace[] = [
   {
     id: 'ws-1',
-    name: 'Nexus Corp Enterprise',
-    avatar: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=120&q=80',
+    name: 'Clicko AI Studios',
+    avatar: '/clicko-ai-studios-logo-stacked.png',
     plan: 'Enterprise',
     membersCount: 12,
     brandProfile: {
-      name: 'Nexus Tech Solutions',
+      name: 'Clicko AI Studios',
       industry: 'Tecnologia B2B / SaaS',
       tone: 'Sofisticado, Inovador, Direto ao ponto e Confiável',
       targetAudience: 'CTOs, Diretores de Inovação, Fundadores de Startups e Líderes de Produto',
@@ -111,7 +110,7 @@ export const INITIAL_POSTS: Post[] = [
     platform: 'tiktok',
     format: 'reels',
     copy: 'Roteiro de Reels/TikTok:\n[0-3s HOOK]: Pare de postar vídeos sem essa legenda dinâmica!\n[3-12s CORPO]: Testamos 50 variações de Reels e a retenção subiu +42% quando aplicamos legendas estilo Raycast com destaques em neon.\n[12-20s CTA]: Comente "REELS" para receber a biblioteca completa!',
-    hashtags: ['#DicasDeSocialMedia', '#ReelsTips', '#ViralReels', '#NexusAI'],
+    hashtags: ['#DicasDeSocialMedia', '#ReelsTips', '#ViralReels', '#ClickoStudio'],
     videoUrl: 'https://assets.mixkit.co/videos/preview/mixkit-working-late-at-a-computer-43409-large.mp4',
     scheduledAt: '2026-07-30T19:00:00Z',
     status: 'pending_approval',
@@ -180,50 +179,11 @@ export const INITIAL_AUTOMATIONS: AutomationFlow[] = [
   },
 ];
 
-export const INITIAL_TEAM: TeamMember[] = [
-  {
-    id: 'tm-1',
-    name: 'Elena Vance',
-    email: 'elena@nexus.ai',
-    role: 'Owner',
-    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80',
-    status: 'active',
-    lastActive: 'Agora mesmo',
-  },
-  {
-    id: 'tm-2',
-    name: 'Marcus Thorne',
-    email: 'marcus@nexus.ai',
-    role: 'Admin',
-    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&q=80',
-    status: 'active',
-    lastActive: 'Há 12 minutos',
-  },
-  {
-    id: 'tm-3',
-    name: 'Gabriel Santos',
-    email: 'gabriel@nexus.ai',
-    role: 'Creator',
-    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=120&q=80',
-    status: 'active',
-    lastActive: 'Há 1 hora',
-  },
-  {
-    id: 'tm-4',
-    name: 'Sofia Rossi',
-    email: 'sofia.client@apex.com',
-    role: 'Client',
-    avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=120&q=80',
-    status: 'invited',
-    lastActive: 'Pendente aceite',
-  },
-];
-
 export const CONNECTED_ACCOUNTS: ConnectedAccount[] = [
   {
     id: 'acc-1',
     platform: 'instagram',
-    handle: '@nexusai.official',
+    handle: '@clickostudio',
     connected: true,
     followers: '142.8K',
     bestTime: '18:30 - Ter / Qui',
@@ -232,7 +192,7 @@ export const CONNECTED_ACCOUNTS: ConnectedAccount[] = [
   {
     id: 'acc-2',
     platform: 'linkedin',
-    handle: 'Nexus Tech Solutions',
+    handle: 'Clicko AI Studios',
     connected: true,
     followers: '89.4K',
     bestTime: '09:00 - Qua / Sex',
@@ -241,7 +201,7 @@ export const CONNECTED_ACCOUNTS: ConnectedAccount[] = [
   {
     id: 'acc-3',
     platform: 'tiktok',
-    handle: '@nexusai_tok',
+    handle: '@clickostudio',
     connected: true,
     followers: '210.5K',
     bestTime: '20:00 - Todos os dias',
@@ -250,7 +210,7 @@ export const CONNECTED_ACCOUNTS: ConnectedAccount[] = [
   {
     id: 'acc-4',
     platform: 'youtube',
-    handle: 'Nexus AI Studio',
+    handle: 'Clicko AI Studios',
     connected: true,
     followers: '45.2K',
     bestTime: '12:00 - Sábado',
@@ -259,7 +219,7 @@ export const CONNECTED_ACCOUNTS: ConnectedAccount[] = [
   {
     id: 'acc-5',
     platform: 'threads',
-    handle: '@nexusai.official',
+    handle: '@clickostudio',
     connected: true,
     followers: '28.1K',
     bestTime: '14:00 - Seg / Qua',
@@ -268,7 +228,7 @@ export const CONNECTED_ACCOUNTS: ConnectedAccount[] = [
   {
     id: 'acc-6',
     platform: 'x',
-    handle: '@nexus_ai_app',
+    handle: '@clickostudio',
     connected: true,
     followers: '62.9K',
     bestTime: '11:00 - Ter / Qui',

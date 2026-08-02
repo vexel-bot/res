@@ -1,233 +1,552 @@
 import React from 'react';
 import {
-  Settings,
-  Sparkles,
-  Key,
-  SlidersHorizontal,
-  Command,
+  Activity,
+  Bell,
+  BellRing,
+  Bot,
+  BookOpen,
+  Bug,
+  CalendarDays,
+  Camera,
+  Check,
   CheckCircle2,
-  Moon,
-  Sun,
-  Maximize2,
-  Minimize2,
+  ChevronRight,
+  Copy,
+  CreditCard,
+  ExternalLink,
+  Eye,
+  FileKey,
+  HelpCircle,
+  History,
+  Keyboard,
+  Languages,
+  Laptop,
+  LayoutGrid,
+  LifeBuoy,
+  Lightbulb,
+  List,
+  LogOut,
+  Mail,
+  MessageCircle,
+  PanelLeftClose,
+  PlayCircle,
+  Plus,
   RefreshCw,
+  Save,
+  Search,
+  Settings,
+  ShieldCheck,
+  SlidersHorizontal,
+  Smartphone,
+  Sparkles,
+  UserRound,
+  Zap,
 } from 'lucide-react';
-import { Workspace } from '../types';
 
-interface SettingsViewProps {
-  activeWorkspace: Workspace;
-  onUpdateWorkspace: (updated: Workspace) => void;
-  isCompact: boolean;
-  onToggleCompact: () => void;
-  isDarkMode: boolean;
-  onToggleDarkMode: () => void;
+type SectionId =
+  | 'account'
+  | 'security'
+  | 'preferences'
+  | 'personal-ai'
+  | 'billing'
+  | 'support';
+
+type ToggleProps = {
+  checked: boolean;
+  onChange: (value: boolean) => void;
+  label: string;
+};
+
+type PersonalSettings = {
+  account: {
+    avatar: string;
+    name: string;
+    role: string;
+    company: string;
+    email: string;
+    phone: string;
+    language: string;
+    timezone: string;
+    dateFormat: string;
+    signature: string;
+  };
+  appearance: {
+    theme: 'dark' | 'light' | 'system';
+    accent: string;
+    layout: 'comfortable' | 'compact';
+    uiSize: 'small' | 'medium' | 'large';
+    sidebarCollapsed: boolean;
+    animations: boolean;
+    glass: boolean;
+    rounded: boolean;
+    density: 'low' | 'medium' | 'high';
+  };
+  preferences: {
+    homePage: string;
+    autoWorkspace: string;
+    defaultView: string;
+    calendarView: string;
+    contentSort: string;
+    persistentFilters: boolean;
+    aiLanguage: string;
+    openLastPage: boolean;
+  };
+  personalAI: {
+    model: string;
+    creativity: number;
+    depth: string;
+    language: string;
+    writingStyle: string;
+    formality: number;
+    autoCta: boolean;
+    improvements: boolean;
+    proofreading: boolean;
+    titles: boolean;
+    hashtags: boolean;
+    variations: boolean;
+  };
+  privacy: {
+    usageData: boolean;
+    aiHistory: boolean;
+    personalizeAI: boolean;
+    activityStatus: boolean;
+  };
+};
+
+const STORAGE_KEY = 'clicko-studio:user-settings:pedro-henrique';
+
+const defaultSettings: PersonalSettings = {
+  account: {
+    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=240&q=85',
+    name: 'Pedro Henrique',
+    role: 'Administrador',
+    company: 'Clicko AI Studios',
+    email: 'pedro@clickostudio.com',
+    phone: '+55 (11) 99999-0000',
+    language: 'pt-BR',
+    timezone: 'America/Sao_Paulo',
+    dateFormat: 'DD/MM/AAAA',
+    signature: 'Pedro Henrique\nAdministrador · Clicko AI Studios',
+  },
+  appearance: {
+    theme: 'dark',
+    accent: '#8bd132',
+    layout: 'comfortable',
+    uiSize: 'medium',
+    sidebarCollapsed: false,
+    animations: true,
+    glass: true,
+    rounded: true,
+    density: 'medium',
+  },
+  preferences: {
+    homePage: 'dashboard',
+    autoWorkspace: 'last',
+    defaultView: 'cards',
+    calendarView: 'week',
+    contentSort: 'recent',
+    persistentFilters: true,
+    aiLanguage: 'pt-BR',
+    openLastPage: true,
+  },
+  personalAI: {
+    model: 'clicko-pro',
+    creativity: 64,
+    depth: 'balanced',
+    language: 'pt-BR',
+    writingStyle: 'direct',
+    formality: 58,
+    autoCta: true,
+    improvements: true,
+    proofreading: true,
+    titles: true,
+    hashtags: true,
+    variations: false,
+  },
+  privacy: {
+    usageData: true,
+    aiHistory: true,
+    personalizeAI: true,
+    activityStatus: false,
+  },
+};
+
+const sections: Array<{
+  id: SectionId;
+  label: string;
+  description: string;
+  icon: React.ComponentType<{ className?: string }>;
+}> = [
+  { id: 'account', label: 'Minha Conta', description: 'Perfil e informações pessoais', icon: UserRound },
+  { id: 'security', label: 'Segurança', description: 'Senha, 2FA e sessões', icon: ShieldCheck },
+  { id: 'preferences', label: 'Preferências', description: 'Experiência, notificações e atalhos', icon: SlidersHorizontal },
+  { id: 'personal-ai', label: 'IA Pessoal', description: 'Comportamento do assistente', icon: Bot },
+  { id: 'billing', label: 'Plano e Assinatura', description: 'Uso, cobrança e assinatura', icon: CreditCard },
+  { id: 'support', label: 'Ajuda e Suporte', description: 'Documentação e atendimento', icon: LifeBuoy },
+];
+
+const notificationEvents = [
+  ['approvals', 'Aprovações', 'Quando um conteúdo precisar da sua aprovação'],
+  ['comments', 'Comentários e menções', 'Respostas, comentários e marcações com @'],
+  ['publications', 'Publicações', 'Sucesso, falha ou alteração em agendamentos'],
+  ['tasks', 'Tarefas', 'Prazos, atribuições e mudanças de status'],
+  ['ai', 'IA e automações', 'Sugestões, conclusões e alertas inteligentes'],
+  ['invites', 'Convites', 'Novos times, clientes e colaborações'],
+  ['system', 'Atualizações do sistema', 'Novidades, manutenção e segurança'],
+  ['digest', 'Resumo diário', 'Consolidado da sua operação uma vez ao dia'],
+] as const;
+
+type AuxiliarySettings = {
+  twoFactor: boolean;
+  notificationChannels: { internal: boolean; email: boolean; push: boolean };
+  notifications: Record<string, Record<'internal' | 'email' | 'push', boolean>>;
+};
+
+const defaultAuxiliarySettings: AuxiliarySettings = {
+  twoFactor: true,
+  notificationChannels: { internal: true, email: true, push: false },
+  notifications: Object.fromEntries(notificationEvents.map(([id]) => [id, { internal: true, email: id !== 'system', push: id === 'approvals' || id === 'tasks' }])),
+};
+
+function loadSettings(): PersonalSettings {
+  if (typeof window === 'undefined') return defaultSettings;
+  try {
+    const stored = window.localStorage.getItem(STORAGE_KEY);
+    if (!stored) return defaultSettings;
+    const parsed = JSON.parse(stored) as Partial<PersonalSettings>;
+    return {
+      ...defaultSettings,
+      ...parsed,
+      account: { ...defaultSettings.account, ...parsed.account },
+      appearance: { ...defaultSettings.appearance, ...parsed.appearance },
+      preferences: { ...defaultSettings.preferences, ...parsed.preferences },
+      personalAI: { ...defaultSettings.personalAI, ...parsed.personalAI },
+      privacy: { ...defaultSettings.privacy, ...parsed.privacy },
+    };
+  } catch {
+    return defaultSettings;
+  }
 }
 
-export const SettingsView: React.FC<SettingsViewProps> = ({
-  activeWorkspace,
-  onUpdateWorkspace,
-  isCompact,
-  onToggleCompact,
-  isDarkMode,
-  onToggleDarkMode,
-}) => {
-  const [brandName, setBrandName] = React.useState(activeWorkspace.brandProfile.name);
-  const [industry, setIndustry] = React.useState(activeWorkspace.brandProfile.industry);
-  const [tone, setTone] = React.useState(activeWorkspace.brandProfile.tone);
-  const [targetAudience, setTargetAudience] = React.useState(
-    activeWorkspace.brandProfile.targetAudience
-  );
-  const [doAndDonts, setDoAndDonts] = React.useState(
-    activeWorkspace.brandProfile.doAndDonts
-  );
-  const [savedSuccess, setSavedSuccess] = React.useState(false);
+function loadAuxiliarySettings(): AuxiliarySettings {
+  if (typeof window === 'undefined') return defaultAuxiliarySettings;
+  try {
+    const stored = window.localStorage.getItem(`${STORAGE_KEY}:auxiliary`);
+    if (!stored) return defaultAuxiliarySettings;
+    const parsed = JSON.parse(stored) as Partial<AuxiliarySettings>;
+    return {
+      ...defaultAuxiliarySettings,
+      ...parsed,
+      notificationChannels: { ...defaultAuxiliarySettings.notificationChannels, ...parsed.notificationChannels },
+      notifications: { ...defaultAuxiliarySettings.notifications, ...parsed.notifications },
+    };
+  } catch {
+    return defaultAuxiliarySettings;
+  }
+}
 
-  const handleSaveSettings = () => {
-    onUpdateWorkspace({
-      ...activeWorkspace,
-      brandProfile: {
-        ...activeWorkspace.brandProfile,
-        name: brandName,
-        industry,
-        tone,
-        targetAudience,
-        doAndDonts,
-      },
-    });
-    setSavedSuccess(true);
-    setTimeout(() => setSavedSuccess(false), 3000);
+const Toggle: React.FC<ToggleProps> = ({ checked, onChange, label }) => (
+  <button
+    type="button"
+    role="switch"
+    aria-checked={checked}
+    aria-label={label}
+    onClick={() => onChange(!checked)}
+    className={`relative h-[22px] w-10 shrink-0 rounded-full border transition-colors ${
+      checked ? 'border-[#8bd132]/60 bg-[#8bd132]' : 'border-white/10 bg-[#30393e]'
+    }`}
+  >
+    <span className={`absolute top-[2px] h-4 w-4 rounded-full bg-white transition-transform ${checked ? 'translate-x-[20px]' : 'translate-x-[2px]'}`} />
+  </button>
+);
+
+const SettingsCard: React.FC<{ title?: string; description?: string; children: React.ReactNode; className?: string }> = ({ title, description, children, className = '' }) => (
+  <section className={`rounded-[12px] border border-white/[0.065] bg-[#182126] p-5 ${className}`}>
+    {(title || description) && (
+      <div className="mb-5">
+        {title && <h3 className="text-[13px] font-semibold text-white">{title}</h3>}
+        {description && <p className="mt-1 text-[10px] leading-relaxed text-[#879197]">{description}</p>}
+      </div>
+    )}
+    {children}
+  </section>
+);
+
+const Field: React.FC<React.InputHTMLAttributes<HTMLInputElement> & { label: string; hint?: string }> = ({ label, hint, className = '', ...props }) => (
+  <label className="block">
+    <span className="mb-1.5 block text-[10px] font-medium text-[#c7cdd0]">{label}</span>
+    <input {...props} className={`h-10 w-full rounded-lg border border-white/[0.07] bg-[#11191d] px-3 text-[11px] text-white outline-none transition placeholder:text-[#596268] focus:border-[#8bd132]/55 ${className}`} />
+    {hint && <span className="mt-1.5 block text-[9px] text-[#737d82]">{hint}</span>}
+  </label>
+);
+
+const SelectField: React.FC<React.SelectHTMLAttributes<HTMLSelectElement> & { label: string; children: React.ReactNode }> = ({ label, children, ...props }) => (
+  <label className="block">
+    <span className="mb-1.5 block text-[10px] font-medium text-[#c7cdd0]">{label}</span>
+    <select {...props} className="h-10 w-full rounded-lg border border-white/[0.07] bg-[#11191d] px-3 text-[11px] text-white outline-none focus:border-[#8bd132]/55">
+      {children}
+    </select>
+  </label>
+);
+
+const ToggleRow: React.FC<{ title: string; description: string; checked: boolean; onChange: (value: boolean) => void }> = ({ title, description, checked, onChange }) => (
+  <div className="flex items-center justify-between gap-5 border-b border-white/[0.045] py-3.5 last:border-b-0">
+    <div>
+      <div className="text-[11px] font-medium text-[#e7eaeb]">{title}</div>
+      <div className="mt-0.5 text-[9px] text-[#79848a]">{description}</div>
+    </div>
+    <Toggle label={title} checked={checked} onChange={onChange} />
+  </div>
+);
+
+export const SettingsView: React.FC = () => {
+  const [activeSection, setActiveSection] = React.useState<SectionId>('account');
+  const [query, setQuery] = React.useState('');
+  const [settings, setSettings] = React.useState<PersonalSettings>(loadSettings);
+  const [initialAuxiliary] = React.useState<AuxiliarySettings>(loadAuxiliarySettings);
+  const [dirty, setDirty] = React.useState(false);
+  const [saveState, setSaveState] = React.useState<'idle' | 'saving' | 'saved'>('idle');
+  const [twoFactor, setTwoFactor] = React.useState(initialAuxiliary.twoFactor);
+  const [showRecoveryCodes, setShowRecoveryCodes] = React.useState(false);
+  const [sessions, setSessions] = React.useState([
+    { id: 'current', device: 'Chrome em Windows', location: 'São Paulo, Brasil', time: 'Agora', current: true },
+    { id: 'iphone', device: 'iPhone 16 Pro', location: 'São Paulo, Brasil', time: 'Há 2 horas', current: false },
+    { id: 'mac', device: 'Safari em macOS', location: 'Campinas, Brasil', time: 'Ontem, 21:14', current: false },
+  ]);
+  const [notificationChannels, setNotificationChannels] = React.useState(initialAuxiliary.notificationChannels);
+  const [notifications, setNotifications] = React.useState(initialAuxiliary.notifications);
+  const [copied, setCopied] = React.useState(false);
+
+  const currentSection = sections.find((section) => section.id === activeSection) || sections[0];
+  const filteredSections = sections.filter((section) => `${section.label} ${section.description}`.toLowerCase().includes(query.toLowerCase()));
+
+  const patchSettings = <K extends keyof PersonalSettings>(group: K, values: Partial<PersonalSettings[K]>) => {
+    setSettings((current) => ({ ...current, [group]: { ...current[group], ...values } }));
+    setDirty(true);
+    setSaveState('idle');
+  };
+
+  const markAuxiliaryDirty = () => {
+    setDirty(true);
+    setSaveState('idle');
+  };
+
+  const saveSettings = () => {
+    setSaveState('saving');
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
+    window.localStorage.setItem(`${STORAGE_KEY}:auxiliary`, JSON.stringify({ twoFactor, notificationChannels, notifications }));
+    window.setTimeout(() => {
+      setSaveState('saved');
+      setDirty(false);
+    }, 450);
+  };
+
+  const handleAvatar = (file?: File) => {
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => patchSettings('account', { avatar: String(reader.result) });
+    reader.readAsDataURL(file);
+  };
+
+  const renderAccount = () => (
+    <div className="space-y-4">
+      <SettingsCard>
+        <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
+          <div className="relative">
+            <img src={settings.account.avatar} alt="Pedro Henrique" className="h-20 w-20 rounded-2xl object-cover ring-1 ring-white/10" />
+            <label className="absolute -bottom-1 -right-1 grid h-7 w-7 cursor-pointer place-items-center rounded-full border border-white/10 bg-[#273137] text-[#b9c0c4] hover:text-[#8bd132]">
+              <Camera className="h-3.5 w-3.5" />
+              <input type="file" accept="image/*" className="hidden" onChange={(event) => handleAvatar(event.target.files?.[0])} />
+            </label>
+          </div>
+          <div className="flex-1">
+            <h3 className="text-[15px] font-semibold text-white">{settings.account.name}</h3>
+            <p className="mt-1 text-[10px] text-[#8d979c]">{settings.account.role} · {settings.account.company}</p>
+            <p className="mt-2 text-[9px] text-[#667178]">JPG, PNG ou WebP · máximo recomendado de 5 MB</p>
+          </div>
+          <label className="cursor-pointer rounded-lg border border-white/[0.08] bg-white/[0.035] px-4 py-2 text-[10px] font-medium text-[#d9dddf] hover:border-[#8bd132]/30 hover:text-[#8bd132]">
+            Alterar foto
+            <input type="file" accept="image/*" className="hidden" onChange={(event) => handleAvatar(event.target.files?.[0])} />
+          </label>
+        </div>
+      </SettingsCard>
+      <SettingsCard title="Informações pessoais" description="Estes dados pertencem somente à sua conta Clicko AI Studios.">
+        <div className="grid gap-4 sm:grid-cols-2">
+          <Field label="Nome completo" value={settings.account.name} onChange={(e) => patchSettings('account', { name: e.target.value })} />
+          <Field label="Cargo" value={settings.account.role} onChange={(e) => patchSettings('account', { role: e.target.value })} />
+          <Field label="Empresa" value={settings.account.company} onChange={(e) => patchSettings('account', { company: e.target.value })} />
+          <Field label="E-mail" type="email" value={settings.account.email} onChange={(e) => patchSettings('account', { email: e.target.value })} />
+          <Field label="Telefone" value={settings.account.phone} onChange={(e) => patchSettings('account', { phone: e.target.value })} />
+          <SelectField label="Idioma" value={settings.account.language} onChange={(e) => patchSettings('account', { language: e.target.value })}>
+            <option value="pt-BR">Português (Brasil)</option><option value="en-US">English (US)</option><option value="es">Español</option>
+          </SelectField>
+          <SelectField label="Fuso horário" value={settings.account.timezone} onChange={(e) => patchSettings('account', { timezone: e.target.value })}>
+            <option value="America/Sao_Paulo">São Paulo · GMT-3</option><option value="America/New_York">New York · GMT-4</option><option value="Europe/Lisbon">Lisboa · GMT+1</option>
+          </SelectField>
+          <SelectField label="Formato de data" value={settings.account.dateFormat} onChange={(e) => patchSettings('account', { dateFormat: e.target.value })}>
+            <option>DD/MM/AAAA</option><option>MM/DD/AAAA</option><option>AAAA-MM-DD</option>
+          </SelectField>
+        </div>
+        <label className="mt-4 block">
+          <span className="mb-1.5 block text-[10px] font-medium text-[#c7cdd0]">Assinatura personalizada</span>
+          <textarea rows={4} value={settings.account.signature} onChange={(e) => patchSettings('account', { signature: e.target.value })} className="w-full resize-none rounded-lg border border-white/[0.07] bg-[#11191d] p-3 text-[11px] text-white outline-none focus:border-[#8bd132]/55" />
+        </label>
+      </SettingsCard>
+    </div>
+  );
+
+  const renderSecurity = () => (
+    <div className="space-y-4">
+      <SettingsCard>
+        <div className="flex items-center gap-5">
+          <div className="relative grid h-20 w-20 place-items-center rounded-full border-[6px] border-[#8bd132]/20 text-xl font-semibold text-white"><span className="absolute inset-[-6px] rounded-full border-[6px] border-[#8bd132] border-r-transparent" />82%</div>
+          <div className="flex-1"><div className="flex items-center gap-2"><ShieldCheck className="h-4 w-4 text-[#8bd132]" /><h3 className="text-[14px] font-semibold text-white">Sua conta está bem protegida</h3></div><p className="mt-1.5 max-w-xl text-[10px] leading-relaxed text-[#879197]">Ative a confirmação biométrica em dispositivos móveis para elevar sua pontuação de segurança.</p></div>
+          <span className="rounded-full bg-[#8bd132]/10 px-3 py-1.5 text-[9px] font-medium text-[#8bd132]">Proteção forte</span>
+        </div>
+      </SettingsCard>
+      <div className="grid gap-4 lg:grid-cols-2">
+        <SettingsCard title="Senha" description="Use pelo menos 12 caracteres e não reutilize senhas.">
+          <div className="space-y-3"><Field label="Senha atual" type="password" placeholder="••••••••••••" /><Field label="Nova senha" type="password" placeholder="Mínimo de 12 caracteres" /><Field label="Confirmar nova senha" type="password" placeholder="Repita a nova senha" /><button className="rounded-lg bg-[#8bd132] px-4 py-2.5 text-[10px] font-semibold text-[#14200e]">Atualizar senha</button></div>
+        </SettingsCard>
+        <SettingsCard title="Autenticação em dois fatores" description="Adicione uma segunda camada de proteção à sua conta.">
+          <ToggleRow title="Autenticação 2FA" description={twoFactor ? 'Ativa via aplicativo autenticador' : 'Proteção adicional desativada'} checked={twoFactor} onChange={(value) => { setTwoFactor(value); markAuxiliaryDirty(); }} />
+          <button onClick={() => setShowRecoveryCodes(!showRecoveryCodes)} className="mt-4 flex items-center gap-2 rounded-lg border border-white/[0.08] px-3 py-2 text-[10px] text-[#cbd0d3] hover:text-[#8bd132]"><FileKey className="h-3.5 w-3.5" />Gerar chaves de recuperação</button>
+          {showRecoveryCodes && <div className="mt-3 grid grid-cols-2 gap-2 rounded-lg bg-[#11191d] p-3 font-mono text-[9px] text-[#9ba4a9]"><span>VX7A-82KP</span><span>Q9LM-34WT</span><span>R2DX-71CN</span><span>P6HV-90JS</span></div>}
+        </SettingsCard>
+      </div>
+      <SettingsCard title="Sessões ativas" description="Dispositivos atualmente conectados à sua conta.">
+        <div className="divide-y divide-white/[0.045]">
+          {sessions.map((session) => <div key={session.id} className="flex items-center gap-3 py-3.5"><span className="grid h-9 w-9 place-items-center rounded-lg bg-white/[0.04] text-[#aeb6ba]">{session.id === 'iphone' ? <Smartphone className="h-4 w-4" /> : <Laptop className="h-4 w-4" />}</span><div className="flex-1"><div className="flex items-center gap-2 text-[11px] font-medium text-white">{session.device}{session.current && <span className="rounded-full bg-[#8bd132]/10 px-2 py-0.5 text-[8px] text-[#8bd132]">Esta sessão</span>}</div><div className="mt-1 text-[9px] text-[#778188]">{session.location} · {session.time}</div></div>{!session.current && <button onClick={() => setSessions((items) => items.filter((item) => item.id !== session.id))} className="text-[9px] text-[#9ea6aa] hover:text-red-400">Encerrar</button>}</div>)}
+        </div>
+        <button onClick={() => setSessions((items) => items.filter((item) => item.current))} className="mt-3 flex items-center gap-2 text-[10px] text-red-400"><LogOut className="h-3.5 w-3.5" />Encerrar todas as outras sessões</button>
+      </SettingsCard>
+      <SettingsCard title="Histórico de logins">
+        {[['Hoje, 16:42', 'Chrome · Windows', 'São Paulo, Brasil'], ['Hoje, 09:18', 'iPhone · iOS', 'São Paulo, Brasil'], ['31 jul., 21:14', 'Safari · macOS', 'Campinas, Brasil']].map(([time, device, location]) => <div key={time} className="grid grid-cols-[120px_1fr_1fr_auto] items-center border-b border-white/[0.04] py-3 text-[9px] last:border-0"><span className="text-[#aab2b6]">{time}</span><span className="text-[#d5d9db]">{device}</span><span className="text-[#818b90]">{location}</span><span className="text-[#8bd132]">Sucesso</span></div>)}
+      </SettingsCard>
+    </div>
+  );
+
+  const renderNotifications = () => (
+    <div className="space-y-4">
+      <div className="grid gap-3 sm:grid-cols-3">
+        {([['internal', 'Na plataforma', BellRing], ['email', 'Por e-mail', Mail], ['push', 'Notificações push', Smartphone]] as const).map(([id, label, Icon]) => <SettingsCard key={id}><div className="flex items-center justify-between"><span className="grid h-9 w-9 place-items-center rounded-lg bg-[#8bd132]/10 text-[#8bd132]"><Icon className="h-4 w-4" /></span><Toggle label={label} checked={notificationChannels[id]} onChange={(value) => { setNotificationChannels((current) => ({ ...current, [id]: value })); markAuxiliaryDirty(); }} /></div><div className="mt-4 text-[11px] font-medium text-white">{label}</div><div className="mt-1 text-[9px] text-[#7f898e]">{notificationChannels[id] ? 'Canal ativo' : 'Canal pausado'}</div></SettingsCard>)}
+      </div>
+      <SettingsCard title="Tipos de notificação" description="Escolha quais eventos devem chegar em cada canal.">
+        <div className="overflow-x-auto">
+          <div className="min-w-[650px]"><div className="grid grid-cols-[1fr_90px_90px_90px] border-b border-white/[0.055] pb-3 text-center text-[9px] uppercase tracking-wider text-[#707a80]"><span className="text-left">Evento</span><span>Interna</span><span>E-mail</span><span>Push</span></div>{notificationEvents.map(([id, title, description]) => <div key={id} className="grid grid-cols-[1fr_90px_90px_90px] items-center border-b border-white/[0.04] py-3.5 last:border-0"><div><div className="text-[11px] font-medium text-white">{title}</div><div className="mt-0.5 text-[9px] text-[#778188]">{description}</div></div>{(['internal', 'email', 'push'] as const).map((channel) => <div key={channel} className="flex justify-center"><Toggle label={`${title} por ${channel}`} checked={notifications[id][channel]} onChange={(value) => { setNotifications((current) => ({ ...current, [id]: { ...current[id], [channel]: value } })); markAuxiliaryDirty(); }} /></div>)}</div>)}</div>
+        </div>
+      </SettingsCard>
+    </div>
+  );
+
+  const renderPreferences = () => (
+    <div className="space-y-7">
+      <section className="space-y-4">
+        <div className="flex items-center gap-3"><SlidersHorizontal className="h-4 w-4 text-[#8bd132]" /><div><h3 className="text-[12px] font-semibold text-white">Experiência e navegação</h3><p className="mt-0.5 text-[9px] text-[#748087]">Defina como a plataforma deve abrir e exibir seus conteúdos.</p></div></div>
+        <div className="grid gap-4 lg:grid-cols-2">
+          <SettingsCard title="Navegação inicial" description="Defina como a plataforma deve abrir para você.">
+            <div className="space-y-4"><SelectField label="Página inicial" value={settings.preferences.homePage} onChange={(e) => patchSettings('preferences', { homePage: e.target.value })}><option value="dashboard">Dashboard</option><option value="calendar">Calendário</option><option value="content">Conteúdos</option><option value="analytics">Desempenho</option></SelectField><SelectField label="Workspace automático" value={settings.preferences.autoWorkspace} onChange={(e) => patchSettings('preferences', { autoWorkspace: e.target.value })}><option value="last">Último acessado</option><option value="vitalis">Clínica Vitalis</option><option value="none">Sempre perguntar</option></SelectField><ToggleRow title="Reabrir última página" description="Continue exatamente de onde parou" checked={settings.preferences.openLastPage} onChange={(value) => patchSettings('preferences', { openLastPage: value })} /></div>
+          </SettingsCard>
+          <SettingsCard title="Visualizações padrão">
+            <div className="space-y-4"><SelectField label="Conteúdos" value={settings.preferences.defaultView} onChange={(e) => patchSettings('preferences', { defaultView: e.target.value })}><option value="list">Lista</option><option value="cards">Cards</option><option value="kanban">Kanban</option></SelectField><SelectField label="Calendário" value={settings.preferences.calendarView} onChange={(e) => patchSettings('preferences', { calendarView: e.target.value })}><option value="week">Semana</option><option value="month">Mês</option></SelectField><SelectField label="Ordenação de conteúdos" value={settings.preferences.contentSort} onChange={(e) => patchSettings('preferences', { contentSort: e.target.value })}><option value="recent">Mais recentes</option><option value="oldest">Mais antigos</option><option value="status">Por status</option><option value="performance">Por desempenho</option></SelectField></div>
+          </SettingsCard>
+          <SettingsCard title="Persistência e idioma" className="lg:col-span-2">
+            <div className="grid gap-5 lg:grid-cols-2"><ToggleRow title="Filtros persistentes" description="Mantenha filtros entre sessões e páginas" checked={settings.preferences.persistentFilters} onChange={(value) => patchSettings('preferences', { persistentFilters: value })} /><SelectField label="Idioma padrão da IA" value={settings.preferences.aiLanguage} onChange={(e) => patchSettings('preferences', { aiLanguage: e.target.value })}><option value="pt-BR">Português (Brasil)</option><option value="en-US">English (US)</option><option value="es">Español</option></SelectField></div>
+          </SettingsCard>
+        </div>
+      </section>
+
+      <section className="space-y-4 border-t border-white/[0.055] pt-6">
+        <div className="flex items-center gap-3"><Bell className="h-4 w-4 text-[#8bd132]" /><div><h3 className="text-[12px] font-semibold text-white">Notificações</h3><p className="mt-0.5 text-[9px] text-[#748087]">Gerencie canais e eventos sem sair de Preferências.</p></div></div>
+        {renderNotifications()}
+      </section>
+
+      <section className="space-y-4 border-t border-white/[0.055] pt-6">
+        <div className="flex items-center gap-3"><Keyboard className="h-4 w-4 text-[#8bd132]" /><div><h3 className="text-[12px] font-semibold text-white">Atalhos</h3><p className="mt-0.5 text-[9px] text-[#748087]">Personalize comandos e acessos rápidos.</p></div></div>
+        {renderShortcuts()}
+      </section>
+    </div>
+  );
+
+  const renderPersonalAI = () => (
+    <div className="space-y-4">
+      <SettingsCard>
+        <div className="flex items-center gap-4"><span className="grid h-12 w-12 place-items-center rounded-xl bg-[#8bd132]/10 text-[#8bd132]"><Bot className="h-6 w-6" /></span><div><h3 className="text-[14px] font-semibold text-white">Seu assistente, do seu jeito</h3><p className="mt-1 text-[10px] text-[#7f898f]">Estas escolhas afetam somente as suas interações com a IA.</p></div></div>
+      </SettingsCard>
+      <div className="grid gap-4 lg:grid-cols-2">
+        <SettingsCard title="Modelo e respostas">
+          <div className="space-y-4"><SelectField label="Modelo de IA" value={settings.personalAI.model} onChange={(e) => patchSettings('personalAI', { model: e.target.value })}><option value="clicko-pro">Clicko Pro · Recomendado</option><option value="clicko-fast">Clicko Fast · Mais rápido</option><option value="clicko-reasoning">Clicko Reasoning · Análise profunda</option></SelectField><SelectField label="Profundidade das respostas" value={settings.personalAI.depth} onChange={(e) => patchSettings('personalAI', { depth: e.target.value })}><option value="concise">Concisa</option><option value="balanced">Equilibrada</option><option value="detailed">Detalhada</option></SelectField><SelectField label="Idioma padrão" value={settings.personalAI.language} onChange={(e) => patchSettings('personalAI', { language: e.target.value })}><option value="pt-BR">Português (Brasil)</option><option value="en-US">English (US)</option><option value="es">Español</option></SelectField></div>
+        </SettingsCard>
+        <SettingsCard title="Estilo de criação">
+          <SelectField label="Estilo de escrita" value={settings.personalAI.writingStyle} onChange={(e) => patchSettings('personalAI', { writingStyle: e.target.value })}><option value="direct">Direto e estratégico</option><option value="creative">Criativo e expressivo</option><option value="educational">Educacional</option><option value="executive">Executivo</option></SelectField>
+          <div className="mt-5"><div className="flex justify-between text-[10px]"><span className="text-[#c7cdd0]">Criatividade</span><span className="text-[#8bd132]">{settings.personalAI.creativity}%</span></div><input type="range" min="0" max="100" value={settings.personalAI.creativity} onChange={(e) => patchSettings('personalAI', { creativity: Number(e.target.value) })} className="mt-3 w-full accent-[#8bd132]" /></div>
+          <div className="mt-5"><div className="flex justify-between text-[10px]"><span className="text-[#c7cdd0]">Formalidade</span><span className="text-[#8bd132]">{settings.personalAI.formality}%</span></div><input type="range" min="0" max="100" value={settings.personalAI.formality} onChange={(e) => patchSettings('personalAI', { formality: Number(e.target.value) })} className="mt-3 w-full accent-[#8bd132]" /></div>
+        </SettingsCard>
+      </div>
+      <SettingsCard title="Automações de conteúdo">
+        <div className="grid gap-x-8 lg:grid-cols-2">{([['autoCta', 'Gerar CTAs automaticamente', 'Inclui chamadas para ação adequadas'], ['improvements', 'Sugerir melhorias', 'Aponta oportunidades antes de finalizar'], ['proofreading', 'Revisar textos', 'Corrige gramática, clareza e consistência'], ['titles', 'Gerar títulos', 'Cria headlines e variações de abertura'], ['hashtags', 'Sugerir hashtags', 'Seleciona termos relevantes por canal'], ['variations', 'Criar variações', 'Gera versões alternativas automaticamente']] as const).map(([key, title, description]) => <ToggleRow key={key} title={title} description={description} checked={settings.personalAI[key]} onChange={(value) => patchSettings('personalAI', { [key]: value })} />)}</div>
+      </SettingsCard>
+    </div>
+  );
+
+  const renderShortcuts = () => {
+    const shortcutRows = [['Busca global', '⌘ K'], ['Novo conteúdo', '⌘ N'], ['Abrir IA pessoal', '⌘ I'], ['Ir para calendário', 'G C'], ['Ações rápidas', '⌘ /']];
+    return <div className="space-y-4"><SettingsCard title="Atalhos de teclado" description="Clique no comando para definir uma nova combinação."><div className="divide-y divide-white/[0.045]">{shortcutRows.map(([action, keys]) => <div key={action} className="flex items-center justify-between py-3"><span className="text-[10px] text-[#d1d6d8]">{action}</span><button className="min-w-[68px] rounded-md border border-white/[0.08] bg-[#11191d] px-2.5 py-1.5 font-mono text-[9px] text-[#aeb6ba]">{keys}</button></div>)}</div></SettingsCard><div className="grid gap-4 lg:grid-cols-2"><SettingsCard title="Barra de acesso rápido"><div className="space-y-2">{[['Dashboard', LayoutGrid], ['Calendário', CalendarDays], ['IA Pessoal', Sparkles], ['Desempenho', Activity]].map(([label, Icon]) => { const IconComponent = Icon as React.ComponentType<{ className?: string }>; return <button key={String(label)} className="flex w-full items-center gap-3 rounded-lg border border-white/[0.055] bg-[#11191d] p-3 text-left"><IconComponent className="h-4 w-4 text-[#8bd132]" /><span className="flex-1 text-[10px] text-white">{String(label)}</span><span className="text-[8px] text-[#788288]">Fixado</span></button>; })}</div></SettingsCard><SettingsCard title="Comandos personalizados"><div className="rounded-lg border border-dashed border-white/10 p-5 text-center"><Zap className="mx-auto h-5 w-5 text-[#8bd132]" /><p className="mt-2 text-[10px] text-[#8b959a]">Crie sequências para tarefas repetitivas.</p><button className="mt-4 flex items-center gap-1.5 mx-auto rounded-lg bg-[#293339] px-3 py-2 text-[9px] text-white"><Plus className="h-3.5 w-3.5" />Novo comando</button></div></SettingsCard></div></div>;
+  };
+
+  const renderBilling = () => (
+    <div className="space-y-4"><SettingsCard><div className="flex flex-wrap items-center gap-5"><span className="grid h-14 w-14 place-items-center rounded-xl bg-[#8bd132]/10 text-[#8bd132]"><Sparkles className="h-6 w-6" /></span><div className="flex-1"><div className="flex items-center gap-2"><h3 className="text-[16px] font-semibold text-white">Plano Profissional</h3><span className="rounded-full bg-[#8bd132]/10 px-2 py-1 text-[8px] text-[#8bd132]">Ativo</span></div><p className="mt-1 text-[9px] text-[#788389]">R$ 149/mês · próxima cobrança em 18 de agosto de 2026</p></div><button className="rounded-lg bg-[#8bd132] px-4 py-2.5 text-[10px] font-semibold text-[#14200e]">Fazer upgrade</button></div></SettingsCard><div className="grid gap-4 lg:grid-cols-3">{[['Conteúdos', '320 / 500', 64], ['Armazenamento', '38 GB / 100 GB', 38], ['Requisições IA', '8.240 / 25.000', 33]].map(([label, value, percent]) => <SettingsCard key={String(label)}><div className="text-[10px] text-[#8d979c]">{label}</div><div className="mt-2 text-[16px] font-medium text-white">{value}</div><div className="mt-4 h-1.5 rounded-full bg-[#2b353a]"><div className="h-full rounded-full bg-[#8bd132]" style={{ width: `${percent}%` }} /></div></SettingsCard>)}</div><SettingsCard title="Histórico de pagamentos"><div className="divide-y divide-white/[0.045]">{[['01 ago. 2026', 'Plano Profissional', 'R$ 149,00'], ['01 jul. 2026', 'Plano Profissional', 'R$ 149,00'], ['01 jun. 2026', 'Plano Profissional', 'R$ 149,00']].map(([date, item, amount]) => <div key={date} className="grid grid-cols-[120px_1fr_auto_auto] items-center py-3 text-[9px]"><span className="text-[#7d878d]">{date}</span><span className="text-white">{item}</span><span className="mr-5 text-[#b8bec1]">{amount}</span><button className="text-[#8bd132]">Recibo</button></div>)}</div></SettingsCard><div className="flex gap-4 text-[9px]"><button className="text-[#899399] hover:text-white">Alterar forma de pagamento</button><button className="text-[#899399] hover:text-white">Fazer downgrade</button><button className="text-red-400/70 hover:text-red-400">Cancelar assinatura</button></div></div>
+  );
+
+  const renderSupport = () => (
+    <div className="space-y-4"><div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">{[[BookOpen, 'Central de Ajuda', 'Respostas e guias completos'], [PlayCircle, 'Vídeos tutoriais', 'Aprenda com exemplos práticos'], [MessageCircle, 'Chat com suporte', 'Atendimento em tempo real'], [Lightbulb, 'Sugerir recurso', 'Compartilhe uma ideia']].map(([Icon, title, description]) => { const IconComponent = Icon as React.ComponentType<{ className?: string }>; return <button key={String(title)} className="rounded-xl border border-white/[0.065] bg-[#182126] p-4 text-left hover:border-[#8bd132]/30"><IconComponent className="h-5 w-5 text-[#8bd132]" /><div className="mt-4 text-[11px] font-medium text-white">{String(title)}</div><div className="mt-1 text-[8px] text-[#758087]">{String(description)}</div><ExternalLink className="mt-4 h-3.5 w-3.5 text-[#5f6a70]" /></button>; })}</div><div className="grid gap-4 lg:grid-cols-2"><SettingsCard title="Abrir chamado"><div className="space-y-3"><SelectField label="Assunto" defaultValue="technical"><option value="technical">Problema técnico</option><option value="billing">Cobrança</option><option value="account">Minha conta</option></SelectField><Field label="Título" placeholder="Descreva o problema em uma frase" /><label className="block"><span className="mb-1.5 block text-[10px] font-medium text-[#c7cdd0]">Detalhes</span><textarea rows={4} className="w-full resize-none rounded-lg border border-white/[0.07] bg-[#11191d] p-3 text-[10px] text-white outline-none focus:border-[#8bd132]/55" placeholder="Conte o que aconteceu..." /></label><button className="rounded-lg bg-[#8bd132] px-4 py-2.5 text-[9px] font-semibold text-[#14200e]">Enviar chamado</button></div></SettingsCard><SettingsCard title="Produto e comunidade"><div className="space-y-2">{[[Bug, 'Reportar um problema', 'Envie detalhes diretamente para a equipe'], [History, 'Changelog', 'Veja tudo que mudou nas últimas versões'], [Activity, 'Roadmap público', 'Acompanhe o que estamos construindo'], [HelpCircle, 'Documentação', 'Guias técnicos e boas práticas']].map(([Icon, title, description]) => { const IconComponent = Icon as React.ComponentType<{ className?: string }>; return <button key={String(title)} className="flex w-full items-center gap-3 rounded-lg border border-white/[0.055] bg-[#11191d] p-3 text-left"><IconComponent className="h-4 w-4 text-[#8bd132]" /><span className="flex-1"><span className="block text-[10px] text-white">{String(title)}</span><span className="text-[8px] text-[#748087]">{String(description)}</span></span><ChevronRight className="h-4 w-4 text-[#59656b]" /></button>; })}</div></SettingsCard></div></div>
+  );
+
+  const renderSection = () => {
+    switch (activeSection) {
+      case 'account': return renderAccount();
+      case 'security': return renderSecurity();
+      case 'preferences': return renderPreferences();
+      case 'personal-ai': return renderPersonalAI();
+      case 'billing': return renderBilling();
+      case 'support': return renderSupport();
+      default: return renderAccount();
+    }
   };
 
   return (
-    <div className="p-6 space-y-6 max-w-7xl mx-auto">
-      {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/5 pb-4">
+    <div className="mx-auto w-full max-w-[1500px] p-5 md:p-7">
+      <div className="mb-6 flex flex-col gap-4 border-b border-white/[0.055] pb-5 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h2 className="text-lg font-bold text-[#ededed] flex items-center gap-2">
-            <Settings className="w-5 h-5 text-indigo-400" /> Configurações do Sistema & Cérebro da Marca
-          </h2>
-          <p className="text-xs text-white/40">
-            Ajuste os parâmetros que alimentam a Inteligência Artificial, chaves de API e preferências da interface
-          </p>
+          <div className="flex items-center gap-2.5"><span className="grid h-8 w-8 place-items-center rounded-lg bg-[#8bd132]/10 text-[#8bd132]"><Settings className="h-4 w-4" /></span><h1 className="text-[20px] font-semibold tracking-[-0.02em] text-white">Configurações</h1></div>
+          <p className="mt-2 text-[10px] text-[#7f898f]">Preferências pessoais da sua conta. Nenhuma alteração afeta o workspace ou outros membros.</p>
         </div>
-
-        <button
-          onClick={handleSaveSettings}
-          className="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs shadow-lg shadow-indigo-600/20 border border-indigo-400/30 flex items-center gap-2"
-        >
-          {savedSuccess ? (
-            <>
-              <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-              <span>Configurações Salvas!</span>
-            </>
-          ) : (
-            <span>Salvar Alterações</span>
-          )}
-        </button>
+        <div className="flex items-center gap-3">
+          {dirty && <span className="text-[9px] text-[#9da6aa]">Alterações não salvas</span>}
+          {saveState === 'saved' && <span className="flex items-center gap-1.5 text-[9px] text-[#8bd132]"><CheckCircle2 className="h-3.5 w-3.5" />Tudo salvo</span>}
+          <button onClick={saveSettings} disabled={!dirty || saveState === 'saving'} className="flex h-9 items-center gap-2 rounded-lg bg-[#8bd132] px-4 text-[10px] font-semibold text-[#14200e] transition hover:bg-[#9be24d] disabled:cursor-not-allowed disabled:opacity-45"><Save className="h-3.5 w-3.5" />{saveState === 'saving' ? 'Salvando...' : 'Salvar alterações'}</button>
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Main Brand Config Panel */}
-        <div className="lg:col-span-2 bg-[#0A0A0A] border border-white/5 p-6 rounded-2xl space-y-5">
-          <h3 className="text-sm font-bold text-[#ededed] flex items-center gap-2 border-b border-white/5 pb-3">
-            <Sparkles className="w-4 h-4 text-indigo-400" /> Parâmetros do Cérebro de IA da Marca
-          </h3>
-
-          <div className="space-y-4 text-xs">
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-neutral-300 font-semibold mb-1">Nome da Marca / Projeto</label>
-                <input
-                  type="text"
-                  value={brandName}
-                  onChange={(e) => setBrandName(e.target.value)}
-                  className="w-full bg-white/[0.03] border border-white/5 rounded-xl p-2.5 text-[#ededed] focus:outline-none focus:border-indigo-500/50"
-                />
-              </div>
-
-              <div>
-                <label className="block text-neutral-300 font-semibold mb-1">Indústria / Nicho</label>
-                <input
-                  type="text"
-                  value={industry}
-                  onChange={(e) => setIndustry(e.target.value)}
-                  className="w-full bg-white/[0.03] border border-white/5 rounded-xl p-2.5 text-[#ededed] focus:outline-none focus:border-indigo-500/50"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-neutral-300 font-semibold mb-1">Tom de Voz Padrão</label>
-              <input
-                type="text"
-                value={tone}
-                onChange={(e) => setTone(e.target.value)}
-                className="w-full bg-white/[0.03] border border-white/5 rounded-xl p-2.5 text-[#ededed] focus:outline-none focus:border-indigo-500/50"
-                placeholder="Ex: Sofisticado, Inovador, Direto ao ponto e Confiável"
-              />
-            </div>
-
-            <div>
-              <label className="block text-neutral-300 font-semibold mb-1">Público-Alvo Prioritário</label>
-              <textarea
-                value={targetAudience}
-                onChange={(e) => setTargetAudience(e.target.value)}
-                rows={2}
-                className="w-full bg-white/[0.03] border border-white/5 rounded-xl p-2.5 text-[#ededed] focus:outline-none focus:border-indigo-500/50 resize-none"
-              />
-            </div>
-
-            <div>
-              <label className="block text-neutral-300 font-semibold mb-1">Diretrizes (O que Fazer e Não Fazer)</label>
-              <textarea
-                value={doAndDonts}
-                onChange={(e) => setDoAndDonts(e.target.value)}
-                rows={3}
-                className="w-full bg-white/[0.03] border border-white/5 rounded-xl p-2.5 text-[#ededed] focus:outline-none focus:border-indigo-500/50 resize-none"
-              />
-            </div>
+      <div className="grid gap-5 min-[980px]:grid-cols-[230px_minmax(0,1fr)] 2xl:grid-cols-[248px_minmax(0,1fr)]">
+        <aside className="self-start rounded-[12px] border border-white/[0.06] bg-[#151e22] p-2 min-[980px]:sticky min-[980px]:top-[100px]">
+          <div className="mb-2 flex items-center gap-3 rounded-lg bg-[#1d272c] p-3">
+            <img src={settings.account.avatar} alt="" className="h-9 w-9 rounded-lg object-cover" />
+            <div className="min-w-0"><div className="truncate text-[10px] font-medium text-white">{settings.account.name}</div><div className="mt-0.5 truncate text-[8px] text-[#78838a]">Conta pessoal</div></div>
           </div>
-        </div>
+          <label className="relative mb-2 block"><Search className="absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-[#657178]" /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Buscar configurações" className="h-9 w-full rounded-lg border border-white/[0.055] bg-[#10181c] pl-9 pr-3 text-[9px] text-white outline-none placeholder:text-[#5e696f] focus:border-[#8bd132]/40" /></label>
+          <nav className="custom-scrollbar max-h-[calc(100vh-260px)] space-y-0.5 overflow-y-auto max-[979px]:flex max-[979px]:max-h-none max-[979px]:gap-1 max-[979px]:space-y-0 max-[979px]:overflow-x-auto">
+            {filteredSections.map((section) => { const Icon = section.icon; const selected = activeSection === section.id; return <button key={section.id} onClick={() => setActiveSection(section.id)} className={`group flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left transition max-[979px]:min-w-[175px] ${selected ? 'bg-[#273137] text-white' : 'text-[#9ca5aa] hover:bg-white/[0.03] hover:text-white'}`}><Icon className={`h-4 w-4 shrink-0 ${selected ? 'text-[#8bd132]' : 'text-[#768187] group-hover:text-[#aeb6ba]'}`} /><span className="min-w-0 flex-1"><span className="block truncate text-[9px] font-medium">{section.label}</span><span className="mt-0.5 block truncate text-[7px] text-[#626d73]">{section.description}</span></span>{selected && <ChevronRight className="h-3.5 w-3.5 text-[#8bd132]" />}</button>; })}
+          </nav>
+        </aside>
 
-        {/* API Keys & Shortcuts Side Column */}
-        <div className="space-y-6">
-          {/* Gemini API Status */}
-          <div className="bg-[#0A0A0A] border border-white/5 p-5 rounded-2xl space-y-4">
-            <h3 className="text-sm font-bold text-[#ededed] flex items-center gap-2 border-b border-white/5 pb-3">
-              <Key className="w-4 h-4 text-indigo-400" /> Status da API Gemini
-            </h3>
-
-            <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-xs text-neutral-200 space-y-1">
-              <div className="font-bold text-emerald-400 flex items-center gap-1.5">
-                <CheckCircle2 className="w-4 h-4" /> Gemini API Conectada
-              </div>
-              <p className="text-[11px] text-white/40">
-                A chave de API é injetada com segurança no servidor backend para chamadas server-side sem exposição ao navegador.
-              </p>
-            </div>
+        <main className="min-w-0">
+          <div className="mb-4 flex items-center gap-3">
+            <span className="grid h-10 w-10 place-items-center rounded-xl border border-white/[0.06] bg-[#182126] text-[#8bd132]"><currentSection.icon className="h-[18px] w-[18px]" /></span>
+            <div><h2 className="text-[16px] font-semibold text-white">{currentSection.label}</h2><p className="mt-0.5 text-[9px] text-[#78838a]">{currentSection.description}</p></div>
           </div>
-
-          {/* Interface Preferences */}
-          <div className="bg-[#0A0A0A] border border-white/5 p-5 rounded-2xl space-y-4 text-xs">
-            <h3 className="text-sm font-bold text-[#ededed] flex items-center gap-2 border-b border-white/5 pb-3">
-              <SlidersHorizontal className="w-4 h-4 text-indigo-400" /> Preferências de Interface
-            </h3>
-
-            <div className="flex items-center justify-between p-2.5 rounded-xl bg-white/[0.03] border border-white/5">
-              <div>
-                <div className="font-bold text-[#ededed]">Densidade de Layout</div>
-                <div className="text-[10px] text-white/40">
-                  {isCompact ? 'Modo Compacto Ativo' : 'Modo Confortável Ativo'}
-                </div>
-              </div>
-
-              <button
-                onClick={onToggleCompact}
-                className="p-2 rounded-lg bg-indigo-600/20 text-indigo-300 hover:bg-indigo-600/30"
-              >
-                {isCompact ? <Maximize2 className="w-4 h-4" /> : <Minimize2 className="w-4 h-4" />}
-              </button>
-            </div>
-
-            <div className="flex items-center justify-between p-2.5 rounded-xl bg-white/[0.03] border border-white/5">
-              <div>
-                <div className="font-bold text-[#ededed]">Tema Visual</div>
-                <div className="text-[10px] text-white/40">
-                  {isDarkMode ? 'Dark Mode Padrão (Enterprise)' : 'Light Mode Opcional'}
-                </div>
-              </div>
-
-              <button
-                onClick={onToggleDarkMode}
-                className="p-2 rounded-lg bg-indigo-600/20 text-indigo-300 hover:bg-indigo-600/30"
-              >
-                {isDarkMode ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-indigo-400" />}
-              </button>
-            </div>
-          </div>
-
-          {/* Keyboard Shortcuts Cheat Sheet */}
-          <div className="bg-[#0A0A0A] border border-white/5 p-5 rounded-2xl space-y-3 text-xs">
-            <h3 className="text-xs font-bold text-[#ededed] flex items-center gap-2">
-              <Command className="w-3.5 h-3.5 text-indigo-400" /> Atalhos de Teclado
-            </h3>
-
-            <div className="space-y-1.5 text-[11px] text-white/40">
-              <div className="flex justify-between">
-                <span>Busca Spotlight Global</span>
-                <kbd className="bg-white/10 px-1.5 py-0.5 rounded font-mono text-white">⌘K</kbd>
-              </div>
-              <div className="flex justify-between">
-                <span>Novo Conteúdo</span>
-                <kbd className="bg-white/10 px-1.5 py-0.5 rounded font-mono text-white">⌘N</kbd>
-              </div>
-              <div className="flex justify-between">
-                <span>Assistente IA</span>
-                <kbd className="bg-white/10 px-1.5 py-0.5 rounded font-mono text-white">⌘I</kbd>
-              </div>
-            </div>
-          </div>
-        </div>
+          {renderSection()}
+        </main>
       </div>
     </div>
   );

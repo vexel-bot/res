@@ -1,12 +1,173 @@
 @import "tailwindcss";
 
 @layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    color-scheme: dark;
+  }
+
   body {
-    background-color: #050505;
-    color: #ededed;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    margin: 0;
+    min-width: 320px;
+    background:
+      radial-gradient(circle at 52% -10%, rgba(184, 184, 184, 0.055), transparent 36%),
+      #0B0B0B;
+    color: #eef1f2;
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+
+  button {
+    cursor: pointer;
+  }
+}
+
+@keyframes clicko-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes clicko-scale-in {
+  from { opacity: 0; transform: scale(0.98); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.clicko-logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  background-color: #000000;
+  line-height: 0;
+}
+
+.clicko-logo__image {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+.clicko-logo--seamless {
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  box-shadow: none;
+}
+
+.clicko-logo--badge {
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 8px;
+  padding: 3px 5px;
+  box-shadow: none;
+}
+
+[data-theme="dark"] .clicko-logo--auto {
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  box-shadow: none;
+}
+
+[data-theme="light"] .clicko-logo--auto {
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 10px;
+  padding: 4px 6px;
+  box-shadow: none;
+}
+
+.clicko-logo-force-visible,
+.clicko-logo-full-responsive {
+  display: inline-flex;
+}
+
+.clicko-logo-compact-responsive {
+  display: none;
+}
+
+.clicko-logo-collapsed-size {
+  width: 52px;
+  height: 52px;
+  padding: 5px;
+}
+
+@media (max-width: 900px) {
+  .clicko-logo-full-responsive {
+    display: none;
+  }
+
+  .clicko-logo-compact-responsive {
+    display: inline-flex;
+  }
+}
+
+.clicko-splash-logo,
+.clicko-login-enter {
+  animation: clicko-scale-in 250ms ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .clicko-logo,
+  .clicko-splash-logo,
+  .clicko-login-enter {
+    animation: none;
+    transition: none;
+  }
+}
+
+@layer components {
+  .vexel-card {
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 12px;
+    background: linear-gradient(145deg, rgba(31, 39, 44, 0.98), rgba(25, 33, 38, 0.98));
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.014), 0 10px 30px rgba(0, 0, 0, 0.08);
+  }
+
+  [data-theme="dark"] {
+    --vexel-powered-color: #717c82;
+    --vexel-powered-divider: rgba(255, 255, 255, 0.055);
+    --vexel-powered-tooltip-bg: #171f23;
+    --vexel-powered-tooltip-border: rgba(255, 255, 255, 0.09);
+    --vexel-powered-tooltip-text: #c8ced1;
+  }
+
+  [data-theme="light"] {
+    --vexel-powered-color: #5f686d;
+    --vexel-powered-divider: rgba(14, 21, 25, 0.11);
+    --vexel-powered-tooltip-bg: #f6f7f7;
+    --vexel-powered-tooltip-border: rgba(14, 21, 25, 0.12);
+    --vexel-powered-tooltip-text: #343b3f;
+  }
+
+  .vexel-powered-divider {
+    border-color: var(--vexel-powered-divider);
+  }
+
+  .vexel-powered-signature {
+    color: var(--vexel-powered-color);
+    transition: color 160ms ease, border-color 160ms ease;
+  }
+
+  .vexel-powered-signature:hover,
+  .vexel-powered-signature:focus {
+    color: #83c940;
+  }
+
+  .vexel-powered-mark {
+    border-color: color-mix(in srgb, currentColor 42%, transparent);
+  }
+
+  .vexel-powered-tooltip {
+    border-color: var(--vexel-powered-tooltip-border);
+    background: var(--vexel-powered-tooltip-bg);
+    color: var(--vexel-powered-tooltip-text);
   }
 }
 
@@ -28,7 +189,7 @@
 
 /* Standardized focus and selection */
 ::selection {
-  background-color: rgba(99, 102, 241, 0.3);
-  color: #ffffff;
+  background-color: rgba(139, 209, 50, 0.75);
+  color: #14200e;
 }
 

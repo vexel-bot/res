@@ -1,0 +1,39 @@
+import React from 'react';
+import { ArrowRight, Check, CreditCard, Infinity, ReceiptText, ShieldCheck, Sparkles, Users } from 'lucide-react';
+import { useGovernance } from '../context/GovernanceContext';
+import type { SaaSPlan } from '../types';
+
+const currency = (value: number | null) => value === null ? 'Personalizado' : new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 }).format(value);
+const formatDate = (value?: string) => value ? new Intl.DateTimeFormat('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' }).format(new Date(value)) : '—';
+
+export const SubscriptionView: React.FC = () => {
+  const { plans, subscription, workspace, users, changePlan, loading } = useGovernance();
+  const [selectedPlan, setSelectedPlan] = React.useState<SaaSPlan['id']>();
+  const currentPlan = plans.find((plan) => plan.id === subscription?.planId);
+  const occupiedSeats = users.filter((item) => item.status !== 'disabled').length;
+  const maxUsers = workspace?.maxUsers;
+  const usage = maxUsers ? Math.min(100, Math.round((occupiedSeats / maxUsers) * 100)) : 32;
+
+  const confirmPlan = async () => {
+    if (!selectedPlan || selectedPlan === subscription?.planId) return;
+    if (await changePlan(selectedPlan)) setSelectedPlan(undefined);
+  };
+
+  if (loading && !subscription) return <div className="p-8 text-[11px] text-[#7C7C7C]">Carregando assinatura…</div>;
+
+  return (
+    <div className="mx-auto w-full max-w-[1500px] space-y-5 p-5 md:p-7">
+      <header className="border-b border-white/[0.06] pb-5"><div className="mb-2 flex items-center gap-2 text-[9px] uppercase tracking-[0.2em] text-[#7C7C7C]"><ShieldCheck className="h-3.5 w-3.5" /> Acesso exclusivo do Master</div><h1 className="text-[22px] font-semibold tracking-[-0.035em] text-white">Assinatura e capacidade</h1><p className="mt-1 text-[10px] text-[#7f888d]">Gerencie plano, assentos e cobrança do Workspace.</p></header>
+
+      <section className="grid gap-3 lg:grid-cols-[1.4fr_1fr_1fr]">
+        <div className="rounded-xl border border-white/[0.075] bg-[#141414] p-5"><div className="flex flex-wrap items-start justify-between gap-4"><div><span className="rounded-full bg-white/[0.06] px-2 py-1 text-[8px] uppercase tracking-[0.13em] text-[#B8B8B8]">Plano atual</span><h2 className="mt-4 text-[24px] font-semibold text-white">{currentPlan?.name || '—'}</h2><p className="mt-1 max-w-[420px] text-[9px] leading-relaxed text-[#757e82]">{currentPlan?.description}</p></div><div className="text-right"><div className="text-[18px] font-semibold text-white">{currency(currentPlan?.monthlyPrice ?? null)}</div>{currentPlan?.monthlyPrice !== null && <div className="text-[8px] text-[#636b6f]">por mês</div>}</div></div><div className="mt-5 h-px bg-white/[0.055]" /><div className="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-[8px] text-[#899195]"><span>Assinatura ativa desde {formatDate(subscription?.startedAt)}</span><span>Renovação em {formatDate(subscription?.renewsAt)}</span></div></div>
+        <div className="rounded-xl border border-white/[0.065] bg-[#111111] p-5"><div className="flex items-center justify-between"><div className="text-[9px] text-[#777f83]">Uso de assentos</div><Users className="h-4 w-4 text-[#737b7f]" /></div><div className="mt-5 text-[22px] font-semibold text-white">{occupiedSeats}<span className="text-[11px] font-normal text-[#60686c]"> / {maxUsers ?? '∞'}</span></div><div className="mt-3 h-1.5 overflow-hidden rounded-full bg-white/[0.06]"><div className="h-full rounded-full bg-[#B8B8B8]" style={{ width: `${usage}%` }} /></div><p className="mt-3 text-[8px] text-[#626a6e]">Convites pendentes reservam uma vaga do plano.</p></div>
+        <div className="rounded-xl border border-white/[0.065] bg-[#111111] p-5"><div className="flex items-center justify-between"><div className="text-[9px] text-[#777f83]">Pagamento</div><CreditCard className="h-4 w-4 text-[#737b7f]" /></div><div className="mt-5 text-[12px] font-medium text-white">{subscription?.paymentMethod}</div><p className="mt-1 text-[8px] text-[#636b6f]">Cobrança para {subscription?.billingEmail}</p><button className="mt-4 text-[8px] text-[#B8B8B8] hover:text-white">Alterar forma de pagamento</button></div>
+      </section>
+
+      <section><div className="mb-3 flex items-end justify-between"><div><h2 className="text-[14px] font-semibold text-white">Planos disponíveis</h2><p className="mt-1 text-[9px] text-[#697176]">Capacidade escalável sem alterar a estrutura de permissões.</p></div>{selectedPlan && selectedPlan !== subscription?.planId && <button onClick={() => void confirmPlan()} className="flex h-9 items-center gap-2 rounded-lg bg-white px-4 text-[9px] font-semibold text-black">Confirmar alteração<ArrowRight className="h-3.5 w-3.5" /></button>}</div><div className="grid gap-3 lg:grid-cols-4">{plans.map((plan) => { const current = plan.id === subscription?.planId; const selected = plan.id === selectedPlan; return <button key={plan.id} onClick={() => setSelectedPlan(plan.id)} className={`relative rounded-xl border p-5 text-left transition ${current ? 'border-white/25 bg-white/[0.065]' : selected ? 'border-white/20 bg-white/[0.04]' : 'border-white/[0.06] bg-[#111111] hover:border-white/15'}`}>{current && <span className="absolute right-3 top-3 rounded-full bg-white px-2 py-1 text-[7px] font-semibold text-black">Atual</span>}<div className="grid h-8 w-8 place-items-center rounded-lg bg-white/[0.055] text-[#B8B8B8]">{plan.id === 'enterprise' ? <Infinity className="h-4 w-4" /> : <Sparkles className="h-4 w-4" />}</div><h3 className="mt-4 text-[14px] font-semibold text-white">{plan.name}</h3><div className="mt-2 text-[16px] font-semibold text-[#d8dcde]">{currency(plan.monthlyPrice)}{plan.monthlyPrice !== null && <span className="text-[8px] font-normal text-[#626a6e]"> / mês</span>}</div><p className="mt-2 min-h-[34px] text-[8px] leading-relaxed text-[#6d7579]">{plan.description}</p><div className="my-4 h-px bg-white/[0.055]" /><div className="space-y-2">{plan.features.map((feature) => <div key={feature} className="flex items-center gap-2 text-[8px] text-[#959da1]"><Check className="h-3 w-3 text-[#B8B8B8]" />{feature}</div>)}</div><div className="mt-5 flex items-center gap-2 text-[8px] text-[#70787c]"><Users className="h-3.5 w-3.5" />{plan.maxUsers === null ? 'Capacidade personalizada' : `Até ${plan.maxUsers} usuário${plan.maxUsers > 1 ? 's' : ''}`}</div></button>; })}</div></section>
+
+      <section className="grid gap-3 lg:grid-cols-2"><div className="rounded-xl border border-white/[0.065] bg-[#111111] p-5"><div className="flex items-center gap-2 text-[11px] font-medium text-white"><ReceiptText className="h-4 w-4 text-[#7C7C7C]" />Últimas cobranças</div><div className="mt-4 divide-y divide-white/[0.05]">{['18 jul. 2026', '18 jun. 2026', '18 mai. 2026'].map((date) => <div key={date} className="flex items-center justify-between py-3 text-[8px]"><span className="text-[#777f83]">{date}</span><span className="text-[#aeb4b7]">Plano {currentPlan?.name}</span><span className="text-white">{currency(currentPlan?.monthlyPrice ?? null)}</span><button className="text-[#737b7f] hover:text-white">Recibo</button></div>)}</div></div><div className="rounded-xl border border-white/[0.065] bg-[#111111] p-5"><div className="text-[11px] font-medium text-white">Política de capacidade</div><p className="mt-3 text-[9px] leading-6 text-[#747c80]">Ao atingir o limite, novos convites são bloqueados automaticamente. Usuários desativados deixam de ocupar assento, enquanto convites pendentes reservam uma vaga para garantir o aceite.</p><div className="mt-4 rounded-lg border border-white/[0.055] bg-[#0B0B0B] p-3 text-[8px] text-[#8d9599]">A alteração de plano é registrada no log de auditoria e aplicada imediatamente ao Workspace.</div></div></section>
+    </div>
+  );
+};

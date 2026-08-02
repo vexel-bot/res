@@ -1,15 +1,152 @@
 export type NavigationTab =
   | 'dashboard'
-  | 'ai-central'
-  | 'creation'
-  | 'images'
-  | 'video'
+  | 'workspace'
+  | 'brain'
+  | 'strategy'
+  | 'studio'
+  | 'library'
   | 'calendar'
   | 'publisher'
   | 'analytics'
   | 'automations'
-  | 'collaboration'
+  | 'approvals'
+  | 'team'
+  | 'subscription'
+  | 'audit-logs'
   | 'settings';
+
+export type UserRole = 'master' | 'collaborator';
+
+export type WorkspaceModule =
+  | 'dashboard'
+  | 'workspace'
+  | 'brain'
+  | 'strategy'
+  | 'studio'
+  | 'library'
+  | 'calendar'
+  | 'automations'
+  | 'analytics';
+
+export type MemberStatus = 'active' | 'invited' | 'disabled';
+
+export interface WorkspaceMember {
+  id: string;
+  workspaceId: string;
+  name: string;
+  email: string;
+  avatar: string;
+  role: UserRole;
+  status: MemberStatus;
+  modules: WorkspaceModule[];
+  lastAccess: string;
+  createdAt: string;
+  invitedAt?: string;
+  inviteExpiresAt?: string;
+}
+
+export interface SaaSPlan {
+  id: 'solo' | 'team' | 'business' | 'enterprise';
+  name: string;
+  maxUsers: number | null;
+  monthlyPrice: number | null;
+  description: string;
+  features: string[];
+}
+
+export interface WorkspaceSubscription {
+  id: string;
+  workspaceId: string;
+  planId: SaaSPlan['id'];
+  status: 'active' | 'trialing' | 'past_due' | 'canceled';
+  startedAt: string;
+  renewsAt: string;
+  billingEmail: string;
+  paymentMethod: string;
+}
+
+export interface GovernanceWorkspace {
+  id: string;
+  name: string;
+  logo: string;
+  planId: SaaSPlan['id'];
+  maxUsers: number | null;
+  activeUsers: number;
+  subscriptionDate: string;
+  subscriptionStatus: WorkspaceSubscription['status'];
+  settings: {
+    inviteExpiryDays: number;
+    requireApproval: boolean;
+    timezone: string;
+  };
+}
+
+export type ApprovalStage =
+  | 'draft'
+  | 'in_review'
+  | 'pending_approval'
+  | 'approved'
+  | 'changes_requested'
+  | 'rejected'
+  | 'published';
+
+export interface ApprovalComment {
+  id: string;
+  authorId: string;
+  authorName: string;
+  message: string;
+  createdAt: string;
+}
+
+export interface ApprovalHistoryEntry {
+  id: string;
+  actorId: string;
+  actorName: string;
+  action: string;
+  detail: string;
+  createdAt: string;
+}
+
+export interface ContentApprovalItem {
+  id: string;
+  workspaceId: string;
+  contentId: string;
+  title: string;
+  copy: string;
+  previewUrl?: string;
+  platform: SocialPlatform;
+  format: PostFormat;
+  authorId: string;
+  authorName: string;
+  createdAt: string;
+  scheduledAt?: string;
+  stage: ApprovalStage;
+  approvedBy?: string;
+  approvedAt?: string;
+  publishedBy?: string;
+  publishedAt?: string;
+  comments: ApprovalComment[];
+  history: ApprovalHistoryEntry[];
+  strategyId?: string;
+  campaignId?: string;
+  versions?: ContentVersion[];
+}
+
+export interface AuditLogEntry {
+  id: string;
+  workspaceId: string;
+  actorId: string;
+  actorName: string;
+  action: string;
+  resource: string;
+  detail: string;
+  createdAt: string;
+}
+
+export interface GovernanceSession {
+  currentUser: WorkspaceMember;
+  workspace: GovernanceWorkspace;
+}
 
 export type SocialPlatform =
   | 'instagram'
@@ -39,7 +176,7 @@ export type PostFormat =
   | 'presentation'
   | 'script';
 
-export type PostStatus = 'draft' | 'pending_approval' | 'scheduled' | 'published';
+export type PostStatus = 'draft' | 'in_review' | 'pending_approval' | 'approved' | 'changes_requested' | 'rejected' | 'scheduled' | 'published';
 
 export interface BrandProfile {
   name: string;
@@ -49,6 +186,86 @@ export interface BrandProfile {
   keywords: string[];
   doAndDonts: string;
   primaryColor: string;
+}
+
+export interface BrandBrain {
+  workspaceId: string;
+  revision: number;
+  updatedAt: string;
+  company: string;
+  products: string;
+  services: string;
+  visualIdentity: string;
+  toneOfVoice: string;
+  audience: string;
+  personas: string;
+  objectives: string;
+  differentiators: string;
+  competitors: string;
+  objections: string;
+  pains: string;
+  desires: string;
+  faq: string;
+  requiredWords: string;
+  forbiddenWords: string;
+  history: string;
+  sourceLinks: string[];
+  sourceFiles: BrainSource[];
+}
+
+export interface BrainSource {
+  id: string;
+  name: string;
+  type: 'document' | 'image' | 'video' | 'logo' | 'link' | 'social';
+  url?: string;
+  addedAt: string;
+}
+
+export type StrategyStatus = 'draft' | 'planned' | 'active' | 'completed';
+
+export interface StrategyCampaign {
+  id: string;
+  workspaceId: string;
+  name: string;
+  objective: string;
+  startDate: string;
+  endDate: string;
+  budget: string;
+  kpis: string[];
+  products: string;
+  audience: string;
+  offer: string;
+  channels: SocialPlatform[];
+  importantDates: string;
+  funnel: string;
+  ctas: string[];
+  executionPlan: string[];
+  status: StrategyStatus;
+  brainRevision: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface LibraryAsset {
+  id: string;
+  workspaceId: string;
+  title: string;
+  type: 'content' | 'upload' | 'campaign' | 'version' | 'prompt' | 'image' | 'video' | 'template' | 'document';
+  tags: string[];
+  campaignId?: string;
+  contentId?: string;
+  url?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ContentVersion {
+  id: string;
+  number: number;
+  label: string;
+  author: string;
+  createdAt: string;
+  copy?: string;
 }
 
 export interface Workspace {
@@ -97,6 +314,12 @@ export interface Post {
   createdAt: string;
   approvals?: ApprovalStatus[];
   aiScore?: number;
+  strategyId?: string;
+  campaignId?: string;
+  brainRevision?: number;
+  objective?: string;
+  origin?: 'manual' | 'brain' | 'strategy' | 'automation' | 'analytics';
+  versions?: ContentVersion[];
 }
 
 export interface AutomationNode {
@@ -114,16 +337,6 @@ export interface AutomationFlow {
   isActive: boolean;
   executionsCount: number;
   lastRun?: string;
-}
-
-export interface TeamMember {
-  id: string;
-  name: string;
-  email: string;
-  role: 'Owner' | 'Admin' | 'Creator' | 'Reviewer' | 'Client';
-  avatar: string;
-  status: 'active' | 'invited';
-  lastActive: string;
 }
 
 export interface ConnectedAccount {

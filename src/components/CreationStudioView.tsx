@@ -21,6 +21,7 @@ import {
   ChevronRight,
 } from 'lucide-react';
 import { PostFormat, SocialPlatform, Post, CarouselSlide } from '../types';
+import { useOperations } from '../context/OperationsContext';
 
 interface CreationStudioViewProps {
   onSavePost: (newPost: Partial<Post>) => void;
@@ -29,6 +30,7 @@ interface CreationStudioViewProps {
 export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
   onSavePost,
 }) => {
+  const { brain, activeCampaign } = useOperations();
   const [selectedFormat, setSelectedFormat] = React.useState<PostFormat>('carousel');
   const [selectedPlatform, setSelectedPlatform] = React.useState<SocialPlatform>('instagram');
   const [postTitle, setPostTitle] = React.useState('5 Pilares do Crescimento Digital');
@@ -91,6 +93,8 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
           topic: topicPrompt,
           tone,
           targetAudience,
+          brainContext: brain,
+          strategyContext: activeCampaign,
         }),
       });
 
@@ -378,7 +382,7 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
                     NX
                   </div>
                   <div>
-                    <div className="text-xs font-bold text-[#ededed]">Nexus AI Official</div>
+                    <div className="text-xs font-bold text-[#ededed]">Clicko AI Studios</div>
                     <div className="text-[10px] text-white/40">Patrocinado • Agora</div>
                   </div>
                 </div>
@@ -445,7 +449,7 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
                 </div>
 
                 <div className="text-[11px] text-neutral-300 leading-normal line-clamp-3 whitespace-pre-wrap">
-                  <strong className="text-[#ededed]">nexusai.official</strong> {copyText}
+                  <strong className="text-[#ededed]">clickostudio</strong> {copyText}
                 </div>
 
                 <div className="flex flex-wrap gap-1 text-[10px] text-indigo-400 font-medium pt-1">

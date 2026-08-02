@@ -1,6 +1,6 @@
 {
-  "name": "Nexus AI - Plataforma de Social Media",
-  "description": "Plataforma SaaS Enterprise de Inteligência Artificial para planejamento, criação, edição, automação, publicação e analytics de mídia social.",
+  "name": "Clicko AI Studios",
+  "description": "Plataforma inteligente para planejamento, criação, edição, automação, publicação e análise de conteúdo para mídias sociais.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

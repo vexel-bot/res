@@ -13,6 +13,7 @@ import {
   X,
 } from 'lucide-react';
 import { Post, SocialPlatform, PostStatus } from '../types';
+import { useOperations } from '../context/OperationsContext';
 
 interface EditorialCalendarViewProps {
   posts: Post[];
@@ -25,6 +26,7 @@ export const EditorialCalendarView: React.FC<EditorialCalendarViewProps> = ({
   onSelectPost,
   onNewPost,
 }) => {
+  const { activeCampaign } = useOperations();
   const [viewMode, setViewMode] = React.useState<'month' | 'week' | 'day'>('month');
   const [filterPlatform, setFilterPlatform] = React.useState<string>('all');
   const [selectedPostDetail, setSelectedPostDetail] = React.useState<Post | null>(null);
@@ -67,6 +69,8 @@ export const EditorialCalendarView: React.FC<EditorialCalendarViewProps> = ({
 
   return (
     <div className="p-6 space-y-6 max-w-7xl mx-auto">
+      {activeCampaign && <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-[#8bd132]/20 bg-[#8bd132]/[0.055] p-3"><div><span className="text-[8px] uppercase tracking-[0.16em] text-[#8bd132]">Estratégia ativa no calendário</span><p className="mt-1 text-[10px] font-medium text-white">{activeCampaign.name}</p></div><p className="max-w-xl text-[9px] text-[#9ca6ab]">{activeCampaign.objective}</p></div>}
+
       {/* Calendar Header Bar */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/5 pb-4">
         <div>
