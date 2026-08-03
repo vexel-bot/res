@@ -32,9 +32,9 @@ const initialBrain: BrandBrain = {
   workspaceId: activeWorkspace.id,
   revision: 3,
   updatedAt: '2026-08-02T12:30:00.000Z',
-  company: 'Clicko AI Studios é uma plataforma de operação de mídia com inteligência artificial para marcas e equipes de marketing.',
+  company: 'Clicko Studio é uma plataforma de operação de mídia com inteligência artificial para marcas e equipes de marketing.',
   products: 'Clicko Studio — planejamento, produção, aprovação, publicação e análise de mídia em um único fluxo.',
-  services: 'Estratégia de conteúdo, automação editorial, criação multimídia, governança e inteligência de performance.',
+  services: 'Estratégia de conteúdo, automação editorial, criação multimídia, governança e inteligência de desempenho.',
   visualIdentity: 'Visual premium e tecnológico. Preto, branco, cinzas e verde sutil. Alto contraste, composições limpas e sem efeitos excessivos.',
   toneOfVoice: activeWorkspace.brandProfile.tone,
   audience: activeWorkspace.brandProfile.targetAudience,
@@ -45,8 +45,8 @@ const initialBrain: BrandBrain = {
   objections: 'Tempo de implantação, consistência das respostas de IA, governança e clareza sobre retorno do investimento.',
   pains: 'Ferramentas fragmentadas, briefing incompleto, retrabalho, demora em aprovações e dificuldade de atribuição.',
   desires: 'Produzir mais com qualidade, manter a marca consistente e transformar dados em próximas ações.',
-  faq: 'Como o Brain é usado? Toda geração consulta a revisão ativa.\nComo funciona aprovação? Conteúdos mantêm comentários, histórico e versões.',
-  requiredWords: 'Clicko AI Studios; operação de mídia; inteligência estratégica',
+  faq: 'Como a Memória é usada? Toda geração consulta a revisão ativa.\nComo funciona a aprovação? Os conteúdos mantêm comentários, histórico e versões.',
+  requiredWords: 'Clicko Studio; operação de mídia; inteligência estratégica',
   forbiddenWords: 'promessas garantidas; linguagem sensacionalista; jargão sem explicação',
   history: 'Projeto iniciado como gerador de conteúdo e evoluído para sistema operacional de mídia com IA.',
   sourceLinks: ['https://clickostudio.com/'],
@@ -72,7 +72,7 @@ const initialCampaigns: StrategyCampaign[] = [{
 
 const initialAssets: LibraryAsset[] = [
   { id: 'asset-guide', workspaceId: activeWorkspace.id, title: 'Guia de tom de voz', type: 'document', tags: ['brain', 'marca'], createdAt: '2026-08-01T09:00:00.000Z', updatedAt: '2026-08-01T09:00:00.000Z' },
-  { id: 'asset-template', workspaceId: activeWorkspace.id, title: 'Template carrossel — Educação', type: 'template', tags: ['instagram', 'carrossel'], createdAt: '2026-08-01T11:00:00.000Z', updatedAt: '2026-08-01T11:00:00.000Z' },
+  { id: 'asset-template', workspaceId: activeWorkspace.id, title: 'Modelo de carrossel — Educação', type: 'template', tags: ['instagram', 'carrossel'], createdAt: '2026-08-01T11:00:00.000Z', updatedAt: '2026-08-01T11:00:00.000Z' },
 ];
 
 const defaultState: OperationsState = {
@@ -95,7 +95,13 @@ const OperationsContext = React.createContext<OperationsContextValue | null>(nul
 function loadState(): OperationsState {
   try {
     const stored = window.localStorage.getItem(storageKey);
-    return stored ? { ...defaultState, ...JSON.parse(stored) } : defaultState;
+    if (!stored) return defaultState;
+    const localized = stored
+      .replaceAll('Clicko AI Studios', 'Clicko Studio')
+      .replaceAll('IA Enterprise', 'IA corporativa')
+      .replaceAll('Workflow Unificado', 'Fluxo de trabalho unificado')
+      .replaceAll('Como o Brain é usado?', 'Como a Memória é usada?');
+    return { ...defaultState, ...JSON.parse(localized) };
   } catch {
     return defaultState;
   }

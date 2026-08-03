@@ -1,5 +1,5 @@
 {
-  "name": "Clicko AI Studios",
+  "name": "Clicko Studio",
   "description": "Plataforma inteligente para planejamento, criação, edição, automação, publicação e análise de conteúdo para mídias sociais.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]

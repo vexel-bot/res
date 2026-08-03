@@ -86,7 +86,7 @@ async function startServer() {
         });
       }
 
-      const systemInstruction = `Você é o consultor estratégico da plataforma Clicko AI Studios.
+      const systemInstruction = `Você é o consultor estratégico da plataforma Clicko Studio.
 Sua marca atual: ${brandProfile?.name || 'Marca Padrão'}.
 Tom de voz: ${brandProfile?.tone || 'Profissional, moderno e direto'}.
 Público-alvo: ${brandProfile?.targetAudience || 'Empreendedores e profissionais digitais'}.
@@ -417,7 +417,7 @@ Gere uma explicação contextual inteligente (em português) focando em motivos 
   }
 
   app.listen(PORT, '0.0.0.0', () => {
-    console.log(`Clicko AI Studios Server running on http://0.0.0.0:${PORT}`);
+    console.log(`Clicko Studio Server running on http://0.0.0.0:${PORT}`);
   });
 }
 

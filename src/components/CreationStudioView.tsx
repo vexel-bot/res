@@ -31,7 +31,7 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
   onSavePost,
 }) => {
   const { brain, activeCampaign } = useOperations();
-  const [copyTool, setCopyTool] = React.useState('Posts');
+  const [copyTool, setCopyTool] = React.useState('Publicações');
   const [selectedFormat, setSelectedFormat] = React.useState<PostFormat>('carousel');
   const [selectedPlatform, setSelectedPlatform] = React.useState<SocialPlatform>('instagram');
   const [postTitle, setPostTitle] = React.useState('5 Pilares do Crescimento Digital');
@@ -51,7 +51,7 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
     {
       slideNumber: 1,
       headline: '5 Pilares do Crescimento Digital em 2026',
-      text: 'Como equipes de alta performance economizam tempo e multiplicam alcance.',
+      text: 'Como equipes de alto desempenho economizam tempo e multiplicam alcance.',
     },
     {
       slideNumber: 2,
@@ -73,13 +73,13 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
   const formatsList: { id: PostFormat; label: string; platformDefault: SocialPlatform }[] = [
     { id: 'carousel', label: 'Carrossel', platformDefault: 'instagram' },
     { id: 'reels', label: 'Reels / TikTok', platformDefault: 'instagram' },
-    { id: 'post', label: 'Post Estático', platformDefault: 'instagram' },
-    { id: 'story', label: 'Stories', platformDefault: 'instagram' },
+    { id: 'post', label: 'Publicação estática', platformDefault: 'instagram' },
+    { id: 'story', label: 'Histórias', platformDefault: 'instagram' },
     { id: 'linkedin-article', label: 'Artigo LinkedIn', platformDefault: 'linkedin' },
     { id: 'youtube-short', label: 'YouTube Shorts', platformDefault: 'youtube' },
-    { id: 'thread', label: 'Thread / X', platformDefault: 'x' },
-    { id: 'newsletter', label: 'Newsletter', platformDefault: 'linkedin' },
-    { id: 'vsl', label: 'Roteiro VSL / Ad', platformDefault: 'youtube' },
+    { id: 'thread', label: 'Sequência / X', platformDefault: 'x' },
+    { id: 'newsletter', label: 'Boletim informativo', platformDefault: 'linkedin' },
+    { id: 'vsl', label: 'Roteiro VSL / Anúncio', platformDefault: 'youtube' },
   ];
 
   const handleGenerateAICopy = async () => {
@@ -155,7 +155,7 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
             <PenTool className="w-5 h-5 text-indigo-400" /> Estúdio de Criação Universal
           </h2>
           <p className="text-xs text-white/40">
-            Crie conteúdos de alto impacto formatados para qualquer plataforma com auxílio do IA Copywriter
+            Crie conteúdos de alto impacto para qualquer plataforma com o auxílio da IA de redação
           </p>
         </div>
 
@@ -181,7 +181,7 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
         </div>
       </div>
 
-      <div className="rounded-xl border border-white/[0.06] bg-[#182126] p-3"><div className="mb-2 flex items-center justify-between"><span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-[#7f8a90]">Ferramentas de copy</span><span className="text-[8px] text-[#8bd132]">Biblioteca de prompts conectada</span></div><div className="flex gap-2 overflow-x-auto custom-scrollbar">{['Posts', 'Legendas', 'Copy de vendas', 'Email', 'Blog', 'Landing Page', 'SEO', 'CTA', 'Hashtags', 'Scripts', 'Tradução', 'Correção', 'Reescrita'].map((tool) => <button key={tool} onClick={() => { setCopyTool(tool); setTopicPrompt(`${tool}: ${topicPrompt.replace(/^[^:]+:\s*/, '')}`); }} className={`shrink-0 rounded-lg px-3 py-2 text-[8px] ${copyTool === tool ? 'bg-[#8bd132] font-bold text-[#14200e]' : 'border border-white/[0.06] bg-black/20 text-[#9ba5aa]'}`}>{tool}</button>)}</div></div>
+      <div className="rounded-xl border border-white/[0.06] bg-[#182126] p-3"><div className="mb-2 flex items-center justify-between"><span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-[#7f8a90]">Ferramentas de texto</span><span className="text-[8px] text-[#8bd132]">Biblioteca de comandos conectada</span></div><div className="flex gap-2 overflow-x-auto custom-scrollbar">{['Publicações', 'Legendas', 'Texto de vendas', 'E-mail', 'Artigo', 'Página de captura', 'SEO', 'Chamada para ação', 'Marcadores', 'Roteiros', 'Tradução', 'Correção', 'Reescrita'].map((tool) => <button key={tool} onClick={() => { setCopyTool(tool); setTopicPrompt(`${tool}: ${topicPrompt.replace(/^[^:]+:\s*/, '')}`); }} className={`shrink-0 rounded-lg px-3 py-2 text-[8px] ${copyTool === tool ? 'bg-[#8bd132] font-bold text-[#14200e]' : 'border border-white/[0.06] bg-black/20 text-[#9ba5aa]'}`}>{tool}</button>)}</div></div>
 
       {/* Format Tabs Bar */}
       <div className="flex items-center gap-2 overflow-x-auto pb-2 custom-scrollbar">
@@ -209,7 +209,7 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
         <div className="space-y-5 bg-[#0A0A0A] border border-white/5 p-5 rounded-2xl">
           <div className="flex items-center justify-between border-b border-white/5 pb-3">
             <span className="text-xs font-bold text-[#ededed] flex items-center gap-1.5">
-              <Sparkles className="w-4 h-4 text-indigo-400" /> AI Copywriter & Parâmetros
+              <Sparkles className="w-4 h-4 text-indigo-400" /> Redação com IA e parâmetros
             </span>
             <button
               onClick={handleGenerateAICopy}
@@ -280,7 +280,7 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
             </div>
 
             <div>
-              <label className="block text-neutral-300 font-semibold mb-1">Copywriting Gerado / Editável</label>
+              <label className="block text-neutral-300 font-semibold mb-1">Texto gerado e editável</label>
               <textarea
                 value={copyText}
                 onChange={(e) => setCopyText(e.target.value)}
@@ -345,7 +345,7 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
                         setSlides(updated);
                       }}
                       className="w-full bg-white/[0.03] border border-white/5 rounded-lg p-2 text-xs text-[#ededed] focus:outline-none"
-                      placeholder="Headline do slide"
+                      placeholder="Título do slide"
                     />
 
                     <textarea
@@ -372,7 +372,7 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
             <span className="text-xs font-bold text-[#ededed] flex items-center gap-1.5">
               <Eye className="w-4 h-4 text-emerald-400" /> Visualização em Tempo Real ({selectedPlatform})
             </span>
-            <span className="text-[10px] text-white/40">Mockup Fiel de Interface</span>
+            <span className="text-[10px] text-white/40">Simulação fiel da interface</span>
           </div>
 
           {/* Social Card Mockup */}
@@ -385,7 +385,7 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
                     NX
                   </div>
                   <div>
-                    <div className="text-xs font-bold text-[#ededed]">Clicko AI Studios</div>
+                    <div className="text-xs font-bold text-[#ededed]">Clicko Studio</div>
                     <div className="text-[10px] text-white/40">Patrocinado • Agora</div>
                   </div>
                 </div>
@@ -396,7 +396,7 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
               <div className="relative aspect-square bg-black flex items-center justify-center p-6 text-center border-b border-white/5 overflow-hidden">
                 <img
                   src={previewImageUrl}
-                  alt="Preview"
+                  alt="Prévia"
                   className="absolute inset-0 w-full h-full object-cover opacity-30"
                   referrerPolicy="no-referrer"
                 />

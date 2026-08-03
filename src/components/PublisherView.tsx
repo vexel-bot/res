@@ -12,6 +12,7 @@ import {
 import { ConnectedAccount } from '../types';
 import { CONNECTED_ACCOUNTS } from '../data/mockData';
 import { useOperations } from '../context/OperationsContext';
+import { postStatusLabel } from '../utils/localization';
 
 export const PublisherView: React.FC = () => {
   const { posts, campaigns } = useOperations();
@@ -44,8 +45,8 @@ export const PublisherView: React.FC = () => {
       </div>
 
       <div className="rounded-xl border border-white/[0.07] bg-[#182126] p-4">
-        <div className="flex items-center justify-between"><div><h3 className="text-[11px] font-semibold text-white">Fila rastreável de publicação</h3><p className="mt-1 text-[9px] text-[#7f8a90]">Cada conteúdo mantém vínculo com estratégia, campanha e revisão do Brain.</p></div><span className="rounded-full bg-[#8bd132]/10 px-2.5 py-1 text-[9px] text-[#8bd132]">{posts.filter((post) => ['scheduled', 'approved'].includes(post.status)).length} prontos</span></div>
-        <div className="mt-3 grid gap-2 md:grid-cols-3">{posts.filter((post) => ['scheduled', 'approved', 'published'].includes(post.status)).slice(0, 3).map((post) => <div key={post.id} className="rounded-lg border border-white/[0.05] bg-black/20 p-3"><div className="flex items-center justify-between gap-2"><span className="truncate text-[10px] font-medium text-white">{post.title}</span><span className="text-[7px] uppercase text-[#8bd132]">{post.status}</span></div><p className="mt-2 truncate text-[8px] text-[#78848a]">{campaigns.find((campaign) => campaign.id === post.campaignId)?.name || 'Conteúdo avulso'} · Brain rev. {post.brainRevision || '—'}</p></div>)}</div>
+        <div className="flex items-center justify-between"><div><h3 className="text-[11px] font-semibold text-white">Fila rastreável de publicação</h3><p className="mt-1 text-[9px] text-[#7f8a90]">Cada conteúdo mantém vínculo com estratégia, campanha e revisão da memória da marca.</p></div><span className="rounded-full bg-[#8bd132]/10 px-2.5 py-1 text-[9px] text-[#8bd132]">{posts.filter((post) => ['scheduled', 'approved'].includes(post.status)).length} prontos</span></div>
+        <div className="mt-3 grid gap-2 md:grid-cols-3">{posts.filter((post) => ['scheduled', 'approved', 'published'].includes(post.status)).slice(0, 3).map((post) => <div key={post.id} className="rounded-lg border border-white/[0.05] bg-black/20 p-3"><div className="flex items-center justify-between gap-2"><span className="truncate text-[10px] font-medium text-white">{post.title}</span><span className="text-[7px] uppercase text-[#8bd132]">{postStatusLabel[post.status]}</span></div><p className="mt-2 truncate text-[8px] text-[#78848a]">{campaigns.find((campaign) => campaign.id === post.campaignId)?.name || 'Conteúdo avulso'} · Memória rev. {post.brainRevision || '—'}</p></div>)}</div>
       </div>
 
       {/* Connected Channels Grid */}
@@ -104,7 +105,7 @@ export const PublisherView: React.FC = () => {
           </span>
           <h3 className="text-sm font-bold text-[#ededed]">Reciclar Automaticamente Conteúdos Virais Past</h3>
           <p className="text-xs text-neutral-300">
-            A IA detecta posts com engajamento acima de 8% e re-formata automaticamente para outros canais.
+            A IA detecta publicações com engajamento acima de 8% e reformata automaticamente para outros canais.
           </p>
         </div>
 

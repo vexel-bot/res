@@ -1,20 +1,20 @@
 import type { NavigationTab, UserRole, WorkspaceMember, WorkspaceModule } from '../types';
 
 export const workspaceModules: Array<{ id: WorkspaceModule; label: string; description: string }> = [
-  { id: 'dashboard', label: 'Dashboard', description: 'Resumo inteligente da operação' },
+  { id: 'dashboard', label: 'Painel', description: 'Resumo inteligente da operação' },
   { id: 'create-image', label: 'Criar Imagem', description: 'Geração e edição visual com IA' },
   { id: 'create-video', label: 'Criar Vídeo', description: 'Produção e exportação de vídeos' },
-  { id: 'create-copy', label: 'Criar Copy', description: 'Textos, roteiros, SEO e campanhas' },
+  { id: 'create-copy', label: 'Criar Texto', description: 'Textos, roteiros, SEO e campanhas' },
   { id: 'calendar', label: 'Calendário', description: 'Planejamento e agendamento editorial' },
-  { id: 'analytics', label: 'Analytics', description: 'Métricas, relatórios e recomendações' },
-  { id: 'ai-chat', label: 'AI Chat', description: 'Assistente com memória contextual' },
+  { id: 'analytics', label: 'Análises', description: 'Métricas, relatórios e recomendações' },
+  { id: 'ai-chat', label: 'Chat com IA', description: 'Assistente com memória contextual' },
   { id: 'automations', label: 'Automações', description: 'Fluxos, gatilhos e execuções' },
-  { id: 'templates', label: 'Templates', description: 'Biblioteca reutilizável da equipe' },
+  { id: 'templates', label: 'Modelos', description: 'Biblioteca reutilizável da equipe' },
   { id: 'connected-accounts', label: 'Contas Conectadas', description: 'Canais e integrações sociais' },
-  { id: 'workspace', label: 'Workspace', description: 'Empresas, clientes e projetos' },
-  { id: 'brain', label: 'Brain', description: 'Memória estratégica persistente' },
-  { id: 'strategy', label: 'Strategy', description: 'Campanhas e planos de comunicação' },
-  { id: 'studio', label: 'Studio', description: 'Produção multimídia integrada' },
+  { id: 'workspace', label: 'Ambiente de Trabalho', description: 'Empresas, clientes e projetos' },
+  { id: 'brain', label: 'Memória da Marca', description: 'Memória estratégica persistente' },
+  { id: 'strategy', label: 'Estratégia', description: 'Campanhas e planos de comunicação' },
+  { id: 'studio', label: 'Estúdio', description: 'Produção multimídia integrada' },
   { id: 'library', label: 'Biblioteca', description: 'Ativos, versões e materiais' },
 ];
 
@@ -42,5 +42,5 @@ export function canAccessNavigation(user: Pick<WorkspaceMember, 'role' | 'module
   return requiredModule ? user.modules.includes(requiredModule) : false;
 }
 
-export function roleLabel(role: UserRole) { return role === 'master' ? 'Master' : 'Colaborador'; }
+export function roleLabel(role: UserRole) { return role === 'master' ? 'Administrador' : 'Colaborador'; }
 export function isCriticalTab(tab: NavigationTab) { return masterOnlyTabs.has(tab); }

@@ -9,16 +9,16 @@ import {
 export const INITIAL_WORKSPACES: Workspace[] = [
   {
     id: 'ws-1',
-    name: 'Clicko AI Studios',
+    name: 'Clicko Studio',
     avatar: '/clicko-ai-studios-logo-stacked.png',
     plan: 'Enterprise',
     membersCount: 12,
     brandProfile: {
-      name: 'Clicko AI Studios',
+      name: 'Clicko Studio',
       industry: 'Tecnologia B2B / SaaS',
       tone: 'Sofisticado, Inovador, Direto ao ponto e Confiável',
       targetAudience: 'CTOs, Diretores de Inovação, Fundadores de Startups e Líderes de Produto',
-      keywords: ['SaaS', 'Inteligência Artificial', 'Automação Enterprise', 'Produtividade', 'Escalabilidade'],
+      keywords: ['SaaS', 'Inteligência Artificial', 'Automação corporativa', 'Produtividade', 'Escalabilidade'],
       doAndDonts: 'DO: Usar linguagem clara e focada em ROI. DONT: Usar gírias informais ou promessas exageradas.',
       primaryColor: '#6366F1',
     },
@@ -45,10 +45,10 @@ export const INITIAL_POSTS: Post[] = [
   {
     id: 'post-101',
     workspaceId: 'ws-1',
-    title: '5 Regras da IA Enterprise em 2026',
+    title: '5 Regras da IA corporativa em 2026',
     platform: 'instagram',
     format: 'carousel',
-    copy: 'A automação de processos não é mais um diferencial — é pré-requisito de sobrevivência no mercado. 🚀\n\nDeslize para ver os 5 pilares que estruturam times de alta performance este ano.\n\nQual desses pontos sua equipe já adotou?',
+    copy: 'A automação de processos não é mais um diferencial — é pré-requisito de sobrevivência no mercado. 🚀\n\nDeslize para ver os 5 pilares que estruturam equipes de alto desempenho este ano.\n\nQual desses pontos sua equipe já adotou?',
     hashtags: ['#SaaS', '#EnterpriseAI', '#Inovacao', '#Productivity'],
     imageUrl: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80',
     scheduledAt: '2026-07-31T18:30:00Z',
@@ -59,7 +59,7 @@ export const INITIAL_POSTS: Post[] = [
     slides: [
       {
         slideNumber: 1,
-        headline: '5 Regras da IA Enterprise em 2026',
+        headline: '5 Regras da IA corporativa em 2026',
         text: 'Como times de tecnologia usam automação para crescer 3x sem aumentar custos.',
       },
       {
@@ -83,7 +83,7 @@ export const INITIAL_POSTS: Post[] = [
         reviewerName: 'Marcus Thorne',
         reviewerRole: 'CMO',
         status: 'approved',
-        comment: 'Design e copy aprovados. Excelente alinhamento visual!',
+        comment: 'Design e texto aprovados. Excelente alinhamento visual!',
         timestamp: '2026-07-29T14:20:00Z',
       },
     ],
@@ -91,10 +91,10 @@ export const INITIAL_POSTS: Post[] = [
   {
     id: 'post-102',
     workspaceId: 'ws-1',
-    title: 'Por que centralizar seu workflow melhora a retenção',
+    title: 'Por que centralizar seu fluxo de trabalho melhora a retenção',
     platform: 'linkedin',
     format: 'post',
-    copy: 'O maior gargalo das equipes modernas não é a falta de ideias, mas o atrito na execução.\n\nQuando um criador precisa chavear entre 6 abas diferentes para agendar, editar vídeo, criar thumbnails e conferir métricas, perde-se até 35% de tempo útil.\n\nNo artigo de hoje, exploramos como a arquitetura de plataforma única transforma a cadência de lançamentos.',
+    copy: 'O maior gargalo das equipes modernas não é a falta de ideias, mas o atrito na execução.\n\nQuando um criador precisa chavear entre 6 abas diferentes para agendar, editar vídeo, criar miniaturas e conferir métricas, perde-se até 35% de tempo útil.\n\nNo artigo de hoje, exploramos como a arquitetura de plataforma única transforma a cadência de lançamentos.',
     hashtags: ['#Lideranca', '#Produtividade', '#SaaS', '#Gestão'],
     imageUrl: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80',
     scheduledAt: '2026-08-01T09:00:00Z',
@@ -109,7 +109,7 @@ export const INITIAL_POSTS: Post[] = [
     title: 'O erro que quebra a retenção nos primeiros 3 segundos',
     platform: 'tiktok',
     format: 'reels',
-    copy: 'Roteiro de Reels/TikTok:\n[0-3s HOOK]: Pare de postar vídeos sem essa legenda dinâmica!\n[3-12s CORPO]: Testamos 50 variações de Reels e a retenção subiu +42% quando aplicamos legendas estilo Raycast com destaques em neon.\n[12-20s CTA]: Comente "REELS" para receber a biblioteca completa!',
+    copy: 'Roteiro de Reels/TikTok:\n[0-3s GANCHO]: Pare de postar vídeos sem essa legenda dinâmica!\n[3-12s CORPO]: Testamos 50 variações de Reels e a retenção subiu +42% quando aplicamos legendas estilo Raycast com destaques em neon.\n[12-20s CTA]: Comente "REELS" para receber a biblioteca completa!',
     hashtags: ['#DicasDeSocialMedia', '#ReelsTips', '#ViralReels', '#ClickoStudio'],
     videoUrl: 'https://assets.mixkit.co/videos/preview/mixkit-working-late-at-a-computer-43409-large.mp4',
     scheduledAt: '2026-07-30T19:00:00Z',
@@ -130,7 +130,7 @@ export const INITIAL_POSTS: Post[] = [
   {
     id: 'post-104',
     workspaceId: 'ws-1',
-    title: 'Relatório Trimestral de Performance Digital',
+    title: 'Relatório trimestral de desempenho digital',
     platform: 'youtube',
     format: 'youtube-short',
     copy: 'Apresentamos os principais aprendizados da nossa última grande campanha de crescimento orgânico. Resultados que multiplicaram em 4x a autoridade de marca.',
@@ -151,13 +151,13 @@ export const INITIAL_POSTS: Post[] = [
 export const INITIAL_AUTOMATIONS: AutomationFlow[] = [
   {
     id: 'flow-1',
-    title: 'Pipeline Automático de Reels & Shorts',
+    title: 'Fluxo automático de Reels & Shorts',
     trigger: 'Novo Roteiro Aprovado',
     isActive: true,
     executionsCount: 38,
     lastRun: 'Hoje às 11:20',
     nodes: [
-      { id: 'n1', type: 'trigger', label: 'Roteiro de Vídeo Aprovado', details: 'Detecta novos posts no formato Reel/Short' },
+      { id: 'n1', type: 'trigger', label: 'Roteiro de Vídeo Aprovado', details: 'Detecta novas publicações no formato Reel/Short' },
       { id: 'n2', type: 'ai_generate', label: 'Gerar Legendas & Transcrição', details: 'Aplica IA para criação de legendas otimizadas' },
       { id: 'n3', type: 'image_studio', label: 'Gerar Thumbnail HD', details: 'Gera capa 9:16 com tipografia de alto contraste' },
       { id: 'n4', type: 'schedule', label: 'Agendar Melhor Horário IA', details: 'Calcula pico de audiência (ex: Terça 18:30)' },
@@ -167,12 +167,12 @@ export const INITIAL_AUTOMATIONS: AutomationFlow[] = [
   {
     id: 'flow-2',
     title: 'Reciclagem Inteligente de Conteúdo B2B',
-    trigger: 'Novo Post de Sucesso no LinkedIn (>500 interações)',
+    trigger: 'Nova publicação de sucesso no LinkedIn (>500 interações)',
     isActive: true,
     executionsCount: 14,
     lastRun: 'Ontem às 16:45',
     nodes: [
-      { id: 'n1', type: 'trigger', label: 'Post com Alta Performance', details: 'Filtra posts com engajamento acima da média' },
+      { id: 'n1', type: 'trigger', label: 'Publicação com alto desempenho', details: 'Filtra publicações com engajamento acima da média' },
       { id: 'n2', type: 'ai_generate', label: 'Transformar em Carrossel', details: 'IA resume o post em 5 slides visuais' },
       { id: 'n3', type: 'schedule', label: 'Agendar para Instagram', details: 'Enfileira para publicação 3 dias depois' },
     ],
@@ -192,7 +192,7 @@ export const CONNECTED_ACCOUNTS: ConnectedAccount[] = [
   {
     id: 'acc-2',
     platform: 'linkedin',
-    handle: 'Clicko AI Studios',
+    handle: 'Clicko Studio',
     connected: true,
     followers: '89.4K',
     bestTime: '09:00 - Qua / Sex',
@@ -210,7 +210,7 @@ export const CONNECTED_ACCOUNTS: ConnectedAccount[] = [
   {
     id: 'acc-4',
     platform: 'youtube',
-    handle: 'Clicko AI Studios',
+    handle: 'Clicko Studio',
     connected: true,
     followers: '45.2K',
     bestTime: '12:00 - Sábado',
@@ -255,8 +255,8 @@ export const AI_SUGGESTIONS: AIActionSuggestion[] = [
   },
   {
     id: 'sug-3',
-    title: 'Reciclar Post de Topo do LinkedIn',
-    description: 'O artigo sobre "Workflow Unificado" atingiu 1.2k likes. Converter em Carrossel para Instagram.',
+    title: 'Reciclar publicação de destaque do LinkedIn',
+    description: 'O artigo sobre "Fluxo de trabalho unificado" atingiu 1,2 mil curtidas. Converter em Carrossel para Instagram.',
     type: 'repurpose',
     badge: 'Conteúdo Viral',
     impact: 'Lançamento com 1-Clique',

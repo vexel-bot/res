@@ -50,7 +50,7 @@ export const AICentralView: React.FC<AICentralViewProps> = ({
   ]);
   const [isLoadingChat, setIsLoadingChat] = React.useState(false);
 
-  // Campaign Wizard state
+  // Assistente de campanha state
   const [wizardGoal, setWizardGoal] = React.useState('Lançamento de Novo Produto / Serviço');
   const [wizardTopic, setWizardTopic] = React.useState('Plataforma de IA com automação de mídias sociais');
   const [wizardTone, setWizardTone] = React.useState(activeWorkspace.brandProfile.tone);
@@ -154,7 +154,7 @@ export const AICentralView: React.FC<AICentralViewProps> = ({
       hashtags: p.hashtags || [],
       scheduledAt: new Date(Date.now() + (idx + 1) * 86400000).toISOString(),
       status: 'scheduled',
-      author: 'IA Central Assistant',
+      author: 'Assistente da IA Central',
       aiScore: 95,
       imageUrl: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80',
     }));
@@ -283,7 +283,7 @@ export const AICentralView: React.FC<AICentralViewProps> = ({
                 value={chatInput}
                 onChange={(e) => setChatInput(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSendChatMessage()}
-                placeholder="Ex: Crie um plano de 5 posts para lançamento do nosso novo SaaS..."
+                placeholder="Ex: Crie um plano de 5 publicações para lançamento do nosso novo SaaS..."
                 className="flex-1 bg-white/[0.03] border border-white/5 rounded-xl px-4 py-2.5 text-xs text-[#ededed] placeholder-white/30 focus:outline-none focus:border-indigo-500/50"
               />
               <button
@@ -301,7 +301,7 @@ export const AICentralView: React.FC<AICentralViewProps> = ({
           <div className="rounded-2xl bg-[#0A0A0A] border border-white/5 p-4 space-y-4 flex flex-col justify-between">
             <div>
               <h3 className="text-xs font-bold text-[#ededed] mb-1 flex items-center gap-2">
-                <Zap className="w-4 h-4 text-amber-400" /> Prompts Rápidos
+                <Zap className="w-4 h-4 text-amber-400" /> Comandos rápidos
               </h3>
               <p className="text-[11px] text-white/40 mb-3">Clique para disparar ações diretas com a IA Central</p>
 
@@ -330,7 +330,7 @@ export const AICentralView: React.FC<AICentralViewProps> = ({
 
             <div className="p-3 rounded-xl bg-indigo-600/10 border border-indigo-500/20 text-[11px] text-neutral-300">
               <div className="font-semibold text-indigo-300 mb-1">Dica de Produtividade</div>
-              A IA Central pode gerar copies, prompts de imagem, hashtags e datas num único comando!
+              A IA Central pode gerar textos, comandos de imagem, hashtags e datas num único comando!
             </div>
           </div>
         </div>
@@ -344,7 +344,7 @@ export const AICentralView: React.FC<AICentralViewProps> = ({
               <div>
                 <h3 className="text-sm font-bold text-[#ededed]">Gerador de Campanhas Multicanal Inteligente</h3>
                 <p className="text-xs text-white/40 mt-0.5">
-                  Preencha o objetivo e a IA gerará automaticamente os posts, cópias, imagens e agenda em poucas frações de segundo.
+                  Preencha o objetivo e a IA gerará automaticamente as publicações, os textos, imagens e agenda em poucas frações de segundo.
                 </p>
               </div>
               <button
@@ -378,7 +378,7 @@ export const AICentralView: React.FC<AICentralViewProps> = ({
                   value={wizardTopic}
                   onChange={(e) => setWizardTopic(e.target.value)}
                   className="w-full bg-white/[0.03] border border-white/5 rounded-xl px-3.5 py-2.5 text-xs text-[#ededed] focus:outline-none focus:border-indigo-500/50"
-                  placeholder="Ex: Novo módulo de analytics com IA"
+                  placeholder="Ex: Novo módulo de análises com IA"
                 />
               </div>
             </div>
@@ -486,7 +486,7 @@ export const AICentralView: React.FC<AICentralViewProps> = ({
                     </div>
 
                     <div className="pt-2 border-t border-white/5 text-[10px] text-white/30 italic">
-                      Prompt de Imagem: {p.imagePrompt}
+                      Comando de imagem: {p.imagePrompt}
                     </div>
                   </div>
                 ))}
@@ -496,7 +496,7 @@ export const AICentralView: React.FC<AICentralViewProps> = ({
         </div>
       )}
 
-      {/* Sub-Tab 3: Brand Knowledge Settings */}
+      {/* Sub-Tab 3: Conhecimento da marca Settings */}
       {activeSubTab === 'brand-knowledge' && (
         <div className="p-6 rounded-2xl bg-[#0A0A0A] border border-white/5 space-y-6">
           <div className="border-b border-white/5 pb-4">

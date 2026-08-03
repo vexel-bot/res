@@ -20,19 +20,19 @@ interface SidebarProps {
 type NavItem = { label: string; id: NavigationTab; icon: React.ComponentType<{ className?: string }> };
 
 const primaryItems: NavItem[] = [
-  { label: 'Dashboard', id: 'dashboard', icon: LayoutDashboard },
+  { label: 'Painel', id: 'dashboard', icon: LayoutDashboard },
   { label: 'Criar Imagem', id: 'create-image', icon: Image },
   { label: 'Criar Vídeo', id: 'create-video', icon: Video },
-  { label: 'Criar Copy', id: 'create-copy', icon: PenLine },
+  { label: 'Criar Texto', id: 'create-copy', icon: PenLine },
   { label: 'Calendário', id: 'calendar', icon: CalendarDays },
   { label: 'Aprovações', id: 'approvals', icon: CheckCircle2 },
-  { label: 'Analytics', id: 'analytics', icon: ChartNoAxesCombined },
-  { label: 'AI Chat', id: 'ai-chat', icon: Bot },
+  { label: 'Análises', id: 'analytics', icon: ChartNoAxesCombined },
+  { label: 'Chat com IA', id: 'ai-chat', icon: Bot },
   { label: 'Automações', id: 'automations', icon: Workflow },
-  { label: 'Templates', id: 'templates', icon: LayoutTemplate },
+  { label: 'Modelos', id: 'templates', icon: LayoutTemplate },
   { label: 'Contas Conectadas', id: 'connected-accounts', icon: Link2 },
   { label: 'Equipe', id: 'team', icon: Users },
-  { label: 'Logs', id: 'audit-logs', icon: ScrollText },
+  { label: 'Registros', id: 'audit-logs', icon: ScrollText },
 ];
 
 const secondaryItems: NavItem[] = [
@@ -59,7 +59,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onSelectTab, isCom
 
   return <aside className={`fixed inset-y-0 left-0 z-40 flex flex-col border-r border-white/[0.075] bg-[#0B0B0B] transition-[width] duration-200 max-[900px]:w-[76px] ${isCompact ? 'w-[76px]' : 'w-[188px] 2xl:w-[226px]'}`}>
     <div className={`flex h-[82px] shrink-0 items-center bg-black max-[900px]:justify-center max-[900px]:px-3 ${isCompact ? 'justify-center px-3' : 'px-5 2xl:px-7'}`}>
-      <button type="button" onClick={() => onSelectTab('dashboard')} className="clicko-brand-link flex items-center rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#8bd132]" aria-label="Voltar ao Dashboard" title="Voltar ao Dashboard">
+      <button type="button" onClick={() => onSelectTab('dashboard')} className="clicko-brand-link flex items-center rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#8bd132]" aria-label="Voltar ao Painel" title="Voltar ao Painel">
         <ClickoLogo appearance="seamless" variant="icon" className={`clicko-logo-collapsed-size shrink-0 ${isCompact ? 'clicko-logo-force-visible' : 'clicko-logo-compact-responsive'}`} />
         {!isCompact && <ClickoLogo appearance="seamless" className="clicko-logo-full-responsive h-[64px] w-[128px] 2xl:h-[70px] 2xl:w-[140px]" />}
       </button>
@@ -72,15 +72,15 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onSelectTab, isCom
     </nav>
 
     {!isCompact && currentUser?.role === 'master' && <div className="m-3.5 mt-2 rounded-[11px] border border-white/[0.055] bg-[#1b2328] p-3.5 max-[900px]:hidden">
-      <div className="text-[11px] font-semibold text-white">Plano {workspace?.planId ? workspace.planId.charAt(0).toUpperCase() + workspace.planId.slice(1) : '—'}</div>
+      <div className="text-[11px] font-semibold text-white">Plano {workspace?.planId ? ({ solo: 'Solo', team: 'Equipe', business: 'Negócios', enterprise: 'Corporativo' }[workspace.planId]) : '—'}</div>
       <div className="mt-2 flex items-center justify-between text-[8px] text-[#c1c7ca]"><span>Assentos usados</span><span>{occupiedSeats} / {workspace?.maxUsers ?? '∞'}</span></div>
       <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-[#30393e]"><div className="h-full rounded-full bg-[#8bd132]" style={{ width: workspace?.maxUsers ? `${Math.min(100, occupiedSeats / workspace.maxUsers * 100)}%` : '32%' }} /></div>
-      <button onClick={() => onSelectTab('subscription')} className="mt-3 w-full rounded-md bg-[#8bd132] py-2 text-[9px] font-bold text-[#14200e] transition hover:bg-[#9be24d]">Fazer upgrade</button>
+      <button onClick={() => onSelectTab('subscription')} className="mt-3 w-full rounded-md bg-[#8bd132] py-2 text-[9px] font-bold text-[#14200e] transition hover:bg-[#9be24d]">Mudar para plano superior</button>
     </div>}
 
     <button type="button" onClick={onToggleCompact} className="flex h-9 shrink-0 items-center justify-center text-[#69747a] transition-colors hover:text-[#8bd132]" aria-label={isCompact ? 'Expandir barra lateral' : 'Recolher barra lateral'}><ChevronLeft className={`h-[18px] w-[18px] transition-transform duration-200 ${isCompact ? 'rotate-180' : ''}`} /></button>
     <footer className={`vexel-powered-divider relative shrink-0 border-t ${isCompact ? 'px-3 py-3.5' : 'px-4 py-[16px]'}`}>
-      {isCompact ? <div className="group relative flex justify-center"><a href="https://vexelbr.com/" target="_blank" rel="noopener noreferrer" title="Powered by VEXEL" className="vexel-powered-signature vexel-powered-mark grid h-8 w-8 place-items-center rounded-lg border" aria-label="Powered by VEXEL"><Box className="h-[17px] w-[17px]" strokeWidth={1.6} /></a><div role="tooltip" className="vexel-powered-tooltip pointer-events-none absolute bottom-0 left-full z-50 ml-3 whitespace-nowrap rounded-md border px-3 py-2 text-[9px] font-medium uppercase tracking-[0.22em] opacity-0 transition-opacity group-hover:opacity-100">Powered by VEXEL</div></div> : <a href="https://vexelbr.com/" target="_blank" rel="noopener noreferrer" title="Powered by VEXEL" className="vexel-powered-signature block text-center text-[8px] font-medium uppercase tracking-[0.3em]"><span>Powered by VEXEL</span></a>}
+      {isCompact ? <div className="group relative flex justify-center"><a href="https://vexelbr.com/" target="_blank" rel="noopener noreferrer" title="Desenvolvido pela VEXEL" className="vexel-powered-signature vexel-powered-mark grid h-8 w-8 place-items-center rounded-lg border" aria-label="Desenvolvido pela VEXEL"><Box className="h-[17px] w-[17px]" strokeWidth={1.6} /></a><div role="tooltip" className="vexel-powered-tooltip pointer-events-none absolute bottom-0 left-full z-50 ml-3 whitespace-nowrap rounded-md border px-3 py-2 text-[9px] font-medium uppercase tracking-[0.22em] opacity-0 transition-opacity group-hover:opacity-100">Desenvolvido pela VEXEL</div></div> : <a href="https://vexelbr.com/" target="_blank" rel="noopener noreferrer" title="Desenvolvido pela VEXEL" className="vexel-powered-signature block text-center text-[8px] font-medium uppercase tracking-[0.3em]"><span>Desenvolvido pela VEXEL</span></a>}
     </footer>
   </aside>;
 };

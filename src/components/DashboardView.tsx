@@ -49,23 +49,23 @@ type CalendarItem = {
 
 const calendarItems: CalendarItem[] = [
   { day: 1, row: 1, title: 'Carrossel', subtitle: 'Saúde', time: '10:00', accent: '#c7a13c', image: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?auto=format&fit=crop&w=120&q=80' },
-  { day: 1, row: 3, title: 'Stories', subtitle: 'Dicas', time: '16:00', accent: '#3d91a6', image: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=120&q=80' },
+  { day: 1, row: 3, title: 'Histórias', subtitle: 'Dicas', time: '16:00', accent: '#3d91a6', image: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=120&q=80' },
   { day: 1, row: 5, title: 'Reels', subtitle: 'Depoimento', time: '20:00', accent: '#8a5bc1', image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=120&q=80' },
-  { day: 2, row: 1, title: 'Post feed', subtitle: 'Promoção', time: '10:00', accent: '#a9515a', image: 'https://images.unsplash.com/photo-1549068106-b024baf5062d?auto=format&fit=crop&w=120&q=80' },
+  { day: 2, row: 1, title: 'Publicação', subtitle: 'Promoção', time: '10:00', accent: '#a9515a', image: 'https://images.unsplash.com/photo-1549068106-b024baf5062d?auto=format&fit=crop&w=120&q=80' },
   { day: 2, row: 2, title: 'Reels', subtitle: 'Procedimentos', time: '14:00', accent: '#a9515a', image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=120&q=80' },
-  { day: 2, row: 5, title: 'Stories', subtitle: 'Bastidores', time: '20:00', accent: '#5b87b6', image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=120&q=80' },
+  { day: 2, row: 5, title: 'Histórias', subtitle: 'Bastidores', time: '20:00', accent: '#5b87b6', image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=120&q=80' },
   { day: 3, row: 1, title: 'Reels', subtitle: 'Resultados', time: '10:00', accent: '#754fb2', image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80' },
-  { day: 3, row: 3, title: 'Post feed', subtitle: 'Educação', time: '16:00', accent: '#897048', image: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=120&q=80' },
+  { day: 3, row: 3, title: 'Publicação', subtitle: 'Educação', time: '16:00', accent: '#897048', image: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=120&q=80' },
   { day: 4, row: 1, title: 'Carrossel', subtitle: 'Mitos e Verdades', time: '10:00', accent: '#a48e39', image: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=120&q=80' },
   { day: 4, row: 2, title: 'Carrossel', subtitle: 'Dicas rápidas', time: '14:00', accent: '#a48e39', image: 'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=120&q=80' },
-  { day: 4, row: 5, title: 'Stories', subtitle: 'Perguntas', time: '20:00', accent: '#69ad31', image: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=120&q=80' },
-  { day: 5, row: 1, title: 'Post feed', subtitle: 'Benefícios', time: '10:00', accent: '#8054b0', image: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=120&q=80' },
+  { day: 4, row: 5, title: 'Histórias', subtitle: 'Perguntas', time: '20:00', accent: '#69ad31', image: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=120&q=80' },
+  { day: 5, row: 1, title: 'Publicação', subtitle: 'Benefícios', time: '10:00', accent: '#8054b0', image: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=120&q=80' },
   { day: 5, row: 3, title: 'Reels', subtitle: 'Antes e Depois', time: '16:00', accent: '#9b5555', image: 'https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?auto=format&fit=crop&w=120&q=80' },
   { day: 6, row: 1, title: 'Carrossel', subtitle: 'Cuidados', time: '10:00', accent: '#4e9aad', image: 'https://images.unsplash.com/photo-1538108149393-fbbd81895907?auto=format&fit=crop&w=120&q=80' },
-  { day: 6, row: 2, title: 'Stories', subtitle: 'Depoimento', time: '14:00', accent: '#9b5555', image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80' },
+  { day: 6, row: 2, title: 'Histórias', subtitle: 'Depoimento', time: '14:00', accent: '#9b5555', image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80' },
   { day: 6, row: 5, title: 'Reels', subtitle: 'FAQ', time: '20:00', accent: '#9b5555', image: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=120&q=80' },
-  { day: 7, row: 1, title: 'Post feed', subtitle: 'Lifestyle', time: '10:00', accent: '#8150a5', image: 'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=120&q=80' },
-  { day: 7, row: 3, title: 'Stories', subtitle: 'Dica do dia', time: '16:00', accent: '#9b742d', image: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=120&q=80' },
+  { day: 7, row: 1, title: 'Publicação', subtitle: 'Estilo de vida', time: '10:00', accent: '#8150a5', image: 'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=120&q=80' },
+  { day: 7, row: 3, title: 'Histórias', subtitle: 'Dica do dia', time: '16:00', accent: '#9b742d', image: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=120&q=80' },
 ];
 
 const days = [
@@ -79,14 +79,14 @@ const days = [
 ];
 
 const metricCards = [
-  { label: 'Conteúdos gerados', value: '128', change: '+24%', detail: 'vs semana anterior', icon: FileText, tone: 'green' },
-  { label: 'Publicações agendadas', value: '32', change: '+18%', detail: 'vs semana anterior', icon: CalendarDays, tone: 'green' },
+  { label: 'Conteúdos gerados', value: '128', change: '+24%', detail: ' em relação à semana anterior', icon: FileText, tone: 'green' },
+  { label: 'Publicações agendadas', value: '32', change: '+18%', detail: ' em relação à semana anterior', icon: CalendarDays, tone: 'green' },
   { label: 'Aprovações pendentes', value: '5', change: '', detail: '3 precisam de revisão', icon: Clock3, tone: 'amber' },
-  { label: 'Engajamento (médio)', value: '4,82%', change: '+11%', detail: 'vs semana anterior', icon: ChartNoAxesCombined, tone: 'purple' },
+  { label: 'Engajamento (médio)', value: '4,82%', change: '+11%', detail: ' em relação à semana anterior', icon: ChartNoAxesCombined, tone: 'purple' },
 ];
 
 const quickFlow = [
-  { label: '1. Briefing', text: 'Defina o objetivo\nda semana', icon: ClipboardList },
+  { label: '1. Direcionamento', text: 'Defina o objetivo\nda semana', icon: ClipboardList },
   { label: '2. Estratégia', text: 'IA cria o plano\nde conteúdo', icon: CheckCircle2 },
   { label: '3. Geração', text: 'Conteúdos criados\nem lote', icon: Box },
   { label: '4. Edição', text: 'Edite e personalize\nse necessário', icon: Pencil },
@@ -98,7 +98,7 @@ const quickFlow = [
 const approvals = [
   { title: 'Carrossel - Mitos e Verdades', time: '09:30', image: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=100&q=80' },
   { title: 'Reels - Depoimento', time: '09:15', image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=100&q=80' },
-  { title: 'Post feed - Promoção', time: '08:50', image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=100&q=80' },
+  { title: 'Publicação - Promoção', time: '08:50', image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=100&q=80' },
 ];
 
 const MiniSparkline = ({ tone }: { tone: string }) => (
@@ -115,7 +115,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ onNewPost, onNavig
         <section className="min-w-0 space-y-4">
           <div className="pt-1">
             <h1 className="text-[21px] font-semibold tracking-[-0.03em] text-white">Olá, Pedro! <span className="text-[17px]">👋</span></h1>
-            <div className="mt-1 flex flex-wrap items-center gap-2 text-[10px] text-[#a2aaaf]"><span>Aqui está o resumo da sua operação hoje.</span><span className="rounded-full bg-[#8bd132]/10 px-2 py-1 text-[8px] text-[#8bd132]">Brain {brainCompleteness}%</span>{activeCampaign && <button onClick={() => onNavigate('strategy')} className="rounded-full bg-white/[0.045] px-2 py-1 text-[8px] text-[#b9c0c3]">{activeCampaign.name}</button>}<button onClick={() => onNavigate('library')} className="rounded-full bg-white/[0.045] px-2 py-1 text-[8px] text-[#b9c0c3]">{assets.length + posts.length} ativos</button></div>
+            <div className="mt-1 flex flex-wrap items-center gap-2 text-[10px] text-[#a2aaaf]"><span>Aqui está o resumo da sua operação hoje.</span><span className="rounded-full bg-[#8bd132]/10 px-2 py-1 text-[8px] text-[#8bd132]">Memória {brainCompleteness}%</span>{activeCampaign && <button onClick={() => onNavigate('strategy')} className="rounded-full bg-white/[0.045] px-2 py-1 text-[8px] text-[#b9c0c3]">{activeCampaign.name}</button>}<button onClick={() => onNavigate('library')} className="rounded-full bg-white/[0.045] px-2 py-1 text-[8px] text-[#b9c0c3]">{assets.length + posts.length} ativos</button></div>
           </div>
 
           <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">

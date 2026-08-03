@@ -1,4 +1,4 @@
-# Clicko AI Studios — identidade visual oficial
+# Clicko Studio — identidade visual oficial
 
 ## Arquivo mestre
 

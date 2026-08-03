@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { Post, SocialPlatform, PostStatus } from '../types';
 import { useOperations } from '../context/OperationsContext';
+import { postStatusLabel } from '../utils/localization';
 
 interface EditorialCalendarViewProps {
   posts: Post[];
@@ -85,9 +86,9 @@ export const EditorialCalendarView: React.FC<EditorialCalendarViewProps> = ({
         </div>
 
         <div className="flex flex-wrap items-center gap-3">
-          <select className="rounded-xl border border-white/5 bg-white/[0.03] px-3 py-2 text-[10px] text-[#ededed] outline-none"><option>Todos os clientes</option><option>Clicko AI Studios</option></select>
+          <select className="rounded-xl border border-white/5 bg-white/[0.03] px-3 py-2 text-[10px] text-[#ededed] outline-none"><option>Todos os clientes</option><option>Clicko Studio</option></select>
           <select className="rounded-xl border border-white/5 bg-white/[0.03] px-3 py-2 text-[10px] text-[#ededed] outline-none"><option>Todos os projetos</option><option>Lançamento Q3</option></select>
-          <select className="rounded-xl border border-white/5 bg-white/[0.03] px-3 py-2 text-[10px] text-[#ededed] outline-none"><option>Todas as contas</option><option>@clickostudio</option><option>Clicko AI Studios · LinkedIn</option></select>
+          <select className="rounded-xl border border-white/5 bg-white/[0.03] px-3 py-2 text-[10px] text-[#ededed] outline-none"><option>Todas as contas</option><option>@clickostudio</option><option>Clicko Studio · LinkedIn</option></select>
           {/* Filter by Platform */}
           <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/[0.03] border border-white/5 text-xs text-neutral-300">
             <Filter className="w-3.5 h-3.5 text-indigo-400" />
@@ -136,7 +137,7 @@ export const EditorialCalendarView: React.FC<EditorialCalendarViewProps> = ({
             onClick={onNewPost}
             className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs flex items-center gap-1.5 shadow-lg shadow-indigo-600/20"
           >
-            <Plus className="w-4 h-4" /> Agendar Post
+            <Plus className="w-4 h-4" /> Agendar publicação
           </button>
         </div>
       </div>
@@ -262,7 +263,7 @@ export const EditorialCalendarView: React.FC<EditorialCalendarViewProps> = ({
             </p>
 
             <div className="flex items-center justify-between text-xs text-white/40 pt-2 border-t border-white/5">
-              <div>Status: <strong className="text-[#ededed] capitalize">{selectedPostDetail.status}</strong></div>
+              <div>Situação: <strong className="text-[#ededed]">{postStatusLabel[selectedPostDetail.status]}</strong></div>
               <div>Autor: <strong className="text-[#ededed]">{selectedPostDetail.author}</strong></div>
             </div>
 

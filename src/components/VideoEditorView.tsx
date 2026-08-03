@@ -171,7 +171,7 @@ export const VideoEditorView: React.FC = () => {
       <div className="p-5 rounded-2xl bg-[#0A0A0A] border border-white/5 space-y-3">
         <div className="flex items-center justify-between text-xs text-white/40 border-b border-white/5 pb-2">
           <div className="flex items-center gap-2">
-            <Film className="w-4 h-4 text-indigo-400" /> Timeline Multi-Track
+            <Film className="w-4 h-4 text-indigo-400" /> Linha do tempo com várias faixas
           </div>
           <span className="font-mono text-indigo-300">{currentTime}</span>
         </div>
@@ -180,7 +180,7 @@ export const VideoEditorView: React.FC = () => {
         <div className="space-y-2 text-[11px]">
           {/* Video Track */}
           <div className="flex items-center gap-3">
-            <span className="w-20 text-white/40 font-semibold shrink-0">Vídeo/Clips</span>
+            <span className="w-20 text-white/40 font-semibold shrink-0">Vídeo/Trechos</span>
             <div className="flex-1 h-9 rounded-xl bg-indigo-600/30 border border-indigo-500/40 p-1 flex items-center gap-1 overflow-hidden">
               <div className="h-full bg-indigo-500/50 rounded px-2 flex items-center text-white font-bold text-[10px]">
                 Clip_01.mp4 (12s)
@@ -213,7 +213,7 @@ export const VideoEditorView: React.FC = () => {
         </div>
       </div>
 
-      <div className="grid gap-3 md:grid-cols-3">{[[LayoutTemplate, 'Templates de vídeo', 'Shorts, Reels, anúncios e apresentações'], [History, 'Histórico', '12 projetos e 28 exportações recentes'], [Music, 'Biblioteca de áudio', 'Músicas e trilhas licenciadas']].map(([Icon, title, description]) => { const ItemIcon = Icon as React.ComponentType<{ className?: string }>; return <button key={String(title)} className="rounded-xl border border-white/[0.06] bg-[#182126] p-4 text-left hover:border-[#8bd132]/25"><ItemIcon className="h-4 w-4 text-[#8bd132]" /><h3 className="mt-3 text-[10px] font-semibold text-white">{String(title)}</h3><p className="mt-1 text-[8px] text-[#78848a]">{String(description)}</p></button>; })}</div>
+      <div className="grid gap-3 md:grid-cols-3">{[[LayoutTemplate, 'Modelos de vídeo', 'Vídeos curtos, Reels, anúncios e apresentações'], [History, 'Histórico', '12 projetos e 28 exportações recentes'], [Music, 'Biblioteca de áudio', 'Músicas e trilhas licenciadas']].map(([Icon, title, description]) => { const ItemIcon = Icon as React.ComponentType<{ className?: string }>; return <button key={String(title)} className="rounded-xl border border-white/[0.06] bg-[#182126] p-4 text-left hover:border-[#8bd132]/25"><ItemIcon className="h-4 w-4 text-[#8bd132]" /><h3 className="mt-3 text-[10px] font-semibold text-white">{String(title)}</h3><p className="mt-1 text-[8px] text-[#78848a]">{String(description)}</p></button>; })}</div>
     </div>
   );
 };

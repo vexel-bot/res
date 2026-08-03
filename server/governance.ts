@@ -19,15 +19,15 @@ const moduleIds: WorkspaceModule[] = [
 ];
 
 const plans: SaaSPlan[] = [
-  { id: 'solo', name: 'Solo', maxUsers: 1, monthlyPrice: 79, description: 'Para operações individuais.', features: ['1 usuário Master', 'Criação com IA', 'Calendário editorial'] },
-  { id: 'team', name: 'Team', maxUsers: 6, monthlyPrice: 249, description: 'Para equipes enxutas e colaborativas.', features: ['1 Master + 5 colaboradores', 'Fluxo de aprovação', 'Automações'] },
-  { id: 'business', name: 'Business', maxUsers: 16, monthlyPrice: 599, description: 'Para operações de conteúdo em escala.', features: ['1 Master + 15 colaboradores', 'Analytics avançado', 'Auditoria completa'] },
-  { id: 'enterprise', name: 'Enterprise', maxUsers: null, monthlyPrice: null, description: 'Capacidade, suporte e governança personalizados.', features: ['Usuários personalizados', 'SLA dedicado', 'Governança avançada'] },
+  { id: 'solo', name: 'Solo', maxUsers: 1, monthlyPrice: 79, description: 'Para operações individuais.', features: ['1 usuário administrador', 'Criação com IA', 'Calendário editorial'] },
+  { id: 'team', name: 'Equipe', maxUsers: 6, monthlyPrice: 249, description: 'Para equipes enxutas e colaborativas.', features: ['1 administrador + 5 colaboradores', 'Fluxo de aprovação', 'Automações'] },
+  { id: 'business', name: 'Negócios', maxUsers: 16, monthlyPrice: 599, description: 'Para operações de conteúdo em escala.', features: ['1 administrador + 15 colaboradores', 'Análises avançadas', 'Auditoria completa'] },
+  { id: 'enterprise', name: 'Corporativo', maxUsers: null, monthlyPrice: null, description: 'Capacidade, suporte e governança personalizados.', features: ['Usuários personalizados', 'SLA dedicado', 'Governança avançada'] },
 ];
 
 const workspaces: GovernanceWorkspace[] = [{
   id: 'ws-1',
-  name: 'Clicko AI Studios',
+  name: 'Clicko Studio',
   logo: '/clicko-ai-studios-logo-stacked.png',
   planId: 'team',
   maxUsers: 6,
@@ -66,7 +66,7 @@ const approvals: ContentApprovalItem[] = [{
   comments: [{ id: 'comment-1', authorId: 'usr-master', authorName: 'Pedro Henrique', message: 'O gancho pode ficar mais direto sem perder o tom da marca?', createdAt: '2026-08-02T12:15:00.000Z' }],
   history: [
     { id: 'history-1', actorId: 'usr-lucas', actorName: 'Lucas Silva', action: 'created', detail: 'Conteúdo criado como rascunho', createdAt: '2026-08-02T11:00:00.000Z' },
-    { id: 'history-2', actorId: 'usr-lucas', actorName: 'Lucas Silva', action: 'submitted', detail: 'Enviado para aprovação do Master', createdAt: '2026-08-02T11:42:00.000Z' },
+    { id: 'history-2', actorId: 'usr-lucas', actorName: 'Lucas Silva', action: 'submitted', detail: 'Enviado para aprovação do administrador', createdAt: '2026-08-02T11:42:00.000Z' },
   ],
 }, {
   id: 'approval-105', workspaceId: 'ws-1', contentId: 'post-105', title: 'Checklist de campanha para lançamentos B2B',
@@ -79,7 +79,7 @@ const approvals: ContentApprovalItem[] = [{
 }];
 
 const auditLogs: AuditLogEntry[] = [
-  { id: 'audit-1', workspaceId: 'ws-1', actorId: 'usr-master', actorName: 'Pedro Henrique', action: 'subscription.viewed', resource: 'subscription:sub-1', detail: 'Assinatura Team consultada', createdAt: '2026-08-02T13:10:00.000Z' },
+  { id: 'audit-1', workspaceId: 'ws-1', actorId: 'usr-master', actorName: 'Pedro Henrique', action: 'subscription.viewed', resource: 'subscription:sub-1', detail: 'Assinatura Equipe consultada', createdAt: '2026-08-02T13:10:00.000Z' },
   { id: 'audit-2', workspaceId: 'ws-1', actorId: 'usr-lucas', actorName: 'Lucas Silva', action: 'content.submitted', resource: 'content:post-103', detail: 'Conteúdo enviado para aprovação', createdAt: '2026-08-02T11:42:00.000Z' },
 ];
 
@@ -102,13 +102,13 @@ function authenticate(req: AuthenticatedRequest, res: Response, next: NextFuncti
   const userId = String(req.header('x-user-id') || 'usr-master');
   const user = users.find((item) => item.id === userId && item.workspaceId === workspaceId);
   if (!user || user.status !== 'active') return res.status(401).json({ error: 'Sessão inválida ou usuário inativo.' });
-  if (!workspaces.some((item) => item.id === workspaceId)) return res.status(404).json({ error: 'Workspace não encontrado.' });
+  if (!workspaces.some((item) => item.id === workspaceId)) return res.status(404).json({ error: 'Ambiente de trabalho não encontrado.' });
   req.auth = { workspaceId, user };
   next();
 }
 
 function masterOnly(req: AuthenticatedRequest, res: Response, next: NextFunction) {
-  if (req.auth?.user.role !== 'master') return res.status(403).json({ error: 'Apenas o usuário Master pode realizar esta ação.' });
+  if (req.auth?.user.role !== 'master') return res.status(403).json({ error: 'Apenas o usuário administrador pode realizar esta ação.' });
   next();
 }
 
@@ -116,7 +116,7 @@ function moduleOnly(req: AuthenticatedRequest, res: Response, next: NextFunction
   const requestedModule = String(req.params.moduleId || '') as WorkspaceModule;
   if (!moduleIds.includes(requestedModule)) return res.status(404).json({ error: 'Módulo desconhecido.' });
   const user = req.auth!.user;
-  if (user.role !== 'master' && !user.modules.includes(requestedModule)) return res.status(403).json({ error: 'Este módulo não foi liberado pelo Master.' });
+  if (user.role !== 'master' && !user.modules.includes(requestedModule)) return res.status(403).json({ error: 'Este módulo não foi liberado pelo administrador.' });
   next();
 }
 
@@ -134,13 +134,13 @@ export function createGovernanceRouter() {
     const userId = inviteTokens.get(token);
     const member = users.find((item) => item.id === userId && item.status === 'invited');
     if (!member) return res.status(404).json({ error: 'Convite inválido ou já utilizado.' });
-    if (member.inviteExpiresAt && new Date(member.inviteExpiresAt).getTime() < Date.now()) return res.status(410).json({ error: 'Este convite expirou. Solicite um novo convite ao Master.' });
+    if (member.inviteExpiresAt && new Date(member.inviteExpiresAt).getTime() < Date.now()) return res.status(410).json({ error: 'Este convite expirou. Solicite um novo convite ao administrador.' });
     if (password.length < 8) return res.status(400).json({ error: 'A senha deve possuir ao menos 8 caracteres.' });
     member.status = 'active';
     member.lastAccess = nowIso();
     inviteTokens.delete(token);
     refreshWorkspaceSeats(member.workspaceId);
-    auditLogs.unshift({ id: id('audit'), workspaceId: member.workspaceId, actorId: member.id, actorName: member.name, action: 'invite.accepted', resource: 'user:' + member.id, detail: 'Convite aceito e acesso ao Workspace ativado', createdAt: nowIso() });
+    auditLogs.unshift({ id: id('audit'), workspaceId: member.workspaceId, actorId: member.id, actorName: member.name, action: 'invite.accepted', resource: 'user:' + member.id, detail: 'Convite aceito e acesso ao ambiente de trabalho ativado', createdAt: nowIso() });
     res.json({ user: member, workspace: workspaces.find((item) => item.id === member.workspaceId) });
   });
 
@@ -165,7 +165,7 @@ export function createGovernanceRouter() {
     const occupiedSeats = users.filter((item) => item.workspaceId === auth.workspaceId && item.status !== 'disabled').length;
     if (workspace.maxUsers !== null && occupiedSeats >= workspace.maxUsers) {
       addAudit(auth, 'invite.blocked', 'workspace:' + workspace.id, 'Convite bloqueado por limite do plano');
-      return res.status(409).json({ error: 'Você atingiu o limite de usuários do seu plano. Faça um upgrade para adicionar novos colaboradores.' });
+      return res.status(409).json({ error: 'Você atingiu o limite de usuários do seu plano. Mude para um plano superior para adicionar novos colaboradores.' });
     }
     const email = String(req.body?.email || '').trim().toLowerCase();
     const name = String(req.body?.name || '').trim();
@@ -183,8 +183,8 @@ export function createGovernanceRouter() {
   router.patch('/users/:userId', masterOnly, (req: AuthenticatedRequest, res) => {
     const auth = req.auth!;
     const member = users.find((item) => item.id === req.params.userId && item.workspaceId === auth.workspaceId);
-    if (!member) return res.status(404).json({ error: 'Usuário não encontrado neste Workspace.' });
-    if (member.role === 'master') return res.status(400).json({ error: 'O usuário Master não pode ser alterado por esta ação.' });
+    if (!member) return res.status(404).json({ error: 'Usuário não encontrado neste ambiente de trabalho.' });
+    if (member.role === 'master') return res.status(400).json({ error: 'O usuário administrador não pode ser alterado por esta ação.' });
     if (typeof req.body?.name === 'string' && req.body.name.trim()) member.name = req.body.name.trim();
     if (req.body?.status === 'active' || req.body?.status === 'disabled') member.status = req.body.status;
     if (req.body?.modules) member.modules = validModules(req.body.modules);
@@ -207,11 +207,11 @@ export function createGovernanceRouter() {
   router.delete('/users/:userId', masterOnly, (req: AuthenticatedRequest, res) => {
     const auth = req.auth!;
     const index = users.findIndex((item) => item.id === req.params.userId && item.workspaceId === auth.workspaceId);
-    if (index < 0) return res.status(404).json({ error: 'Usuário não encontrado neste Workspace.' });
-    if (users[index].role === 'master') return res.status(400).json({ error: 'O usuário Master não pode ser removido.' });
+    if (index < 0) return res.status(404).json({ error: 'Usuário não encontrado neste ambiente de trabalho.' });
+    if (users[index].role === 'master') return res.status(400).json({ error: 'O usuário administrador não pode ser removido.' });
     const [removed] = users.splice(index, 1);
     refreshWorkspaceSeats(auth.workspaceId);
-    addAudit(auth, 'user.removed', 'user:' + removed.id, `${removed.name} removido do Workspace`);
+    addAudit(auth, 'user.removed', 'user:' + removed.id, `${removed.name} removido do ambiente de trabalho`);
     res.status(204).end();
   });
 
@@ -221,7 +221,7 @@ export function createGovernanceRouter() {
     const plan = plans.find((item) => item.id === req.body?.planId);
     if (!plan) return res.status(400).json({ error: 'Plano inválido.' });
     const occupiedSeats = users.filter((item) => item.workspaceId === auth.workspaceId && item.status !== 'disabled').length;
-    if (plan.maxUsers !== null && occupiedSeats > plan.maxUsers) return res.status(409).json({ error: `O plano ${plan.name} permite ${plan.maxUsers} usuário(s), mas o Workspace possui ${occupiedSeats} assentos ocupados.` });
+    if (plan.maxUsers !== null && occupiedSeats > plan.maxUsers) return res.status(409).json({ error: `O plano ${plan.name} permite ${plan.maxUsers} usuário(s), mas o ambiente possui ${occupiedSeats} assentos ocupados.` });
     const subscription = subscriptions.find((item) => item.workspaceId === auth.workspaceId)!;
     const workspace = workspaces.find((item) => item.id === auth.workspaceId)!;
     subscription.planId = plan.id;
@@ -242,13 +242,13 @@ export function createGovernanceRouter() {
     if (!allowed.includes(action)) return res.status(400).json({ error: 'Ação de aprovação inválida.' });
     if ((action === 'publish' || action === 'schedule') && approval.stage !== 'approved') {
       addAudit(auth, 'publication.blocked', 'content:' + approval.contentId, 'Publicação bloqueada: conteúdo sem aprovação');
-      return res.status(409).json({ error: 'Este conteúdo precisa ser aprovado pelo Master antes da publicação.' });
+      return res.status(409).json({ error: 'Este conteúdo precisa ser aprovado pelo administrador antes da publicação.' });
     }
     if (comment) approval.comments.push({ id: id('comment'), authorId: auth.user.id, authorName: auth.user.name, message: comment, createdAt: nowIso() });
     const actionMap: Record<string, { stage?: ContentApprovalItem['stage']; detail: string }> = {
-      approve: { stage: 'approved', detail: 'Conteúdo aprovado pelo Master' },
+      approve: { stage: 'approved', detail: 'Conteúdo aprovado pelo administrador' },
       request_changes: { stage: 'changes_requested', detail: 'Ajustes solicitados ao colaborador' },
-      reject: { stage: 'rejected', detail: 'Conteúdo reprovado pelo Master' },
+      reject: { stage: 'rejected', detail: 'Conteúdo reprovado pelo administrador' },
       publish: { stage: 'published', detail: 'Conteúdo publicado oficialmente' },
       schedule: { detail: 'Publicação aprovada e agendada' },
       comment: { detail: 'Comentário adicionado à revisão' },
@@ -269,7 +269,7 @@ export function createGovernanceRouter() {
     if (!approval) return res.status(404).json({ error: 'Conteúdo não encontrado.' });
     if (approval.stage !== 'approved') {
       addAudit(auth, 'automation.publication_blocked', 'content:' + approval.contentId, 'Agendamento cancelado por ausência de aprovação');
-      return res.status(409).json({ error: 'Publicação automática cancelada: aprovação do Master pendente.' });
+      return res.status(409).json({ error: 'Publicação automática cancelada: aprovação do administrador pendente.' });
     }
     approval.stage = 'published';
     approval.publishedBy = auth.user.id;

@@ -35,9 +35,9 @@ export const ImageStudioView: React.FC = () => {
 
   const presetsList = [
     { name: 'Capa de Carrossel Instagram', ratio: '1:1', promptAdd: 'square cover graphic' },
-    { name: 'YouTube Thumbnail HD', ratio: '16:9', promptAdd: 'high contrast youtube thumbnail with bold focus' },
-    { name: 'Reels / Stories Banner', ratio: '9:16', promptAdd: 'vertical full height smartphone visual' },
-    { name: 'Banner LinkedIn Corporate', ratio: '16:9', promptAdd: 'clean corporate header banner B2B' },
+    { name: 'Miniatura do YouTube em alta definição', ratio: '16:9', promptAdd: 'high contrast youtube thumbnail with bold focus' },
+    { name: 'Faixa para Reels e Histórias', ratio: '9:16', promptAdd: 'vertical full height smartphone visual' },
+    { name: 'Faixa corporativa para LinkedIn', ratio: '16:9', promptAdd: 'clean corporate header banner B2B' },
   ];
 
   const handleGenerateImage = async () => {
@@ -150,7 +150,7 @@ export const ImageStudioView: React.FC = () => {
                     {[
                       { id: '1:1', label: '1:1 (Post)' },
                       { id: '16:9', label: '16:9 (Banner)' },
-                      { id: '9:16', label: '9:16 (Story)' },
+                      { id: '9:16', label: '9:16 (História)' },
                       { id: '4:5', label: '4:5 (Insta)' },
                     ].map((r) => (
                       <button
@@ -304,7 +304,7 @@ export const ImageStudioView: React.FC = () => {
           </div>
         </div>
       </div>
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">{[[Maximize2, 'Expandir imagem', 'Amplie o canvas com preenchimento por IA'], [Heart, 'Favoritos', 'Salve referências e resultados preferidos'], [History, 'Histórico', 'Revise prompts, variações e versões'], [LayoutTemplate, 'Templates e biblioteca', 'Reutilize estilos e identidades visuais']].map(([Icon, title, description]) => { const ItemIcon = Icon as React.ComponentType<{ className?: string }>; return <button key={String(title)} className="rounded-xl border border-white/[0.06] bg-[#182126] p-4 text-left hover:border-[#8bd132]/25"><ItemIcon className="h-4 w-4 text-[#8bd132]" /><h3 className="mt-3 text-[10px] font-semibold text-white">{String(title)}</h3><p className="mt-1 text-[8px] text-[#78848a]">{String(description)}</p></button>; })}</div>
+      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">{[[Maximize2, 'Expandir imagem', 'Amplie a área com preenchimento por IA'], [Heart, 'Favoritos', 'Salve referências e resultados preferidos'], [History, 'Histórico', 'Revise comandos, variações e versões'], [LayoutTemplate, 'Modelos e biblioteca', 'Reutilize estilos e identidades visuais']].map(([Icon, title, description]) => { const ItemIcon = Icon as React.ComponentType<{ className?: string }>; return <button key={String(title)} className="rounded-xl border border-white/[0.06] bg-[#182126] p-4 text-left hover:border-[#8bd132]/25"><ItemIcon className="h-4 w-4 text-[#8bd132]" /><h3 className="mt-3 text-[10px] font-semibold text-white">{String(title)}</h3><p className="mt-1 text-[8px] text-[#78848a]">{String(description)}</p></button>; })}</div>
     </div>
   );
 };

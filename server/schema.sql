@@ -1,4 +1,4 @@
--- Clicko AI Studios governance schema (PostgreSQL)
+-- Clicko Studio governance schema (PostgreSQL)
 create type user_role as enum ('master', 'collaborator');
 create type member_status as enum ('active', 'invited', 'disabled');
 create type approval_stage as enum ('draft', 'in_review', 'pending_approval', 'approved', 'changes_requested', 'rejected', 'published');

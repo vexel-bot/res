@@ -13,7 +13,7 @@ type AIChatContextValue = {
 const storageKey = 'clicko:ai-chat:history';
 const initialMessage: AIChatMessage = {
   id: 'welcome', role: 'assistant', createdAt: new Date().toISOString(),
-  content: 'Olá! Sou o assistente da Clicko. Posso ajudar com criação, estratégia, planejamento, análise e automações usando o contexto do seu Brain.',
+  content: 'Olá! Sou o assistente da Clicko. Posso ajudar com criação, estratégia, planejamento, análise e automações usando a memória da sua marca.',
   module: 'dashboard',
 };
 
@@ -22,7 +22,12 @@ const AIChatContext = React.createContext<AIChatContextValue | null>(null);
 export function AIChatProvider({ children }: { children: React.ReactNode }) {
   const { brain, activeCampaign } = useOperations();
   const [messages, setMessages] = React.useState<AIChatMessage[]>(() => {
-    try { const saved = localStorage.getItem(storageKey); return saved ? JSON.parse(saved) : [initialMessage]; }
+    try {
+      const saved = localStorage.getItem(storageKey);
+      if (!saved) return [initialMessage];
+      const parsed = JSON.parse(saved) as AIChatMessage[];
+      return parsed.map((message) => message.id === initialMessage.id ? initialMessage : message);
+    }
     catch { return [initialMessage]; }
   });
   const [loading, setLoading] = React.useState(false);

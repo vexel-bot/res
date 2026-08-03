@@ -29,7 +29,7 @@ export const AnalyticsView: React.FC = () => {
           period,
           reachChange: 18.4,
           engagementRate: 6.8,
-          topPost: '5 Regras da IA Enterprise em 2026',
+          topPost: '5 Regras da IA corporativa em 2026',
           brainContext: brain,
           strategyContext: activeCampaign,
         }),
@@ -59,7 +59,7 @@ export const AnalyticsView: React.FC = () => {
       kpis: ['Alcance qualificado', 'Engajamento', 'Conversões'],
       products: brain.products,
       audience: brain.audience,
-      offer: 'Conteúdo derivado do melhor padrão de performance',
+      offer: 'Conteúdo derivado do melhor padrão de desempenho',
       channels: ['instagram', 'linkedin'],
       importantDates: '',
       funnel: 'Descoberta → Consideração → Conversão',
@@ -75,7 +75,7 @@ export const AnalyticsView: React.FC = () => {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/5 pb-4">
         <div>
           <h2 className="text-lg font-bold text-[#ededed] flex items-center gap-2">
-            <BarChart3 className="w-5 h-5 text-indigo-400" /> Analytics Contextual Explicado por IA
+            <BarChart3 className="w-5 h-5 text-indigo-400" /> Análises contextuais explicadas por IA
           </h2>
           <p className="text-xs text-white/40">
             A IA analisa a oscilação de métricas e traduz os números em justificativas estratégicas e táticas acionáveis
@@ -131,7 +131,7 @@ export const AnalyticsView: React.FC = () => {
                 </ul>
               </div>
             )}
-            <button onClick={turnInsightIntoCampaign} className="flex items-center gap-2 rounded-lg bg-[#8bd132] px-4 py-2.5 text-[10px] font-bold text-[#14200e]"><Sparkles className="h-4 w-4" />Criar campanha a partir deste insight</button>
+            <button onClick={turnInsightIntoCampaign} className="flex items-center gap-2 rounded-lg bg-[#8bd132] px-4 py-2.5 text-[10px] font-bold text-[#14200e]"><Sparkles className="h-4 w-4" />Criar campanha a partir desta análise</button>
           </div>
         ) : (
           <div className="p-4 text-center text-white/40 text-xs">Carregando diagnóstico...</div>

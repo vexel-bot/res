@@ -47,8 +47,8 @@ export const SpotlightModal: React.FC<SpotlightModalProps> = ({
   const ALL_SEARCH_ITEMS: SearchResultItem[] = [
     {
       id: 's1',
-      title: '5 Regras da IA Enterprise em 2026',
-      subtitle: 'Post Carrossel agendado para Instagram',
+      title: '5 Regras da IA corporativa em 2026',
+      subtitle: 'Publicação em carrossel agendado para Instagram',
       type: 'post',
       tabToNavigate: 'create-copy',
     },
@@ -61,7 +61,7 @@ export const SpotlightModal: React.FC<SpotlightModalProps> = ({
     },
     {
       id: 's3',
-      title: 'Pipeline Automático de Reels & Shorts',
+      title: 'Fluxo automático de Reels & Shorts',
       subtitle: 'Automação ativa com 38 execuções',
       type: 'automation',
       tabToNavigate: 'automations',
@@ -128,7 +128,7 @@ export const SpotlightModal: React.FC<SpotlightModalProps> = ({
             autoFocus
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Digite para buscar qualquer projeto, post, prompt, cliente ou automação..."
+            placeholder="Digite para buscar qualquer projeto, publicação, comando, cliente ou automação..."
             className="w-full bg-transparent text-[#ededed] placeholder-white/30 text-sm focus:outline-none"
           />
           <button
@@ -182,7 +182,7 @@ export const SpotlightModal: React.FC<SpotlightModalProps> = ({
             <span><kbd className="bg-white/10 px-1.5 py-0.5 rounded font-mono text-white">↑↓</kbd> Navegar</span>
             <span><kbd className="bg-white/10 px-1.5 py-0.5 rounded font-mono text-white">↵</kbd> Selecionar</span>
           </div>
-          <span>Mecanismo de Busca Spotlight</span>
+          <span>Mecanismo de busca em destaque</span>
         </div>
       </div>
     </div>

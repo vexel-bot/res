@@ -17,7 +17,7 @@ export const ClickoLogo: React.FC<ClickoLogoProps> = ({
   variant = 'horizontal',
   loading = false,
   className = '',
-  alt = 'Clicko AI Studios',
+  alt = 'Clicko Studio',
   appearance = 'auto',
 }) => (
   <span
@@ -36,5 +36,5 @@ export const ClickoLogo: React.FC<ClickoLogoProps> = ({
 );
 
 export const ClickoLoader: React.FC<{ className?: string }> = ({ className = '' }) => (
-  <ClickoLogo loading className={className} alt="Clicko AI Studios carregando" />
+  <ClickoLogo loading className={className} alt="Clicko Studio carregando" />
 );
