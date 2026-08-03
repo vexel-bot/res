@@ -45,7 +45,7 @@ const initialBrain: BrandBrain = {
   objections: 'Tempo de implantação, consistência das respostas de IA, governança e clareza sobre retorno do investimento.',
   pains: 'Ferramentas fragmentadas, briefing incompleto, retrabalho, demora em aprovações e dificuldade de atribuição.',
   desires: 'Produzir mais com qualidade, manter a marca consistente e transformar dados em próximas ações.',
-  faq: 'Como a Memória é usada? Toda geração consulta a revisão ativa.\nComo funciona a aprovação? Os conteúdos mantêm comentários, histórico e versões.',
+  faq: 'Como o Brain é usado? Toda geração consulta a revisão ativa.\nComo funciona aprovação? Conteúdos mantêm comentários, histórico e versões.',
   requiredWords: 'Clicko Studio; operação de mídia; inteligência estratégica',
   forbiddenWords: 'promessas garantidas; linguagem sensacionalista; jargão sem explicação',
   history: 'Projeto iniciado como gerador de conteúdo e evoluído para sistema operacional de mídia com IA.',
@@ -95,13 +95,7 @@ const OperationsContext = React.createContext<OperationsContextValue | null>(nul
 function loadState(): OperationsState {
   try {
     const stored = window.localStorage.getItem(storageKey);
-    if (!stored) return defaultState;
-    const localized = stored
-      .replaceAll('Clicko AI Studios', 'Clicko Studio')
-      .replaceAll('IA Enterprise', 'IA corporativa')
-      .replaceAll('Workflow Unificado', 'Fluxo de trabalho unificado')
-      .replaceAll('Como o Brain é usado?', 'Como a Memória é usada?');
-    return { ...defaultState, ...JSON.parse(localized) };
+    return stored ? { ...defaultState, ...JSON.parse(stored) } : defaultState;
   } catch {
     return defaultState;
   }

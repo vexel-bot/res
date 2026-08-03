@@ -9,7 +9,7 @@ export const AuditLogsView: React.FC = () => {
   const { auditLogs, loading, workspace } = useGovernance();
   const [query, setQuery] = React.useState('');
   const [moduleFilter, setModuleFilter] = React.useState('all');
-  const modules = Array.from(new Set<string>(auditLogs.map((entry) => entry.resource.split(':')[0])));
+  const modules = Array.from(new Set(auditLogs.map((entry) => entry.resource.split(':')[0])));
   const visible = auditLogs.filter((entry) =>
     (moduleFilter === 'all' || entry.resource.startsWith(`${moduleFilter}:`))
     && `${entry.actorName} ${entry.action} ${entry.detail} ${entry.resource}`.toLowerCase().includes(query.toLowerCase()),

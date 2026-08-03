@@ -22,12 +22,7 @@ const AIChatContext = React.createContext<AIChatContextValue | null>(null);
 export function AIChatProvider({ children }: { children: React.ReactNode }) {
   const { brain, activeCampaign } = useOperations();
   const [messages, setMessages] = React.useState<AIChatMessage[]>(() => {
-    try {
-      const saved = localStorage.getItem(storageKey);
-      if (!saved) return [initialMessage];
-      const parsed = JSON.parse(saved) as AIChatMessage[];
-      return parsed.map((message) => message.id === initialMessage.id ? initialMessage : message);
-    }
+    try { const saved = localStorage.getItem(storageKey); return saved ? JSON.parse(saved) : [initialMessage]; }
     catch { return [initialMessage]; }
   });
   const [loading, setLoading] = React.useState(false);
