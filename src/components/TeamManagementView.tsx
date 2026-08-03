@@ -25,7 +25,7 @@ export const TeamManagementView: React.FC = () => {
   const [editing, setEditing] = React.useState<WorkspaceMember | null>(null);
   const [editName, setEditName] = React.useState('');
   const [confirmDelete, setConfirmDelete] = React.useState<string | null>(null);
-  const [invite, setInvite] = React.useState({ name: '', email: '', modules: ['dashboard', 'workspace', 'studio', 'library', 'calendar'] as WorkspaceModule[] });
+  const [invite, setInvite] = React.useState({ name: '', email: '', modules: ['dashboard', 'create-image', 'create-copy', 'ai-chat', 'templates', 'calendar'] as WorkspaceModule[] });
   const [editModules, setEditModules] = React.useState<WorkspaceModule[]>([]);
 
   const plan = plans.find((item) => item.id === workspace?.planId);
@@ -51,7 +51,7 @@ export const TeamManagementView: React.FC = () => {
     event.preventDefault();
     const ok = await inviteUser(invite);
     if (ok) {
-      setInvite({ name: '', email: '', modules: ['dashboard', 'workspace', 'studio', 'library', 'calendar'] });
+      setInvite({ name: '', email: '', modules: ['dashboard', 'create-image', 'create-copy', 'ai-chat', 'templates', 'calendar'] });
       setShowInvite(false);
     }
   };

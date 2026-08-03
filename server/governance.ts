@@ -13,8 +13,9 @@ type AuthContext = { workspaceId: string; user: WorkspaceMember };
 type AuthenticatedRequest = Request & { auth?: AuthContext };
 
 const moduleIds: WorkspaceModule[] = [
-  'dashboard', 'workspace', 'brain', 'strategy', 'studio', 'library',
-  'calendar', 'automations', 'analytics',
+  'dashboard', 'create-image', 'create-video', 'create-copy', 'ai-chat',
+  'templates', 'connected-accounts', 'workspace', 'brain', 'strategy',
+  'studio', 'library', 'calendar', 'automations', 'analytics',
 ];
 
 const plans: SaaSPlan[] = [
@@ -38,10 +39,10 @@ const workspaces: GovernanceWorkspace[] = [{
 
 const users: WorkspaceMember[] = [
   { id: 'usr-master', workspaceId: 'ws-1', name: 'Pedro Henrique', email: 'pedro@clickostudio.com', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=120&q=80', role: 'master', status: 'active', modules: [...moduleIds], lastAccess: new Date().toISOString(), createdAt: '2026-05-18T12:00:00.000Z' },
-  { id: 'usr-lucas', workspaceId: 'ws-1', name: 'Lucas Silva', email: 'lucas@clickostudio.com', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&q=80', role: 'collaborator', status: 'active', modules: ['dashboard', 'workspace', 'brain', 'strategy', 'studio', 'library', 'calendar'], lastAccess: '2026-08-02T14:42:00.000Z', createdAt: '2026-06-03T13:00:00.000Z' },
-  { id: 'usr-ana', workspaceId: 'ws-1', name: 'Ana Martins', email: 'ana@clickostudio.com', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80', role: 'collaborator', status: 'active', modules: ['dashboard', 'workspace', 'studio', 'library', 'calendar', 'analytics'], lastAccess: '2026-08-02T12:18:00.000Z', createdAt: '2026-06-21T16:30:00.000Z' },
-  { id: 'usr-caio', workspaceId: 'ws-1', name: 'Caio Rocha', email: 'caio@clickostudio.com', avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=120&q=80', role: 'collaborator', status: 'disabled', modules: ['dashboard', 'studio'], lastAccess: '2026-07-28T19:05:00.000Z', createdAt: '2026-07-02T10:10:00.000Z' },
-  { id: 'usr-invite', workspaceId: 'ws-1', name: 'Marina Costa', email: 'marina@clickostudio.com', avatar: '', role: 'collaborator', status: 'invited', modules: ['dashboard', 'studio', 'library', 'calendar'], lastAccess: 'Convite pendente', createdAt: '2026-08-01T09:00:00.000Z', invitedAt: '2026-08-01T09:00:00.000Z', inviteExpiresAt: '2026-08-08T09:00:00.000Z' },
+  { id: 'usr-lucas', workspaceId: 'ws-1', name: 'Lucas Silva', email: 'lucas@clickostudio.com', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&q=80', role: 'collaborator', status: 'active', modules: ['dashboard', 'create-image', 'create-video', 'create-copy', 'ai-chat', 'templates', 'workspace', 'brain', 'strategy', 'studio', 'library', 'calendar'], lastAccess: '2026-08-02T14:42:00.000Z', createdAt: '2026-06-03T13:00:00.000Z' },
+  { id: 'usr-ana', workspaceId: 'ws-1', name: 'Ana Martins', email: 'ana@clickostudio.com', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80', role: 'collaborator', status: 'active', modules: ['dashboard', 'create-image', 'create-copy', 'ai-chat', 'templates', 'workspace', 'studio', 'library', 'calendar', 'analytics'], lastAccess: '2026-08-02T12:18:00.000Z', createdAt: '2026-06-21T16:30:00.000Z' },
+  { id: 'usr-caio', workspaceId: 'ws-1', name: 'Caio Rocha', email: 'caio@clickostudio.com', avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=120&q=80', role: 'collaborator', status: 'disabled', modules: ['dashboard', 'create-copy', 'ai-chat', 'studio'], lastAccess: '2026-07-28T19:05:00.000Z', createdAt: '2026-07-02T10:10:00.000Z' },
+  { id: 'usr-invite', workspaceId: 'ws-1', name: 'Marina Costa', email: 'marina@clickostudio.com', avatar: '', role: 'collaborator', status: 'invited', modules: ['dashboard', 'create-image', 'create-copy', 'ai-chat', 'templates', 'studio', 'library', 'calendar'], lastAccess: 'Convite pendente', createdAt: '2026-08-01T09:00:00.000Z', invitedAt: '2026-08-01T09:00:00.000Z', inviteExpiresAt: '2026-08-08T09:00:00.000Z' },
 ];
 
 const subscriptions: WorkspaceSubscription[] = [{

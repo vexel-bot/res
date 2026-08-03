@@ -1,29 +1,37 @@
 import type { NavigationTab, UserRole, WorkspaceMember, WorkspaceModule } from '../types';
 
 export const workspaceModules: Array<{ id: WorkspaceModule; label: string; description: string }> = [
-  { id: 'dashboard', label: 'Dashboard', description: 'Resumo e indicadores do Workspace' },
-  { id: 'workspace', label: 'Workspace', description: 'Clientes, projetos e operação central' },
-  { id: 'brain', label: 'Brain', description: 'Memória estratégica persistente da marca' },
-  { id: 'strategy', label: 'Strategy', description: 'Campanhas, objetivos e planos de comunicação' },
-  { id: 'studio', label: 'Studio', description: 'Criação de texto, imagem e vídeo' },
-  { id: 'library', label: 'Biblioteca', description: 'Memória de ativos, versões e materiais' },
-  { id: 'calendar', label: 'Agenda e Calendário', description: 'Planejamento editorial' },
-  { id: 'automations', label: 'Templates e Automações', description: 'Fluxos liberados pelo Master' },
-  { id: 'analytics', label: 'Analytics', description: 'Métricas e inteligência de desempenho' },
+  { id: 'dashboard', label: 'Dashboard', description: 'Resumo inteligente da operação' },
+  { id: 'create-image', label: 'Criar Imagem', description: 'Geração e edição visual com IA' },
+  { id: 'create-video', label: 'Criar Vídeo', description: 'Produção e exportação de vídeos' },
+  { id: 'create-copy', label: 'Criar Copy', description: 'Textos, roteiros, SEO e campanhas' },
+  { id: 'calendar', label: 'Calendário', description: 'Planejamento e agendamento editorial' },
+  { id: 'analytics', label: 'Analytics', description: 'Métricas, relatórios e recomendações' },
+  { id: 'ai-chat', label: 'AI Chat', description: 'Assistente com memória contextual' },
+  { id: 'automations', label: 'Automações', description: 'Fluxos, gatilhos e execuções' },
+  { id: 'templates', label: 'Templates', description: 'Biblioteca reutilizável da equipe' },
+  { id: 'connected-accounts', label: 'Contas Conectadas', description: 'Canais e integrações sociais' },
+  { id: 'workspace', label: 'Workspace', description: 'Empresas, clientes e projetos' },
+  { id: 'brain', label: 'Brain', description: 'Memória estratégica persistente' },
+  { id: 'strategy', label: 'Strategy', description: 'Campanhas e planos de comunicação' },
+  { id: 'studio', label: 'Studio', description: 'Produção multimídia integrada' },
+  { id: 'library', label: 'Biblioteca', description: 'Ativos, versões e materiais' },
 ];
 
-const masterOnlyTabs = new Set<NavigationTab>(['approvals', 'publisher', 'team', 'subscription', 'audit-logs', 'settings']);
+const masterOnlyTabs = new Set<NavigationTab>(['approvals', 'connected-accounts', 'publisher', 'team', 'subscription', 'audit-logs', 'settings']);
 
 const tabModules: Partial<Record<NavigationTab, WorkspaceModule>> = {
   dashboard: 'dashboard',
-  workspace: 'workspace',
-  brain: 'brain',
-  strategy: 'strategy',
-  studio: 'studio',
-  library: 'library',
+  'create-image': 'create-image',
+  'create-video': 'create-video',
+  'create-copy': 'create-copy',
   calendar: 'calendar',
   analytics: 'analytics',
+  'ai-chat': 'ai-chat',
   automations: 'automations',
+  templates: 'templates',
+  'connected-accounts': 'connected-accounts',
+  workspace: 'workspace', brain: 'brain', strategy: 'strategy', studio: 'studio', library: 'library',
 };
 
 export function canAccessNavigation(user: Pick<WorkspaceMember, 'role' | 'modules'> | undefined, tab: NavigationTab) {
@@ -34,10 +42,5 @@ export function canAccessNavigation(user: Pick<WorkspaceMember, 'role' | 'module
   return requiredModule ? user.modules.includes(requiredModule) : false;
 }
 
-export function roleLabel(role: UserRole) {
-  return role === 'master' ? 'Master' : 'Colaborador';
-}
-
-export function isCriticalTab(tab: NavigationTab) {
-  return masterOnlyTabs.has(tab);
-}
+export function roleLabel(role: UserRole) { return role === 'master' ? 'Master' : 'Colaborador'; }
+export function isCriticalTab(tab: NavigationTab) { return masterOnlyTabs.has(tab); }

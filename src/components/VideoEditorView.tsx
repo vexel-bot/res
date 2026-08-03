@@ -15,6 +15,10 @@ import {
   Film,
   Type,
   Music,
+  Image as ImageIcon,
+  UserRound,
+  LayoutTemplate,
+  History,
 } from 'lucide-react';
 
 export const VideoEditorView: React.FC = () => {
@@ -24,6 +28,7 @@ export const VideoEditorView: React.FC = () => {
   const [voiceName, setVoiceName] = React.useState('Kore (Feminino - PT-BR)');
   const [exportFormat, setExportFormat] = React.useState('9:16 Reels / TikTok');
   const [currentTime, setCurrentTime] = React.useState('00:04 / 00:30');
+  const [creationMode, setCreationMode] = React.useState<'text' | 'image' | 'avatar'>('text');
 
   return (
     <div className="p-6 space-y-6 max-w-7xl mx-auto">
@@ -50,6 +55,14 @@ export const VideoEditorView: React.FC = () => {
             <Download className="w-4 h-4" /> Exportar Vídeo HD
           </button>
         </div>
+      </div>
+
+      <div className="grid gap-3 md:grid-cols-3">
+        {[
+          { id: 'text' as const, title: 'Texto para vídeo', description: 'Transforme roteiro em cenas, narração e legendas.', icon: Type },
+          { id: 'image' as const, title: 'Imagem para vídeo', description: 'Anime imagens com movimento e transições de IA.', icon: ImageIcon },
+          { id: 'avatar' as const, title: 'Avatar IA', description: 'Apresente conteúdos com avatar e voz sintética.', icon: UserRound },
+        ].map(({ id, title, description, icon: Icon }) => <button key={id} onClick={() => setCreationMode(id)} className={`rounded-xl border p-4 text-left transition ${creationMode === id ? 'border-[#8bd132]/30 bg-[#8bd132]/[0.06]' : 'border-white/[0.06] bg-[#182126] hover:border-white/15'}`}><div className="flex items-center gap-3"><span className="grid h-9 w-9 place-items-center rounded-lg bg-black/25"><Icon className={`h-4 w-4 ${creationMode === id ? 'text-[#8bd132]' : 'text-[#9aa4a9]'}`} /></span><div><h3 className="text-[10px] font-semibold text-white">{title}</h3><p className="mt-1 text-[8px] text-[#78848a]">{description}</p></div></div></button>)}
       </div>
 
       {/* Editor Grid */}
@@ -199,6 +212,8 @@ export const VideoEditorView: React.FC = () => {
           </div>
         </div>
       </div>
+
+      <div className="grid gap-3 md:grid-cols-3">{[[LayoutTemplate, 'Templates de vídeo', 'Shorts, Reels, anúncios e apresentações'], [History, 'Histórico', '12 projetos e 28 exportações recentes'], [Music, 'Biblioteca de áudio', 'Músicas e trilhas licenciadas']].map(([Icon, title, description]) => { const ItemIcon = Icon as React.ComponentType<{ className?: string }>; return <button key={String(title)} className="rounded-xl border border-white/[0.06] bg-[#182126] p-4 text-left hover:border-[#8bd132]/25"><ItemIcon className="h-4 w-4 text-[#8bd132]" /><h3 className="mt-3 text-[10px] font-semibold text-white">{String(title)}</h3><p className="mt-1 text-[8px] text-[#78848a]">{String(description)}</p></button>; })}</div>
     </div>
   );
 };

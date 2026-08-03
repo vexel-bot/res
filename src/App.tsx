@@ -13,6 +13,13 @@ import { BrainView } from './components/BrainView';
 import { StrategyView } from './components/StrategyView';
 import { StudioView } from './components/StudioView';
 import { LibraryView } from './components/LibraryView';
+import { ImageStudioView } from './components/ImageStudioView';
+import { VideoEditorView } from './components/VideoEditorView';
+import { CreationStudioView } from './components/CreationStudioView';
+import { AIChatView } from './components/AIChatView';
+import { FloatingAIAssistant } from './components/FloatingAIAssistant';
+import { TemplatesView } from './components/TemplatesView';
+import { ConnectedAccountsView } from './components/ConnectedAccountsView';
 import { EditorialCalendarView } from './components/EditorialCalendarView';
 import { PublisherView } from './components/PublisherView';
 import { AnalyticsView } from './components/AnalyticsView';
@@ -119,7 +126,7 @@ export default function App() {
         isCompact={isCompact}
         onToggleCompact={() => setIsCompact(!isCompact)}
         onOpenSpotlight={() => setIsSpotlightOpen(true)}
-        onNewPost={() => setCurrentTab('studio')}
+        onNewPost={() => setCurrentTab('create-copy')}
       />
 
       {/* Main Workspace Stage */}
@@ -133,8 +140,8 @@ export default function App() {
           currentTab={currentTab}
           activeWorkspace={activeWorkspace}
           onOpenSpotlight={() => setIsSpotlightOpen(true)}
-          onOpenAICentral={() => setCurrentTab('strategy')}
-          onNewPost={() => setCurrentTab('studio')}
+          onOpenAICentral={() => setCurrentTab('ai-chat')}
+          onNewPost={() => setCurrentTab('create-copy')}
           isCompact={isCompact}
           onToggleCompact={() => setIsCompact(!isCompact)}
           isDarkMode={isDarkMode}
@@ -151,8 +158,8 @@ export default function App() {
               suggestions={suggestions}
               activeWorkspace={activeWorkspace}
               onNavigate={setCurrentTab}
-              onOpenCampaignWizard={() => setCurrentTab('strategy')}
-              onNewPost={() => setCurrentTab('studio')}
+              onOpenCampaignWizard={() => setCurrentTab('ai-chat')}
+              onNewPost={() => setCurrentTab('create-copy')}
               onSelectPost={(p) => setCurrentTab('calendar')}
             />
           )}
@@ -167,11 +174,23 @@ export default function App() {
 
           {hasAccessToCurrentTab && currentTab === 'library' && <LibraryView />}
 
+          {hasAccessToCurrentTab && currentTab === 'create-image' && <ImageStudioView />}
+
+          {hasAccessToCurrentTab && currentTab === 'create-video' && <VideoEditorView />}
+
+          {hasAccessToCurrentTab && currentTab === 'create-copy' && <CreationStudioView onSavePost={handleSaveSinglePost} />}
+
+          {hasAccessToCurrentTab && currentTab === 'ai-chat' && <AIChatView />}
+
+          {hasAccessToCurrentTab && currentTab === 'templates' && <TemplatesView />}
+
+          {hasAccessToCurrentTab && currentTab === 'connected-accounts' && <ConnectedAccountsView />}
+
           {hasAccessToCurrentTab && currentTab === 'calendar' && (
             <EditorialCalendarView
               posts={posts}
               onSelectPost={() => {}}
-              onNewPost={() => setCurrentTab('studio')}
+              onNewPost={() => setCurrentTab('create-copy')}
             />
           )}
 
@@ -200,6 +219,7 @@ export default function App() {
         onNavigate={setCurrentTab}
       />
       <GovernanceFeedback />
+      <FloatingAIAssistant currentTab={currentTab} onOpenFullChat={() => setCurrentTab('ai-chat')} />
     </div>
   );
 }

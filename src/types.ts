@@ -1,5 +1,11 @@
 export type NavigationTab =
   | 'dashboard'
+  | 'create-image'
+  | 'create-video'
+  | 'create-copy'
+  | 'ai-chat'
+  | 'templates'
+  | 'connected-accounts'
   | 'workspace'
   | 'brain'
   | 'strategy'
@@ -19,6 +25,12 @@ export type UserRole = 'master' | 'collaborator';
 
 export type WorkspaceModule =
   | 'dashboard'
+  | 'create-image'
+  | 'create-video'
+  | 'create-copy'
+  | 'ai-chat'
+  | 'templates'
+  | 'connected-accounts'
   | 'workspace'
   | 'brain'
   | 'strategy'
@@ -347,6 +359,33 @@ export interface ConnectedAccount {
   followers: string;
   bestTime: string;
   engagement: string;
+  name?: string;
+  avatar?: string;
+  lastSync?: string;
+  permissions?: string[];
+  isDefault?: boolean;
+  company?: string;
+}
+
+export interface AIChatMessage {
+  id: string;
+  role: 'user' | 'assistant';
+  content: string;
+  createdAt: string;
+  module?: NavigationTab;
+  favorite?: boolean;
+}
+
+export interface ContentTemplate {
+  id: string;
+  name: string;
+  category: 'image' | 'video' | 'copy' | 'campaign' | 'calendar' | 'prompt' | 'brand';
+  description: string;
+  thumbnail?: string;
+  favorite: boolean;
+  shared: boolean;
+  uses: number;
+  updatedAt: string;
 }
 
 export interface AIActionSuggestion {

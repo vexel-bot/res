@@ -64,7 +64,8 @@ async function startServer() {
   const operatingContext = (body: any) => {
     const brain = body?.brainContext;
     const strategy = body?.strategyContext;
-    if (!brain && !strategy) return '';
+    const screenContext = body?.screenContext;
+    if (!brain && !strategy && !screenContext) return '';
     return `\n\nCONTEXTO OPERACIONAL OBRIGATÓRIO (fonte única de verdade):\n${brain ? `BRAIN revisão ${brain.revision}:\nEmpresa: ${brain.company}\nProdutos: ${brain.products}\nServiços: ${brain.services}\nTom: ${brain.toneOfVoice}\nPúblico: ${brain.audience}\nPersonas: ${brain.personas}\nObjetivos: ${brain.objectives}\nDiferenciais: ${brain.differentiators}\nDores: ${brain.pains}\nDesejos: ${brain.desires}\nObjeções: ${brain.objections}\nIdentidade visual: ${brain.visualIdentity}\nPalavras obrigatórias: ${brain.requiredWords}\nPalavras proibidas: ${brain.forbiddenWords}` : ''}${strategy ? `\nESTRATÉGIA ATIVA: ${strategy.name}\nObjetivo: ${strategy.objective}\nOferta: ${strategy.offer}\nPúblico: ${strategy.audience}\nFunil: ${strategy.funnel}\nCTAs: ${strategy.ctas?.join(', ')}` : ''}\nNão contradiga este contexto e preserve a rastreabilidade da resposta.`;
   };
 

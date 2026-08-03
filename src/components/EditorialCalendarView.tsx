@@ -30,6 +30,8 @@ export const EditorialCalendarView: React.FC<EditorialCalendarViewProps> = ({
   const [viewMode, setViewMode] = React.useState<'month' | 'week' | 'day'>('month');
   const [filterPlatform, setFilterPlatform] = React.useState<string>('all');
   const [selectedPostDetail, setSelectedPostDetail] = React.useState<Post | null>(null);
+  const [draggedPostId, setDraggedPostId] = React.useState<string>();
+  const [lastMoved, setLastMoved] = React.useState<string>();
 
   const daysInMonth = [
     { day: 27, isOtherMonth: true },
@@ -83,6 +85,9 @@ export const EditorialCalendarView: React.FC<EditorialCalendarViewProps> = ({
         </div>
 
         <div className="flex flex-wrap items-center gap-3">
+          <select className="rounded-xl border border-white/5 bg-white/[0.03] px-3 py-2 text-[10px] text-[#ededed] outline-none"><option>Todos os clientes</option><option>Clicko AI Studios</option></select>
+          <select className="rounded-xl border border-white/5 bg-white/[0.03] px-3 py-2 text-[10px] text-[#ededed] outline-none"><option>Todos os projetos</option><option>Lançamento Q3</option></select>
+          <select className="rounded-xl border border-white/5 bg-white/[0.03] px-3 py-2 text-[10px] text-[#ededed] outline-none"><option>Todas as contas</option><option>@clickostudio</option><option>Clicko AI Studios · LinkedIn</option></select>
           {/* Filter by Platform */}
           <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/[0.03] border border-white/5 text-xs text-neutral-300">
             <Filter className="w-3.5 h-3.5 text-indigo-400" />
@@ -183,6 +188,8 @@ export const EditorialCalendarView: React.FC<EditorialCalendarViewProps> = ({
           {daysInMonth.map((item, idx) => (
             <div
               key={idx}
+              onDragOver={(event) => event.preventDefault()}
+              onDrop={() => { if (draggedPostId) { setLastMoved(`Conteúdo reagendado para o dia ${item.day}`); setDraggedPostId(undefined); } }}
               className={`min-h-[110px] p-2 rounded-xl border flex flex-col justify-between transition-all ${
                 item.isOtherMonth
                   ? 'bg-white/[0.01] border-white/5 text-white/20'
@@ -208,6 +215,8 @@ export const EditorialCalendarView: React.FC<EditorialCalendarViewProps> = ({
                   item.posts.map((post) => (
                     <div
                       key={post.id}
+                      draggable
+                      onDragStart={() => setDraggedPostId(post.id)}
                       onClick={() => {
                         setSelectedPostDetail(post);
                         onSelectPost(post);
@@ -230,6 +239,8 @@ export const EditorialCalendarView: React.FC<EditorialCalendarViewProps> = ({
       </div>
 
       {/* Post Detail Drawer Modal */}
+      {lastMoved && <div className="fixed bottom-20 right-6 z-50 rounded-lg border border-[#8bd132]/25 bg-[#182126] px-4 py-3 text-[9px] text-[#8bd132] shadow-xl">{lastMoved}<button onClick={() => setLastMoved(undefined)} className="ml-3 text-[#7e898f]">Fechar</button></div>}
+
       {selectedPostDetail && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-150">
           <div className="w-full max-w-lg bg-[#0A0A0A] border border-white/10 rounded-2xl shadow-2xl p-6 space-y-4">

@@ -31,6 +31,7 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
   onSavePost,
 }) => {
   const { brain, activeCampaign } = useOperations();
+  const [copyTool, setCopyTool] = React.useState('Posts');
   const [selectedFormat, setSelectedFormat] = React.useState<PostFormat>('carousel');
   const [selectedPlatform, setSelectedPlatform] = React.useState<SocialPlatform>('instagram');
   const [postTitle, setPostTitle] = React.useState('5 Pilares do Crescimento Digital');
@@ -179,6 +180,8 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
           </button>
         </div>
       </div>
+
+      <div className="rounded-xl border border-white/[0.06] bg-[#182126] p-3"><div className="mb-2 flex items-center justify-between"><span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-[#7f8a90]">Ferramentas de copy</span><span className="text-[8px] text-[#8bd132]">Biblioteca de prompts conectada</span></div><div className="flex gap-2 overflow-x-auto custom-scrollbar">{['Posts', 'Legendas', 'Copy de vendas', 'Email', 'Blog', 'Landing Page', 'SEO', 'CTA', 'Hashtags', 'Scripts', 'Tradução', 'Correção', 'Reescrita'].map((tool) => <button key={tool} onClick={() => { setCopyTool(tool); setTopicPrompt(`${tool}: ${topicPrompt.replace(/^[^:]+:\s*/, '')}`); }} className={`shrink-0 rounded-lg px-3 py-2 text-[8px] ${copyTool === tool ? 'bg-[#8bd132] font-bold text-[#14200e]' : 'border border-white/[0.06] bg-black/20 text-[#9ba5aa]'}`}>{tool}</button>)}</div></div>
 
       {/* Format Tabs Bar */}
       <div className="flex items-center gap-2 overflow-x-auto pb-2 custom-scrollbar">

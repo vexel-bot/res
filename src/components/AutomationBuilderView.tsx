@@ -29,10 +29,10 @@ export const AutomationBuilderView: React.FC = () => {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/5 pb-4">
         <div>
           <h2 className="text-lg font-bold text-[#ededed] flex items-center gap-2">
-            <GitFork className="w-5 h-5 text-indigo-400" /> Templates & Automações
+            <GitFork className="w-5 h-5 text-indigo-400" /> Central de Automações
           </h2>
           <p className="text-xs text-white/40">
-            Crie fluxos de trabalho sem código integrando geração de conteúdo, thumbnails, agendamento e relatórios
+            Fluxos, gatilhos, webhooks e execuções programadas em um construtor visual escalável
           </p>
         </div>
 

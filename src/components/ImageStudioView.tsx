@@ -12,6 +12,9 @@ import {
   Maximize2,
   Check,
   Zap,
+  Heart,
+  History,
+  LayoutTemplate,
 } from 'lucide-react';
 import { useOperations } from '../context/OperationsContext';
 
@@ -301,6 +304,7 @@ export const ImageStudioView: React.FC = () => {
           </div>
         </div>
       </div>
+      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">{[[Maximize2, 'Expandir imagem', 'Amplie o canvas com preenchimento por IA'], [Heart, 'Favoritos', 'Salve referências e resultados preferidos'], [History, 'Histórico', 'Revise prompts, variações e versões'], [LayoutTemplate, 'Templates e biblioteca', 'Reutilize estilos e identidades visuais']].map(([Icon, title, description]) => { const ItemIcon = Icon as React.ComponentType<{ className?: string }>; return <button key={String(title)} className="rounded-xl border border-white/[0.06] bg-[#182126] p-4 text-left hover:border-[#8bd132]/25"><ItemIcon className="h-4 w-4 text-[#8bd132]" /><h3 className="mt-3 text-[10px] font-semibold text-white">{String(title)}</h3><p className="mt-1 text-[8px] text-[#78848a]">{String(description)}</p></button>; })}</div>
     </div>
   );
 };

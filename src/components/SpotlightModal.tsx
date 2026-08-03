@@ -50,14 +50,14 @@ export const SpotlightModal: React.FC<SpotlightModalProps> = ({
       title: '5 Regras da IA Enterprise em 2026',
       subtitle: 'Post Carrossel agendado para Instagram',
       type: 'post',
-      tabToNavigate: 'studio',
+      tabToNavigate: 'create-copy',
     },
     {
       id: 's2',
       title: 'Campanha de Lançamento Q3',
       subtitle: 'Estratégia multicanal com 5 conteúdos ativos',
       type: 'campaign',
-      tabToNavigate: 'strategy',
+      tabToNavigate: 'ai-chat',
     },
     {
       id: 's3',
@@ -85,7 +85,7 @@ export const SpotlightModal: React.FC<SpotlightModalProps> = ({
       title: 'Gerador de Capa & Banners HD',
       subtitle: 'Criar imagem com nano banana / Gemini',
       type: 'action',
-      tabToNavigate: 'studio',
+      tabToNavigate: 'create-image',
     },
     {
       id: 's7',

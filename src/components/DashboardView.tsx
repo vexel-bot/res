@@ -19,6 +19,10 @@ import {
   Plus,
   Send,
   Sparkles,
+  Cpu,
+  Link2,
+  Workflow,
+  Activity,
 } from 'lucide-react';
 import { NavigationTab, Post, AIActionSuggestion, Workspace } from '../types';
 import { useOperations } from '../context/OperationsContext';
@@ -137,6 +141,15 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ onNewPost, onNavig
               );
             })}
           </div>
+
+          <section className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+            {[
+              { label: 'Contas conectadas', value: '8 canais', detail: '7 sincronizados agora', icon: Link2, tab: 'connected-accounts' as const },
+              { label: 'Automações', value: '5 ativas', detail: '52 execuções este mês', icon: Workflow, tab: 'automations' as const },
+              { label: 'Consumo de IA', value: '68%', detail: '34.120 de 50.000 créditos', icon: Cpu, tab: 'subscription' as const },
+              { label: 'Atividade recente', value: '24 ações', detail: 'Última há 3 minutos', icon: Activity, tab: 'audit-logs' as const },
+            ].map(({ label, value, detail, icon: Icon, tab }) => <button key={label} onClick={() => onNavigate(tab)} className="vexel-card flex items-center gap-3 p-3.5 text-left transition hover:border-[#8bd132]/25"><span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-[#8bd132]/[0.07]"><Icon className="h-4 w-4 text-[#8bd132]" /></span><span className="min-w-0"><span className="block text-[8px] text-[#7e898f]">{label}</span><strong className="mt-0.5 block text-[11px] font-medium text-white">{value}</strong><span className="block truncate text-[7px] text-[#69757b]">{detail}</span></span></button>)}
+          </section>
 
           <section className="vexel-card overflow-hidden p-[18px]">
             <div className="mb-3 flex items-center justify-between">
