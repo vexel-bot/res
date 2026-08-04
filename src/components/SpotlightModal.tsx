@@ -176,13 +176,10 @@ export const SpotlightModal: React.FC<SpotlightModalProps> = ({
           )}
         </div>
 
-        {/* Keyboard Shortcuts Footer */}
+        {/* Modal Footer */}
         <div className="p-3 border-t border-white/5 bg-white/[0.01] flex items-center justify-between text-[11px] text-white/40">
-          <div className="flex items-center gap-3">
-            <span><kbd className="bg-white/10 px-1.5 py-0.5 rounded font-mono text-white">↑↓</kbd> Navegar</span>
-            <span><kbd className="bg-white/10 px-1.5 py-0.5 rounded font-mono text-white">↵</kbd> Selecionar</span>
-          </div>
-          <span>Mecanismo de busca em destaque</span>
+          <span>Clique em um item para acessar</span>
+          <span>Mecanismo de busca Clicko Studio</span>
         </div>
       </div>
     </div>

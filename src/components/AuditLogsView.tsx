@@ -41,7 +41,7 @@ export const AuditLogsView: React.FC = () => {
 
     <div className="flex flex-wrap gap-2">
       <label className="flex h-10 min-w-[260px] flex-1 items-center gap-2 rounded-lg border border-white/[0.07] bg-[#182126] px-3"><Search className="h-4 w-4 text-[#748087]" /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Pesquisar usuário, ação ou detalhe…" className="w-full bg-transparent text-[9px] text-white outline-none" /></label>
-      <label className="flex h-10 items-center gap-2 rounded-lg border border-white/[0.07] bg-[#182126] px-3"><Filter className="h-3.5 w-3.5 text-[#748087]" /><select value={moduleFilter} onChange={(event) => setModuleFilter(event.target.value)} className="bg-transparent text-[9px] text-white outline-none"><option value="all">Todos os módulos</option>{modules.map((module) => <option key={module} value={module}>{localizeAuditToken(module)}</option>)}</select></label>
+      <label className="flex h-10 items-center gap-2 rounded-lg border border-white/[0.07] bg-[#182126] px-3"><Filter className="h-3.5 w-3.5 text-[#748087]" /><select value={moduleFilter} onChange={(event) => setModuleFilter(event.target.value)} className="bg-transparent text-[9px] text-white outline-none"><option value="all">Todos os módulos</option>{modules.map((module) => <option key={String(module)} value={String(module)}>{localizeAuditToken(String(module))}</option>)}</select></label>
     </div>
 
     <section className="overflow-hidden rounded-xl border border-white/[0.065] bg-[#111111]">

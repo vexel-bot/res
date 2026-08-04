@@ -73,13 +73,13 @@ export const ImageStudioView: React.FC = () => {
   return (
     <div className="p-6 space-y-6 max-w-7xl mx-auto">
       {/* Top Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/5 pb-4">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/[0.06] pb-4">
         <div>
-          <h2 className="text-lg font-bold text-[#ededed] flex items-center gap-2">
-            <ImageIcon className="w-5 h-5 text-indigo-400" /> Estúdio de Geração e Edição de Imagens IA
+          <h2 className="text-lg font-bold text-white flex items-center gap-2">
+            <ImageIcon className="w-5 h-5 text-[#8bd132]" /> Estúdio de Geração e Edição de Imagens IA
           </h2>
-          <p className="text-xs text-white/40">
-            Crie thumbnails, banners, capas e mockups em alta definição sem precisar de softwares externos
+          <p className="text-xs text-[#78858e]">
+            Crie thumbnails, banners, capas e mockups em alta definição com facilidade
           </p>
         </div>
 
@@ -91,7 +91,7 @@ export const ImageStudioView: React.FC = () => {
               link.download = 'clicko-ai-studios-asset.jpg';
               link.click();
             }}
-            className="px-4 py-2 rounded-xl bg-white/[0.03] hover:bg-white/10 text-[#ededed] font-bold text-xs flex items-center gap-1.5 border border-white/5 shadow-sm"
+            className="px-4 py-2 rounded-xl bg-[#8bd132] hover:bg-[#9be24d] text-[#0b1208] font-bold text-xs flex items-center gap-1.5 transition-all shadow-md shadow-[#8bd132]/20"
           >
             <Download className="w-4 h-4" /> Exportar Imagem
           </button>
@@ -101,30 +101,30 @@ export const ImageStudioView: React.FC = () => {
       {/* Main Studio Workspace */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Controls Column */}
-        <div className="space-y-5 bg-[#0A0A0A] border border-white/5 p-5 rounded-2xl flex flex-col justify-between">
+        <div className="space-y-5 bg-[#0a0e11] border border-white/[0.06] p-5 rounded-xl shadow-xl shadow-black/40 flex flex-col justify-between">
           <div className="space-y-4">
             {/* Tool Tabs */}
-            <div className="flex items-center p-1 rounded-xl bg-white/[0.03] border border-white/5">
+            <div className="flex items-center p-1 rounded-xl bg-[#06080a] border border-white/[0.06]">
               <button
                 onClick={() => setActiveTool('generate')}
-                className={`flex-1 py-1.5 text-[11px] font-bold rounded-lg ${
-                  activeTool === 'generate' ? 'bg-indigo-600 text-white' : 'text-white/40'
+                className={`flex-1 py-1.5 text-[11px] font-bold rounded-lg transition-all ${
+                  activeTool === 'generate' ? 'bg-[#8bd132] text-[#0e170a]' : 'text-[#78858e] hover:text-white'
                 }`}
               >
                 Gerar IA
               </button>
               <button
                 onClick={() => setActiveTool('text')}
-                className={`flex-1 py-1.5 text-[11px] font-bold rounded-lg ${
-                  activeTool === 'text' ? 'bg-indigo-600 text-white' : 'text-white/40'
+                className={`flex-1 py-1.5 text-[11px] font-bold rounded-lg transition-all ${
+                  activeTool === 'text' ? 'bg-[#8bd132] text-[#0e170a]' : 'text-[#78858e] hover:text-white'
                 }`}
               >
                 Texto Layer
               </button>
               <button
                 onClick={() => setActiveTool('presets')}
-                className={`flex-1 py-1.5 text-[11px] font-bold rounded-lg ${
-                  activeTool === 'presets' ? 'bg-indigo-600 text-white' : 'text-white/40'
+                className={`flex-1 py-1.5 text-[11px] font-bold rounded-lg transition-all ${
+                  activeTool === 'presets' ? 'bg-[#8bd132] text-[#0e170a]' : 'text-[#78858e] hover:text-white'
                 }`}
               >
                 Modelos
@@ -134,23 +134,23 @@ export const ImageStudioView: React.FC = () => {
             {activeTool === 'generate' && (
               <div className="space-y-4 text-xs">
                 <div>
-                  <label className="block text-neutral-300 font-semibold mb-1">Prompt da Imagem</label>
+                  <label className="block text-[#a0aab0] font-semibold mb-1">Prompt da Imagem</label>
                   <textarea
                     value={prompt}
                     onChange={(e) => setPrompt(e.target.value)}
                     rows={4}
-                    className="w-full bg-white/[0.03] border border-white/5 rounded-xl p-3 text-[#ededed] focus:outline-none focus:border-indigo-500/50 text-xs resize-none"
+                    className="w-full bg-[#050709] border border-white/[0.08] rounded-xl p-3 text-white focus:outline-none focus:border-[#8bd132]/50 text-xs resize-none"
                     placeholder="Descreva detalhadamente o elemento visual..."
                   />
                 </div>
 
                 <div>
-                  <label className="block text-neutral-300 font-semibold mb-1">Proporção (Aspect Ratio)</label>
+                  <label className="block text-[#a0aab0] font-semibold mb-1">Proporção (Aspect Ratio)</label>
                   <div className="grid grid-cols-4 gap-2">
                     {[
                       { id: '1:1', label: '1:1 (Post)' },
                       { id: '16:9', label: '16:9 (Banner)' },
-                      { id: '9:16', label: '9:16 (História)' },
+                      { id: '9:16', label: '9:16 (Story)' },
                       { id: '4:5', label: '4:5 (Insta)' },
                     ].map((r) => (
                       <button
@@ -159,8 +159,8 @@ export const ImageStudioView: React.FC = () => {
                         onClick={() => setAspectRatio(r.id as any)}
                         className={`p-2 rounded-xl text-[10px] font-bold border transition-all ${
                           aspectRatio === r.id
-                            ? 'bg-indigo-600/30 text-indigo-300 border-indigo-500/40'
-                            : 'bg-white/[0.03] text-white/40 border-white/5'
+                            ? 'bg-[#8bd132]/10 text-[#8bd132] border-[#8bd132]/40 font-bold'
+                            : 'bg-[#050709] text-[#78858e] border-white/[0.06] hover:text-white'
                         }`}
                       >
                         {r.label}

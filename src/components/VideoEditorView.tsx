@@ -33,12 +33,12 @@ export const VideoEditorView: React.FC = () => {
   return (
     <div className="p-6 space-y-6 max-w-7xl mx-auto">
       {/* Top Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/5 pb-4">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/[0.06] pb-4">
         <div>
-          <h2 className="text-lg font-bold text-[#ededed] flex items-center gap-2">
-            <Video className="w-5 h-5 text-indigo-400" /> Editor de Vídeos Inteligente
+          <h2 className="text-lg font-bold text-white flex items-center gap-2">
+            <Video className="w-5 h-5 text-[#8bd132]" /> Editor de Vídeos Inteligente
           </h2>
-          <p className="text-xs text-white/40">
+          <p className="text-xs text-[#78858e]">
             Cortes automáticos de silêncio, legendas dinâmicas em estilo neon e narração sintética
           </p>
         </div>
@@ -46,12 +46,12 @@ export const VideoEditorView: React.FC = () => {
         <div className="flex items-center gap-2">
           <button
             onClick={() => setIsPlaying(!isPlaying)}
-            className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs flex items-center gap-1.5 shadow-lg shadow-indigo-600/20"
+            className="px-4 py-2 rounded-xl bg-[#0d1216] border border-white/[0.08] hover:bg-white/[0.06] text-white font-bold text-xs flex items-center gap-1.5 transition-all shadow-sm"
           >
-            {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
+            {isPlaying ? <Pause className="w-4 h-4 text-[#8bd132]" /> : <Play className="w-4 h-4 text-[#8bd132]" />}
             <span>{isPlaying ? 'Pausar' : 'Reproduzir Preview'}</span>
           </button>
-          <button className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center gap-1.5 shadow-lg shadow-emerald-600/20">
+          <button className="px-4 py-2 rounded-xl bg-[#8bd132] hover:bg-[#9be24d] text-[#0b1208] font-bold text-xs flex items-center gap-1.5 transition-all shadow-md shadow-[#8bd132]/20">
             <Download className="w-4 h-4" /> Exportar Vídeo HD
           </button>
         </div>

@@ -46,6 +46,8 @@ import {
   MonitorSmartphone,
 } from 'lucide-react';
 
+import { useGovernance } from '../context/GovernanceContext';
+
 type SectionId =
   | 'account'
   | 'company'
@@ -186,7 +188,7 @@ const sections: Array<{
   { id: 'company', label: 'Empresa', description: 'Identidade e dados corporativos', icon: Building2 },
   { id: 'platform', label: 'Plataforma', description: 'Tema, APIs e integrações gerais', icon: PlugZap },
   { id: 'security', label: 'Segurança', description: 'Senha, 2FA e sessões', icon: ShieldCheck },
-  { id: 'preferences', label: 'Preferências', description: 'Experiência, notificações e atalhos', icon: SlidersHorizontal },
+  { id: 'preferences', label: 'Preferências', description: 'Experiência e notificações do sistema', icon: SlidersHorizontal },
   { id: 'personal-ai', label: 'IA Pessoal', description: 'Comportamento do assistente', icon: Bot },
   { id: 'billing', label: 'Plano e Assinatura', description: 'Uso, cobrança e assinatura', icon: CreditCard },
   { id: 'support', label: 'Ajuda e Suporte', description: 'Documentação e atendimento', icon: LifeBuoy },
@@ -307,8 +309,24 @@ const ToggleRow: React.FC<{ title: string; description: string; checked: boolean
 );
 
 export const SettingsView: React.FC = () => {
+  const { environmentMode } = useGovernance();
+  const isPersonal = environmentMode === 'personal';
+
   const [activeSection, setActiveSection] = React.useState<SectionId>('account');
   const [query, setQuery] = React.useState('');
+
+  const visibleSections = React.useMemo(() => {
+    if (isPersonal) {
+      return sections.filter((s) => s.id !== 'company');
+    }
+    return sections;
+  }, [isPersonal]);
+
+  React.useEffect(() => {
+    if (isPersonal && activeSection === 'company') {
+      setActiveSection('account');
+    }
+  }, [isPersonal, activeSection]);
   const [settings, setSettings] = React.useState<PersonalSettings>(loadSettings);
   const [initialAuxiliary] = React.useState<AuxiliarySettings>(loadAuxiliarySettings);
   const [dirty, setDirty] = React.useState(false);
@@ -324,8 +342,8 @@ export const SettingsView: React.FC = () => {
   const [notifications, setNotifications] = React.useState(initialAuxiliary.notifications);
   const [copied, setCopied] = React.useState(false);
 
-  const currentSection = sections.find((section) => section.id === activeSection) || sections[0];
-  const filteredSections = sections.filter((section) => `${section.label} ${section.description}`.toLowerCase().includes(query.toLowerCase()));
+  const currentSection = visibleSections.find((section) => section.id === activeSection) || visibleSections[0];
+  const filteredSections = visibleSections.filter((section) => `${section.label} ${section.description}`.toLowerCase().includes(query.toLowerCase()));
 
   const patchSettings = <K extends keyof PersonalSettings>(group: K, values: Partial<PersonalSettings[K]>) => {
     setSettings((current) => ({ ...current, [group]: { ...current[group], ...values } }));
@@ -467,11 +485,6 @@ export const SettingsView: React.FC = () => {
         <div className="flex items-center gap-3"><Bell className="h-4 w-4 text-[#8bd132]" /><div><h3 className="text-[12px] font-semibold text-white">Notificações</h3><p className="mt-0.5 text-[9px] text-[#748087]">Gerencie canais e eventos sem sair de Preferências.</p></div></div>
         {renderNotifications()}
       </section>
-
-      <section className="space-y-4 border-t border-white/[0.055] pt-6">
-        <div className="flex items-center gap-3"><Keyboard className="h-4 w-4 text-[#8bd132]" /><div><h3 className="text-[12px] font-semibold text-white">Atalhos</h3><p className="mt-0.5 text-[9px] text-[#748087]">Personalize comandos e acessos rápidos.</p></div></div>
-        {renderShortcuts()}
-      </section>
     </div>
   );
 
@@ -495,11 +508,6 @@ export const SettingsView: React.FC = () => {
       </SettingsCard>
     </div>
   );
-
-  const renderShortcuts = () => {
-    const shortcutRows = [['Busca global', '⌘ K'], ['Novo conteúdo', '⌘ N'], ['Abrir IA pessoal', '⌘ I'], ['Ir para calendário', 'G C'], ['Ações rápidas', '⌘ /']];
-    return <div className="space-y-4"><SettingsCard title="Atalhos de teclado" description="Clique no comando para definir uma nova combinação."><div className="divide-y divide-white/[0.045]">{shortcutRows.map(([action, keys]) => <div key={action} className="flex items-center justify-between py-3"><span className="text-[10px] text-[#d1d6d8]">{action}</span><button className="min-w-[68px] rounded-md border border-white/[0.08] bg-[#11191d] px-2.5 py-1.5 font-mono text-[9px] text-[#aeb6ba]">{keys}</button></div>)}</div></SettingsCard><div className="grid gap-4 lg:grid-cols-2"><SettingsCard title="Barra de acesso rápido"><div className="space-y-2">{[['Painel', LayoutGrid], ['Calendário', CalendarDays], ['IA Pessoal', Sparkles], ['Desempenho', Activity]].map(([label, Icon]) => { const IconComponent = Icon as React.ComponentType<{ className?: string }>; return <button key={String(label)} className="flex w-full items-center gap-3 rounded-lg border border-white/[0.055] bg-[#11191d] p-3 text-left"><IconComponent className="h-4 w-4 text-[#8bd132]" /><span className="flex-1 text-[10px] text-white">{String(label)}</span><span className="text-[8px] text-[#788288]">Fixado</span></button>; })}</div></SettingsCard><SettingsCard title="Comandos personalizados"><div className="rounded-lg border border-dashed border-white/10 p-5 text-center"><Zap className="mx-auto h-5 w-5 text-[#8bd132]" /><p className="mt-2 text-[10px] text-[#8b959a]">Crie sequências para tarefas repetitivas.</p><button className="mt-4 flex items-center gap-1.5 mx-auto rounded-lg bg-[#293339] px-3 py-2 text-[9px] text-white"><Plus className="h-3.5 w-3.5" />Novo comando</button></div></SettingsCard></div></div>;
-  };
 
   const renderBilling = () => (
     <div className="space-y-4"><SettingsCard><div className="flex flex-wrap items-center gap-5"><span className="grid h-14 w-14 place-items-center rounded-xl bg-[#8bd132]/10 text-[#8bd132]"><Sparkles className="h-6 w-6" /></span><div className="flex-1"><div className="flex items-center gap-2"><h3 className="text-[16px] font-semibold text-white">Plano Profissional</h3><span className="rounded-full bg-[#8bd132]/10 px-2 py-1 text-[8px] text-[#8bd132]">Ativo</span></div><p className="mt-1 text-[9px] text-[#788389]">R$ 149/mês · próxima cobrança em 18 de agosto de 2026</p></div><button className="rounded-lg bg-[#8bd132] px-4 py-2.5 text-[10px] font-semibold text-[#14200e]">Mudar para plano superior</button></div></SettingsCard><div className="grid gap-4 lg:grid-cols-3">{[['Conteúdos', '320 / 500', 64], ['Armazenamento', '38 GB / 100 GB', 38], ['Requisições IA', '8.240 / 25.000', 33]].map(([label, value, percent]) => <SettingsCard key={String(label)}><div className="text-[10px] text-[#8d979c]">{label}</div><div className="mt-2 text-[16px] font-medium text-white">{value}</div><div className="mt-4 h-1.5 rounded-full bg-[#2b353a]"><div className="h-full rounded-full bg-[#8bd132]" style={{ width: `${percent}%` }} /></div></SettingsCard>)}</div><SettingsCard title="Histórico de pagamentos"><div className="divide-y divide-white/[0.045]">{[['01 ago. 2026', 'Plano Profissional', 'R$ 149,00'], ['01 jul. 2026', 'Plano Profissional', 'R$ 149,00'], ['01 jun. 2026', 'Plano Profissional', 'R$ 149,00']].map(([date, item, amount]) => <div key={date} className="grid grid-cols-[120px_1fr_auto_auto] items-center py-3 text-[9px]"><span className="text-[#7d878d]">{date}</span><span className="text-white">{item}</span><span className="mr-5 text-[#b8bec1]">{amount}</span><button className="text-[#8bd132]">Recibo</button></div>)}</div></SettingsCard><div className="flex gap-4 text-[9px]"><button className="text-[#899399] hover:text-white">Alterar forma de pagamento</button><button className="text-[#899399] hover:text-white">Mudar para plano inferior</button><button className="text-red-400/70 hover:text-red-400">Cancelar assinatura</button></div></div>

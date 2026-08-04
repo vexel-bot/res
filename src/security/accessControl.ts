@@ -34,8 +34,17 @@ const tabModules: Partial<Record<NavigationTab, WorkspaceModule>> = {
   workspace: 'workspace', brain: 'brain', strategy: 'strategy', studio: 'studio', library: 'library',
 };
 
-export function canAccessNavigation(user: Pick<WorkspaceMember, 'role' | 'modules'> | undefined, tab: NavigationTab) {
+const corporateOnlyTabs = new Set<NavigationTab>(['approvals', 'team', 'automations', 'workspace']);
+
+export function canAccessNavigation(
+  user: Pick<WorkspaceMember, 'role' | 'modules'> | undefined,
+  tab: NavigationTab,
+  environmentMode: 'company' | 'personal' = 'company'
+) {
   if (!user) return false;
+  if (environmentMode === 'personal' && corporateOnlyTabs.has(tab)) {
+    return false;
+  }
   if (user.role === 'master') return true;
   if (masterOnlyTabs.has(tab)) return false;
   const requiredModule = tabModules[tab];

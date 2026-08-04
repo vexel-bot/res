@@ -12,9 +12,13 @@ import type {
 } from '../types';
 import { canAccessNavigation } from '../security/accessControl';
 
+export type EnvironmentMode = 'company' | 'personal';
+
 type Feedback = { type: 'success' | 'error'; message: string } | null;
 
 type GovernanceContextValue = {
+  environmentMode: EnvironmentMode;
+  setEnvironmentMode: (mode: EnvironmentMode) => void;
   loading: boolean;
   feedback: Feedback;
   currentUser?: WorkspaceMember;
@@ -38,19 +42,28 @@ type GovernanceContextValue = {
 
 const GovernanceContext = React.createContext<GovernanceContextValue | null>(null);
 
-const workspaceId = 'ws-1';
-
-function getUserId() {
-  return window.localStorage.getItem('clicko-studio:session-user') || 'usr-master';
+function getStoredEnvironment(): EnvironmentMode {
+  const stored = window.localStorage.getItem('clicko-studio:environment');
+  return stored === 'personal' ? 'personal' : 'company';
 }
 
-async function request<T>(path: string, init?: RequestInit): Promise<T> {
+function getActiveWorkspaceId(envMode: EnvironmentMode) {
+  return envMode === 'personal' ? 'ws-personal' : 'ws-1';
+}
+
+function getUserId(envMode: EnvironmentMode) {
+  const stored = window.localStorage.getItem('clicko-studio:session-user');
+  if (stored) return stored;
+  return envMode === 'personal' ? 'usr-master-personal' : 'usr-master';
+}
+
+async function request<T>(path: string, envMode: EnvironmentMode, init?: RequestInit): Promise<T> {
   const response = await fetch(`/api/governance${path}`, {
     ...init,
     headers: {
       'Content-Type': 'application/json',
-      'x-workspace-id': workspaceId,
-      'x-user-id': getUserId(),
+      'x-workspace-id': getActiveWorkspaceId(envMode),
+      'x-user-id': getUserId(envMode),
       ...init?.headers,
     },
   });
@@ -63,6 +76,7 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
 }
 
 export const GovernanceProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [environmentMode, setEnvironmentModeState] = React.useState<EnvironmentMode>(getStoredEnvironment);
   const [loading, setLoading] = React.useState(true);
   const [feedback, setFeedback] = React.useState<Feedback>(null);
   const [session, setSession] = React.useState<GovernanceSession>();
@@ -73,20 +87,26 @@ export const GovernanceProvider: React.FC<{ children: React.ReactNode }> = ({ ch
   const [approvals, setApprovals] = React.useState<ContentApprovalItem[]>([]);
   const [auditLogs, setAuditLogs] = React.useState<AuditLogEntry[]>([]);
 
+  const setEnvironmentMode = React.useCallback((mode: EnvironmentMode) => {
+    window.localStorage.setItem('clicko-studio:environment', mode);
+    setEnvironmentModeState(mode);
+    window.dispatchEvent(new CustomEvent('clicko:environment-change', { detail: { mode } }));
+  }, []);
+
   const refresh = React.useCallback(async () => {
     setLoading(true);
     try {
-      const nextSession = await request<GovernanceSession>('/session');
-      const nextWorkspace = await request<GovernanceWorkspace>('/workspace');
+      const nextSession = await request<GovernanceSession>('/session', environmentMode);
+      const nextWorkspace = await request<GovernanceWorkspace>('/workspace', environmentMode);
       setSession(nextSession);
       setWorkspace(nextWorkspace);
       if (nextSession.currentUser.role === 'master') {
         const [nextUsers, nextPlans, nextSubscription, nextApprovals, nextAuditLogs] = await Promise.all([
-          request<WorkspaceMember[]>('/users'),
-          request<SaaSPlan[]>('/plans'),
-          request<WorkspaceSubscription>('/subscription'),
-          request<ContentApprovalItem[]>('/approvals'),
-          request<AuditLogEntry[]>('/audit-logs'),
+          request<WorkspaceMember[]>('/users', environmentMode),
+          request<SaaSPlan[]>('/plans', environmentMode),
+          request<WorkspaceSubscription>('/subscription', environmentMode),
+          request<ContentApprovalItem[]>('/approvals', environmentMode),
+          request<AuditLogEntry[]>('/audit-logs', environmentMode),
         ]);
         setUsers(nextUsers);
         setPlans(nextPlans);
@@ -105,7 +125,7 @@ export const GovernanceProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [environmentMode]);
 
   React.useEffect(() => { void refresh(); }, [refresh]);
 
@@ -122,45 +142,46 @@ export const GovernanceProvider: React.FC<{ children: React.ReactNode }> = ({ ch
   };
 
   const inviteUser: GovernanceContextValue['inviteUser'] = async (payload) => Boolean(await run(
-    () => request<WorkspaceMember>('/invites', { method: 'POST', body: JSON.stringify(payload) }),
+    () => request<WorkspaceMember>('/invites', environmentMode, { method: 'POST', body: JSON.stringify(payload) }),
     'Convite enviado com sucesso.',
     (member) => setUsers((current) => [...current, member]),
   ));
 
   const updateUser: GovernanceContextValue['updateUser'] = async (userId, payload) => Boolean(await run(
-    () => request<WorkspaceMember>(`/users/${userId}`, { method: 'PATCH', body: JSON.stringify(payload) }),
+    () => request<WorkspaceMember>(`/users/${userId}`, environmentMode, { method: 'PATCH', body: JSON.stringify(payload) }),
     'Usuário atualizado.',
     (member) => setUsers((current) => current.map((item) => item.id === member.id ? member : item)),
   ));
 
   const deleteUser: GovernanceContextValue['deleteUser'] = async (userId) => {
-    const result = await run(() => request<void>(`/users/${userId}`, { method: 'DELETE' }), 'Usuário removido.', () => setUsers((current) => current.filter((item) => item.id !== userId)));
+    const result = await run(() => request<void>(`/users/${userId}`, environmentMode, { method: 'DELETE' }), 'Usuário removido.', () => setUsers((current) => current.filter((item) => item.id !== userId)));
     return result !== null;
   };
 
   const resendInvite: GovernanceContextValue['resendInvite'] = async (userId) => Boolean(await run(
-    () => request<WorkspaceMember>(`/users/${userId}/resend-invite`, { method: 'POST' }),
+    () => request<WorkspaceMember>(`/users/${userId}/resend-invite`, environmentMode, { method: 'POST' }),
     'Convite reenviado e prazo renovado.',
     (member) => setUsers((current) => current.map((item) => item.id === member.id ? member : item)),
   ));
 
   const changePlan: GovernanceContextValue['changePlan'] = async (planId) => Boolean(await run(
-    () => request<{ subscription: WorkspaceSubscription; workspace: GovernanceWorkspace }>('/subscription', { method: 'PATCH', body: JSON.stringify({ planId }) }),
+    () => request<{ subscription: WorkspaceSubscription; workspace: GovernanceWorkspace }>('/subscription', environmentMode, { method: 'PATCH', body: JSON.stringify({ planId }) }),
     'Plano atualizado com sucesso.',
     (result) => { setSubscription(result.subscription); setWorkspace(result.workspace); },
   ));
 
   const approvalAction: GovernanceContextValue['approvalAction'] = async (approvalId, action, comment, scheduledAt) => run(
-    () => request<ContentApprovalItem>(`/approvals/${approvalId}/actions`, { method: 'POST', body: JSON.stringify({ action, comment, scheduledAt }) }),
+    () => request<ContentApprovalItem>(`/approvals/${approvalId}/actions`, environmentMode, { method: 'POST', body: JSON.stringify({ action, comment, scheduledAt }) }),
     action === 'comment' ? 'Comentário adicionado.' : 'Fluxo de aprovação atualizado.',
     (approval) => setApprovals((current) => current.map((item) => item.id === approval.id ? approval : item)),
   );
 
   const currentUser = session?.currentUser;
   const value: GovernanceContextValue = {
+    environmentMode, setEnvironmentMode,
     loading, feedback, currentUser, workspace, users, plans, subscription, approvals, auditLogs,
     isMaster: currentUser?.role === 'master',
-    canAccess: (tab) => canAccessNavigation(currentUser, tab),
+    canAccess: (tab) => canAccessNavigation(currentUser, tab, environmentMode),
     clearFeedback: () => setFeedback(null),
     inviteUser, updateUser, deleteUser, resendInvite, changePlan, approvalAction, refresh,
   };

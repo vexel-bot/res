@@ -75,29 +75,29 @@ export const EditorialCalendarView: React.FC<EditorialCalendarViewProps> = ({
       {activeCampaign && <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-[#8bd132]/20 bg-[#8bd132]/[0.055] p-3"><div><span className="text-[8px] uppercase tracking-[0.16em] text-[#8bd132]">Estratégia ativa no calendário</span><p className="mt-1 text-[10px] font-medium text-white">{activeCampaign.name}</p></div><p className="max-w-xl text-[9px] text-[#9ca6ab]">{activeCampaign.objective}</p></div>}
 
       {/* Calendar Header Bar */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/5 pb-4">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/[0.06] pb-4">
         <div>
-          <h2 className="text-lg font-bold text-[#ededed] flex items-center gap-2">
-            <CalendarIcon className="w-5 h-5 text-indigo-400" /> Calendário Editorial Inteligente
+          <h2 className="text-lg font-bold text-white flex items-center gap-2">
+            <CalendarIcon className="w-5 h-5 text-[#8bd132]" /> Calendário Editorial Inteligente
           </h2>
-          <p className="text-xs text-white/40">
-            Visualização completa no estilo Google Calendar com arrasto inteligente e sugestão de melhores horários
+          <p className="text-xs text-[#78858e]">
+            Planejamento visual completo com organização em lote e melhores horários de publicação
           </p>
         </div>
 
         <div className="flex flex-wrap items-center gap-3">
-          <select className="rounded-xl border border-white/5 bg-white/[0.03] px-3 py-2 text-[10px] text-[#ededed] outline-none"><option>Todos os clientes</option><option>Clicko Studio</option></select>
-          <select className="rounded-xl border border-white/5 bg-white/[0.03] px-3 py-2 text-[10px] text-[#ededed] outline-none"><option>Todos os projetos</option><option>Lançamento Q3</option></select>
-          <select className="rounded-xl border border-white/5 bg-white/[0.03] px-3 py-2 text-[10px] text-[#ededed] outline-none"><option>Todas as contas</option><option>@clickostudio</option><option>Clicko Studio · LinkedIn</option></select>
+          <select className="rounded-xl border border-white/[0.08] bg-[#0d1216] px-3 py-2 text-[10px] text-white outline-none"><option>Todos os clientes</option><option>Clicko Studio</option></select>
+          <select className="rounded-xl border border-white/[0.08] bg-[#0d1216] px-3 py-2 text-[10px] text-white outline-none"><option>Todos os projetos</option><option>Lançamento Q3</option></select>
+          <select className="rounded-xl border border-white/[0.08] bg-[#0d1216] px-3 py-2 text-[10px] text-white outline-none"><option>Todas as contas</option><option>@clickostudio</option><option>Clicko Studio · LinkedIn</option></select>
           {/* Filter by Platform */}
-          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/[0.03] border border-white/5 text-xs text-neutral-300">
-            <Filter className="w-3.5 h-3.5 text-indigo-400" />
+          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#0d1216] border border-white/[0.08] text-xs text-[#8e989e]">
+            <Filter className="w-3.5 h-3.5 text-[#8bd132]" />
             <select
               value={filterPlatform}
               onChange={(e) => setFilterPlatform(e.target.value)}
-              className="bg-transparent focus:outline-none text-[#ededed] cursor-pointer"
+              className="bg-transparent focus:outline-none text-white cursor-pointer"
             >
-              <option value="all" className="bg-[#050505]">Todas as Redes</option>
+              <option value="all" className="bg-[#080b0e]">Todas as Redes</option>
               <option value="instagram" className="bg-[#050505]">Instagram</option>
               <option value="linkedin" className="bg-[#050505]">LinkedIn</option>
               <option value="tiktok" className="bg-[#050505]">TikTok</option>

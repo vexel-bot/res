@@ -9,13 +9,28 @@ import {
   Share2,
   RefreshCw,
   ArrowUpRight,
-  HelpCircle,
+  Filter,
+  Users,
+  Building,
+  Target,
+  FolderKanban,
+  Share,
 } from 'lucide-react';
 import { useOperations } from '../context/OperationsContext';
+import { useGovernance } from '../context/GovernanceContext';
 
 export const AnalyticsView: React.FC = () => {
   const { brain, activeCampaign, createCampaign } = useOperations();
+  const { environmentMode, users } = useGovernance();
+  const isPersonal = environmentMode === 'personal';
+
   const [period, setPeriod] = React.useState('Últimos 30 Dias');
+  const [selectedClient, setSelectedClient] = React.useState('Todos os Clientes');
+  const [selectedTeam, setSelectedTeam] = React.useState('Toda a Equipe');
+  const [selectedCollaborator, setSelectedCollaborator] = React.useState('Todos os Colaboradores');
+  const [selectedNetwork, setSelectedNetwork] = React.useState('Todas as Redes');
+  const [selectedCampaign, setSelectedCampaign] = React.useState('Todas as Campanhas');
+
   const [aiAnalysis, setAiAnalysis] = React.useState<any>(null);
   const [isLoadingAnalysis, setIsLoadingAnalysis] = React.useState(false);
 
@@ -27,9 +42,12 @@ export const AnalyticsView: React.FC = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           period,
+          environmentMode,
+          selectedClient,
+          selectedCollaborator,
           reachChange: 18.4,
           engagementRate: 6.8,
-          topPost: '5 Regras da IA corporativa em 2026',
+          topPost: isPersonal ? 'Artigo autoral sobre IA & Engenharia' : '5 Regras da IA corporativa em 2026',
           brainContext: brain,
           strategyContext: activeCampaign,
         }),
@@ -46,7 +64,7 @@ export const AnalyticsView: React.FC = () => {
 
   React.useEffect(() => {
     fetchAiAnalysis();
-  }, [period]);
+  }, [period, environmentMode, selectedClient, selectedCollaborator]);
 
   const turnInsightIntoCampaign = () => {
     if (!aiAnalysis) return;
@@ -72,20 +90,23 @@ export const AnalyticsView: React.FC = () => {
   return (
     <div className="p-6 space-y-6 max-w-7xl mx-auto">
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/5 pb-4">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/[0.06] pb-4">
         <div>
-          <h2 className="text-lg font-bold text-[#ededed] flex items-center gap-2">
-            <BarChart3 className="w-5 h-5 text-indigo-400" /> Análises contextuais explicadas por IA
+          <h2 className="text-lg font-bold text-white flex items-center gap-2">
+            <BarChart3 className="w-5 h-5 text-[#8bd132]" />
+            {isPersonal ? 'Analytics Pessoal & Performance Autoral' : 'Analytics Corporativo & Inteligência de Operação'}
           </h2>
-          <p className="text-xs text-white/40">
-            A IA analisa a oscilação de métricas e traduz os números em justificativas estratégicas e táticas acionáveis
+          <p className="text-xs text-[#78858e]">
+            {isPersonal
+              ? 'Acompanhe seu alcance autoral, engajamento autônomo e crescimento de audiência'
+              : 'Métricas analíticas consolidadas por empresa, cliente, equipe, colaborador e canal'}
           </p>
         </div>
 
         <select
           value={period}
           onChange={(e) => setPeriod(e.target.value)}
-          className="bg-[#050505] border border-white/5 rounded-xl px-3.5 py-2 text-xs text-[#ededed] focus:outline-none focus:border-indigo-500/50"
+          className="bg-[#0c1014] border border-white/[0.08] rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-[#8bd132]/50"
         >
           <option value="Últimos 7 Dias">Últimos 7 Dias</option>
           <option value="Últimos 30 Dias">Últimos 30 Dias</option>
@@ -93,11 +114,77 @@ export const AnalyticsView: React.FC = () => {
         </select>
       </div>
 
+      {/* Corporate Multi-Filters Bar */}
+      {!isPersonal && (
+        <div className="p-4 rounded-2xl bg-[#0c1015] border border-white/[0.06] space-y-2">
+          <div className="flex items-center gap-2 text-xs font-bold text-[#8bd132]">
+            <Filter className="w-3.5 h-3.5" />
+            <span>Filtros Corporativos Avançados</span>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5">
+            <select
+              value={selectedClient}
+              onChange={(e) => setSelectedClient(e.target.value)}
+              className="bg-[#121820] border border-white/10 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-[#8bd132]/50"
+            >
+              <option value="Todos os Clientes">Todos os Clientes</option>
+              <option value="Clínica Vitalis">Clínica Vitalis</option>
+              <option value="Nexus Tech">Nexus Tech</option>
+            </select>
+
+            <select
+              value={selectedTeam}
+              onChange={(e) => setSelectedTeam(e.target.value)}
+              className="bg-[#121820] border border-white/10 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-[#8bd132]/50"
+            >
+              <option value="Toda a Equipe">Toda a Equipe</option>
+              <option value="Marketing Digital">Marketing Digital</option>
+              <option value="Criação & Design">Criação & Design</option>
+            </select>
+
+            <select
+              value={selectedCollaborator}
+              onChange={(e) => setSelectedCollaborator(e.target.value)}
+              className="bg-[#121820] border border-white/10 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-[#8bd132]/50"
+            >
+              <option value="Todos os Colaboradores">Todos Colaboradores</option>
+              {users.map((u) => (
+                <option key={u.id} value={u.name}>
+                  {u.name}
+                </option>
+              ))}
+            </select>
+
+            <select
+              value={selectedCampaign}
+              onChange={(e) => setSelectedCampaign(e.target.value)}
+              className="bg-[#121820] border border-white/10 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-[#8bd132]/50"
+            >
+              <option value="Todas as Campanhas">Todas Campanhas</option>
+              <option value="Lançamento Q3">Lançamento Q3</option>
+              <option value="Branding Institucional">Branding Institucional</option>
+            </select>
+
+            <select
+              value={selectedNetwork}
+              onChange={(e) => setSelectedNetwork(e.target.value)}
+              className="bg-[#121820] border border-white/10 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-[#8bd132]/50"
+            >
+              <option value="Todas as Redes">Todas as Redes</option>
+              <option value="Instagram">Instagram</option>
+              <option value="LinkedIn">LinkedIn</option>
+              <option value="YouTube">YouTube</option>
+              <option value="TikTok">TikTok</option>
+            </select>
+          </div>
+        </div>
+      )}
+
       {/* AI Explanation Banner (High Context) */}
-      <div className="p-6 rounded-2xl bg-[#0A0A0A] border border-indigo-500/30 space-y-4 shadow-xl">
-        <div className="flex items-center justify-between border-b border-white/5 pb-3">
+      <div className="p-6 rounded-2xl bg-[#0a0e11] border border-[#8bd132]/30 space-y-4 shadow-xl shadow-black/40">
+        <div className="flex items-center justify-between border-b border-white/[0.06] pb-3">
           <div className="flex items-center gap-2">
-            <Sparkles className="w-4 h-4 text-indigo-400" />
+            <Sparkles className="w-4 h-4 text-[#8bd132]" />
             <h3 className="text-sm font-bold text-[#ededed]">Diagnóstico e Explicação Contextual da IA</h3>
           </div>
           <button
@@ -111,30 +198,39 @@ export const AnalyticsView: React.FC = () => {
 
         {aiAnalysis ? (
           <div className="space-y-4 text-xs">
-            <div className="p-4 rounded-xl bg-indigo-600/10 border border-indigo-500/20 text-neutral-200 space-y-1.5">
-              <div className="font-bold text-indigo-300">Análise do Período ({period})</div>
-              <p className="leading-relaxed text-neutral-300">{aiAnalysis.insight}</p>
+            <div className="p-4 rounded-xl bg-white/[0.03] border border-white/[0.08] text-[#c0c8ce] space-y-1.5">
+              <div className="font-bold text-white flex items-center gap-1.5">
+                <Sparkles className="h-3.5 w-3.5 text-[#8bd132]" /> Análise do Período ({period})
+              </div>
+              <p className="leading-relaxed text-[#a0abb2]">{aiAnalysis.insight}</p>
             </div>
 
-            <div className="p-4 rounded-xl bg-emerald-600/10 border border-emerald-500/20 text-neutral-200 space-y-1.5">
-              <div className="font-bold text-emerald-400">Recomendação Prática de Ação</div>
-              <p className="leading-relaxed text-neutral-300">{aiAnalysis.recommendation}</p>
+            <div className="p-4 rounded-xl bg-[#8bd132]/10 border border-[#8bd132]/30 text-white space-y-1.5">
+              <div className="font-bold text-[#8bd132]">Recomendação Prática de Ação</div>
+              <p className="leading-relaxed text-[#d0d8dd]">{aiAnalysis.recommendation}</p>
             </div>
 
             {aiAnalysis.keyTakeaways && (
               <div className="space-y-1 pt-1">
-                <span className="font-bold text-neutral-300 text-[11px]">Principais Conclusões:</span>
-                <ul className="list-disc list-inside space-y-1 text-white/40">
+                <span className="font-bold text-white text-[11px]">Principais Conclusões:</span>
+                <ul className="list-disc list-inside space-y-1 text-[#808c94]">
                   {aiAnalysis.keyTakeaways.map((item: string, i: number) => (
                     <li key={i}>{item}</li>
                   ))}
                 </ul>
               </div>
             )}
-            <button onClick={turnInsightIntoCampaign} className="flex items-center gap-2 rounded-lg bg-[#8bd132] px-4 py-2.5 text-[10px] font-bold text-[#14200e]"><Sparkles className="h-4 w-4" />Criar campanha a partir desta análise</button>
+            <button
+              type="button"
+              onClick={turnInsightIntoCampaign}
+              className="flex items-center gap-2 rounded-xl bg-[#8bd132] px-4 py-2.5 text-xs font-bold text-[#080e05] transition hover:bg-[#9be24d] shadow-lg shadow-[#8bd132]/20"
+            >
+              <Sparkles className="h-4 w-4" />
+              <span>Criar Campanha a partir desta Análise</span>
+            </button>
           </div>
         ) : (
-          <div className="p-4 text-center text-white/40 text-xs">Carregando diagnóstico...</div>
+          <div className="p-4 text-center text-[#78848c] text-xs">Carregando diagnóstico contextual...</div>
         )}
       </div>
 

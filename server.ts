@@ -35,25 +35,24 @@ async function startServer() {
     });
   };
 
-  // Helper function to call Gemini API with fallback model on temporary failures (e.g. 503/429)
+  // Helper function to call Gemini API with fallback models and retry on temporary failures (e.g. 503/429)
   const generateContentWithFallback = async (ai: GoogleGenAI, params: any) => {
-    try {
-      return await ai.models.generateContent({
-        model: 'gemini-3.6-flash',
-        ...params,
-      });
-    } catch (err: any) {
-      console.warn(`Primary Gemini model failed (${err?.status || err?.code || err?.message}). Attempting fallback to gemini-3.1-flash-lite...`);
+    const modelsToTry = ['gemini-3.6-flash', 'gemini-flash-latest', 'gemini-3.1-flash-lite'];
+    let lastError: any = null;
+
+    for (const model of modelsToTry) {
       try {
         return await ai.models.generateContent({
-          model: 'gemini-3.1-flash-lite',
+          model,
           ...params,
         });
-      } catch (fallbackErr: any) {
-        console.error('Fallback Gemini model also failed:', fallbackErr?.message || fallbackErr);
-        throw err;
+      } catch (err: any) {
+        lastError = err;
+        console.warn(`Modelo Gemini '${model}' temporariamente indisponível (${err?.status || err?.code || err?.message}). Tentando próximo modelo...`);
+        await new Promise((resolve) => setTimeout(resolve, 300));
       }
     }
+    throw lastError;
   };
 
   // API Routes

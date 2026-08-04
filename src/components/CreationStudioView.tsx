@@ -22,6 +22,7 @@ import {
 } from 'lucide-react';
 import { PostFormat, SocialPlatform, Post, CarouselSlide } from '../types';
 import { useOperations } from '../context/OperationsContext';
+import { useGovernance } from '../context/GovernanceContext';
 
 interface CreationStudioViewProps {
   onSavePost: (newPost: Partial<Post>) => void;
@@ -31,6 +32,9 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
   onSavePost,
 }) => {
   const { brain, activeCampaign } = useOperations();
+  const { environmentMode, currentUser } = useGovernance();
+  const isPersonal = environmentMode === 'personal';
+  const isCollaborator = currentUser?.role === 'collaborator';
   const [copyTool, setCopyTool] = React.useState('Publicações');
   const [selectedFormat, setSelectedFormat] = React.useState<PostFormat>('carousel');
   const [selectedPlatform, setSelectedPlatform] = React.useState<SocialPlatform>('instagram');
@@ -130,7 +134,7 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
     setActiveSlideIndex(Math.max(0, index - 1));
   };
 
-  const handleSaveDraft = (status: 'draft' | 'scheduled' | 'pending_approval') => {
+  const handleSaveDraft = (status: Post['status']) => {
     onSavePost({
       title: postTitle,
       platform: selectedPlatform,
@@ -141,7 +145,7 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
       imageUrl: previewImageUrl,
       status,
       scheduledAt: new Date(Date.now() + 86400000).toISOString(),
-      author: 'Estúdio de Criação',
+      author: currentUser?.name || (isPersonal ? 'Criador Solo' : 'Estúdio de Criação'),
       aiScore: 94,
     });
   };
@@ -149,35 +153,73 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
   return (
     <div className="p-6 space-y-6 max-w-7xl mx-auto">
       {/* Header & Format Selector Bar */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/5 pb-4">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/[0.06] pb-5">
         <div>
-          <h2 className="text-lg font-bold text-[#ededed] flex items-center gap-2">
-            <PenTool className="w-5 h-5 text-indigo-400" /> Estúdio de Criação Universal
-          </h2>
-          <p className="text-xs text-white/40">
-            Crie conteúdos de alto impacto para qualquer plataforma com o auxílio da IA de redação
+          <div className="flex items-center gap-2">
+            <PenTool className="w-5 h-5 text-[#8bd132]" />
+            <h2 className="text-xl font-bold tracking-tight text-white">
+              {isPersonal ? 'Estúdio de Criação Pessoal' : 'Estúdio de Criação Universal'}
+            </h2>
+          </div>
+          <p className="text-xs text-[#78848c] mt-0.5">
+            {isPersonal
+              ? 'Crie e publique diretamente sem necessidade de aprovação ou revisão'
+              : 'Crie conteúdos com governança corporativa e fluxo de aprovação'}
           </p>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2.5">
           <button
+            type="button"
             onClick={() => handleSaveDraft('draft')}
-            className="px-3.5 py-2 rounded-xl bg-white/[0.02] hover:bg-white/[0.06] text-neutral-300 font-medium text-xs border border-white/5 transition-all duration-150 active:scale-[0.98]"
+            className="px-4 py-2 rounded-xl bg-white/[0.05] hover:bg-white/[0.1] text-white font-semibold text-xs border border-white/10 transition"
           >
             Salvar Rascunho
           </button>
-          <button
-            onClick={() => handleSaveDraft('pending_approval')}
-            className="px-3.5 py-2 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 font-medium text-xs border border-amber-500/20 transition-all duration-150 active:scale-[0.98]"
-          >
-            Enviar para Aprovação
-          </button>
-          <button
-            onClick={() => handleSaveDraft('scheduled')}
-            className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-medium text-xs shadow-sm shadow-indigo-600/20 border border-indigo-500/30 transition-all duration-150 active:scale-[0.98]"
-          >
-            Agendar Publicação
-          </button>
+
+          {isPersonal ? (
+            <>
+              <button
+                type="button"
+                onClick={() => handleSaveDraft('published')}
+                className="px-4 py-2 rounded-xl bg-[#8bd132] hover:bg-[#9be24d] text-[#080e05] font-bold text-xs shadow-lg shadow-[#8bd132]/20 transition"
+              >
+                Publicar Imediatamente
+              </button>
+              <button
+                type="button"
+                onClick={() => handleSaveDraft('scheduled')}
+                className="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold text-xs border border-white/10 transition"
+              >
+                Agendar Publicação
+              </button>
+            </>
+          ) : isCollaborator ? (
+            <button
+              type="button"
+              onClick={() => handleSaveDraft('pending_approval')}
+              className="px-4 py-2 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 font-bold text-xs border border-amber-500/30 transition shadow-lg shadow-amber-500/10"
+            >
+              Enviar para Aprovação
+            </button>
+          ) : (
+            <>
+              <button
+                type="button"
+                onClick={() => handleSaveDraft('published')}
+                className="px-4 py-2 rounded-xl bg-[#8bd132] hover:bg-[#9be24d] text-[#080e05] font-bold text-xs shadow-lg shadow-[#8bd132]/20 transition"
+              >
+                Publicar Imediatamente
+              </button>
+              <button
+                type="button"
+                onClick={() => handleSaveDraft('scheduled')}
+                className="px-4 py-2 rounded-xl bg-indigo-600/30 hover:bg-indigo-600/40 text-indigo-200 font-semibold text-xs border border-indigo-500/30 transition"
+              >
+                Aprovar & Agendar
+              </button>
+            </>
+          )}
         </div>
       </div>
 
@@ -194,8 +236,8 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
             }}
             className={`px-3.5 py-2 rounded-xl text-xs font-semibold shrink-0 transition-all ${
               selectedFormat === f.id
-                ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/20 border border-indigo-400/30'
-                : 'bg-white/[0.03] text-white/40 hover:text-white border border-white/5'
+                ? 'bg-[#8bd132] text-[#0e170a] font-bold shadow-md shadow-[#8bd132]/20 border border-[#8bd132]'
+                : 'bg-[#0d1216] text-[#8e989e] hover:text-white border border-white/[0.06]'
             }`}
           >
             {f.label}
@@ -206,15 +248,15 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
       {/* Studio Workspace Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Left Col: Content Inputs & AI Copywriter */}
-        <div className="space-y-5 bg-[#0A0A0A] border border-white/5 p-5 rounded-2xl">
-          <div className="flex items-center justify-between border-b border-white/5 pb-3">
-            <span className="text-xs font-bold text-[#ededed] flex items-center gap-1.5">
-              <Sparkles className="w-4 h-4 text-indigo-400" /> Redação com IA e parâmetros
+        <div className="space-y-5 bg-[#0a0e11] border border-white/[0.06] p-5 rounded-2xl shadow-xl shadow-black/40">
+          <div className="flex items-center justify-between border-b border-white/[0.06] pb-3">
+            <span className="text-xs font-bold text-white flex items-center gap-1.5">
+              <Sparkles className="w-4 h-4 text-[#8bd132]" /> Redação com IA e parâmetros
             </span>
             <button
               onClick={handleGenerateAICopy}
               disabled={isGenerating}
-              className="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 text-white text-xs font-bold flex items-center gap-1.5 shadow-md shadow-indigo-600/20"
+              className="px-3.5 py-1.5 rounded-lg bg-[#8bd132] hover:bg-[#9be24d] disabled:opacity-50 text-[#0b1208] text-xs font-bold flex items-center gap-1.5 shadow-md shadow-[#8bd132]/20 transition-all"
             >
               {isGenerating ? (
                 <>
@@ -222,7 +264,7 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
                 </>
               ) : (
                 <>
-                  <Sparkles className="w-3.5 h-3.5 text-amber-300" /> Escrever com IA
+                  <Sparkles className="w-3.5 h-3.5" /> Escrever com IA
                 </>
               )}
             </button>
@@ -230,43 +272,43 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
 
           <div className="space-y-4 text-xs">
             <div>
-              <label className="block text-neutral-300 font-semibold mb-1">Título Interno do Projeto</label>
+              <label className="block text-xs font-semibold text-white mb-1.5">Título Interno do Projeto</label>
               <input
                 type="text"
                 value={postTitle}
                 onChange={(e) => setPostTitle(e.target.value)}
-                className="w-full bg-white/[0.03] border border-white/5 rounded-xl px-3.5 py-2 text-[#ededed] focus:outline-none focus:border-indigo-500/50"
+                className="w-full bg-[#070a0d] border border-white/[0.08] rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-[#8bd132] focus:ring-1 focus:ring-[#8bd132] transition"
               />
             </div>
 
             <div>
-              <label className="block text-neutral-300 font-semibold mb-1">Tópico ou Ideia do Conteúdo</label>
+              <label className="block text-xs font-semibold text-white mb-1.5">Tópico ou Ideia do Conteúdo</label>
               <textarea
                 value={topicPrompt}
                 onChange={(e) => setTopicPrompt(e.target.value)}
                 rows={2}
-                className="w-full bg-white/[0.03] border border-white/5 rounded-xl p-3 text-[#ededed] focus:outline-none focus:border-indigo-500/50 resize-none"
+                className="w-full bg-[#070a0d] border border-white/[0.08] rounded-xl p-3 text-xs text-white focus:outline-none focus:border-[#8bd132] focus:ring-1 focus:ring-[#8bd132] resize-none transition"
                 placeholder="Descreva o objetivo do conteúdo..."
               />
             </div>
 
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-neutral-300 font-semibold mb-1">Tom de Voz</label>
+                <label className="block text-xs font-semibold text-white mb-1.5">Tom de Voz</label>
                 <input
                   type="text"
                   value={tone}
                   onChange={(e) => setTone(e.target.value)}
-                  className="w-full bg-white/[0.03] border border-white/5 rounded-xl px-3 py-2 text-[#ededed] focus:outline-none focus:border-indigo-500/50"
+                  className="w-full bg-[#070a0d] border border-white/[0.08] rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-[#8bd132] transition"
                 />
               </div>
 
               <div>
-                <label className="block text-neutral-300 font-semibold mb-1">Plataforma Alvo</label>
+                <label className="block text-xs font-semibold text-white mb-1.5">Plataforma Alvo</label>
                 <select
                   value={selectedPlatform}
                   onChange={(e) => setSelectedPlatform(e.target.value as SocialPlatform)}
-                  className="w-full bg-[#050505] border border-white/5 rounded-xl px-3 py-2 text-[#ededed] focus:outline-none focus:border-indigo-500/50"
+                  className="w-full bg-[#070a0d] border border-white/[0.08] rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-[#8bd132] transition"
                 >
                   <option value="instagram">Instagram</option>
                   <option value="linkedin">LinkedIn</option>
@@ -280,12 +322,12 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
             </div>
 
             <div>
-              <label className="block text-neutral-300 font-semibold mb-1">Texto gerado e editável</label>
+              <label className="block text-xs font-semibold text-white mb-1.5">Texto gerado e editável</label>
               <textarea
                 value={copyText}
                 onChange={(e) => setCopyText(e.target.value)}
                 rows={6}
-                className="w-full bg-white/[0.03] border border-white/5 rounded-xl p-3 text-[#ededed] focus:outline-none focus:border-indigo-500/50 font-sans leading-relaxed"
+                className="w-full bg-[#070a0d] border border-white/[0.08] rounded-xl p-3 text-xs text-white focus:outline-none focus:border-[#8bd132] font-sans leading-relaxed resize-y transition"
               />
             </div>
 

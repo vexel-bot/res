@@ -132,7 +132,7 @@ export default function App() {
       {/* Main Workspace Stage */}
       <div
         className={`flex min-w-0 flex-1 flex-col transition-all duration-200 ${
-          isCompact ? 'pl-[76px]' : 'pl-[188px] max-[900px]:pl-[76px] 2xl:pl-[226px]'
+          isCompact ? 'pl-[76px]' : 'pl-[210px] max-[900px]:pl-[76px] 2xl:pl-[240px]'
         }`}
       >
         {/* Header Toolbar */}

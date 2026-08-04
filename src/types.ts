@@ -284,7 +284,7 @@ export interface Workspace {
   id: string;
   name: string;
   avatar: string;
-  plan: 'Enterprise' | 'Pro' | 'Growth';
+  plan: 'Enterprise' | 'Pro' | 'Growth' | 'Solo Creator' | string;
   membersCount: number;
   brandProfile: BrandProfile;
 }
