@@ -234,6 +234,44 @@ export const AnalyticsView: React.FC = () => {
         )}
       </div>
 
+      {/* AI Social Media BI Breakdown Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="p-4 rounded-2xl bg-[#182126] border border-white/[0.07] space-y-2">
+          <span className="text-[9px] font-bold uppercase tracking-wider text-[#8bd132]">
+            Melhores Horários
+          </span>
+          <h4 className="text-xs font-bold text-white">Horários de Pico da Audiência</h4>
+          <ul className="text-[10px] text-[#a0abb0] space-y-1">
+            <li className="flex justify-between"><span>Terças-feiras</span><strong className="text-[#8bd132]">18:30 (Retenção 94%)</strong></li>
+            <li className="flex justify-between"><span>Quintas-feiras</span><strong className="text-[#8bd132]">09:00 (Engajamento 8.8%)</strong></li>
+            <li className="flex justify-between"><span>Sábados</span><strong className="text-[#8bd132]">11:00 (Salvamentos 2.4x)</strong></li>
+          </ul>
+        </div>
+
+        <div className="p-4 rounded-2xl bg-[#182126] border border-white/[0.07] space-y-2">
+          <span className="text-[9px] font-bold uppercase tracking-wider text-[#8bd132]">
+            Formatos & Performance
+          </span>
+          <h4 className="text-xs font-bold text-white">Carrosséis vs Posts Estáticos</h4>
+          <div className="text-[10px] text-[#a0abb0] space-y-1">
+            <p>• Carrosséis educativos têm <strong className="text-white">8.4% engajamento</strong></p>
+            <p>• Posts estáticos simples tiveram <strong className="text-amber-400">pior desempenho (1.8%)</strong></p>
+            <p className="text-[#8bd132] font-semibold mt-1">Recomendação: Substituir textos únicos por carrossel de 3 lâminas.</p>
+          </div>
+        </div>
+
+        <div className="p-4 rounded-2xl bg-[#182126] border border-white/[0.07] space-y-2">
+          <span className="text-[9px] font-bold uppercase tracking-wider text-[#8bd132]">
+            Oportunidades de Conteúdo
+          </span>
+          <h4 className="text-xs font-bold text-white">Gaps Detectados pela IA</h4>
+          <div className="text-[10px] text-[#a0abb0] space-y-1">
+            <p>• Pauta "Automação Operacional" tem busca alta e pouca concorrência.</p>
+            <p>• Publicar 1 Reel semanal gera <strong className="text-white">+380 novos seguidores qualificados</strong>.</p>
+          </div>
+        </div>
+      </div>
+
       {/* Metrics Cards Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="p-4 rounded-2xl bg-[#0A0A0A] border border-white/5 space-y-2">

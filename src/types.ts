@@ -42,6 +42,18 @@ export type WorkspaceModule =
 
 export type MemberStatus = 'active' | 'invited' | 'disabled';
 
+export interface UserAccount {
+  id: string;
+  name: string;
+  type: 'personal' | 'company';
+  role?: string;
+  planName?: string;
+  membersCount?: number;
+  email?: string;
+  avatar?: string;
+  createdAt?: string;
+}
+
 export interface WorkspaceMember {
   id: string;
   workspaceId: string;

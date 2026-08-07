@@ -43,7 +43,7 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
   const [tone, setTone] = React.useState('Profissional, inovador e persuasivo');
   const [targetAudience, setTargetAudience] = React.useState('Líderes de marketing e empreendedores');
   const [copyText, setCopyText] = React.useState(
-    'A automação inteligente não substitui a criatividade humana — ela impulsiona. 🚀\n\nQuando você centraliza o planejamento, criação e agendamento em uma única plataforma, sua equipe economiza até 15h semanais.\n\nQual o seu maior desafio ao criar conteúdo hoje?'
+    'A automação inteligente não substitui a criatividade humana — ela impulsiona.\n\nQuando você centraliza o planejamento, criação e agendamento em uma única plataforma, sua equipe economiza até 15h semanais.\n\nQual o seu maior desafio ao criar conteúdo hoje?'
   );
   const [hashtags, setHashtags] = React.useState<string[]>([
     '#MarketingDigital',

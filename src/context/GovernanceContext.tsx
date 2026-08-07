@@ -6,6 +6,7 @@ import type {
   GovernanceWorkspace,
   NavigationTab,
   SaaSPlan,
+  UserAccount,
   WorkspaceMember,
   WorkspaceModule,
   WorkspaceSubscription,
@@ -19,6 +20,12 @@ type Feedback = { type: 'success' | 'error'; message: string } | null;
 type GovernanceContextValue = {
   environmentMode: EnvironmentMode;
   setEnvironmentMode: (mode: EnvironmentMode) => void;
+  accounts: UserAccount[];
+  activeAccountId: string;
+  activeAccount: UserAccount;
+  switchAccount: (accountId: string) => void;
+  addAccount: (account: Omit<UserAccount, 'id'>) => string;
+  removeAccount: (accountId: string) => void;
   loading: boolean;
   feedback: Feedback;
   currentUser?: WorkspaceMember;
@@ -41,6 +48,50 @@ type GovernanceContextValue = {
 };
 
 const GovernanceContext = React.createContext<GovernanceContextValue | null>(null);
+
+const DEFAULT_ACCOUNTS: UserAccount[] = [
+  {
+    id: 'acc-personal-1',
+    name: 'Conta Pessoal',
+    type: 'personal',
+    role: 'Solo Creator',
+    planName: 'Plano Solo',
+    email: 'pedro.henrique@clickostudio.com',
+  },
+  {
+    id: 'acc-ws-1',
+    name: 'Conta Workspace',
+    type: 'company',
+    role: 'Equipe & Governança',
+    planName: 'Plano Enterprise',
+    membersCount: 12,
+    email: 'equipe@clickostudio.com',
+  },
+];
+
+function getStoredAccounts(): UserAccount[] {
+  try {
+    const stored = window.localStorage.getItem('clicko-studio:user-accounts');
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        const hasPersonal = parsed.some((a: UserAccount) => a.type === 'personal');
+        const hasCompany = parsed.some((a: UserAccount) => a.type === 'company');
+        let updated = [...parsed];
+        if (!hasPersonal) {
+          updated.unshift(DEFAULT_ACCOUNTS[0]);
+        }
+        if (!hasCompany) {
+          updated.push(DEFAULT_ACCOUNTS[1]);
+        }
+        return updated;
+      }
+    }
+  } catch (e) {
+    console.error('Error reading stored accounts', e);
+  }
+  return DEFAULT_ACCOUNTS;
+}
 
 function getStoredEnvironment(): EnvironmentMode {
   const stored = window.localStorage.getItem('clicko-studio:environment');
@@ -76,7 +127,20 @@ async function request<T>(path: string, envMode: EnvironmentMode, init?: Request
 }
 
 export const GovernanceProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [environmentMode, setEnvironmentModeState] = React.useState<EnvironmentMode>(getStoredEnvironment);
+  const [accounts, setAccounts] = React.useState<UserAccount[]>(getStoredAccounts);
+  const [activeAccountId, setActiveAccountId] = React.useState<string>(() => {
+    const stored = window.localStorage.getItem('clicko-studio:active-account-id');
+    const existing = getStoredAccounts();
+    if (stored && existing.some((a) => a.id === stored)) return stored;
+    return existing[0]?.id || 'acc-personal-1';
+  });
+
+  const [environmentMode, setEnvironmentModeState] = React.useState<EnvironmentMode>(() => {
+    const activeAcc = getStoredAccounts().find(a => a.id === window.localStorage.getItem('clicko-studio:active-account-id'));
+    if (activeAcc) return activeAcc.type;
+    return getStoredEnvironment();
+  });
+
   const [loading, setLoading] = React.useState(true);
   const [feedback, setFeedback] = React.useState<Feedback>(null);
   const [session, setSession] = React.useState<GovernanceSession>();
@@ -87,11 +151,58 @@ export const GovernanceProvider: React.FC<{ children: React.ReactNode }> = ({ ch
   const [approvals, setApprovals] = React.useState<ContentApprovalItem[]>([]);
   const [auditLogs, setAuditLogs] = React.useState<AuditLogEntry[]>([]);
 
+  const activeAccount = React.useMemo(() => {
+    return accounts.find((a) => a.id === activeAccountId) || accounts[0] || DEFAULT_ACCOUNTS[0];
+  }, [accounts, activeAccountId]);
+
   const setEnvironmentMode = React.useCallback((mode: EnvironmentMode) => {
     window.localStorage.setItem('clicko-studio:environment', mode);
     setEnvironmentModeState(mode);
     window.dispatchEvent(new CustomEvent('clicko:environment-change', { detail: { mode } }));
   }, []);
+
+  const switchAccount = React.useCallback((accountId: string) => {
+    const target = accounts.find((a) => a.id === accountId);
+    if (!target) return;
+    setActiveAccountId(accountId);
+    window.localStorage.setItem('clicko-studio:active-account-id', accountId);
+    if (target.type !== environmentMode) {
+      setEnvironmentMode(target.type);
+    }
+  }, [accounts, environmentMode, setEnvironmentMode]);
+
+  const addAccount = React.useCallback((newAccData: Omit<UserAccount, 'id'>) => {
+    const id = `acc-${newAccData.type}-${Date.now()}`;
+    const newAcc: UserAccount = {
+      id,
+      ...newAccData,
+      createdAt: new Date().toISOString(),
+    };
+    setAccounts((current) => {
+      const updated = [...current, newAcc];
+      window.localStorage.setItem('clicko-studio:user-accounts', JSON.stringify(updated));
+      return updated;
+    });
+    setActiveAccountId(id);
+    window.localStorage.setItem('clicko-studio:active-account-id', id);
+    setEnvironmentMode(newAcc.type);
+    return id;
+  }, [setEnvironmentMode]);
+
+  const removeAccount = React.useCallback((accountId: string) => {
+    setAccounts((current) => {
+      if (current.length <= 1) return current;
+      const updated = current.filter((a) => a.id !== accountId);
+      window.localStorage.setItem('clicko-studio:user-accounts', JSON.stringify(updated));
+      if (activeAccountId === accountId && updated.length > 0) {
+        const fallback = updated[0];
+        setActiveAccountId(fallback.id);
+        window.localStorage.setItem('clicko-studio:active-account-id', fallback.id);
+        setEnvironmentMode(fallback.type);
+      }
+      return updated;
+    });
+  }, [activeAccountId, setEnvironmentMode]);
 
   const refresh = React.useCallback(async () => {
     setLoading(true);
@@ -178,12 +289,33 @@ export const GovernanceProvider: React.FC<{ children: React.ReactNode }> = ({ ch
 
   const currentUser = session?.currentUser;
   const value: GovernanceContextValue = {
-    environmentMode, setEnvironmentMode,
-    loading, feedback, currentUser, workspace, users, plans, subscription, approvals, auditLogs,
+    environmentMode,
+    setEnvironmentMode,
+    accounts,
+    activeAccountId,
+    activeAccount,
+    switchAccount,
+    addAccount,
+    removeAccount,
+    loading,
+    feedback,
+    currentUser,
+    workspace,
+    users,
+    plans,
+    subscription,
+    approvals,
+    auditLogs,
     isMaster: currentUser?.role === 'master',
     canAccess: (tab) => canAccessNavigation(currentUser, tab, environmentMode),
     clearFeedback: () => setFeedback(null),
-    inviteUser, updateUser, deleteUser, resendInvite, changePlan, approvalAction, refresh,
+    inviteUser,
+    updateUser,
+    deleteUser,
+    resendInvite,
+    changePlan,
+    approvalAction,
+    refresh,
   };
 
   return <GovernanceContext.Provider value={value}>{children}</GovernanceContext.Provider>;

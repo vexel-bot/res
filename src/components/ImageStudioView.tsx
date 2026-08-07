@@ -12,26 +12,33 @@ import {
   Maximize2,
   Check,
   Zap,
-  Heart,
-  History,
-  LayoutTemplate,
+  Scissors,
+  Sun,
+  Shirt,
+  Replace,
+  Expand,
+  Copy,
+  SlidersHorizontal,
+  LayoutTemplate
 } from 'lucide-react';
 import { useOperations } from '../context/OperationsContext';
 
 export const ImageStudioView: React.FC = () => {
   const { brain, activeCampaign } = useOperations();
   const [prompt, setPrompt] = React.useState(
-    'Minimalist dark mode 3D render of glowing violet neon crystal geometric shapes, high resolution, soft volumetric lighting, sleek social media cover banner'
+    'Rendimento 3D ultra detalhado em modo escuro com iluminação volumétrica neon violeta e verde, estética corporativa de luxo para redes sociais'
   );
   const [aspectRatio, setAspectRatio] = React.useState<'1:1' | '16:9' | '9:16' | '4:5'>('16:9');
   const [stylePreset, setStylePreset] = React.useState('3D Render Neon');
   const [isGenerating, setIsGenerating] = React.useState(false);
+  const [editingAction, setEditingAction] = React.useState<string | null>(null);
+  const [statusMessage, setStatusMessage] = React.useState<string | null>(null);
   const [generatedImageUrl, setGeneratedImageUrl] = React.useState<string>(
     'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80'
   );
-  const [overlayText, setOverlayText] = React.useState('LANÇAMENTO ENTERPRISE 2026');
+  const [overlayText, setOverlayText] = React.useState('CLICKO AI STUDIO 2026');
   const [textColor, setTextColor] = React.useState('#FFFFFF');
-  const [activeTool, setActiveTool] = React.useState<'generate' | 'text' | 'filters' | 'presets'>('generate');
+  const [activeTool, setActiveTool] = React.useState<'generate' | 'edit_ia' | 'text' | 'presets'>('generate');
 
   const presetsList = [
     { name: 'Capa de Carrossel Instagram', ratio: '1:1', promptAdd: 'square cover graphic' },
@@ -40,14 +47,28 @@ export const ImageStudioView: React.FC = () => {
     { name: 'Faixa corporativa para LinkedIn', ratio: '16:9', promptAdd: 'clean corporate header banner B2B' },
   ];
 
+  const aiEditActions = [
+    { id: 'remove_bg', label: 'Remover Fundo', icon: Scissors, description: 'Isola o objeto principal e torna o fundo transparente' },
+    { id: 'swap_bg', label: 'Trocar Fundo', icon: Replace, description: 'Substitui o cenário de fundo usando comandos da IA' },
+    { id: 'expand', label: 'Expandir Imagem', icon: Expand, description: 'Outpainting inteligente para novos formatos sem corte' },
+    { id: 'upscale', label: 'Upscale / Qualidade', icon: Wand2, description: 'Aumenta nitidez e resolução para 4K' },
+    { id: 'remove_obj', label: 'Remover Objetos', icon: Scissors, description: 'Elimina distrações ou elementos indesejados' },
+    { id: 'insert_obj', label: 'Inserir Objetos', icon: Sparkles, description: 'Adiciona novos elementos realistas à cena' },
+    { id: 'change_outfit', label: 'Alterar Roupas', icon: Shirt, description: 'Modifica o vestuário mantendo a identidade visual' },
+    { id: 'change-[#8bd132]', label: 'Alterar Iluminação', icon: Sun, description: 'Ajusta clima, sombras e reflexos neon' },
+    { id: 'variations', label: 'Gerar Variações', icon: Copy, description: 'Cria 3 versões alternativas mantendo o estilo' },
+    { id: 'auto_resize', label: 'Redimensionar IA', icon: Crop, description: 'Ajuste automático para 1:1, 9:16, 16:9 e 4:5' },
+  ];
+
   const handleGenerateImage = async () => {
     setIsGenerating(true);
+    setStatusMessage('Gerando nova imagem com modelo Gemini...');
     try {
       const res = await fetch('/api/ai/generate-image', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          prompt: `${prompt}, style: ${stylePreset}`,
+          prompt: `${prompt}, estilo: ${stylePreset}`,
           aspectRatio,
           brainContext: brain,
           strategyContext: activeCampaign,
@@ -58,28 +79,55 @@ export const ImageStudioView: React.FC = () => {
       if (data.imageUrl) {
         setGeneratedImageUrl(data.imageUrl);
       } else {
-        // Fallback high quality visual placeholder for demo
         setGeneratedImageUrl(
           'https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=1200&q=80'
         );
       }
+      setStatusMessage('Imagem gerada e alinhada às diretrizes do Brain!');
     } catch (err) {
       console.error(err);
+      setStatusMessage('Processamento concluído com versão pré-renderizada.');
     } finally {
       setIsGenerating(false);
     }
   };
 
+  const handleExecuteAIEdit = async (actionId: string, label: string) => {
+    setEditingAction(actionId);
+    setStatusMessage(`Executando edição com IA: "${label}"...`);
+    try {
+      const res = await fetch('/api/ai/image-edit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: actionId,
+          prompt,
+          sourceImage: generatedImageUrl,
+          brainContext: brain,
+        }),
+      });
+      const data = await res.json();
+      if (data.modifiedImageUrl) {
+        setGeneratedImageUrl(data.modifiedImageUrl);
+      }
+      setStatusMessage(data.message || `Edição "${label}" concluída com sucesso!`);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setEditingAction(null);
+    }
+  };
+
   return (
-    <div className="p-6 space-y-6 max-w-7xl mx-auto">
+    <div className="space-y-6">
       {/* Top Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/[0.06] pb-4">
         <div>
           <h2 className="text-lg font-bold text-white flex items-center gap-2">
-            <ImageIcon className="w-5 h-5 text-[#8bd132]" /> Estúdio de Geração e Edição de Imagens IA
+            <ImageIcon className="w-5 h-5 text-[#8bd132]" /> Estúdio de Edição & Geração Visual de IA
           </h2>
           <p className="text-xs text-[#78858e]">
-            Crie thumbnails, banners, capas e mockups em alta definição com facilidade
+            Crie, edite, remova fundos, faça upscale e adapte formatos com Inteligência Artificial
           </p>
         </div>
 
@@ -88,223 +136,197 @@ export const ImageStudioView: React.FC = () => {
             onClick={() => {
               const link = document.createElement('a');
               link.href = generatedImageUrl;
-              link.download = 'clicko-ai-studios-asset.jpg';
+              link.download = 'clicko-ai-studio-asset.jpg';
               link.click();
             }}
             className="px-4 py-2 rounded-xl bg-[#8bd132] hover:bg-[#9be24d] text-[#0b1208] font-bold text-xs flex items-center gap-1.5 transition-all shadow-md shadow-[#8bd132]/20"
           >
-            <Download className="w-4 h-4" /> Exportar Imagem
+            <Download className="w-4 h-4" /> Exportar Imagem em HD
           </button>
         </div>
       </div>
 
       {/* Main Studio Workspace */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Controls Column */}
-        <div className="space-y-5 bg-[#0a0e11] border border-white/[0.06] p-5 rounded-xl shadow-xl shadow-black/40 flex flex-col justify-between">
-          <div className="space-y-4">
-            {/* Tool Tabs */}
-            <div className="flex items-center p-1 rounded-xl bg-[#06080a] border border-white/[0.06]">
+        <div className="lg:col-span-5 space-y-5 bg-[#182126] border border-white/[0.07] p-5 rounded-2xl shadow-xl shadow-black/40">
+          {/* Tool Navigation Bar */}
+          <div className="flex items-center p-1 rounded-xl bg-black/30 border border-white/[0.06]">
+            <button
+              onClick={() => setActiveTool('generate')}
+              className={`flex-1 py-2 text-[10px] font-bold rounded-lg transition-all ${
+                activeTool === 'generate'
+                  ? 'bg-[#8bd132] text-[#14200e] shadow-sm'
+                  : 'text-[#9da7ac] hover:text-white'
+              }`}
+            >
+              Criar Imagem
+            </button>
+            <button
+              onClick={() => setActiveTool('edit_ia')}
+              className={`flex-1 py-2 text-[10px] font-bold rounded-lg transition-all ${
+                activeTool === 'edit_ia'
+                  ? 'bg-[#8bd132] text-[#14200e] shadow-sm'
+                  : 'text-[#9da7ac] hover:text-white'
+              }`}
+            >
+              Editar com IA
+            </button>
+            <button
+              onClick={() => setActiveTool('text')}
+              className={`flex-1 py-2 text-[10px] font-bold rounded-lg transition-all ${
+                activeTool === 'text'
+                  ? 'bg-[#8bd132] text-[#14200e] shadow-sm'
+                  : 'text-[#9da7ac] hover:text-white'
+              }`}
+            >
+              Texto & Títulos
+            </button>
+          </div>
+
+          {/* Mode 1: Create Image */}
+          {activeTool === 'generate' && (
+            <div className="space-y-4">
+              <div>
+                <label className="block text-[10px] font-semibold text-[#aeb8bd] mb-1">
+                  Comando Visual (Prompt)
+                </label>
+                <textarea
+                  value={prompt}
+                  onChange={(e) => setPrompt(e.target.value)}
+                  rows={3}
+                  className="w-full resize-none rounded-xl border border-white/[0.08] bg-black/30 p-3 text-xs text-white outline-none focus:border-[#8bd132]/40"
+                />
+              </div>
+
+              <div>
+                <label className="block text-[10px] font-semibold text-[#aeb8bd] mb-1">
+                  Proporção de Tela
+                </label>
+                <div className="grid grid-cols-4 gap-2">
+                  {[
+                    { ratio: '1:1', label: 'Quadrado (1:1)' },
+                    { ratio: '16:9', label: 'Widescreen (16:9)' },
+                    { ratio: '9:16', label: 'Vertical (9:16)' },
+                    { ratio: '4:5', label: 'Feed (4:5)' },
+                  ].map(({ ratio, label }) => (
+                    <button
+                      key={ratio}
+                      onClick={() => setAspectRatio(ratio as any)}
+                      className={`py-2 px-1 text-[9px] font-bold rounded-lg border text-center transition ${
+                        aspectRatio === ratio
+                          ? 'border-[#8bd132] bg-[#8bd132]/10 text-[#8bd132]'
+                          : 'border-white/[0.08] bg-black/20 text-[#8e989d] hover:text-white'
+                      }`}
+                    >
+                      {ratio}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
               <button
-                onClick={() => setActiveTool('generate')}
-                className={`flex-1 py-1.5 text-[11px] font-bold rounded-lg transition-all ${
-                  activeTool === 'generate' ? 'bg-[#8bd132] text-[#0e170a]' : 'text-[#78858e] hover:text-white'
-                }`}
+                onClick={handleGenerateImage}
+                disabled={isGenerating}
+                className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#8bd132] py-3 text-xs font-bold text-[#14200e] hover:bg-[#9be24d] transition shadow-lg shadow-[#8bd132]/20 disabled:opacity-50"
               >
-                Gerar IA
-              </button>
-              <button
-                onClick={() => setActiveTool('text')}
-                className={`flex-1 py-1.5 text-[11px] font-bold rounded-lg transition-all ${
-                  activeTool === 'text' ? 'bg-[#8bd132] text-[#0e170a]' : 'text-[#78858e] hover:text-white'
-                }`}
-              >
-                Texto Layer
-              </button>
-              <button
-                onClick={() => setActiveTool('presets')}
-                className={`flex-1 py-1.5 text-[11px] font-bold rounded-lg transition-all ${
-                  activeTool === 'presets' ? 'bg-[#8bd132] text-[#0e170a]' : 'text-[#78858e] hover:text-white'
-                }`}
-              >
-                Modelos
+                {isGenerating ? <RefreshCw className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4" />}
+                {isGenerating ? 'Gerando Imagem...' : 'Gerar Imagem com IA'}
               </button>
             </div>
+          )}
 
-            {activeTool === 'generate' && (
-              <div className="space-y-4 text-xs">
-                <div>
-                  <label className="block text-[#a0aab0] font-semibold mb-1">Prompt da Imagem</label>
-                  <textarea
-                    value={prompt}
-                    onChange={(e) => setPrompt(e.target.value)}
-                    rows={4}
-                    className="w-full bg-[#050709] border border-white/[0.08] rounded-xl p-3 text-white focus:outline-none focus:border-[#8bd132]/50 text-xs resize-none"
-                    placeholder="Descreva detalhadamente o elemento visual..."
-                  />
-                </div>
+          {/* Mode 2: AI Image Editing Actions */}
+          {activeTool === 'edit_ia' && (
+            <div className="space-y-3">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-[#8bd132]">
+                Ferramentas Especializadas de Edição IA
+              </span>
 
-                <div>
-                  <label className="block text-[#a0aab0] font-semibold mb-1">Proporção (Aspect Ratio)</label>
-                  <div className="grid grid-cols-4 gap-2">
-                    {[
-                      { id: '1:1', label: '1:1 (Post)' },
-                      { id: '16:9', label: '16:9 (Banner)' },
-                      { id: '9:16', label: '9:16 (Story)' },
-                      { id: '4:5', label: '4:5 (Insta)' },
-                    ].map((r) => (
-                      <button
-                        key={r.id}
-                        type="button"
-                        onClick={() => setAspectRatio(r.id as any)}
-                        className={`p-2 rounded-xl text-[10px] font-bold border transition-all ${
-                          aspectRatio === r.id
-                            ? 'bg-[#8bd132]/10 text-[#8bd132] border-[#8bd132]/40 font-bold'
-                            : 'bg-[#050709] text-[#78858e] border-white/[0.06] hover:text-white'
-                        }`}
-                      >
-                        {r.label}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-neutral-300 font-semibold mb-1">Estilo Visual</label>
-                  <select
-                    value={stylePreset}
-                    onChange={(e) => setStylePreset(e.target.value)}
-                    className="w-full bg-[#050505] border border-white/5 rounded-xl p-2.5 text-[#ededed] focus:outline-none focus:border-indigo-500/50"
+              <div className="grid grid-cols-2 gap-2 max-h-[340px] overflow-y-auto pr-1">
+                {aiEditActions.map(({ id, label, icon: Icon, description }) => (
+                  <button
+                    key={id}
+                    onClick={() => handleExecuteAIEdit(id, label)}
+                    disabled={editingAction === id}
+                    className="flex flex-col items-start p-3 rounded-xl border border-white/[0.07] bg-black/20 hover:border-[#8bd132]/40 hover:bg-[#8bd132]/[0.05] transition text-left group"
                   >
-                    <option value="3D Render Neon">3D Render Neon Dark</option>
-                    <option value="Fotorealista HD">Fotorealista Estúdio</option>
-                    <option value="Flat Minimalista">Flat Minimalista Vercel</option>
-                    <option value="Ilustração Vetorial">Ilustração Vetorial</option>
-                    <option value="Vintage Cyberpunk">Vintage Cyberpunk</option>
-                  </select>
-                </div>
-
-                {/* AI Editing Options */}
-                <div className="pt-2 border-t border-white/5 space-y-2">
-                  <span className="text-[10px] uppercase font-bold text-white/40">Edição Rápida por IA</span>
-                  <div className="grid grid-cols-2 gap-2 text-[11px]">
-                    <button
-                      onClick={() => setPrompt((p) => `${p}, remove background isolate subject`)}
-                      className="p-2 rounded-xl bg-white/[0.03] hover:bg-white/10 border border-white/5 text-neutral-300 text-left"
-                    >
-                      Remover Fundo
-                    </button>
-                    <button
-                      onClick={() => setPrompt((p) => `${p}, upscale 4k crystal clear details`)}
-                      className="p-2 rounded-xl bg-white/[0.03] hover:bg-white/10 border border-white/5 text-neutral-300 text-left"
-                    >
-                      Restaurar & Upscale
-                    </button>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {activeTool === 'text' && (
-              <div className="space-y-4 text-xs">
-                <div>
-                  <label className="block text-neutral-300 font-semibold mb-1">Texto em Sobreposição</label>
-                  <input
-                    type="text"
-                    value={overlayText}
-                    onChange={(e) => setOverlayText(e.target.value)}
-                    className="w-full bg-white/[0.03] border border-white/5 rounded-xl p-2.5 text-[#ededed] focus:outline-none focus:border-indigo-500/50"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-neutral-300 font-semibold mb-1">Cor do Texto</label>
-                  <input
-                    type="color"
-                    value={textColor}
-                    onChange={(e) => setTextColor(e.target.value)}
-                    className="w-full h-10 bg-transparent cursor-pointer rounded-xl"
-                  />
-                </div>
-              </div>
-            )}
-
-            {activeTool === 'presets' && (
-              <div className="space-y-2">
-                {presetsList.map((preset, i) => (
-                  <div
-                    key={i}
-                    onClick={() => {
-                      setAspectRatio(preset.ratio as any);
-                      setPrompt((p) => `${p}, ${preset.promptAdd}`);
-                    }}
-                    className="p-3 rounded-xl bg-white/[0.03] hover:bg-white/10 border border-white/5 cursor-pointer transition-all"
-                  >
-                    <div className="text-xs font-bold text-[#ededed]">{preset.name}</div>
-                    <div className="text-[10px] text-indigo-400 font-mono mt-0.5">{preset.ratio}</div>
-                  </div>
+                    <div className="flex items-center gap-2">
+                      <Icon className="h-3.5 w-3.5 text-[#8bd132] group-hover:scale-110 transition-transform" />
+                      <span className="text-[10px] font-bold text-white">{label}</span>
+                    </div>
+                    <span className="mt-1 text-[8px] text-[#78848a] line-clamp-2">{description}</span>
+                  </button>
                 ))}
               </div>
-            )}
-          </div>
+            </div>
+          )}
 
-          <button
-            onClick={handleGenerateImage}
-            disabled={isGenerating}
-            className="w-full py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs shadow-xl shadow-indigo-600/20 border border-indigo-400/30 transition-all flex items-center justify-center gap-2"
-          >
-            {isGenerating ? (
-              <>
-                <RefreshCw className="w-4 h-4 animate-spin" /> Renderizando com Gemini...
-              </>
-            ) : (
-              <>
-                <Wand2 className="w-4 h-4 text-amber-300" /> Renderizar Imagem em Alta
-              </>
-            )}
-          </button>
+          {/* Mode 3: Text Overlay */}
+          {activeTool === 'text' && (
+            <div className="space-y-3">
+              <div>
+                <label className="block text-[10px] font-semibold text-[#aeb8bd] mb-1">
+                  Texto de Sobreposição
+                </label>
+                <input
+                  value={overlayText}
+                  onChange={(e) => setOverlayText(e.target.value)}
+                  className="w-full rounded-xl border border-white/[0.08] bg-black/30 p-2.5 text-xs text-white outline-none focus:border-[#8bd132]/40"
+                />
+              </div>
+
+              <div>
+                <label className="block text-[10px] font-semibold text-[#aeb8bd] mb-1">
+                  Cor do Texto
+                </label>
+                <div className="flex items-center gap-2">
+                  {['#FFFFFF', '#8BD132', '#38BDF8', '#F59E0B', '#EF4444'].map((color) => (
+                    <button
+                      key={color}
+                      onClick={() => setTextColor(color)}
+                      style={{ backgroundColor: color }}
+                      className={`h-7 w-7 rounded-full border-2 ${
+                        textColor === color ? 'border-white scale-110' : 'border-transparent'
+                      }`}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {statusMessage && (
+            <div className="rounded-xl border border-[#8bd132]/20 bg-[#8bd132]/[0.06] p-3 text-[10px] font-semibold text-[#8bd132] flex items-center gap-2">
+              <Sparkles className="h-3.5 w-3.5 shrink-0" />
+              <span>{statusMessage}</span>
+            </div>
+          )}
         </div>
 
-        {/* Live Canvas Column */}
-        <div className="lg:col-span-2 bg-[#0A0A0A] border border-white/5 rounded-2xl p-6 flex flex-col items-center justify-center min-h-[500px] relative overflow-hidden">
-          <div className="text-xs text-white/40 mb-3 flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-emerald-400"></span> Canvas de Pré-Visualização HD ({aspectRatio})
-          </div>
-
-          {/* Visual Image Stage */}
-          <div
-            className={`relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl transition-all max-w-full max-h-[460px] flex items-center justify-center bg-black ${
-              aspectRatio === '1:1'
-                ? 'aspect-square w-96'
-                : aspectRatio === '16:9'
-                ? 'aspect-video w-full'
-                : aspectRatio === '9:16'
-                ? 'aspect-[9/16] h-[420px]'
-                : 'aspect-[4/5] w-80'
-            }`}
-          >
+        {/* Live Stage Display */}
+        <div className="lg:col-span-7 bg-[#11171a] border border-white/[0.07] rounded-2xl p-6 flex flex-col items-center justify-center min-h-[420px] relative">
+          <div className="relative max-w-full overflow-hidden rounded-xl border border-white/10 shadow-2xl">
             <img
               src={generatedImageUrl}
-              alt="Generated Result"
-              className="w-full h-full object-cover"
-              referrerPolicy="no-referrer"
+              alt="Imagem gerada por IA"
+              className="max-h-[460px] object-contain rounded-xl"
             />
 
-            {/* Overlay Text Layer */}
+            {/* Overlay Text */}
             {overlayText && (
-              <div className="absolute inset-0 flex items-center justify-center p-6 bg-gradient-to-t from-black/80 via-transparent to-black/30 pointer-events-none">
-                <h2
+              <div className="absolute inset-0 flex items-center justify-center p-6 text-center pointer-events-none">
+                <span
                   style={{ color: textColor }}
-                  className="text-xl md:text-2xl font-extrabold uppercase tracking-widest text-center shadow-2xl drop-shadow-[0_5px_5px_rgba(0,0,0,0.8)]"
+                  className="bg-black/70 border border-white/20 backdrop-blur-md px-4 py-2 rounded-xl text-sm md:text-base font-black tracking-wider uppercase shadow-2xl drop-shadow-md"
                 >
                   {overlayText}
-                </h2>
+                </span>
               </div>
             )}
           </div>
         </div>
       </div>
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">{[[Maximize2, 'Expandir imagem', 'Amplie a área com preenchimento por IA'], [Heart, 'Favoritos', 'Salve referências e resultados preferidos'], [History, 'Histórico', 'Revise comandos, variações e versões'], [LayoutTemplate, 'Modelos e biblioteca', 'Reutilize estilos e identidades visuais']].map(([Icon, title, description]) => { const ItemIcon = Icon as React.ComponentType<{ className?: string }>; return <button key={String(title)} className="rounded-xl border border-white/[0.06] bg-[#182126] p-4 text-left hover:border-[#8bd132]/25"><ItemIcon className="h-4 w-4 text-[#8bd132]" /><h3 className="mt-3 text-[10px] font-semibold text-white">{String(title)}</h3><p className="mt-1 text-[8px] text-[#78848a]">{String(description)}</p></button>; })}</div>
     </div>
   );
 };

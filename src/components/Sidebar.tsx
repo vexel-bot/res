@@ -177,20 +177,20 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onSelectTab, isCom
 
   return (
     <aside
-      className={`fixed inset-y-0 left-0 z-40 flex flex-col border-r border-white/[0.06] bg-[#000000] backdrop-blur-2xl transition-[width] duration-200 max-[900px]:w-[76px] ${
-        isCompact ? 'w-[76px]' : 'w-[210px] 2xl:w-[240px]'
+      className={`fixed inset-y-0 left-0 z-40 flex flex-col border-r border-white/[0.05] bg-[#070a0d]/95 backdrop-blur-2xl transition-[width] duration-300 ease-out max-[900px]:w-[76px] ${
+        isCompact ? 'w-[76px]' : 'w-[220px] 2xl:w-[250px]'
       }`}
     >
-      {/* Header Logo Area - Seamlessly matching Clicko AI Studios Logo background */}
+      {/* Header Logo Area */}
       <div
-        className={`flex h-[76px] shrink-0 items-center border-b border-white/[0.06] bg-[#000000] max-[900px]:justify-center max-[900px]:px-3 ${
-          isCompact ? 'justify-center px-3' : 'px-5 2xl:px-6'
+        className={`flex h-[76px] shrink-0 items-center border-b border-white/[0.05] bg-[#070a0d] max-[900px]:justify-center max-[900px]:px-3 ${
+          isCompact ? 'justify-center px-3' : 'px-6 2xl:px-7'
         }`}
       >
         <button
           type="button"
           onClick={() => onSelectTab('dashboard')}
-          className="clicko-brand-link flex items-center rounded-md focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#8bd132]"
+          className="clicko-brand-link flex items-center rounded-xl transition-all hover:opacity-90 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#8bd132]"
           aria-label="Voltar ao Painel"
           title="Voltar ao Painel"
         >
@@ -204,15 +204,15 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onSelectTab, isCom
           {!isCompact && (
             <ClickoLogo
               appearance="seamless"
-              className="clicko-logo-full-responsive h-[60px] w-[124px] 2xl:h-[66px] 2xl:w-[136px]"
+              className="clicko-logo-full-responsive h-[56px] w-[120px] 2xl:h-[62px] 2xl:w-[130px]"
             />
           )}
         </button>
       </div>
 
       {/* Navigation Group Scroll */}
-      <nav className={`custom-scrollbar flex-1 overflow-y-auto py-4 ${isCompact ? 'px-2' : 'px-3'}`}>
-        <div className="space-y-5">
+      <nav className={`custom-scrollbar flex-1 overflow-y-auto py-5 ${isCompact ? 'px-2.5' : 'px-3.5'}`}>
+        <div className="space-y-6">
           {navGroups.map((group, groupIdx) => {
             const hasVisibleItems = group.items.some((item) => !currentUser || canAccess(item.id));
             if (!hasVisibleItems) return null;
@@ -220,12 +220,12 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onSelectTab, isCom
             return (
               <div key={group.sectionTitle} className="space-y-1">
                 {!isCompact && (
-                  <div className="px-3 pb-1.5 text-[9px] font-bold uppercase tracking-[0.2em] text-[#525e66] max-[900px]:hidden">
+                  <div className="px-3 pb-2 text-[9px] font-mono font-bold uppercase tracking-[0.25em] text-[#4d5a62] max-[900px]:hidden">
                     {group.sectionTitle}
                   </div>
                 )}
-                {groupIdx > 0 && isCompact && <div className="mx-auto my-2 w-6 border-t border-white/[0.06]" />}
-                <div className="space-y-0.5">{group.items.map(renderItem)}</div>
+                {groupIdx > 0 && isCompact && <div className="mx-auto my-3 w-6 border-t border-white/[0.05]" />}
+                <div className="space-y-1">{group.items.map(renderItem)}</div>
               </div>
             );
           })}
@@ -234,25 +234,28 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onSelectTab, isCom
 
       {/* Subscription Card Widget */}
       {!isCompact && currentUser?.role === 'master' && (
-        <div className="mx-3 my-2 rounded-2xl border border-white/[0.06] bg-[#0c1015] p-3.5 max-[900px]:hidden shadow-xl shadow-black/40">
+        <div className="mx-3.5 my-2.5 rounded-2xl border border-white/[0.06] bg-gradient-to-b from-[#0d1217] to-[#090d10] p-4 max-[900px]:hidden shadow-2xl shadow-black/60">
           <div className="flex items-center justify-between text-xs font-bold text-white">
-            <span>Plano {workspace?.planId ? ({ solo: 'Solo', team: 'Equipe', business: 'Negócios', enterprise: 'Corporativo' }[workspace.planId] || workspace.planId) : 'Corporativo'}</span>
-            <span className="h-2 w-2 rounded-full bg-[#8bd132] animate-pulse" />
+            <span className="tracking-tight">Plano {workspace?.planId ? ({ solo: 'Solo', team: 'Equipe', business: 'Negócios', enterprise: 'Corporativo' }[workspace.planId] || workspace.planId) : 'Corporativo'}</span>
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#8bd132] opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#8bd132]"></span>
+            </span>
           </div>
-          <div className="mt-2 flex items-center justify-between text-[10px] text-[#78848c]">
-            <span>Assentos</span>
-            <span className="font-semibold text-white">{occupiedSeats} / {workspace?.maxUsers ?? '12'}</span>
+          <div className="mt-2.5 flex items-center justify-between text-[10px] text-[#717d85]">
+            <span>Assentos em uso</span>
+            <span className="font-mono font-bold text-white">{occupiedSeats} / {workspace?.maxUsers ?? '12'}</span>
           </div>
-          <div className="mt-1.5 h-1.5 overflow-hidden rounded-full bg-white/[0.06]">
+          <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-white/[0.06] p-[1px]">
             <div
-              className="h-full rounded-full bg-[#8bd132]"
+              className="h-full rounded-full bg-[#8bd132] transition-all duration-300"
               style={{ width: workspace?.maxUsers ? `${Math.min(100, (occupiedSeats / workspace.maxUsers) * 100)}%` : '25%' }}
             />
           </div>
           <button
             type="button"
             onClick={() => onSelectTab('subscription')}
-            className="mt-3 w-full rounded-xl bg-[#8bd132] py-2 text-xs font-bold text-[#080e05] transition hover:bg-[#9be24d]"
+            className="mt-3.5 w-full rounded-xl bg-[#8bd132] py-2 text-xs font-bold text-[#080e05] transition-all hover:bg-[#9be24d] hover:shadow-[0_0_16px_rgba(139,209,50,0.3)]"
           >
             Mudar de Plano
           </button>
@@ -263,14 +266,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onSelectTab, isCom
       <button
         type="button"
         onClick={onToggleCompact}
-        className="flex h-10 shrink-0 items-center justify-center text-[#525e66] transition-colors hover:text-[#8bd132]"
+        className="flex h-10 shrink-0 items-center justify-center text-[#4d5a62] transition-colors hover:text-[#8bd132]"
         aria-label={isCompact ? 'Expandir barra lateral' : 'Recolher barra lateral'}
       >
-        <ChevronLeft className={`h-4 w-4 transition-transform duration-200 ${isCompact ? 'rotate-180' : ''}`} />
+        <ChevronLeft className={`h-4 w-4 transition-transform duration-300 ${isCompact ? 'rotate-180' : ''}`} />
       </button>
 
       {/* Footer Branding */}
-      <footer className={`vexel-powered-divider relative shrink-0 border-t border-white/[0.06] ${isCompact ? 'px-3 py-3' : 'px-4 py-3'}`}>
+      <footer className={`vexel-powered-divider relative shrink-0 border-t border-white/[0.05] ${isCompact ? 'px-3 py-3' : 'px-4 py-3.5'}`}>
         {isCompact ? (
           <div className="group relative flex justify-center">
             <a
@@ -293,7 +296,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onSelectTab, isCom
             target="_blank"
             rel="noopener noreferrer"
             title="Desenvolvido pela VEXEL"
-            className="vexel-powered-signature block text-center text-[8px] font-bold uppercase tracking-[0.28em] text-[#525e66] hover:text-[#8bd132]"
+            className="vexel-powered-signature block text-center text-[8px] font-mono font-bold uppercase tracking-[0.3em] text-[#4d5a62] hover:text-[#8bd132] transition-colors"
           >
             <span>Desenvolvido pela VEXEL</span>
           </a>

@@ -133,43 +133,48 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ onNewPost, onNavig
       ];
 
   return (
-    <div className="vexel-dashboard min-h-screen px-6 pb-8 pt-4 2xl:px-10 space-y-6 max-w-[1700px] mx-auto">
-      {/* Top Welcome Bar */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-6 rounded-2xl border border-white/[0.06] bg-[#0c1015]/80 backdrop-blur-xl shadow-2xl shadow-black/50">
-        <div className="space-y-1">
+    <div className="vexel-dashboard min-h-screen px-8 pb-12 pt-6 2xl:px-12 space-y-8 max-w-[1720px] mx-auto">
+      {/* Top Command Welcome Banner */}
+      <div className="relative overflow-hidden flex flex-col md:flex-row md:items-center justify-between gap-6 p-8 rounded-3xl border border-white/[0.06] bg-gradient-to-b from-[#0e1318] to-[#090d10] backdrop-blur-2xl shadow-[0_12px_40px_rgba(0,0,0,0.6)]">
+        <div className="absolute top-0 right-1/4 w-96 h-96 bg-[#8bd132]/5 blur-[120px] pointer-events-none rounded-full" />
+        <div className="relative z-10 space-y-1.5">
           <div className="flex items-center gap-3">
-            <h1 className="text-2xl font-bold tracking-tight text-white flex items-center gap-2">
-              Olá, Pedro <span className="text-[#8bd132] inline-block animate-pulse">●</span>
+            <h1 className="text-3xl font-extrabold tracking-tight text-white flex items-center gap-3">
+              Olá, Pedro
+              <span className="relative flex h-2.5 w-2.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#8bd132] opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#8bd132]"></span>
+              </span>
             </h1>
           </div>
-          <p className="text-xs text-[#808c94]">
-            Centro de controle operacional e produção acelerada com inteligência artificial.
+          <p className="text-xs text-[#717d85] max-w-xl leading-relaxed">
+            Centro de controle operacional e esteira acelerada de criação de conteúdos com IA.
           </p>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2.5">
+        <div className="relative z-10 flex flex-wrap items-center gap-3">
           {activeCampaign && (
             <button
               type="button"
               onClick={() => onNavigate('strategy')}
-              className="flex items-center gap-2 rounded-xl border border-white/[0.08] bg-[#121820] px-3.5 py-2 text-xs font-medium text-[#c0c8ce] transition hover:border-white/20 hover:bg-[#161e27]"
+              className="flex items-center gap-2.5 rounded-xl border border-white/[0.08] bg-[#070a0d] px-4 py-2.5 text-xs font-semibold text-[#c0c8ce] transition-all hover:border-white/20 hover:bg-[#11161c]"
             >
-              <Workflow className="h-3.5 w-3.5 text-[#8bd132]" />
+              <Workflow className="h-4 w-4 text-[#8bd132]" />
               <span className="truncate max-w-[160px]">{activeCampaign.name}</span>
             </button>
           )}
           <button
             type="button"
             onClick={() => onNavigate('library')}
-            className="flex items-center gap-2 rounded-xl border border-white/[0.08] bg-[#121820] px-3.5 py-2 text-xs font-medium text-[#c0c8ce] transition hover:border-white/20 hover:bg-[#161e27]"
+            className="flex items-center gap-2.5 rounded-xl border border-white/[0.08] bg-[#070a0d] px-4 py-2.5 text-xs font-semibold text-[#c0c8ce] transition-all hover:border-white/20 hover:bg-[#11161c]"
           >
-            <Box className="h-3.5 w-3.5 text-[#7b878f]" />
+            <Box className="h-4 w-4 text-[#717d85]" />
             <span>{assets.length + posts.length} Ativos no Acervo</span>
           </button>
           <button
             type="button"
             onClick={onNewPost}
-            className="flex items-center gap-2 rounded-xl bg-[#8bd132] px-4 py-2 text-xs font-bold text-[#091106] transition-all hover:bg-[#9be24d] shadow-lg shadow-[#8bd132]/20"
+            className="flex items-center gap-2.5 rounded-xl bg-[#8bd132] px-5 py-2.5 text-xs font-bold text-[#080e05] transition-all hover:bg-[#9be24d] shadow-[0_0_20px_rgba(139,209,50,0.25)] hover:shadow-[0_0_28px_rgba(139,209,50,0.4)]"
           >
             <Plus className="h-4 w-4 stroke-[2.5]" />
             <span>Criar Conteúdo</span>
@@ -178,38 +183,38 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ onNewPost, onNavig
       </div>
 
       {/* Main Grid Section */}
-      <div className="grid grid-cols-1 gap-6 min-[1150px]:grid-cols-[minmax(0,1fr)_340px] 2xl:grid-cols-[minmax(0,1fr)_410px]">
+      <div className="grid grid-cols-1 gap-8 min-[1180px]:grid-cols-[minmax(0,1fr)_360px] 2xl:grid-cols-[minmax(0,1fr)_420px]">
         {/* Left Primary Column */}
-        <section className="min-w-0 space-y-6">
-          {/* Top Metric Cards */}
-          <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+        <section className="min-w-0 space-y-8">
+          {/* Top Metric Cards - Redesigned Bento Row */}
+          <div className="grid grid-cols-2 gap-5 lg:grid-cols-4">
             {dynamicMetricCards.map((metric) => {
               const Icon = metric.icon;
               const isAccent = metric.tone === 'amber';
               return (
                 <article
                   key={metric.label}
-                  className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-white/[0.06] bg-[#0c1015]/90 p-5 backdrop-blur-md transition-all duration-200 hover:border-white/15 hover:shadow-xl hover:shadow-black/50"
+                  className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-white/[0.05] bg-gradient-to-b from-[#0e1318] to-[#080b0e] p-6 backdrop-blur-xl transition-all duration-200 hover:border-white/15 hover:shadow-[0_12px_36px_rgba(0,0,0,0.6)]"
                 >
-                  <div className="flex items-start justify-between">
-                    <span className="text-xs font-medium text-[#88949d]">{metric.label}</span>
+                  <div className="flex items-start justify-between gap-2">
+                    <span className="text-xs font-semibold text-[#717d85] tracking-tight">{metric.label}</span>
                     <span
-                      className={`grid h-8 w-8 place-items-center rounded-xl border ${
+                      className={`grid h-9 w-9 place-items-center rounded-xl border ${
                         isAccent
                           ? 'border-amber-500/20 bg-amber-500/10 text-amber-400'
-                          : 'border-white/[0.08] bg-white/[0.04] text-[#8bd132]'
+                          : 'border-white/[0.08] bg-white/[0.03] text-[#8bd132]'
                       }`}
                     >
                       <Icon className="h-4 w-4" strokeWidth={1.8} />
                     </span>
                   </div>
 
-                  <div className="mt-4 flex items-end justify-between">
+                  <div className="mt-6 flex items-end justify-between">
                     <div>
-                      <div className="text-2xl font-bold tracking-tight text-white">{metric.value}</div>
-                      <div className="mt-1 flex items-center gap-1 text-[10px] text-[#78848c]">
+                      <div className="text-3xl font-extrabold tracking-tight text-white">{metric.value}</div>
+                      <div className="mt-1.5 flex items-center gap-1.5 text-[11px] text-[#627078]">
                         {metric.change && (
-                          <span className="font-semibold text-[#8bd132]">{metric.change}</span>
+                          <span className="font-bold text-[#8bd132]">{metric.change}</span>
                         )}
                         <span>{metric.detail}</span>
                       </div>
@@ -222,26 +227,26 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ onNewPost, onNavig
           </div>
 
           {/* Interactive Calendar Schedule Command */}
-          <section className="rounded-2xl border border-white/[0.06] bg-[#0c1015]/90 p-6 backdrop-blur-xl shadow-2xl shadow-black/40">
-            <div className="mb-5 flex flex-wrap items-center justify-between gap-4 border-b border-white/[0.06] pb-4">
-              <div className="space-y-0.5">
-                <div className="flex items-center gap-2">
+          <section className="rounded-2xl border border-white/[0.05] bg-gradient-to-b from-[#0e1318] to-[#080b0e] p-7 backdrop-blur-xl shadow-[0_16px_48px_rgba(0,0,0,0.6)]">
+            <div className="mb-6 flex flex-wrap items-center justify-between gap-4 border-b border-white/[0.05] pb-5">
+              <div className="space-y-1">
+                <div className="flex items-center gap-2.5">
                   <CalendarDays className="h-4 w-4 text-[#8bd132]" />
                   <h2 className="text-sm font-bold tracking-tight text-white">Cronograma Visual de Publicações</h2>
                 </div>
-                <p className="text-[11px] text-[#78848c]">Grade da semana com distribuição de conteúdos por canal</p>
+                <p className="text-xs text-[#717d85]">Grade da semana com distribuição de conteúdos por canal e horário</p>
               </div>
 
               <div className="flex items-center gap-3">
-                <div className="flex items-center gap-1.5 rounded-xl border border-white/[0.08] bg-[#070a0d] px-3 py-1.5 text-xs text-[#9ea9b1]">
+                <div className="flex items-center gap-2 rounded-xl border border-white/[0.08] bg-[#070a0d] px-3.5 py-2 text-xs text-[#9ea9b1]">
                   <span>Visão:</span>
                   <span className="font-semibold text-white">Semanal</span>
-                  <ChevronDown className="h-3.5 w-3.5 text-[#6c7880]" />
+                  <ChevronDown className="h-3.5 w-3.5 text-[#5a6770]" />
                 </div>
                 <button
                   type="button"
                   onClick={onNewPost}
-                  className="flex items-center gap-1.5 rounded-xl bg-white/[0.08] border border-white/10 px-3.5 py-1.5 text-xs font-semibold text-white transition hover:bg-white/15"
+                  className="flex items-center gap-2 rounded-xl bg-white/[0.06] border border-white/10 px-4 py-2 text-xs font-semibold text-white transition hover:bg-white/12"
                 >
                   <Plus className="h-3.5 w-3.5 text-[#8bd132]" />
                   <span>Novo Item</span>
@@ -250,29 +255,29 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ onNewPost, onNavig
             </div>
 
             {/* Days Header */}
-            <div className="grid grid-cols-[46px_repeat(7,minmax(0,1fr))] border-b border-white/[0.06]">
+            <div className="grid grid-cols-[48px_repeat(7,minmax(0,1fr))] border-b border-white/[0.05]">
               <div className="flex items-center justify-center">
-                <button type="button" className="grid h-7 w-7 place-items-center rounded-lg bg-white/[0.04] text-[#808c94] hover:text-white">
+                <button type="button" className="grid h-8 w-8 place-items-center rounded-xl bg-white/[0.03] text-[#717d85] hover:text-white transition-colors">
                   <ChevronLeft className="h-4 w-4" />
                 </button>
               </div>
               {days.map(([name, date], index) => (
                 <div
                   key={date}
-                  className={`flex h-12 flex-col items-center justify-center border-l border-white/[0.04] text-xs transition-all ${
-                    index === 3 ? 'border-t-2 border-t-[#8bd132] bg-[#8bd132]/[0.06]' : ''
+                  className={`flex h-14 flex-col items-center justify-center border-l border-white/[0.04] text-xs transition-all ${
+                    index === 3 ? 'border-t-2 border-t-[#8bd132] bg-[#8bd132]/[0.05]' : ''
                   }`}
                 >
-                  <span className={`font-semibold ${index === 3 ? 'text-[#8bd132]' : 'text-[#d0d7dc]'}`}>{name}</span>
-                  <span className={`text-[10px] ${index === 3 ? 'text-[#8bd132]/80 font-medium' : 'text-[#6e7a82]'}`}>{date}</span>
+                  <span className={`font-bold ${index === 3 ? 'text-[#8bd132]' : 'text-[#d0d7dc]'}`}>{name}</span>
+                  <span className={`text-[10px] font-mono ${index === 3 ? 'text-[#8bd132]/90' : 'text-[#627078]'}`}>{date}</span>
                 </div>
               ))}
             </div>
 
             {/* Grid Matrix */}
-            <div className="relative grid grid-cols-[46px_repeat(7,minmax(0,1fr))] grid-rows-5 pt-2">
+            <div className="relative grid grid-cols-[48px_repeat(7,minmax(0,1fr))] grid-rows-5 pt-3">
               {[8, 10, 12, 14, 16].map((time, index) => (
-                <div key={time} style={{ gridColumn: 1, gridRow: index + 1 }} className="pr-3 pt-2 text-right text-[10px] font-mono text-[#626e76]">
+                <div key={time} style={{ gridColumn: 1, gridRow: index + 1 }} className="pr-3 pt-2 text-right text-[10px] font-mono text-[#5a6770]">
                   {String(time).padStart(2, '0')}:00
                 </div>
               ))}
@@ -283,7 +288,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ onNewPost, onNavig
                   <div
                     key={index}
                     style={{ gridColumn: day + 1, gridRow: row }}
-                    className={`h-[58px] border-b border-l border-white/[0.04] ${
+                    className={`h-[64px] border-b border-l border-white/[0.04] ${
                       day === 4 ? 'bg-[#8bd132]/[0.02]' : 'bg-transparent'
                     }`}
                   />
@@ -294,20 +299,20 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ onNewPost, onNavig
                 <button
                   key={`${item.day}-${item.row}-${index}`}
                   type="button"
-                  style={{ gridColumn: item.day + 1, gridRow: item.row, borderColor: `${item.accent}80` }}
-                  className="z-10 m-[3px] flex min-w-0 items-center gap-2 rounded-xl border bg-[#11171f] p-1.5 text-left shadow-lg shadow-black/40 transition-all hover:-translate-y-0.5 hover:border-white/30 hover:bg-[#161e27]"
+                  style={{ gridColumn: item.day + 1, gridRow: item.row, borderColor: `${item.accent}60` }}
+                  className="z-10 m-[3px] flex min-w-0 items-center gap-2 rounded-xl border bg-[#0d1217] p-2 text-left shadow-lg shadow-black/50 transition-all hover:-translate-y-0.5 hover:border-white/30 hover:bg-[#121820]"
                 >
-                  <img src={item.image} alt="" className="h-8 w-7 shrink-0 rounded-lg object-cover" />
+                  <img src={item.image} alt="" className="h-9 w-8 shrink-0 rounded-lg object-cover" />
                   <span className="min-w-0 flex-1">
-                    <span className="block truncate text-[10px] font-bold text-white">{item.title}</span>
+                    <span className="block truncate text-[11px] font-bold text-white">{item.title}</span>
                     <span className="block truncate text-[9px] text-[#8e9aa2]">{item.subtitle}</span>
                   </span>
-                  <Instagram className="h-3 w-3 shrink-0 text-[#e780a8]" />
+                  <Instagram className="h-3.5 w-3.5 shrink-0 text-[#e780a8]" />
                 </button>
               ))}
             </div>
 
-            <div className="mt-4 flex flex-wrap items-center gap-6 border-t border-white/[0.04] pt-3 text-[10px] text-[#78848c]">
+            <div className="mt-5 flex flex-wrap items-center gap-6 border-t border-white/[0.04] pt-4 text-xs text-[#717d85]">
               {[
                 ['#8bd132', 'Publicado / Agendado'],
                 ['#f2b33d', 'Em Aprovação'],
@@ -323,26 +328,28 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ onNewPost, onNavig
           </section>
 
           {/* Quick Production Process */}
-          <section className="rounded-2xl border border-white/[0.06] bg-[#0c1015]/90 p-6 backdrop-blur-xl">
-            <div className="flex items-center justify-between mb-5">
-              <h2 className="text-xs font-bold uppercase tracking-widest text-[#6c7880]">Esteira de Produção Inteligente</h2>
-              <span className="text-[10px] text-[#8bd132] font-semibold">7 Passos Automatizados</span>
+          <section className="rounded-2xl border border-white/[0.05] bg-gradient-to-b from-[#0e1318] to-[#080b0e] p-7 backdrop-blur-xl">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-xs font-mono font-bold uppercase tracking-[0.2em] text-[#627078]">Esteira de Produção Inteligente</h2>
+              <span className="text-[10px] text-[#8bd132] font-semibold bg-[#8bd132]/10 border border-[#8bd132]/20 px-2.5 py-0.5 rounded-full">
+                7 Passos Automatizados
+              </span>
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-3">
-              {quickFlow.map((step, index) => {
+            <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-3.5">
+              {quickFlow.map((step) => {
                 const Icon = step.icon;
                 return (
                   <button
                     key={step.label}
                     type="button"
                     onClick={onNewPost}
-                    className="group flex flex-col items-center rounded-xl border border-white/[0.05] bg-[#080b0e] p-3 text-center transition-all hover:border-[#8bd132]/40 hover:bg-[#11171f]"
+                    className="group flex flex-col items-center rounded-2xl border border-white/[0.05] bg-[#070a0d] p-4 text-center transition-all hover:border-[#8bd132]/40 hover:bg-[#10151c]"
                   >
-                    <span className="grid h-10 w-10 place-items-center rounded-xl border border-white/[0.08] bg-white/[0.03] text-[#8bd132] group-hover:scale-105 group-hover:bg-[#8bd132]/10 transition-all">
+                    <span className="grid h-10 w-10 place-items-center rounded-xl border border-white/[0.08] bg-white/[0.03] text-[#8bd132] group-hover:scale-110 group-hover:bg-[#8bd132]/10 transition-all duration-200">
                       <Icon className="h-4 w-4" />
                     </span>
-                    <span className="mt-2 text-[10px] font-bold text-white">{step.label}</span>
-                    <span className="mt-1 text-[9px] leading-tight text-[#78848c] whitespace-pre-line">{step.text}</span>
+                    <span className="mt-3 text-[11px] font-bold text-white">{step.label}</span>
+                    <span className="mt-1 text-[9px] leading-tight text-[#717d85] whitespace-pre-line">{step.text}</span>
                   </button>
                 );
               })}
@@ -351,40 +358,40 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ onNewPost, onNavig
         </section>
 
         {/* Right Sidebar Column */}
-        <aside className="space-y-6">
-          {/* Status do Ambiente (Empresa ou Pessoal) */}
+        <aside className="space-y-8">
+          {/* Status do Ambiente */}
           {isPersonal ? (
-            <section className="rounded-2xl border border-white/[0.06] bg-[#0c1015]/90 p-5 backdrop-blur-xl shadow-2xl shadow-black/40">
-              <div className="flex items-center justify-between border-b border-white/[0.06] pb-3">
-                <div className="flex items-center gap-2">
+            <section className="rounded-2xl border border-white/[0.05] bg-gradient-to-b from-[#0e1318] to-[#080b0e] p-6 backdrop-blur-xl shadow-[0_12px_36px_rgba(0,0,0,0.6)]">
+              <div className="flex items-center justify-between border-b border-white/[0.05] pb-4">
+                <div className="flex items-center gap-2.5">
                   <Sparkles className="h-4 w-4 text-[#8bd132]" />
                   <h2 className="text-xs font-bold text-white">Ambiente Pessoal Ativo</h2>
                 </div>
-                <span className="rounded-full bg-[#8bd132]/10 border border-[#8bd132]/20 px-2 py-0.5 text-[9px] font-bold text-[#8bd132]">
+                <span className="rounded-full bg-[#8bd132]/10 border border-[#8bd132]/20 px-2.5 py-0.5 text-[9px] font-bold text-[#8bd132]">
                   Modo Solo
                 </span>
               </div>
-              <div className="mt-4 space-y-3 text-xs text-[#9ea9b0]">
-                <div className="flex items-start gap-2.5 rounded-xl border border-white/[0.04] bg-[#080b0e] p-3">
+              <div className="mt-5 space-y-3.5 text-xs text-[#a0abb2]">
+                <div className="flex items-start gap-3 rounded-xl border border-white/[0.04] bg-[#070a0d] p-3.5">
                   <CheckCircle2 className="h-4 w-4 text-[#8bd132] shrink-0 mt-0.5" />
                   <div>
                     <strong className="block text-white font-semibold text-[11px]">Publicação Direta Ativa</strong>
-                    <span className="text-[10px] text-[#78848c]">Conteúdos agendados e publicados vão direto aos canais sem fila de aprovação.</span>
+                    <span className="text-[10px] text-[#717d85]">Conteúdos agendados e publicados vão direto aos canais sem fila de aprovação.</span>
                   </div>
                 </div>
-                <div className="flex items-start gap-2.5 rounded-xl border border-white/[0.04] bg-[#080b0e] p-3">
+                <div className="flex items-start gap-3 rounded-xl border border-white/[0.04] bg-[#070a0d] p-3.5">
                   <UserRound className="h-4 w-4 text-[#8bd132] shrink-0 mt-0.5" />
                   <div>
                     <strong className="block text-white font-semibold text-[11px]">Operação Autônoma</strong>
-                    <span className="text-[10px] text-[#78848c]">Sem limitação de permissões corporativas, auditoria entre usuários ou gestão de equipe.</span>
+                    <span className="text-[10px] text-[#717d85]">Sem limitação de permissões corporativas, auditoria entre usuários ou gestão de equipe.</span>
                   </div>
                 </div>
               </div>
             </section>
           ) : (
-            <section className="rounded-2xl border border-white/[0.06] bg-[#0c1015]/90 p-5 backdrop-blur-xl shadow-2xl shadow-black/40">
-              <div className="flex items-center justify-between border-b border-white/[0.06] pb-3">
-                <div className="flex items-center gap-2">
+            <section className="rounded-2xl border border-white/[0.05] bg-gradient-to-b from-[#0e1318] to-[#080b0e] p-6 backdrop-blur-xl shadow-[0_12px_36px_rgba(0,0,0,0.6)]">
+              <div className="flex items-center justify-between border-b border-white/[0.05] pb-4">
+                <div className="flex items-center gap-2.5">
                   <Clock3 className="h-4 w-4 text-amber-400" />
                   <h2 className="text-xs font-bold text-white">Fila de Aprovações Corporativas</h2>
                 </div>
@@ -396,20 +403,20 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ onNewPost, onNavig
                   Ver Todas
                 </button>
               </div>
-              <div className="mt-4 space-y-3">
+              <div className="mt-5 space-y-3">
                 {approvals.map((item) => (
                   <button
                     key={item.title}
                     type="button"
                     onClick={() => onNavigate('approvals')}
-                    className="flex w-full items-center gap-3 rounded-xl border border-white/[0.04] bg-[#080b0e] p-2.5 text-left transition hover:border-white/10 hover:bg-[#11171f]"
+                    className="flex w-full items-center gap-3.5 rounded-xl border border-white/[0.04] bg-[#070a0d] p-3 text-left transition-all hover:border-white/10 hover:bg-[#10151c]"
                   >
                     <img src={item.image} alt="" className="h-11 w-11 rounded-lg object-cover" />
                     <span className="min-w-0 flex-1">
-                      <span className="block truncate text-xs font-semibold text-white">{item.title}</span>
-                      <span className="block text-[10px] text-[#78848c]">Equipe Corporativa</span>
+                      <span className="block truncate text-xs font-bold text-white">{item.title}</span>
+                      <span className="block text-[10px] text-[#717d85]">Equipe Corporativa</span>
                     </span>
-                    <span className="rounded-full bg-amber-500/10 border border-amber-500/20 px-2 py-0.5 text-[9px] font-bold text-amber-400">
+                    <span className="rounded-full bg-amber-500/10 border border-amber-500/20 px-2.5 py-0.5 text-[9px] font-bold text-amber-400">
                       Pendente
                     </span>
                   </button>
@@ -419,9 +426,9 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ onNewPost, onNavig
           )}
 
           {/* Performance Summary Widget */}
-          <section className="rounded-2xl border border-white/[0.06] bg-[#0c1015]/90 p-5 backdrop-blur-xl shadow-2xl shadow-black/40">
-            <div className="flex items-center justify-between border-b border-white/[0.06] pb-3">
-              <div className="flex items-center gap-2">
+          <section className="rounded-2xl border border-white/[0.05] bg-gradient-to-b from-[#0e1318] to-[#080b0e] p-6 backdrop-blur-xl shadow-[0_12px_36px_rgba(0,0,0,0.6)]">
+            <div className="flex items-center justify-between border-b border-white/[0.05] pb-4">
+              <div className="flex items-center gap-2.5">
                 <BarChart3 className="h-4 w-4 text-[#8bd132]" />
                 <h2 className="text-xs font-bold text-white">Desempenho Semanal</h2>
               </div>
@@ -434,17 +441,17 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ onNewPost, onNavig
               </button>
             </div>
 
-            <div className="mt-4 space-y-2.5">
+            <div className="mt-5 space-y-3">
               {[
                 ['Alcance Total', '128.7K', '+14.5%'],
                 ['Impressões', '256.3K', '+11.2%'],
                 ['Engajamento Médio', '4.82%', '+11.0%'],
                 ['Cliques no Link', '3.265', '+8.7%'],
               ].map(([label, value, gain]) => (
-                <div key={label} className="flex items-center justify-between text-xs py-1 border-b border-white/[0.03] last:border-0">
-                  <span className="text-[#808c94]">{label}</span>
-                  <div className="flex items-center gap-2">
-                    <span className="font-bold text-white">{value}</span>
+                <div key={label} className="flex items-center justify-between text-xs py-1.5 border-b border-white/[0.03] last:border-0">
+                  <span className="text-[#717d85]">{label}</span>
+                  <div className="flex items-center gap-2.5">
+                    <span className="font-bold font-mono text-white">{value}</span>
                     <span className="text-[10px] font-bold text-[#8bd132]">{gain}</span>
                   </div>
                 </div>
@@ -452,7 +459,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ onNewPost, onNavig
             </div>
 
             {/* Sparkline Graphic Canvas */}
-            <div className="relative mt-5 h-28 w-full">
+            <div className="relative mt-6 h-28 w-full">
               <svg viewBox="0 0 330 112" className="h-full w-full" preserveAspectRatio="none">
                 <defs>
                   <linearGradient id="area" x1="0" y1="0" x2="0" y2="1">
@@ -467,18 +474,18 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ onNewPost, onNavig
           </section>
 
           {/* AI Strategic Recommendation Box */}
-          <section className="relative overflow-hidden rounded-2xl border border-[#8bd132]/30 bg-gradient-to-br from-[#8bd132]/10 via-[#0c1015] to-[#080b0e] p-5 shadow-2xl">
+          <section className="relative overflow-hidden rounded-2xl border border-[#8bd132]/30 bg-gradient-to-br from-[#8bd132]/10 via-[#0a0e12] to-[#06080a] p-6 shadow-2xl">
             <div className="flex items-center gap-2 text-[#8bd132]">
               <Sparkles className="h-4 w-4" />
-              <h2 className="text-xs font-bold uppercase tracking-wider">Insight da Inteligência Artificial</h2>
+              <h2 className="text-xs font-mono font-bold uppercase tracking-wider">Insight da IA Copilot</h2>
             </div>
-            <p className="mt-3 text-xs leading-relaxed text-[#c0c9cf]">
+            <p className="mt-3.5 text-xs leading-relaxed text-[#c0c9cf]">
               Seus Reels com depoimentos tiveram <strong className="text-white">+27% de alcance</strong> que a média. Recomendamos gerar 3 variações focadas nessa temática para a próxima semana.
             </p>
             <button
               type="button"
               onClick={onNewPost}
-              className="mt-4 flex items-center gap-2 rounded-xl bg-[#8bd132] px-4 py-2 text-xs font-bold text-[#080e05] transition hover:bg-[#9be24d] shadow-lg shadow-[#8bd132]/20"
+              className="mt-5 flex items-center gap-2.5 rounded-xl bg-[#8bd132] px-4 py-2.5 text-xs font-bold text-[#080e05] transition-all hover:bg-[#9be24d] shadow-[0_0_20px_rgba(139,209,50,0.25)]"
             >
               <Sparkles className="h-3.5 w-3.5" />
               <span>Gerar Variações com IA</span>
