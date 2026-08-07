@@ -6,9 +6,9 @@ import {
   Video,
   Target,
   Sparkles,
-  Layers,
+  FileEdit,
   Wand2,
-  FileEdit
+  ChevronRight
 } from 'lucide-react';
 import { CreationStudioView } from './CreationStudioView';
 import { ImageStudioView } from './ImageStudioView';
@@ -18,16 +18,59 @@ import { SmartBriefingView } from './SmartBriefingView';
 import { useOperations } from '../context/OperationsContext';
 import type { Post } from '../types';
 
-export function StudioView({ onSavePost }: { onSavePost: (post: Partial<Post>) => void }) {
+export type StudioModuleId = 'create' | 'edit_image' | 'edit_video' | 'matrix' | 'briefing';
+
+interface StudioViewProps {
+  onSavePost: (post: Partial<Post>) => void;
+  initialMode?: StudioModuleId;
+}
+
+export function StudioView({ onSavePost, initialMode = 'create' }: StudioViewProps) {
   const { brain, campaigns, activeCampaign, setActiveCampaignId } = useOperations();
-  const [mode, setMode] = React.useState<'create' | 'edit_image' | 'edit_video' | 'matrix' | 'briefing'>('create');
+  const [mode, setMode] = React.useState<StudioModuleId>(initialMode);
+
+  React.useEffect(() => {
+    if (initialMode) {
+      setMode(initialMode);
+    }
+  }, [initialMode]);
 
   const tabs = [
-    { id: 'create' as const, label: 'Criar Conteúdo', sublabel: 'Copys, Posts, Carrosséis & Anúncios', icon: FileText },
-    { id: 'edit_image' as const, label: 'Editar Imagem IA', sublabel: 'Remover fundo, upscale & expansão', icon: ImageIcon },
-    { id: 'edit_video' as const, label: 'Vídeo IA & Shorts', sublabel: 'Cortes, legendas & dublagem', icon: Video },
-    { id: 'matrix' as const, label: 'Matriz Criativa', sublabel: 'Gancho, Ângulo, Emoção & CTA', icon: Target },
-    { id: 'briefing' as const, label: 'Briefing Inteligente', sublabel: 'Planejamento & cronogramas', icon: FileEdit },
+    {
+      id: 'create' as const,
+      label: 'Criar Conteúdo',
+      sublabel: 'Copys, Posts, Carrosséis & Anúncios',
+      icon: FileText,
+      badge: 'Redação & Agendamento',
+    },
+    {
+      id: 'edit_image' as const,
+      label: 'Editar Imagem IA',
+      sublabel: 'Remover fundo, Upscale & Expansão',
+      icon: ImageIcon,
+      badge: 'Editor Visual Completo',
+    },
+    {
+      id: 'edit_video' as const,
+      label: 'Vídeo IA & Shorts',
+      sublabel: 'Cortes, Legendas & Dublagem',
+      icon: Video,
+      badge: 'Editor de Vídeo Pro',
+    },
+    {
+      id: 'matrix' as const,
+      label: 'Matriz Criativa',
+      sublabel: 'Gancho, Ângulo, Emoção & CTA',
+      icon: Target,
+      badge: 'Engenharia de Conversão',
+    },
+    {
+      id: 'briefing' as const,
+      label: 'Briefing Inteligente',
+      sublabel: 'Planejamento & Cronogramas',
+      icon: FileEdit,
+      badge: 'Estratégia & Metas',
+    },
   ];
 
   return (
@@ -40,7 +83,7 @@ export function StudioView({ onSavePost }: { onSavePost: (post: Partial<Post>) =
           </p>
           <h1 className="text-3xl font-extrabold tracking-tight text-white">Clicko Creative Studio</h1>
           <p className="text-xs text-[#717d85] max-w-xl">
-            Ambiente unificado de alta performance para criação, edição visual acelerada por IA e arquitetura de marca.
+            Suíte profissional para mídias sociais dividida em módulos independentes com ferramentas e fluxos exclusivos.
           </p>
         </div>
 
@@ -63,34 +106,65 @@ export function StudioView({ onSavePost }: { onSavePost: (post: Partial<Post>) =
         </div>
       </div>
 
-      {/* Module Selector Tabs */}
-      <div className="mx-auto flex w-full max-w-[1720px] flex-wrap gap-3 px-8 2xl:px-12">
-        {tabs.map(({ id, label, sublabel, icon: Icon }) => (
-          <button
-            key={id}
-            onClick={() => setMode(id)}
-            className={`flex flex-col items-start rounded-2xl px-5 py-3.5 transition-all duration-200 border ${
-              mode === id
-                ? 'bg-[#8bd132] font-bold text-[#080e05] border-[#8bd132] shadow-[0_0_24px_rgba(139,209,50,0.3)] scale-[1.02]'
-                : 'bg-[#070a0d] text-[#8e9aa2] hover:bg-[#0f141a] hover:text-white border-white/[0.05]'
-            }`}
-          >
-            <div className="flex items-center gap-2.5">
-              <Icon className="h-4 w-4" />
-              <span className="text-xs font-bold tracking-tight">{label}</span>
-            </div>
-            <span
-              className={`mt-1 text-[10px] ${
-                mode === id ? 'text-[#1d2a13] font-semibold' : 'text-[#627078]'
+      {/* Module Navigation Cards */}
+      <div className="mx-auto grid w-full max-w-[1720px] grid-cols-1 gap-4 px-8 sm:grid-cols-2 lg:grid-cols-5 2xl:px-12">
+        {tabs.map(({ id, label, sublabel, icon: Icon, badge }) => {
+          const isActive = mode === id;
+          return (
+            <button
+              key={id}
+              type="button"
+              onClick={() => setMode(id)}
+              className={`group relative flex flex-col justify-between rounded-2xl p-5 text-left transition-all duration-200 border ${
+                isActive
+                  ? 'bg-gradient-to-b from-[#111811] to-[#070b07] border-[#8bd132] shadow-[0_8px_32px_rgba(139,209,50,0.18)] scale-[1.02]'
+                  : 'bg-[#070a0d] border-white/[0.05] hover:bg-[#0e1318] hover:border-white/20'
               }`}
             >
-              {sublabel}
-            </span>
-          </button>
-        ))}
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <span
+                    className={`grid h-10 w-10 place-items-center rounded-xl border ${
+                      isActive
+                        ? 'border-[#8bd132]/40 bg-[#8bd132]/15 text-[#8bd132]'
+                        : 'border-white/10 bg-white/[0.03] text-[#717d85] group-hover:text-white'
+                    }`}
+                  >
+                    <Icon className="h-5 w-5" />
+                  </span>
+                  <span
+                    className={`text-[9px] font-mono font-semibold px-2 py-0.5 rounded-full border ${
+                      isActive
+                        ? 'border-[#8bd132]/30 bg-[#8bd132]/10 text-[#8bd132]'
+                        : 'border-white/[0.06] bg-white/[0.02] text-[#627078]'
+                    }`}
+                  >
+                    {badge}
+                  </span>
+                </div>
+
+                <h3 className={`text-sm font-extrabold tracking-tight ${isActive ? 'text-white' : 'text-[#c0c8ce] group-hover:text-white'}`}>
+                  {label}
+                </h3>
+                <p className={`mt-1 text-[11px] leading-relaxed ${isActive ? 'text-[#8bd132]' : 'text-[#627078]'}`}>
+                  {sublabel}
+                </p>
+              </div>
+
+              <div className="mt-4 flex items-center gap-1 text-[10px] font-bold text-[#8bd132] opacity-0 group-hover:opacity-100 transition-opacity">
+                <span>Acessar Módulo</span>
+                <ChevronRight className="h-3 w-3" />
+              </div>
+
+              {isActive && (
+                <div className="absolute top-0 right-0 left-0 h-1 rounded-t-2xl bg-[#8bd132] shadow-[0_0_12px_#8bd132]" />
+              )}
+            </button>
+          );
+        })}
       </div>
 
-      {/* Embedded Studio Modules Container */}
+      {/* Embedded Studio Module Workspace */}
       <div className="mx-auto w-full max-w-[1720px] px-8 2xl:px-12">
         {mode === 'create' && (
           <CreationStudioView
@@ -118,3 +192,4 @@ export function StudioView({ onSavePost }: { onSavePost: (post: Partial<Post>) =
     </div>
   );
 }
+

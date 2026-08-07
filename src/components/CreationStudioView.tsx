@@ -223,7 +223,45 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
         </div>
       </div>
 
-      <div className="rounded-xl border border-white/[0.06] bg-[#182126] p-3"><div className="mb-2 flex items-center justify-between"><span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-[#7f8a90]">Ferramentas de texto</span><span className="text-[8px] text-[#8bd132]">Biblioteca de comandos conectada</span></div><div className="flex gap-2 overflow-x-auto custom-scrollbar">{['Publicações', 'Legendas', 'Texto de vendas', 'E-mail', 'Artigo', 'Página de captura', 'SEO', 'Chamada para ação', 'Marcadores', 'Roteiros', 'Tradução', 'Correção', 'Reescrita'].map((tool) => <button key={tool} onClick={() => { setCopyTool(tool); setTopicPrompt(`${tool}: ${topicPrompt.replace(/^[^:]+:\s*/, '')}`); }} className={`shrink-0 rounded-lg px-3 py-2 text-[8px] ${copyTool === tool ? 'bg-[#8bd132] font-bold text-[#14200e]' : 'border border-white/[0.06] bg-black/20 text-[#9ba5aa]'}`}>{tool}</button>)}</div></div>
+      <div className="rounded-2xl border border-white/[0.06] bg-[#0c1015] p-3.5 shadow-lg">
+        <div className="mb-2.5 flex items-center justify-between">
+          <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#6c7880]">Ferramentas de Redação</span>
+          <span className="text-[10px] font-mono font-bold text-[#8bd132]">Biblioteca de Prompts Conectada</span>
+        </div>
+        <div className="flex gap-2 overflow-x-auto custom-scrollbar pb-1">
+          {[
+            'Publicações',
+            'Legendas',
+            'Texto de vendas',
+            'E-mail',
+            'Artigo',
+            'Página de captura',
+            'SEO',
+            'Chamada para ação',
+            'Marcadores',
+            'Roteiros',
+            'Tradução',
+            'Correção',
+            'Reescrita',
+          ].map((tool) => (
+            <button
+              key={tool}
+              type="button"
+              onClick={() => {
+                setCopyTool(tool);
+                setTopicPrompt(`${tool}: ${topicPrompt.replace(/^[^:]+:\s*/, '')}`);
+              }}
+              className={`shrink-0 rounded-xl px-3 py-1.5 text-xs font-semibold transition-all ${
+                copyTool === tool
+                  ? 'bg-[#8bd132] font-bold text-[#080e05] shadow-sm'
+                  : 'border border-white/[0.06] bg-white/[0.02] text-[#8e9aa2] hover:bg-white/[0.06] hover:text-white'
+              }`}
+            >
+              {tool}
+            </button>
+          ))}
+        </div>
+      </div>
 
       {/* Format Tabs Bar */}
       <div className="flex items-center gap-2 overflow-x-auto pb-2 custom-scrollbar">

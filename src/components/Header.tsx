@@ -64,9 +64,6 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSpotlight }) => {
             <Search className="h-4 w-4 shrink-0 text-[#5a6770] group-hover:text-[#8bd132] transition-colors" />
             <span className="truncate text-xs font-medium max-[900px]:hidden">Buscar no workspace, conteúdos, IA...</span>
           </div>
-          <kbd className="hidden sm:inline-flex items-center gap-1 rounded-md border border-white/10 bg-white/[0.04] px-2 py-0.5 text-[10px] font-mono font-bold text-[#627078]">
-            ⌘K
-          </kbd>
         </button>
       </div>
 

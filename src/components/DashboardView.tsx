@@ -109,7 +109,12 @@ const MiniSparkline = ({ tone }: { tone: string }) => (
   </svg>
 );
 
-export const DashboardView: React.FC<DashboardViewProps> = ({ onNewPost, onNavigate }) => {
+export const DashboardView: React.FC<DashboardViewProps> = ({
+  onNewPost,
+  onNavigate,
+  activeWorkspace,
+  onOpenCampaignWizard,
+}) => {
   const { activeCampaign, brainCompleteness, assets, posts } = useOperations();
   const { environmentMode, currentUser } = useGovernance();
   const isPersonal = environmentMode === 'personal';
@@ -135,49 +140,46 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ onNewPost, onNavig
   return (
     <div className="vexel-dashboard min-h-screen px-8 pb-12 pt-6 2xl:px-12 space-y-8 max-w-[1720px] mx-auto">
       {/* Top Command Welcome Banner */}
-      <div className="relative overflow-hidden flex flex-col md:flex-row md:items-center justify-between gap-6 p-8 rounded-3xl border border-white/[0.06] bg-gradient-to-b from-[#0e1318] to-[#090d10] backdrop-blur-2xl shadow-[0_12px_40px_rgba(0,0,0,0.6)]">
+      <div className="relative overflow-hidden flex flex-col md:flex-row md:items-center justify-between gap-6 p-7 rounded-3xl border border-white/[0.08] bg-gradient-to-r from-[#0d1217] via-[#090d10] to-[#070a0d] backdrop-blur-2xl shadow-[0_16px_48px_rgba(0,0,0,0.7)]">
         <div className="absolute top-0 right-1/4 w-96 h-96 bg-[#8bd132]/5 blur-[120px] pointer-events-none rounded-full" />
-        <div className="relative z-10 space-y-1.5">
-          <div className="flex items-center gap-3">
-            <h1 className="text-3xl font-extrabold tracking-tight text-white flex items-center gap-3">
-              Olá, Pedro
-              <span className="relative flex h-2.5 w-2.5">
+        <div className="relative z-10 space-y-2">
+          <div className="flex flex-wrap items-center gap-3">
+            <span className="flex items-center gap-1.5 rounded-full border border-[#8bd132]/30 bg-[#8bd132]/10 px-3 py-1 text-[10px] font-mono font-bold uppercase tracking-wider text-[#8bd132]">
+              <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#8bd132] opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#8bd132]"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#8bd132]"></span>
               </span>
-            </h1>
+              Sistema Operacional Ativo
+            </span>
+            <span className="text-[11px] text-[#6c7880]">
+              Workspace: <strong className="text-white font-semibold">{activeWorkspace?.name || 'Geral'}</strong>
+            </span>
           </div>
-          <p className="text-xs text-[#717d85] max-w-xl leading-relaxed">
-            Centro de controle operacional e esteira acelerada de criação de conteúdos com IA.
+
+          <h1 className="text-3xl font-extrabold tracking-tight text-white flex items-center gap-3">
+            Central Operacional de Conteúdo
+          </h1>
+          <p className="text-xs text-[#8e9aa2] max-w-xl leading-relaxed">
+            Painel unificado com esteira acelerada de criação, cronograma inteligente, métricas em tempo real e orquestração de IA.
           </p>
         </div>
 
         <div className="relative z-10 flex flex-wrap items-center gap-3">
-          {activeCampaign && (
-            <button
-              type="button"
-              onClick={() => onNavigate('strategy')}
-              className="flex items-center gap-2.5 rounded-xl border border-white/[0.08] bg-[#070a0d] px-4 py-2.5 text-xs font-semibold text-[#c0c8ce] transition-all hover:border-white/20 hover:bg-[#11161c]"
-            >
-              <Workflow className="h-4 w-4 text-[#8bd132]" />
-              <span className="truncate max-w-[160px]">{activeCampaign.name}</span>
-            </button>
-          )}
-          <button
-            type="button"
-            onClick={() => onNavigate('library')}
-            className="flex items-center gap-2.5 rounded-xl border border-white/[0.08] bg-[#070a0d] px-4 py-2.5 text-xs font-semibold text-[#c0c8ce] transition-all hover:border-white/20 hover:bg-[#11161c]"
-          >
-            <Box className="h-4 w-4 text-[#717d85]" />
-            <span>{assets.length + posts.length} Ativos no Acervo</span>
-          </button>
           <button
             type="button"
             onClick={onNewPost}
-            className="flex items-center gap-2.5 rounded-xl bg-[#8bd132] px-5 py-2.5 text-xs font-bold text-[#080e05] transition-all hover:bg-[#9be24d] shadow-[0_0_20px_rgba(139,209,50,0.25)] hover:shadow-[0_0_28px_rgba(139,209,50,0.4)]"
+            className="flex items-center gap-2 rounded-xl bg-[#8bd132] px-4 py-2.5 text-xs font-bold text-[#080e05] transition-all hover:bg-[#9be24d] hover:shadow-[0_0_20px_rgba(139,209,50,0.3)] active:scale-[0.98]"
           >
-            <Plus className="h-4 w-4 stroke-[2.5]" />
-            <span>Criar Conteúdo</span>
+            <Plus className="h-4 w-4" />
+            <span>Criar Novo Conteúdo</span>
+          </button>
+          <button
+            type="button"
+            onClick={onOpenCampaignWizard}
+            className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.05] px-4 py-2.5 text-xs font-semibold text-white transition-all hover:bg-white/10 hover:border-white/20 active:scale-[0.98]"
+          >
+            <Sparkles className="h-4 w-4 text-[#8bd132]" />
+            <span>Assistente IA</span>
           </button>
         </div>
       </div>

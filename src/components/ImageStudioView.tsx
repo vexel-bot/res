@@ -55,7 +55,7 @@ export const ImageStudioView: React.FC = () => {
     { id: 'remove_obj', label: 'Remover Objetos', icon: Scissors, description: 'Elimina distrações ou elementos indesejados' },
     { id: 'insert_obj', label: 'Inserir Objetos', icon: Sparkles, description: 'Adiciona novos elementos realistas à cena' },
     { id: 'change_outfit', label: 'Alterar Roupas', icon: Shirt, description: 'Modifica o vestuário mantendo a identidade visual' },
-    { id: 'change-[#8bd132]', label: 'Alterar Iluminação', icon: Sun, description: 'Ajusta clima, sombras e reflexos neon' },
+    { id: 'change_lighting', label: 'Alterar Iluminação', icon: Sun, description: 'Ajusta clima, sombras e reflexos neon' },
     { id: 'variations', label: 'Gerar Variações', icon: Copy, description: 'Cria 3 versões alternativas mantendo o estilo' },
     { id: 'auto_resize', label: 'Redimensionar IA', icon: Crop, description: 'Ajuste automático para 1:1, 9:16, 16:9 e 4:5' },
   ];
