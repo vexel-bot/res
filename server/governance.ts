@@ -3,6 +3,7 @@ import type {
   AuditLogEntry,
   ContentApprovalItem,
   GovernanceWorkspace,
+  OfferEventPayload,
   SaaSPlan,
   WorkspaceMember,
   WorkspaceModule,
@@ -227,6 +228,21 @@ export function createGovernanceRouter() {
     const [removed] = users.splice(index, 1);
     refreshWorkspaceSeats(auth.workspaceId);
     addAudit(auth, 'user.removed', 'user:' + removed.id, `${removed.name} removido do ambiente de trabalho`);
+    res.status(204).end();
+  });
+
+  router.post('/offers/events', (req: AuthenticatedRequest, res) => {
+    const auth = req.auth!;
+    const allowedEvents: OfferEventPayload['event'][] = [
+      'OFFER_VIEWED', 'OFFER_CLICKED', 'UPGRADE_STARTED',
+      'CHECKOUT_STARTED', 'CHECKOUT_COMPLETED', 'OFFER_DISMISSED',
+    ];
+    const event = String(req.body?.event || '') as OfferEventPayload['event'];
+    if (!allowedEvents.includes(event)) return res.status(400).json({ error: 'Evento de oferta inválido.' });
+    const offerId = String(req.body?.offerId || '').slice(0, 120);
+    const context = String(req.body?.context || '').slice(0, 80);
+    const targetPlanId = String(req.body?.targetPlanId || '').slice(0, 40);
+    addAudit(auth, `offer.${event.toLowerCase()}`, `offer:${offerId || 'contextual'}`, `${context}${targetPlanId ? ` · plano ${targetPlanId}` : ''}`);
     res.status(204).end();
   });
 

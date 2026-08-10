@@ -71,7 +71,7 @@ export const EditorialCalendarView: React.FC<EditorialCalendarViewProps> = ({
   };
 
   return (
-    <div className="p-6 space-y-6 max-w-7xl mx-auto">
+    <div className="mx-auto max-w-[1500px] space-y-5 p-5">
       {activeCampaign && <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-[#8bd132]/20 bg-[#8bd132]/[0.055] p-3"><div><span className="text-[8px] uppercase tracking-[0.16em] text-[#8bd132]">Estratégia ativa no calendário</span><p className="mt-1 text-[10px] font-medium text-white">{activeCampaign.name}</p></div><p className="max-w-xl text-[9px] text-[#9ca6ab]">{activeCampaign.objective}</p></div>}
 
       {/* Calendar Header Bar */}
@@ -110,7 +110,7 @@ export const EditorialCalendarView: React.FC<EditorialCalendarViewProps> = ({
             <button
               onClick={() => setViewMode('month')}
               className={`px-3 py-1 text-xs font-semibold rounded-lg ${
-                viewMode === 'month' ? 'bg-indigo-600 text-white' : 'text-white/40'
+                viewMode === 'month' ? 'bg-[#8bd132] text-[#14200e]' : 'text-white/40'
               }`}
             >
               Mês
@@ -118,7 +118,7 @@ export const EditorialCalendarView: React.FC<EditorialCalendarViewProps> = ({
             <button
               onClick={() => setViewMode('week')}
               className={`px-3 py-1 text-xs font-semibold rounded-lg ${
-                viewMode === 'week' ? 'bg-indigo-600 text-white' : 'text-white/40'
+                viewMode === 'week' ? 'bg-[#8bd132] text-[#14200e]' : 'text-white/40'
               }`}
             >
               Semana
@@ -126,7 +126,7 @@ export const EditorialCalendarView: React.FC<EditorialCalendarViewProps> = ({
             <button
               onClick={() => setViewMode('day')}
               className={`px-3 py-1 text-xs font-semibold rounded-lg ${
-                viewMode === 'day' ? 'bg-indigo-600 text-white' : 'text-white/40'
+                viewMode === 'day' ? 'bg-[#8bd132] text-[#14200e]' : 'text-white/40'
               }`}
             >
               Dia
@@ -135,7 +135,7 @@ export const EditorialCalendarView: React.FC<EditorialCalendarViewProps> = ({
 
           <button
             onClick={onNewPost}
-            className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs flex items-center gap-1.5 shadow-lg shadow-indigo-600/20"
+            className="flex items-center gap-1.5 rounded-lg bg-[#8bd132] px-4 py-2 text-xs font-semibold text-[#14200e] transition-colors hover:bg-[#9be24d]"
           >
             <Plus className="w-4 h-4" /> Agendar publicação
           </button>
@@ -143,7 +143,7 @@ export const EditorialCalendarView: React.FC<EditorialCalendarViewProps> = ({
       </div>
 
       {/* Month Navigator Header */}
-      <div className="flex items-center justify-between bg-[#0A0A0A] border border-white/5 p-4 rounded-2xl">
+      <div className="flex items-center justify-between rounded-xl border border-white/[0.06] bg-[#101316] p-4">
         <div className="flex items-center gap-3">
           <button className="p-2 rounded-xl bg-white/[0.03] hover:bg-white/10 text-white">
             <ChevronLeft className="w-4 h-4" />
@@ -172,7 +172,7 @@ export const EditorialCalendarView: React.FC<EditorialCalendarViewProps> = ({
       </div>
 
       {/* Calendar Grid (Month View) */}
-      <div className="bg-[#0A0A0A] border border-white/5 rounded-2xl overflow-hidden p-4 space-y-2">
+      <div className="clicko-calendar-grid custom-scrollbar space-y-2 overflow-x-auto rounded-xl border border-white/[0.06] bg-[#101316] p-4">
         {/* Day of Week Labels */}
         <div className="grid grid-cols-7 gap-2 text-center text-xs font-bold text-white/40 border-b border-white/5 pb-3">
           <div>DOM</div>
@@ -195,16 +195,16 @@ export const EditorialCalendarView: React.FC<EditorialCalendarViewProps> = ({
                 item.isOtherMonth
                   ? 'bg-white/[0.01] border-white/5 text-white/20'
                   : item.day === 30
-                  ? 'bg-indigo-600/10 border-indigo-500/30 text-white'
+                  ? 'border-[#8bd132]/30 bg-[#8bd132]/[0.07] text-white'
                   : 'bg-white/[0.02] border-white/5 hover:border-white/10 text-neutral-200'
               }`}
             >
               <div className="flex items-center justify-between text-xs">
-                <span className={`font-bold ${item.day === 30 ? 'text-indigo-400' : ''}`}>
+                <span className={`font-bold ${item.day === 30 ? 'text-[#8bd132]' : ''}`}>
                   {item.day}
                 </span>
                 {item.day === 30 && (
-                  <span className="text-[9px] px-1.5 py-0.2 rounded bg-indigo-500/20 text-indigo-300">
+                  <span className="rounded bg-[#8bd132]/15 px-1.5 py-0.5 text-[9px] text-[#8bd132]">
                     Hoje
                   </span>
                 )}
@@ -222,7 +222,7 @@ export const EditorialCalendarView: React.FC<EditorialCalendarViewProps> = ({
                         setSelectedPostDetail(post);
                         onSelectPost(post);
                       }}
-                      className="p-1.5 rounded-lg bg-[#050505] border border-white/5 hover:border-indigo-500/40 text-[10px] cursor-pointer transition-all space-y-1"
+                      className="clicko-interactive-surface p-1.5 rounded-lg bg-[#050505] border border-white/5 hover:border-indigo-500/40 text-[10px] cursor-pointer transition-all space-y-1"
                     >
                       <div className="flex items-center justify-between gap-1">
                         <span className="font-bold text-[#ededed] truncate">{post.title}</span>
@@ -244,7 +244,7 @@ export const EditorialCalendarView: React.FC<EditorialCalendarViewProps> = ({
 
       {selectedPostDetail && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-150">
-          <div className="w-full max-w-lg bg-[#0A0A0A] border border-white/10 rounded-2xl shadow-2xl p-6 space-y-4">
+          <div className="w-full max-w-lg bg-[#0A0A0A] border border-white/10 rounded-xl shadow-xl shadow-black/40 p-5 space-y-4">
             <div className="flex items-center justify-between border-b border-white/5 pb-3">
               <span className="text-xs font-bold uppercase tracking-wider px-2.5 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
                 {selectedPostDetail.platform} • {selectedPostDetail.format}

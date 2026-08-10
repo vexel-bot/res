@@ -23,7 +23,7 @@ export const LoginView: React.FC = () => {
             <ClickoLogo appearance="seamless" className="h-[150px] w-[300px] max-w-[78vw]" />
           </a>
         </div>
-        <div className="rounded-2xl border border-white/[0.08] bg-[#111111] p-7">
+        <div className="rounded-xl border border-white/[0.08] bg-[#111111] p-6">
           <div className="mb-7 text-center">
             <h1 className="text-[20px] font-semibold tracking-[-0.02em]">Acesse o Clicko Studio</h1>
             <p className="mt-2 text-[11px] text-[#7C7C7C]">Entre para continuar criando com inteligência.</p>

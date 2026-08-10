@@ -51,14 +51,14 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSpotlight }) => {
   const isCompany = activeAccount?.type === 'company';
 
   return (
-    <header className="sticky top-0 z-30 flex h-[76px] items-center justify-between border-b border-white/[0.05] bg-[#070a0d]/90 px-8 backdrop-blur-2xl 2xl:px-12">
+    <header className="clicko-topbar sticky top-2 z-30 mx-3 mt-2 flex h-[56px] items-center justify-between rounded-2xl border border-white/[0.06] px-3.5 lg:mx-4 lg:px-4 2xl:mx-5">
       {/* Search & Navigation Bar - Left */}
       <div className="flex min-w-0 items-center gap-4">
         {/* Global Command Search Bar */}
         <button
           type="button"
           onClick={onOpenSpotlight}
-          className="group flex h-10 w-[420px] max-w-[40vw] items-center justify-between gap-3 rounded-xl border border-white/[0.07] bg-[#0c1015]/80 px-4 text-[#717d85] transition-all hover:border-white/20 hover:bg-[#11161c] hover:text-white max-[900px]:w-10 max-[900px]:px-2.5 shadow-sm"
+          className="clicko-command-search group flex h-9 w-[420px] max-w-[42vw] items-center justify-between gap-3 rounded-xl border border-white/[0.06] bg-transparent px-3.5 text-[#717d85] transition-colors hover:border-white/15 hover:bg-white/[0.025] hover:text-white max-[900px]:w-9 max-[900px]:px-2.5"
         >
           <div className="flex items-center gap-3 min-w-0">
             <Search className="h-4 w-4 shrink-0 text-[#5a6770] group-hover:text-[#8bd132] transition-colors" />
@@ -68,24 +68,25 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSpotlight }) => {
       </div>
 
       {/* Right Action Bar with Profile / Account Switcher */}
-      <div className="flex items-center gap-3.5">
+      <div className="flex items-center gap-2.5">
         {/* Notifications Button */}
         <div className="relative">
           <button
             type="button"
             onClick={() => setShowNotifications((value) => !value)}
-            className="relative grid h-10 w-10 place-items-center rounded-xl border border-white/[0.07] bg-[#0c1015]/80 text-[#a2adba] transition-all hover:border-white/20 hover:bg-[#11161c] hover:text-white"
+            className="relative grid h-9 w-9 place-items-center rounded-xl border border-white/[0.06] bg-transparent text-[#8b959b] transition-colors hover:border-white/15 hover:bg-white/[0.025] hover:text-white"
             aria-label="Notificações"
+            aria-expanded={showNotifications}
           >
             <Bell className="h-4 w-4" />
             {pendingApprovals > 0 && (
-              <span className="absolute -right-1 -top-1 grid h-4 min-w-[16px] place-items-center rounded-full bg-[#8bd132] px-1 text-[9px] font-bold text-[#080e05] shadow-[0_0_10px_rgba(139,209,50,0.5)]">
+              <span className="absolute -right-1 -top-1 grid h-4 min-w-[16px] place-items-center rounded-full bg-[#8bd132] px-1 text-[9px] font-bold text-[#080e05]">
                 {pendingApprovals}
               </span>
             )}
           </button>
           {showNotifications && (
-            <div className="absolute right-0 top-12 w-80 rounded-2xl border border-white/10 bg-[#0d1217]/95 p-4 shadow-2xl backdrop-blur-2xl z-50 animate-in fade-in zoom-in-95 duration-150">
+            <div className="absolute right-0 top-12 z-50 w-80 max-w-[calc(100vw-24px)] rounded-xl border border-white/10 bg-[#0d1217]/95 p-4 shadow-xl shadow-black/40 backdrop-blur-sm animate-in fade-in zoom-in-95 duration-150">
               <div className="mb-3 flex items-center justify-between border-b border-white/[0.06] pb-2.5">
                 <span className="text-xs font-bold text-white tracking-tight">Central de Notificações</span>
                 <span className="text-[10px] text-[#8bd132] font-semibold">{pendingApprovals} pendentes</span>
@@ -109,7 +110,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSpotlight }) => {
         {/* Help Button */}
         <button
           type="button"
-          className="grid h-10 w-10 place-items-center rounded-xl border border-white/[0.07] bg-[#0c1015]/80 text-[#a2adba] transition-all hover:border-white/20 hover:bg-[#11161c] hover:text-white max-[700px]:hidden"
+          className="grid h-9 w-9 place-items-center rounded-xl border border-white/[0.06] bg-transparent text-[#8b959b] transition-colors hover:border-white/15 hover:bg-white/[0.025] hover:text-white max-[700px]:hidden"
           aria-label="Ajuda"
         >
           <CircleHelp className="h-4 w-4" />
@@ -120,8 +121,9 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSpotlight }) => {
           <button
             type="button"
             onClick={() => setShowPlanMenu((v) => !v)}
-            className="group flex h-10 items-center gap-3 rounded-xl border border-white/[0.07] bg-[#0c1015]/80 px-3.5 text-left transition-all hover:border-white/20 hover:bg-[#11161c]"
+            className="group flex h-9 items-center gap-2.5 rounded-xl border border-white/[0.06] bg-transparent px-2.5 text-left transition-colors hover:border-white/15 hover:bg-white/[0.025]"
             aria-label="Seletor de Perfis"
+            aria-expanded={showPlanMenu}
             title="Seletor de Perfis"
           >
             <div
@@ -134,12 +136,12 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSpotlight }) => {
               {isCompany ? <Building2 className="h-3.5 w-3.5" /> : <User className="h-3.5 w-3.5" />}
             </div>
 
-            <div className="flex flex-col min-w-0">
+            <div className="clicko-profile-copy flex min-w-0 flex-col">
               <div className="flex items-center gap-2">
                 <span className="text-xs font-bold tracking-tight text-white truncate max-w-[130px]">
                   {activeAccount?.name || 'Selecione a Conta'}
                 </span>
-                <span className="h-1.5 w-1.5 rounded-full bg-[#8bd132] shadow-[0_0_8px_#8bd132]" />
+                <span className="h-1.5 w-1.5 rounded-full bg-[#8bd132]" />
               </div>
               <span className="truncate text-[10px] text-[#717d85]">
                 {isCompany ? 'Workspace Corporativo' : 'Workspace Pessoal'}
@@ -155,7 +157,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSpotlight }) => {
 
           {/* Account Switcher Dropdown Menu */}
           {showPlanMenu && (
-            <div className="absolute right-0 top-12 z-50 w-80 rounded-2xl border border-white/10 bg-[#0d1217] p-3.5 shadow-2xl backdrop-blur-2xl animate-in fade-in zoom-in-95 duration-150">
+            <div className="absolute right-0 top-12 z-50 w-80 max-w-[calc(100vw-24px)] rounded-xl border border-white/10 bg-[#0d1217] p-3.5 shadow-xl shadow-black/40 animate-in fade-in zoom-in-95 duration-150">
               <div className="px-2.5 py-2 border-b border-white/[0.06] mb-2.5 flex items-center justify-between">
                 <span className="text-[10px] font-bold uppercase tracking-wider text-[#6c7880]">
                   Seletor de Perfis

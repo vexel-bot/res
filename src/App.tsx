@@ -7,11 +7,11 @@ import React from 'react';
 import { Sidebar } from './components/Sidebar';
 import { Header } from './components/Header';
 import { SpotlightModal } from './components/SpotlightModal';
-import { DashboardView } from './components/DashboardView';
+import { DashboardView } from './components/DashboardEditorialView';
 import { WorkspaceView } from './components/WorkspaceView';
 import { BrainView } from './components/BrainView';
 import { StrategyView } from './components/StrategyView';
-import { StudioView } from './components/StudioView';
+import { StudioView } from './components/StudioImmersiveView';
 import { LibraryView } from './components/LibraryView';
 import { ImageStudioView } from './components/ImageStudioView';
 import { VideoEditorView } from './components/VideoEditorView';
@@ -58,6 +58,10 @@ export default function App() {
   const [showSplash, setShowSplash] = React.useState(() => window.location.pathname !== '/login');
 
   React.useEffect(() => {
+    document.documentElement.dataset.theme = isDarkMode ? 'dark' : 'light';
+  }, [isDarkMode]);
+
+  React.useEffect(() => {
     if (!showSplash) return;
     const timer = window.setTimeout(() => setShowSplash(false), 780);
     return () => window.clearTimeout(timer);
@@ -81,6 +85,14 @@ export default function App() {
       author: p.author || currentUser?.name || 'Usuário',
       createdAt: new Date().toISOString(),
       aiScore: p.aiScore || 90,
+      clientId: p.clientId,
+      campaignId: p.campaignId,
+      strategyId: p.strategyId,
+      brainRevision: p.brainRevision,
+      objective: p.objective,
+      origin: p.origin,
+      creativeIdeaId: p.creativeIdeaId,
+      clickScoreBreakdown: p.clickScoreBreakdown,
     }));
 
     addPosts(created);
@@ -111,7 +123,7 @@ export default function App() {
   }
 
   return (
-    <div data-theme={isDarkMode ? 'dark' : 'light'} className="flex min-h-screen bg-[#0B0B0B] font-sans text-[#eef1f2] antialiased selection:bg-[#B8B8B8] selection:text-[#0B0B0B]">
+    <div data-theme={isDarkMode ? 'dark' : 'light'} className="clicko-app-shell flex min-h-screen font-sans antialiased selection:bg-[#B8B8B8] selection:text-[#0B0B0B]">
       {showSplash && (
         <div className="clicko-splash fixed inset-0 z-[100] grid place-items-center bg-black">
           <div className="clicko-splash-logo text-center">
@@ -131,8 +143,8 @@ export default function App() {
 
       {/* Main Workspace Stage */}
       <div
-        className={`flex min-w-0 flex-1 flex-col transition-all duration-300 ease-out ${
-          isCompact ? 'pl-[76px]' : 'pl-[220px] max-[900px]:pl-[76px] 2xl:pl-[250px]'
+        className={`clicko-app-stage flex min-w-0 flex-1 flex-col transition-all duration-300 ease-out ${
+          isCompact ? 'pl-[80px]' : 'pl-[232px] max-[900px]:pl-[80px]'
         }`}
       >
         {/* Header Toolbar */}
@@ -149,7 +161,7 @@ export default function App() {
         />
 
         {/* Dynamic Tab View Area */}
-        <main className="flex-1 overflow-x-hidden overflow-y-auto">
+        <main className="clicko-main-stage flex-1 overflow-x-hidden overflow-y-auto">
           {!hasAccessToCurrentTab && <AccessDeniedView onBack={() => setCurrentTab('dashboard')} />}
 
           {hasAccessToCurrentTab && currentTab === 'dashboard' && (
@@ -172,7 +184,7 @@ export default function App() {
 
           {hasAccessToCurrentTab && currentTab === 'studio' && <StudioView onSavePost={handleSaveSinglePost} />}
 
-          {hasAccessToCurrentTab && currentTab === 'library' && <LibraryView />}
+          {hasAccessToCurrentTab && currentTab === 'library' && <LibraryView onOpenStudio={() => setCurrentTab('studio')} />}
 
           {hasAccessToCurrentTab && currentTab === 'create-image' && <ImageStudioView />}
 
@@ -180,7 +192,7 @@ export default function App() {
 
           {hasAccessToCurrentTab && currentTab === 'create-copy' && <CreationStudioView onSavePost={handleSaveSinglePost} />}
 
-          {hasAccessToCurrentTab && currentTab === 'ai-chat' && <AIChatView />}
+          {hasAccessToCurrentTab && currentTab === 'ai-chat' && <AIChatView onNavigate={setCurrentTab} />}
 
           {hasAccessToCurrentTab && currentTab === 'templates' && <TemplatesView />}
 
@@ -196,7 +208,7 @@ export default function App() {
 
           {hasAccessToCurrentTab && currentTab === 'publisher' && <PublisherView />}
 
-          {hasAccessToCurrentTab && currentTab === 'analytics' && <AnalyticsView />}
+          {hasAccessToCurrentTab && currentTab === 'analytics' && <AnalyticsView onOpenStudio={() => setCurrentTab('studio')} />}
 
           {hasAccessToCurrentTab && currentTab === 'automations' && <AutomationBuilderView />}
 

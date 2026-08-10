@@ -1,28 +1,53 @@
 import React from 'react';
 import { INITIAL_POSTS, INITIAL_WORKSPACES } from '../data/mockData';
-import type { BrandBrain, LibraryAsset, Post, StrategyCampaign, Workspace } from '../types';
+import type {
+  BrandBrain,
+  ClientIntelligenceProfile,
+  CreativeIdea,
+  LearningSignal,
+  LibraryAsset,
+  Post,
+  StrategyCampaign,
+  StudioHandoff,
+  Workspace,
+} from '../types';
 import { useGovernance } from './GovernanceContext';
 
 type OperationsState = {
   brain: BrandBrain;
+  clients: ClientIntelligenceProfile[];
   campaigns: StrategyCampaign[];
+  creativeIdeas: CreativeIdea[];
+  selectedCreativeIdeaIds: string[];
+  learningSignals: LearningSignal[];
   assets: LibraryAsset[];
   posts: Post[];
+  activeClientId?: string;
   activeCampaignId?: string;
+  studioHandoff?: StudioHandoff;
 };
 
 type OperationsContextValue = OperationsState & {
   activeWorkspace: Workspace;
+  activeClient?: ClientIntelligenceProfile;
   activeCampaign?: StrategyCampaign;
   brainCompleteness: number;
   updateBrain: (values: Partial<BrandBrain>) => void;
   addBrainSource: (source: BrandBrain['sourceFiles'][number]) => void;
+  updateClient: (id: string, values: Partial<ClientIntelligenceProfile>) => void;
+  setActiveClientId: (id?: string) => void;
   createCampaign: (campaign: Omit<StrategyCampaign, 'id' | 'workspaceId' | 'brainRevision' | 'createdAt' | 'updatedAt'>) => StrategyCampaign;
   updateCampaign: (id: string, values: Partial<StrategyCampaign>) => void;
   setActiveCampaignId: (id?: string) => void;
   addPosts: (posts: Post[]) => void;
   updatePosts: React.Dispatch<React.SetStateAction<Post[]>>;
   addAsset: (asset: Omit<LibraryAsset, 'id' | 'workspaceId' | 'createdAt' | 'updatedAt'>) => LibraryAsset;
+  setCreativeIdeas: (ideas: CreativeIdea[]) => void;
+  toggleCreativeIdea: (id: string) => void;
+  prepareStudioHandoff: (handoff: Omit<StudioHandoff, 'id' | 'createdAt'>) => StudioHandoff;
+  clearStudioHandoff: () => void;
+  createRepurposeHandoff: (post: Post, format: StudioHandoff['format']) => StudioHandoff;
+  addLearningSignal: (signal: Omit<LearningSignal, 'id' | 'createdAt'>) => LearningSignal;
 };
 
 const now = () => new Date().toISOString();
@@ -87,6 +112,53 @@ function createInitialBrain(ws: Workspace): BrandBrain {
   };
 }
 
+function createInitialClients(ws: Workspace, brain: BrandBrain): ClientIntelligenceProfile[] {
+  const timestamp = '2026-08-02T12:30:00.000Z';
+  if (ws.id === 'ws-personal') {
+    return [{
+      id: 'client-personal', workspaceId: ws.id, name: ws.name, segment: 'Marca pessoal e tecnologia',
+      products: brain.products, audience: brain.audience, positioning: brain.objectives,
+      toneOfVoice: brain.toneOfVoice, visualIdentity: brain.visualIdentity, differentiators: brain.differentiators,
+      featuredOffer: 'Guia de Produtividade com Agentes de IA', currentObjective: brain.objectives,
+      highlightedContentIds: [], activeCampaignIds: ['strategy-personal-q3'],
+      recommendedActions: ['Consolidar a série sobre agentes de IA', 'Transformar o vlog em três cortes curtos', 'Distribuir o artigo no LinkedIn'],
+      updatedAt: timestamp,
+    }];
+  }
+
+  return [
+    {
+      id: 'client-clicko', workspaceId: ws.id, name: 'Clicko Studio', segment: 'Software para operações de social media',
+      products: brain.products, audience: brain.audience, positioning: 'Sistema operacional de social media com contexto persistente.',
+      toneOfVoice: brain.toneOfVoice, visualIdentity: brain.visualIdentity, differentiators: brain.differentiators,
+      featuredOffer: 'Diagnóstico gratuito da operação de conteúdo', currentObjective: 'Gerar demanda qualificada para o lançamento Q3.',
+      highlightedContentIds: [], activeCampaignIds: ['strategy-q3'],
+      recommendedActions: ['Validar a mensagem central do lançamento', 'Produzir a peça de descoberta', 'Preparar a sequência de prova para aprovação'],
+      updatedAt: timestamp,
+    },
+    {
+      id: 'client-vitalis', workspaceId: ws.id, name: 'Clínica Vitalis', segment: 'Saúde e bem-estar',
+      products: 'Consultas preventivas e programas de bem-estar', audience: 'Adultos que buscam prevenção com atendimento humanizado.',
+      positioning: 'Cuidado preventivo acessível, confiável e próximo.', toneOfVoice: 'Acolhedor, claro e responsável.',
+      visualIdentity: 'Fotografia humana, composição limpa e contraste suave.', differentiators: 'Atendimento integrado e acompanhamento próximo.',
+      featuredOffer: 'Programa Vitalis Preventivo', currentObjective: 'Aumentar agendamentos qualificados sem apelos sensacionalistas.',
+      highlightedContentIds: [], activeCampaignIds: [],
+      recommendedActions: ['Estruturar campanha educativa', 'Mapear objeções sobre prevenção', 'Criar uma sequência de perguntas frequentes'],
+      updatedAt: timestamp,
+    },
+  ];
+}
+
+function createInitialLearningSignals(clientId: string): LearningSignal[] {
+  return [{
+    id: 'learning-hook-clarity', clientId,
+    label: 'Hipótese de mensagem',
+    evidence: 'Leitura baseada apenas nos metadados e padrões dos conteúdos salvos localmente.',
+    recommendation: 'Priorizar hooks diretos que apresentem o problema antes da solução.',
+    confidence: 'hypothesis', source: 'content-metadata', createdAt: '2026-08-02T12:30:00.000Z',
+  }];
+}
+
 function createInitialCampaigns(ws: Workspace): StrategyCampaign[] {
   const isPersonal = ws.id === 'ws-personal';
   if (isPersonal) {
@@ -137,6 +209,8 @@ function createInitialAssets(ws: Workspace): LibraryAsset[] {
 
 function getDefaultState(ws: Workspace): OperationsState {
   const isPersonal = ws.id === 'ws-personal';
+  const brain = createInitialBrain(ws);
+  const clients = createInitialClients(ws, brain);
   const campaigns = createInitialCampaigns(ws);
   const activeCampId = campaigns[0]?.id;
   const filteredPosts = INITIAL_POSTS.filter((post) => isPersonal ? post.workspaceId === 'ws-personal' : post.workspaceId !== 'ws-personal').map((post, index) => ({
@@ -149,10 +223,15 @@ function getDefaultState(ws: Workspace): OperationsState {
   }));
 
   return {
-    brain: createInitialBrain(ws),
+    brain,
+    clients,
     campaigns,
+    creativeIdeas: [],
+    selectedCreativeIdeaIds: [],
+    learningSignals: createInitialLearningSignals(clients[0].id),
     assets: createInitialAssets(ws),
     posts: filteredPosts,
+    activeClientId: clients[0].id,
     activeCampaignId: activeCampId,
   };
 }
@@ -197,12 +276,34 @@ export function OperationsProvider({ children }: { children: React.ReactNode }) 
     setState((current) => ({ ...current, brain: { ...current.brain, sourceFiles: [source, ...current.brain.sourceFiles], revision: current.brain.revision + 1, updatedAt: now() } }));
   }, []);
 
+  const updateClient = React.useCallback((id: string, values: Partial<ClientIntelligenceProfile>) => {
+    setState((current) => ({
+      ...current,
+      clients: current.clients.map((client) => client.id === id ? { ...client, ...values, updatedAt: now() } : client),
+    }));
+  }, []);
+
+  const setActiveClientId = React.useCallback((id?: string) => {
+    setState((current) => {
+      const client = current.clients.find((item) => item.id === id);
+      const matchingCampaign = current.campaigns.find((campaign) => campaign.clientId === id || client?.activeCampaignIds.includes(campaign.id));
+      return { ...current, activeClientId: id, activeCampaignId: matchingCampaign?.id || current.activeCampaignId };
+    });
+  }, []);
+
   const createCampaign = React.useCallback((values: Omit<StrategyCampaign, 'id' | 'workspaceId' | 'brainRevision' | 'createdAt' | 'updatedAt'>) => {
     const timestamp = now();
-    const campaign: StrategyCampaign = { ...values, id: `strategy-${Date.now()}`, workspaceId: activeWorkspace.id, brainRevision: state.brain.revision, createdAt: timestamp, updatedAt: timestamp };
-    setState((current) => ({ ...current, campaigns: [campaign, ...current.campaigns], activeCampaignId: campaign.id }));
+    const campaign: StrategyCampaign = { ...values, clientId: values.clientId || state.activeClientId, id: `strategy-${Date.now()}`, workspaceId: activeWorkspace.id, brainRevision: state.brain.revision, createdAt: timestamp, updatedAt: timestamp };
+    setState((current) => ({
+      ...current,
+      campaigns: [campaign, ...current.campaigns],
+      clients: current.clients.map((client) => client.id === campaign.clientId
+        ? { ...client, activeCampaignIds: [...new Set([campaign.id, ...client.activeCampaignIds])], updatedAt: timestamp }
+        : client),
+      activeCampaignId: campaign.id,
+    }));
     return campaign;
-  }, [state.brain.revision, activeWorkspace.id]);
+  }, [state.brain.revision, state.activeClientId, activeWorkspace.id]);
 
   const updateCampaign = React.useCallback((id: string, values: Partial<StrategyCampaign>) => {
     setState((current) => ({ ...current, campaigns: current.campaigns.map((campaign) => campaign.id === id ? { ...campaign, ...values, updatedAt: now() } : campaign) }));
@@ -221,11 +322,62 @@ export function OperationsProvider({ children }: { children: React.ReactNode }) 
     return asset;
   }, [activeWorkspace.id]);
 
+  const setCreativeIdeas = React.useCallback((ideas: CreativeIdea[]) => {
+    setState((current) => ({ ...current, creativeIdeas: ideas, selectedCreativeIdeaIds: [] }));
+  }, []);
+
+  const toggleCreativeIdea = React.useCallback((id: string) => {
+    setState((current) => ({
+      ...current,
+      selectedCreativeIdeaIds: current.selectedCreativeIdeaIds.includes(id)
+        ? current.selectedCreativeIdeaIds.filter((ideaId) => ideaId !== id)
+        : [...current.selectedCreativeIdeaIds, id],
+    }));
+  }, []);
+
+  const prepareStudioHandoff = React.useCallback((values: Omit<StudioHandoff, 'id' | 'createdAt'>) => {
+    const handoff: StudioHandoff = { ...values, id: `handoff-${Date.now()}`, createdAt: now() };
+    setState((current) => ({
+      ...current,
+      studioHandoff: handoff,
+      activeClientId: values.clientId || current.activeClientId,
+      activeCampaignId: values.campaignId || current.activeCampaignId,
+    }));
+    return handoff;
+  }, []);
+
+  const clearStudioHandoff = React.useCallback(() => setState((current) => ({ ...current, studioHandoff: undefined })), []);
+
+  const createRepurposeHandoff = React.useCallback((post: Post, format: StudioHandoff['format']) => {
+    const handoff: StudioHandoff = {
+      id: `repurpose-${Date.now()}`, source: 'repurpose', clientId: post.clientId,
+      campaignId: post.campaignId, contentId: post.id, objective: post.objective || 'Reaproveitar conteúdo preservando a mensagem central.',
+      title: `Desdobramento de ${post.title}`, angle: 'Reenquadramento para um novo formato',
+      hook: post.title, cta: 'Continuar a conversa com a marca', format,
+      funnelStage: 'Reaproveitamento', createdAt: now(),
+    };
+    setState((current) => ({ ...current, studioHandoff: handoff, activeClientId: post.clientId || current.activeClientId, activeCampaignId: post.campaignId || current.activeCampaignId }));
+    return handoff;
+  }, []);
+
+  const addLearningSignal = React.useCallback((values: Omit<LearningSignal, 'id' | 'createdAt'>) => {
+    const signal: LearningSignal = { ...values, id: `learning-${Date.now()}`, createdAt: now() };
+    setState((current) => ({ ...current, learningSignals: [signal, ...current.learningSignals] }));
+    return signal;
+  }, []);
+
   const requiredBrainFields: Array<keyof BrandBrain> = ['company', 'products', 'services', 'visualIdentity', 'toneOfVoice', 'audience', 'personas', 'objectives', 'differentiators', 'competitors', 'objections', 'pains', 'desires', 'faq'];
   const brainCompleteness = Math.round(requiredBrainFields.filter((field) => String(state.brain[field] || '').trim()).length / requiredBrainFields.length * 100);
+  const activeClient = state.clients.find((client) => client.id === state.activeClientId);
   const activeCampaign = state.campaigns.find((campaign) => campaign.id === state.activeCampaignId);
 
-  return <OperationsContext.Provider value={{ ...state, activeWorkspace, activeCampaign, brainCompleteness, updateBrain, addBrainSource, createCampaign, updateCampaign, setActiveCampaignId, addPosts, updatePosts, addAsset }}>{children}</OperationsContext.Provider>;
+  return <OperationsContext.Provider value={{
+    ...state, activeWorkspace, activeClient, activeCampaign, brainCompleteness,
+    updateBrain, addBrainSource, updateClient, setActiveClientId,
+    createCampaign, updateCampaign, setActiveCampaignId,
+    addPosts, updatePosts, addAsset, setCreativeIdeas, toggleCreativeIdea,
+    prepareStudioHandoff, clearStudioHandoff, createRepurposeHandoff, addLearningSignal,
+  }}>{children}</OperationsContext.Provider>;
 }
 
 export function useOperations() {

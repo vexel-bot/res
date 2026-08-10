@@ -138,10 +138,9 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
       ];
 
   return (
-    <div className="vexel-dashboard min-h-screen px-8 pb-12 pt-6 2xl:px-12 space-y-8 max-w-[1720px] mx-auto">
+    <div className="vexel-dashboard mx-auto min-h-screen max-w-[1600px] space-y-5 px-6 pb-8 pt-5 2xl:px-8">
       {/* Top Command Welcome Banner */}
-      <div className="relative overflow-hidden flex flex-col md:flex-row md:items-center justify-between gap-6 p-7 rounded-3xl border border-white/[0.08] bg-gradient-to-r from-[#0d1217] via-[#090d10] to-[#070a0d] backdrop-blur-2xl shadow-[0_16px_48px_rgba(0,0,0,0.7)]">
-        <div className="absolute top-0 right-1/4 w-96 h-96 bg-[#8bd132]/5 blur-[120px] pointer-events-none rounded-full" />
+      <div className="relative flex flex-col justify-between gap-5 rounded-xl border border-white/[0.07] bg-[#101316] p-5 md:flex-row md:items-center">
         <div className="relative z-10 space-y-2">
           <div className="flex flex-wrap items-center gap-3">
             <span className="flex items-center gap-1.5 rounded-full border border-[#8bd132]/30 bg-[#8bd132]/10 px-3 py-1 text-[10px] font-mono font-bold uppercase tracking-wider text-[#8bd132]">
@@ -156,7 +155,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             </span>
           </div>
 
-          <h1 className="text-3xl font-extrabold tracking-tight text-white flex items-center gap-3">
+          <h1 className="flex items-center gap-3 text-[26px] font-semibold tracking-tight text-white">
             Central Operacional de Conteúdo
           </h1>
           <p className="text-xs text-[#8e9aa2] max-w-xl leading-relaxed">
@@ -168,7 +167,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           <button
             type="button"
             onClick={onNewPost}
-            className="flex items-center gap-2 rounded-xl bg-[#8bd132] px-4 py-2.5 text-xs font-bold text-[#080e05] transition-all hover:bg-[#9be24d] hover:shadow-[0_0_20px_rgba(139,209,50,0.3)] active:scale-[0.98]"
+            className="flex items-center gap-2 rounded-lg bg-[#8bd132] px-4 py-2.5 text-xs font-semibold text-[#080e05] transition-colors hover:bg-[#9be24d]"
           >
             <Plus className="h-4 w-4" />
             <span>Criar Novo Conteúdo</span>
@@ -176,7 +175,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           <button
             type="button"
             onClick={onOpenCampaignWizard}
-            className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.05] px-4 py-2.5 text-xs font-semibold text-white transition-all hover:bg-white/10 hover:border-white/20 active:scale-[0.98]"
+            className="flex items-center gap-2 rounded-lg border border-white/10 bg-white/[0.04] px-4 py-2.5 text-xs font-medium text-white transition-colors hover:border-white/15 hover:bg-white/[0.07]"
           >
             <Sparkles className="h-4 w-4 text-[#8bd132]" />
             <span>Assistente IA</span>
@@ -185,23 +184,23 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
       </div>
 
       {/* Main Grid Section */}
-      <div className="grid grid-cols-1 gap-8 min-[1180px]:grid-cols-[minmax(0,1fr)_360px] 2xl:grid-cols-[minmax(0,1fr)_420px]">
+      <div className="grid grid-cols-1 gap-5 min-[1180px]:grid-cols-[minmax(0,1fr)_340px] 2xl:grid-cols-[minmax(0,1fr)_380px]">
         {/* Left Primary Column */}
-        <section className="min-w-0 space-y-8">
+        <section className="min-w-0 space-y-5">
           {/* Top Metric Cards - Redesigned Bento Row */}
-          <div className="grid grid-cols-2 gap-5 lg:grid-cols-4">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {dynamicMetricCards.map((metric) => {
               const Icon = metric.icon;
               const isAccent = metric.tone === 'amber';
               return (
                 <article
                   key={metric.label}
-                  className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-white/[0.05] bg-gradient-to-b from-[#0e1318] to-[#080b0e] p-6 backdrop-blur-xl transition-all duration-200 hover:border-white/15 hover:shadow-[0_12px_36px_rgba(0,0,0,0.6)]"
+                  className="group relative flex flex-col justify-between overflow-hidden rounded-xl border border-white/[0.06] bg-[#101316] p-4 transition-colors duration-150 hover:border-white/10"
                 >
                   <div className="flex items-start justify-between gap-2">
                     <span className="text-xs font-semibold text-[#717d85] tracking-tight">{metric.label}</span>
                     <span
-                      className={`grid h-9 w-9 place-items-center rounded-xl border ${
+                      className={`grid h-8 w-8 place-items-center rounded-lg border ${
                         isAccent
                           ? 'border-amber-500/20 bg-amber-500/10 text-amber-400'
                           : 'border-white/[0.08] bg-white/[0.03] text-[#8bd132]'
@@ -211,9 +210,9 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                     </span>
                   </div>
 
-                  <div className="mt-6 flex items-end justify-between">
+                  <div className="mt-4 flex items-end justify-between">
                     <div>
-                      <div className="text-3xl font-extrabold tracking-tight text-white">{metric.value}</div>
+                      <div className="text-2xl font-semibold tracking-tight text-white">{metric.value}</div>
                       <div className="mt-1.5 flex items-center gap-1.5 text-[11px] text-[#627078]">
                         {metric.change && (
                           <span className="font-bold text-[#8bd132]">{metric.change}</span>
@@ -229,8 +228,8 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           </div>
 
           {/* Interactive Calendar Schedule Command */}
-          <section className="rounded-2xl border border-white/[0.05] bg-gradient-to-b from-[#0e1318] to-[#080b0e] p-7 backdrop-blur-xl shadow-[0_16px_48px_rgba(0,0,0,0.6)]">
-            <div className="mb-6 flex flex-wrap items-center justify-between gap-4 border-b border-white/[0.05] pb-5">
+          <section className="rounded-xl border border-white/[0.06] bg-[#101316] p-5">
+            <div className="mb-4 flex flex-wrap items-center justify-between gap-3 border-b border-white/[0.05] pb-4">
               <div className="space-y-1">
                 <div className="flex items-center gap-2.5">
                   <CalendarDays className="h-4 w-4 text-[#8bd132]" />
@@ -330,7 +329,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           </section>
 
           {/* Quick Production Process */}
-          <section className="rounded-2xl border border-white/[0.05] bg-gradient-to-b from-[#0e1318] to-[#080b0e] p-7 backdrop-blur-xl">
+          <section className="rounded-xl border border-white/[0.06] bg-[#101316] p-5">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-xs font-mono font-bold uppercase tracking-[0.2em] text-[#627078]">Esteira de Produção Inteligente</h2>
               <span className="text-[10px] text-[#8bd132] font-semibold bg-[#8bd132]/10 border border-[#8bd132]/20 px-2.5 py-0.5 rounded-full">
@@ -345,7 +344,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                     key={step.label}
                     type="button"
                     onClick={onNewPost}
-                    className="group flex flex-col items-center rounded-2xl border border-white/[0.05] bg-[#070a0d] p-4 text-center transition-all hover:border-[#8bd132]/40 hover:bg-[#10151c]"
+                    className="group flex flex-col items-center rounded-lg border border-white/[0.05] bg-[#0d1114] p-3.5 text-center transition-colors hover:border-white/10 hover:bg-[#14181c]"
                   >
                     <span className="grid h-10 w-10 place-items-center rounded-xl border border-white/[0.08] bg-white/[0.03] text-[#8bd132] group-hover:scale-110 group-hover:bg-[#8bd132]/10 transition-all duration-200">
                       <Icon className="h-4 w-4" />
@@ -360,10 +359,10 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         </section>
 
         {/* Right Sidebar Column */}
-        <aside className="space-y-8">
+        <aside className="space-y-5">
           {/* Status do Ambiente */}
           {isPersonal ? (
-            <section className="rounded-2xl border border-white/[0.05] bg-gradient-to-b from-[#0e1318] to-[#080b0e] p-6 backdrop-blur-xl shadow-[0_12px_36px_rgba(0,0,0,0.6)]">
+            <section className="rounded-xl border border-white/[0.06] bg-[#101316] p-5">
               <div className="flex items-center justify-between border-b border-white/[0.05] pb-4">
                 <div className="flex items-center gap-2.5">
                   <Sparkles className="h-4 w-4 text-[#8bd132]" />
@@ -391,7 +390,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
               </div>
             </section>
           ) : (
-            <section className="rounded-2xl border border-white/[0.05] bg-gradient-to-b from-[#0e1318] to-[#080b0e] p-6 backdrop-blur-xl shadow-[0_12px_36px_rgba(0,0,0,0.6)]">
+            <section className="rounded-xl border border-white/[0.06] bg-[#101316] p-5">
               <div className="flex items-center justify-between border-b border-white/[0.05] pb-4">
                 <div className="flex items-center gap-2.5">
                   <Clock3 className="h-4 w-4 text-amber-400" />
@@ -428,7 +427,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           )}
 
           {/* Performance Summary Widget */}
-          <section className="rounded-2xl border border-white/[0.05] bg-gradient-to-b from-[#0e1318] to-[#080b0e] p-6 backdrop-blur-xl shadow-[0_12px_36px_rgba(0,0,0,0.6)]">
+          <section className="rounded-xl border border-white/[0.06] bg-[#101316] p-5">
             <div className="flex items-center justify-between border-b border-white/[0.05] pb-4">
               <div className="flex items-center gap-2.5">
                 <BarChart3 className="h-4 w-4 text-[#8bd132]" />
@@ -476,7 +475,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           </section>
 
           {/* AI Strategic Recommendation Box */}
-          <section className="relative overflow-hidden rounded-2xl border border-[#8bd132]/30 bg-gradient-to-br from-[#8bd132]/10 via-[#0a0e12] to-[#06080a] p-6 shadow-2xl">
+          <section className="relative overflow-hidden rounded-xl border border-[#8bd132]/20 bg-[#101510] p-5">
             <div className="flex items-center gap-2 text-[#8bd132]">
               <Sparkles className="h-4 w-4" />
               <h2 className="text-xs font-mono font-bold uppercase tracking-wider">Insight da IA Copilot</h2>
@@ -487,7 +486,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             <button
               type="button"
               onClick={onNewPost}
-              className="mt-5 flex items-center gap-2.5 rounded-xl bg-[#8bd132] px-4 py-2.5 text-xs font-bold text-[#080e05] transition-all hover:bg-[#9be24d] shadow-[0_0_20px_rgba(139,209,50,0.25)]"
+              className="mt-5 flex items-center gap-2.5 rounded-lg bg-[#8bd132] px-4 py-2.5 text-xs font-semibold text-[#080e05] transition-colors hover:bg-[#9be24d]"
             >
               <Sparkles className="h-3.5 w-3.5" />
               <span>Gerar Variações com IA</span>

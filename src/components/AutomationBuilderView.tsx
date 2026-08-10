@@ -109,7 +109,7 @@ export const AutomationBuilderView: React.FC = () => {
   };
 
   return (
-    <div className="p-6 space-y-6 max-w-7xl mx-auto">
+    <div className="clicko-automations-view mx-auto max-w-[1500px] space-y-5 p-5">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/[0.06] pb-4">
         <div>
@@ -123,14 +123,14 @@ export const AutomationBuilderView: React.FC = () => {
 
         <button
           onClick={handleCreateNewFlow}
-          className="px-4 py-2.5 rounded-xl bg-[#8bd132] hover:bg-[#9be24d] text-[#0b1208] font-bold text-xs flex items-center gap-1.5 transition-all shadow-md shadow-[#8bd132]/20"
+          className="flex items-center gap-1.5 rounded-lg bg-[#8bd132] px-4 py-2.5 text-xs font-semibold text-[#0b1208] transition-colors hover:bg-[#9be24d]"
         >
           <Plus className="w-4 h-4" /> Criar Novo Fluxo
         </button>
       </div>
 
       {/* Main Flow Canvas Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-12">
         {/* Left List of Flows */}
         <div className="lg:col-span-4 space-y-3">
           <span className="text-xs font-bold text-[#aeb7bb]">Fluxos de Automação ({flows.length})</span>
@@ -138,9 +138,9 @@ export const AutomationBuilderView: React.FC = () => {
             <div
               key={f.id}
               onClick={() => setSelectedFlow(f)}
-              className={`p-4 rounded-2xl border cursor-pointer transition-all ${
+              className={`clicko-interactive-surface cursor-pointer rounded-xl border p-4 transition-colors ${
                 selectedFlow.id === f.id
-                  ? 'bg-[#8bd132]/[0.08] border-[#8bd132]/40 text-white shadow-lg'
+                  ? 'border-[#8bd132]/25 bg-[#8bd132]/[0.07] text-white'
                   : 'bg-[#182126] border-white/[0.06] hover:border-white/15 text-[#cbd2d5]'
               }`}
             >
@@ -166,7 +166,7 @@ export const AutomationBuilderView: React.FC = () => {
         </div>
 
         {/* Visual Node Flow Stage */}
-        <div className="lg:col-span-8 bg-[#182126] border border-white/[0.07] rounded-2xl p-6 space-y-6">
+        <div className="clicko-automation-canvas space-y-5 rounded-xl border border-white/[0.07] bg-[#101316] p-5 lg:col-span-8">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/[0.06] pb-4">
             <div>
               <span className="text-[9px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded bg-[#8bd132]/20 text-[#8bd132] border border-[#8bd132]/30">
@@ -195,7 +195,7 @@ export const AutomationBuilderView: React.FC = () => {
           )}
 
           {/* Node Visual Chain */}
-          <div className="space-y-3 relative">
+          <div className="clicko-automation-chain relative space-y-3">
             {selectedFlow.nodes.map((node, index) => (
               <div key={node.id} className="relative">
                 <div className="p-4 rounded-xl bg-black/25 border border-white/[0.06] hover:border-[#8bd132]/40 transition-all flex items-center justify-between gap-4">

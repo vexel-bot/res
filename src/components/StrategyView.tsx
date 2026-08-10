@@ -1,43 +1,131 @@
 import React from 'react';
-import { Bot, CalendarRange, CheckCircle2, ChevronRight, Plus, Sparkles, Target } from 'lucide-react';
+import {
+  ArrowRight, BrainCircuit, Check, ChevronRight, CircleAlert, Layers3,
+  LoaderCircle, Plus, Sparkles, Target, WandSparkles,
+} from 'lucide-react';
 import { useOperations } from '../context/OperationsContext';
 import { strategyStatusLabel } from '../utils/localization';
-import type { SocialPlatform, StrategyCampaign } from '../types';
+import type { CampaignContentItem, CreativeIdea, PostFormat, StrategyCampaign } from '../types';
 
-const platforms: SocialPlatform[] = ['instagram', 'linkedin', 'tiktok', 'youtube', 'facebook'];
-const blank = { name: '', objective: '', startDate: '2026-08-03', endDate: '2026-08-31', budget: '', products: '', audience: '', offer: '', importantDates: '' };
+type CampaignDraft = Pick<StrategyCampaign, 'name' | 'objective' | 'audience' | 'offer' | 'funnel' | 'centralMessage' | 'angle' | 'contentPlan'>;
+
+const formatMap: Record<string, PostFormat> = {
+  carrossel: 'carousel', reel: 'reels', reels: 'reels', story: 'story', stories: 'story', post: 'post',
+};
+
+function fallbackPlan(need: string, audience: string, offer: string): CampaignDraft {
+  const contentPlan: CampaignContentItem[] = [
+    { id: `plan-${Date.now()}-1`, format: 'reels', funnelStage: 'descoberta', purpose: 'Interromper o padrão e tornar o problema reconhecível.', hook: 'O custo invisível de continuar fazendo do mesmo jeito', status: 'planned' },
+    { id: `plan-${Date.now()}-2`, format: 'carousel', funnelStage: 'consideracao', purpose: 'Explicar a mudança com clareza e prova lógica.', hook: 'O método em cinco decisões práticas', status: 'planned' },
+    { id: `plan-${Date.now()}-3`, format: 'story', funnelStage: 'consideracao', purpose: 'Responder objeções e abrir conversa.', hook: 'A dúvida que quase todo cliente tem antes de começar', status: 'planned' },
+    { id: `plan-${Date.now()}-4`, format: 'post', funnelStage: 'conversao', purpose: 'Apresentar oferta e próximo passo.', hook: 'O que muda quando você começa agora', status: 'planned' },
+  ];
+  return {
+    name: 'Campanha orientada por objetivo', objective: need,
+    audience, offer, funnel: 'Descoberta → Consideração → Conversão',
+    centralMessage: 'Transformar uma necessidade real em uma decisão clara e segura.',
+    angle: 'Clareza operacional e redução de fricção', contentPlan,
+  };
+}
 
 export function StrategyView({ onOpenStudio }: { onOpenStudio: () => void }) {
-  const { brain, campaigns, activeCampaign, setActiveCampaignId, createCampaign } = useOperations();
-  const [creating, setCreating] = React.useState(false);
-  const [form, setForm] = React.useState(blank);
-  const [question, setQuestion] = React.useState('Qual é o resultado mais importante desta campanha?');
-  const [answer, setAnswer] = React.useState('');
-  const [consulting, setConsulting] = React.useState(false);
-  const create = () => {
-    if (!form.name.trim() || !form.objective.trim()) return;
-    createCampaign({ ...form, kpis: ['Alcance qualificado', 'CTR', 'Conversões'], channels: ['instagram', 'linkedin'], funnel: 'Descoberta → Consideração → Conversão', ctas: ['Conhecer a solução', 'Solicitar demonstração'], executionPlan: ['Validar mensagem central', 'Produzir peças prioritárias', 'Agendar distribuição', 'Medir e otimizar'], status: 'planned' });
-    setForm(blank); setCreating(false);
-  };
-  const consult = async () => {
-    if (!answer.trim()) return;
-    setConsulting(true);
+  const {
+    brain, activeClient, campaigns, activeCampaign, creativeIdeas, selectedCreativeIdeaIds,
+    setActiveCampaignId, createCampaign, setCreativeIdeas, toggleCreativeIdea, prepareStudioHandoff,
+  } = useOperations();
+  const [need, setNeed] = React.useState('Preciso transformar esta oferta em uma campanha prática para esta semana.');
+  const [draft, setDraft] = React.useState<CampaignDraft | null>(null);
+  const [planning, setPlanning] = React.useState(false);
+  const [error, setError] = React.useState('');
+  const [success, setSuccess] = React.useState('');
+  const [exploding, setExploding] = React.useState(false);
+
+  const interpretGoal = async () => {
+    if (!need.trim() || !activeClient) return;
+    setPlanning(true); setError(''); setSuccess('');
+    const base = fallbackPlan(need, activeClient.audience, activeClient.featuredOffer);
     try {
-      const response = await fetch('/api/ai/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: answer, brainContext: brain, strategyContext: activeCampaign, mode: 'strategic-consultant' }) });
+      const response = await fetch('/api/ai/generate-campaign', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          campaignGoal: need, productOrTopic: activeClient.featuredOffer,
+          platforms: ['Instagram', 'LinkedIn'], tone: activeClient.toneOfVoice,
+          brandName: activeClient.name, brainContext: brain, clientContext: activeClient, screenContext: 'strategy',
+        }),
+      });
+      if (!response.ok) throw new Error('Não foi possível consultar o planejador.');
       const data = await response.json();
-      setQuestion(data.reply || 'Quais canais e ofertas melhor sustentam esse objetivo?');
-      setAnswer('');
-    } catch { setQuestion('Quais canais e ofertas melhor sustentam esse objetivo?'); setAnswer(''); }
-    finally { setConsulting(false); }
+      const mapped = Array.isArray(data.posts) ? data.posts.slice(0, 6).map((post: any, index: number): CampaignContentItem => ({
+        id: `plan-${Date.now()}-${index}`, format: formatMap[String(post.format || '').toLowerCase()] || 'post',
+        funnelStage: index === 0 ? 'descoberta' : index === data.posts.length - 1 ? 'conversao' : 'consideracao',
+        purpose: post.title || 'Peça conectada ao objetivo', hook: post.copy?.split('\n')[0] || post.title || base.contentPlan?.[index % 4]?.hook || '', status: 'planned',
+      })) : base.contentPlan;
+      setDraft({ ...base, name: data.title || base.name, centralMessage: data.description || base.centralMessage, contentPlan: mapped });
+    } catch {
+      setDraft(base);
+      setError('A integração de IA não respondeu. O Clicko estruturou um plano local editável com o contexto disponível.');
+    } finally { setPlanning(false); }
   };
 
-  return <div className="mx-auto w-full max-w-[1480px] space-y-5 p-6 2xl:p-10">
-    <div className="flex flex-wrap items-end justify-between gap-4"><div><p className="text-[10px] uppercase tracking-[0.24em] text-[#8bd132]">Planejamento orientado por IA</p><h1 className="mt-2 text-2xl font-semibold text-white">Estratégia</h1><p className="mt-1 text-sm text-[#8f999f]">Toda campanha nasce aqui e carrega o contexto da memória da marca até o resultado.</p></div><button onClick={() => setCreating(true)} className="flex items-center gap-2 rounded-lg bg-[#8bd132] px-4 py-2.5 text-[11px] font-bold text-[#14200e]"><Plus className="h-4 w-4" />Nova campanha</button></div>
-    {creating && <section className="rounded-xl border border-[#8bd132]/25 bg-[#182126] p-5"><div className="flex items-center gap-2"><Sparkles className="h-4 w-4 text-[#8bd132]" /><h2 className="text-sm font-semibold text-white">Estruturar nova campanha</h2></div><div className="mt-4 grid gap-3 md:grid-cols-2">{Object.entries(form).map(([key, value]) => <label key={key} className={key === 'objective' ? 'md:col-span-2' : ''}><span className="mb-1.5 block text-[9px] uppercase tracking-[0.13em] text-[#899399]">{{ name: 'Nome', objective: 'Objetivo', startDate: 'Início', endDate: 'Fim', budget: 'Orçamento', products: 'Produtos / serviços', audience: 'Público', offer: 'Oferta', importantDates: 'Datas importantes' }[key]}</span>{key === 'objective' ? <textarea rows={3} value={value} onChange={(e) => setForm((current) => ({ ...current, [key]: e.target.value }))} className="w-full rounded-lg border border-white/[0.07] bg-black/25 p-3 text-[11px] text-white outline-none focus:border-[#8bd132]/40" /> : <input type={key.toLowerCase().includes('date') ? 'date' : 'text'} value={value} onChange={(e) => setForm((current) => ({ ...current, [key]: e.target.value }))} className="h-10 w-full rounded-lg border border-white/[0.07] bg-black/25 px-3 text-[11px] text-white outline-none focus:border-[#8bd132]/40" />}</label>)}</div><div className="mt-4 flex justify-end gap-2"><button onClick={() => setCreating(false)} className="rounded-lg px-4 py-2 text-[10px] text-[#9ca5aa]">Cancelar</button><button onClick={create} className="rounded-lg bg-[#8bd132] px-4 py-2 text-[10px] font-bold text-[#14200e]">Criar plano estratégico</button></div></section>}
-    <div className="grid gap-4 xl:grid-cols-[310px_1fr_320px]">
-      <section className="rounded-xl border border-white/[0.07] bg-[#182126] p-4"><h2 className="px-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#9ca5aa]">Campanhas</h2><div className="mt-3 space-y-2">{campaigns.map((campaign) => <button key={campaign.id} onClick={() => setActiveCampaignId(campaign.id)} className={`w-full rounded-lg border p-3 text-left ${activeCampaign?.id === campaign.id ? 'border-[#8bd132]/30 bg-[#8bd132]/[0.07]' : 'border-white/[0.05] bg-black/20'}`}><div className="flex items-start justify-between"><span className="text-[11px] font-medium text-white">{campaign.name}</span><ChevronRight className="h-4 w-4 text-[#68747a]" /></div><div className="mt-2 flex items-center justify-between text-[8px] uppercase"><span className="text-[#8bd132]">{strategyStatusLabel[campaign.status]}</span><span className="text-[#707c82]">rev. Memória {campaign.brainRevision}</span></div></button>)}</div></section>
-      <section className="rounded-xl border border-white/[0.07] bg-[#182126] p-5">{activeCampaign ? <><div className="flex flex-wrap items-start justify-between gap-3"><div><span className="text-[9px] uppercase tracking-[0.15em] text-[#8bd132]">Campanha ativa</span><h2 className="mt-1 text-xl font-semibold text-white">{activeCampaign.name}</h2></div><button onClick={onOpenStudio} className="rounded-lg border border-[#8bd132]/25 bg-[#8bd132]/10 px-3 py-2 text-[9px] font-semibold text-[#8bd132]">Criar no Estúdio</button></div><p className="mt-4 rounded-lg bg-black/20 p-4 text-[11px] leading-relaxed text-[#c7ced1]">{activeCampaign.objective}</p><div className="mt-4 grid gap-3 sm:grid-cols-2">{[['Período', `${activeCampaign.startDate} — ${activeCampaign.endDate}`, CalendarRange], ['Orçamento', activeCampaign.budget || 'Não definido', Target], ['Público', activeCampaign.audience, Target], ['Oferta', activeCampaign.offer, Sparkles]].map(([label, value, Icon]) => <div key={String(label)} className="rounded-lg border border-white/[0.05] bg-black/15 p-3"><div className="flex items-center gap-2 text-[9px] text-[#899399]"><Icon className="h-3.5 w-3.5 text-[#8bd132]" />{String(label)}</div><p className="mt-2 text-[10px] leading-relaxed text-white">{String(value)}</p></div>)}</div><h3 className="mt-5 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#9ca5aa]">Plano de execução</h3><div className="mt-3 space-y-2">{activeCampaign.executionPlan.map((step, index) => <div key={step} className="flex items-center gap-3 rounded-lg bg-black/20 p-3"><span className="grid h-5 w-5 place-items-center rounded-full bg-[#8bd132]/10 text-[8px] text-[#8bd132]">{index + 1}</span><span className="text-[10px] text-[#c8ced1]">{step}</span></div>)}</div></> : <div className="grid h-full place-items-center text-xs text-[#899399]">Selecione uma campanha.</div>}</section>
-      <aside className="rounded-xl border border-white/[0.07] bg-[#182126] p-5"><div className="flex items-center gap-2"><Bot className="h-5 w-5 text-[#8bd132]" /><div><h2 className="text-[11px] font-semibold text-white">Consultor estratégico</h2><p className="text-[8px] text-[#758087]">Direcionamento inteligente · Memória rev. {brain.revision}</p></div></div><div className="mt-5 rounded-xl border border-[#8bd132]/15 bg-[#8bd132]/[0.055] p-4"><p className="text-[10px] leading-relaxed text-[#d6dcde]">{question}</p></div><textarea value={answer} onChange={(e) => setAnswer(e.target.value)} rows={5} placeholder="Responda com o máximo de contexto possível..." className="mt-3 w-full resize-none rounded-xl border border-white/[0.07] bg-black/25 p-3 text-[10px] text-white outline-none focus:border-[#8bd132]/35" /><button onClick={consult} disabled={consulting} className="mt-3 flex w-full items-center justify-center gap-2 rounded-lg bg-[#8bd132] py-2.5 text-[10px] font-bold text-[#14200e] disabled:opacity-60">{consulting ? <Sparkles className="h-4 w-4 animate-pulse" /> : <CheckCircle2 className="h-4 w-4" />}{consulting ? 'Analisando…' : 'Continuar direcionamento'}</button><div className="mt-5 text-[9px] leading-relaxed text-[#727e84]">A conversa estrutura objetivo, formatos, funil, CTAs, calendário e plano de execução antes da produção.</div></aside>
+  const confirmCampaign = () => {
+    if (!draft || !activeClient) return;
+    const campaign = createCampaign({
+      ...draft, clientId: activeClient.id, startDate: new Date().toISOString().slice(0, 10),
+      endDate: new Date(Date.now() + 7 * 86400000).toISOString().slice(0, 10), budget: 'A definir',
+      kpis: ['Atenção qualificada', 'Intenção', 'Conversas iniciadas'], products: activeClient.products,
+      channels: ['instagram', 'linkedin'], importantDates: 'Distribuição concentrada nos próximos sete dias',
+      ctas: ['Conhecer a oferta', 'Iniciar conversa'], executionPlan: ['Validar mensagem central', 'Selecionar combinações criativas', 'Produzir peças', 'Enviar para aprovação', 'Distribuir e registrar aprendizados'], status: 'planned',
+    });
+    setDraft(null); setSuccess(`Campanha “${campaign.name}” criada e conectada ao fluxo.`);
+  };
+
+  const generateExplosion = () => {
+    if (!activeClient || !activeCampaign) return;
+    setExploding(true);
+    window.setTimeout(() => {
+      const combinations: Array<[string, string, PostFormat, CreativeIdea['funnelStage'], string]> = [
+        ['Contraste', 'O que você perde ao manter o processo atual', 'reels', 'descoberta', 'Reconhecer o problema'],
+        ['Bastidores', 'Como a transformação acontece na prática', 'carousel', 'consideracao', 'Entender o método'],
+        ['Objeção', 'A pergunta que precisa ser respondida antes da decisão', 'story', 'consideracao', 'Reduzir insegurança'],
+        ['Prova lógica', 'Cinco sinais de que esta solução faz sentido', 'carousel', 'consideracao', 'Validar a escolha'],
+        ['Oferta', 'O próximo passo mais simples para começar', 'post', 'conversao', 'Iniciar conversa'],
+        ['Visão futura', 'Como a rotina pode funcionar depois da mudança', 'reels', 'conversao', 'Visualizar resultado'],
+      ];
+      setCreativeIdeas(combinations.map(([angle, hook, format, funnelStage, rationale], index) => ({
+        id: `idea-${Date.now()}-${index}`, clientId: activeClient.id, campaignId: activeCampaign.id,
+        title: `${angle} · ${activeCampaign.name}`, angle, hook, format, funnelStage,
+        cta: activeCampaign.ctas[index % activeCampaign.ctas.length] || 'Conhecer a oferta', rationale,
+      })));
+      setExploding(false);
+    }, 520);
+  };
+
+  const sendSelectedToStudio = () => {
+    const first = creativeIdeas.find((idea) => selectedCreativeIdeaIds.includes(idea.id));
+    if (!first || !activeCampaign) return;
+    prepareStudioHandoff({
+      source: 'matrix', clientId: first.clientId, campaignId: first.campaignId,
+      objective: activeCampaign.objective, title: first.title, angle: first.angle,
+      hook: first.hook, cta: first.cta, format: first.format, funnelStage: first.funnelStage,
+    });
+    onOpenStudio();
+  };
+
+  return <div className="clicko-strategy-builder mx-auto w-full max-w-[1480px] space-y-5 p-6 2xl:p-10">
+    <header className="flex flex-wrap items-end justify-between gap-4"><div><div className="flex items-center gap-2 text-[10px] uppercase tracking-[0.24em] text-[#ff7a00]"><Target className="h-4 w-4" />Campaign Builder</div><h1 className="mt-2 text-2xl font-semibold text-white">Objetivo em plano de ação.</h1><p className="mt-1 max-w-2xl text-sm text-[#8f999f]">A IA interpreta a necessidade e distribui cada peça pela função no funil.</p></div>{activeClient && <div className="rounded-full border border-white/[0.07] bg-white/[0.025] px-3 py-2 text-[9px] text-[#aaa]"><span className="text-[#666]">Cliente ativo · </span>{activeClient.name}</div>}</header>
+
+    <section className="rounded-xl border border-white/[0.07] bg-[#111] p-5 md:p-6"><div className="grid gap-5 lg:grid-cols-[1fr_auto]"><label><span className="text-[9px] font-semibold uppercase tracking-[0.15em] text-[#777]">O que precisa acontecer?</span><textarea value={need} onChange={(event) => setNeed(event.target.value)} rows={3} placeholder="Ex.: Quero aumentar as matrículas desta turma nas próximas duas semanas." className="mt-2 w-full resize-none rounded-xl border border-white/[0.08] bg-black p-4 text-[12px] leading-relaxed text-white outline-none focus:border-[#ff5c5c]/45" /></label><button onClick={interpretGoal} disabled={planning || !need.trim() || !activeClient} className="self-end rounded-xl bg-[#ff5c5c] px-5 py-4 text-[10px] font-bold text-white disabled:opacity-40">{planning ? <span className="flex items-center gap-2"><LoaderCircle className="h-4 w-4 animate-spin" />Interpretando…</span> : <span className="flex items-center gap-2"><WandSparkles className="h-4 w-4" />Interpretar objetivo</span>}</button></div>{error && <div className="mt-3 flex items-start gap-2 rounded-lg border border-[#ff7a00]/20 bg-[#ff7a00]/[0.06] p-3 text-[9px] text-[#d9a46f]"><CircleAlert className="mt-0.5 h-3.5 w-3.5 shrink-0" />{error}</div>}{success && <div className="mt-3 flex items-center gap-2 rounded-lg border border-[#ff5c5c]/20 bg-[#ff5c5c]/[0.06] p-3 text-[9px] text-[#ff9b9b]"><Check className="h-3.5 w-3.5" />{success}</div>}</section>
+
+    {draft && <section className="rounded-xl border border-[#ff5c5c]/20 bg-[#111] p-5 md:p-6"><div className="flex flex-wrap items-start justify-between gap-4"><div><span className="text-[8px] uppercase tracking-[0.16em] text-[#ff5c5c]">Plano proposto</span><h2 className="mt-1 text-lg font-semibold text-white">{draft.name}</h2><p className="mt-2 max-w-3xl text-[10px] leading-relaxed text-[#aaa]">{draft.centralMessage}</p></div><button onClick={confirmCampaign} className="flex items-center gap-2 rounded-lg bg-[#ff5c5c] px-4 py-2.5 text-[9px] font-bold text-white"><Check className="h-4 w-4" />Confirmar campanha</button></div><div className="mt-5 grid gap-3 md:grid-cols-3">{[['Público', draft.audience], ['Oferta', draft.offer], ['Ângulo', draft.angle]].map(([label, value]) => <div key={label} className="rounded-lg border border-white/[0.055] bg-black/20 p-3"><span className="text-[7px] uppercase text-[#666]">{label}</span><p className="mt-2 text-[9px] leading-relaxed text-[#ccc]">{value}</p></div>)}</div><div className="mt-5 overflow-x-auto"><div className="flex min-w-[720px] gap-2">{draft.contentPlan?.map((item, index) => <div key={item.id} className="min-w-0 flex-1 rounded-lg border border-white/[0.06] bg-black/25 p-3"><div className="flex items-center justify-between"><span className="text-[7px] uppercase text-[#ff7a00]">{item.funnelStage}</span><span className="text-[7px] text-[#555]">0{index + 1}</span></div><strong className="mt-2 block text-[9px] capitalize text-white">{item.format}</strong><p className="mt-2 line-clamp-2 text-[8px] leading-relaxed text-[#777]">{item.hook}</p></div>)}</div></div></section>}
+
+    <div className="grid gap-4 xl:grid-cols-[270px_minmax(0,1fr)]">
+      <aside className="rounded-xl border border-white/[0.07] bg-[#111] p-3"><div className="flex items-center justify-between px-2 py-2"><span className="text-[9px] font-semibold uppercase tracking-[0.16em] text-[#777]">Campanhas</span><span className="text-[9px] text-[#ff7a00]">{campaigns.length}</span></div><div className="mt-1 space-y-1.5">{campaigns.map((campaign) => <button key={campaign.id} onClick={() => setActiveCampaignId(campaign.id)} className={`clicko-interactive-surface w-full rounded-lg border p-3 text-left ${activeCampaign?.id === campaign.id ? 'border-[#ff5c5c]/30 bg-[#ff5c5c]/[0.06]' : 'border-transparent bg-white/[0.018]'}`}><div className="flex items-start justify-between gap-2"><strong className="text-[10px] font-medium text-white">{campaign.name}</strong><ChevronRight className="h-3.5 w-3.5 text-[#555]" /></div><div className="mt-2 flex justify-between text-[7px] uppercase"><span className="text-[#ff7a00]">{strategyStatusLabel[campaign.status]}</span><span className="text-[#555]">Brain rev. {campaign.brainRevision}</span></div></button>)}</div></aside>
+
+      <main className="min-w-0 rounded-xl border border-white/[0.07] bg-[#111] p-5 md:p-6">{activeCampaign ? <><div className="flex flex-wrap items-start justify-between gap-4"><div><span className="text-[8px] uppercase tracking-[0.16em] text-[#ff7a00]">Campanha ativa</span><h2 className="mt-1 text-xl font-semibold text-white">{activeCampaign.name}</h2><p className="mt-2 max-w-3xl text-[10px] leading-relaxed text-[#999]">{activeCampaign.objective}</p></div><button onClick={generateExplosion} disabled={exploding} className="flex items-center gap-2 rounded-lg border border-[#ff7a00]/25 bg-[#ff7a00]/[0.07] px-4 py-2.5 text-[9px] font-semibold text-[#ff9a3d]">{exploding ? <LoaderCircle className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4" />}{exploding ? 'Combinando…' : 'Explosão criativa'}</button></div>
+        <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-3">{creativeIdeas.filter((idea) => idea.campaignId === activeCampaign.id).map((idea) => { const selected = selectedCreativeIdeaIds.includes(idea.id); return <button key={idea.id} onClick={() => toggleCreativeIdea(idea.id)} className={`clicko-interactive-surface min-h-44 rounded-xl border p-4 text-left ${selected ? 'border-[#ff5c5c]/45 bg-[#ff5c5c]/[0.07]' : 'border-white/[0.06] bg-black/20'}`}><div className="flex items-center justify-between"><span className="rounded-full bg-[#ff7a00]/10 px-2 py-1 text-[7px] uppercase text-[#ff9a3d]">{idea.funnelStage}</span><span className={`grid h-5 w-5 place-items-center rounded-full border ${selected ? 'border-[#ff5c5c] bg-[#ff5c5c] text-white' : 'border-white/10 text-transparent'}`}><Check className="h-3 w-3" /></span></div><strong className="mt-3 block text-[11px] text-white">{idea.angle}</strong><p className="mt-2 text-[9px] leading-relaxed text-[#aaa]">{idea.hook}</p><div className="mt-4 flex items-center justify-between border-t border-white/[0.05] pt-3 text-[7px]"><span className="uppercase text-[#666]">{idea.format}</span><span className="text-[#888]">{idea.rationale}</span></div></button>; })}</div>
+        {!creativeIdeas.some((idea) => idea.campaignId === activeCampaign.id) && <div className="mt-5 grid min-h-48 place-items-center rounded-xl border border-dashed border-white/[0.08] bg-black/10 text-center"><div><Layers3 className="mx-auto h-7 w-7 text-[#555]" /><p className="mt-3 text-[10px] text-[#888]">Gere combinações de ângulo, hook, formato, CTA e estágio do funil.</p><p className="mt-1 text-[8px] text-[#555]">A matriz organiza possibilidades; você escolhe o que segue para produção.</p></div></div>}
+        {selectedCreativeIdeaIds.length > 0 && <div className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-[#ff5c5c]/20 bg-[#ff5c5c]/[0.05] p-3"><span className="text-[9px] text-[#ff9b9b]">{selectedCreativeIdeaIds.length} ideia(s) selecionada(s)</span><button onClick={sendSelectedToStudio} className="flex items-center gap-2 rounded-lg bg-[#ff5c5c] px-4 py-2 text-[9px] font-bold text-white">Enviar ao Studio <ArrowRight className="h-3.5 w-3.5" /></button></div>}
+      </> : <div className="grid min-h-72 place-items-center text-center"><div><BrainCircuit className="mx-auto h-7 w-7 text-[#555]" /><p className="mt-3 text-[10px] text-[#888]">Crie ou selecione uma campanha para continuar.</p></div></div>}</main>
     </div>
   </div>;
 }

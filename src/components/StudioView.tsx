@@ -74,14 +74,14 @@ export function StudioView({ onSavePost, initialMode = 'create' }: StudioViewPro
   ];
 
   return (
-    <div className="space-y-8 pb-16 min-h-screen">
+    <div className="min-h-screen space-y-5 pb-10">
       {/* Top Header */}
-      <div className="mx-auto flex w-full max-w-[1720px] flex-wrap items-center justify-between gap-6 px-8 pt-8 2xl:px-12 2xl:pt-10">
+      <div className="mx-auto flex w-full max-w-[1600px] flex-wrap items-center justify-between gap-5 px-6 pt-6 2xl:px-8 2xl:pt-7">
         <div className="space-y-1.5">
           <p className="text-[10px] font-mono uppercase tracking-[0.25em] font-bold text-[#8bd132] flex items-center gap-2">
             <Sparkles className="h-3.5 w-3.5" /> Central de Produção Multimídia & IA
           </p>
-          <h1 className="text-3xl font-extrabold tracking-tight text-white">Clicko Creative Studio</h1>
+          <h1 className="text-[26px] font-semibold tracking-tight text-white">Clicko Creative Studio</h1>
           <p className="text-xs text-[#717d85] max-w-xl">
             Suíte profissional para mídias sociais dividida em módulos independentes com ferramentas e fluxos exclusivos.
           </p>
@@ -107,7 +107,7 @@ export function StudioView({ onSavePost, initialMode = 'create' }: StudioViewPro
       </div>
 
       {/* Module Navigation Cards */}
-      <div className="mx-auto grid w-full max-w-[1720px] grid-cols-1 gap-4 px-8 sm:grid-cols-2 lg:grid-cols-5 2xl:px-12">
+      <div className="custom-scrollbar mx-auto flex w-full max-w-[1600px] gap-3 overflow-x-auto px-6 pb-1 sm:grid sm:grid-cols-2 sm:overflow-visible lg:grid-cols-5 2xl:px-8">
         {tabs.map(({ id, label, sublabel, icon: Icon, badge }) => {
           const isActive = mode === id;
           return (
@@ -115,9 +115,9 @@ export function StudioView({ onSavePost, initialMode = 'create' }: StudioViewPro
               key={id}
               type="button"
               onClick={() => setMode(id)}
-              className={`group relative flex flex-col justify-between rounded-2xl p-5 text-left transition-all duration-200 border ${
+              className={`group relative flex min-w-[210px] flex-col justify-between rounded-xl border p-4 text-left transition-colors duration-150 sm:min-w-0 ${
                 isActive
-                  ? 'bg-gradient-to-b from-[#111811] to-[#070b07] border-[#8bd132] shadow-[0_8px_32px_rgba(139,209,50,0.18)] scale-[1.02]'
+                  ? 'border-[#8bd132]/35 bg-[#101510]'
                   : 'bg-[#070a0d] border-white/[0.05] hover:bg-[#0e1318] hover:border-white/20'
               }`}
             >
@@ -157,7 +157,7 @@ export function StudioView({ onSavePost, initialMode = 'create' }: StudioViewPro
               </div>
 
               {isActive && (
-                <div className="absolute top-0 right-0 left-0 h-1 rounded-t-2xl bg-[#8bd132] shadow-[0_0_12px_#8bd132]" />
+                <div className="absolute inset-x-3 top-0 h-0.5 rounded-b-full bg-[#8bd132]" />
               )}
             </button>
           );
@@ -165,7 +165,7 @@ export function StudioView({ onSavePost, initialMode = 'create' }: StudioViewPro
       </div>
 
       {/* Embedded Studio Module Workspace */}
-      <div className="mx-auto w-full max-w-[1720px] px-8 2xl:px-12">
+      <div className="mx-auto w-full max-w-[1600px] px-1 sm:px-2">
         {mode === 'create' && (
           <CreationStudioView
             onSavePost={(post) =>

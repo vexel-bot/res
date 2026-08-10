@@ -21,7 +21,7 @@ export const ClickoLogo: React.FC<ClickoLogoProps> = ({
   appearance = 'auto',
 }) => (
   <span
-    className={`clicko-logo clicko-logo--${appearance} ${loading ? 'clicko-logo--loading' : ''} ${className}`}
+    className={`clicko-logo clicko-logo--${appearance} clicko-logo--${variant} ${loading ? 'clicko-logo--loading' : ''} ${className}`}
     style={{ backgroundColor: OFFICIAL_CLICKO_LOGO_BACKGROUND }}
   >
     <img

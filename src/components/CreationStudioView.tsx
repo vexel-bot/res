@@ -19,20 +19,39 @@ import {
   Image as ImageIcon,
   ChevronLeft,
   ChevronRight,
+  Gauge,
+  WandSparkles,
 } from 'lucide-react';
-import { PostFormat, SocialPlatform, Post, CarouselSlide } from '../types';
+import { PostFormat, SocialPlatform, Post, CarouselSlide, ClickScoreBreakdown } from '../types';
 import { useOperations } from '../context/OperationsContext';
 import { useGovernance } from '../context/GovernanceContext';
+import { useOffers } from '../context/OfferContext';
 
 interface CreationStudioViewProps {
   onSavePost: (newPost: Partial<Post>) => void;
 }
 
+function calculateClickScore(title: string, copy: string, audience: string, ctaPresent: boolean, slidesCount: number, hasContext: boolean): ClickScoreBreakdown {
+  const hook = Math.min(98, title.trim().length >= 24 ? 88 : 68);
+  const clarity = copy.trim().length >= 180 && copy.trim().length <= 900 ? 90 : 76;
+  const differentiation = hasContext ? 86 : 70;
+  const audienceFit = audience.trim().length > 18 ? 91 : 72;
+  const objectiveFit = hasContext ? 92 : 74;
+  const cta = ctaPresent ? 90 : 58;
+  const retention = slidesCount >= 3 || copy.includes('\n') ? 87 : 69;
+  const brandConsistency = hasContext ? 94 : 78;
+  const total = Math.round((hook + clarity + differentiation + audienceFit + objectiveFit + cta + retention + brandConsistency) / 8);
+  const strengths = [hook >= 85 ? 'Hook específico e legível' : '', audienceFit >= 85 ? 'Boa adequação ao público' : '', brandConsistency >= 90 ? 'Consistente com o contexto da marca' : ''].filter(Boolean);
+  const improvements = [cta < 80 ? 'Deixe o próximo passo mais explícito' : '', retention < 80 ? 'Crie uma progressão mais clara entre blocos' : '', differentiation < 80 ? 'Adicione um ponto de vista próprio da marca' : ''].filter(Boolean);
+  return { total, hook, clarity, differentiation, audienceFit, objectiveFit, cta, retention, brandConsistency, strengths, improvements };
+}
+
 export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
   onSavePost,
 }) => {
-  const { brain, activeCampaign } = useOperations();
-  const { environmentMode, currentUser } = useGovernance();
+  const { brain, activeClient, activeCampaign, studioHandoff } = useOperations();
+  const { environmentMode, currentUser, subscription } = useGovernance();
+  const { openOffer } = useOffers();
   const isPersonal = environmentMode === 'personal';
   const isCollaborator = currentUser?.role === 'collaborator';
   const [copyTool, setCopyTool] = React.useState('Publicações');
@@ -73,6 +92,25 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
   const [previewImageUrl, setPreviewImageUrl] = React.useState(
     'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80'
   );
+  const appliedHandoff = React.useRef<string | undefined>(undefined);
+
+  React.useEffect(() => {
+    if (!studioHandoff || appliedHandoff.current === studioHandoff.id) return;
+    appliedHandoff.current = studioHandoff.id;
+    setSelectedFormat(studioHandoff.format);
+    setPostTitle(studioHandoff.title);
+    setTopicPrompt(`${studioHandoff.objective}\n\nÂngulo: ${studioHandoff.angle}`);
+    setTargetAudience(activeClient?.audience || targetAudience);
+    setTone(activeClient?.toneOfVoice || tone);
+    setCopyText(`${studioHandoff.hook}\n\n${studioHandoff.angle}. Desenvolva esta mensagem de forma clara, útil e coerente com o objetivo da campanha.\n\n${studioHandoff.cta}`);
+  }, [studioHandoff?.id, activeClient?.id]);
+
+  const clickScore = React.useMemo(() => calculateClickScore(
+    postTitle, copyText, targetAudience,
+    /comente|acesse|conheça|saiba|fale|comece|agende|clique|conversa/i.test(copyText),
+    selectedFormat === 'carousel' ? slides.length : 1,
+    Boolean(activeCampaign || studioHandoff || brain.revision),
+  ), [postTitle, copyText, targetAudience, selectedFormat, slides.length, activeCampaign?.id, studioHandoff?.id, brain.revision]);
 
   const formatsList: { id: PostFormat; label: string; platformDefault: SocialPlatform }[] = [
     { id: 'carousel', label: 'Carrossel', platformDefault: 'instagram' },
@@ -86,7 +124,7 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
     { id: 'vsl', label: 'Roteiro VSL / Anúncio', platformDefault: 'youtube' },
   ];
 
-  const handleGenerateAICopy = async () => {
+  const handleGenerateAICopy = async (optimize = false) => {
     setIsGenerating(true);
     try {
       const res = await fetch('/api/ai/generate-copy', {
@@ -95,10 +133,11 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
         body: JSON.stringify({
           platform: selectedPlatform,
           format: selectedFormat,
-          topic: topicPrompt,
+          topic: optimize ? `Otimize este conteúdo com base no Click Score, preservando a ideia central: ${topicPrompt}\n\nTexto atual: ${copyText}` : topicPrompt,
           tone,
           targetAudience,
           brainContext: brain,
+          clientContext: activeClient,
           strategyContext: activeCampaign,
         }),
       });
@@ -112,6 +151,20 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
     } finally {
       setIsGenerating(false);
     }
+  };
+
+  const handleOptimizeContent = () => {
+    if (environmentMode === 'company' && subscription?.planId === 'solo') {
+      const shown = openOffer({
+        context: 'premium_feature',
+        targetPlanId: 'team',
+        featureLabel: 'a otimização avançada de conteúdo',
+        source: 'creation-studio.optimize',
+        reason: 'Este recurso usa a camada avançada de colaboração e automação do ambiente.',
+      });
+      if (shown) return;
+    }
+    void handleGenerateAICopy(true);
   };
 
   const handleAddSlide = () => {
@@ -146,14 +199,16 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
       status,
       scheduledAt: new Date(Date.now() + 86400000).toISOString(),
       author: currentUser?.name || (isPersonal ? 'Criador Solo' : 'Estúdio de Criação'),
-      aiScore: 94,
+      aiScore: clickScore.total,
+      clickScoreBreakdown: clickScore,
+      clientId: activeClient?.id,
     });
   };
 
   return (
-    <div className="p-6 space-y-6 max-w-7xl mx-auto">
+    <div className="mx-auto max-w-[1500px] space-y-5 p-5">
       {/* Header & Format Selector Bar */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/[0.06] pb-5">
+      <div className="clicko-studio-actionbar flex flex-col justify-between gap-4 border-b border-white/[0.06] pb-5 md:flex-row md:items-center">
         <div>
           <div className="flex items-center gap-2">
             <PenTool className="w-5 h-5 text-[#8bd132]" />
@@ -168,11 +223,11 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
           </p>
         </div>
 
-        <div className="flex items-center gap-2.5">
+        <div className="clicko-studio-actions flex items-center gap-2.5">
           <button
             type="button"
             onClick={() => handleSaveDraft('draft')}
-            className="px-4 py-2 rounded-xl bg-white/[0.05] hover:bg-white/[0.1] text-white font-semibold text-xs border border-white/10 transition"
+            className="rounded-lg border border-white/10 bg-white/[0.04] px-4 py-2 text-xs font-medium text-white transition-colors hover:bg-white/[0.07]"
           >
             Salvar Rascunho
           </button>
@@ -182,14 +237,14 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
               <button
                 type="button"
                 onClick={() => handleSaveDraft('published')}
-                className="px-4 py-2 rounded-xl bg-[#8bd132] hover:bg-[#9be24d] text-[#080e05] font-bold text-xs shadow-lg shadow-[#8bd132]/20 transition"
+                className="rounded-lg bg-[#8bd132] px-4 py-2 text-xs font-semibold text-[#080e05] transition-colors hover:bg-[#9be24d]"
               >
                 Publicar Imediatamente
               </button>
               <button
                 type="button"
                 onClick={() => handleSaveDraft('scheduled')}
-                className="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold text-xs border border-white/10 transition"
+                className="rounded-lg border border-white/10 bg-white/[0.06] px-4 py-2 text-xs font-medium text-white transition-colors hover:bg-white/10"
               >
                 Agendar Publicação
               </button>
@@ -198,7 +253,7 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
             <button
               type="button"
               onClick={() => handleSaveDraft('pending_approval')}
-              className="px-4 py-2 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 font-bold text-xs border border-amber-500/30 transition shadow-lg shadow-amber-500/10"
+              className="rounded-lg border border-amber-500/25 bg-amber-500/15 px-4 py-2 text-xs font-semibold text-amber-300 transition-colors hover:bg-amber-500/20"
             >
               Enviar para Aprovação
             </button>
@@ -207,14 +262,14 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
               <button
                 type="button"
                 onClick={() => handleSaveDraft('published')}
-                className="px-4 py-2 rounded-xl bg-[#8bd132] hover:bg-[#9be24d] text-[#080e05] font-bold text-xs shadow-lg shadow-[#8bd132]/20 transition"
+                className="rounded-lg bg-[#8bd132] px-4 py-2 text-xs font-semibold text-[#080e05] transition-colors hover:bg-[#9be24d]"
               >
                 Publicar Imediatamente
               </button>
               <button
                 type="button"
                 onClick={() => handleSaveDraft('scheduled')}
-                className="px-4 py-2 rounded-xl bg-indigo-600/30 hover:bg-indigo-600/40 text-indigo-200 font-semibold text-xs border border-indigo-500/30 transition"
+                className="rounded-lg border border-white/10 bg-white/[0.06] px-4 py-2 text-xs font-medium text-white transition-colors hover:bg-white/10"
               >
                 Aprovar & Agendar
               </button>
@@ -223,7 +278,7 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
         </div>
       </div>
 
-      <div className="rounded-2xl border border-white/[0.06] bg-[#0c1015] p-3.5 shadow-lg">
+      <div className="rounded-xl border border-white/[0.06] bg-[#101316] p-3.5">
         <div className="mb-2.5 flex items-center justify-between">
           <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#6c7880]">Ferramentas de Redação</span>
           <span className="text-[10px] font-mono font-bold text-[#8bd132]">Biblioteca de Prompts Conectada</span>
@@ -251,9 +306,9 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
                 setCopyTool(tool);
                 setTopicPrompt(`${tool}: ${topicPrompt.replace(/^[^:]+:\s*/, '')}`);
               }}
-              className={`shrink-0 rounded-xl px-3 py-1.5 text-xs font-semibold transition-all ${
+              className={`shrink-0 rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${
                 copyTool === tool
-                  ? 'bg-[#8bd132] font-bold text-[#080e05] shadow-sm'
+                  ? 'bg-[#8bd132] font-semibold text-[#080e05]'
                   : 'border border-white/[0.06] bg-white/[0.02] text-[#8e9aa2] hover:bg-white/[0.06] hover:text-white'
               }`}
             >
@@ -272,9 +327,9 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
               setSelectedFormat(f.id);
               setSelectedPlatform(f.platformDefault);
             }}
-            className={`px-3.5 py-2 rounded-xl text-xs font-semibold shrink-0 transition-all ${
+            className={`shrink-0 rounded-lg px-3.5 py-2 text-xs font-medium transition-colors ${
               selectedFormat === f.id
-                ? 'bg-[#8bd132] text-[#0e170a] font-bold shadow-md shadow-[#8bd132]/20 border border-[#8bd132]'
+                ? 'border border-[#8bd132] bg-[#8bd132] font-semibold text-[#0e170a]'
                 : 'bg-[#0d1216] text-[#8e989e] hover:text-white border border-white/[0.06]'
             }`}
           >
@@ -284,17 +339,24 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
       </div>
 
       {/* Studio Workspace Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <section className="clicko-score-panel grid gap-4 rounded-xl border border-white/[0.06] bg-[#0d0d0d] p-4 md:grid-cols-[150px_minmax(0,1fr)_auto] md:items-center">
+        <div className="flex items-center gap-3"><span className="relative grid h-14 w-14 place-items-center rounded-full border border-[#ff7a00]/25 bg-[#ff7a00]/[0.06]"><Gauge className="absolute h-8 w-8 text-[#ff7a00]/20" /><strong className="relative text-lg text-white">{clickScore.total}</strong></span><div><span className="text-[8px] font-semibold uppercase tracking-[0.16em] text-[#ff7a00]">Click Score</span><p className="mt-1 text-[8px] text-[#666]">Leitura da peça</p></div></div>
+        <div className="grid gap-3 sm:grid-cols-2"><div><span className="text-[8px] uppercase text-[#666]">O que está forte</span><p className="mt-1 text-[9px] leading-relaxed text-[#aaa]">{clickScore.strengths[0] || 'Estrutura pronta para refinamento.'}</p></div><div><span className="text-[8px] uppercase text-[#666]">Próximo ajuste</span><p className="mt-1 text-[9px] leading-relaxed text-[#aaa]">{clickScore.improvements[0] || 'A peça está equilibrada; refine apenas o ritmo.'}</p></div></div>
+        <button onClick={handleOptimizeContent} disabled={isGenerating} className="flex items-center justify-center gap-2 rounded-lg border border-[#ff5c5c]/25 bg-[#ff5c5c]/[0.07] px-4 py-2.5 text-[9px] font-semibold text-[#ff8a8a] disabled:opacity-40"><WandSparkles className="h-4 w-4" />Otimizar conteúdo</button>
+      </section>
+
+      {/* Studio Workspace Grid */}
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
         {/* Left Col: Content Inputs & AI Copywriter */}
-        <div className="space-y-5 bg-[#0a0e11] border border-white/[0.06] p-5 rounded-2xl shadow-xl shadow-black/40">
+        <div className="space-y-4 rounded-xl border border-white/[0.06] bg-[#101316] p-4">
           <div className="flex items-center justify-between border-b border-white/[0.06] pb-3">
             <span className="text-xs font-bold text-white flex items-center gap-1.5">
               <Sparkles className="w-4 h-4 text-[#8bd132]" /> Redação com IA e parâmetros
             </span>
             <button
-              onClick={handleGenerateAICopy}
+              onClick={() => handleGenerateAICopy()}
               disabled={isGenerating}
-              className="px-3.5 py-1.5 rounded-lg bg-[#8bd132] hover:bg-[#9be24d] disabled:opacity-50 text-[#0b1208] text-xs font-bold flex items-center gap-1.5 shadow-md shadow-[#8bd132]/20 transition-all"
+              className="flex items-center gap-1.5 rounded-lg bg-[#8bd132] px-3.5 py-1.5 text-xs font-semibold text-[#0b1208] transition-colors hover:bg-[#9be24d] disabled:opacity-50"
             >
               {isGenerating ? (
                 <>
@@ -456,8 +518,8 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
           </div>
 
           {/* Social Card Mockup */}
-          <div className="flex-1 bg-[#0A0A0A] border border-white/5 rounded-2xl p-4 flex flex-col justify-center items-center">
-            <div className="w-full max-w-sm bg-[#050505] border border-white/10 rounded-2xl overflow-hidden shadow-2xl">
+          <div className="flex flex-1 flex-col items-center justify-center rounded-xl border border-white/[0.06] bg-[#101316] p-4">
+            <div className="w-full max-w-sm bg-[#050505] border border-white/10 rounded-xl overflow-hidden shadow-xl shadow-black/40">
               {/* Mockup Header */}
               <div className="p-3 border-b border-white/5 flex items-center justify-between">
                 <div className="flex items-center gap-2.5">

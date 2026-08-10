@@ -27,7 +27,7 @@ export const PublisherView: React.FC = () => {
   };
 
   return (
-    <div className="p-6 space-y-6 max-w-7xl mx-auto">
+    <div className="mx-auto max-w-[1500px] space-y-5 p-5">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/5 pb-4">
         <div>
@@ -39,7 +39,7 @@ export const PublisherView: React.FC = () => {
           </p>
         </div>
 
-        <button className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs flex items-center gap-1.5 shadow-lg shadow-indigo-600/20">
+        <button className="flex items-center gap-1.5 rounded-lg bg-[#8bd132] px-4 py-2 text-xs font-semibold text-[#14200e] transition-colors hover:bg-[#9be24d]">
           <Plus className="w-4 h-4" /> Conectar Nova Conta
         </button>
       </div>
@@ -54,7 +54,7 @@ export const PublisherView: React.FC = () => {
         {accounts.map((acc) => (
           <div
             key={acc.id}
-            className="p-5 rounded-2xl bg-[#0A0A0A] border border-white/5 flex flex-col justify-between space-y-4 hover:border-indigo-500/30 transition-all"
+            className="flex flex-col justify-between space-y-4 rounded-xl border border-white/[0.06] bg-[#101316] p-4 transition-colors hover:border-white/10"
           >
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
@@ -98,9 +98,9 @@ export const PublisherView: React.FC = () => {
       </div>
 
       {/* AI Recycling Engine Banner */}
-      <div className="p-5 rounded-2xl bg-[#0A0A0A] border border-indigo-500/30 flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="p-5 rounded-xl bg-[#0A0A0A] border border-white/[0.08] flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div className="space-y-1">
-          <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+          <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-[#8bd132]/10 text-[#8bd132] border border-[#8bd132]/25">
             Motor de Reciclagem Inteligente
           </span>
           <h3 className="text-sm font-bold text-[#ededed]">Reciclar Automaticamente Conteúdos Virais Past</h3>
@@ -109,7 +109,7 @@ export const PublisherView: React.FC = () => {
           </p>
         </div>
 
-        <button className="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs shrink-0 shadow-lg shadow-indigo-600/20">
+        <button className="px-4 py-2.5 rounded-lg bg-[#8bd132] hover:bg-[#9be24d] text-[#14200e] font-bold text-xs shrink-0 transition-colors">
           Ativar Reciclagem Automática
         </button>
       </div>

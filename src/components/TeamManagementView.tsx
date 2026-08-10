@@ -1,6 +1,7 @@
 import React from 'react';
 import { Ban, Check, ChevronDown, Clock3, Mail, MoreHorizontal, RefreshCw, Search, ShieldCheck, Trash2, UserPlus, Users, X } from 'lucide-react';
 import { useGovernance } from '../context/GovernanceContext';
+import { useOffers } from '../context/OfferContext';
 import { roleLabel, workspaceModules } from '../security/accessControl';
 import type { WorkspaceMember, WorkspaceModule } from '../types';
 
@@ -19,6 +20,7 @@ const statusStyle = {
 
 export const TeamManagementView: React.FC = () => {
   const { users, workspace, plans, loading, inviteUser, updateUser, deleteUser, resendInvite } = useGovernance();
+  const { openOffer } = useOffers();
   const [query, setQuery] = React.useState('');
   const [status, setStatus] = React.useState<'all' | WorkspaceMember['status']>('all');
   const [showInvite, setShowInvite] = React.useState(false);
@@ -31,6 +33,7 @@ export const TeamManagementView: React.FC = () => {
   const plan = plans.find((item) => item.id === workspace?.planId);
   const occupiedSeats = users.filter((user) => user.status !== 'disabled').length;
   const maxUsers = workspace?.maxUsers;
+  const atSeatLimit = maxUsers !== null && maxUsers !== undefined && occupiedSeats >= maxUsers;
   const seatsPercent = maxUsers ? Math.min(100, Math.round((occupiedSeats / maxUsers) * 100)) : 36;
   const filtered = users.filter((user) => {
     const matchesQuery = `${user.name} ${user.email}`.toLowerCase().includes(query.toLowerCase());
@@ -47,8 +50,25 @@ export const TeamManagementView: React.FC = () => {
     setEditModules(member.modules);
   };
 
+  const openSeatOffer = (source: string) => openOffer({
+    context: atSeatLimit ? 'limit_reached' : 'seat_increase',
+    source,
+    reason: atSeatLimit
+      ? `Os ${maxUsers} assentos do plano ${plan?.name || 'atual'} já estão ocupados.`
+      : `Seu ambiente utiliza ${occupiedSeats} de ${maxUsers ?? 'capacidade personalizada'} assentos do plano ${plan?.name || 'atual'}.`,
+  });
+
+  const beginInvite = () => {
+    if (atSeatLimit && openSeatOffer('team.invite-limit')) return;
+    setShowInvite(true);
+  };
+
   const sendInvite = async (event: React.FormEvent) => {
     event.preventDefault();
+    if (atSeatLimit && openSeatOffer('team.invite-submit-limit')) {
+      setShowInvite(false);
+      return;
+    }
     const ok = await inviteUser(invite);
     if (ok) {
       setInvite({ name: '', email: '', modules: ['dashboard', 'create-image', 'create-copy', 'ai-chat', 'templates', 'calendar'] });
@@ -66,11 +86,11 @@ export const TeamManagementView: React.FC = () => {
           <h1 className="text-[22px] font-semibold tracking-[-0.035em] text-white">Equipe e permissões</h1>
           <p className="mt-1 text-[10px] text-[#7f888d]">Controle usuários, convites e módulos liberados em um só lugar.</p>
         </div>
-        <button onClick={() => setShowInvite(true)} className="flex h-10 items-center justify-center gap-2 rounded-lg bg-white px-4 text-[10px] font-semibold text-[#0B0B0B] transition hover:scale-[1.01]"><UserPlus className="h-4 w-4" />Convidar colaborador</button>
+        <button onClick={beginInvite} className="flex h-10 items-center justify-center gap-2 rounded-lg bg-white px-4 text-[10px] font-semibold text-[#0B0B0B] transition hover:scale-[1.01]"><UserPlus className="h-4 w-4" />{atSeatLimit ? 'Aumentar capacidade' : 'Convidar colaborador'}</button>
       </header>
 
       <section className="grid gap-3 md:grid-cols-3">
-        <div className="rounded-xl border border-white/[0.065] bg-[#131313] p-4"><div className="flex items-center justify-between text-[9px] text-[#7C7C7C]"><span>Plano atual</span><span className="rounded-full bg-white/[0.05] px-2 py-1 text-[#B8B8B8]">{plan?.name || '—'}</span></div><div className="mt-4 text-[20px] font-semibold text-white">{occupiedSeats}<span className="text-[12px] font-normal text-[#656b6f]"> / {maxUsers ?? '∞'} assentos</span></div><div className="mt-3 h-1.5 overflow-hidden rounded-full bg-white/[0.055]"><div className="h-full rounded-full bg-[#B8B8B8]" style={{ width: `${seatsPercent}%` }} /></div></div>
+        <div className="rounded-xl border border-white/[0.065] bg-[#131313] p-4"><div className="flex items-center justify-between text-[9px] text-[#7C7C7C]"><span>Plano atual</span><span className="rounded-full bg-white/[0.05] px-2 py-1 text-[#B8B8B8]">{plan?.name || '—'}</span></div><div className="mt-4 text-[20px] font-semibold text-white">{occupiedSeats}<span className="text-[12px] font-normal text-[#656b6f]"> / {maxUsers ?? '∞'} assentos</span></div><div className="mt-3 h-1.5 overflow-hidden rounded-full bg-white/[0.055]"><div className="h-full rounded-full bg-[#ff5c5c]" style={{ width: `${seatsPercent}%` }} /></div>{maxUsers !== null && maxUsers !== undefined && <button onClick={() => openSeatOffer('team.capacity-card')} className="mt-3 text-[8px] font-medium text-[#ff8a8a] transition hover:text-[#ffb078]">{atSeatLimit ? 'Limite atingido · ver opções' : 'Ver mais capacidade'}</button>}</div>
         <div className="rounded-xl border border-white/[0.065] bg-[#131313] p-4"><div className="text-[9px] text-[#7C7C7C]">Usuários ativos</div><div className="mt-4 flex items-end justify-between"><strong className="text-[20px] font-semibold text-white">{users.filter((item) => item.status === 'active').length}</strong><Users className="h-5 w-5 text-[#7C7C7C]" /></div><p className="mt-2 text-[9px] text-[#5f676b]">Inclui o administrador do ambiente</p></div>
         <div className="rounded-xl border border-white/[0.065] bg-[#131313] p-4"><div className="text-[9px] text-[#7C7C7C]">Convites pendentes</div><div className="mt-4 flex items-end justify-between"><strong className="text-[20px] font-semibold text-white">{users.filter((item) => item.status === 'invited').length}</strong><Mail className="h-5 w-5 text-[#7C7C7C]" /></div><p className="mt-2 text-[9px] text-[#5f676b]">Expiram em {workspace?.settings.inviteExpiryDays || 7} dias</p></div>
       </section>

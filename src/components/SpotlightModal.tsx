@@ -118,8 +118,8 @@ export const SpotlightModal: React.FC<SpotlightModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center pt-20 px-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-150">
-      <div className="w-full max-w-2xl bg-[#0A0A0A] border border-white/10 rounded-2xl shadow-2xl overflow-hidden flex flex-col">
+    <div className="fixed inset-0 z-50 flex items-start justify-center pt-20 px-4 bg-black/75 backdrop-blur-sm animate-in fade-in duration-150">
+      <div className="w-full max-w-2xl bg-[#0A0A0A] border border-white/10 rounded-xl shadow-xl shadow-black/40 overflow-hidden flex flex-col">
         {/* Search Input Bar */}
         <div className="p-4 border-b border-white/5 flex items-center gap-3 bg-white/[0.02]">
           <Search className="w-5 h-5 text-indigo-400 shrink-0" />
@@ -153,10 +153,10 @@ export const SpotlightModal: React.FC<SpotlightModalProps> = ({
                   onNavigate(item.tabToNavigate);
                   onClose();
                 }}
-                className="group flex items-center justify-between p-3 rounded-xl hover:bg-indigo-600/15 border border-transparent hover:border-indigo-500/30 cursor-pointer transition-all"
+                className="group flex items-center justify-between p-3 rounded-lg hover:bg-[#8bd132]/10 border border-transparent hover:border-[#8bd132]/25 cursor-pointer transition-colors"
               >
                 <div className="flex items-center gap-3">
-                  <div className="p-2 rounded-lg bg-white/5 border border-white/5 group-hover:bg-indigo-500/20 group-hover:border-indigo-500/30">
+                  <div className="p-2 rounded-lg bg-white/5 border border-white/5 group-hover:bg-[#8bd132]/15 group-hover:border-[#8bd132]/25">
                     {getTypeIcon(item.type)}
                   </div>
                   <div>

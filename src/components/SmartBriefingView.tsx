@@ -118,7 +118,7 @@ export const SmartBriefingView: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Header Banner */}
-      <div className="rounded-2xl border border-white/[0.08] bg-gradient-to-r from-[#182126] via-[#12191d] to-[#0d1316] p-6">
+      <div className="rounded-xl border border-white/[0.08] bg-[#14191c] p-5">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
             <div className="inline-flex items-center gap-2 rounded-full border border-[#8bd132]/30 bg-[#8bd132]/[0.08] px-3 py-1 text-[10px] font-bold text-[#8bd132]">
@@ -132,7 +132,7 @@ export const SmartBriefingView: React.FC = () => {
           <button
             onClick={handleGenerateBriefing}
             disabled={isGenerating}
-            className="flex items-center gap-2 rounded-xl bg-[#8bd132] px-5 py-3 text-xs font-bold text-[#14200e] hover:bg-[#9be24d] transition shadow-lg shadow-[#8bd132]/20 disabled:opacity-50"
+            className="flex items-center gap-2 rounded-lg bg-[#8bd132] px-5 py-2.5 text-xs font-bold text-[#14200e] hover:bg-[#9be24d] transition-colors disabled:opacity-50"
           >
             {isGenerating ? <RefreshCw className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4" />}
             {isGenerating ? 'Montando Planejamento...' : 'Gerar Briefing Completo'}
@@ -140,10 +140,10 @@ export const SmartBriefingView: React.FC = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-12">
         {/* Input Column */}
         <div className="lg:col-span-5 space-y-4">
-          <div className="rounded-2xl border border-white/[0.07] bg-[#182126] p-5 space-y-4">
+          <div className="rounded-xl border border-white/[0.07] bg-[#182126] p-5 space-y-4">
             <h3 className="text-xs font-bold uppercase tracking-wider text-white flex items-center gap-2 border-b border-white/[0.06] pb-3">
               <Briefcase className="h-4 w-4 text-[#8bd132]" /> Dados do Briefing
             </h3>
@@ -213,7 +213,7 @@ export const SmartBriefingView: React.FC = () => {
 
         {/* AI Briefing Results Column */}
         <div className="lg:col-span-7 space-y-4">
-          <div className="rounded-2xl border border-white/[0.07] bg-[#182126] p-6 space-y-5">
+          <div className="rounded-xl border border-white/[0.07] bg-[#182126] p-5 space-y-5">
             <div className="flex items-center justify-between border-b border-white/[0.06] pb-3">
               <div className="flex items-center gap-2">
                 <span className="grid h-8 w-8 place-items-center rounded-lg bg-[#8bd132]/10 text-[#8bd132]">

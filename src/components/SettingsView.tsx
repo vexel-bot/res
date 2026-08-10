@@ -270,7 +270,7 @@ const Toggle: React.FC<ToggleProps> = ({ checked, onChange, label }) => (
 );
 
 const SettingsCard: React.FC<{ title?: string; description?: string; children: React.ReactNode; className?: string }> = ({ title, description, children, className = '' }) => (
-  <section className={`rounded-[12px] border border-white/[0.065] bg-[#182126] p-5 ${className}`}>
+  <section className={`border-b border-white/[0.065] py-6 first:pt-0 last:border-b-0 ${className}`}>
     {(title || description) && (
       <div className="mb-5">
         {title && <h3 className="text-[13px] font-semibold text-white">{title}</h3>}
@@ -536,7 +536,7 @@ export const SettingsView: React.FC = () => {
   };
 
   return (
-    <div className="mx-auto w-full max-w-[1500px] p-5 md:p-7">
+    <div className="clicko-settings-editorial mx-auto w-full min-w-0 max-w-[1580px] overflow-x-hidden p-5 md:p-7">
       <div className="mb-6 flex flex-col gap-4 border-b border-white/[0.055] pb-5 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <div className="flex items-center gap-2.5"><span className="grid h-8 w-8 place-items-center rounded-lg bg-[#8bd132]/10 text-[#8bd132]"><Settings className="h-4 w-4" /></span><h1 className="text-[20px] font-semibold tracking-[-0.02em] text-white">Configurações</h1></div>
@@ -549,19 +549,19 @@ export const SettingsView: React.FC = () => {
         </div>
       </div>
 
-      <div className="grid gap-5 min-[980px]:grid-cols-[230px_minmax(0,1fr)] 2xl:grid-cols-[248px_minmax(0,1fr)]">
-        <aside className="self-start rounded-[12px] border border-white/[0.06] bg-[#151e22] p-2 min-[980px]:sticky min-[980px]:top-[100px]">
-          <div className="mb-2 flex items-center gap-3 rounded-lg bg-[#1d272c] p-3">
+      <div className="grid min-w-0 gap-0 min-[980px]:grid-cols-[214px_minmax(0,1fr)] 2xl:grid-cols-[228px_minmax(0,1fr)]">
+        <aside className="min-w-0 self-start overflow-hidden border-b border-white/[0.06] pb-4 min-[980px]:sticky min-[980px]:top-[84px] min-[980px]:border-b-0 min-[980px]:border-r min-[980px]:pb-0 min-[980px]:pr-5">
+          <div className="mb-3 flex items-center gap-3 border-b border-white/[0.055] px-2 pb-4">
             <img src={settings.account.avatar} alt="" className="h-9 w-9 rounded-lg object-cover" />
             <div className="min-w-0"><div className="truncate text-[10px] font-medium text-white">{settings.account.name}</div><div className="mt-0.5 truncate text-[8px] text-[#78838a]">Conta pessoal</div></div>
           </div>
           <label className="relative mb-2 block"><Search className="absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-[#657178]" /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Buscar configurações" className="h-9 w-full rounded-lg border border-white/[0.055] bg-[#10181c] pl-9 pr-3 text-[9px] text-white outline-none placeholder:text-[#5e696f] focus:border-[#8bd132]/40" /></label>
           <nav className="custom-scrollbar max-h-[calc(100vh-260px)] space-y-0.5 overflow-y-auto max-[979px]:flex max-[979px]:max-h-none max-[979px]:gap-1 max-[979px]:space-y-0 max-[979px]:overflow-x-auto">
-            {filteredSections.map((section) => { const Icon = section.icon; const selected = activeSection === section.id; return <button key={section.id} onClick={() => setActiveSection(section.id)} className={`group flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left transition max-[979px]:min-w-[175px] ${selected ? 'bg-[#273137] text-white' : 'text-[#9ca5aa] hover:bg-white/[0.03] hover:text-white'}`}><Icon className={`h-4 w-4 shrink-0 ${selected ? 'text-[#8bd132]' : 'text-[#768187] group-hover:text-[#aeb6ba]'}`} /><span className="min-w-0 flex-1"><span className="block truncate text-[9px] font-medium">{section.label}</span><span className="mt-0.5 block truncate text-[7px] text-[#626d73]">{section.description}</span></span>{selected && <ChevronRight className="h-3.5 w-3.5 text-[#8bd132]" />}</button>; })}
+            {filteredSections.map((section) => { const Icon = section.icon; const selected = activeSection === section.id; return <button key={section.id} onClick={() => setActiveSection(section.id)} className={`group relative flex w-full items-center gap-3 rounded-md px-2.5 py-2.5 text-left transition max-[979px]:min-w-[175px] ${selected ? 'text-white' : 'text-[#879197] hover:bg-white/[0.025] hover:text-white'}`}>{selected && <span className="absolute inset-y-2 left-0 w-px bg-[#8bd132]" />}<Icon className={`h-4 w-4 shrink-0 ${selected ? 'text-[#8bd132]' : 'text-[#68747b] group-hover:text-[#aeb6ba]'}`} /><span className="min-w-0 flex-1"><span className="block truncate text-[9px] font-medium">{section.label}</span><span className="mt-0.5 block truncate text-[7px] text-[#566269]">{section.description}</span></span>{selected && <ChevronRight className="h-3.5 w-3.5 text-[#8bd132]" />}</button>; })}
           </nav>
         </aside>
 
-        <main className="min-w-0">
+        <main className="min-w-0 pt-6 min-[980px]:pl-7 min-[980px]:pt-0">
           <div className="mb-4 flex items-center gap-3">
             <span className="grid h-10 w-10 place-items-center rounded-xl border border-white/[0.06] bg-[#182126] text-[#8bd132]"><currentSection.icon className="h-[18px] w-[18px]" /></span>
             <div><h2 className="text-[16px] font-semibold text-white">{currentSection.label}</h2><p className="mt-0.5 text-[9px] text-[#78838a]">{currentSection.description}</p></div>

@@ -172,11 +172,11 @@ export const AICentralView: React.FC<AICentralViewProps> = ({
   };
 
   return (
-    <div className="p-6 space-y-6 max-w-7xl mx-auto">
+    <div className="mx-auto max-w-[1500px] space-y-5 p-5">
       {/* Tab Navigation sub-header */}
-      <div className="flex items-center justify-between border-b border-white/5 pb-4">
+      <div className="flex items-center justify-between gap-4 border-b border-white/5 pb-4 max-[760px]:flex-col max-[760px]:items-stretch">
         <div className="flex items-center gap-2">
-          <div className="p-2 rounded-xl bg-indigo-600/20 border border-indigo-500/30 text-indigo-400">
+          <div className="p-2 rounded-lg bg-[#8bd132]/10 border border-[#8bd132]/25 text-[#8bd132]">
             <Sparkles className="w-5 h-5 animate-pulse" />
           </div>
           <div>
@@ -185,12 +185,12 @@ export const AICentralView: React.FC<AICentralViewProps> = ({
           </div>
         </div>
 
-        <div className="flex items-center p-1 rounded-xl bg-white/[0.02] border border-white/5">
+        <div className="custom-scrollbar flex items-center overflow-x-auto rounded-xl border border-white/5 bg-white/[0.02] p-1">
           <button
             onClick={() => setActiveSubTab('chat')}
-            className={`px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all duration-150 ${
+            className={`shrink-0 rounded-lg px-3.5 py-1.5 text-xs font-medium transition-all duration-150 ${
               activeSubTab === 'chat'
-                ? 'bg-indigo-600 text-white shadow-sm shadow-indigo-600/20'
+                ? 'bg-[#8bd132] text-[#14200e]'
                 : 'text-white/40 hover:text-white'
             }`}
           >
@@ -198,9 +198,9 @@ export const AICentralView: React.FC<AICentralViewProps> = ({
           </button>
           <button
             onClick={() => setActiveSubTab('campaign-wizard')}
-            className={`px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all duration-150 ${
+            className={`shrink-0 rounded-lg px-3.5 py-1.5 text-xs font-medium transition-all duration-150 ${
               activeSubTab === 'campaign-wizard'
-                ? 'bg-indigo-600 text-white shadow-sm shadow-indigo-600/20'
+                ? 'bg-[#8bd132] text-[#14200e]'
                 : 'text-white/40 hover:text-white'
             }`}
           >
@@ -208,9 +208,9 @@ export const AICentralView: React.FC<AICentralViewProps> = ({
           </button>
           <button
             onClick={() => setActiveSubTab('brand-knowledge')}
-            className={`px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all duration-150 ${
+            className={`shrink-0 rounded-lg px-3.5 py-1.5 text-xs font-medium transition-all duration-150 ${
               activeSubTab === 'brand-knowledge'
-                ? 'bg-indigo-600 text-white shadow-sm shadow-indigo-600/20'
+                ? 'bg-[#8bd132] text-[#14200e]'
                 : 'text-white/40 hover:text-white'
             }`}
           >
@@ -221,9 +221,9 @@ export const AICentralView: React.FC<AICentralViewProps> = ({
 
       {/* Sub-Tab 1: Conversational Chat */}
       {activeSubTab === 'chat' && (
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 h-[640px]">
+        <div className="grid grid-cols-1 gap-4 lg:h-[620px] lg:grid-cols-4">
           {/* Main Chat Stream */}
-          <div className="lg:col-span-3 rounded-2xl bg-[#0A0A0A] border border-white/5 flex flex-col overflow-hidden">
+          <div className="lg:col-span-3 rounded-xl bg-[#0A0A0A] border border-white/5 flex flex-col overflow-hidden">
             <div className="p-4 border-b border-white/5 bg-white/[0.01] flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
@@ -242,24 +242,24 @@ export const AICentralView: React.FC<AICentralViewProps> = ({
                   <div
                     className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 ${
                       msg.sender === 'user'
-                        ? 'bg-indigo-600 text-white font-bold text-xs'
-                        : 'bg-indigo-950 border border-indigo-500/30 text-indigo-400'
+                        ? 'bg-[#8bd132] text-[#14200e] font-bold text-xs'
+                        : 'bg-[#8bd132]/10 border border-[#8bd132]/25 text-[#8bd132]'
                     }`}
                   >
                     {msg.sender === 'user' ? <User className="w-4 h-4" /> : <Bot className="w-4 h-4" />}
                   </div>
 
                   <div
-                    className={`max-w-xl p-4 rounded-2xl text-xs leading-relaxed space-y-2 ${
+                    className={`max-w-xl p-4 rounded-xl text-xs leading-relaxed space-y-2 ${
                       msg.sender === 'user'
-                        ? 'bg-indigo-600 text-white rounded-tr-none'
+                        ? 'bg-[#8bd132] text-[#14200e] rounded-tr-none'
                         : 'bg-white/[0.03] border border-white/5 text-neutral-200 rounded-tl-none'
                     }`}
                   >
                     <div className="whitespace-pre-wrap">{msg.text}</div>
                     <div
                       className={`text-[9px] text-right ${
-                        msg.sender === 'user' ? 'text-indigo-200' : 'text-white/30'
+                        msg.sender === 'user' ? 'text-[#294507]' : 'text-white/30'
                       }`}
                     >
                       {msg.timestamp}
@@ -269,7 +269,7 @@ export const AICentralView: React.FC<AICentralViewProps> = ({
               ))}
 
               {isLoadingChat && (
-                <div className="flex items-center gap-2 text-xs text-indigo-400 p-2">
+                <div className="flex items-center gap-2 text-xs text-[#8bd132] p-2">
                   <RefreshCw className="w-4 h-4 animate-spin" />
                   <span>IA Central pensando e gerando estratégia...</span>
                 </div>
@@ -284,12 +284,12 @@ export const AICentralView: React.FC<AICentralViewProps> = ({
                 onChange={(e) => setChatInput(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSendChatMessage()}
                 placeholder="Ex: Crie um plano de 5 publicações para lançamento do nosso novo SaaS..."
-                className="flex-1 bg-white/[0.03] border border-white/5 rounded-xl px-4 py-2.5 text-xs text-[#ededed] placeholder-white/30 focus:outline-none focus:border-indigo-500/50"
+                className="flex-1 bg-white/[0.03] border border-white/5 rounded-lg px-4 py-2.5 text-xs text-[#ededed] placeholder-white/30 focus:outline-none focus:border-[#8bd132]/50"
               />
               <button
                 onClick={() => handleSendChatMessage()}
                 disabled={isLoadingChat || !chatInput.trim()}
-                className="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 text-white font-medium text-xs flex items-center gap-2 shadow-lg shadow-indigo-600/20 transition-all"
+                className="px-4 py-2.5 rounded-lg bg-[#8bd132] hover:bg-[#9be24d] disabled:opacity-50 text-[#14200e] font-semibold text-xs flex items-center gap-2 transition-colors"
               >
                 <span>Enviar</span>
                 <Send className="w-3.5 h-3.5" />
@@ -298,7 +298,7 @@ export const AICentralView: React.FC<AICentralViewProps> = ({
           </div>
 
           {/* Right Quick Prompts Panel */}
-          <div className="rounded-2xl bg-[#0A0A0A] border border-white/5 p-4 space-y-4 flex flex-col justify-between">
+          <div className="rounded-xl bg-[#0A0A0A] border border-white/5 p-4 space-y-4 flex flex-col justify-between">
             <div>
               <h3 className="text-xs font-bold text-[#ededed] mb-1 flex items-center gap-2">
                 <Zap className="w-4 h-4 text-amber-400" /> Comandos rápidos
@@ -319,17 +319,17 @@ export const AICentralView: React.FC<AICentralViewProps> = ({
                       setChatInput(promptText);
                       handleSendChatMessage(promptText);
                     }}
-                    className="w-full text-left p-2.5 rounded-xl bg-white/[0.02] hover:bg-white/[0.05] border border-white/5 hover:border-indigo-500/30 text-[11px] text-neutral-300 transition-all group flex items-center justify-between"
+                    className="w-full text-left p-2.5 rounded-lg bg-white/[0.02] hover:bg-white/[0.05] border border-white/5 hover:border-[#8bd132]/25 text-[11px] text-neutral-300 transition-colors group flex items-center justify-between"
                   >
                     <span className="line-clamp-2">{promptText}</span>
-                    <ArrowRight className="w-3 h-3 text-white/40 group-hover:text-indigo-400 shrink-0 ml-2" />
+                    <ArrowRight className="w-3 h-3 text-white/40 group-hover:text-[#8bd132] shrink-0 ml-2" />
                   </button>
                 ))}
               </div>
             </div>
 
-            <div className="p-3 rounded-xl bg-indigo-600/10 border border-indigo-500/20 text-[11px] text-neutral-300">
-              <div className="font-semibold text-indigo-300 mb-1">Dica de Produtividade</div>
+            <div className="p-3 rounded-lg bg-[#8bd132]/[0.07] border border-[#8bd132]/20 text-[11px] text-neutral-300">
+              <div className="font-semibold text-[#8bd132] mb-1">Dica de Produtividade</div>
               A IA Central pode gerar textos, comandos de imagem, hashtags e datas num único comando!
             </div>
           </div>
@@ -338,8 +338,8 @@ export const AICentralView: React.FC<AICentralViewProps> = ({
 
       {/* Sub-Tab 2: Campaign Generator Wizard */}
       {activeSubTab === 'campaign-wizard' && (
-        <div className="space-y-6">
-          <div className="p-6 rounded-2xl bg-[#0A0A0A] border border-white/5 space-y-6">
+        <div className="space-y-5">
+          <div className="p-5 rounded-xl bg-[#0A0A0A] border border-white/5 space-y-5">
             <div className="flex items-center justify-between border-b border-white/5 pb-4">
               <div>
                 <h3 className="text-sm font-bold text-[#ededed]">Gerador de Campanhas Multicanal Inteligente</h3>
@@ -349,7 +349,7 @@ export const AICentralView: React.FC<AICentralViewProps> = ({
               </div>
               <button
                 onClick={() => setActiveSubTab('chat')}
-                className="text-xs text-indigo-400 hover:text-indigo-300 font-medium"
+                className="text-xs text-[#8bd132] hover:text-[#9be24d] font-medium"
               >
                 Voltar ao Chat
               </button>
@@ -364,7 +364,7 @@ export const AICentralView: React.FC<AICentralViewProps> = ({
                   type="text"
                   value={wizardGoal}
                   onChange={(e) => setWizardGoal(e.target.value)}
-                  className="w-full bg-white/[0.03] border border-white/5 rounded-xl px-3.5 py-2.5 text-xs text-[#ededed] focus:outline-none focus:border-indigo-500/50"
+                  className="w-full bg-white/[0.03] border border-white/5 rounded-lg px-3.5 py-2.5 text-xs text-[#ededed] focus:outline-none focus:border-[#8bd132]/50"
                   placeholder="Ex: Lançamento de Produto, Promoção de Black Friday, Autoridade de Marca"
                 />
               </div>
@@ -377,7 +377,7 @@ export const AICentralView: React.FC<AICentralViewProps> = ({
                   type="text"
                   value={wizardTopic}
                   onChange={(e) => setWizardTopic(e.target.value)}
-                  className="w-full bg-white/[0.03] border border-white/5 rounded-xl px-3.5 py-2.5 text-xs text-[#ededed] focus:outline-none focus:border-indigo-500/50"
+                  className="w-full bg-white/[0.03] border border-white/5 rounded-lg px-3.5 py-2.5 text-xs text-[#ededed] focus:outline-none focus:border-[#8bd132]/50"
                   placeholder="Ex: Novo módulo de análises com IA"
                 />
               </div>
@@ -397,7 +397,7 @@ export const AICentralView: React.FC<AICentralViewProps> = ({
                       onClick={() => togglePlatform(plat)}
                       className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-all ${
                         isSelected
-                          ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/20 border border-indigo-400/30'
+                          ? 'bg-[#8bd132] text-[#14200e] border border-[#8bd132]'
                           : 'bg-white/[0.03] text-white/40 hover:text-white border border-white/5'
                       }`}
                     >
@@ -412,7 +412,7 @@ export const AICentralView: React.FC<AICentralViewProps> = ({
               <button
                 onClick={handleGenerateCampaign}
                 disabled={isGeneratingCampaign}
-                className="px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs shadow-xl shadow-indigo-600/20 border border-indigo-400/30 transition-all flex items-center gap-2"
+                className="px-6 py-2.5 rounded-lg bg-[#8bd132] hover:bg-[#9be24d] text-[#14200e] font-bold text-xs transition-colors flex items-center gap-2"
               >
                 {isGeneratingCampaign ? (
                   <>
@@ -431,7 +431,7 @@ export const AICentralView: React.FC<AICentralViewProps> = ({
 
           {/* Output Generated Campaign Cards */}
           {generatedCampaign && (
-            <div className="p-6 rounded-2xl bg-[#0A0A0A] border border-indigo-500/30 space-y-6 animate-in fade-in duration-200">
+            <div className="p-5 rounded-xl bg-[#0A0A0A] border border-[#8bd132]/25 space-y-5 animate-in fade-in duration-200">
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/5 pb-4">
                 <div>
                   <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
@@ -463,7 +463,7 @@ export const AICentralView: React.FC<AICentralViewProps> = ({
                   >
                     <div className="space-y-2">
                       <div className="flex items-center justify-between">
-                        <span className="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+                        <span className="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-[#8bd132]/10 text-[#8bd132] border border-[#8bd132]/20">
                           {p.platform} • {p.format}
                         </span>
                         <span className="text-[10px] text-white/40">{p.suggestedTime}</span>
@@ -477,7 +477,7 @@ export const AICentralView: React.FC<AICentralViewProps> = ({
                       {p.hashtags && (
                         <div className="flex flex-wrap gap-1 pt-1">
                           {p.hashtags.map((tag: string, i: number) => (
-                            <span key={i} className="text-[10px] text-indigo-400">
+                            <span key={i} className="text-[10px] text-[#8bd132]">
                               {tag}
                             </span>
                           ))}
@@ -498,7 +498,7 @@ export const AICentralView: React.FC<AICentralViewProps> = ({
 
       {/* Sub-Tab 3: Conhecimento da marca Settings */}
       {activeSubTab === 'brand-knowledge' && (
-        <div className="p-6 rounded-2xl bg-[#0A0A0A] border border-white/5 space-y-6">
+        <div className="p-5 rounded-xl bg-[#0A0A0A] border border-white/5 space-y-5">
           <div className="border-b border-white/5 pb-4">
             <h3 className="text-sm font-bold text-[#ededed]">Parâmetros de Conhecimento da Marca</h3>
             <p className="text-xs text-white/40 mt-0.5">

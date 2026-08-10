@@ -104,9 +104,9 @@ export const VideoEditorView: React.FC = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-12">
         {/* Main Player Stage */}
-        <div className="lg:col-span-7 bg-[#11171a] border border-white/[0.07] rounded-2xl p-6 flex flex-col items-center justify-center min-h-[440px] relative">
+        <div className="relative flex min-h-[440px] flex-col items-center justify-center rounded-xl border border-white/[0.07] bg-[#101316] p-5 lg:col-span-7">
           <div className="relative aspect-[9/16] h-[380px] bg-black rounded-2xl overflow-hidden border border-white/10 shadow-2xl flex items-center justify-center">
             <video
               src={videoUrl}
@@ -126,7 +126,7 @@ export const VideoEditorView: React.FC = () => {
         </div>
 
         {/* AI Features Sidebar */}
-        <div className="lg:col-span-5 space-y-4 bg-[#182126] border border-white/[0.07] p-5 rounded-2xl shadow-xl shadow-black/40">
+        <div className="space-y-4 rounded-xl border border-white/[0.07] bg-[#101316] p-5 lg:col-span-5">
           <div className="border-b border-white/[0.06] pb-3 flex items-center justify-between">
             <h3 className="font-bold text-white text-xs flex items-center gap-2">
               <Sparkles className="w-4 h-4 text-[#8bd132]" /> Recursos de Vídeo por IA

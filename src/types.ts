@@ -78,6 +78,70 @@ export interface SaaSPlan {
   features: string[];
 }
 
+export type OfferContextType =
+  | 'first_subscription'
+  | 'upgrade'
+  | 'seat_increase'
+  | 'premium_feature'
+  | 'limit_reached'
+  | 'renewal'
+  | 'promotion';
+
+export type OfferEventName =
+  | 'OFFER_VIEWED'
+  | 'OFFER_CLICKED'
+  | 'UPGRADE_STARTED'
+  | 'CHECKOUT_STARTED'
+  | 'CHECKOUT_COMPLETED'
+  | 'OFFER_DISMISSED';
+
+export interface OfferPromotion {
+  originalMonthlyPrice: number;
+  promotionalMonthlyPrice: number;
+  startsAt: string;
+  endsAt: string;
+  terms: string;
+}
+
+export interface OfferConfiguration {
+  id: string;
+  enabled: boolean;
+  contexts: OfferContextType[];
+  environment: 'personal' | 'company' | 'both';
+  eligibleCurrentPlans: SaaSPlan['id'][];
+  targetPlanId: SaaSPlan['id'];
+  headline: string;
+  description: string;
+  ctaLabel: string;
+  benefits: string[];
+  badge?: string;
+  bonus?: string;
+  promotion?: OfferPromotion;
+  experimentKey?: string;
+  variantId?: string;
+}
+
+export interface OfferRequest {
+  context: OfferContextType;
+  reason: string;
+  featureLabel?: string;
+  targetPlanId?: SaaSPlan['id'];
+  source: string;
+  automatic?: boolean;
+}
+
+export interface OfferEventPayload {
+  event: OfferEventName;
+  offerId: string;
+  context: OfferContextType;
+  source: string;
+  currentPlanId?: SaaSPlan['id'];
+  targetPlanId?: SaaSPlan['id'];
+  occurredAt: string;
+  experimentKey?: string;
+  variantId?: string;
+}
+
 export interface WorkspaceSubscription {
   id: string;
   workspaceId: string;
@@ -237,6 +301,89 @@ export interface BrandBrain {
   sourceFiles: BrainSource[];
 }
 
+export interface ClientIntelligenceProfile {
+  id: string;
+  workspaceId: string;
+  name: string;
+  segment: string;
+  products: string;
+  audience: string;
+  positioning: string;
+  toneOfVoice: string;
+  visualIdentity: string;
+  differentiators: string;
+  featuredOffer: string;
+  currentObjective: string;
+  highlightedContentIds: string[];
+  activeCampaignIds: string[];
+  recommendedActions: string[];
+  updatedAt: string;
+}
+
+export interface CampaignContentItem {
+  id: string;
+  format: PostFormat;
+  funnelStage: 'descoberta' | 'consideracao' | 'conversao' | 'retencao';
+  purpose: string;
+  hook: string;
+  status: 'planned' | 'in_production' | 'ready';
+}
+
+export interface CreativeIdea {
+  id: string;
+  clientId: string;
+  campaignId?: string;
+  title: string;
+  angle: string;
+  hook: string;
+  format: PostFormat;
+  funnelStage: CampaignContentItem['funnelStage'];
+  cta: string;
+  rationale: string;
+}
+
+export interface StudioHandoff {
+  id: string;
+  source: 'client' | 'campaign' | 'matrix' | 'analytics' | 'repurpose' | 'ai';
+  clientId?: string;
+  campaignId?: string;
+  contentId?: string;
+  objective: string;
+  title: string;
+  angle: string;
+  hook: string;
+  cta: string;
+  format: PostFormat;
+  funnelStage: string;
+  createdAt: string;
+}
+
+export interface ClickScoreBreakdown {
+  total: number;
+  hook: number;
+  clarity: number;
+  differentiation: number;
+  audienceFit: number;
+  objectiveFit: number;
+  cta: number;
+  retention: number;
+  brandConsistency: number;
+  strengths: string[];
+  improvements: string[];
+}
+
+export interface LearningSignal {
+  id: string;
+  clientId?: string;
+  campaignId?: string;
+  label: string;
+  evidence: string;
+  recommendation: string;
+  confidence: 'hypothesis' | 'validated';
+  source: 'content-metadata' | 'connected-analytics';
+  createdAt: string;
+}
+
 export interface BrainSource {
   id: string;
   name: string;
@@ -264,6 +411,10 @@ export interface StrategyCampaign {
   funnel: string;
   ctas: string[];
   executionPlan: string[];
+  centralMessage?: string;
+  angle?: string;
+  contentPlan?: CampaignContentItem[];
+  clientId?: string;
   status: StrategyStatus;
   brainRevision: number;
   createdAt: string;
@@ -344,6 +495,9 @@ export interface Post {
   objective?: string;
   origin?: 'manual' | 'brain' | 'strategy' | 'automation' | 'analytics';
   versions?: ContentVersion[];
+  clientId?: string;
+  creativeIdeaId?: string;
+  clickScoreBreakdown?: ClickScoreBreakdown;
 }
 
 export interface AutomationNode {
@@ -386,6 +540,11 @@ export interface AIChatMessage {
   createdAt: string;
   module?: NavigationTab;
   favorite?: boolean;
+  actions?: Array<{
+    label: string;
+    tab: NavigationTab;
+    kind: 'campaign' | 'studio' | 'calendar' | 'variants';
+  }>;
 }
 
 export interface ContentTemplate {

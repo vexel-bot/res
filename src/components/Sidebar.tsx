@@ -90,6 +90,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onSelectTab, isCom
           items: [
             { label: 'Contas Conectadas', id: 'connected-accounts', icon: Link2 },
             { label: 'Calendário', id: 'calendar', icon: CalendarDays },
+            { label: 'Biblioteca', id: 'library', icon: FolderKanban },
             { label: 'Analytics', id: 'analytics', icon: ChartNoAxesCombined },
             { label: 'Templates', id: 'templates', icon: LayoutTemplate },
             { label: 'Histórico', id: 'publisher', icon: ScrollText },
@@ -113,6 +114,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onSelectTab, isCom
           items: [
             { label: 'Contas Conectadas', id: 'connected-accounts', icon: Link2 },
             { label: 'Calendário', id: 'calendar', icon: CalendarDays },
+            { label: 'Biblioteca', id: 'library', icon: FolderKanban },
             { label: 'Aprovações', id: 'approvals', icon: CheckCircle2 },
             { label: 'Analytics', id: 'analytics', icon: ChartNoAxesCombined },
             { label: 'Templates', id: 'templates', icon: LayoutTemplate },
@@ -143,20 +145,21 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onSelectTab, isCom
         type="button"
         onClick={() => onSelectTab(item.id)}
         aria-label={item.label}
+        aria-current={selected ? 'page' : undefined}
         title={isCompact ? item.label : undefined}
-        className={`group relative flex w-full items-center rounded-xl text-xs font-semibold transition-all duration-150 max-[900px]:justify-center max-[900px]:px-2.5 max-[900px]:py-2.5 ${
-          isCompact ? 'justify-center px-2.5 py-2.5' : 'gap-3 px-3.5 py-2.5'
+        className={`clicko-nav-item group relative flex w-full items-center rounded-lg text-[11px] font-medium transition-colors duration-150 max-[900px]:justify-center max-[900px]:px-2 max-[900px]:py-2.5 ${
+          isCompact ? 'justify-center px-2 py-2.5' : 'gap-3 px-3 py-2'
         } ${
           selected
-            ? 'bg-[#8bd132]/10 text-white shadow-sm border border-[#8bd132]/20 font-bold'
-            : 'text-[#78848c] hover:bg-white/[0.04] hover:text-white border border-transparent'
+            ? 'bg-white/[0.055] font-semibold text-white'
+            : 'text-[#78848c] hover:bg-white/[0.025] hover:text-white'
         }`}
       >
         {selected && (
-          <span className="absolute inset-y-1.5 left-0 w-[3px] rounded-r-full bg-[#8bd132] shadow-[0_0_10px_#8bd132]" />
+          <span className="clicko-nav-active-indicator absolute inset-y-2 left-0 w-0.5 rounded-full bg-[#8bd132]" />
         )}
         <Icon
-          className={`h-4 w-4 shrink-0 transition-colors ${
+          className={`h-[15px] w-[15px] shrink-0 transition-colors ${
             selected ? 'text-[#8bd132]' : 'text-[#6c7880] group-hover:text-white'
           }`}
           strokeWidth={selected ? 2.2 : 1.8}
@@ -177,14 +180,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onSelectTab, isCom
 
   return (
     <aside
-      className={`fixed inset-y-0 left-0 z-40 flex flex-col border-r border-white/[0.05] bg-[#070a0d]/95 backdrop-blur-2xl transition-[width] duration-300 ease-out max-[900px]:w-[76px] ${
-        isCompact ? 'w-[76px]' : 'w-[220px] 2xl:w-[250px]'
+      className={`clicko-sidebar fixed bottom-2 left-2 top-2 z-40 flex flex-col overflow-hidden rounded-2xl border border-white/[0.06] bg-[#000000] transition-[width] duration-300 ease-out max-[900px]:w-[64px] ${
+        isCompact ? 'w-[64px]' : 'w-[216px]'
       }`}
     >
       {/* Header Logo Area */}
       <div
-        className={`flex h-[76px] shrink-0 items-center border-b border-white/[0.05] bg-[#070a0d] max-[900px]:justify-center max-[900px]:px-3 ${
-          isCompact ? 'justify-center px-3' : 'px-6 2xl:px-7'
+        className={`clicko-sidebar-brand flex h-[64px] shrink-0 items-center border-b border-white/[0.045] bg-[#000000] max-[900px]:justify-center max-[900px]:px-2 ${
+          isCompact ? 'justify-center px-2' : 'px-4 2xl:px-5'
         }`}
       >
         <button
@@ -204,28 +207,28 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onSelectTab, isCom
           {!isCompact && (
             <ClickoLogo
               appearance="seamless"
-              className="clicko-logo-full-responsive h-[56px] w-[120px] 2xl:h-[62px] 2xl:w-[130px]"
+              className="clicko-sidebar-logo-full clicko-logo-full-responsive"
             />
           )}
         </button>
       </div>
 
       {/* Navigation Group Scroll */}
-      <nav className={`custom-scrollbar flex-1 overflow-y-auto py-5 ${isCompact ? 'px-2.5' : 'px-3.5'}`}>
-        <div className="space-y-6">
+      <nav className={`clicko-sidebar-nav custom-scrollbar flex-1 overflow-y-auto py-4 ${isCompact ? 'px-2' : 'px-3'}`}>
+        <div className="space-y-5">
           {navGroups.map((group, groupIdx) => {
             const hasVisibleItems = group.items.some((item) => !currentUser || canAccess(item.id));
             if (!hasVisibleItems) return null;
 
             return (
-              <div key={group.sectionTitle} className="space-y-1">
+              <div key={group.sectionTitle} className="clicko-nav-group space-y-1">
                 {!isCompact && (
-                  <div className="px-3 pb-2 text-[9px] font-mono font-bold uppercase tracking-[0.25em] text-[#4d5a62] max-[900px]:hidden">
+                  <div className="clicko-nav-section-label px-3 pb-1.5 text-[8px] font-medium uppercase tracking-[0.22em] text-[#414b51] max-[900px]:hidden">
                     {group.sectionTitle}
                   </div>
                 )}
                 {groupIdx > 0 && isCompact && <div className="mx-auto my-3 w-6 border-t border-white/[0.05]" />}
-                <div className="space-y-1">{group.items.map(renderItem)}</div>
+                <div className="space-y-0.5">{group.items.map(renderItem)}</div>
               </div>
             );
           })}
@@ -234,7 +237,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onSelectTab, isCom
 
       {/* Subscription Card Widget */}
       {!isCompact && currentUser?.role === 'master' && (
-        <div className="mx-3.5 my-2.5 rounded-2xl border border-white/[0.06] bg-gradient-to-b from-[#0d1217] to-[#090d10] p-4 max-[900px]:hidden shadow-2xl shadow-black/60">
+        <div className="mx-2.5 my-2 border-t border-white/[0.06] px-1 py-3 max-[900px]:hidden">
           <div className="flex items-center justify-between text-xs font-bold text-white">
             <span className="tracking-tight">Plano {workspace?.planId ? ({ solo: 'Solo', team: 'Equipe', business: 'Negócios', enterprise: 'Corporativo' }[workspace.planId] || workspace.planId) : 'Corporativo'}</span>
             <span className="relative flex h-2 w-2">
@@ -255,7 +258,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onSelectTab, isCom
           <button
             type="button"
             onClick={() => onSelectTab('subscription')}
-            className="mt-3.5 w-full rounded-xl bg-[#8bd132] py-2 text-xs font-bold text-[#080e05] transition-all hover:bg-[#9be24d] hover:shadow-[0_0_16px_rgba(139,209,50,0.3)]"
+            className="mt-3 w-full rounded-md border border-[#8bd132]/30 bg-[#8bd132]/10 py-2 text-[10px] font-semibold text-[#8bd132] transition-colors hover:bg-[#8bd132] hover:text-[#080e05]"
           >
             Mudar de Plano
           </button>

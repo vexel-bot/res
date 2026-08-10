@@ -5,6 +5,7 @@ import type {
   GovernanceSession,
   GovernanceWorkspace,
   NavigationTab,
+  OfferEventPayload,
   SaaSPlan,
   UserAccount,
   WorkspaceMember,
@@ -43,6 +44,7 @@ type GovernanceContextValue = {
   deleteUser: (userId: string) => Promise<boolean>;
   resendInvite: (userId: string) => Promise<boolean>;
   changePlan: (planId: SaaSPlan['id']) => Promise<boolean>;
+  recordOfferEvent: (payload: OfferEventPayload) => Promise<void>;
   approvalAction: (approvalId: string, action: 'approve' | 'request_changes' | 'reject' | 'publish' | 'schedule' | 'comment', comment?: string, scheduledAt?: string) => Promise<ContentApprovalItem | null>;
   refresh: () => Promise<void>;
 };
@@ -281,6 +283,20 @@ export const GovernanceProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     (result) => { setSubscription(result.subscription); setWorkspace(result.workspace); },
   ));
 
+  const recordOfferEvent: GovernanceContextValue['recordOfferEvent'] = async (payload) => {
+    try {
+      await request<void>('/offers/events', environmentMode, { method: 'POST', body: JSON.stringify(payload) });
+    } catch {
+      const key = 'clicko:offer-events:pending';
+      try {
+        const pending = JSON.parse(window.localStorage.getItem(key) || '[]');
+        window.localStorage.setItem(key, JSON.stringify([...pending, payload].slice(-50)));
+      } catch {
+        // Tracking must never interrupt the subscription flow.
+      }
+    }
+  };
+
   const approvalAction: GovernanceContextValue['approvalAction'] = async (approvalId, action, comment, scheduledAt) => run(
     () => request<ContentApprovalItem>(`/approvals/${approvalId}/actions`, environmentMode, { method: 'POST', body: JSON.stringify({ action, comment, scheduledAt }) }),
     action === 'comment' ? 'Comentário adicionado.' : 'Fluxo de aprovação atualizado.',
@@ -314,6 +330,7 @@ export const GovernanceProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     deleteUser,
     resendInvite,
     changePlan,
+    recordOfferEvent,
     approvalAction,
     refresh,
   };

@@ -62,10 +62,11 @@ async function startServer() {
 
   const operatingContext = (body: any) => {
     const brain = body?.brainContext;
+    const client = body?.clientContext;
     const strategy = body?.strategyContext;
     const screenContext = body?.screenContext;
-    if (!brain && !strategy && !screenContext) return '';
-    return `\n\nCONTEXTO OPERACIONAL OBRIGATÓRIO (fonte única de verdade):\n${brain ? `BRAIN revisão ${brain.revision}:\nEmpresa: ${brain.company}\nProdutos: ${brain.products}\nServiços: ${brain.services}\nTom: ${brain.toneOfVoice}\nPúblico: ${brain.audience}\nPersonas: ${brain.personas}\nObjetivos: ${brain.objectives}\nDiferenciais: ${brain.differentiators}\nDores: ${brain.pains}\nDesejos: ${brain.desires}\nObjeções: ${brain.objections}\nIdentidade visual: ${brain.visualIdentity}\nPalavras obrigatórias: ${brain.requiredWords}\nPalavras proibidas: ${brain.forbiddenWords}` : ''}${strategy ? `\nESTRATÉGIA ATIVA: ${strategy.name}\nObjetivo: ${strategy.objective}\nOferta: ${strategy.offer}\nPúblico: ${strategy.audience}\nFunil: ${strategy.funnel}\nCTAs: ${strategy.ctas?.join(', ')}` : ''}\nNão contradiga este contexto e preserve a rastreabilidade da resposta.`;
+    if (!brain && !client && !strategy && !screenContext) return '';
+    return `\n\nCONTEXTO OPERACIONAL OBRIGATÓRIO (fonte única de verdade):\n${brain ? `BRAIN revisão ${brain.revision}:\nEmpresa: ${brain.company}\nProdutos: ${brain.products}\nServiços: ${brain.services}\nTom: ${brain.toneOfVoice}\nPúblico: ${brain.audience}\nPersonas: ${brain.personas}\nObjetivos: ${brain.objectives}\nDiferenciais: ${brain.differentiators}\nDores: ${brain.pains}\nDesejos: ${brain.desires}\nObjeções: ${brain.objections}\nIdentidade visual: ${brain.visualIdentity}\nPalavras obrigatórias: ${brain.requiredWords}\nPalavras proibidas: ${brain.forbiddenWords}` : ''}${client ? `\nCLIENTE ATIVO: ${client.name}\nSegmento: ${client.segment}\nObjetivo atual: ${client.currentObjective}\nOferta em destaque: ${client.featuredOffer}\nPosicionamento: ${client.positioning}\nPúblico: ${client.audience}\nTom: ${client.toneOfVoice}\nDiferenciais: ${client.differentiators}` : ''}${strategy ? `\nESTRATÉGIA ATIVA: ${strategy.name}\nObjetivo: ${strategy.objective}\nOferta: ${strategy.offer}\nPúblico: ${strategy.audience}\nFunil: ${strategy.funnel}\nCTAs: ${strategy.ctas?.join(', ')}` : ''}\nTela atual: ${screenContext || 'não informada'}. Não contradiga este contexto e preserve a rastreabilidade da resposta.`;
   };
 
   // 1. AI Central Chat Endpoint
@@ -76,7 +77,7 @@ async function startServer() {
 
       if (!ai) {
         return res.json({
-          reply: `[Modo Demonstração] Entendido! Como estrategista de conteúdo para a marca ${brandProfile?.name || 'sua marca'}, recomendo criarmos uma série de 3 carrosséis focados em autoridade e um Reel de engajamento direto.`,
+          reply: `[Modo Demonstração] Entendido. Para ${req.body?.clientContext?.name || brandProfile?.name || 'a marca ativa'}, recomendo transformar o objetivo atual em uma sequência de descoberta, consideração e conversão, mantendo cada peça conectada à campanha.`,
           actionSuggestions: [
             'Criar Campanha de Lançamento',
             'Gerar 5 Ideias de Carrossel',
@@ -86,9 +87,9 @@ async function startServer() {
       }
 
       const systemInstruction = `Você é o consultor estratégico da plataforma Clicko Studio.
-Sua marca atual: ${brandProfile?.name || 'Marca Padrão'}.
-Tom de voz: ${brandProfile?.tone || 'Profissional, moderno e direto'}.
-Público-alvo: ${brandProfile?.targetAudience || 'Empreendedores e profissionais digitais'}.
+Sua marca atual: ${req.body?.clientContext?.name || brandProfile?.name || 'Marca Padrão'}.
+Tom de voz: ${req.body?.clientContext?.toneOfVoice || brandProfile?.tone || 'Profissional, moderno e direto'}.
+Público-alvo: ${req.body?.clientContext?.audience || brandProfile?.targetAudience || 'Empreendedores e profissionais digitais'}.
 Seu objetivo é ajudar o usuário a planejar, criar, organizar e otimizar campanhas e posts de mídia social.
 Responda em português (BR), de forma concisa, elegante e acionável. Em modo briefing, faça uma pergunta consultiva por vez e converta as respostas em objetivo, campanha, calendário, formatos, funil, CTAs e plano de execução.${operatingContext(req.body)}`;
 
@@ -139,7 +140,7 @@ Responda em português (BR), de forma concisa, elegante e acionável. Em modo br
           platform: 'LinkedIn',
           format: 'Post Executivo',
           title: 'O Futuro da Inovação Digital em 2026',
-          copy: `Analisamos os dados das marcas de maior crescimento neste trimestre. A conclusão é clara: empresas que unem automação com comunicação autêntica crescem 3.4x mais rápido.\n\nConfira os pilares da nossa análise sobre ${productOrTopic || 'eficiência digital'}.`,
+          copy: `Uma operação consistente combina automação com comunicação autêntica. O ponto não é produzir por produzir, mas transformar contexto em decisões mais claras.\n\nConfira os pilares da nossa abordagem sobre ${productOrTopic || 'eficiência digital'}.`,
           hashtags: ['#Inovacao', '#Gestao', '#Tecnologia', '#B2B'],
           suggestedTime: 'Quarta-feira, 09:00',
           imagePrompt: 'Professional clean corporate dashboard view with elegant lighting'
@@ -297,12 +298,12 @@ Retorne um JSON com:
     const { period = 'Últimos 30 dias', reachChange = 18.4, engagementRate = 6.8, topPost = 'Lançamento de Produto' } = req.body;
 
     const fallbackMetrics = {
-      insight: `Seu alcance cresceu ${reachChange}% no período (${period}), impulsionado pelo engajamento de ${engagementRate}% e pela tração do post "${topPost}".`,
-      recommendation: `Aumente a frequência de publicação em horários de pico (terças e quintas às 18:30) e padronize carrosséis educativos.`,
+      insight: `A leitura usa apenas a amostra local de demonstração de ${period}. Ela aponta "${topPost}" como referência de estrutura, não como comprovação de desempenho real.`,
+      recommendation: 'Use esse padrão como hipótese: crie variações controladas, publique somente após aprovação e valide a conclusão quando uma fonte de analytics estiver conectada.',
       keyTakeaways: [
-        'Retenção dos leitores subiu 24% em carrosséis',
-        'Posts com CTA clara no corpo geraram 2x mais salvamentos',
-        'Quinta-feira registrou o maior pico de interações da semana'
+        'A mensagem pode ser testada em mais de um formato',
+        'O CTA deve permanecer explícito nas variações',
+        'Nenhum padrão é marcado como validado sem dados conectados'
       ]
     };
 
@@ -319,7 +320,7 @@ Análise de desempenho do período (${period}):
 - Taxa de Engajamento: ${engagementRate}%
 - Post mais popular: "${topPost}"
 
-Gere uma explicação contextual inteligente (em português) focando em motivos e próximos passos acionáveis em formato JSON:
+Os valores acima são uma amostra local de demonstração. Não os apresente como resultados reais nem faça alegações causais. Gere uma explicação contextual inteligente (em português) tratando tudo como hipótese e focando em próximos passos acionáveis em formato JSON:
 {
   "insight": "Breve explicação do porquê dos resultados",
   "recommendation": "Recomendação tática direta",

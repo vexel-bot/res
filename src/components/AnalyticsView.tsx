@@ -15,12 +15,14 @@ import {
   Target,
   FolderKanban,
   Share,
+  BrainCircuit,
+  WandSparkles,
 } from 'lucide-react';
 import { useOperations } from '../context/OperationsContext';
 import { useGovernance } from '../context/GovernanceContext';
 
-export const AnalyticsView: React.FC = () => {
-  const { brain, activeCampaign, createCampaign } = useOperations();
+export const AnalyticsView: React.FC<{ onOpenStudio?: () => void }> = ({ onOpenStudio }) => {
+  const { brain, activeClient, activeCampaign, learningSignals, createCampaign, prepareStudioHandoff, addLearningSignal } = useOperations();
   const { environmentMode, users } = useGovernance();
   const isPersonal = environmentMode === 'personal';
 
@@ -49,6 +51,7 @@ export const AnalyticsView: React.FC = () => {
           engagementRate: 6.8,
           topPost: isPersonal ? 'Artigo autoral sobre IA & Engenharia' : '5 Regras da IA corporativa em 2026',
           brainContext: brain,
+          clientContext: activeClient,
           strategyContext: activeCampaign,
         }),
       });
@@ -83,12 +86,33 @@ export const AnalyticsView: React.FC = () => {
       funnel: 'Descoberta → Consideração → Conversão',
       ctas: ['Conhecer a solução'],
       executionPlan: aiAnalysis.keyTakeaways || ['Replicar o padrão vencedor', 'Testar variações', 'Medir resultados'],
+      clientId: activeClient?.id,
+      centralMessage: aiAnalysis.recommendation || aiAnalysis.insight,
+      angle: 'Aprendizado orientado por padrões de conteúdo',
       status: 'planned',
     });
   };
 
+  const createVariants = () => {
+    if (!aiAnalysis) return;
+    prepareStudioHandoff({
+      source: 'analytics', clientId: activeClient?.id, campaignId: activeCampaign?.id,
+      objective: aiAnalysis.recommendation || 'Transformar o aprendizado em novas variações.',
+      title: 'Variações orientadas por aprendizado', angle: aiAnalysis.insight || 'Reaplicar o padrão observado',
+      hook: aiAnalysis.keyTakeaways?.[0] || 'Uma nova abordagem para a mensagem que já existe',
+      cta: 'Criar cinco variações', format: 'carousel', funnelStage: 'Aprendizado',
+    });
+    addLearningSignal({
+      clientId: activeClient?.id, campaignId: activeCampaign?.id,
+      label: 'Hipótese enviada para produção', evidence: 'Derivada do diagnóstico exibido com dados locais de demonstração.',
+      recommendation: aiAnalysis.recommendation || 'Testar variações antes de validar o padrão.',
+      confidence: 'hypothesis', source: 'content-metadata',
+    });
+    onOpenStudio?.();
+  };
+
   return (
-    <div className="p-6 space-y-6 max-w-7xl mx-auto">
+    <div className="clicko-analytics-editorial mx-auto max-w-[1580px] space-y-5 p-5">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/[0.06] pb-4">
         <div>
@@ -103,7 +127,7 @@ export const AnalyticsView: React.FC = () => {
           </p>
         </div>
 
-        <select
+        <div className="flex flex-wrap items-center gap-2"><span className="rounded-full border border-[#ff7a00]/20 bg-[#ff7a00]/[0.06] px-2.5 py-1.5 text-[8px] text-[#ff9a3d]">Dados locais demonstrativos</span><select
           value={period}
           onChange={(e) => setPeriod(e.target.value)}
           className="bg-[#0c1014] border border-white/[0.08] rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-[#8bd132]/50"
@@ -111,12 +135,12 @@ export const AnalyticsView: React.FC = () => {
           <option value="Últimos 7 Dias">Últimos 7 Dias</option>
           <option value="Últimos 30 Dias">Últimos 30 Dias</option>
           <option value="Últimos 90 Dias">Últimos 90 Dias</option>
-        </select>
+        </select></div>
       </div>
 
       {/* Corporate Multi-Filters Bar */}
       {!isPersonal && (
-        <div className="p-4 rounded-2xl bg-[#0c1015] border border-white/[0.06] space-y-2">
+        <div className="space-y-2 rounded-xl border border-white/[0.06] bg-[#101316] p-4">
           <div className="flex items-center gap-2 text-xs font-bold text-[#8bd132]">
             <Filter className="w-3.5 h-3.5" />
             <span>Filtros Corporativos Avançados</span>
@@ -181,7 +205,7 @@ export const AnalyticsView: React.FC = () => {
       )}
 
       {/* AI Explanation Banner (High Context) */}
-      <div className="p-6 rounded-2xl bg-[#0a0e11] border border-[#8bd132]/30 space-y-4 shadow-xl shadow-black/40">
+      <div className="space-y-4 rounded-xl border border-[#8bd132]/20 bg-[#101316] p-5">
         <div className="flex items-center justify-between border-b border-white/[0.06] pb-3">
           <div className="flex items-center gap-2">
             <Sparkles className="w-4 h-4 text-[#8bd132]" />
@@ -223,98 +247,101 @@ export const AnalyticsView: React.FC = () => {
             <button
               type="button"
               onClick={turnInsightIntoCampaign}
-              className="flex items-center gap-2 rounded-xl bg-[#8bd132] px-4 py-2.5 text-xs font-bold text-[#080e05] transition hover:bg-[#9be24d] shadow-lg shadow-[#8bd132]/20"
+              className="flex items-center gap-2 rounded-lg bg-[#8bd132] px-4 py-2.5 text-xs font-semibold text-[#080e05] transition-colors hover:bg-[#9be24d]"
             >
               <Sparkles className="h-4 w-4" />
               <span>Criar Campanha a partir desta Análise</span>
             </button>
+            <button type="button" onClick={createVariants} className="ml-2 inline-flex items-center gap-2 rounded-lg border border-[#ff5c5c]/25 bg-[#ff5c5c]/[0.07] px-4 py-2.5 text-xs font-semibold text-[#ff8a8a]"><WandSparkles className="h-4 w-4" />Criar 5 variações no Studio</button>
           </div>
         ) : (
           <div className="p-4 text-center text-[#78848c] text-xs">Carregando diagnóstico contextual...</div>
         )}
       </div>
 
+      <section className="rounded-xl border border-white/[0.07] bg-[#101010] p-5"><div className="flex items-start justify-between gap-4"><div><div className="flex items-center gap-2 text-[9px] uppercase tracking-[0.16em] text-[#ff7a00]"><BrainCircuit className="h-4 w-4" />Aprendizado do Brain</div><h3 className="mt-1 text-sm font-semibold text-white">Padrões viram próximas ações.</h3></div><span className="text-[8px] text-[#666]">Hipóteses até a conexão de analytics</span></div><div className="mt-4 grid gap-2 md:grid-cols-2">{learningSignals.slice(0, 4).map((signal) => <article key={signal.id} className="rounded-lg border border-white/[0.055] bg-black/20 p-3"><div className="flex items-center justify-between gap-2"><strong className="text-[9px] text-white">{signal.label}</strong><span className={`rounded-full px-2 py-1 text-[7px] uppercase ${signal.confidence === 'validated' ? 'bg-[#ff5c5c]/10 text-[#ff8a8a]' : 'bg-[#ff7a00]/10 text-[#ff9a3d]'}`}>{signal.confidence === 'validated' ? 'validado' : 'hipótese'}</span></div><p className="mt-2 text-[8px] leading-relaxed text-[#777]">{signal.evidence}</p><p className="mt-2 text-[8px] leading-relaxed text-[#aaa]">{signal.recommendation}</p></article>)}</div></section>
+
       {/* AI Social Media BI Breakdown Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="p-4 rounded-2xl bg-[#182126] border border-white/[0.07] space-y-2">
+        <div className="space-y-2 rounded-xl border border-white/[0.07] bg-[#101316] p-4">
           <span className="text-[9px] font-bold uppercase tracking-wider text-[#8bd132]">
-            Melhores Horários
+            Hipótese de horário
           </span>
-          <h4 className="text-xs font-bold text-white">Horários de Pico da Audiência</h4>
+          <h4 className="text-xs font-bold text-white">Faixas a validar</h4>
           <ul className="text-[10px] text-[#a0abb0] space-y-1">
-            <li className="flex justify-between"><span>Terças-feiras</span><strong className="text-[#8bd132]">18:30 (Retenção 94%)</strong></li>
-            <li className="flex justify-between"><span>Quintas-feiras</span><strong className="text-[#8bd132]">09:00 (Engajamento 8.8%)</strong></li>
-            <li className="flex justify-between"><span>Sábados</span><strong className="text-[#8bd132]">11:00 (Salvamentos 2.4x)</strong></li>
+            <li className="flex justify-between"><span>Manhã</span><strong className="text-[#8bd132]">Teste A</strong></li>
+            <li className="flex justify-between"><span>Fim da tarde</span><strong className="text-[#8bd132]">Teste B</strong></li>
+            <li className="pt-1 text-[#6f7a80]">Conecte uma fonte para identificar horários reais.</li>
           </ul>
         </div>
 
-        <div className="p-4 rounded-2xl bg-[#182126] border border-white/[0.07] space-y-2">
+        <div className="space-y-2 rounded-xl border border-white/[0.07] bg-[#101316] p-4">
           <span className="text-[9px] font-bold uppercase tracking-wider text-[#8bd132]">
-            Formatos & Performance
+            Hipótese de formato
           </span>
-          <h4 className="text-xs font-bold text-white">Carrosséis vs Posts Estáticos</h4>
+          <h4 className="text-xs font-bold text-white">Carrossel vs publicação estática</h4>
           <div className="text-[10px] text-[#a0abb0] space-y-1">
-            <p>• Carrosséis educativos têm <strong className="text-white">8.4% engajamento</strong></p>
-            <p>• Posts estáticos simples tiveram <strong className="text-amber-400">pior desempenho (1.8%)</strong></p>
-            <p className="text-[#8bd132] font-semibold mt-1">Recomendação: Substituir textos únicos por carrossel de 3 lâminas.</p>
+            <p>• Testar a mesma mensagem nos dois formatos.</p>
+            <p>• Comparar retenção e intenção com critérios iguais.</p>
+            <p className="text-[#8bd132] font-semibold mt-1">Recomendação: criar variações controladas antes de concluir.</p>
           </div>
         </div>
 
-        <div className="p-4 rounded-2xl bg-[#182126] border border-white/[0.07] space-y-2">
+        <div className="space-y-2 rounded-xl border border-white/[0.07] bg-[#101316] p-4">
           <span className="text-[9px] font-bold uppercase tracking-wider text-[#8bd132]">
-            Oportunidades de Conteúdo
+            Oportunidades contextuais
           </span>
-          <h4 className="text-xs font-bold text-white">Gaps Detectados pela IA</h4>
+          <h4 className="text-xs font-bold text-white">Pautas sugeridas pelo Brain</h4>
           <div className="text-[10px] text-[#a0abb0] space-y-1">
-            <p>• Pauta "Automação Operacional" tem busca alta e pouca concorrência.</p>
-            <p>• Publicar 1 Reel semanal gera <strong className="text-white">+380 novos seguidores qualificados</strong>.</p>
+            <p>• Explorar “Automação Operacional” pelo ângulo de clareza e rotina.</p>
+            <p>• Validar Reels e carrosséis sem presumir resultado futuro.</p>
           </div>
         </div>
       </div>
 
       {/* Metrics Cards Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="p-4 rounded-2xl bg-[#0A0A0A] border border-white/5 space-y-2">
+        <div className="space-y-2 rounded-xl border border-white/[0.06] bg-[#101316] p-4">
           <div className="flex items-center justify-between text-white/40 text-xs">
             <span>Alcance Orgânico</span>
             <Eye className="w-4 h-4 text-indigo-400" />
           </div>
-          <div className="text-2xl font-extrabold text-[#ededed]">184,200</div>
-          <div className="text-xs font-bold text-emerald-400 flex items-center gap-0.5">
-            <ArrowUpRight className="w-3.5 h-3.5" /> +18.4% este mês
+          <div className="text-2xl font-extrabold text-[#ededed]">—</div>
+          <div className="text-xs text-[#6f7a80] flex items-center gap-0.5">
+            Aguardando fonte conectada
           </div>
         </div>
 
-        <div className="p-4 rounded-2xl bg-[#0A0A0A] border border-white/5 space-y-2">
+        <div className="space-y-2 rounded-xl border border-white/[0.06] bg-[#101316] p-4">
           <div className="flex items-center justify-between text-white/40 text-xs">
             <span>Interações Totais</span>
             <Heart className="w-4 h-4 text-rose-400" />
           </div>
-          <div className="text-2xl font-extrabold text-[#ededed]">14,820</div>
-          <div className="text-xs font-bold text-emerald-400 flex items-center gap-0.5">
-            <ArrowUpRight className="w-3.5 h-3.5" /> +22.1% este mês
+          <div className="text-2xl font-extrabold text-[#ededed]">—</div>
+          <div className="text-xs text-[#6f7a80] flex items-center gap-0.5">
+            Aguardando fonte conectada
           </div>
         </div>
 
-        <div className="p-4 rounded-2xl bg-[#0A0A0A] border border-white/5 space-y-2">
+        <div className="space-y-2 rounded-xl border border-white/[0.06] bg-[#101316] p-4">
           <div className="flex items-center justify-between text-white/40 text-xs">
             <span>Salvamentos / Compartilhamentos</span>
             <Share2 className="w-4 h-4 text-amber-400" />
           </div>
-          <div className="text-2xl font-extrabold text-[#ededed]">3,120</div>
-          <div className="text-xs font-bold text-emerald-400 flex items-center gap-0.5">
-            <ArrowUpRight className="w-3.5 h-3.5" /> +34.0% este mês
+          <div className="text-2xl font-extrabold text-[#ededed]">—</div>
+          <div className="text-xs text-[#6f7a80] flex items-center gap-0.5">
+            Aguardando fonte conectada
           </div>
         </div>
 
-        <div className="p-4 rounded-2xl bg-[#0A0A0A] border border-white/5 space-y-2">
+        <div className="space-y-2 rounded-xl border border-white/[0.06] bg-[#101316] p-4">
           <div className="flex items-center justify-between text-white/40 text-xs">
             <span>Conversão em Leads</span>
             <TrendingUp className="w-4 h-4 text-emerald-400" />
           </div>
-          <div className="text-2xl font-extrabold text-[#ededed]">418</div>
-          <div className="text-xs font-bold text-emerald-400 flex items-center gap-0.5">
-            <ArrowUpRight className="w-3.5 h-3.5" /> +12.8% este mês
+          <div className="text-2xl font-extrabold text-[#ededed]">—</div>
+          <div className="text-xs text-[#6f7a80] flex items-center gap-0.5">
+            Aguardando fonte conectada
           </div>
         </div>
       </div>

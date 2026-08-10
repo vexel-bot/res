@@ -92,8 +92,8 @@ export const AddAccountModal: React.FC<AddAccountModalProps> = ({ isOpen, onClos
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-md animate-in fade-in duration-200">
-      <div className="relative w-full max-w-lg rounded-2xl border border-white/10 bg-[#0d1217] p-6 shadow-2xl backdrop-blur-2xl">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4 backdrop-blur-sm animate-in fade-in duration-150">
+      <div className="relative w-full max-w-lg rounded-xl border border-white/10 bg-[#0d1217] p-5 shadow-xl shadow-black/40">
         {/* Header */}
         <div className="flex items-center justify-between border-b border-white/[0.08] pb-4 mb-5">
           <div className="flex items-center gap-3">
@@ -268,7 +268,7 @@ export const AddAccountModal: React.FC<AddAccountModalProps> = ({ isOpen, onClos
                   setSelectedPlan('Plano Solo');
                   setStep('create-form');
                 }}
-                className="group flex flex-col items-center justify-center rounded-2xl border border-white/[0.08] bg-[#121820] p-5 text-center transition-all hover:border-[#8bd132]/50 hover:bg-[#8bd132]/5"
+                className="group flex flex-col items-center justify-center rounded-xl border border-white/[0.08] bg-[#121820] p-4 text-center transition-colors hover:border-[#8bd132]/50 hover:bg-[#8bd132]/5"
               >
                 <div className="grid h-12 w-12 place-items-center rounded-xl border border-[#8bd132]/30 bg-[#8bd132]/10 text-[#8bd132] mb-3">
                   <User className="h-6 w-6" />
@@ -286,12 +286,12 @@ export const AddAccountModal: React.FC<AddAccountModalProps> = ({ isOpen, onClos
                   setSelectedPlan('Plano Team');
                   setStep('create-form');
                 }}
-                className="group flex flex-col items-center justify-center rounded-2xl border border-white/[0.08] bg-[#121820] p-5 text-center transition-all hover:border-indigo-500/50 hover:bg-indigo-500/5"
+                className="group flex flex-col items-center justify-center rounded-xl border border-white/[0.08] bg-[#121820] p-4 text-center transition-colors hover:border-[#8bd132]/50 hover:bg-[#8bd132]/5"
               >
-                <div className="grid h-12 w-12 place-items-center rounded-xl border border-indigo-500/30 bg-indigo-500/10 text-indigo-400 mb-3">
+                <div className="grid h-12 w-12 place-items-center rounded-xl border border-[#8bd132]/30 bg-[#8bd132]/10 text-[#8bd132] mb-3">
                   <Building2 className="h-6 w-6" />
                 </div>
-                <h3 className="text-xs font-bold text-white group-hover:text-indigo-400">Workspace</h3>
+                <h3 className="text-xs font-bold text-white group-hover:text-[#8bd132]">Workspace</h3>
                 <p className="mt-1 text-[10px] text-[#78848c] leading-tight">
                   Para empresas, equipes, agências e gestão colaborativa.
                 </p>

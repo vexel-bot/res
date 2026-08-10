@@ -147,9 +147,9 @@ export const ImageStudioView: React.FC = () => {
       </div>
 
       {/* Main Studio Workspace */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-12">
         {/* Controls Column */}
-        <div className="lg:col-span-5 space-y-5 bg-[#182126] border border-white/[0.07] p-5 rounded-2xl shadow-xl shadow-black/40">
+        <div className="space-y-4 rounded-xl border border-white/[0.07] bg-[#101316] p-5 lg:col-span-5">
           {/* Tool Navigation Bar */}
           <div className="flex items-center p-1 rounded-xl bg-black/30 border border-white/[0.06]">
             <button
@@ -305,7 +305,7 @@ export const ImageStudioView: React.FC = () => {
         </div>
 
         {/* Live Stage Display */}
-        <div className="lg:col-span-7 bg-[#11171a] border border-white/[0.07] rounded-2xl p-6 flex flex-col items-center justify-center min-h-[420px] relative">
+        <div className="relative flex min-h-[420px] flex-col items-center justify-center rounded-xl border border-white/[0.07] bg-[#101316] p-5 lg:col-span-7">
           <div className="relative max-w-full overflow-hidden rounded-xl border border-white/10 shadow-2xl">
             <img
               src={generatedImageUrl}

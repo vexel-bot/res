@@ -59,7 +59,7 @@ export function FloatingAIAssistant({
   return (
     <div className="fixed bottom-5 right-5 z-[70]">
       {open && (
-        <section className="mb-3 flex h-[480px] w-[360px] max-w-[calc(100vw-32px)] flex-col overflow-hidden rounded-2xl border border-white/[0.09] bg-[#141b1f] shadow-2xl shadow-black/80">
+        <section className="mb-3 flex h-[440px] w-[340px] max-h-[calc(100vh-96px)] max-w-[calc(100vw-32px)] flex-col overflow-hidden rounded-xl border border-white/[0.09] bg-[#141b1f] shadow-xl shadow-black/50">
           {/* Header */}
           <header className="flex items-center justify-between border-b border-white/[0.06] p-3.5 bg-[#182126]">
             <div className="flex items-center gap-2">
@@ -188,7 +188,7 @@ export function FloatingAIAssistant({
       {/* Floating Toggle Button */}
       <button
         onClick={() => setOpen((value) => !value)}
-        className="ml-auto grid h-12 w-12 place-items-center rounded-full border border-[#8bd132]/40 bg-[#182126] text-[#8bd132] shadow-2xl shadow-black/80 transition hover:scale-105 hover:bg-[#8bd132] hover:text-[#14200e]"
+        className="ml-auto grid h-12 w-12 place-items-center rounded-full border border-[#8bd132]/40 bg-[#182126] text-[#8bd132] shadow-lg shadow-black/50 transition-colors hover:bg-[#8bd132] hover:text-[#14200e]"
         aria-label="Abrir Copiloto de IA"
       >
         <Bot className="h-5 w-5" />
