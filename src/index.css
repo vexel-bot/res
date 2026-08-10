@@ -2856,6 +2856,480 @@ body,
   transform: scale(1.5);
 }
 
+/* Home immersion: information, response and depth without ambient motion */
+.clicko-dashboard-editorial {
+  position: relative;
+  isolation: isolate;
+  --clicko-home-type-overline: clamp(10px, 0.68vw, 11px);
+  --clicko-home-type-caption: clamp(10px, 0.72vw, 11.5px);
+  --clicko-home-type-small: clamp(11px, 0.76vw, 12px);
+  --clicko-home-type-body: clamp(12px, 0.82vw, 13px);
+  --clicko-home-type-section: clamp(17px, 1.24vw, 20px);
+  --clicko-home-leading-tight: 1.25;
+  --clicko-home-leading-copy: 1.5;
+}
+
+.clicko-dashboard-editorial::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background:
+    radial-gradient(circle at 78% 6%, rgba(255, 122, 0, 0.025), transparent 20%),
+    radial-gradient(circle at 16% 32%, rgba(255, 92, 92, 0.018), transparent 19%);
+  content: "";
+  pointer-events: none;
+}
+
+.clicko-dashboard-hero {
+  min-height: auto;
+  padding: 24px 28px !important;
+}
+
+.clicko-dashboard-hero::before {
+  content: none !important;
+}
+
+.clicko-account-identity {
+  font-size: var(--clicko-home-type-overline) !important;
+  line-height: 1.4;
+  letter-spacing: 0.17em !important;
+  animation: clicko-account-enter 220ms var(--clicko-motion-ease-out) both;
+}
+
+.clicko-dashboard-greeting {
+  animation: clicko-greeting-enter 320ms var(--clicko-motion-ease-out) both;
+}
+
+.clicko-dashboard-greeting-name {
+  display: inline-block;
+  animation: clicko-name-enter 340ms 45ms var(--clicko-motion-ease-out) both;
+}
+
+.clicko-home-overline {
+  font-size: var(--clicko-home-type-overline) !important;
+  line-height: 1.4;
+  letter-spacing: 0.15em !important;
+}
+
+.clicko-home-section-title {
+  font-size: var(--clicko-home-type-section) !important;
+  line-height: var(--clicko-home-leading-tight);
+  letter-spacing: -0.025em;
+}
+
+.clicko-home-side-title {
+  font-size: clamp(16px, 1.08vw, 18px) !important;
+  line-height: 1.3;
+  letter-spacing: -0.018em;
+}
+
+.clicko-home-action-text {
+  font-size: var(--clicko-home-type-small) !important;
+  line-height: 1.25;
+}
+
+.clicko-dashboard-command {
+  position: relative;
+  display: grid;
+  grid-template-columns: 210px minmax(0, 1fr);
+  align-items: center;
+  gap: 18px 24px;
+  margin-top: 18px;
+  overflow: hidden;
+  border: 1px solid var(--clicko-border);
+  border-radius: var(--clicko-radius-panel);
+  padding: 24px;
+  background:
+    linear-gradient(112deg, rgba(255, 92, 92, 0.035), transparent 24%),
+    color-mix(in srgb, var(--clicko-surface-1) 78%, transparent);
+  box-shadow: 0 16px 42px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.025);
+  animation: clicko-section-enter var(--clicko-motion-enter) 35ms var(--clicko-motion-ease-out) both;
+}
+
+.clicko-dashboard-command::after {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 2px;
+  background: linear-gradient(180deg, transparent, var(--color-accent-coral), var(--color-accent-orange), transparent);
+  content: "";
+  opacity: 0.72;
+}
+
+.clicko-ai-command-field {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 10px;
+  min-height: 58px;
+  border: 1px solid color-mix(in srgb, var(--clicko-border-strong) 82%, var(--color-accent-coral) 18%);
+  border-radius: 14px;
+  padding: 8px 9px 8px 14px;
+  background: color-mix(in srgb, var(--clicko-control) 88%, transparent);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.026);
+  transition:
+    border-color var(--clicko-motion-state) var(--clicko-motion-ease),
+    background-color var(--clicko-motion-state) var(--clicko-motion-ease),
+    box-shadow var(--clicko-motion-state) var(--clicko-motion-ease),
+    transform var(--clicko-motion-fast) var(--clicko-motion-ease);
+}
+
+.clicko-ai-command-field:hover {
+  border-color: color-mix(in srgb, var(--color-accent-coral) 30%, var(--clicko-border-strong));
+}
+
+.clicko-ai-command-field:focus-within {
+  border-color: color-mix(in srgb, var(--color-accent-coral) 48%, var(--clicko-border-strong));
+  background: color-mix(in srgb, var(--clicko-surface-2) 82%, transparent);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.16), 0 0 0 3px rgba(255, 92, 92, 0.055);
+  transform: translateY(-1px);
+}
+
+.clicko-ai-command-icon {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  flex: none;
+  place-items: center;
+  border-radius: 9px;
+  background: var(--color-accent-coral-soft);
+  color: var(--color-accent-coral);
+}
+
+.clicko-ai-command-field input {
+  min-width: 0;
+  min-height: 36px !important;
+  flex: 1;
+  border: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: var(--clicko-text) !important;
+  font-size: var(--clicko-home-type-body);
+  line-height: 1.45;
+  outline: none;
+}
+
+.clicko-ai-command-field input::placeholder {
+  color: var(--clicko-text-muted);
+}
+
+.clicko-ai-command-field button {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  flex: none;
+  place-items: center;
+  border: 1px solid var(--color-accent-coral-border);
+  border-radius: 10px;
+  background: var(--color-accent-coral);
+  color: #111111;
+}
+
+.clicko-ai-command-field button:disabled {
+  border-color: var(--clicko-border);
+  background: color-mix(in srgb, var(--clicko-surface-3) 72%, transparent);
+  color: var(--clicko-text-muted);
+  opacity: 0.6;
+  cursor: default;
+}
+
+.clicko-quick-actions {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.clicko-quick-action {
+  display: flex;
+  min-width: 0;
+  min-height: 64px;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid var(--clicko-border);
+  border-radius: 11px;
+  padding: 10px 12px;
+  background: color-mix(in srgb, var(--clicko-surface-0) 52%, transparent);
+  text-align: left;
+}
+
+.clicko-quick-action-icon {
+  display: grid;
+  width: 30px;
+  height: 30px;
+  flex: none;
+  place-items: center;
+  border: 1px solid var(--clicko-border);
+  border-radius: 8px;
+  color: var(--color-accent-orange);
+}
+
+.clicko-quick-action strong,
+.clicko-quick-action small {
+  display: block;
+}
+
+.clicko-quick-action strong {
+  overflow: hidden;
+  color: var(--clicko-text);
+  font-size: var(--clicko-home-type-small);
+  font-weight: 600;
+  line-height: 1.3;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.clicko-quick-action small {
+  margin-top: 3px;
+  overflow: hidden;
+  color: var(--clicko-text-muted);
+  font-size: var(--clicko-home-type-caption);
+  line-height: 1.35;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.clicko-timeline-day {
+  position: relative;
+  transition:
+    background-color var(--clicko-motion-state) var(--clicko-motion-ease),
+    opacity var(--clicko-motion-fast) var(--clicko-motion-ease);
+}
+
+.clicko-timeline-day:hover {
+  background: color-mix(in srgb, var(--clicko-surface-3) 56%, transparent);
+}
+
+.clicko-timeline-day-current::after {
+  position: absolute;
+  right: 24%;
+  bottom: 0;
+  left: 24%;
+  height: 1px;
+  background: var(--color-accent-orange);
+  content: "";
+}
+
+.clicko-metric-label {
+  font-size: var(--clicko-home-type-small) !important;
+  line-height: 1.35;
+  letter-spacing: 0.11em !important;
+}
+
+.clicko-metric-cell > div:last-child > strong {
+  font-size: clamp(32px, 3.1vw, 44px) !important;
+}
+
+.clicko-metric-detail {
+  font-size: var(--clicko-home-type-small) !important;
+  line-height: 1.3;
+}
+
+.clicko-calendar-day-label {
+  font-size: var(--clicko-home-type-small) !important;
+  line-height: 1.25;
+}
+
+.clicko-dashboard-editorial .clicko-calendar-date,
+.clicko-dashboard-editorial .clicko-calendar-time,
+.clicko-dashboard-editorial .clicko-schedule-subtitle,
+.clicko-dashboard-editorial .clicko-side-item-meta,
+.clicko-dashboard-editorial .clicko-rhythm-label,
+.clicko-dashboard-editorial .clicko-flow-meta,
+.clicko-dashboard-editorial .clicko-flow-summary {
+  font-size: var(--clicko-home-type-caption) !important;
+  line-height: 1.35;
+}
+
+.clicko-schedule-title,
+.clicko-side-item-title,
+.clicko-flow-title {
+  font-size: var(--clicko-home-type-small) !important;
+  line-height: 1.35;
+}
+
+.clicko-analytics-row {
+  font-size: var(--clicko-home-type-small) !important;
+  line-height: 1.4;
+}
+
+.clicko-analytics-row strong {
+  font-size: var(--clicko-home-type-body);
+  font-variant-numeric: tabular-nums;
+}
+
+.clicko-dashboard-editorial .clicko-chart-tooltip-copy {
+  font-size: var(--clicko-home-type-caption) !important;
+  line-height: 1.4;
+}
+
+.clicko-dashboard-editorial .clicko-chart-tooltip-copy strong {
+  font-size: var(--clicko-home-type-small) !important;
+}
+
+.clicko-next-movement-copy {
+  font-size: clamp(14px, 1vw, 16px) !important;
+  line-height: 1.55 !important;
+}
+
+.clicko-live-value {
+  font-size: clamp(22px, 1.55vw, 26px) !important;
+  line-height: 1.05;
+}
+
+.clicko-flow-index {
+  font-size: var(--clicko-home-type-caption) !important;
+  line-height: 1;
+}
+
+.clicko-next-movement {
+  position: relative;
+}
+
+.clicko-next-movement.is-urgent::before {
+  position: absolute;
+  inset: 18px auto 18px 0;
+  width: 2px;
+  border-radius: 999px;
+  background: var(--color-accent-coral);
+  content: "";
+}
+
+.clicko-live-value {
+  font-variant-numeric: tabular-nums;
+  animation: clicko-metric-enter 280ms var(--clicko-motion-ease-out) both;
+}
+
+.clicko-operational-flow {
+  position: relative;
+  isolation: isolate;
+}
+
+.clicko-operational-flow::before {
+  position: absolute;
+  z-index: -1;
+  top: 50%;
+  right: 5%;
+  left: 5%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--clicko-border-strong) 12% 88%, transparent);
+  content: "";
+}
+
+.clicko-flow-step {
+  min-height: 72px;
+  background: color-mix(in srgb, var(--clicko-surface-1) 88%, transparent);
+}
+
+.clicko-flow-step[aria-pressed="true"] {
+  border-color: var(--color-accent-coral-border) !important;
+  background: linear-gradient(105deg, var(--color-accent-coral-soft), color-mix(in srgb, var(--clicko-surface-2) 84%, transparent)) !important;
+}
+
+.clicko-flow-step[aria-pressed="true"] strong {
+  color: var(--clicko-text) !important;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .clicko-operational-flow:has(.clicko-flow-step:hover) .clicko-flow-step:not(:hover) {
+    opacity: 0.62;
+  }
+
+  .clicko-quick-action:hover .clicko-quick-action-icon {
+    border-color: var(--color-accent-orange-border);
+    background: var(--color-accent-orange-soft);
+  }
+}
+
+[data-theme="light"] .clicko-dashboard-command {
+  background:
+    linear-gradient(112deg, rgba(218, 63, 63, 0.045), transparent 24%),
+    rgba(255, 255, 255, 0.86);
+  box-shadow: 0 16px 42px rgba(45, 39, 34, 0.07), inset 0 1px 0 rgba(255, 255, 255, 0.86);
+}
+
+[data-theme="light"] .clicko-dashboard-side {
+  background: #f2f5ef !important;
+}
+
+[data-theme="light"] .clicko-ai-command-field,
+[data-theme="light"] .clicko-quick-action,
+[data-theme="light"] .clicko-flow-step {
+  background-color: rgba(255, 255, 255, 0.82);
+}
+
+[data-theme="light"] .clicko-dashboard-command .clicko-ai-command-field input:focus {
+  background: transparent !important;
+}
+
+@media (max-width: 900px) {
+  .clicko-dashboard-command {
+    grid-template-columns: 180px minmax(0, 1fr);
+    padding: 20px;
+  }
+
+  .clicko-quick-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .clicko-dashboard-hero {
+    min-height: auto;
+    padding: 20px 18px !important;
+  }
+
+  .clicko-dashboard-command {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+    border-radius: 14px;
+    padding: 18px;
+  }
+
+  .clicko-dashboard-editorial {
+    --clicko-home-type-overline: 10px;
+    --clicko-home-type-caption: 10px;
+    --clicko-home-type-small: 11px;
+    --clicko-home-type-body: 12px;
+    --clicko-home-type-section: 18px;
+  }
+
+  .clicko-quick-actions {
+    grid-column: 1;
+  }
+}
+
+@media (max-width: 600px) {
+  .clicko-quick-actions {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .clicko-quick-action {
+    min-height: 58px;
+  }
+
+  .clicko-dashboard-flow > div:first-child {
+    align-items: flex-start;
+  }
+
+  .clicko-flow-summary {
+    max-width: 13ch;
+  }
+}
+
+@media (max-width: 480px) {
+
+  .clicko-ai-command-field {
+    min-height: 54px;
+    padding-left: 10px;
+  }
+
+  .clicko-ai-command-icon {
+    width: 28px;
+    height: 28px;
+  }
+}
+
 .clicko-offer-overlay {
   animation: clicko-offer-overlay-enter 180ms ease-out both;
 }
@@ -2974,6 +3448,21 @@ html[data-theme="light"] .clicko-offer-dialog button.bg-white {
 @keyframes clicko-offer-overlay-enter {
   from { opacity: 0; }
   to { opacity: 1; }
+}
+
+@keyframes clicko-account-enter {
+  from { opacity: 0; transform: translateY(3px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes clicko-greeting-enter {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes clicko-name-enter {
+  from { opacity: 0.55; transform: translateY(2px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @media (prefers-reduced-motion: reduce) {
