@@ -117,7 +117,7 @@ export const AnalyticsView: React.FC<{ onOpenStudio?: () => void }> = ({ onOpenS
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/[0.06] pb-4">
         <div>
           <h2 className="text-lg font-bold text-white flex items-center gap-2">
-            <BarChart3 className="w-5 h-5 text-[#8bd132]" />
+            <BarChart3 className="w-5 h-5 text-[#ff5c5c]" />
             {isPersonal ? 'Analytics Pessoal & Performance Autoral' : 'Analytics Corporativo & Inteligência de Operação'}
           </h2>
           <p className="text-xs text-[#78858e]">
@@ -130,7 +130,7 @@ export const AnalyticsView: React.FC<{ onOpenStudio?: () => void }> = ({ onOpenS
         <div className="flex flex-wrap items-center gap-2"><span className="rounded-full border border-[#ff7a00]/20 bg-[#ff7a00]/[0.06] px-2.5 py-1.5 text-[8px] text-[#ff9a3d]">Dados locais demonstrativos</span><select
           value={period}
           onChange={(e) => setPeriod(e.target.value)}
-          className="bg-[#0c1014] border border-white/[0.08] rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-[#8bd132]/50"
+          className="bg-[#0c1014] border border-white/[0.08] rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-[#ff5c5c]/50"
         >
           <option value="Últimos 7 Dias">Últimos 7 Dias</option>
           <option value="Últimos 30 Dias">Últimos 30 Dias</option>
@@ -141,7 +141,7 @@ export const AnalyticsView: React.FC<{ onOpenStudio?: () => void }> = ({ onOpenS
       {/* Corporate Multi-Filters Bar */}
       {!isPersonal && (
         <div className="space-y-2 rounded-xl border border-white/[0.06] bg-[#101316] p-4">
-          <div className="flex items-center gap-2 text-xs font-bold text-[#8bd132]">
+          <div className="flex items-center gap-2 text-xs font-bold text-[#ff5c5c]">
             <Filter className="w-3.5 h-3.5" />
             <span>Filtros Corporativos Avançados</span>
           </div>
@@ -149,7 +149,7 @@ export const AnalyticsView: React.FC<{ onOpenStudio?: () => void }> = ({ onOpenS
             <select
               value={selectedClient}
               onChange={(e) => setSelectedClient(e.target.value)}
-              className="bg-[#121820] border border-white/10 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-[#8bd132]/50"
+              className="bg-[#121820] border border-white/10 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-[#ff5c5c]/50"
             >
               <option value="Todos os Clientes">Todos os Clientes</option>
               <option value="Clínica Vitalis">Clínica Vitalis</option>
@@ -159,7 +159,7 @@ export const AnalyticsView: React.FC<{ onOpenStudio?: () => void }> = ({ onOpenS
             <select
               value={selectedTeam}
               onChange={(e) => setSelectedTeam(e.target.value)}
-              className="bg-[#121820] border border-white/10 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-[#8bd132]/50"
+              className="bg-[#121820] border border-white/10 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-[#ff5c5c]/50"
             >
               <option value="Toda a Equipe">Toda a Equipe</option>
               <option value="Marketing Digital">Marketing Digital</option>
@@ -169,7 +169,7 @@ export const AnalyticsView: React.FC<{ onOpenStudio?: () => void }> = ({ onOpenS
             <select
               value={selectedCollaborator}
               onChange={(e) => setSelectedCollaborator(e.target.value)}
-              className="bg-[#121820] border border-white/10 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-[#8bd132]/50"
+              className="bg-[#121820] border border-white/10 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-[#ff5c5c]/50"
             >
               <option value="Todos os Colaboradores">Todos Colaboradores</option>
               {users.map((u) => (
@@ -182,7 +182,7 @@ export const AnalyticsView: React.FC<{ onOpenStudio?: () => void }> = ({ onOpenS
             <select
               value={selectedCampaign}
               onChange={(e) => setSelectedCampaign(e.target.value)}
-              className="bg-[#121820] border border-white/10 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-[#8bd132]/50"
+              className="bg-[#121820] border border-white/10 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-[#ff5c5c]/50"
             >
               <option value="Todas as Campanhas">Todas Campanhas</option>
               <option value="Lançamento Q3">Lançamento Q3</option>
@@ -192,7 +192,7 @@ export const AnalyticsView: React.FC<{ onOpenStudio?: () => void }> = ({ onOpenS
             <select
               value={selectedNetwork}
               onChange={(e) => setSelectedNetwork(e.target.value)}
-              className="bg-[#121820] border border-white/10 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-[#8bd132]/50"
+              className="bg-[#121820] border border-white/10 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-[#ff5c5c]/50"
             >
               <option value="Todas as Redes">Todas as Redes</option>
               <option value="Instagram">Instagram</option>
@@ -205,10 +205,10 @@ export const AnalyticsView: React.FC<{ onOpenStudio?: () => void }> = ({ onOpenS
       )}
 
       {/* AI Explanation Banner (High Context) */}
-      <div className="space-y-4 rounded-xl border border-[#8bd132]/20 bg-[#101316] p-5">
+      <div className="space-y-4 rounded-xl border border-[#ff5c5c]/20 bg-[#101316] p-5">
         <div className="flex items-center justify-between border-b border-white/[0.06] pb-3">
           <div className="flex items-center gap-2">
-            <Sparkles className="w-4 h-4 text-[#8bd132]" />
+            <Sparkles className="w-4 h-4 text-[#ff5c5c]" />
             <h3 className="text-sm font-bold text-[#ededed]">Diagnóstico e Explicação Contextual da IA</h3>
           </div>
           <button
@@ -224,13 +224,13 @@ export const AnalyticsView: React.FC<{ onOpenStudio?: () => void }> = ({ onOpenS
           <div className="space-y-4 text-xs">
             <div className="p-4 rounded-xl bg-white/[0.03] border border-white/[0.08] text-[#c0c8ce] space-y-1.5">
               <div className="font-bold text-white flex items-center gap-1.5">
-                <Sparkles className="h-3.5 w-3.5 text-[#8bd132]" /> Análise do Período ({period})
+                <Sparkles className="h-3.5 w-3.5 text-[#ff5c5c]" /> Análise do Período ({period})
               </div>
               <p className="leading-relaxed text-[#a0abb2]">{aiAnalysis.insight}</p>
             </div>
 
-            <div className="p-4 rounded-xl bg-[#8bd132]/10 border border-[#8bd132]/30 text-white space-y-1.5">
-              <div className="font-bold text-[#8bd132]">Recomendação Prática de Ação</div>
+            <div className="p-4 rounded-xl bg-[#ff5c5c]/10 border border-[#ff5c5c]/30 text-white space-y-1.5">
+              <div className="font-bold text-[#ff5c5c]">Recomendação Prática de Ação</div>
               <p className="leading-relaxed text-[#d0d8dd]">{aiAnalysis.recommendation}</p>
             </div>
 
@@ -247,7 +247,7 @@ export const AnalyticsView: React.FC<{ onOpenStudio?: () => void }> = ({ onOpenS
             <button
               type="button"
               onClick={turnInsightIntoCampaign}
-              className="flex items-center gap-2 rounded-lg bg-[#8bd132] px-4 py-2.5 text-xs font-semibold text-[#080e05] transition-colors hover:bg-[#9be24d]"
+              className="flex items-center gap-2 rounded-lg bg-[#ff5c5c] px-4 py-2.5 text-xs font-semibold text-[#080e05] transition-colors hover:bg-[#9be24d]"
             >
               <Sparkles className="h-4 w-4" />
               <span>Criar Campanha a partir desta Análise</span>
@@ -264,31 +264,31 @@ export const AnalyticsView: React.FC<{ onOpenStudio?: () => void }> = ({ onOpenS
       {/* AI Social Media BI Breakdown Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="space-y-2 rounded-xl border border-white/[0.07] bg-[#101316] p-4">
-          <span className="text-[9px] font-bold uppercase tracking-wider text-[#8bd132]">
+          <span className="text-[9px] font-bold uppercase tracking-wider text-[#ff5c5c]">
             Hipótese de horário
           </span>
           <h4 className="text-xs font-bold text-white">Faixas a validar</h4>
           <ul className="text-[10px] text-[#a0abb0] space-y-1">
-            <li className="flex justify-between"><span>Manhã</span><strong className="text-[#8bd132]">Teste A</strong></li>
-            <li className="flex justify-between"><span>Fim da tarde</span><strong className="text-[#8bd132]">Teste B</strong></li>
+            <li className="flex justify-between"><span>Manhã</span><strong className="text-[#ff5c5c]">Teste A</strong></li>
+            <li className="flex justify-between"><span>Fim da tarde</span><strong className="text-[#ff5c5c]">Teste B</strong></li>
             <li className="pt-1 text-[#6f7a80]">Conecte uma fonte para identificar horários reais.</li>
           </ul>
         </div>
 
         <div className="space-y-2 rounded-xl border border-white/[0.07] bg-[#101316] p-4">
-          <span className="text-[9px] font-bold uppercase tracking-wider text-[#8bd132]">
+          <span className="text-[9px] font-bold uppercase tracking-wider text-[#ff5c5c]">
             Hipótese de formato
           </span>
           <h4 className="text-xs font-bold text-white">Carrossel vs publicação estática</h4>
           <div className="text-[10px] text-[#a0abb0] space-y-1">
             <p>• Testar a mesma mensagem nos dois formatos.</p>
             <p>• Comparar retenção e intenção com critérios iguais.</p>
-            <p className="text-[#8bd132] font-semibold mt-1">Recomendação: criar variações controladas antes de concluir.</p>
+            <p className="text-[#ff5c5c] font-semibold mt-1">Recomendação: criar variações controladas antes de concluir.</p>
           </div>
         </div>
 
         <div className="space-y-2 rounded-xl border border-white/[0.07] bg-[#101316] p-4">
-          <span className="text-[9px] font-bold uppercase tracking-wider text-[#8bd132]">
+          <span className="text-[9px] font-bold uppercase tracking-wider text-[#ff5c5c]">
             Oportunidades contextuais
           </span>
           <h4 className="text-xs font-bold text-white">Pautas sugeridas pelo Brain</h4>

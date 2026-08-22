@@ -1,0 +1,514 @@
+/* Final cascade for the product-finish feedback pass. */
+.cx-stage,
+.cx-main,
+.cx-content-hub-approved,
+.cx-library-approved,
+.cx-calendar-approved,
+.cx-projects-approved,
+.cx-factory-approved {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.cx-product {
+  font-family: var(--clicko-font-sans) !important;
+  font-size: var(--clicko-type-body-size);
+  line-height: var(--clicko-type-body-line);
+  font-optical-sizing: auto;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+.cx-product :is(button, input, textarea, select) {
+  font-family: inherit;
+}
+
+.cx-product h1 {
+  font-family: var(--clicko-font-display) !important;
+  font-size: var(--clicko-type-page-size);
+  font-weight: var(--clicko-type-page-weight);
+  line-height: var(--clicko-type-page-line);
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+.cx-product h2 {
+  font-family: var(--clicko-font-sans) !important;
+  font-size: var(--clicko-type-section-size);
+  font-weight: var(--clicko-type-section-weight);
+  line-height: var(--clicko-type-section-line);
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+.cx-product h3 {
+  font-family: var(--clicko-font-sans) !important;
+  font-size: var(--clicko-type-card-size);
+  font-weight: var(--clicko-type-card-weight);
+  line-height: var(--clicko-type-card-line);
+  letter-spacing: 0;
+}
+
+.cx-product p {
+  line-height: var(--clicko-type-body-line);
+}
+
+.cx-product small {
+  line-height: var(--clicko-type-small-line);
+}
+
+/* Keep composer metadata at the shared minimum readable size. */
+.cx-home-approved .cx-composer footer button small {
+  font-size: var(--clicko-type-small-size) !important;
+  line-height: var(--clicko-type-small-line);
+}
+
+.cx-product :is(button, input, textarea, select) {
+  line-height: 1.35;
+}
+
+.cx-content-hub-approved :is(small, p),
+.cx-library-approved :is(small, p),
+.cx-calendar-approved :is(small, p),
+.cx-projects-approved :is(small, p),
+.cx-factory-approved :is(small, p),
+.cx-editor-approved :is(small, p),
+.cx-visual-approved :is(small, p),
+.cx-presenter-studio :is(small, p) {
+  color: #aaa;
+}
+
+.cx-home-approved .cx-composer > div {
+  min-height: 88px;
+}
+.cx-home-approved .cx-composer textarea {
+  min-height: 70px;
+  padding-block: 22px;
+}
+
+.cx-editor-home {
+  width: 78px;
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border: 0 !important;
+  background: transparent !important;
+  color: #fff !important;
+  padding: 0 !important;
+}
+.cx-editor-home strong {
+  font-family: var(--clicko-font-display);
+  font-size: 16px;
+}
+.cx-editor-home strong span {
+  color: var(--orange);
+}
+.cx-editor-home small {
+  color: #9c9c9c !important;
+}
+.cx-editor-back {
+  white-space: nowrap;
+}
+.cx-selection {
+  height: auto;
+  min-height: 32%;
+  overflow: visible;
+}
+.cx-selection > strong {
+  position: absolute;
+  inset: 8% 7%;
+  overflow-wrap: anywhere;
+  color: #fff;
+  font: 600 clamp(22px, 3.1vw, 40px) / 0.94 var(--clicko-font-display);
+  letter-spacing: -0.03em;
+}
+.cx-selection::before {
+  content: none !important;
+}
+.cx-slide-strip-approved {
+  position: relative;
+}
+.cx-slide-strip-toggle {
+  position: absolute;
+  top: 7px;
+  right: 10px;
+  border: 0;
+  background: transparent;
+  color: var(--orange);
+}
+.cx-slide-strip-approved.is-collapsed > div {
+  display: none;
+}
+.cx-visual-approved:has(.cx-slide-strip-approved.is-collapsed) {
+  grid-template-rows: 64px 1fr 48px;
+}
+.cx-visual-approved:has(.cx-slide-strip-approved.is-collapsed)
+  .cx-layers-approved
+  > .cx-button {
+  bottom: 68px;
+}
+
+.cx-presenter-focusbar {
+  min-height: 68px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  padding: 8px 12px 0;
+}
+.cx-presenter-focusbar article {
+  border: 1px solid #303030;
+  border-radius: 7px;
+  background: #111;
+  padding: 9px 11px;
+}
+.cx-presenter-focusbar article.is-decision {
+  border-color: var(--coral);
+}
+.cx-presenter-focusbar small,
+.cx-presenter-focusbar b {
+  display: block;
+}
+.cx-presenter-focusbar small {
+  color: var(--studio-orange) !important;
+  font: 12px/1.35 var(--clicko-font-mono) !important;
+}
+.cx-presenter-focusbar b {
+  margin-top: 6px;
+  font-size: 13px;
+}
+.cx-presenter-grid {
+  overflow: auto;
+}
+.cx-presenter-grid > aside,
+.cx-presenter-grid > main,
+.cx-presenter-tests {
+  overflow: visible;
+}
+
+@media (max-width: 1500px) and (min-width: 1101px) {
+  .cx-content-hub-layout,
+  .cx-library-layout,
+  .cx-calendar-approved-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .cx-content-hub-layout > aside {
+    border-left: 0;
+    border-top: 1px solid #303030;
+    padding: 14px 0 0;
+  }
+  .cx-content-filterbar {
+    grid-template-columns: minmax(220px, 1.4fr) repeat(3, minmax(120px, 1fr));
+  }
+  .cx-start-cards {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .cx-library-layout > aside,
+  .cx-calendar-approved-layout > aside {
+    order: -1;
+  }
+  .cx-calendar-week {
+    min-width: 0;
+  }
+  .cx-calendar-approved-layout > main {
+    overflow: hidden;
+  }
+  .cx-calendar-week > section {
+    min-width: 0;
+  }
+  .cx-calendar-week button b {
+    overflow-wrap: anywhere;
+  }
+  .cx-editorial-approved {
+    min-height: 100vh;
+    height: auto;
+    grid-template: 64px auto / 56px minmax(380px, 0.92fr) minmax(440px, 1.08fr);
+    overflow: auto;
+  }
+  .cx-editorial-context {
+    display: none;
+  }
+  .cx-editorial-copy,
+  .cx-editorial-preview {
+    min-width: 0;
+    overflow: visible;
+  }
+  .cx-editor-approved > header > span {
+    display: none;
+  }
+  .cx-editor-approved > header {
+    gap: 7px;
+  }
+  .cx-editor-approved > header .cx-button {
+    height: 32px;
+    padding-inline: 8px;
+  }
+}
+
+@media (max-width: 1350px) {
+  .cx-projects-toolbar {
+    grid-template-columns: 150px minmax(220px, 1fr) repeat(
+        3,
+        minmax(95px, auto)
+      );
+  }
+  .cx-project-universes {
+    grid-template-columns: 1fr;
+  }
+  .cx-visual-approved {
+    grid-template: 64px 1fr 160px / 72px 220px minmax(0, 1fr);
+  }
+  .cx-visual-approved > header {
+    padding-left: 84px;
+  }
+  .cx-design-approved {
+    display: none;
+  }
+  .cx-slide-strip-approved {
+    grid-column: 2/4;
+  }
+  .cx-layers-approved > .cx-button {
+    left: 94px;
+    width: 198px;
+    bottom: 180px;
+  }
+  .cx-visual-stage > div {
+    height: min(500px, calc(100vh - 260px));
+  }
+  .cx-presenter-studio {
+    grid-template-columns: 220px 1fr;
+  }
+  .cx-presenter-grid {
+    grid-template-columns: 170px minmax(420px, 1fr) 270px;
+  }
+}
+
+@media (max-width: 1100px) {
+  .cx-content-hub-layout,
+  .cx-library-layout,
+  .cx-calendar-approved-layout,
+  .cx-factory-system {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .cx-content-hub-layout > aside {
+    border-left: 0;
+    border-top: 1px solid #303030;
+    padding: 14px 0 0;
+  }
+  .cx-library-layout > aside,
+  .cx-calendar-approved-layout > aside {
+    order: -1;
+  }
+  .cx-content-filterbar {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .cx-start-cards {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .cx-calendar-week {
+    min-width: 0;
+  }
+  .cx-calendar-approved-layout > main {
+    overflow: hidden;
+  }
+  .cx-factory-decisions {
+    grid-column: 1;
+    grid-row: auto;
+  }
+  .cx-factory-destinations {
+    grid-column: 1;
+  }
+}
+
+@media (max-width: 850px) {
+  .cx-home-intelligence,
+  .cx-project-resume,
+  .cx-factory-cells {
+    grid-template-columns: 1fr 1fr;
+  }
+  .cx-project-universes > button {
+    grid-template-columns: 170px 1fr 18px;
+  }
+  .cx-factory-inputs > div {
+    grid-template-columns: 1fr 1fr;
+  }
+  .cx-factory-recipe > div {
+    display: flex;
+    flex-direction: column;
+  }
+  .cx-factory-recipe > div > span {
+    width: 100%;
+  }
+  .cx-factory-recipe > div > svg {
+    transform: rotate(90deg);
+  }
+  .cx-calendar-week {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .cx-calendar-week > section {
+    min-height: 360px;
+    border-bottom: 1px solid #303030;
+  }
+  .cx-presenter-focusbar {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 760px) {
+  .cx-home-intelligence,
+  .cx-project-universes,
+  .cx-project-resume,
+  .cx-factory-cells,
+  .cx-factory-inputs > div,
+  .cx-calendar-week {
+    grid-template-columns: 1fr;
+  }
+  .cx-content-filterbar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    overflow: visible;
+  }
+  .cx-projects-toolbar {
+    grid-template-columns: 1fr 1fr;
+    overflow: visible;
+  }
+  .cx-project-universes > button {
+    grid-template-columns: 1fr;
+  }
+  .cx-project-universe-visual {
+    min-height: 190px;
+  }
+  .cx-project-universes > button > svg {
+    display: none;
+  }
+  .cx-factory-destinations {
+    grid-template-columns: 1fr;
+  }
+  .cx-calendar-week > section {
+    min-height: 0;
+  }
+  .cx-presenter-main {
+    min-width: 0;
+  }
+}
+
+/* Minimum readable labels in the dense operational surfaces. */
+.cx-calendar-approved
+  :is(
+    .cx-calendar-controls button,
+    .cx-calendar-rhythm b,
+    .cx-calendar-rhythm span,
+    .cx-calendar-week header,
+    .cx-calendar-week button b,
+    .cx-calendar-week button span,
+    .cx-calendar-week button small,
+    .cx-calendar-approved-layout main footer span,
+    .cx-preflight p
+  ),
+.cx-factory-approved
+  :is(
+    .cx-factory-metrics span,
+    .cx-factory-metrics > small,
+    .cx-factory-inputs article i,
+    .cx-factory-recipe > div > span,
+    .cx-factory-cells article > b,
+    .cx-factory-cells article footer,
+    .cx-factory-decisions button > em,
+    .cx-factory-destinations span,
+    .cx-factory-destinations strong
+  ),
+.cx-projects-approved
+  :is(
+    .cx-project-resume b,
+    .cx-project-resume strong,
+    .cx-project-universe-copy > em,
+    .cx-project-output-list i,
+    .cx-project-universe-visual > em
+  ),
+.cx-social-detail
+  :is(
+    .cx-social-capabilities b,
+    .cx-social-capabilities small,
+    .cx-social-flow b,
+    .cx-social-flow small,
+    .cx-social-pairs b,
+    .cx-social-pairs small,
+    .cx-social-layout aside section > span b,
+    .cx-social-layout aside section > span small,
+    .cx-social-metrics small,
+    .cx-social-metrics em
+  ),
+.cx-presenter-studio
+  :is(
+    .cx-presenter-main > header nav i,
+    .cx-presenter-materials article b,
+    .cx-presenter-materials article em,
+    .cx-presenter-materials > span b,
+    .cx-presenter-materials > section b,
+    .cx-presenter-materials > section button,
+    .cx-presenter-composition article b,
+    .cx-presenter-limits section b,
+    .cx-presenter-limits section em,
+    .cx-presenter-limits section strong,
+    .cx-presenter-tests article b,
+    .cx-presenter-tests article em
+  ) {
+  font-size: var(--clicko-type-small-size) !important;
+  line-height: var(--clicko-type-small-line);
+}
+
+.cx-selection {
+  isolation: isolate;
+  overflow: visible;
+  border-radius: 5px;
+  background: transparent;
+}
+.cx-selection::before {
+  content: "" !important;
+  position: absolute;
+  z-index: -1;
+  inset: -22% -14% -28% -18%;
+  border-radius: 6px;
+  background: linear-gradient(
+    90deg,
+    #090908fc 0%,
+    #090908ef 74%,
+    #09090830 100%
+  );
+  box-shadow: 0 8px 30px #0008;
+}
+.cx-selection > strong {
+  z-index: 1;
+  inset: 9% 8%;
+  font-family: var(--clicko-font-sans) !important;
+  font-size: clamp(21px, 2.7vw, 34px);
+  font-weight: 800;
+  line-height: 0.94;
+}
+
+@media (max-width: 1500px) and (min-width: 1101px) {
+  .cx-home-approved .cx-composer footer {
+    height: auto;
+    min-height: 62px;
+    flex-wrap: wrap;
+    align-content: center;
+    padding-block: 8px;
+  }
+  .cx-home-approved .cx-composer footer button {
+    flex: 1 1 auto;
+  }
+  .cx-library-layout > aside,
+  .cx-calendar-approved-layout > aside {
+    order: initial;
+  }
+}
+
+@media (max-width: 1350px) and (min-width: 1101px) {
+  .cx-project-universes {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .cx-project-universes > button {
+    grid-template-columns: 145px minmax(0, 1fr) 16px;
+    gap: 11px;
+  }
+}

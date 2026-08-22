@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Settings Command V5 - Clicko Precision</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {"surface-container-high": "#2a2a2a", "surface-tint": "#ffb3af", surface: "#131313", "on-secondary-fixed": "#321200", "inverse-surface": "#e5e2e1", "on-primary-fixed-variant": "#920418", "on-primary-container": "#62000c", "surface-bright": "#393939", "tertiary-fixed-dim": "#ffb3b1", "tertiary-container": "#e17474", "surface-container": "#201f1f", "primary-container": "#ff5c5c", "secondary-fixed-dim": "#ffb68b", "inverse-on-surface": "#313030", "on-tertiary-fixed": "#410007", "on-tertiary-container": "#5c0e15", "on-tertiary-fixed-variant": "#7f292c", "primary-fixed": "#ffdad7", "on-primary-fixed": "#410005", "on-surface": "#e5e2e1", "surface-container-low": "#1c1b1b", "surface-dim": "#131313", error: "#ffb4ab", "error-container": "#93000a", primary: "#ffb3af", secondary: "#ffb68b", tertiary: "#ffb3b1", "on-background": "#e5e2e1", outline: "#a98987", "secondary-container": "#ff7f1c", "on-error-container": "#ffdad6", "on-secondary-fixed-variant": "#753400", background: "#131313", "on-surface-variant": "#e2bebc", "outline-variant": "#5a403f", "tertiary-fixed": "#ffdad8", "secondary-fixed": "#ffdbc8", "on-error": "#690005", "on-primary": "#68000d", "surface-container-highest": "#353534", "on-tertiary": "#601118", "surface-variant": "#353534", "inverse-primary": "#b4252d", "on-secondary-container": "#602a00", "surface-container-lowest": "#0e0e0e", "primary-fixed-dim": "#ffb3af", "on-secondary": "#522300"}, borderRadius: {DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem"}, spacing: {"container-max": "1440px", "margin-desktop": "32px", "margin-mobile": "16px", gutter: "16px", unit: "4px"}, fontFamily: {"body-lg": ["Geist"], display: ["Geist"], "label-md": ["Geist"], "headline-lg": ["Geist"], "body-md": ["Geist"], code: ["Geist"], "headline-md": ["Geist"], headline: ["Geist"], body: ["Geist"], label: ["Geist"]}, fontSize: {"body-lg": ["16px", {lineHeight: "1.5", fontWeight: "400"}], display: ["32px", {lineHeight: "1.2", letterSpacing: "-0.02em", fontWeight: "600"}], "label-md": ["12px", {lineHeight: "1", letterSpacing: "0.02em", fontWeight: "500"}], "headline-lg": ["24px", {lineHeight: "1.3", fontWeight: "600"}], "body-md": ["14px", {lineHeight: "1.5", fontWeight: "400"}], code: ["13px", {lineHeight: "1.4", fontWeight: "400"}], "headline-md": ["20px", {lineHeight: "1.4", fontWeight: "500"}]}}}};</script>
+<style>
+        /* Custom scrollbar for dense layouts */
+        ::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #343536; /* surface-container-highest */
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #474746; /* secondary-container */
+        }
+        body {
+            background-color: #0F1011; /* Enforce base level 0 */
+        }
+        .border-level-1 { border-color: #3b4a3d; } /* outline-variant */
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md antialiased min-h-screen flex flex-col">
+<!-- Supressed Navigation Shell (TopAppBar/BottomNavBar) as Settings is a transactional/focused intent -->
+<!-- Creating a focused contextual header instead -->
+<header class="flex justify-between items-center px-margin-desktop w-full h-16 bg-surface-container-lowest border-b border-outline-variant">
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:text-primary transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">arrow_back</span>
+<span class="font-label-md text-label-md">Back to Workspace</span>
+</button>
+<div class="h-6 w-[1px] bg-outline-variant"></div>
+<h1 class="font-headline-lg text-headline-lg font-bold text-on-surface tracking-tighter">Settings Command V5</h1>
+</div>
+<div class="flex items-center gap-4">
+<span class="font-label-md text-label-md text-on-surface-variant flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-primary block"></span>
+                Governance Active
+            </span>
+<img alt="User profile" class="w-8 h-8 rounded-full border border-outline-variant object-cover" data-alt="A macro photography shot of a sleek, dark matte metallic server node with subtle glowing green fiber optic elements indicating active data processing, representing technical precision and governance in a sterile server room environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3xSvwesfgmI8odzjW0sdOD4j2P7mkL4Cfu2LMdJZRB79KWhNEnD1UGdhTOHfQirOeU-AetAXWB_3mw_XMK_Acm98YsAmeJDN7NoJSfxKaI8LVzMTgdy1CDKuf9ZTcgdLTA2OMnx96Ify_rAyQPpkaA_6qwIO9iJc6YGmYivxBrYP7pZG-VzVKhExngQ7e_sMJYJ76-RlpFx2TwqV_TTeiTRKYKTYYd3wkrY3DLmP3LnDK4fmys9FW1g"/>
+</div>
+</header>
+<main class="flex-1 flex w-full max-w-container-max mx-auto h-[calc(100vh-64px)] overflow-hidden">
+<!-- Workflow Spine (Sidebar Settings Navigation) -->
+<nav class="w-[240px] shrink-0 bg-surface-container-low border-r border-outline-variant flex flex-col h-full py-6">
+<div class="px-6 mb-6">
+<h2 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest">Configuration</h2>
+</div>
+<ul class="flex flex-col gap-1 px-4">
+<li>
+<a class="flex items-center gap-3 px-3 py-2 rounded font-body-md text-body-md text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined text-[18px]">person</span>
+                        Profile
+                    </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 rounded font-body-md text-body-md text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined text-[18px]">business</span>
+                        Organization
+                    </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 rounded font-body-md text-body-md text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined text-[18px]">security</span>
+                        Access &amp; Security
+                    </a>
+</li>
+<li class="mt-4 mb-2 px-2">
+<h3 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest">AI &amp; Governance</h3>
+</li>
+<li>
+<!-- Active State -->
+<a class="flex items-center gap-3 px-3 py-2 rounded font-body-md text-body-md bg-[#1E1E1E] text-primary border border-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">memory</span>
+                        Memory Governance
+                    </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 rounded font-body-md text-body-md text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined text-[18px]">policy</span>
+                        Autonomy Rules
+                    </a>
+</li>
+</ul>
+</nav>
+<!-- Main Content Area -->
+<section class="flex-1 overflow-y-auto p-margin-desktop bg-surface">
+<div class="max-w-4xl">
+<!-- Section Header -->
+<div class="mb-8 border-b border-outline-variant pb-6">
+<h2 class="font-headline-md text-headline-md text-on-surface mb-2">Memory Governance</h2>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl">Configure how Clicko AI interacts with Brand Memory. Define autonomy thresholds, memory retention periods, and contextual override rules for campaign synthesis.</p>
+</div>
+<!-- Bento Grid for Memory Governance Settings -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- AI Autonomy Level (Spans 8 cols) -->
+<div class="col-span-1 md:col-span-8 bg-[#181B1D] border border-outline-variant rounded p-6">
+<div class="flex items-center justify-between mb-6">
+<h3 class="font-label-md text-label-md text-on-surface uppercase tracking-widest flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-primary">tune</span>
+                                AI Autonomy Threshold
+                            </h3>
+<span class="bg-primary-container text-on-primary-container font-label-md text-label-md px-2 py-1 rounded-sm">High Control</span>
+</div>
+<div class="space-y-6">
+<!-- Slider visualization (mock) -->
+<div class="w-full relative py-4">
+<div class="h-[1px] w-full bg-outline-variant absolute top-1/2 -translate-y-1/2"></div>
+<div class="h-[1px] w-3/4 bg-primary absolute top-1/2 -translate-y-1/2 left-0"></div>
+<div class="absolute top-1/2 -translate-y-1/2 left-3/4 w-3 h-3 bg-primary rounded-full shadow-[0_0_8px_rgba(117,255,158,0.5)] cursor-pointer"></div>
+<div class="flex justify-between mt-4 font-code text-code text-on-surface-variant">
+<span>Restrictive</span>
+<span>Balanced</span>
+<span class="text-primary">Autonomous</span>
+</div>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant bg-surface-container-low p-4 border border-outline-variant rounded">
+<strong class="text-on-surface">Current State:</strong> The AI will autonomously pull historical campaign data to generate drafts, but requires explicit human approval before committing changes to the Brand Memory archive.
+                            </p>
+</div>
+</div>
+<!-- Status Quick Card (Spans 4 cols) -->
+<div class="col-span-1 md:col-span-4 bg-[#181B1D] border border-outline-variant rounded p-6 flex flex-col justify-between">
+<div>
+<h3 class="font-label-md text-label-md text-on-surface uppercase tracking-widest mb-4">Memory Index Status</h3>
+<div class="flex items-baseline gap-2 mb-2">
+<span class="font-display text-display text-primary">99.8%</span>
+<span class="font-code text-code text-on-surface-variant">Sync Health</span>
+</div>
+<p class="font-code text-code text-on-surface-variant">Last indexed: 2m ago</p>
+</div>
+<div class="mt-6 border-t border-outline-variant pt-4">
+<button class="w-full bg-surface-container-highest hover:bg-secondary-container text-on-surface font-label-md text-label-md py-2 border border-outline-variant rounded transition-colors flex justify-center items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">sync</span>
+                                Force Re-index
+                            </button>
+</div>
+</div>
+<!-- Contextual Data Usage (Full width - 12 cols) -->
+<div class="col-span-1 md:col-span-12 bg-[#181B1D] border border-outline-variant rounded p-6 mt-2">
+<h3 class="font-label-md text-label-md text-on-surface uppercase tracking-widest mb-6">Contextual Data Usage</h3>
+<!-- High density table -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-outline-variant">
+<th class="py-2 px-2 font-label-md text-label-md text-on-surface-variant">Data Source</th>
+<th class="py-2 px-2 font-label-md text-label-md text-on-surface-variant">Access Level</th>
+<th class="py-2 px-2 font-label-md text-label-md text-on-surface-variant">Retention Limit</th>
+<th class="py-2 px-2 font-label-md text-label-md text-on-surface-variant">Status</th>
+<th class="py-2 px-2 text-right"></th>
+</tr>
+</thead>
+<tbody class="font-code text-code">
+<tr class="border-b border-outline-variant hover:bg-[#1E1E1E] transition-colors group">
+<td class="py-3 px-2 text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">description</span>
+                                            Campaign Briefs
+                                        </td>
+<td class="py-3 px-2 text-on-surface">Read / Write</td>
+<td class="py-3 px-2 text-on-surface-variant">Indefinite</td>
+<td class="py-3 px-2">
+<span class="flex items-center gap-1.5 text-primary">
+<span class="w-1.5 h-1.5 bg-primary rounded-full"></span> Active
+                                            </span>
+</td>
+<td class="py-3 px-2 text-right">
+<button class="text-on-surface-variant group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[16px]">more_vert</span>
+</button>
+</td>
+</tr>
+<tr class="border-b border-outline-variant hover:bg-[#1E1E1E] transition-colors group">
+<td class="py-3 px-2 text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">chat</span>
+                                            Radar Room Transcripts
+                                        </td>
+<td class="py-3 px-2 text-on-surface">Read Only</td>
+<td class="py-3 px-2 text-on-surface-variant">90 Days</td>
+<td class="py-3 px-2">
+<span class="flex items-center gap-1.5 text-primary">
+<span class="w-1.5 h-1.5 bg-primary rounded-full"></span> Active
+                                            </span>
+</td>
+<td class="py-3 px-2 text-right">
+<button class="text-on-surface-variant group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[16px]">more_vert</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-[#1E1E1E] transition-colors group">
+<td class="py-3 px-2 text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">image</span>
+                                            Draft Assets
+                                        </td>
+<td class="py-3 px-2 text-on-surface">None</td>
+<td class="py-3 px-2 text-on-surface-variant">0 Days</td>
+<td class="py-3 px-2">
+<span class="flex items-center gap-1.5 text-on-surface-variant">
+<span class="w-1.5 h-1.5 bg-[#474746] rounded-full"></span> Disabled
+                                            </span>
+</td>
+<td class="py-3 px-2 text-right">
+<button class="text-on-surface-variant group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[16px]">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Action Footer within content -->
+<div class="mt-8 flex justify-end gap-4 border-t border-outline-variant pt-6">
+<button class="px-4 py-2 border border-outline-variant rounded text-on-surface font-label-md text-label-md hover:bg-surface-container-high transition-colors">Discard Changes</button>
+<button class="px-4 py-2 bg-primary text-on-primary-fixed font-label-md text-label-md rounded hover:bg-primary-fixed transition-colors">Save Configurations</button>
+</div>
+</div>
+</section>
+</main>
+<script src="/stitch/bridge.js"></script></body></html>

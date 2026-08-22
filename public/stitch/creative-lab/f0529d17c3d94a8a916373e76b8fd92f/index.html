@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Clicko - Carousel Builder</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {"on-secondary-fixed": "#321200", primary: "#ffb3af", background: "#131313", "tertiary-fixed-dim": "#ffb3b1", "surface-container-high": "#2a2a2a", "on-surface-variant": "#e2bebc", secondary: "#ffb68b", "surface-bright": "#393939", "on-tertiary-fixed": "#410007", "tertiary-container": "#e17474", "on-primary": "#68000d", "secondary-fixed": "#ffdbc8", "on-secondary-container": "#602a00", "primary-fixed": "#ffdad7", "primary-container": "#ff5c5c", "tertiary-fixed": "#ffdad8", "surface-container-low": "#1c1b1b", "surface-container-highest": "#353534", "outline-variant": "#5a403f", surface: "#131313", "on-primary-fixed": "#410005", "on-secondary": "#522300", "surface-tint": "#ffb3af", "secondary-fixed-dim": "#ffb68b", "on-primary-fixed-variant": "#920418", "on-secondary-fixed-variant": "#753400", "on-primary-container": "#62000c", "inverse-on-surface": "#313030", "inverse-primary": "#b4252d", "surface-container-lowest": "#0e0e0e", "on-error": "#690005", "on-tertiary-container": "#5c0e15", "on-tertiary": "#601118", "on-surface": "#e5e2e1", "on-tertiary-fixed-variant": "#7f292c", "secondary-container": "#ff7f1c", "primary-fixed-dim": "#ffb3af", "surface-container": "#201f1f", "inverse-surface": "#e5e2e1", "on-error-container": "#ffdad6", "on-background": "#e5e2e1", outline: "#a98987", error: "#ffb4ab", "error-container": "#93000a", "surface-dim": "#131313", tertiary: "#ffb3b1", "surface-variant": "#353534"}, borderRadius: {DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem"}, spacing: {stack_gap_md: "16px", gutter: "16px", stack_gap_sm: "8px", spine_width: "64px", context_nav_width: "240px", container_padding: "24px"}, fontFamily: {"body-sm": ["Geist"], "headline-md": ["Geist"], display: ["Geist"], "label-mono": ["Geist"], "headline-lg": ["Geist"], "body-lg": ["Geist"], "data-number": ["Geist"], "body-md": ["Geist"], headline: ["Geist"], body: ["Geist"], label: ["Geist"]}, fontSize: {"body-sm": ["13px", {lineHeight: "18px", fontWeight: "400"}], "headline-md": ["20px", {lineHeight: "28px", fontWeight: "500"}], display: ["32px", {lineHeight: "40px", letterSpacing: "-0.02em", fontWeight: "600"}], "label-mono": ["12px", {lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "500"}], "headline-lg": ["24px", {lineHeight: "32px", letterSpacing: "-0.01em", fontWeight: "600"}], "body-lg": ["16px", {lineHeight: "24px", fontWeight: "400"}], "data-number": ["14px", {lineHeight: "20px", fontWeight: "600"}], "body-md": ["14px", {lineHeight: "20px", fontWeight: "400"}]}}}};</script>
+<style>
+        body { background-color: #0F1011; color: #e3e2e3; }
+        .workbench-border { border: 1px solid #2C2F31; }
+        .canvas-area { height: calc(100vh - 64px - 160px); }
+        .aspect-4-5 { aspect-ratio: 4 / 5; }
+        .safe-area { position: absolute; inset: 10%; border: 1px dashed rgba(255, 255, 255, 0.3); pointer-events: none; display: none; }
+        .show-safe-area .safe-area { display: block; }
+    </style>
+</head>
+<body class="flex flex-col h-screen overflow-hidden text-body-md font-body-md bg-background text-on-background">
+<!-- TopNavBar -->
+<header class="w-full h-16 top-0 sticky bg-surface-container-low dark:bg-surface-container-low border-b border-outline-variant flex justify-between items-center px-gutter w-full z-50 shrink-0">
+<div class="flex items-center gap-4">
+<h1 class="font-display text-display text-primary dark:text-primary tracking-tight">Clicko Creative Lab</h1>
+<div class="workbench-border rounded bg-surface px-3 py-1.5 flex items-center gap-2 ml-8">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">search</span>
+<input class="bg-transparent border-none text-body-sm font-body-sm text-on-surface focus:outline-none focus:ring-0 w-48 placeholder-on-surface-variant" placeholder="Search..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<!-- Format Toggle & Safe Area (Specific to Carousel Builder) -->
+<div class="flex items-center bg-surface-container-highest rounded workbench-border mr-4">
+<button class="px-3 py-1.5 text-label-mono font-label-mono bg-primary-container text-on-primary-container rounded-l transition-colors">4:5</button>
+<button class="px-3 py-1.5 text-label-mono font-label-mono text-on-surface-variant hover:text-on-surface transition-colors">1:1</button>
+<div class="w-[1px] h-4 bg-outline-variant mx-1"></div>
+<button class="px-3 py-1.5 text-label-mono font-label-mono text-on-surface-variant hover:text-on-surface transition-colors flex items-center gap-1" onclick="document.getElementById('main-canvas').classList.toggle('show-safe-area')">
+<span class="material-symbols-outlined text-[16px]">crop_free</span> Safe Area
+                </button>
+</div>
+<button class="material-symbols-outlined text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-bright transition-colors rounded p-1">notifications</button>
+<button class="material-symbols-outlined text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-bright transition-colors rounded p-1">settings</button>
+<button class="bg-primary-container text-on-primary-container px-4 py-2 rounded text-body-sm font-headline-md font-medium hover:opacity-90 transition-opacity">Create Post</button>
+<img alt="User avatar" class="w-8 h-8 rounded-full ml-2 workbench-border" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDL2gJU1zp-ynCf0tTfQTEE-HS9yZ73SLpd0zntyBl4BqX-k7xQ0FExjgfIQv7KmLVK8iHdtZDxfIhvliizMTY1XcosbsscOplSaEXbYD_J-oUnLBlbWm1w-CqEdVmfGHfwd6jHuQVwYzMzJDpZNqa7Gz6bhprPOmyprkFbK7yGIgrYh9z-2lWpUbhFjCNkdoqfhA_dfn_gltFctkii1lLd3Vt1BJmGMTiBvJNU3FwL8C7VnbPdPKpf3w"/>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden">
+<!-- SideNavBar -->
+<nav class="h-full w-spine_width fixed left-0 top-16 bg-surface-container-lowest dark:bg-surface-container-lowest border-r border-outline-variant flex flex-col items-center py-4 z-40 shrink-0">
+<div class="flex flex-col gap-4 w-full items-center">
+<button class="p-2 rounded text-on-surface-variant opacity-60 hover:text-on-surface hover:bg-surface-container transition-all duration-150 ease-in-out group relative" title="Asset Library">
+<span class="material-symbols-outlined text-[24px]">folder_open</span>
+</button>
+<button class="p-2 rounded text-on-surface-variant opacity-60 hover:text-on-surface hover:bg-surface-container transition-all duration-150 ease-in-out group relative" title="Moodboard">
+<span class="material-symbols-outlined text-[24px]">palette</span>
+</button>
+<button class="p-2 rounded text-primary border-l-2 border-primary bg-surface-container-high transition-all duration-150 ease-in-out group relative" title="Carousel Builder">
+<span class="material-symbols-outlined text-[24px]">view_carousel</span>
+</button>
+<button class="p-2 rounded text-on-surface-variant opacity-60 hover:text-on-surface hover:bg-surface-container transition-all duration-150 ease-in-out group relative" title="Format Board">
+<span class="material-symbols-outlined text-[24px]">aspect_ratio</span>
+</button>
+<button class="p-2 rounded text-on-surface-variant opacity-60 hover:text-on-surface hover:bg-surface-container transition-all duration-150 ease-in-out group relative" title="Campaign World">
+<span class="material-symbols-outlined text-[24px]">public</span>
+</button>
+</div>
+<div class="mt-auto flex flex-col gap-4 w-full items-center mb-16">
+<button class="p-2 rounded text-on-surface-variant opacity-60 hover:text-on-surface hover:bg-surface-container transition-all duration-150 ease-in-out" title="Support">
+<span class="material-symbols-outlined text-[24px]">help_outline</span>
+</button>
+<button class="p-2 rounded text-on-surface-variant opacity-60 hover:text-on-surface hover:bg-surface-container transition-all duration-150 ease-in-out" title="Account">
+<span class="material-symbols-outlined text-[24px]">person</span>
+</button>
+<div class="w-8 h-8 rounded mt-2 overflow-hidden workbench-border" title="Workspace: Client Select">
+<img alt="Workspace switcher" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD-NX-DXiJHaB7kJtjFs43ZfFoQC5ganWaKKiemB1SG8fE5U8hVZACbWLr998Hb2XWM7ZCdodSsPqBStOGC4aDtrVq-05ri4sgf3mA6t3ZtQKUmUYjAFCyqA5O1EF6pnvJf8RppLLDpVmRnSBUTWbMPyUnEnFZ4g_JyB8v6t4otAoY0lRPL2bOd3Ijsr0fJknCZVYHFEuq_8viFjYm3vXUl3O4QtCHputVwrL7WO1DVZomP1zgTGgjqBQ"/>
+</div>
+</div>
+</nav>
+<!-- Main Workspace -->
+<main class="flex-1 ml-spine_width flex flex-col overflow-hidden bg-background">
+<!-- Central Canvas & Right Panel Area -->
+<div class="flex-1 flex overflow-hidden">
+<!-- Canvas -->
+<section class="flex-1 relative flex items-center justify-center p-8 bg-surface-container-lowest canvas-area">
+<!-- Slide Container -->
+<div class="relative bg-surface workbench-border rounded-lg shadow-2xl flex items-center justify-center overflow-hidden aspect-4-5 h-full max-h-[800px] transition-all duration-300" id="main-canvas">
+<div class="safe-area"></div>
+<!-- Slide 2 Content (Current active in visualization) -->
+<div class="absolute inset-0 bg-black flex flex-col items-center justify-center p-8">
+<img class="absolute inset-0 w-full h-full object-cover opacity-80 mix-blend-luminosity" data-alt="A highly detailed, ultra-close-up macro shot of a rich, dark espresso shot being extracted into a minimalist matte black ceramic cup. The lighting is dramatic, high-contrast, professional studio lighting with a dark mood. The crema is thick and golden, catching a sharp rim light that highlights its texture. The background is completely swallowed in deep shadow, emphasizing the clinical, precise, high-density professional aesthetic of the coffee preparation process. Utilitarian precision in every droplet." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBib7Tgex3DPd8kXzxgZbjbv5TTaF1woywrZWEXwCJjb7fONd1AVMKMJ3xu-2JpPgxzrmOiO6Y8GJDDhCFXfU-Hpj_TD9NS4VRCSQ6-bF5tZJLDJnchPzRkN4sJXQSZdFq1rLogswwVvHfL4zpzq1rSBUZ8PFQUBkV2G-kzsvoYjCtRspXOPsH4QJTbxBvBy0P2gz7wbOf1_HhisrKo2c6sk2kMnmpIRfTCx58Jeio-mqafBLWOmHs8wQ"/>
+<div class="relative z-10 w-full h-full flex flex-col justify-end pb-12">
+<h2 class="text-display font-display font-bold text-white tracking-tighter leading-none mb-4 uppercase mix-blend-difference">O SEU<br/>RITUAL</h2>
+<p class="text-body-lg font-body-lg text-secondary max-w-[80%] border-l-2 border-primary pl-4 mix-blend-difference">A precisão necessária para o começo do dia.</p>
+</div>
+</div>
+<!-- Slide Navigation Overlays -->
+<button class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-surface-container-high/80 workbench-border flex items-center justify-center text-on-surface hover:bg-surface-bright transition-colors backdrop-blur-sm z-20">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-surface-container-high/80 workbench-border flex items-center justify-center text-on-surface hover:bg-surface-bright transition-colors backdrop-blur-sm z-20">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+<!-- Canvas Controls -->
+<div class="absolute top-4 right-4 flex gap-2 z-20">
+<button class="w-8 h-8 rounded bg-surface-container-high/80 workbench-border flex items-center justify-center text-on-surface hover:bg-surface-bright transition-colors backdrop-blur-sm" title="Zoom In">
+<span class="material-symbols-outlined text-[18px]">zoom_in</span>
+</button>
+<button class="w-8 h-8 rounded bg-surface-container-high/80 workbench-border flex items-center justify-center text-on-surface hover:bg-surface-bright transition-colors backdrop-blur-sm" title="Zoom Out">
+<span class="material-symbols-outlined text-[18px]">zoom_out</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Right Panel (Inspector) -->
+<aside class="w-[320px] bg-surface-container-low workbench-border border-l flex flex-col shrink-0 overflow-y-auto">
+<div class="p-4 border-b border-outline-variant flex justify-between items-center sticky top-0 bg-surface-container-low z-10">
+<h3 class="font-headline-md text-headline-md text-on-surface">Slide 2</h3>
+<div class="flex gap-1">
+<button class="p-1 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors"><span class="material-symbols-outlined text-[18px]">content_copy</span></button>
+<button class="p-1 rounded text-on-surface-variant hover:text-error hover:bg-surface-container transition-colors"><span class="material-symbols-outlined text-[18px]">delete</span></button>
+</div>
+</div>
+<div class="p-4 flex flex-col gap-6">
+<!-- Lineage -->
+<div>
+<h4 class="font-label-mono text-label-mono text-on-surface-variant mb-2 uppercase tracking-wider flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">account_tree</span> Lineage
+                            </h4>
+<div class="bg-surface p-3 rounded workbench-border text-body-sm text-secondary">
+<p class="mb-2"><span class="text-on-surface font-medium">From S1:</span> Hook established ('O SEU RITUAL').</p>
+<p><span class="text-primary font-medium">To S2:</span> Visual proof of the ritual (Macro espresso shot). Transition via hard cut.</p>
+</div>
+</div>
+<!-- Copy -->
+<div>
+<h4 class="font-label-mono text-label-mono text-on-surface-variant mb-2 uppercase tracking-wider flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">notes</span> Slide Copy
+                            </h4>
+<textarea class="w-full bg-surface workbench-border rounded p-3 text-body-sm font-body-sm text-on-surface h-24 focus:border-primary focus:ring-1 focus:ring-primary resize-none placeholder-on-surface-variant" placeholder="Enter slide copy...">O SEU RITUAL
+A precisão necessária para o começo do dia.</textarea>
+</div>
+<!-- Hook Ideas -->
+<div>
+<h4 class="font-label-mono text-label-mono text-on-surface-variant mb-2 uppercase tracking-wider flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">lightbulb</span> Hook Alternatives
+                            </h4>
+<div class="flex flex-col gap-2">
+<div class="bg-surface workbench-border rounded p-2 text-body-sm flex justify-between items-center group cursor-pointer hover:border-primary transition-colors">
+<span class="text-secondary group-hover:text-on-surface">A QUÍMICA PERFEITA</span>
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant opacity-0 group-hover:opacity-100">add</span>
+</div>
+<div class="bg-surface workbench-border rounded p-2 text-body-sm flex justify-between items-center group cursor-pointer hover:border-primary transition-colors">
+<span class="text-secondary group-hover:text-on-surface">O PRIMEIRO PASSO</span>
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant opacity-0 group-hover:opacity-100">add</span>
+</div>
+</div>
+</div>
+<!-- Visual Assets -->
+<div>
+<h4 class="font-label-mono text-label-mono text-on-surface-variant mb-2 uppercase tracking-wider flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">image</span> Background Media
+                            </h4>
+<div class="w-full aspect-video bg-surface workbench-border rounded flex items-center justify-center relative overflow-hidden group cursor-pointer">
+<img class="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-80 transition-opacity" data-alt="A highly detailed, ultra-close-up macro shot of a rich, dark espresso shot being extracted into a minimalist matte black ceramic cup. Studio lighting, dark mood." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB9bPPzhYhzl32hTwugRxB6oCMnmbTRQ8IePgEqs_ALXjFUsXrpfmKAtgyvylcNvHL38-LSrMaVMhPZz5G3AljJEhfWHUEbfvfpJRFovl5oiqWCqVRE9k2m3Gnp159zfJPD-oV2GhkemMF8WhXZDxqhwdN9aIjPRPm2RkzbCqpcNA-a6pyopL2nM-A2tLib-f8iWkmaTAuT_Hsd8lz08BXbYe0sAIUQLkBEySUwwqGzVxVDi7DmS6dUcg"/>
+<div class="relative z-10 flex flex-col items-center gap-1 bg-surface-container-high/80 px-3 py-1 rounded workbench-border backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-[18px] text-on-surface">swap_horiz</span>
+<span class="text-label-mono text-on-surface">Replace</span>
+</div>
+</div>
+</div>
+</div>
+</aside>
+</div>
+<!-- Bottom Rail (Timeline) -->
+<footer class="h-[160px] bg-surface-container-highest border-t border-outline-variant flex items-center px-6 overflow-x-auto gap-4 shrink-0">
+<!-- Slide 1 -->
+<div class="h-[120px] aspect-4-5 bg-surface workbench-border rounded relative group cursor-grab shrink-0">
+<div class="absolute top-1 left-1 bg-surface-container-high px-1.5 py-0.5 rounded text-[10px] font-label-mono text-on-surface z-10">1</div>
+<div class="absolute inset-0 bg-black flex items-center justify-center p-2 overflow-hidden rounded">
+<div class="w-full text-center">
+<span class="text-[8px] font-display font-bold text-white uppercase leading-none mix-blend-difference">O SEU<br/>RITUAL</span>
+</div>
+</div>
+<!-- Hover Actions -->
+<div class="absolute -top-3 -right-3 hidden group-hover:flex bg-surface-container-high rounded workbench-border z-20 overflow-hidden shadow-lg">
+<button class="p-1 hover:bg-surface-bright text-on-surface-variant hover:text-on-surface" title="Duplicate"><span class="material-symbols-outlined text-[14px]">content_copy</span></button>
+<button class="p-1 hover:bg-surface-bright text-on-surface-variant hover:text-error" title="Delete"><span class="material-symbols-outlined text-[14px]">close</span></button>
+</div>
+</div>
+<!-- Slide 2 (Active) -->
+<div class="h-[120px] aspect-4-5 bg-surface border-2 border-primary rounded relative group cursor-grab shrink-0 ring-2 ring-primary/20">
+<div class="absolute top-1 left-1 bg-primary text-on-primary px-1.5 py-0.5 rounded text-[10px] font-label-mono z-10 font-bold">2</div>
+<div class="absolute inset-0 bg-black overflow-hidden rounded">
+<img class="w-full h-full object-cover opacity-80 grayscale" data-alt="Macro espresso shot" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBhWKswwCHhJ14We_e0j1odi5df-9foX-54BDPSfUYO3HMCTqatfray7Fwyx9Jc2OEHcDZqDwb8249Cte3IpQXfCmsA3xdLEj4-dfojMdOHWZ4epzoiKcRX_Xug2GWFCnba65r5_pToVa7dVUDS3nullawh9-2dXOthYXUZwnct3c3iY9jbJBZp_wWVr6u7GWqzX03lJV42HZggPx335C1tV9kAfOtEIGt-huWw2CDcnU6yWvGXb7CKAw"/>
+</div>
+<!-- Hover Actions -->
+<div class="absolute -top-3 -right-3 hidden group-hover:flex bg-surface-container-high rounded workbench-border z-20 overflow-hidden shadow-lg">
+<button class="p-1 hover:bg-surface-bright text-on-surface-variant hover:text-on-surface" title="Duplicate"><span class="material-symbols-outlined text-[14px]">content_copy</span></button>
+<button class="p-1 hover:bg-surface-bright text-on-surface-variant hover:text-error" title="Delete"><span class="material-symbols-outlined text-[14px]">close</span></button>
+</div>
+</div>
+<!-- Slide 3 -->
+<div class="h-[120px] aspect-4-5 bg-surface workbench-border rounded relative group cursor-grab shrink-0">
+<div class="absolute top-1 left-1 bg-surface-container-high px-1.5 py-0.5 rounded text-[10px] font-label-mono text-on-surface z-10">3</div>
+<div class="absolute inset-0 bg-black flex items-center justify-center p-2 overflow-hidden rounded">
+<div class="w-full text-center">
+<span class="text-[8px] font-display font-bold text-white uppercase leading-none mix-blend-difference">DESCOBERTA</span>
+</div>
+</div>
+<!-- Hover Actions -->
+<div class="absolute -top-3 -right-3 hidden group-hover:flex bg-surface-container-high rounded workbench-border z-20 overflow-hidden shadow-lg">
+<button class="p-1 hover:bg-surface-bright text-on-surface-variant hover:text-on-surface" title="Duplicate"><span class="material-symbols-outlined text-[14px]">content_copy</span></button>
+<button class="p-1 hover:bg-surface-bright text-on-surface-variant hover:text-error" title="Delete"><span class="material-symbols-outlined text-[14px]">close</span></button>
+</div>
+</div>
+<!-- Add New Slide -->
+<button class="h-[120px] aspect-4-5 bg-transparent border border-dashed border-outline-variant hover:border-primary hover:bg-primary/5 rounded flex flex-col items-center justify-center gap-2 text-on-surface-variant hover:text-primary transition-colors shrink-0">
+<span class="material-symbols-outlined">add</span>
+<span class="font-label-mono text-[10px]">Add Slide</span>
+</button>
+</footer>
+</main>
+</div>
+<script src="/stitch/bridge.js"></script></body></html>

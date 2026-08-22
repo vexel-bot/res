@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Pro Composition Canvas V2</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {secondary: "#ffb68b", "primary-fixed-dim": "#ffb3af", background: "#131313", surface: "#131313", "surface-tint": "#ffb3af", "secondary-container": "#ff7f1c", "on-error-container": "#ffdad6", "secondary-fixed-dim": "#ffb68b", "tertiary-container": "#e17474", "on-primary-fixed-variant": "#920418", "on-primary-container": "#62000c", "on-tertiary": "#601118", "on-surface": "#e5e2e1", "outline-variant": "#5a403f", "on-primary": "#68000d", "surface-container-lowest": "#0e0e0e", "inverse-surface": "#e5e2e1", "surface-dim": "#131313", "on-tertiary-container": "#5c0e15", "inverse-on-surface": "#313030", "surface-bright": "#393939", "primary-container": "#ff5c5c", "primary-fixed": "#ffdad7", "on-tertiary-fixed-variant": "#7f292c", "on-primary-fixed": "#410005", "inverse-primary": "#b4252d", "on-secondary": "#522300", "on-secondary-fixed-variant": "#753400", "tertiary-fixed": "#ffdad8", "on-secondary-fixed": "#321200", "tertiary-fixed-dim": "#ffb3b1", "surface-container-highest": "#353534", "on-error": "#690005", "surface-container": "#201f1f", primary: "#ffb3af", "on-background": "#e5e2e1", "secondary-fixed": "#ffdbc8", "surface-container-high": "#2a2a2a", "on-surface-variant": "#e2bebc", "on-tertiary-fixed": "#410007", "error-container": "#93000a", "surface-variant": "#353534", "surface-container-low": "#1c1b1b", outline: "#a98987", tertiary: "#ffb3b1", "on-secondary-container": "#602a00", error: "#ffb4ab"}, borderRadius: {DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem"}, spacing: {context_nav_width: "240px", stack_gap_md: "16px", spine_width: "64px", container_padding: "24px", stack_gap_sm: "8px", gutter: "16px"}, fontFamily: {"data-number": ["Geist"], "label-mono": ["Geist"], "body-lg": ["Geist"], "body-md": ["Geist"], "body-sm": ["Geist"], display: ["Geist"], "headline-lg": ["Geist"], "headline-md": ["Geist"], headline: ["Geist"], body: ["Geist"], label: ["Geist"]}, fontSize: {"data-number": ["14px", {lineHeight: "20px", fontWeight: "600"}], "label-mono": ["12px", {lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "500"}], "body-lg": ["16px", {lineHeight: "24px", fontWeight: "400"}], "body-md": ["14px", {lineHeight: "20px", fontWeight: "400"}], "body-sm": ["13px", {lineHeight: "18px", fontWeight: "400"}], display: ["32px", {lineHeight: "40px", letterSpacing: "-0.02em", fontWeight: "600"}], "headline-lg": ["24px", {lineHeight: "32px", letterSpacing: "-0.01em", fontWeight: "600"}], "headline-md": ["20px", {lineHeight: "28px", fontWeight: "500"}]}}}};</script>
+<style>
+        body { font-family: 'Geist', sans-serif; }
+        .bg-canvas-pattern {
+            background-image: radial-gradient(var(--tw-colors-outline-variant) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface h-screen overflow-hidden flex flex-col">
+<!-- TopNavBar -->
+<header class="bg-surface dark:bg-surface text-primary dark:text-primary border-b border-outline-variant fixed top-0 w-full h-16 flex justify-between items-center px-container_padding z-50">
+<div class="flex items-center gap-8 h-full">
+<span class="text-headline-lg font-headline-lg font-bold text-primary tracking-tight">CREATIVE LAB</span>
+<nav class="hidden md:flex items-center gap-6 h-full pt-2">
+<a class="font-label-mono text-label-mono text-primary border-b-2 border-primary pb-1 h-full flex items-center mt-1" href="#">Composition</a>
+<a class="font-label-mono text-label-mono text-on-surface-variant hover:text-primary transition-colors cursor-pointer active:opacity-80 h-full flex items-center" href="#">Inventory</a>
+<a class="font-label-mono text-label-mono text-on-surface-variant hover:text-primary transition-colors cursor-pointer active:opacity-80 h-full flex items-center" href="#">Review</a>
+<a class="font-label-mono text-label-mono text-on-surface-variant hover:text-primary transition-colors cursor-pointer active:opacity-80 h-full flex items-center" href="#">Insights</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden lg:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">search</span>
+<input class="bg-background border border-outline-variant rounded-DEFAULT h-8 pl-9 pr-3 text-body-sm font-body-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none w-48 text-on-surface placeholder:text-on-surface-variant" placeholder="Search resources..." type="text"/>
+</div>
+<div class="flex items-center gap-2">
+<button class="text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined text-[20px]">notifications</span></button>
+<button class="text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined text-[20px]">settings</span></button>
+</div>
+<button class="bg-primary text-[#000000] font-label-mono text-label-mono px-4 py-1.5 rounded-DEFAULT hover:bg-primary-fixed transition-colors">Publish</button>
+<div class="w-8 h-8 rounded-full bg-surface-container-highest overflow-hidden border border-outline-variant ml-2">
+<img alt="Creative Director Profile" class="w-full h-full object-cover" data-alt="A striking portrait of a sophisticated creative director, high-contrast monochrome with subtle cyan lighting, ultra-detailed professional studio photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBiptYUtuQS2xz01g8oEHOzZ1iAsKcn6oYNetwTuX50ONN3_XgY_7SIN75JHr-je7-b1qqoE6mKz93Aju2PnbqHScxNdOEXajNAbjkpDi6yE1iMOml9XrToJnSxk1pzr1tYKQr149w7OVfFYAYVUE1yrkGmcVpg1RRwSYrwJLC9AXlW55l8Bh9Escgx1ZhBmHLn6Mhmjk-2_5TcxgLZjKkAPmJhpUZeUQqm5REUjSeXssLS2Y9MgkY3wA"/>
+</div>
+</div>
+</header>
+<div class="flex flex-1 mt-16 w-full h-[calc(100vh-64px)]">
+<!-- SideNavBar -->
+<aside class="bg-surface-container dark:bg-surface-container text-primary dark:text-primary border-r border-outline-variant fixed left-0 top-16 h-[calc(100vh-64px)] w-spine_width md:w-context_nav_width flex flex-col py-stack_gap_md z-40 transition-all duration-200">
+<div class="px-4 mb-6 hidden md:block">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-DEFAULT bg-surface-bright flex items-center justify-center border border-outline-variant">
+<span class="material-symbols-outlined text-on-surface-variant">folder_special</span>
+</div>
+<div>
+<div class="font-label-mono text-label-mono text-on-surface">Project Alpha</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Creative Director Active</div>
+</div>
+</div>
+</div>
+<nav class="flex flex-col gap-1 flex-1 px-2">
+<a class="flex items-center gap-3 px-3 py-2 rounded-DEFAULT text-on-surface-variant hover:bg-surface-container-highest transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">route</span>
+<span class="font-label-mono text-label-mono hidden md:block">Workflow Spine</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-DEFAULT bg-secondary-container text-primary border-l-4 border-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">brush</span>
+<span class="font-label-mono text-label-mono hidden md:block">Pro Canvas</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-DEFAULT text-on-surface-variant hover:bg-surface-container-highest transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">grid_view</span>
+<span class="font-label-mono text-label-mono hidden md:block">Content Board</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-DEFAULT text-on-surface-variant hover:bg-surface-container-highest transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+<span class="font-label-mono text-label-mono hidden md:block">Review Room</span>
+</a>
+</nav>
+<div class="px-4 mt-auto mb-4 hidden md:block">
+<button class="w-full bg-transparent border border-outline-variant text-on-surface font-label-mono text-label-mono py-2 rounded-DEFAULT hover:border-primary hover:text-primary transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[16px]">add</span> New Composition
+                </button>
+</div>
+<nav class="flex flex-col gap-1 px-2 border-t border-outline-variant pt-4 mt-4">
+<a class="flex items-center gap-3 px-3 py-2 rounded-DEFAULT text-on-surface-variant hover:bg-surface-container-highest transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">help</span>
+<span class="font-label-mono text-label-mono hidden md:block">Help</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-DEFAULT text-on-surface-variant hover:bg-surface-container-highest transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">archive</span>
+<span class="font-label-mono text-label-mono hidden md:block">Archive</span>
+</a>
+</nav>
+</aside>
+<!-- Main Workspace (Canvas + Inspector) -->
+<main class="ml-spine_width md:ml-context_nav_width flex-1 flex h-full bg-surface-container-lowest">
+<!-- Canvas Area -->
+<section class="flex-1 flex flex-col h-full relative overflow-hidden">
+<!-- Contextual Top Bar -->
+<div class="h-12 border-b border-outline-variant bg-surface flex items-center px-4 gap-4 flex-shrink-0">
+<div class="flex items-center gap-1 border-r border-outline-variant pr-4">
+<button class="w-8 h-8 flex items-center justify-center rounded hover:bg-surface-container-highest text-on-surface-variant transition-colors"><span class="material-symbols-outlined text-[18px]">undo</span></button>
+<button class="w-8 h-8 flex items-center justify-center rounded hover:bg-surface-container-highest text-on-surface-variant transition-colors"><span class="material-symbols-outlined text-[18px]">redo</span></button>
+</div>
+<div class="flex items-center gap-1 border-r border-outline-variant pr-4">
+<button class="w-8 h-8 flex items-center justify-center rounded hover:bg-surface-container-highest text-on-surface transition-colors"><span class="material-symbols-outlined text-[18px]">format_align_left</span></button>
+<button class="w-8 h-8 flex items-center justify-center rounded hover:bg-surface-container-highest text-on-surface-variant transition-colors"><span class="material-symbols-outlined text-[18px]">format_align_center</span></button>
+<button class="w-8 h-8 flex items-center justify-center rounded hover:bg-surface-container-highest text-on-surface-variant transition-colors"><span class="material-symbols-outlined text-[18px]">format_align_right</span></button>
+<button class="w-8 h-8 flex items-center justify-center rounded hover:bg-surface-container-highest text-on-surface-variant transition-colors"><span class="material-symbols-outlined text-[18px]">format_align_justify</span></button>
+</div>
+<div class="flex items-center gap-1 border-r border-outline-variant pr-4">
+<button class="w-8 h-8 flex items-center justify-center rounded hover:bg-surface-container-highest text-on-surface-variant transition-colors"><span class="material-symbols-outlined text-[18px]">vertical_align_top</span></button>
+<button class="w-8 h-8 flex items-center justify-center rounded hover:bg-surface-container-highest text-on-surface-variant transition-colors"><span class="material-symbols-outlined text-[18px]">vertical_align_center</span></button>
+<button class="w-8 h-8 flex items-center justify-center rounded hover:bg-surface-container-highest text-on-surface-variant transition-colors"><span class="material-symbols-outlined text-[18px]">vertical_align_bottom</span></button>
+<button class="w-8 h-8 flex items-center justify-center rounded hover:bg-surface-container-highest text-on-surface-variant transition-colors ml-2"><span class="material-symbols-outlined text-[18px]">space_dashboard</span></button>
+</div>
+<span class="font-label-mono text-label-mono text-on-surface-variant ml-auto">100%</span>
+</div>
+<!-- Canvas Board -->
+<div class="flex-1 bg-surface-container-lowest bg-canvas-pattern overflow-auto flex items-center justify-center relative p-8">
+<!-- 4:5 Safe Area Canvas -->
+<div class="w-[400px] h-[500px] bg-surface border border-outline-variant relative shadow-lg group">
+<!-- Overlay Guides -->
+<div class="absolute inset-0 pointer-events-none">
+<div class="absolute top-0 bottom-0 left-1/2 w-[1px] bg-primary/20 -translate-x-1/2"></div>
+<div class="absolute left-0 right-0 top-1/2 h-[1px] bg-primary/20 -translate-y-1/2"></div>
+<div class="absolute inset-4 border border-outline-variant/30 border-dashed"></div>
+</div>
+<!-- Canvas Content placeholder -->
+<div class="absolute inset-0 opacity-40 bg-cover bg-center grayscale" data-alt="A minimalist architectural photograph of concrete structures with strong shadows, cinematic lighting, editorial dark aesthetic." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBfVdPoSY9uLrX_es-Erq36K5o_rfKCvlfHMNthmhT5XmarlGGzzMNl54z7T4wSQPZJQSeJqTT3zN29aV9yRvbmkAeVl7Ss1L38zIYcazTZNu2HWP-1iTfiwtXUjpDFPS924LcgqTynqe2_q-mEDgajcsjOwiB7IbAd4eAoPCDN2uWbQ8E6RyDpbS4gn8uaizn2h3pK9BEvZlqZ7f22jTFJnpRgDVNJQ_xQdDworemvPmo-EBUERhz19Q')"></div>
+<!-- Selected Text Block -->
+<div class="absolute top-[180px] left-[40px] right-[40px] border border-primary cursor-move">
+<!-- Resize Handles -->
+<div class="absolute -top-1 -left-1 w-2 h-2 bg-surface border border-primary"></div>
+<div class="absolute -top-1 -right-1 w-2 h-2 bg-surface border border-primary"></div>
+<div class="absolute -bottom-1 -left-1 w-2 h-2 bg-surface border border-primary"></div>
+<div class="absolute -bottom-1 -right-1 w-2 h-2 bg-surface border border-primary"></div>
+<div class="absolute top-1/2 -left-1 w-2 h-2 bg-surface border border-primary -translate-y-1/2"></div>
+<div class="absolute top-1/2 -right-1 w-2 h-2 bg-surface border border-primary -translate-y-1/2"></div>
+<!-- Snapping Line Indicator (simulated) -->
+<div class="absolute -top-[180px] bottom-0 left-0 w-[1px] bg-primary pointer-events-none opacity-50"></div>
+<h1 class="font-display text-display text-on-surface uppercase tracking-widest text-center py-4 bg-surface/50 backdrop-blur-sm m-0">O SEU RITUAL</h1>
+</div>
+</div>
+</div>
+</section>
+<!-- Right Inspector -->
+<aside class="w-[320px] bg-surface border-l border-outline-variant flex flex-col h-full flex-shrink-0">
+<!-- Inspector Tabs -->
+<div class="flex border-b border-outline-variant">
+<button class="flex-1 py-3 font-label-mono text-label-mono text-primary border-b-2 border-primary bg-surface-container-highest/50">Design</button>
+<button class="flex-1 py-3 font-label-mono text-label-mono text-on-surface-variant hover:text-on-surface transition-colors">Prototyping</button>
+<button class="flex-1 py-3 font-label-mono text-label-mono text-on-surface-variant hover:text-on-surface transition-colors">Export</button>
+</div>
+<div class="flex-1 overflow-y-auto">
+<!-- Alignment & Coordinates -->
+<div class="p-4 border-b border-outline-variant space-y-4">
+<div class="flex justify-between items-center text-on-surface-variant">
+<span class="font-label-mono text-label-mono uppercase">Position &amp; Size</span>
+<button class="hover:text-primary"><span class="material-symbols-outlined text-[16px]">more_horiz</span></button>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<div class="flex items-center gap-2">
+<span class="font-label-mono text-label-mono text-on-surface-variant w-4">X</span>
+<input class="flex-1 h-8 bg-background border border-outline-variant rounded text-data-number font-data-number text-on-surface px-2 focus:border-primary focus:ring-1 focus:ring-primary outline-none" type="text" value="40"/>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-label-mono text-label-mono text-on-surface-variant w-4">Y</span>
+<input class="flex-1 h-8 bg-background border border-outline-variant rounded text-data-number font-data-number text-on-surface px-2 focus:border-primary focus:ring-1 focus:ring-primary outline-none" type="text" value="180"/>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-label-mono text-label-mono text-on-surface-variant w-4">W</span>
+<input class="flex-1 h-8 bg-background border border-outline-variant rounded text-data-number font-data-number text-on-surface px-2 focus:border-primary focus:ring-1 focus:ring-primary outline-none" type="text" value="320"/>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-label-mono text-label-mono text-on-surface-variant w-4">H</span>
+<input class="flex-1 h-8 bg-background border border-outline-variant rounded text-data-number font-data-number text-on-surface px-2 focus:border-primary focus:ring-1 focus:ring-primary outline-none" type="text" value="72"/>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-2 flex-1">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">rotate_right</span>
+<input class="w-full h-8 bg-background border border-outline-variant rounded text-data-number font-data-number text-on-surface px-2 focus:border-primary outline-none" type="text" value="0°"/>
+</div>
+<div class="flex items-center gap-2 flex-1">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">rounded_corner</span>
+<input class="w-full h-8 bg-background border border-outline-variant rounded text-data-number font-data-number text-on-surface px-2 focus:border-primary outline-none" type="text" value="0"/>
+</div>
+</div>
+</div>
+<!-- Typography -->
+<div class="p-4 border-b border-outline-variant space-y-4">
+<div class="flex justify-between items-center text-on-surface">
+<span class="font-label-mono text-label-mono uppercase">Typography</span>
+<div class="flex gap-2">
+<button class="text-on-surface-variant hover:text-primary"><span class="material-symbols-outlined text-[16px]">add</span></button>
+<button class="text-on-surface-variant hover:text-primary"><span class="material-symbols-outlined text-[16px]">more_horiz</span></button>
+</div>
+</div>
+<!-- Font Selection -->
+<div class="relative">
+<select class="w-full h-8 bg-background border border-outline-variant rounded font-body-sm text-body-sm text-on-surface px-2 appearance-none focus:border-primary outline-none">
+<option>Geist</option>
+<option>Inter</option>
+<option>Roboto</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-[16px] text-on-surface-variant pointer-events-none">expand_more</span>
+</div>
+<!-- Weight & Size -->
+<div class="flex gap-2">
+<div class="relative flex-[2]">
+<select class="w-full h-8 bg-background border border-outline-variant rounded font-body-sm text-body-sm text-on-surface px-2 appearance-none focus:border-primary outline-none">
+<option>Regular</option>
+<option>Medium</option>
+<option selected="">SemiBold</option>
+<option>Bold</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-[16px] text-on-surface-variant pointer-events-none">expand_more</span>
+</div>
+<div class="relative flex-1">
+<span class="absolute left-2 top-1/2 -translate-y-1/2 font-label-mono text-[10px] text-on-surface-variant">Px</span>
+<input class="w-full h-8 bg-background border border-outline-variant rounded text-data-number font-data-number text-on-surface pl-7 pr-2 focus:border-primary outline-none" type="text" value="32"/>
+</div>
+</div>
+<!-- Leading & Tracking -->
+<div class="flex gap-2">
+<div class="relative flex-1 flex items-center border border-outline-variant rounded bg-background h-8 px-2 focus-within:border-primary">
+<span class="material-symbols-outlined text-[14px] text-on-surface-variant mr-2">format_line_spacing</span>
+<input class="w-full bg-transparent text-data-number font-data-number text-on-surface outline-none" type="text" value="40"/>
+</div>
+<div class="relative flex-1 flex items-center border border-outline-variant rounded bg-background h-8 px-2 focus-within:border-primary">
+<span class="material-symbols-outlined text-[14px] text-on-surface-variant mr-2">format_letter_spacing</span>
+<input class="w-full bg-transparent text-data-number font-data-number text-on-surface outline-none" type="text" value="-2%"/>
+</div>
+</div>
+<!-- Text Styles / Paragraph -->
+<div class="flex justify-between items-center bg-background border border-outline-variant rounded p-1">
+<button class="flex-1 py-1 flex justify-center rounded bg-surface text-on-surface shadow-sm border border-outline-variant"><span class="material-symbols-outlined text-[16px]">format_align_left</span></button>
+<button class="flex-1 py-1 flex justify-center rounded text-on-surface-variant hover:text-on-surface"><span class="material-symbols-outlined text-[16px]">format_align_center</span></button>
+<button class="flex-1 py-1 flex justify-center rounded text-on-surface-variant hover:text-on-surface"><span class="material-symbols-outlined text-[16px]">format_align_right</span></button>
+<button class="flex-1 py-1 flex justify-center rounded text-on-surface-variant hover:text-on-surface"><span class="material-symbols-outlined text-[16px]">format_align_justify</span></button>
+</div>
+</div>
+<!-- Constraints -->
+<div class="p-4 border-b border-outline-variant space-y-4">
+<div class="flex justify-between items-center text-on-surface">
+<span class="font-label-mono text-label-mono uppercase">Constraints</span>
+</div>
+<div class="flex gap-4 items-center">
+<div class="w-16 h-16 border border-outline-variant relative bg-background rounded flex items-center justify-center">
+<!-- Constraint visualization -->
+<div class="w-6 h-6 border-t-2 border-l-2 border-primary absolute top-2 left-2"></div>
+<div class="w-8 h-8 bg-surface-container-highest border border-outline-variant rounded-sm"></div>
+</div>
+<div class="flex-1 space-y-2">
+<div class="flex justify-between items-center text-body-sm font-body-sm">
+<span class="text-on-surface-variant">Horizontal</span>
+<span class="text-on-surface">Left</span>
+</div>
+<div class="flex justify-between items-center text-body-sm font-body-sm">
+<span class="text-on-surface-variant">Vertical</span>
+<span class="text-on-surface">Top</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer CTA -->
+<div class="p-4 border-t border-outline-variant bg-surface-container-highest mt-auto">
+<button class="w-full bg-primary text-[#000000] font-label-mono text-label-mono py-2 rounded-DEFAULT hover:bg-primary-fixed transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[16px]">save</span> Save as Campaign Component
+                    </button>
+</div>
+</aside>
+</main>
+</div>
+<script src="/stitch/bridge.js"></script></body></html>

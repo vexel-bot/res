@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Subscription Capacity V5 - Clicko Precision</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {"surface-container-high": "#2a2a2a", "surface-tint": "#ffb3af", surface: "#131313", "on-secondary-fixed": "#321200", "inverse-surface": "#e5e2e1", "on-primary-fixed-variant": "#920418", "on-primary-container": "#62000c", "surface-bright": "#393939", "tertiary-fixed-dim": "#ffb3b1", "tertiary-container": "#e17474", "surface-container": "#201f1f", "primary-container": "#ff5c5c", "secondary-fixed-dim": "#ffb68b", "inverse-on-surface": "#313030", "on-tertiary-fixed": "#410007", "on-tertiary-container": "#5c0e15", "on-tertiary-fixed-variant": "#7f292c", "primary-fixed": "#ffdad7", "on-primary-fixed": "#410005", "on-surface": "#e5e2e1", "surface-container-low": "#1c1b1b", "surface-dim": "#131313", error: "#ffb4ab", "error-container": "#93000a", primary: "#ffb3af", secondary: "#ffb68b", tertiary: "#ffb3b1", "on-background": "#e5e2e1", outline: "#a98987", "secondary-container": "#ff7f1c", "on-error-container": "#ffdad6", "on-secondary-fixed-variant": "#753400", background: "#131313", "on-surface-variant": "#e2bebc", "outline-variant": "#5a403f", "tertiary-fixed": "#ffdad8", "secondary-fixed": "#ffdbc8", "on-error": "#690005", "on-primary": "#68000d", "surface-container-highest": "#353534", "on-tertiary": "#601118", "surface-variant": "#353534", "inverse-primary": "#b4252d", "on-secondary-container": "#602a00", "surface-container-lowest": "#0e0e0e", "primary-fixed-dim": "#ffb3af", "on-secondary": "#522300"}, borderRadius: {DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem"}, spacing: {"container-max": "1440px", "margin-desktop": "32px", "margin-mobile": "16px", gutter: "16px", unit: "4px"}, fontFamily: {"body-lg": ["Geist"], display: ["Geist"], "label-md": ["Geist"], "headline-lg": ["Geist"], "body-md": ["Geist"], code: ["Geist"], "headline-md": ["Geist"], headline: ["Geist"], body: ["Geist"], label: ["Geist"]}, fontSize: {"body-lg": ["16px", {lineHeight: "1.5", fontWeight: "400"}], display: ["32px", {lineHeight: "1.2", letterSpacing: "-0.02em", fontWeight: "600"}], "label-md": ["12px", {lineHeight: "1", letterSpacing: "0.02em", fontWeight: "500"}], "headline-lg": ["24px", {lineHeight: "1.3", fontWeight: "600"}], "body-md": ["14px", {lineHeight: "1.5", fontWeight: "400"}], code: ["13px", {lineHeight: "1.4", fontWeight: "400"}], "headline-md": ["20px", {lineHeight: "1.4", fontWeight: "500"}]}}}};</script>
+<style>
+        body {
+            background-color: #0F1011;
+            color: #e3e2e3;
+        }
+        /* Custom thin scrollbar */
+        ::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #343536;
+            border-radius: 2px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #474746;
+        }
+    </style>
+</head>
+<body class="font-body-md antialiased min-h-screen flex flex-col">
+<!-- TopAppBar Semantic Shell -->
+<header class="flex justify-between items-center px-margin-desktop w-full h-16 bg-surface-container-lowest border-b border-outline-variant flat no shadows relative z-50">
+<div class="flex items-center gap-8">
+<h1 class="font-headline-lg text-headline-lg font-bold text-on-surface tracking-tighter">Clicko Precision</h1>
+<!-- Navigation Spine -->
+<nav class="hidden md:flex items-center h-full pt-4">
+<ul class="flex gap-6 h-full items-end">
+<li><a class="block font-label-md text-label-md text-on-surface-variant pb-4 hover:text-primary transition-colors duration-200" href="#">Newsroom</a></li>
+<li><a class="block font-label-md text-label-md text-on-surface-variant pb-4 hover:text-primary transition-colors duration-200" href="#">Radar Room</a></li>
+<li><a class="block font-label-md text-label-md text-on-surface-variant pb-4 hover:text-primary transition-colors duration-200" href="#">Brand Memory</a></li>
+<li><a class="block font-label-md text-label-md text-on-surface-variant pb-4 hover:text-primary transition-colors duration-200" href="#">Campaign Intake</a></li>
+<li><a class="block font-label-md text-label-md text-primary border-b-2 border-primary pb-4 opacity-80 transition-opacity" href="#">Campaign Room</a></li>
+</ul>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="bg-primary text-on-primary font-label-md text-label-md px-4 py-2 rounded flex items-center gap-2 hover:bg-primary-fixed transition-colors">
+                New Workspace
+            </button>
+<div class="flex items-center gap-2 border-l border-outline-variant pl-4 ml-2">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+</button>
+<img alt="User profile" class="w-8 h-8 rounded-full ml-2 border border-outline-variant object-cover" data-alt="A small, high-contrast black and white avatar portrait of a professional in a minimalist setting. Studio lighting, sharp focus, technical aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCBx1I8kOJTBqZbXjkuN2Ec5nxZHWG4wdZwnn_CdBoZa4fG7f1jqwLPVIQ0tXVOYgIFQ_fJV58LjCvSbAhL98x7aRG1ik-dPrRTHp2wRhbdM05ev-sBEA95RcYHJ-Im_PxiuPfTbla_grhzxcN8xM51rLR2zOCysEbNDKncLwmhVgJw3Qc1vElyYe_xmT60WIXvts7E2THuox2OXwXfv-TIhgCVorFUFvhEmu3S0L-dcdPrtKqTGakvoA"/>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow flex flex-col md:flex-row w-full max-w-[1440px] mx-auto">
+<!-- Sidebar Navigation (Settings Context) -->
+<aside class="w-full md:w-[240px] bg-[#181B1D] border-r border-outline-variant flex flex-col pt-6 flex-shrink-0">
+<div class="px-6 mb-4">
+<h2 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest">Settings</h2>
+</div>
+<nav class="flex flex-col gap-1 px-4">
+<a class="px-4 py-2 rounded text-on-surface-variant hover:bg-[#1E1E1E] hover:text-on-surface transition-colors font-body-md text-body-md flex items-center gap-3" href="#">
+<span class="material-symbols-outlined text-[18px]">person</span> Profile
+                </a>
+<a class="px-4 py-2 rounded text-on-surface-variant hover:bg-[#1E1E1E] hover:text-on-surface transition-colors font-body-md text-body-md flex items-center gap-3" href="#">
+<span class="material-symbols-outlined text-[18px]">group</span> Team Members
+                </a>
+<a class="px-4 py-2 rounded text-on-surface-variant hover:bg-[#1E1E1E] hover:text-on-surface transition-colors font-body-md text-body-md flex items-center gap-3" href="#">
+<span class="material-symbols-outlined text-[18px]">credit_card</span> Billing
+                </a>
+<a class="px-4 py-2 rounded bg-[#1E1E1E] text-primary font-body-md text-body-md flex items-center gap-3 border border-outline-variant relative" href="#">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-primary rounded-l"></div>
+<span class="material-symbols-outlined text-[18px]">database</span> Capacity V5
+                </a>
+<a class="px-4 py-2 rounded text-on-surface-variant hover:bg-[#1E1E1E] hover:text-on-surface transition-colors font-body-md text-body-md flex items-center gap-3" href="#">
+<span class="material-symbols-outlined text-[18px]">api</span> API Keys
+                </a>
+</nav>
+</aside>
+<!-- Main Workspace -->
+<section class="flex-grow p-margin-mobile md:p-margin-desktop bg-[#0F1011] overflow-y-auto">
+<div class="max-w-4xl mx-auto space-y-8">
+<!-- Page Header -->
+<div class="flex justify-between items-end border-b border-outline-variant pb-6">
+<div>
+<h2 class="font-display text-display text-on-surface mb-2">Subscription Capacity</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Technical overview of current plan utilization and limits.</p>
+</div>
+<div class="flex items-center gap-3 bg-[#181B1D] border border-outline-variant px-4 py-2 rounded">
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+<span class="font-label-md text-label-md text-on-surface">Enterprise Tier Active</span>
+</div>
+</div>
+<!-- Capacity Grids -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Credits Usage Card -->
+<div class="bg-[#181B1D] border border-outline-variant rounded p-6 flex flex-col gap-6">
+<div class="flex justify-between items-center">
+<h3 class="font-headline-md text-headline-md text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]">bolt</span>
+                                Campaign Credits
+                            </h3>
+<span class="font-code text-code text-on-surface-variant bg-surface-container-highest px-2 py-1 rounded">Reset in 12d</span>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between font-label-md text-label-md">
+<span class="text-on-surface-variant">Utilization</span>
+<span class="text-on-surface"><span class="text-primary font-bold">8,420</span> / 10,000</span>
+</div>
+<div class="w-full h-2 bg-[#292a2b] rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full w-[84.2%] transition-all duration-500"></div>
+</div>
+<p class="font-label-md text-label-md text-on-surface-variant text-right">84.2% Consumed</p>
+</div>
+<div class="mt-auto pt-4 border-t border-outline-variant">
+<button class="w-full py-2 border border-outline-variant rounded font-label-md text-label-md text-on-surface hover:bg-[#1E1E1E] transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[16px]">add_circle</span> Add Credit Pack
+                            </button>
+</div>
+</div>
+<!-- Storage Usage Card -->
+<div class="bg-[#181B1D] border border-outline-variant rounded p-6 flex flex-col gap-6">
+<div class="flex justify-between items-center">
+<h3 class="font-headline-md text-headline-md text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]">hard_drive</span>
+                                Asset Storage
+                            </h3>
+<span class="font-code text-code text-on-surface-variant bg-surface-container-highest px-2 py-1 rounded">Persistent</span>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between font-label-md text-label-md">
+<span class="text-on-surface-variant">Utilization</span>
+<span class="text-on-surface"><span class="text-primary font-bold">142 GB</span> / 500 GB</span>
+</div>
+<div class="w-full h-2 bg-[#292a2b] rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full w-[28.4%] transition-all duration-500"></div>
+</div>
+<p class="font-label-md text-label-md text-on-surface-variant text-right">28.4% Consumed</p>
+</div>
+<div class="mt-auto pt-4 border-t border-outline-variant">
+<button class="w-full py-2 border border-outline-variant rounded font-label-md text-label-md text-on-surface hover:bg-[#1E1E1E] transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[16px]">storage</span> Expand Volume
+                            </button>
+</div>
+</div>
+<!-- Workspaces Card (Full Width) -->
+<div class="md:col-span-2 bg-[#181B1D] border border-outline-variant rounded p-6">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-headline-md text-headline-md text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]">grid_view</span>
+                                Workspace Slots
+                            </h3>
+<div class="font-label-md text-label-md text-on-surface">
+<span class="text-primary font-bold">3</span> Active / <span class="text-on-surface-variant">5 Limit</span>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+<!-- Active Slots -->
+<div class="bg-[#1E1E1E] border border-primary rounded p-4 flex flex-col gap-2 relative">
+<div class="absolute top-2 right-2 w-1.5 h-1.5 rounded-full bg-primary"></div>
+<span class="font-code text-code text-on-surface-variant">WS-001</span>
+<span class="font-body-md text-body-md text-on-surface truncate">Q3 Marketing</span>
+</div>
+<div class="bg-[#1E1E1E] border border-primary rounded p-4 flex flex-col gap-2 relative">
+<div class="absolute top-2 right-2 w-1.5 h-1.5 rounded-full bg-primary"></div>
+<span class="font-code text-code text-on-surface-variant">WS-002</span>
+<span class="font-body-md text-body-md text-on-surface truncate">Product Launch</span>
+</div>
+<div class="bg-[#1E1E1E] border border-primary rounded p-4 flex flex-col gap-2 relative">
+<div class="absolute top-2 right-2 w-1.5 h-1.5 rounded-full bg-primary"></div>
+<span class="font-code text-code text-on-surface-variant">WS-003</span>
+<span class="font-body-md text-body-md text-on-surface truncate">Brand Refresh</span>
+</div>
+<!-- Empty Slots -->
+<div class="border border-dashed border-outline-variant rounded p-4 flex flex-col items-center justify-center gap-2 text-on-surface-variant opacity-50">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span class="font-label-md text-label-md">Available</span>
+</div>
+<div class="border border-dashed border-outline-variant rounded p-4 flex flex-col items-center justify-center gap-2 text-on-surface-variant opacity-50">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span class="font-label-md text-label-md">Available</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer Semantic Shell -->
+<footer class="flex justify-between items-center px-margin-desktop py-4 w-full bg-surface-container-low border-t border-outline-variant flat no shadows relative z-50">
+<div class="font-label-md text-label-md uppercase tracking-widest text-on-surface-variant">
+            © 2024 Clicko Precision. Operational Governance System.
+        </div>
+<nav>
+<ul class="flex gap-6">
+<li><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" href="#">Documentation</a></li>
+<li><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" href="#">Support</a></li>
+<li><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" href="#">System Status</a></li>
+<li><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" href="#">Security</a></li>
+</ul>
+</nav>
+</footer>
+<script src="/stitch/bridge.js"></script></body></html>

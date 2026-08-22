@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Channel Connections V5</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {"secondary-fixed-dim": "#ffb68b", "surface-variant": "#353534", surface: "#131313", "on-secondary-container": "#602a00", "surface-bright": "#393939", "surface-container-lowest": "#0e0e0e", "primary-container": "#ff5c5c", "inverse-surface": "#e5e2e1", "error-container": "#93000a", "primary-fixed-dim": "#ffb3af", "on-primary-container": "#62000c", "primary-fixed": "#ffdad7", "on-primary-fixed-variant": "#920418", "tertiary-fixed-dim": "#ffb3b1", "surface-dim": "#131313", "on-tertiary-container": "#5c0e15", "on-error-container": "#ffdad6", "inverse-on-surface": "#313030", "on-secondary-fixed-variant": "#753400", secondary: "#ffb68b", "on-background": "#e5e2e1", "outline-variant": "#5a403f", "secondary-fixed": "#ffdbc8", outline: "#a98987", error: "#ffb4ab", "on-surface-variant": "#e2bebc", "tertiary-fixed": "#ffdad8", "surface-container": "#201f1f", background: "#131313", "on-tertiary-fixed-variant": "#7f292c", "tertiary-container": "#e17474", "surface-tint": "#ffb3af", "secondary-container": "#ff7f1c", "on-surface": "#e5e2e1", "surface-container-low": "#1c1b1b", "on-secondary-fixed": "#321200", "inverse-primary": "#b4252d", "on-error": "#690005", primary: "#ffb3af", "on-tertiary": "#601118", "on-secondary": "#522300", "surface-container-highest": "#353534", "on-primary-fixed": "#410005", "surface-container-high": "#2a2a2a", "on-tertiary-fixed": "#410007", tertiary: "#ffb3b1", "on-primary": "#68000d"}, borderRadius: {DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem"}, spacing: {"container-max": "1440px", unit: "4px", "margin-mobile": "16px", gutter: "16px", "margin-desktop": "32px"}, fontFamily: {"body-lg": ["Geist"], "label-md": ["Geist"], "headline-lg": ["Geist"], code: ["Geist"], display: ["Geist"], "headline-md": ["Geist"], "body-md": ["Geist"], headline: ["Geist"], body: ["Geist"], label: ["Geist"]}, fontSize: {"body-lg": ["16px", {lineHeight: "1.5", fontWeight: "400"}], "label-md": ["12px", {lineHeight: "1", letterSpacing: "0.02em", fontWeight: "500"}], "headline-lg": ["24px", {lineHeight: "1.3", fontWeight: "600"}], code: ["13px", {lineHeight: "1.4", fontWeight: "400"}], display: ["32px", {lineHeight: "1.2", letterSpacing: "-0.02em", fontWeight: "600"}], "headline-md": ["20px", {lineHeight: "1.4", fontWeight: "500"}], "body-md": ["14px", {lineHeight: "1.5", fontWeight: "400"}]}}}};</script>
+<style>
+        body { background-color: #0F1011; color: #e3e2e3; }
+        .surface-panel { background-color: #181B1D; }
+        .border-base { border-color: #3b4a3d; }
+        .verde-operacional { color: #00E676; }
+        .bg-verde-operacional { background-color: #00E676; color: #000; }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; height: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #343536; border-radius: 4px; }
+        .custom-scrollbar:hover::-webkit-scrollbar-thumb { background: #515456; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col font-body-md">
+<!-- TopNavBar -->
+<header class="flex justify-between items-center px-margin-desktop w-full sticky top-0 z-50 bg-surface border-b border-outline-variant h-16">
+<div class="flex items-center gap-8">
+<h1 class="font-headline-md text-headline-md font-bold text-primary">Clicko Precision</h1>
+<nav class="hidden md:flex gap-6 h-full items-center">
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-200 cursor-pointer" href="#">Newsroom</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-200 cursor-pointer" href="#">Radar Room</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-200 cursor-pointer" href="#">Brand Memory</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-200 cursor-pointer" href="#">Campaign Intake</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-200 cursor-pointer" href="#">Campaign Room</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:text-primary transition-colors duration-200">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors duration-200">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-surface-container overflow-hidden border border-outline-variant">
+<img alt="User profile" class="w-full h-full object-cover" data-alt="A macro photography shot of a sleek, abstract metallic sphere glowing with subtle internal green LED lights, set against a dark matte background. The image evokes a sense of high-tech precision and operational readiness in an industrial, clinical environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAZVfPZV8QAFOomEhz2k5iu-ekR9H_L873212VEP__QOjiROdpqjlG15atrEWdep9jDvN4mic2VHWQkk5vocvdq_yTxNi-1Y5ze5eVNSflwDZJTX7OQD3xT7fP0X45c4jT3oL5FDj2jCxMfBgmlU4hcvgYnj3-Cd-Dj_ylur6dNRskahhtDuMscKMB8q1Ma4iwGA3W65yWnGbazPf1n2xQ2NEWS4aIHatJyIwZUuz0CKwE5V057y04_Og"/>
+</div>
+</div>
+</header>
+<main class="flex-grow flex flex-col items-center w-full max-w-container-max mx-auto px-margin-desktop py-8">
+<div class="w-full mb-8 flex justify-between items-end">
+<div>
+<h2 class="font-display text-display text-on-surface mb-2">Channel Connections V5</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Manage integrated social media accounts and operational permissions.</p>
+</div>
+<button class="bg-verde-operacional font-label-md text-label-md px-4 py-2 rounded flex items-center gap-2 hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-[16px]" data-icon="add">add</span>
+                Add Connection
+            </button>
+</div>
+<div class="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+<!-- Connection Card: Instagram -->
+<div class="surface-panel border border-base rounded p-4 flex flex-col gap-4 relative group hover:border-primary-container transition-colors">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-surface-container flex items-center justify-center border border-outline-variant">
+<span class="material-symbols-outlined text-primary-container" data-icon="photo_camera">photo_camera</span>
+</div>
+<div>
+<div class="font-headline-md text-headline-md text-on-surface">Instagram</div>
+<div class="font-code text-code text-on-surface-variant">@clicko_global</div>
+</div>
+</div>
+<div class="flex items-center gap-1">
+<div class="w-1.5 h-1.5 rounded-full bg-primary-container"></div>
+<span class="font-label-md text-label-md text-primary-container uppercase">Active</span>
+</div>
+</div>
+<div class="border-t border-base pt-3">
+<div class="font-label-md text-label-md text-on-surface-variant mb-2 uppercase tracking-wide">Permissions</div>
+<div class="flex flex-wrap gap-2">
+<span class="px-2 py-1 bg-surface border border-outline-variant rounded font-code text-code text-on-surface">Post</span>
+<span class="px-2 py-1 bg-surface border border-outline-variant rounded font-code text-code text-on-surface">Analytics</span>
+<span class="px-2 py-1 bg-surface border border-outline-variant rounded font-code text-code text-on-surface">Ads</span>
+</div>
+</div>
+<div class="mt-auto pt-4 flex gap-2">
+<button class="flex-1 bg-surface border border-outline-variant text-on-surface font-label-md text-label-md py-1.5 rounded hover:border-primary-container hover:text-primary-container transition-colors">Configure</button>
+</div>
+</div>
+<!-- Connection Card: LinkedIn -->
+<div class="surface-panel border border-base rounded p-4 flex flex-col gap-4 relative group hover:border-primary-container transition-colors">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-surface-container flex items-center justify-center border border-outline-variant">
+<span class="material-symbols-outlined text-on-surface" data-icon="work">work</span>
+</div>
+<div>
+<div class="font-headline-md text-headline-md text-on-surface">LinkedIn</div>
+<div class="font-code text-code text-on-surface-variant">Clicko Precision Inc.</div>
+</div>
+</div>
+<div class="flex items-center gap-1">
+<div class="w-1.5 h-1.5 rounded-full bg-primary-container"></div>
+<span class="font-label-md text-label-md text-primary-container uppercase">Active</span>
+</div>
+</div>
+<div class="border-t border-base pt-3">
+<div class="font-label-md text-label-md text-on-surface-variant mb-2 uppercase tracking-wide">Permissions</div>
+<div class="flex flex-wrap gap-2">
+<span class="px-2 py-1 bg-surface border border-outline-variant rounded font-code text-code text-on-surface">Post</span>
+<span class="px-2 py-1 bg-surface border border-outline-variant rounded font-code text-code text-on-surface">Analytics</span>
+</div>
+</div>
+<div class="mt-auto pt-4 flex gap-2">
+<button class="flex-1 bg-surface border border-outline-variant text-on-surface font-label-md text-label-md py-1.5 rounded hover:border-primary-container hover:text-primary-container transition-colors">Configure</button>
+</div>
+</div>
+<!-- Connection Card: TikTok -->
+<div class="surface-panel border border-error-container rounded p-4 flex flex-col gap-4 relative group">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-surface-container flex items-center justify-center border border-error-container">
+<span class="material-symbols-outlined text-error" data-icon="music_note">music_note</span>
+</div>
+<div>
+<div class="font-headline-md text-headline-md text-on-surface">TikTok</div>
+<div class="font-code text-code text-on-surface-variant">@clicko_hq</div>
+</div>
+</div>
+<div class="flex items-center gap-1">
+<div class="w-1.5 h-1.5 rounded-full bg-error"></div>
+<span class="font-label-md text-label-md text-error uppercase">Error</span>
+</div>
+</div>
+<div class="border-t border-base pt-3">
+<div class="font-label-md text-label-md text-on-surface-variant mb-2 uppercase tracking-wide">Permissions</div>
+<div class="flex flex-wrap gap-2">
+<span class="px-2 py-1 bg-surface border border-outline-variant rounded font-code text-code text-on-surface opacity-50">Post</span>
+</div>
+</div>
+<div class="mt-auto pt-4 flex gap-2">
+<button class="flex-1 bg-error-container text-on-error font-label-md text-label-md py-1.5 rounded hover:opacity-90 transition-opacity">Reconnect</button>
+</div>
+</div>
+<!-- Connection Card: X -->
+<div class="surface-panel border border-tertiary-container rounded p-4 flex flex-col gap-4 relative group">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-surface-container flex items-center justify-center border border-tertiary-container">
+<span class="material-symbols-outlined text-tertiary-container" data-icon="tag">tag</span>
+</div>
+<div>
+<div class="font-headline-md text-headline-md text-on-surface">X (Twitter)</div>
+<div class="font-code text-code text-on-surface-variant">@clicko_sys</div>
+</div>
+</div>
+<div class="flex items-center gap-1">
+<div class="w-1.5 h-1.5 rounded-full bg-tertiary-container"></div>
+<span class="font-label-md text-label-md text-tertiary-container uppercase">Expiring</span>
+</div>
+</div>
+<div class="border-t border-base pt-3">
+<div class="font-label-md text-label-md text-on-surface-variant mb-2 uppercase tracking-wide">Permissions</div>
+<div class="flex flex-wrap gap-2">
+<span class="px-2 py-1 bg-surface border border-outline-variant rounded font-code text-code text-on-surface">Post</span>
+<span class="px-2 py-1 bg-surface border border-outline-variant rounded font-code text-code text-on-surface">Analytics</span>
+</div>
+</div>
+<div class="mt-auto pt-4 flex gap-2">
+<button class="flex-1 bg-surface border border-tertiary-container text-tertiary-container font-label-md text-label-md py-1.5 rounded hover:bg-tertiary-container hover:text-surface-dim transition-colors">Renew Token</button>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="flex justify-between items-center px-margin-desktop w-full mt-auto py-4 bg-surface-dim border-t border-outline-variant">
+<div class="font-label-md text-label-md uppercase tracking-widest text-on-surface">
+            © 2024 Clicko Precision. System Operational.
+        </div>
+<div class="flex gap-4">
+<a class="font-label-md text-label-md text-on-tertiary-container hover:text-primary-fixed transition-colors" href="#">Status</a>
+<a class="font-label-md text-label-md text-on-tertiary-container hover:text-primary-fixed transition-colors" href="#">Documentation</a>
+<a class="font-label-md text-label-md text-on-tertiary-container hover:text-primary-fixed transition-colors" href="#">Support</a>
+<a class="font-label-md text-label-md text-on-tertiary-container hover:text-primary-fixed transition-colors" href="#">Terms</a>
+</div>
+</footer>
+<script src="/stitch/bridge.js"></script></body></html>

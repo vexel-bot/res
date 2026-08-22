@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Clicko - Tool Atlas V7.4</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {"tertiary-fixed-dim": "#ffb3b1", "on-surface": "#e5e2e1", "on-secondary-container": "#602a00", primary: "#ffb3af", "on-tertiary-fixed-variant": "#7f292c", "inverse-primary": "#b4252d", "secondary-fixed-dim": "#ffb68b", tertiary: "#ffb3b1", "on-secondary-fixed": "#321200", "tertiary-container": "#e17474", "primary-container": "#ff5c5c", "on-tertiary-container": "#5c0e15", "surface-bright": "#393939", "on-surface-variant": "#e2bebc", "surface-dim": "#131313", "surface-variant": "#353534", "secondary-container": "#ff7f1c", "error-container": "#93000a", "on-error": "#690005", "on-primary-container": "#62000c", "tertiary-fixed": "#ffdad8", "inverse-surface": "#e5e2e1", "on-secondary": "#522300", "surface-container-high": "#2a2a2a", "on-tertiary": "#601118", "on-background": "#e5e2e1", "on-tertiary-fixed": "#410007", "surface-tint": "#ffb3af", "on-primary": "#68000d", surface: "#131313", "primary-fixed-dim": "#ffb3af", "surface-container": "#201f1f", "on-secondary-fixed-variant": "#753400", "surface-container-lowest": "#0e0e0e", "on-primary-fixed-variant": "#920418", "surface-container-highest": "#353534", "inverse-on-surface": "#313030", "outline-variant": "#5a403f", "on-error-container": "#ffdad6", secondary: "#ffb68b", background: "#131313", "on-primary-fixed": "#410005", outline: "#a98987", "surface-container-low": "#1c1b1b", "secondary-fixed": "#ffdbc8", "primary-fixed": "#ffdad7", error: "#ffb4ab"}, borderRadius: {DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem"}, spacing: {gutter: "16px", "margin-desktop": "32px", unit: "4px", "container-max": "1440px", "margin-mobile": "16px"}, fontFamily: {"body-md": ["Geist", "sans-serif"], "body-lg": ["Geist", "sans-serif"], display: ["Geist"], "label-md": ["Geist", "sans-serif"], "headline-md": ["Geist", "sans-serif"], "headline-lg": ["Geist", "sans-serif"], code: ["JetBrains Mono", "monospace"], headline: ["Geist"], body: ["Geist"], label: ["Geist"]}, fontSize: {"body-md": ["14px", {lineHeight: "1.5", fontWeight: "400"}], "body-lg": ["16px", {lineHeight: "1.5", fontWeight: "400"}], display: ["32px", {lineHeight: "1.2", letterSpacing: "-0.02em", fontWeight: "600"}], "label-md": ["12px", {lineHeight: "1", letterSpacing: "0.02em", fontWeight: "500"}], "headline-md": ["20px", {lineHeight: "1.4", fontWeight: "500"}], "headline-lg": ["24px", {lineHeight: "1.3", fontWeight: "600"}], code: ["13px", {lineHeight: "1.4", fontWeight: "400"}]}}}};</script>
+<style>
+        body { background-color: #0F1011; color: #e3e2e3; font-family: 'Geist', sans-serif; }
+        .surface-1 { background-color: #181B1D; }
+        .surface-2 { background-color: #1E1E1E; }
+        .border-base { border: 1px solid #3b4a3d; }
+        .border-active { border: 1px solid #75ff9e; }
+        .glass-panel { background: rgba(30, 30, 30, 0.7); backdrop-filter: blur(12px); border: 1px solid #3b4a3d; }
+        /* Ultra thin scrollbar for density */
+        ::-webkit-scrollbar { width: 4px; height: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #343536; border-radius: 2px; }
+        ::-webkit-scrollbar-thumb:hover { background: #75ff9e; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased selection:bg-primary/30 selection:text-primary">
+<!-- TopNavBar -->
+<nav class="bg-background dark:bg-background text-primary dark:text-primary font-label-md text-label-md docked full-width top-0 border-b border-outline-variant flat no shadows flex justify-between items-center w-full px-margin-desktop h-16 shrink-0 z-50 relative">
+<div class="flex items-center gap-8 h-full">
+<span class="font-display text-display text-primary uppercase tracking-tighter shrink-0">Clicko Precision</span>
+<div class="hidden md:flex h-full gap-6 items-center">
+<a class="text-on-surface-variant font-medium pb-2 border-b-2 border-transparent hover:text-primary transition-colors duration-200 pt-2 flex items-center h-full" href="#">Newsroom</a>
+<a class="text-on-surface-variant font-medium pb-2 border-b-2 border-transparent hover:text-primary transition-colors duration-200 pt-2 flex items-center h-full" href="#">Radar Room</a>
+<a class="text-on-surface-variant font-medium pb-2 border-b-2 border-transparent hover:text-primary transition-colors duration-200 pt-2 flex items-center h-full" href="#">Brand Memory</a>
+<a class="text-primary font-bold border-b-2 border-primary pb-2 pt-2 flex items-center h-full" href="#">Campaign Intake</a>
+<a class="text-on-surface-variant font-medium pb-2 border-b-2 border-transparent hover:text-primary transition-colors duration-200 pt-2 flex items-center h-full" href="#">Campaign Room</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden lg:flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-on-surface-variant text-[18px]">search</span>
+<input class="bg-[#181B1D] border border-outline-variant text-on-surface text-label-md rounded pl-9 pr-3 py-1.5 focus:outline-none focus:border-primary transition-colors w-64 placeholder:text-on-surface-variant/50" placeholder="Search..." type="text"/>
+</div>
+<button class="bg-primary text-on-primary font-label-md py-1.5 px-4 rounded hover:bg-primary/90 transition-colors shrink-0">Criar Campanha</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors flex items-center justify-center"><span class="material-symbols-outlined">notifications</span></button>
+<button class="text-on-surface-variant hover:text-primary transition-colors flex items-center justify-center"><span class="material-symbols-outlined">account_circle</span></button>
+</div>
+</nav>
+<!-- TopAppBar (ContextualHeader) -->
+<header class="bg-surface-container dark:bg-surface-container text-secondary dark:text-secondary font-headline-md text-headline-md full-width border-b border-outline-variant flat no shadows flex items-center w-full px-margin-desktop py-2 min-h-[48px] shrink-0 z-40 relative">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary text-[24px]">analytics</span>
+<h1 class="font-headline-md text-headline-md text-on-surface">Tool Atlas V7.4 — Personalizar e retomar</h1>
+</div>
+</header>
+<!-- Main Workspace -->
+<main class="flex-1 flex w-full relative overflow-hidden">
+<!-- Left Sidebar (Tools) -->
+<aside class="w-64 surface-1 border-r border-outline-variant flex-shrink-0 flex flex-col h-full overflow-y-auto z-30">
+<div class="p-4 flex flex-col gap-6">
+<!-- Pinned Section -->
+<section>
+<div class="flex justify-between items-center mb-3 group">
+<h2 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Fixados</h2>
+<button class="text-on-surface-variant hover:text-primary opacity-0 group-hover:opacity-100 transition-opacity" onclick="document.getElementById('personalization-overlay').classList.toggle('hidden')" title="Editar atalhos do topo">
+<span class="material-symbols-outlined text-[16px]">edit</span>
+</button>
+</div>
+<ul class="flex flex-col gap-1">
+<li>
+<button class="w-full text-left flex items-center gap-3 p-2 rounded hover:bg-surface-variant text-on-surface transition-colors border border-transparent hover:border-outline-variant">
+<span class="material-symbols-outlined text-[18px] text-primary">add_box</span>
+<span class="font-body-md text-body-md">Criar post</span>
+</button>
+</li>
+<li>
+<button class="w-full text-left flex items-center gap-3 p-2 rounded hover:bg-surface-variant text-on-surface transition-colors border border-transparent hover:border-outline-variant">
+<span class="material-symbols-outlined text-[18px] text-secondary">radar</span>
+<span class="font-body-md text-body-md">Radar de oportunidades</span>
+</button>
+</li>
+<li>
+<button class="w-full text-left flex items-center gap-3 p-2 rounded hover:bg-surface-variant text-on-surface transition-colors border border-transparent hover:border-outline-variant">
+<span class="material-symbols-outlined text-[18px] text-secondary">calendar_month</span>
+<span class="font-body-md text-body-md">Planejar semana</span>
+</button>
+</li>
+<li>
+<button class="w-full text-left flex items-center gap-3 p-2 rounded hover:bg-surface-variant text-on-surface transition-colors border border-transparent hover:border-outline-variant relative">
+<span class="material-symbols-outlined text-[18px] text-secondary">pending_actions</span>
+<span class="font-body-md text-body-md">Revisões pendentes</span>
+<span class="absolute right-2 top-1/2 -translate-y-1/2 bg-error text-on-error rounded px-1.5 py-0.5 font-label-md text-[10px]">3</span>
+</button>
+</li>
+</ul>
+</section>
+<hr class="border-outline-variant"/>
+<!-- Most Used Section -->
+<section>
+<h2 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider mb-3">Mais usadas por você</h2>
+<ul class="flex flex-col gap-1">
+<li>
+<button class="w-full text-left flex items-center gap-3 p-2 rounded hover:bg-surface-variant text-on-surface transition-colors border border-transparent hover:border-outline-variant">
+<span class="material-symbols-outlined text-[18px] text-secondary">insights</span>
+<span class="font-body-md text-body-md">Ver desempenho</span>
+</button>
+</li>
+<li>
+<button class="w-full text-left flex items-center gap-3 p-2 rounded hover:bg-surface-variant text-on-surface transition-colors border border-transparent hover:border-outline-variant">
+<span class="material-symbols-outlined text-[18px] text-secondary">dashboard_customize</span>
+<span class="font-body-md text-body-md">Templates</span>
+</button>
+</li>
+<li>
+<button class="w-full text-left flex items-center gap-3 p-2 rounded hover:bg-surface-variant text-on-surface transition-colors border border-transparent hover:border-outline-variant">
+<span class="material-symbols-outlined text-[18px] text-secondary">group</span>
+<span class="font-body-md text-body-md">Equipe</span>
+</button>
+</li>
+</ul>
+</section>
+</div>
+</aside>
+<!-- Main Content Area -->
+<div class="flex-1 p-margin-desktop overflow-y-auto bg-background relative z-20">
+<div class="max-w-6xl mx-auto space-y-12">
+<!-- Resume Work Section -->
+<section>
+<h2 class="font-headline-md text-headline-md text-on-surface mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">play_circle</span>
+                        Retomar Trabalho
+                    </h2>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Card 1 -->
+<div class="surface-1 border-base rounded-lg overflow-hidden group hover:border-primary transition-colors cursor-pointer flex flex-col h-64">
+<div class="h-32 bg-surface-variant relative overflow-hidden">
+<div class="bg-cover bg-center w-full h-full opacity-60 group-hover:opacity-100 transition-opacity" data-alt="A close up of roasted coffee beans in a dark moody setting, industrial lighting, sharp focus, technical style, deep blacks and rich browns." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAmHrUqASXvRR0S15s04u08T91MYNU3HgQglP5wv1gJKybuqeFaQn9m4YeeHjtm9b9zOMCIsGLsNqEmxayfzco8maI8t3C6-iCJgfzbihHeJ41XH94_7WHBukA4C0-FuB8zzqNh1Vb6RPZvRkfoVylbt4IZLIGmU46hlR3JSgwJ-F2DZpq1LyzIIbvjvLTI83yNzDmYmkjmswoPTJvT3G4RDafvMy3tPsp_HUzO7mOS_GcxowDPBUnecQ')"></div>
+<div class="absolute top-2 left-2 bg-primary/20 text-primary border border-primary/30 px-2 py-0.5 rounded font-label-md text-[10px] flex items-center gap-1 backdrop-blur-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+                                    Editando agora
+                                </div>
+</div>
+<div class="p-4 flex-1 flex flex-col justify-between">
+<div>
+<h3 class="font-body-lg text-body-lg text-on-surface font-medium truncate">Aurora Café - Post Lançamento</h3>
+<p class="font-body-md text-body-md text-on-surface-variant truncate mt-1">Campanha "Café é território"</p>
+</div>
+<div class="flex items-center justify-between mt-4 border-t border-outline-variant pt-3">
+<span class="font-code text-code text-on-surface-variant text-[11px]">Modificado 2m atrás</span>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary text-[18px]">arrow_forward</span>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="surface-1 border-base rounded-lg overflow-hidden group hover:border-primary transition-colors cursor-pointer flex flex-col h-64">
+<div class="h-32 bg-surface-variant relative overflow-hidden flex items-center justify-center">
+<span class="material-symbols-outlined text-[48px] text-surface-bright">description</span>
+</div>
+<div class="p-4 flex-1 flex flex-col justify-between">
+<div>
+<h3 class="font-body-lg text-body-lg text-on-surface font-medium truncate">Relatório Q3 - Engajamento</h3>
+<p class="font-body-md text-body-md text-on-surface-variant truncate mt-1">Cliente Global Tech</p>
+</div>
+<div class="flex items-center justify-between mt-4 border-t border-outline-variant pt-3">
+<span class="font-code text-code text-on-surface-variant text-[11px]">Modificado 1h atrás</span>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary text-[18px]">arrow_forward</span>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="surface-1 border-base rounded-lg overflow-hidden group hover:border-primary transition-colors cursor-pointer flex flex-col h-64">
+<div class="h-32 bg-surface-variant relative overflow-hidden flex items-center justify-center">
+<div class="bg-cover bg-center w-full h-full opacity-60 group-hover:opacity-100 transition-opacity" data-alt="A minimalist architectural render of a modern office space, concrete textures, dark grey walls, subtle lighting, professional tone." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAH2B52P-1HN8i6prDA8Jt268xVky74D9kDpKWtZ7RHQwYILFhjNWoWaF16Q-czBVrdZEds0jQptLkq7mR3eAX0rgJ5Gb4mV545TtLqfGQmV48wyB7cSUXX9MHQQxnYljnXllMooMt74ysHZ1XCFrQKye0Rt1CUiAK_O245WN_0Q8_UmRqHzZ14f9CHdZSee8L0PrzFZ5fxGTM508x_xv3WXPDxQoVGtU5OpEZU1VchUgiIkRkYy7ue1A')"></div>
+</div>
+<div class="p-4 flex-1 flex flex-col justify-between">
+<div>
+<h3 class="font-body-lg text-body-lg text-on-surface font-medium truncate">Banner Ads - Retargeting</h3>
+<p class="font-body-md text-body-md text-on-surface-variant truncate mt-1">Campanha Inverno 24</p>
+</div>
+<div class="flex items-center justify-between mt-4 border-t border-outline-variant pt-3">
+<span class="font-code text-code text-on-surface-variant text-[11px]">Modificado ontem</span>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary text-[18px]">arrow_forward</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Activity / Density Example Section (Bento grid style) -->
+<section>
+<h2 class="font-headline-md text-headline-md text-on-surface mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary">monitor_heart</span>
+                        System Pulse
+                    </h2>
+<div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-[120px]">
+<div class="surface-1 border-base p-4 rounded-lg col-span-1 md:col-span-2 row-span-2 flex flex-col justify-between relative overflow-hidden">
+<div class="relative z-10">
+<h3 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest">Active Campaigns</h3>
+<div class="mt-4 flex items-baseline gap-2">
+<span class="font-display text-[48px] text-on-surface leading-none">12</span>
+<span class="font-code text-code text-primary">+2 this week</span>
+</div>
+</div>
+<div class="absolute bottom-0 left-0 w-full h-1/2 opacity-20 pointer-events-none" style="background: linear-gradient(to top, rgba(117, 255, 158, 0.2), transparent);"></div>
+</div>
+<div class="surface-1 border-base p-4 rounded-lg col-span-1 flex flex-col justify-between">
+<h3 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest">Pending Approvals</h3>
+<div class="flex items-end justify-between">
+<span class="font-display text-[32px] text-error leading-none">3</span>
+<span class="material-symbols-outlined text-error text-[24px]">warning</span>
+</div>
+</div>
+<div class="surface-1 border-base p-4 rounded-lg col-span-1 flex flex-col justify-between">
+<h3 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest">Team Sync</h3>
+<div class="flex items-end justify-between">
+<span class="font-body-md text-body-md text-on-surface leading-tight">14:00<br/>Briefing</span>
+<span class="material-symbols-outlined text-secondary text-[24px]">videocam</span>
+</div>
+</div>
+<div class="surface-1 border-base p-4 rounded-lg col-span-1 md:col-span-2 flex flex-row items-center gap-4">
+<div class="w-12 h-12 rounded bg-surface-variant border border-outline-variant flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary">bolt</span>
+</div>
+<div>
+<h3 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest">System Status</h3>
+<p class="font-code text-code text-on-surface mt-1">All systems operational. Latency 24ms.</p>
+</div>
+</div>
+</div>
+</section>
+</div>
+</div>
+<!-- Personalization Overlay (Hidden by default, triggered by JS) -->
+<div class="hidden absolute top-4 left-[280px] w-[320px] glass-panel rounded-lg shadow-2xl z-50 overflow-hidden flex flex-col" id="personalization-overlay">
+<div class="p-4 border-b border-outline-variant bg-surface-1 flex justify-between items-center">
+<h3 class="font-headline-md text-[16px] text-on-surface">Personalizar Fixados</h3>
+<button class="text-on-surface-variant hover:text-on-surface" onclick="document.getElementById('personalization-overlay').classList.add('hidden')">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+<div class="p-4 bg-background">
+<p class="font-body-md text-body-md text-on-surface-variant mb-4">Arraste para reordenar ou selecione um item para substituir.</p>
+<div class="space-y-2 mb-4">
+<div class="flex items-center gap-2 p-2 border border-outline-variant rounded bg-surface-1">
+<span class="material-symbols-outlined text-on-surface-variant text-[16px] cursor-grab">drag_indicator</span>
+<span class="material-symbols-outlined text-secondary text-[16px]">calendar_month</span>
+<span class="font-body-md text-body-md text-on-surface flex-1">Planejar semana</span>
+<button class="text-error hover:text-error/80"><span class="material-symbols-outlined text-[16px]">remove_circle_outline</span></button>
+</div>
+</div>
+<div class="border-t border-outline-variant pt-4">
+<label class="font-label-md text-label-md text-on-surface-variant block mb-2">Adicionar novo atalho</label>
+<div class="relative">
+<select class="w-full bg-surface-1 border border-outline-variant text-on-surface font-body-md text-body-md rounded p-2 appearance-none focus:outline-none focus:border-primary">
+<option>Aprovações</option>
+<option>Relatórios Gerenciais</option>
+<option>Banco de Mídia</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none text-[18px]">expand_more</span>
+</div>
+<button class="mt-3 w-full bg-surface-variant border border-outline-variant hover:border-primary text-on-surface font-label-md py-1.5 rounded transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[16px]">add</span>
+                        Adicionar
+                    </button>
+</div>
+</div>
+<div class="p-3 bg-surface-1 border-t border-outline-variant flex justify-end gap-2">
+<button class="px-3 py-1.5 font-label-md text-on-surface-variant hover:text-on-surface transition-colors" onclick="document.getElementById('personalization-overlay').classList.add('hidden')">Cancelar</button>
+<button class="px-3 py-1.5 font-label-md bg-primary text-on-primary rounded hover:bg-primary/90 transition-colors" onclick="document.getElementById('personalization-overlay').classList.add('hidden')">Salvar</button>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-low dark:bg-surface-container-low text-on-surface-variant dark:text-on-surface-variant font-code text-code font-label-md text-label-md docked full-width bottom-0 border-t border-outline-variant flat no shadows flex justify-between items-center w-full px-margin-desktop py-2 shrink-0 z-40 relative">
+<span>© 2024 Clicko Precision</span>
+<div class="flex gap-6">
+<a class="text-on-secondary-fixed-variant hover:text-on-surface transition-colors duration-150 ease-in-out" href="#">System Status</a>
+<a class="text-on-secondary-fixed-variant hover:text-on-surface transition-colors duration-150 ease-in-out" href="#">Documentation</a>
+<a class="text-on-secondary-fixed-variant hover:text-on-surface transition-colors duration-150 ease-in-out" href="#">Support</a>
+</div>
+</footer>
+<script>
+        // Simple drag simulation interactions could go here if needed for deeper prototyping
+    </script>
+<script src="/stitch/bridge.js"></script></body></html>

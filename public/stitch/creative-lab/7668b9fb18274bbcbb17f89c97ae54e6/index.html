@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Clicko - Inventory</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {"outline-variant": "#5a403f", "on-secondary-fixed": "#321200", "surface-bright": "#393939", "tertiary-fixed-dim": "#ffb3b1", "inverse-on-surface": "#313030", "on-tertiary-container": "#5c0e15", "secondary-fixed-dim": "#ffb68b", "primary-container": "#ff5c5c", "on-tertiary-fixed-variant": "#7f292c", secondary: "#ffb68b", "primary-fixed": "#ffdad7", "primary-fixed-dim": "#ffb3af", "on-error": "#690005", "secondary-fixed": "#ffdbc8", "surface-variant": "#353534", "on-error-container": "#ffdad6", tertiary: "#ffb3b1", "surface-tint": "#ffb3af", "surface-container": "#201f1f", "on-secondary-fixed-variant": "#753400", "on-surface-variant": "#e2bebc", error: "#ffb4ab", "on-secondary": "#522300", "on-background": "#e5e2e1", "inverse-primary": "#b4252d", "on-secondary-container": "#602a00", "tertiary-container": "#e17474", "tertiary-fixed": "#ffdad8", background: "#131313", "on-primary-fixed-variant": "#920418", primary: "#ffb3af", "error-container": "#93000a", "on-primary-container": "#62000c", "secondary-container": "#ff7f1c", "on-primary-fixed": "#410005", "on-surface": "#e5e2e1", outline: "#a98987", "surface-container-highest": "#353534", "on-tertiary-fixed": "#410007", "surface-container-high": "#2a2a2a", "surface-dim": "#131313", "inverse-surface": "#e5e2e1", "surface-container-low": "#1c1b1b", "on-primary": "#68000d", "surface-container-lowest": "#0e0e0e", surface: "#131313", "on-tertiary": "#601118"}, borderRadius: {DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem"}, spacing: {stack_gap_sm: "8px", gutter: "16px", context_nav_width: "240px", stack_gap_md: "16px", spine_width: "64px", container_padding: "24px"}, fontFamily: {"headline-lg": ["Geist"], "body-sm": ["Geist"], display: ["Geist"], "body-lg": ["Geist"], "headline-md": ["Geist"], "body-md": ["Geist"], "label-mono": ["Geist"], "data-number": ["Geist"], headline: ["Geist"], body: ["Geist"], label: ["Geist"]}, fontSize: {"headline-lg": ["24px", {lineHeight: "32px", letterSpacing: "-0.01em", fontWeight: "600"}], "body-sm": ["13px", {lineHeight: "18px", fontWeight: "400"}], display: ["32px", {lineHeight: "40px", letterSpacing: "-0.02em", fontWeight: "600"}], "body-lg": ["16px", {lineHeight: "24px", fontWeight: "400"}], "headline-md": ["20px", {lineHeight: "28px", fontWeight: "500"}], "body-md": ["14px", {lineHeight: "20px", fontWeight: "400"}], "label-mono": ["12px", {lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "500"}], "data-number": ["14px", {lineHeight: "20px", fontWeight: "600"}]}}}};</script>
+<style>
+        body { background-color: #0F1011; color: #e3e2e3; }
+        .workbench-panel { background-color: #181B1D; border: 1px solid #2C2F31; }
+        .workbench-hover:hover { background-color: #1E1E1E; border-color: #3b4a3d; }
+        .input-workbench { background-color: #0F1011; border: 1px solid #2C2F31; color: #e3e2e3; transition: all 0.2s; }
+        .input-workbench:focus { border-color: #00e475; outline: none; box-shadow: 0 0 0 2px rgba(0, 228, 117, 0.2); }
+        .btn-primary { background-color: #00e475; color: #000; border: none; font-weight: 500; }
+        .btn-secondary { background-color: transparent; border: 1px solid #2C2F31; color: #ECECED; }
+        .btn-secondary:hover { background-color: #1E1E1E; }
+        
+        /* Custom Scrollbar for Workbench */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #0F1011; }
+        ::-webkit-scrollbar-thumb { background: #2C2F31; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #3b4a3d; }
+    </style>
+</head>
+<body class="font-body-md bg-background text-on-surface h-screen overflow-hidden flex flex-col">
+<!-- TopNavBar -->
+<header class="flex justify-between items-center h-16 px-gutter w-full sticky top-0 z-50 bg-surface dark:bg-surface border-b border-outline-variant dark:border-outline-variant flat no shadows">
+<div class="flex items-center gap-gutter">
+<div class="font-headline-md text-headline-md font-bold text-primary dark:text-primary mr-6">Clicko</div>
+<nav class="hidden md:flex gap-6 items-center">
+<a class="font-body-md text-body-md text-on-surface-variant dark:text-on-surface-variant hover:text-primary dark:hover:text-primary-fixed transition-colors cursor-pointer active:opacity-80" href="#">Dashboard</a>
+<a class="font-body-md text-body-md text-primary dark:text-primary border-b-2 border-primary pb-1 hover:text-primary dark:hover:text-primary-fixed transition-colors cursor-pointer active:opacity-80" href="#">Inventory</a>
+<a class="font-body-md text-body-md text-on-surface-variant dark:text-on-surface-variant hover:text-primary dark:hover:text-primary-fixed transition-colors cursor-pointer active:opacity-80" href="#">Workspace</a>
+<a class="font-body-md text-body-md text-on-surface-variant dark:text-on-surface-variant hover:text-primary dark:hover:text-primary-fixed transition-colors cursor-pointer active:opacity-80" href="#">Detail</a>
+<a class="font-body-md text-body-md text-on-surface-variant dark:text-on-surface-variant hover:text-primary dark:hover:text-primary-fixed transition-colors cursor-pointer active:opacity-80" href="#">Reuse Lab</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden lg:block w-64">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm">search</span>
+<input class="input-workbench w-full pl-9 pr-3 py-1.5 rounded-DEFAULT font-body-sm text-body-sm" placeholder="Search inventory..." type="text"/>
+</div>
+<button class="text-on-surface-variant hover:text-primary transition-colors flex items-center justify-center p-2 rounded-DEFAULT hover:bg-surface-variant">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors flex items-center justify-center p-2 rounded-DEFAULT hover:bg-surface-variant">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<button class="btn-primary px-4 py-1.5 rounded-DEFAULT font-label-mono text-label-mono transition-opacity hover:opacity-90">Criar post</button>
+<div class="w-8 h-8 rounded-full bg-surface-variant overflow-hidden border border-outline-variant flex-shrink-0 cursor-pointer">
+<img alt="User profile avatar" class="w-full h-full object-cover" data-alt="A professional headshot of a young woman with short dark hair, wearing a dark blazer over a simple t-shirt. She has a confident, slight smile. The background is a clean, dark grey studio backdrop with soft, dramatic lighting on one side of her face. The style is modern, corporate, and high-quality, fitting a dark mode UI." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB2S4bCEHYFPycHMpAc1XmRgPCjK3RmNDFBURVugntCDI0nUlcyVaTOV8Dd65BL4InJVTcSR-0fKCBJbH32zpcziMyf72aiqzoQsUFdDjzt6rPqi-f8tt2nWVSsVoVG7OeFpTLU7pFOEKEyHD2EKCHfMDgd_Kddrf_oF3genZukHad01DpB2AX2sVe189LzGOpuaNNf2rI-zsJXJzw7ATG14MraBdxCxF_vS8NncHGUJCRl0raGJeGg3A"/>
+</div>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden relative">
+<!-- SideNavBar -->
+<nav class="fixed left-0 top-16 w-spine_width hover:w-context_nav_width flex flex-col h-[calc(100vh-64px)] z-40 transition-all overflow-hidden bg-surface-container dark:bg-surface-container border-r border-outline-variant dark:border-outline-variant flat no shadows group">
+<div class="p-4 flex items-center gap-3 border-b border-outline-variant opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap overflow-hidden h-[72px]">
+<div class="w-8 h-8 rounded-DEFAULT bg-surface-variant flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-primary text-sm">workspaces</span>
+</div>
+<div>
+<div class="font-label-mono text-label-mono text-on-surface font-semibold">Workspace</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Creator Pro</div>
+</div>
+</div>
+<div class="flex-1 py-4 flex flex-col gap-2 overflow-y-auto overflow-x-hidden">
+<a class="flex items-center gap-4 px-4 py-3 text-on-surface-variant dark:text-on-surface-variant pl-4 hover:bg-surface-variant dark:hover:bg-surface-variant transition-all duration-150 ease-in-out" href="#">
+<span class="material-symbols-outlined flex-shrink-0 text-xl">dashboard</span>
+<span class="font-label-mono text-label-mono whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">Dashboard</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 text-primary dark:text-primary border-l-2 border-primary pl-4 bg-surface-container-high dark:bg-surface-container-high hover:bg-surface-variant dark:hover:bg-surface-variant transition-all duration-150 ease-in-out relative left-[-2px]" href="#">
+<span class="material-symbols-outlined flex-shrink-0 text-xl">inventory_2</span>
+<span class="font-label-mono text-label-mono whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">Inventory</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 text-on-surface-variant dark:text-on-surface-variant pl-4 hover:bg-surface-variant dark:hover:bg-surface-variant transition-all duration-150 ease-in-out" href="#">
+<span class="material-symbols-outlined flex-shrink-0 text-xl">workspaces</span>
+<span class="font-label-mono text-label-mono whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">Workspace</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 text-on-surface-variant dark:text-on-surface-variant pl-4 hover:bg-surface-variant dark:hover:bg-surface-variant transition-all duration-150 ease-in-out" href="#">
+<span class="material-symbols-outlined flex-shrink-0 text-xl">info</span>
+<span class="font-label-mono text-label-mono whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">Detail</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 text-on-surface-variant dark:text-on-surface-variant pl-4 hover:bg-surface-variant dark:hover:bg-surface-variant transition-all duration-150 ease-in-out" href="#">
+<span class="material-symbols-outlined flex-shrink-0 text-xl">rebase_edit</span>
+<span class="font-label-mono text-label-mono whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">Reuse Lab</span>
+</a>
+</div>
+<div class="p-4 border-t border-outline-variant flex flex-col gap-2">
+<a class="flex items-center gap-4 px-4 py-2 text-on-surface-variant hover:text-on-surface transition-colors" href="#">
+<span class="material-symbols-outlined flex-shrink-0 text-sm">psychology</span>
+<span class="font-label-mono text-label-mono whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">Brand Memory</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-2 text-on-surface-variant hover:text-on-surface transition-colors" href="#">
+<span class="material-symbols-outlined flex-shrink-0 text-sm">campaign</span>
+<span class="font-label-mono text-label-mono whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">Campaigns</span>
+</a>
+<button class="btn-primary mt-2 w-full py-2 rounded-DEFAULT font-label-mono text-label-mono flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity overflow-hidden whitespace-nowrap">
+<span class="material-symbols-outlined text-sm">auto_awesome</span>
+                    IA Insights
+                </button>
+</div>
+</nav>
+<!-- Main Canvas -->
+<main class="flex-1 ml-spine_width p-container_padding overflow-y-auto bg-background transition-all">
+<!-- Context Header & Global Actions -->
+<div class="flex justify-between items-end mb-stack_gap_md">
+<div>
+<h1 class="font-display text-display text-on-surface mb-2">Content Inventory</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Visão operacional de 1,432 posts indexados.</p>
+</div>
+<div class="flex items-center gap-3">
+<div class="workbench-panel flex rounded-DEFAULT overflow-hidden">
+<button class="px-3 py-1.5 bg-surface-variant text-on-surface border-r border-outline-variant hover:bg-surface-bright transition-colors" title="Grid View">
+<span class="material-symbols-outlined text-sm">grid_view</span>
+</button>
+<button class="px-3 py-1.5 text-on-surface-variant hover:bg-surface-bright transition-colors" title="List View">
+<span class="material-symbols-outlined text-sm">view_list</span>
+</button>
+</div>
+<button class="btn-secondary px-3 py-1.5 rounded-DEFAULT font-label-mono text-label-mono flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">download</span>
+                        Exportar
+                    </button>
+</div>
+</div>
+<!-- Advanced Filter Bar (Bento-style tight arrangement) -->
+<div class="workbench-panel rounded-DEFAULT p-3 mb-stack_gap_md flex flex-wrap gap-3 items-center">
+<!-- Quick Search -->
+<div class="relative flex-1 min-w-[200px]">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm">search</span>
+<input class="input-workbench w-full pl-9 pr-3 py-1.5 rounded-DEFAULT font-body-sm text-body-sm h-[32px]" placeholder="Buscar por título, hook, id..." type="text"/>
+</div>
+<div class="w-[1px] h-6 bg-outline-variant mx-1"></div>
+<!-- Dropdown Filters -->
+<select class="input-workbench rounded-DEFAULT font-body-sm text-body-sm py-1 h-[32px] pl-2 pr-8 cursor-pointer appearance-none bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23859585%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E')] bg-no-repeat bg-[position:right_4px_center] bg-[length:16px]">
+<option value="">Status: Todos</option>
+<option value="published">Publicado</option>
+<option value="draft">Rascunho</option>
+<option value="review">Em Revisão</option>
+</select>
+<select class="input-workbench rounded-DEFAULT font-body-sm text-body-sm py-1 h-[32px] pl-2 pr-8 cursor-pointer appearance-none bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23859585%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E')] bg-no-repeat bg-[position:right_4px_center] bg-[length:16px]">
+<option selected="" value="">Campanha: Café é território</option>
+<option value="c2">Verão 24</option>
+<option value="c3">Lançamento Grãos</option>
+</select>
+<select class="input-workbench rounded-DEFAULT font-body-sm text-body-sm py-1 h-[32px] pl-2 pr-8 cursor-pointer appearance-none bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23859585%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E')] bg-no-repeat bg-[position:right_4px_center] bg-[length:16px]">
+<option value="">Formato: Todos</option>
+<option value="reels">Reels</option>
+<option value="carousel">Carrossel</option>
+<option value="static">Estático</option>
+</select>
+<button class="btn-secondary h-[32px] px-3 rounded-DEFAULT font-label-mono text-label-mono flex items-center gap-1 text-on-surface-variant hover:text-on-surface">
+<span class="material-symbols-outlined text-[16px]">tune</span>
+                    Mais Filtros
+                </button>
+</div>
+<!-- Bulk Actions (Appears when items are selected - currently simulated as visible but inactive) -->
+<div class="workbench-panel rounded-DEFAULT p-2 mb-stack_gap_md flex items-center justify-between border-dashed opacity-50 pointer-events-none">
+<div class="flex items-center gap-3 pl-2">
+<span class="font-label-mono text-label-mono text-on-surface">0 selecionados</span>
+</div>
+<div class="flex gap-2">
+<button class="btn-secondary h-[28px] px-3 rounded-DEFAULT font-label-mono text-label-mono text-[11px]">Abrir Lote</button>
+<button class="btn-secondary h-[28px] px-3 rounded-DEFAULT font-label-mono text-label-mono text-[11px]">Duplicar</button>
+<button class="btn-secondary h-[28px] px-3 rounded-DEFAULT font-label-mono text-label-mono text-[11px]">Reutilizar</button>
+<button class="btn-secondary h-[28px] px-3 rounded-DEFAULT font-label-mono text-label-mono text-[11px]">Enviar Aprovação</button>
+</div>
+</div>
+<!-- Content Grid (Bento style) -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-gutter">
+<!-- Item 1 -->
+<div class="workbench-panel workbench-hover rounded-DEFAULT flex flex-col overflow-hidden relative group">
+<div class="absolute top-2 left-2 z-10">
+<input class="w-4 h-4 rounded-sm border-outline-variant bg-surface-dim text-primary focus:ring-primary focus:ring-offset-0 focus:ring-offset-transparent cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity" type="checkbox"/>
+</div>
+<!-- Preview Area -->
+<div class="h-40 bg-surface-dim border-b border-outline-variant relative overflow-hidden">
+<img alt="Preview" class="w-full h-full object-cover opacity-80" data-alt="A cinematic, high-contrast close-up photo of steaming coffee being poured into a sleek, matte black ceramic mug. The background is dark and moody, with subtle hints of a modern cafe environment. A single spotlight highlights the steam and the rich, dark texture of the coffee. The overall aesthetic is premium, dark mode compatible, and sophisticated." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4xP-5uTQg2wMhByctED7Huq-STbmVH2YOOlg1D1Nk_C140P4ZDWVo6uBCk1l3Xwd45XtHqmYeRg0z-Kt8vMDM1MKVzdSO9jD9gPhDMi8bCvn_fjaZ8o0QGiIPgVLUWG993fv9caozmyEcKyeLfFEMzI9JZmZQA28MZUtGJ70FBrLl0ZaGuP2U72kGnYzAiRxfV8wz9FkekkZvr8UswO8RR3JrrfDPIi4mJjRvXBd1Ey2Og2IE2gcdKQ"/>
+<div class="absolute bottom-2 right-2 flex gap-1">
+<span class="material-symbols-outlined text-[14px] text-white bg-black/50 p-1 rounded-sm backdrop-blur-sm">play_circle</span>
+<span class="text-[10px] font-label-mono text-white bg-black/50 px-1.5 py-0.5 rounded-sm backdrop-blur-sm flex items-center">0:15</span>
+</div>
+<div class="absolute top-2 right-2 border border-primary text-primary text-[10px] font-label-mono px-1.5 py-0.5 rounded-sm uppercase bg-surface-dim/80 backdrop-blur-sm">
+                            Publicado
+                        </div>
+</div>
+<!-- Meta Content -->
+<div class="p-3 flex flex-col gap-2 flex-1">
+<div class="flex justify-between items-start gap-2">
+<h3 class="font-headline-md text-body-lg text-on-surface leading-tight line-clamp-2">A rotina perfeita começa com o grão certo.</h3>
+</div>
+<div class="text-[11px] font-label-mono text-on-surface-variant bg-surface-variant px-2 py-1 rounded-sm border border-outline-variant inline-block w-fit">
+                            Hook: "Você sabia que a extração..."
+                        </div>
+<div class="flex-1 mt-1">
+<div class="flex items-center gap-1.5 text-body-sm text-on-surface-variant mb-1">
+<span class="material-symbols-outlined text-[14px]">campaign</span>
+<span class="truncate">Café é território</span>
+</div>
+<div class="flex items-center gap-1.5 text-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[14px]">psychology</span>
+<span class="truncate text-[11px] font-label-mono text-tertiary-fixed-dim border border-tertiary-fixed-dim/30 px-1 rounded-sm">High-value</span>
+</div>
+</div>
+<!-- Stats & Footer -->
+<div class="pt-2 mt-auto border-t border-outline-variant flex justify-between items-center">
+<div class="flex gap-3">
+<div class="flex flex-col">
+<span class="text-[9px] text-on-surface-variant uppercase tracking-wider">Alcance</span>
+<span class="font-data-number text-body-sm text-on-surface">45.2k</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[9px] text-on-surface-variant uppercase tracking-wider">Edição</span>
+<div class="flex items-center gap-0.5 h-full pt-1">
+<div class="w-1.5 h-2 bg-primary rounded-sm"></div>
+<div class="w-1.5 h-3 bg-primary rounded-sm"></div>
+<div class="w-1.5 h-4 bg-primary rounded-sm"></div>
+<div class="w-1.5 h-2 bg-surface-variant rounded-sm"></div>
+</div>
+</div>
+</div>
+<div class="text-[10px] text-on-surface-variant font-label-mono">12 Out</div>
+</div>
+</div>
+</div>
+<!-- Item 2 (Draft) -->
+<div class="workbench-panel workbench-hover rounded-DEFAULT flex flex-col overflow-hidden relative group">
+<div class="absolute top-2 left-2 z-10">
+<input class="w-4 h-4 rounded-sm border-outline-variant bg-surface-dim text-primary focus:ring-primary focus:ring-offset-0 focus:ring-offset-transparent cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity" type="checkbox"/>
+</div>
+<div class="h-40 bg-surface-dim border-b border-outline-variant relative overflow-hidden flex items-center justify-center border-dashed border-2 m-2 rounded-sm">
+<span class="material-symbols-outlined text-outline-variant text-4xl">image_not_supported</span>
+<div class="absolute top-0 right-0 m-1 border border-secondary text-secondary text-[10px] font-label-mono px-1.5 py-0.5 rounded-sm uppercase bg-surface-dim/80 backdrop-blur-sm">
+                            Rascunho
+                        </div>
+</div>
+<div class="p-3 flex flex-col gap-2 flex-1">
+<div class="flex justify-between items-start gap-2">
+<h3 class="font-headline-md text-body-lg text-on-surface leading-tight line-clamp-2 text-on-surface-variant italic">Trabalhando no copy do carrossel origens...</h3>
+</div>
+<div class="text-[11px] font-label-mono text-on-surface-variant bg-surface-variant px-2 py-1 rounded-sm border border-outline-variant border-dashed inline-block w-fit">
+                            Hook: Pendente
+                        </div>
+<div class="flex-1 mt-1">
+<div class="flex items-center gap-1.5 text-body-sm text-on-surface-variant mb-1">
+<span class="material-symbols-outlined text-[14px]">campaign</span>
+<span class="truncate">Café é território</span>
+</div>
+<div class="flex items-center gap-1.5 text-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[14px]">group</span>
+<span class="truncate text-[11px]">Resp: Maria S.</span>
+</div>
+</div>
+<div class="pt-2 mt-auto border-t border-outline-variant flex justify-between items-center">
+<div class="flex gap-3">
+<div class="flex flex-col">
+<span class="text-[9px] text-on-surface-variant uppercase tracking-wider">Formato</span>
+<span class="font-label-mono text-[11px] text-on-surface">Carrossel</span>
+</div>
+</div>
+<div class="text-[10px] text-on-surface-variant font-label-mono">Hoje, 14:30</div>
+</div>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="workbench-panel workbench-hover rounded-DEFAULT flex flex-col overflow-hidden relative group">
+<div class="absolute top-2 left-2 z-10">
+<input class="w-4 h-4 rounded-sm border-outline-variant bg-surface-dim text-primary focus:ring-primary focus:ring-offset-0 focus:ring-offset-transparent cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity" type="checkbox"/>
+</div>
+<div class="h-40 bg-surface-dim border-b border-outline-variant relative overflow-hidden">
+<img alt="Preview" class="w-full h-full object-cover opacity-80" data-alt="A stylized, top-down isometric view of coffee beans scattered artistically around a portafilter on a dark slate surface. The lighting is dramatic, emphasizing the texture of the beans and the metallic gleam of the equipment. Colors are constrained to deep browns, blacks, and subtle metallic grays, fitting a high-density professional tool aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA4E0CrYuR8F0HE9DdMopM25X6Be5O2mRMCF6BQmJBtnz-u9y7yWPM5gsi6id2fa_24cFKijWoWQzgk2QNevPqAMRZaYYschiGlxrIi5lBBtihazHIZzYjY63-a3443NVydvXyCGkSfFX70fvyw1zvuZY_weQxmLaSXmGSfm4SKI7NOYfwo9F_c1gLDOf9iIZvXMhPXNGcZV17o7DuknyR9di6JnCOkPiV5pK5YhUvBFV9MDCLqRb1opA"/>
+<div class="absolute top-2 right-2 border border-primary text-primary text-[10px] font-label-mono px-1.5 py-0.5 rounded-sm uppercase bg-surface-dim/80 backdrop-blur-sm">
+                            Publicado
+                        </div>
+</div>
+<div class="p-3 flex flex-col gap-2 flex-1">
+<div class="flex justify-between items-start gap-2">
+<h3 class="font-headline-md text-body-lg text-on-surface leading-tight line-clamp-2">Da fazenda para a sua xícara: rastreabilidade.</h3>
+</div>
+<div class="text-[11px] font-label-mono text-on-surface-variant bg-surface-variant px-2 py-1 rounded-sm border border-outline-variant inline-block w-fit">
+                            Hook: "Quem planta o café que..."
+                        </div>
+<div class="flex-1 mt-1">
+<div class="flex items-center gap-1.5 text-body-sm text-on-surface-variant mb-1">
+<span class="material-symbols-outlined text-[14px]">campaign</span>
+<span class="truncate">Café é território</span>
+</div>
+<div class="flex items-center gap-1.5 text-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[14px]">psychology</span>
+<span class="truncate text-[11px] font-label-mono text-primary-fixed-dim border border-primary-fixed-dim/30 px-1 rounded-sm">Trust</span>
+</div>
+</div>
+<div class="pt-2 mt-auto border-t border-outline-variant flex justify-between items-center">
+<div class="flex gap-3">
+<div class="flex flex-col">
+<span class="text-[9px] text-on-surface-variant uppercase tracking-wider">Alcance</span>
+<span class="font-data-number text-body-sm text-on-surface">12.8k</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[9px] text-on-surface-variant uppercase tracking-wider">Edição</span>
+<div class="flex items-center gap-0.5 h-full pt-1">
+<div class="w-1.5 h-2 bg-primary rounded-sm"></div>
+<div class="w-1.5 h-2 bg-primary rounded-sm"></div>
+<div class="w-1.5 h-2 bg-surface-variant rounded-sm"></div>
+<div class="w-1.5 h-2 bg-surface-variant rounded-sm"></div>
+</div>
+</div>
+</div>
+<div class="text-[10px] text-on-surface-variant font-label-mono">10 Out</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Load More (Ghost Button) -->
+<div class="flex justify-center mt-stack_gap_md pt-4">
+<button class="btn-secondary border-none px-4 py-2 font-label-mono text-label-mono text-on-surface-variant hover:text-on-surface flex items-center gap-2">
+                    Carregar mais itens <span class="material-symbols-outlined text-[16px]">expand_more</span>
+</button>
+</div>
+</main>
+</div>
+<script src="/stitch/bridge.js"></script></body></html>

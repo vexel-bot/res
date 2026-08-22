@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Clicko — Visual Composition Handoff V1</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        @import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap');
+        
+        :root {
+            --font-geist: 'Geist', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-geist);
+        }
+        
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {"tertiary-fixed": "#ffdad8", "surface-container-lowest": "#0e0e0e", "tertiary-fixed-dim": "#ffb3b1", "on-secondary-fixed": "#321200", "secondary-fixed": "#ffdbc8", "on-error": "#690005", "on-primary-fixed-variant": "#920418", secondary: "#ffb68b", "inverse-primary": "#b4252d", "surface-tint": "#ffb3af", primary: "#ffb3af", "surface-container": "#201f1f", "secondary-container": "#ff7f1c", "on-background": "#e5e2e1", "surface-container-low": "#1c1b1b", "on-tertiary-fixed": "#410007", error: "#ffb4ab", "on-primary-fixed": "#410005", "secondary-fixed-dim": "#ffb68b", tertiary: "#ffb3b1", "error-container": "#93000a", "on-surface-variant": "#e2bebc", outline: "#a98987", "surface-variant": "#353534", "surface-container-high": "#2a2a2a", "surface-dim": "#131313", "on-secondary": "#522300", "surface-container-highest": "#353534", "primary-fixed-dim": "#ffb3af", "on-primary": "#68000d", "on-surface": "#e5e2e1", "on-tertiary": "#601118", surface: "#131313", "on-tertiary-fixed-variant": "#7f292c", "on-primary-container": "#62000c", "on-secondary-container": "#602a00", "outline-variant": "#5a403f", "inverse-on-surface": "#313030", background: "#131313", "inverse-surface": "#e5e2e1", "on-secondary-fixed-variant": "#753400", "on-error-container": "#ffdad6", "on-tertiary-container": "#5c0e15", "surface-bright": "#393939", "primary-fixed": "#ffdad7", "tertiary-container": "#e17474", "primary-container": "#ff5c5c"}, borderRadius: {DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem"}, spacing: {spine_width: "64px", stack_gap_md: "16px", context_nav_width: "240px", gutter: "16px", container_padding: "24px", stack_gap_sm: "8px"}, fontFamily: {"headline-md": ["Geist"], "headline-lg": ["Geist"], "body-lg": ["Geist"], "label-mono": ["Geist"], "data-number": ["Geist"], "body-md": ["Geist"], "body-sm": ["Geist"], display: ["Geist"], headline: ["Geist"], body: ["Geist"], label: ["Geist"]}, fontSize: {"headline-md": ["20px", {lineHeight: "28px", fontWeight: "500"}], "headline-lg": ["24px", {lineHeight: "32px", letterSpacing: "-0.01em", fontWeight: "600"}], "body-lg": ["16px", {lineHeight: "24px", fontWeight: "400"}], "label-mono": ["12px", {lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "500"}], "data-number": ["14px", {lineHeight: "20px", fontWeight: "600"}], "body-md": ["14px", {lineHeight: "20px", fontWeight: "400"}], "body-sm": ["13px", {lineHeight: "18px", fontWeight: "400"}], display: ["32px", {lineHeight: "40px", letterSpacing: "-0.02em", fontWeight: "600"}]}}}};</script>
+</head>
+<body class="bg-[#0F1011] text-on-surface h-screen overflow-hidden flex flex-col font-body-md select-none">
+<!-- Top Navigation Spine -->
+<header class="flex-none h-spine_width bg-[#181B1D] border-b border-[#2C2F31] flex items-center justify-between px-6 z-50">
+<!-- Brand & Context -->
+<div class="flex items-center gap-6 h-full">
+<div class="flex items-center gap-3 pr-6 border-r border-[#2C2F31] h-full">
+<span class="material-symbols-outlined text-primary-container text-2xl">grid_view</span>
+<span class="font-headline-md text-on-surface">Clicko</span>
+</div>
+<div class="flex items-center gap-3 text-body-sm text-on-surface-variant">
+<span class="flex items-center gap-1 hover:text-on-surface cursor-pointer"><span class="material-symbols-outlined text-[16px]">folder</span> Brand Memory rev.12</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="flex items-center gap-1 hover:text-on-surface cursor-pointer"><span class="material-symbols-outlined text-[16px]">campaign</span> Café é território</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-on-surface font-medium flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">article</span> Post Title</span>
+<span class="bg-surface-variant px-2 py-0.5 rounded text-[10px] uppercase font-label-mono tracking-wide ml-2">Radar Origin</span>
+</div>
+</div>
+<!-- Workflow Spine -->
+<div class="flex items-center gap-1 h-full font-label-mono text-[11px] uppercase tracking-wider">
+<!-- Visited -->
+<button class="flex items-center gap-2 h-full px-4 text-on-surface-variant hover:text-on-surface hover:bg-surface transition-colors border-b-2 border-transparent relative group">
+<span class="material-symbols-outlined text-[16px] text-[#00E676]">check_circle</span>
+                Contexto
+                <div class="absolute right-0 top-1/2 -translate-y-1/2 w-4 border-t border-[#2C2F31] group-last:hidden translate-x-1/2"></div>
+</button>
+<!-- Visited -->
+<button class="flex items-center gap-2 h-full px-4 text-on-surface-variant hover:text-on-surface hover:bg-surface transition-colors border-b-2 border-transparent relative group">
+<span class="material-symbols-outlined text-[16px] text-[#00E676]">check_circle</span>
+                Texto
+                <div class="absolute right-0 top-1/2 -translate-y-1/2 w-4 border-t border-[#2C2F31] group-last:hidden translate-x-1/2"></div>
+</button>
+<!-- Active -->
+<button class="flex items-center gap-2 h-full px-4 text-[#00E676] bg-[#1E1E1E] border-b-2 border-[#00E676] relative group">
+<span class="material-symbols-outlined text-[16px]">design_services</span>
+                Composição
+                <div class="absolute right-0 top-1/2 -translate-y-1/2 w-4 border-t border-[#2C2F31] group-last:hidden translate-x-1/2"></div>
+</button>
+<!-- Upcoming -->
+<button class="flex items-center gap-2 h-full px-4 text-on-surface-variant hover:text-on-surface hover:bg-surface transition-colors border-b-2 border-transparent relative group opacity-50">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+                Revisão
+                <div class="absolute right-0 top-1/2 -translate-y-1/2 w-4 border-t border-[#2C2F31] group-last:hidden translate-x-1/2"></div>
+</button>
+<!-- Upcoming -->
+<button class="flex items-center gap-2 h-full px-4 text-on-surface-variant hover:text-on-surface hover:bg-surface transition-colors border-b-2 border-transparent relative group opacity-50">
+<span class="material-symbols-outlined text-[16px]">thumb_up</span>
+                Aprovação
+            </button>
+</div>
+<!-- Global Actions -->
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-2 text-xs text-on-surface-variant mr-4">
+<span class="w-1.5 h-1.5 rounded-full bg-outline-variant"></span>
+                Autosaved 1m ago
+            </div>
+<button class="h-8 px-3 flex items-center gap-2 rounded border border-[#2C2F31] text-on-surface hover:bg-[#1E1E1E] transition-colors text-body-sm font-medium">
+<span class="material-symbols-outlined text-[18px]">history</span>
+                History
+            </button>
+<button class="h-8 px-3 flex items-center gap-2 rounded border border-[#2C2F31] text-on-surface hover:bg-[#1E1E1E] transition-colors text-body-sm font-medium">
+<span class="material-symbols-outlined text-[18px]">download</span>
+                Export
+            </button>
+<button class="h-8 px-4 flex items-center gap-2 rounded bg-primary-container text-[#0F1011] hover:bg-[#62ff96] transition-colors text-body-sm font-medium shadow-sm">
+                Next: Revisão
+                <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</header>
+<!-- Main Workspace -->
+<main class="flex-1 flex overflow-hidden">
+<!-- Left Panel: Assets & Layers (18%) -->
+<aside class="w-[18%] bg-[#181B1D] border-r border-[#2C2F31] flex flex-col h-full z-40">
+<!-- Tools Bar -->
+<div class="p-3 border-b border-[#2C2F31] grid grid-cols-4 gap-2">
+<button class="h-10 rounded border border-[#2C2F31] hover:bg-[#1E1E1E] flex flex-col items-center justify-center gap-1 text-on-surface-variant hover:text-on-surface transition-colors group" title="Add Text">
+<span class="material-symbols-outlined text-[18px]">title</span>
+</button>
+<button class="h-10 rounded border border-[#2C2F31] hover:bg-[#1E1E1E] flex flex-col items-center justify-center gap-1 text-on-surface-variant hover:text-on-surface transition-colors group" title="Add Shape">
+<span class="material-symbols-outlined text-[18px]">category</span>
+</button>
+<button class="h-10 rounded border border-[#2C2F31] bg-[#1E1E1E] flex flex-col items-center justify-center gap-1 text-[#00E676] transition-colors group" title="Assets">
+<span class="material-symbols-outlined text-[18px]">perm_media</span>
+</button>
+<button class="h-10 rounded border border-[#2C2F31] hover:bg-[#1E1E1E] flex flex-col items-center justify-center gap-1 text-on-surface-variant hover:text-on-surface transition-colors group" title="Brand Templates">
+<span class="material-symbols-outlined text-[18px]">view_quilt</span>
+</button>
+</div>
+<!-- Assets List (Scrollable) -->
+<div class="flex-1 overflow-y-auto p-4 custom-scrollbar">
+<h3 class="font-label-mono text-[11px] text-on-surface-variant uppercase tracking-wider mb-3">Project Assets</h3>
+<div class="grid grid-cols-2 gap-2 mb-6">
+<div class="aspect-square bg-[#1E1E1E] border border-[#2C2F31] rounded flex items-center justify-center hover:border-outline-variant cursor-pointer relative overflow-hidden group">
+<img class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-opacity" data-alt="A highly detailed close-up shot of freshly roasted, oily coffee beans filling the frame. Rich dark brown tones with a slight gleam reflecting soft, directional studio lighting. Deep shadows enhance the texture of the beans. Professional food photography style, moody and aromatic atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBhndDf5rqDWKzi5dNhei-VxO_PVh8d4-vlvIhtyv0WrwTMbGo0pdCKPwamxv5R3Q0CsxJpB1y68VKT93xFT4i4ipOstoaz1a1yUmKXBBnBwCg4GMyCG8omEehqUu_TTpgkXgjkAt0wnYNuSsPSqXWIFpvgVij2kJljZzUDVBnuPzcLs8t7NzhyS5gxH-6FJLzJmSFDwNgKxzh-WTwGRI9ycpTk9hfT1Q-1eH53VwS9KOOW9Fa4-ZIICQ"/>
+</div>
+<div class="aspect-square bg-[#1E1E1E] border border-[#2C2F31] rounded flex items-center justify-center hover:border-outline-variant cursor-pointer relative overflow-hidden group">
+<img class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-opacity" data-alt="A professional top-down view of a ceramic coffee cup filled with perfect espresso crema on a dark slate tabletop. Next to the cup is a metallic portafilter showing fine coffee grounds. Clean, minimalist styling, high-end cafe aesthetic, soft natural light creating long subtle shadows. High resolution and sharp focus." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCPa6EYScymwoyXZrr8Panw4wZsp9laVygfupslHED53lCaXveBoCbMI2VHmHl8V-yFdTx9bQRFzGomeweMErFItpi_VzHmQUJG3JyKECLtIzYja3_88rrb2a2_nYZPqfwQLWiN77NlpQ2Fds298GzT2NR7LHlTs6zYiGJ5kSdY3DAQwF2htsXq8Yu1GnPrczSb8A2uwGsTCMGZ4G4wR4a-GUs9YSPRF0cDwY_ff6YNEuzv0sfWnFI8ZQ"/>
+</div>
+<div class="aspect-square bg-[#1E1E1E] border border-[#2C2F31] rounded flex items-center justify-center hover:border-outline-variant cursor-pointer relative overflow-hidden group">
+<div class="w-full h-full bg-gradient-to-br from-[#1E1E1E] to-[#2C2F31] flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant">add_photo_alternate</span>
+</div>
+</div>
+</div>
+<div class="h-px w-full bg-[#2C2F31] my-4"></div>
+<h3 class="font-label-mono text-[11px] text-on-surface-variant uppercase tracking-wider mb-3 flex justify-between items-center">
+                    Layers
+                    <button class="hover:text-on-surface"><span class="material-symbols-outlined text-[14px]">add</span></button>
+</h3>
+<div class="space-y-1">
+<!-- Layer Item (Active) -->
+<div class="flex items-center justify-between p-2 rounded bg-[#1E1E1E] border border-[#2C2F31] cursor-pointer">
+<div class="flex items-center gap-2 truncate">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">title</span>
+<span class="text-body-sm text-on-surface truncate">Headline: "Território"</span>
+</div>
+<div class="flex items-center gap-1 opacity-100">
+<button class="text-on-surface-variant hover:text-on-surface"><span class="material-symbols-outlined text-[14px]">lock_open</span></button>
+<button class="text-on-surface-variant hover:text-on-surface"><span class="material-symbols-outlined text-[14px]">visibility</span></button>
+</div>
+</div>
+<!-- Layer Item -->
+<div class="flex items-center justify-between p-2 rounded hover:bg-[#1E1E1E] cursor-pointer group border border-transparent hover:border-[#2C2F31]">
+<div class="flex items-center gap-2 truncate">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">notes</span>
+<span class="text-body-sm text-on-surface-variant group-hover:text-on-surface truncate">Subtext: Descubra o aroma...</span>
+</div>
+<div class="flex items-center gap-1 opacity-0 group-hover:opacity-100">
+<button class="text-on-surface-variant hover:text-on-surface"><span class="material-symbols-outlined text-[14px]">lock_open</span></button>
+<button class="text-on-surface-variant hover:text-on-surface"><span class="material-symbols-outlined text-[14px]">visibility</span></button>
+</div>
+</div>
+<!-- Layer Item -->
+<div class="flex items-center justify-between p-2 rounded hover:bg-[#1E1E1E] cursor-pointer group border border-transparent hover:border-[#2C2F31]">
+<div class="flex items-center gap-2 truncate">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">image</span>
+<span class="text-body-sm text-on-surface-variant group-hover:text-on-surface truncate">Hero Image - Coffee</span>
+</div>
+<div class="flex items-center gap-1 opacity-0 group-hover:opacity-100">
+<button class="text-on-surface-variant hover:text-on-surface"><span class="material-symbols-outlined text-[14px]">lock</span></button>
+<button class="text-on-surface-variant hover:text-on-surface"><span class="material-symbols-outlined text-[14px]">visibility</span></button>
+</div>
+</div>
+<!-- Layer Item -->
+<div class="flex items-center justify-between p-2 rounded hover:bg-[#1E1E1E] cursor-pointer group border border-transparent hover:border-[#2C2F31]">
+<div class="flex items-center gap-2 truncate">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">rectangle</span>
+<span class="text-body-sm text-on-surface-variant group-hover:text-on-surface truncate">Background Fill</span>
+</div>
+<div class="flex items-center gap-1 opacity-0 group-hover:opacity-100">
+<button class="text-on-surface-variant hover:text-on-surface"><span class="material-symbols-outlined text-[14px]">lock</span></button>
+<button class="text-on-surface-variant hover:text-on-surface"><span class="material-symbols-outlined text-[14px]">visibility</span></button>
+</div>
+</div>
+</div>
+</div>
+<!-- Contextual AI Panel (Bottom Left) -->
+<div class="p-4 border-t border-[#2C2F31] bg-[#121314]">
+<div class="flex items-start gap-2">
+<span class="material-symbols-outlined text-[#75ff9e] text-[18px] mt-0.5">psychology</span>
+<div>
+<h4 class="text-[12px] font-medium text-on-surface mb-1">AI Recommendation</h4>
+<p class="text-[11px] text-on-surface-variant leading-tight">Increase headline contrast. The dark green text on the coffee image background has low readability (ratio 3.1:1).</p>
+<button class="mt-2 text-[11px] text-primary hover:underline font-medium">Apply Fix</button>
+</div>
+</div>
+</div>
+</aside>
+<!-- Center Canvas (58%) -->
+<section class="w-[58%] bg-[#0F1011] relative flex flex-col z-10 overflow-hidden">
+<!-- Canvas Toolbar -->
+<div class="absolute top-4 left-1/2 -translate-x-1/2 bg-[#181B1D] border border-[#2C2F31] rounded-full px-4 py-2 flex items-center gap-4 z-50 shadow-md">
+<div class="flex items-center gap-1">
+<button class="text-on-surface-variant hover:text-on-surface p-1 rounded hover:bg-surface-variant"><span class="material-symbols-outlined text-[18px]">remove</span></button>
+<span class="text-body-sm font-label-mono w-12 text-center">75%</span>
+<button class="text-on-surface-variant hover:text-on-surface p-1 rounded hover:bg-surface-variant"><span class="material-symbols-outlined text-[18px]">add</span></button>
+</div>
+<div class="w-px h-4 bg-[#2C2F31]"></div>
+<div class="flex items-center gap-2">
+<button class="text-body-sm font-label-mono text-on-surface bg-surface-variant px-2 py-1 rounded">4:5</button>
+<button class="text-body-sm font-label-mono text-on-surface-variant hover:text-on-surface px-2 py-1">1:1</button>
+<button class="text-body-sm font-label-mono text-on-surface-variant hover:text-on-surface px-2 py-1">9:16</button>
+</div>
+<div class="w-px h-4 bg-[#2C2F31]"></div>
+<button class="text-primary hover:text-primary-container p-1 rounded flex items-center gap-1 text-xs font-medium" title="Toggle Safe Margins">
+<span class="material-symbols-outlined text-[18px]">grid_4x4</span>
+                    Margins
+                </button>
+</div>
+<!-- Canvas Area (Pan/Zoom Container) -->
+<div class="flex-1 overflow-auto flex items-center justify-center p-8 bg-[radial-gradient(#1E1E1E_1px,transparent_1px)] [background-size:16px_16px]">
+<!-- The Post Artboard (4:5 Ratio approx 1080x1350 scaled down) -->
+<div class="w-[432px] h-[540px] bg-white relative shadow-2xl overflow-hidden ring-1 ring-[#2C2F31]">
+<!-- Safe Area Guides (Toggled ON) -->
+<div class="absolute inset-[5%] border border-[#00E676]/30 border-dashed z-50 pointer-events-none"></div>
+<!-- Composition Content -->
+<!-- Main Hero Image {{DATA:IMAGE:IMAGE_1}} -->
+<div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg')"></div>
+<!-- Dark Gradient Overlay for text readability -->
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+<!-- Typography Overlays -->
+<div class="absolute bottom-12 left-8 right-8 z-20">
+<h1 class="font-headline-lg text-white text-[48px] leading-[1.1] font-bold mb-4 tracking-tight" style="font-family: var(--font-geist);">
+                            CAFÉ É<br/>TERRITÓRIO.
+                        </h1>
+<div class="w-12 h-1 bg-[#00E676] mb-4"></div>
+<p class="text-[#ECECED] font-body-md text-[16px] leading-relaxed max-w-[80%]">
+                            Descubra a origem, sinta o aroma e viva a experiência de um grão cultivado com maestria.
+                        </p>
+</div>
+<!-- Selection Box (Active Layer) -->
+<div class="absolute bottom-[40px] left-[24px] w-[340px] h-[100px] border-2 border-[#00E676] z-30 pointer-events-none">
+<!-- Resize Handles -->
+<div class="absolute -top-1.5 -left-1.5 w-3 h-3 bg-white border-2 border-[#00E676] rounded-sm"></div>
+<div class="absolute -top-1.5 -right-1.5 w-3 h-3 bg-white border-2 border-[#00E676] rounded-sm"></div>
+<div class="absolute -bottom-1.5 -left-1.5 w-3 h-3 bg-white border-2 border-[#00E676] rounded-sm"></div>
+<div class="absolute -bottom-1.5 -right-1.5 w-3 h-3 bg-white border-2 border-[#00E676] rounded-sm"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Right Panel: Properties & Audit (24%) -->
+<aside class="w-[24%] bg-[#181B1D] border-l border-[#2C2F31] flex flex-col h-full z-40 overflow-y-auto custom-scrollbar">
+<div class="p-4 border-b border-[#2C2F31]">
+<h2 class="text-body-md font-semibold text-on-surface">Typography Properties</h2>
+<p class="text-xs text-on-surface-variant">Headline: "Território"</p>
+</div>
+<!-- Property Editor Sections -->
+<div class="p-4 space-y-6">
+<!-- Position & Size -->
+<div>
+<h3 class="font-label-mono text-[10px] text-on-surface-variant uppercase tracking-wider mb-2">Transform</h3>
+<div class="grid grid-cols-2 gap-2">
+<div class="flex items-center bg-[#0F1011] border border-[#2C2F31] rounded px-2 py-1.5 focus-within:border-primary-container focus-within:ring-1 focus-within:ring-primary-container">
+<span class="text-on-surface-variant text-[11px] w-4">X</span>
+<input class="bg-transparent text-on-surface text-sm w-full outline-none text-right font-data-number border-none p-0 focus:ring-0" type="text" value="32"/>
+</div>
+<div class="flex items-center bg-[#0F1011] border border-[#2C2F31] rounded px-2 py-1.5 focus-within:border-primary-container focus-within:ring-1 focus-within:ring-primary-container">
+<span class="text-on-surface-variant text-[11px] w-4">Y</span>
+<input class="bg-transparent text-on-surface text-sm w-full outline-none text-right font-data-number border-none p-0 focus:ring-0" type="text" value="420"/>
+</div>
+<div class="flex items-center bg-[#0F1011] border border-[#2C2F31] rounded px-2 py-1.5 focus-within:border-primary-container focus-within:ring-1 focus-within:ring-primary-container">
+<span class="text-on-surface-variant text-[11px] w-4">W</span>
+<input class="bg-transparent text-on-surface text-sm w-full outline-none text-right font-data-number border-none p-0 focus:ring-0" type="text" value="336"/>
+</div>
+<div class="flex items-center bg-[#0F1011] border border-[#2C2F31] rounded px-2 py-1.5 focus-within:border-primary-container focus-within:ring-1 focus-within:ring-primary-container">
+<span class="text-on-surface-variant text-[11px] w-4">H</span>
+<input class="bg-transparent text-on-surface text-sm w-full outline-none text-right font-data-number border-none p-0 focus:ring-0" type="text" value="108"/>
+</div>
+</div>
+</div>
+<div class="h-px w-full bg-[#2C2F31]"></div>
+<!-- Text Formatting -->
+<div>
+<h3 class="font-label-mono text-[10px] text-on-surface-variant uppercase tracking-wider mb-2">Text</h3>
+<div class="space-y-3">
+<!-- Font Family -->
+<div class="bg-[#0F1011] border border-[#2C2F31] rounded px-3 py-2 flex justify-between items-center cursor-pointer hover:border-outline-variant">
+<span class="text-on-surface text-sm font-medium">Geist Sans</span>
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">expand_more</span>
+</div>
+<!-- Style & Size -->
+<div class="grid grid-cols-2 gap-2">
+<div class="bg-[#0F1011] border border-[#2C2F31] rounded px-3 py-1.5 flex justify-between items-center cursor-pointer hover:border-outline-variant">
+<span class="text-on-surface text-sm">Bold</span>
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">expand_more</span>
+</div>
+<div class="flex items-center bg-[#0F1011] border border-[#2C2F31] rounded px-2 py-1.5">
+<input class="bg-transparent text-on-surface text-sm w-full outline-none text-right font-data-number border-none p-0 focus:ring-0" type="text" value="48"/>
+<span class="text-on-surface-variant text-[11px] ml-1">px</span>
+</div>
+</div>
+<!-- Alignment -->
+<div class="flex bg-[#0F1011] border border-[#2C2F31] rounded overflow-hidden">
+<button class="flex-1 py-1.5 hover:bg-[#1E1E1E] bg-[#2C2F31] text-on-surface border-r border-[#2C2F31] flex justify-center"><span class="material-symbols-outlined text-[16px]">format_align_left</span></button>
+<button class="flex-1 py-1.5 hover:bg-[#1E1E1E] text-on-surface-variant hover:text-on-surface border-r border-[#2C2F31] flex justify-center"><span class="material-symbols-outlined text-[16px]">format_align_center</span></button>
+<button class="flex-1 py-1.5 hover:bg-[#1E1E1E] text-on-surface-variant hover:text-on-surface border-r border-[#2C2F31] flex justify-center"><span class="material-symbols-outlined text-[16px]">format_align_right</span></button>
+<button class="flex-1 py-1.5 hover:bg-[#1E1E1E] text-on-surface-variant hover:text-on-surface flex justify-center"><span class="material-symbols-outlined text-[16px]">format_align_justify</span></button>
+</div>
+<!-- Color -->
+<div class="flex items-center justify-between">
+<span class="text-xs text-on-surface-variant">Fill</span>
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded bg-white border border-[#2C2F31] cursor-pointer"></div>
+<span class="text-sm text-on-surface font-label-mono uppercase">#FFFFFF</span>
+<span class="text-sm text-on-surface-variant font-label-mono">100%</span>
+</div>
+</div>
+</div>
+</div>
+<div class="h-px w-full bg-[#2C2F31]"></div>
+<!-- Layer Effects -->
+<div>
+<h3 class="font-label-mono text-[10px] text-on-surface-variant uppercase tracking-wider mb-2 flex justify-between items-center">
+                        Effects
+                        <button class="hover:text-on-surface"><span class="material-symbols-outlined text-[14px]">add</span></button>
+</h3>
+<div class="text-xs text-on-surface-variant italic">No effects applied.</div>
+</div>
+</div>
+<!-- Spacer -->
+<div class="flex-1"></div>
+<!-- Visual Audit Section -->
+<div class="bg-[#121314] border-t border-[#2C2F31] p-4">
+<h3 class="font-label-mono text-[11px] text-on-surface uppercase tracking-wider mb-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">fact_check</span>
+                    Visual Audit
+                </h3>
+<div class="space-y-2">
+<!-- Check Item (Pass) -->
+<div class="flex items-start gap-2">
+<span class="material-symbols-outlined text-[16px] text-[#00E676]">check_circle</span>
+<div>
+<p class="text-xs text-on-surface font-medium">Resolution (High)</p>
+<p class="text-[10px] text-on-surface-variant">Assets meet 1080p requirement.</p>
+</div>
+</div>
+<!-- Check Item (Pass) -->
+<div class="flex items-start gap-2">
+<span class="material-symbols-outlined text-[16px] text-[#00E676]">check_circle</span>
+<div>
+<p class="text-xs text-on-surface font-medium">Safe Margins</p>
+<p class="text-[10px] text-on-surface-variant">All text within 5% safe area.</p>
+</div>
+</div>
+<!-- Check Item (Warning) -->
+<div class="flex items-start gap-2">
+<span class="material-symbols-outlined text-[16px] text-tertiary-fixed-dim">warning</span>
+<div>
+<p class="text-xs text-on-surface font-medium">Contrast (Subtext)</p>
+<p class="text-[10px] text-on-surface-variant">Subtext ratio 4.2:1. Min 4.5:1 recommended.</p>
+</div>
+</div>
+</div>
+<button class="w-full mt-4 h-8 bg-[#1E1E1E] hover:bg-[#2C2F31] border border-[#2C2F31] rounded text-xs font-medium text-on-surface transition-colors">
+                    Run Full Audit
+                </button>
+</div>
+</aside>
+</main>
+<script src="/stitch/bridge.js"></script></body></html>

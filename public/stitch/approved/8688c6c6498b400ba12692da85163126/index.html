@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Workspace Switcher V5 - Clicko Precision</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {"surface-container-high": "#2a2a2a", "surface-tint": "#ffb3af", surface: "#131313", "on-secondary-fixed": "#321200", "inverse-surface": "#e5e2e1", "on-primary-fixed-variant": "#920418", "on-primary-container": "#62000c", "surface-bright": "#393939", "tertiary-fixed-dim": "#ffb3b1", "tertiary-container": "#e17474", "surface-container": "#201f1f", "primary-container": "#ff5c5c", "secondary-fixed-dim": "#ffb68b", "inverse-on-surface": "#313030", "on-tertiary-fixed": "#410007", "on-tertiary-container": "#5c0e15", "on-tertiary-fixed-variant": "#7f292c", "primary-fixed": "#ffdad7", "on-primary-fixed": "#410005", "on-surface": "#e5e2e1", "surface-container-low": "#1c1b1b", "surface-dim": "#131313", error: "#ffb4ab", "error-container": "#93000a", primary: "#ffb3af", secondary: "#ffb68b", tertiary: "#ffb3b1", "on-background": "#e5e2e1", outline: "#a98987", "secondary-container": "#ff7f1c", "on-error-container": "#ffdad6", "on-secondary-fixed-variant": "#753400", background: "#131313", "on-surface-variant": "#e2bebc", "outline-variant": "#5a403f", "tertiary-fixed": "#ffdad8", "secondary-fixed": "#ffdbc8", "on-error": "#690005", "on-primary": "#68000d", "surface-container-highest": "#353534", "on-tertiary": "#601118", "surface-variant": "#353534", "inverse-primary": "#b4252d", "on-secondary-container": "#602a00", "surface-container-lowest": "#0e0e0e", "primary-fixed-dim": "#ffb3af", "on-secondary": "#522300"}, borderRadius: {DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem"}, spacing: {"container-max": "1440px", "margin-desktop": "32px", "margin-mobile": "16px", gutter: "16px", unit: "4px"}, fontFamily: {"body-lg": ["Geist", "sans-serif"], display: ["Geist"], "label-md": ["Geist", "sans-serif"], "headline-lg": ["Geist", "sans-serif"], "body-md": ["Geist", "sans-serif"], code: ["Geist", "monospace"], "headline-md": ["Geist", "sans-serif"], headline: ["Geist"], body: ["Geist"], label: ["Geist"]}, fontSize: {"body-lg": ["16px", {lineHeight: "1.5", fontWeight: "400"}], display: ["32px", {lineHeight: "1.2", letterSpacing: "-0.02em", fontWeight: "600"}], "label-md": ["12px", {lineHeight: "1", letterSpacing: "0.02em", fontWeight: "500"}], "headline-lg": ["24px", {lineHeight: "1.3", fontWeight: "600"}], "body-md": ["14px", {lineHeight: "1.5", fontWeight: "400"}], code: ["13px", {lineHeight: "1.4", fontWeight: "400"}], "headline-md": ["20px", {lineHeight: "1.4", fontWeight: "500"}]}}}};</script>
+<style>
+        @import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&display=swap');
+        
+        body {
+            background-color: theme('colors.surface-container-lowest');
+            color: theme('colors.on-surface');
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Custom Scrollbar for dense layouts */
+        ::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: theme('colors.surface-variant');
+            border-radius: 2px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: theme('colors.outline');
+        }
+
+        /* Utility class for Material Icons */
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .icon-fill {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="antialiased font-body-md selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopAppBar -->
+<header class="bg-surface-container-lowest dark:bg-surface-container-lowest docked full-width top-0 border-b border-outline-variant dark:border-outline-variant flat no-shadows flex justify-between items-center px-margin-desktop w-full h-16 z-50 sticky">
+<div class="flex items-center gap-8">
+<div class="font-headline-lg text-headline-lg font-bold text-on-surface dark:text-on-surface tracking-tighter">Clicko Precision</div>
+<!-- Navigation Links -->
+<nav class="hidden md:flex items-center gap-6 h-full mt-4">
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-on-surface-variant pb-4 hover:text-primary transition-colors duration-200" href="#">Newsroom</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-on-surface-variant pb-4 hover:text-primary transition-colors duration-200" href="#">Radar Room</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-on-surface-variant pb-4 hover:text-primary transition-colors duration-200" href="#">Brand Memory</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-on-surface-variant pb-4 hover:text-primary transition-colors duration-200" href="#">Campaign Intake</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-on-surface-variant pb-4 hover:text-primary transition-colors duration-200" href="#">Campaign Room</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<!-- Trailing Action -->
+<button class="bg-primary text-on-primary font-label-md text-label-md px-4 py-2 rounded flex items-center gap-2 hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-[16px]">add</span>
+                New Workspace
+            </button>
+<!-- Trailing Icons -->
+<div class="flex items-center gap-2 border-l border-outline-variant pl-4 ml-2">
+<button class="text-on-surface-variant hover:text-primary transition-colors duration-200 p-1">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors duration-200 p-1 relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-error"></span>
+</button>
+<img class="w-8 h-8 rounded-full ml-2 object-cover border border-outline-variant" data-alt="A macro photography shot of a high-tech metallic security token with glowing green LED accents, resting on a matte black carbon fiber surface in a futuristic server room. Industrial minimalist aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTQcvFRSiEYhW4sUQmWFPzqn7MW3nuKFf-icE86nVPPx6DORsicF2cpXCRC-vXK5bSlBX0WHgQ2YpGyoM5lM2Q1kxXPgINUyaPRY0rTRYuGt3F51Q8UazGJQ3zrf4mrdZwFbOzNdKEFgHk5RUbls5hLI1TI6mYAG9_3XaMe4ER7EtizR2pD0YDKJWzR-i5tDuGj_dByqGvGXQz_0dlvOIBH-3oocycoTqIqGiVBM_LijWgfdWGuX6liQ"/>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-grow flex flex-col items-center px-margin-mobile md:px-margin-desktop py-12">
+<div class="w-full max-w-container-max flex flex-col gap-8">
+<!-- Header & Search Area -->
+<section class="flex flex-col md:flex-row justify-between items-end gap-6 border-b border-outline-variant pb-6">
+<div>
+<h1 class="font-display text-display text-on-surface mb-2">Workspace Switcher V5</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Select a brand context to inject into operational modules.</p>
+</div>
+<div class="w-full md:w-96 relative group">
+<label class="absolute -top-5 left-0 font-label-md text-label-md text-on-surface-variant">Global Search</label>
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-on-surface-variant group-focus-within:text-primary transition-colors">search</span>
+</div>
+<input class="w-full bg-surface-container-low border border-outline-variant text-on-surface font-body-md text-body-md rounded-none py-2 pl-10 pr-4 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all placeholder:text-on-surface-variant/50" placeholder="Search by name, ID, or tag..." type="text"/>
+<div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+<span class="font-code text-code text-on-surface-variant/50 border border-outline-variant px-1 rounded rounded-sm">⌘K</span>
+</div>
+</div>
+</section>
+<!-- Workspace Grid -->
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+<!-- Active Workspace Card -->
+<div class="bg-surface-container border border-primary relative p-6 flex flex-col gap-4 cursor-pointer hover:bg-surface-container-highest transition-colors group">
+<div class="absolute top-0 left-0 w-full h-1 bg-primary"></div>
+<div class="absolute top-4 right-4 flex items-center gap-2">
+<span class="font-label-md text-label-md text-primary">Active Session</span>
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+</div>
+<div>
+<div class="font-code text-code text-on-surface-variant mb-1">ID: WRK-892A</div>
+<h2 class="font-headline-md text-headline-md text-on-surface">Acme Corp</h2>
+<div class="font-label-md text-label-md text-on-surface-variant mt-1">Enterprise Plan • Enterprise IT</div>
+</div>
+<div class="border-t border-outline-variant pt-4 mt-auto">
+<div class="flex justify-between items-center mb-2">
+<span class="font-label-md text-label-md text-on-surface-variant">Context Health</span>
+<span class="font-code text-code text-primary">98%</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1 rounded-full overflow-hidden">
+<div class="bg-primary h-full" style="width: 98%"></div>
+</div>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant mt-2">
+<span class="material-symbols-outlined text-[16px]">history</span>
+<span class="font-label-md text-label-md truncate">Last action: Campaign Intake updated 2m ago</span>
+</div>
+</div>
+<!-- Inactive Workspace Card 1 -->
+<div class="bg-surface-container-low border border-outline-variant relative p-6 flex flex-col gap-4 cursor-pointer hover:border-on-surface-variant hover:bg-surface-container transition-all group">
+<div class="absolute top-4 right-4">
+<button class="opacity-0 group-hover:opacity-100 transition-opacity text-on-surface-variant hover:text-primary">
+<span class="material-symbols-outlined">login</span>
+</button>
+</div>
+<div>
+<div class="font-code text-code text-on-surface-variant mb-1">ID: WRK-741B</div>
+<h2 class="font-headline-md text-headline-md text-on-surface group-hover:text-primary transition-colors">Global Tech</h2>
+<div class="font-label-md text-label-md text-on-surface-variant mt-1">Pro Plan • FinTech</div>
+</div>
+<div class="border-t border-outline-variant pt-4 mt-auto">
+<div class="flex justify-between items-center mb-2">
+<span class="font-label-md text-label-md text-on-surface-variant">Context Health</span>
+<span class="font-code text-code text-secondary">75%</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1 rounded-full overflow-hidden">
+<div class="bg-secondary h-full" style="width: 75%"></div>
+</div>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant mt-2">
+<span class="material-symbols-outlined text-[16px]">history</span>
+<span class="font-label-md text-label-md truncate">Last action: Radar Room generated 5 alerts (1h ago)</span>
+</div>
+</div>
+<!-- Inactive Workspace Card 2 -->
+<div class="bg-surface-container-low border border-outline-variant relative p-6 flex flex-col gap-4 cursor-pointer hover:border-on-surface-variant hover:bg-surface-container transition-all group">
+<div class="absolute top-4 right-4">
+<button class="opacity-0 group-hover:opacity-100 transition-opacity text-on-surface-variant hover:text-primary">
+<span class="material-symbols-outlined">login</span>
+</button>
+</div>
+<div>
+<div class="font-code text-code text-on-surface-variant mb-1">ID: WRK-339C</div>
+<h2 class="font-headline-md text-headline-md text-on-surface group-hover:text-primary transition-colors">Stellar Brand</h2>
+<div class="font-label-md text-label-md text-on-surface-variant mt-1">Startup Plan • E-Commerce</div>
+</div>
+<div class="border-t border-outline-variant pt-4 mt-auto">
+<div class="flex justify-between items-center mb-2">
+<span class="font-label-md text-label-md text-on-surface-variant">Context Health</span>
+<span class="font-code text-code text-primary">99%</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1 rounded-full overflow-hidden">
+<div class="bg-primary h-full" style="width: 99%"></div>
+</div>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant mt-2">
+<span class="material-symbols-outlined text-[16px]">history</span>
+<span class="font-label-md text-label-md truncate">Last action: Brand Memory sync completed (2d ago)</span>
+</div>
+</div>
+<!-- Inactive Workspace Card 3 (Archived/Low Health) -->
+<div class="bg-surface-container-lowest border border-outline-variant/50 relative p-6 flex flex-col gap-4 cursor-pointer hover:border-outline-variant transition-all group opacity-70 hover:opacity-100">
+<div class="absolute top-4 right-4 flex items-center gap-2">
+<span class="font-label-md text-label-md text-error">Attention Req.</span>
+<span class="w-2 h-2 rounded-full bg-error"></span>
+</div>
+<div>
+<div class="font-code text-code text-on-surface-variant mb-1">ID: WRK-112X</div>
+<h2 class="font-headline-md text-headline-md text-on-surface">Legacy Systems Inc.</h2>
+<div class="font-label-md text-label-md text-on-surface-variant mt-1">Basic Plan • Archival</div>
+</div>
+<div class="border-t border-outline-variant pt-4 mt-auto">
+<div class="flex justify-between items-center mb-2">
+<span class="font-label-md text-label-md text-on-surface-variant">Context Health</span>
+<span class="font-code text-code text-error">24%</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1 rounded-full overflow-hidden">
+<div class="bg-error h-full" style="width: 24%"></div>
+</div>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant mt-2">
+<span class="material-symbols-outlined text-[16px]">history</span>
+<span class="font-label-md text-label-md truncate">Last action: API Token Expired (1mo ago)</span>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-low dark:bg-surface-container-low full-width bottom border-t border-outline-variant dark:border-outline-variant flat no-shadows flex justify-between items-center px-margin-desktop py-4 w-full mt-auto">
+<div class="font-label-md text-label-md uppercase tracking-widest text-on-surface-variant dark:text-on-surface-variant">
+            © 2024 Clicko Precision. Operational Governance System.
+        </div>
+<div class="flex items-center gap-6">
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-on-surface-variant hover:text-on-surface transition-colors" href="#">Documentation</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-on-surface-variant hover:text-on-surface transition-colors" href="#">Support</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-on-surface-variant hover:text-on-surface transition-colors" href="#">System Status</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-on-surface-variant hover:text-on-surface transition-colors" href="#">Security</a>
+</div>
+</footer>
+<script src="/stitch/bridge.js"></script></body></html>

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Automation Workshop V5</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {"secondary-fixed-dim": "#ffb68b", "surface-variant": "#353534", surface: "#131313", "on-secondary-container": "#602a00", "surface-bright": "#393939", "surface-container-lowest": "#0e0e0e", "primary-container": "#ff5c5c", "inverse-surface": "#e5e2e1", "error-container": "#93000a", "primary-fixed-dim": "#ffb3af", "on-primary-container": "#62000c", "primary-fixed": "#ffdad7", "on-primary-fixed-variant": "#920418", "tertiary-fixed-dim": "#ffb3b1", "surface-dim": "#131313", "on-tertiary-container": "#5c0e15", "on-error-container": "#ffdad6", "inverse-on-surface": "#313030", "on-secondary-fixed-variant": "#753400", secondary: "#ffb68b", "on-background": "#e5e2e1", "outline-variant": "#5a403f", "secondary-fixed": "#ffdbc8", outline: "#a98987", error: "#ffb4ab", "on-surface-variant": "#e2bebc", "tertiary-fixed": "#ffdad8", "surface-container": "#201f1f", background: "#131313", "on-tertiary-fixed-variant": "#7f292c", "tertiary-container": "#e17474", "surface-tint": "#ffb3af", "secondary-container": "#ff7f1c", "on-surface": "#e5e2e1", "surface-container-low": "#1c1b1b", "on-secondary-fixed": "#321200", "inverse-primary": "#b4252d", "on-error": "#690005", primary: "#ffb3af", "on-tertiary": "#601118", "on-secondary": "#522300", "surface-container-highest": "#353534", "on-primary-fixed": "#410005", "surface-container-high": "#2a2a2a", "on-tertiary-fixed": "#410007", tertiary: "#ffb3b1", "on-primary": "#68000d"}, borderRadius: {DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem"}, spacing: {"container-max": "1440px", unit: "4px", "margin-mobile": "16px", gutter: "16px", "margin-desktop": "32px"}, fontFamily: {"body-lg": ["Geist"], "label-md": ["Geist"], "headline-lg": ["Geist"], code: ["Geist"], display: ["Geist"], "headline-md": ["Geist"], "body-md": ["Geist"], headline: ["Geist"], body: ["Geist"], label: ["Geist"]}, fontSize: {"body-lg": ["16px", {lineHeight: "1.5", fontWeight: "400"}], "label-md": ["12px", {lineHeight: "1", letterSpacing: "0.02em", fontWeight: "500"}], "headline-lg": ["24px", {lineHeight: "1.3", fontWeight: "600"}], code: ["13px", {lineHeight: "1.4", fontWeight: "400"}], display: ["32px", {lineHeight: "1.2", letterSpacing: "-0.02em", fontWeight: "600"}], "headline-md": ["20px", {lineHeight: "1.4", fontWeight: "500"}], "body-md": ["14px", {lineHeight: "1.5", fontWeight: "400"}]}}}};</script>
+<style>
+        body { background-color: #0F1011; } /* Level 0 Base */
+        .surface-l1 { background-color: #181B1D; border: 1px solid #3b4a3d; }
+        .surface-l2 { background-color: #1E1E1E; border: 1px solid #3b4a3d; }
+        .border-base { border-color: #3b4a3d; }
+        .border-active { border-color: #00e676; }
+        
+        /* Thin Scrollbar */
+        ::-webkit-scrollbar { width: 4px; height: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #343536; border-radius: 2px; }
+        ::-webkit-scrollbar-thumb:hover { background: #474746; }
+        
+        /* Node Connectors */
+        .spine-line {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #3b4a3d;
+            z-index: 0;
+        }
+        .spine-line.active {
+            background: #00e676;
+            box-shadow: 0 0 8px rgba(0, 230, 118, 0.4);
+        }
+    </style>
+</head>
+<body class="text-on-surface h-screen flex flex-col overflow-hidden antialiased">
+<!-- TopNavBar -->
+<header class="flex justify-between items-center px-margin-desktop w-full sticky top-0 z-50 bg-surface h-16 border-b border-outline-variant dark:border-outline-variant flat no shadows">
+<div class="flex items-center gap-8">
+<div class="font-headline-md text-headline-md font-bold text-primary dark:text-primary">Clicko Precision</div>
+<nav class="hidden md:flex gap-6 h-full items-center">
+<a class="text-on-surface-variant dark:text-on-secondary-container hover:text-primary dark:hover:text-primary-fixed transition-colors duration-200 cursor-pointer active:opacity-80 font-body-md text-body-md h-full flex items-center" href="#">Newsroom</a>
+<a class="text-on-surface-variant dark:text-on-secondary-container hover:text-primary dark:hover:text-primary-fixed transition-colors duration-200 cursor-pointer active:opacity-80 font-body-md text-body-md h-full flex items-center" href="#">Radar Room</a>
+<a class="text-on-surface-variant dark:text-on-secondary-container hover:text-primary dark:hover:text-primary-fixed transition-colors duration-200 cursor-pointer active:opacity-80 font-body-md text-body-md h-full flex items-center" href="#">Brand Memory</a>
+<a class="text-on-surface-variant dark:text-on-secondary-container hover:text-primary dark:hover:text-primary-fixed transition-colors duration-200 cursor-pointer active:opacity-80 font-body-md text-body-md h-full flex items-center" href="#">Campaign Intake</a>
+<a class="text-primary dark:text-primary-fixed-dim border-b-2 border-primary pt-1 hover:text-primary dark:hover:text-primary-fixed transition-colors duration-200 cursor-pointer active:opacity-80 font-body-md text-body-md h-full flex items-center" href="#">Campaign Room</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:text-primary transition-colors cursor-pointer">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors cursor-pointer">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-surface-variant border border-outline overflow-hidden">
+<img alt="User profile" class="object-cover w-full h-full" data-alt="A macro shot of a sleek, dark metallic texture with minimal specular highlights. Professional, clinical, and high-tech corporate avatar background. Dark mode aesthetic with subtle green reflections." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDauVJZq_ZfU7wc7E605WJ3HqKdn--OHYp-qqJvcJSZYC-sLDH2OCNrTj73jVSwL-AeFxbOV8Wv9w-F9qS0WDqjo2qXEsN9rhKuIZeFu-zD-eF05X7jwpki9iHkQxI0rOPSqUbektY0C-iiMM5NYrPlo8J_8VpZD5ifPfMrXX9iJudrTZIJN0ejGsY-64y48Q0LTelbse77qH5Fb6Yc29yWpZkGfhNb0ROHx9W0CoowYhrXih3fZ6XjLA"/>
+</div>
+</div>
+</header>
+<!-- Main Workspace -->
+<main class="flex-1 flex overflow-hidden">
+<!-- Sidebar - Available Nodes -->
+<aside class="w-64 surface-l1 flex flex-col border-r border-base flex-shrink-0 z-10 relative">
+<div class="p-4 border-b border-base">
+<h2 class="font-headline-md text-headline-md text-on-surface">Nodes</h2>
+<p class="font-label-md text-label-md text-on-surface-variant mt-1">Drag to canvas</p>
+</div>
+<div class="flex-1 overflow-y-auto p-4 space-y-4">
+<!-- Triggers -->
+<div>
+<h3 class="font-label-md text-label-md text-on-surface-variant mb-2 uppercase tracking-wider">Triggers</h3>
+<div class="space-y-2">
+<div class="surface-l2 p-3 rounded flex items-center gap-3 cursor-grab hover:border-active transition-colors border border-base">
+<span class="material-symbols-outlined text-primary" data-icon="bolt">bolt</span>
+<span class="font-body-md text-body-md">Campaign Start</span>
+</div>
+<div class="surface-l2 p-3 rounded flex items-center gap-3 cursor-grab hover:border-active transition-colors border border-base">
+<span class="material-symbols-outlined text-secondary" data-icon="schedule">schedule</span>
+<span class="font-body-md text-body-md">Scheduled Time</span>
+</div>
+</div>
+</div>
+<!-- Conditions -->
+<div>
+<h3 class="font-label-md text-label-md text-on-surface-variant mb-2 uppercase tracking-wider mt-4">Conditions</h3>
+<div class="space-y-2">
+<div class="surface-l2 p-3 rounded flex items-center gap-3 cursor-grab hover:border-active transition-colors border border-base">
+<span class="material-symbols-outlined text-secondary" data-icon="alt_route">alt_route</span>
+<span class="font-body-md text-body-md">A/B Split</span>
+</div>
+</div>
+</div>
+<!-- Actions -->
+<div>
+<h3 class="font-label-md text-label-md text-on-surface-variant mb-2 uppercase tracking-wider mt-4">Actions</h3>
+<div class="space-y-2">
+<div class="surface-l2 p-3 rounded flex items-center gap-3 cursor-grab hover:border-active transition-colors border border-base">
+<span class="material-symbols-outlined text-secondary" data-icon="send">send</span>
+<span class="font-body-md text-body-md">Email Sequence</span>
+</div>
+<div class="surface-l2 p-3 rounded flex items-center gap-3 cursor-grab hover:border-active transition-colors border border-base">
+<span class="material-symbols-outlined text-secondary" data-icon="thumb_up">thumb_up</span>
+<span class="font-body-md text-body-md">Approval Gate</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Flow Status -->
+<div class="p-4 border-t border-base bg-surface-container-low">
+<div class="flex justify-between items-center mb-2">
+<span class="font-label-md text-label-md text-on-surface-variant">Flow Status</span>
+<span class="flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span>
+<span class="font-label-md text-label-md text-primary">Running</span>
+</span>
+</div>
+<button class="w-full bg-surface-variant border border-outline hover:border-primary text-on-surface font-label-md text-label-md py-2 rounded transition-colors">
+                    Pause Flow
+                </button>
+</div>
+</aside>
+<!-- Canvas -->
+<section class="flex-1 relative overflow-auto bg-[#0F1011]" style="background-image: radial-gradient(#3b4a3d 1px, transparent 1px); background-size: 24px 24px;">
+<!-- Toolbar -->
+<div class="absolute top-4 right-4 flex gap-2 z-20">
+<button class="surface-l2 p-2 rounded hover:border-primary transition-colors text-on-surface-variant hover:text-on-surface">
+<span class="material-symbols-outlined" data-icon="zoom_in">zoom_in</span>
+</button>
+<button class="surface-l2 p-2 rounded hover:border-primary transition-colors text-on-surface-variant hover:text-on-surface">
+<span class="material-symbols-outlined" data-icon="zoom_out">zoom_out</span>
+</button>
+<button class="surface-l2 p-2 rounded hover:border-primary transition-colors text-on-surface-variant hover:text-on-surface">
+<span class="material-symbols-outlined" data-icon="center_focus_strong">center_focus_strong</span>
+</button>
+</div>
+<!-- Workflow Container -->
+<div class="min-w-max min-h-full p-16 flex items-center relative">
+<!-- Spine Line -->
+<div class="spine-line active w-[800px] left-16"></div>
+<!-- Node: Trigger -->
+<div class="surface-l2 border-active rounded-lg w-64 p-4 relative z-10 shadow-[0_0_15px_rgba(0,230,118,0.1)]">
+<div class="flex items-start justify-between mb-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-lg" data-icon="bolt">bolt</span>
+<h4 class="font-body-md text-body-md font-medium text-on-surface">Campaign Start</h4>
+</div>
+<span class="font-code text-code text-primary bg-primary/10 px-1.5 py-0.5 rounded">T-0</span>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between font-label-md text-label-md">
+<span class="text-on-surface-variant">Source</span>
+<span class="text-on-surface">Q3 Launch Form</span>
+</div>
+<div class="flex justify-between font-label-md text-label-md">
+<span class="text-on-surface-variant">Entries</span>
+<span class="text-on-surface">1,204</span>
+</div>
+</div>
+</div>
+<!-- Spacer -->
+<div class="w-16"></div>
+<!-- Node: Condition -->
+<div class="surface-l2 border-base rounded-lg w-64 p-4 relative z-10">
+<div class="flex items-start justify-between mb-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-lg" data-icon="alt_route">alt_route</span>
+<h4 class="font-body-md text-body-md font-medium text-on-surface">Lead Score Split</h4>
+</div>
+</div>
+<div class="space-y-1 border-t border-base pt-2">
+<div class="flex items-center gap-2 font-label-md text-label-md">
+<span class="text-primary">&gt; 50</span>
+<span class="text-on-surface-variant">Fast Track</span>
+</div>
+<div class="flex items-center gap-2 font-label-md text-label-md">
+<span class="text-secondary">&lt; 50</span>
+<span class="text-on-surface-variant">Nurture</span>
+</div>
+</div>
+</div>
+<!-- Spacer -->
+<div class="w-16"></div>
+<!-- Node: Action (Active) -->
+<div class="bg-primary text-on-primary rounded-lg w-64 p-4 relative z-10 border border-primary">
+<div class="flex items-start justify-between mb-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-primary text-lg" data-icon="send">send</span>
+<h4 class="font-body-md text-body-md font-medium">VIP Welcome Email</h4>
+</div>
+<span class="w-2 h-2 rounded-full bg-on-primary animate-pulse"></span>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between font-label-md text-label-md opacity-80">
+<span>Sent</span>
+<span>482</span>
+</div>
+<div class="flex justify-between font-label-md text-label-md font-medium">
+<span>Open Rate</span>
+<span>68%</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Performance Panel (Right Sidebar) -->
+<aside class="w-80 surface-l1 border-l border-base flex flex-col z-10">
+<div class="p-4 border-b border-base">
+<h2 class="font-headline-md text-headline-md text-on-surface">Performance Overview</h2>
+</div>
+<div class="p-4 space-y-6">
+<!-- Stat Block -->
+<div>
+<h3 class="font-label-md text-label-md text-on-surface-variant mb-1">Total Throughput</h3>
+<div class="font-display text-display text-on-surface">1,204</div>
+<div class="font-label-md text-label-md text-primary flex items-center mt-1">
+<span class="material-symbols-outlined text-sm mr-1" data-icon="trending_up">trending_up</span>
+                        12% vs last week
+                    </div>
+</div>
+<!-- Chart Area -->
+<div class="border border-base rounded bg-surface-container-low p-3 h-48 relative overflow-hidden flex flex-col justify-end">
+<span class="font-label-md text-label-md text-on-surface-variant absolute top-3 left-3">Conversion Rate</span>
+<div class="flex items-end justify-between gap-1 h-32 mt-auto">
+<div class="w-full bg-surface-variant rounded-t" style="height: 40%"></div>
+<div class="w-full bg-surface-variant rounded-t" style="height: 55%"></div>
+<div class="w-full bg-surface-variant rounded-t" style="height: 45%"></div>
+<div class="w-full bg-surface-variant rounded-t" style="height: 60%"></div>
+<div class="w-full bg-primary-container/80 rounded-t" style="height: 85%"></div>
+<div class="w-full bg-surface-variant rounded-t" style="height: 70%"></div>
+<div class="w-full bg-surface-variant rounded-t" style="height: 65%"></div>
+</div>
+</div>
+<!-- Recent Activity -->
+<div>
+<h3 class="font-label-md text-label-md text-on-surface-variant mb-3 border-b border-base pb-2">Recent Activity</h3>
+<div class="space-y-3">
+<div class="flex gap-3">
+<span class="material-symbols-outlined text-primary text-sm mt-0.5" data-icon="check_circle">check_circle</span>
+<div>
+<p class="font-body-md text-body-md text-on-surface">Node 'VIP Welcome' updated</p>
+<p class="font-label-md text-label-md text-on-surface-variant">2 mins ago by Admin</p>
+</div>
+</div>
+<div class="flex gap-3">
+<span class="material-symbols-outlined text-secondary text-sm mt-0.5" data-icon="play_arrow">play_arrow</span>
+<div>
+<p class="font-body-md text-body-md text-on-surface">Flow started</p>
+<p class="font-label-md text-label-md text-on-surface-variant">1 hour ago by System</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</aside>
+</main>
+<!-- Footer -->
+<footer class="flex justify-between items-center px-margin-desktop w-full mt-auto h-12 bg-surface-dim dark:bg-surface-dim border-t border-outline-variant dark:border-outline-variant flat no shadows">
+<div class="font-label-md text-label-md uppercase tracking-widest text-on-surface">
+            © 2024 Clicko Precision. System Operational.
+        </div>
+<div class="flex gap-4">
+<a class="text-on-tertiary-container dark:text-on-tertiary-container hover:text-primary-fixed dark:hover:text-primary-fixed transition-colors cursor-pointer font-label-md text-label-md" href="#">Status</a>
+<a class="text-on-tertiary-container dark:text-on-tertiary-container hover:text-primary-fixed dark:hover:text-primary-fixed transition-colors cursor-pointer font-label-md text-label-md" href="#">Documentation</a>
+<a class="text-on-tertiary-container dark:text-on-tertiary-container hover:text-primary-fixed dark:hover:text-primary-fixed transition-colors cursor-pointer font-label-md text-label-md" href="#">Support</a>
+<a class="text-on-tertiary-container dark:text-on-tertiary-container hover:text-primary-fixed dark:hover:text-primary-fixed transition-colors cursor-pointer font-label-md text-label-md" href="#">Terms</a>
+</div>
+</footer>
+<script src="/stitch/bridge.js"></script></body></html>

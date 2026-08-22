@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Review Room - CREATIVE LAB</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {primary: "#ffb3af", "inverse-primary": "#b4252d", "inverse-on-surface": "#313030", "secondary-container": "#ff7f1c", "on-surface": "#e5e2e1", "on-primary-container": "#62000c", "primary-fixed": "#ffdad7", "inverse-surface": "#e5e2e1", "on-tertiary-container": "#5c0e15", "secondary-fixed": "#ffdbc8", "on-secondary-container": "#602a00", "on-error": "#690005", "secondary-fixed-dim": "#ffb68b", surface: "#131313", secondary: "#ffb68b", "on-tertiary-fixed": "#410007", "surface-container-lowest": "#0e0e0e", "on-secondary-fixed": "#321200", background: "#131313", "surface-container-high": "#2a2a2a", "on-primary-fixed": "#410005", "primary-fixed-dim": "#ffb3af", "error-container": "#93000a", "surface-dim": "#131313", "on-error-container": "#ffdad6", "surface-tint": "#ffb3af", "on-surface-variant": "#e2bebc", "tertiary-fixed": "#ffdad8", "on-background": "#e5e2e1", "on-tertiary": "#601118", "surface-container": "#201f1f", "tertiary-container": "#e17474", tertiary: "#ffb3b1", "surface-container-low": "#1c1b1b", "on-secondary-fixed-variant": "#753400", "on-tertiary-fixed-variant": "#7f292c", "tertiary-fixed-dim": "#ffb3b1", outline: "#a98987", error: "#ffb4ab", "surface-bright": "#393939", "primary-container": "#ff5c5c", "on-secondary": "#522300", "outline-variant": "#5a403f", "on-primary": "#68000d", "surface-variant": "#353534", "surface-container-highest": "#353534", "on-primary-fixed-variant": "#920418"}, borderRadius: {DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem"}, spacing: {stack_gap_sm: "8px", container_padding: "24px", spine_width: "64px", gutter: "16px", stack_gap_md: "16px", context_nav_width: "240px"}, fontFamily: {"headline-lg": ["Geist"], "body-lg": ["Geist"], "headline-md": ["Geist"], "data-number": ["Geist"], display: ["Geist"], "label-mono": ["Geist"], "body-md": ["Geist"], "body-sm": ["Geist"], headline: ["Geist"], body: ["Geist"], label: ["Geist"]}, fontSize: {"headline-lg": ["24px", {lineHeight: "32px", letterSpacing: "-0.01em", fontWeight: "600"}], "body-lg": ["16px", {lineHeight: "24px", fontWeight: "400"}], "headline-md": ["20px", {lineHeight: "28px", fontWeight: "500"}], "data-number": ["14px", {lineHeight: "20px", fontWeight: "600"}], display: ["32px", {lineHeight: "40px", letterSpacing: "-0.02em", fontWeight: "600"}], "label-mono": ["12px", {lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "500"}], "body-md": ["14px", {lineHeight: "20px", fontWeight: "400"}], "body-sm": ["13px", {lineHeight: "18px", fontWeight: "400"}]}}}};</script>
+<style>
+        body { font-family: 'Geist', sans-serif; background-color: #0F1011; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .icon-fill { font-variation-settings: 'FILL' 1; }
+        .glass-panel { background: rgba(24, 27, 29, 0.7); backdrop-filter: blur(12px); border: 1px solid #2C2F31; }
+        .level-1 { background-color: #181B1D; border: 1px solid #2C2F31; }
+        .level-2 { background-color: #1E1E1E; border: 1px solid #2C2F31; }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #3b4a3d; border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #859585; }
+    </style>
+</head>
+<body class="text-on-surface h-screen overflow-hidden flex flex-col">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full h-16 bg-surface border-b border-outline-variant flex justify-between items-center px-container_padding z-50">
+<div class="flex items-center gap-stack_gap_md">
+<span class="text-headline-lg font-headline-lg font-bold text-primary">CREATIVE LAB</span>
+</div>
+<nav class="hidden md:flex gap-stack_gap_md items-center h-full">
+<a class="font-label-mono text-label-mono text-on-surface-variant hover:text-primary transition-colors cursor-pointer active:opacity-80 h-full flex items-center px-2" href="#">Composition</a>
+<a class="font-label-mono text-label-mono text-on-surface-variant hover:text-primary transition-colors cursor-pointer active:opacity-80 h-full flex items-center px-2" href="#">Inventory</a>
+<a class="font-label-mono text-label-mono text-primary border-b-2 border-primary pb-1 h-full flex items-center px-2" href="#">Review</a>
+<a class="font-label-mono text-label-mono text-on-surface-variant hover:text-primary transition-colors cursor-pointer active:opacity-80 h-full flex items-center px-2" href="#">Insights</a>
+</nav>
+<div class="flex items-center gap-stack_gap_md">
+<div class="flex gap-2">
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined">notifications</span></button>
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined">settings</span></button>
+</div>
+<button class="bg-primary text-on-primary-container font-label-mono text-label-mono px-4 py-2 rounded uppercase tracking-wider hover:bg-primary-fixed transition-colors">Publish</button>
+<img alt="Creative Director Profile" class="w-8 h-8 rounded-full border border-outline-variant object-cover" data-alt="A small, circular avatar portrait of a creative director in a high-tech studio environment. Dark background, professional lighting, modern minimalist aesthetic. 100 words max." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBciEZDoenA2rB1wntLyaI_LdEFdytF5vR2Eyoj9UPs7B4XqfTzJacx3kXBlEyd4NsMaM1OTS6r6szlVffQwfVklvTj-fC0pHxWIAGUkaT-ccHfvXRy17FBAwS7aZptOpuy9miI0wO4pcxxG7MSfppIW2A4-x5SOFCAyIsz2_GAd5Qis7xGVXUnpD6ffw62e1q0UzyCIjJiDehOcIEM1jaxWeBxZt7O_VA77_lNCJWTl_u44Kef6p_EmQ"/>
+</div>
+</header>
+<div class="flex flex-1 pt-16">
+<!-- SideNavBar -->
+<aside class="hidden md:flex flex-col py-stack_gap_md z-40 fixed left-0 top-16 h-[calc(100vh-64px)] w-spine_width md:w-context_nav_width bg-surface-container border-r border-outline-variant transition-all duration-200">
+<div class="px-container_padding mb-6">
+<div class="flex items-center gap-3 mb-2">
+<div class="w-8 h-8 rounded bg-surface-variant flex items-center justify-center border border-outline-variant">
+<span class="material-symbols-outlined text-primary text-sm">folder</span>
+</div>
+<div class="overflow-hidden">
+<h2 class="font-headline-md text-headline-md text-on-surface truncate">Project Alpha</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">Creative Director Active</p>
+</div>
+</div>
+<button class="w-full mt-4 bg-transparent border border-outline-variant text-on-surface font-label-mono text-label-mono py-2 px-3 flex items-center justify-center gap-2 hover:bg-surface-variant transition-colors rounded">
+<span class="material-symbols-outlined text-sm">add</span> New Composition
+                </button>
+</div>
+<nav class="flex-1 flex flex-col gap-1 px-2">
+<a class="flex items-center gap-3 px-3 py-2 rounded font-label-mono text-label-mono text-on-surface-variant hover:bg-surface-container-highest transition-colors" href="#">
+<span class="material-symbols-outlined text-lg">route</span>
+<span class="truncate">Workflow Spine</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded font-label-mono text-label-mono text-on-surface-variant hover:bg-surface-container-highest transition-colors" href="#">
+<span class="material-symbols-outlined text-lg">brush</span>
+<span class="truncate">Pro Canvas</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded font-label-mono text-label-mono text-on-surface-variant hover:bg-surface-container-highest transition-colors" href="#">
+<span class="material-symbols-outlined text-lg">grid_view</span>
+<span class="truncate">Content Board</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded font-label-mono text-label-mono bg-secondary-container text-primary border-l-4 border-primary hover:bg-surface-container-highest transition-colors" href="#">
+<span class="material-symbols-outlined text-lg">visibility</span>
+<span class="truncate">Review Room</span>
+</a>
+</nav>
+<div class="mt-auto px-2 flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2 rounded font-label-mono text-label-mono text-on-surface-variant hover:bg-surface-container-highest transition-colors" href="#">
+<span class="material-symbols-outlined text-lg">help</span>
+<span class="truncate">Help</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded font-label-mono text-label-mono text-on-surface-variant hover:bg-surface-container-highest transition-colors" href="#">
+<span class="material-symbols-outlined text-lg">archive</span>
+<span class="truncate">Archive</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 ml-0 md:ml-context_nav_width p-gutter overflow-y-auto custom-scrollbar flex gap-gutter bg-[#0F1011]">
+<!-- Left Canvas: Preview & Comparison (approx 65%) -->
+<div class="w-[65%] flex flex-col gap-gutter">
+<!-- Header -->
+<div class="flex justify-between items-center">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="font-label-mono text-label-mono text-primary px-2 py-0.5 border border-primary rounded-sm uppercase">Campaign</span>
+<span class="font-body-md text-body-md text-on-surface-variant">Café é território</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface">Review Room</h1>
+</div>
+<div class="flex gap-2">
+<button class="bg-transparent border border-outline-variant text-on-surface font-label-mono text-label-mono px-3 py-1.5 hover:bg-surface-variant transition-colors flex items-center gap-2 rounded">
+<span class="material-symbols-outlined text-sm">edit</span> Edit
+                        </button>
+<button class="bg-transparent border border-outline-variant text-on-surface font-label-mono text-label-mono px-3 py-1.5 hover:bg-surface-variant transition-colors flex items-center gap-2 rounded">
+<span class="material-symbols-outlined text-sm">difference</span> Vary
+                        </button>
+<button class="bg-primary text-on-primary-container font-label-mono text-label-mono px-4 py-1.5 hover:bg-primary-fixed transition-colors flex items-center gap-2 rounded">
+<span class="material-symbols-outlined text-sm">schedule</span> Schedule
+                        </button>
+</div>
+</div>
+<!-- Comparison Area -->
+<div class="flex-1 level-1 flex gap-px bg-outline-variant rounded overflow-hidden">
+<!-- Original -->
+<div class="flex-1 bg-surface flex flex-col relative group">
+<div class="absolute top-2 left-2 z-10 font-label-mono text-label-mono text-on-surface bg-surface-variant px-2 py-1 rounded border border-outline-variant opacity-80 group-hover:opacity-100 transition-opacity">Original</div>
+<div class="flex-1 relative bg-[#0a0a0a] flex items-center justify-center p-4">
+<!-- Simulated Content Ad -->
+<div class="w-full max-w-[300px] aspect-[4/5] bg-surface-container rounded border border-outline-variant overflow-hidden relative shadow-2xl">
+<div class="w-full h-full bg-cover bg-center" data-alt="A high-quality lifestyle photograph of a steaming cup of artisan coffee sitting on a rustic wooden table in a dimly lit, moody cafe environment. Rich earthy tones, deep shadows, cinematic lighting. A subtle digital overlay with geometric framing hints at a precision analytics tool analyzing the image structure. 100 words max." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB2OEOVstHkHuhqtfsrrJm7QuVxQpTtfulIeuI72MzBW_C9ggaxF7DlzFULvTpO7BVbRWAq7IlX_SEtw6OoXQRqP67hXJ41ZwZ1UK4ppTANmMh4rBkaKOFrqfo-jaK5XI0wX-BM3C_p4SP-D1VkzR5pXR2FxIv1-ubNrIFCN39fVcC3WAlvav7Zk04OYU3yKz3Wz6ik7JC31eL6WMwox-Wcy9AhItwcs3vZ7-bnlxfURV5e_Z3edmBFzw')"></div>
+<div class="absolute bottom-0 w-full p-4 bg-gradient-to-t from-black/80 to-transparent">
+<h3 class="font-headline-md text-headline-md text-white mb-2 leading-tight">A origem importa.</h3>
+<p class="font-body-sm text-body-sm text-gray-300 mb-3">Descubra os grãos do Sul de Minas.</p>
+<button class="w-full border border-primary text-primary font-label-mono text-label-mono py-2 rounded-sm hover:bg-primary/10 transition-colors">Explore</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Variation -->
+<div class="flex-1 bg-surface flex flex-col relative group">
+<div class="absolute top-2 left-2 z-10 font-label-mono text-label-mono text-primary bg-primary/10 px-2 py-1 rounded border border-primary/30 opacity-80 group-hover:opacity-100 transition-opacity">Var. A (Optimized)</div>
+<div class="flex-1 relative bg-[#0a0a0a] flex items-center justify-center p-4">
+<!-- Simulated Content Ad -->
+<div class="w-full max-w-[300px] aspect-[4/5] bg-surface-container rounded border border-primary/30 overflow-hidden relative shadow-2xl">
+<div class="w-full h-full bg-cover bg-center" data-alt="A close-up, high-resolution macro shot of artisan coffee beans being poured into a sleek, modern grinder. The background is a sleek, dark industrial kitchen. Bright, contrasting highlights emphasize texture. A subtle, glowing green digital targeting box highlights the focal point, suggesting advanced AI analysis and structural optimization. 100 words max." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuALS2K7nAasn0T-MvlltNIufXnotGNN2P6RG0GW4RWjNEb5x-dHn88Rg1zhC_96S1o020Q7oDjV9MXrQJk8oQ4zOt-k50OfTnzqu1nhYW1WwqVrcvriDRKp6mnsbSjaMW_zE_-oM9G8CEtdAi1p-MXRPqanIdCuLy0_Fli8TjtihYnSkQ-jSXbJ706zDbS_N6GqP-O32HlxwZ3ycsGEgF1drxEz10SR6oKddjYIwByf2fZzX7oAxINwQg')"></div>
+<!-- Highlight Hook -->
+<div class="absolute top-4 left-4 right-4 border border-dashed border-primary bg-primary/5 p-2 rounded-sm">
+<span class="absolute -top-2 left-2 bg-[#0a0a0a] px-1 font-label-mono text-[10px] text-primary">Hook Focus</span>
+<div class="font-headline-md text-headline-md text-white leading-tight font-bold">Café é território.</div>
+</div>
+<div class="absolute bottom-0 w-full p-4 bg-gradient-to-t from-black/90 to-transparent">
+<p class="font-body-sm text-body-sm text-gray-300 mb-3">O sabor que conta uma história.</p>
+<!-- Highlight CTA -->
+<div class="relative border-2 border-primary rounded-sm p-1">
+<span class="absolute -top-3 right-2 bg-primary text-[#0a0a0a] px-1 font-label-mono text-[10px] uppercase font-bold">Optimized CTA</span>
+<button class="w-full bg-primary text-[#0a0a0a] font-label-mono text-label-mono py-2 rounded-sm font-bold">Compre Agora</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Sidebar: Metrics & Insights (approx 35%) -->
+<div class="w-[35%] flex flex-col gap-gutter">
+<!-- Performance Signals -->
+<div class="level-1 rounded p-4 flex flex-col gap-4">
+<h2 class="font-label-mono text-label-mono text-on-surface-variant uppercase tracking-wider mb-2 flex items-center gap-2"><span class="material-symbols-outlined text-sm">monitoring</span> Performance Signals</h2>
+<div class="grid grid-cols-2 gap-3">
+<div class="bg-surface-variant border border-outline-variant p-3 rounded flex flex-col justify-between">
+<span class="font-label-mono text-[10px] text-on-surface-variant uppercase">Proj. Reach</span>
+<div class="flex items-baseline gap-2 mt-1">
+<span class="font-data-number text-data-number text-on-surface text-lg">124k</span>
+<span class="text-primary text-[10px] flex items-center"><span class="material-symbols-outlined text-[12px]">arrow_upward</span> 12%</span>
+</div>
+</div>
+<div class="bg-surface-variant border border-outline-variant p-3 rounded flex flex-col justify-between">
+<span class="font-label-mono text-[10px] text-on-surface-variant uppercase">Est. Saves</span>
+<div class="flex items-baseline gap-2 mt-1">
+<span class="font-data-number text-data-number text-on-surface text-lg">3.2k</span>
+<span class="text-primary text-[10px] flex items-center"><span class="material-symbols-outlined text-[12px]">arrow_upward</span> 8%</span>
+</div>
+</div>
+<div class="bg-surface-variant border border-primary/30 p-3 rounded flex flex-col justify-between relative overflow-hidden">
+<div class="absolute inset-0 bg-primary/5"></div>
+<span class="font-label-mono text-[10px] text-primary uppercase relative z-10">Conv. Rate</span>
+<div class="flex items-baseline gap-2 mt-1 relative z-10">
+<span class="font-data-number text-data-number text-primary text-lg">4.8%</span>
+<span class="text-primary text-[10px] flex items-center"><span class="material-symbols-outlined text-[12px]">arrow_upward</span> 22%</span>
+</div>
+</div>
+<div class="bg-surface-variant border border-outline-variant p-3 rounded flex flex-col justify-between">
+<span class="font-label-mono text-[10px] text-on-surface-variant uppercase">Engagement</span>
+<div class="flex items-baseline gap-2 mt-1">
+<span class="font-data-number text-data-number text-on-surface text-lg">High</span>
+<span class="text-on-surface-variant text-[10px]">Index 84</span>
+</div>
+</div>
+</div>
+<!-- Why it worked -->
+<div class="mt-2 bg-surface-container-highest border-l-2 border-primary p-3">
+<h3 class="font-label-mono text-label-mono text-primary mb-1 uppercase text-[10px]">Why Var A. worked</h3>
+<p class="font-body-sm text-body-sm text-on-surface leading-relaxed text-xs">
+                            A mudança no hook para "Café é território" aumentou a retenção nos primeiros 3s em 18%. O CTA contrastante "Compre Agora" elevou a intenção de clique.
+                        </p>
+</div>
+</div>
+<!-- Tabs: Comments & Lineage -->
+<div class="level-1 rounded flex-1 flex flex-col overflow-hidden">
+<div class="flex border-b border-outline-variant">
+<button class="flex-1 py-3 font-label-mono text-label-mono text-primary border-b-2 border-primary text-center">Comments (3)</button>
+<button class="flex-1 py-3 font-label-mono text-label-mono text-on-surface-variant hover:text-on-surface transition-colors text-center border-b-2 border-transparent">Lineage</button>
+</div>
+<div class="flex-1 overflow-y-auto p-4 custom-scrollbar flex flex-col gap-4">
+<!-- Comment Item -->
+<div class="flex gap-3">
+<img alt="User" class="w-6 h-6 rounded-full border border-outline-variant" data-alt="A tiny UI avatar showing a serious looking male data analyst in a dark aesthetic setting. Sharp, high contrast, professional. 50 words max." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCPUNuPJOPr0-Fm1RMVsGvdmkNZi1CWJpqkDsjSYO1zeRImuS4tE92kBDVYDRfEUND9virnKG82QEuJ6SOh4iQV2ffEF-lFdHllKXRKl2An6XZLvTqMtP3IaT5-IpGY-0odISavfaM-zkLoN8RlCzttFPQpFWM1B1MuGgXuq6aL5z_IxJwx7WYIrKY9ewTyUY3qo1gi8IQjS8yumGqBvlTOIiNkQG8XIyStAvDxa-arXgPhtbywgNqqqw"/>
+<div class="flex-1">
+<div class="flex justify-between items-baseline mb-1">
+<span class="font-label-mono text-[10px] text-on-surface font-bold">Ana Silva (Strategy)</span>
+<span class="font-label-mono text-[9px] text-on-surface-variant">2h ago</span>
+</div>
+<p class="font-body-sm text-xs text-on-surface-variant">O contraste do CTA ficou ótimo. Podemos testar uma versão com textura de grãos no fundo?</p>
+</div>
+</div>
+<!-- Comment Item -->
+<div class="flex gap-3">
+<div class="w-6 h-6 rounded-full bg-primary/20 border border-primary/50 flex items-center justify-center">
+<span class="font-label-mono text-[10px] text-primary">SYS</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-baseline mb-1">
+<span class="font-label-mono text-[10px] text-primary font-bold">Auto-Optimize</span>
+<span class="font-label-mono text-[9px] text-on-surface-variant">4h ago</span>
+</div>
+<p class="font-body-sm text-xs text-on-surface-variant">Variação A gerada baseada em histórico de campanhas 'Origem'. Foco em legibilidade e contraste.</p>
+</div>
+</div>
+</div>
+<div class="p-3 border-t border-outline-variant bg-surface-container">
+<div class="relative">
+<input class="w-full bg-surface border border-outline-variant rounded px-3 py-2 font-body-sm text-sm text-on-surface placeholder:text-on-surface-variant/50 focus:border-primary focus:ring-1 focus:ring-primary outline-none" placeholder="Add a comment..." type="text"/>
+<button class="absolute right-2 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-primary"><span class="material-symbols-outlined text-sm">send</span></button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<script src="/stitch/bridge.js"></script></body></html>

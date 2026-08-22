@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Workspace Entry V5 - Clicko Precision</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {error: "#ffb4ab", "surface-container-lowest": "#0e0e0e", "surface-container": "#201f1f", "on-primary-container": "#62000c", "outline-variant": "#5a403f", "secondary-fixed": "#ffdbc8", primary: "#ffb3af", "on-tertiary-container": "#5c0e15", "surface-container-low": "#1c1b1b", "surface-tint": "#ffb3af", "on-primary-fixed": "#410005", "primary-container": "#ff5c5c", tertiary: "#ffb3b1", "on-background": "#e5e2e1", "on-surface": "#e5e2e1", "secondary-container": "#ff7f1c", "on-primary-fixed-variant": "#920418", "on-error": "#690005", "primary-fixed": "#ffdad7", "inverse-on-surface": "#313030", "on-tertiary-fixed-variant": "#7f292c", secondary: "#ffb68b", "on-secondary-fixed": "#321200", "surface-container-high": "#2a2a2a", "error-container": "#93000a", "surface-bright": "#393939", "on-error-container": "#ffdad6", outline: "#a98987", "tertiary-fixed-dim": "#ffb3b1", "on-secondary": "#522300", surface: "#131313", "on-tertiary": "#601118", "secondary-fixed-dim": "#ffb68b", "surface-dim": "#131313", "on-secondary-fixed-variant": "#753400", "inverse-surface": "#e5e2e1", "on-primary": "#68000d", "tertiary-fixed": "#ffdad8", "primary-fixed-dim": "#ffb3af", "surface-container-highest": "#353534", background: "#131313", "tertiary-container": "#e17474", "on-surface-variant": "#e2bebc", "on-tertiary-fixed": "#410007", "inverse-primary": "#b4252d", "on-secondary-container": "#602a00", "surface-variant": "#353534"}, borderRadius: {DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem"}, spacing: {unit: "4px", "margin-desktop": "32px", "container-max": "1440px", "margin-mobile": "16px", gutter: "16px"}, fontFamily: {code: ["Geist"], "headline-lg": ["Geist"], "body-md": ["Geist"], "label-md": ["Geist"], "headline-md": ["Geist"], "body-lg": ["Geist"], display: ["Geist"], headline: ["Geist"], body: ["Geist"], label: ["Geist"]}, fontSize: {code: ["13px", {lineHeight: "1.4", fontWeight: "400"}], "headline-lg": ["24px", {lineHeight: "1.3", fontWeight: "600"}], "body-md": ["14px", {lineHeight: "1.5", fontWeight: "400"}], "label-md": ["12px", {lineHeight: "1", letterSpacing: "0.02em", fontWeight: "500"}], "headline-md": ["20px", {lineHeight: "1.4", fontWeight: "500"}], "body-lg": ["16px", {lineHeight: "1.5", fontWeight: "400"}], display: ["32px", {lineHeight: "1.2", letterSpacing: "-0.02em", fontWeight: "600"}]}}}};</script>
+<style>
+        body { background-color: theme('colors.background'); color: theme('colors.on-background'); }
+        
+        /* Custom Scrollbar for minimalist dark theme */
+        ::-webkit-scrollbar { width: 4px; height: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: theme('colors.surface-container-highest'); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: theme('colors.outline'); }
+        
+        /* Input autofill override */
+        input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus, input:-webkit-autofill:active{
+            -webkit-box-shadow: 0 0 0 30px theme('colors.surface-container-low') inset !important;
+            -webkit-text-fill-color: theme('colors.on-surface') !important;
+            transition: background-color 5000s ease-in-out 0s;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased selection:bg-primary-container selection:text-on-primary-container font-body-md">
+<!-- Top Navigation Bar (Suppressed due to Linear/Transactional intent, but keeping Brand anchor) -->
+<header class="w-full flex justify-between items-center px-margin-desktop h-16 bg-surface-container-lowest border-b border-outline-variant">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary text-[24px]">precision_manufacturing</span>
+<span class="font-display text-display text-primary tracking-tight">Clicko Precision</span>
+</div>
+<div class="flex items-center">
+<button class="text-on-surface-variant hover:text-primary transition-colors text-label-md font-label-md uppercase flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">logout</span> Exit Setup
+            </button>
+</div>
+</header>
+<!-- Main Content Area: Focus on Form -->
+<main class="flex-grow flex flex-col items-center justify-center p-margin-mobile md:p-margin-desktop">
+<div class="w-full max-w-2xl bg-surface-container-low border border-outline-variant rounded p-8">
+<!-- Header -->
+<div class="mb-8">
+<h1 class="font-headline-lg text-headline-lg text-on-surface mb-2">Workspace Initialization</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Configure environment parameters for new client context.</p>
+</div>
+<form class="space-y-6">
+<!-- Group 1: Core Identity -->
+<div class="space-y-4">
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant mb-1 uppercase" for="companyName">Empresa / Cliente</label>
+<input class="w-full bg-surface-container-low border border-outline-variant rounded px-3 py-2 text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all font-body-md" id="companyName" placeholder="Acme Corp" type="text"/>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant mb-1 uppercase" for="segment">Segmento</label>
+<select class="w-full bg-surface-container-low border border-outline-variant rounded px-3 py-2 text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all font-body-md appearance-none" id="segment">
+<option disabled="" selected="" value="">Select industry...</option>
+<option value="tech">Technology / SaaS</option>
+<option value="retail">Retail / E-commerce</option>
+<option value="fin">Financial Services</option>
+<option value="health">Healthcare</option>
+</select>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant mb-1 uppercase" for="owner">Responsável (Lead)</label>
+<input class="w-full bg-surface-container-low border border-outline-variant rounded px-3 py-2 text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all font-body-md" id="owner" placeholder="user@domain.com" type="text"/>
+</div>
+</div>
+</div>
+<hr class="border-outline-variant"/>
+<!-- Group 2: Context & Objectives -->
+<div class="space-y-4">
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant mb-2 uppercase">Integração de Canais</label>
+<div class="flex flex-wrap gap-2">
+<label class="flex items-center gap-2 bg-surface-container border border-outline-variant px-3 py-1.5 rounded cursor-pointer hover:border-primary transition-colors group">
+<input class="form-checkbox text-primary bg-surface-container-lowest border-outline-variant focus:ring-primary rounded-sm" type="checkbox"/>
+<span class="font-body-md text-body-md text-on-surface group-hover:text-primary transition-colors">Web Analytics</span>
+</label>
+<label class="flex items-center gap-2 bg-surface-container border border-outline-variant px-3 py-1.5 rounded cursor-pointer hover:border-primary transition-colors group">
+<input class="form-checkbox text-primary bg-surface-container-lowest border-outline-variant focus:ring-primary rounded-sm" type="checkbox"/>
+<span class="font-body-md text-body-md text-on-surface group-hover:text-primary transition-colors">CRM Data</span>
+</label>
+<label class="flex items-center gap-2 bg-surface-container border border-outline-variant px-3 py-1.5 rounded cursor-pointer hover:border-primary transition-colors group">
+<input class="form-checkbox text-primary bg-surface-container-lowest border-outline-variant focus:ring-primary rounded-sm" type="checkbox"/>
+<span class="font-body-md text-body-md text-on-surface group-hover:text-primary transition-colors">Social Metrics</span>
+</label>
+<label class="flex items-center gap-2 bg-surface-container border border-outline-variant px-3 py-1.5 rounded cursor-pointer hover:border-primary transition-colors group">
+<input class="form-checkbox text-primary bg-surface-container-lowest border-outline-variant focus:ring-primary rounded-sm" type="checkbox"/>
+<span class="font-body-md text-body-md text-on-surface group-hover:text-primary transition-colors">ERP Systems</span>
+</label>
+</div>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant mb-1 uppercase" for="objectives">Objetivos Principais</label>
+<textarea class="w-full bg-surface-container-low border border-outline-variant rounded px-3 py-2 text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all font-body-md resize-none" id="objectives" placeholder="Definir KPIs e metas iniciais..." rows="3"></textarea>
+</div>
+</div>
+<hr class="border-outline-variant"/>
+<!-- Group 3: Memory & Assets -->
+<div class="space-y-4">
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant mb-1 uppercase">Memória Inicial (Brand Assets)</label>
+<div class="border border-dashed border-outline-variant rounded-lg p-8 flex flex-col items-center justify-center text-center bg-surface-container-lowest hover:border-primary hover:bg-surface-container transition-all cursor-pointer group">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary text-[32px] mb-2 transition-colors">upload_file</span>
+<p class="font-body-md text-body-md text-on-surface mb-1">Drag and drop files here or <span class="text-primary underline">browse</span></p>
+<p class="font-label-md text-label-md text-on-surface-variant">Upload brand manuals, visual references, or existing data structures (PDF, ZIP, CSV up to 50MB)</p>
+</div>
+</div>
+</div>
+<!-- Action -->
+<div class="pt-6 flex justify-end">
+<button class="bg-primary text-on-primary-fixed font-label-md text-label-md uppercase px-6 py-3 rounded hover:opacity-90 transition-opacity flex items-center gap-2" type="button">
+<span class="material-symbols-outlined text-[18px]">rocket_launch</span>
+                        Inicializar Workspace
+                    </button>
+</div>
+</form>
+</div>
+<!-- Ambient Decor (Subtle Tech Pattern) -->
+<div class="fixed inset-0 pointer-events-none z-[-1] opacity-5" style="background-image: radial-gradient(theme('colors.on-surface') 1px, transparent 1px); background-size: 32px 32px;"></div>
+</main>
+<script src="/stitch/bridge.js"></script></body></html>

@@ -114,7 +114,7 @@ export const AutomationBuilderView: React.FC = () => {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/[0.06] pb-4">
         <div>
           <h2 className="text-lg font-bold text-white flex items-center gap-2">
-            <GitFork className="w-5 h-5 text-[#8bd132]" /> Construtor de Automações Operacionais com IA
+            <GitFork className="w-5 h-5 text-[#ff5c5c]" /> Construtor de Automações Operacionais com IA
           </h2>
           <p className="text-xs text-[#78858e]">
             Conecte Instagram, WhatsApp, CRM, Email, Analytics e Tarefas em fluxos de trabalho autônomos
@@ -123,7 +123,7 @@ export const AutomationBuilderView: React.FC = () => {
 
         <button
           onClick={handleCreateNewFlow}
-          className="flex items-center gap-1.5 rounded-lg bg-[#8bd132] px-4 py-2.5 text-xs font-semibold text-[#0b1208] transition-colors hover:bg-[#9be24d]"
+          className="flex items-center gap-1.5 rounded-lg bg-[#ff5c5c] px-4 py-2.5 text-xs font-semibold text-[#0b1208] transition-colors hover:bg-[#9be24d]"
         >
           <Plus className="w-4 h-4" /> Criar Novo Fluxo
         </button>
@@ -140,7 +140,7 @@ export const AutomationBuilderView: React.FC = () => {
               onClick={() => setSelectedFlow(f)}
               className={`clicko-interactive-surface cursor-pointer rounded-xl border p-4 transition-colors ${
                 selectedFlow.id === f.id
-                  ? 'border-[#8bd132]/25 bg-[#8bd132]/[0.07] text-white'
+                  ? 'border-[#ff5c5c]/25 bg-[#ff5c5c]/[0.07] text-white'
                   : 'bg-[#182126] border-white/[0.06] hover:border-white/15 text-[#cbd2d5]'
               }`}
             >
@@ -153,7 +153,7 @@ export const AutomationBuilderView: React.FC = () => {
                     e.stopPropagation();
                     toggleFlowActive(f.id);
                   }}
-                  className="w-4 h-4 accent-[#8bd132] rounded cursor-pointer"
+                  className="w-4 h-4 accent-[#ff5c5c] rounded cursor-pointer"
                 />
               </div>
               <p className="text-[10px] text-[#7d888d] mt-1 line-clamp-2">Gatilho: {f.trigger}</p>
@@ -169,7 +169,7 @@ export const AutomationBuilderView: React.FC = () => {
         <div className="clicko-automation-canvas space-y-5 rounded-xl border border-white/[0.07] bg-[#101316] p-5 lg:col-span-8">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/[0.06] pb-4">
             <div>
-              <span className="text-[9px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded bg-[#8bd132]/20 text-[#8bd132] border border-[#8bd132]/30">
+              <span className="text-[9px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded bg-[#ff5c5c]/20 text-[#ff5c5c] border border-[#ff5c5c]/30">
                 Construtor Visual de Processos
               </span>
               <h3 className="text-base font-bold text-white mt-1">{selectedFlow.title}</h3>
@@ -181,14 +181,14 @@ export const AutomationBuilderView: React.FC = () => {
                 disabled={isTesting}
                 className="px-3.5 py-2 rounded-xl bg-black/30 hover:bg-black/50 text-xs font-bold text-white border border-white/[0.08] flex items-center gap-1.5"
               >
-                {isTesting ? <RefreshCw className="h-3.5 w-3.5 animate-spin text-[#8bd132]" /> : <Play className="h-3.5 w-3.5 text-[#8bd132]" />}
+                {isTesting ? <RefreshCw className="h-3.5 w-3.5 animate-spin text-[#ff5c5c]" /> : <Play className="h-3.5 w-3.5 text-[#ff5c5c]" />}
                 <span>{isTesting ? 'Simulando...' : 'Testar Fluxo IA'}</span>
               </button>
             </div>
           </div>
 
           {testLog && (
-            <div className="rounded-xl border border-[#8bd132]/30 bg-[#8bd132]/[0.08] p-3 text-[10px] font-bold text-[#8bd132] flex items-center gap-2">
+            <div className="rounded-xl border border-[#ff5c5c]/30 bg-[#ff5c5c]/[0.08] p-3 text-[10px] font-bold text-[#ff5c5c] flex items-center gap-2">
               <ShieldCheck className="h-4 w-4 shrink-0" />
               <span>{testLog}</span>
             </div>
@@ -198,13 +198,13 @@ export const AutomationBuilderView: React.FC = () => {
           <div className="clicko-automation-chain relative space-y-3">
             {selectedFlow.nodes.map((node, index) => (
               <div key={node.id} className="relative">
-                <div className="p-4 rounded-xl bg-black/25 border border-white/[0.06] hover:border-[#8bd132]/40 transition-all flex items-center justify-between gap-4">
+                <div className="p-4 rounded-xl bg-black/25 border border-white/[0.06] hover:border-[#ff5c5c]/40 transition-all flex items-center justify-between gap-4">
                   <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-[#8bd132]/10 border border-[#8bd132]/30 flex items-center justify-center font-bold text-xs text-[#8bd132] shrink-0">
+                    <div className="w-8 h-8 rounded-lg bg-[#ff5c5c]/10 border border-[#ff5c5c]/30 flex items-center justify-center font-bold text-xs text-[#ff5c5c] shrink-0">
                       {index + 1}
                     </div>
                     <div>
-                      <span className="text-[9px] uppercase font-bold text-[#8bd132] tracking-wider">
+                      <span className="text-[9px] uppercase font-bold text-[#ff5c5c] tracking-wider">
                         {node.type === 'trigger' ? 'Gatilho Inicial' : node.type === 'ai_generate' ? 'Ação com IA' : 'Integração de Sistema'}
                       </span>
                       <h5 className="text-xs font-bold text-white">{node.label}</h5>
@@ -212,14 +212,14 @@ export const AutomationBuilderView: React.FC = () => {
                     </div>
                   </div>
 
-                  <span className="text-[9px] font-bold text-[#8bd132] bg-[#8bd132]/10 px-2 py-1 rounded">
+                  <span className="text-[9px] font-bold text-[#ff5c5c] bg-[#ff5c5c]/10 px-2 py-1 rounded">
                     Ativo
                   </span>
                 </div>
 
                 {index < selectedFlow.nodes.length - 1 && (
                   <div className="flex justify-center py-1">
-                    <div className="w-0.5 h-4 bg-[#8bd132]/30" />
+                    <div className="w-0.5 h-4 bg-[#ff5c5c]/30" />
                   </div>
                 )}
               </div>

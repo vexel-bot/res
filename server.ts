@@ -14,7 +14,40 @@ const __dirname = path.dirname(__filename);
 async function startServer() {
   const app = express();
   const PORT = Number(process.env.PORT) || 3000;
+  const API_ORIGIN = process.env.CLICKO_API_ORIGIN || 'http://127.0.0.1:8000';
   const isProduction = process.env.NODE_ENV === 'production' || path.basename(__dirname).toLowerCase() === 'dist';
+
+  app.use(['/api/v1', '/health'], async (req, res) => {
+    const targetUrl = new URL(req.originalUrl, API_ORIGIN);
+    const headers = new Headers();
+    for (const [name, value] of Object.entries(req.headers)) {
+      if (!value || ['host', 'connection', 'content-length'].includes(name.toLowerCase())) continue;
+      headers.set(name, Array.isArray(value) ? value.join(', ') : value);
+    }
+
+    try {
+      const upstream = await fetch(targetUrl, {
+        method: req.method,
+        headers,
+        body: ['GET', 'HEAD'].includes(req.method) ? undefined : (req as unknown as BodyInit),
+        duplex: ['GET', 'HEAD'].includes(req.method) ? undefined : 'half',
+      } as RequestInit & { duplex?: 'half' });
+
+      res.status(upstream.status);
+      upstream.headers.forEach((value, name) => {
+        if (!['content-encoding', 'transfer-encoding', 'connection'].includes(name.toLowerCase())) {
+          res.setHeader(name, value);
+        }
+      });
+      res.send(Buffer.from(await upstream.arrayBuffer()));
+    } catch (error) {
+      console.error('Clicko API proxy unavailable:', error);
+      res.status(503).json({
+        detail: 'A API funcional da Clicko está temporariamente indisponível.',
+        upstream: API_ORIGIN,
+      });
+    }
+  });
 
   app.use(express.json({ limit: '10mb' }));
   app.use('/api/governance', createGovernanceRouter());

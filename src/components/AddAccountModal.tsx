@@ -136,13 +136,13 @@ export const AddAccountModal: React.FC<AddAccountModalProps> = ({ isOpen, onClos
             <button
               type="button"
               onClick={() => setStep('login')}
-              className="group flex w-full items-start gap-4 rounded-xl border border-white/[0.08] bg-[#121820] p-4 text-left transition-all hover:border-[#8bd132]/40 hover:bg-[#161f2a]"
+              className="group flex w-full items-start gap-4 rounded-xl border border-white/[0.08] bg-[#121820] p-4 text-left transition-all hover:border-[#ff5c5c]/40 hover:bg-[#161f2a]"
             >
-              <div className="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-white/10 bg-white/[0.04] text-[#8bd132] group-hover:bg-[#8bd132]/10 transition-colors">
+              <div className="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-white/10 bg-white/[0.04] text-[#ff5c5c] group-hover:bg-[#ff5c5c]/10 transition-colors">
                 <LogIn className="h-5 w-5" />
               </div>
               <div className="flex-1 min-w-0">
-                <h3 className="text-xs font-bold text-white group-hover:text-[#8bd132] transition-colors">
+                <h3 className="text-xs font-bold text-white group-hover:text-[#ff5c5c] transition-colors">
                   Entrar em uma conta existente
                 </h3>
                 <p className="mt-1 text-[11px] text-[#78848c] leading-relaxed">
@@ -154,13 +154,13 @@ export const AddAccountModal: React.FC<AddAccountModalProps> = ({ isOpen, onClos
             <button
               type="button"
               onClick={() => setStep('create-type')}
-              className="group flex w-full items-start gap-4 rounded-xl border border-white/[0.08] bg-[#121820] p-4 text-left transition-all hover:border-[#8bd132]/40 hover:bg-[#161f2a]"
+              className="group flex w-full items-start gap-4 rounded-xl border border-white/[0.08] bg-[#121820] p-4 text-left transition-all hover:border-[#ff5c5c]/40 hover:bg-[#161f2a]"
             >
-              <div className="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-white/10 bg-white/[0.04] text-[#8bd132] group-hover:bg-[#8bd132]/10 transition-colors">
+              <div className="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-white/10 bg-white/[0.04] text-[#ff5c5c] group-hover:bg-[#ff5c5c]/10 transition-colors">
                 <PlusCircle className="h-5 w-5" />
               </div>
               <div className="flex-1 min-w-0">
-                <h3 className="text-xs font-bold text-white group-hover:text-[#8bd132] transition-colors">
+                <h3 className="text-xs font-bold text-white group-hover:text-[#ff5c5c] transition-colors">
                   Criar / Assinar uma nova conta
                 </h3>
                 <p className="mt-1 text-[11px] text-[#78848c] leading-relaxed">
@@ -194,11 +194,11 @@ export const AddAccountModal: React.FC<AddAccountModalProps> = ({ isOpen, onClos
                   onClick={() => setLoginType('personal')}
                   className={`flex items-center justify-center gap-2 rounded-xl border p-2.5 text-xs font-bold transition-all ${
                     loginType === 'personal'
-                      ? 'border-[#8bd132]/50 bg-[#8bd132]/10 text-white'
+                      ? 'border-[#ff5c5c]/50 bg-[#ff5c5c]/10 text-white'
                       : 'border-white/[0.08] bg-[#121820] text-[#78848c] hover:text-white'
                   }`}
                 >
-                  <User className="h-4 w-4 text-[#8bd132]" />
+                  <User className="h-4 w-4 text-[#ff5c5c]" />
                   <span>Pessoal</span>
                 </button>
               </div>
@@ -212,7 +212,7 @@ export const AddAccountModal: React.FC<AddAccountModalProps> = ({ isOpen, onClos
                 value={loginEmail}
                 onChange={(e) => setLoginEmail(e.target.value)}
                 placeholder="seu.email@empresa.com"
-                className="w-full rounded-xl border border-white/10 bg-[#121820] px-3.5 py-2.5 text-xs text-white placeholder-[#505c64] outline-none focus:border-[#8bd132]"
+                className="w-full rounded-xl border border-white/10 bg-[#121820] px-3.5 py-2.5 text-xs text-white placeholder-[#505c64] outline-none focus:border-[#ff5c5c]"
               />
             </div>
 
@@ -224,7 +224,7 @@ export const AddAccountModal: React.FC<AddAccountModalProps> = ({ isOpen, onClos
                 value={loginPassword}
                 onChange={(e) => setLoginPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full rounded-xl border border-white/10 bg-[#121820] px-3.5 py-2.5 text-xs text-white placeholder-[#505c64] outline-none focus:border-[#8bd132]"
+                className="w-full rounded-xl border border-white/10 bg-[#121820] px-3.5 py-2.5 text-xs text-white placeholder-[#505c64] outline-none focus:border-[#ff5c5c]"
               />
             </div>
 
@@ -235,14 +235,14 @@ export const AddAccountModal: React.FC<AddAccountModalProps> = ({ isOpen, onClos
                 value={loginAccountName}
                 onChange={(e) => setLoginAccountName(e.target.value)}
                 placeholder={loginType === 'company' ? 'Ex: Agência Digital' : 'Ex: Nome Pessoal'}
-                className="w-full rounded-xl border border-white/10 bg-[#121820] px-3.5 py-2.5 text-xs text-white placeholder-[#505c64] outline-none focus:border-[#8bd132]"
+                className="w-full rounded-xl border border-white/10 bg-[#121820] px-3.5 py-2.5 text-xs text-white placeholder-[#505c64] outline-none focus:border-[#ff5c5c]"
               />
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="mt-2 flex w-full items-center justify-center gap-2 rounded-xl bg-[#8bd132] py-3 text-xs font-bold text-[#080e05] transition hover:bg-[#9de339] disabled:opacity-50"
+              className="mt-2 flex w-full items-center justify-center gap-2 rounded-xl bg-[#ff5c5c] py-3 text-xs font-bold text-[#080e05] transition hover:bg-[#9de339] disabled:opacity-50"
             >
               {loading ? (
                 <span>Autenticando...</span>
@@ -268,12 +268,12 @@ export const AddAccountModal: React.FC<AddAccountModalProps> = ({ isOpen, onClos
                   setSelectedPlan('Plano Solo');
                   setStep('create-form');
                 }}
-                className="group flex flex-col items-center justify-center rounded-xl border border-white/[0.08] bg-[#121820] p-4 text-center transition-colors hover:border-[#8bd132]/50 hover:bg-[#8bd132]/5"
+                className="group flex flex-col items-center justify-center rounded-xl border border-white/[0.08] bg-[#121820] p-4 text-center transition-colors hover:border-[#ff5c5c]/50 hover:bg-[#ff5c5c]/5"
               >
-                <div className="grid h-12 w-12 place-items-center rounded-xl border border-[#8bd132]/30 bg-[#8bd132]/10 text-[#8bd132] mb-3">
+                <div className="grid h-12 w-12 place-items-center rounded-xl border border-[#ff5c5c]/30 bg-[#ff5c5c]/10 text-[#ff5c5c] mb-3">
                   <User className="h-6 w-6" />
                 </div>
-                <h3 className="text-xs font-bold text-white group-hover:text-[#8bd132]">Conta Pessoal</h3>
+                <h3 className="text-xs font-bold text-white group-hover:text-[#ff5c5c]">Conta Pessoal</h3>
                 <p className="mt-1 text-[10px] text-[#78848c] leading-tight">
                   Para criadores solo, marcas pessoais e projetos individuais.
                 </p>
@@ -286,12 +286,12 @@ export const AddAccountModal: React.FC<AddAccountModalProps> = ({ isOpen, onClos
                   setSelectedPlan('Plano Team');
                   setStep('create-form');
                 }}
-                className="group flex flex-col items-center justify-center rounded-xl border border-white/[0.08] bg-[#121820] p-4 text-center transition-colors hover:border-[#8bd132]/50 hover:bg-[#8bd132]/5"
+                className="group flex flex-col items-center justify-center rounded-xl border border-white/[0.08] bg-[#121820] p-4 text-center transition-colors hover:border-[#ff5c5c]/50 hover:bg-[#ff5c5c]/5"
               >
-                <div className="grid h-12 w-12 place-items-center rounded-xl border border-[#8bd132]/30 bg-[#8bd132]/10 text-[#8bd132] mb-3">
+                <div className="grid h-12 w-12 place-items-center rounded-xl border border-[#ff5c5c]/30 bg-[#ff5c5c]/10 text-[#ff5c5c] mb-3">
                   <Building2 className="h-6 w-6" />
                 </div>
-                <h3 className="text-xs font-bold text-white group-hover:text-[#8bd132]">Workspace</h3>
+                <h3 className="text-xs font-bold text-white group-hover:text-[#ff5c5c]">Workspace</h3>
                 <p className="mt-1 text-[10px] text-[#78848c] leading-tight">
                   Para empresas, equipes, agências e gestão colaborativa.
                 </p>
@@ -313,7 +313,7 @@ export const AddAccountModal: React.FC<AddAccountModalProps> = ({ isOpen, onClos
                 value={createName}
                 onChange={(e) => setCreateName(e.target.value)}
                 placeholder={createType === 'company' ? 'Ex: TechLab Inovação' : 'Ex: Pedro Henrique Solo'}
-                className="w-full rounded-xl border border-white/10 bg-[#121820] px-3.5 py-2.5 text-xs text-white placeholder-[#505c64] outline-none focus:border-[#8bd132]"
+                className="w-full rounded-xl border border-white/10 bg-[#121820] px-3.5 py-2.5 text-xs text-white placeholder-[#505c64] outline-none focus:border-[#ff5c5c]"
               />
             </div>
 
@@ -324,7 +324,7 @@ export const AddAccountModal: React.FC<AddAccountModalProps> = ({ isOpen, onClos
                 value={createEmail}
                 onChange={(e) => setCreateEmail(e.target.value)}
                 placeholder="contato@empresa.com"
-                className="w-full rounded-xl border border-white/10 bg-[#121820] px-3.5 py-2.5 text-xs text-white placeholder-[#505c64] outline-none focus:border-[#8bd132]"
+                className="w-full rounded-xl border border-white/10 bg-[#121820] px-3.5 py-2.5 text-xs text-white placeholder-[#505c64] outline-none focus:border-[#ff5c5c]"
               />
             </div>
 
@@ -343,7 +343,7 @@ export const AddAccountModal: React.FC<AddAccountModalProps> = ({ isOpen, onClos
                         onClick={() => setSelectedPlan(plan.id)}
                         className={`flex w-full items-center justify-between rounded-xl border p-3 text-left transition-all ${
                           selectedPlan === plan.id
-                            ? 'border-[#8bd132] bg-[#8bd132]/10 text-white'
+                            ? 'border-[#ff5c5c] bg-[#ff5c5c]/10 text-white'
                             : 'border-white/[0.08] bg-[#121820] text-[#78848c] hover:border-white/20'
                         }`}
                       >
@@ -351,7 +351,7 @@ export const AddAccountModal: React.FC<AddAccountModalProps> = ({ isOpen, onClos
                           <span className="text-xs font-bold text-white block">{plan.id}</span>
                           <span className="text-[10px] text-[#78848c]">{plan.desc}</span>
                         </div>
-                        <span className="text-xs font-bold text-[#8bd132]">{plan.price}</span>
+                        <span className="text-xs font-bold text-[#ff5c5c]">{plan.price}</span>
                       </button>
                     ))}
                   </>
@@ -387,7 +387,7 @@ export const AddAccountModal: React.FC<AddAccountModalProps> = ({ isOpen, onClos
             <button
               type="submit"
               disabled={loading}
-              className="mt-2 flex w-full items-center justify-center gap-2 rounded-xl bg-[#8bd132] py-3 text-xs font-bold text-[#080e05] transition hover:bg-[#9de339] disabled:opacity-50"
+              className="mt-2 flex w-full items-center justify-center gap-2 rounded-xl bg-[#ff5c5c] py-3 text-xs font-bold text-[#080e05] transition hover:bg-[#9de339] disabled:opacity-50"
             >
               {loading ? (
                 <span>Criando Conta...</span>

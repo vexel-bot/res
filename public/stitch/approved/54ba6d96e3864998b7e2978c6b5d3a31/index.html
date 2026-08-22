@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Clicko - Descobrir</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {"tertiary-fixed": "#ffdad8", "outline-variant": "#5a403f", "on-error-container": "#ffdad6", "secondary-fixed": "#ffdbc8", "surface-container-low": "#1c1b1b", "on-primary-fixed-variant": "#920418", "on-tertiary-container": "#5c0e15", "on-primary-fixed": "#410005", "on-primary-container": "#62000c", "on-secondary-fixed": "#321200", "surface-dim": "#131313", "surface-container-lowest": "#0e0e0e", "inverse-primary": "#b4252d", "surface-bright": "#393939", "surface-variant": "#353534", "tertiary-fixed-dim": "#ffb3b1", primary: "#ffb3af", outline: "#a98987", error: "#ffb4ab", "tertiary-container": "#e17474", "primary-fixed": "#ffdad7", secondary: "#ffb68b", surface: "#131313", "surface-container-high": "#2a2a2a", "secondary-container": "#ff7f1c", "on-primary": "#68000d", "on-error": "#690005", "secondary-fixed-dim": "#ffb68b", "inverse-on-surface": "#313030", "error-container": "#93000a", "on-tertiary-fixed": "#410007", "inverse-surface": "#e5e2e1", "on-surface": "#e5e2e1", "on-secondary-fixed-variant": "#753400", "surface-container": "#201f1f", "surface-container-highest": "#353534", "on-secondary-container": "#602a00", tertiary: "#ffb3b1", "primary-container": "#ff5c5c", "on-tertiary-fixed-variant": "#7f292c", "surface-tint": "#ffb3af", "on-background": "#e5e2e1", background: "#131313", "on-secondary": "#522300", "on-surface-variant": "#e2bebc", "on-tertiary": "#601118", "primary-fixed-dim": "#ffb3af"}, borderRadius: {DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem"}, spacing: {"margin-mobile": "16px", gutter: "16px", "margin-desktop": "32px", "container-max": "1440px", unit: "4px"}, fontFamily: {code: ["Geist"], "body-md": ["Geist"], "headline-md": ["Geist"], "body-lg": ["Geist"], "headline-lg": ["Geist"], display: ["Geist"], "label-md": ["Geist"], headline: ["Geist"], body: ["Geist"], label: ["Geist"]}, fontSize: {code: ["13px", {lineHeight: "1.4", fontWeight: "400"}], "body-md": ["14px", {lineHeight: "1.5", fontWeight: "400"}], "headline-md": ["20px", {lineHeight: "1.4", fontWeight: "500"}], "body-lg": ["16px", {lineHeight: "1.5", fontWeight: "400"}], "headline-lg": ["24px", {lineHeight: "1.3", fontWeight: "600"}], display: ["32px", {lineHeight: "1.2", letterSpacing: "-0.02em", fontWeight: "600"}], "label-md": ["12px", {lineHeight: "1", letterSpacing: "0.02em", fontWeight: "500"}]}}}};</script>
+<style>
+        body { background-color: #0F1011; color: #e3e2e3; }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; height: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #343536; border-radius: 4px; }
+        .custom-scrollbar:hover::-webkit-scrollbar-thumb { background: #474746; }
+    </style>
+</head>
+<body class="font-body-md text-body-md h-screen flex flex-col overflow-hidden bg-[#0F1011]">
+<!-- Top Navigation Bar -->
+<nav class="flex justify-between items-center w-full px-margin-desktop h-16 bg-surface-container-lowest border-b border-outline-variant flex-shrink-0 z-50">
+<!-- Left: Logo & Workspace -->
+<div class="flex items-center gap-6">
+<div class="font-display text-display text-primary tracking-tight">Clicko</div>
+<button class="flex items-center gap-2 bg-surface-container-low border border-outline-variant rounded-full px-4 py-2 hover:border-primary transition-colors duration-200">
+<div class="w-5 h-5 rounded-full bg-primary flex items-center justify-center">
+<span class="font-label-md text-label-md text-on-primary">A</span>
+</div>
+<div class="flex flex-col items-start">
+<span class="font-label-md text-label-md text-on-surface">Aurora Café</span>
+<span class="font-code text-code text-on-surface-variant text-[10px]">Agência Norte / Cliente</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant text-[16px]">expand_more</span>
+</button>
+</div>
+<!-- Center: Workflow Spine -->
+<div class="hidden md:flex items-center h-full">
+<div class="flex space-x-1 h-full">
+<!-- Active Tab: Descobrir -->
+<a class="flex flex-col items-center justify-center px-4 h-full text-primary border-b-2 border-primary transition-all duration-200" href="#">
+<span class="material-symbols-outlined mb-1 text-[18px]">explore</span>
+<span class="font-label-md text-label-md">Descobrir</span>
+</a>
+<!-- Inactive Tabs -->
+<a class="flex flex-col items-center justify-center px-4 h-full text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mb-1 text-[18px]">schema</span>
+<span class="font-label-md text-label-md">Planejar</span>
+</a>
+<a class="flex flex-col items-center justify-center px-4 h-full text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mb-1 text-[18px]">edit_document</span>
+<span class="font-label-md text-label-md">Criar</span>
+</a>
+<a class="flex flex-col items-center justify-center px-4 h-full text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mb-1 text-[18px]">verified</span>
+<span class="font-label-md text-label-md">Aprovar</span>
+</a>
+<a class="flex flex-col items-center justify-center px-4 h-full text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mb-1 text-[18px]">rocket_launch</span>
+<span class="font-label-md text-label-md">Publicar</span>
+</a>
+<a class="flex flex-col items-center justify-center px-4 h-full text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mb-1 text-[18px]">school</span>
+<span class="font-label-md text-label-md">Aprender</span>
+</a>
+</div>
+</div>
+<!-- Right: Actions & Profile -->
+<div class="flex items-center gap-4">
+<!-- Search -->
+<button class="hidden md:flex items-center justify-between w-48 bg-surface-container-low border border-outline-variant rounded px-3 py-1.5 hover:border-primary transition-colors">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px]">search</span>
+<span class="font-code text-code">Buscar...</span>
+</div>
+<span class="font-code text-code text-on-surface-variant bg-surface-container-high px-1 rounded">⌘K</span>
+</button>
+<!-- Split Button -->
+<div class="flex rounded-DEFAULT overflow-hidden">
+<button class="bg-primary-container text-on-primary-container font-label-md text-label-md px-4 py-2 hover:bg-primary transition-colors border-r border-[#00c968]">
+                    + Novo
+                </button>
+<button class="bg-primary-container text-on-primary-container px-2 py-2 hover:bg-primary transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px]">arrow_drop_down</span>
+</button>
+</div>
+<!-- Icons -->
+<div class="flex items-center gap-2 border-l border-outline-variant pl-4">
+<button class="relative p-2 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">rule_folder</span>
+<span class="absolute top-1 right-1 w-2 h-2 bg-primary rounded-full"></span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="ml-2 w-8 h-8 rounded-full overflow-hidden border border-outline-variant hover:border-primary transition-colors">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="A professional portrait of a confident SaaS platform user with a subtle smile. High quality, dark moody lighting, cinematic aesthetic, shallow depth of field. Tech company environment, subtle neon green ambient light reflecting softly on the face. Shot on 85mm lens." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQh63KeifBFm-8CpVmbjCDJ6lqicrAmuYJbfgij_l-8z_rqoYxvh-llVpspq3M3EzxiHjG4x-J6pGSoPbRlOUlKYvh6qDm0RmB-21adjJggZSbk5m2K-u8fxlNNx21gjNw-JdV2Q6VniWJU80I4-jhobur2gsGYFQu1hAyDTiw58PliGDB4JtUS2wlmsh2rwco2HHTOLCP0tUkhc8t5RUd-zIP0ahgWR3mynL20BVXt6w8E-oPykVkJA"/>
+</button>
+</div>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 overflow-y-auto custom-scrollbar relative">
+<!-- Onboarding Banner -->
+<div class="absolute top-6 left-1/2 -translate-x-1/2 z-40 bg-surface-container-high border border-primary/30 rounded-full px-6 py-3 shadow-lg flex items-center gap-4" id="onboardingBanner">
+<span class="material-symbols-outlined text-primary">info</span>
+<span class="font-body-md text-body-md text-on-surface">Navegue pelo ciclo do conteúdo. Você pode entrar em qualquer etapa.</span>
+<button class="text-on-surface-variant hover:text-on-surface ml-2" onclick="document.getElementById('onboardingBanner').style.display='none'">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+<div class="max-w-container-max mx-auto px-margin-desktop py-12">
+<!-- Hero Section -->
+<section class="mb-12 relative overflow-hidden rounded-xl border border-outline-variant bg-[#181B1D]">
+<div class="absolute inset-0 z-0 opacity-20">
+<div class="bg-cover bg-center w-full h-full" data-alt="A cinematic, high-contrast overhead shot of a perfectly prepared espresso coffee on a dark matte table. Steaming cup, raw coffee beans scattered artfully. Dramatic directional lighting highlighting the textures. Industrial minimalism style, rich deep browns against profound blacks. Professional food styling." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAtp6E1LBXUTT1DPJZbUmgETRjq8TdPlPLTQyiKdrW26Q2IQGbGlRe-cbs8C4_wx2DfH0UckFH3i0H0R5qWfkm8szpXa18wP5-GwWl-c8I0oTBVaOqhZr25zMnmQkS3lTYzxz64XG2EJ648eT_Q6EFIgg5rtbAmt8rLXEstJm-WEEoVlF-gVMCK-RRHX3uuOa92CIvGbDi50w4CgNre6j9j2J3m_RsI_6IJG6F62LrQ8P8XyhC8BrX2HA')"></div>
+<div class="absolute inset-0 bg-gradient-to-r from-[#181B1D] via-[#181B1D]/80 to-transparent"></div>
+</div>
+<div class="relative z-10 p-8 md:p-12 md:w-2/3">
+<div class="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 text-primary px-3 py-1 rounded-full mb-6">
+<span class="material-symbols-outlined text-[16px] animate-pulse">radar</span>
+<span class="font-label-md text-label-md uppercase tracking-wider">Alta Relevância</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface mb-4">
+                        O ritual do café virou conteúdo de rotina
+                    </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-8 max-w-xl">
+                        A análise do Radar Room indica um pico de engajamento em vídeos curtos sobre rituais matinais com café. O momento é ideal para posicionar a Aurora Café neste micro-momento.
+                    </p>
+<button class="bg-primary-container text-on-primary-container font-label-md text-label-md px-6 py-3 rounded hover:bg-primary transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">bolt</span>
+                        Transformar em campanha
+                    </button>
+</div>
+</section>
+<!-- Editorial Queue -->
+<section>
+<div class="flex items-center justify-between mb-6">
+<h2 class="font-headline-md text-headline-md text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant">view_timeline</span>
+                        Fila Editorial
+                    </h2>
+<button class="text-on-surface-variant hover:text-primary font-label-md text-label-md flex items-center gap-1 transition-colors">
+                        Ver todas <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Card 1 -->
+<div class="bg-surface-container-low border border-outline-variant rounded-lg overflow-hidden group hover:border-primary/50 transition-colors">
+<div class="h-32 relative">
+<img alt="Campaign Thumbnail" class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity" data-alt="A stylized digital illustration of an espresso machine extraction process. Minimalist graphic design, solid dark background, clean geometric lines in vibrant green and white. UI component thumbnail style. Professional, sleek, modern SaaS aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDYdHdpynHCCbRFoWG0P_ZQ6UIVwf5J_Gwl3WaY102AHUG9J93xQl3TecLcCg6UpRnvmeOEQy9LnuVENfAtaL5an0I17a-mT5z-CVmEwQ0ySMmVwofnCFDSlhCaiFPXKq7EBeUlZiAyDnF2XRfKxAs5RXANOMuzUD1G1L8E9WC5RGo6OidILhRD0qkjVdNzTlac8jlYbbAlEAmXoNy6lT3UfobraJTZ0UB2dNHevjtot3V3e5T2RnzoLA"/>
+<div class="absolute top-2 right-2 bg-surface-container-high/90 backdrop-blur border border-outline-variant px-2 py-1 rounded font-code text-code text-[10px] text-on-surface">
+                                Planejamento
+                            </div>
+</div>
+<div class="p-4 border-t border-outline-variant">
+<h3 class="font-body-lg text-body-lg text-on-surface mb-1">Cold Brew de Verão</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4">Lançamento nova linha gelada</p>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+<span class="font-code text-code text-[11px]">Em andamento</span>
+</div>
+<div class="flex -space-x-2">
+<div class="w-6 h-6 rounded-full bg-surface-container-highest border border-outline-variant flex items-center justify-center text-[10px] font-label-md text-on-surface">AB</div>
+<div class="w-6 h-6 rounded-full bg-surface-container-highest border border-outline-variant flex items-center justify-center text-[10px] font-label-md text-on-surface">CD</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-container-low border border-outline-variant rounded-lg overflow-hidden group hover:border-primary/50 transition-colors">
+<div class="h-32 relative">
+<img alt="Campaign Thumbnail" class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity" data-alt="A moody, high-end photograph of a barista pouring latte art in a dark cafe setting. Shallow depth of field, focused on the cup and milk stream. Rich earthy tones, dramatic lighting. Industrial minimalism style. Used as a campaign thumbnail." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAny7R_wy5qELXGHSUPRbAgcrcdEmyRYRq7bmVzgClV5FXhco332H5yXLOn03pSe9kqEL1Qchc0LJij8ssM2jNOk5tI_D0GKawL3JD73dLUWi0xnpj3JYJ6dUlF0JFMGchbCx1HcHjrQHuWid0fMjFJfSYIxo2FK0ahIR69IV6kXsFwIn8L2ybgQ-URj_jbC1669Oj9Nm9HtbIekFaknGerZp7gZDC37kAOeIFkvD9frLgTieG50I9wYw"/>
+<div class="absolute top-2 right-2 bg-surface-container-high/90 backdrop-blur border border-outline-variant px-2 py-1 rounded font-code text-code text-[10px] text-on-surface">
+                                Aprovação
+                            </div>
+</div>
+<div class="p-4 border-t border-outline-variant">
+<h3 class="font-body-lg text-body-lg text-on-surface mb-1">Dia do Barista</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4">Homenagem aos profissionais</p>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="w-2 h-2 rounded-full bg-surface-variant"></span>
+<span class="font-code text-code text-[11px]">Aguardando revisão</span>
+</div>
+<div class="flex -space-x-2">
+<div class="w-6 h-6 rounded-full bg-surface-container-highest border border-outline-variant flex items-center justify-center text-[10px] font-label-md text-on-surface">EF</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-container-low border border-outline-variant border-dashed rounded-lg flex flex-col items-center justify-center p-6 text-on-surface-variant hover:text-primary hover:border-primary transition-colors cursor-pointer min-h-[220px]">
+<span class="material-symbols-outlined text-[32px] mb-2">add_circle</span>
+<span class="font-label-md text-label-md">Nova Campanha</span>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Bottom Navigation Bar (Mobile Only) -->
+<nav class="md:hidden flex justify-around items-center w-full h-16 bg-surface-container-lowest border-t border-outline-variant flex-shrink-0 z-50">
+<a class="flex flex-col items-center justify-center flex-1 h-full text-primary border-t-2 border-primary pt-1" href="#">
+<span class="material-symbols-outlined mb-1 text-[20px]">explore</span>
+<span class="font-label-md text-[10px]">Descobrir</span>
+</a>
+<a class="flex flex-col items-center justify-center flex-1 h-full text-on-surface-variant hover:text-primary pt-1 border-t-2 border-transparent" href="#">
+<span class="material-symbols-outlined mb-1 text-[20px]">schema</span>
+<span class="font-label-md text-[10px]">Planejar</span>
+</a>
+<a class="flex flex-col items-center justify-center flex-1 h-full text-on-surface-variant hover:text-primary pt-1 border-t-2 border-transparent" href="#">
+<span class="material-symbols-outlined mb-1 text-[20px]">edit_document</span>
+<span class="font-label-md text-[10px]">Criar</span>
+</a>
+<a class="flex flex-col items-center justify-center flex-1 h-full text-on-surface-variant hover:text-primary pt-1 border-t-2 border-transparent" href="#">
+<span class="material-symbols-outlined mb-1 text-[20px]">menu</span>
+<span class="font-label-md text-[10px]">Mais</span>
+</a>
+</nav>
+<script src="/stitch/bridge.js"></script></body></html>

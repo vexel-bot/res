@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Tool Atlas V7.1 — Menu fechado</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        @font-face {
+            font-family: 'Geist';
+            src: url('https://cdn.jsdelivr.net/npm/geist@1.0.0/dist/fonts/geist-sans/Geist-Regular.woff2') format('woff2');
+            font-weight: 400;
+        }
+        @font-face {
+            font-family: 'Geist';
+            src: url('https://cdn.jsdelivr.net/npm/geist@1.0.0/dist/fonts/geist-sans/Geist-Medium.woff2') format('woff2');
+            font-weight: 500;
+        }
+        @font-face {
+            font-family: 'Geist';
+            src: url('https://cdn.jsdelivr.net/npm/geist@1.0.0/dist/fonts/geist-sans/Geist-SemiBold.woff2') format('woff2');
+            font-weight: 600;
+        }
+    </style>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {"tertiary-fixed-dim": "#ffb3b1", "on-surface": "#e5e2e1", "on-secondary-container": "#602a00", primary: "#ffb3af", "on-tertiary-fixed-variant": "#7f292c", "inverse-primary": "#b4252d", "secondary-fixed-dim": "#ffb68b", tertiary: "#ffb3b1", "on-secondary-fixed": "#321200", "tertiary-container": "#e17474", "primary-container": "#ff5c5c", "on-tertiary-container": "#5c0e15", "surface-bright": "#393939", "on-surface-variant": "#e2bebc", "surface-dim": "#131313", "surface-variant": "#353534", "secondary-container": "#ff7f1c", "error-container": "#93000a", "on-error": "#690005", "on-primary-container": "#62000c", "tertiary-fixed": "#ffdad8", "inverse-surface": "#e5e2e1", "on-secondary": "#522300", "surface-container-high": "#2a2a2a", "on-tertiary": "#601118", "on-background": "#e5e2e1", "on-tertiary-fixed": "#410007", "surface-tint": "#ffb3af", "on-primary": "#68000d", surface: "#131313", "primary-fixed-dim": "#ffb3af", "surface-container": "#201f1f", "on-secondary-fixed-variant": "#753400", "surface-container-lowest": "#0e0e0e", "on-primary-fixed-variant": "#920418", "surface-container-highest": "#353534", "inverse-on-surface": "#313030", "outline-variant": "#5a403f", "on-error-container": "#ffdad6", secondary: "#ffb68b", background: "#131313", "on-primary-fixed": "#410005", outline: "#a98987", "surface-container-low": "#1c1b1b", "secondary-fixed": "#ffdbc8", "primary-fixed": "#ffdad7", error: "#ffb4ab"}, borderRadius: {DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem"}, spacing: {gutter: "16px", "margin-desktop": "32px", unit: "4px", "container-max": "1440px", "margin-mobile": "16px"}, fontFamily: {"body-md": ["Geist"], "body-lg": ["Geist"], display: ["Geist"], "label-md": ["Geist"], "headline-md": ["Geist"], "headline-lg": ["Geist"], code: ["Geist"], headline: ["Geist"], body: ["Geist"], label: ["Geist"]}, fontSize: {"body-md": ["14px", {lineHeight: "1.5", fontWeight: "400"}], "body-lg": ["16px", {lineHeight: "1.5", fontWeight: "400"}], display: ["32px", {lineHeight: "1.2", letterSpacing: "-0.02em", fontWeight: "600"}], "label-md": ["12px", {lineHeight: "1", letterSpacing: "0.02em", fontWeight: "500"}], "headline-md": ["20px", {lineHeight: "1.4", fontWeight: "500"}], "headline-lg": ["24px", {lineHeight: "1.3", fontWeight: "600"}], code: ["13px", {lineHeight: "1.4", fontWeight: "400"}]}}}};</script>
+</head>
+<body class="bg-[#0F1011] text-on-surface font-body-md min-h-screen flex flex-col">
+<!-- Global Workflow Bar V7 -->
+<header class="flex justify-between items-center w-full px-margin-desktop h-[64px] bg-[#181B1D] border-b border-[#2A2B2D] shrink-0 sticky top-0 z-50">
+<!-- Left: Logo + Workspace Pill -->
+<div class="flex items-center gap-6">
+<div class="font-display text-[20px] text-primary uppercase tracking-tighter">Clicko</div>
+<div class="flex items-center gap-2 bg-[#232527] hover:bg-[#2A2B2D] transition-colors rounded px-2 py-1.5 cursor-pointer border border-[#343536]">
+<img class="w-5 h-5 rounded-sm object-cover" data-alt="A small, professional avatar image of a coffee cup icon on a dark background, representing a brand logo for 'Aurora Café' in a minimalist style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDCf7dOfujSygyIa-jhuMmgLKCw9MhZY6wbvxt8wF7A7SMAY0jR0b4StsoiVBJJMhRnwQLub0KuF62p32A5W1UkjvOPicmgtkKY7xkM_Hv_C9iJD5_ULaGzY2DaS3H8W9Q3dP2Xo7H7X0Im0rNebmAJ94yhefk88fWEpRUX0jOjXLhtC4kfL6__RRe6KVcqpxu1Ne0fRcrAnHGKbEhhvuPKwp1M_DPGM2q4EgMYxuzOikEs0zbodeNvVg"/>
+<div class="flex flex-col mx-1">
+<span class="font-label-md text-label-md text-on-surface">Aurora Café</span>
+<span class="text-[10px] text-on-surface-variant font-medium leading-none mt-0.5">Agência Norte</span>
+</div>
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">expand_more</span>
+</div>
+</div>
+<!-- Center: Navigation -->
+<nav class="flex items-center gap-1 h-full">
+<a class="h-full flex items-center px-4 font-label-md text-label-md text-primary border-b-2 border-primary" href="#">Hoje</a>
+<a class="h-full flex items-center px-4 font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" href="#">Radar</a>
+<a class="h-full flex items-center px-4 font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" href="#">Campanhas</a>
+<a class="h-full flex items-center px-4 font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" href="#">Calendário</a>
+</nav>
+<!-- Right: Actions -->
+<div class="flex items-center gap-4">
+<!-- Quick Search -->
+<button class="flex items-center gap-2 px-3 py-1.5 bg-[#232527] hover:bg-[#2A2B2D] border border-[#343536] rounded text-on-surface-variant transition-colors group">
+<span class="material-symbols-outlined text-[16px]">search</span>
+<span class="font-label-md text-label-md">Busca</span>
+<span class="font-code text-[10px] bg-[#181B1D] px-1 rounded border border-[#343536] ml-2">Ctrl K</span>
+</button>
+<!-- All Tools -->
+<button class="flex items-center gap-2 px-3 py-1.5 hover:bg-[#232527] rounded text-on-surface transition-colors group relative" title="Veja todas as ações da Clicko">
+<span class="material-symbols-outlined text-[18px]">grid_view</span>
+<span class="font-label-md text-label-md">Ferramentas</span>
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">expand_more</span>
+</button>
+<!-- Split Button Primary -->
+<div class="flex items-center bg-primary-container rounded shadow-sm">
+<button class="px-4 py-1.5 font-label-md text-label-md text-on-primary-container font-semibold hover:bg-opacity-90 transition-colors rounded-l">
+                    Criar conteúdo
+                </button>
+<div class="w-[1px] h-4 bg-on-primary-container opacity-20"></div>
+<button class="px-2 py-1.5 text-on-primary-container hover:bg-opacity-90 transition-colors rounded-r flex items-center">
+<span class="material-symbols-outlined text-[18px]">arrow_drop_down</span>
+</button>
+</div>
+<!-- Utilities -->
+<div class="flex items-center gap-3 pl-2 border-l border-[#2A2B2D]">
+<button class="relative text-on-surface-variant hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-[20px]">check_circle</span>
+<span class="absolute -top-1 -right-1 bg-error text-[#181B1D] text-[9px] font-bold px-1 rounded-full border border-[#181B1D]">3</span>
+</button>
+<button class="text-on-surface-variant hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+</button>
+<button class="w-7 h-7 rounded-full bg-[#343536] border border-[#474746] flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A minimalist professional user avatar showing a silhouette or simple face icon on a dark grey background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAvpBciGt_mSHnqkZwnpwi13IgPkA-RxBtXAj2QoABbekG8OM1i14DdSW0TXrLam9LVXELdAjYPttFiXFTObeoeAf56h6Wgd-I8txTAjC12ow_I5KyMEPZHLqbR4ttwvXIL9oP7QL16g1S6-YD-zWYRNM4d9InOyqw9j-1YtWnDoXBpPBAZ1GNbi9YQA-c4dYU8fv3VYf_GgXMpmsuFHSf2AS3GWm7fAICvVZmWQ68N2Ro6mHvjRrHL3Q"/>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Canvas -->
+<main class="flex-1 flex flex-col p-margin-desktop gap-gutter max-w-container-max mx-auto w-full">
+<!-- Page Header -->
+<div class="flex justify-between items-end mb-4">
+<div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface mb-1">Hoje</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Resumo operacional para Aurora Café. Terça-feira, 24 de Outubro.</p>
+</div>
+</div>
+<div class="grid grid-cols-12 gap-gutter">
+<!-- Left Column: Editorial Queue -->
+<div class="col-span-8 flex flex-col gap-gutter">
+<!-- Section Header -->
+<div class="flex justify-between items-center bg-[#181B1D] px-4 py-3 border border-[#2A2B2D] rounded-t">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-primary">edit_calendar</span>
+<h2 class="font-label-md text-label-md text-on-surface uppercase tracking-wider">Fila Editorial</h2>
+<span class="px-2 py-0.5 bg-[#232527] rounded text-[10px] text-on-surface-variant border border-[#343536]">Próximas 48h</span>
+</div>
+<button class="font-label-md text-label-md text-primary hover:underline">Ver Calendário Completo</button>
+</div>
+<!-- Data Table (Bento Style) -->
+<div class="bg-[#181B1D] border-x border-b border-[#2A2B2D] rounded-b -mt-4">
+<!-- Table Header -->
+<div class="grid grid-cols-12 gap-2 px-4 py-2 border-b border-[#2A2B2D] text-[11px] text-on-surface-variant uppercase font-medium">
+<div class="col-span-1">Status</div>
+<div class="col-span-2">Data/Hora</div>
+<div class="col-span-4">Conteúdo</div>
+<div class="col-span-2">Canal</div>
+<div class="col-span-2">Responsável</div>
+<div class="col-span-1 text-right">Ação</div>
+</div>
+<!-- Rows -->
+<div class="flex flex-col">
+<!-- Row 1 -->
+<div class="grid grid-cols-12 gap-2 px-4 py-3 border-b border-[#2A2B2D] hover:bg-[#232527] transition-colors items-center group">
+<div class="col-span-1 flex items-center">
+<div class="w-1.5 h-1.5 rounded-full bg-error mr-2"></div>
+<span class="font-code text-[11px] text-error">Atrasado</span>
+</div>
+<div class="col-span-2 font-code text-[12px] text-on-surface">Hoje, 10:00</div>
+<div class="col-span-4 font-body-md text-[13px] text-on-surface truncate">Post Promoção de Inverno</div>
+<div class="col-span-2 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-on-surface-variant">photo_camera</span>
+<span class="font-label-md text-[11px] text-on-surface-variant">Instagram</span>
+</div>
+<div class="col-span-2 font-body-md text-[12px] text-on-surface-variant">Ana C.</div>
+<div class="col-span-1 text-right">
+<button class="text-on-surface-variant hover:text-primary opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+</div>
+</div>
+<!-- Row 2 -->
+<div class="grid grid-cols-12 gap-2 px-4 py-3 border-b border-[#2A2B2D] hover:bg-[#232527] transition-colors items-center group bg-[#1F2021]">
+<div class="col-span-1 flex items-center">
+<div class="w-1.5 h-1.5 rounded-full bg-primary mr-2"></div>
+<span class="font-code text-[11px] text-primary">Pendente</span>
+</div>
+<div class="col-span-2 font-code text-[12px] text-on-surface">Hoje, 15:30</div>
+<div class="col-span-4 font-body-md text-[13px] text-on-surface font-medium truncate">Reels: Bastidores Torra</div>
+<div class="col-span-2 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-on-surface-variant">smart_display</span>
+<span class="font-label-md text-[11px] text-on-surface-variant">Instagram</span>
+</div>
+<div class="col-span-2 font-body-md text-[12px] text-on-surface-variant">Carlos M.</div>
+<div class="col-span-1 text-right flex justify-end gap-2">
+<button class="px-2 py-0.5 bg-primary-container text-on-primary-container font-label-md text-[10px] rounded hover:bg-opacity-90">Aprovar</button>
+</div>
+</div>
+<!-- Row 3 -->
+<div class="grid grid-cols-12 gap-2 px-4 py-3 border-b border-[#2A2B2D] hover:bg-[#232527] transition-colors items-center group">
+<div class="col-span-1 flex items-center">
+<div class="w-1.5 h-1.5 rounded-full bg-[#859585] mr-2"></div>
+<span class="font-code text-[11px] text-on-surface-variant">Draft</span>
+</div>
+<div class="col-span-2 font-code text-[12px] text-on-surface-variant">Amanhã, 09:00</div>
+<div class="col-span-4 font-body-md text-[13px] text-on-surface-variant truncate">Newsletter Semanal #42</div>
+<div class="col-span-2 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-on-surface-variant">mail</span>
+<span class="font-label-md text-[11px] text-on-surface-variant">Email</span>
+</div>
+<div class="col-span-2 font-body-md text-[12px] text-on-surface-variant">Ana C.</div>
+<div class="col-span-1 text-right">
+<button class="text-on-surface-variant hover:text-primary opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Recommendations & Radar -->
+<div class="col-span-4 flex flex-col gap-gutter">
+<!-- Recommendations Bento -->
+<div class="bg-[#181B1D] border border-[#2A2B2D] rounded p-4 flex flex-col gap-4 relative overflow-hidden">
+<!-- Subtle gradient background -->
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-3xl -mr-10 -mt-10"></div>
+<div class="flex items-center gap-2 relative z-10">
+<span class="material-symbols-outlined text-[18px] text-primary">lightbulb</span>
+<h2 class="font-label-md text-label-md text-on-surface uppercase tracking-wider">Radar &amp; Recomendações</h2>
+</div>
+<div class="flex flex-col gap-3 relative z-10">
+<!-- Insight 1 -->
+<div class="p-3 border border-[#343536] rounded bg-[#121314] hover:border-primary/50 transition-colors cursor-pointer">
+<div class="flex justify-between items-start mb-1">
+<span class="font-label-md text-[11px] text-primary">Tendência em Alta</span>
+<span class="material-symbols-outlined text-[14px] text-on-surface-variant">trending_up</span>
+</div>
+<p class="font-body-md text-[13px] text-on-surface mb-2">Termo "Café Especial Gelado" cresceu 45% nas buscas locais.</p>
+<button class="font-label-md text-[11px] text-on-surface border border-[#343536] px-2 py-1 rounded hover:bg-[#232527]">Gerar Pauta</button>
+</div>
+<!-- Insight 2 -->
+<div class="p-3 border border-[#343536] rounded bg-[#121314] hover:border-primary/50 transition-colors cursor-pointer">
+<div class="flex justify-between items-start mb-1">
+<span class="font-label-md text-[11px] text-[#b7b5b4]">Alerta de Engajamento</span>
+<span class="material-symbols-outlined text-[14px] text-on-surface-variant">bar_chart</span>
+</div>
+<p class="font-body-md text-[13px] text-on-surface">O último Reels teve 2x mais salvamentos que a média.</p>
+</div>
+</div>
+</div>
+<!-- Quick Stats -->
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-[#181B1D] border border-[#2A2B2D] rounded p-4 flex flex-col">
+<span class="font-label-md text-[11px] text-on-surface-variant uppercase mb-1">Publicados Hoje</span>
+<span class="font-display text-[24px] text-on-surface">2<span class="text-[14px] text-on-surface-variant font-body-md ml-1">/ 5</span></span>
+</div>
+<div class="bg-[#181B1D] border border-[#2A2B2D] rounded p-4 flex flex-col">
+<span class="font-label-md text-[11px] text-on-surface-variant uppercase mb-1">Aprovações Pend.</span>
+<span class="font-display text-[24px] text-error">3</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<script src="/stitch/bridge.js"></script></body></html>

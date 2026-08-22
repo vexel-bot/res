@@ -72,13 +72,13 @@ export const EditorialCalendarView: React.FC<EditorialCalendarViewProps> = ({
 
   return (
     <div className="mx-auto max-w-[1500px] space-y-5 p-5">
-      {activeCampaign && <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-[#8bd132]/20 bg-[#8bd132]/[0.055] p-3"><div><span className="text-[8px] uppercase tracking-[0.16em] text-[#8bd132]">Estratégia ativa no calendário</span><p className="mt-1 text-[10px] font-medium text-white">{activeCampaign.name}</p></div><p className="max-w-xl text-[9px] text-[#9ca6ab]">{activeCampaign.objective}</p></div>}
+      {activeCampaign && <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-[#ff5c5c]/20 bg-[#ff5c5c]/[0.055] p-3"><div><span className="text-[8px] uppercase tracking-[0.16em] text-[#ff5c5c]">Estratégia ativa no calendário</span><p className="mt-1 text-[10px] font-medium text-white">{activeCampaign.name}</p></div><p className="max-w-xl text-[9px] text-[#9ca6ab]">{activeCampaign.objective}</p></div>}
 
       {/* Calendar Header Bar */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/[0.06] pb-4">
         <div>
           <h2 className="text-lg font-bold text-white flex items-center gap-2">
-            <CalendarIcon className="w-5 h-5 text-[#8bd132]" /> Calendário Editorial Inteligente
+            <CalendarIcon className="w-5 h-5 text-[#ff5c5c]" /> Calendário Editorial Inteligente
           </h2>
           <p className="text-xs text-[#78858e]">
             Planejamento visual completo com organização em lote e melhores horários de publicação
@@ -91,7 +91,7 @@ export const EditorialCalendarView: React.FC<EditorialCalendarViewProps> = ({
           <select className="rounded-xl border border-white/[0.08] bg-[#0d1216] px-3 py-2 text-[10px] text-white outline-none"><option>Todas as contas</option><option>@clickostudio</option><option>Clicko Studio · LinkedIn</option></select>
           {/* Filter by Platform */}
           <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#0d1216] border border-white/[0.08] text-xs text-[#8e989e]">
-            <Filter className="w-3.5 h-3.5 text-[#8bd132]" />
+            <Filter className="w-3.5 h-3.5 text-[#ff5c5c]" />
             <select
               value={filterPlatform}
               onChange={(e) => setFilterPlatform(e.target.value)}
@@ -110,7 +110,7 @@ export const EditorialCalendarView: React.FC<EditorialCalendarViewProps> = ({
             <button
               onClick={() => setViewMode('month')}
               className={`px-3 py-1 text-xs font-semibold rounded-lg ${
-                viewMode === 'month' ? 'bg-[#8bd132] text-[#14200e]' : 'text-white/40'
+                viewMode === 'month' ? 'bg-[#ff5c5c] text-[#14200e]' : 'text-white/40'
               }`}
             >
               Mês
@@ -118,7 +118,7 @@ export const EditorialCalendarView: React.FC<EditorialCalendarViewProps> = ({
             <button
               onClick={() => setViewMode('week')}
               className={`px-3 py-1 text-xs font-semibold rounded-lg ${
-                viewMode === 'week' ? 'bg-[#8bd132] text-[#14200e]' : 'text-white/40'
+                viewMode === 'week' ? 'bg-[#ff5c5c] text-[#14200e]' : 'text-white/40'
               }`}
             >
               Semana
@@ -126,7 +126,7 @@ export const EditorialCalendarView: React.FC<EditorialCalendarViewProps> = ({
             <button
               onClick={() => setViewMode('day')}
               className={`px-3 py-1 text-xs font-semibold rounded-lg ${
-                viewMode === 'day' ? 'bg-[#8bd132] text-[#14200e]' : 'text-white/40'
+                viewMode === 'day' ? 'bg-[#ff5c5c] text-[#14200e]' : 'text-white/40'
               }`}
             >
               Dia
@@ -135,7 +135,7 @@ export const EditorialCalendarView: React.FC<EditorialCalendarViewProps> = ({
 
           <button
             onClick={onNewPost}
-            className="flex items-center gap-1.5 rounded-lg bg-[#8bd132] px-4 py-2 text-xs font-semibold text-[#14200e] transition-colors hover:bg-[#9be24d]"
+            className="flex items-center gap-1.5 rounded-lg bg-[#ff5c5c] px-4 py-2 text-xs font-semibold text-[#14200e] transition-colors hover:bg-[#9be24d]"
           >
             <Plus className="w-4 h-4" /> Agendar publicação
           </button>
@@ -195,16 +195,16 @@ export const EditorialCalendarView: React.FC<EditorialCalendarViewProps> = ({
                 item.isOtherMonth
                   ? 'bg-white/[0.01] border-white/5 text-white/20'
                   : item.day === 30
-                  ? 'border-[#8bd132]/30 bg-[#8bd132]/[0.07] text-white'
+                  ? 'border-[#ff5c5c]/30 bg-[#ff5c5c]/[0.07] text-white'
                   : 'bg-white/[0.02] border-white/5 hover:border-white/10 text-neutral-200'
               }`}
             >
               <div className="flex items-center justify-between text-xs">
-                <span className={`font-bold ${item.day === 30 ? 'text-[#8bd132]' : ''}`}>
+                <span className={`font-bold ${item.day === 30 ? 'text-[#ff5c5c]' : ''}`}>
                   {item.day}
                 </span>
                 {item.day === 30 && (
-                  <span className="rounded bg-[#8bd132]/15 px-1.5 py-0.5 text-[9px] text-[#8bd132]">
+                  <span className="rounded bg-[#ff5c5c]/15 px-1.5 py-0.5 text-[9px] text-[#ff5c5c]">
                     Hoje
                   </span>
                 )}
@@ -240,7 +240,7 @@ export const EditorialCalendarView: React.FC<EditorialCalendarViewProps> = ({
       </div>
 
       {/* Post Detail Drawer Modal */}
-      {lastMoved && <div className="fixed bottom-20 right-6 z-50 rounded-lg border border-[#8bd132]/25 bg-[#182126] px-4 py-3 text-[9px] text-[#8bd132] shadow-xl">{lastMoved}<button onClick={() => setLastMoved(undefined)} className="ml-3 text-[#7e898f]">Fechar</button></div>}
+      {lastMoved && <div className="fixed bottom-20 right-6 z-50 rounded-lg border border-[#ff5c5c]/25 bg-[#182126] px-4 py-3 text-[9px] text-[#ff5c5c] shadow-xl">{lastMoved}<button onClick={() => setLastMoved(undefined)} className="ml-3 text-[#7e898f]">Fechar</button></div>}
 
       {selectedPostDetail && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-150">

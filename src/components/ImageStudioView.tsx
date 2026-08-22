@@ -124,7 +124,7 @@ export const ImageStudioView: React.FC = () => {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/[0.06] pb-4">
         <div>
           <h2 className="text-lg font-bold text-white flex items-center gap-2">
-            <ImageIcon className="w-5 h-5 text-[#8bd132]" /> Estúdio de Edição & Geração Visual de IA
+            <ImageIcon className="w-5 h-5 text-[#ff5c5c]" /> Estúdio de Edição & Geração Visual de IA
           </h2>
           <p className="text-xs text-[#78858e]">
             Crie, edite, remova fundos, faça upscale e adapte formatos com Inteligência Artificial
@@ -139,7 +139,7 @@ export const ImageStudioView: React.FC = () => {
               link.download = 'clicko-ai-studio-asset.jpg';
               link.click();
             }}
-            className="px-4 py-2 rounded-xl bg-[#8bd132] hover:bg-[#9be24d] text-[#0b1208] font-bold text-xs flex items-center gap-1.5 transition-all shadow-md shadow-[#8bd132]/20"
+            className="px-4 py-2 rounded-xl bg-[#ff5c5c] hover:bg-[#9be24d] text-[#0b1208] font-bold text-xs flex items-center gap-1.5 transition-all shadow-md shadow-[#ff5c5c]/20"
           >
             <Download className="w-4 h-4" /> Exportar Imagem em HD
           </button>
@@ -156,7 +156,7 @@ export const ImageStudioView: React.FC = () => {
               onClick={() => setActiveTool('generate')}
               className={`flex-1 py-2 text-[10px] font-bold rounded-lg transition-all ${
                 activeTool === 'generate'
-                  ? 'bg-[#8bd132] text-[#14200e] shadow-sm'
+                  ? 'bg-[#ff5c5c] text-[#14200e] shadow-sm'
                   : 'text-[#9da7ac] hover:text-white'
               }`}
             >
@@ -166,7 +166,7 @@ export const ImageStudioView: React.FC = () => {
               onClick={() => setActiveTool('edit_ia')}
               className={`flex-1 py-2 text-[10px] font-bold rounded-lg transition-all ${
                 activeTool === 'edit_ia'
-                  ? 'bg-[#8bd132] text-[#14200e] shadow-sm'
+                  ? 'bg-[#ff5c5c] text-[#14200e] shadow-sm'
                   : 'text-[#9da7ac] hover:text-white'
               }`}
             >
@@ -176,7 +176,7 @@ export const ImageStudioView: React.FC = () => {
               onClick={() => setActiveTool('text')}
               className={`flex-1 py-2 text-[10px] font-bold rounded-lg transition-all ${
                 activeTool === 'text'
-                  ? 'bg-[#8bd132] text-[#14200e] shadow-sm'
+                  ? 'bg-[#ff5c5c] text-[#14200e] shadow-sm'
                   : 'text-[#9da7ac] hover:text-white'
               }`}
             >
@@ -195,7 +195,7 @@ export const ImageStudioView: React.FC = () => {
                   value={prompt}
                   onChange={(e) => setPrompt(e.target.value)}
                   rows={3}
-                  className="w-full resize-none rounded-xl border border-white/[0.08] bg-black/30 p-3 text-xs text-white outline-none focus:border-[#8bd132]/40"
+                  className="w-full resize-none rounded-xl border border-white/[0.08] bg-black/30 p-3 text-xs text-white outline-none focus:border-[#ff5c5c]/40"
                 />
               </div>
 
@@ -215,7 +215,7 @@ export const ImageStudioView: React.FC = () => {
                       onClick={() => setAspectRatio(ratio as any)}
                       className={`py-2 px-1 text-[9px] font-bold rounded-lg border text-center transition ${
                         aspectRatio === ratio
-                          ? 'border-[#8bd132] bg-[#8bd132]/10 text-[#8bd132]'
+                          ? 'border-[#ff5c5c] bg-[#ff5c5c]/10 text-[#ff5c5c]'
                           : 'border-white/[0.08] bg-black/20 text-[#8e989d] hover:text-white'
                       }`}
                     >
@@ -228,7 +228,7 @@ export const ImageStudioView: React.FC = () => {
               <button
                 onClick={handleGenerateImage}
                 disabled={isGenerating}
-                className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#8bd132] py-3 text-xs font-bold text-[#14200e] hover:bg-[#9be24d] transition shadow-lg shadow-[#8bd132]/20 disabled:opacity-50"
+                className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#ff5c5c] py-3 text-xs font-bold text-[#14200e] hover:bg-[#9be24d] transition shadow-lg shadow-[#ff5c5c]/20 disabled:opacity-50"
               >
                 {isGenerating ? <RefreshCw className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4" />}
                 {isGenerating ? 'Gerando Imagem...' : 'Gerar Imagem com IA'}
@@ -239,7 +239,7 @@ export const ImageStudioView: React.FC = () => {
           {/* Mode 2: AI Image Editing Actions */}
           {activeTool === 'edit_ia' && (
             <div className="space-y-3">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-[#8bd132]">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-[#ff5c5c]">
                 Ferramentas Especializadas de Edição IA
               </span>
 
@@ -249,10 +249,10 @@ export const ImageStudioView: React.FC = () => {
                     key={id}
                     onClick={() => handleExecuteAIEdit(id, label)}
                     disabled={editingAction === id}
-                    className="flex flex-col items-start p-3 rounded-xl border border-white/[0.07] bg-black/20 hover:border-[#8bd132]/40 hover:bg-[#8bd132]/[0.05] transition text-left group"
+                    className="flex flex-col items-start p-3 rounded-xl border border-white/[0.07] bg-black/20 hover:border-[#ff5c5c]/40 hover:bg-[#ff5c5c]/[0.05] transition text-left group"
                   >
                     <div className="flex items-center gap-2">
-                      <Icon className="h-3.5 w-3.5 text-[#8bd132] group-hover:scale-110 transition-transform" />
+                      <Icon className="h-3.5 w-3.5 text-[#ff5c5c] group-hover:scale-110 transition-transform" />
                       <span className="text-[10px] font-bold text-white">{label}</span>
                     </div>
                     <span className="mt-1 text-[8px] text-[#78848a] line-clamp-2">{description}</span>
@@ -272,7 +272,7 @@ export const ImageStudioView: React.FC = () => {
                 <input
                   value={overlayText}
                   onChange={(e) => setOverlayText(e.target.value)}
-                  className="w-full rounded-xl border border-white/[0.08] bg-black/30 p-2.5 text-xs text-white outline-none focus:border-[#8bd132]/40"
+                  className="w-full rounded-xl border border-white/[0.08] bg-black/30 p-2.5 text-xs text-white outline-none focus:border-[#ff5c5c]/40"
                 />
               </div>
 
@@ -281,7 +281,7 @@ export const ImageStudioView: React.FC = () => {
                   Cor do Texto
                 </label>
                 <div className="flex items-center gap-2">
-                  {['#FFFFFF', '#8BD132', '#38BDF8', '#F59E0B', '#EF4444'].map((color) => (
+                  {['#FFFFFF', '#FF5C5C', '#38BDF8', '#F59E0B', '#EF4444'].map((color) => (
                     <button
                       key={color}
                       onClick={() => setTextColor(color)}
@@ -297,7 +297,7 @@ export const ImageStudioView: React.FC = () => {
           )}
 
           {statusMessage && (
-            <div className="rounded-xl border border-[#8bd132]/20 bg-[#8bd132]/[0.06] p-3 text-[10px] font-semibold text-[#8bd132] flex items-center gap-2">
+            <div className="rounded-xl border border-[#ff5c5c]/20 bg-[#ff5c5c]/[0.06] p-3 text-[10px] font-semibold text-[#ff5c5c] flex items-center gap-2">
               <Sparkles className="h-3.5 w-3.5 shrink-0" />
               <span>{statusMessage}</span>
             </div>

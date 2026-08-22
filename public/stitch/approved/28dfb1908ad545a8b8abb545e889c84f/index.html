@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Team Access Room V5 - Clicko Precision</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {"surface-container-high": "#2a2a2a", "surface-tint": "#ffb3af", surface: "#131313", "on-secondary-fixed": "#321200", "inverse-surface": "#e5e2e1", "on-primary-fixed-variant": "#920418", "on-primary-container": "#62000c", "surface-bright": "#393939", "tertiary-fixed-dim": "#ffb3b1", "tertiary-container": "#e17474", "surface-container": "#201f1f", "primary-container": "#ff5c5c", "secondary-fixed-dim": "#ffb68b", "inverse-on-surface": "#313030", "on-tertiary-fixed": "#410007", "on-tertiary-container": "#5c0e15", "on-tertiary-fixed-variant": "#7f292c", "primary-fixed": "#ffdad7", "on-primary-fixed": "#410005", "on-surface": "#e5e2e1", "surface-container-low": "#1c1b1b", "surface-dim": "#131313", error: "#ffb4ab", "error-container": "#93000a", primary: "#ffb3af", secondary: "#ffb68b", tertiary: "#ffb3b1", "on-background": "#e5e2e1", outline: "#a98987", "secondary-container": "#ff7f1c", "on-error-container": "#ffdad6", "on-secondary-fixed-variant": "#753400", background: "#131313", "on-surface-variant": "#e2bebc", "outline-variant": "#5a403f", "tertiary-fixed": "#ffdad8", "secondary-fixed": "#ffdbc8", "on-error": "#690005", "on-primary": "#68000d", "surface-container-highest": "#353534", "on-tertiary": "#601118", "surface-variant": "#353534", "inverse-primary": "#b4252d", "on-secondary-container": "#602a00", "surface-container-lowest": "#0e0e0e", "primary-fixed-dim": "#ffb3af", "on-secondary": "#522300"}, borderRadius: {DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem"}, spacing: {"container-max": "1440px", "margin-desktop": "32px", "margin-mobile": "16px", gutter: "16px", unit: "4px"}, fontFamily: {"body-lg": ["Geist"], display: ["Geist"], "label-md": ["Geist"], "headline-lg": ["Geist"], "body-md": ["Geist"], code: ["Geist"], "headline-md": ["Geist"], headline: ["Geist"], body: ["Geist"], label: ["Geist"]}, fontSize: {"body-lg": ["16px", {lineHeight: "1.5", fontWeight: "400"}], display: ["32px", {lineHeight: "1.2", letterSpacing: "-0.02em", fontWeight: "600"}], "label-md": ["12px", {lineHeight: "1", letterSpacing: "0.02em", fontWeight: "500"}], "headline-lg": ["24px", {lineHeight: "1.3", fontWeight: "600"}], "body-md": ["14px", {lineHeight: "1.5", fontWeight: "400"}], code: ["13px", {lineHeight: "1.4", fontWeight: "400"}], "headline-md": ["20px", {lineHeight: "1.4", fontWeight: "500"}]}}}};</script>
+</head>
+<body class="bg-background text-on-surface font-body-md min-h-screen flex flex-col antialiased selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopAppBar -->
+<header class="bg-surface-container-lowest dark:bg-surface-container-lowest flex justify-between items-center px-margin-desktop w-full h-16 border-b border-outline-variant dark:border-outline-variant docked full-width top-0 z-50">
+<div class="flex items-center gap-8">
+<h1 class="font-headline-lg text-headline-lg font-bold text-on-surface dark:text-on-surface tracking-tighter">Clicko Precision</h1>
+<nav class="hidden md:flex gap-6 pt-4 h-full items-end">
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-on-surface-variant pb-4 hover:text-primary transition-colors duration-200" href="#">Newsroom</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-on-surface-variant pb-4 hover:text-primary transition-colors duration-200" href="#">Radar Room</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-on-surface-variant pb-4 hover:text-primary transition-colors duration-200" href="#">Brand Memory</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-on-surface-variant pb-4 hover:text-primary transition-colors duration-200" href="#">Campaign Intake</a>
+<a class="font-label-md text-label-md text-primary dark:text-primary border-b-2 border-primary pb-4 opacity-80 transition-opacity" href="#">Campaign Room</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden md:flex gap-2">
+<button class="text-on-surface-variant hover:text-primary transition-colors duration-200 flex items-center justify-center p-2 rounded-full hover:bg-surface-container-high">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors duration-200 flex items-center justify-center p-2 rounded-full hover:bg-surface-container-high relative">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-primary rounded-full"></span>
+</button>
+</div>
+<button class="bg-primary-container text-on-primary-container font-label-md text-label-md px-4 py-2 rounded-DEFAULT hover:bg-primary transition-colors duration-200 hidden sm:block">
+                New Workspace
+            </button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant cursor-pointer">
+<img alt="User profile" class="w-full h-full object-cover" data-alt="Close-up portrait of a professional software engineer in a dimly lit studio setting. The lighting is cinematic, highlighting sharp facial features against a dark, matte background. The image has a highly technical, corporate yet modern vibe, fitting seamlessly into an industrial minimalist UI." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1U-lXJ8s1GsLkR1iXmxgjkyXGyAtymygyqVBWUNfrM3cfqYFRzQV5mywjIEjqJgvGxgmas17r-5WXoz1xJPUqDBvSQLKSRt5M8tnAWtMoaUkhC5BhBbaXpskNP6PCygeEPMQ8ZSjx3GDySFgIa6KZelaKARbkYsLFViaolBToJ63iKFvp0IvRsl67tLa68fRv3BZLU89KgPX2sj4jxPESj2lkf127hFB9vtSD07TMHC81lhpaXQstcA"/>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow w-full max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-8 flex flex-col gap-8">
+<!-- Page Header & Actions -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 border-b border-outline-variant pb-6">
+<div>
+<h2 class="font-display text-display text-on-surface">Team Access Room V5</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2 max-w-2xl">
+                    Gerenciamento avançado de permissões, escopos de workspace e fluxos operacionais para a equipe Clicko Precision.
+                </p>
+</div>
+<div class="flex gap-4 w-full md:w-auto">
+<button class="flex-1 md:flex-none flex items-center justify-center gap-2 border border-outline text-on-surface px-4 py-2 rounded-DEFAULT hover:border-primary hover:text-primary transition-colors font-label-md text-label-md">
+<span class="material-symbols-outlined text-[18px]">rule</span>
+                    Approval Flows
+                </button>
+<button class="flex-1 md:flex-none flex items-center justify-center gap-2 bg-[#00612e] text-[#62ff96] px-4 py-2 rounded-DEFAULT hover:bg-primary-container hover:text-on-primary-container transition-colors font-label-md text-label-md">
+<span class="material-symbols-outlined text-[18px]">person_add</span>
+                    Invite Member
+                </button>
+</div>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Invite Widget (Span 4) -->
+<div class="lg:col-span-4 bg-surface-container-low border border-outline-variant rounded-lg p-6 flex flex-col gap-6">
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">mail</span>
+                        New Invitation
+                    </h3>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Configure o acesso antes de convidar.</p>
+</div>
+<div class="flex flex-col gap-4">
+<div class="flex flex-col gap-1 relative group">
+<label class="font-label-md text-label-md text-on-surface-variant">Email Address</label>
+<input class="bg-[#181B1D] border border-outline-variant rounded-DEFAULT px-3 py-2 text-on-surface font-body-md focus:outline-none focus:border-primary transition-colors w-full placeholder:text-on-surface-variant/50" placeholder="colleague@clicko.com" type="email"/>
+</div>
+<div class="flex flex-col gap-1 relative group">
+<label class="font-label-md text-label-md text-on-surface-variant">Global Role</label>
+<select class="bg-[#181B1D] border border-outline-variant rounded-DEFAULT px-3 py-2 text-on-surface font-body-md focus:outline-none focus:border-primary transition-colors w-full appearance-none">
+<option value="viewer">Viewer (Read-only)</option>
+<option value="editor">Editor</option>
+<option value="strategist">Strategist</option>
+<option value="admin">Administrator</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-[26px] text-on-surface-variant pointer-events-none">expand_more</span>
+</div>
+<div class="flex flex-col gap-2 mt-2 border-t border-outline-variant pt-4">
+<label class="font-label-md text-label-md text-on-surface-variant mb-1">Required Approval Flux</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="w-4 h-4 bg-[#181B1D] border-outline-variant text-primary rounded-sm focus:ring-primary focus:ring-offset-background" type="checkbox"/>
+<span class="font-body-md text-body-md text-on-surface group-hover:text-primary transition-colors">Campaign Launches</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="w-4 h-4 bg-[#181B1D] border-outline-variant text-primary rounded-sm focus:ring-primary focus:ring-offset-background" type="checkbox"/>
+<span class="font-body-md text-body-md text-on-surface group-hover:text-primary transition-colors">Budget Modifications</span>
+</label>
+</div>
+</div>
+<button class="mt-auto w-full flex items-center justify-center gap-2 border border-outline-variant text-on-surface px-4 py-2 rounded-DEFAULT hover:border-primary hover:text-primary transition-colors font-label-md text-label-md">
+                    Generate Link
+                </button>
+</div>
+<!-- Main Data Table (Span 8) -->
+<div class="lg:col-span-8 bg-surface-container-low border border-outline-variant rounded-lg overflow-hidden flex flex-col">
+<div class="p-4 border-b border-outline-variant flex justify-between items-center bg-[#181B1D]">
+<h3 class="font-headline-md text-headline-md text-on-surface">Active Members</h3>
+<div class="relative w-64">
+<span class="material-symbols-outlined absolute left-3 top-2 text-on-surface-variant">search</span>
+<input class="bg-surface-container border border-outline-variant rounded-DEFAULT pl-10 pr-3 py-1.5 text-on-surface font-body-md focus:outline-none focus:border-primary transition-colors w-full text-sm" placeholder="Search members..." type="text"/>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-outline-variant bg-surface-container-highest">
+<th class="p-3 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Member</th>
+<th class="p-3 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Role</th>
+<th class="p-3 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Workspace Scopes</th>
+<th class="p-3 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Status</th>
+<th class="p-3 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="font-code text-code text-on-surface">
+<!-- Row 1 -->
+<tr class="border-b border-outline-variant hover:bg-[#1E1E1E] transition-colors group">
+<td class="p-3 flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center font-bold text-primary text-xs">EK</div>
+<div>
+<div class="font-medium">Elena K.</div>
+<div class="text-on-surface-variant text-xs font-body-md">elena@clicko.com</div>
+</div>
+</td>
+<td class="p-3">
+<span class="inline-block px-2 py-1 rounded bg-[#005226] text-[#75ff9e] text-xs font-label-md">Admin</span>
+</td>
+<td class="p-3 text-on-surface-variant">Global</td>
+<td class="p-3">
+<div class="flex items-center gap-2">
+<div class="w-1.5 h-1.5 rounded-full bg-primary"></div>
+<span class="text-xs">Active</span>
+</div>
+</td>
+<td class="p-3 text-right">
+<button class="text-on-surface-variant hover:text-primary transition-colors opacity-0 group-hover:opacity-100"><span class="material-symbols-outlined text-[20px]">more_vert</span></button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="border-b border-outline-variant hover:bg-[#1E1E1E] transition-colors group">
+<td class="p-3 flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center font-bold text-on-surface text-xs">MJ</div>
+<div>
+<div class="font-medium">Marcus J.</div>
+<div class="text-on-surface-variant text-xs font-body-md">marcus@clicko.com</div>
+</div>
+</td>
+<td class="p-3">
+<span class="inline-block px-2 py-1 rounded bg-surface-container-highest text-on-surface text-xs font-label-md border border-outline-variant">Strategist</span>
+</td>
+<td class="p-3">
+<div class="flex flex-wrap gap-1">
+<span class="px-1.5 py-0.5 bg-surface border border-outline-variant rounded text-[10px] text-on-surface-variant">Q4 Campaign</span>
+<span class="px-1.5 py-0.5 bg-surface border border-outline-variant rounded text-[10px] text-on-surface-variant">Brand Mem</span>
+</div>
+</td>
+<td class="p-3">
+<div class="flex items-center gap-2">
+<div class="w-1.5 h-1.5 rounded-full bg-primary"></div>
+<span class="text-xs">Active</span>
+</div>
+</td>
+<td class="p-3 text-right">
+<button class="text-on-surface-variant hover:text-primary transition-colors opacity-0 group-hover:opacity-100"><span class="material-symbols-outlined text-[20px]">more_vert</span></button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="border-b border-outline-variant hover:bg-[#1E1E1E] transition-colors group">
+<td class="p-3 flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center font-bold text-on-surface text-xs">ST</div>
+<div>
+<div class="font-medium">Sarah T.</div>
+<div class="text-on-surface-variant text-xs font-body-md">sarah@clicko.com</div>
+</div>
+</td>
+<td class="p-3">
+<span class="inline-block px-2 py-1 rounded bg-surface-container-highest text-on-surface text-xs font-label-md border border-outline-variant">Editor</span>
+</td>
+<td class="p-3">
+<div class="flex flex-wrap gap-1">
+<span class="px-1.5 py-0.5 bg-surface border border-outline-variant rounded text-[10px] text-on-surface-variant">Newsroom</span>
+</div>
+</td>
+<td class="p-3">
+<div class="flex items-center gap-2">
+<div class="w-1.5 h-1.5 rounded-full bg-zinc-600"></div>
+<span class="text-xs text-on-surface-variant">Offline</span>
+</div>
+</td>
+<td class="p-3 text-right">
+<button class="text-on-surface-variant hover:text-primary transition-colors opacity-0 group-hover:opacity-100"><span class="material-symbols-outlined text-[20px]">more_vert</span></button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-[#1E1E1E] transition-colors group">
+<td class="p-3 flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center font-bold text-on-surface text-xs">RW</div>
+<div>
+<div class="font-medium opacity-50">Robert W.</div>
+<div class="text-on-surface-variant text-xs font-body-md opacity-50">robert@client.com</div>
+</div>
+</td>
+<td class="p-3">
+<span class="inline-block px-2 py-1 rounded bg-surface-container-highest text-on-surface-variant text-xs font-label-md border border-outline-variant border-dashed">Viewer</span>
+</td>
+<td class="p-3 text-on-surface-variant text-xs italic">Pending Invite</td>
+<td class="p-3">
+<div class="flex items-center gap-2">
+<div class="w-1.5 h-1.5 rounded-full bg-secondary-container"></div>
+<span class="text-xs text-on-surface-variant">Pending</span>
+</div>
+</td>
+<td class="p-3 text-right">
+<button class="text-on-surface-variant hover:text-primary transition-colors opacity-0 group-hover:opacity-100"><span class="material-symbols-outlined text-[20px]">more_vert</span></button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-low dark:bg-surface-container-low flex justify-between items-center px-margin-desktop py-4 w-full full-width bottom border-t border-outline-variant dark:border-outline-variant mt-auto">
+<p class="font-label-md text-label-md text-on-surface-variant dark:text-on-surface-variant">© 2024 Clicko Precision. Operational Governance System.</p>
+<div class="flex gap-6">
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-on-surface-variant hover:text-on-surface transition-colors" href="#">Documentation</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-on-surface-variant hover:text-on-surface transition-colors" href="#">Support</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-on-surface-variant hover:text-on-surface transition-colors" href="#">System Status</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-on-surface-variant hover:text-on-surface transition-colors" href="#">Security</a>
+</div>
+</footer>
+<script src="/stitch/bridge.js"></script></body></html>

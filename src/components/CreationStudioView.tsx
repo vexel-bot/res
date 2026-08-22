@@ -211,7 +211,7 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
       <div className="clicko-studio-actionbar flex flex-col justify-between gap-4 border-b border-white/[0.06] pb-5 md:flex-row md:items-center">
         <div>
           <div className="flex items-center gap-2">
-            <PenTool className="w-5 h-5 text-[#8bd132]" />
+            <PenTool className="w-5 h-5 text-[#ff5c5c]" />
             <h2 className="text-xl font-bold tracking-tight text-white">
               {isPersonal ? 'Estúdio de Criação Pessoal' : 'Estúdio de Criação Universal'}
             </h2>
@@ -237,7 +237,7 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
               <button
                 type="button"
                 onClick={() => handleSaveDraft('published')}
-                className="rounded-lg bg-[#8bd132] px-4 py-2 text-xs font-semibold text-[#080e05] transition-colors hover:bg-[#9be24d]"
+                className="rounded-lg bg-[#ff5c5c] px-4 py-2 text-xs font-semibold text-[#080e05] transition-colors hover:bg-[#9be24d]"
               >
                 Publicar Imediatamente
               </button>
@@ -262,7 +262,7 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
               <button
                 type="button"
                 onClick={() => handleSaveDraft('published')}
-                className="rounded-lg bg-[#8bd132] px-4 py-2 text-xs font-semibold text-[#080e05] transition-colors hover:bg-[#9be24d]"
+                className="rounded-lg bg-[#ff5c5c] px-4 py-2 text-xs font-semibold text-[#080e05] transition-colors hover:bg-[#9be24d]"
               >
                 Publicar Imediatamente
               </button>
@@ -281,7 +281,7 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
       <div className="rounded-xl border border-white/[0.06] bg-[#101316] p-3.5">
         <div className="mb-2.5 flex items-center justify-between">
           <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#6c7880]">Ferramentas de Redação</span>
-          <span className="text-[10px] font-mono font-bold text-[#8bd132]">Biblioteca de Prompts Conectada</span>
+          <span className="text-[10px] font-mono font-bold text-[#ff5c5c]">Biblioteca de Prompts Conectada</span>
         </div>
         <div className="flex gap-2 overflow-x-auto custom-scrollbar pb-1">
           {[
@@ -308,7 +308,7 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
               }}
               className={`shrink-0 rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${
                 copyTool === tool
-                  ? 'bg-[#8bd132] font-semibold text-[#080e05]'
+                  ? 'bg-[#ff5c5c] font-semibold text-[#080e05]'
                   : 'border border-white/[0.06] bg-white/[0.02] text-[#8e9aa2] hover:bg-white/[0.06] hover:text-white'
               }`}
             >
@@ -329,7 +329,7 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
             }}
             className={`shrink-0 rounded-lg px-3.5 py-2 text-xs font-medium transition-colors ${
               selectedFormat === f.id
-                ? 'border border-[#8bd132] bg-[#8bd132] font-semibold text-[#0e170a]'
+                ? 'border border-[#ff5c5c] bg-[#ff5c5c] font-semibold text-[#0e170a]'
                 : 'bg-[#0d1216] text-[#8e989e] hover:text-white border border-white/[0.06]'
             }`}
           >
@@ -351,12 +351,12 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
         <div className="space-y-4 rounded-xl border border-white/[0.06] bg-[#101316] p-4">
           <div className="flex items-center justify-between border-b border-white/[0.06] pb-3">
             <span className="text-xs font-bold text-white flex items-center gap-1.5">
-              <Sparkles className="w-4 h-4 text-[#8bd132]" /> Redação com IA e parâmetros
+              <Sparkles className="w-4 h-4 text-[#ff5c5c]" /> Redação com IA e parâmetros
             </span>
             <button
               onClick={() => handleGenerateAICopy()}
               disabled={isGenerating}
-              className="flex items-center gap-1.5 rounded-lg bg-[#8bd132] px-3.5 py-1.5 text-xs font-semibold text-[#0b1208] transition-colors hover:bg-[#9be24d] disabled:opacity-50"
+              className="flex items-center gap-1.5 rounded-lg bg-[#ff5c5c] px-3.5 py-1.5 text-xs font-semibold text-[#0b1208] transition-colors hover:bg-[#9be24d] disabled:opacity-50"
             >
               {isGenerating ? (
                 <>
@@ -377,7 +377,7 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
                 type="text"
                 value={postTitle}
                 onChange={(e) => setPostTitle(e.target.value)}
-                className="w-full bg-[#070a0d] border border-white/[0.08] rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-[#8bd132] focus:ring-1 focus:ring-[#8bd132] transition"
+                className="w-full bg-[#070a0d] border border-white/[0.08] rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-[#ff5c5c] focus:ring-1 focus:ring-[#ff5c5c] transition"
               />
             </div>
 
@@ -387,7 +387,7 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
                 value={topicPrompt}
                 onChange={(e) => setTopicPrompt(e.target.value)}
                 rows={2}
-                className="w-full bg-[#070a0d] border border-white/[0.08] rounded-xl p-3 text-xs text-white focus:outline-none focus:border-[#8bd132] focus:ring-1 focus:ring-[#8bd132] resize-none transition"
+                className="w-full bg-[#070a0d] border border-white/[0.08] rounded-xl p-3 text-xs text-white focus:outline-none focus:border-[#ff5c5c] focus:ring-1 focus:ring-[#ff5c5c] resize-none transition"
                 placeholder="Descreva o objetivo do conteúdo..."
               />
             </div>
@@ -399,7 +399,7 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
                   type="text"
                   value={tone}
                   onChange={(e) => setTone(e.target.value)}
-                  className="w-full bg-[#070a0d] border border-white/[0.08] rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-[#8bd132] transition"
+                  className="w-full bg-[#070a0d] border border-white/[0.08] rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-[#ff5c5c] transition"
                 />
               </div>
 
@@ -408,7 +408,7 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
                 <select
                   value={selectedPlatform}
                   onChange={(e) => setSelectedPlatform(e.target.value as SocialPlatform)}
-                  className="w-full bg-[#070a0d] border border-white/[0.08] rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-[#8bd132] transition"
+                  className="w-full bg-[#070a0d] border border-white/[0.08] rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-[#ff5c5c] transition"
                 >
                   <option value="instagram">Instagram</option>
                   <option value="linkedin">LinkedIn</option>
@@ -427,7 +427,7 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
                 value={copyText}
                 onChange={(e) => setCopyText(e.target.value)}
                 rows={6}
-                className="w-full bg-[#070a0d] border border-white/[0.08] rounded-xl p-3 text-xs text-white focus:outline-none focus:border-[#8bd132] font-sans leading-relaxed resize-y transition"
+                className="w-full bg-[#070a0d] border border-white/[0.08] rounded-xl p-3 text-xs text-white focus:outline-none focus:border-[#ff5c5c] font-sans leading-relaxed resize-y transition"
               />
             </div>
 

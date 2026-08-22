@@ -1,47 +1,5 @@
 @import "tailwindcss";
-
-:root {
-  --clicko-accent: #8bd132;
-  --clicko-accent-hover: #98dc45;
-  --clicko-accent-fill: #8bd132;
-  --clicko-accent-fill-hover: #98dc45;
-  --clicko-radius-sm: 7px;
-  --clicko-radius-md: 10px;
-  --clicko-radius-lg: 12px;
-  --clicko-transition: 150ms cubic-bezier(0.2, 0, 0, 1);
-}
-
-[data-theme="dark"] {
-  color-scheme: dark;
-  --clicko-bg: #0a0c0e;
-  --clicko-surface-0: #0d1012;
-  --clicko-surface-1: #111517;
-  --clicko-surface-2: #151a1d;
-  --clicko-surface-3: #1a2023;
-  --clicko-border: rgba(255, 255, 255, 0.075);
-  --clicko-border-strong: rgba(255, 255, 255, 0.12);
-  --clicko-text: #edf0f1;
-  --clicko-text-secondary: #a0a9ad;
-  --clicko-text-muted: #78858a;
-  --clicko-control: #0f1315;
-}
-
-[data-theme="light"] {
-  color-scheme: light;
-  --clicko-accent: #477713;
-  --clicko-accent-hover: #3f6e0f;
-  --clicko-bg: #f5f5f2;
-  --clicko-surface-0: #fafaf7;
-  --clicko-surface-1: #ffffff;
-  --clicko-surface-2: #f0f2ef;
-  --clicko-surface-3: #e8ebe7;
-  --clicko-border: rgba(18, 24, 21, 0.1);
-  --clicko-border-strong: rgba(18, 24, 21, 0.16);
-  --clicko-text: #171a18;
-  --clicko-text-secondary: #515955;
-  --clicko-text-muted: #707975;
-  --clicko-control: #ffffff;
-}
+@import "./design-system/tokens.css";
 
 @layer base {
   * {
@@ -57,7 +15,7 @@
     min-width: 320px;
     background-color: #080a0c;
     color: #e2e8ec;
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-family: var(--clicko-font-sans);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -71,6 +29,13 @@
   select,
   textarea {
     font: inherit;
+  }
+
+  code,
+  kbd,
+  samp,
+  .font-mono {
+    font-family: var(--clicko-font-mono);
   }
 }
 
@@ -228,6 +193,191 @@
   }
 }
 
+/* Unified Stitch work: every product surface shares the same precision shell.
+   The dashboard keeps its operational information, not its former visual shell. */
+.clicko-unified-shell {
+  --stitch-canvas: #101010;
+  --stitch-panel: #171616;
+  --stitch-panel-raised: #1d1b1b;
+  --stitch-border: rgba(240, 160, 160, 0.26);
+  --stitch-border-soft: rgba(240, 160, 160, 0.14);
+  --stitch-accent: #ffb5b5;
+  --stitch-accent-strong: #ff9ea3;
+  --clicko-action: #ffb5b5;
+  --clicko-action-hover: #ffcaca;
+  --clicko-action-active: #ff9ea3;
+  --clicko-creative: #ff9ea3;
+  --clicko-creative-hover: #ffb5b5;
+  background: var(--stitch-canvas);
+}
+
+.clicko-unified-shell .clicko-main-stage {
+  position: relative;
+  min-height: calc(100vh - 48px);
+  background:
+    linear-gradient(rgba(240, 160, 160, 0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(240, 160, 160, 0.014) 1px, transparent 1px),
+    var(--stitch-canvas);
+  background-size: 36px 36px;
+}
+
+.clicko-unified-shell .clicko-main-stage::before {
+  content: none;
+}
+
+.clicko-unified-shell .clicko-product-surface,
+.clicko-unified-shell .clicko-dashboard-editorial {
+  width: 100%;
+  max-width: none;
+  padding: 14px !important;
+}
+
+.clicko-unified-shell .clicko-main-stage [class*="rounded"] {
+  border-radius: 2px !important;
+}
+
+.clicko-unified-shell .clicko-main-stage :is(section, article, aside, header)[class*="border"] {
+  border-color: var(--stitch-border-soft) !important;
+  box-shadow: none !important;
+}
+
+.clicko-unified-shell .clicko-dashboard-editorial::before,
+.clicko-unified-shell .clicko-dashboard-hero::before,
+.clicko-unified-shell .clicko-dashboard-command::after {
+  content: none !important;
+}
+
+.clicko-unified-shell .clicko-dashboard-hero {
+  display: flex !important;
+  align-items: flex-end !important;
+  justify-content: space-between !important;
+  min-height: 0;
+  margin: 0;
+  border: 1px solid var(--stitch-border) !important;
+  border-radius: 2px !important;
+  padding: 13px 15px !important;
+  background: rgba(20, 19, 19, 0.96) !important;
+  text-align: left !important;
+}
+
+.clicko-unified-shell .clicko-dashboard-command {
+  grid-template-columns: 170px minmax(0, 1fr);
+  gap: 10px 14px;
+  margin-top: 10px;
+  border-color: var(--stitch-border) !important;
+  border-radius: 2px !important;
+  padding: 13px;
+  background: rgba(23, 22, 22, 0.96);
+  box-shadow: none;
+}
+
+.clicko-unified-shell .clicko-ai-command-field {
+  min-height: 40px;
+  border-color: var(--stitch-border) !important;
+  border-radius: 1px;
+  padding: 4px 5px 4px 9px;
+  background: #131212;
+  box-shadow: none;
+}
+
+.clicko-unified-shell .clicko-ai-command-icon {
+  width: 26px;
+  height: 26px;
+  border-radius: 1px;
+  background: rgba(255, 181, 181, 0.09);
+  color: var(--stitch-accent);
+}
+
+.clicko-unified-shell .clicko-ai-command-field button {
+  width: 30px;
+  height: 30px;
+  border-radius: 1px;
+  border-color: var(--stitch-border);
+  background: var(--stitch-accent);
+}
+
+.clicko-unified-shell .clicko-quick-actions {
+  gap: 6px;
+}
+
+.clicko-unified-shell .clicko-quick-action {
+  min-height: 48px;
+  border-color: var(--stitch-border-soft) !important;
+  border-radius: 1px;
+  padding: 7px 9px;
+  background: #141313;
+}
+
+.clicko-unified-shell .clicko-quick-action-icon {
+  width: 25px;
+  height: 25px;
+  border-radius: 1px;
+  border-color: var(--stitch-border-soft);
+  color: var(--stitch-accent);
+}
+
+.clicko-unified-shell .clicko-dashboard-metrics {
+  margin-top: 10px;
+  border: 1px solid var(--stitch-border) !important;
+  background: rgba(23, 22, 22, 0.96);
+  border-radius: 2px !important;
+}
+
+.clicko-unified-shell .clicko-metric-cell {
+  padding: 13px !important;
+  border-color: var(--stitch-border-soft) !important;
+}
+
+.clicko-unified-shell .clicko-metric-cell strong {
+  font-size: 25px !important;
+}
+
+.clicko-unified-shell .clicko-dashboard-body,
+.clicko-unified-shell .clicko-dashboard-insight,
+.clicko-unified-shell .clicko-dashboard-flow > div:last-child {
+  margin-top: 10px;
+  border: 1px solid var(--stitch-border) !important;
+  background: rgba(23, 22, 22, 0.96);
+  border-radius: 2px !important;
+}
+
+.clicko-unified-shell .clicko-dashboard-calendar,
+.clicko-unified-shell .clicko-dashboard-side,
+.clicko-unified-shell .clicko-dashboard-insight > div {
+  padding: 14px !important;
+  border-color: var(--stitch-border-soft) !important;
+}
+
+.clicko-unified-shell .clicko-dashboard-flow {
+  padding: 10px 0 0 !important;
+}
+
+.clicko-unified-shell .clicko-dashboard-flow > div:first-child {
+  padding: 0 2px;
+}
+
+.clicko-unified-shell .clicko-dashboard-editorial [class*="text-[#ff5c5c]"] {
+  color: var(--stitch-accent) !important;
+}
+
+.clicko-unified-shell .clicko-dashboard-editorial :is(.clicko-metric-detail, .clicko-home-overline, .clicko-home-action-text) {
+  color: var(--stitch-accent) !important;
+}
+
+.clicko-unified-shell .clicko-product-surface button[class*="bg-[var(--clicko-action)]"] {
+  background: var(--stitch-accent) !important;
+  color: #211010 !important;
+}
+
+@media (max-width: 820px) {
+  .clicko-unified-shell .clicko-dashboard-command {
+    grid-template-columns: 1fr;
+  }
+  .clicko-unified-shell .clicko-quick-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 @layer components {
   .vexel-card {
     border: 1px solid var(--clicko-border);
@@ -255,7 +405,7 @@
 
   /* Micro-glow border effect */
   .clicko-accent-glow {
-    box-shadow: 0 0 0 1px rgba(139, 209, 50, 0.2);
+    box-shadow: 0 0 0 1px rgba(255, 92, 92, 0.2);
   }
 
   /* Standardized Primary Button */
@@ -265,7 +415,7 @@
     justify-content: center;
     gap: 0.5rem;
     border-radius: var(--clicko-radius-md);
-    background-color: #8bd132;
+    background-color: #ff5c5c;
     padding: 0.5rem 1rem;
     font-size: 0.75rem;
     font-weight: 700;
@@ -326,8 +476,8 @@
 
   .input-vexel:focus {
     outline: none;
-    border-color: #8bd132;
-    box-shadow: 0 0 0 2px rgba(139, 209, 50, 0.2);
+    border-color: #ff5c5c;
+    box-shadow: 0 0 0 2px rgba(255, 92, 92, 0.2);
   }
 
   [data-theme="dark"] {
@@ -389,7 +539,7 @@
 
 /* Standardized focus and selection */
 ::selection {
-  background-color: rgba(139, 209, 50, 0.75);
+  background-color: rgba(255, 92, 92, 0.75);
   color: #14200e;
 }
 
@@ -585,18 +735,18 @@
   opacity: 0.48 !important;
 }
 
-.clicko-main-stage button[class*="bg-[#8bd132]"],
+.clicko-main-stage button[class*="bg-[#ff5c5c]"],
 .clicko-main-stage button[class*="bg-indigo"] {
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.12) inset, 0 8px 20px rgba(91, 145, 23, 0.08) !important;
 }
 
-.clicko-main-stage button[class*="bg-[#8bd132]"]:not(:disabled):hover,
+.clicko-main-stage button[class*="bg-[#ff5c5c]"]:not(:disabled):hover,
 .clicko-main-stage button[class*="bg-indigo"]:not(:disabled):hover {
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.18) inset, 0 10px 24px rgba(91, 145, 23, 0.13) !important;
   transform: translateY(-1px) !important;
 }
 
-.clicko-main-stage button[class*="bg-[#8bd132]"]:not(:disabled):active,
+.clicko-main-stage button[class*="bg-[#ff5c5c]"]:not(:disabled):active,
 .clicko-main-stage button[class*="bg-indigo"]:not(:disabled):active {
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.08) inset, 0 3px 9px rgba(91, 145, 23, 0.08) !important;
   transform: translateY(0) scale(0.985) !important;
@@ -771,7 +921,7 @@
 
 .clicko-studio-canvas :is(section, div)[class*="border"]:focus-within {
   border-color: color-mix(in srgb, var(--clicko-accent) 22%, var(--clicko-border)) !important;
-  box-shadow: 0 0 0 1px rgba(139, 209, 50, 0.035), 0 14px 36px rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 0 0 1px rgba(255, 92, 92, 0.035), 0 14px 36px rgba(0, 0, 0, 0.08) !important;
 }
 
 .clicko-studio-immersive nav button[aria-pressed="true"] {
@@ -786,7 +936,7 @@
 
 .clicko-studio-immersive > main {
   background:
-    radial-gradient(circle at 72% 18%, rgba(139, 209, 50, 0.022), transparent 28%),
+    radial-gradient(circle at 72% 18%, rgba(255, 92, 92, 0.022), transparent 28%),
     transparent;
 }
 
@@ -899,7 +1049,7 @@
 
 .clicko-chart:hover .clicko-chart-line {
   stroke-width: 2;
-  filter: drop-shadow(0 2px 4px rgba(139, 209, 50, 0.14));
+  filter: drop-shadow(0 2px 4px rgba(255, 92, 92, 0.14));
 }
 
 .clicko-chart:hover .clicko-chart-area {
@@ -975,6 +1125,101 @@
     animation-delay: 0ms !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+}
+
+/* Final Stitch cascade — intentionally last because index.css contains legacy
+   compatibility layers that otherwise restyle the unified product. */
+.clicko-unified-shell,
+.clicko-unified-shell .clicko-main-stage,
+.clicko-unified-shell .clicko-product-surface,
+.clicko-unified-shell .clicko-dashboard-editorial {
+  --clicko-action: #ffb5b5 !important;
+  --clicko-action-hover: #ffcaca !important;
+  --clicko-action-active: #ff9ea3 !important;
+  --clicko-creative: #ff9ea3 !important;
+  --clicko-creative-hover: #ffb5b5 !important;
+  --color-accent-coral: #ffb5b5 !important;
+  --color-accent-orange: #ff9ea3 !important;
+}
+
+.clicko-unified-shell .clicko-main-stage {
+  padding: 0 !important;
+  background:
+    linear-gradient(rgba(240, 160, 160, 0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(240, 160, 160, 0.014) 1px, transparent 1px),
+    #101010 !important;
+  background-size: 36px 36px !important;
+}
+
+.clicko-unified-shell .clicko-main-stage::before {
+  content: none !important;
+}
+
+.clicko-unified-shell .clicko-product-surface,
+.clicko-unified-shell .clicko-dashboard-editorial {
+  width: 100% !important;
+  max-width: none !important;
+  padding: 14px !important;
+}
+
+.clicko-unified-shell .clicko-main-stage [class*="rounded"] {
+  border-radius: 2px !important;
+}
+
+.clicko-unified-shell .clicko-dashboard-hero {
+  display: flex !important;
+  min-height: 0 !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+  gap: 8px !important;
+  margin: 0 !important;
+  border: 1px solid rgba(240, 160, 160, 0.26) !important;
+  border-radius: 2px !important;
+  padding: 13px 15px !important;
+  background: rgba(20, 19, 19, 0.96) !important;
+  text-align: left !important;
+}
+
+.clicko-unified-shell .clicko-dashboard-hero h1 {
+  font-size: 18px !important;
+  line-height: 1.2 !important;
+}
+
+.clicko-unified-shell .clicko-dashboard-command {
+  margin-top: 10px !important;
+  border-color: rgba(240, 160, 160, 0.26) !important;
+  border-radius: 2px !important;
+  padding: 13px !important;
+  background: rgba(23, 22, 22, 0.96) !important;
+  box-shadow: none !important;
+}
+
+.clicko-unified-shell .clicko-dashboard-metrics,
+.clicko-unified-shell .clicko-dashboard-body,
+.clicko-unified-shell .clicko-dashboard-insight,
+.clicko-unified-shell .clicko-dashboard-flow > div:last-child {
+  border-color: rgba(240, 160, 160, 0.26) !important;
+  border-radius: 2px !important;
+  background: rgba(23, 22, 22, 0.96) !important;
+  box-shadow: none !important;
+}
+
+.clicko-unified-shell .clicko-dashboard-editorial :is(
+  .clicko-metric-detail,
+  .clicko-home-overline,
+  .clicko-home-action-text,
+  [class*="text-[#ff5c5c]"]
+) {
+  color: #ffb5b5 !important;
+}
+
+@media (min-width: 768px) {
+  .clicko-unified-shell .clicko-dashboard-hero {
+    flex-direction: row !important;
+    align-items: flex-end !important;
+    justify-content: space-between !important;
   }
 }
 
@@ -1207,15 +1452,15 @@
   [class*="text-[#A"],
   [class*="text-[#b"],
   [class*="text-[#B"]
-):not([class*="text-[#8bd132]"]) {
+):not([class*="text-[#ff5c5c]"]) {
   color: var(--clicko-text-muted) !important;
 }
 
-[data-theme="light"] :is(.clicko-main-stage, .clicko-topbar) [class*="text-[#8bd132]"] {
+[data-theme="light"] :is(.clicko-main-stage, .clicko-topbar) [class*="text-[#ff5c5c]"] {
   color: var(--clicko-accent) !important;
 }
 
-[data-theme="light"] :is(.clicko-main-stage, .clicko-topbar) [class*="fill-[#8bd132]"] {
+[data-theme="light"] :is(.clicko-main-stage, .clicko-topbar) [class*="fill-[#ff5c5c]"] {
   fill: var(--clicko-accent) !important;
 }
 
@@ -1332,15 +1577,15 @@ body,
 
 body {
   background-image:
-    radial-gradient(circle at 78% -16%, rgba(139, 209, 50, 0.07), transparent 30%),
-    linear-gradient(135deg, color-mix(in srgb, var(--clicko-bg) 96%, #8bd132 4%), var(--clicko-bg) 55%);
+    radial-gradient(circle at 78% -16%, rgba(255, 92, 92, 0.07), transparent 30%),
+    linear-gradient(135deg, color-mix(in srgb, var(--clicko-bg) 96%, #ff5c5c 4%), var(--clicko-bg) 55%);
   font-family: "Segoe UI Variable", "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
 .clicko-app-shell {
   isolation: isolate;
   background:
-    radial-gradient(circle at 75% 0%, rgba(139, 209, 50, 0.045), transparent 32%),
+    radial-gradient(circle at 75% 0%, rgba(255, 92, 92, 0.045), transparent 32%),
     var(--clicko-bg);
 }
 
@@ -1365,7 +1610,7 @@ body {
   z-index: -1;
   inset: 0 0 0 var(--clicko-sidebar-expanded);
   background:
-    radial-gradient(ellipse at 58% 0%, rgba(139, 209, 50, 0.035), transparent 30%),
+    radial-gradient(ellipse at 58% 0%, rgba(255, 92, 92, 0.035), transparent 30%),
     linear-gradient(180deg, color-mix(in srgb, var(--clicko-surface-0) 42%, transparent), transparent 38%);
   content: "";
   pointer-events: none;
@@ -1429,7 +1674,7 @@ body {
   inset: 5px 7px;
   z-index: -1;
   border-radius: 7px;
-  background: radial-gradient(circle at left center, rgba(139, 209, 50, 0.08), transparent 70%);
+  background: radial-gradient(circle at left center, rgba(255, 92, 92, 0.08), transparent 70%);
   content: "";
   opacity: 0;
   transition: opacity var(--clicko-motion-state);
@@ -1446,14 +1691,14 @@ body {
 }
 
 .clicko-nav-item[aria-current="page"] {
-  border-color: rgba(139, 209, 50, 0.16);
-  background: linear-gradient(90deg, rgba(139, 209, 50, 0.105), rgba(255, 255, 255, 0.025)) !important;
+  border-color: rgba(255, 92, 92, 0.16);
+  background: linear-gradient(90deg, rgba(255, 92, 92, 0.105), rgba(255, 255, 255, 0.025)) !important;
   color: #f5f8f5 !important;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.035) !important;
 }
 
 .clicko-nav-active-indicator {
-  box-shadow: 0 0 10px rgba(139, 209, 50, 0.45);
+  box-shadow: 0 0 10px rgba(255, 92, 92, 0.45);
 }
 
 .clicko-topbar {
@@ -1506,7 +1751,7 @@ body {
   border-radius: var(--clicko-radius-panel);
   padding: 34px 36px !important;
   background:
-    radial-gradient(circle at 83% 20%, rgba(139, 209, 50, 0.105), transparent 25%),
+    radial-gradient(circle at 83% 20%, rgba(255, 92, 92, 0.105), transparent 25%),
     linear-gradient(125deg, color-mix(in srgb, var(--clicko-surface-2) 62%, transparent), color-mix(in srgb, var(--clicko-surface-0) 88%, transparent) 64%);
   box-shadow: var(--clicko-shadow-panel);
 }
@@ -1516,7 +1761,7 @@ body {
   inset: 0;
   background:
     linear-gradient(90deg, transparent 0 70%, rgba(255, 255, 255, 0.018) 70% 70.2%, transparent 70.2%),
-    radial-gradient(circle at 88% 26%, transparent 0 42px, rgba(139, 209, 50, 0.08) 43px 44px, transparent 45px);
+    radial-gradient(circle at 88% 26%, transparent 0 42px, rgba(255, 92, 92, 0.08) 43px 44px, transparent 45px);
   content: "";
   pointer-events: none;
 }
@@ -1555,7 +1800,7 @@ body {
   left: 24px;
   height: 2px;
   border-radius: 999px;
-  background: linear-gradient(90deg, rgba(139, 209, 50, 0.42), rgba(139, 209, 50, 0.04) 64%, transparent);
+  background: linear-gradient(90deg, rgba(255, 92, 92, 0.42), rgba(255, 92, 92, 0.04) 64%, transparent);
   content: "";
   opacity: 0.55;
 }
@@ -1581,7 +1826,7 @@ body {
   padding: 30px !important;
   border-color: var(--clicko-border) !important;
   background:
-    linear-gradient(180deg, rgba(139, 209, 50, 0.025), transparent 34%),
+    linear-gradient(180deg, rgba(255, 92, 92, 0.025), transparent 34%),
     color-mix(in srgb, var(--clicko-surface-1) 72%, transparent);
 }
 
@@ -1591,7 +1836,7 @@ body {
   border: 1px solid var(--clicko-border) !important;
   border-radius: var(--clicko-radius-panel);
   background:
-    radial-gradient(circle at 12% 20%, rgba(139, 209, 50, 0.075), transparent 27%),
+    radial-gradient(circle at 12% 20%, rgba(255, 92, 92, 0.075), transparent 27%),
     color-mix(in srgb, var(--clicko-surface-1) 72%, transparent);
   box-shadow: var(--clicko-shadow-panel);
 }
@@ -1638,7 +1883,7 @@ body {
   border: 1px solid var(--clicko-border);
   border-radius: var(--clicko-radius-panel);
   background:
-    radial-gradient(circle at 72% 8%, rgba(139, 209, 50, 0.055), transparent 25%),
+    radial-gradient(circle at 72% 8%, rgba(255, 92, 92, 0.055), transparent 25%),
     var(--clicko-surface-0) !important;
   box-shadow: var(--clicko-shadow-panel);
 }
@@ -1646,7 +1891,7 @@ body {
 .clicko-studio-sidebar {
   border-color: var(--clicko-border) !important;
   background:
-    linear-gradient(180deg, rgba(139, 209, 50, 0.035), transparent 26%),
+    linear-gradient(180deg, rgba(255, 92, 92, 0.035), transparent 26%),
     color-mix(in srgb, var(--clicko-surface-1) 86%, transparent);
 }
 
@@ -1656,8 +1901,8 @@ body {
 }
 
 .clicko-studio-immersive nav button[aria-pressed="true"] {
-  border-color: rgba(139, 209, 50, 0.2) !important;
-  background: linear-gradient(90deg, rgba(139, 209, 50, 0.12), rgba(255, 255, 255, 0.025)) !important;
+  border-color: rgba(255, 92, 92, 0.2) !important;
+  background: linear-gradient(90deg, rgba(255, 92, 92, 0.12), rgba(255, 255, 255, 0.025)) !important;
   box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.035) !important;
 }
 
@@ -1665,7 +1910,7 @@ body {
   min-height: 144px;
   border-color: var(--clicko-border) !important;
   background:
-    radial-gradient(circle at 88% 15%, rgba(139, 209, 50, 0.07), transparent 23%),
+    radial-gradient(circle at 88% 15%, rgba(255, 92, 92, 0.07), transparent 23%),
     linear-gradient(115deg, transparent, rgba(255, 255, 255, 0.012));
 }
 
@@ -1691,7 +1936,7 @@ body {
 
 .clicko-studio-canvas > div:focus-within {
   border-color: color-mix(in srgb, var(--clicko-accent) 22%, var(--clicko-border));
-  box-shadow: 0 18px 52px rgba(0, 0, 0, 0.17), 0 0 0 1px rgba(139, 209, 50, 0.04);
+  box-shadow: 0 18px 52px rgba(0, 0, 0, 0.17), 0 0 0 1px rgba(255, 92, 92, 0.04);
 }
 
 .clicko-main-stage :is(input:not([type="range"]), select, textarea) {
@@ -1704,9 +1949,9 @@ body {
   line-height: 1.6;
 }
 
-.clicko-main-stage button[class*="bg-[#8bd132]"],
+.clicko-main-stage button[class*="bg-[#ff5c5c]"],
 .clicko-main-stage button[class*="bg-indigo"] {
-  border: 1px solid rgba(139, 209, 50, 0.64) !important;
+  border: 1px solid rgba(255, 92, 92, 0.64) !important;
   background: linear-gradient(180deg, #98dc43, #83c72d) !important;
   color: #111a0c !important;
   box-shadow: 0 10px 24px rgba(83, 128, 27, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.42) !important;
@@ -2115,17 +2360,17 @@ body,
 }
 
 .clicko-chart-line,
-.clicko-app-shell [stroke="#8bd132"] {
+.clicko-app-shell [stroke="#ff5c5c"] {
   stroke: #dedede !important;
   filter: none !important;
 }
 
 .clicko-chart-point,
-.clicko-app-shell [fill="#8bd132"] {
+.clicko-app-shell [fill="#ff5c5c"] {
   fill: var(--clicko-white) !important;
 }
 
-.clicko-app-shell [class*="fill-[#8bd132]"],
+.clicko-app-shell [class*="fill-[#ff5c5c]"],
 .clicko-app-shell [class*="fill-indigo"],
 .clicko-app-shell [class*="fill-purple"],
 .clicko-app-shell [class*="fill-blue"],
@@ -2137,7 +2382,7 @@ body,
   fill: rgba(255, 255, 255, 0.055) !important;
 }
 
-.clicko-main-stage button[class*="bg-[#8bd132]"],
+.clicko-main-stage button[class*="bg-[#ff5c5c]"],
 .clicko-main-stage button[class*="bg-indigo"] {
   border-color: #d8d8d8 !important;
   background: linear-gradient(180deg, #ffffff, #dedede) !important;
@@ -2145,7 +2390,7 @@ body,
   box-shadow: 0 10px 24px rgba(0, 0, 0, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.75) !important;
 }
 
-.clicko-main-stage button[class*="bg-[#8bd132]"]:hover,
+.clicko-main-stage button[class*="bg-[#ff5c5c]"]:hover,
 .clicko-main-stage button[class*="bg-indigo"]:hover {
   border-color: var(--clicko-white) !important;
   background: var(--clicko-white) !important;
@@ -2172,7 +2417,7 @@ body,
   background-color: var(--clicko-surface-hover) !important;
 }
 
-.clicko-app-shell [class*="text-[#8bd132]"],
+.clicko-app-shell [class*="text-[#ff5c5c]"],
 .clicko-app-shell [class*="text-[#9be24d]"],
 .clicko-app-shell [class*="text-lime"],
 .clicko-app-shell [class*="text-indigo"],
@@ -2232,7 +2477,7 @@ body,
   color: inherit !important;
 }
 
-.clicko-app-shell [class*="border-[#8bd132]"],
+.clicko-app-shell [class*="border-[#ff5c5c]"],
 .clicko-app-shell [class*="border-lime"],
 .clicko-app-shell [class*="border-indigo"],
 .clicko-app-shell [class*="border-purple"],
@@ -2244,22 +2489,22 @@ body,
 }
 
 .clicko-app-shell :is(
-  [class~="bg-[#8bd132]"],
-  [class~="bg-[#8bd132]/10"],
-  [class~="bg-[#8bd132]/15"],
-  [class~="bg-[#8bd132]/20"],
-  [class~="bg-[#8bd132]/30"],
-  [class~="bg-[#8bd132]/[0.02]"],
-  [class~="bg-[#8bd132]/[0.05]"],
-  [class~="bg-[#8bd132]/[0.055]"],
-  [class~="bg-[#8bd132]/[0.06]"],
-  [class~="bg-[#8bd132]/[0.07]"],
-  [class~="bg-[#8bd132]/[0.08]"]
+  [class~="bg-[#ff5c5c]"],
+  [class~="bg-[#ff5c5c]/10"],
+  [class~="bg-[#ff5c5c]/15"],
+  [class~="bg-[#ff5c5c]/20"],
+  [class~="bg-[#ff5c5c]/30"],
+  [class~="bg-[#ff5c5c]/[0.02]"],
+  [class~="bg-[#ff5c5c]/[0.05]"],
+  [class~="bg-[#ff5c5c]/[0.055]"],
+  [class~="bg-[#ff5c5c]/[0.06]"],
+  [class~="bg-[#ff5c5c]/[0.07]"],
+  [class~="bg-[#ff5c5c]/[0.08]"]
 ) {
   background-color: rgba(255, 255, 255, 0.075) !important;
 }
 
-.clicko-app-shell [class~="bg-[#8bd132]"] {
+.clicko-app-shell [class~="bg-[#ff5c5c]"] {
   background: var(--clicko-text-primary) !important;
   color: var(--clicko-black) !important;
 }
@@ -2287,9 +2532,9 @@ body,
   background-color: rgba(255, 255, 255, 0.075) !important;
 }
 
-.clicko-app-shell [class*="from-[#8bd132]"],
-.clicko-app-shell [class*="to-[#8bd132]"],
-.clicko-app-shell [class*="via-[#8bd132]"],
+.clicko-app-shell [class*="from-[#ff5c5c]"],
+.clicko-app-shell [class*="to-[#ff5c5c]"],
+.clicko-app-shell [class*="via-[#ff5c5c]"],
 .clicko-app-shell [class*="from-indigo"],
 .clicko-app-shell [class*="to-indigo"],
 .clicko-app-shell [class*="from-purple"],
@@ -2297,17 +2542,17 @@ body,
   background-image: linear-gradient(135deg, #242424, #111111) !important;
 }
 
-.clicko-app-shell .group:hover [class*="group-hover:text-[#8bd132]"],
-.clicko-app-shell [class*="hover:text-[#8bd132]"]:hover {
+.clicko-app-shell .group:hover [class*="group-hover:text-[#ff5c5c]"],
+.clicko-app-shell [class*="hover:text-[#ff5c5c]"]:hover {
   color: var(--clicko-white) !important;
 }
 
-.clicko-app-shell [class*="hover:bg-[#8bd132]"]:hover {
+.clicko-app-shell [class*="hover:bg-[#ff5c5c]"]:hover {
   background-color: #e8e8e8 !important;
   color: var(--clicko-black) !important;
 }
 
-.clicko-app-shell [style*="#8bd132"],
+.clicko-app-shell [style*="#ff5c5c"],
 .clicko-app-shell [style*="rgb(139, 209, 50)"] {
   border-color: #d5d5d5 !important;
   color: #d5d5d5 !important;
@@ -2319,7 +2564,7 @@ body,
   color: var(--clicko-text-primary) !important;
 }
 
-.clicko-app-shell :is([class*="shadow-[#8bd132]"], [class*="shadow-indigo"], [class*="shadow-purple"]) {
+.clicko-app-shell :is([class*="shadow-[#ff5c5c]"], [class*="shadow-indigo"], [class*="shadow-purple"]) {
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28) !important;
 }
 
@@ -2398,41 +2643,41 @@ body,
   box-shadow: 0 0 8px rgba(255, 92, 92, 0.28) !important;
 }
 
-.clicko-sidebar .clicko-nav-item [class~="bg-[#8bd132]"],
-.clicko-topbar [class~="bg-[#8bd132]"] {
+.clicko-sidebar .clicko-nav-item [class~="bg-[#ff5c5c]"],
+.clicko-topbar [class~="bg-[#ff5c5c]"] {
   background: var(--color-accent-coral) !important;
   color: var(--clicko-black) !important;
 }
 
-.clicko-app-shell [class*="text-[#8bd132]"],
+.clicko-app-shell [class*="text-[#ff5c5c]"],
 .clicko-app-shell [class*="text-[#9be24d]"] {
   color: var(--color-accent-coral) !important;
 }
 
-.clicko-app-shell [class*="border-[#8bd132]"] {
+.clicko-app-shell [class*="border-[#ff5c5c]"] {
   border-color: var(--color-accent-coral-border) !important;
 }
 
-.clicko-app-shell [class*="fill-[#8bd132]"] {
+.clicko-app-shell [class*="fill-[#ff5c5c]"] {
   fill: var(--color-accent-coral) !important;
 }
 
 .clicko-app-shell :is(
-  [class~="bg-[#8bd132]/10"],
-  [class~="bg-[#8bd132]/15"],
-  [class~="bg-[#8bd132]/20"],
-  [class~="bg-[#8bd132]/30"],
-  [class~="bg-[#8bd132]/[0.02]"],
-  [class~="bg-[#8bd132]/[0.05]"],
-  [class~="bg-[#8bd132]/[0.055]"],
-  [class~="bg-[#8bd132]/[0.06]"],
-  [class~="bg-[#8bd132]/[0.07]"],
-  [class~="bg-[#8bd132]/[0.08]"]
+  [class~="bg-[#ff5c5c]/10"],
+  [class~="bg-[#ff5c5c]/15"],
+  [class~="bg-[#ff5c5c]/20"],
+  [class~="bg-[#ff5c5c]/30"],
+  [class~="bg-[#ff5c5c]/[0.02]"],
+  [class~="bg-[#ff5c5c]/[0.05]"],
+  [class~="bg-[#ff5c5c]/[0.055]"],
+  [class~="bg-[#ff5c5c]/[0.06]"],
+  [class~="bg-[#ff5c5c]/[0.07]"],
+  [class~="bg-[#ff5c5c]/[0.08]"]
 ) {
   background-color: var(--color-accent-coral-soft) !important;
 }
 
-.clicko-main-stage button[class*="bg-[#8bd132]"],
+.clicko-main-stage button[class*="bg-[#ff5c5c]"],
 .clicko-main-stage button[class*="bg-indigo"] {
   border-color: var(--color-accent-coral) !important;
   background: var(--color-accent-coral) !important;
@@ -2440,15 +2685,15 @@ body,
   box-shadow: 0 10px 24px rgba(0, 0, 0, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
 }
 
-.clicko-main-stage button[class*="bg-[#8bd132]"]:hover,
+.clicko-main-stage button[class*="bg-[#ff5c5c]"]:hover,
 .clicko-main-stage button[class*="bg-indigo"]:hover,
-.clicko-app-shell [class*="hover:bg-[#8bd132]"]:hover {
+.clicko-app-shell [class*="hover:bg-[#ff5c5c]"]:hover {
   border-color: var(--color-accent-coral-hover) !important;
   background: var(--color-accent-coral-hover) !important;
   color: var(--clicko-black) !important;
 }
 
-.clicko-main-stage button[class*="bg-[#8bd132]"]:active,
+.clicko-main-stage button[class*="bg-[#ff5c5c]"]:active,
 .clicko-main-stage button[class*="bg-indigo"]:active {
   border-color: var(--color-accent-coral-active) !important;
   background: var(--color-accent-coral-active) !important;
@@ -2464,19 +2709,19 @@ body,
   border-color: color-mix(in srgb, var(--color-accent-coral) 28%, #383838) !important;
 }
 
-.clicko-dashboard-editorial [class*="text-[#8bd132]"],
+.clicko-dashboard-editorial [class*="text-[#ff5c5c]"],
 .clicko-dashboard-editorial [class*="text-[#9be24d]"],
 .clicko-dashboard-editorial .clicko-metric-cell span:last-child {
   color: var(--color-accent-orange) !important;
 }
 
-.clicko-dashboard-editorial button[class*="bg-[#8bd132]"] {
+.clicko-dashboard-editorial button[class*="bg-[#ff5c5c]"] {
   border-color: var(--color-accent-coral) !important;
   background: var(--color-accent-coral) !important;
   color: var(--clicko-black) !important;
 }
 
-.clicko-dashboard-editorial button[class*="bg-[#8bd132]"] svg {
+.clicko-dashboard-editorial button[class*="bg-[#ff5c5c]"] svg {
   color: inherit !important;
 }
 
@@ -2484,8 +2729,8 @@ body,
   background: linear-gradient(90deg, var(--color-accent-orange), rgba(255, 122, 0, 0.1) 64%, transparent) !important;
 }
 
-.clicko-dashboard-editorial [class~="bg-[#8bd132]/[0.06]"],
-.clicko-dashboard-editorial [class~="bg-[#8bd132]/[0.018]"] {
+.clicko-dashboard-editorial [class~="bg-[#ff5c5c]/[0.06]"],
+.clicko-dashboard-editorial [class~="bg-[#ff5c5c]/[0.018]"] {
   background-color: var(--color-accent-orange-soft) !important;
 }
 
@@ -2495,12 +2740,12 @@ body,
 }
 
 .clicko-chart-line,
-.clicko-app-shell .clicko-chart [stroke="#8bd132"] {
+.clicko-app-shell .clicko-chart [stroke="#ff5c5c"] {
   stroke: var(--color-accent-orange) !important;
 }
 
 .clicko-chart-point,
-.clicko-app-shell .clicko-chart [fill="#8bd132"] {
+.clicko-app-shell .clicko-chart [fill="#ff5c5c"] {
   fill: var(--color-accent-coral) !important;
 }
 
@@ -2512,7 +2757,7 @@ body,
   filter: drop-shadow(0 2px 4px rgba(255, 122, 0, 0.16)) !important;
 }
 
-.clicko-studio-immersive [class*="text-[#8bd132]"],
+.clicko-studio-immersive [class*="text-[#ff5c5c]"],
 .clicko-studio-immersive [class*="text-[#9be24d]"] {
   color: var(--color-accent-orange) !important;
 }
@@ -2527,51 +2772,51 @@ body,
   color: var(--color-accent-coral) !important;
 }
 
-.clicko-studio-immersive button[class*="bg-[#8bd132]"],
+.clicko-studio-immersive button[class*="bg-[#ff5c5c]"],
 .clicko-studio-immersive button[class*="bg-indigo"] {
   border-color: var(--color-accent-coral) !important;
   background: var(--color-accent-coral) !important;
   color: var(--clicko-black) !important;
 }
 
-.clicko-studio-immersive button[class*="bg-[#8bd132]"] svg,
+.clicko-studio-immersive button[class*="bg-[#ff5c5c]"] svg,
 .clicko-studio-immersive button[class*="bg-indigo"] svg {
   color: inherit !important;
 }
 
-.clicko-studio-immersive [class*="border-[#8bd132]"]:not(button) {
+.clicko-studio-immersive [class*="border-[#ff5c5c]"]:not(button) {
   border-color: var(--color-accent-orange-border) !important;
 }
 
 .clicko-studio-immersive :is(
-  [class~="bg-[#8bd132]/10"],
-  [class~="bg-[#8bd132]/15"],
-  [class~="bg-[#8bd132]/20"],
-  [class~="bg-[#8bd132]/[0.05]"],
-  [class~="bg-[#8bd132]/[0.07]"]
+  [class~="bg-[#ff5c5c]/10"],
+  [class~="bg-[#ff5c5c]/15"],
+  [class~="bg-[#ff5c5c]/20"],
+  [class~="bg-[#ff5c5c]/[0.05]"],
+  [class~="bg-[#ff5c5c]/[0.07]"]
 ) {
   background-color: var(--color-accent-orange-soft) !important;
 }
 
-.clicko-automation-canvas [class*="text-[#8bd132]"] {
+.clicko-automation-canvas [class*="text-[#ff5c5c]"] {
   color: var(--color-accent-orange) !important;
 }
 
-.clicko-automation-canvas [class*="border-[#8bd132]"]:not(button) {
+.clicko-automation-canvas [class*="border-[#ff5c5c]"]:not(button) {
   border-color: var(--color-accent-orange-border) !important;
 }
 
 .clicko-automation-canvas :is(
-  [class~="bg-[#8bd132]/10"],
-  [class~="bg-[#8bd132]/20"],
-  [class~="bg-[#8bd132]/30"],
-  [class~="bg-[#8bd132]/[0.08]"]
+  [class~="bg-[#ff5c5c]/10"],
+  [class~="bg-[#ff5c5c]/20"],
+  [class~="bg-[#ff5c5c]/30"],
+  [class~="bg-[#ff5c5c]/[0.08]"]
 ) {
   background-color: var(--color-accent-orange-soft) !important;
 }
 
 .clicko-sidebar [role="progressbar"] > *,
-.clicko-sidebar [class~="h-full"][class~="bg-[#8bd132]"] {
+.clicko-sidebar [class~="h-full"][class~="bg-[#ff5c5c]"] {
   background: var(--color-accent-orange) !important;
 }
 
@@ -2675,7 +2920,7 @@ body,
     transform: rotate(-4deg) scale(1.08);
   }
 
-  .clicko-main-stage button:is([class*="bg-[#8bd132]"], [class*="bg-indigo"]):not(:disabled):hover {
+  .clicko-main-stage button:is([class*="bg-[#ff5c5c]"], [class*="bg-indigo"]):not(:disabled):hover {
     box-shadow:
       0 11px 26px rgba(0, 0, 0, 0.28),
       0 0 0 3px rgba(255, 92, 92, 0.055),
@@ -3478,6 +3723,77 @@ html[data-theme="light"] .clicko-offer-dialog button.bg-white {
     animation-delay: 0ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+/* Unified Stitch shell: terminal overrides after every legacy layer. */
+.clicko-unified-shell,
+.clicko-unified-shell .clicko-main-stage,
+.clicko-unified-shell .clicko-product-surface,
+.clicko-unified-shell .clicko-dashboard-editorial {
+  --clicko-action: #ffb5b5 !important;
+  --clicko-action-hover: #ffcaca !important;
+  --clicko-creative: #ff9ea3 !important;
+  --color-accent-coral: #ffb5b5 !important;
+  --color-accent-orange: #ff9ea3 !important;
+}
+
+.clicko-unified-shell .clicko-product-surface,
+.clicko-unified-shell .clicko-dashboard-editorial {
+  width: 100% !important;
+  max-width: none !important;
+  padding: 14px !important;
+}
+
+.clicko-unified-shell .clicko-main-stage [class*="rounded"] {
+  border-radius: 2px !important;
+}
+
+.clicko-unified-shell .clicko-dashboard-hero {
+  display: flex !important;
+  min-height: 0 !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+  gap: 8px !important;
+  margin: 0 !important;
+  border: 1px solid rgba(240, 160, 160, 0.26) !important;
+  border-radius: 2px !important;
+  padding: 13px 15px !important;
+  background: rgba(20, 19, 19, 0.96) !important;
+  text-align: left !important;
+}
+
+.clicko-unified-shell .clicko-dashboard-hero h1 {
+  font-size: 18px !important;
+  line-height: 1.2 !important;
+}
+
+.clicko-unified-shell .clicko-dashboard-command,
+.clicko-unified-shell .clicko-dashboard-metrics,
+.clicko-unified-shell .clicko-dashboard-body,
+.clicko-unified-shell .clicko-dashboard-insight,
+.clicko-unified-shell .clicko-dashboard-flow > div:last-child {
+  border-color: rgba(240, 160, 160, 0.26) !important;
+  border-radius: 2px !important;
+  background: rgba(23, 22, 22, 0.96) !important;
+  box-shadow: none !important;
+}
+
+.clicko-unified-shell .clicko-dashboard-editorial :is(
+  .clicko-metric-detail,
+  .clicko-home-overline,
+  .clicko-home-action-text,
+  [class*="text-[#ff5c5c]"]
+) {
+  color: #ffb5b5 !important;
+}
+
+@media (min-width: 768px) {
+  .clicko-unified-shell .clicko-dashboard-hero {
+    flex-direction: row !important;
+    align-items: flex-end !important;
+    justify-content: space-between !important;
   }
 }
 

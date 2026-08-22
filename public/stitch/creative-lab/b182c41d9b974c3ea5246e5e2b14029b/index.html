@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Creative Lab - Motion Studio</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {secondary: "#ffb68b", "primary-fixed-dim": "#ffb3af", background: "#131313", surface: "#131313", "surface-tint": "#ffb3af", "secondary-container": "#ff7f1c", "on-error-container": "#ffdad6", "secondary-fixed-dim": "#ffb68b", "tertiary-container": "#e17474", "on-primary-fixed-variant": "#920418", "on-primary-container": "#62000c", "on-tertiary": "#601118", "on-surface": "#e5e2e1", "outline-variant": "#5a403f", "on-primary": "#68000d", "surface-container-lowest": "#0e0e0e", "inverse-surface": "#e5e2e1", "surface-dim": "#131313", "on-tertiary-container": "#5c0e15", "inverse-on-surface": "#313030", "surface-bright": "#393939", "primary-container": "#ff5c5c", "primary-fixed": "#ffdad7", "on-tertiary-fixed-variant": "#7f292c", "on-primary-fixed": "#410005", "inverse-primary": "#b4252d", "on-secondary": "#522300", "on-secondary-fixed-variant": "#753400", "tertiary-fixed": "#ffdad8", "on-secondary-fixed": "#321200", "tertiary-fixed-dim": "#ffb3b1", "surface-container-highest": "#353534", "on-error": "#690005", "surface-container": "#201f1f", primary: "#ffb3af", "on-background": "#e5e2e1", "secondary-fixed": "#ffdbc8", "surface-container-high": "#2a2a2a", "on-surface-variant": "#e2bebc", "on-tertiary-fixed": "#410007", "error-container": "#93000a", "surface-variant": "#353534", "surface-container-low": "#1c1b1b", outline: "#a98987", tertiary: "#ffb3b1", "on-secondary-container": "#602a00", error: "#ffb4ab"}, borderRadius: {DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem"}, spacing: {context_nav_width: "240px", stack_gap_md: "16px", spine_width: "64px", container_padding: "24px", stack_gap_sm: "8px", gutter: "16px"}, fontFamily: {"data-number": ["Geist"], "label-mono": ["Geist"], "body-lg": ["Geist"], "body-md": ["Geist"], "body-sm": ["Geist"], display: ["Geist"], "headline-lg": ["Geist"], "headline-md": ["Geist"], headline: ["Geist"], body: ["Geist"], label: ["Geist"]}, fontSize: {"data-number": ["14px", {lineHeight: "20px", fontWeight: "600"}], "label-mono": ["12px", {lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "500"}], "body-lg": ["16px", {lineHeight: "24px", fontWeight: "400"}], "body-md": ["14px", {lineHeight: "20px", fontWeight: "400"}], "body-sm": ["13px", {lineHeight: "18px", fontWeight: "400"}], display: ["32px", {lineHeight: "40px", letterSpacing: "-0.02em", fontWeight: "600"}], "headline-lg": ["24px", {lineHeight: "32px", letterSpacing: "-0.01em", fontWeight: "600"}], "headline-md": ["20px", {lineHeight: "28px", fontWeight: "500"}]}}}};</script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .icon-fill {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface h-screen overflow-hidden flex flex-col font-body-md antialiased">
+<!-- TopNavBar -->
+<nav class="bg-surface dark:bg-surface fixed top-0 w-full h-16 border-b border-outline-variant flex justify-between items-center px-container_padding z-50">
+<div class="text-headline-lg font-headline-lg font-bold text-primary">CREATIVE LAB</div>
+<div class="flex gap-8 h-full">
+<a class="h-full flex items-center text-on-surface-variant font-label-mono text-label-mono hover:text-primary transition-colors cursor-pointer active:opacity-80" href="#">Composition</a>
+<a class="h-full flex items-center text-on-surface-variant font-label-mono text-label-mono hover:text-primary transition-colors cursor-pointer active:opacity-80" href="#">Inventory</a>
+<a class="h-full flex items-center text-on-surface-variant font-label-mono text-label-mono hover:text-primary transition-colors cursor-pointer active:opacity-80" href="#">Review</a>
+<a class="h-full flex items-center text-on-surface-variant font-label-mono text-label-mono hover:text-primary transition-colors cursor-pointer active:opacity-80" href="#">Insights</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined" data-icon="notifications">notifications</span></button>
+<button class="text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined" data-icon="settings">settings</span></button>
+<button class="bg-primary text-on-primary font-label-mono text-label-mono px-4 py-2 rounded font-medium hover:opacity-90">Publish</button>
+<img alt="Creative Director Profile" class="w-8 h-8 rounded-full border border-outline-variant object-cover" data-alt="A small, circular avatar portrait of a creative director. The portrait is professionally lit with a slight rim light against a dark background, fitting a sleek, high-density professional tool aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAI82NkFDFd10OFbMAPeKQLhpY8lozFK-v0SCX4Q8o7O7FVs5ZwGbpikUqxS0O3ISm4S9jNBgGdxqSo71pzZihhIeB5f2pg9AuKLqo5kRhn1aZp_gU786eoMAI5K4vNuweq8WKVGvP7hdka0FyMSn60TrgebtYx4p4ZBxfptAJa2zPWaaoDb4l44qkcDfF5KnDsht4BwneWA7bVFEu5tcdOakyuxou9hnrc_J_40bz5cYACsShvEol-_w"/>
+</div>
+</nav>
+<div class="flex flex-1 pt-16 h-full">
+<!-- SideNavBar -->
+<aside class="bg-surface-container dark:bg-surface-container fixed left-0 top-16 h-[calc(100vh-64px)] w-spine_width md:w-context_nav_width border-r border-outline-variant flex flex-col py-stack_gap_md z-40 transition-all duration-200">
+<div class="px-4 mb-6 hidden md:block">
+<div class="flex items-center gap-3">
+<img alt="Project Avatar" class="w-10 h-10 rounded border border-outline-variant object-cover" data-alt="A small, stylized avatar representing a project. It features abstract geometric shapes in muted dark tones with a subtle green accent, conveying a sense of structured digital workflow." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBuC65Cbw0lAhliceVrsMoVhorjK1iO9F04_q2dHnm3pDAfvA7pIowx79COLTr5Zm3rhthbIezq97azb9jtNvj6C9QiEJ_N34RsOsiW7PeR2I6xzR69_vFJfB4Wpy7uCKy8-81uAKKS07jBmmmXJ8835rJXgtbBgO51dePoS3RUWA5VcgBYzLNG3b0c3erMReVwgByc5sMkMpzRF6GoywoSdw7BlDp68KI8cbtx4dNbpJ-BrMBAAO9VYA"/>
+<div>
+<div class="font-headline-md text-headline-md text-primary">Project Alpha</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Creative Director Active</div>
+</div>
+</div>
+</div>
+<button class="mx-4 mb-6 bg-primary text-on-primary font-label-mono text-label-mono px-4 py-2 rounded flex items-center justify-center gap-2 hover:opacity-90 transition-opacity hidden md:flex">
+<span class="material-symbols-outlined text-[18px]">add</span> New Composition
+            </button>
+<nav class="flex-1">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-highest transition-all duration-200 cursor-pointer" href="#">
+<span class="material-symbols-outlined" data-icon="route">route</span>
+<span class="font-label-mono text-label-mono hidden md:block">Workflow Spine</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 bg-secondary-container text-primary border-l-4 border-primary hover:bg-surface-container-highest transition-all duration-200 cursor-pointer" href="#">
+<span class="material-symbols-outlined icon-fill" data-icon="brush">brush</span>
+<span class="font-label-mono text-label-mono hidden md:block">Pro Canvas</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-highest transition-all duration-200 cursor-pointer" href="#">
+<span class="material-symbols-outlined" data-icon="grid_view">grid_view</span>
+<span class="font-label-mono text-label-mono hidden md:block">Content Board</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-highest transition-all duration-200 cursor-pointer" href="#">
+<span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+<span class="font-label-mono text-label-mono hidden md:block">Review Room</span>
+</a>
+</nav>
+<div class="mt-auto">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-highest transition-all duration-200 cursor-pointer" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+<span class="font-label-mono text-label-mono hidden md:block">Help</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-highest transition-all duration-200 cursor-pointer" href="#">
+<span class="material-symbols-outlined" data-icon="archive">archive</span>
+<span class="font-label-mono text-label-mono hidden md:block">Archive</span>
+</a>
+</div>
+</aside>
+<!-- Main Workspace -->
+<main class="flex-1 ml-[64px] md:ml-[240px] flex flex-col h-[calc(100vh-64px)] overflow-hidden">
+<!-- Canvas Area -->
+<div class="flex-1 flex bg-surface-container-lowest p-gutter relative overflow-hidden">
+<!-- Toolbar overlay -->
+<div class="absolute top-4 left-1/2 -translate-x-1/2 bg-surface border border-outline-variant rounded flex items-center gap-1 p-1 z-10">
+<button class="p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container-highest rounded transition-colors"><span class="material-symbols-outlined">smartphone</span></button>
+<button class="p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container-highest rounded transition-colors"><span class="material-symbols-outlined">tablet_mac</span></button>
+<div class="w-[1px] h-4 bg-outline-variant mx-1"></div>
+<span class="font-label-mono text-label-mono text-on-surface-variant px-2">9:16</span>
+<button class="p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container-highest rounded transition-colors"><span class="material-symbols-outlined">crop_rotate</span></button>
+</div>
+<!-- Central Canvas (Motion Mockup) -->
+<div class="w-full h-full flex items-center justify-center">
+<div class="w-[320px] h-[568px] bg-surface border border-outline-variant relative overflow-hidden flex flex-col items-center justify-center">
+<div class="absolute inset-0 bg-surface-container-high opacity-20" style="background-image: radial-gradient(circle at 2px 2px, #3b4a3d 1px, transparent 0); background-size: 20px 20px;"></div>
+<!-- Animated Element 1 -->
+<div class="w-32 h-32 bg-secondary-container border border-outline-variant rounded-lg absolute top-1/4 left-1/2 -translate-x-1/2 flex items-center justify-center">
+<span class="material-symbols-outlined text-4xl text-on-surface-variant">image</span>
+<!-- Motion Path Indicator -->
+<svg class="absolute -top-16 left-1/2 w-32 h-32 overflow-visible pointer-events-none" style="transform: translateX(-50%);">
+<path d="M 0,0 Q 50,-50 100,0" fill="none" stroke="#00e475" stroke-dasharray="4,4" stroke-width="2"></path>
+<circle cx="0" cy="0" fill="#00e475" r="4"></circle>
+<polygon fill="#00e475" points="95,-5 100,0 95,5"></polygon>
+</svg>
+</div>
+<!-- Text Element -->
+<div class="absolute bottom-1/4 left-1/2 -translate-x-1/2 text-center">
+<div class="font-headline-md text-primary border border-primary px-4 py-2 bg-surface/50 backdrop-blur-sm">NEW ARRIVAL</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Timeline Panel -->
+<div class="h-48 bg-surface border-t border-outline-variant flex flex-col shrink-0">
+<div class="h-8 border-b border-outline-variant flex items-center justify-between px-4 bg-surface-container">
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined text-[20px]">play_arrow</span></button>
+<span class="font-data-number text-data-number text-on-surface">00:02:14</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-label-mono text-label-mono text-on-surface-variant">Reduced Motion</span>
+<div class="w-8 h-4 bg-surface-container-highest rounded-full relative cursor-pointer border border-outline-variant">
+<div class="w-3 h-3 bg-on-surface-variant rounded-full absolute left-[2px] top-[1px]"></div>
+</div>
+</div>
+</div>
+<div class="flex-1 flex overflow-hidden">
+<!-- Tracks Header -->
+<div class="w-48 border-r border-outline-variant bg-surface-container flex flex-col">
+<div class="h-10 border-b border-outline-variant flex items-center px-3 gap-2">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">image</span>
+<span class="font-label-mono text-label-mono text-on-surface">Product Shot</span>
+</div>
+<div class="h-10 border-b border-outline-variant flex items-center px-3 gap-2">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">title</span>
+<span class="font-label-mono text-label-mono text-on-surface">Headline</span>
+</div>
+</div>
+<!-- Timeline Canvas -->
+<div class="flex-1 bg-surface-container-lowest relative overflow-x-auto">
+<!-- Playhead -->
+<div class="absolute top-0 bottom-0 left-[25%] w-[1px] bg-primary z-10 pointer-events-none">
+<div class="w-3 h-3 bg-primary absolute -top-1.5 -left-1.5 transform rotate-45"></div>
+</div>
+<!-- Track 1 -->
+<div class="h-10 border-b border-outline-variant relative px-4">
+<div class="absolute top-2 h-6 left-10 w-48 bg-secondary-container border border-outline-variant rounded flex items-center overflow-hidden">
+<div class="w-4 h-full bg-primary/20 border-r border-primary/50 flex items-center justify-center" title="Entrance"><div class="w-1 h-1 rounded-full bg-primary"></div></div>
+<div class="flex-1"></div>
+<div class="w-4 h-full bg-primary/20 border-l border-primary/50 flex items-center justify-center" title="Exit"><div class="w-1 h-1 rounded-full bg-primary"></div></div>
+</div>
+</div>
+<!-- Track 2 -->
+<div class="h-10 border-b border-outline-variant relative px-4">
+<div class="absolute top-2 h-6 left-32 w-32 bg-secondary-container border border-outline-variant rounded flex items-center overflow-hidden">
+<div class="w-4 h-full bg-primary/20 border-r border-primary/50 flex items-center justify-center" title="Entrance"><div class="w-1 h-1 rounded-full bg-primary"></div></div>
+<div class="flex-1 h-full relative">
+<div class="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-tertiary-container rotate-45" title="Emphasis Keyframe"></div>
+</div>
+</div>
+</div>
+<!-- Ruler Ticks -->
+<div class="absolute top-0 left-0 w-full h-full pointer-events-none opacity-20" style="background-image: repeating-linear-gradient(90deg, #3b4a3d 0px, #3b4a3d 1px, transparent 1px, transparent 20px);"></div>
+</div>
+</div>
+</div>
+</main>
+<!-- Right Inspector (Motion Tab) -->
+<aside class="w-[280px] bg-surface border-l border-outline-variant flex flex-col shrink-0 overflow-y-auto">
+<!-- Tabs -->
+<div class="flex border-b border-outline-variant">
+<button class="flex-1 py-3 text-center font-label-mono text-label-mono text-on-surface-variant hover:text-primary transition-colors">Design</button>
+<button class="flex-1 py-3 text-center font-label-mono text-label-mono text-primary border-b-2 border-primary">Motion</button>
+</div>
+<div class="p-4 flex flex-col gap-6">
+<!-- Entrance Section -->
+<div>
+<div class="flex items-center justify-between mb-3">
+<h3 class="font-label-mono text-label-mono text-on-surface">Entrance</h3>
+<div class="w-8 h-4 bg-primary/20 rounded-full relative cursor-pointer border border-primary/50">
+<div class="w-3 h-3 bg-primary rounded-full absolute right-[2px] top-[1px]"></div>
+</div>
+</div>
+<div class="space-y-4">
+<div class="grid grid-cols-2 gap-2">
+<button class="bg-surface-container border border-primary text-primary px-3 py-2 rounded text-left font-body-sm flex justify-between items-center">
+                                Fade In <span class="material-symbols-outlined text-[16px]">arrow_drop_down</span>
+</button>
+<button class="bg-surface-container border border-outline-variant text-on-surface px-3 py-2 rounded text-left font-body-sm flex justify-between items-center">
+                                Bottom <span class="material-symbols-outlined text-[16px]">arrow_drop_down</span>
+</button>
+</div>
+<div>
+<label class="font-label-mono text-label-mono text-on-surface-variant block mb-1">Duration (ms)</label>
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded px-3 py-1.5 font-data-number text-data-number text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none" type="number" value="600"/>
+</div>
+<div>
+<label class="font-label-mono text-label-mono text-on-surface-variant block mb-1">Easing</label>
+<div class="flex border border-outline-variant rounded overflow-hidden">
+<button class="flex-1 bg-secondary-container text-on-surface py-1.5 font-body-sm text-center border-r border-outline-variant">Ease Out</button>
+<button class="flex-1 bg-surface-container text-on-surface-variant py-1.5 font-body-sm text-center hover:bg-surface-container-highest">Spring</button>
+</div>
+</div>
+</div>
+</div>
+<hr class="border-outline-variant"/>
+<!-- Emphasis Section -->
+<div>
+<div class="flex items-center justify-between mb-3">
+<h3 class="font-label-mono text-label-mono text-on-surface">Emphasis</h3>
+<div class="w-8 h-4 bg-surface-container-highest rounded-full relative cursor-pointer border border-outline-variant">
+<div class="w-3 h-3 bg-on-surface-variant rounded-full absolute left-[2px] top-[1px]"></div>
+</div>
+</div>
+<button class="w-full bg-surface-container border border-outline-variant border-dashed text-on-surface-variant px-3 py-2 rounded text-center font-body-sm hover:text-primary hover:border-primary transition-colors">
+                        + Add Effect
+                    </button>
+</div>
+<hr class="border-outline-variant"/>
+<!-- Stagger Section -->
+<div>
+<h3 class="font-label-mono text-label-mono text-on-surface mb-3">Stagger Settings</h3>
+<div class="flex items-center justify-between bg-surface-container border border-outline-variant rounded p-3">
+<span class="font-body-sm text-on-surface">Apply to Children</span>
+<div class="w-8 h-4 bg-surface-container-highest rounded-full relative cursor-pointer border border-outline-variant">
+<div class="w-3 h-3 bg-on-surface-variant rounded-full absolute left-[2px] top-[1px]"></div>
+</div>
+</div>
+</div>
+</div>
+</aside>
+</div>
+<script src="/stitch/bridge.js"></script></body></html>

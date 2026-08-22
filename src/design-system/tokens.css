@@ -1,0 +1,105 @@
+:root:root {
+  --clicko-action: #ff5c5c;
+  --clicko-action-hover: #ff7070;
+  --clicko-action-active: #e94e4e;
+  --clicko-creative: #ff7a00;
+  --clicko-creative-hover: #ff8f2a;
+  --clicko-creative-active: #e66e00;
+  --clicko-danger: #e87979;
+  --clicko-success: #53b780;
+  --clicko-warning: #f1a33c;
+  --clicko-info: #78a9e6;
+  --clicko-on-action: #160606;
+  --clicko-on-creative: #140a00;
+  --clicko-white: #ffffff;
+  --clicko-black: #000000;
+  --clicko-accent: var(--clicko-action);
+  --clicko-accent-hover: var(--clicko-action-hover);
+  --clicko-accent-fill: var(--clicko-action);
+  --clicko-accent-fill-hover: var(--clicko-action-hover);
+  --clicko-radius-sm: 6px;
+  --clicko-radius-md: 10px;
+  --clicko-radius-lg: 16px;
+  --clicko-radius-panel: 16px;
+  --clicko-radius-xl: 22px;
+  --clicko-radius-full: 9999px;
+  --clicko-space-xs: 4px;
+  --clicko-space-sm: 8px;
+  --clicko-space-md: 16px;
+  --clicko-space-lg: 24px;
+  --clicko-space-xl: 32px;
+  --clicko-space-2xl: 48px;
+  --clicko-space-3xl: 64px;
+  --clicko-font-sans: "Manrope Variable", "Segoe UI Variable", system-ui, -apple-system, sans-serif;
+  --clicko-font-display: "Bricolage Grotesque Variable", "Manrope Variable", "Segoe UI Variable", system-ui, sans-serif;
+  --clicko-font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  --clicko-type-display-size: clamp(2.5rem, 4vw, 3.25rem);
+  --clicko-type-display-line: 1.05;
+  --clicko-type-display-weight: 650;
+  --clicko-type-page-size: clamp(1.875rem, 2.8vw, 2.25rem);
+  --clicko-type-page-line: 1.12;
+  --clicko-type-page-weight: 650;
+  --clicko-type-section-size: 1.375rem;
+  --clicko-type-section-line: 1.25;
+  --clicko-type-section-weight: 600;
+  --clicko-type-card-size: 1rem;
+  --clicko-type-card-line: 1.35;
+  --clicko-type-card-weight: 600;
+  --clicko-type-body-lg-size: 1rem;
+  --clicko-type-body-lg-line: 1.6;
+  --clicko-type-body-size: 0.875rem;
+  --clicko-type-body-line: 1.55;
+  --clicko-type-small-size: 0.75rem;
+  --clicko-type-small-line: 1.5;
+  --clicko-type-label-size: 0.75rem;
+  --clicko-type-label-line: 1.3;
+  --clicko-type-label-tracking: 0.08em;
+  --clicko-transition-fast: 120ms ease-out;
+  --clicko-transition: 180ms ease-out;
+  --clicko-transition-deliberate: 240ms ease-out;
+}
+
+[data-theme="dark"][data-theme="dark"] {
+  color-scheme: dark;
+  --clicko-bg: #080808;
+  --clicko-surface-0: #0f0f0f;
+  --clicko-surface-1: #151515;
+  --clicko-surface-2: #1c1c1c;
+  --clicko-surface-3: #222222;
+  --clicko-control: #111111;
+  --clicko-border: #282828;
+  --clicko-border-strong: #353535;
+  --clicko-text: #f5f5f5;
+  --clicko-text-secondary: #a0a0a0;
+  --clicko-text-muted: #727272;
+}
+
+[data-theme="light"][data-theme="light"] {
+  color-scheme: light;
+  --clicko-bg: #f5f5f5;
+  --clicko-surface-0: #ffffff;
+  --clicko-surface-1: #ffffff;
+  --clicko-surface-2: #f0f0f0;
+  --clicko-surface-3: #e7e7e7;
+  --clicko-control: #ffffff;
+  --clicko-border: #dedede;
+  --clicko-border-strong: #c7c7c7;
+  --clicko-text: #151515;
+  --clicko-text-secondary: #555555;
+  --clicko-text-muted: #777777;
+  --clicko-accent: #e94e4e;
+  --clicko-accent-hover: #d84040;
+  --clicko-accent-fill: #e94e4e;
+  --clicko-accent-fill-hover: #d84040;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

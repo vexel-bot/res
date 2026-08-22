@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Clicko Precision - Criar Aberto</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {"on-secondary-fixed-variant": "#753400", "inverse-on-surface": "#313030", "on-error": "#690005", "inverse-surface": "#e5e2e1", "primary-fixed-dim": "#ffb3af", "on-background": "#e5e2e1", "surface-container-low": "#1c1b1b", "on-secondary-container": "#602a00", "surface-container-high": "#2a2a2a", "on-tertiary-fixed": "#410007", "secondary-container": "#ff7f1c", "on-primary": "#68000d", "on-surface-variant": "#e2bebc", "secondary-fixed": "#ffdbc8", "on-error-container": "#ffdad6", "tertiary-fixed-dim": "#ffb3b1", "surface-container-highest": "#353534", "on-secondary": "#522300", "outline-variant": "#5a403f", "primary-container": "#ff5c5c", "surface-container-lowest": "#0e0e0e", error: "#ffb4ab", "surface-variant": "#353534", background: "#131313", primary: "#ffb3af", "on-primary-fixed": "#410005", "secondary-fixed-dim": "#ffb68b", "on-tertiary-fixed-variant": "#7f292c", "on-secondary-fixed": "#321200", "surface-tint": "#ffb3af", "primary-fixed": "#ffdad7", "tertiary-container": "#e17474", "tertiary-fixed": "#ffdad8", tertiary: "#ffb3b1", "on-surface": "#e5e2e1", secondary: "#ffb68b", "surface-container": "#201f1f", "on-tertiary": "#601118", "surface-dim": "#131313", "inverse-primary": "#b4252d", "on-primary-fixed-variant": "#920418", "surface-bright": "#393939", outline: "#a98987", "on-tertiary-container": "#5c0e15", "error-container": "#93000a", "on-primary-container": "#62000c", surface: "#131313"}, borderRadius: {DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem"}, spacing: {"margin-desktop": "32px", gutter: "16px", unit: "4px", "container-max": "1440px", "margin-mobile": "16px"}, fontFamily: {"label-md": ["Geist"], "headline-md": ["Geist"], "headline-lg": ["Geist"], "body-lg": ["Geist"], code: ["Geist"], display: ["Geist"], "body-md": ["Geist"], headline: ["Geist"], body: ["Geist"], label: ["Geist"]}, fontSize: {"label-md": ["12px", {lineHeight: "1", letterSpacing: "0.02em", fontWeight: "500"}], "headline-md": ["20px", {lineHeight: "1.4", fontWeight: "500"}], "headline-lg": ["24px", {lineHeight: "1.3", fontWeight: "600"}], "body-lg": ["16px", {lineHeight: "1.5", fontWeight: "400"}], code: ["13px", {lineHeight: "1.4", fontWeight: "400"}], display: ["32px", {lineHeight: "1.2", letterSpacing: "-0.02em", fontWeight: "600"}], "body-md": ["14px", {lineHeight: "1.5", fontWeight: "400"}]}}}};</script>
+<style>
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .pointer-cursor {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body class="bg-[#0F1011] text-on-surface h-screen w-screen overflow-hidden flex flex-col font-body-md">
+<!-- OVERLAY for dimmed background -->
+<div class="fixed inset-0 bg-black/40 z-40 pointer-events-none"></div>
+<!-- HEADER -->
+<header class="h-16 bg-surface border-b border-surface-container-high flex justify-between items-center px-6 w-full z-50 sticky top-0">
+<!-- Left: Logo & Workspace -->
+<div class="flex items-center gap-4">
+<div class="font-headline-md font-bold text-primary tracking-tight">Clicko</div>
+<div class="h-4 w-px bg-surface-container-high mx-2"></div>
+<div class="flex items-center gap-2 bg-surface-container-low border border-surface-container-high rounded px-2.5 py-1">
+<span class="material-symbols-outlined text-on-surface-variant text-[16px]">coffee</span>
+<span class="font-label-md text-on-surface">Aurora Café</span>
+<span class="text-on-surface-variant">/</span>
+<span class="font-label-md text-on-surface-variant">Agência Norte</span>
+<span class="material-symbols-outlined text-on-surface-variant text-[16px] ml-1 pointer-cursor">unfold_more</span>
+</div>
+</div>
+<!-- Center: Navigation -->
+<nav class="flex gap-1 h-full items-end">
+<a class="px-4 py-2 font-body-md text-primary border-b-2 border-primary mb-[-1px] font-medium pointer-cursor" href="#">Hoje</a>
+<a class="px-4 py-2 font-body-md text-on-surface-variant hover:text-primary transition-colors pointer-cursor" href="#">Radar</a>
+<a class="px-4 py-2 font-body-md text-on-surface-variant hover:text-primary transition-colors pointer-cursor" href="#">Campanhas</a>
+<a class="px-4 py-2 font-body-md text-on-surface-variant hover:text-primary transition-colors pointer-cursor" href="#">Conteúdos</a>
+<a class="px-4 py-2 font-body-md text-on-surface-variant hover:text-primary transition-colors pointer-cursor" href="#">Calendário</a>
+</nav>
+<!-- Right: Actions -->
+<div class="flex items-center gap-3">
+<!-- Active Criar -->
+<div class="relative flex items-center bg-surface-container-high rounded pl-3 pr-2 py-1.5 border border-primary-container pointer-cursor group">
+<span class="font-label-md text-primary-container mr-1">Criar</span>
+<span class="material-symbols-outlined text-primary-container text-[18px]">keyboard_arrow_up</span>
+</div>
+<div class="h-4 w-px bg-surface-container-high mx-1"></div>
+<button class="p-1.5 text-on-surface-variant hover:text-on-surface rounded pointer-cursor transition-colors" title="Ferramentas">
+<span class="material-symbols-outlined text-[20px]">grid_view</span>
+</button>
+<button class="flex items-center gap-2 px-3 py-1.5 bg-surface-container-low border border-surface-container-high rounded text-on-surface-variant hover:border-outline-variant pointer-cursor transition-colors">
+<span class="material-symbols-outlined text-[16px]">search</span>
+<span class="font-label-md">Busca</span>
+<span class="text-[10px] bg-surface-container px-1 py-0.5 rounded ml-2 font-mono">⌘K</span>
+</button>
+<button class="relative p-1.5 text-on-surface-variant hover:text-on-surface rounded pointer-cursor transition-colors">
+<span class="material-symbols-outlined text-[20px]">fact_check</span>
+<span class="absolute top-0 right-0 bg-primary-container text-on-primary-container text-[9px] font-bold px-1 rounded-full border border-surface">3</span>
+</button>
+<div class="ml-2 h-7 w-7 rounded-full bg-surface-container-high border border-outline-variant flex items-center justify-center overflow-hidden pointer-cursor">
+<img class="object-cover w-full h-full" data-alt="A detailed headshot portrait of a professional woman with short dark hair in a sleek, minimalist tech office setting, lit with high-end, dramatic corporate lighting. Dark matte background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAOCrYpQqNCZdIV7lLbwFQTpxofeVBgSFRiBNnarvona5OTzBp8CCPjymvYVKPCdJiXiKevFMC228lIiEiGeL4AwHCzkDeH6wsEHdsq0Lp9OLNH1s8CfrSCnhnXnafgicY6Q3Gs-mHgy_UsoTnDt0ieyKGk0QCjK25f3gEn_WGxDc7hX_Zx1WMgvjVdN-zTFvf80PVhrofhi_Hmoz3ymtI57_bFtTFd3iojfB4wSCx8oi5kSiSJuJHQAg"/>
+</div>
+</div>
+</header>
+<!-- MAIN CANVAS (Blurred/Dimmed Background Context) -->
+<main class="relative flex-1 p-8 filter blur-[2px] opacity-30 select-none z-0">
+<h1 class="font-headline-lg text-on-surface mb-6">Bom dia, Hoje</h1>
+<div class="grid grid-cols-3 gap-4">
+<div class="bg-surface-container-low border border-surface-container-high rounded h-48 p-4"></div>
+<div class="bg-surface-container-low border border-surface-container-high rounded h-48 p-4"></div>
+<div class="bg-surface-container-low border border-surface-container-high rounded h-48 p-4"></div>
+</div>
+</main>
+<!-- DROPDOWN MENU -->
+<div class="absolute top-[52px] right-24 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
+<!-- Pointer -->
+<div class="absolute -top-1.5 right-[145px] w-3 h-3 bg-[#181B1D] border-l border-t border-surface-container-high rotate-45"></div>
+<!-- Dropdown Surface -->
+<div class="bg-[#181B1D] w-[960px] h-[440px] rounded-lg border border-surface-container-high shadow-2xl flex overflow-hidden">
+<!-- Main Content Area -->
+<div class="flex-1 p-6 flex flex-col relative overflow-hidden">
+<!-- Header -->
+<div class="mb-6">
+<h2 class="font-headline-md text-on-surface">O que vamos criar?</h2>
+<p class="font-body-md text-on-surface-variant mt-1">Comece do zero, reutilize ou use uma oportunidade.</p>
+</div>
+<!-- Grid Areas -->
+<div class="grid grid-cols-2 gap-x-8 gap-y-6 overflow-y-auto pr-2 pb-4">
+<!-- AREA 1: COMEÇAR DO ZERO -->
+<div>
+<h3 class="font-mono text-[11px] uppercase tracking-widest text-on-surface-variant mb-3 border-b border-surface-container-high pb-2">Começar do Zero</h3>
+<div class="space-y-1">
+<div class="group flex items-start gap-3 p-2 rounded hover:bg-surface-container-highest pointer-cursor transition-colors border border-transparent">
+<span class="material-symbols-outlined text-on-surface-variant mt-0.5 text-[18px]">article</span>
+<div>
+<div class="font-label-md text-on-surface">Criar post</div>
+<div class="text-[12px] text-on-surface-variant mt-0.5 leading-snug">Peça única pronta para editar e publicar.</div>
+</div>
+</div>
+<div class="group flex items-start gap-3 p-2 rounded hover:bg-surface-container-highest pointer-cursor transition-colors border border-transparent">
+<span class="material-symbols-outlined text-on-surface-variant mt-0.5 text-[18px]">view_carousel</span>
+<div>
+<div class="font-label-md text-on-surface">Criar carrossel</div>
+<div class="text-[12px] text-on-surface-variant mt-0.5 leading-snug">Narrativa organizada slide a slide.</div>
+</div>
+</div>
+<div class="group flex items-start gap-3 p-2 rounded hover:bg-surface-container-highest pointer-cursor transition-colors border border-transparent">
+<span class="material-symbols-outlined text-on-surface-variant mt-0.5 text-[18px]">campaign</span>
+<div>
+<div class="font-label-md text-on-surface">Criar campanha</div>
+<div class="text-[12px] text-on-surface-variant mt-0.5 leading-snug">Estratégia, peças e calendário conectados.</div>
+</div>
+</div>
+</div>
+</div>
+<!-- AREA 2: PARTIR DO QUE JÁ EXISTE -->
+<div class="relative">
+<h3 class="font-mono text-[11px] uppercase tracking-widest text-on-surface-variant mb-3 border-b border-surface-container-high pb-2">Partir do que já existe</h3>
+<div class="space-y-1 relative">
+<!-- ACTIVE HOVER STATE ITEM -->
+<div class="relative flex items-start gap-3 p-2 rounded bg-surface-container-highest border border-surface-container-high pointer-cursor group z-10">
+<!-- Green vertical indicator -->
+<div class="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-3/4 bg-primary-container rounded-r-sm"></div>
+<span class="material-symbols-outlined text-primary-container mt-0.5 text-[18px] ml-1">transform</span>
+<div class="flex-1">
+<div class="flex items-center justify-between">
+<div class="font-label-md text-on-surface">Transformar post em carrossel</div>
+<span class="material-symbols-outlined text-on-surface-variant text-[16px] group-hover:text-primary-container transition-colors">arrow_forward</span>
+</div>
+<div class="text-[12px] text-on-surface-variant mt-0.5 leading-snug">Converta estrutura textual em slides visuais.</div>
+</div>
+<!-- Cursor Simulation (Optional purely visual) -->
+<div class="absolute right-4 bottom-[-8px] pointer-events-none z-50">
+<svg fill="none" height="24" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M7 2L20.5 10L14 12L17.5 21L13 22.5L9.5 13.5L4 16.5L7 2Z" fill="white" stroke="black" stroke-linejoin="round" stroke-width="1.5"></path>
+</svg>
+</div>
+</div>
+<!-- PREVIEW BOX (Tied to the active state above) -->
+<div class="absolute left-[calc(100%+16px)] top-0 w-56 bg-surface-container-low border border-surface-container-high rounded p-3 shadow-lg z-20 before:content-[''] before:absolute before:top-4 before:-left-[5px] before:w-2 before:h-2 before:bg-surface-container-low before:border-l before:border-t before:border-surface-container-high before:-rotate-45">
+<div class="font-mono text-[10px] text-on-surface-variant mb-2 space-y-1">
+<div><span class="text-on-surface font-medium">ENTRADA:</span> post existente.</div>
+<div><span class="text-on-surface font-medium">SAÍDA:</span> carrossel editável.</div>
+<div><span class="text-on-surface font-medium">PRESERVA:</span> identidade, campanha e histórico.</div>
+</div>
+<button class="w-full py-1.5 bg-surface-container-high hover:bg-surface-bright border border-outline-variant text-on-surface font-label-md text-[11px] rounded transition-colors mt-2">
+                                    Selecionar conteúdo
+                                </button>
+</div>
+<div class="group flex items-start gap-3 p-2 rounded hover:bg-surface-container-highest pointer-cursor transition-colors border border-transparent">
+<span class="material-symbols-outlined text-on-surface-variant mt-0.5 text-[18px]">find_replace</span>
+<div>
+<div class="font-label-md text-on-surface">Adaptar conteúdo existente</div>
+<div class="text-[12px] text-on-surface-variant mt-0.5 leading-snug">Leve uma peça para outro formato ou canal.</div>
+</div>
+</div>
+<div class="group flex items-start gap-3 p-2 rounded hover:bg-surface-container-highest pointer-cursor transition-colors border border-transparent">
+<span class="material-symbols-outlined text-on-surface-variant mt-0.5 text-[18px]">replay</span>
+<div>
+<div class="font-label-md text-on-surface">Reutilizar conteúdo vencedor</div>
+<div class="text-[12px] text-on-surface-variant mt-0.5 leading-snug">Crie uma nova variação usando evidências.</div>
+</div>
+</div>
+</div>
+</div>
+<!-- AREA 3: CRIAR COM INTELIGÊNCIA -->
+<div class="col-span-2 pt-2">
+<h3 class="font-mono text-[11px] uppercase tracking-widest text-on-surface-variant mb-3 border-b border-surface-container-high pb-2">Criar com Inteligência</h3>
+<div class="grid grid-cols-2 gap-4">
+<div class="group flex items-start gap-3 p-2 rounded hover:bg-surface-container-highest pointer-cursor transition-colors border border-transparent">
+<span class="material-symbols-outlined text-on-surface-variant mt-0.5 text-[18px]">radar</span>
+<div>
+<div class="font-label-md text-on-surface">Criar a partir do Radar</div>
+<div class="text-[12px] text-on-surface-variant mt-0.5 leading-snug">Use uma oportunidade contextual compatível com a marca.</div>
+</div>
+</div>
+<div class="group flex items-start gap-3 p-2 rounded hover:bg-surface-container-highest pointer-cursor transition-colors border border-transparent">
+<span class="material-symbols-outlined text-on-surface-variant mt-0.5 text-[18px]">psychology</span>
+<div>
+<div class="font-label-md text-on-surface">Briefing inteligente</div>
+<div class="text-[12px] text-on-surface-variant mt-0.5 leading-snug">Responda poucas perguntas e receba uma direção completa.</div>
+</div>
+</div>
+<div class="group flex items-start gap-3 p-2 rounded hover:bg-surface-container-highest pointer-cursor transition-colors border border-transparent col-span-2 w-1/2 pr-2">
+<span class="material-symbols-outlined text-on-surface-variant mt-0.5 text-[18px]">dashboard_customize</span>
+<div>
+<div class="font-label-md text-on-surface">Começar com template</div>
+<div class="text-[12px] text-on-surface-variant mt-0.5 leading-snug">Use uma estrutura aprovada da identidade da marca.</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- AREA 4: RETOMAR (Right Sidebar) -->
+<div class="w-[280px] bg-surface-container-low border-l border-surface-container-high flex flex-col p-4 relative z-30">
+<div class="flex items-center justify-between mb-4 border-b border-surface-container-high pb-2">
+<h3 class="font-mono text-[11px] uppercase tracking-widest text-on-surface-variant">Retomar</h3>
+<span class="material-symbols-outlined text-on-surface-variant text-[16px] pointer-cursor hover:text-on-surface">more_horiz</span>
+</div>
+<div class="flex-1 overflow-y-auto space-y-3">
+<!-- Item 1 -->
+<div class="flex items-center gap-3 group pointer-cursor">
+<div class="w-10 h-10 rounded border border-surface-container-high overflow-hidden bg-surface flex-shrink-0">
+<img class="object-cover w-full h-full opacity-80 group-hover:opacity-100 transition-opacity" data-alt="A small, stylized thumbnail image of a morning coffee cup on a minimal desk, representing a social media post draft. Dark mode aesthetic, clinical and clean lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCn03489GcUvnsQUmV1H6ETlc4qgnw619lBB6PpK55rx7hB0WuF9BlkQPGUuEnypNBNIoth0dZ1YBVC7ruSHoy5k85wuK-nH9tYLbgdR7R_7MK87k8NhjRNlo8qds8S4hDPtpBEcYbhVyvM_qn47LqfMW9z0VC9t0smYCOoYolNz47ZMA0qk5CCUEd1IUZ7ooQXEdqjzQVEdq43WLC4FVkE5igka9uaGT0qr0IytExouHYpnIz2_eXiHA"/>
+</div>
+<div class="flex-1 min-w-0">
+<div class="font-label-md text-on-surface truncate group-hover:text-primary-container transition-colors">Ritual da manhã</div>
+<div class="flex items-center gap-1.5 mt-0.5">
+<span class="text-[10px] bg-surface border border-outline-variant text-on-surface-variant px-1 rounded uppercase">Post</span>
+<span class="text-[11px] text-on-surface-variant truncate">Editado há 12 min</span>
+</div>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="flex items-center gap-3 group pointer-cursor">
+<div class="w-10 h-10 rounded border border-surface-container-high overflow-hidden bg-surface flex-shrink-0">
+<img class="object-cover w-full h-full opacity-80 group-hover:opacity-100 transition-opacity" data-alt="A small, abstract minimal graphic depicting coffee beans in a geometric pattern, representing a carousel design. Dark mode, subtle green accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCfVLotP_zr4sjpWo5SNTjCmquC0dd8LuQAIdrWHiqYIBJBdcLkymUhBzDj6YhiA1A6gFwfouviqyqnoTo5c4neo8eiXJ6q93dYx7c1VfwTPofjIYV2I0XF0M0YcT1kWY3fBRLwhduofVsb4QXuuaPe0FkosplE8KY_VsKEjbHBXgG5-pcE2miuvRL9v5ql3vLKCbv-GLL7WQeKfButIpAGGFsWu4wzUQmVFMEPzJ6YFMpZWIP46Cd41g"/>
+</div>
+<div class="flex-1 min-w-0">
+<div class="font-label-md text-on-surface truncate group-hover:text-primary-container transition-colors">Café é território</div>
+<div class="flex items-center gap-1.5 mt-0.5">
+<span class="text-[10px] bg-surface border border-outline-variant text-on-surface-variant px-1 rounded uppercase">Carrossel</span>
+<span class="text-[11px] text-on-surface-variant truncate">6/8 slides</span>
+</div>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="flex items-center gap-3 group pointer-cursor">
+<div class="w-10 h-10 rounded border border-surface-container-high overflow-hidden bg-surface flex-shrink-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-outline-variant text-[20px]">campaign</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="font-label-md text-on-surface truncate group-hover:text-primary-container transition-colors">Semana do café</div>
+<div class="flex items-center gap-1.5 mt-0.5">
+<span class="text-[10px] bg-surface border border-outline-variant text-on-surface-variant px-1 rounded uppercase">Campanha</span>
+<span class="text-[11px] text-on-surface-variant truncate flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-outline-variant"></span>
+                                    Em planejamento
+                                </span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script src="/stitch/bridge.js"></script></body></html>

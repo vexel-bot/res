@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Navigation V6.2 — Etapa Criar aberta</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {"tertiary-fixed": "#ffdad8", "outline-variant": "#5a403f", "on-error-container": "#ffdad6", "secondary-fixed": "#ffdbc8", "surface-container-low": "#1c1b1b", "on-primary-fixed-variant": "#920418", "on-tertiary-container": "#5c0e15", "on-primary-fixed": "#410005", "on-primary-container": "#62000c", "on-secondary-fixed": "#321200", "surface-dim": "#131313", "surface-container-lowest": "#0e0e0e", "inverse-primary": "#b4252d", "surface-bright": "#393939", "surface-variant": "#353534", "tertiary-fixed-dim": "#ffb3b1", primary: "#ffb3af", outline: "#a98987", error: "#ffb4ab", "tertiary-container": "#e17474", "primary-fixed": "#ffdad7", secondary: "#ffb68b", surface: "#131313", "surface-container-high": "#2a2a2a", "secondary-container": "#ff7f1c", "on-primary": "#68000d", "on-error": "#690005", "secondary-fixed-dim": "#ffb68b", "inverse-on-surface": "#313030", "error-container": "#93000a", "on-tertiary-fixed": "#410007", "inverse-surface": "#e5e2e1", "on-surface": "#e5e2e1", "on-secondary-fixed-variant": "#753400", "surface-container": "#201f1f", "surface-container-highest": "#353534", "on-secondary-container": "#602a00", tertiary: "#ffb3b1", "primary-container": "#ff5c5c", "on-tertiary-fixed-variant": "#7f292c", "surface-tint": "#ffb3af", "on-background": "#e5e2e1", background: "#131313", "on-secondary": "#522300", "on-surface-variant": "#e2bebc", "on-tertiary": "#601118", "primary-fixed-dim": "#ffb3af"}, borderRadius: {DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem"}, spacing: {"margin-mobile": "16px", gutter: "16px", "margin-desktop": "32px", "container-max": "1440px", unit: "4px"}, fontFamily: {code: ["Geist"], "body-md": ["Geist"], "headline-md": ["Geist"], "body-lg": ["Geist"], "headline-lg": ["Geist"], display: ["Geist"], "label-md": ["Geist"], headline: ["Geist"], body: ["Geist"], label: ["Geist"]}, fontSize: {code: ["13px", {lineHeight: "1.4", fontWeight: "400"}], "body-md": ["14px", {lineHeight: "1.5", fontWeight: "400"}], "headline-md": ["20px", {lineHeight: "1.4", fontWeight: "500"}], "body-lg": ["16px", {lineHeight: "1.5", fontWeight: "400"}], "headline-lg": ["24px", {lineHeight: "1.3", fontWeight: "600"}], display: ["32px", {lineHeight: "1.2", letterSpacing: "-0.02em", fontWeight: "600"}], "label-md": ["12px", {lineHeight: "1", letterSpacing: "0.02em", fontWeight: "500"}]}}}};</script>
+<style>
+        @import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&display=swap');
+        body { font-family: 'Geist', sans-serif; }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen relative overflow-hidden">
+<!-- TopNavBar -->
+<header class="flex justify-between items-center w-full px-margin-desktop h-16 bg-surface-container-lowest border-b border-outline-variant z-50 relative">
+<div class="flex items-center gap-8">
+<h1 class="font-display text-display text-primary tracking-tight">Clicko Precision</h1>
+<nav class="hidden md:flex gap-6 h-full items-center">
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-200 font-label-md text-label-md" href="#">Newsroom</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-200 font-label-md text-label-md" href="#">Radar Room</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-200 font-label-md text-label-md" href="#">Brand Memory</a>
+<!-- Active Item -->
+<div class="relative h-full flex items-center">
+<a class="text-primary border-b-2 border-primary pb-1 font-label-md text-label-md h-full flex items-center opacity-80 transition-all" href="#">Campaign Intake</a>
+</div>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-200 font-label-md text-label-md" href="#">Campaign Room</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:text-primary transition-colors duration-200">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors duration-200">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-surface-container-high border border-outline-variant overflow-hidden">
+<img alt="User profile" class="w-full h-full object-cover" data-alt="A detailed headshot of a professional user in a dark, high-end technical environment. The lighting is moody and cinematic, with a subtle green rim light reflecting the brand's primary color. The portrait is crisp, modern, and conveys a sense of quiet authority suited for an industrial minimalism interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCnbtEEbn07lxBeEvST4J8YqlQBmWoKESMVEs-hnmyefkpaEe3tpaoIsDuhRnnOg_u9qxflDkldOPr2eWKN8234YUPOjZ3z0aryJci_h3uww7C8EKVj3ssx816GsEiMQDY2ZJY_tgPLemKzAIbvQF5hB7_IGtWqRIyvf1I0a4oDTXtXz3CBfMcX4aRbbPJaAzSnYV6sQdk3YnHtwjsqdSENSJp8-FX0bO9nv79e0jj_Fscm-jtTZ808rg"/>
+</div>
+</div>
+</header>
+<!-- SideNavBar & Main Content Wrapper -->
+<div class="flex h-[calc(100vh-64px)] relative">
+<!-- SideNavBar -->
+<aside class="flex flex-col w-64 h-[calc(100vh-64px)] py-4 bg-surface-container-low border-r border-outline-variant fixed left-0 top-16 z-40 hidden md:flex">
+<div class="px-6 mb-8">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-surface-container-high border border-outline-variant flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">precision_manufacturing</span>
+</div>
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface">Precision Ops</h2>
+<p class="font-label-md text-label-md text-on-surface-variant">Operational Mode</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 flex flex-col gap-2 px-2">
+<a class="flex items-center gap-3 px-4 py-3 rounded text-on-surface-variant hover:bg-surface-container transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+                    Dashboard
+                </a>
+<a class="flex items-center gap-3 px-4 py-3 rounded text-on-surface-variant hover:bg-surface-container transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">monitoring</span>
+                    Analytics
+                </a>
+<!-- Active Side Item Mapping to 'Criar'/Campaign Intake context -->
+<a class="flex items-center gap-3 px-4 py-3 rounded bg-surface-container-high text-primary border-l-2 border-primary scale-95 transition-transform font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">database</span>
+                    Assets
+                </a>
+<a class="flex items-center gap-3 px-4 py-3 rounded text-on-surface-variant hover:bg-surface-container transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">terminal</span>
+                    Logs
+                </a>
+<a class="flex items-center gap-3 px-4 py-3 rounded text-on-surface-variant hover:bg-surface-container transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">help</span>
+                    Support
+                </a>
+</nav>
+</aside>
+<!-- Blurred Background Canvas -->
+<main class="ml-64 flex-1 p-margin-desktop relative overflow-y-auto">
+<!-- Background Content (Blurred) -->
+<div class="absolute inset-0 z-0 bg-surface-dim opacity-50 blur-sm pointer-events-none p-margin-desktop grid grid-cols-12 gap-gutter">
+<div class="col-span-12 mb-8">
+<h2 class="font-headline-lg text-headline-lg mb-2">Hoje</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Visão geral das campanhas ativas.</p>
+</div>
+<!-- Dummy Grid items for background -->
+<div class="col-span-8 h-64 bg-surface-container border border-outline-variant rounded"></div>
+<div class="col-span-4 h-64 bg-surface-container border border-outline-variant rounded"></div>
+<div class="col-span-4 h-64 bg-surface-container border border-outline-variant rounded"></div>
+<div class="col-span-8 h-64 bg-surface-container border border-outline-variant rounded"></div>
+</div>
+<!-- Overlay Dropdown (Painel Suspenso) -->
+<div class="absolute top-0 left-64 right-0 z-50 flex justify-center pt-2 pointer-events-none">
+<!-- Dropdown Container -->
+<div class="w-[800px] bg-[#181B1D] border border-outline-variant rounded-lg shadow-2xl flex flex-col pointer-events-auto mt-2">
+<div class="p-6 grid grid-cols-12 gap-8 border-b border-outline-variant">
+<!-- Left Column -->
+<div class="col-span-7 flex flex-col gap-8">
+<!-- Iniciar rápido -->
+<div>
+<h3 class="font-label-md text-label-md text-on-surface-variant mb-4 uppercase tracking-widest">Iniciar rápido</h3>
+<div class="grid grid-cols-3 gap-4">
+<button class="bg-surface-container-low border border-outline-variant hover:border-primary hover:bg-surface-container p-4 rounded flex flex-col items-start gap-2 transition-all">
+<span class="material-symbols-outlined text-primary">edit_document</span>
+<span class="font-body-md text-body-md">Post</span>
+</button>
+<button class="bg-surface-container-low border border-outline-variant hover:border-primary hover:bg-surface-container p-4 rounded flex flex-col items-start gap-2 transition-all">
+<span class="material-symbols-outlined text-primary">view_carousel</span>
+<span class="font-body-md text-body-md">Carrossel</span>
+</button>
+<button class="bg-surface-container-low border border-outline-variant hover:border-primary hover:bg-surface-container p-4 rounded flex flex-col items-start gap-2 transition-all">
+<span class="material-symbols-outlined text-primary">movie</span>
+<span class="font-body-md text-body-md">Roteiro UGC</span>
+</button>
+</div>
+</div>
+<!-- Ferramentas & Inteligência -->
+<div class="grid grid-cols-2 gap-8">
+<div>
+<h3 class="font-label-md text-label-md text-on-surface-variant mb-4 uppercase tracking-widest">Ferramentas</h3>
+<ul class="flex flex-col gap-2">
+<li><a class="font-body-md text-body-md hover:text-primary transition-colors flex items-center gap-2" href="#"><span class="material-symbols-outlined text-[16px]">build</span> Studio Composer</a></li>
+<li><a class="font-body-md text-body-md hover:text-primary transition-colors flex items-center gap-2" href="#"><span class="material-symbols-outlined text-[16px]">visibility</span> Visual Editor</a></li>
+<li><a class="font-body-md text-body-md hover:text-primary transition-colors flex items-center gap-2" href="#"><span class="material-symbols-outlined text-[16px]">layers</span> Carousel Builder</a></li>
+<li><a class="font-body-md text-body-md hover:text-primary transition-colors flex items-center gap-2" href="#"><span class="material-symbols-outlined text-[16px]">videocam</span> Video Studio</a></li>
+</ul>
+</div>
+<div class="flex flex-col gap-8">
+<div>
+<h3 class="font-label-md text-label-md text-on-surface-variant mb-4 uppercase tracking-widest">Inteligência</h3>
+<a class="font-body-md text-body-md hover:text-primary transition-colors flex items-center gap-2" href="#">
+<span class="material-symbols-outlined text-[16px]">smart_toy</span> Contextual Copilot
+                                        </a>
+</div>
+<div>
+<h3 class="font-label-md text-label-md text-on-surface-variant mb-4 uppercase tracking-widest">Recursos</h3>
+<a class="font-body-md text-body-md hover:text-primary transition-colors flex items-center gap-2" href="#">
+<span class="material-symbols-outlined text-[16px]">library_books</span> Templates e Reutilizáveis
+                                        </a>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Retomar -->
+<div class="col-span-5 border-l border-outline-variant pl-8">
+<h3 class="font-label-md text-label-md text-on-surface-variant mb-4 uppercase tracking-widest">Retomar</h3>
+<div class="flex flex-col gap-4">
+<!-- Item 1 -->
+<div class="flex items-center gap-4 group cursor-pointer">
+<div class="w-16 h-12 bg-surface-container border border-outline-variant rounded overflow-hidden flex-shrink-0 relative group-hover:border-primary transition-colors">
+<div class="bg-cover bg-center w-full h-full" data-alt="A high-contrast, minimalist thumbnail image representing a digital marketing campaign. Deep blacks and vibrant green geometric shapes create a sense of operational precision. The style is dark matte, industrial, and highly technical." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD6ghO_h2_BPhkz2ABJnEOXsyKpLzPyzmq29NjLE9D538Mgf1CpchtuhGTemuIKL1EcH146-BnXccmoHiXk4Mjqf2RvjtqmUmk4O4p2PuWRXiqez8oXt7OHmWSbKRYIvuANpPdGtR7v1oyr8m8wZAg5BQHPl5_9MLmyPfIH1l1NE1k9nMB91rx4PupiLzuyMmPxDoMbLRR__iombfewVuEceTrGTSwxw_LR4S294iru8_c4IDj06k2yCQ')"></div>
+</div>
+<div class="flex-1 min-w-0">
+<h4 class="font-body-md text-body-md truncate group-hover:text-primary transition-colors">Campanha Q3 Lançamento</h4>
+<div class="flex items-center gap-2 mt-1">
+<div class="w-1.5 h-1.5 rounded-full bg-primary"></div>
+<span class="font-label-md text-label-md text-on-surface-variant">Rascunho</span>
+</div>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="flex items-center gap-4 group cursor-pointer">
+<div class="w-16 h-12 bg-surface-container border border-outline-variant rounded overflow-hidden flex-shrink-0 relative group-hover:border-primary transition-colors">
+<div class="bg-cover bg-center w-full h-full" data-alt="A sleek, abstract data visualization thumbnail showing a line chart trending upwards. Rendered in dark mode with surgical thin lines and a glowing primary green accent. The aesthetic is clinical and professional, fitting a high-end B2B dashboard." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA-CTlsqBvFMeWkf_S4PjGsSMww8FMRQsJxRl4O1BfHNWLt9NYM1Wu1Q_QyOHrnRypNU6h9vF0bHNnmiOBnl2jP4YibADDXPLiXJib-5DIzaCqlfgbn5n8oUdPf2nLxHu9Ltj8da7TgRInxNgoQE3lmHea9xLkzwhZsM-qbgkkzGFn1NROXShAlGwdxVgh1hj7dwQPJzmygsT52khMQ4rdjuudxc8EdJou2wipe381_31N2H-rj38J_UA')"></div>
+</div>
+<div class="flex-1 min-w-0">
+<h4 class="font-body-md text-body-md truncate group-hover:text-primary transition-colors">Relatório Mensal Social</h4>
+<div class="flex items-center gap-2 mt-1">
+<div class="w-1.5 h-1.5 rounded-full bg-surface-variant"></div>
+<span class="font-label-md text-label-md text-on-surface-variant">Pausado</span>
+</div>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="flex items-center gap-4 group cursor-pointer">
+<div class="w-16 h-12 bg-surface-container border border-outline-variant rounded overflow-hidden flex-shrink-0 relative group-hover:border-primary transition-colors">
+<div class="bg-cover bg-center w-full h-full" data-alt="A moody, cinematic thumbnail image of a server rack or technical hardware bathed in low-key lighting with a subtle green glow. It conveys robust infrastructure and technical capability in a dark matte industrial style." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAJQsiPVHrJiTYZ5KslLeK2cR-jWyOC03M0YDXm3i-X-3NC2tk2mpEym5DHgd7_WNi0Din-p41Romq8mA-Z_ql4x39vzL9Xr6yWkhDzH4Fjzlz8fFyoGJVc80I6mss4DHVdhm6zT2PzliL3ui422Ax6NwF05hCkongL5b4VifOIfQqndFgPupmmUHxwJbPPfp3R_pf5ZXCO4z3nw_o0InsNoVGwJvS34aD_6saPEqg-dp6dG9sKEiUOQA')"></div>
+</div>
+<div class="flex-1 min-w-0">
+<h4 class="font-body-md text-body-md truncate group-hover:text-primary transition-colors">UGC Promo Verão</h4>
+<div class="flex items-center gap-2 mt-1">
+<div class="w-1.5 h-1.5 rounded-full bg-primary"></div>
+<span class="font-label-md text-label-md text-on-surface-variant">Em revisão</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<div class="p-4 bg-surface-container-low rounded-b-lg flex justify-center">
+<a class="font-body-md text-body-md text-primary hover:underline flex items-center gap-2" href="#">
+                            Ver toda a produção <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+</main>
+</div>
+<script src="/stitch/bridge.js"></script></body></html>

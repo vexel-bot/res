@@ -78,7 +78,7 @@ export function StudioView({ onSavePost, initialMode = 'create' }: StudioViewPro
       {/* Top Header */}
       <div className="mx-auto flex w-full max-w-[1600px] flex-wrap items-center justify-between gap-5 px-6 pt-6 2xl:px-8 2xl:pt-7">
         <div className="space-y-1.5">
-          <p className="text-[10px] font-mono uppercase tracking-[0.25em] font-bold text-[#8bd132] flex items-center gap-2">
+          <p className="text-[10px] font-mono uppercase tracking-[0.25em] font-bold text-[#ff5c5c] flex items-center gap-2">
             <Sparkles className="h-3.5 w-3.5" /> Central de Produção Multimídia & IA
           </p>
           <h1 className="text-[26px] font-semibold tracking-tight text-white">Clicko Creative Studio</h1>
@@ -88,13 +88,13 @@ export function StudioView({ onSavePost, initialMode = 'create' }: StudioViewPro
         </div>
 
         <div className="flex flex-wrap items-center gap-3">
-          <span className="flex items-center gap-2 rounded-xl border border-[#8bd132]/30 bg-[#8bd132]/[0.08] px-4 py-2.5 text-[10px] font-mono font-bold text-[#8bd132] shadow-sm">
+          <span className="flex items-center gap-2 rounded-xl border border-[#ff5c5c]/30 bg-[#ff5c5c]/[0.08] px-4 py-2.5 text-[10px] font-mono font-bold text-[#ff5c5c] shadow-sm">
             <BrainCircuit className="h-4 w-4" /> Brain Memória Rev. {brain.revision}
           </span>
           <select
             value={activeCampaign?.id || ''}
             onChange={(e) => setActiveCampaignId(e.target.value || undefined)}
-            className="h-10 rounded-xl border border-white/[0.08] bg-[#070a0d] px-4 text-xs font-semibold text-white outline-none focus:border-[#8bd132]/50 transition-all"
+            className="h-10 rounded-xl border border-white/[0.08] bg-[#070a0d] px-4 text-xs font-semibold text-white outline-none focus:border-[#ff5c5c]/50 transition-all"
           >
             <option value="">Sem campanha vinculada</option>
             {campaigns.map((campaign) => (
@@ -117,7 +117,7 @@ export function StudioView({ onSavePost, initialMode = 'create' }: StudioViewPro
               onClick={() => setMode(id)}
               className={`group relative flex min-w-[210px] flex-col justify-between rounded-xl border p-4 text-left transition-colors duration-150 sm:min-w-0 ${
                 isActive
-                  ? 'border-[#8bd132]/35 bg-[#101510]'
+                  ? 'border-[#ff5c5c]/35 bg-[#101510]'
                   : 'bg-[#070a0d] border-white/[0.05] hover:bg-[#0e1318] hover:border-white/20'
               }`}
             >
@@ -126,7 +126,7 @@ export function StudioView({ onSavePost, initialMode = 'create' }: StudioViewPro
                   <span
                     className={`grid h-10 w-10 place-items-center rounded-xl border ${
                       isActive
-                        ? 'border-[#8bd132]/40 bg-[#8bd132]/15 text-[#8bd132]'
+                        ? 'border-[#ff5c5c]/40 bg-[#ff5c5c]/15 text-[#ff5c5c]'
                         : 'border-white/10 bg-white/[0.03] text-[#717d85] group-hover:text-white'
                     }`}
                   >
@@ -135,7 +135,7 @@ export function StudioView({ onSavePost, initialMode = 'create' }: StudioViewPro
                   <span
                     className={`text-[9px] font-mono font-semibold px-2 py-0.5 rounded-full border ${
                       isActive
-                        ? 'border-[#8bd132]/30 bg-[#8bd132]/10 text-[#8bd132]'
+                        ? 'border-[#ff5c5c]/30 bg-[#ff5c5c]/10 text-[#ff5c5c]'
                         : 'border-white/[0.06] bg-white/[0.02] text-[#627078]'
                     }`}
                   >
@@ -146,18 +146,18 @@ export function StudioView({ onSavePost, initialMode = 'create' }: StudioViewPro
                 <h3 className={`text-sm font-extrabold tracking-tight ${isActive ? 'text-white' : 'text-[#c0c8ce] group-hover:text-white'}`}>
                   {label}
                 </h3>
-                <p className={`mt-1 text-[11px] leading-relaxed ${isActive ? 'text-[#8bd132]' : 'text-[#627078]'}`}>
+                <p className={`mt-1 text-[11px] leading-relaxed ${isActive ? 'text-[#ff5c5c]' : 'text-[#627078]'}`}>
                   {sublabel}
                 </p>
               </div>
 
-              <div className="mt-4 flex items-center gap-1 text-[10px] font-bold text-[#8bd132] opacity-0 group-hover:opacity-100 transition-opacity">
+              <div className="mt-4 flex items-center gap-1 text-[10px] font-bold text-[#ff5c5c] opacity-0 group-hover:opacity-100 transition-opacity">
                 <span>Acessar Módulo</span>
                 <ChevronRight className="h-3 w-3" />
               </div>
 
               {isActive && (
-                <div className="absolute inset-x-3 top-0 h-0.5 rounded-b-full bg-[#8bd132]" />
+                <div className="absolute inset-x-3 top-0 h-0.5 rounded-b-full bg-[#ff5c5c]" />
               )}
             </button>
           );

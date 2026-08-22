@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Clicko - Post Creation Workspace</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {"outline-variant": "#5a403f", "on-secondary-fixed": "#321200", "surface-bright": "#393939", "tertiary-fixed-dim": "#ffb3b1", "inverse-on-surface": "#313030", "on-tertiary-container": "#5c0e15", "secondary-fixed-dim": "#ffb68b", "primary-container": "#ff5c5c", "on-tertiary-fixed-variant": "#7f292c", secondary: "#ffb68b", "primary-fixed": "#ffdad7", "primary-fixed-dim": "#ffb3af", "on-error": "#690005", "secondary-fixed": "#ffdbc8", "surface-variant": "#353534", "on-error-container": "#ffdad6", tertiary: "#ffb3b1", "surface-tint": "#ffb3af", "surface-container": "#201f1f", "on-secondary-fixed-variant": "#753400", "on-surface-variant": "#e2bebc", error: "#ffb4ab", "on-secondary": "#522300", "on-background": "#e5e2e1", "inverse-primary": "#b4252d", "on-secondary-container": "#602a00", "tertiary-container": "#e17474", "tertiary-fixed": "#ffdad8", background: "#131313", "on-primary-fixed-variant": "#920418", primary: "#ffb3af", "error-container": "#93000a", "on-primary-container": "#62000c", "secondary-container": "#ff7f1c", "on-primary-fixed": "#410005", "on-surface": "#e5e2e1", outline: "#a98987", "surface-container-highest": "#353534", "on-tertiary-fixed": "#410007", "surface-container-high": "#2a2a2a", "surface-dim": "#131313", "inverse-surface": "#e5e2e1", "surface-container-low": "#1c1b1b", "on-primary": "#68000d", "surface-container-lowest": "#0e0e0e", surface: "#131313", "on-tertiary": "#601118"}, borderRadius: {DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem"}, spacing: {stack_gap_sm: "8px", gutter: "16px", context_nav_width: "240px", stack_gap_md: "16px", spine_width: "64px", container_padding: "24px"}, fontFamily: {"headline-lg": ["Geist"], "body-sm": ["Geist"], display: ["Geist"], "body-lg": ["Geist"], "headline-md": ["Geist"], "body-md": ["Geist"], "label-mono": ["Geist"], "data-number": ["Geist"], headline: ["Geist"], body: ["Geist"], label: ["Geist"]}, fontSize: {"headline-lg": ["24px", {lineHeight: "32px", letterSpacing: "-0.01em", fontWeight: "600"}], "body-sm": ["13px", {lineHeight: "18px", fontWeight: "400"}], display: ["32px", {lineHeight: "40px", letterSpacing: "-0.02em", fontWeight: "600"}], "body-lg": ["16px", {lineHeight: "24px", fontWeight: "400"}], "headline-md": ["20px", {lineHeight: "28px", fontWeight: "500"}], "body-md": ["14px", {lineHeight: "20px", fontWeight: "400"}], "label-mono": ["12px", {lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "500"}], "data-number": ["14px", {lineHeight: "20px", fontWeight: "600"}]}}}};</script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        @import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&display=swap');
+        
+        /* Utility classes based on style guidance */
+        .workbench-input {
+            @apply bg-background border border-outline-variant text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary rounded-DEFAULT px-3 py-2 font-body-md;
+        }
+        .workbench-label {
+            @apply font-label-mono text-label-mono text-on-surface-variant mb-1 block uppercase;
+        }
+        .workbench-card {
+            @apply bg-surface-container border border-outline-variant rounded-lg p-4;
+        }
+        .workbench-btn-primary {
+            @apply bg-primary text-on-primary font-body-md font-medium px-4 py-2 rounded-DEFAULT hover:opacity-90 transition-opacity;
+        }
+        .workbench-btn-secondary {
+            @apply bg-transparent border border-outline-variant text-on-surface font-body-md px-4 py-2 rounded-DEFAULT hover:bg-surface-variant transition-colors;
+        }
+        .workbench-btn-ghost {
+            @apply bg-transparent text-on-surface-variant font-body-md px-3 py-1 hover:text-on-surface transition-colors;
+        }
+        .workbench-chip {
+            @apply border border-outline-variant text-on-surface-variant font-label-mono px-2 py-0.5 rounded-full inline-flex items-center text-[10px] uppercase;
+        }
+        .workbench-chip-success {
+            @apply border-primary text-primary;
+        }
+        
+        /* Custom scrollbar for high-density environments */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #292a2b; /* surface-container-high */
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #343536; /* surface-variant */
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md antialiased h-screen overflow-hidden flex flex-col selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar -->
+<header class="flex justify-between items-center h-16 px-gutter w-full sticky top-0 z-50 bg-surface dark:bg-surface border-b border-outline-variant dark:border-outline-variant flat no shadows">
+<div class="flex items-center gap-6">
+<div class="font-headline-md text-headline-md font-bold text-primary dark:text-primary tracking-tight">Clicko</div>
+<nav class="hidden md:flex gap-6 h-full items-center">
+<a class="text-on-surface-variant dark:text-on-surface-variant font-body-md text-body-md hover:text-primary dark:hover:text-primary-fixed transition-colors cursor-pointer active:opacity-80" href="#">Dashboard</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant font-body-md text-body-md hover:text-primary dark:hover:text-primary-fixed transition-colors cursor-pointer active:opacity-80" href="#">Inventory</a>
+<a class="text-primary dark:text-primary border-b-2 border-primary pb-1 font-body-md text-body-md flex-col h-full flex justify-center mt-1 cursor-pointer active:opacity-80" href="#">Workspace</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant font-body-md text-body-md hover:text-primary dark:hover:text-primary-fixed transition-colors cursor-pointer active:opacity-80" href="#">Detail</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant font-body-md text-body-md hover:text-primary dark:hover:text-primary-fixed transition-colors cursor-pointer active:opacity-80" href="#">Reuse Lab</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<!-- Search bar on left logic assumed integrated into layout if needed, hiding for specific layout request -->
+<button class="workbench-btn-primary flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                Criar post
+            </button>
+<div class="flex items-center gap-2 text-on-surface-variant">
+<button class="p-2 hover:text-on-surface transition-colors rounded-full hover:bg-surface-variant"><span class="material-symbols-outlined">notifications</span></button>
+<button class="p-2 hover:text-on-surface transition-colors rounded-full hover:bg-surface-variant"><span class="material-symbols-outlined">settings</span></button>
+</div>
+<div class="w-8 h-8 rounded-full bg-surface-variant overflow-hidden border border-outline-variant">
+<img alt="User profile avatar" class="object-cover w-full h-full" data-alt="A clinical, high-contrast professional headshot of a young creative director in a dimly lit studio environment. The lighting is cinematic with a slight green rim light echoing the operational brand colors. The portrait is crisp, authoritative, and minimalist, completely avoiding standard corporate stock photo aesthetics. Shot on 85mm lens." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBonMyM18msRQbjOuWghwAwJ7p074bPc5KmRTbV1MVeJfZqbXchFOO8sogjJJiQdTBUIEjcbRUXFeqX6x5HsRSnpPgk4F_3h8DULPOm_cCoqFaHQb6FJiKGRl4Ry275YU5QgY2vQ_dx4-2NWIcPEqAhAhGfrnvhclOvsTPyGi-I7fRyLeJYHBA4sX19kxEYTGDcvliWhnlC4Xy4JLJTIaWhf084cfmilB31U81NPBx5ATKtKYjUgLidbg"/>
+</div>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-16 w-spine_width hover:w-context_nav_width flex flex-col h-[calc(100vh-64px)] z-40 transition-all duration-150 ease-in-out overflow-hidden bg-surface-container dark:bg-surface-container border-r border-outline-variant dark:border-outline-variant flat no shadows group">
+<div class="p-4 flex items-center gap-4 border-b border-outline-variant/50 shrink-0 whitespace-nowrap min-w-[240px]">
+<div class="w-8 h-8 bg-surface-variant rounded-DEFAULT flex items-center justify-center text-primary shrink-0 border border-outline-variant">
+<span class="material-symbols-outlined text-[18px]">workspaces</span>
+</div>
+<div class="opacity-0 group-hover:opacity-100 transition-opacity duration-150 flex-1">
+<div class="font-headline-md text-headline-md text-primary leading-tight">Workspace</div>
+<div class="font-label-mono text-label-mono text-on-surface-variant">Creator Pro</div>
+</div>
+</div>
+<nav class="flex-1 py-4 flex flex-col gap-1 overflow-y-auto">
+<a class="flex items-center py-3 text-on-surface-variant dark:text-on-surface-variant pl-4 hover:bg-surface-variant dark:hover:bg-surface-variant transition-colors whitespace-nowrap min-w-[240px]" href="#">
+<span class="material-symbols-outlined shrink-0">dashboard</span>
+<span class="ml-4 font-label-mono text-label-mono opacity-0 group-hover:opacity-100 transition-opacity duration-150 uppercase">Dashboard</span>
+</a>
+<a class="flex items-center py-3 text-on-surface-variant dark:text-on-surface-variant pl-4 hover:bg-surface-variant dark:hover:bg-surface-variant transition-colors whitespace-nowrap min-w-[240px]" href="#">
+<span class="material-symbols-outlined shrink-0">inventory_2</span>
+<span class="ml-4 font-label-mono text-label-mono opacity-0 group-hover:opacity-100 transition-opacity duration-150 uppercase">Inventory</span>
+</a>
+<a class="flex items-center py-3 text-primary dark:text-primary border-l-2 border-primary pl-[14px] bg-surface-container-high dark:bg-surface-container-high hover:bg-surface-variant dark:hover:bg-surface-variant transition-colors whitespace-nowrap min-w-[240px]" href="#">
+<span class="material-symbols-outlined shrink-0">workspaces</span>
+<span class="ml-4 font-label-mono text-label-mono opacity-0 group-hover:opacity-100 transition-opacity duration-150 uppercase">Workspace</span>
+</a>
+<a class="flex items-center py-3 text-on-surface-variant dark:text-on-surface-variant pl-4 hover:bg-surface-variant dark:hover:bg-surface-variant transition-colors whitespace-nowrap min-w-[240px]" href="#">
+<span class="material-symbols-outlined shrink-0">info</span>
+<span class="ml-4 font-label-mono text-label-mono opacity-0 group-hover:opacity-100 transition-opacity duration-150 uppercase">Detail</span>
+</a>
+<a class="flex items-center py-3 text-on-surface-variant dark:text-on-surface-variant pl-4 hover:bg-surface-variant dark:hover:bg-surface-variant transition-colors whitespace-nowrap min-w-[240px]" href="#">
+<span class="material-symbols-outlined shrink-0">rebase_edit</span>
+<span class="ml-4 font-label-mono text-label-mono opacity-0 group-hover:opacity-100 transition-opacity duration-150 uppercase">Reuse Lab</span>
+</a>
+</nav>
+<div class="p-4 border-t border-outline-variant/50 shrink-0 min-w-[240px]">
+<button class="w-full flex items-center justify-center gap-2 bg-surface-variant hover:bg-surface-bright text-primary border border-outline-variant rounded-DEFAULT py-2 transition-colors">
+<span class="material-symbols-outlined text-[16px]">auto_awesome</span>
+<span class="font-label-mono text-label-mono uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-150 whitespace-nowrap">IA Insights</span>
+</button>
+</div>
+<div class="py-2 border-t border-outline-variant/50 shrink-0 flex flex-col gap-1 min-w-[240px]">
+<a class="flex items-center py-2 text-on-surface-variant pl-4 hover:bg-surface-variant transition-colors whitespace-nowrap" href="#">
+<span class="material-symbols-outlined shrink-0 text-[18px]">psychology</span>
+<span class="ml-4 font-label-mono text-[10px] uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-150">Brand Memory</span>
+</a>
+<a class="flex items-center py-2 text-on-surface-variant pl-4 hover:bg-surface-variant transition-colors whitespace-nowrap" href="#">
+<span class="material-symbols-outlined shrink-0 text-[18px]">campaign</span>
+<span class="ml-4 font-label-mono text-[10px] uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-150">Campaigns</span>
+</a>
+</div>
+</aside>
+<!-- Main Canvas -->
+<main class="flex-1 ml-[64px] h-full overflow-hidden flex flex-col">
+<!-- Breadcrumb / Post Header -->
+<div class="px-container_padding py-3 border-b border-outline-variant bg-surface-dim flex items-center justify-between shrink-0">
+<div class="flex items-center gap-3">
+<span class="workbench-chip">Rascunho</span>
+<span class="text-on-surface-variant font-label-mono text-label-mono">Workspace / Nova Publicação</span>
+</div>
+<div class="flex items-center gap-3">
+<button class="workbench-btn-ghost">Descartar</button>
+<button class="workbench-btn-secondary">Salvar Rascunho</button>
+<button class="workbench-btn-primary flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">schedule</span> Agendar
+                    </button>
+</div>
+</div>
+<!-- 60/40 Split Content -->
+<div class="flex-1 flex overflow-hidden">
+<!-- LEFT PANEL: Editor (60%) -->
+<div class="w-[60%] border-r border-outline-variant overflow-y-auto p-container_padding flex flex-col gap-stack_gap_md bg-surface">
+<div class="flex items-center justify-between mb-2">
+<h1 class="font-headline-lg text-headline-lg text-on-surface">Estrutura do Post</h1>
+<div class="flex gap-2">
+<span class="workbench-chip flex items-center gap-1"><span class="material-symbols-outlined text-[12px]">team_drive_key</span> Instagram</span>
+<span class="workbench-chip flex items-center gap-1"><span class="material-symbols-outlined text-[12px]">view_carousel</span> Carrossel</span>
+</div>
+</div>
+<!-- Meta Data Grid -->
+<div class="grid grid-cols-2 gap-gutter">
+<div>
+<label class="workbench-label">Título Interno</label>
+<input class="workbench-input w-full" placeholder="Identificador do post" type="text" value="Café de Manhã - Benefícios"/>
+</div>
+<div>
+<label class="workbench-label">Objetivo</label>
+<select class="workbench-input w-full appearance-none">
+<option>Autoridade (Topo de Funil)</option>
+<option>Engajamento (Meio de Funil)</option>
+<option>Conversão (Fundo de Funil)</option>
+</select>
+</div>
+<div>
+<label class="workbench-label">Público-Alvo</label>
+<input class="workbench-input w-full" placeholder="Ex: Profissionais B2B" type="text" value="Entusiastas de café, 25-45a"/>
+</div>
+<div>
+<label class="workbench-label">Campanha Ativa</label>
+<div class="workbench-input w-full flex items-center gap-2 bg-surface-variant cursor-not-allowed text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px]">campaign</span>
+                                'Café é território'
+                            </div>
+</div>
+</div>
+<hr class="border-outline-variant my-2"/>
+<!-- Content Generation Area -->
+<div class="workbench-card">
+<div class="flex items-center justify-between mb-4">
+<label class="workbench-label mb-0 text-primary flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">edit_note</span> COPY PRINCIPAL
+                             </label>
+<button class="workbench-btn-ghost text-[12px] flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">auto_awesome</span> Gerar Variação</button>
+</div>
+<div class="flex flex-col gap-3">
+<div>
+<label class="font-label-mono text-[10px] text-on-surface-variant uppercase mb-1 block">Hook (Gancho)</label>
+<textarea class="workbench-input w-full resize-none h-16" placeholder="A primeira frase que vai prender a atenção...">O seu primeiro gole de café define como será o resto do seu dia. Você está escolhendo o território certo?</textarea>
+</div>
+<div>
+<label class="font-label-mono text-[10px] text-on-surface-variant uppercase mb-1 block">Corpo do Texto</label>
+<textarea class="workbench-input w-full resize-none h-32" placeholder="Desenvolvimento da ideia...">Não é apenas sobre cafeína. É sobre demarcar seu espaço mental antes que o mundo exija sua atenção. Grãos selecionados não apenas acordam você, eles preparam o terreno para a produtividade extrema e foco cirúrgico. Cada xícara é uma declaração de intenções.</textarea>
+</div>
+<div>
+<label class="font-label-mono text-[10px] text-on-surface-variant uppercase mb-1 block">Call to Action (CTA)</label>
+<input class="workbench-input w-full" placeholder="O que o usuário deve fazer?" type="text" value="Qual é o seu ritual matinal de demarcação? Comenta aqui."/>
+</div>
+<div>
+<label class="font-label-mono text-[10px] text-on-surface-variant uppercase mb-1 block">Hashtags</label>
+<input class="workbench-input w-full text-primary" placeholder="#hashtags" type="text" value="#CafeEspecial #RitualMatinal #Foco #Produtividade"/>
+</div>
+</div>
+</div>
+<!-- Carousel Slides Configurator -->
+<div class="mt-2">
+<div class="flex items-center justify-between mb-4">
+<label class="workbench-label mb-0">Slides do Carrossel (Estrutura Visual)</label>
+<button class="workbench-btn-secondary text-[12px] py-1 px-2 flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">add</span> Add Slide</button>
+</div>
+<div class="flex overflow-x-auto gap-3 pb-2 snap-x">
+<!-- Slide 1 -->
+<div class="workbench-card min-w-[200px] snap-start flex flex-col gap-2 relative group">
+<div class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-error hover:bg-surface-variant p-1 rounded"><span class="material-symbols-outlined text-[14px]">delete</span></button>
+</div>
+<span class="font-label-mono text-[10px] text-on-surface-variant">SLIDE 01 (Capa)</span>
+<textarea class="workbench-input w-full h-20 text-[12px] resize-none" placeholder="Texto da imagem">O seu primeiro gole de café define o seu dia.</textarea>
+<div class="h-20 bg-surface-variant rounded border border-outline-variant flex items-center justify-center text-on-surface-variant overflow-hidden">
+<img alt="Slide background concept" class="object-cover w-full h-full opacity-50" data-alt="A highly stylized, minimalist overhead shot of a perfectly pulled espresso shot in a matte black ceramic cup resting on a dark slate surface. High contrast, clinical lighting. The coffee crema is rich and textured. Surrounding the cup are faint, precise geometric grid lines overlaid as a HUD graphic, suggesting precision and analytical focus. Moody, dark aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDeO9c7wMNPGCzGfUisT1ts8WtreseXG5tkW89n5Py-0MWJED8SgL5nvsTpQJTGMfB_GxLQo3BOf8xOxDsIJjyR_nCCnMiNP62jWs54P_ePDIog-m_PTPB_YNY6zdGdcGbBX93yKOcCvcI9mv2-SRq8abZ0CC5zuprJv4RCRIpDfF2_k8rWK62-jMzOJjprUkGL2rjNbXCFB8XHlMkwASnU6IVvLRyHt4nVchLpHGTVxc2v2XaQu1gBJA"/>
+</div>
+</div>
+<!-- Slide 2 -->
+<div class="workbench-card min-w-[200px] snap-start flex flex-col gap-2 relative group">
+<div class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-error hover:bg-surface-variant p-1 rounded"><span class="material-symbols-outlined text-[14px]">delete</span></button>
+</div>
+<span class="font-label-mono text-[10px] text-on-surface-variant">SLIDE 02 (Problema)</span>
+<textarea class="workbench-input w-full h-20 text-[12px] resize-none" placeholder="Texto da imagem">90% dos profissionais bebem café automático e têm dias automáticos.</textarea>
+<div class="h-20 bg-surface-variant rounded border border-outline-variant flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]">image</span>
+</div>
+</div>
+<!-- Slide 3 -->
+<div class="workbench-card min-w-[200px] snap-start flex flex-col gap-2 relative group border-primary/50 bg-primary/5">
+<div class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-error hover:bg-surface-variant p-1 rounded"><span class="material-symbols-outlined text-[14px]">delete</span></button>
+</div>
+<span class="font-label-mono text-[10px] text-primary">SLIDE 03 (Solução)</span>
+<textarea class="workbench-input w-full h-20 text-[12px] resize-none border-primary/50 focus:border-primary" placeholder="Texto da imagem">Demarque seu território mental com uma escolha intencional.</textarea>
+<div class="h-20 bg-surface-variant rounded border border-outline-variant flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]">add_photo_alternate</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- RIGHT PANEL: AI Context & Insights (40%) -->
+<div class="w-[40%] bg-surface-container-low overflow-y-auto p-container_padding flex flex-col gap-stack_gap_md">
+<div class="flex items-center gap-2 mb-2 border-b border-outline-variant pb-2">
+<span class="material-symbols-outlined text-tertiary-fixed-dim">radar</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">Contexto &amp; Insights</h2>
+</div>
+<!-- Persitent Context Bento -->
+<div class="grid grid-cols-2 gap-3">
+<div class="workbench-card bg-surface flex flex-col gap-1 col-span-2">
+<div class="flex justify-between items-start">
+<span class="font-label-mono text-[10px] text-on-surface-variant uppercase">Brand Memory (Rev.12)</span>
+<span class="workbench-chip workbench-chip-success">Ativo</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface">Tom de voz: Clínico, Direto, Provocador. Palavras proibidas: "Gostoso", "Docinho", "Aconchegante".</p>
+</div>
+<div class="workbench-card bg-surface flex flex-col gap-1 border-tertiary-fixed-dim/30">
+<span class="font-label-mono text-[10px] text-tertiary-fixed-dim uppercase flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">trending_up</span> Radar</span>
+<p class="font-body-sm text-[12px] text-on-surface">Pico de menções sobre "Burnout matinal" no X. Oportunidade para posicionar o produto como âncora.</p>
+</div>
+<div class="workbench-card bg-surface flex flex-col gap-1">
+<span class="font-label-mono text-[10px] text-on-surface-variant uppercase">Performance Base</span>
+<div class="flex items-end gap-2 mt-1">
+<span class="font-data-number text-[20px] text-primary">4.2%</span>
+<span class="font-label-mono text-[10px] text-on-surface-variant mb-1">ER Médio</span>
+</div>
+</div>
+</div>
+<!-- AI Suggested Directions -->
+<div class="mt-4">
+<label class="workbench-label flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-[16px]">psychology</span> Direções Geradas (Base: Radar)
+                         </label>
+<div class="flex flex-col gap-3 mt-2">
+<!-- Direction A -->
+<div class="workbench-card bg-surface border-primary cursor-pointer hover:bg-surface-container-high transition-colors">
+<div class="flex justify-between items-center mb-2">
+<span class="font-label-mono text-primary font-bold">A. Provocação de Rotina</span>
+<span class="workbench-chip">92% Match</span>
+</div>
+<p class="font-body-sm text-[12px] text-on-surface-variant mb-2">Focar no contraste entre tomar café por hábito vs. por intenção (Demarcar território).</p>
+<div class="bg-surface-dim p-2 rounded text-[11px] font-label-mono text-on-surface border border-outline-variant">
+                                     Evidência: Posts focados em intenção renderam +45% saves no último mês.
+                                 </div>
+</div>
+<!-- Direction B -->
+<div class="workbench-card bg-surface cursor-pointer hover:bg-surface-container-high transition-colors opacity-70 hover:opacity-100">
+<div class="flex justify-between items-center mb-2">
+<span class="font-label-mono text-on-surface font-bold">B. Foco Técnico (Grão)</span>
+<span class="workbench-chip">75% Match</span>
+</div>
+<p class="font-body-sm text-[12px] text-on-surface-variant mb-2">Explicar o processo de extração que garante o "foco cirúrgico" mencionado na copy.</p>
+</div>
+</div>
+</div>
+<!-- Library Reference -->
+<div class="mt-4 flex-1">
+<label class="workbench-label flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">library_books</span> Hooks Vencedores Recentes
+                         </label>
+<div class="flex flex-col gap-2 mt-2">
+<div class="p-3 border border-outline-variant rounded bg-surface-dim flex justify-between items-center group">
+<span class="font-body-sm text-on-surface truncate pr-4">"Você está bebendo café errado há 5 anos."</span>
+<button class="workbench-btn-ghost opacity-0 group-hover:opacity-100 p-0"><span class="material-symbols-outlined text-[16px]">content_copy</span></button>
+</div>
+<div class="p-3 border border-outline-variant rounded bg-surface-dim flex justify-between items-center group">
+<span class="font-body-sm text-on-surface truncate pr-4">"Não é cansaço, é falta de território."</span>
+<button class="workbench-btn-ghost opacity-0 group-hover:opacity-100 p-0"><span class="material-symbols-outlined text-[16px]">content_copy</span></button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<script src="/stitch/bridge.js"></script></body></html>

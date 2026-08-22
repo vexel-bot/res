@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Clicko - Brand Asset Library</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {"on-secondary-fixed": "#321200", primary: "#ffb3af", background: "#131313", "tertiary-fixed-dim": "#ffb3b1", "surface-container-high": "#2a2a2a", "on-surface-variant": "#e2bebc", secondary: "#ffb68b", "surface-bright": "#393939", "on-tertiary-fixed": "#410007", "tertiary-container": "#e17474", "on-primary": "#68000d", "secondary-fixed": "#ffdbc8", "on-secondary-container": "#602a00", "primary-fixed": "#ffdad7", "primary-container": "#ff5c5c", "tertiary-fixed": "#ffdad8", "surface-container-low": "#1c1b1b", "surface-container-highest": "#353534", "outline-variant": "#5a403f", surface: "#131313", "on-primary-fixed": "#410005", "on-secondary": "#522300", "surface-tint": "#ffb3af", "secondary-fixed-dim": "#ffb68b", "on-primary-fixed-variant": "#920418", "on-secondary-fixed-variant": "#753400", "on-primary-container": "#62000c", "inverse-on-surface": "#313030", "inverse-primary": "#b4252d", "surface-container-lowest": "#0e0e0e", "on-error": "#690005", "on-tertiary-container": "#5c0e15", "on-tertiary": "#601118", "on-surface": "#e5e2e1", "on-tertiary-fixed-variant": "#7f292c", "secondary-container": "#ff7f1c", "primary-fixed-dim": "#ffb3af", "surface-container": "#201f1f", "inverse-surface": "#e5e2e1", "on-error-container": "#ffdad6", "on-background": "#e5e2e1", outline: "#a98987", error: "#ffb4ab", "error-container": "#93000a", "surface-dim": "#131313", tertiary: "#ffb3b1", "surface-variant": "#353534"}, borderRadius: {DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem"}, spacing: {stack_gap_md: "16px", gutter: "16px", stack_gap_sm: "8px", spine_width: "64px", context_nav_width: "240px", container_padding: "24px"}, fontFamily: {"body-sm": ["Geist"], "headline-md": ["Geist"], display: ["Geist"], "label-mono": ["Geist"], "headline-lg": ["Geist"], "body-lg": ["Geist"], "data-number": ["Geist"], "body-md": ["Geist"], headline: ["Geist"], body: ["Geist"], label: ["Geist"]}, fontSize: {"body-sm": ["13px", {lineHeight: "18px", fontWeight: "400"}], "headline-md": ["20px", {lineHeight: "28px", fontWeight: "500"}], display: ["32px", {lineHeight: "40px", letterSpacing: "-0.02em", fontWeight: "600"}], "label-mono": ["12px", {lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "500"}], "headline-lg": ["24px", {lineHeight: "32px", letterSpacing: "-0.01em", fontWeight: "600"}], "body-lg": ["16px", {lineHeight: "24px", fontWeight: "400"}], "data-number": ["14px", {lineHeight: "20px", fontWeight: "600"}], "body-md": ["14px", {lineHeight: "20px", fontWeight: "400"}]}}}};</script>
+<style>
+        @import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&display=swap');
+        body {
+            background-color: #0F1011; /* Enforced dark matte foundation */
+            color: #e3e2e3;
+        }
+        
+        /* High-Density Functional Utilities */
+        .workbench-border {
+            border: 1px solid #2C2F31;
+        }
+        .workbench-surface {
+            background-color: #181B1D;
+        }
+        .workbench-hover:hover {
+            background-color: #1E1E1E;
+        }
+        
+        /* Operational Green Outline */
+        .focus-operational:focus-within {
+            border-color: #75ff9e;
+            box-shadow: 0 0 0 2px rgba(117, 255, 158, 0.2);
+        }
+
+        /* Hide scrollbar for clean masonry look */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        /* Simple masonry support via flex columns */
+        .masonry-col {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+    </style>
+</head>
+<body class="flex h-screen overflow-hidden antialiased">
+<!-- JSON Component: SideNavBar (Workflow Spine) -->
+<!-- Applying explicit styles from JSON -->
+<nav class="bg-surface-container-lowest border-r border-outline-variant h-screen w-spine_width fixed left-0 top-0 flex flex-col h-full items-center py-4 z-50 transition-all duration-150 ease-in-out">
+<!-- Header / Logo Area -->
+<div class="mb-8">
+<span class="material-symbols-outlined text-primary text-[32px]" data-icon="hub">hub</span>
+</div>
+<!-- Navigation Tabs -->
+<div class="flex flex-col gap-6 w-full items-center">
+<!-- Active Tab: Asset Library -->
+<button class="relative w-full flex justify-center text-primary bg-surface-container-high py-3 workbench-border border-l-2 !border-l-primary" title="Asset Library">
+<span class="material-symbols-outlined" data-icon="folder_open" data-weight="fill" style="font-variation-settings: 'FILL' 1;">folder_open</span>
+</button>
+<!-- Inactive Tabs -->
+<button class="w-full flex justify-center text-on-surface-variant opacity-60 hover:text-on-surface hover:bg-surface-container transition-all py-3" title="Moodboard">
+<span class="material-symbols-outlined" data-icon="palette">palette</span>
+</button>
+<button class="w-full flex justify-center text-on-surface-variant opacity-60 hover:text-on-surface hover:bg-surface-container transition-all py-3" title="Carousel Builder">
+<span class="material-symbols-outlined" data-icon="view_carousel">view_carousel</span>
+</button>
+<button class="w-full flex justify-center text-on-surface-variant opacity-60 hover:text-on-surface hover:bg-surface-container transition-all py-3" title="Format Board">
+<span class="material-symbols-outlined" data-icon="aspect_ratio">aspect_ratio</span>
+</button>
+<button class="w-full flex justify-center text-on-surface-variant opacity-60 hover:text-on-surface hover:bg-surface-container transition-all py-3" title="Campaign World">
+<span class="material-symbols-outlined" data-icon="public">public</span>
+</button>
+</div>
+<!-- Footer Tabs -->
+<div class="mt-auto flex flex-col gap-6 w-full items-center mb-4">
+<button class="w-full flex justify-center text-on-surface-variant opacity-60 hover:text-on-surface hover:bg-surface-container transition-all py-3" title="Support">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+</button>
+<button class="w-full flex justify-center text-on-surface-variant opacity-60 hover:text-on-surface hover:bg-surface-container transition-all py-3" title="Account">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+</button>
+</div>
+</nav>
+<!-- Main Workspace Content Area (Offset by spine_width) -->
+<div class="flex-1 ml-[64px] flex flex-col h-full bg-[#0F1011]">
+<!-- JSON Component: TopNavBar -->
+<header class="bg-surface-container-low w-full h-16 top-0 sticky border-b border-outline-variant flex justify-between items-center px-gutter z-40 transition-colors duration-200">
+<!-- Left: Brand / Title -->
+<div class="flex items-center gap-4">
+<h1 class="font-display text-display text-primary tracking-tight">Clicko Creative Lab</h1>
+<span class="text-on-surface-variant font-label-mono text-label-mono border-l border-outline-variant pl-4 ml-2">Brand Asset Library</span>
+</div>
+<!-- Center: Search (on_left contextually moved slightly) -->
+<div class="flex-1 max-w-md mx-8">
+<div class="flex items-center bg-[#0F1011] workbench-border rounded px-3 py-1.5 focus-operational transition-all h-9">
+<span class="material-symbols-outlined text-on-surface-variant text-sm mr-2" data-icon="search">search</span>
+<input class="w-full bg-transparent border-none text-body-sm text-on-surface focus:outline-none focus:ring-0 p-0 placeholder-on-surface-variant" placeholder="Search assets, tags, or campaigns..." type="text"/>
+<div class="flex gap-1 ml-2">
+<span class="px-1.5 py-0.5 rounded text-[10px] font-label-mono text-on-surface-variant bg-surface-container-highest border border-outline-variant">⌘</span>
+<span class="px-1.5 py-0.5 rounded text-[10px] font-label-mono text-on-surface-variant bg-surface-container-highest border border-outline-variant">K</span>
+</div>
+</div>
+</div>
+<!-- Right: Actions & Profile -->
+<div class="flex items-center gap-4">
+<div class="flex gap-2">
+<button class="text-on-surface-variant hover:bg-surface-bright transition-colors p-2 rounded active:scale-95 duration-200" title="notifications">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:bg-surface-bright transition-colors p-2 rounded active:scale-95 duration-200" title="settings">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+</div>
+<div class="h-6 w-px bg-outline-variant mx-2"></div>
+<button class="bg-primary text-on-primary font-body-sm font-medium px-4 py-2 rounded flex items-center gap-2 hover:bg-primary-fixed-dim transition-colors active:scale-95">
+<span class="material-symbols-outlined text-sm" data-icon="upload">upload</span>
+                    Create Post
+                </button>
+<div class="ml-2 w-8 h-8 rounded-full bg-surface-container-highest workbench-border overflow-hidden cursor-pointer">
+<img alt="User avatar" class="w-full h-full object-cover" data-alt="A small, professional headshot avatar of a digital designer in a dimly lit studio setting. Soft, highly contrasting white light illuminating one side of the face against a dark matte grey background. The mood is serious, focused, and utilitarian, perfectly matching a professional design tool interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDryrUS1wGzcCagGqc-3y3QYA4LzhQzC7TjLPX93J2lXQl7J6Tcf8xyTWwEuxLsLtzHZEEAi8RL4kSTOOeQHoBDR56K0b4w6LWs-9Mf_ZmUiaF06gA_bFO8T_QBLNsYTwexGXpnaEVzjWVyuJnSAJPRjeiSmdUszcVLdzKzuBoEeqRpSAiR4HgzrIduyATbfZj0daDpjtgYogNBncVswTrRZXxNg6iG1yVekjGpaWPz5VsXUgg0aEy-jQ"/>
+</div>
+</div>
+</header>
+<!-- Contextual Layout: Sidebar (Filters) + Masonry Canvas -->
+<div class="flex-1 flex overflow-hidden">
+<!-- Contextual Navigation / Filter Drawer (240px fixed) -->
+<aside class="w-context_nav_width min-w-[240px] workbench-surface border-r border-outline-variant h-full overflow-y-auto no-scrollbar flex flex-col p-4 z-30">
+<div class="flex items-center justify-between mb-6">
+<h2 class="font-label-mono text-label-mono text-on-surface uppercase">Filters</h2>
+<button class="text-on-surface-variant text-xs hover:text-primary transition-colors">Clear All</button>
+</div>
+<!-- Filter Group: Asset Type -->
+<div class="mb-6">
+<h3 class="font-body-sm text-on-surface-variant mb-3 flex items-center justify-between cursor-pointer">
+                        Asset Type
+                        <span class="material-symbols-outlined text-sm">expand_more</span>
+</h3>
+<div class="flex flex-col gap-2">
+<label class="flex items-center gap-3 group cursor-pointer">
+<div class="w-4 h-4 workbench-border rounded-sm flex items-center justify-center group-hover:border-primary transition-colors"></div>
+<span class="font-body-sm text-on-surface">Photo</span>
+<span class="ml-auto font-label-mono text-[10px] text-on-surface-variant">142</span>
+</label>
+<label class="flex items-center gap-3 group cursor-pointer">
+<div class="w-4 h-4 workbench-border rounded-sm bg-primary border-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[12px] text-[#000]">check</span>
+</div>
+<span class="font-body-sm text-on-surface">Logo</span>
+<span class="ml-auto font-label-mono text-[10px] text-on-surface-variant">24</span>
+</label>
+<label class="flex items-center gap-3 group cursor-pointer">
+<div class="w-4 h-4 workbench-border rounded-sm flex items-center justify-center group-hover:border-primary transition-colors"></div>
+<span class="font-body-sm text-on-surface">Component</span>
+<span class="ml-auto font-label-mono text-[10px] text-on-surface-variant">89</span>
+</label>
+<label class="flex items-center gap-3 group cursor-pointer">
+<div class="w-4 h-4 workbench-border rounded-sm flex items-center justify-center group-hover:border-primary transition-colors"></div>
+<span class="font-body-sm text-on-surface">Illustration</span>
+<span class="ml-auto font-label-mono text-[10px] text-on-surface-variant">12</span>
+</label>
+</div>
+</div>
+<!-- Filter Group: Campaign -->
+<div class="mb-6">
+<h3 class="font-body-sm text-on-surface-variant mb-3 flex items-center justify-between cursor-pointer">
+                        Campaign
+                        <span class="material-symbols-outlined text-sm">expand_more</span>
+</h3>
+<div class="flex flex-col gap-2">
+<label class="flex items-center gap-3 group cursor-pointer">
+<div class="w-4 h-4 workbench-border rounded-sm bg-primary border-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[12px] text-[#000]">check</span>
+</div>
+<span class="font-body-sm text-on-surface truncate">Café é território</span>
+</label>
+<label class="flex items-center gap-3 group cursor-pointer">
+<div class="w-4 h-4 workbench-border rounded-sm flex items-center justify-center group-hover:border-primary transition-colors"></div>
+<span class="font-body-sm text-on-surface truncate">Q3 Launch</span>
+</label>
+<label class="flex items-center gap-3 group cursor-pointer">
+<div class="w-4 h-4 workbench-border rounded-sm flex items-center justify-center group-hover:border-primary transition-colors"></div>
+<span class="font-body-sm text-on-surface truncate">Evergreen Social</span>
+</label>
+</div>
+</div>
+<!-- Filter Group: Usage -->
+<div class="mb-6">
+<h3 class="font-body-sm text-on-surface-variant mb-3 flex items-center justify-between cursor-pointer">
+                        Usage Rights
+                        <span class="material-symbols-outlined text-sm">expand_more</span>
+</h3>
+<div class="flex flex-wrap gap-2">
+<span class="px-2 py-1 workbench-border rounded font-label-mono text-[11px] text-on-surface hover:border-primary cursor-pointer transition-colors bg-surface-container-high border-primary text-primary">Social</span>
+<span class="px-2 py-1 workbench-border rounded font-label-mono text-[11px] text-on-surface hover:border-primary cursor-pointer transition-colors">Web</span>
+<span class="px-2 py-1 workbench-border rounded font-label-mono text-[11px] text-on-surface hover:border-primary cursor-pointer transition-colors">Print</span>
+<span class="px-2 py-1 workbench-border rounded font-label-mono text-[11px] text-on-surface hover:border-primary cursor-pointer transition-colors">Internal</span>
+</div>
+</div>
+</aside>
+<!-- Main Canvas: Masonry Grid (75% visual weight) -->
+<main class="flex-1 p-gutter overflow-y-auto no-scrollbar bg-[#0F1011]">
+<!-- Toolbar Area -->
+<div class="flex items-center justify-between mb-6">
+<div class="flex items-center gap-3">
+<span class="font-label-mono text-label-mono text-on-surface-variant uppercase tracking-wider">Viewing:</span>
+<div class="flex gap-2">
+<span class="border border-outline-variant rounded-full px-3 py-1 font-body-sm text-on-surface flex items-center gap-1">
+                                Logo
+                                <button class="hover:text-primary"><span class="material-symbols-outlined text-[14px]">close</span></button>
+</span>
+<span class="border border-outline-variant rounded-full px-3 py-1 font-body-sm text-on-surface flex items-center gap-1">
+                                Café é território
+                                <button class="hover:text-primary"><span class="material-symbols-outlined text-[14px]">close</span></button>
+</span>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="font-body-sm text-on-surface-variant">24 Items</span>
+<div class="h-4 w-px bg-outline-variant"></div>
+<button class="text-on-surface-variant hover:text-primary transition-colors flex items-center gap-1 font-body-sm">
+<span class="material-symbols-outlined text-sm">checklist</span>
+                            Select Multiple
+                        </button>
+<div class="flex workbench-border rounded overflow-hidden">
+<button class="bg-surface-container-high p-1.5 text-primary"><span class="material-symbols-outlined text-sm" data-icon="grid_view">grid_view</span></button>
+<button class="bg-surface p-1.5 text-on-surface-variant hover:text-on-surface"><span class="material-symbols-outlined text-sm" data-icon="view_list">view_list</span></button>
+</div>
+</div>
+</div>
+<!-- Masonry Grid Implementation using CSS Columns -->
+<div class="columns-1 md:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4">
+<!-- Asset Card 1: Macro Photo -->
+<div class="break-inside-avoid relative group workbench-surface workbench-border rounded overflow-hidden flex flex-col">
+<div class="relative w-full aspect-[4/5] bg-surface-container-lowest">
+<img alt="Coffee Bean Macro" class="w-full h-full object-cover" data-alt="A highly detailed, ultra-macro photograph of a single dark roasted coffee bean resting on a matte black slate surface. The lighting is cinematic and moody, casting deep shadows and highlighting the oily texture of the bean. The color palette is restricted to rich dark browns, deep blacks, and a subtle cold highlight. Professional commercial food photography style suitable for a high-end cafe campaign." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4P9r5HLfKNGM0k6YLBNTGx9Xmy6VFBPZ3Z0l4r9uaLsHV1dkBgFsZkoelZVTaFBnXvEf7eTFEtWVNyCQOJtgFvz_GR_R3m2yoSwtyN_3u6WTtBOnaYvLCX3qv9kLrCDyVlFHe6tuhO3RIqLYSnDtkLqUY43NKUjzdgaUIYjNfGF6Lx9QWsJ2eKIbNJJSF84AyTNJxyeV_qHBZb_fJ7_XdWRpyd91LipQ2AySxfd_p8nBVgJ2ZD-IN8g"/>
+<!-- Hover Overlay -->
+<div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex flex-col justify-between p-3">
+<div class="flex justify-end gap-2">
+<button class="w-8 h-8 rounded-full bg-surface/80 flex items-center justify-center text-on-surface hover:text-primary transition-colors" title="Favorite">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+</button>
+</div>
+<div class="flex flex-col gap-2">
+<!-- Performance Signal -->
+<div class="self-start px-2 py-1 bg-surface-container-high/90 border border-primary text-primary font-label-mono text-[10px] rounded flex items-center gap-1 backdrop-blur-sm">
+<span class="material-symbols-outlined text-[12px]">trending_up</span> High Engagement
+                                    </div>
+<button class="w-full py-2 bg-surface/90 backdrop-blur-sm border border-outline-variant rounded font-body-sm text-on-surface hover:border-primary hover:text-primary transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[16px]">add</span> Add to Canvas
+                                    </button>
+</div>
+</div>
+</div>
+<div class="p-3 flex justify-between items-start border-t border-outline-variant">
+<div>
+<h4 class="font-body-md text-on-surface truncate">Origin Bean Macro</h4>
+<p class="font-label-mono text-[10px] text-on-surface-variant uppercase mt-1">Photo • 4K</p>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant text-[16px] cursor-pointer hover:text-on-surface">more_vert</span>
+</div>
+</div>
+<!-- Asset Card 2: Minimalist Brand Mark -->
+<div class="break-inside-avoid relative group workbench-surface workbench-border rounded overflow-hidden flex flex-col">
+<div class="relative w-full aspect-square bg-[#0F1011] flex items-center justify-center p-8">
+<img alt="Brand Mark" class="w-3/4 h-3/4 object-contain opacity-90" data-alt="A stark, minimalist vector brand mark consisting of overlapping geometric shapes forming a stylized coffee cup and a map pin. The design is rendered in pure white on a pitch-black background. Sharp edges, clinical precision, high-contrast, modern architectural aesthetic. No text, purely symbolic icon intended for a professional brand identity system." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAmSV6YuPOqHAbtvCtjk2ORQ7i6QUUy6GT9lQVsQn_dIAb78Ml2T0PUCTlGhWN5XlL_vjlTvcem0bp3J92NYm8mjZNCZ66YMqVwBE-GBi4282AQVm_qC2GwqhUZK9xofuZ3ZcF5IIdQtxwq3LKnSt0vd9-bm_S0OgpdRrqB4mISeO2Sla7j7p8-hzHpYbviAdwmWiWm_SHzfk4UckzT5q0E8G3TrD0x4BYNh6nVWOxdFbjwfasPEKA5rw"/>
+<!-- Hover Overlay -->
+<div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex flex-col justify-between p-3">
+<div class="flex justify-between items-start">
+<span class="px-2 py-1 bg-surface-container-high/90 border border-outline-variant text-on-surface font-label-mono text-[10px] rounded backdrop-blur-sm">SVG Vector</span>
+<button class="w-8 h-8 rounded-full bg-surface/80 flex items-center justify-center text-on-surface hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+</button>
+</div>
+<button class="w-full py-2 bg-surface/90 backdrop-blur-sm border border-outline-variant rounded font-body-sm text-on-surface hover:border-primary hover:text-primary transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[16px]">add</span> Add to Canvas
+                                </button>
+</div>
+</div>
+<div class="p-3 flex justify-between items-start border-t border-outline-variant">
+<div>
+<h4 class="font-body-md text-on-surface truncate">Primary Mark - Light</h4>
+<p class="font-label-mono text-[10px] text-on-surface-variant uppercase mt-1">Logo • Vector</p>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant text-[16px] cursor-pointer hover:text-on-surface">more_vert</span>
+</div>
+</div>
+<!-- Asset Card 3: Editorial Espresso Machine -->
+<div class="break-inside-avoid relative group workbench-surface workbench-border rounded overflow-hidden flex flex-col">
+<div class="relative w-full aspect-video bg-surface-container-lowest">
+<img alt="Espresso Machine" class="w-full h-full object-cover" data-alt="A wide, cinematic shot of a gleaming industrial espresso machine in a dimly lit, brutalist concrete cafe interior. Volumetric steam rises from the group head, catching a single shaft of cool daylight. The machine features matte black and brushed steel textures. The composition is highly structured and architectural, conveying a sense of precision and premium quality. Color grading is desaturated with deep blacks." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBaK0LX-LKM-ImUlVYxoXmFwKNJQwEhnvj2n0p5EPEse2rKFECbt50LzMPNCd4MsnFtMDI9PxEerb7RpsxnUQyXeTtaZ_s4MxFmyZC_Vkdzk_ZzkflKJtRkiSE4cPjLE3Txxj5E31228TnXa3KthQItCEx8vS1OnvU6nox-IE-T8DR-F0FSsKtBfpyYXhqTSqiQF2KRwOexReTknaOfx0naMLIMgZGN_2Knv91ZN9MCSrWOoKgAQkjphQ"/>
+<!-- Hover Overlay -->
+<div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex flex-col justify-between p-3">
+<div class="flex justify-end gap-2">
+<button class="w-8 h-8 rounded-full bg-surface/80 flex items-center justify-center text-on-surface hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+</button>
+</div>
+<button class="w-full py-2 bg-surface/90 backdrop-blur-sm border border-outline-variant rounded font-body-sm text-on-surface hover:border-primary hover:text-primary transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[16px]">add</span> Add to Canvas
+                                </button>
+</div>
+</div>
+<div class="p-3 flex justify-between items-start border-t border-outline-variant">
+<div>
+<h4 class="font-body-md text-on-surface truncate">Extraction Process Wide</h4>
+<p class="font-label-mono text-[10px] text-on-surface-variant uppercase mt-1">Photo • 16:9</p>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant text-[16px] cursor-pointer hover:text-on-surface">more_vert</span>
+</div>
+</div>
+<!-- Asset Card 4: Color Swatches (Component representation) -->
+<div class="break-inside-avoid relative group workbench-surface workbench-border rounded overflow-hidden flex flex-col">
+<div class="relative w-full aspect-[4/3] bg-surface flex flex-col">
+<div class="flex-1 flex">
+<div class="flex-1 bg-[#0F1011]"></div>
+<div class="flex-1 bg-[#181B1D]"></div>
+<div class="flex-1 bg-[#75ff9e]"></div>
+</div>
+<div class="flex-1 flex">
+<div class="flex-1 bg-[#e3e2e3]"></div>
+<div class="flex-1 bg-[#3b4a3d]"></div>
+<div class="flex-1 bg-[#2C2F31]"></div>
+</div>
+<!-- Hover Overlay -->
+<div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex flex-col justify-between p-3">
+<div class="flex justify-between items-start">
+<span class="px-2 py-1 bg-surface-container-high/90 border border-outline-variant text-on-surface font-label-mono text-[10px] rounded backdrop-blur-sm">System</span>
+<button class="w-8 h-8 rounded-full bg-surface/80 flex items-center justify-center text-on-surface hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+</button>
+</div>
+<button class="w-full py-2 bg-surface/90 backdrop-blur-sm border border-outline-variant rounded font-body-sm text-on-surface hover:border-primary hover:text-primary transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[16px]">add</span> Copy Hex Values
+                                </button>
+</div>
+</div>
+<div class="p-3 flex justify-between items-start border-t border-outline-variant">
+<div>
+<h4 class="font-body-md text-on-surface truncate">Digital Palette Base</h4>
+<p class="font-label-mono text-[10px] text-on-surface-variant uppercase mt-1">Component • Colors</p>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant text-[16px] cursor-pointer hover:text-on-surface">more_vert</span>
+</div>
+</div>
+</div>
+</main>
+</div>
+</div>
+<script src="/stitch/bridge.js"></script></body></html>

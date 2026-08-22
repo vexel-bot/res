@@ -61,7 +61,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSpotlight }) => {
           className="clicko-command-search group flex h-9 w-[420px] max-w-[42vw] items-center justify-between gap-3 rounded-xl border border-white/[0.06] bg-transparent px-3.5 text-[#717d85] transition-colors hover:border-white/15 hover:bg-white/[0.025] hover:text-white max-[900px]:w-9 max-[900px]:px-2.5"
         >
           <div className="flex items-center gap-3 min-w-0">
-            <Search className="h-4 w-4 shrink-0 text-[#5a6770] group-hover:text-[#8bd132] transition-colors" />
+            <Search className="h-4 w-4 shrink-0 text-[#5a6770] group-hover:text-[#ff5c5c] transition-colors" />
             <span className="truncate text-xs font-medium max-[900px]:hidden">Buscar no workspace, conteúdos, IA...</span>
           </div>
         </button>
@@ -80,7 +80,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSpotlight }) => {
           >
             <Bell className="h-4 w-4" />
             {pendingApprovals > 0 && (
-              <span className="absolute -right-1 -top-1 grid h-4 min-w-[16px] place-items-center rounded-full bg-[#8bd132] px-1 text-[9px] font-bold text-[#080e05]">
+              <span className="absolute -right-1 -top-1 grid h-4 min-w-[16px] place-items-center rounded-full bg-[#ff5c5c] px-1 text-[9px] font-bold text-[#080e05]">
                 {pendingApprovals}
               </span>
             )}
@@ -89,7 +89,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSpotlight }) => {
             <div className="absolute right-0 top-12 z-50 w-80 max-w-[calc(100vw-24px)] rounded-xl border border-white/10 bg-[#0d1217]/95 p-4 shadow-xl shadow-black/40 backdrop-blur-sm animate-in fade-in zoom-in-95 duration-150">
               <div className="mb-3 flex items-center justify-between border-b border-white/[0.06] pb-2.5">
                 <span className="text-xs font-bold text-white tracking-tight">Central de Notificações</span>
-                <span className="text-[10px] text-[#8bd132] font-semibold">{pendingApprovals} pendentes</span>
+                <span className="text-[10px] text-[#ff5c5c] font-semibold">{pendingApprovals} pendentes</span>
               </div>
               <div className="space-y-2.5 text-xs text-[#a0abb2]">
                 {pendingApprovals > 0 && (
@@ -130,7 +130,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSpotlight }) => {
               className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-lg ${
                 isCompany
                   ? 'bg-indigo-500/20 text-indigo-400 border border-indigo-500/30'
-                  : 'bg-[#8bd132]/20 text-[#8bd132] border border-[#8bd132]/30'
+                  : 'bg-[#ff5c5c]/20 text-[#ff5c5c] border border-[#ff5c5c]/30'
               }`}
             >
               {isCompany ? <Building2 className="h-3.5 w-3.5" /> : <User className="h-3.5 w-3.5" />}
@@ -141,7 +141,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSpotlight }) => {
                 <span className="text-xs font-bold tracking-tight text-white truncate max-w-[130px]">
                   {activeAccount?.name || 'Selecione a Conta'}
                 </span>
-                <span className="h-1.5 w-1.5 rounded-full bg-[#8bd132]" />
+                <span className="h-1.5 w-1.5 rounded-full bg-[#ff5c5c]" />
               </div>
               <span className="truncate text-[10px] text-[#717d85]">
                 {isCompany ? 'Workspace Corporativo' : 'Workspace Pessoal'}
@@ -162,8 +162,8 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSpotlight }) => {
                 <span className="text-[10px] font-bold uppercase tracking-wider text-[#6c7880]">
                   Seletor de Perfis
                 </span>
-                <span className="text-[9px] text-[#8bd132] font-semibold flex items-center gap-1.5 bg-[#8bd132]/10 border border-[#8bd132]/30 px-2 py-0.5 rounded-md">
-                  <span className="h-1.5 w-1.5 rounded-full bg-[#8bd132] animate-pulse" />
+                <span className="text-[9px] text-[#ff5c5c] font-semibold flex items-center gap-1.5 bg-[#ff5c5c]/10 border border-[#ff5c5c]/30 px-2 py-0.5 rounded-md">
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#ff5c5c] animate-pulse" />
                   Ativo
                 </span>
               </div>
@@ -183,7 +183,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSpotlight }) => {
                           isActive
                             ? isAccCompany
                               ? 'bg-indigo-950/40 border border-indigo-500/40 text-white shadow-lg'
-                              : 'bg-[#8bd132]/10 border border-[#8bd132]/40 text-white shadow-lg'
+                              : 'bg-[#ff5c5c]/10 border border-[#ff5c5c]/40 text-white shadow-lg'
                             : 'hover:bg-white/[0.04] border border-transparent text-[#808c94] hover:text-white'
                         }`}
                       >
@@ -191,7 +191,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSpotlight }) => {
                           className={`mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-xl ${
                             isAccCompany
                               ? isActive ? 'bg-indigo-500 text-white shadow-md' : 'bg-[#182028] text-[#808c94]'
-                              : isActive ? 'bg-[#8bd132] text-[#080e05] shadow-md' : 'bg-[#182028] text-[#808c94]'
+                              : isActive ? 'bg-[#ff5c5c] text-[#080e05] shadow-md' : 'bg-[#182028] text-[#808c94]'
                           }`}
                         >
                           {isAccCompany ? <Building2 className="h-4 w-4" /> : <User className="h-4 w-4" />}
@@ -203,7 +203,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSpotlight }) => {
                               {acc.name}
                             </span>
                             {isActive && (
-                              <span className="flex items-center gap-1 text-[10px] font-bold text-[#8bd132]">
+                              <span className="flex items-center gap-1 text-[10px] font-bold text-[#ff5c5c]">
                                 <Check className="h-3.5 w-3.5" />
                               </span>
                             )}
@@ -216,7 +216,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSpotlight }) => {
                               className={`rounded-md px-1.5 py-0.2 text-[8px] font-bold uppercase border ${
                                 isAccCompany
                                   ? 'bg-indigo-500/20 text-indigo-300 border-indigo-500/30'
-                                  : 'bg-[#8bd132]/20 text-[#8bd132] border-[#8bd132]/30'
+                                  : 'bg-[#ff5c5c]/20 text-[#ff5c5c] border-[#ff5c5c]/30'
                               }`}
                             >
                               {isAccCompany ? 'Workspace' : 'Pessoal'}
@@ -257,9 +257,9 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSpotlight }) => {
                     setShowPlanMenu(false);
                     setShowAddAccountModal(true);
                   }}
-                  className="flex w-full items-center justify-center gap-2 rounded-xl border border-dashed border-white/15 bg-white/[0.03] py-2.5 text-xs font-semibold text-white transition hover:border-[#8bd132]/50 hover:bg-[#8bd132]/10 hover:text-[#8bd132]"
+                  className="flex w-full items-center justify-center gap-2 rounded-xl border border-dashed border-white/15 bg-white/[0.03] py-2.5 text-xs font-semibold text-white transition hover:border-[#ff5c5c]/50 hover:bg-[#ff5c5c]/10 hover:text-[#ff5c5c]"
                 >
-                  <Plus className="h-4 w-4 text-[#8bd132]" />
+                  <Plus className="h-4 w-4 text-[#ff5c5c]" />
                   <span>Adicionar conta</span>
                 </button>
               </div>

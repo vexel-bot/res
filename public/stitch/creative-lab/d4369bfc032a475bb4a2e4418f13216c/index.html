@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Pro Composition Canvas - Creative Lab</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {primary: "#ffb3af", "inverse-primary": "#b4252d", "inverse-on-surface": "#313030", "secondary-container": "#ff7f1c", "on-surface": "#e5e2e1", "on-primary-container": "#62000c", "primary-fixed": "#ffdad7", "inverse-surface": "#e5e2e1", "on-tertiary-container": "#5c0e15", "secondary-fixed": "#ffdbc8", "on-secondary-container": "#602a00", "on-error": "#690005", "secondary-fixed-dim": "#ffb68b", surface: "#131313", secondary: "#ffb68b", "on-tertiary-fixed": "#410007", "surface-container-lowest": "#0e0e0e", "on-secondary-fixed": "#321200", background: "#131313", "surface-container-high": "#2a2a2a", "on-primary-fixed": "#410005", "primary-fixed-dim": "#ffb3af", "error-container": "#93000a", "surface-dim": "#131313", "on-error-container": "#ffdad6", "surface-tint": "#ffb3af", "on-surface-variant": "#e2bebc", "tertiary-fixed": "#ffdad8", "on-background": "#e5e2e1", "on-tertiary": "#601118", "surface-container": "#201f1f", "tertiary-container": "#e17474", tertiary: "#ffb3b1", "surface-container-low": "#1c1b1b", "on-secondary-fixed-variant": "#753400", "on-tertiary-fixed-variant": "#7f292c", "tertiary-fixed-dim": "#ffb3b1", outline: "#a98987", error: "#ffb4ab", "surface-bright": "#393939", "primary-container": "#ff5c5c", "on-secondary": "#522300", "outline-variant": "#5a403f", "on-primary": "#68000d", "surface-variant": "#353534", "surface-container-highest": "#353534", "on-primary-fixed-variant": "#920418"}, borderRadius: {DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem"}, spacing: {stack_gap_sm: "8px", container_padding: "24px", spine_width: "64px", gutter: "16px", stack_gap_md: "16px", context_nav_width: "240px"}, fontFamily: {"headline-lg": ["Geist", "sans-serif"], "body-lg": ["Geist", "sans-serif"], "headline-md": ["Geist", "sans-serif"], "data-number": ["Geist", "sans-serif"], display: ["Geist"], "label-mono": ["Geist", "monospace"], "body-md": ["Geist", "sans-serif"], "body-sm": ["Geist", "sans-serif"], headline: ["Geist"], body: ["Geist"], label: ["Geist"]}, fontSize: {"headline-lg": ["24px", {lineHeight: "32px", letterSpacing: "-0.01em", fontWeight: "600"}], "body-lg": ["16px", {lineHeight: "24px", fontWeight: "400"}], "headline-md": ["20px", {lineHeight: "28px", fontWeight: "500"}], "data-number": ["14px", {lineHeight: "20px", fontWeight: "600"}], display: ["32px", {lineHeight: "40px", letterSpacing: "-0.02em", fontWeight: "600"}], "label-mono": ["12px", {lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "500"}], "body-md": ["14px", {lineHeight: "20px", fontWeight: "400"}], "body-sm": ["13px", {lineHeight: "18px", fontWeight: "400"}]}}}};</script>
+<style>
+        /* Custom scrollbar for high-density tools */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #343536; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #474746; }
+        
+        /* Checkered background for canvas */
+        .bg-checkered {
+            background-image: linear-gradient(45deg, #1b1c1d 25%, transparent 25%, transparent 75%, #1b1c1d 75%, #1b1c1d), 
+                              linear-gradient(45deg, #1b1c1d 25%, transparent 25%, transparent 75%, #1b1c1d 75%, #1b1c1d);
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 10px;
+            background-color: #121314;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md text-body-md h-screen w-screen overflow-hidden flex flex-col antialiased selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar (Shared Component) -->
+<header class="bg-surface dark:bg-surface fixed top-0 w-full h-16 border-b border-outline-variant flex justify-between items-center px-container_padding z-50">
+<div class="flex items-center gap-container_padding">
+<span class="text-headline-lg font-headline-lg font-bold text-primary tracking-tight">CREATIVE LAB</span>
+<nav class="hidden md:flex items-center gap-stack_gap_md ml-8">
+<!-- Active Item -->
+<a class="text-primary border-b-2 border-primary pb-1 font-label-mono text-label-mono cursor-pointer active:opacity-80 transition-colors" href="#">Composition</a>
+<!-- Inactive Items -->
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-mono text-label-mono cursor-pointer active:opacity-80" href="#">Inventory</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-mono text-label-mono cursor-pointer active:opacity-80" href="#">Review</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-mono text-label-mono cursor-pointer active:opacity-80" href="#">Insights</a>
+</nav>
+</div>
+<div class="flex items-center gap-stack_gap_md">
+<!-- Search Bar (on_right) -->
+<div class="relative hidden lg:block">
+<span class="material-symbols-outlined absolute left-2 top-1.5 text-on-surface-variant text-[18px]">search</span>
+<input class="bg-surface-container border border-outline-variant rounded pl-8 pr-3 py-1 text-body-sm text-on-surface focus:border-primary focus:ring-1 focus:ring-primary w-48 transition-all outline-none" placeholder="Buscar..." type="text"/>
+</div>
+<button class="text-on-surface-variant hover:text-primary transition-colors p-1 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors p-1 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="w-px h-6 bg-outline-variant mx-2"></div>
+<button class="bg-primary text-on-primary font-label-mono text-label-mono px-4 py-1.5 rounded hover:bg-primary-fixed transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">publish</span>
+                Publish
+            </button>
+<div class="w-8 h-8 rounded-full bg-surface-container border border-outline overflow-hidden ml-2 cursor-pointer">
+<img alt="Creative Director Profile" class="w-full h-full object-cover" data-alt="A professional headshot of a creative director in a well-lit studio environment, subtle cool lighting, high contrast, clean background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDpxSiK4-6NECfvYvf2-4RSmbSA_JQYR2zvrrHqc7RIV6m-I0HEG_Y1HHlQon7JRkUz2iwMyqrC5Mo0KH1gYhPVvf1wLbEiIKKWWB8NIQcAibigYcBU4hCjb1IlyRlzndLYCpt3CmdIPiNuDwe_vUCaX-fQ-9LoWSsrHhirSNyhq_i9zr7luWUzZXrPZWEFPDbAs0ce9zBJfVx1zKpu_rF94XywnG9Qt6xOryeAMJDBudY9OazHZbVM4g"/>
+</div>
+</div>
+</header>
+<!-- Main Application Layout -->
+<div class="flex flex-1 pt-16 w-full h-full overflow-hidden">
+<!-- SideNavBar (Shared Component) -->
+<aside class="bg-surface-container dark:bg-surface-container fixed left-0 top-16 h-[calc(100vh-64px)] w-spine_width md:w-context_nav_width border-r border-outline-variant flex flex-col py-stack_gap_md z-40 transition-all duration-200">
+<!-- Header Context -->
+<div class="px-container_padding mb-6 hidden md:block">
+<div class="flex items-center gap-3 mb-2">
+<div class="w-10 h-10 rounded bg-secondary-container flex items-center justify-center border border-outline text-primary">
+<span class="material-symbols-outlined">coffee</span>
+</div>
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface truncate">Project Alpha</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">Creative Director Active</p>
+</div>
+</div>
+<button class="w-full bg-transparent border border-outline-variant text-on-surface font-label-mono text-label-mono py-1.5 mt-4 rounded hover:border-primary hover:text-primary transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                    New Composition
+                </button>
+</div>
+<!-- Navigation Tabs -->
+<nav class="flex-1 flex flex-col gap-1 px-2">
+<!-- Tab 1 -->
+<a class="flex items-center gap-3 px-3 py-2 rounded text-on-surface-variant hover:bg-surface-container-highest transition-all duration-200 cursor-pointer" href="#">
+<span class="material-symbols-outlined">route</span>
+<span class="font-label-mono text-label-mono hidden md:block">Workflow Spine</span>
+</a>
+<!-- Tab 2 (Active) -->
+<a class="flex items-center gap-3 px-3 py-2 rounded bg-secondary-container text-primary border-l-4 border-primary transition-all duration-200 cursor-pointer" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">brush</span>
+<span class="font-label-mono text-label-mono hidden md:block">Pro Canvas</span>
+</a>
+<!-- Tab 3 -->
+<a class="flex items-center gap-3 px-3 py-2 rounded text-on-surface-variant hover:bg-surface-container-highest transition-all duration-200 cursor-pointer" href="#">
+<span class="material-symbols-outlined">grid_view</span>
+<span class="font-label-mono text-label-mono hidden md:block">Content Board</span>
+</a>
+<!-- Tab 4 -->
+<a class="flex items-center gap-3 px-3 py-2 rounded text-on-surface-variant hover:bg-surface-container-highest transition-all duration-200 cursor-pointer" href="#">
+<span class="material-symbols-outlined">visibility</span>
+<span class="font-label-mono text-label-mono hidden md:block">Review Room</span>
+</a>
+</nav>
+<!-- Footer Tabs -->
+<div class="px-2 mt-auto border-t border-outline-variant pt-2 flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2 rounded text-on-surface-variant hover:bg-surface-container-highest transition-all duration-200 cursor-pointer" href="#">
+<span class="material-symbols-outlined text-[20px]">help</span>
+<span class="font-label-mono text-label-mono hidden md:block">Help</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded text-on-surface-variant hover:bg-surface-container-highest transition-all duration-200 cursor-pointer" href="#">
+<span class="material-symbols-outlined text-[20px]">archive</span>
+<span class="font-label-mono text-label-mono hidden md:block">Archive</span>
+</a>
+</div>
+</aside>
+<!-- Main Workspace Area -->
+<main class="flex-1 ml-[64px] md:ml-[240px] flex h-full">
+<!-- Compact Vertical Tool Rail (Canvas specific) -->
+<div class="w-[48px] bg-surface-container-low border-r border-outline-variant flex flex-col items-center py-4 gap-2 z-30 shadow-[1px_0_0_0_#2C2F31]">
+<button class="w-8 h-8 rounded bg-secondary-container text-primary flex items-center justify-center mb-2" title="Select (V)">
+<span class="material-symbols-outlined text-[20px]">arrow_selector_tool</span>
+</button>
+<button class="w-8 h-8 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest flex items-center justify-center transition-colors" title="Frame (F)">
+<span class="material-symbols-outlined text-[20px]">crop</span>
+</button>
+<button class="w-8 h-8 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest flex items-center justify-center transition-colors" title="Image (I)">
+<span class="material-symbols-outlined text-[20px]">image</span>
+</button>
+<button class="w-8 h-8 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest flex items-center justify-center transition-colors" title="Text (T)">
+<span class="material-symbols-outlined text-[20px]">title</span>
+</button>
+<button class="w-8 h-8 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest flex items-center justify-center transition-colors" title="Shapes (S)">
+<span class="material-symbols-outlined text-[20px]">category</span>
+</button>
+<button class="w-8 h-8 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest flex items-center justify-center transition-colors" title="Pen (P)">
+<span class="material-symbols-outlined text-[20px]">ink_pen</span>
+</button>
+<div class="w-6 h-px bg-outline-variant my-2"></div>
+<button class="w-8 h-8 rounded text-primary bg-surface-container-highest flex items-center justify-center relative group" title="Layers">
+<span class="material-symbols-outlined text-[20px]">layers</span>
+<!-- Indicator dot for active panel -->
+<span class="absolute -right-1 -top-1 w-2 h-2 bg-primary rounded-full border border-surface"></span>
+</button>
+<button class="w-8 h-8 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest flex items-center justify-center transition-colors" title="Assets">
+<span class="material-symbols-outlined text-[20px]">photo_library</span>
+</button>
+</div>
+<!-- Canvas Container -->
+<div class="flex-1 flex flex-col relative overflow-hidden bg-background">
+<!-- Thin Top Context Bar -->
+<div class="h-10 bg-surface border-b border-outline-variant flex items-center justify-between px-4 z-20">
+<div class="flex items-center gap-3">
+<span class="text-on-surface-variant font-label-mono text-label-mono">Campaign:</span>
+<span class="text-on-surface font-label-mono text-label-mono bg-surface-container px-2 py-0.5 rounded border border-outline-variant">Café é território</span>
+<span class="material-symbols-outlined text-on-surface-variant text-[16px]">chevron_right</span>
+<span class="text-primary font-label-mono text-label-mono">Feed Post_01_VarianteA</span>
+</div>
+<div class="flex items-center gap-4 text-on-surface-variant">
+<div class="flex items-center gap-1 cursor-pointer hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[16px]">rule</span>
+<span class="font-label-mono text-label-mono text-[10px]">Guides</span>
+</div>
+<div class="flex items-center gap-1 cursor-pointer text-primary">
+<span class="material-symbols-outlined text-[16px]">border_outer</span>
+<span class="font-label-mono text-label-mono text-[10px]">Safe Area</span>
+</div>
+<div class="w-px h-4 bg-outline-variant"></div>
+<div class="flex items-center gap-2">
+<button class="hover:text-primary"><span class="material-symbols-outlined text-[18px]">remove</span></button>
+<span class="font-data-number text-data-number text-on-surface w-12 text-center">125%</span>
+<button class="hover:text-primary"><span class="material-symbols-outlined text-[18px]">add</span></button>
+</div>
+<button class="hover:text-primary" title="Fit to Screen"><span class="material-symbols-outlined text-[18px]">fit_screen</span></button>
+</div>
+</div>
+<!-- The Actual Canvas Space (Checkered BG) -->
+<div class="flex-1 bg-checkered relative overflow-scroll flex items-center justify-center p-8">
+<!-- Artboard -->
+<div class="w-[400px] h-[500px] bg-white relative shadow-lg ring-1 ring-outline-variant transition-transform hover:ring-primary flex flex-col group cursor-crosshair">
+<!-- Safe Area Overlay (visible because toggle is active above) -->
+<div class="absolute inset-4 border border-dashed border-red-500/50 pointer-events-none z-10 flex items-center justify-center">
+<span class="text-red-500/30 font-label-mono text-[10px] absolute bottom-1 right-1">SAFE AREA</span>
+</div>
+<!-- Mock Content inside Canvas -->
+<div class="relative w-full h-[60%] overflow-hidden bg-surface-container-high">
+<img alt="Coffee Image" class="w-full h-full object-cover" data-alt="A cinematic, high-contrast photograph of a freshly poured espresso in a modern ceramic cup resting on a dark slate table. Steam rising, moody dramatic lighting, professional food photography style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_d5oCimR2sICTGmF6JtOmvQuzwjwk3MgSIcgkcnb90eMmYTntaJpD8TIhFvNXXQIzVoUxYlIuwIsUCjDmlsBA9zklE61n6sHToR89RHRgK0TdOdCRUcpNcKCTUd5uVGyoIuMejAUcB-QL4ucDucubT8nLAyRg7evM3OHCoMI0gkARL_4sTC_ykH5rBDzKUT6wZgMpXze39FRYa__PpSlLCSXAaU4rdZp7GdT7L0xroK1t4ZyFATwdJg"/>
+<!-- Overlay selection box -->
+<div class="absolute inset-0 border-2 border-primary z-20 pointer-events-none">
+<div class="absolute top-0 left-0 w-2 h-2 bg-white border border-primary -mt-1 -ml-1"></div>
+<div class="absolute top-0 right-0 w-2 h-2 bg-white border border-primary -mt-1 -mr-1"></div>
+<div class="absolute bottom-0 left-0 w-2 h-2 bg-white border border-primary -mb-1 -ml-1"></div>
+<div class="absolute bottom-0 right-0 w-2 h-2 bg-white border border-primary -mb-1 -mr-1"></div>
+</div>
+</div>
+<div class="p-6 flex-1 flex flex-col justify-center bg-surface-container-lowest">
+<h1 class="text-[#003918] font-display text-[28px] leading-tight font-bold tracking-tighter uppercase mb-2">O seu ritual,<br/>o seu espaço.</h1>
+<p class="text-[#303031] font-body-sm text-[12px] leading-relaxed">Descubra a nova linha de grãos selecionados do sul de Minas. Torra média, notas de caramelo.</p>
+</div>
+<!-- Canvas Label -->
+<div class="absolute -top-6 left-0 text-on-surface-variant font-label-mono text-[10px] flex items-center gap-2">
+<span class="material-symbols-outlined text-[12px] text-primary">tag</span>
+                            Feed_1080x1350
+                        </div>
+</div>
+</div>
+<!-- Bottom Visual Bar (Variations/Formats) -->
+<div class="h-20 bg-surface border-t border-outline-variant flex items-center px-4 gap-4 overflow-x-auto z-20">
+<div class="flex flex-col h-full justify-center mr-4">
+<span class="text-on-surface font-label-mono text-label-mono mb-1">Formatos</span>
+<span class="text-on-surface-variant font-body-sm text-[10px]">3 Ativos</span>
+</div>
+<!-- Variation Thumbnails -->
+<div class="w-12 h-14 bg-surface-container border-2 border-primary rounded cursor-pointer overflow-hidden relative">
+<img alt="Thumb 1" class="w-full h-full object-cover opacity-80" data-alt="Miniature thumbnail of a dark, moody coffee composition, vertical format." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCqawdGt6rJ29cr7kgVu8yxvtRe4p3QrsTAzVpic-FfndM0Y0c094MEZoYZLi9aIyO2Bf2XcpMhEIpLgm9Zb40SHU8u2kL3xgcQbn4G2QDI4nKoWt_bSYQLUdBNsChkrCTWXPezfsmvYNM0gj5K9LSO1bzkhcWQbYAHfhkT7uK3c868piFbPJTDK7iebY35ju6pThxHlLAuQS59b1NEbNO34HBfa6pnkrwnqEBeqkdy4il8Q1U9UbxVqA"/>
+<div class="absolute bottom-0 left-0 w-full bg-primary/20 backdrop-blur-sm text-primary text-[8px] font-label-mono text-center py-0.5">4:5</div>
+</div>
+<div class="w-14 h-14 bg-surface-container border border-outline-variant rounded cursor-pointer overflow-hidden relative hover:border-on-surface transition-colors">
+<img alt="Thumb 2" class="w-full h-full object-cover opacity-50 grayscale hover:grayscale-0" data-alt="Miniature thumbnail of a dark, moody coffee composition, square format." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZhhjhyTmjpaSNelFkXwfPAObT2Z_f9_cZXi-i0uUrCjvWjfziS6ZS-vqtKSED2880Mne2B-IQPpWYUarKBzVj2_aEOGYTAlocTAt-Sk206RDOqbPoxSCi-ciWLgL1pI_GpJwl5Q35Df4Y4TPQF-_ih-EKBARRBCTyjmhPslI3AB60gbi2LrkzFEob8ioD-fSmu_r2f80y3rs-rKBTis3GeP1-BgYNgSaF3p6os54PxPrdWFZ7ucJ8mw"/>
+<div class="absolute bottom-0 left-0 w-full bg-surface-variant/80 text-on-surface text-[8px] font-label-mono text-center py-0.5">1:1</div>
+</div>
+<div class="w-8 h-14 bg-surface-container border border-outline-variant rounded cursor-pointer overflow-hidden relative hover:border-on-surface transition-colors">
+<img alt="Thumb 3" class="w-full h-full object-cover opacity-50 grayscale hover:grayscale-0" data-alt="Miniature thumbnail of a dark, moody coffee composition, tall story format." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCO_q3KoF6hdIw-ZWXhATyHuU3bGrGw7S4Sak-D2Xh26wYYjQE6gRjtdpGcfw24NYMWKVlfxYYVH5PEZC20PBpv20SgzZQvye7MlJFXxMT-ILlG89f95PiHHkrbZIYxwQVg-MgQj1LYqRRROr4oR3JjeIpLVZg29HvITJf7oqaEU4UxM4HXOUTkZF_IcLJVb-xL76qbnx_dxJ1CrIUUKXEd2aVUt53KmCrL7glmBr3B7_6B38yArTNUxg"/>
+<div class="absolute bottom-0 left-0 w-full bg-surface-variant/80 text-on-surface text-[8px] font-label-mono text-center py-0.5">9:16</div>
+</div>
+<div class="w-px h-8 bg-outline-variant mx-2"></div>
+<button class="w-10 h-10 rounded-full border border-dashed border-outline-variant flex items-center justify-center text-on-surface-variant hover:text-primary hover:border-primary transition-colors">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+</div>
+</div>
+<!-- Right Panel: Selection Properties (Collapsible) -->
+<aside class="w-[280px] bg-surface border-l border-outline-variant flex flex-col z-30 shrink-0">
+<!-- Panel Header -->
+<div class="h-10 border-b border-outline-variant flex items-center justify-between px-3 bg-surface-container-low">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-primary">image</span>
+<span class="font-label-mono text-[11px] text-on-surface tracking-wider uppercase">Image Layer</span>
+</div>
+<button class="text-on-surface-variant hover:text-on-surface">
+<span class="material-symbols-outlined text-[18px]">keyboard_double_arrow_right</span>
+</button>
+</div>
+<!-- Properties Content (High Density) -->
+<div class="flex-1 overflow-y-auto p-3 space-y-4">
+<!-- Section: Align/Distribute -->
+<div class="space-y-2">
+<div class="flex justify-between items-center px-1">
+<span class="text-on-surface-variant font-label-mono text-[10px]">ALINHAMENTO</span>
+</div>
+<div class="flex justify-between bg-surface-container rounded border border-outline-variant p-1">
+<button class="p-1 text-on-surface-variant hover:text-primary hover:bg-surface-container-highest rounded"><span class="material-symbols-outlined text-[16px]">align_horizontal_left</span></button>
+<button class="p-1 text-on-surface-variant hover:text-primary hover:bg-surface-container-highest rounded"><span class="material-symbols-outlined text-[16px]">align_horizontal_center</span></button>
+<button class="p-1 text-on-surface-variant hover:text-primary hover:bg-surface-container-highest rounded"><span class="material-symbols-outlined text-[16px]">align_horizontal_right</span></button>
+<div class="w-px h-4 bg-outline-variant my-auto"></div>
+<button class="p-1 text-on-surface-variant hover:text-primary hover:bg-surface-container-highest rounded"><span class="material-symbols-outlined text-[16px]">align_vertical_top</span></button>
+<button class="p-1 text-on-surface-variant hover:text-primary hover:bg-surface-container-highest rounded"><span class="material-symbols-outlined text-[16px]">align_vertical_center</span></button>
+<button class="p-1 text-on-surface-variant hover:text-primary hover:bg-surface-container-highest rounded"><span class="material-symbols-outlined text-[16px]">align_vertical_bottom</span></button>
+</div>
+</div>
+<div class="w-full h-px bg-outline-variant/50"></div>
+<!-- Section: Position & Size -->
+<div class="space-y-3">
+<div class="flex justify-between items-center px-1">
+<span class="text-on-surface-variant font-label-mono text-[10px]">DIMENSÕES</span>
+<button class="text-primary"><span class="material-symbols-outlined text-[14px]">link</span></button>
+</div>
+<div class="grid grid-cols-2 gap-2">
+<div class="flex items-center bg-surface-container border border-outline-variant rounded overflow-hidden h-7 focus-within:border-primary">
+<span class="text-on-surface-variant font-label-mono text-[10px] pl-2 pr-1">X</span>
+<input class="w-full bg-transparent border-none p-0 text-on-surface text-data-number font-data-number focus:ring-0 text-right pr-2 text-xs" type="text" value="0"/>
+</div>
+<div class="flex items-center bg-surface-container border border-outline-variant rounded overflow-hidden h-7 focus-within:border-primary">
+<span class="text-on-surface-variant font-label-mono text-[10px] pl-2 pr-1">Y</span>
+<input class="w-full bg-transparent border-none p-0 text-on-surface text-data-number font-data-number focus:ring-0 text-right pr-2 text-xs" type="text" value="0"/>
+</div>
+<div class="flex items-center bg-surface-container border border-outline-variant rounded overflow-hidden h-7 focus-within:border-primary">
+<span class="text-on-surface-variant font-label-mono text-[10px] pl-2 pr-1">W</span>
+<input class="w-full bg-transparent border-none p-0 text-on-surface text-data-number font-data-number focus:ring-0 text-right pr-2 text-xs" type="text" value="400"/>
+</div>
+<div class="flex items-center bg-surface-container border border-outline-variant rounded overflow-hidden h-7 focus-within:border-primary">
+<span class="text-on-surface-variant font-label-mono text-[10px] pl-2 pr-1">H</span>
+<input class="w-full bg-transparent border-none p-0 text-on-surface text-data-number font-data-number focus:ring-0 text-right pr-2 text-xs" type="text" value="300"/>
+</div>
+</div>
+<div class="flex items-center bg-surface-container border border-outline-variant rounded overflow-hidden h-7 focus-within:border-primary w-1/2">
+<span class="text-on-surface-variant font-label-mono text-[10px] pl-2 pr-1"><span class="material-symbols-outlined text-[12px]">rotate_right</span></span>
+<input class="w-full bg-transparent border-none p-0 text-on-surface text-data-number font-data-number focus:ring-0 text-right pr-2 text-xs" type="text" value="0°"/>
+</div>
+</div>
+<div class="w-full h-px bg-outline-variant/50"></div>
+<!-- Section: Image Adjustments -->
+<div class="space-y-3">
+<div class="flex justify-between items-center px-1 cursor-pointer group">
+<span class="text-on-surface font-label-mono text-[11px] group-hover:text-primary transition-colors">AJUSTES DE IMAGEM</span>
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">expand_more</span>
+</div>
+<div class="space-y-3 pt-1">
+<!-- Opacity -->
+<div>
+<div class="flex justify-between items-center mb-1">
+<span class="text-on-surface-variant text-[10px] font-label-mono">Opacidade</span>
+<span class="text-on-surface text-data-number font-data-number text-[11px]">100%</span>
+</div>
+<div class="w-full h-1 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="w-full h-full bg-primary rounded-full"></div>
+</div>
+</div>
+<!-- Blend Mode -->
+<div>
+<span class="text-on-surface-variant text-[10px] font-label-mono block mb-1">Mesclagem</span>
+<select class="w-full h-7 bg-surface-container border border-outline-variant rounded text-on-surface text-xs font-body-sm px-2 focus:border-primary focus:ring-1 focus:ring-primary outline-none">
+<option>Normal</option>
+<option>Multiplicar</option>
+<option>Sobrepor</option>
+<option>Tela</option>
+</select>
+</div>
+</div>
+</div>
+<div class="w-full h-px bg-outline-variant/50"></div>
+<!-- Section: Asset Source (Progressive Disclosure) -->
+<div class="space-y-2">
+<span class="text-on-surface-variant font-label-mono text-[10px] px-1">ORIGEM DO ATIVO</span>
+<div class="bg-surface-container p-2 rounded border border-outline-variant flex items-start gap-2">
+<span class="material-symbols-outlined text-on-surface-variant text-[16px] mt-0.5">cloud_done</span>
+<div class="flex-1 min-w-0">
+<p class="text-on-surface font-body-sm text-[11px] truncate">coffee_main_hero_v3.png</p>
+<p class="text-on-surface-variant font-label-mono text-[9px] mt-0.5">DAM // Campanha_Q3</p>
+</div>
+<button class="text-primary hover:text-primary-fixed"><span class="material-symbols-outlined text-[14px]">open_in_new</span></button>
+</div>
+</div>
+</div>
+<!-- Export Footer -->
+<div class="p-3 border-t border-outline-variant bg-surface-container-lowest">
+<button class="w-full bg-transparent border border-primary text-primary font-label-mono text-label-mono py-1.5 rounded hover:bg-primary/10 transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[16px]">download</span>
+                        Exportar Seleção
+                    </button>
+</div>
+</aside>
+</main>
+</div>
+<script src="/stitch/bridge.js"></script></body></html>

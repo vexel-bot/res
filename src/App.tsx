@@ -3,63 +3,69 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React from 'react';
-import { Sidebar } from './components/Sidebar';
-import { Header } from './components/Header';
-import { SpotlightModal } from './components/SpotlightModal';
-import { DashboardView } from './components/DashboardEditorialView';
-import { WorkspaceView } from './components/WorkspaceView';
-import { BrainView } from './components/BrainView';
-import { StrategyView } from './components/StrategyView';
-import { StudioView } from './components/StudioImmersiveView';
-import { LibraryView } from './components/LibraryView';
-import { ImageStudioView } from './components/ImageStudioView';
-import { VideoEditorView } from './components/VideoEditorView';
-import { CreationStudioView } from './components/CreationStudioView';
-import { AIChatView } from './components/AIChatView';
-import { FloatingAIAssistant } from './components/FloatingAIAssistant';
-import { TemplatesView } from './components/TemplatesView';
-import { ConnectedAccountsView } from './components/ConnectedAccountsView';
-import { EditorialCalendarView } from './components/EditorialCalendarView';
-import { PublisherView } from './components/PublisherView';
-import { AnalyticsView } from './components/AnalyticsView';
-import { AutomationBuilderView } from './components/AutomationBuilderView';
-import { SettingsView } from './components/SettingsView';
-import { ClickoLogo } from './components/ClickoLogo';
-import { LoginView } from './components/LoginView';
-import { TeamManagementView } from './components/TeamManagementView';
-import { ApprovalsView } from './components/ApprovalsView';
-import { SubscriptionView } from './components/SubscriptionView';
-import { AuditLogsView } from './components/AuditLogsView';
-import { AccessDeniedView } from './components/AccessDeniedView';
-import { GovernanceFeedback } from './components/GovernanceFeedback';
-import { useGovernance } from './context/GovernanceContext';
-import { useOperations } from './context/OperationsContext';
-import type { ApprovalStage } from './types';
+import React from "react";
+import { SpotlightModal } from "./components/SpotlightModal";
+import { DashboardView } from "./components/DashboardLabView";
+import { WorkspaceView } from "./components/WorkspaceView";
+import { BrainView } from "./components/BrainView";
+import { StrategyView } from "./components/StrategyView";
+import { StudioView } from "./components/StudioImmersiveView";
+import { LibraryView } from "./components/LibraryView";
+import { ImageStudioView } from "./components/ImageStudioView";
+import { VideoEditorView } from "./components/VideoEditorView";
+import { CreationStudioView } from "./components/CreationStudioView";
+import { AIChatView } from "./components/AIChatView";
+import { FloatingAIAssistant } from "./components/FloatingAIAssistant";
+import { TemplatesView } from "./components/TemplatesView";
+import { ConnectedAccountsView } from "./components/ConnectedAccountsView";
+import { EditorialCalendarView } from "./components/EditorialCalendarView";
+import { PublisherView } from "./components/PublisherView";
+import { AnalyticsView } from "./components/AnalyticsView";
+import { AutomationBuilderView } from "./components/AutomationBuilderView";
+import { SettingsView } from "./components/SettingsView";
+import { ClickoLogo } from "./components/ClickoLogo";
+import { LoginView } from "./components/LoginView";
+import { TeamManagementView } from "./components/TeamManagementView";
+import { ApprovalsView } from "./components/ApprovalsView";
+import { SubscriptionView } from "./components/SubscriptionView";
+import { AuditLogsView } from "./components/AuditLogsView";
+import { AccessDeniedView } from "./components/AccessDeniedView";
+import { GovernanceFeedback } from "./components/GovernanceFeedback";
+import { useGovernance } from "./context/GovernanceContext";
+import { useOperations } from "./context/OperationsContext";
+import type { ApprovalStage } from "./types";
+import { useTabRouter } from "./app/router/navigation";
+import { LabGlobalSurfaces } from "./product/LabGlobalSurfaces";
+import {
+  isProductSurfacePath,
+  ProductSurfaceView,
+} from "./product/ProductSurfaceView";
+import { screenForLocation } from "./product/screenManifest";
+import { CanonicalProduct, isCanonicalPath } from "./canonical/CanonicalProduct";
 
-import {
-  NavigationTab,
-  Post,
-  AIActionSuggestion,
-} from './types';
-import {
-  AI_SUGGESTIONS,
-} from './data/mockData';
+import { NavigationTab, Post, AIActionSuggestion } from "./types";
+import { AI_SUGGESTIONS } from "./data/mockData";
 
 export default function App() {
-  const { currentUser, canAccess, loading: governanceLoading } = useGovernance();
+  const {
+    currentUser,
+    canAccess,
+    loading: governanceLoading,
+  } = useGovernance();
   const { activeWorkspace, posts, addPosts, updatePosts } = useOperations();
-  const [currentTab, setCurrentTab] = React.useState<NavigationTab>('dashboard');
+  const {
+    currentTab,
+    pathname,
+    search,
+    navigate: setCurrentTab,
+    navigatePath,
+  } = useTabRouter("dashboard");
   const [suggestions] = React.useState<AIActionSuggestion[]>(AI_SUGGESTIONS);
 
   const [isSpotlightOpen, setIsSpotlightOpen] = React.useState(false);
-  const [isCompact, setIsCompact] = React.useState(false);
-  const [isDarkMode, setIsDarkMode] = React.useState(true);
-  const [showSplash, setShowSplash] = React.useState(() => window.location.pathname !== '/login');
-
-  React.useEffect(() => {
-    document.documentElement.dataset.theme = isDarkMode ? 'dark' : 'light';
-  }, [isDarkMode]);
+  const [showSplash, setShowSplash] = React.useState(
+    () => window.location.pathname !== "/login",
+  );
 
   React.useEffect(() => {
     if (!showSplash) return;
@@ -72,17 +78,21 @@ export default function App() {
     const created: Post[] = newPostsData.map((p, idx) => ({
       id: `post-${Date.now()}-${idx}`,
       workspaceId: activeWorkspace.id,
-      title: p.title || 'Conteúdo Sem Título',
-      platform: p.platform || 'instagram',
-      format: p.format || 'post',
-      copy: p.copy || '',
+      title: p.title || "Conteúdo Sem Título",
+      platform: p.platform || "instagram",
+      format: p.format || "post",
+      copy: p.copy || "",
       hashtags: p.hashtags || [],
       slides: p.slides,
       imageUrl: p.imageUrl,
       videoUrl: p.videoUrl,
       scheduledAt: p.scheduledAt || new Date().toISOString(),
-      status: currentUser?.role === 'collaborator' && ['scheduled', 'published'].includes(p.status || 'scheduled') ? 'pending_approval' : (p.status || 'scheduled'),
-      author: p.author || currentUser?.name || 'Usuário',
+      status:
+        currentUser?.role === "collaborator" &&
+        ["scheduled", "published"].includes(p.status || "scheduled")
+          ? "pending_approval"
+          : p.status || "scheduled",
+      author: p.author || currentUser?.name || "Usuário",
       createdAt: new Date().toISOString(),
       aiScore: p.aiScore || 90,
       clientId: p.clientId,
@@ -100,127 +110,184 @@ export default function App() {
 
   const handleSaveSinglePost = (postData: Partial<Post>) => {
     handleAddPosts([postData]);
-    setCurrentTab('calendar');
+    setCurrentTab("calendar");
   };
 
-  const handleApprovalStatusChange = (contentId: string, stage: ApprovalStage) => {
-    const statusMap: Record<ApprovalStage, Post['status']> = {
-      draft: 'draft',
-      in_review: 'in_review',
-      pending_approval: 'pending_approval',
-      approved: 'approved',
-      changes_requested: 'changes_requested',
-      rejected: 'rejected',
-      published: 'published',
+  const handleApprovalStatusChange = (
+    contentId: string,
+    stage: ApprovalStage,
+  ) => {
+    const statusMap: Record<ApprovalStage, Post["status"]> = {
+      draft: "draft",
+      in_review: "in_review",
+      pending_approval: "pending_approval",
+      approved: "approved",
+      changes_requested: "changes_requested",
+      rejected: "rejected",
+      published: "published",
     };
-    updatePosts((current) => current.map((post) => post.id === contentId ? { ...post, status: statusMap[stage] } : post));
+    updatePosts((current) =>
+      current.map((post) =>
+        post.id === contentId ? { ...post, status: statusMap[stage] } : post,
+      ),
+    );
   };
 
-  const hasAccessToCurrentTab = governanceLoading || !currentUser || canAccess(currentTab);
+  const hasAccessToCurrentTab =
+    governanceLoading || !currentUser || canAccess(currentTab);
+  const productSurface = isProductSurfacePath(pathname);
+  const focusMode = pathname.startsWith("/content/") && pathname.includes("/edit");
+  const stitchScreen = screenForLocation(pathname, search);
 
-  if (window.location.pathname.replace(/\/+$/, '') === '/login') {
+  if (window.location.pathname.replace(/\/+$/, "") === "/login") {
     return <LoginView />;
   }
 
+  if (isCanonicalPath(pathname)) {
+    return (
+      <CanonicalProduct
+        pathname={pathname}
+        search={search}
+        onNavigate={navigatePath}
+      />
+    );
+  }
+
   return (
-    <div data-theme={isDarkMode ? 'dark' : 'light'} className="clicko-app-shell flex min-h-screen font-sans antialiased selection:bg-[#B8B8B8] selection:text-[#0B0B0B]">
+    <div
+      data-theme="dark"
+      data-stitch-screen={stitchScreen?.id}
+      data-stitch-state={stitchScreen?.state}
+      className="clicko-unified-shell clicko-lab-shell min-h-screen bg-[#101010] font-sans text-[#f4eeee] antialiased selection:bg-[#ff6969] selection:text-[#190b0b]"
+    >
       {showSplash && (
         <div className="clicko-splash fixed inset-0 z-[100] grid place-items-center bg-black">
           <div className="clicko-splash-logo text-center">
-            <ClickoLogo appearance="seamless" className="h-[180px] w-[360px] max-w-[78vw]" />
+            <ClickoLogo
+              appearance="seamless"
+              className="h-[180px] w-[360px] max-w-[78vw]"
+            />
           </div>
         </div>
       )}
-      {/* Sidebar Navigation */}
-      <Sidebar
-        currentTab={currentTab}
-        onSelectTab={setCurrentTab}
-        isCompact={isCompact}
-        onToggleCompact={() => setIsCompact(!isCompact)}
+      <LabGlobalSurfaces
+        pathname={pathname}
+        search={search}
+        onNavigate={navigatePath}
         onOpenSpotlight={() => setIsSpotlightOpen(true)}
-        onNewPost={() => setCurrentTab('create-copy')}
       />
 
-      {/* Main Workspace Stage */}
-      <div
-        className={`clicko-app-stage flex min-w-0 flex-1 flex-col transition-all duration-300 ease-out ${
-          isCompact ? 'pl-[80px]' : 'pl-[232px] max-[900px]:pl-[80px]'
-        }`}
-      >
-        {/* Header Toolbar */}
-        <Header
-          currentTab={currentTab}
-          activeWorkspace={activeWorkspace}
-          onOpenSpotlight={() => setIsSpotlightOpen(true)}
-          onOpenAICentral={() => setCurrentTab('ai-chat')}
-          onNewPost={() => setCurrentTab('create-copy')}
-          isCompact={isCompact}
-          onToggleCompact={() => setIsCompact(!isCompact)}
-          isDarkMode={isDarkMode}
-          onToggleDarkMode={() => setIsDarkMode(!isDarkMode)}
-        />
+      <div className="pl-[76px]">
+        <main className={`clicko-main-stage min-h-screen overflow-x-hidden ${focusMode ? "clicko-main-stage--focus" : "clicko-main-stage--shell"}`}>
+          {!hasAccessToCurrentTab && (
+            <AccessDeniedView onBack={() => setCurrentTab("dashboard")} />
+          )}
 
-        {/* Dynamic Tab View Area */}
-        <main className="clicko-main-stage flex-1 overflow-x-hidden overflow-y-auto">
-          {!hasAccessToCurrentTab && <AccessDeniedView onBack={() => setCurrentTab('dashboard')} />}
-
-          {hasAccessToCurrentTab && currentTab === 'dashboard' && (
-            <DashboardView
-              posts={posts}
-              suggestions={suggestions}
-              activeWorkspace={activeWorkspace}
-              onNavigate={setCurrentTab}
-              onOpenCampaignWizard={() => setCurrentTab('ai-chat')}
-              onNewPost={() => setCurrentTab('create-copy')}
-              onSelectPost={(p) => setCurrentTab('calendar')}
+          {hasAccessToCurrentTab && productSurface && (
+            <ProductSurfaceView
+              pathname={pathname}
+              search={search}
+              onNavigate={navigatePath}
             />
           )}
 
-          {hasAccessToCurrentTab && currentTab === 'workspace' && <WorkspaceView onNavigate={setCurrentTab} />}
+          {hasAccessToCurrentTab && !productSurface && (
+            <>
+              {hasAccessToCurrentTab && currentTab === "dashboard" && (
+                <DashboardView
+                  posts={posts}
+                  suggestions={suggestions}
+                  activeWorkspace={activeWorkspace}
+                  onNavigate={setCurrentTab}
+                  onOpenCampaignWizard={() => setCurrentTab("ai-chat")}
+                  onNewPost={() => setCurrentTab("create-copy")}
+                  onSelectPost={(p) => setCurrentTab("calendar")}
+                />
+              )}
 
-          {hasAccessToCurrentTab && currentTab === 'brain' && <BrainView />}
+              {hasAccessToCurrentTab && currentTab === "workspace" && (
+                <WorkspaceView onNavigate={setCurrentTab} />
+              )}
 
-          {hasAccessToCurrentTab && currentTab === 'strategy' && <StrategyView onOpenStudio={() => setCurrentTab('studio')} />}
+              {hasAccessToCurrentTab && currentTab === "brain" && <BrainView />}
 
-          {hasAccessToCurrentTab && currentTab === 'studio' && <StudioView onSavePost={handleSaveSinglePost} />}
+              {hasAccessToCurrentTab && currentTab === "strategy" && (
+                <StrategyView onOpenStudio={() => setCurrentTab("studio")} />
+              )}
 
-          {hasAccessToCurrentTab && currentTab === 'library' && <LibraryView onOpenStudio={() => setCurrentTab('studio')} />}
+              {hasAccessToCurrentTab && currentTab === "studio" && (
+                <StudioView onSavePost={handleSaveSinglePost} />
+              )}
 
-          {hasAccessToCurrentTab && currentTab === 'create-image' && <ImageStudioView />}
+              {hasAccessToCurrentTab && currentTab === "library" && (
+                <LibraryView onOpenStudio={() => setCurrentTab("studio")} />
+              )}
 
-          {hasAccessToCurrentTab && currentTab === 'create-video' && <VideoEditorView />}
+              {hasAccessToCurrentTab && currentTab === "create-image" && (
+                <ImageStudioView />
+              )}
 
-          {hasAccessToCurrentTab && currentTab === 'create-copy' && <CreationStudioView onSavePost={handleSaveSinglePost} />}
+              {hasAccessToCurrentTab && currentTab === "create-video" && (
+                <VideoEditorView />
+              )}
 
-          {hasAccessToCurrentTab && currentTab === 'ai-chat' && <AIChatView onNavigate={setCurrentTab} />}
+              {hasAccessToCurrentTab && currentTab === "create-copy" && (
+                <CreationStudioView onSavePost={handleSaveSinglePost} />
+              )}
 
-          {hasAccessToCurrentTab && currentTab === 'templates' && <TemplatesView />}
+              {hasAccessToCurrentTab && currentTab === "ai-chat" && (
+                <AIChatView onNavigate={setCurrentTab} />
+              )}
 
-          {hasAccessToCurrentTab && currentTab === 'connected-accounts' && <ConnectedAccountsView />}
+              {hasAccessToCurrentTab && currentTab === "templates" && (
+                <TemplatesView />
+              )}
 
-          {hasAccessToCurrentTab && currentTab === 'calendar' && (
-            <EditorialCalendarView
-              posts={posts}
-              onSelectPost={() => {}}
-              onNewPost={() => setCurrentTab('create-copy')}
-            />
+              {hasAccessToCurrentTab && currentTab === "connected-accounts" && (
+                <ConnectedAccountsView />
+              )}
+
+              {hasAccessToCurrentTab && currentTab === "calendar" && (
+                <EditorialCalendarView
+                  posts={posts}
+                  onSelectPost={() => {}}
+                  onNewPost={() => setCurrentTab("create-copy")}
+                />
+              )}
+
+              {hasAccessToCurrentTab && currentTab === "publisher" && (
+                <PublisherView />
+              )}
+
+              {hasAccessToCurrentTab && currentTab === "analytics" && (
+                <AnalyticsView onOpenStudio={() => setCurrentTab("studio")} />
+              )}
+
+              {hasAccessToCurrentTab && currentTab === "automations" && (
+                <AutomationBuilderView />
+              )}
+
+              {hasAccessToCurrentTab && currentTab === "approvals" && (
+                <ApprovalsView onStatusChange={handleApprovalStatusChange} />
+              )}
+
+              {hasAccessToCurrentTab && currentTab === "team" && (
+                <TeamManagementView />
+              )}
+
+              {hasAccessToCurrentTab && currentTab === "subscription" && (
+                <SubscriptionView />
+              )}
+
+              {hasAccessToCurrentTab && currentTab === "audit-logs" && (
+                <AuditLogsView />
+              )}
+
+              {hasAccessToCurrentTab && currentTab === "settings" && (
+                <SettingsView />
+              )}
+            </>
           )}
-
-          {hasAccessToCurrentTab && currentTab === 'publisher' && <PublisherView />}
-
-          {hasAccessToCurrentTab && currentTab === 'analytics' && <AnalyticsView onOpenStudio={() => setCurrentTab('studio')} />}
-
-          {hasAccessToCurrentTab && currentTab === 'automations' && <AutomationBuilderView />}
-
-          {hasAccessToCurrentTab && currentTab === 'approvals' && <ApprovalsView onStatusChange={handleApprovalStatusChange} />}
-
-          {hasAccessToCurrentTab && currentTab === 'team' && <TeamManagementView />}
-
-          {hasAccessToCurrentTab && currentTab === 'subscription' && <SubscriptionView />}
-
-          {hasAccessToCurrentTab && currentTab === 'audit-logs' && <AuditLogsView />}
-
-          {hasAccessToCurrentTab && currentTab === 'settings' && <SettingsView />}
         </main>
       </div>
 
@@ -231,7 +298,12 @@ export default function App() {
         onNavigate={setCurrentTab}
       />
       <GovernanceFeedback />
-      <FloatingAIAssistant currentTab={currentTab} onOpenFullChat={() => setCurrentTab('ai-chat')} />
+      {!focusMode && (
+        <FloatingAIAssistant
+          currentTab={currentTab}
+          onOpenFullChat={() => setCurrentTab("ai-chat")}
+        />
+      )}
     </div>
   );
 }

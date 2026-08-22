@@ -153,10 +153,10 @@ export const SpotlightModal: React.FC<SpotlightModalProps> = ({
                   onNavigate(item.tabToNavigate);
                   onClose();
                 }}
-                className="group flex items-center justify-between p-3 rounded-lg hover:bg-[#8bd132]/10 border border-transparent hover:border-[#8bd132]/25 cursor-pointer transition-colors"
+                className="group flex items-center justify-between p-3 rounded-lg hover:bg-[#ff5c5c]/10 border border-transparent hover:border-[#ff5c5c]/25 cursor-pointer transition-colors"
               >
                 <div className="flex items-center gap-3">
-                  <div className="p-2 rounded-lg bg-white/5 border border-white/5 group-hover:bg-[#8bd132]/15 group-hover:border-[#8bd132]/25">
+                  <div className="p-2 rounded-lg bg-white/5 border border-white/5 group-hover:bg-[#ff5c5c]/15 group-hover:border-[#ff5c5c]/25">
                     {getTypeIcon(item.type)}
                   </div>
                   <div>

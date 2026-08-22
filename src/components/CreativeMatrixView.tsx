@@ -116,7 +116,7 @@ export const CreativeMatrixView: React.FC<CreativeMatrixViewProps> = ({ onSavePo
       <div className="rounded-xl border border-white/[0.08] bg-[#14191c] p-5">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-[#8bd132]/30 bg-[#8bd132]/[0.08] px-3 py-1 text-[10px] font-bold text-[#8bd132]">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#ff5c5c]/30 bg-[#ff5c5c]/[0.08] px-3 py-1 text-[10px] font-bold text-[#ff5c5c]">
               <Target className="h-3.5 w-3.5" /> Engenharia Estratégica de Conteúdo
             </div>
             <h2 className="mt-2 text-xl font-bold text-white">Matriz Criativa de Alta Conversão</h2>
@@ -127,7 +127,7 @@ export const CreativeMatrixView: React.FC<CreativeMatrixViewProps> = ({ onSavePo
           <button
             onClick={handleGenerateMatrix}
             disabled={isGenerating}
-            className="flex items-center gap-2 rounded-lg bg-[#8bd132] px-5 py-2.5 text-xs font-bold text-[#14200e] hover:bg-[#9be24d] transition-colors disabled:opacity-50"
+            className="flex items-center gap-2 rounded-lg bg-[#ff5c5c] px-5 py-2.5 text-xs font-bold text-[#14200e] hover:bg-[#9be24d] transition-colors disabled:opacity-50"
           >
             {isGenerating ? <RefreshCw className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4" />}
             {isGenerating ? 'Processando Matriz...' : 'Gerar Conteúdo via Matriz'}
@@ -140,7 +140,7 @@ export const CreativeMatrixView: React.FC<CreativeMatrixViewProps> = ({ onSavePo
         <div className="lg:col-span-5 space-y-4">
           <div className="rounded-xl border border-white/[0.07] bg-[#182126] p-5 space-y-4">
             <h3 className="text-xs font-bold uppercase tracking-wider text-white flex items-center gap-2 border-b border-white/[0.06] pb-3">
-              <Sliders className="h-4 w-4 text-[#8bd132]" /> Parâmetros da Matriz
+              <Sliders className="h-4 w-4 text-[#ff5c5c]" /> Parâmetros da Matriz
             </h3>
 
             {/* Gancho / Hook */}
@@ -152,7 +152,7 @@ export const CreativeMatrixView: React.FC<CreativeMatrixViewProps> = ({ onSavePo
                 value={gancho}
                 onChange={(e) => setGancho(e.target.value)}
                 placeholder="Ex: O maior erro do seu setor..."
-                className="w-full rounded-xl border border-white/[0.08] bg-black/30 p-2.5 text-xs text-white outline-none focus:border-[#8bd132]/40"
+                className="w-full rounded-xl border border-white/[0.08] bg-black/30 p-2.5 text-xs text-white outline-none focus:border-[#ff5c5c]/40"
               />
             </div>
 
@@ -165,7 +165,7 @@ export const CreativeMatrixView: React.FC<CreativeMatrixViewProps> = ({ onSavePo
                 value={angulo}
                 onChange={(e) => setAngulo(e.target.value)}
                 placeholder="Ex: Contradição, Curiosidade, Estatística surpreendente..."
-                className="w-full rounded-xl border border-white/[0.08] bg-black/30 p-2.5 text-xs text-white outline-none focus:border-[#8bd132]/40"
+                className="w-full rounded-xl border border-white/[0.08] bg-black/30 p-2.5 text-xs text-white outline-none focus:border-[#ff5c5c]/40"
               />
             </div>
 
@@ -179,7 +179,7 @@ export const CreativeMatrixView: React.FC<CreativeMatrixViewProps> = ({ onSavePo
                   value={emocao}
                   onChange={(e) => setEmocao(e.target.value)}
                   placeholder="Ex: Urgência, Confiança"
-                  className="w-full rounded-xl border border-white/[0.08] bg-black/30 p-2.5 text-xs text-white outline-none focus:border-[#8bd132]/40"
+                  className="w-full rounded-xl border border-white/[0.08] bg-black/30 p-2.5 text-xs text-white outline-none focus:border-[#ff5c5c]/40"
                 />
               </div>
 
@@ -191,7 +191,7 @@ export const CreativeMatrixView: React.FC<CreativeMatrixViewProps> = ({ onSavePo
                   value={persona}
                   onChange={(e) => setPersona(e.target.value)}
                   placeholder="Ex: Social Media Pro"
-                  className="w-full rounded-xl border border-white/[0.08] bg-black/30 p-2.5 text-xs text-white outline-none focus:border-[#8bd132]/40"
+                  className="w-full rounded-xl border border-white/[0.08] bg-black/30 p-2.5 text-xs text-white outline-none focus:border-[#ff5c5c]/40"
                 />
               </div>
             </div>
@@ -206,7 +206,7 @@ export const CreativeMatrixView: React.FC<CreativeMatrixViewProps> = ({ onSavePo
                 onChange={(e) => setDor(e.target.value)}
                 rows={2}
                 placeholder="Ex: Perda de tempo criando tudo do zero..."
-                className="w-full resize-none rounded-xl border border-white/[0.08] bg-black/30 p-2.5 text-xs text-white outline-none focus:border-[#8bd132]/40"
+                className="w-full resize-none rounded-xl border border-white/[0.08] bg-black/30 p-2.5 text-xs text-white outline-none focus:border-[#ff5c5c]/40"
               />
             </div>
 
@@ -219,7 +219,7 @@ export const CreativeMatrixView: React.FC<CreativeMatrixViewProps> = ({ onSavePo
                 onChange={(e) => setDesejo(e.target.value)}
                 rows={2}
                 placeholder="Ex: Escalar a produção mantendo qualidade extrema..."
-                className="w-full resize-none rounded-xl border border-white/[0.08] bg-black/30 p-2.5 text-xs text-white outline-none focus:border-[#8bd132]/40"
+                className="w-full resize-none rounded-xl border border-white/[0.08] bg-black/30 p-2.5 text-xs text-white outline-none focus:border-[#ff5c5c]/40"
               />
             </div>
 
@@ -233,7 +233,7 @@ export const CreativeMatrixView: React.FC<CreativeMatrixViewProps> = ({ onSavePo
                   value={cta}
                   onChange={(e) => setCta(e.target.value)}
                   placeholder="Ex: Comente 'SISTEMA'"
-                  className="w-full rounded-xl border border-white/[0.08] bg-black/30 p-2.5 text-xs text-white outline-none focus:border-[#8bd132]/40"
+                  className="w-full rounded-xl border border-white/[0.08] bg-black/30 p-2.5 text-xs text-white outline-none focus:border-[#ff5c5c]/40"
                 />
               </div>
 
@@ -244,7 +244,7 @@ export const CreativeMatrixView: React.FC<CreativeMatrixViewProps> = ({ onSavePo
                 <select
                   value={estagioFunil}
                   onChange={(e) => setEstagioFunil(e.target.value)}
-                  className="w-full rounded-xl border border-white/[0.08] bg-black/30 p-2.5 text-xs text-white outline-none focus:border-[#8bd132]/40"
+                  className="w-full rounded-xl border border-white/[0.08] bg-black/30 p-2.5 text-xs text-white outline-none focus:border-[#ff5c5c]/40"
                 >
                   <option value="Topo de Funil">Topo de Funil (Atração)</option>
                   <option value="Meio de Funil">Meio de Funil (Nutrição)</option>
@@ -260,7 +260,7 @@ export const CreativeMatrixView: React.FC<CreativeMatrixViewProps> = ({ onSavePo
           <div className="rounded-xl border border-white/[0.07] bg-[#182126] p-5 space-y-5">
             <div className="flex items-center justify-between border-b border-white/[0.06] pb-3">
               <div className="flex items-center gap-2">
-                <span className="grid h-8 w-8 place-items-center rounded-lg bg-[#8bd132]/10 text-[#8bd132]">
+                <span className="grid h-8 w-8 place-items-center rounded-lg bg-[#ff5c5c]/10 text-[#ff5c5c]">
                   <Sparkles className="h-4 w-4" />
                 </span>
                 <div>
@@ -270,7 +270,7 @@ export const CreativeMatrixView: React.FC<CreativeMatrixViewProps> = ({ onSavePo
               </div>
 
               <div className="flex items-center gap-2">
-                <span className="rounded-lg bg-[#8bd132]/10 px-2.5 py-1 text-[10px] font-bold text-[#8bd132]">
+                <span className="rounded-lg bg-[#ff5c5c]/10 px-2.5 py-1 text-[10px] font-bold text-[#ff5c5c]">
                   Score IA: {matrixResult.aiScore || 95}/100
                 </span>
               </div>
@@ -278,7 +278,7 @@ export const CreativeMatrixView: React.FC<CreativeMatrixViewProps> = ({ onSavePo
 
             {/* Headline */}
             <div className="rounded-xl border border-white/[0.06] bg-black/25 p-4">
-              <span className="text-[9px] font-bold uppercase tracking-wider text-[#8bd132]">
+              <span className="text-[9px] font-bold uppercase tracking-wider text-[#ff5c5c]">
                 Headline Principal
               </span>
               <h4 className="mt-1 text-sm font-bold text-white">{matrixResult.headline}</h4>
@@ -286,7 +286,7 @@ export const CreativeMatrixView: React.FC<CreativeMatrixViewProps> = ({ onSavePo
 
             {/* Copy Content */}
             <div className="rounded-xl border border-white/[0.06] bg-black/25 p-4 space-y-2">
-              <span className="text-[9px] font-bold uppercase tracking-wider text-[#8bd132]">
+              <span className="text-[9px] font-bold uppercase tracking-wider text-[#ff5c5c]">
                 Legenda / Copy Desenvolvida
               </span>
               <p className="whitespace-pre-line text-xs leading-relaxed text-[#cdd4d7]">
@@ -297,7 +297,7 @@ export const CreativeMatrixView: React.FC<CreativeMatrixViewProps> = ({ onSavePo
             {/* Slide Breakdown if Carousel */}
             {matrixResult.slides && matrixResult.slides.length > 0 && (
               <div className="space-y-2">
-                <span className="text-[9px] font-bold uppercase tracking-wider text-[#8bd132]">
+                <span className="text-[9px] font-bold uppercase tracking-wider text-[#ff5c5c]">
                   Estrutura de Slides / Carrossel ({matrixResult.slides.length} lâminas)
                 </span>
                 <div className="grid gap-2 md:grid-cols-3">
@@ -306,7 +306,7 @@ export const CreativeMatrixView: React.FC<CreativeMatrixViewProps> = ({ onSavePo
                       key={slide.slideNumber}
                       className="rounded-xl border border-white/[0.06] bg-black/30 p-3 space-y-1"
                     >
-                      <span className="text-[9px] font-bold text-[#8bd132]">Slide {slide.slideNumber}</span>
+                      <span className="text-[9px] font-bold text-[#ff5c5c]">Slide {slide.slideNumber}</span>
                       <h5 className="text-[10px] font-bold text-white truncate">{slide.headline}</h5>
                       <p className="text-[9px] text-[#8e989d] line-clamp-2">{slide.text}</p>
                     </div>
@@ -326,7 +326,7 @@ export const CreativeMatrixView: React.FC<CreativeMatrixViewProps> = ({ onSavePo
 
               <button
                 onClick={handleSaveToPosts}
-                className="flex items-center gap-1.5 rounded-lg bg-[#8bd132] px-4 py-2 text-[10px] font-bold text-[#14200e] hover:bg-[#9be24d] transition shadow-md shadow-[#8bd132]/20"
+                className="flex items-center gap-1.5 rounded-lg bg-[#ff5c5c] px-4 py-2 text-[10px] font-bold text-[#14200e] hover:bg-[#9be24d] transition shadow-md shadow-[#ff5c5c]/20"
               >
                 <Send className="h-3.5 w-3.5" /> Enviar para Aprovações & Publicador
               </button>

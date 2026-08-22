@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Global Spotlight V5 - Clicko Precision</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {"secondary-fixed-dim": "#ffb68b", "surface-variant": "#353534", surface: "#131313", "on-secondary-container": "#602a00", "surface-bright": "#393939", "surface-container-lowest": "#0e0e0e", "primary-container": "#ff5c5c", "inverse-surface": "#e5e2e1", "error-container": "#93000a", "primary-fixed-dim": "#ffb3af", "on-primary-container": "#62000c", "primary-fixed": "#ffdad7", "on-primary-fixed-variant": "#920418", "tertiary-fixed-dim": "#ffb3b1", "surface-dim": "#131313", "on-tertiary-container": "#5c0e15", "on-error-container": "#ffdad6", "inverse-on-surface": "#313030", "on-secondary-fixed-variant": "#753400", secondary: "#ffb68b", "on-background": "#e5e2e1", "outline-variant": "#5a403f", "secondary-fixed": "#ffdbc8", outline: "#a98987", error: "#ffb4ab", "on-surface-variant": "#e2bebc", "tertiary-fixed": "#ffdad8", "surface-container": "#201f1f", background: "#131313", "on-tertiary-fixed-variant": "#7f292c", "tertiary-container": "#e17474", "surface-tint": "#ffb3af", "secondary-container": "#ff7f1c", "on-surface": "#e5e2e1", "surface-container-low": "#1c1b1b", "on-secondary-fixed": "#321200", "inverse-primary": "#b4252d", "on-error": "#690005", primary: "#ffb3af", "on-tertiary": "#601118", "on-secondary": "#522300", "surface-container-highest": "#353534", "on-primary-fixed": "#410005", "surface-container-high": "#2a2a2a", "on-tertiary-fixed": "#410007", tertiary: "#ffb3b1", "on-primary": "#68000d"}, borderRadius: {DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem"}, spacing: {"container-max": "1440px", unit: "4px", "margin-mobile": "16px", gutter: "16px", "margin-desktop": "32px"}, fontFamily: {"body-lg": ["Geist"], "label-md": ["Geist"], "headline-lg": ["Geist"], code: ["Geist"], display: ["Geist"], "headline-md": ["Geist"], "body-md": ["Geist"], headline: ["Geist"], body: ["Geist"], label: ["Geist"]}, fontSize: {"body-lg": ["16px", {lineHeight: "1.5", fontWeight: "400"}], "label-md": ["12px", {lineHeight: "1", letterSpacing: "0.02em", fontWeight: "500"}], "headline-lg": ["24px", {lineHeight: "1.3", fontWeight: "600"}], code: ["13px", {lineHeight: "1.4", fontWeight: "400"}], display: ["32px", {lineHeight: "1.2", letterSpacing: "-0.02em", fontWeight: "600"}], "headline-md": ["20px", {lineHeight: "1.4", fontWeight: "500"}], "body-md": ["14px", {lineHeight: "1.5", fontWeight: "400"}]}}}};</script>
+<style>
+        body { background-color: #0F1011; color: #e3e2e3; }
+        .bg-surface-level-1 { background-color: #181B1D; }
+        .bg-surface-level-2 { background-color: #1E1E1E; }
+        .border-base { border-color: #3b4a3d; }
+        .focus-green:focus-within { border-color: #00e676; }
+        
+        /* Custom Scrollbar for dense lists */
+        ::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #343536;
+            border-radius: 2px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #474746;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col font-body-md text-body-md bg-background antialiased selection:bg-primary-container selection:text-on-primary-container">
+<!-- Top Navigation from Shared Components -->
+<nav class="w-full h-16 border-b border-outline-variant dark:border-outline-variant flat no shadows flex justify-between items-center px-margin-desktop sticky top-0 z-50 bg-surface dark:bg-surface">
+<div class="flex items-center gap-6">
+<span class="font-headline-md text-headline-md font-bold text-primary dark:text-primary">Clicko Precision</span>
+<div class="hidden md:flex h-full items-center gap-6">
+<!-- Highlight 'Radar Room' as active intent for search/spotlight -->
+<a class="text-on-surface-variant dark:text-on-secondary-container hover:text-primary dark:hover:text-primary-fixed transition-colors duration-200 cursor-pointer active:opacity-80" href="#">Newsroom</a>
+<a class="text-primary dark:text-primary-fixed-dim border-b-2 border-primary pt-1 hover:text-primary dark:hover:text-primary-fixed transition-colors duration-200 cursor-pointer active:opacity-80 h-full flex items-center" href="#">Radar Room</a>
+<a class="text-on-surface-variant dark:text-on-secondary-container hover:text-primary dark:hover:text-primary-fixed transition-colors duration-200 cursor-pointer active:opacity-80" href="#">Brand Memory</a>
+<a class="text-on-surface-variant dark:text-on-secondary-container hover:text-primary dark:hover:text-primary-fixed transition-colors duration-200 cursor-pointer active:opacity-80" href="#">Campaign Intake</a>
+<a class="text-on-surface-variant dark:text-on-secondary-container hover:text-primary dark:hover:text-primary-fixed transition-colors duration-200 cursor-pointer active:opacity-80" href="#">Campaign Room</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:text-primary transition-colors cursor-pointer">
+<span class="material-symbols-outlined" data-weight="fill" style="font-variation-settings: 'FILL' 1;">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors cursor-pointer">
+<span class="material-symbols-outlined" data-weight="fill" style="font-variation-settings: 'FILL' 1;">settings</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-surface-variant overflow-hidden border border-outline-variant cursor-pointer">
+<img alt="User profile" class="w-full h-full object-cover" data-alt="A stark, minimalist profile placeholder graphic featuring a subtle geometric pattern in deep slate gray and muted silver. High resolution, high contrast technical aesthetic suitable for a professional B2B software dashboard interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLbpH8CCFtJOMjD4XwAUZJM37T4otac4c5GpOCzyDklZd0Q_CmDggasARVcVkL6neAZ6tU5djJWfqxUeKkaamRLyJo4Vht26-IQucbRo9EynZg_--h4gmWh5duJIZkt5a7uc65y98f_MFGYdnWYq0Ge1Hvsnkj3BDgHHKoaxFWDMsfHC3QxlFPK5AUmBQdTpYFJ31n3voWxk4hX7aTqVZQzz-xa6wT2MgoHfHddZhj63ngF9qD-W8otw"/>
+</div>
+</div>
+</nav>
+<!-- Main Content: Global Spotlight -->
+<main class="flex-grow flex flex-col items-center justify-start pt-16 px-4 md:px-margin-desktop w-full max-w-container-max mx-auto">
+<!-- Large Central Search Input Container -->
+<div class="w-full max-w-4xl flex flex-col gap-2 mb-8">
+<div class="flex items-center justify-between px-2 mb-2">
+<h1 class="font-display text-display text-on-surface">Global Spotlight V5</h1>
+<div class="flex gap-2 text-on-tertiary-container font-code text-code">
+<span class="px-2 py-1 bg-surface-container-high border border-outline-variant rounded">⌘</span>
+<span class="px-2 py-1 bg-surface-container-high border border-outline-variant rounded">K</span>
+</div>
+</div>
+<!-- Input Field Group -->
+<div class="relative w-full bg-surface-level-1 border border-outline-variant rounded-lg focus-green transition-colors duration-200 flex items-center px-4 py-3 group">
+<span class="material-symbols-outlined text-on-surface-variant mr-4 text-2xl group-focus-within:text-primary-container transition-colors">search</span>
+<input autofocus="" class="w-full bg-transparent border-none text-on-surface font-headline-lg text-headline-lg focus:ring-0 placeholder:text-on-surface-variant/50 p-0" placeholder="Search campaigns, assets, people, or commands..." type="text"/>
+<!-- Quick Filter Badges inside input -->
+<div class="absolute right-4 hidden md:flex items-center gap-2">
+<span class="font-label-md text-label-md text-on-surface-variant px-2 py-1 border border-outline-variant rounded bg-surface">Tab to cycle filters</span>
+</div>
+</div>
+</div>
+<!-- Filtered Results Bento Grid -->
+<div class="w-full max-w-6xl grid grid-cols-1 md:grid-cols-12 gap-gutter mb-16">
+<!-- Left Column: Primary Results (Campaigns & Assets) -->
+<div class="col-span-1 md:col-span-8 flex flex-col gap-gutter">
+<!-- Campaigns Section -->
+<section class="bg-surface-level-1 border border-outline-variant rounded-lg flex flex-col">
+<div class="px-4 py-3 border-b border-outline-variant flex justify-between items-center bg-surface-container-low rounded-t-lg">
+<h2 class="font-label-md text-label-md text-on-surface tracking-widest uppercase">Campaigns</h2>
+<span class="font-label-md text-label-md text-primary-fixed-dim bg-primary-container/10 px-2 py-0.5 rounded">3 Matches</span>
+</div>
+<div class="flex flex-col p-2 gap-1">
+<!-- Result Item -->
+<div class="group flex items-center justify-between p-3 hover:bg-surface-level-2 rounded transition-colors cursor-pointer border border-transparent hover:border-outline-variant">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 bg-surface border border-outline-variant rounded flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary-container">campaign</span>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-md text-headline-md text-on-surface group-hover:text-primary-fixed-dim transition-colors">Q3 Apollo Launch</span>
+<span class="font-body-md text-body-md text-on-surface-variant flex items-center gap-2">
+                                        ID: CMP-8842 <span class="w-1 h-1 rounded-full bg-outline-variant"></span> Active <span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span>
+</span>
+</div>
+</div>
+<div class="opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-2">
+<button class="p-2 text-on-surface hover:text-primary-container hover:bg-surface rounded transition-colors border border-transparent hover:border-outline-variant" title="Open">
+<span class="material-symbols-outlined text-sm">open_in_new</span>
+</button>
+<button class="p-2 text-on-surface hover:text-primary-container hover:bg-surface rounded transition-colors border border-transparent hover:border-outline-variant" title="Clone">
+<span class="material-symbols-outlined text-sm">content_copy</span>
+</button>
+</div>
+</div>
+<!-- Result Item -->
+<div class="group flex items-center justify-between p-3 hover:bg-surface-level-2 rounded transition-colors cursor-pointer border border-transparent hover:border-outline-variant">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 bg-surface border border-outline-variant rounded flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-surface-variant">campaign</span>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-md text-headline-md text-on-surface group-hover:text-primary-fixed-dim transition-colors">Project Gemini Retargeting</span>
+<span class="font-body-md text-body-md text-on-surface-variant flex items-center gap-2">
+                                        ID: CMP-7109 <span class="w-1 h-1 rounded-full bg-outline-variant"></span> Draft
+                                    </span>
+</div>
+</div>
+<div class="opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-2">
+<button class="p-2 text-on-surface hover:text-primary-container hover:bg-surface rounded transition-colors border border-transparent hover:border-outline-variant" title="Open">
+<span class="material-symbols-outlined text-sm">open_in_new</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Assets Section -->
+<section class="bg-surface-level-1 border border-outline-variant rounded-lg flex flex-col">
+<div class="px-4 py-3 border-b border-outline-variant flex justify-between items-center bg-surface-container-low rounded-t-lg">
+<h2 class="font-label-md text-label-md text-on-surface tracking-widest uppercase">Creative Assets</h2>
+<span class="font-label-md text-label-md text-on-surface-variant bg-surface-container-highest px-2 py-0.5 rounded">12 Matches</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-2 p-2">
+<!-- Asset Card -->
+<div class="group relative flex flex-col bg-surface border border-outline-variant rounded overflow-hidden cursor-pointer hover:border-primary-fixed-dim transition-colors">
+<div class="h-24 w-full bg-surface-variant overflow-hidden border-b border-outline-variant relative">
+<img alt="Asset thumbnail" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" data-alt="A highly compressed technical thumbnail showing a vector graphic of a stylized rocket launching against a dark grid background. Industrial matte design aesthetic, sharp edges, neon green accents indicating data flow." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZ9DjgAq9wRpO219lCHRIcLylwRN3FMlOF579C7gs7egJpnjxFsCQy34OFCuFJuWbZe1FwGYrdbeJ7b0mBGmDG7jzegr86nDjLU9jlihy1IHtjSL24rhfjLlVmUOe0tQHzdkdp09XSPsnN6PQa2YbOBpEvWbCqIkSZdhvrkvyvcq7hNa8yGJEt2gGe_OVwMJQ2IT0KgZel6OI2qGAMeQ3g5G8s7uFysk00N4jMc_9uof-LmDh7o4JoTA"/>
+<div class="absolute top-2 right-2 bg-surface/80 backdrop-blur border border-outline-variant px-1.5 py-0.5 rounded font-code text-[10px] text-on-surface">PNG</div>
+</div>
+<div class="p-3 flex flex-col">
+<span class="font-label-md text-label-md text-on-surface truncate">apollo_hero_v4_final.png</span>
+<span class="font-code text-[11px] text-on-surface-variant mt-1">2.4 MB • Updated 2h ago</span>
+</div>
+<div class="absolute inset-0 bg-surface-level-2/90 opacity-0 group-hover:opacity-100 flex items-center justify-center gap-2 transition-opacity">
+<button class="bg-primary-container text-on-primary-container font-label-md px-3 py-1.5 rounded flex items-center gap-1 hover:brightness-110">
+<span class="material-symbols-outlined text-[16px]">download</span> Export
+                                 </button>
+<button class="bg-surface border border-outline-variant text-on-surface font-label-md px-3 py-1.5 rounded flex items-center gap-1 hover:border-primary-fixed-dim">
+<span class="material-symbols-outlined text-[16px]">sell</span> Tag
+                                 </button>
+</div>
+</div>
+<!-- Asset Card -->
+<div class="group relative flex flex-col bg-surface border border-outline-variant rounded overflow-hidden cursor-pointer hover:border-primary-fixed-dim transition-colors">
+<div class="h-24 w-full bg-surface-variant flex items-center justify-center border-b border-outline-variant relative">
+<span class="material-symbols-outlined text-4xl text-on-surface-variant">description</span>
+<div class="absolute top-2 right-2 bg-surface/80 backdrop-blur border border-outline-variant px-1.5 py-0.5 rounded font-code text-[10px] text-on-surface">PDF</div>
+</div>
+<div class="p-3 flex flex-col">
+<span class="font-label-md text-label-md text-on-surface truncate">Q3_Media_Plan_Brief.pdf</span>
+<span class="font-code text-[11px] text-on-surface-variant mt-1">840 KB • Updated 1d ago</span>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Right Column: Commands & People (Sidebar) -->
+<div class="col-span-1 md:col-span-4 flex flex-col gap-gutter">
+<!-- Quick Commands -->
+<section class="bg-surface-level-1 border border-outline-variant rounded-lg flex flex-col h-fit">
+<div class="px-4 py-3 border-b border-outline-variant bg-surface-container-low rounded-t-lg">
+<h2 class="font-label-md text-label-md text-on-surface tracking-widest uppercase">System Commands</h2>
+</div>
+<div class="flex flex-col p-2 gap-1">
+<button class="flex items-center justify-between p-2 rounded hover:bg-surface-level-2 text-left group border border-transparent hover:border-outline-variant transition-colors">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary-container text-sm">add_circle</span>
+<span class="font-body-md text-body-md text-on-surface">Create New Campaign</span>
+</div>
+<span class="font-code text-code text-on-surface-variant px-1.5 py-0.5 border border-outline-variant rounded bg-surface opacity-50 group-hover:opacity-100">C</span>
+</button>
+<button class="flex items-center justify-between p-2 rounded hover:bg-surface-level-2 text-left group border border-transparent hover:border-outline-variant transition-colors">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary-container text-sm">sync</span>
+<span class="font-body-md text-body-md text-on-surface">Sync Ad Platforms</span>
+</div>
+<span class="font-code text-code text-on-surface-variant px-1.5 py-0.5 border border-outline-variant rounded bg-surface opacity-50 group-hover:opacity-100">S</span>
+</button>
+<button class="flex items-center justify-between p-2 rounded hover:bg-surface-level-2 text-left group border border-transparent hover:border-outline-variant transition-colors">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary-container text-sm">summarize</span>
+<span class="font-body-md text-body-md text-on-surface">Generate Weekly Report</span>
+</div>
+<span class="font-code text-code text-on-surface-variant px-1.5 py-0.5 border border-outline-variant rounded bg-surface opacity-50 group-hover:opacity-100">R</span>
+</button>
+</div>
+</section>
+<!-- People / Stakeholders -->
+<section class="bg-surface-level-1 border border-outline-variant rounded-lg flex flex-col h-fit">
+<div class="px-4 py-3 border-b border-outline-variant bg-surface-container-low rounded-t-lg">
+<h2 class="font-label-md text-label-md text-on-surface tracking-widest uppercase">Directory</h2>
+</div>
+<div class="flex flex-col p-2 gap-1">
+<div class="flex items-center gap-3 p-2 hover:bg-surface-level-2 rounded border border-transparent hover:border-outline-variant cursor-pointer transition-colors group">
+<div class="w-8 h-8 rounded bg-surface-variant overflow-hidden border border-outline-variant shrink-0">
+<img alt="User avatar" class="w-full h-full object-cover" data-alt="A monochromatic low-key portrait photo of a professional in a tech environment, acting as an avatar placeholder. Industrial matte finish, dark gray tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDkPEr2etH5FMdpPBBEqrJHRONsIGPwb0ebFTmd45fSCQ7zHvvZZbaxjnQ1geYqYy3x3fBlAHRLtyGuSlxEbPjI8cmsHu9mjcX5-QIg9a_ykguWVVLKAhXqL5c3Ao5y02JMPbe8rXymUBLNs7xowzqD4_h5eEQgFpzUjY3LfogKHiqEaUUGgz0ATeyNFFQzhXBD-lBbUpyM5lWZI26fdTe1UzwNTfnub6HxvFMROGYZa-XU6K0aKqj_AQ"/>
+</div>
+<div class="flex flex-col flex-grow">
+<span class="font-body-md text-body-md text-on-surface group-hover:text-primary-fixed-dim">Sarah Jenkins</span>
+<span class="font-label-md text-label-md text-on-surface-variant">Media Director</span>
+</div>
+<button class="text-on-surface-variant hover:text-primary-container p-1" title="Message">
+<span class="material-symbols-outlined text-[18px]">chat</span>
+</button>
+</div>
+<div class="flex items-center gap-3 p-2 hover:bg-surface-level-2 rounded border border-transparent hover:border-outline-variant cursor-pointer transition-colors group">
+<div class="w-8 h-8 rounded bg-surface-variant overflow-hidden border border-outline-variant shrink-0 flex items-center justify-center">
+<span class="font-label-md text-on-surface">MK</span>
+</div>
+<div class="flex flex-col flex-grow">
+<span class="font-body-md text-body-md text-on-surface group-hover:text-primary-fixed-dim">Marcus Kim</span>
+<span class="font-label-md text-label-md text-on-surface-variant">Creative Lead</span>
+</div>
+<button class="text-on-surface-variant hover:text-primary-container p-1" title="Message">
+<span class="material-symbols-outlined text-[18px]">chat</span>
+</button>
+</div>
+</div>
+</section>
+</div>
+</div>
+</main>
+<!-- Footer from Shared Components -->
+<footer class="w-full py-4 border-t border-outline-variant dark:border-outline-variant flat no shadows bg-surface-dim dark:bg-surface-dim flex justify-between items-center px-margin-desktop mt-auto">
+<span class="font-label-md text-label-md uppercase tracking-widest text-on-surface">© 2024 Clicko Precision. System Operational.</span>
+<div class="flex gap-6">
+<a class="font-label-md text-label-md text-on-tertiary-container dark:text-on-tertiary-container hover:text-primary-fixed dark:hover:text-primary-fixed transition-colors cursor-pointer" href="#">Status</a>
+<a class="font-label-md text-label-md text-on-tertiary-container dark:text-on-tertiary-container hover:text-primary-fixed dark:hover:text-primary-fixed transition-colors cursor-pointer" href="#">Documentation</a>
+<a class="font-label-md text-label-md text-on-tertiary-container dark:text-on-tertiary-container hover:text-primary-fixed dark:hover:text-primary-fixed transition-colors cursor-pointer" href="#">Support</a>
+<a class="font-label-md text-label-md text-on-tertiary-container dark:text-on-tertiary-container hover:text-primary-fixed dark:hover:text-primary-fixed transition-colors cursor-pointer" href="#">Terms</a>
+</div>
+</footer>
+<script src="/stitch/bridge.js"></script></body></html>

@@ -63,12 +63,12 @@ export function FloatingAIAssistant({
           {/* Header */}
           <header className="flex items-center justify-between border-b border-white/[0.06] p-3.5 bg-[#182126]">
             <div className="flex items-center gap-2">
-              <span className="grid h-8 w-8 place-items-center rounded-lg bg-[#8bd132]/10 border border-[#8bd132]/20">
-                <Bot className="h-4 w-4 text-[#8bd132]" />
+              <span className="grid h-8 w-8 place-items-center rounded-lg bg-[#ff5c5c]/10 border border-[#ff5c5c]/20">
+                <Bot className="h-4 w-4 text-[#ff5c5c]" />
               </span>
               <div>
                 <h2 className="text-[11px] font-bold text-white flex items-center gap-1">
-                  Copiloto Clicko IA <Sparkles className="h-3 w-3 text-[#8bd132]" />
+                  Copiloto Clicko IA <Sparkles className="h-3 w-3 text-[#ff5c5c]" />
                 </h2>
                 <p className="text-[8px] text-[#828e93]">
                   Diretor de Mídia Social · Contexto: {navigationLabel[currentTab]}
@@ -98,7 +98,7 @@ export function FloatingAIAssistant({
           <div className="p-2 border-b border-white/[0.05] bg-black/20 flex gap-1 overflow-x-auto custom-scrollbar">
             <button
               onClick={() => handleQuickAction('Abrir Estúdio para criar conteúdo', 'studio')}
-              className="px-2 py-1 text-[8px] font-bold rounded bg-[#8bd132]/10 text-[#8bd132] whitespace-nowrap hover:bg-[#8bd132]/20 transition flex items-center gap-1"
+              className="px-2 py-1 text-[8px] font-bold rounded bg-[#ff5c5c]/10 text-[#ff5c5c] whitespace-nowrap hover:bg-[#ff5c5c]/20 transition flex items-center gap-1"
             >
               <Target className="h-3 w-3" /> Matriz Criativa
             </button>
@@ -132,7 +132,7 @@ export function FloatingAIAssistant({
                 <p
                   className={`max-w-[88%] rounded-xl px-3 py-2.5 text-[10px] leading-relaxed ${
                     message.role === 'user'
-                      ? 'bg-[#8bd132] text-[#14200e] font-medium'
+                      ? 'bg-[#ff5c5c] text-[#14200e] font-medium'
                       : 'bg-black/30 border border-white/[0.06] text-[#cbd2d5]'
                   }`}
                 >
@@ -142,7 +142,7 @@ export function FloatingAIAssistant({
             ))}
 
             {loading && (
-              <div className="flex items-center gap-2 text-[9px] text-[#8bd132] font-semibold">
+              <div className="flex items-center gap-2 text-[9px] text-[#ff5c5c] font-semibold">
                 <Sparkles className="h-3.5 w-3.5 animate-pulse" />
                 Consultando o Brain & Analisando dados...
               </div>
@@ -157,7 +157,7 @@ export function FloatingAIAssistant({
                   moduleSuggestions[currentTab] || 'Como a IA pode otimizar meu trabalho nesta tela?'
                 )
               }
-              className="mb-2 w-full truncate rounded-lg bg-[#8bd132]/[0.08] border border-[#8bd132]/20 px-2.5 py-1.5 text-left text-[8px] font-bold text-[#8bd132]"
+              className="mb-2 w-full truncate rounded-lg bg-[#ff5c5c]/[0.08] border border-[#ff5c5c]/20 px-2.5 py-1.5 text-left text-[8px] font-bold text-[#ff5c5c]"
             >
               <BrainCircuit className="mr-1.5 inline h-3 w-3" />
               {moduleSuggestions[currentTab] || 'Pedir sugestão tática para esta tela'}
@@ -171,12 +171,12 @@ export function FloatingAIAssistant({
                   if (event.key === 'Enter') submit();
                 }}
                 placeholder="Comande a IA em qualquer tela..."
-                className="h-9 min-w-0 flex-1 rounded-xl border border-white/[0.08] bg-black/30 px-3 text-[10px] text-white outline-none focus:border-[#8bd132]/40"
+                className="h-9 min-w-0 flex-1 rounded-xl border border-white/[0.08] bg-black/30 px-3 text-[10px] text-white outline-none focus:border-[#ff5c5c]/40"
               />
               <button
                 onClick={submit}
                 disabled={!input.trim() || loading}
-                className="grid h-9 w-9 place-items-center rounded-xl bg-[#8bd132] text-[#14200e] disabled:opacity-35 transition hover:bg-[#9be24d]"
+                className="grid h-9 w-9 place-items-center rounded-xl bg-[#ff5c5c] text-[#14200e] disabled:opacity-35 transition hover:bg-[#9be24d]"
               >
                 <Send className="h-3.5 w-3.5" />
               </button>
@@ -188,7 +188,7 @@ export function FloatingAIAssistant({
       {/* Floating Toggle Button */}
       <button
         onClick={() => setOpen((value) => !value)}
-        className="ml-auto grid h-12 w-12 place-items-center rounded-full border border-[#8bd132]/40 bg-[#182126] text-[#8bd132] shadow-lg shadow-black/50 transition-colors hover:bg-[#8bd132] hover:text-[#14200e]"
+        className="ml-auto grid h-12 w-12 place-items-center rounded-full border border-[#ff5c5c]/40 bg-[#182126] text-[#ff5c5c] shadow-lg shadow-black/50 transition-colors hover:bg-[#ff5c5c] hover:text-[#14200e]"
         aria-label="Abrir Copiloto de IA"
       >
         <Bot className="h-5 w-5" />

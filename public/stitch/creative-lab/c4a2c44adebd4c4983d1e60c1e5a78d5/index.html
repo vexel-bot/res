@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Clicko - Campaign Moodboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {"on-secondary-fixed": "#321200", primary: "#ffb3af", background: "#131313", "tertiary-fixed-dim": "#ffb3b1", "surface-container-high": "#2a2a2a", "on-surface-variant": "#e2bebc", secondary: "#ffb68b", "surface-bright": "#393939", "on-tertiary-fixed": "#410007", "tertiary-container": "#e17474", "on-primary": "#68000d", "secondary-fixed": "#ffdbc8", "on-secondary-container": "#602a00", "primary-fixed": "#ffdad7", "primary-container": "#ff5c5c", "tertiary-fixed": "#ffdad8", "surface-container-low": "#1c1b1b", "surface-container-highest": "#353534", "outline-variant": "#5a403f", surface: "#131313", "on-primary-fixed": "#410005", "on-secondary": "#522300", "surface-tint": "#ffb3af", "secondary-fixed-dim": "#ffb68b", "on-primary-fixed-variant": "#920418", "on-secondary-fixed-variant": "#753400", "on-primary-container": "#62000c", "inverse-on-surface": "#313030", "inverse-primary": "#b4252d", "surface-container-lowest": "#0e0e0e", "on-error": "#690005", "on-tertiary-container": "#5c0e15", "on-tertiary": "#601118", "on-surface": "#e5e2e1", "on-tertiary-fixed-variant": "#7f292c", "secondary-container": "#ff7f1c", "primary-fixed-dim": "#ffb3af", "surface-container": "#201f1f", "inverse-surface": "#e5e2e1", "on-error-container": "#ffdad6", "on-background": "#e5e2e1", outline: "#a98987", error: "#ffb4ab", "error-container": "#93000a", "surface-dim": "#131313", tertiary: "#ffb3b1", "surface-variant": "#353534"}, borderRadius: {DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem"}, spacing: {stack_gap_md: "16px", gutter: "16px", stack_gap_sm: "8px", spine_width: "64px", context_nav_width: "240px", container_padding: "24px"}, fontFamily: {"body-sm": ["Geist"], "headline-md": ["Geist"], display: ["Geist"], "label-mono": ["Geist"], "headline-lg": ["Geist"], "body-lg": ["Geist"], "data-number": ["Geist"], "body-md": ["Geist"], headline: ["Geist"], body: ["Geist"], label: ["Geist"]}, fontSize: {"body-sm": ["13px", {lineHeight: "18px", fontWeight: "400"}], "headline-md": ["20px", {lineHeight: "28px", fontWeight: "500"}], display: ["32px", {lineHeight: "40px", letterSpacing: "-0.02em", fontWeight: "600"}], "label-mono": ["12px", {lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "500"}], "headline-lg": ["24px", {lineHeight: "32px", letterSpacing: "-0.01em", fontWeight: "600"}], "body-lg": ["16px", {lineHeight: "24px", fontWeight: "400"}], "data-number": ["14px", {lineHeight: "20px", fontWeight: "600"}], "body-md": ["14px", {lineHeight: "20px", fontWeight: "400"}]}}}};</script>
+<style>
+        body {
+            background-color: #0F1011; /* Custom background as requested */
+            color: #e3e2e3;
+        }
+        .canvas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+            grid-auto-rows: 200px;
+            grid-auto-flow: dense;
+        }
+        .canvas-item {
+            border: 1px solid #2C2F31;
+            background-color: #181B1D;
+            overflow: hidden;
+            position: relative;
+            border-radius: 0.125rem;
+        }
+        .canvas-item:hover .canvas-overlay {
+            opacity: 1;
+        }
+        .canvas-item.wide { grid-column: span 2; }
+        .canvas-item.tall { grid-row: span 2; }
+        
+        /* Custom scrollbar for high-density tool */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0F1011;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2C2F31;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #39393a;
+        }
+    </style>
+</head>
+<body class="h-screen w-screen overflow-hidden flex flex-col font-body-sm text-body-sm bg-background">
+<!-- TopNavBar -->
+<header class="bg-surface-container-low dark:bg-surface-container-low text-primary dark:text-primary font-headline-md text-headline-md w-full h-16 top-0 sticky border-b border-outline-variant flex justify-between items-center px-gutter z-50">
+<div class="flex items-center gap-4">
+<div class="font-display text-display text-primary dark:text-primary tracking-tight">Clicko Creative Lab</div>
+</div>
+<!-- Search on left logic translated to left of actions -->
+<div class="flex items-center gap-6">
+<div class="relative hidden md:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm">search</span>
+<input class="bg-surface border border-outline-variant rounded-full py-1.5 pl-9 pr-4 text-body-sm text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary w-64" placeholder="Search resources..." type="text"/>
+</div>
+<button class="bg-primary text-on-primary font-body-md text-body-md px-4 py-2 rounded-DEFAULT hover:bg-surface-bright transition-colors active:scale-95 duration-200">Create Post</button>
+<div class="flex items-center gap-3">
+<button class="text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-bright transition-colors rounded-full p-2 w-10 h-10 flex items-center justify-center">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-bright transition-colors rounded-full p-2 w-10 h-10 flex items-center justify-center">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<img alt="User avatar" class="w-8 h-8 rounded-full border border-outline-variant ml-2 object-cover" data-alt="A small, circular avatar image of a professional creative director in a modern, moody lighting setting. The avatar is highly detailed, representing a professional user in a high-density creative workbench tool." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCVXxufrGINhBV3keTI5i4Rg2hWHTEzajfVYMu53BG2QaZUBeK2SIKqBAYhD0nNxMjS0P-5jVGqS5fK1ltt_eq3MWTQXcj_0_VuuL3fNOh9Oq_G_l5x9HslApOA30cHrtgmCkMvqRrdVJZyiwFjmdowia4qbzTgWgl3bjXukP4F-rujF4twWHDAKlTz-MftZd9XSkou1X1_yANtTHuaYePNUbRYBs7qScN5CSNXHeLBBziMMb0ycZMIZQ"/>
+</div>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden">
+<!-- SideNavBar (Workflow Spine) -->
+<nav class="bg-surface-container-lowest dark:bg-surface-container-lowest text-primary dark:text-primary font-label-mono text-label-mono h-full w-spine_width fixed left-0 top-16 border-r border-outline-variant flex flex-col items-center py-4 z-40">
+<!-- Header section of spine -->
+<div class="mb-8 flex flex-col items-center cursor-pointer group">
+<div class="w-10 h-10 rounded-DEFAULT bg-surface-container-high border border-outline-variant flex items-center justify-center mb-2 overflow-hidden group-hover:border-primary transition-colors">
+<img alt="Workspace switcher" class="w-full h-full object-cover" data-alt="A small square icon representing a workspace switcher in a professional creative tool. It shows a geometric logo for a client workspace, styled in dark matte colors with a subtle green accent." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3RnovcUVCrta6ncXit25vN98GqFsmyuit6_6DlWuM1BqsQ9YRUifj_AI4JL7Fvw_93OK2Zj7jyxNqzC-cCFtlnHOga0qsVEfK36NgvA0h5Dr38J5nlknKBTtJ5W43uo8rSIKTjyeLTzTM_z96zHNg1dZSJTNf9UlPh6Zy0H2TkSGj8F_vkPegU1BIk8OdKn49Xfz5K_9_Z1TINU6j0NSUm6skLeXE-72uZxYJiVdcOX-u3xaSmrkHBQ"/>
+</div>
+<div class="text-[10px] text-on-surface-variant text-center leading-tight">Workspace<br/><span class="opacity-50">Client Select</span></div>
+</div>
+<!-- Navigation Tabs -->
+<div class="flex flex-col gap-4 w-full items-center flex-1">
+<button class="w-12 h-12 rounded-DEFAULT text-on-surface-variant opacity-60 hover:text-on-surface hover:bg-surface-container transition-all duration-150 ease-in-out flex flex-col items-center justify-center gap-1 group relative" title="Asset Library">
+<span class="material-symbols-outlined">folder_open</span>
+</button>
+<button class="w-12 h-12 rounded-DEFAULT text-primary border-l-2 border-primary bg-surface-container-high flex flex-col items-center justify-center gap-1 relative" title="Moodboard">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">palette</span>
+</button>
+<button class="w-12 h-12 rounded-DEFAULT text-on-surface-variant opacity-60 hover:text-on-surface hover:bg-surface-container transition-all duration-150 ease-in-out flex flex-col items-center justify-center gap-1 group relative" title="Carousel Builder">
+<span class="material-symbols-outlined">view_carousel</span>
+</button>
+<button class="w-12 h-12 rounded-DEFAULT text-on-surface-variant opacity-60 hover:text-on-surface hover:bg-surface-container transition-all duration-150 ease-in-out flex flex-col items-center justify-center gap-1 group relative" title="Format Board">
+<span class="material-symbols-outlined">aspect_ratio</span>
+</button>
+<button class="w-12 h-12 rounded-DEFAULT text-on-surface-variant opacity-60 hover:text-on-surface hover:bg-surface-container transition-all duration-150 ease-in-out flex flex-col items-center justify-center gap-1 group relative" title="Campaign World">
+<span class="material-symbols-outlined">public</span>
+</button>
+</div>
+<!-- Footer Tabs -->
+<div class="flex flex-col gap-4 w-full items-center mt-auto">
+<button class="w-12 h-12 rounded-DEFAULT text-on-surface-variant opacity-60 hover:text-on-surface hover:bg-surface-container transition-all duration-150 ease-in-out flex items-center justify-center" title="Support">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+<button class="w-12 h-12 rounded-DEFAULT text-on-surface-variant opacity-60 hover:text-on-surface hover:bg-surface-container transition-all duration-150 ease-in-out flex items-center justify-center" title="Account">
+<span class="material-symbols-outlined">person</span>
+</button>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 ml-spine_width flex flex-row h-[calc(100vh-64px)] overflow-hidden">
+<!-- Canvas Canvas (70%) -->
+<div class="flex-1 w-[70%] p-gutter overflow-y-auto bg-[#0F1011] relative">
+<div class="flex justify-between items-center mb-6">
+<div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface">Café é território</h1>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Campaign Moodboard • 14 items</p>
+</div>
+<div class="flex gap-3">
+<button class="px-4 py-2 bg-transparent border border-outline-variant text-[#ECECED] font-body-md text-body-md rounded-DEFAULT hover:bg-surface-bright transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">add_link</span>
+                            Add from Web
+                        </button>
+</div>
+</div>
+<!-- Bento Grid for Moodboard -->
+<div class="canvas-grid">
+<div class="canvas-item wide tall">
+<img alt="Hero Reference" class="w-full h-full object-cover" data-alt="A cinematic, moody photograph of a morning cafe in an urban setting. Dense fog outside the window, dark roast coffee beans scattered on a rustic dark wood table. High-contrast, clinical, high-density professional aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAWmraaaahLu1-4wU8KN0l0FFYlgaKyOQAXo7eFsj1zPiZQECJ7f3wPChmApK2jXRHkg-ES8GoJ4MAokCq0xLiNKsC7cAXLOOqHEncnQUatG5tzXAyTjEqwipPuBIA4GR7BB9B4_9CxInwfWvT5xBXH_fERSfuz71OzK_Iuo-MKQfaSviZ_JQ6XPGsQI0Z5R97cxILsZN2TMr7vIj9hpmRaBQ2lrZMoEivfEwTJih4mBW8isvdYboRb0Q"/>
+<div class="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/80 to-transparent">
+<div class="flex justify-between items-center">
+<span class="text-white font-label-mono text-label-mono">HERO VIBE</span>
+<span class="material-symbols-outlined text-white text-sm">drag_indicator</span>
+</div>
+</div>
+</div>
+<div class="canvas-item">
+<img alt="Texture Reference" class="w-full h-full object-cover" data-alt="Macro shot of dark roast coffee textures. Oily, glistening beans against a matte black surface. Clinical lighting, highly detailed, perfect for a high-performance visual reference board." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGHxgk8O-dQiAM2jBCmiRUq9vEteamI8gPfOXd658Oqu9hP0SjYErksi5xRG6yf407Jj-4ME1KnQRqEzWNLOkPsrDjFT2LXTkgOKN-xWTb3q2uIA5qFhjXH7MtyEKO4UAx97ISF0c9Wfr40b1khM8SOBDr5EmHcMmh3OegjxLoBTjJfNyybu_B3txnSxtuMTPyMf-kb4aE1ZN_P0ZXaiH8M7l-mDynkPMV8HkFgRpaZmNYBLPWQ7wPZg"/>
+<div class="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/80 to-transparent">
+<div class="flex justify-between items-center">
+<span class="text-white font-label-mono text-label-mono">TEXTURE</span>
+<span class="material-symbols-outlined text-white text-sm">drag_indicator</span>
+</div>
+</div>
+</div>
+<div class="canvas-item">
+<div class="w-full h-full bg-surface-container-high p-4 flex flex-col justify-between">
+<div class="font-label-mono text-label-mono text-primary mb-2 border border-primary px-2 py-1 inline-block w-max rounded-sm">COPY DIRECTION</div>
+<h3 class="font-headline-md text-headline-md text-on-surface leading-snug">"Onde a cidade acorda antes do sol."</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-2">Competitor analysis: Focus on the early risers.</p>
+</div>
+</div>
+<div class="canvas-item tall">
+<img alt="Equipment Reference" class="w-full h-full object-cover" data-alt="Urban coffee culture shot. A sleek, modern espresso machine in a dark, matte-finished cafe environment. Steam rising, harsh dramatic lighting highlighting the metal and dark surfaces." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBO16kkxSr8j9LER1oWHUbZwfhZZ3wb8zisq3gO8IHQhzzKHZF9a2PPnTDZGzm4wHEvw0bn6yvkycCSHIjpC_GHAO5CMNDjPVG5-PhpgNywJVXtcIyO-zAp1jZ4duV-MxhtEEBlf9fyJIgLnMd6zdmnV3y_8Q0kA6kStVw5LIVFIZIU2Giinrdo7jS2n9ZXrKNboc9vLMXG-bX6xYFUzyxlClM9yMEFKrL6Y4vPlOW4ILHE-_gkg4MB2w"/>
+<div class="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/80 to-transparent">
+<div class="flex justify-between items-center">
+<span class="text-white font-label-mono text-label-mono">ENVIRONMENT</span>
+<span class="material-symbols-outlined text-white text-sm">drag_indicator</span>
+</div>
+</div>
+</div>
+<div class="canvas-item wide">
+<div class="w-full h-full flex flex-row">
+<div class="w-1/2 p-4 bg-surface-container flex flex-col justify-center">
+<span class="font-label-mono text-label-mono text-on-surface-variant mb-2">PREVIOUS SUCCESS</span>
+<div class="font-data-number text-data-number text-primary text-2xl">14.2% ER</div>
+<p class="font-body-sm text-body-sm text-on-surface mt-2">Post from Q2 matching this exact lighting style.</p>
+</div>
+<div class="w-1/2">
+<img alt="Past Performance" class="w-full h-full object-cover" data-alt="A successful past social media post design featuring a dark, moody coffee cup on a concrete ledge overlooking a rainy city street. Professional, high-density tool aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3VGWCpS_XFvDRbc1pbqTXq3f6XKByLTwAmfQ9dcf5nIBxXzZU83a1V2LqavYHZaPEm49v0gXGcdDXSz8f0M3dSW6L9s3H6Idu_FdT8FIOu_d4kvsKab_jggZRohdFYRSagxvDoDk7fraZk-VPjHhj9Hwegm6D6XPCVehfPuGUxwG2uDZTslaE19xAYj3PrdzgoStgOrSZy8fCFlMXl9DF-c8ShLyWtemC5-JjvhuIzh9q0ausYbLxHA"/>
+</div>
+</div>
+</div>
+<div class="canvas-item">
+<div class="bg-cover bg-center w-full h-full" data-alt="A color palette swatch featuring dark matte blacks, deep browns of coffee, and sharp stark white for high contrast. Styled as a professional design tool color reference." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDUZNpbwc9chotPC0fxMrTnkF5rkblti6OI4rLmphWpc6deoSs7Qn-7oqfYrr16q9Xx3v2nztTDYQQBsxO-g1hYbmlGFWl5du8BPyQ-6lF5Fa8vufoglzipl6mfxykisyUbJp0O5XBSJVkUhHYNszEpNpRXDseI39TyZYVr7QSsq10KhIwuSXPb08qHVcVTqaeHb56rqJO8RjSGXMlrrZNjlSHTFgNg0fH5GOodWMMU8HUHJuqjS5xF_g')"></div>
+<div class="absolute bottom-0 left-0 right-0 p-3 bg-black/60 backdrop-blur-sm border-t border-outline-variant">
+<div class="flex justify-between items-center">
+<span class="text-white font-label-mono text-label-mono">PALETTE</span>
+<span class="material-symbols-outlined text-white text-sm">drag_indicator</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Panel (30%) - Campaign Details -->
+<div class="w-[30%] min-w-[320px] bg-surface border-l border-outline-variant flex flex-col h-full relative" id="right-panel">
+<!-- Collapse Toggle -->
+<button class="absolute -left-3 top-6 bg-surface-container-high border border-outline-variant rounded-full w-6 h-6 flex items-center justify-center text-on-surface-variant hover:text-primary z-10" onclick="document.getElementById('right-panel').classList.toggle('hidden'); document.querySelector('.canvas-grid').classList.toggle('grid-cols-[repeat(auto-fill,minmax(280px,1fr))]'); document.querySelector('.canvas-grid').classList.toggle('grid-cols-[repeat(auto-fill,minmax(320px,1fr))]');">
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+<div class="p-gutter border-b border-outline-variant bg-surface-container-low flex justify-between items-center">
+<h2 class="font-headline-md text-headline-md text-on-surface">Campaign Brief</h2>
+<span class="border border-primary text-primary px-2 py-0.5 rounded-sm font-label-mono text-[10px]">ACTIVE</span>
+</div>
+<div class="flex-1 overflow-y-auto p-gutter flex flex-col gap-6">
+<!-- Section: Key Angles -->
+<div>
+<h3 class="font-label-mono text-label-mono text-on-surface-variant mb-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">track_changes</span> KEY ANGLES
+                        </h3>
+<ul class="space-y-2">
+<li class="p-3 bg-surface-container border border-outline-variant rounded-DEFAULT text-body-sm text-on-surface">
+<strong class="text-white block mb-1">Urban Sanctuary</strong>
+                                Positioning the cafe as the only quiet refuge in a chaotic morning city.
+                            </li>
+<li class="p-3 bg-surface-container border border-outline-variant rounded-DEFAULT text-body-sm text-on-surface">
+<strong class="text-white block mb-1">Texture Over Taste</strong>
+                                Visual communication relying on the physical texture of the dark roast to imply boldness.
+                            </li>
+</ul>
+</div>
+<!-- Section: Radar Opportunities -->
+<div>
+<h3 class="font-label-mono text-label-mono text-on-surface-variant mb-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">radar</span> RADAR OPPORTUNITIES
+                        </h3>
+<div class="bg-surface-container-highest border border-outline-variant rounded-DEFAULT overflow-hidden">
+<div class="p-3 border-b border-outline-variant flex justify-between items-center hover:bg-surface-bright transition-colors cursor-pointer">
+<span class="font-body-sm text-on-surface">Competitor X trending aesthetic</span>
+<span class="material-symbols-outlined text-on-surface-variant text-sm">arrow_outward</span>
+</div>
+<div class="p-3 border-b border-outline-variant flex justify-between items-center hover:bg-surface-bright transition-colors cursor-pointer">
+<span class="font-body-sm text-on-surface">Audio trend: Rain + Jazz</span>
+<span class="material-symbols-outlined text-on-surface-variant text-sm">arrow_outward</span>
+</div>
+<div class="p-3 flex justify-between items-center hover:bg-surface-bright transition-colors cursor-pointer">
+<span class="font-body-sm text-on-surface">Local micro-influencer pivot</span>
+<span class="material-symbols-outlined text-on-surface-variant text-sm">arrow_outward</span>
+</div>
+</div>
+</div>
+<!-- Section: Notes/Tags -->
+<div>
+<h3 class="font-label-mono text-label-mono text-on-surface-variant mb-3">GLOBAL TAGS</h3>
+<div class="flex flex-wrap gap-2">
+<span class="px-2 py-1 border border-outline-variant rounded-full text-[11px] font-label-mono text-on-surface-variant">#MistyMorning</span>
+<span class="px-2 py-1 border border-outline-variant rounded-full text-[11px] font-label-mono text-on-surface-variant">#DarkRoast</span>
+<span class="px-2 py-1 border border-outline-variant rounded-full text-[11px] font-label-mono text-on-surface-variant">#UrbanVibe</span>
+<span class="px-2 py-1 border border-primary text-primary rounded-full text-[11px] font-label-mono">+ Add Tag</span>
+</div>
+</div>
+</div>
+<!-- Fixed Bottom Action -->
+<div class="p-gutter border-t border-outline-variant bg-surface-container-low mt-auto">
+<button class="w-full bg-primary text-black font-headline-md text-[14px] py-3 rounded-DEFAULT hover:bg-[#62ff96] transition-colors flex justify-center items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">save</span>
+                        Save as Direction
+                    </button>
+</div>
+</div>
+</main>
+</div>
+<script src="/stitch/bridge.js"></script></body></html>

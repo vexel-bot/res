@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Clicko Precision - Content Board</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Custom scrollbar for high-density workbench feel */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #121314; }
+        ::-webkit-scrollbar-thumb { background: #3b4a3d; border-radius: 0px; }
+        ::-webkit-scrollbar-thumb:hover { background: #859585; }
+    </style>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {primary: "#ffb3af", "inverse-primary": "#b4252d", "inverse-on-surface": "#313030", "secondary-container": "#ff7f1c", "on-surface": "#e5e2e1", "on-primary-container": "#62000c", "primary-fixed": "#ffdad7", "inverse-surface": "#e5e2e1", "on-tertiary-container": "#5c0e15", "secondary-fixed": "#ffdbc8", "on-secondary-container": "#602a00", "on-error": "#690005", "secondary-fixed-dim": "#ffb68b", surface: "#131313", secondary: "#ffb68b", "on-tertiary-fixed": "#410007", "surface-container-lowest": "#0e0e0e", "on-secondary-fixed": "#321200", background: "#131313", "surface-container-high": "#2a2a2a", "on-primary-fixed": "#410005", "primary-fixed-dim": "#ffb3af", "error-container": "#93000a", "surface-dim": "#131313", "on-error-container": "#ffdad6", "surface-tint": "#ffb3af", "on-surface-variant": "#e2bebc", "tertiary-fixed": "#ffdad8", "on-background": "#e5e2e1", "on-tertiary": "#601118", "surface-container": "#201f1f", "tertiary-container": "#e17474", tertiary: "#ffb3b1", "surface-container-low": "#1c1b1b", "on-secondary-fixed-variant": "#753400", "on-tertiary-fixed-variant": "#7f292c", "tertiary-fixed-dim": "#ffb3b1", outline: "#a98987", error: "#ffb4ab", "surface-bright": "#393939", "primary-container": "#ff5c5c", "on-secondary": "#522300", "outline-variant": "#5a403f", "on-primary": "#68000d", "surface-variant": "#353534", "surface-container-highest": "#353534", "on-primary-fixed-variant": "#920418"}, borderRadius: {DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem"}, spacing: {stack_gap_sm: "8px", container_padding: "24px", spine_width: "64px", gutter: "16px", stack_gap_md: "16px", context_nav_width: "240px"}, fontFamily: {"headline-lg": ["Geist", "sans-serif"], "body-lg": ["Geist", "sans-serif"], "headline-md": ["Geist", "sans-serif"], "data-number": ["Geist", "sans-serif"], display: ["Geist"], "label-mono": ["Geist", "monospace"], "body-md": ["Geist", "sans-serif"], "body-sm": ["Geist", "sans-serif"], headline: ["Geist"], body: ["Geist"], label: ["Geist"]}, fontSize: {"headline-lg": ["24px", {lineHeight: "32px", letterSpacing: "-0.01em", fontWeight: "600"}], "body-lg": ["16px", {lineHeight: "24px", fontWeight: "400"}], "headline-md": ["20px", {lineHeight: "28px", fontWeight: "500"}], "data-number": ["14px", {lineHeight: "20px", fontWeight: "600"}], display: ["32px", {lineHeight: "40px", letterSpacing: "-0.02em", fontWeight: "600"}], "label-mono": ["12px", {lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "500"}], "body-md": ["14px", {lineHeight: "20px", fontWeight: "400"}], "body-sm": ["13px", {lineHeight: "18px", fontWeight: "400"}]}}}};</script>
+</head>
+<body class="bg-background text-on-surface h-screen overflow-hidden selection:bg-primary selection:text-on-primary">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full h-16 bg-surface border-b border-outline-variant flex justify-between items-center px-container_padding z-50">
+<!-- Brand -->
+<div class="text-headline-lg font-headline-lg font-bold text-primary">CREATIVE LAB</div>
+<!-- Navigation Links (Centered) -->
+<div class="hidden md:flex gap-stack_gap_md items-center">
+<a class="font-label-mono text-label-mono text-on-surface-variant hover:text-primary transition-colors cursor-pointer active:opacity-80" href="#">Composition</a>
+<a class="font-label-mono text-label-mono text-primary border-b-2 border-primary pb-1 cursor-pointer active:opacity-80" href="#">Inventory</a>
+<a class="font-label-mono text-label-mono text-on-surface-variant hover:text-primary transition-colors cursor-pointer active:opacity-80" href="#">Review</a>
+<a class="font-label-mono text-label-mono text-on-surface-variant hover:text-primary transition-colors cursor-pointer active:opacity-80" href="#">Insights</a>
+</div>
+<!-- Trailing Actions -->
+<div class="flex items-center gap-stack_gap_md">
+<button class="bg-primary text-on-primary-container font-label-mono text-label-mono px-4 py-2 rounded-DEFAULT hover:bg-primary-container transition-colors cursor-pointer active:opacity-80">
+                Publish
+            </button>
+<div class="flex gap-2">
+<button class="text-on-surface-variant hover:text-primary transition-colors cursor-pointer active:opacity-80 flex items-center justify-center w-8 h-8">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors cursor-pointer active:opacity-80 flex items-center justify-center w-8 h-8">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+</button>
+</div>
+<div class="w-8 h-8 rounded-full border border-outline-variant overflow-hidden ml-2 cursor-pointer">
+<img class="w-full h-full object-cover" data-alt="A macro photography shot of intense roasted coffee beans, used as a profile avatar. High contrast, dark cinematic lighting, highly detailed textures." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBictfvlUWafntNR_JiKrLNl5H_SSkixA67h92rQU0aHoLMqhHV-hfXp8GzBcg9X36_fJIxZDScOa7mRv50qtuOq6EvbPqyPEIgBSwB2kFK81eh6Ac65FU4otm3C5hHHRHP9aRubxTqwH3BdOhwzhUmqrFKJ6RPXccoXOgTiL4iQ9bEaYiRCIuGR0LHcJNA2hh0aowvG0mHlZIB6UW6To_8aEKu33j5k2qy6nNTdOk5U5A-jPRt_R-kRQ"/>
+</div>
+</div>
+</nav>
+<!-- SideNavBar -->
+<aside class="hidden md:flex flex-col py-stack_gap_md z-40 bg-surface-container fixed left-0 top-16 h-[calc(100vh-64px)] w-context_nav_width border-r border-outline-variant transition-all duration-200">
+<!-- Header -->
+<div class="px-gutter mb-6 flex flex-col gap-2">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 border border-outline-variant bg-surface flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary text-[20px]">coffee_maker</span>
+</div>
+<div class="flex flex-col overflow-hidden">
+<h2 class="font-headline-md text-headline-md text-primary truncate">Project Alpha</h2>
+<span class="font-label-mono text-label-mono text-on-surface-variant truncate">Creative Director Active</span>
+</div>
+</div>
+<button class="w-full mt-4 bg-transparent border border-outline-variant text-on-surface hover:border-primary hover:text-primary transition-colors py-2 flex items-center justify-center gap-2 font-label-mono text-label-mono">
+<span class="material-symbols-outlined text-[16px]">add</span>
+                New Composition
+            </button>
+</div>
+<!-- Navigation Tabs -->
+<div class="flex-1 overflow-y-auto flex flex-col gap-1 px-2">
+<a class="flex items-center gap-3 px-3 py-2 rounded-sm text-on-surface-variant hover:bg-surface-container-highest transition-all duration-200 cursor-pointer" href="#">
+<span class="material-symbols-outlined text-[20px]">route</span>
+<span class="font-label-mono text-label-mono">Workflow Spine</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-sm text-on-surface-variant hover:bg-surface-container-highest transition-all duration-200 cursor-pointer" href="#">
+<span class="material-symbols-outlined text-[20px]">brush</span>
+<span class="font-label-mono text-label-mono">Pro Canvas</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-sm bg-secondary-container text-primary border-l-4 border-primary transition-all duration-200 cursor-pointer" href="#">
+<span class="material-symbols-outlined text-[20px]">grid_view</span>
+<span class="font-label-mono text-label-mono">Content Board</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-sm text-on-surface-variant hover:bg-surface-container-highest transition-all duration-200 cursor-pointer" href="#">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+<span class="font-label-mono text-label-mono">Review Room</span>
+</a>
+</div>
+<!-- Footer Tabs -->
+<div class="px-2 pt-4 border-t border-outline-variant flex flex-col gap-1 mt-auto">
+<a class="flex items-center gap-3 px-3 py-2 rounded-sm text-on-surface-variant hover:bg-surface-container-highest transition-all duration-200 cursor-pointer" href="#">
+<span class="material-symbols-outlined text-[20px]">help</span>
+<span class="font-label-mono text-label-mono">Help</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-sm text-on-surface-variant hover:bg-surface-container-highest transition-all duration-200 cursor-pointer" href="#">
+<span class="material-symbols-outlined text-[20px]">archive</span>
+<span class="font-label-mono text-label-mono">Archive</span>
+</a>
+</div>
+</aside>
+<!-- Main Canvas: VISUAL CONTENT BOARD -->
+<main class="md:ml-[240px] mt-16 p-gutter h-[calc(100vh-64px)] overflow-y-auto bg-background flex flex-col relative">
+<!-- Toolbar (Sticky) -->
+<header class="sticky top-0 z-30 bg-background/95 backdrop-blur-sm border-b border-outline-variant pb-stack_gap_sm mb-stack_gap_md flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+<div class="flex items-center gap-4 w-full md:w-auto">
+<h1 class="font-headline-lg text-headline-lg text-on-surface uppercase tracking-tight hidden md:block">Inventário V2</h1>
+<div class="h-6 w-px bg-outline-variant hidden md:block"></div>
+<div class="relative w-full md:w-80 group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px] group-focus-within:text-primary transition-colors">search</span>
+<input class="w-full bg-surface-container-low border border-outline-variant text-body-sm text-on-surface rounded-none pl-10 pr-4 py-2 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all placeholder:text-on-surface-variant" placeholder="Buscar por tag, ID ou formato..." type="text"/>
+</div>
+<button class="bg-surface-container border border-outline-variant hover:border-primary text-on-surface hover:text-primary p-2 flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined text-[20px]">tune</span>
+</button>
+</div>
+<div class="flex items-center gap-2">
+<div class="flex border border-outline-variant bg-surface-container-low">
+<button class="bg-primary text-on-primary-container p-2 flex items-center justify-center" title="Visualização em Grade">
+<span class="material-symbols-outlined text-[20px]">grid_on</span>
+</button>
+<button class="text-on-surface-variant hover:text-on-surface hover:bg-surface-container p-2 flex items-center justify-center transition-colors" title="Visualização em Tabela">
+<span class="material-symbols-outlined text-[20px]">table_rows</span>
+</button>
+</div>
+<span class="font-label-mono text-label-mono text-on-surface-variant ml-2 border-l border-outline-variant pl-4 py-1">248 ITEMS</span>
+</div>
+</header>
+<!-- High Density Visual Masonry/Grid -->
+<!-- Using a strict grid to enforce the clinical structural alignment -->
+<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-stack_gap_md auto-rows-[280px]">
+<!-- Tile 1 (Post) -->
+<article class="relative group border border-outline-variant bg-surface-container-lowest overflow-hidden flex flex-col">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="A striking, high-contrast overhead shot of a barista extracting espresso from a professional machine. The espresso is a rich dark amber, contrasting sharply with the matte black metal of the machine. The lighting is clinical and focused, emphasizing precision and the dark mode aesthetic of a professional workbench." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCiXFv6_lc-B7m4P391goJWmiLekEfOgneh0EzKwYp3n4TL7y2wxAEJqXOlv5jwrr8yXjyoOnjcMROMSbZPV5gtlsCJWK2nqSMutC6VrMKaWuVzGZImMpUwQZG0sYlh-ia8dTXWd43BmoAa77eW37waNVUeQITmLpc-jNvD3uJKIcaCKzxdhhqDo64Idk2DKoEzdydVwzvx06jjTRgOnZJjREeGs3tXLiH14zahE_AIPLtohcHPdxiZaw"/>
+<!-- Bottom Info Bar (Always visible) -->
+<div class="absolute bottom-0 left-0 right-0 bg-surface/90 backdrop-blur-md border-t border-outline-variant p-2 flex items-center justify-between">
+<div class="flex items-center gap-2 overflow-hidden">
+<span class="material-symbols-outlined text-on-surface-variant text-[16px]">photo_camera</span>
+<h3 class="font-label-mono text-label-mono text-on-surface truncate">EXT_01_RAW</h3>
+</div>
+<div class="w-2 h-2 rounded-full bg-primary shrink-0" title="Publicado"></div>
+</div>
+<!-- Hover Overlay (Actions & Details) -->
+<div class="absolute inset-0 bg-background/80 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex flex-col p-3 z-10 backdrop-blur-sm">
+<div class="flex justify-end gap-2">
+<button class="text-on-surface hover:text-primary bg-surface border border-outline-variant p-1.5"><span class="material-symbols-outlined text-[16px]">edit</span></button>
+<button class="text-on-surface hover:text-error bg-surface border border-outline-variant p-1.5"><span class="material-symbols-outlined text-[16px]">delete</span></button>
+</div>
+<div class="mt-auto mb-10 flex flex-col gap-2">
+<div class="flex justify-between items-baseline border-b border-outline-variant pb-1">
+<span class="font-label-mono text-label-mono text-on-surface-variant">ENGAGEMENT</span>
+<span class="font-data-number text-data-number text-primary">+14.2%</span>
+</div>
+<div class="h-8 w-full flex items-end gap-0.5 opacity-80">
+<!-- CSS Sparkline representation -->
+<div class="w-full bg-primary h-[20%]"></div>
+<div class="w-full bg-primary h-[35%]"></div>
+<div class="w-full bg-primary h-[25%]"></div>
+<div class="w-full bg-primary h-[60%]"></div>
+<div class="w-full bg-primary h-[85%]"></div>
+<div class="w-full bg-primary h-[100%]"></div>
+</div>
+</div>
+</div>
+</article>
+<!-- Tile 2 (Carousel - taller span) -->
+<article class="relative group border border-outline-variant bg-surface-container-lowest overflow-hidden flex flex-col row-span-2">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="A meticulously organized flat lay of various coffee beans from different global territories, neatly arranged on a clinical dark grey slate surface. Small white labels with precise typography identify each origin. The lighting is incredibly sharp, creating stark shadows and a highly analytical, professional atmosphere suitable for a dark UI." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXUwtZKfTS-lgdsparO9CUkc_Xy1pNI-C1ZxUsuperTjZHusFl5DW_2IuhSdsDCI40ipWqMkuQuUD7YGGgyM9uCf_FeM030KHXbBvRnk20-0Yc8h_-XnuBX191TUvHMWnD5KQgLLYdz2ga2j2y58gVPgdoCD-ATsUWsbJF4jU05pAeRf5vtvOBpf6KzyjMJil2YIb51yScqC1HdFSzokTeT1TR22t5BG1fb7S39gDBLnLM9fPL83HW5Q"/>
+<div class="absolute top-2 left-2 bg-surface/90 border border-outline-variant px-2 py-0.5 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-primary">view_carousel</span>
+<span class="font-label-mono text-[10px] text-on-surface tracking-wider">CAROUSEL (5)</span>
+</div>
+<div class="absolute bottom-0 left-0 right-0 bg-surface/90 backdrop-blur-md border-t border-outline-variant p-2 flex items-center justify-between">
+<div class="flex items-center gap-2 overflow-hidden">
+<h3 class="font-label-mono text-label-mono text-on-surface truncate">TERRITORIO_MAP</h3>
+</div>
+<div class="w-2 h-2 rounded-full border border-primary shrink-0" title="Rascunho"></div>
+</div>
+<div class="absolute inset-0 bg-background/80 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex flex-col p-3 z-10 backdrop-blur-sm">
+<div class="flex justify-end gap-2">
+<button class="text-on-surface hover:text-primary bg-surface border border-outline-variant p-1.5"><span class="material-symbols-outlined text-[16px]">edit</span></button>
+</div>
+<div class="mt-auto mb-10 flex flex-col gap-2">
+<div class="flex justify-between items-baseline border-b border-outline-variant pb-1">
+<span class="font-label-mono text-label-mono text-on-surface-variant">REACH EST.</span>
+<span class="font-data-number text-data-number text-on-surface">45.2K</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-2 line-clamp-3">Sequência detalhando as origens do grão, focando em altitude e processamento. Necessita revisão do slide 3.</p>
+</div>
+</div>
+</article>
+<!-- Tile 3 (Video/Reels) -->
+<article class="relative group border border-outline-variant bg-surface-container-lowest overflow-hidden flex flex-col">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="A close-up, dramatic shot of dark coffee roasting inside an industrial roaster. The internal glow of the machine provides a warm orange contrast against the predominantly pitch-black environment. Sparks and smoke are captured in crisp detail, conveying motion and raw process." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAobPcOlucDuUmxA-KicSugJBR_ZLQPVPC_C1Hr9CUFf3CPOY2N6DOgHTk3p9vsQ4x2O8LxBoIG2Zx6HGtIeRNN3WWwzAUhwS4r4kV114IS6VZEWisAI4uOz-pP70eYMXWy1hlrzEYK-hfv_31unogBwZDBDjsyRSlDrDG3jY5KDjbPkyhKRqgi2i5RyudqTfuIaY7XNv51nnXFjxyCApVWJyd3tDGpcLI5oWBLd6j3efz_p1AtaVFH7w"/>
+<div class="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
+<div class="w-12 h-12 rounded-full bg-background/50 border border-outline-variant flex items-center justify-center backdrop-blur-sm">
+<span class="material-symbols-outlined text-primary text-[24px]">play_arrow</span>
+</div>
+</div>
+<div class="absolute bottom-0 left-0 right-0 bg-surface/90 backdrop-blur-md border-t border-outline-variant p-2 flex items-center justify-between z-10">
+<div class="flex items-center gap-2 overflow-hidden">
+<span class="material-symbols-outlined text-on-surface-variant text-[16px]">movie</span>
+<h3 class="font-label-mono text-label-mono text-on-surface truncate">ROAST_PROCESS_V1</h3>
+</div>
+<div class="w-2 h-2 rounded-full bg-primary shrink-0"></div>
+</div>
+<div class="absolute inset-0 bg-background/80 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex flex-col p-3 z-20 backdrop-blur-sm">
+<div class="flex justify-end gap-2">
+<button class="text-on-surface hover:text-primary bg-surface border border-outline-variant p-1.5"><span class="material-symbols-outlined text-[16px]">edit</span></button>
+</div>
+<div class="mt-auto mb-10 flex flex-col gap-2">
+<div class="flex justify-between items-baseline border-b border-outline-variant pb-1">
+<span class="font-label-mono text-label-mono text-on-surface-variant">VIEWS</span>
+<span class="font-data-number text-data-number text-primary">128K</span>
+</div>
+</div>
+</div>
+</article>
+<!-- Tile 4 (Post) -->
+<article class="relative group border border-outline-variant bg-surface-container-lowest overflow-hidden flex flex-col">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Minimalist composition of a single, perfectly tamped portafilter resting on a brushed steel digital scale. The background is a profound, matte black void. The lighting emphasizes the precise metallic textures and the geometric perfection of the coffee preparation tools." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTCbdkZDrl9O3zjauKuO0xx2qN5PUrRp_iYpZJvGpbs3_GOWMZOa4aXZ1DOmf5TpXv631BWGbBpp9KrQ9Zi1itWnfVxIG1qtKMjGYurwpNqnBdOMFbfmYrYkGK43pbtCgtP6VMYuKlx265ry1KAoOAZtmfEhhVfgW7uk1qz2gaQHp0y7v51gSUd8FBT1JYEAmWAd_btf9Aq6NUt2OtTrQYTdqYupGxgb2_0XtwrAVmQ7LSqs-Q960TZg"/>
+<div class="absolute bottom-0 left-0 right-0 bg-surface/90 backdrop-blur-md border-t border-outline-variant p-2 flex items-center justify-between">
+<div class="flex items-center gap-2 overflow-hidden">
+<span class="material-symbols-outlined text-on-surface-variant text-[16px]">photo_camera</span>
+<h3 class="font-label-mono text-label-mono text-on-surface truncate">PRECISION_TAMP</h3>
+</div>
+<div class="w-2 h-2 rounded-full bg-primary shrink-0"></div>
+</div>
+<div class="absolute inset-0 bg-background/80 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex flex-col p-3 z-10 backdrop-blur-sm">
+<div class="flex justify-end gap-2">
+<button class="text-on-surface hover:text-primary bg-surface border border-outline-variant p-1.5"><span class="material-symbols-outlined text-[16px]">edit</span></button>
+</div>
+<div class="mt-auto mb-10">
+<div class="flex justify-between items-baseline border-b border-outline-variant pb-1">
+<span class="font-label-mono text-label-mono text-on-surface-variant">ENGAGEMENT</span>
+<span class="font-data-number text-data-number text-surface-variant line-through text-[12px] mr-1">4.2%</span>
+<span class="font-data-number text-data-number text-primary">8.1%</span>
+</div>
+</div>
+</div>
+</article>
+<!-- Tile 5 (Story) -->
+<article class="relative group border border-outline-variant bg-surface-container-lowest overflow-hidden flex flex-col row-span-2">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="A vertical format, stark and moody portrait of a coffee farmer's hands holding a handful of raw, green coffee cherries. The skin texture is highly detailed, emphasizing hard work. The background is completely black, isolating the subject in a dramatic, clinical light typical of a high-end documentary aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBle3jxaHdKOgFHkr389Fl1Ejq5Bmhfpob5T8Riid-PzBdCSXtLY6n6mUZiVsB6Isz0nLycAZs6jNteJw2pKYcMpedy_GNl5gDVhGoq3D8CZ88QaRwj9CjUGy_cZ4f-RBdH_28HjI3hbQs1AFhTa_o-6dGyPOL0Tr2uXsVW1ipONRiFGxGXhB1ahJ3EwJBSjlRQmvgFnLSkqe7zBRqCAuvN5FXno_cpg4XIoHwgIy_j-kDixu05moinoA"/>
+<div class="absolute top-2 left-2 bg-surface/90 border border-outline-variant px-2 py-0.5 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-primary">amp_stories</span>
+<span class="font-label-mono text-[10px] text-on-surface tracking-wider">STORY</span>
+</div>
+<div class="absolute bottom-0 left-0 right-0 bg-surface/90 backdrop-blur-md border-t border-outline-variant p-2 flex items-center justify-between">
+<div class="flex items-center gap-2 overflow-hidden">
+<h3 class="font-label-mono text-label-mono text-on-surface truncate">ORIGIN_HANDS</h3>
+</div>
+<div class="w-2 h-2 rounded-full border border-primary shrink-0"></div>
+</div>
+<div class="absolute inset-0 bg-background/80 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex flex-col p-3 z-10 backdrop-blur-sm">
+<div class="flex justify-end gap-2">
+<button class="text-on-surface hover:text-primary bg-surface border border-outline-variant p-1.5"><span class="material-symbols-outlined text-[16px]">edit</span></button>
+</div>
+</div>
+</article>
+<!-- Tile 6 (Post) -->
+<article class="relative group border border-outline-variant bg-surface-container-lowest overflow-hidden flex flex-col">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="A topographical map element rendered in a glowing neon operational green over a pure black grid background, abstractly representing coffee farming territories. The design is highly technical, resembling a sonar or radar screen on a high-density professional dashboard." src="https://lh3.googleusercontent.com/aida-public/AB6AXuANqlBY042P5juF_8KiDgv6LeDy0Y0TcbU61LjC4ElQqvrrzd0W8H7evCZcLJ-GSLTIRzwjf_OtQuK6qpIIEPX8uXlEwHQSSZSpaJmEJ-nimSmdfcdy286kFe5temgn1h1mwvb9e7ao-MUM1Lk5jtoUzWsKiXB42fuLgmHbIwvuxqWuJgYW5r_Bb3KjjBhMeQzAQ3OL75Kkm9SKdgaNOTlWhKm1YkoGXeTl92TiwUCghn2wsFE__h8-sA"/>
+<div class="absolute bottom-0 left-0 right-0 bg-surface/90 backdrop-blur-md border-t border-outline-variant p-2 flex items-center justify-between">
+<div class="flex items-center gap-2 overflow-hidden">
+<span class="material-symbols-outlined text-on-surface-variant text-[16px]">map</span>
+<h3 class="font-label-mono text-label-mono text-on-surface truncate">DATA_VIS_02</h3>
+</div>
+<div class="w-2 h-2 rounded-full bg-error shrink-0" title="Erro de Publicação"></div>
+</div>
+</article>
+</div>
+</main>
+<script src="/stitch/bridge.js"></script></body></html>

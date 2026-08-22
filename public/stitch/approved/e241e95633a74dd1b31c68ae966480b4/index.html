@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Approval Room V5 — Revisão e decisão | Clicko Precision</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {"surface-container-highest": "#353534", "on-primary": "#68000d", secondary: "#ffb68b", surface: "#131313", "on-error-container": "#ffdad6", "on-background": "#e5e2e1", "on-secondary-fixed-variant": "#753400", "secondary-container": "#ff7f1c", "error-container": "#93000a", "surface-container-high": "#2a2a2a", "on-surface": "#e5e2e1", "inverse-surface": "#e5e2e1", outline: "#a98987", primary: "#ffb3af", "surface-bright": "#393939", "on-secondary-fixed": "#321200", "on-primary-container": "#62000c", "on-tertiary-container": "#5c0e15", "on-error": "#690005", "on-tertiary": "#601118", "tertiary-fixed-dim": "#ffb3b1", tertiary: "#ffb3b1", "tertiary-container": "#e17474", background: "#131313", "on-tertiary-fixed-variant": "#7f292c", "surface-container-low": "#1c1b1b", "tertiary-fixed": "#ffdad8", "outline-variant": "#5a403f", "on-primary-fixed-variant": "#920418", "on-tertiary-fixed": "#410007", "primary-fixed": "#ffdad7", "surface-dim": "#131313", "secondary-fixed": "#ffdbc8", "inverse-on-surface": "#313030", "primary-container": "#ff5c5c", "surface-container": "#201f1f", "on-primary-fixed": "#410005", error: "#ffb4ab", "surface-tint": "#ffb3af", "inverse-primary": "#b4252d", "surface-variant": "#353534", "on-secondary-container": "#602a00", "surface-container-lowest": "#0e0e0e", "on-secondary": "#522300", "primary-fixed-dim": "#ffb3af", "secondary-fixed-dim": "#ffb68b", "on-surface-variant": "#e2bebc"}, borderRadius: {DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem"}, spacing: {unit: "4px", "container-max": "1440px", gutter: "16px", "margin-desktop": "32px", "margin-mobile": "16px"}, fontFamily: {"body-lg": ["Geist", "sans-serif"], "headline-lg": ["Geist", "sans-serif"], code: ["Geist Mono", "monospace"], display: ["Geist"], "label-md": ["Geist", "sans-serif"], "headline-md": ["Geist", "sans-serif"], "body-md": ["Geist", "sans-serif"], headline: ["Geist"], body: ["Geist"], label: ["Geist"]}, fontSize: {"body-lg": ["16px", {lineHeight: "1.5", fontWeight: "400"}], "headline-lg": ["24px", {lineHeight: "1.3", fontWeight: "600"}], code: ["13px", {lineHeight: "1.4", fontWeight: "400"}], display: ["32px", {lineHeight: "1.2", letterSpacing: "-0.02em", fontWeight: "600"}], "label-md": ["12px", {lineHeight: "1", letterSpacing: "0.02em", fontWeight: "500"}], "headline-md": ["20px", {lineHeight: "1.4", fontWeight: "500"}], "body-md": ["14px", {lineHeight: "1.5", fontWeight: "400"}]}}}};</script>
+<style>
+        body { background-color: #0F1011; color: #e3e2e3; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24; }
+        .filled-icon { font-variation-settings: 'FILL' 1; }
+        
+        /* Thin Scrollbar for dense layouts */
+        ::-webkit-scrollbar { width: 4px; height: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #343536; border-radius: 2px; }
+        ::-webkit-scrollbar-thumb:hover { background: #474746; }
+    </style>
+</head>
+<body class="bg-[#0F1011] font-body-md text-on-surface flex flex-col h-screen overflow-hidden selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar (Shared Component) -->
+<nav class="bg-background dark:bg-background border-b border-outline-variant flex justify-between items-center w-full px-margin-desktop h-16 shrink-0 z-50">
+<div class="flex items-center gap-8 h-full">
+<span class="font-display text-display text-primary uppercase tracking-tighter cursor-pointer shrink-0">Clicko Precision</span>
+<div class="hidden md:flex h-full gap-6 ml-4">
+<button class="text-on-surface-variant font-medium pb-2 hover:text-primary transition-colors duration-200 flex items-center h-full pt-2">Newsroom</button>
+<button class="text-on-surface-variant font-medium pb-2 hover:text-primary transition-colors duration-200 flex items-center h-full pt-2">Radar Room</button>
+<button class="text-on-surface-variant font-medium pb-2 hover:text-primary transition-colors duration-200 flex items-center h-full pt-2">Brand Memory</button>
+<button class="text-on-surface-variant font-medium pb-2 hover:text-primary transition-colors duration-200 flex items-center h-full pt-2">Campaign Intake</button>
+<!-- Active Navigation mapping to Intent -> Campaign Room for approval workflow -->
+<button class="text-primary font-bold border-b-2 border-primary pb-2 flex items-center h-full pt-[10px]">Campaign Room</button>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<!-- Search Bar placeholder from component config -->
+<div class="relative hidden lg:block group mr-4">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm">search</span>
+<input class="bg-[#181B1D] border border-outline-variant text-on-surface font-body-md rounded-DEFAULT pl-9 pr-3 py-1.5 focus:outline-none focus:border-primary transition-colors w-64 placeholder:text-on-surface-variant/50" placeholder="Search resources..." type="text"/>
+</div>
+<button class="text-on-surface-variant hover:text-primary transition-colors" title="notifications">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors" title="account_circle">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+<button class="ml-2 bg-surface-container-highest border border-outline-variant hover:border-primary text-on-surface font-label-md text-label-md px-4 py-2 rounded-DEFAULT transition-all active:scale-95 flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">add</span>
+                Criar Campanha
+            </button>
+</div>
+</nav>
+<!-- ContextualHeader TopAppBar (Shared Component) -->
+<div class="bg-surface-container dark:bg-surface-container border-b border-outline-variant flex items-center w-full px-margin-desktop py-2 min-h-[48px] shrink-0">
+<div class="flex items-center gap-3 w-full">
+<span class="material-symbols-outlined text-secondary dark:text-secondary filled-icon">analytics</span>
+<div class="flex items-center gap-2">
+<span class="font-headline-md text-headline-md text-secondary dark:text-secondary">Approval Room V5</span>
+<span class="text-on-surface-variant mx-1">/</span>
+<span class="font-label-md text-label-md text-on-surface">Revisão e decisão</span>
+</div>
+<div class="ml-auto flex items-center gap-3">
+<span class="inline-flex items-center gap-1.5 px-2 py-1 rounded bg-[#181B1D] border border-outline-variant text-on-surface font-code text-[11px]">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+                    STATUS: PENDING REVIEW
+                </span>
+<span class="inline-flex items-center gap-1.5 px-2 py-1 rounded bg-[#181B1D] border border-outline-variant text-on-surface font-code text-[11px]">
+                    ID: CLK-992-V5
+                </span>
+</div>
+</div>
+</div>
+<!-- Main Workspace -->
+<main class="flex-1 flex overflow-hidden w-full relative">
+<!-- Left Sidebar: Lineage & KPIs -->
+<aside class="w-80 border-r border-outline-variant bg-[#181B1D] flex flex-col shrink-0 overflow-y-auto">
+<div class="p-4 border-b border-outline-variant flex justify-between items-center bg-[#1E1E1E]">
+<h3 class="font-label-md text-label-md text-on-surface uppercase tracking-wider">Version Lineage</h3>
+<button class="text-on-surface-variant hover:text-on-surface">
+<span class="material-symbols-outlined text-[18px]">history</span>
+</button>
+</div>
+<div class="p-4 flex-1">
+<!-- Timeline -->
+<div class="relative border-l border-outline-variant ml-2 pl-4 pb-6 space-y-6">
+<!-- V5 (Current) -->
+<div class="relative">
+<div class="absolute -left-[21px] top-1 w-2.5 h-2.5 bg-primary rounded-full ring-4 ring-[#181B1D]"></div>
+<div class="bg-[#1E1E1E] border border-primary/50 p-3 rounded-DEFAULT">
+<div class="flex justify-between items-start mb-1">
+<span class="font-label-md text-label-md text-primary">v5.0 (Current)</span>
+<span class="font-code text-code text-on-surface-variant text-[10px]">10:42 AM</span>
+</div>
+<p class="font-body-md text-[13px] text-on-surface mb-2">Color grading adjusted per Brand Guideline Q3.</p>
+<div class="flex gap-2">
+<span class="px-1.5 py-0.5 rounded bg-surface border border-outline-variant text-[10px] text-on-surface font-code">By: A. Silva</span>
+</div>
+</div>
+</div>
+<!-- V4 -->
+<div class="relative opacity-60 hover:opacity-100 transition-opacity cursor-pointer group">
+<div class="absolute -left-[21px] top-1 w-2.5 h-2.5 bg-surface-variant rounded-full ring-4 ring-[#181B1D] group-hover:bg-outline"></div>
+<div class="border border-outline-variant p-3 rounded-DEFAULT group-hover:bg-[#1E1E1E]">
+<div class="flex justify-between items-start mb-1">
+<span class="font-label-md text-label-md text-on-surface">v4.2</span>
+<span class="font-code text-code text-on-surface-variant text-[10px]">Yesterday</span>
+</div>
+<p class="font-body-md text-[13px] text-on-surface-variant">Copy updated in lower third.</p>
+</div>
+</div>
+<!-- V3 -->
+<div class="relative opacity-40">
+<div class="absolute -left-[21px] top-1 w-2.5 h-2.5 bg-surface-variant rounded-full ring-4 ring-[#181B1D]"></div>
+<div class="border border-outline-variant p-3 rounded-DEFAULT">
+<div class="flex justify-between items-start mb-1">
+<span class="font-label-md text-label-md text-on-surface">v3.0</span>
+<span class="font-code text-code text-on-surface-variant text-[10px]">Oct 12</span>
+</div>
+<p class="font-body-md text-[13px] text-on-surface-variant">Initial structural render.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4 border-t border-outline-variant bg-[#0F1011]">
+<h3 class="font-label-md text-label-md text-on-surface uppercase tracking-wider mb-4">Evidence Data</h3>
+<div class="space-y-3">
+<div class="flex justify-between items-center border-b border-outline-variant pb-2">
+<span class="font-body-md text-[13px] text-on-surface-variant flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px]">policy</span>
+                            Brand Alignment
+                        </span>
+<span class="font-code text-code text-primary">98%</span>
+</div>
+<div class="flex justify-between items-center border-b border-outline-variant pb-2">
+<span class="font-body-md text-[13px] text-on-surface-variant flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px]">speed</span>
+                            Est. Engagement
+                        </span>
+<span class="font-code text-code text-on-surface">High</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-body-md text-[13px] text-on-surface-variant flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px]">contrast</span>
+                            Accessibility Score
+                        </span>
+<span class="font-code text-code text-on-surface">AA Pass</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- Center Canvas: Asset Review -->
+<section class="flex-1 flex flex-col bg-[#0F1011] relative">
+<!-- Toolbar -->
+<div class="h-12 border-b border-outline-variant flex items-center justify-between px-4 bg-[#121314]">
+<div class="flex gap-2">
+<button class="p-1.5 text-on-surface-variant hover:text-on-surface hover:bg-[#1E1E1E] rounded transition-colors" title="Zoom In">
+<span class="material-symbols-outlined text-[20px]">zoom_in</span>
+</button>
+<button class="p-1.5 text-on-surface-variant hover:text-on-surface hover:bg-[#1E1E1E] rounded transition-colors" title="Zoom Out">
+<span class="material-symbols-outlined text-[20px]">zoom_out</span>
+</button>
+<div class="w-px h-5 bg-outline-variant my-auto mx-1"></div>
+<button class="p-1.5 text-on-surface-variant hover:text-on-surface hover:bg-[#1E1E1E] rounded transition-colors" title="Toggle Grid">
+<span class="material-symbols-outlined text-[20px]">grid_4x4</span>
+</button>
+<button class="p-1.5 text-primary bg-primary/10 rounded transition-colors" title="Compare Versions">
+<span class="material-symbols-outlined text-[20px]">compare</span>
+</button>
+</div>
+<div class="flex items-center gap-3">
+<span class="font-code text-[11px] text-on-surface-variant">1920x1080 (100%)</span>
+</div>
+</div>
+<!-- Canvas Area -->
+<div class="flex-1 p-8 overflow-auto flex items-center justify-center bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiPgo8cmVjdCB3aWR0aD0iOCIgaGVpZ2h0PSI4IiBmaWxsPSIjMEYxMDExIj48L3JlY3Q+CjxwYXRoIGQ9Ik0wIDBMOCA4Wk04IDBMMCA4WiIgc3Ryb2tlPSIjMThxQjFEIiBzdHJva2Utd2lkdGg9IjEiPjwvcGF0aD4KPC9zdmc+')] bg-repeat">
+<div class="relative group max-w-full max-h-full aspect-video shadow-2xl ring-1 ring-outline-variant flex w-full">
+<!-- Split View Logic -->
+<!-- V4 (Left/Previous) -->
+<div class="w-1/2 h-full relative overflow-hidden border-r border-dashed border-primary">
+<div class="absolute inset-0 bg-surface-container-highest">
+<div class="w-[200%] h-full bg-cover bg-left" data-alt="A sophisticated digital dashboard interface in a dark matte style, showing analytical charts and data points. The lighting is cool and clinical, emphasizing precision and data density. High contrast between deep black backgrounds and muted grey text, with subtle structural lines." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCtqpIIUgErsM_dwkcFXe9G5RFw6jNvqhd0OgRlCyzzKZJon1WZ_yDaHfS1b4wwh3ha8PXxTUkBe_8PUeU4DN0MYPexfCDuSG2uSlCC8KDsYlIbRyNab95TE-5I4JBTHQGX2Gafb9aCDXbmTN_8d67cCxT9hgVxB5VA06dwl_fT65yz_CyOQbdNx0EjFqf5LU3tINS7bN1T6hvw5Il0L7fCKXWYkD8U9yTlYnds8dr-7NN7fneuDCDRkQ')"></div>
+</div>
+<div class="absolute top-2 left-2 bg-[#0F1011]/80 backdrop-blur border border-outline-variant px-2 py-1 rounded">
+<span class="font-code text-[10px] text-on-surface-variant uppercase">v4.2 (Previous)</span>
+</div>
+</div>
+<!-- V5 (Right/Current) -->
+<div class="w-1/2 h-full relative overflow-hidden">
+<div class="absolute inset-0 bg-surface-container-highest -left-full w-[200%]">
+<div class="w-full h-full bg-cover bg-right" data-alt="A sophisticated digital dashboard interface in a dark matte style, showing analytical charts and data points. The lighting is cool and clinical, emphasizing precision and data density. High contrast between deep black backgrounds and muted grey text, with subtle structural lines. This version features slightly more vibrant neon green data highlights to demonstrate version iteration." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAR5uQHXzxQlMBc9CUNQdbW1Ei27zzc8L6mjFuvbF0gg2QjfWRSLAKAPh-1KaZnnh4xW4VZNwBV6Fp6cKPcWSH2-1bDQlbYj5JtsPM1bt7yUMVL2s9tddMDpbD-nWhuaLq2SqNSePBuErwV1pBPbT6qkS_g2q-16cMNyiLd5gwCXM9hzf4oTy06lHwmV3knqFZ7zzgKE1VyVtixk3LY9tNUMwBT-udsLPLf-gYml7uZby--hc3n8Kmp2w')"></div>
+</div>
+<div class="absolute top-2 right-2 bg-[#0F1011]/80 backdrop-blur border border-primary/50 px-2 py-1 rounded">
+<span class="font-code text-[10px] text-primary uppercase">v5.0 (Current)</span>
+</div>
+<!-- Annotation Pin Example -->
+<button class="absolute top-1/3 right-1/4 w-6 h-6 rounded-full bg-primary text-[#0F1011] flex items-center justify-center shadow-[0_0_0_4px_rgba(117,255,158,0.2)] hover:scale-110 transition-transform">
+<span class="font-code text-[12px] font-bold">1</span>
+</button>
+</div>
+<!-- Slider Handle (Visual only) -->
+<div class="absolute left-1/2 top-0 bottom-0 w-px bg-primary z-10 flex flex-col items-center justify-center cursor-ew-resize">
+<div class="w-6 h-8 bg-[#181B1D] border border-primary rounded flex items-center justify-center gap-0.5 shadow-lg">
+<div class="w-px h-3 bg-primary/50"></div>
+<div class="w-px h-3 bg-primary/50"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Decision Footer -->
+<div class="h-20 bg-[#121314] border-t border-outline-variant flex items-center justify-between px-6 shrink-0 shadow-[0_-4px_24px_rgba(0,0,0,0.5)]">
+<div class="flex items-center gap-4">
+<span class="font-label-md text-label-md text-on-surface">Required Sign-offs:</span>
+<div class="flex -space-x-2">
+<div class="w-8 h-8 rounded-full border border-[#121314] bg-surface-container-highest flex items-center justify-center text-[10px] font-code text-on-surface relative" title="Legal Approved">
+                            L
+                            <div class="absolute -bottom-1 -right-1 w-3.5 h-3.5 bg-primary rounded-full flex items-center justify-center ring-2 ring-[#121314]">
+<span class="material-symbols-outlined text-[10px] text-[#0F1011] filled-icon">check</span>
+</div>
+</div>
+<div class="w-8 h-8 rounded-full border border-[#121314] bg-[#181B1D] border-dashed border-outline-variant flex items-center justify-center text-[10px] font-code text-on-surface-variant relative" title="Creative Pending">
+                            C
+                        </div>
+</div>
+</div>
+<div class="flex gap-3">
+<button class="px-6 py-2 border border-outline-variant hover:border-error-container hover:bg-error-container/10 hover:text-error text-on-surface font-label-md text-[13px] rounded transition-all flex items-center gap-2 h-10">
+<span class="material-symbols-outlined text-[16px]">close</span>
+                        Solicitar Mudanças
+                    </button>
+<button class="px-8 py-2 bg-primary-container hover:bg-primary text-on-primary-fixed font-headline-md text-[14px] rounded transition-all active:scale-[0.98] flex items-center gap-2 h-10 shadow-[0_0_15px_rgba(0,230,118,0.2)]">
+<span class="material-symbols-outlined text-[18px]">check_circle</span>
+                        Aprovar v5.0
+                    </button>
+</div>
+</div>
+</section>
+<!-- Right Sidebar: Thread/Comments -->
+<aside class="w-[340px] border-l border-outline-variant bg-[#181B1D] flex flex-col shrink-0">
+<div class="p-4 border-b border-outline-variant flex justify-between items-center bg-[#1E1E1E]">
+<h3 class="font-label-md text-label-md text-on-surface uppercase tracking-wider">Discussion Thread</h3>
+<span class="bg-surface-variant text-on-surface px-2 py-0.5 rounded text-[10px] font-code">3 Open</span>
+</div>
+<div class="flex-1 overflow-y-auto p-4 space-y-4">
+<!-- Comment 1 (Resolved) -->
+<div class="border border-outline-variant bg-[#121314] p-3 rounded opacity-60">
+<div class="flex justify-between items-start mb-2">
+<div class="flex items-center gap-2">
+<div class="w-5 h-5 rounded bg-surface-container-highest flex items-center justify-center text-[10px] font-code">MD</div>
+<span class="font-label-md text-[11px] text-on-surface">M. Dias (Legal)</span>
+</div>
+<span class="material-symbols-outlined text-[14px] text-primary">check_circle</span>
+</div>
+<p class="font-body-md text-[12px] text-on-surface-variant">Disclaimer text contrast ratio is too low. Needs to be at least 4.5:1.</p>
+</div>
+<!-- Comment 2 (Active with Pin) -->
+<div class="border border-primary/30 bg-[#1E1E1E] p-3 rounded relative">
+<div class="absolute -left-3 top-3 w-6 h-6 rounded-full bg-primary text-[#0F1011] flex items-center justify-center shadow-sm">
+<span class="font-code text-[10px] font-bold">1</span>
+</div>
+<div class="ml-4">
+<div class="flex justify-between items-start mb-2">
+<div class="flex items-center gap-2">
+<div class="w-5 h-5 rounded bg-surface-container-highest flex items-center justify-center text-[10px] font-code">CD</div>
+<span class="font-label-md text-[11px] text-on-surface">C. Director</span>
+</div>
+<span class="font-code text-[10px] text-on-surface-variant">10:45 AM</span>
+</div>
+<p class="font-body-md text-[13px] text-on-surface mb-3">The green highlight here feels a bit overwhelming. Can we dial back the opacity by 20%?</p>
+<!-- Reply box -->
+<div class="flex gap-2 mt-2">
+<input class="w-full bg-[#0F1011] border border-outline-variant text-[12px] p-1.5 rounded focus:outline-none focus:border-primary" placeholder="Reply..." type="text"/>
+<button class="bg-[#343536] text-on-surface px-2 rounded hover:bg-[#474746]">
+<span class="material-symbols-outlined text-[14px]">send</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- New Comment Input -->
+<div class="p-4 border-t border-outline-variant bg-[#1E1E1E]">
+<textarea class="w-full bg-[#0F1011] border border-outline-variant text-on-surface font-body-md text-[13px] rounded p-2 focus:outline-none focus:border-primary resize-none mb-2" placeholder="Add a general comment..." rows="2"></textarea>
+<div class="flex justify-between items-center">
+<button class="text-on-surface-variant hover:text-on-surface" title="Add Pin">
+<span class="material-symbols-outlined text-[18px]">push_pin</span>
+</button>
+<button class="px-4 py-1.5 bg-[#343536] hover:bg-outline-variant text-on-surface font-label-md text-[12px] rounded transition-colors">
+                        Post Comment
+                    </button>
+</div>
+</div>
+</aside>
+</main>
+<script src="/stitch/bridge.js"></script></body></html>

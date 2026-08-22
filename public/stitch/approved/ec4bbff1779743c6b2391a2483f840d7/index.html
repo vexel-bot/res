@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Reuse Workshop V5</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {error: "#ffb4ab", "surface-container-lowest": "#0e0e0e", "surface-container": "#201f1f", "on-primary-container": "#62000c", "outline-variant": "#5a403f", "secondary-fixed": "#ffdbc8", primary: "#ffb3af", "on-tertiary-container": "#5c0e15", "surface-container-low": "#1c1b1b", "surface-tint": "#ffb3af", "on-primary-fixed": "#410005", "primary-container": "#ff5c5c", tertiary: "#ffb3b1", "on-background": "#e5e2e1", "on-surface": "#e5e2e1", "secondary-container": "#ff7f1c", "on-primary-fixed-variant": "#920418", "on-error": "#690005", "primary-fixed": "#ffdad7", "inverse-on-surface": "#313030", "on-tertiary-fixed-variant": "#7f292c", secondary: "#ffb68b", "on-secondary-fixed": "#321200", "surface-container-high": "#2a2a2a", "error-container": "#93000a", "surface-bright": "#393939", "on-error-container": "#ffdad6", outline: "#a98987", "tertiary-fixed-dim": "#ffb3b1", "on-secondary": "#522300", surface: "#131313", "on-tertiary": "#601118", "secondary-fixed-dim": "#ffb68b", "surface-dim": "#131313", "on-secondary-fixed-variant": "#753400", "inverse-surface": "#e5e2e1", "on-primary": "#68000d", "tertiary-fixed": "#ffdad8", "primary-fixed-dim": "#ffb3af", "surface-container-highest": "#353534", background: "#131313", "tertiary-container": "#e17474", "on-surface-variant": "#e2bebc", "on-tertiary-fixed": "#410007", "inverse-primary": "#b4252d", "on-secondary-container": "#602a00", "surface-variant": "#353534"}, borderRadius: {DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem"}, spacing: {unit: "4px", "margin-desktop": "32px", "container-max": "1440px", "margin-mobile": "16px", gutter: "16px"}, fontFamily: {code: ["Geist", "monospace"], "headline-lg": ["Geist", "sans-serif"], "body-md": ["Geist", "sans-serif"], "label-md": ["Geist", "sans-serif"], "headline-md": ["Geist", "sans-serif"], "body-lg": ["Geist", "sans-serif"], display: ["Geist"], headline: ["Geist"], body: ["Geist"], label: ["Geist"]}, fontSize: {code: ["13px", {lineHeight: "1.4", fontWeight: "400"}], "headline-lg": ["24px", {lineHeight: "1.3", fontWeight: "600"}], "body-md": ["14px", {lineHeight: "1.5", fontWeight: "400"}], "label-md": ["12px", {lineHeight: "1", letterSpacing: "0.02em", fontWeight: "500"}], "headline-md": ["20px", {lineHeight: "1.4", fontWeight: "500"}], "body-lg": ["16px", {lineHeight: "1.5", fontWeight: "400"}], display: ["32px", {lineHeight: "1.2", letterSpacing: "-0.02em", fontWeight: "600"}]}}}};</script>
+<style>
+        body {
+            background-color: theme('colors.background');
+            color: theme('colors.on-background');
+            font-family: 'Geist', sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .material-symbols-outlined {
+            font-family: 'Material Symbols Outlined';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 20px;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            font-feature-settings: 'liga';
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Thin scrollbar for dense layouts */
+        ::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: theme('colors.surface-container-highest');
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: theme('colors.outline');
+        }
+    </style>
+</head>
+<body>
+<!-- TopNavBar -->
+<header class="flex justify-between items-center w-full px-margin-desktop h-16 bg-surface-container-lowest border-b border-outline-variant flex-shrink-0 z-10">
+<div class="flex items-center gap-6">
+<span class="font-display text-display text-primary tracking-tight">Clicko Precision</span>
+<nav class="hidden md:flex items-center gap-4 ml-8">
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Newsroom</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Radar Room</a>
+<a class="font-label-md text-label-md text-primary border-b-2 border-primary pb-1 opacity-80 transition-all" href="#">Brand Memory</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Campaign Intake</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Campaign Room</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:text-primary transition-colors duration-200">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors duration-200">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-surface-container-high overflow-hidden border border-outline-variant">
+<img alt="User profile" class="w-full h-full object-cover" data-alt="A detailed headshot of a professional user in a well-lit studio environment. The lighting is sharp and clinical, reflecting a modern tech aesthetic with high contrast and deep shadows." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBvdH1FdroBISukhrhWTnKwB4krx0xpWjt_5MYR4EEqJg_8OnLoAOBGNK0StY_V_70AbBEweOF1L1nM_ROhTg4OXI7Cu2u7qFR45G1SFDxFM4PhZir3l13rtqn_x2iEg6xuJa2twwe8aBIDbNLZleH2jgSChTPpV0F9j0ZRsd3ChsVSf-GZ3lO5HWJu5N6a07CxjGMrqrUam3OrU4uBhNARF88AfUhyKXm67whhcG3E8aKI_2P22FCLdw"/>
+</div>
+</div>
+</header>
+<!-- Main Workspace Container -->
+<main class="flex-1 flex overflow-hidden">
+<!-- Left Panel: Original Asset & Context -->
+<section class="w-[320px] bg-surface-container-low border-r border-outline-variant flex flex-col flex-shrink-0">
+<div class="p-4 border-b border-outline-variant">
+<h2 class="font-headline-md text-headline-md text-on-surface">Source Asset</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">High-Performing Creative</p>
+</div>
+<div class="p-4 flex-1 overflow-y-auto">
+<div class="aspect-video bg-surface rounded mb-4 overflow-hidden border border-outline-variant relative group">
+<img class="w-full h-full object-cover" data-alt="A modern, high-contrast B2B marketing graphic showing a data dashboard interface hovering over a dark abstract background. Crisp lines, neon green accents, technical style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDk2Uy0Kz_5MbqaVF5DNQTfE8x3ngE0EeXliMeTSCkc30RBYRjC_Z1RJLorvlH8W4Ymh1dPXlTQ2lrd3PiLb-Sx3oqTDma-4MSCkpxmUTcwkNptm2-0z0NRoNBPaKP-Z1kFxEOKRuFsQv71zwAc29lMa5tx8LETuARQgCRGqeCO0y6kxzvRFLkBnn2JV7MstaO9CxALUJ4xiEbzBbW5N0xhOBtOGid9VnhMYpzZ6y2dmrzunqJpTbLSCg"/>
+<div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+<button class="bg-primary text-on-primary-fixed font-label-md text-label-md px-4 py-2 rounded-DEFAULT">Preview</button>
+</div>
+</div>
+<div class="space-y-4">
+<div>
+<h3 class="font-label-md text-label-md text-on-surface mb-2">Performance Data</h3>
+<div class="bg-surface border border-outline-variant p-3 rounded">
+<div class="flex justify-between items-center mb-2">
+<span class="font-body-md text-body-md text-on-surface-variant">Conversion Rate</span>
+<span class="font-code text-code text-primary">+20.4%</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1 rounded-full overflow-hidden">
+<div class="bg-primary h-full" style="width: 75%"></div>
+</div>
+</div>
+</div>
+<div>
+<h3 class="font-label-md text-label-md text-on-surface mb-2">Key Learnings</h3>
+<ul class="space-y-2">
+<li class="flex items-start gap-2 bg-surface p-2 border border-outline-variant rounded">
+<span class="material-symbols-outlined text-primary text-[16px] mt-0.5" data-icon="check_circle">check_circle</span>
+<span class="font-body-md text-body-md text-on-surface">Direct hook text outperformed question-based variant.</span>
+</li>
+<li class="flex items-start gap-2 bg-surface p-2 border border-outline-variant rounded">
+<span class="material-symbols-outlined text-primary text-[16px] mt-0.5" data-icon="check_circle">check_circle</span>
+<span class="font-body-md text-body-md text-on-surface">Neon green accents drove higher CTR on mobile.</span>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<!-- Center Panel: Adaptation Canvas -->
+<section class="flex-1 flex flex-col bg-background relative overflow-hidden">
+<div class="p-4 flex justify-between items-center border-b border-outline-variant bg-surface-container-lowest/80 backdrop-blur-sm absolute top-0 w-full z-10">
+<div class="flex items-center gap-3">
+<h2 class="font-headline-md text-headline-md text-on-surface">Adaptation Canvas</h2>
+<span class="bg-surface-container-high px-2 py-1 rounded font-code text-code text-on-surface-variant border border-outline-variant">v5.0</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="px-4 py-2 border border-outline-variant rounded font-label-md text-label-md text-on-surface hover:bg-surface-container-high transition-colors">Drafts</button>
+<button class="px-4 py-2 bg-primary text-on-primary-fixed rounded font-label-md text-label-md hover:opacity-90 transition-opacity">Generate Variants</button>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto pt-20 p-8">
+<!-- Grid layout for new formats -->
+<div class="grid grid-cols-2 gap-6 max-w-5xl mx-auto">
+<!-- Format 1: LinkedIn Square -->
+<div class="bg-surface-container border border-outline-variant rounded p-4 flex flex-col group hover:border-primary transition-colors">
+<div class="flex justify-between items-center mb-4">
+<span class="font-label-md text-label-md text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]" data-icon="square">square</span>
+                                LinkedIn Feed
+                            </span>
+<span class="font-code text-code text-on-surface-variant">1080x1080</span>
+</div>
+<div class="aspect-square bg-surface border border-dashed border-outline-variant rounded mb-4 flex items-center justify-center relative overflow-hidden">
+<img class="w-full h-full object-cover opacity-60" data-alt="A stylized adaptation of a B2B marketing graphic formatted for a square feed. Features bold typography and technical elements against a dark background with green accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCscojAocE69XTCY2PM3JrzEPa3Jyx855GbT8K_qBjoT2vPJTQMQ6S1oZI-a25a2BPSx0fGYYWMfLsY3jaDnRpbThv-SoPcDAtmJDkUrC8GcsCmkFR5jtSoo0R3MxE1VENjB93f5rTbQAUr36rb_uD3UUdN94yvshwBRDV5OzuA_6L7jOE9KY-OWBPiTV2uHvqL4YFxM8PI4cELH7FzrQDkCAf7G_P-8cdoY9VmAZE0Ci1lSijZa_DWVw"/>
+<div class="absolute inset-0 bg-surface/20 hover:bg-transparent transition-colors"></div>
+</div>
+<div class="mt-auto">
+<textarea class="w-full bg-surface border border-outline-variant rounded p-2 font-body-md text-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all resize-none" placeholder="Optimized copy..." rows="2"></textarea>
+</div>
+</div>
+<!-- Format 2: IG Story -->
+<div class="bg-surface-container border border-outline-variant rounded p-4 flex flex-col group hover:border-primary transition-colors">
+<div class="flex justify-between items-center mb-4">
+<span class="font-label-md text-label-md text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]" data-icon="smartphone">smartphone</span>
+                                Story / Reel
+                            </span>
+<span class="font-code text-code text-on-surface-variant">1080x1920</span>
+</div>
+<div class="aspect-[9/16] bg-surface border border-dashed border-outline-variant rounded mb-4 flex items-center justify-center relative overflow-hidden w-2/3 mx-auto">
+<div class="absolute inset-0 flex flex-col justify-between p-4">
+<div class="h-4 bg-outline-variant/30 rounded w-1/3"></div>
+<div class="text-center">
+<span class="material-symbols-outlined text-outline-variant text-4xl mb-2" data-icon="add_photo_alternate">add_photo_alternate</span>
+<p class="font-code text-code text-on-surface-variant">Generating vertical layout...</p>
+</div>
+<div class="h-10 bg-primary/20 border border-primary/50 rounded w-full"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Right Panel: Brand Context & Memory -->
+<section class="w-[300px] bg-surface-container-low border-l border-outline-variant flex flex-col flex-shrink-0">
+<div class="p-4 border-b border-outline-variant flex justify-between items-center">
+<h2 class="font-headline-md text-headline-md text-on-surface">Brand Context</h2>
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="memory">memory</span>
+</div>
+<div class="p-4 space-y-6 flex-1 overflow-y-auto">
+<!-- Tone Settings -->
+<div>
+<h3 class="font-label-md text-label-md text-on-surface mb-3 uppercase tracking-wider text-xs">Tone of Voice</h3>
+<div class="space-y-2">
+<label class="flex items-center gap-2 bg-surface p-2 border border-outline-variant rounded cursor-pointer hover:border-primary transition-colors">
+<input class="bg-surface-container border-outline-variant text-primary focus:ring-primary focus:ring-offset-surface" name="tone" type="radio"/>
+<span class="font-body-md text-body-md text-on-surface">Authoritative (Default)</span>
+</label>
+<label class="flex items-center gap-2 bg-surface p-2 border border-outline-variant rounded cursor-pointer hover:border-primary transition-colors">
+<input checked="" class="bg-surface-container border-outline-variant text-primary focus:ring-primary focus:ring-offset-surface" name="tone" type="radio"/>
+<span class="font-body-md text-body-md text-on-surface">Technical &amp; Direct</span>
+</label>
+</div>
+</div>
+<!-- Active Tokens -->
+<div>
+<h3 class="font-label-md text-label-md text-on-surface mb-3 uppercase tracking-wider text-xs">Active Visual Tokens</h3>
+<div class="flex flex-wrap gap-2">
+<span class="px-2 py-1 bg-surface border border-outline-variant rounded font-code text-code text-on-surface-variant flex items-center gap-1">
+<div class="w-2 h-2 rounded-full bg-primary"></div> Primary Green
+                        </span>
+<span class="px-2 py-1 bg-surface border border-outline-variant rounded font-code text-code text-on-surface-variant flex items-center gap-1">
+<div class="w-2 h-2 rounded-full bg-background border border-outline-variant"></div> Dark Matte
+                        </span>
+<span class="px-2 py-1 bg-surface border border-outline-variant rounded font-code text-code text-on-surface-variant">
+                            Geist Font
+                        </span>
+</div>
+</div>
+<!-- Brand Guidelines Enforcer -->
+<div class="bg-surface-container-high border border-outline-variant rounded p-3">
+<h3 class="font-label-md text-label-md text-on-surface mb-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-primary" data-icon="policy">policy</span>
+                        Guideline Checks
+                    </h3>
+<div class="space-y-2 mt-3">
+<div class="flex justify-between items-center">
+<span class="font-body-md text-body-md text-on-surface-variant">Logo Clearance</span>
+<span class="material-symbols-outlined text-primary text-[16px]" data-icon="check">check</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-body-md text-body-md text-on-surface-variant">Contrast Ratio</span>
+<span class="material-symbols-outlined text-primary text-[16px]" data-icon="check">check</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-body-md text-body-md text-on-surface-variant">No Drop Shadows</span>
+<span class="material-symbols-outlined text-primary text-[16px]" data-icon="check">check</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<script src="/stitch/bridge.js"></script></body></html>

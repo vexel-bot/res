@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Clicko Precision - Workspace</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {"on-tertiary-fixed": "#410007", "tertiary-fixed": "#ffdad8", "on-primary": "#68000d", primary: "#ffb3af", "on-surface": "#e5e2e1", "secondary-fixed-dim": "#ffb68b", "on-error-container": "#ffdad6", "surface-container-low": "#1c1b1b", "on-surface-variant": "#e2bebc", "on-primary-fixed": "#410005", "inverse-primary": "#b4252d", secondary: "#ffb68b", "surface-container": "#201f1f", tertiary: "#ffb3b1", "on-secondary-fixed": "#321200", "on-tertiary-fixed-variant": "#7f292c", "on-tertiary": "#601118", "surface-bright": "#393939", "surface-dim": "#131313", "surface-variant": "#353534", "on-background": "#e5e2e1", "primary-fixed": "#ffdad7", error: "#ffb4ab", "secondary-container": "#ff7f1c", "surface-container-highest": "#353534", "surface-container-high": "#2a2a2a", "on-secondary-fixed-variant": "#753400", "surface-tint": "#ffb3af", "tertiary-container": "#e17474", "on-primary-fixed-variant": "#920418", "inverse-on-surface": "#313030", "tertiary-fixed-dim": "#ffb3b1", "secondary-fixed": "#ffdbc8", "inverse-surface": "#e5e2e1", "primary-container": "#ff5c5c", "error-container": "#93000a", outline: "#a98987", "on-secondary": "#522300", "on-tertiary-container": "#5c0e15", "surface-container-lowest": "#0e0e0e", surface: "#131313", "on-primary-container": "#62000c", "on-error": "#690005", "primary-fixed-dim": "#ffb3af", "outline-variant": "#5a403f", "on-secondary-container": "#602a00", background: "#131313"}, borderRadius: {DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem"}, spacing: {unit: "4px", "margin-desktop": "32px", gutter: "16px", "margin-mobile": "16px", "container-max": "1440px"}, fontFamily: {"body-md": ["Geist", "sans-serif"], "label-md": ["Geist", "sans-serif"], "headline-md": ["Geist", "sans-serif"], display: ["Geist"], "body-lg": ["Geist", "sans-serif"], "headline-lg": ["Geist", "sans-serif"], code: ["Geist", "sans-serif"], headline: ["Geist"], body: ["Geist"], label: ["Geist"]}, fontSize: {"body-md": ["14px", {lineHeight: "1.5", fontWeight: "400"}], "label-md": ["12px", {lineHeight: "1", letterSpacing: "0.02em", fontWeight: "500"}], "headline-md": ["20px", {lineHeight: "1.4", fontWeight: "500"}], display: ["32px", {lineHeight: "1.2", letterSpacing: "-0.02em", fontWeight: "600"}], "body-lg": ["16px", {lineHeight: "1.5", fontWeight: "400"}], "headline-lg": ["24px", {lineHeight: "1.3", fontWeight: "600"}], code: ["13px", {lineHeight: "1.4", fontWeight: "400"}]}}}};</script>
+<style>
+        .group:hover .group-hover\:opacity-100 {
+            opacity: 1;
+        }
+        .group:hover .group-hover\:visible {
+            visibility: visible;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md h-screen flex flex-col overflow-hidden">
+<!-- Top Navigation Area -->
+<header class="bg-background dark:bg-background border-b border-outline-variant flex justify-between items-center w-full px-margin-desktop h-16 shrink-0 z-50 fixed top-0 left-0 right-0">
+<!-- Left: Logo & Workspace Pill -->
+<div class="flex items-center gap-gutter">
+<div class="font-display text-display text-primary uppercase tracking-tighter">
+                Clicko Precision
+            </div>
+<div class="flex items-center bg-surface-container rounded-full border border-outline-variant px-3 py-1.5 cursor-pointer hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant text-[16px] mr-2">storefront</span>
+<span class="font-label-md text-label-md text-on-surface">Aurora Café / Agência Norte</span>
+<span class="material-symbols-outlined text-on-surface-variant text-[16px] ml-2">expand_more</span>
+</div>
+</div>
+<!-- Center: Main Navigation -->
+<nav class="flex gap-gutter h-full items-end">
+<!-- Active State based on prompt: Hoje -->
+<a class="text-primary font-bold border-b-2 border-primary pb-2 flex items-center gap-2 hover:text-primary transition-colors duration-200" href="#">
+                 Hoje
+            </a>
+<a class="text-on-surface-variant font-medium pb-2 flex items-center gap-2 hover:text-primary transition-colors duration-200" href="#">
+                Radar
+            </a>
+<a class="text-on-surface-variant font-medium pb-2 flex items-center gap-2 hover:text-primary transition-colors duration-200" href="#">
+                Campanhas
+            </a>
+<a class="text-on-surface-variant font-medium pb-2 flex items-center gap-2 hover:text-primary transition-colors duration-200" href="#">
+                Conteúdos
+            </a>
+<a class="text-on-surface-variant font-medium pb-2 flex items-center gap-2 hover:text-primary transition-colors duration-200" href="#">
+                Calendário
+            </a>
+</nav>
+<!-- Right: Actions -->
+<div class="flex items-center gap-4">
+<!-- Search -->
+<div class="flex items-center bg-surface-container border border-outline-variant rounded lg px-3 py-1.5 text-on-surface-variant hover:border-primary transition-colors cursor-text group">
+<span class="material-symbols-outlined text-[18px] mr-2 group-hover:text-primary">search</span>
+<span class="font-body-md text-body-md mr-4 text-sm">Buscar...</span>
+<div class="bg-surface-container-high border border-outline-variant rounded px-1.5 py-0.5 flex items-center">
+<span class="font-code text-code text-[10px] leading-none">Ctrl K</span>
+</div>
+</div>
+<!-- Approvals -->
+<button class="relative p-2 text-on-surface-variant hover:text-primary transition-colors rounded-full hover:bg-surface-container-high">
+<span class="material-symbols-outlined">check_circle</span>
+<span class="absolute top-1 right-1 bg-primary text-on-primary text-[10px] font-bold h-4 w-4 rounded-full flex items-center justify-center border-2 border-background">3</span>
+</button>
+<!-- Tools Dropdown with Tooltip -->
+<div class="relative group">
+<button class="flex items-center gap-1 p-2 text-on-surface-variant hover:text-primary transition-colors rounded hover:bg-surface-container-high border border-transparent hover:border-outline-variant">
+<span class="material-symbols-outlined">grid_view</span>
+<span class="material-symbols-outlined text-[16px]">expand_more</span>
+</button>
+<!-- Tooltip -->
+<div class="absolute right-0 top-full mt-2 w-max bg-surface-container-highest text-on-surface font-label-md text-label-md py-1.5 px-3 rounded shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 border border-outline-variant whitespace-nowrap">
+                    Veja todas as ações essenciais
+                </div>
+</div>
+<!-- Criar CTA -->
+<button class="bg-primary-container text-on-primary-container font-label-md text-label-md px-4 py-2 rounded-lg hover:opacity-90 transition-opacity flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                Criar
+            </button>
+<!-- User Avatar -->
+<button class="w-8 h-8 rounded-full bg-surface-container-highest border border-outline-variant flex items-center justify-center overflow-hidden hover:border-primary transition-colors">
+<img alt="User Avatar" class="object-cover w-full h-full" data-alt="A highly detailed close-up professional headshot of a technical worker. The setting is a minimalist, modern office environment. The lighting is soft, cinematic, and slightly cool-toned to match a dark mode aesthetic, with subtle green highlights reflecting on the subject's face. The mood is focused and authoritative." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXa8DQl732BdJYBly4hgLjGWN1tVqkMXFyFN4dT07cLEVmwLkjGd0QRaTVA5XAr-m-__rPFjP_cRU_EQ8pLy2yV3-YrIneybKZ9BdHCzwVzHAMwHKm2_8MeFGqJxlwx6C5Yi0HB78fycMRJwKmt_e7g4QKM57biZBf4eVVwQdPvoAEJzPsv_dKlSCZNpt-E2Ac-8Tx0PCdMOgIDzyX5n0ltVHETgqkyPGdEJeC0G206Zo8_Bj4O57sNQ"/>
+</button>
+</div>
+</header>
+<!-- Main Content Area (Dimmed Background simulating 'Hoje' screen) -->
+<main class="flex-1 mt-16 p-margin-desktop overflow-y-auto bg-surface-container-lowest opacity-40">
+<div class="max-w-container-max mx-auto space-y-gutter">
+<!-- Header for Hoje Content -->
+<div class="flex justify-between items-center mb-8 border-b border-outline-variant pb-4">
+<h1 class="font-headline-lg text-headline-lg text-on-surface">Resumo Operacional</h1>
+<div class="font-label-md text-label-md text-on-surface-variant">
+                    Última atualização: Hoje, 09:42 BRT
+                </div>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-12 gap-gutter">
+<!-- Performance Card -->
+<div class="col-span-8 bg-surface-container border border-outline-variant rounded-xl p-gutter flex flex-col justify-between">
+<div class="flex items-center gap-2 mb-4 text-on-surface-variant font-label-md text-label-md uppercase tracking-wider">
+<span class="material-symbols-outlined text-[18px]">monitoring</span>
+                        Performance Geral
+                    </div>
+<div class="h-64 rounded-lg bg-surface flex items-center justify-center border border-outline-variant">
+<span class="text-on-surface-variant">Gráfico de Performance Principal (Simulado)</span>
+</div>
+</div>
+<!-- Alerts Card -->
+<div class="col-span-4 bg-surface-container border border-outline-variant rounded-xl p-gutter flex flex-col">
+<div class="flex justify-between items-center mb-4">
+<div class="flex items-center gap-2 text-on-surface-variant font-label-md text-label-md uppercase tracking-wider">
+<span class="material-symbols-outlined text-[18px]">warning</span>
+                            Atenção Requerida
+                        </div>
+<span class="bg-error-container text-on-error-container px-2 py-0.5 rounded text-[10px] font-bold">2</span>
+</div>
+<ul class="space-y-4 flex-1">
+<li class="p-3 bg-surface border border-outline-variant rounded-lg border-l-2 border-l-error">
+<div class="font-headline-md text-headline-md text-on-surface text-sm mb-1">Campanha 'Verão' estagnada</div>
+<div class="font-body-md text-body-md text-on-surface-variant text-xs">O orçamento diário não foi consumido nas últimas 24h.</div>
+</li>
+<li class="p-3 bg-surface border border-outline-variant rounded-lg border-l-2 border-l-error">
+<div class="font-headline-md text-headline-md text-on-surface text-sm mb-1">Erro de Integração CRM</div>
+<div class="font-body-md text-body-md text-on-surface-variant text-xs">Falha na sincronização de leads há 45 min.</div>
+</li>
+</ul>
+</div>
+<!-- Active Campaigns -->
+<div class="col-span-12 bg-surface-container border border-outline-variant rounded-xl p-gutter">
+<div class="flex items-center gap-2 mb-4 text-on-surface-variant font-label-md text-label-md uppercase tracking-wider">
+<span class="material-symbols-outlined text-[18px]">campaign</span>
+                        Campanhas Ativas
+                    </div>
+<table class="w-full text-left font-body-md text-body-md">
+<thead>
+<tr class="text-on-surface-variant font-label-md text-label-md uppercase border-b border-outline-variant">
+<th class="pb-2 font-normal">Nome da Campanha</th>
+<th class="pb-2 font-normal">Status</th>
+<th class="pb-2 font-normal text-right">Gasto</th>
+<th class="pb-2 font-normal text-right">ROAS</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<tr class="hover:bg-surface-container-high transition-colors">
+<td class="py-3 text-on-surface">Lançamento Novo Produto Alpha</td>
+<td class="py-3">
+<span class="inline-flex items-center gap-1 px-2 py-1 bg-primary-fixed-dim bg-opacity-10 text-primary-fixed-dim rounded font-label-md text-[10px]">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-fixed-dim"></span> Rodando
+                                    </span>
+</td>
+<td class="py-3 text-right font-code text-code">R$ 14.500</td>
+<td class="py-3 text-right text-primary-fixed font-code text-code">4.2x</td>
+</tr>
+<tr class="hover:bg-surface-container-high transition-colors">
+<td class="py-3 text-on-surface">Retargeting Abandonos Carrinho</td>
+<td class="py-3">
+<span class="inline-flex items-center gap-1 px-2 py-1 bg-primary-fixed-dim bg-opacity-10 text-primary-fixed-dim rounded font-label-md text-[10px]">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-fixed-dim"></span> Rodando
+                                    </span>
+</td>
+<td class="py-3 text-right font-code text-code">R$ 3.200</td>
+<td class="py-3 text-right text-primary-fixed font-code text-code">8.5x</td>
+</tr>
+<tr class="hover:bg-surface-container-high transition-colors">
+<td class="py-3 text-on-surface">Institucional Q3</td>
+<td class="py-3">
+<span class="inline-flex items-center gap-1 px-2 py-1 bg-surface-variant text-on-surface-variant rounded font-label-md text-[10px]">
+<span class="w-1.5 h-1.5 rounded-full bg-on-surface-variant"></span> Pausado
+                                    </span>
+</td>
+<td class="py-3 text-right font-code text-code">R$ 800</td>
+<td class="py-3 text-right text-on-surface-variant font-code text-code">1.1x</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer Area (Based on JSON, positioned fixed bottom or at end of content depending on needs) -->
+<footer class="bg-surface-container-low dark:bg-surface-container-low border-t border-outline-variant flex justify-between items-center w-full px-margin-desktop py-2 docked full-width bottom-0 z-40 relative">
+<div class="font-label-md text-label-md text-on-surface-variant">© 2024 Clicko Precision</div>
+<div class="flex gap-4">
+<a class="font-code text-code text-on-secondary-fixed-variant hover:text-on-surface transition-colors duration-150" href="#">System Status</a>
+<a class="font-code text-code text-on-secondary-fixed-variant hover:text-on-surface transition-colors duration-150" href="#">Documentation</a>
+<a class="font-code text-code text-on-secondary-fixed-variant hover:text-on-surface transition-colors duration-150" href="#">Support</a>
+</div>
+</footer>
+<script src="/stitch/bridge.js"></script></body></html>

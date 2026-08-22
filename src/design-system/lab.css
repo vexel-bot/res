@@ -1,0 +1,142 @@
+/* Creative Social Lab — terminal layer, intentionally loaded after legacy CSS. */
+.clicko-lab-shell {
+  --clicko-action: #ff6969 !important;
+  --clicko-action-hover: #ff8585 !important;
+  --clicko-creative: #ff8d68 !important;
+  background:
+    radial-gradient(circle at 55% -20%, rgba(255, 105, 105, 0.07), transparent 34rem),
+    #101011 !important;
+  font-family: var(--clicko-font-sans) !important;
+}
+
+.clicko-lab-shell .clicko-display {
+  font-family: var(--clicko-font-display) !important;
+  font-variation-settings: "wdth" 92;
+}
+
+.clicko-lab-shell .clicko-lab-home,
+.clicko-lab-shell .clicko-project-gallery,
+.clicko-lab-shell .clicko-product-surface {
+  animation: clicko-lab-enter 220ms ease-out both;
+}
+
+.clicko-lab-shell .clicko-lab-home [class*="rounded"],
+.clicko-lab-shell .clicko-project-gallery [class*="rounded"],
+.clicko-lab-shell .clicko-product-surface [class*="rounded"] {
+  border-radius: 18px !important;
+}
+
+.clicko-lab-shell .clicko-lab-home [class*="rounded-[30px]"],
+.clicko-lab-shell .clicko-product-surface [class*="rounded-[30px]"] {
+  border-radius: 30px !important;
+}
+
+.clicko-lab-shell .clicko-lab-rail [class*="rounded"],
+.clicko-lab-shell .clicko-lab-topbar [class*="rounded"] {
+  border-radius: 14px !important;
+}
+
+.clicko-lab-shell .clicko-main-stage {
+  background: transparent !important;
+}
+
+.clicko-lab-shell .clicko-main-stage--shell {
+  padding-top: 60px !important;
+}
+
+.clicko-lab-shell .clicko-main-stage--focus {
+  padding-top: 0 !important;
+}
+
+.clicko-lab-shell .clicko-product-surface {
+  padding: 28px 30px 56px !important;
+}
+
+.clicko-lab-shell .clicko-product-surface :is(
+  [class~="text-[7px]"],
+  [class~="text-[8px]"],
+  [class~="text-[9px]"],
+  [class~="text-[10px]"]
+) {
+  font-size: var(--clicko-type-small-size) !important;
+  line-height: var(--clicko-type-small-line) !important;
+}
+
+.clicko-lab-shell .clicko-lab-topbar button,
+.clicko-lab-shell .clicko-main-stage--shell .clicko-product-surface button,
+.clicko-lab-shell .clicko-main-stage--shell .clicko-lab-home button,
+.clicko-lab-shell .clicko-main-stage--shell input:not([type="file"]),
+.clicko-lab-shell .clicko-main-stage--shell select,
+.clicko-lab-shell .clicko-main-stage--shell textarea {
+  min-height: 44px;
+}
+
+.clicko-lab-shell .clicko-lab-topbar button {
+  min-width: 44px;
+}
+
+.clicko-lab-shell :is(button, a, input, textarea):focus-visible {
+  outline: 2px solid rgba(255, 105, 105, 0.9) !important;
+  outline-offset: 2px;
+}
+
+.clicko-lab-shell ::selection {
+  background: #ff6969;
+  color: #260707;
+}
+
+@keyframes clicko-lab-enter {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 767px) {
+  .clicko-lab-shell .clicko-lab-rail {
+    inset: auto 0 0 0 !important;
+    width: auto !important;
+    height: 68px;
+    flex-direction: row;
+    padding: 6px 8px;
+    border-right: 0;
+    border-top: 1px solid rgba(255,255,255,.08);
+  }
+
+  .clicko-lab-shell .clicko-lab-rail > :first-child,
+  .clicko-lab-shell .clicko-lab-rail > :last-child {
+    display: none;
+  }
+
+  .clicko-lab-shell .clicko-lab-rail nav {
+    margin: 0;
+    flex-direction: row;
+    justify-content: space-around;
+    gap: 2px;
+  }
+
+  .clicko-lab-shell .clicko-lab-nav-item {
+    min-height: 54px;
+    flex: 1;
+  }
+
+  .clicko-lab-shell .clicko-lab-topbar {
+    left: 0 !important;
+    padding-inline: 14px;
+  }
+
+  .clicko-lab-shell > div.pl-\[76px\] {
+    padding-left: 0 !important;
+    padding-bottom: 68px;
+  }
+
+  .clicko-lab-shell .clicko-product-surface {
+    padding: 20px 14px 88px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .clicko-lab-shell .clicko-lab-home,
+  .clicko-lab-shell .clicko-project-gallery,
+  .clicko-lab-shell .clicko-product-surface {
+    animation: none;
+  }
+}

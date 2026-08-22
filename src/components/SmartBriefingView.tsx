@@ -121,7 +121,7 @@ export const SmartBriefingView: React.FC = () => {
       <div className="rounded-xl border border-white/[0.08] bg-[#14191c] p-5">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-[#8bd132]/30 bg-[#8bd132]/[0.08] px-3 py-1 text-[10px] font-bold text-[#8bd132]">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#ff5c5c]/30 bg-[#ff5c5c]/[0.08] px-3 py-1 text-[10px] font-bold text-[#ff5c5c]">
               <FileText className="h-3.5 w-3.5" /> Briefing Estratégico Guiado por IA
             </div>
             <h2 className="mt-2 text-xl font-bold text-white">Briefing Inteligente de Mídia Social</h2>
@@ -132,7 +132,7 @@ export const SmartBriefingView: React.FC = () => {
           <button
             onClick={handleGenerateBriefing}
             disabled={isGenerating}
-            className="flex items-center gap-2 rounded-lg bg-[#8bd132] px-5 py-2.5 text-xs font-bold text-[#14200e] hover:bg-[#9be24d] transition-colors disabled:opacity-50"
+            className="flex items-center gap-2 rounded-lg bg-[#ff5c5c] px-5 py-2.5 text-xs font-bold text-[#14200e] hover:bg-[#9be24d] transition-colors disabled:opacity-50"
           >
             {isGenerating ? <RefreshCw className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4" />}
             {isGenerating ? 'Montando Planejamento...' : 'Gerar Briefing Completo'}
@@ -145,7 +145,7 @@ export const SmartBriefingView: React.FC = () => {
         <div className="lg:col-span-5 space-y-4">
           <div className="rounded-xl border border-white/[0.07] bg-[#182126] p-5 space-y-4">
             <h3 className="text-xs font-bold uppercase tracking-wider text-white flex items-center gap-2 border-b border-white/[0.06] pb-3">
-              <Briefcase className="h-4 w-4 text-[#8bd132]" /> Dados do Briefing
+              <Briefcase className="h-4 w-4 text-[#ff5c5c]" /> Dados do Briefing
             </h3>
 
             <div>
@@ -156,7 +156,7 @@ export const SmartBriefingView: React.FC = () => {
                 value={campanha}
                 onChange={(e) => setCampanha(e.target.value)}
                 placeholder="Ex: Lançamento Trimestral 2026"
-                className="w-full rounded-xl border border-white/[0.08] bg-black/30 p-2.5 text-xs text-white outline-none focus:border-[#8bd132]/40"
+                className="w-full rounded-xl border border-white/[0.08] bg-black/30 p-2.5 text-xs text-white outline-none focus:border-[#ff5c5c]/40"
               />
             </div>
 
@@ -168,7 +168,7 @@ export const SmartBriefingView: React.FC = () => {
                 value={objetivo}
                 onChange={(e) => setObjetivo(e.target.value)}
                 placeholder="Ex: Gerar 500 novos leads B2B qualificados"
-                className="w-full rounded-xl border border-white/[0.08] bg-black/30 p-2.5 text-xs text-white outline-none focus:border-[#8bd132]/40"
+                className="w-full rounded-xl border border-white/[0.08] bg-black/30 p-2.5 text-xs text-white outline-none focus:border-[#ff5c5c]/40"
               />
             </div>
 
@@ -180,7 +180,7 @@ export const SmartBriefingView: React.FC = () => {
                 value={produto}
                 onChange={(e) => setProduto(e.target.value)}
                 placeholder="Ex: Mentoria de IA para Marketing"
-                className="w-full rounded-xl border border-white/[0.08] bg-black/30 p-2.5 text-xs text-white outline-none focus:border-[#8bd132]/40"
+                className="w-full rounded-xl border border-white/[0.08] bg-black/30 p-2.5 text-xs text-white outline-none focus:border-[#ff5c5c]/40"
               />
             </div>
 
@@ -193,7 +193,7 @@ export const SmartBriefingView: React.FC = () => {
                 onChange={(e) => setOferta(e.target.value)}
                 rows={2}
                 placeholder="Ex: 50% de desconto no primeiro mês + onboarding VIP"
-                className="w-full resize-none rounded-xl border border-white/[0.08] bg-black/30 p-2.5 text-xs text-white outline-none focus:border-[#8bd132]/40"
+                className="w-full resize-none rounded-xl border border-white/[0.08] bg-black/30 p-2.5 text-xs text-white outline-none focus:border-[#ff5c5c]/40"
               />
             </div>
 
@@ -205,7 +205,7 @@ export const SmartBriefingView: React.FC = () => {
                 value={publico}
                 onChange={(e) => setPublico(e.target.value)}
                 placeholder="Ex: Diretores de Agências e Gestores"
-                className="w-full rounded-xl border border-white/[0.08] bg-black/30 p-2.5 text-xs text-white outline-none focus:border-[#8bd132]/40"
+                className="w-full rounded-xl border border-white/[0.08] bg-black/30 p-2.5 text-xs text-white outline-none focus:border-[#ff5c5c]/40"
               />
             </div>
           </div>
@@ -216,7 +216,7 @@ export const SmartBriefingView: React.FC = () => {
           <div className="rounded-xl border border-white/[0.07] bg-[#182126] p-5 space-y-5">
             <div className="flex items-center justify-between border-b border-white/[0.06] pb-3">
               <div className="flex items-center gap-2">
-                <span className="grid h-8 w-8 place-items-center rounded-lg bg-[#8bd132]/10 text-[#8bd132]">
+                <span className="grid h-8 w-8 place-items-center rounded-lg bg-[#ff5c5c]/10 text-[#ff5c5c]">
                   <Target className="h-4 w-4" />
                 </span>
                 <div>
@@ -228,7 +228,7 @@ export const SmartBriefingView: React.FC = () => {
 
             {/* Executive Summary */}
             <div className="rounded-xl border border-white/[0.06] bg-black/25 p-4 space-y-1">
-              <span className="text-[9px] font-bold uppercase tracking-wider text-[#8bd132]">
+              <span className="text-[9px] font-bold uppercase tracking-wider text-[#ff5c5c]">
                 Resumo Executivo do Planejamento
               </span>
               <p className="text-xs text-[#cdd4d7] leading-relaxed">{briefingResult.planning}</p>
@@ -237,7 +237,7 @@ export const SmartBriefingView: React.FC = () => {
             {/* Timeline */}
             {briefingResult.timeline && (
               <div className="space-y-2">
-                <span className="text-[9px] font-bold uppercase tracking-wider text-[#8bd132]">
+                <span className="text-[9px] font-bold uppercase tracking-wider text-[#ff5c5c]">
                   Cronograma de Execução por Semanas
                 </span>
                 <div className="space-y-2">
@@ -246,7 +246,7 @@ export const SmartBriefingView: React.FC = () => {
                       key={idx}
                       className="flex items-center gap-3 rounded-xl border border-white/[0.05] bg-black/30 p-3"
                     >
-                      <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-[#8bd132]/10 text-[10px] font-bold text-[#8bd132]">
+                      <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-[#ff5c5c]/10 text-[10px] font-bold text-[#ff5c5c]">
                         {idx + 1}
                       </span>
                       <p className="text-xs text-white">{step}</p>
@@ -259,13 +259,13 @@ export const SmartBriefingView: React.FC = () => {
             {/* Suggested Editorial Content */}
             {briefingResult.suggestedContents && (
               <div className="space-y-2">
-                <span className="text-[9px] font-bold uppercase tracking-wider text-[#8bd132]">
+                <span className="text-[9px] font-bold uppercase tracking-wider text-[#ff5c5c]">
                   Conteúdos Sugeridos para o Calendário
                 </span>
                 <div className="grid gap-2 md:grid-cols-2">
                   {briefingResult.suggestedContents.map((c: any, i: number) => (
                     <div key={i} className="rounded-xl border border-white/[0.06] bg-black/30 p-3 space-y-1">
-                      <div className="flex items-center justify-between text-[9px] font-bold text-[#8bd132]">
+                      <div className="flex items-center justify-between text-[9px] font-bold text-[#ff5c5c]">
                         <span>{c.platform} · {c.format}</span>
                         <span className="text-[#8e989d]">{c.date}</span>
                       </div>
@@ -279,17 +279,17 @@ export const SmartBriefingView: React.FC = () => {
             {/* Ads Structure */}
             {briefingResult.adsStructure && (
               <div className="space-y-2">
-                <span className="text-[9px] font-bold uppercase tracking-wider text-[#8bd132]">
+                <span className="text-[9px] font-bold uppercase tracking-wider text-[#ff5c5c]">
                   Estrutura de Anúncios Recomenda
                 </span>
                 <div className="space-y-2">
                   {briefingResult.adsStructure.map((ad: any, i: number) => (
                     <div key={i} className="rounded-xl border border-white/[0.06] bg-black/30 p-3 flex flex-col md:flex-row md:items-center justify-between gap-2">
                       <div>
-                        <span className="text-[9px] font-bold text-[#8bd132]">{ad.adType} · {ad.target}</span>
+                        <span className="text-[9px] font-bold text-[#ff5c5c]">{ad.adType} · {ad.target}</span>
                         <p className="text-xs text-white font-medium mt-0.5">"{ad.hook}"</p>
                       </div>
-                      <span className="shrink-0 text-[9px] font-bold bg-[#8bd132]/10 px-2 py-1 rounded text-[#8bd132]">
+                      <span className="shrink-0 text-[9px] font-bold bg-[#ff5c5c]/10 px-2 py-1 rounded text-[#ff5c5c]">
                         Pronto para Tráfego
                       </span>
                     </div>
@@ -302,7 +302,7 @@ export const SmartBriefingView: React.FC = () => {
             <div className="pt-3 border-t border-white/[0.06]">
               <button
                 onClick={handleExportToCampaignAndCalendar}
-                className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#8bd132] py-3 text-xs font-bold text-[#14200e] hover:bg-[#9be24d] transition shadow-lg shadow-[#8bd132]/20"
+                className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#ff5c5c] py-3 text-xs font-bold text-[#14200e] hover:bg-[#9be24d] transition shadow-lg shadow-[#ff5c5c]/20"
               >
                 <Calendar className="h-4 w-4" /> Converter em Campanha Ativa & Inserir no Calendário
               </button>

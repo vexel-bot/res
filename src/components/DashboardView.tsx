@@ -105,7 +105,7 @@ const approvals = [
 
 const MiniSparkline = ({ tone }: { tone: string }) => (
   <svg viewBox="0 0 70 24" className="h-6 w-[70px]" aria-hidden="true">
-    <path d="M1 20 C12 20 13 12 22 13 C31 15 35 22 45 13 C53 7 58 14 69 3" fill="none" stroke={tone === 'purple' ? '#9556d8' : '#8bd132'} strokeWidth="1.6" />
+    <path d="M1 20 C12 20 13 12 22 13 C31 15 35 22 45 13 C53 7 58 14 69 3" fill="none" stroke={tone === 'purple' ? '#9556d8' : '#ff5c5c'} strokeWidth="1.6" />
   </svg>
 );
 
@@ -143,10 +143,10 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
       <div className="relative flex flex-col justify-between gap-5 rounded-xl border border-white/[0.07] bg-[#101316] p-5 md:flex-row md:items-center">
         <div className="relative z-10 space-y-2">
           <div className="flex flex-wrap items-center gap-3">
-            <span className="flex items-center gap-1.5 rounded-full border border-[#8bd132]/30 bg-[#8bd132]/10 px-3 py-1 text-[10px] font-mono font-bold uppercase tracking-wider text-[#8bd132]">
+            <span className="flex items-center gap-1.5 rounded-full border border-[#ff5c5c]/30 bg-[#ff5c5c]/10 px-3 py-1 text-[10px] font-mono font-bold uppercase tracking-wider text-[#ff5c5c]">
               <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#8bd132] opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#8bd132]"></span>
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#ff5c5c] opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#ff5c5c]"></span>
               </span>
               Sistema Operacional Ativo
             </span>
@@ -167,7 +167,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           <button
             type="button"
             onClick={onNewPost}
-            className="flex items-center gap-2 rounded-lg bg-[#8bd132] px-4 py-2.5 text-xs font-semibold text-[#080e05] transition-colors hover:bg-[#9be24d]"
+            className="flex items-center gap-2 rounded-lg bg-[#ff5c5c] px-4 py-2.5 text-xs font-semibold text-[#080e05] transition-colors hover:bg-[#9be24d]"
           >
             <Plus className="h-4 w-4" />
             <span>Criar Novo Conteúdo</span>
@@ -177,7 +177,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             onClick={onOpenCampaignWizard}
             className="flex items-center gap-2 rounded-lg border border-white/10 bg-white/[0.04] px-4 py-2.5 text-xs font-medium text-white transition-colors hover:border-white/15 hover:bg-white/[0.07]"
           >
-            <Sparkles className="h-4 w-4 text-[#8bd132]" />
+            <Sparkles className="h-4 w-4 text-[#ff5c5c]" />
             <span>Assistente IA</span>
           </button>
         </div>
@@ -203,7 +203,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                       className={`grid h-8 w-8 place-items-center rounded-lg border ${
                         isAccent
                           ? 'border-amber-500/20 bg-amber-500/10 text-amber-400'
-                          : 'border-white/[0.08] bg-white/[0.03] text-[#8bd132]'
+                          : 'border-white/[0.08] bg-white/[0.03] text-[#ff5c5c]'
                       }`}
                     >
                       <Icon className="h-4 w-4" strokeWidth={1.8} />
@@ -215,7 +215,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                       <div className="text-2xl font-semibold tracking-tight text-white">{metric.value}</div>
                       <div className="mt-1.5 flex items-center gap-1.5 text-[11px] text-[#627078]">
                         {metric.change && (
-                          <span className="font-bold text-[#8bd132]">{metric.change}</span>
+                          <span className="font-bold text-[#ff5c5c]">{metric.change}</span>
                         )}
                         <span>{metric.detail}</span>
                       </div>
@@ -232,7 +232,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             <div className="mb-4 flex flex-wrap items-center justify-between gap-3 border-b border-white/[0.05] pb-4">
               <div className="space-y-1">
                 <div className="flex items-center gap-2.5">
-                  <CalendarDays className="h-4 w-4 text-[#8bd132]" />
+                  <CalendarDays className="h-4 w-4 text-[#ff5c5c]" />
                   <h2 className="text-sm font-bold tracking-tight text-white">Cronograma Visual de Publicações</h2>
                 </div>
                 <p className="text-xs text-[#717d85]">Grade da semana com distribuição de conteúdos por canal e horário</p>
@@ -249,7 +249,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                   onClick={onNewPost}
                   className="flex items-center gap-2 rounded-xl bg-white/[0.06] border border-white/10 px-4 py-2 text-xs font-semibold text-white transition hover:bg-white/12"
                 >
-                  <Plus className="h-3.5 w-3.5 text-[#8bd132]" />
+                  <Plus className="h-3.5 w-3.5 text-[#ff5c5c]" />
                   <span>Novo Item</span>
                 </button>
               </div>
@@ -266,11 +266,11 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                 <div
                   key={date}
                   className={`flex h-14 flex-col items-center justify-center border-l border-white/[0.04] text-xs transition-all ${
-                    index === 3 ? 'border-t-2 border-t-[#8bd132] bg-[#8bd132]/[0.05]' : ''
+                    index === 3 ? 'border-t-2 border-t-[#ff5c5c] bg-[#ff5c5c]/[0.05]' : ''
                   }`}
                 >
-                  <span className={`font-bold ${index === 3 ? 'text-[#8bd132]' : 'text-[#d0d7dc]'}`}>{name}</span>
-                  <span className={`text-[10px] font-mono ${index === 3 ? 'text-[#8bd132]/90' : 'text-[#627078]'}`}>{date}</span>
+                  <span className={`font-bold ${index === 3 ? 'text-[#ff5c5c]' : 'text-[#d0d7dc]'}`}>{name}</span>
+                  <span className={`text-[10px] font-mono ${index === 3 ? 'text-[#ff5c5c]/90' : 'text-[#627078]'}`}>{date}</span>
                 </div>
               ))}
             </div>
@@ -290,7 +290,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                     key={index}
                     style={{ gridColumn: day + 1, gridRow: row }}
                     className={`h-[64px] border-b border-l border-white/[0.04] ${
-                      day === 4 ? 'bg-[#8bd132]/[0.02]' : 'bg-transparent'
+                      day === 4 ? 'bg-[#ff5c5c]/[0.02]' : 'bg-transparent'
                     }`}
                   />
                 );
@@ -315,7 +315,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
 
             <div className="mt-5 flex flex-wrap items-center gap-6 border-t border-white/[0.04] pt-4 text-xs text-[#717d85]">
               {[
-                ['#8bd132', 'Publicado / Agendado'],
+                ['#ff5c5c', 'Publicado / Agendado'],
                 ['#f2b33d', 'Em Aprovação'],
                 ['#6ba7e8', 'Rascunho Pronto'],
                 ['#e35d63', 'Ajuste Solicitado'],
@@ -332,7 +332,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           <section className="rounded-xl border border-white/[0.06] bg-[#101316] p-5">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-xs font-mono font-bold uppercase tracking-[0.2em] text-[#627078]">Esteira de Produção Inteligente</h2>
-              <span className="text-[10px] text-[#8bd132] font-semibold bg-[#8bd132]/10 border border-[#8bd132]/20 px-2.5 py-0.5 rounded-full">
+              <span className="text-[10px] text-[#ff5c5c] font-semibold bg-[#ff5c5c]/10 border border-[#ff5c5c]/20 px-2.5 py-0.5 rounded-full">
                 7 Passos Automatizados
               </span>
             </div>
@@ -346,7 +346,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                     onClick={onNewPost}
                     className="group flex flex-col items-center rounded-lg border border-white/[0.05] bg-[#0d1114] p-3.5 text-center transition-colors hover:border-white/10 hover:bg-[#14181c]"
                   >
-                    <span className="grid h-10 w-10 place-items-center rounded-xl border border-white/[0.08] bg-white/[0.03] text-[#8bd132] group-hover:scale-110 group-hover:bg-[#8bd132]/10 transition-all duration-200">
+                    <span className="grid h-10 w-10 place-items-center rounded-xl border border-white/[0.08] bg-white/[0.03] text-[#ff5c5c] group-hover:scale-110 group-hover:bg-[#ff5c5c]/10 transition-all duration-200">
                       <Icon className="h-4 w-4" />
                     </span>
                     <span className="mt-3 text-[11px] font-bold text-white">{step.label}</span>
@@ -365,23 +365,23 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             <section className="rounded-xl border border-white/[0.06] bg-[#101316] p-5">
               <div className="flex items-center justify-between border-b border-white/[0.05] pb-4">
                 <div className="flex items-center gap-2.5">
-                  <Sparkles className="h-4 w-4 text-[#8bd132]" />
+                  <Sparkles className="h-4 w-4 text-[#ff5c5c]" />
                   <h2 className="text-xs font-bold text-white">Ambiente Pessoal Ativo</h2>
                 </div>
-                <span className="rounded-full bg-[#8bd132]/10 border border-[#8bd132]/20 px-2.5 py-0.5 text-[9px] font-bold text-[#8bd132]">
+                <span className="rounded-full bg-[#ff5c5c]/10 border border-[#ff5c5c]/20 px-2.5 py-0.5 text-[9px] font-bold text-[#ff5c5c]">
                   Modo Solo
                 </span>
               </div>
               <div className="mt-5 space-y-3.5 text-xs text-[#a0abb2]">
                 <div className="flex items-start gap-3 rounded-xl border border-white/[0.04] bg-[#070a0d] p-3.5">
-                  <CheckCircle2 className="h-4 w-4 text-[#8bd132] shrink-0 mt-0.5" />
+                  <CheckCircle2 className="h-4 w-4 text-[#ff5c5c] shrink-0 mt-0.5" />
                   <div>
                     <strong className="block text-white font-semibold text-[11px]">Publicação Direta Ativa</strong>
                     <span className="text-[10px] text-[#717d85]">Conteúdos agendados e publicados vão direto aos canais sem fila de aprovação.</span>
                   </div>
                 </div>
                 <div className="flex items-start gap-3 rounded-xl border border-white/[0.04] bg-[#070a0d] p-3.5">
-                  <UserRound className="h-4 w-4 text-[#8bd132] shrink-0 mt-0.5" />
+                  <UserRound className="h-4 w-4 text-[#ff5c5c] shrink-0 mt-0.5" />
                   <div>
                     <strong className="block text-white font-semibold text-[11px]">Operação Autônoma</strong>
                     <span className="text-[10px] text-[#717d85]">Sem limitação de permissões corporativas, auditoria entre usuários ou gestão de equipe.</span>
@@ -399,7 +399,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                 <button
                   type="button"
                   onClick={() => onNavigate('approvals')}
-                  className="text-[10px] font-bold text-[#8bd132] hover:underline"
+                  className="text-[10px] font-bold text-[#ff5c5c] hover:underline"
                 >
                   Ver Todas
                 </button>
@@ -430,13 +430,13 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           <section className="rounded-xl border border-white/[0.06] bg-[#101316] p-5">
             <div className="flex items-center justify-between border-b border-white/[0.05] pb-4">
               <div className="flex items-center gap-2.5">
-                <BarChart3 className="h-4 w-4 text-[#8bd132]" />
+                <BarChart3 className="h-4 w-4 text-[#ff5c5c]" />
                 <h2 className="text-xs font-bold text-white">Desempenho Semanal</h2>
               </div>
               <button
                 type="button"
                 onClick={() => onNavigate('analytics')}
-                className="text-[10px] font-bold text-[#8bd132] hover:underline"
+                className="text-[10px] font-bold text-[#ff5c5c] hover:underline"
               >
                 Detalhes
               </button>
@@ -453,7 +453,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                   <span className="text-[#717d85]">{label}</span>
                   <div className="flex items-center gap-2.5">
                     <span className="font-bold font-mono text-white">{value}</span>
-                    <span className="text-[10px] font-bold text-[#8bd132]">{gain}</span>
+                    <span className="text-[10px] font-bold text-[#ff5c5c]">{gain}</span>
                   </div>
                 </div>
               ))}
@@ -464,19 +464,19 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
               <svg viewBox="0 0 330 112" className="h-full w-full" preserveAspectRatio="none">
                 <defs>
                   <linearGradient id="area" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0" stopColor="#8bd132" stopOpacity="0.25" />
-                    <stop offset="1" stopColor="#8bd132" stopOpacity="0" />
+                    <stop offset="0" stopColor="#ff5c5c" stopOpacity="0.25" />
+                    <stop offset="1" stopColor="#ff5c5c" stopOpacity="0" />
                   </linearGradient>
                 </defs>
                 <path d="M6 67 C34 48 44 55 69 67 C91 78 109 42 137 48 C169 55 181 86 215 72 C244 61 254 71 282 54 C304 41 318 38 326 35 L326 112 L6 112 Z" fill="url(#area)" />
-                <path d="M6 67 C34 48 44 55 69 67 C91 78 109 42 137 48 C169 55 181 86 215 72 C244 61 254 71 282 54 C304 41 318 38 326 35" fill="none" stroke="#8bd132" strokeWidth="2" />
+                <path d="M6 67 C34 48 44 55 69 67 C91 78 109 42 137 48 C169 55 181 86 215 72 C244 61 254 71 282 54 C304 41 318 38 326 35" fill="none" stroke="#ff5c5c" strokeWidth="2" />
               </svg>
             </div>
           </section>
 
           {/* AI Strategic Recommendation Box */}
-          <section className="relative overflow-hidden rounded-xl border border-[#8bd132]/20 bg-[#101510] p-5">
-            <div className="flex items-center gap-2 text-[#8bd132]">
+          <section className="relative overflow-hidden rounded-xl border border-[#ff5c5c]/20 bg-[#101510] p-5">
+            <div className="flex items-center gap-2 text-[#ff5c5c]">
               <Sparkles className="h-4 w-4" />
               <h2 className="text-xs font-mono font-bold uppercase tracking-wider">Insight da IA Copilot</h2>
             </div>
@@ -486,7 +486,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             <button
               type="button"
               onClick={onNewPost}
-              className="mt-5 flex items-center gap-2.5 rounded-lg bg-[#8bd132] px-4 py-2.5 text-xs font-semibold text-[#080e05] transition-colors hover:bg-[#9be24d]"
+              className="mt-5 flex items-center gap-2.5 rounded-lg bg-[#ff5c5c] px-4 py-2.5 text-xs font-semibold text-[#080e05] transition-colors hover:bg-[#9be24d]"
             >
               <Sparkles className="h-3.5 w-3.5" />
               <span>Gerar Variações com IA</span>

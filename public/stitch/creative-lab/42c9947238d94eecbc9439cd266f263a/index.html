@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Clicko - Detalhe do Post</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {"outline-variant": "#5a403f", "on-secondary-fixed": "#321200", "surface-bright": "#393939", "tertiary-fixed-dim": "#ffb3b1", "inverse-on-surface": "#313030", "on-tertiary-container": "#5c0e15", "secondary-fixed-dim": "#ffb68b", "primary-container": "#ff5c5c", "on-tertiary-fixed-variant": "#7f292c", secondary: "#ffb68b", "primary-fixed": "#ffdad7", "primary-fixed-dim": "#ffb3af", "on-error": "#690005", "secondary-fixed": "#ffdbc8", "surface-variant": "#353534", "on-error-container": "#ffdad6", tertiary: "#ffb3b1", "surface-tint": "#ffb3af", "surface-container": "#201f1f", "on-secondary-fixed-variant": "#753400", "on-surface-variant": "#e2bebc", error: "#ffb4ab", "on-secondary": "#522300", "on-background": "#e5e2e1", "inverse-primary": "#b4252d", "on-secondary-container": "#602a00", "tertiary-container": "#e17474", "tertiary-fixed": "#ffdad8", background: "#131313", "on-primary-fixed-variant": "#920418", primary: "#ffb3af", "error-container": "#93000a", "on-primary-container": "#62000c", "secondary-container": "#ff7f1c", "on-primary-fixed": "#410005", "on-surface": "#e5e2e1", outline: "#a98987", "surface-container-highest": "#353534", "on-tertiary-fixed": "#410007", "surface-container-high": "#2a2a2a", "surface-dim": "#131313", "inverse-surface": "#e5e2e1", "surface-container-low": "#1c1b1b", "on-primary": "#68000d", "surface-container-lowest": "#0e0e0e", surface: "#131313", "on-tertiary": "#601118"}, borderRadius: {DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem"}, spacing: {stack_gap_sm: "8px", gutter: "16px", context_nav_width: "240px", stack_gap_md: "16px", spine_width: "64px", container_padding: "24px"}, fontFamily: {"headline-lg": ["Geist"], "body-sm": ["Geist"], display: ["Geist"], "body-lg": ["Geist"], "headline-md": ["Geist"], "body-md": ["Geist"], "label-mono": ["Geist"], "data-number": ["Geist"], headline: ["Geist"], body: ["Geist"], label: ["Geist"]}, fontSize: {"headline-lg": ["24px", {lineHeight: "32px", letterSpacing: "-0.01em", fontWeight: "600"}], "body-sm": ["13px", {lineHeight: "18px", fontWeight: "400"}], display: ["32px", {lineHeight: "40px", letterSpacing: "-0.02em", fontWeight: "600"}], "body-lg": ["16px", {lineHeight: "24px", fontWeight: "400"}], "headline-md": ["20px", {lineHeight: "28px", fontWeight: "500"}], "body-md": ["14px", {lineHeight: "20px", fontWeight: "400"}], "label-mono": ["12px", {lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "500"}], "data-number": ["14px", {lineHeight: "20px", fontWeight: "600"}]}}}};</script>
+<style>
+        body { font-family: 'Geist', sans-serif; }
+    </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen flex flex-col">
+<!-- TopNavBar -->
+<header class="flex justify-between items-center h-16 px-gutter w-full sticky top-0 z-50 bg-surface dark:bg-surface border-b border-outline-variant dark:border-outline-variant">
+<div class="flex items-center gap-gutter">
+<span class="font-headline-md text-headline-md font-bold text-primary dark:text-primary">Clicko</span>
+<div class="hidden md:flex gap-stack_gap_md">
+<a class="font-body-md text-body-md text-on-surface-variant dark:text-on-surface-variant hover:text-primary dark:hover:text-primary-fixed transition-colors cursor-pointer active:opacity-80" href="#">Dashboard</a>
+<a class="font-body-md text-body-md text-on-surface-variant dark:text-on-surface-variant hover:text-primary dark:hover:text-primary-fixed transition-colors cursor-pointer active:opacity-80" href="#">Inventory</a>
+<a class="font-body-md text-body-md text-on-surface-variant dark:text-on-surface-variant hover:text-primary dark:hover:text-primary-fixed transition-colors cursor-pointer active:opacity-80" href="#">Workspace</a>
+<a class="font-body-md text-body-md text-primary dark:text-primary border-b-2 border-primary pb-1 cursor-pointer active:opacity-80" href="#">Detail</a>
+<a class="font-body-md text-body-md text-on-surface-variant dark:text-on-surface-variant hover:text-primary dark:hover:text-primary-fixed transition-colors cursor-pointer active:opacity-80" href="#">Reuse Lab</a>
+</div>
+</div>
+<div class="flex items-center gap-stack_gap_md">
+<span class="material-symbols-outlined cursor-pointer hover:text-primary transition-colors text-on-surface-variant" data-icon="notifications">notifications</span>
+<span class="material-symbols-outlined cursor-pointer hover:text-primary transition-colors text-on-surface-variant" data-icon="settings">settings</span>
+<button class="bg-primary text-on-primary px-4 py-2 font-label-mono text-label-mono rounded hover:opacity-90 transition-opacity">Criar post</button>
+<div class="w-8 h-8 bg-surface-variant rounded-full overflow-hidden border border-outline-variant">
+<img alt="User profile avatar" class="w-full h-full object-cover" data-alt="A small circular user profile avatar showing a professional, sleek, low-poly 3d rendering of a person wearing a VR headset, set against a dark matte background with a subtle green rim light. The mood is clinical and efficient, aligning with a high-density professional tool aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC1i_UuelU3xcuZ88uzgvDffhkQiRG7RmuOKZl6LZIYqFju_NDHh7Oo_F8alrTn0EXS6yri6BTG6HQsoUvQ6rbLkFOKx69nvWap7jK3ZIUb9UpV1unVoVJhmKeWhDwR44-llX_pSxMT6mJOXwuW6QAVmYlDvmZZEaELnjf3P25yX2YvrSmR-_14rnedcbEWvlGy1TosIw3Z7lCIZHHDKX64cyAg-jkfnLDNGC7WBZDUJTBwmH0gAMtD2g"/>
+</div>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden">
+<!-- Main Content -->
+<main class="flex-1 overflow-y-auto p-container_padding flex justify-center">
+<div class="max-w-[1200px] w-full grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-gutter">
+<!-- Left Column: Content Preview & Tabs -->
+<div class="flex flex-col gap-stack_gap_md">
+<!-- Header/Breadcrumb -->
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-2 text-on-surface-variant font-label-mono text-label-mono">
+<span>Campanhas</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span>Café é território</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface">Estratégia de Expansão B2B</h1>
+<div class="flex items-center gap-2 mt-1">
+<span class="px-2 py-0.5 border border-primary text-primary font-label-mono text-label-mono rounded text-[10px]">PUBLICADO</span>
+<span class="text-on-surface-variant font-body-sm text-body-sm">Há 2 dias</span>
+</div>
+</div>
+<!-- Preview Card -->
+<div class="bg-surface-container border border-outline-variant rounded-lg overflow-hidden flex flex-col">
+<div class="w-full h-[400px] bg-surface-container-high border-b border-outline-variant relative">
+<img alt="Post Preview Image" class="w-full h-full object-cover absolute inset-0" data-alt="A cinematic, high-contrast photograph of a premium, modern coffee setup in a sleek corporate boardroom. A sleek, matte black espresso machine sits on a dark concrete table, illuminated by a single, sharp spotlight cutting through shadows. The background is a blurred, dark urban office setting. The aesthetic is highly professional, clinical, and precise, aligning with a high-density professional tool style. The color palette is dark matte with subtle warm tones from the coffee." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDl6AMC9Ku9RpzzVz9oEY28ybVDzboKX7hzGxq3yuDtezhIZ5qwMj52B7VIr4YqIkIHdWhVZzfzM5hmlcyLXj9aP2atm5v7RjR-IEVCX5Txt8qckmIYfWhAJPdi5uFQy3jNpe1N7jAZfDfhEuSB5zEfepQPMy43u2CcTMvYDXoJhxq1lWmUz8jjC_zbQa2D_aXxOYMDNWbCzhiSiAoUQ-r2lkJoa7qfX67qJHYect0uUAaEI3NzVYSdFA"/>
+</div>
+<div class="p-gutter flex flex-col gap-stack_gap_sm bg-surface-container-low">
+<p class="font-body-lg text-body-lg text-on-surface whitespace-pre-line">
+                                Transformar o escritório não é apenas sobre mesas novas. É sobre energia. ☕⚡
+
+                                O café certo define o ritmo de produtividade da sua equipe. Nossa nova linha 'Território B2B' foi desenhada para empresas que exigem alta performance em cada detalhe. Da torra à xícara, nós controlamos o processo para você controlar os resultados.
+
+                                Agende uma degustação corporativa e mude a cultura do seu ambiente de trabalho hoje mesmo. Link na bio. 📈
+                            </p>
+<div class="flex gap-2 mt-2">
+<span class="text-primary font-label-mono text-label-mono">#AltaPerformance</span>
+<span class="text-primary font-label-mono text-label-mono">#CafeCorporativo</span>
+<span class="text-primary font-label-mono text-label-mono">#B2B</span>
+</div>
+</div>
+</div>
+<!-- Action Bar -->
+<div class="flex gap-stack_gap_sm">
+<button class="bg-primary text-on-primary px-4 py-2 font-label-mono text-label-mono rounded hover:opacity-90 transition-opacity flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">edit</span> Editar
+                        </button>
+<button class="bg-transparent border border-outline-variant text-on-surface px-4 py-2 font-label-mono text-label-mono rounded hover:bg-surface-variant transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">fork_right</span> Criar variação
+                        </button>
+<button class="bg-transparent border border-outline-variant text-on-surface px-4 py-2 font-label-mono text-label-mono rounded hover:bg-surface-variant transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">recycling</span> Reutilizar
+                        </button>
+<button class="bg-transparent border border-outline-variant text-on-surface px-4 py-2 font-label-mono text-label-mono rounded hover:bg-surface-variant transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">compare_arrows</span> Comparar versões
+                        </button>
+</div>
+</div>
+<!-- Right Column: Metrics & Analysis -->
+<div class="flex flex-col gap-stack_gap_md">
+<!-- Tabs -->
+<div class="flex border-b border-outline-variant">
+<button class="px-4 py-2 font-label-mono text-label-mono text-on-surface-variant hover:text-primary transition-colors border-b-2 border-transparent hover:border-primary">Conteúdo</button>
+<button class="px-4 py-2 font-label-mono text-label-mono text-on-surface-variant hover:text-primary transition-colors border-b-2 border-transparent hover:border-primary">Versões</button>
+<button class="px-4 py-2 font-label-mono text-label-mono text-on-surface-variant hover:text-primary transition-colors border-b-2 border-transparent hover:border-primary">Comentários</button>
+<button class="px-4 py-2 font-label-mono text-label-mono text-primary border-b-2 border-primary">Métricas</button>
+<button class="px-4 py-2 font-label-mono text-label-mono text-on-surface-variant hover:text-primary transition-colors border-b-2 border-transparent hover:border-primary">Linhagem</button>
+</div>
+<!-- Metrics Grid -->
+<div class="grid grid-cols-2 gap-stack_gap_sm">
+<div class="bg-surface-container border border-outline-variant p-stack_gap_md rounded flex flex-col gap-1">
+<span class="font-label-mono text-label-mono text-on-surface-variant flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">visibility</span> Alcance</span>
+<span class="font-data-number text-data-number text-on-surface text-xl">45.2K</span>
+<span class="text-primary font-body-sm text-body-sm flex items-center"><span class="material-symbols-outlined text-[14px]">trending_up</span> +12% vs ref</span>
+</div>
+<div class="bg-surface-container border border-outline-variant p-stack_gap_md rounded flex flex-col gap-1">
+<span class="font-label-mono text-label-mono text-on-surface-variant flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">bookmark</span> Saves</span>
+<span class="font-data-number text-data-number text-on-surface text-xl">1.2K</span>
+<span class="text-primary font-body-sm text-body-sm flex items-center"><span class="material-symbols-outlined text-[14px]">trending_up</span> +4% vs ref</span>
+</div>
+<div class="bg-surface-container border border-outline-variant p-stack_gap_md rounded flex flex-col gap-1">
+<span class="font-label-mono text-label-mono text-on-surface-variant flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">share</span> Compartilhamentos</span>
+<span class="font-data-number text-data-number text-on-surface text-xl">842</span>
+<span class="text-error font-body-sm text-body-sm flex items-center"><span class="material-symbols-outlined text-[14px]">trending_down</span> -2% vs ref</span>
+</div>
+<div class="bg-surface-container border border-outline-variant p-stack_gap_md rounded flex flex-col gap-1">
+<span class="font-label-mono text-label-mono text-on-surface-variant flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">ads_click</span> Cliques (CTR)</span>
+<span class="font-data-number text-data-number text-on-surface text-xl">4.8%</span>
+<span class="text-primary font-body-sm text-body-sm flex items-center"><span class="material-symbols-outlined text-[14px]">trending_up</span> +1.5% vs ref</span>
+</div>
+<div class="bg-surface-container border border-outline-variant p-stack_gap_md rounded flex flex-col gap-1 col-span-2 bg-surface-container-high">
+<span class="font-label-mono text-label-mono text-on-surface-variant flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">shopping_cart</span> Conversões</span>
+<span class="font-data-number text-data-number text-on-surface text-2xl">124</span>
+<span class="text-primary font-body-sm text-body-sm flex items-center"><span class="material-symbols-outlined text-[14px]">trending_up</span> +22% vs amostra V1</span>
+</div>
+</div>
+<!-- Analysis Card -->
+<div class="bg-surface-container border border-outline-variant p-stack_gap_md rounded flex flex-col gap-stack_gap_sm">
+<div class="flex items-center gap-2 border-b border-outline-variant pb-2">
+<span class="material-symbols-outlined text-primary" data-icon="psychology">psychology</span>
+<h3 class="font-headline-md text-headline-md text-on-surface">Análise de Performance</h3>
+</div>
+<div class="flex flex-col gap-2 mt-2">
+<div class="flex items-start gap-2">
+<span class="material-symbols-outlined text-primary text-[16px] mt-1">check_circle</span>
+<div>
+<h4 class="font-label-mono text-label-mono text-on-surface">Por que venceu (Hook Visual)</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">A imagem escurecida com contraste pontual na máquina de espresso gerou 34% mais retenção nos primeiros 3 segundos comparado à versão clara.</p>
+</div>
+</div>
+<div class="flex items-start gap-2 mt-2">
+<span class="material-symbols-outlined text-primary text-[16px] mt-1">check_circle</span>
+<div>
+<h4 class="font-label-mono text-label-mono text-on-surface">Por que venceu (Copy B2B)</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">A mudança de tom para "controle de resultados" (foco em performance) aumentou o CTR em 1.5% comparado ao tom anterior focado em "sabor".</p>
+</div>
+</div>
+<div class="flex items-start gap-2 mt-2 opacity-70">
+<span class="material-symbols-outlined text-on-surface-variant text-[16px] mt-1">warning</span>
+<div>
+<h4 class="font-label-mono text-label-mono text-on-surface">Ponto de Atenção (Compartilhamentos)</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">O formato carrossel tende a gerar mais shares nesta categoria. Considerar desdobramento.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<script src="/stitch/bridge.js"></script></body></html>

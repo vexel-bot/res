@@ -4,6 +4,7 @@ import {
   ChartNoAxesCombined, Bot, Workflow, LayoutTemplate, Link2, Users,
   ScrollText, Settings, CreditCard, ChevronLeft, Box, FolderKanban,
   BrainCircuit, Target, Sparkles, Send
+  , Radar, GitBranch, LibraryBig
 } from 'lucide-react';
 import type { NavigationTab } from '../types';
 import { ClickoLogo } from './ClickoLogo';
@@ -16,9 +17,11 @@ interface SidebarProps {
   onToggleCompact: () => void;
   onOpenSpotlight: () => void;
   onNewPost: () => void;
+  pathname: string;
+  onNavigatePath: (path: string) => void;
 }
 
-type NavItem = { label: string; id: NavigationTab; icon: React.ComponentType<{ className?: string }> };
+type NavItem = { label: string; id: NavigationTab; icon: React.ComponentType<{ className?: string }>; path?: string };
 
 type NavGroup = {
   sectionTitle: string;
@@ -69,7 +72,7 @@ const navGroups: NavGroup[] = [
   },
 ];
 
-export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onSelectTab, isCompact, onToggleCompact }) => {
+export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onSelectTab, isCompact, onToggleCompact, pathname, onNavigatePath }) => {
   const { canAccess, currentUser, workspace, users, approvals, environmentMode } = useGovernance();
   const occupiedSeats = users.filter((user) => user.status !== 'disabled').length;
   const isPersonal = environmentMode === 'personal';
@@ -100,41 +103,52 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onSelectTab, isCom
       ]
     : [
         {
-          sectionTitle: 'OPERAÇÃO CORPORATIVA',
+          sectionTitle: 'CICLO OPERACIONAL',
           items: [
-            { label: 'Dashboard', id: 'dashboard', icon: LayoutDashboard },
-            { label: 'Studio', id: 'studio', icon: Sparkles },
-            { label: 'Central IA', id: 'ai-chat', icon: Bot },
-            { label: 'Clientes', id: 'workspace', icon: FolderKanban },
-            { label: 'Biblioteca da Marca', id: 'brain', icon: BrainCircuit },
+            { label: 'Dashboard', id: 'dashboard', icon: LayoutDashboard, path: '/dashboard' },
+            { label: 'Projetos', id: 'strategy', icon: FolderKanban, path: '/projects' },
+            { label: 'Descobrir', id: 'workspace', icon: Radar, path: '/discover' },
+            { label: 'Radar', id: 'workspace', icon: Target, path: '/radar' },
           ],
         },
         {
-          sectionTitle: 'PUBLICAÇÃO & GOVERNANÇA',
+          sectionTitle: 'CRIAÇÃO & MEMÓRIA',
           items: [
-            { label: 'Contas Conectadas', id: 'connected-accounts', icon: Link2 },
-            { label: 'Calendário', id: 'calendar', icon: CalendarDays },
-            { label: 'Biblioteca', id: 'library', icon: FolderKanban },
+            { label: 'Content Command', id: 'library', icon: FolderKanban, path: '/content/dashboard' },
+            { label: 'Creative Lab', id: 'studio', icon: Sparkles, path: '/content/dashboard' },
+            { label: 'Studio', id: 'studio', icon: Sparkles },
+            { label: 'Assets da Marca', id: 'library', icon: LibraryBig, path: '/library/assets' },
+            { label: 'Lineage', id: 'library', icon: GitBranch, path: '/library/lineage' },
+            { label: 'Copiloto', id: 'ai-chat', icon: Bot },
+            { label: 'Memória da Marca', id: 'brain', icon: BrainCircuit },
+          ],
+        },
+        {
+          sectionTitle: 'DECISÃO & PERFORMANCE',
+          items: [
             { label: 'Aprovações', id: 'approvals', icon: CheckCircle2 },
-            { label: 'Analytics', id: 'analytics', icon: ChartNoAxesCombined },
-            { label: 'Templates', id: 'templates', icon: LayoutTemplate },
-            { label: 'Automações', id: 'automations', icon: Workflow },
+            { label: 'Calendário', id: 'calendar', icon: CalendarDays },
+            { label: 'Publicador', id: 'publisher', icon: Send },
+            { label: 'Learning Analytics', id: 'analytics', icon: ChartNoAxesCombined, path: '/analytics/learning' },
           ],
         },
         {
           sectionTitle: 'EQUIPE & GOVERNANÇA',
           items: [
+            { label: 'Contas Conectadas', id: 'connected-accounts', icon: Link2 },
             { label: 'Equipe', id: 'team', icon: Users },
-            { label: 'Logs', id: 'audit-logs', icon: ScrollText },
-            { label: 'Histórico', id: 'publisher', icon: Send },
-            { label: 'Configurações', id: 'settings', icon: Settings },
+            { label: 'Automações', id: 'automations', icon: Workflow },
+            { label: 'Governança de IA', id: 'settings', icon: Settings, path: '/settings/ai-governance' },
+            { label: 'Auditoria', id: 'audit-logs', icon: ScrollText },
           ],
         },
       ];
 
   const renderItem = (item: NavItem) => {
     const Icon = item.icon;
-    const selected = currentTab === item.id;
+    const selected = item.path
+      ? pathname === item.path || pathname.startsWith(`${item.path}/`)
+      : currentTab === item.id && !pathname.startsWith('/discover') && !pathname.startsWith('/radar');
     const badge = item.id === 'approvals' ? approvals.filter((approval) => ['in_review', 'pending_approval'].includes(approval.stage)).length : 0;
     
     if (currentUser && !canAccess(item.id)) return null;
@@ -143,7 +157,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onSelectTab, isCom
       <button
         key={item.id}
         type="button"
-        onClick={() => onSelectTab(item.id)}
+        onClick={() => item.path ? onNavigatePath(item.path) : onSelectTab(item.id)}
         aria-label={item.label}
         aria-current={selected ? 'page' : undefined}
         title={isCompact ? item.label : undefined}
@@ -156,11 +170,11 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onSelectTab, isCom
         }`}
       >
         {selected && (
-          <span className="clicko-nav-active-indicator absolute inset-y-2 left-0 w-0.5 rounded-full bg-[#8bd132]" />
+          <span className="clicko-nav-active-indicator absolute inset-y-2 left-0 w-0.5 rounded-full bg-[#ff5c5c]" />
         )}
         <Icon
           className={`h-[15px] w-[15px] shrink-0 transition-colors ${
-            selected ? 'text-[#8bd132]' : 'text-[#6c7880] group-hover:text-white'
+            selected ? 'text-[#ff5c5c]' : 'text-[#6c7880] group-hover:text-white'
           }`}
           strokeWidth={selected ? 2.2 : 1.8}
         />
@@ -170,7 +184,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onSelectTab, isCom
           </span>
         )}
         {!isCompact && badge > 0 && (
-          <span className="grid h-4 min-w-[16px] place-items-center rounded-full bg-[#8bd132] px-1 text-[9px] font-bold text-[#080e05] max-[900px]:hidden">
+          <span className="grid h-4 min-w-[16px] place-items-center rounded-full bg-[#ff5c5c] px-1 text-[9px] font-bold text-[#080e05] max-[900px]:hidden">
             {badge}
           </span>
         )}
@@ -193,7 +207,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onSelectTab, isCom
         <button
           type="button"
           onClick={() => onSelectTab('dashboard')}
-          className="clicko-brand-link flex items-center rounded-xl transition-all hover:opacity-90 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#8bd132]"
+          className="clicko-brand-link flex items-center rounded-xl transition-all hover:opacity-90 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#ff5c5c]"
           aria-label="Voltar ao Painel"
           title="Voltar ao Painel"
         >
@@ -241,8 +255,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onSelectTab, isCom
           <div className="flex items-center justify-between text-xs font-bold text-white">
             <span className="tracking-tight">Plano {workspace?.planId ? ({ solo: 'Solo', team: 'Equipe', business: 'Negócios', enterprise: 'Corporativo' }[workspace.planId] || workspace.planId) : 'Corporativo'}</span>
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#8bd132] opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#8bd132]"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#ff5c5c] opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#ff5c5c]"></span>
             </span>
           </div>
           <div className="mt-2.5 flex items-center justify-between text-[10px] text-[#717d85]">
@@ -251,14 +265,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onSelectTab, isCom
           </div>
           <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-white/[0.06] p-[1px]">
             <div
-              className="h-full rounded-full bg-[#8bd132] transition-all duration-300"
+              className="h-full rounded-full bg-[#ff5c5c] transition-all duration-300"
               style={{ width: workspace?.maxUsers ? `${Math.min(100, (occupiedSeats / workspace.maxUsers) * 100)}%` : '25%' }}
             />
           </div>
           <button
             type="button"
             onClick={() => onSelectTab('subscription')}
-            className="mt-3 w-full rounded-md border border-[#8bd132]/30 bg-[#8bd132]/10 py-2 text-[10px] font-semibold text-[#8bd132] transition-colors hover:bg-[#8bd132] hover:text-[#080e05]"
+            className="mt-3 w-full rounded-md border border-[#ff5c5c]/30 bg-[#ff5c5c]/10 py-2 text-[10px] font-semibold text-[#ff5c5c] transition-colors hover:bg-[#ff5c5c] hover:text-[#080e05]"
           >
             Mudar de Plano
           </button>
@@ -269,7 +283,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onSelectTab, isCom
       <button
         type="button"
         onClick={onToggleCompact}
-        className="flex h-10 shrink-0 items-center justify-center text-[#4d5a62] transition-colors hover:text-[#8bd132]"
+        className="flex h-10 shrink-0 items-center justify-center text-[#4d5a62] transition-colors hover:text-[#ff5c5c]"
         aria-label={isCompact ? 'Expandir barra lateral' : 'Recolher barra lateral'}
       >
         <ChevronLeft className={`h-4 w-4 transition-transform duration-300 ${isCompact ? 'rotate-180' : ''}`} />
@@ -284,7 +298,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onSelectTab, isCom
               target="_blank"
               rel="noopener noreferrer"
               title="Desenvolvido pela VEXEL"
-              className="vexel-powered-signature vexel-powered-mark grid h-7 w-7 place-items-center rounded-lg border border-white/10 text-[#717c82] hover:text-[#8bd132]"
+              className="vexel-powered-signature vexel-powered-mark grid h-7 w-7 place-items-center rounded-lg border border-white/10 text-[#717c82] hover:text-[#ff5c5c]"
               aria-label="Desenvolvido pela VEXEL"
             >
               <Box className="h-3.5 w-3.5" strokeWidth={1.6} />
@@ -299,7 +313,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onSelectTab, isCom
             target="_blank"
             rel="noopener noreferrer"
             title="Desenvolvido pela VEXEL"
-            className="vexel-powered-signature block text-center text-[8px] font-mono font-bold uppercase tracking-[0.3em] text-[#4d5a62] hover:text-[#8bd132] transition-colors"
+            className="vexel-powered-signature block text-center text-[8px] font-mono font-bold uppercase tracking-[0.3em] text-[#4d5a62] hover:text-[#ff5c5c] transition-colors"
           >
             <span>Desenvolvido pela VEXEL</span>
           </a>

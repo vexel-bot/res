@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Tool Atlas V7.2 — Atlas completo aberto</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {"tertiary-fixed-dim": "#ffb3b1", "on-surface": "#e5e2e1", "on-secondary-container": "#602a00", primary: "#ffb3af", "on-tertiary-fixed-variant": "#7f292c", "inverse-primary": "#b4252d", "secondary-fixed-dim": "#ffb68b", tertiary: "#ffb3b1", "on-secondary-fixed": "#321200", "tertiary-container": "#e17474", "primary-container": "#ff5c5c", "on-tertiary-container": "#5c0e15", "surface-bright": "#393939", "on-surface-variant": "#e2bebc", "surface-dim": "#131313", "surface-variant": "#353534", "secondary-container": "#ff7f1c", "error-container": "#93000a", "on-error": "#690005", "on-primary-container": "#62000c", "tertiary-fixed": "#ffdad8", "inverse-surface": "#e5e2e1", "on-secondary": "#522300", "surface-container-high": "#2a2a2a", "on-tertiary": "#601118", "on-background": "#e5e2e1", "on-tertiary-fixed": "#410007", "surface-tint": "#ffb3af", "on-primary": "#68000d", surface: "#131313", "primary-fixed-dim": "#ffb3af", "surface-container": "#201f1f", "on-secondary-fixed-variant": "#753400", "surface-container-lowest": "#0e0e0e", "on-primary-fixed-variant": "#920418", "surface-container-highest": "#353534", "inverse-on-surface": "#313030", "outline-variant": "#5a403f", "on-error-container": "#ffdad6", secondary: "#ffb68b", background: "#131313", "on-primary-fixed": "#410005", outline: "#a98987", "surface-container-low": "#1c1b1b", "secondary-fixed": "#ffdbc8", "primary-fixed": "#ffdad7", error: "#ffb4ab"}, borderRadius: {DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem"}, spacing: {gutter: "16px", "margin-desktop": "32px", unit: "4px", "container-max": "1440px", "margin-mobile": "16px"}, fontFamily: {"body-md": ["Geist", "sans-serif"], "body-lg": ["Geist", "sans-serif"], display: ["Geist"], "label-md": ["Geist", "sans-serif"], "headline-md": ["Geist", "sans-serif"], "headline-lg": ["Geist", "sans-serif"], code: ["Geist", "monospace"], headline: ["Geist"], body: ["Geist"], label: ["Geist"]}, fontSize: {"body-md": ["14px", {lineHeight: "1.5", fontWeight: "400"}], "body-lg": ["16px", {lineHeight: "1.5", fontWeight: "400"}], display: ["32px", {lineHeight: "1.2", letterSpacing: "-0.02em", fontWeight: "600"}], "label-md": ["12px", {lineHeight: "1", letterSpacing: "0.02em", fontWeight: "500"}], "headline-md": ["20px", {lineHeight: "1.4", fontWeight: "500"}], "headline-lg": ["24px", {lineHeight: "1.3", fontWeight: "600"}], code: ["13px", {lineHeight: "1.4", fontWeight: "400"}]}}}};</script>
+<style>
+        body { font-family: 'Geist', sans-serif; }
+        .grid-layout { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 16px; }
+        .glass-panel { background: rgba(24, 27, 29, 0.95); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid var(--tw-colors-outline-variant); }
+        .tool-group-title { color: var(--tw-colors-on-surface-variant); margin-bottom: 8px; font-weight: 500; font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase; }
+        .tool-link { display: flex; align-items: center; gap: 8px; padding: 6px 8px; border-radius: 4px; color: var(--tw-colors-on-surface); text-decoration: none; transition: all 0.2s ease; font-size: 13px; margin-left: -8px; }
+        .tool-link:hover { background: var(--tw-colors-surface-container-high); color: var(--tw-colors-primary); }
+        .tool-link.highlight { background: rgba(117, 255, 158, 0.05); border-left: 2px solid var(--tw-colors-primary); border-radius: 0 4px 4px 0; }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: var(--tw-colors-surface-variant); border-radius: 4px; }
+        .custom-scrollbar:hover::-webkit-scrollbar-thumb { background: var(--tw-colors-on-surface-variant); }
+    </style>
+</head>
+<body class="bg-background text-on-surface h-screen overflow-hidden flex flex-col font-body-md antialiased">
+<!-- TopNavBar -->
+<nav class="bg-background border-b border-outline-variant flex justify-between items-center w-full px-margin-desktop h-16 shrink-0 relative z-50">
+<div class="flex items-center gap-8">
+<span class="font-display text-display text-primary uppercase tracking-tighter">Clicko Precision</span>
+<div class="hidden md:flex gap-6 items-center">
+<a class="text-primary font-bold border-b-2 border-primary pb-2 pt-2 text-label-md flex items-center gap-2" href="#">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">apps</span>
+                    Todas as ferramentas
+                    <span class="material-symbols-outlined text-[16px]">expand_less</span>
+</a>
+<a class="text-on-surface-variant font-medium pb-2 pt-2 text-label-md hover:text-primary transition-colors duration-200" href="#">Newsroom</a>
+<a class="text-on-surface-variant font-medium pb-2 pt-2 text-label-md hover:text-primary transition-colors duration-200" href="#">Radar Room</a>
+<a class="text-on-surface-variant font-medium pb-2 pt-2 text-label-md hover:text-primary transition-colors duration-200" href="#">Brand Memory</a>
+<a class="text-on-surface-variant font-medium pb-2 pt-2 text-label-md hover:text-primary transition-colors duration-200" href="#">Campaign Intake</a>
+<a class="text-on-surface-variant font-medium pb-2 pt-2 text-label-md hover:text-primary transition-colors duration-200" href="#">Campaign Room</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="bg-primary text-on-primary px-4 py-2 rounded font-label-md hover:bg-primary-container transition-colors">Criar Campanha</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined text-[20px]">notifications</span></button>
+<button class="text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined text-[20px]">account_circle</span></button>
+</div>
+</nav>
+<!-- Main Workspace Area (Dimmed Background Content) -->
+<main class="flex-1 relative bg-[#0F1011] overflow-hidden">
+<div class="absolute inset-0 opacity-20 pointer-events-none p-margin-desktop flex flex-col gap-4 filter blur-[2px]">
+<!-- Faux background content to show depth -->
+<div class="h-12 w-1/3 bg-surface-container rounded border border-outline-variant"></div>
+<div class="flex gap-4">
+<div class="h-64 w-1/4 bg-surface-container rounded border border-outline-variant"></div>
+<div class="h-64 flex-1 bg-surface-container rounded border border-outline-variant"></div>
+</div>
+<div class="h-32 w-full bg-surface-container rounded border border-outline-variant"></div>
+</div>
+<!-- ATLAS OVERLAY -->
+<div class="absolute top-0 left-0 w-full h-full flex justify-center z-40 bg-black/40 backdrop-blur-sm p-4 overflow-y-auto custom-scrollbar pt-0">
+<!-- Tool Atlas Panel -->
+<div class="w-full max-w-[1160px] glass-panel rounded-b-lg shadow-2xl flex flex-col mt-0 h-fit mb-8 animate-[slideDown_0.2s_ease-out]">
+<!-- Atlas Header -->
+<div class="p-8 border-b border-outline-variant bg-surface-container/50">
+<h1 class="font-headline-lg text-headline-lg mb-6">O que você quer fazer?</h1>
+<div class="relative max-w-2xl mb-6">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full bg-[#121314] border border-outline-variant rounded-md py-3 pl-12 pr-4 text-body-lg text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-on-surface-variant/50" placeholder="Ex.: transformar um post em carrossel" type="text"/>
+<div class="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1">
+<kbd class="px-2 py-1 bg-surface-container-high rounded text-xs text-on-surface-variant font-code border border-outline-variant">⌘</kbd>
+<kbd class="px-2 py-1 bg-surface-container-high rounded text-xs text-on-surface-variant font-code border border-outline-variant">K</kbd>
+</div>
+</div>
+<div class="flex items-center gap-2 flex-wrap">
+<span class="text-label-md text-on-surface-variant mr-2 flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">push_pin</span> Fixados:</span>
+<button class="px-3 py-1.5 bg-surface-container border border-outline-variant rounded-full text-label-md hover:border-primary/50 hover:bg-surface-container-high transition-colors flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px]">edit_document</span> Criar post
+                        </button>
+<button class="px-3 py-1.5 bg-surface-container border border-outline-variant rounded-full text-label-md hover:border-primary/50 hover:bg-surface-container-high transition-colors flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px]">calendar_month</span> Planejar semana
+                        </button>
+<button class="px-3 py-1.5 bg-surface-container border border-outline-variant rounded-full text-label-md hover:border-primary/50 hover:bg-surface-container-high transition-colors flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px]">fact_check</span> Aprovações
+                        </button>
+<button class="px-3 py-1.5 bg-surface-container border border-outline-variant rounded-full text-label-md hover:border-primary/50 hover:bg-surface-container-high transition-colors flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px]">monitoring</span> Ver desempenho
+                        </button>
+<button class="px-3 py-1.5 bg-transparent border border-dashed border-outline-variant rounded-full text-label-md text-on-surface-variant hover:text-on-surface hover:border-on-surface-variant transition-colors flex items-center gap-1.5 ml-auto">
+<span class="material-symbols-outlined text-[14px]">tune</span> Personalizar atalhos
+                        </button>
+</div>
+</div>
+<!-- Atlas Content Grid -->
+<div class="p-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-12 gap-y-10 bg-[#181B1D]/80">
+<!-- Group 1 -->
+<div class="flex flex-col gap-2">
+<h2 class="tool-group-title flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">explore</span> Descobrir o que publicar
+                        </h2>
+<a class="tool-link" href="#"><span class="material-symbols-outlined text-[18px] text-on-surface-variant">lightbulb</span> Ideias para hoje</a>
+<a class="tool-link" href="#"><span class="material-symbols-outlined text-[18px] text-on-surface-variant">radar</span> Radar de oportunidades</a>
+<a class="tool-link" href="#"><span class="material-symbols-outlined text-[18px] text-on-surface-variant">trending_up</span> Tendências do meu nicho</a>
+<a class="tool-link" href="#"><span class="material-symbols-outlined text-[18px] text-on-surface-variant">troubleshoot</span> Analisar concorrentes</a>
+<a class="tool-link" href="#"><span class="material-symbols-outlined text-[18px] text-on-surface-variant">forum</span> Perguntas do público</a>
+</div>
+<!-- Group 2 -->
+<div class="flex flex-col gap-2">
+<h2 class="tool-group-title flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">architecture</span> Planejar e organizar
+                        </h2>
+<a class="tool-link" href="#"><span class="material-symbols-outlined text-[18px] text-on-surface-variant">campaign</span> Criar campanha</a>
+<a class="tool-link" href="#"><span class="material-symbols-outlined text-[18px] text-on-surface-variant">assignment</span> Montar briefing</a>
+<a class="tool-link" href="#"><span class="material-symbols-outlined text-[18px] text-on-surface-variant">date_range</span> Planejar a semana</a>
+<a class="tool-link" href="#"><span class="material-symbols-outlined text-[18px] text-on-surface-variant">event_note</span> Calendário editorial</a>
+<a class="tool-link" href="#"><span class="material-symbols-outlined text-[18px] text-on-surface-variant">folder_special</span> Organizar por cliente</a>
+</div>
+<!-- Group 3 -->
+<div class="flex flex-col gap-2">
+<h2 class="tool-group-title flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">draw</span> Criar conteúdo
+                        </h2>
+<a class="tool-link" href="#"><span class="material-symbols-outlined text-[18px] text-on-surface-variant">post_add</span> Criar post</a>
+<a class="tool-link" href="#"><span class="material-symbols-outlined text-[18px] text-on-surface-variant">view_carousel</span> Criar carrossel</a>
+<a class="tool-link" href="#"><span class="material-symbols-outlined text-[18px] text-on-surface-variant">movie</span> Criar roteiro UGC</a>
+<a class="tool-link" href="#"><span class="material-symbols-outlined text-[18px] text-on-surface-variant">subtitles</span> Criar legenda</a>
+<a class="tool-link" href="#"><span class="material-symbols-outlined text-[18px] text-on-surface-variant">dynamic_feed</span> Criar variações</a>
+<a class="tool-link" href="#"><span class="material-symbols-outlined text-[18px] text-on-surface-variant">auto_awesome</span> Gerar campanha completa</a>
+</div>
+<!-- Group 4 -->
+<div class="flex flex-col gap-2">
+<h2 class="tool-group-title flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">edit_note</span> Editar e adaptar
+                        </h2>
+<a class="tool-link" href="#"><span class="material-symbols-outlined text-[18px] text-on-surface-variant">design_services</span> Abrir editor visual</a>
+<!-- Tooltip wrapper -->
+<div class="group relative">
+<a class="tool-link highlight" href="#">
+<span class="material-symbols-outlined text-[18px] text-primary">transform</span>
+<span class="text-on-surface font-medium">Transformar post em carrossel</span>
+<span class="material-symbols-outlined text-[14px] text-primary/70 ml-auto opacity-0 group-hover:opacity-100 transition-opacity">info</span>
+</a>
+<!-- Tooltip -->
+<div class="absolute left-full top-1/2 -translate-y-1/2 ml-4 w-64 p-3 bg-surface-container-highest border border-outline-variant rounded shadow-xl z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all pointer-events-none before:content-[''] before:absolute before:right-full before:top-1/2 before:-translate-y-1/2 before:border-8 before:border-transparent before:border-r-surface-container-highest">
+<p class="text-xs text-on-surface-variant leading-relaxed">Converta uma peça aprovada em uma sequência editável, preservando identidade, campanha e origem.</p>
+</div>
+</div>
+<a class="tool-link" href="#"><span class="material-symbols-outlined text-[18px] text-on-surface-variant">aspect_ratio</span> Adaptar para outros formatos</a>
+<a class="tool-link" href="#"><span class="material-symbols-outlined text-[18px] text-on-surface-variant">palette</span> Aplicar identidade da marca</a>
+<a class="tool-link" href="#"><span class="material-symbols-outlined text-[18px] text-on-surface-variant">recycling</span> Reutilizar conteúdo</a>
+<a class="tool-link" href="#"><span class="material-symbols-outlined text-[18px] text-on-surface-variant">difference</span> Comparar versões</a>
+</div>
+<!-- Group 5 -->
+<div class="flex flex-col gap-2">
+<h2 class="tool-group-title flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">done_all</span> Aprovar e publicar
+                        </h2>
+<a class="tool-link" href="#"><span class="material-symbols-outlined text-[18px] text-on-surface-variant">send</span> Enviar para aprovação</a>
+<a class="tool-link" href="#"><span class="material-symbols-outlined text-[18px] text-on-surface-variant">pending_actions</span> Revisões pendentes</a>
+<a class="tool-link" href="#"><span class="material-symbols-outlined text-[18px] text-on-surface-variant">schedule_send</span> Agendar publicação</a>
+<a class="tool-link" href="#"><span class="material-symbols-outlined text-[18px] text-on-surface-variant">publish</span> Publicar agora</a>
+<a class="tool-link" href="#"><span class="material-symbols-outlined text-[18px] text-on-surface-variant">hub</span> Conectar canais</a>
+<a class="tool-link" href="#"><span class="material-symbols-outlined text-[18px] text-on-surface-variant">history</span> Histórico de alterações</a>
+</div>
+<!-- Group 6 -->
+<div class="flex flex-col gap-2">
+<h2 class="tool-group-title flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">insights</span> Analisar e melhorar
+                        </h2>
+<a class="tool-link" href="#"><span class="material-symbols-outlined text-[18px] text-on-surface-variant">bar_chart</span> Ver desempenho</a>
+<a class="tool-link" href="#"><span class="material-symbols-outlined text-[18px] text-on-surface-variant">emoji_events</span> Conteúdos vencedores</a>
+<a class="tool-link" href="#"><span class="material-symbols-outlined text-[18px] text-on-surface-variant">compare_arrows</span> Comparar formatos</a>
+<a class="tool-link" href="#"><span class="material-symbols-outlined text-[18px] text-on-surface-variant">psychology</span> Aprendizados da marca</a>
+<a class="tool-link" href="#"><span class="material-symbols-outlined text-[18px] text-on-surface-variant">find_replace</span> Encontrar conteúdo para reutilizar</a>
+<a class="tool-link" href="#"><span class="material-symbols-outlined text-[18px] text-on-surface-variant">smart_toy</span> Criar automação</a>
+</div>
+<!-- Group 7 -->
+<div class="flex flex-col gap-2 lg:col-span-2">
+<h2 class="tool-group-title flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">settings_suggest</span> Marca e operação
+                        </h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-x-12">
+<div class="flex flex-col gap-2">
+<a class="tool-link" href="#"><span class="material-symbols-outlined text-[18px] text-on-surface-variant">memory</span> Memória da marca</a>
+<a class="tool-link" href="#"><span class="material-symbols-outlined text-[18px] text-on-surface-variant">perm_media</span> Biblioteca de ativos</a>
+<a class="tool-link" href="#"><span class="material-symbols-outlined text-[18px] text-on-surface-variant">dashboard_customize</span> Templates</a>
+</div>
+<div class="flex flex-col gap-2">
+<a class="tool-link" href="#"><span class="material-symbols-outlined text-[18px] text-on-surface-variant">workspaces</span> Clientes e workspaces</a>
+<a class="tool-link" href="#"><span class="material-symbols-outlined text-[18px] text-on-surface-variant">groups</span> Equipe e permissões</a>
+<a class="tool-link" href="#"><span class="material-symbols-outlined text-[18px] text-on-surface-variant">integration_instructions</span> Integrações e configurações</a>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom accent bar -->
+<div class="h-1 w-full bg-gradient-to-r from-transparent via-primary/20 to-transparent"></div>
+</div>
+</div>
+</main>
+<style>
+        @keyframes slideDown {
+            from { transform: translateY(-10px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+    </style>
+<script src="/stitch/bridge.js"></script></body></html>

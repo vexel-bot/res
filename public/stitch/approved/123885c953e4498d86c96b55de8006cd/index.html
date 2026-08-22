@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Studio Composer V5 - Clicko Precision</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<style type="text/tailwindcss">
+        @layer utilities {
+            .scrollbar-hide::-webkit-scrollbar {
+                display: none;
+            }
+            .scrollbar-hide {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+            .scrollbar-thin::-webkit-scrollbar {
+                width: 4px;
+                height: 4px;
+            }
+            .scrollbar-thin::-webkit-scrollbar-track {
+                background: transparent;
+            }
+            .scrollbar-thin::-webkit-scrollbar-thumb {
+                background: #343536; /* surface-variant */
+                border-radius: 2px;
+            }
+            .scrollbar-thin:hover::-webkit-scrollbar-thumb {
+                background: #474746; /* secondary-container */
+            }
+            
+            /* Workspace Connection Lines */
+            .workflow-line::after {
+                content: '';
+                position: absolute;
+                top: 100%;
+                left: 50%;
+                width: 1px;
+                height: 32px;
+                background-color: #3b4a3d; /* outline-variant */
+                transform: translateX(-50%);
+                z-index: 0;
+            }
+            .workflow-connector-horizontal::before {
+                content: '';
+                position: absolute;
+                top: -33px;
+                left: calc(16.66% + 12px);
+                right: calc(16.66% + 12px);
+                height: 1px;
+                background-color: #3b4a3d; /* outline-variant */
+                z-index: 0;
+            }
+        }
+    </style>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {"surface-container-highest": "#353534", "on-primary": "#68000d", secondary: "#ffb68b", surface: "#131313", "on-error-container": "#ffdad6", "on-background": "#e5e2e1", "on-secondary-fixed-variant": "#753400", "secondary-container": "#ff7f1c", "error-container": "#93000a", "surface-container-high": "#2a2a2a", "on-surface": "#e5e2e1", "inverse-surface": "#e5e2e1", outline: "#a98987", primary: "#ffb3af", "surface-bright": "#393939", "on-secondary-fixed": "#321200", "on-primary-container": "#62000c", "on-tertiary-container": "#5c0e15", "on-error": "#690005", "on-tertiary": "#601118", "tertiary-fixed-dim": "#ffb3b1", tertiary: "#ffb3b1", "tertiary-container": "#e17474", background: "#131313", "on-tertiary-fixed-variant": "#7f292c", "surface-container-low": "#1c1b1b", "tertiary-fixed": "#ffdad8", "outline-variant": "#5a403f", "on-primary-fixed-variant": "#920418", "on-tertiary-fixed": "#410007", "primary-fixed": "#ffdad7", "surface-dim": "#131313", "secondary-fixed": "#ffdbc8", "inverse-on-surface": "#313030", "primary-container": "#ff5c5c", "surface-container": "#201f1f", "on-primary-fixed": "#410005", error: "#ffb4ab", "surface-tint": "#ffb3af", "inverse-primary": "#b4252d", "surface-variant": "#353534", "on-secondary-container": "#602a00", "surface-container-lowest": "#0e0e0e", "on-secondary": "#522300", "primary-fixed-dim": "#ffb3af", "secondary-fixed-dim": "#ffb68b", "on-surface-variant": "#e2bebc"}, borderRadius: {DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem"}, spacing: {unit: "4px", "container-max": "1440px", gutter: "16px", "margin-desktop": "32px", "margin-mobile": "16px"}, fontFamily: {"body-lg": ["Geist"], "headline-lg": ["Geist"], code: ["Geist"], display: ["Geist"], "label-md": ["Geist"], "headline-md": ["Geist"], "body-md": ["Geist"], headline: ["Geist"], body: ["Geist"], label: ["Geist"]}, fontSize: {"body-lg": ["16px", {lineHeight: "1.5", fontWeight: "400"}], "headline-lg": ["24px", {lineHeight: "1.3", fontWeight: "600"}], code: ["13px", {lineHeight: "1.4", fontWeight: "400"}], display: ["32px", {lineHeight: "1.2", letterSpacing: "-0.02em", fontWeight: "600"}], "label-md": ["12px", {lineHeight: "1", letterSpacing: "0.02em", fontWeight: "500"}], "headline-md": ["20px", {lineHeight: "1.4", fontWeight: "500"}], "body-md": ["14px", {lineHeight: "1.5", fontWeight: "400"}]}}}};</script>
+</head>
+<body class="bg-background text-on-background font-body-md h-screen flex flex-col overflow-hidden selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar (Shared Component) -->
+<header class="bg-background dark:bg-background text-primary dark:text-primary font-label-md text-label-md docked full-width top-0 border-b border-outline-variant flat no shadows flex justify-between items-center w-full px-margin-desktop h-16 shrink-0 z-50">
+<!-- Left: Logo & Search -->
+<div class="flex items-center gap-8">
+<div class="font-display text-display text-primary uppercase tracking-tighter cursor-default">
+                Clicko Precision
+            </div>
+<!-- Search Bar (search_bar: on_left) -->
+<div class="relative hidden lg:flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-on-surface-variant pointer-events-none" style="font-variation-settings: 'FILL' 0;">search</span>
+<input class="bg-surface-container-low border border-outline-variant text-on-surface text-body-md font-body-md pl-10 pr-4 py-2 w-64 focus:outline-none focus:border-primary-container transition-colors rounded-none placeholder:text-on-surface-variant" placeholder="Search workspace..." type="text"/>
+</div>
+</div>
+<!-- Center: Navigation Links -->
+<nav class="hidden md:flex items-center gap-8 h-full pt-4">
+<!-- Inactive -->
+<a class="text-on-surface-variant font-medium pb-2 hover:text-primary transition-colors duration-200 h-full flex items-end" href="#">Newsroom</a>
+<a class="text-on-surface-variant font-medium pb-2 hover:text-primary transition-colors duration-200 h-full flex items-end" href="#">Radar Room</a>
+<a class="text-on-surface-variant font-medium pb-2 hover:text-primary transition-colors duration-200 h-full flex items-end" href="#">Brand Memory</a>
+<a class="text-on-surface-variant font-medium pb-2 hover:text-primary transition-colors duration-200 h-full flex items-end" href="#">Campaign Intake</a>
+<!-- Active (Matched to Context) -->
+<a class="text-primary font-bold border-b-2 border-primary pb-2 hover:text-primary transition-colors duration-200 h-full flex items-end relative" href="#">
+                Campaign Room
+                <!-- Active Indicator Glow -->
+<div class="absolute bottom-0 left-0 w-full h-[2px] bg-primary-container shadow-[0_0_8px_rgba(0,230,118,0.6)]"></div>
+</a>
+</nav>
+<!-- Right: Actions -->
+<div class="flex items-center gap-6">
+<!-- Icon Actions -->
+<div class="flex items-center gap-4 text-on-surface-variant">
+<button class="hover:text-primary transition-colors duration-200 active:opacity-80 active:scale-95 transition-all">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">notifications</span>
+</button>
+<button class="hover:text-primary transition-colors duration-200 active:opacity-80 active:scale-95 transition-all">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">account_circle</span>
+</button>
+</div>
+<!-- Trailing Primary Action -->
+<button class="bg-primary-container text-on-primary-container px-4 py-2 font-label-md text-label-md active:opacity-80 active:scale-95 transition-all flex items-center gap-2 hover:bg-surface-tint border border-transparent">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">add</span>
+                Criar Campanha
+            </button>
+</div>
+</header>
+<!-- Workspace Container -->
+<main class="flex-1 flex overflow-hidden bg-background">
+<!-- Left Panel: Persistent Briefing & Context -->
+<aside class="w-[280px] bg-surface-container-low border-r border-outline-variant flex flex-col shrink-0">
+<!-- Panel Header -->
+<div class="px-4 py-3 border-b border-outline-variant bg-surface-container-highest flex items-center justify-between">
+<h2 class="font-label-md text-label-md text-on-surface uppercase tracking-wider">Contexto Ativo</h2>
+<span class="w-2 h-2 rounded-full bg-primary-container shadow-[0_0_4px_rgba(0,230,118,0.5)]"></span>
+</div>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto scrollbar-thin p-4 flex flex-col gap-6">
+<!-- Meta Block 1 -->
+<div class="flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<span class="font-code text-code text-on-surface-variant">ID_CAMP</span>
+<span class="font-code text-code text-primary-container">#CPL-2024-Q3</span>
+</div>
+<div class="h-[1px] w-full bg-outline-variant opacity-50"></div>
+</div>
+<!-- Section: Business Objective -->
+<div class="flex flex-col gap-2">
+<h3 class="font-label-md text-label-md text-on-surface-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-[14px]">target</span>
+                        Objetivo de Negócio
+                    </h3>
+<div class="bg-surface p-3 border border-outline-variant">
+<p class="font-body-md text-body-md text-on-surface">
+                            Aumentar a conversão do plano Enterprise em 15% focado no setor financeiro B2B.
+                        </p>
+</div>
+</div>
+<!-- Section: Target Audience -->
+<div class="flex flex-col gap-2">
+<h3 class="font-label-md text-label-md text-on-surface-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-[14px]">group</span>
+                        Targeting
+                    </h3>
+<div class="flex flex-wrap gap-2">
+<span class="px-2 py-1 bg-surface border border-outline-variant font-code text-[11px] text-on-surface">C-Level IT</span>
+<span class="px-2 py-1 bg-surface border border-outline-variant font-code text-[11px] text-on-surface">Fintech</span>
+<span class="px-2 py-1 bg-surface border border-outline-variant font-code text-[11px] text-on-surface">LatAm</span>
+</div>
+</div>
+<!-- Section: Core Offer -->
+<div class="flex flex-col gap-2">
+<h3 class="font-label-md text-label-md text-on-surface-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-[14px]">local_offer</span>
+                        Oferta Central (Promo)
+                    </h3>
+<div class="bg-surface p-3 border border-outline-variant">
+<p class="font-code text-code text-on-surface">
+                            {TRIAL_30D} + {ONBOARDING_VIP}
+                        </p>
+</div>
+</div>
+<!-- Tone & Voice -->
+<div class="flex flex-col gap-2 mt-auto pt-4 border-t border-outline-variant">
+<h3 class="font-label-md text-label-md text-on-surface-variant">Brand Voice Preset</h3>
+<div class="flex items-center justify-between bg-surface-container border border-outline-variant p-2 cursor-pointer hover:border-primary-container transition-colors">
+<span class="font-body-md text-body-md text-on-surface">Autoritário &amp; Analítico</span>
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">tune</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Workspace: Studio Composer -->
+<section class="flex-1 flex flex-col min-w-0 bg-background relative">
+<!-- Toolbar -->
+<div class="h-14 border-b border-outline-variant bg-surface flex items-center justify-between px-6 shrink-0 z-10">
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">account_tree</span>
+<span class="font-headline-md text-headline-md text-on-surface">Studio Composer V5</span>
+<span class="font-code text-code text-on-surface-variant px-2">— Conteúdo conectado</span>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="flex items-center gap-2 font-code text-[12px] text-on-surface-variant mr-4">
+<span class="w-2 h-2 rounded-full bg-outline-variant animate-pulse"></span>
+                        Draft Auto-Saved
+                    </span>
+<button class="px-3 py-1.5 border border-outline-variant text-on-surface font-label-md text-label-md hover:bg-surface-container-high transition-colors">
+                        Preview Matriz
+                    </button>
+<button class="px-3 py-1.5 bg-secondary-container text-on-surface font-label-md text-label-md hover:bg-surface-bright transition-colors border border-outline-variant">
+                        Exportar Assets
+                    </button>
+</div>
+</div>
+<!-- Composer Canvas (Bento-ish Grid / Connected Layout) -->
+<div class="flex-1 overflow-auto scrollbar-thin p-8 relative">
+<!-- Background Grid Pattern for Technical Feel -->
+<div class="absolute inset-0 pointer-events-none opacity-5" style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 24px 24px;"></div>
+<div class="max-w-[1200px] mx-auto flex flex-col gap-12 relative z-10">
+<!-- Level 1: Hero Asset (The Source) -->
+<div class="flex justify-center relative workflow-line">
+<div class="w-[600px] bg-surface-container border border-outline-variant shadow-lg flex flex-col relative group">
+<!-- Focus Border Effect -->
+<div class="absolute inset-0 border border-primary-container opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10"></div>
+<!-- Header -->
+<div class="flex items-center justify-between px-4 py-2 border-b border-outline-variant bg-surface-container-highest">
+<span class="font-label-md text-label-md text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-[14px] text-primary-container">star</span>
+                                    Hero Asset (Key Visual &amp; Copy)
+                                </span>
+<span class="font-code text-[10px] text-on-surface-variant bg-surface px-1 border border-outline-variant">V 1.0</span>
+</div>
+<!-- Content Area -->
+<div class="p-4 flex flex-col gap-4">
+<!-- Visual Placeholder -->
+<div class="w-full h-48 bg-surface-container-lowest border border-outline-variant relative overflow-hidden flex items-center justify-center">
+<img class="absolute inset-0 w-full h-full object-cover opacity-80 mix-blend-screen" data-alt="A highly detailed, professional B2B marketing key visual representing data analytics and financial growth. The aesthetic is dark mode, industrial, and sleek. It features glowing green (#00E676) abstract data nodes and geometric lines intersecting on a deep matte black (#0F1011) background. The lighting is cinematic and dramatic, emphasizing precision and technological advancement. A sense of depth is created through subtle atmospheric fog and sharp, hyper-realistic rendering." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA4pXid1pqXwNHV8dF6GDHcOwzCwuYlptrOiHwTbrwA47Gadsuz0VkQ5G_oaF5_zrb1-v5y_MgRcWLEkv9ji_bbjZjhqT17nkGfaoUnrLd_hPUgNYjs-IsVVFFtjckvg0Os_N7e7Fo29ttgNxiLbg9pI5k2uQfsaulxLZM5j6OAz3ayZlzAkLfK5u7MV8kOb1fd8wTr8ea2reEaXm7ELp_3nW6EaKIVHHeoSuCQyIuBqu_wD0V4pN3IIg"/>
+<div class="absolute bottom-2 right-2 flex gap-2">
+<button class="bg-surface/80 border border-outline-variant p-1 hover:bg-surface-container transition-colors backdrop-blur-sm"><span class="material-symbols-outlined text-[16px] text-on-surface">crop</span></button>
+<button class="bg-surface/80 border border-outline-variant p-1 hover:bg-surface-container transition-colors backdrop-blur-sm"><span class="material-symbols-outlined text-[16px] text-on-surface">image_search</span></button>
+</div>
+</div>
+<!-- Copy Area -->
+<div class="flex flex-col gap-2">
+<label class="font-code text-[11px] text-on-surface-variant">Main Headline</label>
+<input class="bg-surface border border-outline-variant text-on-surface font-headline-md text-headline-md px-3 py-2 w-full focus:outline-none focus:border-primary-container rounded-none" type="text" value="Precisão em Escala para Fintechs."/>
+<label class="font-code text-[11px] text-on-surface-variant mt-2">Body Copy</label>
+<textarea class="bg-surface border border-outline-variant text-on-surface font-body-md text-body-md px-3 py-2 w-full focus:outline-none focus:border-primary-container rounded-none resize-none" rows="2">Automatize sua inteligência de mercado e tome decisões baseadas em dados com risco zero.</textarea>
+</div>
+</div>
+</div>
+</div>
+<!-- Level 2: Derivations (Connected Matrix) -->
+<div class="relative pt-8">
+<!-- Connecting Horizontal Line -->
+<div class="workflow-connector-horizontal w-full absolute top-0 pointer-events-none"></div>
+<div class="grid grid-cols-3 gap-6 relative z-10">
+<!-- Derivation 1: Social -->
+<div class="bg-surface-container-low border border-outline-variant flex flex-col relative group">
+<div class="absolute -top-[33px] left-1/2 w-[1px] h-[33px] bg-outline-variant transform -translate-x-1/2"></div>
+<div class="absolute inset-0 border border-surface-variant group-hover:border-primary-container/50 transition-colors pointer-events-none"></div>
+<div class="px-3 py-2 border-b border-outline-variant flex items-center justify-between">
+<span class="font-label-md text-label-md text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-[14px]">share</span>
+                                        Social (LinkedIn)
+                                    </span>
+<span class="w-2 h-2 rounded-full bg-primary-container"></span>
+</div>
+<div class="p-3 flex flex-col gap-3">
+<!-- Adapted Visual -->
+<div class="aspect-square bg-surface border border-outline-variant relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-br from-surface-container-highest to-surface"></div>
+<img class="absolute inset-0 w-full h-full object-cover opacity-60" data-alt="A square format social media graphic for LinkedIn. It inherits the dark mode, industrial minimalist aesthetic of the main campaign. It features a cropped, impactful section of the glowing green data nodes (#00E676) against a matte black (#0F1011) background. The composition is tailored for high readability on small screens, with stark contrast and clean, tech-focused visual hierarchy." src="https://lh3.googleusercontent.com/aida-public/AB6AXuALTdg3Rc8ykhR22s-WaTpb8lJMg9WUq6W3EA4vaBhx6fKDYkW6d7i5tmpKLaQ2H3ScGHf9Fs0buLPmyqFaJwokalYq0NOZVvlpnScoVtYKXKbwwJlGucJrJlXK5Swndy_MTY3bVQgglZYJ2eerHlit2Hj6ITm8hKmkoPuGLCQuc45CxIMUyRoCd8WeWGq0NGMJR37b68iKbaa1_uq3oNBIvsp7pGNa36LiCtgim2K7RbdwZmwtkXEMJQ"/>
+<div class="absolute top-2 left-2 bg-surface/90 border border-outline-variant px-1 font-code text-[10px] text-on-surface">1:1 Auto-Crop</div>
+</div>
+<div class="bg-surface border border-outline-variant p-2 min-h-[60px]">
+<p class="font-body-md text-body-md text-on-surface text-[12px] leading-tight opacity-90">
+                                            Fintechs não podem depender de achismos. Nossa nova engine... <span class="text-primary-container cursor-pointer">[+]</span>
+</p>
+</div>
+</div>
+</div>
+<!-- Derivation 2: Display Ads -->
+<div class="bg-surface-container-low border border-outline-variant flex flex-col relative group">
+<div class="absolute -top-[33px] left-1/2 w-[1px] h-[33px] bg-outline-variant transform -translate-x-1/2"></div>
+<div class="absolute inset-0 border border-surface-variant group-hover:border-primary-container/50 transition-colors pointer-events-none"></div>
+<div class="px-3 py-2 border-b border-outline-variant flex items-center justify-between">
+<span class="font-label-md text-label-md text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-[14px]">ad_units</span>
+                                        Display Network
+                                    </span>
+<span class="w-2 h-2 rounded-full bg-primary-container"></span>
+</div>
+<div class="p-3 flex flex-col gap-3">
+<!-- Adapted Visuals (Multiple Sizes) -->
+<div class="flex flex-col gap-2">
+<div class="w-full h-[60px] bg-surface border border-outline-variant relative flex items-center justify-center overflow-hidden">
+<span class="absolute z-10 font-code text-[10px] text-on-surface bg-surface-container px-1 border border-outline-variant">728x90</span>
+<div class="absolute inset-0 bg-surface-container-highest opacity-50"></div>
+<div class="absolute inset-0" style="background-image: linear-gradient(90deg, #181B1D 0%, #00E676 200%); opacity: 0.2;"></div>
+</div>
+<div class="w-[120px] h-[100px] bg-surface border border-outline-variant relative flex items-center justify-center overflow-hidden">
+<span class="absolute z-10 font-code text-[10px] text-on-surface bg-surface-container px-1 border border-outline-variant">300x250</span>
+<div class="absolute inset-0 bg-surface-container-highest opacity-50"></div>
+</div>
+</div>
+<div class="flex items-center justify-between mt-auto">
+<span class="font-code text-[11px] text-on-surface-variant">Status:</span>
+<span class="font-label-md text-[11px] text-primary-container">Sync Complete</span>
+</div>
+</div>
+</div>
+<!-- Derivation 3: Email CRM -->
+<div class="bg-surface-container-low border border-outline-variant flex flex-col relative group">
+<div class="absolute -top-[33px] left-1/2 w-[1px] h-[33px] bg-outline-variant transform -translate-x-1/2"></div>
+<div class="absolute inset-0 border border-surface-variant group-hover:border-primary-container/50 transition-colors pointer-events-none"></div>
+<div class="px-3 py-2 border-b border-outline-variant flex items-center justify-between">
+<span class="font-label-md text-label-md text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-[14px]">mail</span>
+                                        Email Sequence
+                                    </span>
+<span class="w-2 h-2 rounded-full bg-outline-variant"></span> <!-- Not ready status -->
+</div>
+<div class="p-3 flex flex-col gap-3">
+<!-- Subject Line -->
+<div class="bg-surface border border-outline-variant p-2 border-l-2 border-l-surface-variant">
+<p class="font-code text-[11px] text-on-surface-variant mb-1">Subject</p>
+<p class="font-body-md text-body-md text-on-surface text-[13px] truncate">
+                                            [Convite] Precisão em Escala na sua...
+                                        </p>
+</div>
+<!-- Email Body Preview -->
+<div class="bg-surface border border-outline-variant p-3 flex-1 flex flex-col relative">
+<div class="w-full h-12 bg-surface-container-highest mb-2"></div>
+<div class="w-3/4 h-2 bg-outline-variant/30 mb-1"></div>
+<div class="w-full h-2 bg-outline-variant/30 mb-1"></div>
+<div class="w-5/6 h-2 bg-outline-variant/30 mb-3"></div>
+<!-- CTA Button in Email -->
+<div class="w-24 h-6 bg-surface-container border border-primary-container mt-auto ml-auto flex items-center justify-center">
+<span class="w-12 h-1 bg-primary-container/50"></span>
+</div>
+<!-- Overlay for generation -->
+<div class="absolute inset-0 bg-surface/80 backdrop-blur-[1px] flex flex-col items-center justify-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant animate-spin">sync</span>
+<span class="font-code text-[10px] text-on-surface-variant">Generating Variables...</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<script src="/stitch/bridge.js"></script></body></html>

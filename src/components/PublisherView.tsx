@@ -39,14 +39,14 @@ export const PublisherView: React.FC = () => {
           </p>
         </div>
 
-        <button className="flex items-center gap-1.5 rounded-lg bg-[#8bd132] px-4 py-2 text-xs font-semibold text-[#14200e] transition-colors hover:bg-[#9be24d]">
+        <button className="flex items-center gap-1.5 rounded-lg bg-[#ff5c5c] px-4 py-2 text-xs font-semibold text-[#14200e] transition-colors hover:bg-[#9be24d]">
           <Plus className="w-4 h-4" /> Conectar Nova Conta
         </button>
       </div>
 
       <div className="rounded-xl border border-white/[0.07] bg-[#182126] p-4">
-        <div className="flex items-center justify-between"><div><h3 className="text-[11px] font-semibold text-white">Fila rastreável de publicação</h3><p className="mt-1 text-[9px] text-[#7f8a90]">Cada conteúdo mantém vínculo com estratégia, campanha e revisão da memória da marca.</p></div><span className="rounded-full bg-[#8bd132]/10 px-2.5 py-1 text-[9px] text-[#8bd132]">{posts.filter((post) => ['scheduled', 'approved'].includes(post.status)).length} prontos</span></div>
-        <div className="mt-3 grid gap-2 md:grid-cols-3">{posts.filter((post) => ['scheduled', 'approved', 'published'].includes(post.status)).slice(0, 3).map((post) => <div key={post.id} className="rounded-lg border border-white/[0.05] bg-black/20 p-3"><div className="flex items-center justify-between gap-2"><span className="truncate text-[10px] font-medium text-white">{post.title}</span><span className="text-[7px] uppercase text-[#8bd132]">{postStatusLabel[post.status]}</span></div><p className="mt-2 truncate text-[8px] text-[#78848a]">{campaigns.find((campaign) => campaign.id === post.campaignId)?.name || 'Conteúdo avulso'} · Memória rev. {post.brainRevision || '—'}</p></div>)}</div>
+        <div className="flex items-center justify-between"><div><h3 className="text-[11px] font-semibold text-white">Fila rastreável de publicação</h3><p className="mt-1 text-[9px] text-[#7f8a90]">Cada conteúdo mantém vínculo com estratégia, campanha e revisão da memória da marca.</p></div><span className="rounded-full bg-[#ff5c5c]/10 px-2.5 py-1 text-[9px] text-[#ff5c5c]">{posts.filter((post) => ['scheduled', 'approved'].includes(post.status)).length} prontos</span></div>
+        <div className="mt-3 grid gap-2 md:grid-cols-3">{posts.filter((post) => ['scheduled', 'approved', 'published'].includes(post.status)).slice(0, 3).map((post) => <div key={post.id} className="rounded-lg border border-white/[0.05] bg-black/20 p-3"><div className="flex items-center justify-between gap-2"><span className="truncate text-[10px] font-medium text-white">{post.title}</span><span className="text-[7px] uppercase text-[#ff5c5c]">{postStatusLabel[post.status]}</span></div><p className="mt-2 truncate text-[8px] text-[#78848a]">{campaigns.find((campaign) => campaign.id === post.campaignId)?.name || 'Conteúdo avulso'} · Memória rev. {post.brainRevision || '—'}</p></div>)}</div>
       </div>
 
       {/* Connected Channels Grid */}
@@ -100,7 +100,7 @@ export const PublisherView: React.FC = () => {
       {/* AI Recycling Engine Banner */}
       <div className="p-5 rounded-xl bg-[#0A0A0A] border border-white/[0.08] flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div className="space-y-1">
-          <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-[#8bd132]/10 text-[#8bd132] border border-[#8bd132]/25">
+          <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-[#ff5c5c]/10 text-[#ff5c5c] border border-[#ff5c5c]/25">
             Motor de Reciclagem Inteligente
           </span>
           <h3 className="text-sm font-bold text-[#ededed]">Reciclar Automaticamente Conteúdos Virais Past</h3>
@@ -109,7 +109,7 @@ export const PublisherView: React.FC = () => {
           </p>
         </div>
 
-        <button className="px-4 py-2.5 rounded-lg bg-[#8bd132] hover:bg-[#9be24d] text-[#14200e] font-bold text-xs shrink-0 transition-colors">
+        <button className="px-4 py-2.5 rounded-lg bg-[#ff5c5c] hover:bg-[#9be24d] text-[#14200e] font-bold text-xs shrink-0 transition-colors">
           Ativar Reciclagem Automática
         </button>
       </div>
