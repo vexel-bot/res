@@ -15,12 +15,12 @@ type AuthenticatedRequest = Request & { auth?: AuthContext };
 
 const moduleIds: WorkspaceModule[] = [
   'dashboard', 'create-image', 'create-video', 'create-copy', 'ai-chat',
-  'templates', 'connected-accounts', 'workspace', 'brain', 'strategy',
-  'studio', 'library', 'calendar', 'automations', 'analytics',
+  'connected-accounts', 'workspace', 'strategy',
+  'library', 'calendar', 'automations', 'analytics',
 ];
 
 const plans: SaaSPlan[] = [
-  { id: 'solo', name: 'Solo', maxUsers: 1, monthlyPrice: 79, description: 'Para operações individuais.', features: ['1 usuário administrador', 'Criação com IA', 'Calendário editorial'] },
+  { id: 'solo', name: 'Solo', maxUsers: 1, monthlyPrice: 79, description: 'Para operações individuais.', features: ['1 usuário administrador', 'Criação com a KLIC', 'Calendário editorial'] },
   { id: 'team', name: 'Equipe', maxUsers: 6, monthlyPrice: 249, description: 'Para equipes enxutas e colaborativas.', features: ['1 administrador + 5 colaboradores', 'Fluxo de aprovação', 'Automações'] },
   { id: 'business', name: 'Negócios', maxUsers: 16, monthlyPrice: 599, description: 'Para operações de conteúdo em escala.', features: ['1 administrador + 15 colaboradores', 'Análises avançadas', 'Auditoria completa'] },
   { id: 'enterprise', name: 'Corporativo', maxUsers: null, monthlyPrice: null, description: 'Capacidade, suporte e governança personalizados.', features: ['Usuários personalizados', 'SLA dedicado', 'Governança avançada'] },
@@ -50,10 +50,10 @@ const workspaces: GovernanceWorkspace[] = [{
 
 const users: WorkspaceMember[] = [
   { id: 'usr-master', workspaceId: 'ws-1', name: 'Pedro Henrique', email: 'pedro@clickostudio.com', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=120&q=80', role: 'master', status: 'active', modules: [...moduleIds], lastAccess: new Date().toISOString(), createdAt: '2026-05-18T12:00:00.000Z' },
-  { id: 'usr-lucas', workspaceId: 'ws-1', name: 'Lucas Silva', email: 'lucas@clickostudio.com', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&q=80', role: 'collaborator', status: 'active', modules: ['dashboard', 'create-image', 'create-video', 'create-copy', 'ai-chat', 'templates', 'workspace', 'brain', 'strategy', 'studio', 'library', 'calendar'], lastAccess: '2026-08-02T14:42:00.000Z', createdAt: '2026-06-03T13:00:00.000Z' },
-  { id: 'usr-ana', workspaceId: 'ws-1', name: 'Ana Martins', email: 'ana@clickostudio.com', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80', role: 'collaborator', status: 'active', modules: ['dashboard', 'create-image', 'create-copy', 'ai-chat', 'templates', 'workspace', 'studio', 'library', 'calendar', 'analytics'], lastAccess: '2026-08-02T12:18:00.000Z', createdAt: '2026-06-21T16:30:00.000Z' },
-  { id: 'usr-caio', workspaceId: 'ws-1', name: 'Caio Rocha', email: 'caio@clickostudio.com', avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=120&q=80', role: 'collaborator', status: 'disabled', modules: ['dashboard', 'create-copy', 'ai-chat', 'studio'], lastAccess: '2026-07-28T19:05:00.000Z', createdAt: '2026-07-02T10:10:00.000Z' },
-  { id: 'usr-invite', workspaceId: 'ws-1', name: 'Marina Costa', email: 'marina@clickostudio.com', avatar: '', role: 'collaborator', status: 'invited', modules: ['dashboard', 'create-image', 'create-copy', 'ai-chat', 'templates', 'studio', 'library', 'calendar'], lastAccess: 'Convite pendente', createdAt: '2026-08-01T09:00:00.000Z', invitedAt: '2026-08-01T09:00:00.000Z', inviteExpiresAt: '2026-08-08T09:00:00.000Z' },
+  { id: 'usr-lucas', workspaceId: 'ws-1', name: 'Lucas Silva', email: 'lucas@clickostudio.com', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&q=80', role: 'collaborator', status: 'active', modules: ['dashboard', 'create-image', 'create-video', 'create-copy', 'ai-chat', 'workspace', 'strategy', 'library', 'calendar'], lastAccess: '2026-08-02T14:42:00.000Z', createdAt: '2026-06-03T13:00:00.000Z' },
+  { id: 'usr-ana', workspaceId: 'ws-1', name: 'Ana Martins', email: 'ana@clickostudio.com', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80', role: 'collaborator', status: 'active', modules: ['dashboard', 'create-image', 'create-copy', 'ai-chat', 'workspace', 'library', 'calendar', 'analytics'], lastAccess: '2026-08-02T12:18:00.000Z', createdAt: '2026-06-21T16:30:00.000Z' },
+  { id: 'usr-caio', workspaceId: 'ws-1', name: 'Caio Rocha', email: 'caio@clickostudio.com', avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=120&q=80', role: 'collaborator', status: 'disabled', modules: ['dashboard', 'create-copy', 'ai-chat', 'create-image'], lastAccess: '2026-07-28T19:05:00.000Z', createdAt: '2026-07-02T10:10:00.000Z' },
+  { id: 'usr-invite', workspaceId: 'ws-1', name: 'Marina Costa', email: 'marina@clickostudio.com', avatar: '', role: 'collaborator', status: 'invited', modules: ['dashboard', 'create-image', 'create-copy', 'ai-chat', 'library', 'calendar'], lastAccess: 'Convite pendente', createdAt: '2026-08-01T09:00:00.000Z', invitedAt: '2026-08-01T09:00:00.000Z', inviteExpiresAt: '2026-08-08T09:00:00.000Z' },
   { id: 'usr-master-personal', workspaceId: 'ws-personal', name: 'Pedro Henrique (Pessoal)', email: 'pedro.henrique@gmail.com', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=120&q=80', role: 'master', status: 'active', modules: [...moduleIds], lastAccess: new Date().toISOString(), createdAt: '2026-06-01T12:00:00.000Z' },
 ];
 
@@ -141,8 +141,40 @@ function validModules(value: unknown): WorkspaceModule[] {
   return value.filter((item): item is WorkspaceModule => moduleIds.includes(item as WorkspaceModule));
 }
 
+function publishingConfigured(platform: ContentApprovalItem['platform']) {
+  if (platform === 'instagram' || platform === 'facebook' || platform === 'threads') return Boolean(process.env.META_CLIENT_ID && process.env.META_CLIENT_SECRET);
+  if (platform === 'linkedin') return Boolean(process.env.LINKEDIN_CLIENT_ID && process.env.LINKEDIN_CLIENT_SECRET);
+  if (platform === 'youtube') return Boolean(process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET);
+  if (platform === 'tiktok') return Boolean(process.env.TIKTOK_CLIENT_KEY && process.env.TIKTOK_CLIENT_SECRET);
+  return false;
+}
+
 export function createGovernanceRouter() {
   const router = Router();
+
+  router.post('/workspaces/register', (req, res) => {
+    const workspaceId = String(req.body?.workspaceId || '').trim();
+    const userId = String(req.body?.userId || '').trim();
+    const name = String(req.body?.name || '').trim();
+    const type = req.body?.type === 'personal' ? 'personal' : 'company';
+    const email = String(req.body?.email || '').trim() || `${userId}@local.clicko`;
+    if (!/^ws-[a-z0-9-]+$/i.test(workspaceId) || !/^usr-[a-z0-9-]+$/i.test(userId) || !name) return res.status(400).json({ error: 'Identificação do ambiente inválida.' });
+    let workspace = workspaces.find((item) => item.id === workspaceId);
+    let user = users.find((item) => item.id === userId && item.workspaceId === workspaceId);
+    if (!workspace) {
+      const planId: SaaSPlan['id'] = type === 'personal' ? 'solo' : /enterprise/i.test(String(req.body?.planName)) ? 'enterprise' : /business/i.test(String(req.body?.planName)) ? 'business' : 'team';
+      const plan = plans.find((item) => item.id === planId)!;
+      const createdAt = nowIso();
+      workspace = { id: workspaceId, name, logo: '', planId, maxUsers: plan.maxUsers, activeUsers: 1, subscriptionDate: createdAt, subscriptionStatus: 'active', settings: { inviteExpiryDays: 7, requireApproval: type === 'company', timezone: 'America/Sao_Paulo' } };
+      workspaces.push(workspace);
+      subscriptions.push({ id: id('sub'), workspaceId, planId, status: 'active', startedAt: createdAt, renewsAt: new Date(Date.now() + 30 * 86_400_000).toISOString(), billingEmail: email, paymentMethod: 'Não configurado' });
+    }
+    if (!user) {
+      user = { id: userId, workspaceId, name: type === 'personal' ? name : 'Administrador', email, avatar: '', role: 'master', status: 'active', modules: [...moduleIds], lastAccess: nowIso(), createdAt: nowIso() };
+      users.push(user);
+    }
+    res.status(201).json({ workspace, user });
+  });
 
   router.post('/invites/accept', (req, res) => {
     const token = String(req.body?.token || '');
@@ -262,6 +294,32 @@ export function createGovernanceRouter() {
     res.json({ subscription, workspace });
   });
 
+  router.post('/approvals', (req: AuthenticatedRequest, res) => {
+    const auth = req.auth!;
+    if (auth.user.role !== 'master' && !auth.user.modules.includes('calendar')) return res.status(403).json({ error: 'O Calendário não foi liberado para este usuário.' });
+    const title = String(req.body?.title || '').trim();
+    const contentId = String(req.body?.contentId || '').trim();
+    const copy = String(req.body?.copy || '').trim();
+    const platform = String(req.body?.platform || '') as ContentApprovalItem['platform'];
+    const format = String(req.body?.format || '') as ContentApprovalItem['format'];
+    if (!title || !contentId || !platform || !format) return res.status(400).json({ error: 'Título, conteúdo, plataforma e formato são obrigatórios.' });
+    const existing = approvals.find((item) => item.workspaceId === auth.workspaceId && item.contentId === contentId);
+    if (existing) return res.status(409).json({ error: 'Este conteúdo já possui um fluxo de aprovação.' });
+    const createdAt = nowIso();
+    const approval: ContentApprovalItem = {
+      id: id('approval'), workspaceId: auth.workspaceId, contentId, title, copy, platform, format,
+      authorId: auth.user.id, authorName: auth.user.name, createdAt,
+      scheduledAt: req.body?.scheduledAt ? String(req.body.scheduledAt) : undefined,
+      stage: 'pending_approval', comments: [],
+      history: [{ id: id('history'), actorId: auth.user.id, actorName: auth.user.name, action: 'submitted', detail: 'Conteúdo enviado para aprovação pelo Calendário', createdAt }],
+      campaignId: req.body?.campaignId ? String(req.body.campaignId) : undefined,
+      strategyId: req.body?.strategyId ? String(req.body.strategyId) : undefined,
+    };
+    approvals.unshift(approval);
+    addAudit(auth, 'content.submitted', 'content:' + contentId, 'Conteúdo enviado para aprovação pelo Calendário');
+    return res.status(201).json(approval);
+  });
+
   router.get('/approvals', masterOnly, (req: AuthenticatedRequest, res) => res.json(approvals.filter((item) => item.workspaceId === req.auth!.workspaceId)));
   router.post('/approvals/:approvalId/actions', masterOnly, (req: AuthenticatedRequest, res) => {
     const auth = req.auth!;
@@ -274,6 +332,10 @@ export function createGovernanceRouter() {
     if ((action === 'publish' || action === 'schedule') && approval.stage !== 'approved') {
       addAudit(auth, 'publication.blocked', 'content:' + approval.contentId, 'Publicação bloqueada: conteúdo sem aprovação');
       return res.status(409).json({ error: 'Este conteúdo precisa ser aprovado pelo administrador antes da publicação.' });
+    }
+    if (action === 'publish' && !publishingConfigured(approval.platform)) {
+      addAudit(auth, 'publication.blocked', 'content:' + approval.contentId, `Publicação bloqueada: integração ${approval.platform} não configurada`);
+      return res.status(409).json({ error: `A publicação no ${approval.platform} exige uma conta autorizada e credenciais válidas. O conteúdo permaneceu aprovado.` });
     }
     if (comment) approval.comments.push({ id: id('comment'), authorId: auth.user.id, authorName: auth.user.name, message: comment, createdAt: nowIso() });
     const actionMap: Record<string, { stage?: ContentApprovalItem['stage']; detail: string }> = {
@@ -301,6 +363,10 @@ export function createGovernanceRouter() {
     if (approval.stage !== 'approved') {
       addAudit(auth, 'automation.publication_blocked', 'content:' + approval.contentId, 'Agendamento cancelado por ausência de aprovação');
       return res.status(409).json({ error: 'Publicação automática cancelada: aprovação do administrador pendente.' });
+    }
+    if (!publishingConfigured(approval.platform)) {
+      addAudit(auth, 'automation.publication_blocked', 'content:' + approval.contentId, `Integração ${approval.platform} não configurada`);
+      return res.status(409).json({ error: `A publicação automática no ${approval.platform} não está configurada.` });
     }
     approval.stage = 'published';
     approval.publishedBy = auth.user.id;

@@ -5,6 +5,7 @@ import { createServer as createViteServer } from 'vite';
 import { GoogleGenAI, Type } from '@google/genai';
 import dotenv from 'dotenv';
 import { createGovernanceRouter } from './server/governance';
+import { createIntegrationsRouter } from './server/integrations';
 
 dotenv.config();
 
@@ -18,6 +19,7 @@ async function startServer() {
 
   app.use(express.json({ limit: '10mb' }));
   app.use('/api/governance', createGovernanceRouter());
+  app.use('/api/integrations', createIntegrationsRouter());
 
   // Helper to initialize Gemini SDK on server-side
   const getAiClient = () => {
@@ -60,58 +62,138 @@ async function startServer() {
     res.json({ status: 'ok', timestamp: new Date().toISOString() });
   });
 
+  app.get('/api/capabilities', (_req, res) => {
+    const socialProviders = {
+      instagram: Boolean(process.env.META_CLIENT_ID && process.env.META_CLIENT_SECRET),
+      facebook: Boolean(process.env.META_CLIENT_ID && process.env.META_CLIENT_SECRET),
+      linkedin: Boolean(process.env.LINKEDIN_CLIENT_ID && process.env.LINKEDIN_CLIENT_SECRET),
+      youtube: Boolean(process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET),
+      tiktok: Boolean(process.env.TIKTOK_CLIENT_KEY && process.env.TIKTOK_CLIENT_SECRET),
+      pinterest: Boolean(process.env.PINTEREST_APP_ID && process.env.PINTEREST_APP_SECRET),
+      threads: Boolean(process.env.THREADS_APP_ID && process.env.THREADS_APP_SECRET),
+    };
+    res.json({
+      geminiConfigured: Boolean(process.env.GEMINI_API_KEY),
+      webhooksConfigured: Boolean(process.env.WEBHOOK_SIGNING_SECRET),
+      analyticsConfigured: Object.values(socialProviders).some(Boolean),
+      socialPublishingConfigured: Object.values(socialProviders).some(Boolean),
+      socialProviders,
+      storageMode: 'browser-local',
+      transactionalEmailConfigured: Boolean(process.env.TRANSACTIONAL_EMAIL_API_KEY),
+    });
+  });
+
   const operatingContext = (body: any) => {
-    const brain = body?.brainContext;
+    const contextProfile = body?.contextProfile;
     const client = body?.clientContext;
     const strategy = body?.strategyContext;
-    const screenContext = body?.screenContext;
-    if (!brain && !client && !strategy && !screenContext) return '';
-    return `\n\nCONTEXTO OPERACIONAL OBRIGATÓRIO (fonte única de verdade):\n${brain ? `BRAIN revisão ${brain.revision}:\nEmpresa: ${brain.company}\nProdutos: ${brain.products}\nServiços: ${brain.services}\nTom: ${brain.toneOfVoice}\nPúblico: ${brain.audience}\nPersonas: ${brain.personas}\nObjetivos: ${brain.objectives}\nDiferenciais: ${brain.differentiators}\nDores: ${brain.pains}\nDesejos: ${brain.desires}\nObjeções: ${brain.objections}\nIdentidade visual: ${brain.visualIdentity}\nPalavras obrigatórias: ${brain.requiredWords}\nPalavras proibidas: ${brain.forbiddenWords}` : ''}${client ? `\nCLIENTE ATIVO: ${client.name}\nSegmento: ${client.segment}\nObjetivo atual: ${client.currentObjective}\nOferta em destaque: ${client.featuredOffer}\nPosicionamento: ${client.positioning}\nPúblico: ${client.audience}\nTom: ${client.toneOfVoice}\nDiferenciais: ${client.differentiators}` : ''}${strategy ? `\nESTRATÉGIA ATIVA: ${strategy.name}\nObjetivo: ${strategy.objective}\nOferta: ${strategy.offer}\nPúblico: ${strategy.audience}\nFunil: ${strategy.funnel}\nCTAs: ${strategy.ctas?.join(', ')}` : ''}\nTela atual: ${screenContext || 'não informada'}. Não contradiga este contexto e preserve a rastreabilidade da resposta.`;
+    const memory = Array.isArray(body?.memoryContext) ? body.memoryContext : [];
+    const operation = body?.operationSummary;
+    if (!contextProfile && !client && !strategy && !memory.length) return '';
+    const history = Array.isArray(operation?.contentHistory) ? operation.contentHistory : [];
+    const historyText = history.slice(0, 60).map((item: any) => `- ${item.title} | ${item.platform}/${item.format} | ${item.status} | objetivo: ${item.objective || 'não informado'} | campanha: ${item.campaignId || 'nenhuma'}`).join('\n');
+    const accountsText = Array.isArray(operation?.connectedAccounts) ? operation.connectedAccounts.map((account: any) => `- ${account.platform}: ${account.connected ? `autorizada (${(account.permissions || []).join(', ') || 'permissões não informadas'})` : 'não autorizada'}`).join('\n') : '';
+    const gaps = Array.isArray(operation?.knowledgeGaps) ? operation.knowledgeGaps.join(', ') : '';
+    const preferences = body?.operatorPreferences && typeof body.operatorPreferences === 'object'
+      ? Object.entries(body.operatorPreferences)
+          .filter(([, value]) => value !== undefined && value !== null && String(value).trim() !== '')
+          .slice(0, 12)
+          .map(([key, value]) => `- ${key}: ${Array.isArray(value) ? value.join(', ') : String(value)}`)
+          .join('\n')
+      : '';
+    return `\n\nCONTEXTO OPERACIONAL OBRIGATÓRIO — WORKSPACE ${body?.workspaceId || 'ATIVO'}:
+ ${contextProfile ? `CONTEXTO CONSOLIDADO revisão ${contextProfile.revision}:\nIdentidade: ${contextProfile.company}\nProdutos: ${contextProfile.products}\nServiços: ${contextProfile.services}\nTom: ${contextProfile.toneOfVoice}\nPúblico: ${contextProfile.audience}\nObjetivos: ${contextProfile.objectives}\nDiferenciais: ${contextProfile.differentiators}\nConcorrentes: ${contextProfile.competitors}\nPreferências visuais: ${contextProfile.visualIdentity}\nPalavras obrigatórias: ${contextProfile.requiredWords}\nPalavras a evitar: ${contextProfile.forbiddenWords}` : ''}
+${client ? `\nPERFIL/CLIENTE ATIVO: ${client.name}\nSegmento: ${client.segment}\nObjetivo atual: ${client.currentObjective}\nOferta: ${client.featuredOffer}\nPosicionamento: ${client.positioning}\nPúblico: ${client.audience}\nTom: ${client.toneOfVoice}` : ''}
+${strategy ? `\nESTRATÉGIA: ${strategy.name}\nObjetivo: ${strategy.objective}\nOferta: ${strategy.offer}\nFunil: ${strategy.funnel}\nCTAs: ${strategy.ctas?.join(', ')}` : ''}
+\nMEMÓRIA SELECIONADA PARA ESTE PEDIDO:
+${memory.map((entry: any) => `- [${entry.scope}/${entry.confidence}%] ${entry.label}: ${entry.value}`).join('\n') || 'Nenhuma preferência adicional.'}
+\nPREFERÊNCIAS DO OPERADOR:
+${preferences || 'Nenhuma preferência pessoal adicional configurada.'}
+\nHISTÓRICO DE CONTEÚDO DO CONTEXTO ATIVO (${history.length}):
+${historyText || 'Nenhum conteúdo anterior.'}
+\nSINAIS E APROVAÇÕES:
+${operation?.learningSignals?.map((signal: any) => signal.recommendation).join(' | ') || 'Nenhum sinal validado.'}
+${operation?.approvals?.map((item: any) => `${item.title} (${item.stage})`).join(' | ') || 'Nenhuma aprovação.'}
+\nCONTAS SOCIAIS:
+${accountsText || 'Nenhuma conta informada.'}
+\nLACUNAS DE CONHECIMENTO: ${gaps || 'nenhuma crítica identificada'}.
+ \nTela: ${body?.screenContext || 'não informada'}. Não misture contas ou workspaces. Use somente as memórias relevantes para o pedido atual; não trate informações temporárias como regras permanentes. Adapte profundidade e formato às preferências do operador. Diferencie fato, hipótese e pesquisa externa. Se uma informação crítica estiver ausente, faça somente as perguntas objetivas necessárias e não repita perguntas já respondidas.`;
   };
 
-  // 1. AI Central Chat Endpoint
+  const chatActions = (actionId = '', message = '') => {
+    const intent = `${actionId} ${message}`.toLowerCase();
+    if (intent.includes('instagram') && !intent.includes('create')) return ['Analisar perfil', 'Pesquisar tendências', 'Criar estratégia'];
+    if (intent.includes('mode.strategist')) return [{ label: 'Criar plano de 30 dias', actionId: 'strategy.30-60-90' }, { label: 'Definir prioridades', actionId: 'strategy.priorities' }, 'Abrir estratégia'];
+    if (intent.includes('mode.explorer') || intent.includes('radar')) return [{ label: 'Transformar oportunidade em conteúdo', actionId: 'create.from-opportunity' }, { label: 'Comparar com concorrentes', actionId: 'competitors.analyze' }, 'Criar campanha'];
+    if (intent.includes('mode.diagnostic')) return [{ label: 'Corrigir principal lacuna', actionId: 'strategy.correct-gap' }, { label: 'Montar próximos conteúdos', actionId: 'analysis.next' }, 'Abrir análise de resultados'];
+    if (intent.includes('briefing.smart')) return [{ label: 'Criar estratégia com este briefing', actionId: 'strategy.create' }, 'Abrir estratégia'];
+    if (intent.includes('create.bulk')) return ['Salvar na biblioteca', 'Criar calendário editorial', 'Criar imagem', 'Criar vídeo'];
+    if (intent.includes('create.post')) return ['Salvar na biblioteca', 'Criar imagem', 'Abrir calendário editorial'];
+    if (/research|tendên|alta agora/.test(intent)) return ['Transformar tendência em campanha', 'Criar 5 ideias contextualizadas', 'Comparar com concorrentes'];
+    if (/competitor|concorrent/.test(intent)) return ['Criar mapa de diferenciação', 'Pesquisar tendências', 'Criar campanha própria'];
+    if (/analysis|analis|resultado/.test(intent)) return ['Abrir análise de resultados', 'Criar variações vencedoras', 'Montar próximos conteúdos'];
+    if (/video|vídeo|roteiro/.test(intent)) return ['Criar vídeo', 'Criar roteiro de vídeo', 'Salvar na biblioteca'];
+    if (/image|imagem|carrossel/.test(intent)) return ['Criar imagem', 'Criar carrossel', 'Salvar na biblioteca'];
+    if (/calendar|calend|agend/.test(intent)) return ['Abrir calendário editorial', 'Criar posts da semana', 'Sugerir melhores horários'];
+    if (/strategy|campanha|estratég|pilar/.test(intent)) return ['Abrir estratégia', 'Criar calendário editorial', 'Criar primeira peça'];
+    return ['Criar estratégia', 'Pesquisar tendências', 'Criar imagem', 'Criar vídeo', 'Analisar resultados'];
+  };
+
+  const compatibilityScore = (body: any) => {
+    let score = 58;
+    if (body?.contextProfile) score += 15;
+    if (body?.clientContext) score += 10;
+    if (body?.strategyContext) score += 7;
+    if (body?.memoryContext?.length) score += Math.min(8, body.memoryContext.length);
+    const forbidden = String(body?.contextProfile?.forbiddenWords || '').split(/[;,]/).map((word: string) => word.trim().toLowerCase()).filter(Boolean);
+    if (forbidden.some((word: string) => String(body?.message || '').toLowerCase().includes(word))) score -= 18;
+    return Math.max(35, Math.min(98, score));
+  };
+
+  const contextualFallback = (body: any) => {
+    const name = body?.clientContext?.name || 'a marca ativa';
+    const objective = body?.clientContext?.currentObjective || body?.contextProfile?.objectives || 'crescimento consistente';
+    const learning = body?.operationSummary?.learningSignals?.[0]?.recommendation;
+    const actionId = String(body?.actionId || '');
+    const gaps = Array.isArray(body?.operationSummary?.knowledgeGaps) ? body.operationSummary.knowledgeGaps : [];
+    if (actionId === 'briefing.smart') return gaps.length ? `Já recuperei o contexto disponível de ${name}. Para concluir o briefing sem repetir perguntas, preciso apenas destas informações: ${gaps.map((gap: string) => `\n• ${gap}`).join('')}. Responda em uma única mensagem; depois transformarei o briefing em estratégia acionável.` : `O briefing de ${name} já possui os campos críticos: identidade, oferta, público, objetivo e diferenciais. Posso avançar diretamente para estratégia, matriz criativa ou geração sem perguntar novamente.`;
+    if (actionId === 'create.bulk') return `Lote inicial para ${name}, orientado ao objetivo “${objective}” e variando ângulos para evitar repetição:\n\n1. Carrossel educativo — problema → método → CTA de consideração.\n2. Reel curto — hook de contraste → demonstração → CTA de descoberta.\n3. Post de prova — contexto → evidência disponível → convite.\n4. Stories — pergunta → bastidor → resposta → ação.\n5. Post de posicionamento — opinião própria → justificativa → conversa.\n\nAntes de publicar, complete dados específicos e valide qualquer afirmação que dependa de fonte externa.`;
+    if (actionId === 'create.post') return `Post para ${name}\n\nHook: O que muda quando conteúdo deixa de ser tarefa isolada e passa a responder a “${objective}”?\n\nDesenvolvimento: conecte o problema real do público ao diferencial da marca, apresente um passo aplicável e evite promessas não comprovadas.\n\nCTA: escolha uma ação compatível com a etapa atual do funil.\n\nA estrutura está pronta para ser salva na Biblioteca, enviada ao módulo de Imagem ou organizada no Calendário.`;
+    if (actionId === 'create.image') return `Direção visual para ${name}: composição limpa, hierarquia clara, foco em uma única mensagem e elementos coerentes com a identidade visual registrada. O material deve ser finalizado no módulo de Imagem; a KLIC apenas prepara contexto, conceito e prompt.`;
+    if (actionId === 'create.video') return `Roteiro-base para ${name}: hook de até 3 segundos, contexto do problema, demonstração ou argumento central, prova disponível e CTA coerente com “${objective}”. A criação e edição continuam no módulo de Vídeo.`;
+    if (actionId.startsWith('research')) return `Para ${name}, a pesquisa deve partir do objetivo “${objective}”. Vou priorizar sinais atuais ligados ao público e ao posicionamento, descartando tendências genéricas. Achados externos serão identificados e convertidos em ângulos próprios.`;
+    if (actionId === 'mode.strategist') return `Diagnóstico estratégico de ${name}: o objetivo “${objective}” precisa ser traduzido em prioridades de 30, 60 e 90 dias. Nos primeiros 30 dias, validar mensagem e formatos; em 60 dias, ampliar os padrões vencedores; em 90 dias, consolidar distribuição e conversão. A prioridade imediata é conectar cada conteúdo a uma etapa do funil.`;
+    if (actionId === 'mode.explorer' || actionId === 'research.radar') return `Radar de ${name}: vou limitar a exploração a poucas oportunidades com alta aderência ao posicionamento. O fluxo recomendado é Tendência → relevância para a marca → ângulo próprio → conteúdo executável, evitando aderir a assuntos apenas porque estão populares.`;
+    if (actionId === 'mode.diagnostic') return `Diagnóstico de ${name}: ponto forte — contexto de marca estruturado; risco — repetir formatos sem comprovar evolução; prioridade — cruzar objetivo, conteúdos recentes, aprovações e desempenho antes de produzir a próxima sequência. Toda avaliação permanece identificada como fato ou hipótese.`;
+    if (actionId.startsWith('competitors')) return `A análise de concorrência de ${name} deve comparar posicionamento, linguagem, temas, formatos e frequência sem copiar. A primeira oportunidade é identificar argumentos repetidos no mercado e ocupar um território de autoridade próprio.`;
+    if (actionId.startsWith('analysis')) return `Com os dados disponíveis de ${name}, o padrão inicial é: ${learning || 'conectar cada conteúdo a uma campanha e medir a resposta por formato'}. Isso permanece como hipótese até haver evidência suficiente.`;
+    if (actionId.startsWith('strategy')) return `Para ${name}, estruturaria a estratégia em educação sobre o problema, prova do diferencial e conversão para “${objective}”. Cada peça deve estar ligada a uma etapa do funil e a um indicador.`;
+    return `Entendi o objetivo de ${name}. Considerando posicionamento, público, memória aprendida e a meta “${objective}”, vou organizar a resposta em recomendação, justificativa, execução e próximo passo.`;
+  };
+
   app.post('/api/ai/chat', async (req, res) => {
     try {
-      const { message, brandProfile } = req.body;
+      const { message, brandProfile, actionId, conversationContext } = req.body;
       const ai = getAiClient();
+      if (!ai) return res.json({ reply: contextualFallback(req.body), actionSuggestions: chatActions(actionId, message), researchedExternally: false, brandCompatibilityScore: compatibilityScore(req.body) });
 
-      if (!ai) {
-        return res.json({
-          reply: `[Modo Demonstração] Entendido. Para ${req.body?.clientContext?.name || brandProfile?.name || 'a marca ativa'}, recomendo transformar o objetivo atual em uma sequência de descoberta, consideração e conversão, mantendo cada peça conectada à campanha.`,
-          actionSuggestions: [
-            'Criar Campanha de Lançamento',
-            'Gerar 5 Ideias de Carrossel',
-            'Agendar posts para os melhores horários'
-          ]
-        });
-      }
-
-      const systemInstruction = `Você é o consultor estratégico da plataforma Clicko Studio.
-Sua marca atual: ${req.body?.clientContext?.name || brandProfile?.name || 'Marca Padrão'}.
-Tom de voz: ${req.body?.clientContext?.toneOfVoice || brandProfile?.tone || 'Profissional, moderno e direto'}.
-Público-alvo: ${req.body?.clientContext?.audience || brandProfile?.targetAudience || 'Empreendedores e profissionais digitais'}.
-Seu objetivo é ajudar o usuário a planejar, criar, organizar e otimizar campanhas e posts de mídia social.
-Responda em português (BR), de forma concisa, elegante e acionável. Em modo briefing, faça uma pergunta consultiva por vez e converta as respostas em objetivo, campanha, calendário, formatos, funil, CTAs e plano de execução.${operatingContext(req.body)}`;
-
+      const systemInstruction = `Você é o cérebro estratégico da plataforma Clicko Studio. Sua marca atual é ${req.body?.clientContext?.name || brandProfile?.name || 'Marca Padrão'}. Coordene estratégia, pesquisa, análise, criação, biblioteca, calendário e aprendizado. Responda em português do Brasil, de forma específica e acionável. Nunca dê sugestões genéricas. Preserve o contexto da conversa e não peça novamente informações já fornecidas. Não transforme comentários casuais em regras permanentes. Antes de responder, faça autocrítica silenciosa: valide DNA da marca, objetivo, diferenciação, hook, possível repetição com os conteúdos recentes e informações que exigem confirmação. Evite repetir temas, estruturas e ângulos usados recentemente; aplique distância criativa sem romper a identidade. Se o pedido contradizer claramente o posicionamento, alerte e ofereça uma alternativa. Em planos estratégicos, pense em ciclos de 30, 60 e 90 dias.${actionId ? `\nAÇÃO SOLICITADA: ${actionId}. Entregue um resultado utilizável.` : ''}${operatingContext(req.body)}`;
       try {
+        const needsResearch = /research|competitor|tendên|alta agora|concorrent/i.test(`${actionId || ''} ${message}`);
+        const history = Array.isArray(conversationContext) ? conversationContext.slice(-10).map((item: any) => ({ role: item.role === 'assistant' ? 'model' : 'user', parts: [{ text: String(item.content || '') }] })) : [];
+        const attachmentParts = (Array.isArray(req.body?.attachments) ? req.body.attachments : []).slice(0, 4).flatMap((attachment: any) => {
+          const match = String(attachment?.dataUrl || '').match(/^data:([^;,]+);base64,(.+)$/);
+          if (!match) return [];
+          return [{ inlineData: { mimeType: match[1], data: match[2] } }];
+        });
         const response = await generateContentWithFallback(ai, {
-          contents: [
-            { role: 'user', parts: [{ text: `${systemInstruction}\n\nUsuário: ${message}` }] }
-          ]
+          contents: [...history, { role: 'user', parts: [{ text: `${systemInstruction}\n\nPedido atual: ${message}${needsResearch ? '\nUse pesquisa externa atualizada quando disponível e deixe explícito o que veio de fonte externa.' : ''}${attachmentParts.length ? '\nAnalise também os anexos enviados e identifique claramente qualquer limitação de leitura.' : ''}` }, ...attachmentParts] }],
+          ...(needsResearch ? { config: { tools: [{ googleSearch: {} }] } } : {}),
         });
-
-        const replyText = response.text || 'Não foi possível obter resposta no momento.';
-        res.json({ reply: replyText });
+        res.json({ reply: response.text || contextualFallback(req.body), actionSuggestions: chatActions(actionId, message), researchedExternally: needsResearch, brandCompatibilityScore: compatibilityScore(req.body) });
       } catch (apiErr: any) {
-        console.warn('Gemini chat unavailable, returning smart fallback reply:', apiErr?.message);
-        res.json({
-          reply: `Recebi sua mensagem sobre "${message}". Os servidores de IA estão com alta demanda temporária, mas preparei uma sugestão estratégica: focar em carrosséis explicativos com chamadas para ação diretas no final.`,
-          actionSuggestions: [
-            'Criar Carrossel Explicativo',
-            'Ver Roteiro de Vídeo Sugerido',
-            'Agendar para o melhor horário'
-          ]
-        });
+        console.warn('Gemini chat unavailable, returning contextual fallback:', apiErr?.message);
+        res.json({ reply: contextualFallback(req.body), actionSuggestions: chatActions(actionId, message), researchedExternally: false, brandCompatibilityScore: compatibilityScore(req.body) });
       }
     } catch (err: any) {
       console.error('Error in /api/ai/chat:', err);
@@ -181,7 +263,7 @@ Retorne obrigatoriamente um objeto JSON com a seguinte estrutura:
       "title": "Título / Headline atraente",
       "copy": "Texto completo da postagem com CTA",
       "hashtags": ["#tag1", "#tag2", "#tag3"],
-      "suggestedTime": "Dia e horário sugerido pela IA",
+      "suggestedTime": "Dia e horário sugerido pela KLIC",
       "imagePrompt": "Descrição visual em inglês para geração da imagem de capa"
     }
   ]
@@ -231,6 +313,79 @@ Retorne obrigatoriamente um objeto JSON com a seguinte estrutura:
     } catch (err: any) {
       console.error('Error in /api/ai/generate-campaign:', err);
       res.json(fallbackCampaign);
+    }
+  });
+
+  app.post('/api/ai/plan-calendar', async (req, res) => {
+    const ai = getAiClient();
+    if (!ai) return res.status(503).json({ error: 'A KLIC precisa estar configurada para gerar um planejamento.' });
+    const objective = String(req.body?.objective || '').trim();
+    const periodStart = String(req.body?.periodStart || '');
+    const periodEnd = String(req.body?.periodEnd || '');
+    const requestedPlatforms = Array.isArray(req.body?.connectedPlatforms)
+      ? req.body.connectedPlatforms.map((item: unknown) => String(item).toLowerCase()).filter((item: string) => ['instagram', 'facebook', 'tiktok', 'linkedin', 'youtube', 'threads'].includes(item))
+      : [];
+    if (!objective) return res.status(400).json({ error: 'Informe o objetivo do planejamento.' });
+    if (!requestedPlatforms.length) return res.status(409).json({ error: 'Conecte ao menos uma rede social antes de planejar a distribuição com a KLIC.' });
+
+    const existingPosts = Array.isArray(req.body?.existingPosts) ? req.body.existingPosts.slice(0, 80) : [];
+    const prompt = `Crie sugestões editoriais para revisão humana. Nunca afirme que publicou ou alterou o calendário.
+Objetivo: ${objective}
+Período permitido: ${periodStart} até ${periodEnd}
+Plataformas autorizadas: ${requestedPlatforms.join(', ')}
+Conteúdos já planejados: ${existingPosts.map((post: any) => `${post.scheduledAt || 'sem data'} | ${post.platform} | ${post.title}`).join('\n') || 'nenhum'}
+
+Distribua temas e horários sem sobrepor conteúdos existentes. Retorne de 3 a 8 sugestões. Cada suggestedAt deve ser uma data ISO dentro do período permitido e cada platform deve pertencer às plataformas autorizadas. Explique brevemente a razão de cada escolha.`;
+
+    try {
+      const response = await generateContentWithFallback(ai, {
+        contents: `${prompt}${operatingContext(req.body)}`,
+        config: {
+          responseMimeType: 'application/json',
+          responseSchema: {
+            type: Type.OBJECT,
+            properties: {
+              suggestions: {
+                type: Type.ARRAY,
+                items: {
+                  type: Type.OBJECT,
+                  properties: {
+                    title: { type: Type.STRING },
+                    platform: { type: Type.STRING },
+                    format: { type: Type.STRING },
+                    suggestedAt: { type: Type.STRING },
+                    copy: { type: Type.STRING },
+                    rationale: { type: Type.STRING },
+                  },
+                  required: ['title', 'platform', 'format', 'suggestedAt', 'copy', 'rationale'],
+                },
+              },
+            },
+            required: ['suggestions'],
+          },
+        },
+      });
+      const parsed = JSON.parse(response.text || '{}');
+      const allowedFormats = new Set(['post', 'carousel', 'reels', 'story', 'video', 'youtube-short', 'youtube-long', 'linkedin-article', 'thread', 'script']);
+      const startTime = new Date(periodStart).getTime();
+      const endTime = new Date(periodEnd).getTime();
+      const suggestions = (Array.isArray(parsed.suggestions) ? parsed.suggestions : []).filter((item: any) => {
+        const date = new Date(item.suggestedAt).getTime();
+        return item?.title && requestedPlatforms.includes(String(item.platform).toLowerCase()) && Number.isFinite(date) && date >= startTime && date <= endTime;
+      }).slice(0, 8).map((item: any, index: number) => ({
+        id: `calendar-suggestion-${Date.now()}-${index}`,
+        title: String(item.title),
+        platform: String(item.platform).toLowerCase(),
+        format: allowedFormats.has(String(item.format).toLowerCase()) ? String(item.format).toLowerCase() : 'post',
+        suggestedAt: new Date(item.suggestedAt).toISOString(),
+        copy: String(item.copy || ''),
+        rationale: String(item.rationale || ''),
+      }));
+      if (!suggestions.length) return res.status(422).json({ error: 'A KLIC não retornou sugestões válidas para este período. Ajuste o objetivo e tente novamente.' });
+      return res.json({ suggestions });
+    } catch (error: any) {
+      console.error('Error in /api/ai/plan-calendar:', error);
+      return res.status(502).json({ error: error?.message || 'Não foi possível gerar o planejamento agora.' });
     }
   });
 
@@ -295,17 +450,21 @@ Retorne um JSON com:
 
   // 4. Analytics AI Explanation
   app.post('/api/ai/analyze-metrics', async (req, res) => {
-    const { period = 'Últimos 30 dias', reachChange = 18.4, engagementRate = 6.8, topPost = 'Lançamento de Produto' } = req.body;
+    const { period = 'Últimos 30 dias' } = req.body;
+    const metrics = Array.isArray(req.body?.metrics) ? req.body.metrics.filter((item: any) => item?.source === 'connected-api') : [];
 
     const fallbackMetrics = {
-      insight: `A leitura usa apenas a amostra local de demonstração de ${period}. Ela aponta "${topPost}" como referência de estrutura, não como comprovação de desempenho real.`,
-      recommendation: 'Use esse padrão como hipótese: crie variações controladas, publique somente após aprovação e valide a conclusão quando uma fonte de analytics estiver conectada.',
+      dataStatus: 'unavailable',
+      insight: `Não há métricas autorizadas disponíveis para ${period}. Por isso, a KLIC não calculou crescimento, alcance, engajamento ou um conteúdo vencedor.`,
+      recommendation: 'Autorize uma conta em Conexões e conceda permissão de leitura de métricas. Até lá, trate sugestões criativas apenas como hipóteses a testar.',
       keyTakeaways: [
-        'A mensagem pode ser testada em mais de um formato',
-        'O CTA deve permanecer explícito nas variações',
-        'Nenhum padrão é marcado como validado sem dados conectados'
+        'Nenhuma métrica externa foi recebida',
+        'Nenhum padrão foi marcado como validado',
+        'As recomendações permanecem hipóteses até a conexão de uma fonte'
       ]
     };
+
+    if (!metrics.length) return res.json(fallbackMetrics);
 
     try {
       const ai = getAiClient();
@@ -315,13 +474,12 @@ Retorne um JSON com:
       }
 
       const prompt = `Você é um analista de dados e cientista de crescimento de mídia social.
-Análise de desempenho do período (${period}):
-- Variação do Alcance: ${reachChange}%
-- Taxa de Engajamento: ${engagementRate}%
-- Post mais popular: "${topPost}"
+Análise de desempenho do período (${period}) usando exclusivamente estas métricas provenientes de APIs conectadas:
+${JSON.stringify(metrics)}
 
-Os valores acima são uma amostra local de demonstração. Não os apresente como resultados reais nem faça alegações causais. Gere uma explicação contextual inteligente (em português) tratando tudo como hipótese e focando em próximos passos acionáveis em formato JSON:
+Diferencie dados recebidos, cálculos e inferências. Não faça alegações causais sem evidência. Gere uma explicação contextual inteligente (em português) em formato JSON:
 {
+  "dataStatus": "connected",
   "insight": "Breve explicação do porquê dos resultados",
   "recommendation": "Recomendação tática direta",
   "keyTakeaways": ["Ponto 1", "Ponto 2", "Ponto 3"]
@@ -337,7 +495,7 @@ Os valores acima são uma amostra local de demonstração. Não os apresente com
 
         const parsed = JSON.parse(response.text || '{}');
         if (parsed && parsed.insight) {
-          return res.json(parsed);
+          return res.json({ ...parsed, dataStatus: 'connected' });
         }
         return res.json(fallbackMetrics);
       } catch (apiErr: any) {
@@ -525,7 +683,7 @@ Monte automaticamente o planejamento completo com cronograma, lista de conteúdo
       success: true,
       actionApplied: action,
       modifiedImageUrl: sourceImage || 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80',
-      message: `Ação de IA "${action}" executada com sucesso! Ajustes de iluminação e renderização final aplicados.`
+      message: `Ação da KLIC "${action}" executada com sucesso! Ajustes de iluminação e renderização final aplicados.`
     });
   });
 
@@ -538,7 +696,7 @@ Monte automaticamente o planejamento completo com cronograma, lista de conteúdo
       videoUrl: videoUrl || 'https://assets.mixkit.co/videos/preview/mixkit-working-late-at-a-computer-43409-large.mp4',
       subtitlesGenerated: true,
       silenceRemovedSecs: 3.8,
-      message: `Edição de vídeo com IA "${action}" concluída. Legendas estilo ${subtitleStyle} aplicadas.`
+      message: `Edição de vídeo com a KLIC "${action}" concluída. Legendas estilo ${subtitleStyle} aplicadas.`
     });
   });
 

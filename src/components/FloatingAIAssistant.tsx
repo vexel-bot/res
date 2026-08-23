@@ -1,21 +1,15 @@
 import React from 'react';
 import {
-  Bot,
-  BrainCircuit,
-  Maximize2,
-  Send,
-  Sparkles,
-  X,
-  Target,
   BarChart3,
   GitFork,
-  FileText,
-  Zap,
-  ArrowRight
+  Maximize2,
+  Send,
+  Target,
+  X,
 } from 'lucide-react';
 import type { NavigationTab } from '../types';
 import { useAIChat } from '../context/AIChatContext';
-import { navigationLabel } from '../utils/localization';
+import { KlicPlasma } from './KlicPlasma';
 
 interface FloatingAIAssistantProps {
   currentTab: NavigationTab;
@@ -23,15 +17,31 @@ interface FloatingAIAssistantProps {
   onNavigateTab?: (tab: NavigationTab) => void;
 }
 
-const moduleSuggestions: Partial<Record<NavigationTab, string>> = {
-  calendar: 'Crie uma legenda otimizada para o próximo agendamento.',
-  analytics: 'Explique por que meu alcance variou este mês.',
-  studio: 'Gere um post usando a Matriz Criativa.',
-  'create-image': 'Remova o fundo e aplique iluminação neon nesta imagem.',
-  'create-video': 'Gere legendas animadas no estilo Karaokê.',
-  automations: 'Sugira um novo fluxo de captura e WhatsApp.',
-  brain: 'Mostre as principais diretrizes de tom de voz da marca.',
-};
+const quickActions: Array<{
+  label: string;
+  prompt: string;
+  tab?: NavigationTab;
+  icon: React.ComponentType<{ className?: string }>;
+}> = [
+  {
+    label: 'Matriz Criativa',
+    prompt: 'Abrir criação e edição de imagem',
+    tab: 'create-image',
+    icon: Target,
+  },
+  {
+    label: 'Analytics',
+    prompt: 'Analisar métricas recentes do Analytics',
+    tab: 'analytics',
+    icon: BarChart3,
+  },
+  {
+    label: 'Automações',
+    prompt: 'Abrir Automações de Lead e WhatsApp',
+    tab: 'automations',
+    icon: GitFork,
+  },
+];
 
 export function FloatingAIAssistant({
   currentTab,
@@ -41,157 +51,181 @@ export function FloatingAIAssistant({
   const { messages, loading, sendMessage } = useAIChat();
   const [open, setOpen] = React.useState(false);
   const [input, setInput] = React.useState('');
-  const recent = messages.slice(-4);
+  const inputRef = React.useRef<HTMLTextAreaElement>(null);
+  const streamRef = React.useRef<HTMLDivElement>(null);
+  const recent = messages.slice(-7);
+
+  React.useEffect(() => {
+    if (!open) return;
+    const focusTimer = window.setTimeout(() => inputRef.current?.focus(), 220);
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setOpen(false);
+    };
+    window.addEventListener('keydown', handleEscape);
+    return () => {
+      window.clearTimeout(focusTimer);
+      window.removeEventListener('keydown', handleEscape);
+    };
+  }, [open]);
+
+  React.useEffect(() => {
+    if (!open) return;
+    const stream = streamRef.current;
+    if (stream) stream.scrollTop = stream.scrollHeight;
+  }, [loading, messages, open]);
 
   const submit = () => {
-    const value = input;
+    const value = input.trim();
+    if (!value || loading) return;
     setInput('');
     void sendMessage(value, currentTab);
   };
 
   const handleQuickAction = (action: string, navigateTo?: NavigationTab) => {
-    if (navigateTo && onNavigateTab) {
-      onNavigateTab(navigateTo);
-    }
+    if (navigateTo && onNavigateTab) onNavigateTab(navigateTo);
     void sendMessage(action, currentTab);
   };
 
+  const openFullChat = () => {
+    setOpen(false);
+    onOpenFullChat();
+  };
+
   return (
-    <div className="fixed bottom-5 right-5 z-[70]">
+    <div className={`klic-floating-root ${open ? 'is-open' : ''}`}>
       {open && (
-        <section className="mb-3 flex h-[440px] w-[340px] max-h-[calc(100vh-96px)] max-w-[calc(100vw-32px)] flex-col overflow-hidden rounded-xl border border-white/[0.09] bg-[#141b1f] shadow-xl shadow-black/50">
-          {/* Header */}
-          <header className="flex items-center justify-between border-b border-white/[0.06] p-3.5 bg-[#182126]">
-            <div className="flex items-center gap-2">
-              <span className="grid h-8 w-8 place-items-center rounded-lg bg-[#8bd132]/10 border border-[#8bd132]/20">
-                <Bot className="h-4 w-4 text-[#8bd132]" />
-              </span>
-              <div>
-                <h2 className="text-[11px] font-bold text-white flex items-center gap-1">
-                  Copiloto Clicko IA <Sparkles className="h-3 w-3 text-[#8bd132]" />
-                </h2>
-                <p className="text-[8px] text-[#828e93]">
-                  Diretor de Mídia Social · Contexto: {navigationLabel[currentTab]}
+        <section
+          id="klic-floating-dialog"
+          role="dialog"
+          aria-label="Conversa rápida com a KLIC"
+          className="klic-floating-panel"
+        >
+          <header className="klic-floating-header">
+            <div className="flex min-w-0 items-center gap-3">
+              <KlicPlasma state={loading ? 'processing' : 'idle'} compact />
+              <div className="min-w-0">
+                <div className="flex items-center gap-2">
+                  <h2 className="text-[13px] font-semibold tracking-[0.08em] text-white">KLIC AI</h2>
+                  <span className="klic-floating-live-dot" aria-hidden="true" />
+                </div>
+                <p className="truncate text-[9px] text-[#69747a]">
+                  Inteligência artificial da Clicko.
                 </p>
               </div>
             </div>
 
-            <div className="flex gap-1">
+            <div className="flex shrink-0 items-center gap-1">
               <button
-                onClick={onOpenFullChat}
-                className="rounded-md p-1.5 text-[#78848a] hover:bg-white/[0.05] hover:text-white"
-                title="Abrir Chat do Diretor de IA"
+                type="button"
+                onClick={openFullChat}
+                className="klic-floating-icon-button"
+                aria-label="Abrir Klic AI em tela cheia"
+                title="Abrir Klic AI"
               >
                 <Maximize2 className="h-3.5 w-3.5" />
               </button>
               <button
+                type="button"
                 onClick={() => setOpen(false)}
-                className="rounded-md p-1.5 text-[#78848a] hover:bg-white/[0.05] hover:text-white"
-                title="Fechar assistente"
+                className="klic-floating-icon-button"
+                aria-label="Fechar Klic AI"
+                title="Fechar"
               >
-                <X className="h-3.5 w-3.5" />
+                <X className="h-4 w-4" />
               </button>
             </div>
           </header>
 
-          {/* Quick Command Shortcuts */}
-          <div className="p-2 border-b border-white/[0.05] bg-black/20 flex gap-1 overflow-x-auto custom-scrollbar">
-            <button
-              onClick={() => handleQuickAction('Abrir Estúdio para criar conteúdo', 'studio')}
-              className="px-2 py-1 text-[8px] font-bold rounded bg-[#8bd132]/10 text-[#8bd132] whitespace-nowrap hover:bg-[#8bd132]/20 transition flex items-center gap-1"
-            >
-              <Target className="h-3 w-3" /> Matriz Criativa
-            </button>
-            <button
-              onClick={() => handleQuickAction('Consultar dados do Brain da Marca', 'brain')}
-              className="px-2 py-1 text-[8px] font-bold rounded bg-white/[0.05] text-[#b8c2c6] whitespace-nowrap hover:text-white transition flex items-center gap-1"
-            >
-              <BrainCircuit className="h-3 w-3" /> Ver Brain
-            </button>
-            <button
-              onClick={() => handleQuickAction('Analisar métricas recentes do Analytics', 'analytics')}
-              className="px-2 py-1 text-[8px] font-bold rounded bg-white/[0.05] text-[#b8c2c6] whitespace-nowrap hover:text-white transition flex items-center gap-1"
-            >
-              <BarChart3 className="h-3 w-3" /> Analytics
-            </button>
-            <button
-              onClick={() => handleQuickAction('Abrir Automações de Lead e WhatsApp', 'automations')}
-              className="px-2 py-1 text-[8px] font-bold rounded bg-white/[0.05] text-[#b8c2c6] whitespace-nowrap hover:text-white transition flex items-center gap-1"
-            >
-              <GitFork className="h-3 w-3" /> Automações
+          <div className="klic-floating-actions custom-scrollbar" aria-label="Atalhos da KLIC">
+            {quickActions.map((action) => {
+              const Icon = action.icon;
+              return (
+                <button
+                  key={action.label}
+                  type="button"
+                  onClick={() => handleQuickAction(action.prompt, action.tab)}
+                  disabled={loading}
+                >
+                  <Icon className="h-3 w-3" />
+                  {action.label}
+                </button>
+              );
+            })}
+            <button type="button" onClick={openFullChat}>
+              Memória da KLIC
             </button>
           </div>
 
-          {/* Chat Stream */}
-          <div className="custom-scrollbar flex-1 space-y-3 overflow-y-auto p-3.5">
+          <div ref={streamRef} className="klic-floating-stream custom-scrollbar" aria-live="polite">
             {recent.map((message) => (
               <div
                 key={message.id}
-                className={`flex ${message.role === 'user' ? 'justify-end' : ''}`}
+                className={`klic-floating-message ${message.role === 'user' ? 'is-user' : 'is-assistant'}`}
               >
-                <p
-                  className={`max-w-[88%] rounded-xl px-3 py-2.5 text-[10px] leading-relaxed ${
-                    message.role === 'user'
-                      ? 'bg-[#8bd132] text-[#14200e] font-medium'
-                      : 'bg-black/30 border border-white/[0.06] text-[#cbd2d5]'
-                  }`}
-                >
-                  {message.content}
-                </p>
+                {message.role === 'assistant' && (
+                  <span className="klic-floating-message-mark" aria-hidden="true">
+                    <span className="scale-[0.72]"><KlicPlasma state="idle" compact /></span>
+                  </span>
+                )}
+                <div>
+                  <p>{message.content}</p>
+                  <time>
+                    {new Date(message.createdAt).toLocaleTimeString('pt-BR', {
+                      hour: '2-digit',
+                      minute: '2-digit',
+                    })}
+                  </time>
+                </div>
               </div>
             ))}
 
             {loading && (
-              <div className="flex items-center gap-2 text-[9px] text-[#8bd132] font-semibold">
-                <Sparkles className="h-3.5 w-3.5 animate-pulse" />
-                Consultando o Brain & Analisando dados...
+              <div className="klic-floating-thinking">
+                <KlicPlasma state="processing" compact />
+                <span>A KLIC está organizando a resposta…</span>
               </div>
             )}
           </div>
 
-          {/* Bottom Input Area */}
-          <div className="border-t border-white/[0.06] p-3 bg-[#182126]">
-            <button
-              onClick={() =>
-                setInput(
-                  moduleSuggestions[currentTab] || 'Como a IA pode otimizar meu trabalho nesta tela?'
-                )
-              }
-              className="mb-2 w-full truncate rounded-lg bg-[#8bd132]/[0.08] border border-[#8bd132]/20 px-2.5 py-1.5 text-left text-[8px] font-bold text-[#8bd132]"
-            >
-              <BrainCircuit className="mr-1.5 inline h-3 w-3" />
-              {moduleSuggestions[currentTab] || 'Pedir sugestão tática para esta tela'}
-            </button>
-
-            <div className="flex gap-2">
-              <input
+          <footer className="klic-floating-composer-wrap">
+            <div className="klic-floating-composer">
+              <textarea
+                ref={inputRef}
                 value={input}
                 onChange={(event) => setInput(event.target.value)}
                 onKeyDown={(event) => {
-                  if (event.key === 'Enter') submit();
+                  if (event.key === 'Enter' && !event.shiftKey) {
+                    event.preventDefault();
+                    submit();
+                  }
                 }}
-                placeholder="Comande a IA em qualquer tela..."
-                className="h-9 min-w-0 flex-1 rounded-xl border border-white/[0.08] bg-black/30 px-3 text-[10px] text-white outline-none focus:border-[#8bd132]/40"
+                rows={1}
+                placeholder="Converse com a KLIC…"
+                aria-label="Mensagem para a KLIC"
               />
               <button
+                type="button"
                 onClick={submit}
                 disabled={!input.trim() || loading}
-                className="grid h-9 w-9 place-items-center rounded-xl bg-[#8bd132] text-[#14200e] disabled:opacity-35 transition hover:bg-[#9be24d]"
+                aria-label="Enviar mensagem"
               >
-                <Send className="h-3.5 w-3.5" />
+                <Send className="h-4 w-4" />
               </button>
             </div>
-          </div>
+          </footer>
         </section>
       )}
 
-      {/* Floating Toggle Button */}
       <button
+        type="button"
         onClick={() => setOpen((value) => !value)}
-        className="ml-auto grid h-12 w-12 place-items-center rounded-full border border-[#8bd132]/40 bg-[#182126] text-[#8bd132] shadow-lg shadow-black/50 transition-colors hover:bg-[#8bd132] hover:text-[#14200e]"
-        aria-label="Abrir Copiloto de IA"
+        className="klic-floating-trigger"
+        aria-label={open ? 'Fechar Klic AI' : 'Abrir Klic AI'}
+        aria-expanded={open}
+        aria-controls="klic-floating-dialog"
       >
-        <Bot className="h-5 w-5" />
+        <KlicPlasma state={loading ? 'processing' : 'idle'} compact />
+        <span className="klic-floating-trigger-hint" aria-hidden="true">Como posso ajudar?</span>
       </button>
     </div>
   );

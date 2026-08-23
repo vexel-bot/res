@@ -62,7 +62,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSpotlight }) => {
         >
           <div className="flex items-center gap-3 min-w-0">
             <Search className="h-4 w-4 shrink-0 text-[#5a6770] group-hover:text-[#8bd132] transition-colors" />
-            <span className="truncate text-xs font-medium max-[900px]:hidden">Buscar no workspace, conteúdos, IA...</span>
+            <span className="truncate text-xs font-medium max-[900px]:hidden">Buscar no workspace, conteúdos ou KLIC...</span>
           </div>
         </button>
       </div>
@@ -98,10 +98,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSpotlight }) => {
                     {pendingApprovals} conteúdo(s) aguardando sua autorização final.
                   </div>
                 )}
-                <div className="rounded-xl border border-white/[0.06] bg-[#07090c] p-3">
-                  <span className="font-semibold text-white block mb-0.5">Campanha em Alta</span>
-                  Sua estratégia de conteúdo registrou crescimento de +14.5% em alcance.
-                </div>
+                {pendingApprovals === 0 && <div className="rounded-xl border border-white/[0.06] bg-[#07090c] p-3"><span className="font-semibold text-white block mb-0.5">Nenhuma notificação operacional</span>Novos eventos aparecerão aqui quando forem registrados neste Perfil/Workspace.</div>}
               </div>
             </div>
           )}
@@ -144,7 +141,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSpotlight }) => {
                 <span className="h-1.5 w-1.5 rounded-full bg-[#8bd132]" />
               </div>
               <span className="truncate text-[10px] text-[#717d85]">
-                {isCompany ? 'Workspace Corporativo' : 'Workspace Pessoal'}
+                {isCompany ? 'Workspace Corporativo' : 'Conta Pessoal'}
               </span>
             </div>
 

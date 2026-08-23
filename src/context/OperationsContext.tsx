@@ -1,8 +1,10 @@
 import React from 'react';
 import { INITIAL_POSTS, INITIAL_WORKSPACES } from '../data/mockData';
 import type {
-  BrandBrain,
+  AIContextSnapshot,
+  AIMemoryEntry,
   ClientIntelligenceProfile,
+  ConnectedAccount,
   CreativeIdea,
   LearningSignal,
   LibraryAsset,
@@ -14,7 +16,6 @@ import type {
 import { useGovernance } from './GovernanceContext';
 
 type OperationsState = {
-  brain: BrandBrain;
   clients: ClientIntelligenceProfile[];
   campaigns: StrategyCampaign[];
   creativeIdeas: CreativeIdea[];
@@ -25,18 +26,19 @@ type OperationsState = {
   activeClientId?: string;
   activeCampaignId?: string;
   studioHandoff?: StudioHandoff;
+  aiMemory: AIMemoryEntry[];
+  connectedAccounts: ConnectedAccount[];
 };
 
 type OperationsContextValue = OperationsState & {
   activeWorkspace: Workspace;
   activeClient?: ClientIntelligenceProfile;
   activeCampaign?: StrategyCampaign;
-  brainCompleteness: number;
-  updateBrain: (values: Partial<BrandBrain>) => void;
-  addBrainSource: (source: BrandBrain['sourceFiles'][number]) => void;
+  contextSnapshot: AIContextSnapshot;
+  contextRevision: number;
   updateClient: (id: string, values: Partial<ClientIntelligenceProfile>) => void;
   setActiveClientId: (id?: string) => void;
-  createCampaign: (campaign: Omit<StrategyCampaign, 'id' | 'workspaceId' | 'brainRevision' | 'createdAt' | 'updatedAt'>) => StrategyCampaign;
+  createCampaign: (campaign: Omit<StrategyCampaign, 'id' | 'workspaceId' | 'contextRevision' | 'createdAt' | 'updatedAt'>) => StrategyCampaign;
   updateCampaign: (id: string, values: Partial<StrategyCampaign>) => void;
   setActiveCampaignId: (id?: string) => void;
   addPosts: (posts: Post[]) => void;
@@ -48,16 +50,31 @@ type OperationsContextValue = OperationsState & {
   clearStudioHandoff: () => void;
   createRepurposeHandoff: (post: Post, format: StudioHandoff['format']) => StudioHandoff;
   addLearningSignal: (signal: Omit<LearningSignal, 'id' | 'createdAt'>) => LearningSignal;
+  upsertAIMemory: (memory: Omit<AIMemoryEntry, 'id' | 'workspaceId' | 'createdAt' | 'updatedAt' | 'occurrences'> & { id?: string }) => AIMemoryEntry;
+  updateAIMemory: (id: string, values: Partial<Pick<AIMemoryEntry, 'label' | 'value' | 'scope' | 'category'>>) => void;
+  deleteAIMemory: (id: string) => void;
+  addConnectedAccount: (platform: ConnectedAccount['platform']) => ConnectedAccount;
+  updateConnectedAccount: (id: string, values: Partial<ConnectedAccount>) => void;
+  removeConnectedAccount: (id: string) => void;
 };
 
 const now = () => new Date().toISOString();
 
-function createInitialBrain(ws: Workspace): BrandBrain {
+function createInitialContextSeed(ws: Workspace): AIContextSnapshot {
   const isPersonal = ws.id === 'ws-personal';
+  const isSeedCompany = ws.id === 'ws-1';
+  if (!isPersonal && !isSeedCompany) {
+    return {
+      workspaceId: ws.id, revision: 1, company: ws.name,
+      products: '', services: '', visualIdentity: '', toneOfVoice: ws.brandProfile.tone || '',
+      audience: ws.brandProfile.targetAudience || '', personas: '', objectives: '', differentiators: '',
+      competitors: '', objections: '', pains: '', desires: '', faq: '', requiredWords: '', forbiddenWords: '',
+      history: '',
+    };
+  }
   return {
     workspaceId: ws.id,
     revision: 3,
-    updatedAt: '2026-08-02T12:30:00.000Z',
     company: isPersonal
       ? 'Pedro Henrique é Tech Lead, criador de conteúdo e especialista em engenharia de IA e liderança de produto.'
       : 'Clicko Studio é uma plataforma de operação de mídia com inteligência artificial para marcas e equipes de marketing.',
@@ -95,42 +112,41 @@ function createInitialBrain(ws: Workspace): BrandBrain {
       : 'Produzir mais com qualidade, manter a marca consistente e transformar dados em próximas ações.',
     faq: isPersonal
       ? 'Qual o foco dos posts? Práticas de engenharia, IA generativa e liderança técnica em 2026.'
-      : 'Como o Brain é usado? Toda geração consulta a revisão ativa.\nComo funciona aprovação? Conteúdos mantêm comentários, histórico e versões.',
+      : 'Como a memória é usada? A KLIC seleciona apenas o contexto relevante para cada pedido.\nComo funciona aprovação? Conteúdos mantêm comentários, histórico e versões.',
     requiredWords: isPersonal ? 'Pedro Henrique; Tech Lead; Inteligência Artificial; Engenharia' : 'Clicko Studio; operação de mídia; inteligência estratégica',
     forbiddenWords: 'promessas garantidas; linguagem sensacionalista; jargão sem explicação',
     history: isPersonal ? 'Iniciado como dev log pessoal e transformado em canal de referência em IA e liderança.' : 'Projeto iniciado como gerador de conteúdo e evoluído para sistema operacional de mídia com IA.',
-    sourceLinks: isPersonal ? ['https://github.com/vexel-bot', 'https://linkedin.com/in/pedro-henrique-tech'] : ['https://clickostudio.com/'],
-    sourceFiles: isPersonal
-      ? [
-          { id: 'personal-avatar', name: 'Foto de Perfil HD.jpg', type: 'image', addedAt: '2026-08-01T10:00:00.000Z' },
-          { id: 'personal-bio', name: 'Bio & Linhas Editoriais 2026.pdf', type: 'document', addedAt: '2026-08-01T10:15:00.000Z' },
-        ]
-      : [
-          { id: 'brain-logo', name: 'Identidade oficial Clicko', type: 'logo', addedAt: '2026-08-02T10:00:00.000Z' },
-          { id: 'brain-guide', name: 'Guia de tom de voz.pdf', type: 'document', addedAt: '2026-08-02T10:15:00.000Z' },
-        ],
   };
 }
 
-function createInitialClients(ws: Workspace, brain: BrandBrain): ClientIntelligenceProfile[] {
+function createInitialClients(ws: Workspace, context: AIContextSnapshot): ClientIntelligenceProfile[] {
   const timestamp = '2026-08-02T12:30:00.000Z';
   if (ws.id === 'ws-personal') {
     return [{
       id: 'client-personal', workspaceId: ws.id, name: ws.name, segment: 'Marca pessoal e tecnologia',
-      products: brain.products, audience: brain.audience, positioning: brain.objectives,
-      toneOfVoice: brain.toneOfVoice, visualIdentity: brain.visualIdentity, differentiators: brain.differentiators,
-      featuredOffer: 'Guia de Produtividade com Agentes de IA', currentObjective: brain.objectives,
+      products: context.products, audience: context.audience, positioning: context.objectives,
+      toneOfVoice: context.toneOfVoice, visualIdentity: context.visualIdentity, differentiators: context.differentiators,
+      featuredOffer: 'Guia de Produtividade com Agentes de IA', currentObjective: context.objectives,
       highlightedContentIds: [], activeCampaignIds: ['strategy-personal-q3'],
       recommendedActions: ['Consolidar a série sobre agentes de IA', 'Transformar o vlog em três cortes curtos', 'Distribuir o artigo no LinkedIn'],
       updatedAt: timestamp,
     }];
   }
 
+  if (ws.id !== 'ws-1') {
+    return [{
+      id: `client-${ws.id}`, workspaceId: ws.id, name: ws.name, segment: ws.brandProfile.industry || '',
+      products: '', audience: ws.brandProfile.targetAudience || '', positioning: '', toneOfVoice: ws.brandProfile.tone || '',
+      visualIdentity: '', differentiators: '', featuredOffer: '', currentObjective: '', highlightedContentIds: [],
+      activeCampaignIds: [], recommendedActions: ['Conversar com a KLIC sobre o projeto', 'Definir o primeiro objetivo', 'Criar o primeiro conteúdo'], updatedAt: now(),
+    }];
+  }
+
   return [
     {
       id: 'client-clicko', workspaceId: ws.id, name: 'Clicko Studio', segment: 'Software para operações de social media',
-      products: brain.products, audience: brain.audience, positioning: 'Sistema operacional de social media com contexto persistente.',
-      toneOfVoice: brain.toneOfVoice, visualIdentity: brain.visualIdentity, differentiators: brain.differentiators,
+      products: context.products, audience: context.audience, positioning: 'Sistema operacional de social media com contexto persistente.',
+      toneOfVoice: context.toneOfVoice, visualIdentity: context.visualIdentity, differentiators: context.differentiators,
       featuredOffer: 'Diagnóstico gratuito da operação de conteúdo', currentObjective: 'Gerar demanda qualificada para o lançamento Q3.',
       highlightedContentIds: [], activeCampaignIds: ['strategy-q3'],
       recommendedActions: ['Validar a mensagem central do lançamento', 'Produzir a peça de descoberta', 'Preparar a sequência de prova para aprovação'],
@@ -159,6 +175,50 @@ function createInitialLearningSignals(clientId: string): LearningSignal[] {
   }];
 }
 
+function createInitialAIMemory(ws: Workspace, context: AIContextSnapshot): AIMemoryEntry[] {
+  const createdAt = '2026-08-02T12:30:00.000Z';
+  const base: Array<Pick<AIMemoryEntry, 'category' | 'label' | 'value'>> = [
+    { category: 'identity', label: 'Identidade e posicionamento', value: context.company },
+    { category: 'identity', label: 'Público principal', value: context.audience },
+    { category: 'communication', label: 'Tom de voz', value: context.toneOfVoice },
+    { category: 'communication', label: 'Expressões a evitar', value: context.forbiddenWords },
+    { category: 'content', label: 'Objetivo recorrente', value: context.objectives },
+    { category: 'visual', label: 'Preferência visual', value: context.visualIdentity },
+  ];
+  return base.filter((entry) => entry.value.trim()).map((entry, index) => ({ id: `memory-${ws.id}-${index}`, workspaceId: ws.id, ...entry, scope: 'permanent', confidence: 100, source: 'conversation', occurrences: 1, createdAt, updatedAt: createdAt }));
+}
+
+function contextRevisionFor(memory: AIMemoryEntry[]) {
+  return Math.max(1, memory.reduce((total, entry) => total + entry.occurrences, 0));
+}
+
+function buildContextSnapshot(ws: Workspace, memory: AIMemoryEntry[], client?: ClientIntelligenceProfile): AIContextSnapshot {
+  const durable = memory.filter((entry) => entry.scope === 'recurring' || entry.scope === 'permanent');
+  const find = (patterns: RegExp[], category?: AIMemoryEntry['category']) => durable.find((entry) => (!category || entry.category === category) && patterns.some((pattern) => pattern.test(`${entry.label} ${entry.value}`.toLowerCase())))?.value || '';
+  const identity = durable.filter((entry) => entry.category === 'identity').map((entry) => entry.value).join('\n');
+  return {
+    workspaceId: ws.id,
+    revision: contextRevisionFor(durable),
+    company: find([/identidade/, /empresa/, /posicionamento/], 'identity') || identity || ws.name,
+    products: find([/produto/, /oferta/], 'content') || client?.products || '',
+    services: find([/serviço/, /entrega/], 'content') || '',
+    visualIdentity: find([/visual/, /estética/, /cor/], 'visual') || client?.visualIdentity || '',
+    toneOfVoice: find([/tom de voz/, /comunicação/, /linguagem/], 'communication') || client?.toneOfVoice || ws.brandProfile.tone || '',
+    audience: find([/público/, /audiência/, /persona/], 'identity') || client?.audience || ws.brandProfile.targetAudience || '',
+    personas: find([/persona/], 'identity'),
+    objectives: find([/objetivo/, /meta/, /prioridade/], 'content') || client?.currentObjective || '',
+    differentiators: find([/diferencial/, /posicionamento/], 'identity') || client?.differentiators || '',
+    competitors: find([/concorrent/], 'identity'),
+    objections: find([/objeção/], 'content'),
+    pains: find([/dor/, /problema/], 'content'),
+    desires: find([/desejo/, /transformação/], 'content'),
+    faq: find([/faq/, /pergunta recorrente/], 'content'),
+    requiredWords: find([/palavra obrigatória/, /termo obrigatório/], 'communication'),
+    forbiddenWords: find([/evitar/, /proibida/, /não usar/], 'communication'),
+    history: durable.map((entry) => `${entry.label}: ${entry.value}`).join('\n'),
+  };
+}
+
 function createInitialCampaigns(ws: Workspace): StrategyCampaign[] {
   const isPersonal = ws.id === 'ws-personal';
   if (isPersonal) {
@@ -173,9 +233,11 @@ function createInitialCampaigns(ws: Workspace): StrategyCampaign[] {
       funnel: 'Atração → Conexão Autêntica → Valor Prático → Comunidade',
       ctas: ['Acompanhar no LinkedIn', 'Inscrever-se no canal'],
       executionPlan: ['Postar lições de liderança', 'Lançar vlog de setup dev', 'Demonstrar fluxo de código com agentes', 'Fazer live Q&A'],
-      status: 'active', brainRevision: 3, createdAt: '2026-08-01T09:00:00.000Z', updatedAt: '2026-08-02T12:30:00.000Z',
+      status: 'active', contextRevision: 6, createdAt: '2026-08-01T09:00:00.000Z', updatedAt: '2026-08-02T12:30:00.000Z',
     }];
   }
+
+  if (ws.id !== 'ws-1') return [];
 
   return [{
     id: 'strategy-q3', workspaceId: ws.id, name: 'Lançamento Clicko Q3',
@@ -188,7 +250,7 @@ function createInitialCampaigns(ws: Workspace): StrategyCampaign[] {
     funnel: 'Descoberta → Educação → Prova → Conversão',
     ctas: ['Solicitar diagnóstico', 'Ver demonstração'],
     executionPlan: ['Publicar manifesto', 'Distribuir série educativa', 'Apresentar estudo de caso', 'Ativar retargeting', 'Consolidar aprendizados'],
-    status: 'active', brainRevision: 3, createdAt: '2026-08-01T09:00:00.000Z', updatedAt: '2026-08-02T12:30:00.000Z',
+    status: 'active', contextRevision: 6, createdAt: '2026-08-01T09:00:00.000Z', updatedAt: '2026-08-02T12:30:00.000Z',
   }];
 }
 
@@ -201,34 +263,59 @@ function createInitialAssets(ws: Workspace): LibraryAsset[] {
     ];
   }
 
+  if (ws.id !== 'ws-1') return [];
+
   return [
-    { id: 'asset-guide', workspaceId: ws.id, title: 'Guia de tom de voz', type: 'document', tags: ['brain', 'marca'], createdAt: '2026-08-01T09:00:00.000Z', updatedAt: '2026-08-01T09:00:00.000Z' },
+    { id: 'asset-guide', workspaceId: ws.id, title: 'Guia de tom de voz', type: 'document', tags: ['referência', 'marca'], createdAt: '2026-08-01T09:00:00.000Z', updatedAt: '2026-08-01T09:00:00.000Z' },
     { id: 'asset-template', workspaceId: ws.id, title: 'Modelo de carrossel — Educação', type: 'template', tags: ['instagram', 'carrossel'], createdAt: '2026-08-01T11:00:00.000Z', updatedAt: '2026-08-01T11:00:00.000Z' },
   ];
 }
 
+function createInitialConnectedAccounts(ws: Workspace): ConnectedAccount[] {
+  const platforms: ConnectedAccount['platform'][] = ws.id === 'ws-personal' ? ['instagram', 'youtube'] : ['instagram', 'linkedin', 'tiktok'];
+  return platforms.map((platform, index) => ({
+    id: `social-${ws.id}-${platform}`,
+    workspaceId: ws.id,
+    platform,
+    handle: 'Autorização pendente',
+    connected: false,
+    followers: '—',
+    bestTime: 'Sem dados',
+    engagement: '—',
+    name: platform.charAt(0).toUpperCase() + platform.slice(1),
+    company: ws.name,
+    lastSync: 'Nunca',
+    permissions: [],
+    isDefault: index === 0,
+    connectionStatus: 'not_configured',
+    lastError: 'Credenciais OAuth não configuradas para este ambiente.',
+  }));
+}
+
 function getDefaultState(ws: Workspace): OperationsState {
   const isPersonal = ws.id === 'ws-personal';
-  const brain = createInitialBrain(ws);
-  const clients = createInitialClients(ws, brain);
+  const contextSeed = createInitialContextSeed(ws);
+  const clients = createInitialClients(ws, contextSeed);
   const campaigns = createInitialCampaigns(ws);
   const activeCampId = campaigns[0]?.id;
-  const filteredPosts = INITIAL_POSTS.filter((post) => isPersonal ? post.workspaceId === 'ws-personal' : post.workspaceId !== 'ws-personal').map((post, index) => ({
+  const filteredPosts = (ws.id === 'ws-1' ? INITIAL_POSTS.filter((post) => post.workspaceId !== 'ws-personal') : isPersonal ? INITIAL_POSTS.filter((post) => post.workspaceId === 'ws-personal') : []).map((post, index) => ({
     ...post,
+    workspaceId: ws.id,
     campaignId: index < 3 ? activeCampId : undefined,
     strategyId: index < 3 ? activeCampId : undefined,
-    brainRevision: index < 3 ? 3 : undefined,
+    contextRevision: index < 3 ? 6 : undefined,
     origin: index < 3 ? ('strategy' as const) : ('manual' as const),
     versions: [{ id: `${post.id}-v1`, number: 1, label: 'Versão inicial', author: post.author, createdAt: post.createdAt, copy: post.copy }],
   }));
 
   return {
-    brain,
     clients,
     campaigns,
     creativeIdeas: [],
     selectedCreativeIdeaIds: [],
-    learningSignals: createInitialLearningSignals(clients[0].id),
+    learningSignals: ws.id === 'ws-1' || isPersonal ? createInitialLearningSignals(clients[0].id) : [],
+    aiMemory: createInitialAIMemory(ws, contextSeed),
+    connectedAccounts: createInitialConnectedAccounts(ws),
     assets: createInitialAssets(ws),
     posts: filteredPosts,
     activeClientId: clients[0].id,
@@ -243,7 +330,31 @@ function loadStateForWorkspace(ws: Workspace): OperationsState {
   const defaultState = getDefaultState(ws);
   try {
     const stored = window.localStorage.getItem(storageKey);
-    return stored ? { ...defaultState, ...JSON.parse(stored) } : defaultState;
+    if (!stored) return defaultState;
+    const parsed = JSON.parse(stored) as Partial<OperationsState>;
+    return {
+      ...defaultState,
+      clients: parsed.clients || defaultState.clients,
+      campaigns: parsed.campaigns || defaultState.campaigns,
+      creativeIdeas: parsed.creativeIdeas || defaultState.creativeIdeas,
+      selectedCreativeIdeaIds: parsed.selectedCreativeIdeaIds || defaultState.selectedCreativeIdeaIds,
+      learningSignals: parsed.learningSignals || defaultState.learningSignals,
+      assets: parsed.assets || defaultState.assets,
+      posts: parsed.posts || defaultState.posts,
+      activeClientId: parsed.activeClientId || defaultState.activeClientId,
+      activeCampaignId: parsed.activeCampaignId || defaultState.activeCampaignId,
+      studioHandoff: parsed.studioHandoff,
+      aiMemory: (parsed.aiMemory || defaultState.aiMemory)
+        .filter((entry) => entry.workspaceId === ws.id)
+        .map((entry) => ({
+          ...entry,
+          source: (['conversation', 'user', 'approval', 'analytics', 'manual'] as string[]).includes(entry.source) ? entry.source : 'conversation',
+          label: entry.label === 'Marca e posicionamento' ? 'Identidade e posicionamento' : entry.label === 'Objetivo de conteúdo' ? 'Objetivo recorrente' : entry.label === 'Identidade visual' ? 'Preferência visual' : entry.label,
+        })),
+      connectedAccounts: (parsed.connectedAccounts || defaultState.connectedAccounts)
+        .filter((account) => !account.workspaceId || account.workspaceId === ws.id)
+        .map((account) => ({ ...account, workspaceId: ws.id })),
+    };
   } catch {
     return defaultState;
   }
@@ -252,29 +363,37 @@ function loadStateForWorkspace(ws: Workspace): OperationsState {
 export function OperationsProvider({ children }: { children: React.ReactNode }) {
   const governance = useGovernance();
   const environmentMode = governance.environmentMode;
+  const activeAccount = governance.activeAccount;
 
   const activeWorkspace = React.useMemo(() => {
-    return INITIAL_WORKSPACES.find((ws) => ws.id === (environmentMode === 'personal' ? 'ws-personal' : 'ws-1')) || INITIAL_WORKSPACES[0];
-  }, [environmentMode]);
+    const known = INITIAL_WORKSPACES.find((ws) => ws.id === activeAccount.workspaceId);
+    if (known) return known;
+    return {
+      id: activeAccount.workspaceId,
+      name: activeAccount.name,
+      avatar: activeAccount.avatar || '',
+      plan: activeAccount.planName || (environmentMode === 'personal' ? 'Solo Creator' : 'Team'),
+      membersCount: activeAccount.membersCount || 1,
+      brandProfile: {
+        name: activeAccount.name,
+        industry: environmentMode === 'personal' ? 'Marca pessoal / Creator' : '',
+        tone: '', targetAudience: '', keywords: [], doAndDonts: '', primaryColor: '#8bd132',
+      },
+    };
+  }, [activeAccount, environmentMode]);
 
   const [state, setState] = React.useState<OperationsState>(() => loadStateForWorkspace(activeWorkspace));
+  const loadedWorkspaceId = React.useRef(activeWorkspace.id);
 
   React.useEffect(() => {
-    setState(loadStateForWorkspace(activeWorkspace));
-  }, [activeWorkspace]);
-
-  React.useEffect(() => {
+    if (loadedWorkspaceId.current !== activeWorkspace.id) {
+      loadedWorkspaceId.current = activeWorkspace.id;
+      setState(loadStateForWorkspace(activeWorkspace));
+      return;
+    }
     const storageKey = `clicko:operations:${activeWorkspace.id}`;
     window.localStorage.setItem(storageKey, JSON.stringify(state));
-  }, [state, activeWorkspace.id]);
-
-  const updateBrain = React.useCallback((values: Partial<BrandBrain>) => {
-    setState((current) => ({ ...current, brain: { ...current.brain, ...values, revision: current.brain.revision + 1, updatedAt: now() } }));
-  }, []);
-
-  const addBrainSource = React.useCallback((source: BrandBrain['sourceFiles'][number]) => {
-    setState((current) => ({ ...current, brain: { ...current.brain, sourceFiles: [source, ...current.brain.sourceFiles], revision: current.brain.revision + 1, updatedAt: now() } }));
-  }, []);
+  }, [state, activeWorkspace]);
 
   const updateClient = React.useCallback((id: string, values: Partial<ClientIntelligenceProfile>) => {
     setState((current) => ({
@@ -291,9 +410,9 @@ export function OperationsProvider({ children }: { children: React.ReactNode }) 
     });
   }, []);
 
-  const createCampaign = React.useCallback((values: Omit<StrategyCampaign, 'id' | 'workspaceId' | 'brainRevision' | 'createdAt' | 'updatedAt'>) => {
+  const createCampaign = React.useCallback((values: Omit<StrategyCampaign, 'id' | 'workspaceId' | 'contextRevision' | 'createdAt' | 'updatedAt'>) => {
     const timestamp = now();
-    const campaign: StrategyCampaign = { ...values, clientId: values.clientId || state.activeClientId, id: `strategy-${Date.now()}`, workspaceId: activeWorkspace.id, brainRevision: state.brain.revision, createdAt: timestamp, updatedAt: timestamp };
+    const campaign: StrategyCampaign = { ...values, clientId: values.clientId || state.activeClientId, id: `strategy-${Date.now()}`, workspaceId: activeWorkspace.id, contextRevision: contextRevisionFor(state.aiMemory), createdAt: timestamp, updatedAt: timestamp };
     setState((current) => ({
       ...current,
       campaigns: [campaign, ...current.campaigns],
@@ -303,7 +422,7 @@ export function OperationsProvider({ children }: { children: React.ReactNode }) 
       activeCampaignId: campaign.id,
     }));
     return campaign;
-  }, [state.brain.revision, state.activeClientId, activeWorkspace.id]);
+  }, [state.aiMemory, state.activeClientId, activeWorkspace.id]);
 
   const updateCampaign = React.useCallback((id: string, values: Partial<StrategyCampaign>) => {
     setState((current) => ({ ...current, campaigns: current.campaigns.map((campaign) => campaign.id === id ? { ...campaign, ...values, updatedAt: now() } : campaign) }));
@@ -366,17 +485,51 @@ export function OperationsProvider({ children }: { children: React.ReactNode }) 
     return signal;
   }, []);
 
-  const requiredBrainFields: Array<keyof BrandBrain> = ['company', 'products', 'services', 'visualIdentity', 'toneOfVoice', 'audience', 'personas', 'objectives', 'differentiators', 'competitors', 'objections', 'pains', 'desires', 'faq'];
-  const brainCompleteness = Math.round(requiredBrainFields.filter((field) => String(state.brain[field] || '').trim()).length / requiredBrainFields.length * 100);
+  const upsertAIMemory = React.useCallback((values: Omit<AIMemoryEntry, 'id' | 'workspaceId' | 'createdAt' | 'updatedAt' | 'occurrences'> & { id?: string }) => {
+    const timestamp = now();
+    let result: AIMemoryEntry | undefined;
+    setState((current) => {
+      const normalized = values.label.trim().toLowerCase();
+      const existing = current.aiMemory.find((entry) => entry.id === values.id || (entry.category === values.category && entry.label.trim().toLowerCase() === normalized));
+      if (existing) {
+        const changed = existing.value !== values.value;
+        result = { ...existing, ...values, id: existing.id, workspaceId: activeWorkspace.id, occurrences: existing.occurrences + 1, confidence: Math.min(100, Math.max(existing.confidence, values.confidence) + 5), scope: existing.scope === 'permanent' ? 'permanent' : existing.occurrences >= 2 ? 'recurring' : values.scope, evolution: changed ? [...(existing.evolution || []), { value: existing.value, changedAt: timestamp, source: existing.source }] : existing.evolution, updatedAt: timestamp };
+        return { ...current, aiMemory: current.aiMemory.map((entry) => entry.id === existing.id ? result! : entry) };
+      }
+      result = { ...values, id: values.id || `memory-${Date.now()}`, workspaceId: activeWorkspace.id, occurrences: 1, createdAt: timestamp, updatedAt: timestamp };
+      return { ...current, aiMemory: [result, ...current.aiMemory] };
+    });
+    return result!;
+  }, [activeWorkspace.id]);
+
+  const updateAIMemory = React.useCallback((id: string, values: Partial<Pick<AIMemoryEntry, 'label' | 'value' | 'scope' | 'category'>>) => setState((current) => ({ ...current, aiMemory: current.aiMemory.map((entry) => entry.id === id ? { ...entry, ...values, evolution: values.value && values.value !== entry.value ? [...(entry.evolution || []), { value: entry.value, changedAt: now(), source: entry.source }] : entry.evolution, updatedAt: now() } : entry) })), []);
+  const deleteAIMemory = React.useCallback((id: string) => setState((current) => ({ ...current, aiMemory: current.aiMemory.filter((entry) => entry.id !== id) })), []);
+  const addConnectedAccount = React.useCallback((platform: ConnectedAccount['platform']) => {
+    const account: ConnectedAccount = {
+      id: `social-${activeWorkspace.id}-${platform}-${Date.now()}`, workspaceId: activeWorkspace.id, platform,
+      handle: 'Autorização pendente', connected: false, followers: '—', bestTime: 'Sem dados', engagement: '—',
+      name: platform.charAt(0).toUpperCase() + platform.slice(1), company: activeWorkspace.name, lastSync: 'Nunca',
+      permissions: [], connectionStatus: 'not_configured', lastError: 'Credenciais OAuth não configuradas para este ambiente.',
+    };
+    setState((current) => ({ ...current, connectedAccounts: [...current.connectedAccounts, account] }));
+    return account;
+  }, [activeWorkspace.id, activeWorkspace.name]);
+  const updateConnectedAccount = React.useCallback((id: string, values: Partial<ConnectedAccount>) => setState((current) => ({ ...current, connectedAccounts: current.connectedAccounts.map((account) => account.id === id ? { ...account, ...values } : account) })), []);
+  const removeConnectedAccount = React.useCallback((id: string) => setState((current) => ({ ...current, connectedAccounts: current.connectedAccounts.filter((account) => account.id !== id) })), []);
+
   const activeClient = state.clients.find((client) => client.id === state.activeClientId);
   const activeCampaign = state.campaigns.find((campaign) => campaign.id === state.activeCampaignId);
+  const contextSnapshot = React.useMemo(() => buildContextSnapshot(activeWorkspace, state.aiMemory, activeClient), [activeClient, activeWorkspace, state.aiMemory]);
+  const contextRevision = contextSnapshot.revision;
 
   return <OperationsContext.Provider value={{
-    ...state, activeWorkspace, activeClient, activeCampaign, brainCompleteness,
-    updateBrain, addBrainSource, updateClient, setActiveClientId,
+    ...state, activeWorkspace, activeClient, activeCampaign, contextSnapshot, contextRevision,
+    updateClient, setActiveClientId,
     createCampaign, updateCampaign, setActiveCampaignId,
     addPosts, updatePosts, addAsset, setCreativeIdeas, toggleCreativeIdea,
     prepareStudioHandoff, clearStudioHandoff, createRepurposeHandoff, addLearningSignal,
+    upsertAIMemory, updateAIMemory, deleteAIMemory,
+    addConnectedAccount, updateConnectedAccount, removeConnectedAccount,
   }}>{children}</OperationsContext.Provider>;
 }
 

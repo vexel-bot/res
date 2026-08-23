@@ -1,12 +1,12 @@
 import React from 'react';
 import {
-  LayoutDashboard, Image, Video, PenLine, CalendarDays, CheckCircle2,
-  ChartNoAxesCombined, Bot, Workflow, LayoutTemplate, Link2, Users,
-  ScrollText, Settings, CreditCard, ChevronLeft, Box, FolderKanban,
-  BrainCircuit, Target, Sparkles, Send
+  LayoutDashboard, Image, Video, CalendarDays, CheckCircle2,
+  ChartNoAxesCombined, Workflow, Link2, User, Users,
+  Settings, CreditCard, ChevronLeft, Box, FolderKanban
 } from 'lucide-react';
 import type { NavigationTab } from '../types';
 import { ClickoLogo } from './ClickoLogo';
+import { KlicSymbol } from './KlicSymbol';
 import { useGovernance } from '../context/GovernanceContext';
 
 interface SidebarProps {
@@ -25,112 +25,65 @@ type NavGroup = {
   items: NavItem[];
 };
 
-const navGroups: NavGroup[] = [
-  {
-    sectionTitle: 'OPERAÇÃO',
-    items: [
-      { label: 'Painel', id: 'dashboard', icon: LayoutDashboard },
-      { label: 'Ambiente', id: 'workspace', icon: FolderKanban },
-      { label: 'Memória da Marca', id: 'brain', icon: BrainCircuit },
-      { label: 'Estratégia', id: 'strategy', icon: Target },
-    ],
-  },
-  {
-    sectionTitle: 'CRIAÇÃO COM IA',
-    items: [
-      { label: 'Estúdio Unificado', id: 'studio', icon: Sparkles },
-      { label: 'Criar Imagem', id: 'create-image', icon: Image },
-      { label: 'Criar Vídeo', id: 'create-video', icon: Video },
-      { label: 'Criar Texto', id: 'create-copy', icon: PenLine },
-      { label: 'Chat com IA', id: 'ai-chat', icon: Bot },
-    ],
-  },
-  {
-    sectionTitle: 'PUBLICAÇÃO & PERFORMANCE',
-    items: [
-      { label: 'Calendário', id: 'calendar', icon: CalendarDays },
-      { label: 'Publicador', id: 'publisher', icon: Send },
-      { label: 'Aprovações', id: 'approvals', icon: CheckCircle2 },
-      { label: 'Análises', id: 'analytics', icon: ChartNoAxesCombined },
-      { label: 'Biblioteca', id: 'library', icon: FolderKanban },
-      { label: 'Modelos', id: 'templates', icon: LayoutTemplate },
-      { label: 'Automações', id: 'automations', icon: Workflow },
-    ],
-  },
-  {
-    sectionTitle: 'GOVERNANÇA & EQUIPE',
-    items: [
-      { label: 'Contas Conectadas', id: 'connected-accounts', icon: Link2 },
-      { label: 'Equipe', id: 'team', icon: Users },
-      { label: 'Registros de Auditoria', id: 'audit-logs', icon: ScrollText },
-      { label: 'Assinatura', id: 'subscription', icon: CreditCard },
-      { label: 'Configurações', id: 'settings', icon: Settings },
-    ],
-  },
-];
-
 export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onSelectTab, isCompact, onToggleCompact }) => {
   const { canAccess, currentUser, workspace, users, approvals, environmentMode } = useGovernance();
   const occupiedSeats = users.filter((user) => user.status !== 'disabled').length;
   const isPersonal = environmentMode === 'personal';
 
-  const navGroups: NavGroup[] = isPersonal
-    ? [
-        {
-          sectionTitle: 'MEU STUDIO PESSOAL',
-          items: [
-            { label: 'Dashboard', id: 'dashboard', icon: LayoutDashboard },
-            { label: 'Studio', id: 'studio', icon: Sparkles },
-            { label: 'Central IA', id: 'ai-chat', icon: Bot },
-            { label: 'Biblioteca da Marca', id: 'brain', icon: BrainCircuit },
-          ],
-        },
-        {
-          sectionTitle: 'PUBLICAÇÃO & PERFORMANCE',
-          items: [
-            { label: 'Contas Conectadas', id: 'connected-accounts', icon: Link2 },
-            { label: 'Calendário', id: 'calendar', icon: CalendarDays },
-            { label: 'Biblioteca', id: 'library', icon: FolderKanban },
-            { label: 'Analytics', id: 'analytics', icon: ChartNoAxesCombined },
-            { label: 'Templates', id: 'templates', icon: LayoutTemplate },
-            { label: 'Histórico', id: 'publisher', icon: ScrollText },
-            { label: 'Configurações', id: 'settings', icon: Settings },
-          ],
-        },
-      ]
-    : [
-        {
-          sectionTitle: 'OPERAÇÃO CORPORATIVA',
-          items: [
-            { label: 'Dashboard', id: 'dashboard', icon: LayoutDashboard },
-            { label: 'Studio', id: 'studio', icon: Sparkles },
-            { label: 'Central IA', id: 'ai-chat', icon: Bot },
-            { label: 'Clientes', id: 'workspace', icon: FolderKanban },
-            { label: 'Biblioteca da Marca', id: 'brain', icon: BrainCircuit },
-          ],
-        },
-        {
-          sectionTitle: 'PUBLICAÇÃO & GOVERNANÇA',
-          items: [
-            { label: 'Contas Conectadas', id: 'connected-accounts', icon: Link2 },
-            { label: 'Calendário', id: 'calendar', icon: CalendarDays },
-            { label: 'Biblioteca', id: 'library', icon: FolderKanban },
+  const navGroups: NavGroup[] = [
+    {
+      sectionTitle: 'VISÃO GERAL',
+      items: [
+        { label: 'Dashboard', id: 'dashboard', icon: LayoutDashboard },
+      ],
+    },
+    {
+      sectionTitle: 'CRIAÇÃO & KLIC',
+      items: [
+        { label: 'Imagem', id: 'create-image', icon: Image },
+        { label: 'Vídeo', id: 'create-video', icon: Video },
+        { label: 'Klic AI', id: 'ai-chat', icon: KlicSymbol },
+      ],
+    },
+    {
+      sectionTitle: 'CONTEÚDO & PUBLICAÇÃO',
+      items: [
+        { label: 'Biblioteca', id: 'library', icon: FolderKanban },
+        { label: 'Calendário', id: 'calendar', icon: CalendarDays },
+        { label: 'Conexões', id: 'connected-accounts', icon: Link2 },
+      ],
+    },
+    {
+      sectionTitle: 'GESTÃO & GOVERNANÇA',
+      items: isPersonal
+        ? []
+        : [
+            { label: 'Clientes', id: 'workspace', icon: User },
             { label: 'Aprovações', id: 'approvals', icon: CheckCircle2 },
-            { label: 'Analytics', id: 'analytics', icon: ChartNoAxesCombined },
-            { label: 'Templates', id: 'templates', icon: LayoutTemplate },
             { label: 'Automações', id: 'automations', icon: Workflow },
           ],
-        },
-        {
-          sectionTitle: 'EQUIPE & GOVERNANÇA',
-          items: [
+    },
+    {
+      sectionTitle: 'ANÁLISE',
+      items: [
+        { label: 'Analytics', id: 'analytics', icon: ChartNoAxesCombined },
+      ],
+    },
+    {
+      sectionTitle: 'EQUIPE',
+      items: isPersonal
+        ? []
+        : [
             { label: 'Equipe', id: 'team', icon: Users },
-            { label: 'Logs', id: 'audit-logs', icon: ScrollText },
-            { label: 'Histórico', id: 'publisher', icon: Send },
-            { label: 'Configurações', id: 'settings', icon: Settings },
           ],
-        },
-      ];
+    },
+    {
+      sectionTitle: 'SISTEMA',
+      items: [
+        { label: 'Configurações', id: 'settings', icon: Settings },
+      ],
+    },
+  ];
 
   const renderItem = (item: NavItem) => {
     const Icon = item.icon;
@@ -215,7 +168,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onSelectTab, isCom
 
       {/* Navigation Group Scroll */}
       <nav className={`clicko-sidebar-nav custom-scrollbar flex-1 overflow-y-auto py-4 ${isCompact ? 'px-2' : 'px-3'}`}>
-        <div className="space-y-5">
+        <div className="space-y-4">
           {navGroups.map((group, groupIdx) => {
             const hasVisibleItems = group.items.some((item) => !currentUser || canAccess(item.id));
             if (!hasVisibleItems) return null;
@@ -283,14 +236,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onSelectTab, isCom
               href="https://vexelbr.com/"
               target="_blank"
               rel="noopener noreferrer"
-              title="Desenvolvido pela VEXEL"
+              title="Powered by VEXEL"
               className="vexel-powered-signature vexel-powered-mark grid h-7 w-7 place-items-center rounded-lg border border-white/10 text-[#717c82] hover:text-[#8bd132]"
-              aria-label="Desenvolvido pela VEXEL"
+              aria-label="Powered by VEXEL"
             >
               <Box className="h-3.5 w-3.5" strokeWidth={1.6} />
             </a>
             <div role="tooltip" className="vexel-powered-tooltip pointer-events-none absolute bottom-0 left-full z-50 ml-3 whitespace-nowrap rounded-md border px-2.5 py-1.5 text-[9px] font-medium uppercase tracking-[0.2em] opacity-0 transition-opacity group-hover:opacity-100">
-              Desenvolvido pela VEXEL
+              Powered by VEXEL
             </div>
           </div>
         ) : (
@@ -298,10 +251,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onSelectTab, isCom
             href="https://vexelbr.com/"
             target="_blank"
             rel="noopener noreferrer"
-            title="Desenvolvido pela VEXEL"
-            className="vexel-powered-signature block text-center text-[8px] font-mono font-bold uppercase tracking-[0.3em] text-[#4d5a62] hover:text-[#8bd132] transition-colors"
+            title="Powered by VEXEL"
+            className="vexel-powered-signature block text-center text-[8px] font-mono font-medium uppercase tracking-[0.3em] text-[#4d5a62] hover:text-[#8bd132] transition-colors"
           >
-            <span>Desenvolvido pela VEXEL</span>
+            <span>Powered by VEXEL</span>
           </a>
         )}
       </footer>

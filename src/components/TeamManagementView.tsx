@@ -27,7 +27,7 @@ export const TeamManagementView: React.FC = () => {
   const [editing, setEditing] = React.useState<WorkspaceMember | null>(null);
   const [editName, setEditName] = React.useState('');
   const [confirmDelete, setConfirmDelete] = React.useState<string | null>(null);
-  const [invite, setInvite] = React.useState({ name: '', email: '', modules: ['dashboard', 'create-image', 'create-copy', 'ai-chat', 'templates', 'calendar'] as WorkspaceModule[] });
+  const [invite, setInvite] = React.useState({ name: '', email: '', modules: ['dashboard', 'create-image', 'create-copy', 'ai-chat', 'library', 'calendar'] as WorkspaceModule[] });
   const [editModules, setEditModules] = React.useState<WorkspaceModule[]>([]);
 
   const plan = plans.find((item) => item.id === workspace?.planId);
@@ -71,7 +71,7 @@ export const TeamManagementView: React.FC = () => {
     }
     const ok = await inviteUser(invite);
     if (ok) {
-      setInvite({ name: '', email: '', modules: ['dashboard', 'create-image', 'create-copy', 'ai-chat', 'templates', 'calendar'] });
+      setInvite({ name: '', email: '', modules: ['dashboard', 'create-image', 'create-copy', 'ai-chat', 'library', 'calendar'] });
       setShowInvite(false);
     }
   };
@@ -80,7 +80,7 @@ export const TeamManagementView: React.FC = () => {
 
   return (
     <div className="mx-auto w-full max-w-[1500px] space-y-5 p-5 md:p-7">
-      <header className="flex flex-col gap-4 border-b border-white/[0.06] pb-5 lg:flex-row lg:items-end lg:justify-between">
+      <header className="flex flex-col gap-4 border-b border-white/[0.06] pb-5 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <div className="mb-2 flex items-center gap-2 text-[9px] font-medium uppercase tracking-[0.2em] text-[#7C7C7C]"><ShieldCheck className="h-3.5 w-3.5" /> Governança do ambiente de trabalho</div>
           <h1 className="text-[22px] font-semibold tracking-[-0.035em] text-white">Equipe e permissões</h1>

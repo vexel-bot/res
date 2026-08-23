@@ -1,11 +1,9 @@
 import React from 'react';
 import {
-  BrainCircuit,
   FileText,
   Image as ImageIcon,
   Video,
   Target,
-  Sparkles,
   FileEdit,
   Wand2,
   ChevronRight
@@ -26,7 +24,7 @@ interface StudioViewProps {
 }
 
 export function StudioView({ onSavePost, initialMode = 'create' }: StudioViewProps) {
-  const { brain, campaigns, activeCampaign, setActiveCampaignId } = useOperations();
+  const { contextSnapshot, campaigns, activeCampaign, setActiveCampaignId } = useOperations();
   const [mode, setMode] = React.useState<StudioModuleId>(initialMode);
 
   React.useEffect(() => {
@@ -45,14 +43,14 @@ export function StudioView({ onSavePost, initialMode = 'create' }: StudioViewPro
     },
     {
       id: 'edit_image' as const,
-      label: 'Editar Imagem IA',
+      label: 'Editar imagem com a KLIC',
       sublabel: 'Remover fundo, Upscale & Expansão',
       icon: ImageIcon,
       badge: 'Editor Visual Completo',
     },
     {
       id: 'edit_video' as const,
-      label: 'Vídeo IA & Shorts',
+      label: 'Vídeo com a KLIC e Shorts',
       sublabel: 'Cortes, Legendas & Dublagem',
       icon: Video,
       badge: 'Editor de Vídeo Pro',
@@ -79,7 +77,7 @@ export function StudioView({ onSavePost, initialMode = 'create' }: StudioViewPro
       <div className="mx-auto flex w-full max-w-[1600px] flex-wrap items-center justify-between gap-5 px-6 pt-6 2xl:px-8 2xl:pt-7">
         <div className="space-y-1.5">
           <p className="text-[10px] font-mono uppercase tracking-[0.25em] font-bold text-[#8bd132] flex items-center gap-2">
-            <Sparkles className="h-3.5 w-3.5" /> Central de Produção Multimídia & IA
+            Produção multimídia com a KLIC
           </p>
           <h1 className="text-[26px] font-semibold tracking-tight text-white">Clicko Creative Studio</h1>
           <p className="text-xs text-[#717d85] max-w-xl">
@@ -89,7 +87,7 @@ export function StudioView({ onSavePost, initialMode = 'create' }: StudioViewPro
 
         <div className="flex flex-wrap items-center gap-3">
           <span className="flex items-center gap-2 rounded-xl border border-[#8bd132]/30 bg-[#8bd132]/[0.08] px-4 py-2.5 text-[10px] font-mono font-bold text-[#8bd132] shadow-sm">
-            <BrainCircuit className="h-4 w-4" /> Brain Memória Rev. {brain.revision}
+            Contexto da KLIC · revisão {contextSnapshot.revision}
           </span>
           <select
             value={activeCampaign?.id || ''}
@@ -173,8 +171,8 @@ export function StudioView({ onSavePost, initialMode = 'create' }: StudioViewPro
                 ...post,
                 campaignId: activeCampaign?.id,
                 strategyId: activeCampaign?.id,
-                brainRevision: brain.revision,
-                origin: activeCampaign ? 'strategy' : 'brain',
+                contextRevision: contextSnapshot.revision,
+                origin: activeCampaign ? 'strategy' : 'context',
                 objective: activeCampaign?.objective,
               })
             }

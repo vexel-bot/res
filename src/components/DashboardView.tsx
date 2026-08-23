@@ -18,7 +18,6 @@ import {
   Pencil,
   Plus,
   Send,
-  Sparkles,
   Cpu,
   Link2,
   Workflow,
@@ -28,6 +27,7 @@ import {
 import { NavigationTab, Post, AIActionSuggestion, Workspace } from '../types';
 import { useOperations } from '../context/OperationsContext';
 import { useGovernance } from '../context/GovernanceContext';
+import { Sparkles } from 'lucide-react';
 
 interface DashboardViewProps {
   posts: Post[];
@@ -89,7 +89,7 @@ const metricCards = [
 
 const quickFlow = [
   { label: '1. Direcionamento', text: 'Defina o objetivo\nda semana', icon: ClipboardList },
-  { label: '2. Estratégia', text: 'IA cria o plano\nde conteúdo', icon: CheckCircle2 },
+  { label: '2. Estratégia', text: 'KLIC cria o plano\nde conteúdo', icon: CheckCircle2 },
   { label: '3. Geração', text: 'Conteúdos criados\nem lote', icon: Box },
   { label: '4. Edição', text: 'Edite e personalize\nse necessário', icon: Pencil },
   { label: '5. Aprovação', text: 'Envie para o cliente\naprovar', icon: Sparkles },
@@ -159,7 +159,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             Central Operacional de Conteúdo
           </h1>
           <p className="text-xs text-[#8e9aa2] max-w-xl leading-relaxed">
-            Painel unificado com esteira acelerada de criação, cronograma inteligente, métricas em tempo real e orquestração de IA.
+            Painel unificado com esteira acelerada de criação, cronograma inteligente, métricas em tempo real e orquestração da KLIC.
           </p>
         </div>
 
@@ -177,8 +177,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             onClick={onOpenCampaignWizard}
             className="flex items-center gap-2 rounded-lg border border-white/10 bg-white/[0.04] px-4 py-2.5 text-xs font-medium text-white transition-colors hover:border-white/15 hover:bg-white/[0.07]"
           >
-            <Sparkles className="h-4 w-4 text-[#8bd132]" />
-            <span>Assistente IA</span>
+            <span>KLIC</span>
           </button>
         </div>
       </div>
@@ -477,8 +476,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           {/* AI Strategic Recommendation Box */}
           <section className="relative overflow-hidden rounded-xl border border-[#8bd132]/20 bg-[#101510] p-5">
             <div className="flex items-center gap-2 text-[#8bd132]">
-              <Sparkles className="h-4 w-4" />
-              <h2 className="text-xs font-mono font-bold uppercase tracking-wider">Insight da IA Copilot</h2>
+              <h2 className="text-xs font-mono font-bold uppercase tracking-wider">Insight da KLIC</h2>
             </div>
             <p className="mt-3.5 text-xs leading-relaxed text-[#c0c9cf]">
               Seus Reels com depoimentos tiveram <strong className="text-white">+27% de alcance</strong> que a média. Recomendamos gerar 3 variações focadas nessa temática para a próxima semana.
@@ -488,8 +486,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
               onClick={onNewPost}
               className="mt-5 flex items-center gap-2.5 rounded-lg bg-[#8bd132] px-4 py-2.5 text-xs font-semibold text-[#080e05] transition-colors hover:bg-[#9be24d]"
             >
-              <Sparkles className="h-3.5 w-3.5" />
-              <span>Gerar Variações com IA</span>
+              <span>Gerar variações com a KLIC</span>
             </button>
           </section>
         </aside>

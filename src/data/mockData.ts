@@ -168,7 +168,7 @@ export const INITIAL_POSTS: Post[] = [
     title: 'Como estruturei meu workflow de IA como Tech Lead em 2026',
     platform: 'linkedin',
     format: 'post',
-    copy: '3 hábitos de produtividade que mudaram totalmente minha rotina de engenharia este ano:\n\n1. Agentes para refatoração e testes\n2. Memory Brain para contexto persistente de marca e produto\n3. Automação de postagens diretamente do meu terminal\n\nQual ferramenta de IA tem sido indispensável no seu dia a dia?',
+    copy: '3 hábitos de produtividade que mudaram totalmente minha rotina de engenharia este ano:\n\n1. Agentes para refatoração e testes\n2. Memória contextual para manter preferências entre conversas\n3. Automação de postagens diretamente do meu terminal\n\nQual ferramenta de IA tem sido indispensável no seu dia a dia?',
     hashtags: ['#TechLead', '#InteligenciaArtificial', '#EngenhariaDeSoftware', '#CarreiraDev'],
     imageUrl: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80',
     scheduledAt: '2026-08-02T16:00:00Z',

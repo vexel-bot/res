@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   FileText,
-  Sparkles,
   Calendar,
   Layers,
   ArrowRight,
@@ -13,9 +12,10 @@ import {
   Briefcase
 } from 'lucide-react';
 import { useOperations } from '../context/OperationsContext';
+import { Sparkles as KlicSymbol } from 'lucide-react';
 
 export const SmartBriefingView: React.FC = () => {
-  const { brain, activeCampaign, createCampaign, setPosts } = useOperations();
+  const { contextSnapshot, activeCampaign, createCampaign, setPosts } = useOperations();
 
   const [objetivo, setObjetivo] = React.useState('Aumentar Vendas e Autoridade de Marca');
   const [campanha, setCampanha] = React.useState('Lançamento Primavera/Verão 2026');
@@ -56,7 +56,7 @@ export const SmartBriefingView: React.FC = () => {
           produto,
           oferta,
           publico,
-          brainContext: brain,
+          contextProfile: contextSnapshot,
           strategyContext: activeCampaign,
         }),
       });
@@ -95,7 +95,7 @@ export const SmartBriefingView: React.FC = () => {
     if (briefingResult.suggestedContents && briefingResult.suggestedContents.length > 0) {
       const newPosts = briefingResult.suggestedContents.map((item: any, idx: number) => ({
         id: `post-briefing-${Date.now()}-${idx}`,
-        workspaceId: brain.workspaceId || 'current-ws',
+        workspaceId: contextSnapshot.workspaceId || 'current-ws',
         title: item.title,
         platform: item.platform?.toLowerCase() || 'instagram',
         format: item.format?.toLowerCase()?.includes('carrossel') ? 'carousel' : 'post',
@@ -103,10 +103,10 @@ export const SmartBriefingView: React.FC = () => {
         hashtags: ['#BriefingInteligente', '#ClickoStudio', '#Campanha2026'],
         scheduledAt: new Date(Date.now() + (idx + 1) * 86_400_000).toISOString(),
         status: 'scheduled' as const,
-        author: 'IA Clicko Studio',
+        author: 'KLIC',
         createdAt: new Date().toISOString(),
         aiScore: 97,
-        origin: 'brain' as const,
+        origin: 'context' as const,
       }));
 
       setPosts((prev) => [...newPosts, ...prev]);
@@ -122,11 +122,11 @@ export const SmartBriefingView: React.FC = () => {
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
             <div className="inline-flex items-center gap-2 rounded-full border border-[#8bd132]/30 bg-[#8bd132]/[0.08] px-3 py-1 text-[10px] font-bold text-[#8bd132]">
-              <FileText className="h-3.5 w-3.5" /> Briefing Estratégico Guiado por IA
+              <FileText className="h-3.5 w-3.5" /> Briefing estratégico guiado pela KLIC
             </div>
             <h2 className="mt-2 text-xl font-bold text-white">Briefing Inteligente de Mídia Social</h2>
             <p className="mt-1 text-xs text-[#8f9a9f]">
-              Informe o objetivo e a oferta. A IA constrói instantaneamente o planejamento, cronograma, calendário e estrutura de anúncios.
+              Informe o objetivo e a oferta. A KLIC constrói instantaneamente o planejamento, cronograma, calendário e estrutura de anúncios.
             </p>
           </div>
           <button
@@ -134,7 +134,7 @@ export const SmartBriefingView: React.FC = () => {
             disabled={isGenerating}
             className="flex items-center gap-2 rounded-lg bg-[#8bd132] px-5 py-2.5 text-xs font-bold text-[#14200e] hover:bg-[#9be24d] transition-colors disabled:opacity-50"
           >
-            {isGenerating ? <RefreshCw className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4" />}
+            {isGenerating ? <RefreshCw className="h-4 w-4 animate-spin" /> : <KlicSymbol className="h-4 w-4" />}
             {isGenerating ? 'Montando Planejamento...' : 'Gerar Briefing Completo'}
           </button>
         </div>
@@ -221,7 +221,7 @@ export const SmartBriefingView: React.FC = () => {
                 </span>
                 <div>
                   <h3 className="text-xs font-bold text-white">Plano Gerado Automaticamente</h3>
-                  <p className="text-[10px] text-[#78848a]">Sincronizado com os dados do seu Brain</p>
+                  <p className="text-[10px] text-[#78848a]">Sincronizado com o contexto relevante da KLIC</p>
                 </div>
               </div>
             </div>

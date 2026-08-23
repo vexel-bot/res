@@ -1,33 +1,119 @@
 import React from 'react';
-import { FileText, FolderArchive, Image, Search, Sparkles, Upload, Video, X } from 'lucide-react';
+import { CalendarDays, Copy, FileText, Heart, Image, LayoutTemplate, Megaphone, Palette, Plus, Search, Share2, Upload, Video } from 'lucide-react';
 import { useOperations } from '../context/OperationsContext';
-import type { Post, PostFormat } from '../types';
+import type { ContentTemplate } from '../types';
+import './LibraryView.css';
+
+type LibraryDisplayAsset = readonly [title: string, meta: string, preview: string];
+
+const libraryAssets: LibraryDisplayAsset[] = [
+  ['Ritual de foco 01', 'Post · 4 usos', '/canonical/figma/phase2/s05-creative.png'],
+  ['Aurora — UGC', 'UGC · 2 usos', '/canonical/figma/phase2/s04-carousel.png'],
+  ['Carrossel tipográfico', 'Carrossel · 3 usos', '/canonical/figma/phase2/s04-stories.png'],
+  ['Origem e textura', 'Foto · 5 usos', '/canonical/figma/phase2/s16-product.png'],
+  ['Oferta espresso', 'Produto · licenciado', '/canonical/figma/phase2/s04-offer.png'],
+  ['Produto limpo', 'Produto · próprio', '/canonical/figma/phase2/s16-texture.png'],
+  ['Textura Cerrado', 'Referência · interna', '/canonical/figma/phase2/s16-product.png'],
+  ['Fumaça e movimento', 'Referência · licenciada', '/canonical/figma/phase2/s05-creative.png'],
+];
+
+const templateSeed: ContentTemplate[] = [
+  { id: 'tpl-1', name: 'Carrossel educativo premium', category: 'image', description: 'Estrutura visual de 7 slides para conteúdo educativo.', favorite: true, shared: true, uses: 42, updatedAt: '2026-08-02' },
+  { id: 'tpl-2', name: 'Reels com gancho e prova', category: 'video', description: 'Roteiro de vídeo curto com gancho, demonstração e chamada para ação.', favorite: false, shared: true, uses: 31, updatedAt: '2026-08-01' },
+  { id: 'tpl-3', name: 'Texto de lançamento', category: 'copy', description: 'Estrutura de texto persuasivo para produtos digitais.', favorite: true, shared: false, uses: 68, updatedAt: '2026-07-31' },
+  { id: 'tpl-4', name: 'Campanha multicanal', category: 'campaign', description: 'Plano completo para lançamento em quatro canais.', favorite: false, shared: true, uses: 19, updatedAt: '2026-07-29' },
+  { id: 'tpl-5', name: 'Calendário contínuo', category: 'calendar', description: 'Cadência mensal equilibrada por etapa do funil.', favorite: false, shared: false, uses: 24, updatedAt: '2026-07-28' },
+  { id: 'tpl-6', name: 'Comando de fotografia editorial', category: 'prompt', description: 'Comando detalhado para imagens consistentes de campanha.', favorite: true, shared: true, uses: 57, updatedAt: '2026-07-25' },
+  { id: 'tpl-7', name: 'Identidade Clicko', category: 'brand', description: 'Cores, tipografia, espaçamento e diretrizes da marca.', favorite: true, shared: true, uses: 86, updatedAt: '2026-08-02' },
+];
+
+const templateMeta = {
+  image: ['Imagem', Image], video: ['Vídeo', Video], copy: ['Texto', FileText], campaign: ['Campanha', Megaphone],
+  calendar: ['Calendário', CalendarDays], prompt: ['Comando', LayoutTemplate], brand: ['Identidade visual', Palette],
+} as const;
 
 export function LibraryView({ onOpenStudio }: { onOpenStudio?: () => void }) {
-  const { assets, posts, campaigns, addAsset, createRepurposeHandoff } = useOperations();
+  const { addAsset, assets } = useOperations();
+  const [selected, setSelected] = React.useState(0);
   const [query, setQuery] = React.useState('');
-  const [filter, setFilter] = React.useState('all');
-  const [repurposePost, setRepurposePost] = React.useState<Post | null>(null);
-  const combined = [
-    ...assets,
-    ...posts.map((post) => ({ ...post, type: 'content' as const, tags: [post.platform, post.format, post.status], updatedAt: post.createdAt })),
-    ...campaigns.map((campaign) => ({ ...campaign, title: campaign.name, type: 'campaign' as const, tags: [campaign.status, ...campaign.channels], updatedAt: campaign.updatedAt })),
-  ];
-  const filtered = combined.filter((asset) => (filter === 'all' || asset.type === filter) && `${asset.title} ${asset.tags.join(' ')}`.toLowerCase().includes(query.toLowerCase()));
-  const icon = (type: string) => type === 'video' ? Video : type === 'image' ? Image : type === 'campaign' ? Sparkles : FileText;
+  const [activeTab, setActiveTab] = React.useState('Arquivos');
+  const [deleted, setDeleted] = React.useState(false);
+  const [toast, setToast] = React.useState('');
+  const [templates, setTemplates] = React.useState(templateSeed);
+  const [templateCategory, setTemplateCategory] = React.useState<'all' | ContentTemplate['category']>('all');
+  const contextualAssets = React.useMemo<LibraryDisplayAsset[]>(() => assets.map((asset) => [
+    asset.title,
+    `${asset.type === 'content' ? 'Conteúdo da KLIC' : asset.type === 'upload' ? 'Upload' : asset.type} · ${asset.tags.slice(0, 2).join(' · ') || 'sem etiquetas'}`,
+    asset.url || '/canonical/figma/phase2/s05-creative.png',
+  ]), [assets]);
+  const allLibraryAssets = React.useMemo(() => [
+    ...libraryAssets.slice(0, 4),
+    ...contextualAssets,
+    ...libraryAssets.slice(4),
+  ], [contextualAssets]);
+  const matchesQuery = React.useCallback((asset: LibraryDisplayAsset) => `${asset[0]} ${asset[1]}`.toLowerCase().includes(query.toLowerCase()), [query]);
+  const visibleUsed = libraryAssets.slice(0, 4).filter(matchesQuery);
+  const visibleBrand = [...contextualAssets, ...libraryAssets.slice(4)].filter(matchesQuery);
+  const current = allLibraryAssets[selected] || allLibraryAssets[0];
+  const visibleTemplates = templates.filter((template) => (templateCategory === 'all' || template.category === templateCategory) && `${template.name} ${template.description}`.toLowerCase().includes(query.toLowerCase()));
 
-  const repurpose = (format: PostFormat) => {
-    if (!repurposePost) return;
-    createRepurposeHandoff(repurposePost, format);
-    setRepurposePost(null);
-    onOpenStudio?.();
+  const upload = () => {
+    addAsset({ title: 'Novo material enviado', type: 'upload', tags: ['upload'] });
+    setToast('Upload preparado');
   };
 
-  return <div className="clicko-content-library mx-auto w-full max-w-[1480px] space-y-5 p-6 2xl:p-10">
-    <header className="flex flex-wrap items-end justify-between gap-4"><div><p className="text-[10px] uppercase tracking-[0.24em] text-[#ff7a00]">Memória pesquisável</p><h1 className="mt-2 text-2xl font-semibold text-white">Biblioteca</h1><p className="mt-1 text-sm text-[#8f999f]">Encontre, reutilize e transforme o que a operação já produziu.</p></div><button onClick={() => addAsset({ title: 'Novo material enviado', type: 'upload', tags: ['upload'] })} className="flex items-center gap-2 rounded-lg bg-[#ff5c5c] px-4 py-2.5 text-[11px] font-bold text-white"><Upload className="h-4 w-4" />Adicionar material</button></header>
-    <div className="flex flex-wrap gap-2"><label className="flex h-10 min-w-[260px] flex-1 items-center gap-2 rounded-lg border border-white/[0.07] bg-[#111] px-3"><Search className="h-4 w-4 text-[#666]" /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Buscar por conteúdo, campanha, tag ou formato..." className="w-full bg-transparent text-[10px] text-white outline-none" /></label>{['all', 'content', 'image', 'video', 'campaign', 'template', 'document'].map((item) => <button key={item} onClick={() => setFilter(item)} className={`rounded-lg px-3 text-[9px] capitalize ${filter === item ? 'bg-[#ff5c5c] font-bold text-white' : 'border border-white/[0.07] bg-[#111] text-[#888]'}`}>{item === 'all' ? 'Todos' : item}</button>)}</div>
-    {filtered.length ? <section className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">{filtered.map((asset) => { const Icon = icon(asset.type); const post = asset.type === 'content' ? posts.find((item) => item.id === asset.id) : undefined; return <article key={`${asset.type}-${asset.id}`} className="group overflow-hidden rounded-xl border border-white/[0.07] bg-[#111]"><div className="grid h-28 place-items-center bg-black/25">{'url' in asset && asset.url && asset.type === 'image' ? <img src={asset.url} alt="" className="h-full w-full object-cover opacity-75" /> : <Icon className="h-8 w-8 text-[#ff7a00]/65" />}</div><div className="p-4"><div className="flex items-start justify-between gap-2"><h2 className="line-clamp-2 text-[11px] font-medium text-white">{asset.title}</h2><span className="rounded bg-white/[0.05] px-1.5 py-1 text-[7px] uppercase text-[#777]">{asset.type}</span></div><div className="mt-3 flex flex-wrap gap-1">{asset.tags.slice(0, 3).map((tag) => <span key={tag} className="rounded-full bg-[#ff7a00]/[0.07] px-2 py-1 text-[7px] text-[#ff9a3d]">{tag}</span>)}</div>{'campaignId' in asset && asset.campaignId && <div className="mt-3 flex items-center gap-1.5 text-[8px] text-[#666]"><FolderArchive className="h-3 w-3" />Vinculado à campanha</div>}{post && <button onClick={() => setRepurposePost(post)} className="mt-4 flex w-full items-center justify-center gap-2 rounded-lg border border-[#ff5c5c]/20 bg-[#ff5c5c]/[0.05] py-2 text-[8px] font-semibold text-[#ff8a8a]"><Sparkles className="h-3.5 w-3.5" />Reaproveitar conteúdo</button>}</div></article>; })}</section> : <section className="grid min-h-64 place-items-center rounded-xl border border-dashed border-white/[0.08]"><div className="text-center"><Search className="mx-auto h-7 w-7 text-[#555]" /><p className="mt-3 text-[10px] text-[#888]">Nenhum material corresponde aos filtros.</p><button onClick={() => { setQuery(''); setFilter('all'); }} className="mt-3 text-[9px] text-[#ff7a00]">Limpar busca</button></div></section>}
+  const createTemplate = () => {
+    const template: ContentTemplate = { id: `tpl-${Date.now()}`, name: 'Novo modelo', category: 'copy', description: 'Modelo personalizado pronto para edição.', favorite: false, shared: false, uses: 0, updatedAt: new Date().toISOString().slice(0, 10) };
+    setTemplates((currentTemplates) => [template, ...currentTemplates]);
+    setActiveTab('Modelos'); setTemplateCategory('all'); setQuery(''); setToast('Novo modelo criado');
+  };
 
-    {repurposePost && <div className="fixed inset-0 z-50 grid place-items-center bg-black/70 p-4 backdrop-blur-sm"><section role="dialog" aria-modal="true" aria-label="Reaproveitar conteúdo" className="w-full max-w-md rounded-2xl border border-white/[0.08] bg-[#111] p-5 shadow-2xl"><div className="flex items-start justify-between gap-3"><div><span className="text-[8px] uppercase tracking-[0.16em] text-[#ff7a00]">Content Repurposing</span><h2 className="mt-1 text-base font-semibold text-white">Transformar sem recomeçar.</h2><p className="mt-2 text-[9px] leading-relaxed text-[#888]">O Studio receberá a mensagem, campanha e contexto de “{repurposePost.title}”.</p></div><button onClick={() => setRepurposePost(null)} aria-label="Fechar reaproveitamento" className="grid h-7 w-7 place-items-center rounded-lg text-[#777]"><X className="h-4 w-4" /></button></div><div className="mt-5 grid grid-cols-2 gap-2">{([['reels', 'Reels / cortes'], ['story', 'Stories'], ['carousel', 'Carrossel'], ['post', 'Nova publicação']] as Array<[PostFormat, string]>).map(([format, label]) => <button key={format} onClick={() => repurpose(format)} className="clicko-interactive-surface rounded-xl border border-white/[0.07] bg-black/25 p-4 text-left"><strong className="text-[10px] text-white">{label}</strong><span className="mt-1 block text-[8px] text-[#666]">Abrir no Studio</span></button>)}</div></section></div>}
-  </div>;
+  const updateTemplate = (id: string, field: 'favorite' | 'shared') => setTemplates((currentTemplates) => currentTemplates.map((template) => template.id === id ? { ...template, [field]: !template[field] } : template));
+  const duplicateTemplate = (template: ContentTemplate) => { setTemplates((currentTemplates) => [{ ...template, id: `tpl-${Date.now()}`, name: `${template.name} — cópia`, uses: 0, shared: false, updatedAt: new Date().toISOString().slice(0, 10) }, ...currentTemplates]); setToast('Modelo duplicado'); };
+
+  React.useEffect(() => {
+    if (!toast) return;
+    const timer = window.setTimeout(() => setToast(''), 2400);
+    return () => window.clearTimeout(timer);
+  }, [toast]);
+
+  return <section className="cx-library-approved">
+    <header>
+      <div><h1>Biblioteca</h1><p>Tudo o que a marca pode reutilizar, adaptar e provar.</p></div>
+      <button className="cx-library-button" onClick={upload}><Upload />Upload</button>
+      <button className="cx-library-button is-primary" onClick={createTemplate}><Plus />Criar modelo</button>
+    </header>
+    <nav>{['Arquivos', 'Modelos', 'Marca', 'Campanhas', 'Linhagem'].map((tab) => <button className={activeTab === tab ? 'is-active' : ''} onClick={() => setActiveTab(tab)} key={tab}>{tab}</button>)}</nav>
+    <div className="cx-library-toolbar">
+      <label><Search /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Buscar por nome, campanha, uso ou direito..." /></label>
+      {activeTab === 'Modelos' ? <select value={templateCategory} onChange={(event) => setTemplateCategory(event.target.value as typeof templateCategory)}>{(['all', ...Object.keys(templateMeta)] as const).map((category) => <option key={category} value={category}>{category === 'all' ? 'Todas as categorias' : templateMeta[category][0]}</option>)}</select> : <><button className="cx-library-button">Filtros 3</button><button className="cx-library-button">Mais recentes⌄</button></>}
+    </div>
+    {activeTab === 'Modelos' ? <TemplateLibrary templates={visibleTemplates} onToggle={updateTemplate} onDuplicate={duplicateTemplate} /> : <div className="cx-library-layout">
+      <main>
+        {deleted ? <div className="cx-library-empty"><strong>Arquivo removido da visão</strong><p>A exclusão foi aplicada apenas à demonstração.</p><button onClick={() => setDeleted(false)}>Desfazer</button></div> : <>
+          <div className="cx-library-section-head"><h2>Usados na campanha Aurora</h2><button>Ver campanha →</button></div>
+          <div className="cx-library-used">{visibleUsed.map((asset) => { const index = allLibraryAssets.indexOf(asset); return <button className={selected === index ? 'is-active' : ''} onClick={() => setSelected(index)} key={`${asset[0]}-${index}`}><img src={asset[2]} alt="" /><b>{asset[0]}</b><small>{asset[1]}</small></button>; })}</div>
+          <div className="cx-library-section-head"><h2>Ativos da marca</h2><span>{allLibraryAssets.length} arquivos</span></div>
+          <div className="cx-library-assets">{visibleBrand.map((asset) => { const index = allLibraryAssets.indexOf(asset); return <button className={selected === index ? 'is-active' : ''} onClick={() => setSelected(index)} key={`${asset[0]}-${index}`}><img src={asset[2]} alt="" /><b>{asset[0]}</b><small>{asset[1]}</small></button>; })}</div>
+          <h2>Referências recentes</h2><article className="cx-library-reference"><img src={libraryAssets[1][2]} alt="" /><span><b>Direção humana — cenas cotidianas</b><small>Moodboard Aurora · adicionada hoje por João</small></span><em>Uso interno</em><button>Abrir →</button></article>
+        </>}
+      </main>
+      <aside>
+        <h2>{current[0]}</h2><p>Imagem selecionada</p>
+        <div className="cx-library-preview"><img src={current[2]} alt="" /><em>EM USO</em></div>
+        <small>DETALHES</small><KeyValue label="Tipo" value="Imagem 1080 × 1350" /><KeyValue label="Campanha" value="Aurora — Copa" /><KeyValue label="Direitos" value="Licença comercial" />
+        <small>USOS E LINHAGEM</small><article><b>Carrossel Ritual de foco</b><small>3 variações · 2 publicadas</small><button>Abrir →</button></article><KeyValue label="Origem" value="Moodboard / Ref. 04" /><KeyValue label="Alterações" value="Corte, contraste, texto" />
+        <button className="cx-library-button is-primary is-wide" onClick={onOpenStudio}>Inserir no editor</button><button className="cx-library-button is-wide" onClick={onOpenStudio}>Criar variação com contexto</button><button className="cx-delete-asset" onClick={() => setDeleted(true)}>Excluir arquivo</button>
+      </aside>
+    </div>}
+    {toast && <div className="cx-library-toast">{toast}</div>}
+  </section>;
+}
+
+function TemplateLibrary({ templates, onToggle, onDuplicate }: { templates: ContentTemplate[]; onToggle: (id: string, field: 'favorite' | 'shared') => void; onDuplicate: (template: ContentTemplate) => void }) {
+  return <div className="cx-template-library"><div className="cx-library-section-head"><h2>Modelos reutilizáveis</h2><span>{templates.length} modelos</span></div>{templates.length ? <div className="cx-template-grid">{templates.map((template) => { const [label, Icon] = templateMeta[template.category]; return <article key={template.id}><div className="cx-template-card-top"><span><Icon /></span><button onClick={() => onToggle(template.id, 'favorite')} aria-label="Favoritar modelo"><Heart className={template.favorite ? 'is-favorite' : ''} /></button></div><small>{label}</small><h3>{template.name}</h3><p>{template.description}</p><footer><span>{template.uses} usos</span><div><button onClick={() => onDuplicate(template)} title="Duplicar"><Copy /></button><button onClick={() => onToggle(template.id, 'shared')} title="Compartilhar"><Share2 className={template.shared ? 'is-shared' : ''} /></button></div></footer></article>; })}</div> : <div className="cx-library-empty"><strong>Nenhum modelo encontrado</strong><p>Ajuste a busca ou crie um novo modelo.</p></div>}</div>;
+}
+
+function KeyValue({ label, value }: { label: string; value: string }) {
+  return <div className="cx-library-kv"><span>{label}</span><b>{value}</b></div>;
 }

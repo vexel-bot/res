@@ -4,7 +4,6 @@ import {
   Plus,
   Play,
   CheckCircle2,
-  Sparkles,
   ArrowRight,
   Zap,
   Layers,
@@ -32,39 +31,39 @@ const INITIAL_ROBUST_FLOWS: AutomationFlow[] = [
     lastRun: 'Há 12 minutos',
     nodes: [
       { id: 'n1', type: 'trigger', label: 'Instagram: Comentário Recebido', details: 'Detecta palavra "SISTEMA" em qualquer publicação' },
-      { id: 'n2', type: 'ai_generate', label: 'IA Central: Resposta Automática no Post', details: 'Responde publicamente com mensagem personalizada via Brain' },
-      { id: 'n3', type: 'ai_generate', label: 'IA Central: Envio de DM com Oferta', details: 'Envia link do briefing inteligente e cupom exclusivo' },
+      { id: 'n2', type: 'ai_generate', label: 'KLIC: Resposta Automática no Post', details: 'Responde publicamente usando o contexto autorizado' },
+      { id: 'n3', type: 'ai_generate', label: 'KLIC: Envio de DM com Oferta', details: 'Envia link do briefing inteligente e cupom exclusivo' },
       { id: 'n4', type: 'notify', label: 'CRM: Registro do Lead', details: 'Cria ficha de contato no CRM do Clicko Studio' },
       { id: 'n5', type: 'notify', label: 'WhatsApp: Mensagem Automática', details: 'Dispara mensagem de onboarding e boas-vindas' },
       { id: 'n6', type: 'schedule', label: 'Tarefas: Agendar Follow-up para Equipe', details: 'Cria tarefa para o time comercial em 24h' },
       { id: 'n7', type: 'notify', label: 'Email: Envio de Proposta Comercial', details: 'Dispara e-mail com apresentação do Clicko AI Studio' },
-      { id: 'n8', type: 'ai_generate', label: 'Analytics & Sugestão de Conteúdo IA', details: 'Atualiza métricas de conversão e sugere post de reforço' }
+      { id: 'n8', type: 'ai_generate', label: 'Analytics e sugestão de conteúdo da KLIC', details: 'Atualiza métricas de conversão e sugere post de reforço' }
     ]
   },
   {
     id: 'flow-2',
-    title: 'Repostagem Automática Multicanal com Recriação por IA',
+    title: 'Repostagem automática multicanal com recriação pela KLIC',
     trigger: 'Publicação de alto desempenho atingiu +10% de engajamento',
     isActive: true,
     executionsCount: 89,
     lastRun: 'Há 2 horas',
     nodes: [
       { id: 'n10', type: 'trigger', label: 'Analytics: Post Campeão Detectado', details: 'Alcance 3x maior que a média do perfil' },
-      { id: 'n11', type: 'ai_generate', label: 'IA Central: Adaptar para LinkedIn & Twitter', details: 'Reescreve mantendo o tom profissional e estrutura B2B' },
+      { id: 'n11', type: 'ai_generate', label: 'KLIC: Adaptar para LinkedIn & Twitter', details: 'Reescreve mantendo o tom profissional e estrutura B2B' },
       { id: 'n12', type: 'image_studio', label: 'Estúdio de Imagem: Adaptar Formato 16:9', details: 'Redimensiona a capa com upscale e ajuste de iluminação' },
       { id: 'n13', type: 'schedule', label: 'Agendador: Inserir nos Melhores Horários', details: 'Agenda para os horários de maior pico da audiência' }
     ]
   },
   {
     id: 'flow-3',
-    title: 'Monitoramento de Menções & Gestão de Crise por IA',
-    trigger: 'Menção direta à marca ou palavra proibida do Brain',
+    title: 'Monitoramento de menções e gestão de crise com a KLIC',
+    trigger: 'Menção direta à marca ou termo sinalizado no contexto',
     isActive: false,
     executionsCount: 34,
     lastRun: 'Ontem',
     nodes: [
       { id: 'n20', type: 'trigger', label: 'Social Listening: Menção Detectada', details: 'Monitora Instagram, LinkedIn e Twitter' },
-      { id: 'n21', type: 'ai_generate', label: 'IA Central: Análise de Sentimento', details: 'Classifica o tom do comentário (Positivo, Neutro ou Crítico)' },
+      { id: 'n21', type: 'ai_generate', label: 'KLIC: Análise de Sentimento', details: 'Classifica o tom do comentário (Positivo, Neutro ou Crítico)' },
       { id: 'n22', type: 'notify', label: 'Notificar Equipe de Suporte', details: 'Alerta urgente via WhatsApp e E-mail para a equipe' }
     ]
   }
@@ -100,7 +99,7 @@ export const AutomationBuilderView: React.FC = () => {
       executionsCount: 0,
       nodes: [
         { id: 'n_new_1', type: 'trigger', label: 'Novo Lead Cadastrado', details: 'Gatilho via Webhook' },
-        { id: 'n_new_2', type: 'ai_generate', label: 'IA: Gerar Boas-Vindas Personalizadas', details: 'Consulta o Brain da marca' },
+        { id: 'n_new_2', type: 'ai_generate', label: 'KLIC: Gerar boas-vindas personalizadas', details: 'Consulta apenas o contexto relevante' },
         { id: 'n_new_3', type: 'notify', label: 'WhatsApp & Email: Disparo Simultâneo', details: 'Comunicação multicanal' }
       ]
     };
@@ -114,7 +113,7 @@ export const AutomationBuilderView: React.FC = () => {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/[0.06] pb-4">
         <div>
           <h2 className="text-lg font-bold text-white flex items-center gap-2">
-            <GitFork className="w-5 h-5 text-[#8bd132]" /> Construtor de Automações Operacionais com IA
+            <GitFork className="w-5 h-5 text-[#8bd132]" /> Construtor de automações com a KLIC
           </h2>
           <p className="text-xs text-[#78858e]">
             Conecte Instagram, WhatsApp, CRM, Email, Analytics e Tarefas em fluxos de trabalho autônomos
@@ -144,8 +143,8 @@ export const AutomationBuilderView: React.FC = () => {
                   : 'bg-[#182126] border-white/[0.06] hover:border-white/15 text-[#cbd2d5]'
               }`}
             >
-              <div className="flex items-center justify-between">
-                <h4 className="text-xs font-bold truncate pr-2">{f.title}</h4>
+              <div className="flex items-start justify-between">
+                <h4 className="min-w-0 flex-1 pr-2 text-xs font-bold leading-snug line-clamp-2">{f.title}</h4>
                 <input
                   type="checkbox"
                   checked={f.isActive}
@@ -153,7 +152,7 @@ export const AutomationBuilderView: React.FC = () => {
                     e.stopPropagation();
                     toggleFlowActive(f.id);
                   }}
-                  className="w-4 h-4 accent-[#8bd132] rounded cursor-pointer"
+                  className="mt-0.5 h-4 w-4 shrink-0 cursor-pointer rounded accent-[#8bd132]"
                 />
               </div>
               <p className="text-[10px] text-[#7d888d] mt-1 line-clamp-2">Gatilho: {f.trigger}</p>
@@ -182,7 +181,7 @@ export const AutomationBuilderView: React.FC = () => {
                 className="px-3.5 py-2 rounded-xl bg-black/30 hover:bg-black/50 text-xs font-bold text-white border border-white/[0.08] flex items-center gap-1.5"
               >
                 {isTesting ? <RefreshCw className="h-3.5 w-3.5 animate-spin text-[#8bd132]" /> : <Play className="h-3.5 w-3.5 text-[#8bd132]" />}
-                <span>{isTesting ? 'Simulando...' : 'Testar Fluxo IA'}</span>
+                <span>{isTesting ? 'Simulando...' : 'Testar fluxo com a KLIC'}</span>
               </button>
             </div>
           </div>
@@ -205,7 +204,7 @@ export const AutomationBuilderView: React.FC = () => {
                     </div>
                     <div>
                       <span className="text-[9px] uppercase font-bold text-[#8bd132] tracking-wider">
-                        {node.type === 'trigger' ? 'Gatilho Inicial' : node.type === 'ai_generate' ? 'Ação com IA' : 'Integração de Sistema'}
+                        {node.type === 'trigger' ? 'Gatilho Inicial' : node.type === 'ai_generate' ? 'Ação da KLIC' : 'Integração de Sistema'}
                       </span>
                       <h5 className="text-xs font-bold text-white">{node.label}</h5>
                       <p className="text-[10px] text-[#7b868a] mt-0.5">{node.details}</p>

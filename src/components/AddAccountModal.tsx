@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, ArrowLeft, LogIn, PlusCircle, Building2, User, Check, Sparkles, KeyRound } from 'lucide-react';
+import { X, ArrowLeft, LogIn, PlusCircle, Building2, User, Check, KeyRound, Sparkles } from 'lucide-react';
 import { useGovernance } from '../context/GovernanceContext';
 
 interface AddAccountModalProps {
@@ -14,6 +14,7 @@ export const AddAccountModal: React.FC<AddAccountModalProps> = ({ isOpen, onClos
 
   const [step, setStep] = React.useState<ModalStep>('choose');
   const [loading, setLoading] = React.useState(false);
+  const [error, setError] = React.useState('');
 
   // Login form state
   const [loginEmail, setLoginEmail] = React.useState('');
@@ -31,6 +32,7 @@ export const AddAccountModal: React.FC<AddAccountModalProps> = ({ isOpen, onClos
     if (isOpen) {
       setStep('choose');
       setLoading(false);
+      setError('');
       setLoginEmail('');
       setLoginPassword('');
       setLoginType('company');
@@ -47,37 +49,15 @@ export const AddAccountModal: React.FC<AddAccountModalProps> = ({ isOpen, onClos
   const handleLoginSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!loginEmail || !loginPassword) return;
-
-    setLoading(true);
-    setTimeout(() => {
-      let name = loginAccountName.trim();
-      if (!name) {
-        const username = loginEmail.split('@')[0];
-        name = username.charAt(0).toUpperCase() + username.slice(1);
-        if (loginType === 'company') name += ' Studio';
-      }
-
-      addAccount({
-        name,
-        type: loginType,
-        email: loginEmail,
-        planName: loginType === 'company' ? 'Plano Corporativo' : 'Plano Solo',
-        role: loginType === 'company' ? 'Membro Conectado' : 'Solo Creator',
-        membersCount: loginType === 'company' ? 5 : undefined,
-      });
-
-      setLoading(false);
-      onClose();
-    }, 600);
+    setError('O login de contas existentes exige um provedor de autenticação configurado. Nenhuma conta foi vinculada nem nenhuma credencial foi armazenada.');
   };
 
-  const handleCreateSubmit = (e: React.FormEvent) => {
+  const handleCreateSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!createName.trim()) return;
 
     setLoading(true);
-    setTimeout(() => {
-      addAccount({
+    const created = await addAccount({
         name: createName.trim(),
         type: createType,
         email: createEmail.trim() || undefined,
@@ -85,10 +65,9 @@ export const AddAccountModal: React.FC<AddAccountModalProps> = ({ isOpen, onClos
         role: createType === 'company' ? 'Master / Admin' : 'Solo Creator',
         membersCount: createType === 'company' ? 1 : undefined,
       });
-
-      setLoading(false);
-      onClose();
-    }, 600);
+    setLoading(false);
+    if (created) onClose();
+    else setError('Não foi possível criar o ambiente isolado. Verifique o servidor e tente novamente.');
   };
 
   return (
@@ -129,6 +108,8 @@ export const AddAccountModal: React.FC<AddAccountModalProps> = ({ isOpen, onClos
             <X className="h-4 w-4" />
           </button>
         </div>
+
+        {error && <div role="alert" className="mb-4 rounded-lg border border-amber-400/20 bg-amber-400/[0.06] p-3 text-[10px] leading-relaxed text-amber-200">{error}</div>}
 
         {/* STEP 1: Choose Option */}
         {step === 'choose' && (
@@ -334,7 +315,7 @@ export const AddAccountModal: React.FC<AddAccountModalProps> = ({ isOpen, onClos
                 {createType === 'personal' ? (
                   <>
                     {[
-                      { id: 'Plano Solo', price: 'R$ 49/mês', desc: '1 usuário · Central IA & Posts ilimitados' },
+                      { id: 'Plano Solo', price: 'R$ 49/mês', desc: '1 usuário · KLIC e posts ilimitados' },
                       { id: 'Plano Pro Creator', price: 'R$ 99/mês', desc: '1 usuário · Créditos estendidos + Studio HD' },
                     ].map((plan) => (
                       <button

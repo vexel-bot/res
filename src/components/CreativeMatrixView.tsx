@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Sparkles,
   Target,
   Flame,
   HelpCircle,
@@ -14,7 +13,8 @@ import {
   Send,
   RefreshCw,
   Sliders,
-  UserCheck
+  UserCheck,
+  Sparkles
 } from 'lucide-react';
 import { useOperations } from '../context/OperationsContext';
 import type { Post } from '../types';
@@ -24,7 +24,7 @@ interface CreativeMatrixViewProps {
 }
 
 export const CreativeMatrixView: React.FC<CreativeMatrixViewProps> = ({ onSavePost }) => {
-  const { brain, activeClient, activeCampaign, studioHandoff } = useOperations();
+  const { contextSnapshot, activeClient, activeCampaign, studioHandoff } = useOperations();
 
   const [gancho, setGancho] = React.useState('O maior erro que impede seu crescimento em 2026');
   const [angulo, setAngulo] = React.useState('Contradição e Eficiência Operacional');
@@ -40,11 +40,11 @@ export const CreativeMatrixView: React.FC<CreativeMatrixViewProps> = ({ onSavePo
   const [isGenerating, setIsGenerating] = React.useState(false);
   const [matrixResult, setMatrixResult] = React.useState<any>({
     headline: '[ATENÇÃO] Por que continuar gastando 15 horas semanais em tarefas manuais?',
-    copy: `Se você quer resultados extraordinários na gestão de redes sociais, precisa parar de tratar a IA como um simples chat.\n\nÂngulo: Contradição e Eficiência\nEmoção: Urgência e Empoderamento\n\n1. O modelo tradicional de criação está esgotado\n2. Quem usa um Sistema Operacional com IA multiplica o alcance com menos esforço\n3. Unifique Brain, Agendamento e Produção Multimídia\n\nComente "SISTEMA" para testar gratuitamente.`,
+    copy: `Se você quer resultados extraordinários na gestão de redes sociais, precisa parar de tratar a IA como um simples chat.\n\nÂngulo: Contradição e Eficiência\nEmoção: Urgência e Empoderamento\n\n1. O modelo tradicional de criação está esgotado\n2. Quem usa um Sistema Operacional com IA multiplica o alcance com menos esforço\n3. Unifique contexto, agendamento e produção multimídia\n\nComente "SISTEMA" para testar gratuitamente.`,
     slides: [
       { slideNumber: 1, headline: 'O ERRO QUE CUSTA 15H POR SEMANA', text: 'Você ainda cria posts sem um cérebro estratégico unificado?' },
       { slideNumber: 2, headline: '1. Dispersão de Dados', text: 'A informação da marca fica dividida em 10 abas e notas soltas.' },
-      { slideNumber: 3, headline: '2. A Solução Definitiva', text: 'Um Sistema Operacional que consulta seu Brain permanente a cada clique.' }
+      { slideNumber: 3, headline: '2. A Solução Definitiva', text: 'Um sistema operacional que usa o contexto relevante em cada ação.' }
     ],
     aiScore: 98,
     funnelStage: 'Topo de Funil',
@@ -78,7 +78,7 @@ export const CreativeMatrixView: React.FC<CreativeMatrixViewProps> = ({ onSavePo
           persona,
           platform,
           format,
-          brainContext: brain,
+          contextProfile: contextSnapshot,
           clientContext: activeClient,
           strategyContext: activeCampaign,
         }),
@@ -104,7 +104,7 @@ export const CreativeMatrixView: React.FC<CreativeMatrixViewProps> = ({ onSavePo
       status: 'pending_approval',
       aiScore: matrixResult.aiScore || 95,
       objective: `${estagioFunil} - ${persona}`,
-      origin: 'brain',
+      origin: 'context',
       clientId: activeClient?.id,
       campaignId: activeCampaign?.id,
     });
@@ -121,7 +121,7 @@ export const CreativeMatrixView: React.FC<CreativeMatrixViewProps> = ({ onSavePo
             </div>
             <h2 className="mt-2 text-xl font-bold text-white">Matriz Criativa de Alta Conversão</h2>
             <p className="mt-1 text-xs text-[#8f9a9f]">
-              Combine Gancho, Ângulo, Emoção, Dor, Desejo e Funil para gerar peças certeiras validadas pela IA.
+              Combine Gancho, Ângulo, Emoção, Dor, Desejo e Funil para gerar peças certeiras validadas pela KLIC.
             </p>
           </div>
           <button
@@ -265,13 +265,13 @@ export const CreativeMatrixView: React.FC<CreativeMatrixViewProps> = ({ onSavePo
                 </span>
                 <div>
                   <h3 className="text-xs font-bold text-white">Resultado da Matriz Criativa</h3>
-                  <p className="text-[10px] text-[#78848a]">Sintetizado com o Brain da sua marca</p>
+                  <p className="text-[10px] text-[#78848a]">Sintetizado com o contexto relevante da KLIC</p>
                 </div>
               </div>
 
               <div className="flex items-center gap-2">
                 <span className="rounded-lg bg-[#8bd132]/10 px-2.5 py-1 text-[10px] font-bold text-[#8bd132]">
-                  Score IA: {matrixResult.aiScore || 95}/100
+                  Score KLIC: {matrixResult.aiScore || 95}/100
                 </span>
               </div>
             </div>

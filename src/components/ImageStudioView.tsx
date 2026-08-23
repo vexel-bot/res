@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   Image as ImageIcon,
-  Sparkles,
   RefreshCw,
   Download,
   Wand2,
@@ -19,12 +18,13 @@ import {
   Expand,
   Copy,
   SlidersHorizontal,
-  LayoutTemplate
+  LayoutTemplate,
+  Sparkles
 } from 'lucide-react';
 import { useOperations } from '../context/OperationsContext';
 
 export const ImageStudioView: React.FC = () => {
-  const { brain, activeCampaign } = useOperations();
+  const { contextSnapshot, activeCampaign } = useOperations();
   const [prompt, setPrompt] = React.useState(
     'Rendimento 3D ultra detalhado em modo escuro com iluminação volumétrica neon violeta e verde, estética corporativa de luxo para redes sociais'
   );
@@ -49,7 +49,7 @@ export const ImageStudioView: React.FC = () => {
 
   const aiEditActions = [
     { id: 'remove_bg', label: 'Remover Fundo', icon: Scissors, description: 'Isola o objeto principal e torna o fundo transparente' },
-    { id: 'swap_bg', label: 'Trocar Fundo', icon: Replace, description: 'Substitui o cenário de fundo usando comandos da IA' },
+    { id: 'swap_bg', label: 'Trocar Fundo', icon: Replace, description: 'Substitui o cenário de fundo usando comandos da KLIC' },
     { id: 'expand', label: 'Expandir Imagem', icon: Expand, description: 'Outpainting inteligente para novos formatos sem corte' },
     { id: 'upscale', label: 'Upscale / Qualidade', icon: Wand2, description: 'Aumenta nitidez e resolução para 4K' },
     { id: 'remove_obj', label: 'Remover Objetos', icon: Scissors, description: 'Elimina distrações ou elementos indesejados' },
@@ -57,7 +57,7 @@ export const ImageStudioView: React.FC = () => {
     { id: 'change_outfit', label: 'Alterar Roupas', icon: Shirt, description: 'Modifica o vestuário mantendo a identidade visual' },
     { id: 'change_lighting', label: 'Alterar Iluminação', icon: Sun, description: 'Ajusta clima, sombras e reflexos neon' },
     { id: 'variations', label: 'Gerar Variações', icon: Copy, description: 'Cria 3 versões alternativas mantendo o estilo' },
-    { id: 'auto_resize', label: 'Redimensionar IA', icon: Crop, description: 'Ajuste automático para 1:1, 9:16, 16:9 e 4:5' },
+    { id: 'auto_resize', label: 'Redimensionar com a KLIC', icon: Crop, description: 'Ajuste automático para 1:1, 9:16, 16:9 e 4:5' },
   ];
 
   const handleGenerateImage = async () => {
@@ -70,7 +70,7 @@ export const ImageStudioView: React.FC = () => {
         body: JSON.stringify({
           prompt: `${prompt}, estilo: ${stylePreset}`,
           aspectRatio,
-          brainContext: brain,
+          contextProfile: contextSnapshot,
           strategyContext: activeCampaign,
         }),
       });
@@ -83,7 +83,7 @@ export const ImageStudioView: React.FC = () => {
           'https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=1200&q=80'
         );
       }
-      setStatusMessage('Imagem gerada e alinhada às diretrizes do Brain!');
+      setStatusMessage('Imagem gerada e alinhada ao contexto selecionado pela KLIC!');
     } catch (err) {
       console.error(err);
       setStatusMessage('Processamento concluído com versão pré-renderizada.');
@@ -94,7 +94,7 @@ export const ImageStudioView: React.FC = () => {
 
   const handleExecuteAIEdit = async (actionId: string, label: string) => {
     setEditingAction(actionId);
-    setStatusMessage(`Executando edição com IA: "${label}"...`);
+    setStatusMessage(`A KLIC está executando a edição: "${label}"...`);
     try {
       const res = await fetch('/api/ai/image-edit', {
         method: 'POST',
@@ -103,7 +103,7 @@ export const ImageStudioView: React.FC = () => {
           action: actionId,
           prompt,
           sourceImage: generatedImageUrl,
-          brainContext: brain,
+          contextProfile: contextSnapshot,
         }),
       });
       const data = await res.json();
@@ -124,14 +124,14 @@ export const ImageStudioView: React.FC = () => {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/[0.06] pb-4">
         <div>
           <h2 className="text-lg font-bold text-white flex items-center gap-2">
-            <ImageIcon className="w-5 h-5 text-[#8bd132]" /> Estúdio de Edição & Geração Visual de IA
+            <ImageIcon className="w-5 h-5 text-[#8bd132]" /> Estúdio de edição e geração visual com a KLIC
           </h2>
           <p className="text-xs text-[#78858e]">
             Crie, edite, remova fundos, faça upscale e adapte formatos com Inteligência Artificial
           </p>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex w-full items-center gap-2 md:w-auto">
           <button
             onClick={() => {
               const link = document.createElement('a');
@@ -139,7 +139,7 @@ export const ImageStudioView: React.FC = () => {
               link.download = 'clicko-ai-studio-asset.jpg';
               link.click();
             }}
-            className="px-4 py-2 rounded-xl bg-[#8bd132] hover:bg-[#9be24d] text-[#0b1208] font-bold text-xs flex items-center gap-1.5 transition-all shadow-md shadow-[#8bd132]/20"
+            className="flex w-full items-center justify-center gap-1.5 rounded-xl bg-[#8bd132] px-4 py-2 text-xs font-bold text-[#0b1208] shadow-md shadow-[#8bd132]/20 transition-all hover:bg-[#9be24d] md:w-auto"
           >
             <Download className="w-4 h-4" /> Exportar Imagem em HD
           </button>
@@ -151,10 +151,10 @@ export const ImageStudioView: React.FC = () => {
         {/* Controls Column */}
         <div className="space-y-4 rounded-xl border border-white/[0.07] bg-[#101316] p-5 lg:col-span-5">
           {/* Tool Navigation Bar */}
-          <div className="flex items-center p-1 rounded-xl bg-black/30 border border-white/[0.06]">
+          <div className="grid grid-cols-3 gap-1 rounded-xl border border-white/[0.06] bg-black/30 p-1">
             <button
               onClick={() => setActiveTool('generate')}
-              className={`flex-1 py-2 text-[10px] font-bold rounded-lg transition-all ${
+              className={`min-h-10 rounded-lg px-1.5 py-2 text-[10px] font-bold leading-tight transition-all ${
                 activeTool === 'generate'
                   ? 'bg-[#8bd132] text-[#14200e] shadow-sm'
                   : 'text-[#9da7ac] hover:text-white'
@@ -164,17 +164,17 @@ export const ImageStudioView: React.FC = () => {
             </button>
             <button
               onClick={() => setActiveTool('edit_ia')}
-              className={`flex-1 py-2 text-[10px] font-bold rounded-lg transition-all ${
+              className={`min-h-10 rounded-lg px-1.5 py-2 text-[10px] font-bold leading-tight transition-all ${
                 activeTool === 'edit_ia'
                   ? 'bg-[#8bd132] text-[#14200e] shadow-sm'
                   : 'text-[#9da7ac] hover:text-white'
               }`}
             >
-              Editar com IA
+              Editar com a KLIC
             </button>
             <button
               onClick={() => setActiveTool('text')}
-              className={`flex-1 py-2 text-[10px] font-bold rounded-lg transition-all ${
+              className={`min-h-10 rounded-lg px-1.5 py-2 text-[10px] font-bold leading-tight transition-all ${
                 activeTool === 'text'
                   ? 'bg-[#8bd132] text-[#14200e] shadow-sm'
                   : 'text-[#9da7ac] hover:text-white'
@@ -230,8 +230,8 @@ export const ImageStudioView: React.FC = () => {
                 disabled={isGenerating}
                 className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#8bd132] py-3 text-xs font-bold text-[#14200e] hover:bg-[#9be24d] transition shadow-lg shadow-[#8bd132]/20 disabled:opacity-50"
               >
-                {isGenerating ? <RefreshCw className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4" />}
-                {isGenerating ? 'Gerando Imagem...' : 'Gerar Imagem com IA'}
+                {isGenerating ? <RefreshCw className="h-4 w-4 animate-spin" /> : null}
+                {isGenerating ? 'A KLIC está gerando...' : 'Gerar imagem com a KLIC'}
               </button>
             </div>
           )}
@@ -240,7 +240,7 @@ export const ImageStudioView: React.FC = () => {
           {activeTool === 'edit_ia' && (
             <div className="space-y-3">
               <span className="text-[10px] font-bold uppercase tracking-wider text-[#8bd132]">
-                Ferramentas Especializadas de Edição IA
+                Ferramentas especializadas da KLIC
               </span>
 
               <div className="grid grid-cols-2 gap-2 max-h-[340px] overflow-y-auto pr-1">
@@ -298,7 +298,6 @@ export const ImageStudioView: React.FC = () => {
 
           {statusMessage && (
             <div className="rounded-xl border border-[#8bd132]/20 bg-[#8bd132]/[0.06] p-3 text-[10px] font-semibold text-[#8bd132] flex items-center gap-2">
-              <Sparkles className="h-3.5 w-3.5 shrink-0" />
               <span>{statusMessage}</span>
             </div>
           )}
@@ -309,7 +308,7 @@ export const ImageStudioView: React.FC = () => {
           <div className="relative max-w-full overflow-hidden rounded-xl border border-white/10 shadow-2xl">
             <img
               src={generatedImageUrl}
-              alt="Imagem gerada por IA"
+              alt="Imagem gerada pela KLIC"
               className="max-h-[460px] object-contain rounded-xl"
             />
 

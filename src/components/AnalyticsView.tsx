@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   BarChart3,
-  Sparkles,
   TrendingUp,
   Eye,
   Heart,
@@ -15,14 +14,14 @@ import {
   Target,
   FolderKanban,
   Share,
-  BrainCircuit,
+  Sparkles,
   WandSparkles,
 } from 'lucide-react';
 import { useOperations } from '../context/OperationsContext';
 import { useGovernance } from '../context/GovernanceContext';
 
 export const AnalyticsView: React.FC<{ onOpenStudio?: () => void }> = ({ onOpenStudio }) => {
-  const { brain, activeClient, activeCampaign, learningSignals, createCampaign, prepareStudioHandoff, addLearningSignal } = useOperations();
+  const { contextSnapshot, activeClient, activeCampaign, learningSignals, connectedAccounts, createCampaign, prepareStudioHandoff, addLearningSignal } = useOperations();
   const { environmentMode, users } = useGovernance();
   const isPersonal = environmentMode === 'personal';
 
@@ -47,10 +46,8 @@ export const AnalyticsView: React.FC<{ onOpenStudio?: () => void }> = ({ onOpenS
           environmentMode,
           selectedClient,
           selectedCollaborator,
-          reachChange: 18.4,
-          engagementRate: 6.8,
-          topPost: isPersonal ? 'Artigo autoral sobre IA & Engenharia' : '5 Regras da IA corporativa em 2026',
-          brainContext: brain,
+          metrics: connectedAccounts.filter((account) => account.connected && account.connectionStatus === 'connected').map((account) => ({ source: 'connected-api', platform: account.platform, followers: account.followers, engagement: account.engagement, bestTime: account.bestTime, lastSync: account.lastSync })),
+          contextProfile: contextSnapshot,
           clientContext: activeClient,
           strategyContext: activeCampaign,
         }),
@@ -67,7 +64,7 @@ export const AnalyticsView: React.FC<{ onOpenStudio?: () => void }> = ({ onOpenS
 
   React.useEffect(() => {
     fetchAiAnalysis();
-  }, [period, environmentMode, selectedClient, selectedCollaborator]);
+  }, [period, environmentMode, selectedClient, selectedCollaborator, connectedAccounts]);
 
   const turnInsightIntoCampaign = () => {
     if (!aiAnalysis) return;
@@ -78,8 +75,8 @@ export const AnalyticsView: React.FC<{ onOpenStudio?: () => void }> = ({ onOpenS
       endDate: new Date(Date.now() + 21 * 86_400_000).toISOString().slice(0, 10),
       budget: 'A definir',
       kpis: ['Alcance qualificado', 'Engajamento', 'Conversões'],
-      products: brain.products,
-      audience: brain.audience,
+      products: contextSnapshot.products,
+      audience: contextSnapshot.audience,
       offer: 'Conteúdo derivado do melhor padrão de desempenho',
       channels: ['instagram', 'linkedin'],
       importantDates: '',
@@ -127,7 +124,7 @@ export const AnalyticsView: React.FC<{ onOpenStudio?: () => void }> = ({ onOpenS
           </p>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2"><span className="rounded-full border border-[#ff7a00]/20 bg-[#ff7a00]/[0.06] px-2.5 py-1.5 text-[8px] text-[#ff9a3d]">Dados locais demonstrativos</span><select
+        <div className="flex flex-wrap items-center gap-2"><span className={`rounded-full border px-2.5 py-1.5 text-[8px] ${aiAnalysis?.dataStatus === 'connected' ? 'border-[#8bd132]/20 bg-[#8bd132]/[0.06] text-[#8bd132]' : 'border-amber-400/20 bg-amber-400/[0.06] text-amber-300'}`}>{aiAnalysis?.dataStatus === 'connected' ? 'Dados de API conectada' : 'Aguardando fonte real'}</span><select
           value={period}
           onChange={(e) => setPeriod(e.target.value)}
           className="bg-[#0c1014] border border-white/[0.08] rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-[#8bd132]/50"
@@ -145,7 +142,7 @@ export const AnalyticsView: React.FC<{ onOpenStudio?: () => void }> = ({ onOpenS
             <Filter className="w-3.5 h-3.5" />
             <span>Filtros Corporativos Avançados</span>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5">
+          <div className="grid grid-cols-1 gap-2.5 min-[520px]:grid-cols-2 md:grid-cols-3 xl:grid-cols-5">
             <select
               value={selectedClient}
               onChange={(e) => setSelectedClient(e.target.value)}
@@ -208,8 +205,7 @@ export const AnalyticsView: React.FC<{ onOpenStudio?: () => void }> = ({ onOpenS
       <div className="space-y-4 rounded-xl border border-[#8bd132]/20 bg-[#101316] p-5">
         <div className="flex items-center justify-between border-b border-white/[0.06] pb-3">
           <div className="flex items-center gap-2">
-            <Sparkles className="w-4 h-4 text-[#8bd132]" />
-            <h3 className="text-sm font-bold text-[#ededed]">Diagnóstico e Explicação Contextual da IA</h3>
+            <h3 className="text-sm font-bold text-[#ededed]">Diagnóstico contextual da KLIC</h3>
           </div>
           <button
             onClick={fetchAiAnalysis}
@@ -250,7 +246,7 @@ export const AnalyticsView: React.FC<{ onOpenStudio?: () => void }> = ({ onOpenS
               className="flex items-center gap-2 rounded-lg bg-[#8bd132] px-4 py-2.5 text-xs font-semibold text-[#080e05] transition-colors hover:bg-[#9be24d]"
             >
               <Sparkles className="h-4 w-4" />
-              <span>Criar Campanha a partir desta Análise</span>
+              <span>{aiAnalysis.dataStatus === 'connected' ? 'Criar Campanha a partir desta Análise' : 'Criar experimento para validar a hipótese'}</span>
             </button>
             <button type="button" onClick={createVariants} className="ml-2 inline-flex items-center gap-2 rounded-lg border border-[#ff5c5c]/25 bg-[#ff5c5c]/[0.07] px-4 py-2.5 text-xs font-semibold text-[#ff8a8a]"><WandSparkles className="h-4 w-4" />Criar 5 variações no Studio</button>
           </div>
@@ -259,7 +255,7 @@ export const AnalyticsView: React.FC<{ onOpenStudio?: () => void }> = ({ onOpenS
         )}
       </div>
 
-      <section className="rounded-xl border border-white/[0.07] bg-[#101010] p-5"><div className="flex items-start justify-between gap-4"><div><div className="flex items-center gap-2 text-[9px] uppercase tracking-[0.16em] text-[#ff7a00]"><BrainCircuit className="h-4 w-4" />Aprendizado do Brain</div><h3 className="mt-1 text-sm font-semibold text-white">Padrões viram próximas ações.</h3></div><span className="text-[8px] text-[#666]">Hipóteses até a conexão de analytics</span></div><div className="mt-4 grid gap-2 md:grid-cols-2">{learningSignals.slice(0, 4).map((signal) => <article key={signal.id} className="rounded-lg border border-white/[0.055] bg-black/20 p-3"><div className="flex items-center justify-between gap-2"><strong className="text-[9px] text-white">{signal.label}</strong><span className={`rounded-full px-2 py-1 text-[7px] uppercase ${signal.confidence === 'validated' ? 'bg-[#ff5c5c]/10 text-[#ff8a8a]' : 'bg-[#ff7a00]/10 text-[#ff9a3d]'}`}>{signal.confidence === 'validated' ? 'validado' : 'hipótese'}</span></div><p className="mt-2 text-[8px] leading-relaxed text-[#777]">{signal.evidence}</p><p className="mt-2 text-[8px] leading-relaxed text-[#aaa]">{signal.recommendation}</p></article>)}</div></section>
+      <section className="rounded-xl border border-white/[0.07] bg-[#101010] p-5"><div className="flex items-start justify-between gap-4"><div><div className="flex items-center gap-2 text-[9px] uppercase tracking-[0.16em] text-[#ff7a00]">Aprendizado da KLIC</div><h3 className="mt-1 text-sm font-semibold text-white">Padrões viram próximas ações.</h3></div><span className="text-[8px] text-[#666]">Hipóteses até a conexão de analytics</span></div><div className="mt-4 grid gap-2 md:grid-cols-2">{learningSignals.slice(0, 4).map((signal) => <article key={signal.id} className="rounded-lg border border-white/[0.055] bg-black/20 p-3"><div className="flex items-center justify-between gap-2"><strong className="text-[9px] text-white">{signal.label}</strong><span className={`rounded-full px-2 py-1 text-[7px] uppercase ${signal.confidence === 'validated' ? 'bg-[#ff5c5c]/10 text-[#ff8a8a]' : 'bg-[#ff7a00]/10 text-[#ff9a3d]'}`}>{signal.confidence === 'validated' ? 'validado' : 'hipótese'}</span></div><p className="mt-2 text-[8px] leading-relaxed text-[#777]">{signal.evidence}</p><p className="mt-2 text-[8px] leading-relaxed text-[#aaa]">{signal.recommendation}</p></article>)}</div></section>
 
       {/* AI Social Media BI Breakdown Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -291,7 +287,7 @@ export const AnalyticsView: React.FC<{ onOpenStudio?: () => void }> = ({ onOpenS
           <span className="text-[9px] font-bold uppercase tracking-wider text-[#8bd132]">
             Oportunidades contextuais
           </span>
-          <h4 className="text-xs font-bold text-white">Pautas sugeridas pelo Brain</h4>
+          <h4 className="text-xs font-bold text-white">Pautas sugeridas pela KLIC</h4>
           <div className="text-[10px] text-[#a0abb0] space-y-1">
             <p>• Explorar “Automação Operacional” pelo ângulo de clareza e rotina.</p>
             <p>• Validar Reels e carrosséis sem presumir resultado futuro.</p>

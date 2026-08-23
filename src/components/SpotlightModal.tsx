@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   Search,
-  Sparkles,
   PenTool,
   Calendar,
   GitFork,
@@ -13,6 +12,7 @@ import {
   Share2,
 } from 'lucide-react';
 import { NavigationTab, SearchResultItem } from '../types';
+import { Sparkles as KlicSymbol } from 'lucide-react';
 
 interface SpotlightModalProps {
   isOpen: boolean;
@@ -67,13 +67,6 @@ export const SpotlightModal: React.FC<SpotlightModalProps> = ({
       tabToNavigate: 'automations',
     },
     {
-      id: 's4',
-      title: 'Configuração da Marca & Tom de Voz',
-      subtitle: 'Parâmetros e diretrizes para a IA Central',
-      type: 'action',
-      tabToNavigate: 'brain',
-    },
-    {
       id: 's5',
       title: 'Aprovação de Vídeo por Marcus Thorne',
       subtitle: 'Comentário pendente no Reels/TikTok',
@@ -107,7 +100,7 @@ export const SpotlightModal: React.FC<SpotlightModalProps> = ({
       case 'post':
         return <PenTool className="w-4 h-4 text-indigo-400" />;
       case 'campaign':
-        return <Sparkles className="w-4 h-4 text-amber-400" />;
+        return <KlicSymbol className="w-4 h-4 text-amber-400" />;
       case 'automation':
         return <GitFork className="w-4 h-4 text-emerald-400" />;
       case 'workspace':

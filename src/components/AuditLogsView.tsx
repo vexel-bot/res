@@ -5,7 +5,7 @@ import { localizeAuditToken, localizeResource } from '../utils/localization';
 
 const formatDateTime = (value: string) => new Intl.DateTimeFormat('pt-BR', { dateStyle: 'short', timeStyle: 'short' }).format(new Date(value));
 
-export const AuditLogsView: React.FC = () => {
+export const AuditLogsView: React.FC<{ embedded?: boolean }> = ({ embedded = false }) => {
   const { auditLogs, loading, workspace } = useGovernance();
   const [query, setQuery] = React.useState('');
   const [moduleFilter, setModuleFilter] = React.useState('all');
@@ -33,9 +33,9 @@ export const AuditLogsView: React.FC = () => {
     URL.revokeObjectURL(url);
   };
 
-  return <div className="mx-auto w-full max-w-[1400px] space-y-5 p-5 md:p-7">
+  return <div className={`mx-auto w-full max-w-[1400px] space-y-5 ${embedded ? 'p-0' : 'p-5 md:p-7'}`}>
     <header className="flex flex-wrap items-end justify-between gap-4 border-b border-white/[0.06] pb-5">
-      <div><div className="mb-2 flex items-center gap-2 text-[9px] uppercase tracking-[0.2em] text-[#8bd132]"><ShieldCheck className="h-3.5 w-3.5" />Segurança e rastreabilidade</div><h1 className="text-[22px] font-semibold tracking-[-0.035em] text-white">Registros de auditoria</h1><p className="mt-1 text-[10px] text-[#7f888d]">Registro pesquisável de ações, módulos, usuários e empresas.</p></div>
+      <div><div className="mb-2 flex items-center gap-2 text-[9px] uppercase tracking-[0.2em] text-[#8bd132]"><ShieldCheck className="h-3.5 w-3.5" />Segurança e rastreabilidade</div>{embedded ? <h3 className="text-[16px] font-semibold tracking-[-0.025em] text-white">Logs e histórico</h3> : <h1 className="text-[22px] font-semibold tracking-[-0.035em] text-white">Registros de auditoria</h1>}<p className="mt-1 text-[10px] text-[#7f888d]">Registro pesquisável de ações, módulos, usuários e empresas.</p></div>
       <button onClick={exportCsv} className="flex items-center gap-2 rounded-lg border border-white/[0.07] bg-[#182126] px-4 py-2.5 text-[9px] text-[#c7ced1] hover:border-[#8bd132]/25 hover:text-[#8bd132]"><Download className="h-3.5 w-3.5" />Exportar CSV</button>
     </header>
 

@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   PenTool,
-  Sparkles,
   Layers,
   Send,
   Calendar,
@@ -49,7 +48,7 @@ function calculateClickScore(title: string, copy: string, audience: string, ctaP
 export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
   onSavePost,
 }) => {
-  const { brain, activeClient, activeCampaign, studioHandoff } = useOperations();
+  const { contextSnapshot, activeClient, activeCampaign, studioHandoff, connectedAccounts } = useOperations();
   const { environmentMode, currentUser, subscription } = useGovernance();
   const { openOffer } = useOffers();
   const isPersonal = environmentMode === 'personal';
@@ -84,11 +83,12 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
     {
       slideNumber: 3,
       headline: '2. Tom de Voz Consistente',
-      text: 'Treine a IA com as diretrizes e público exatos da sua marca.',
+      text: 'Oriente a KLIC com as diretrizes e o público exatos da sua marca.',
     },
   ]);
   const [activeSlideIndex, setActiveSlideIndex] = React.useState(0);
   const [isGenerating, setIsGenerating] = React.useState(false);
+  const [publicationError, setPublicationError] = React.useState('');
   const [previewImageUrl, setPreviewImageUrl] = React.useState(
     'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80'
   );
@@ -109,8 +109,8 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
     postTitle, copyText, targetAudience,
     /comente|acesse|conheça|saiba|fale|comece|agende|clique|conversa/i.test(copyText),
     selectedFormat === 'carousel' ? slides.length : 1,
-    Boolean(activeCampaign || studioHandoff || brain.revision),
-  ), [postTitle, copyText, targetAudience, selectedFormat, slides.length, activeCampaign?.id, studioHandoff?.id, brain.revision]);
+    Boolean(activeCampaign || studioHandoff || contextSnapshot.revision),
+  ), [postTitle, copyText, targetAudience, selectedFormat, slides.length, activeCampaign?.id, studioHandoff?.id, contextSnapshot.revision]);
 
   const formatsList: { id: PostFormat; label: string; platformDefault: SocialPlatform }[] = [
     { id: 'carousel', label: 'Carrossel', platformDefault: 'instagram' },
@@ -136,7 +136,7 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
           topic: optimize ? `Otimize este conteúdo com base no Click Score, preservando a ideia central: ${topicPrompt}\n\nTexto atual: ${copyText}` : topicPrompt,
           tone,
           targetAudience,
-          brainContext: brain,
+          contextProfile: contextSnapshot,
           clientContext: activeClient,
           strategyContext: activeCampaign,
         }),
@@ -188,6 +188,12 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
   };
 
   const handleSaveDraft = (status: Post['status']) => {
+    const authorizedAccount = connectedAccounts.find((account) => account.platform === selectedPlatform && account.connected && account.connectionStatus === 'connected' && account.permissions?.some((permission) => /publicar/i.test(permission)));
+    if (status === 'published' && !authorizedAccount) {
+      setPublicationError(`A publicação no ${selectedPlatform} exige uma conta autorizada com permissão de publicação. O conteúdo não foi marcado como publicado.`);
+      return;
+    }
+    setPublicationError('');
     onSavePost({
       title: postTitle,
       platform: selectedPlatform,
@@ -218,7 +224,7 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
           </div>
           <p className="text-xs text-[#78848c] mt-0.5">
             {isPersonal
-              ? 'Crie e publique diretamente sem necessidade de aprovação ou revisão'
+              ? 'Crie livremente; publicação e agendamento respeitam as contas realmente autorizadas'
               : 'Crie conteúdos com governança corporativa e fluxo de aprovação'}
           </p>
         </div>
@@ -246,7 +252,7 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
                 onClick={() => handleSaveDraft('scheduled')}
                 className="rounded-lg border border-white/10 bg-white/[0.06] px-4 py-2 text-xs font-medium text-white transition-colors hover:bg-white/10"
               >
-                Agendar Publicação
+                Agendar internamente
               </button>
             </>
           ) : isCollaborator ? (
@@ -271,12 +277,14 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
                 onClick={() => handleSaveDraft('scheduled')}
                 className="rounded-lg border border-white/10 bg-white/[0.06] px-4 py-2 text-xs font-medium text-white transition-colors hover:bg-white/10"
               >
-                Aprovar & Agendar
+                Aprovar & agendar internamente
               </button>
             </>
           )}
         </div>
       </div>
+
+      {publicationError && <div role="alert" className="rounded-lg border border-amber-400/20 bg-amber-400/[0.06] px-4 py-3 text-[9px] text-amber-200">{publicationError}</div>}
 
       <div className="rounded-xl border border-white/[0.06] bg-[#101316] p-3.5">
         <div className="mb-2.5 flex items-center justify-between">
@@ -351,7 +359,7 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
         <div className="space-y-4 rounded-xl border border-white/[0.06] bg-[#101316] p-4">
           <div className="flex items-center justify-between border-b border-white/[0.06] pb-3">
             <span className="text-xs font-bold text-white flex items-center gap-1.5">
-              <Sparkles className="w-4 h-4 text-[#8bd132]" /> Redação com IA e parâmetros
+              Redação com a KLIC e parâmetros
             </span>
             <button
               onClick={() => handleGenerateAICopy()}
@@ -364,7 +372,7 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
                 </>
               ) : (
                 <>
-                  <Sparkles className="w-3.5 h-3.5" /> Escrever com IA
+                  Escrever com a KLIC
                 </>
               )}
             </button>

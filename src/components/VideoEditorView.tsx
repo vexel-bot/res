@@ -8,7 +8,6 @@ import {
   Mic,
   Subtitles,
   Layers,
-  Sparkles,
   Download,
   Plus,
   RefreshCw,
@@ -21,12 +20,13 @@ import {
   Globe,
   ZoomIn,
   Flame,
-  LayoutTemplate
+  LayoutTemplate,
+  Sparkles
 } from 'lucide-react';
 import { useOperations } from '../context/OperationsContext';
 
 export const VideoEditorView: React.FC = () => {
-  const { brain } = useOperations();
+  const { contextSnapshot } = useOperations();
   const [isPlaying, setIsPlaying] = React.useState(false);
   const [subtitleStyle, setSubtitleStyle] = React.useState<'Neon' | 'Karaoke' | 'Minimalist'>('Neon');
   const [silenceCut, setSilenceCut] = React.useState(true);
@@ -52,7 +52,7 @@ export const VideoEditorView: React.FC = () => {
 
   const handleExecuteVideoAction = async (id: string, label: string) => {
     setActiveAction(id);
-    setStatusMessage(`Processando vídeo com IA: "${label}"...`);
+    setStatusMessage(`A KLIC está processando o vídeo: "${label}"...`);
     try {
       const res = await fetch('/api/ai/video-edit', {
         method: 'POST',
@@ -61,7 +61,7 @@ export const VideoEditorView: React.FC = () => {
           action: id,
           videoUrl,
           subtitleStyle,
-          brainContext: brain,
+          contextProfile: contextSnapshot,
         }),
       });
       const data = await res.json();
@@ -79,25 +79,25 @@ export const VideoEditorView: React.FC = () => {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/[0.06] pb-4">
         <div>
           <h2 className="text-lg font-bold text-white flex items-center gap-2">
-            <Video className="w-5 h-5 text-[#8bd132]" /> Central de Edição de Vídeos & Reels com IA
+            <Video className="w-5 h-5 text-[#8bd132]" /> Edição de vídeos e Reels com a KLIC
           </h2>
           <p className="text-xs text-[#78858e]">
             Cortes inteligentes, legendas dinâmicas, dublagem, remoção de silêncio e geração de Shorts
           </p>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:items-center">
           <button
             onClick={() => setIsPlaying(!isPlaying)}
-            className="px-4 py-2 rounded-xl bg-[#0d1216] border border-white/[0.08] hover:bg-white/[0.06] text-white font-bold text-xs flex items-center gap-1.5 transition-all shadow-sm"
+            className="flex w-full items-center justify-center gap-1.5 rounded-xl border border-white/[0.08] bg-[#0d1216] px-4 py-2 text-xs font-bold text-white shadow-sm transition-all hover:bg-white/[0.06] sm:w-auto"
           >
             {isPlaying ? <Pause className="w-4 h-4 text-[#8bd132]" /> : <Play className="w-4 h-4 text-[#8bd132]" />}
             <span>{isPlaying ? 'Pausar Video' : 'Reproduzir Preview'}</span>
           </button>
 
           <button
-            onClick={() => alert('Exportando vídeo em alta definição com legendas e cortes de IA...')}
-            className="px-4 py-2 rounded-xl bg-[#8bd132] hover:bg-[#9be24d] text-[#0b1208] font-bold text-xs flex items-center gap-1.5 transition-all shadow-md shadow-[#8bd132]/20"
+            onClick={() => alert('Exportando vídeo em alta definição com legendas e cortes da KLIC...')}
+            className="flex w-full items-center justify-center gap-1.5 rounded-xl bg-[#8bd132] px-4 py-2 text-xs font-bold text-[#0b1208] shadow-md shadow-[#8bd132]/20 transition-all hover:bg-[#9be24d] sm:w-auto"
           >
             <Download className="w-4 h-4" /> Exportar Vídeo HD (Reels/TikTok)
           </button>
@@ -129,7 +129,7 @@ export const VideoEditorView: React.FC = () => {
         <div className="space-y-4 rounded-xl border border-white/[0.07] bg-[#101316] p-5 lg:col-span-5">
           <div className="border-b border-white/[0.06] pb-3 flex items-center justify-between">
             <h3 className="font-bold text-white text-xs flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-[#8bd132]" /> Recursos de Vídeo por IA
+              Recursos de vídeo da KLIC
             </h3>
 
             <div className="flex gap-1">
@@ -176,7 +176,6 @@ export const VideoEditorView: React.FC = () => {
 
           {statusMessage && (
             <div className="rounded-xl border border-[#8bd132]/20 bg-[#8bd132]/[0.06] p-3 text-[10px] font-semibold text-[#8bd132] flex items-center gap-2">
-              <Sparkles className="h-3.5 w-3.5 shrink-0" />
               <span>{statusMessage}</span>
             </div>
           )}

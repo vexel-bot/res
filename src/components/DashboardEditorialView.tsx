@@ -10,7 +10,6 @@ import {
   FileText,
   Instagram,
   Plus,
-  Sparkles,
 } from 'lucide-react';
 import type { AIActionSuggestion, NavigationTab, Post, Workspace } from '../types';
 import { useOperations } from '../context/OperationsContext';
@@ -96,7 +95,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         </div>
         <div className="flex flex-wrap gap-2.5">
           <button type="button" onClick={onOpenCampaignWizard} className="h-10 rounded-lg border border-white/10 px-4 text-[11px] font-medium text-[#c6cdd1] transition-colors hover:bg-white/[0.04] hover:text-white">
-            <Sparkles className="mr-2 inline h-3.5 w-3.5 text-[#8bd132]" />Assistente IA
+            KLIC
           </button>
           <button type="button" onClick={onNewPost} className="h-10 rounded-lg bg-[#8bd132] px-4 text-[11px] font-semibold text-[#101608] transition-colors hover:bg-[#9be24d]">
             <Plus className="mr-2 inline h-3.5 w-3.5" />Novo conteúdo
@@ -190,7 +189,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
 
       <section className="clicko-dashboard-insight grid border-y border-white/[0.07] lg:grid-cols-[1.2fr_1fr]">
         <div className="py-7 lg:pr-8">
-          <div className="flex items-center gap-2 text-[9px] font-medium uppercase tracking-[0.18em] text-[#8bd132]"><Sparkles className="h-3.5 w-3.5" />Leitura da IA</div>
+          <div className="flex items-center gap-2 text-[9px] font-medium uppercase tracking-[0.18em] text-[#8bd132]">Leitura da KLIC</div>
           <p className="mt-3 max-w-2xl text-[15px] leading-6 text-[#bbc3c7]">Reels com depoimentos superaram a média em <strong className="font-medium text-white">27% de alcance</strong>. Transforme esse sinal em três novas variações.</p>
           <button type="button" onClick={onNewPost} className="mt-4 text-[10px] font-semibold text-[#8bd132]">Gerar variações <ArrowRight className="ml-1.5 inline h-3 w-3" /></button>
         </div>

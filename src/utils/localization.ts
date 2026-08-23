@@ -5,27 +5,23 @@ export const navigationLabel: Record<NavigationTab, string> = {
   'create-image': 'Criar imagem',
   'create-video': 'Criar vídeo',
   'create-copy': 'Criar texto',
-  'ai-chat': 'Chat com IA',
-  templates: 'Modelos',
-  'connected-accounts': 'Contas conectadas',
+  'ai-chat': 'KLIC',
+  'connected-accounts': 'Conexões',
   workspace: 'Ambiente de trabalho',
-  brain: 'Memória da marca',
   strategy: 'Estratégia',
-  studio: 'Estúdio',
   library: 'Biblioteca',
   calendar: 'Calendário',
-  publisher: 'Publicações',
   analytics: 'Análises',
   automations: 'Automações',
   approvals: 'Aprovações',
   team: 'Equipe',
   subscription: 'Assinatura',
-  'audit-logs': 'Registros de auditoria',
   settings: 'Configurações',
 };
 
 export const postStatusLabel: Record<PostStatus, string> = {
   draft: 'Rascunho',
+  in_production: 'Em produção',
   in_review: 'Em revisão',
   pending_approval: 'Aguardando aprovação',
   approved: 'Aprovado',
@@ -33,6 +29,7 @@ export const postStatusLabel: Record<PostStatus, string> = {
   rejected: 'Reprovado',
   scheduled: 'Agendado',
   published: 'Publicado',
+  error: 'Erro',
 };
 
 export const approvalStageLabel: Record<ApprovalStage, string> = {

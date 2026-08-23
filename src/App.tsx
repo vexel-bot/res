@@ -9,19 +9,15 @@ import { Header } from './components/Header';
 import { SpotlightModal } from './components/SpotlightModal';
 import { DashboardView } from './components/DashboardEditorialView';
 import { WorkspaceView } from './components/WorkspaceView';
-import { BrainView } from './components/BrainView';
 import { StrategyView } from './components/StrategyView';
-import { StudioView } from './components/StudioImmersiveView';
 import { LibraryView } from './components/LibraryView';
 import { ImageStudioView } from './components/ImageStudioView';
 import { VideoEditorView } from './components/VideoEditorView';
 import { CreationStudioView } from './components/CreationStudioView';
 import { AIChatView } from './components/AIChatView';
 import { FloatingAIAssistant } from './components/FloatingAIAssistant';
-import { TemplatesView } from './components/TemplatesView';
 import { ConnectedAccountsView } from './components/ConnectedAccountsView';
 import { EditorialCalendarView } from './components/EditorialCalendarView';
-import { PublisherView } from './components/PublisherView';
 import { AnalyticsView } from './components/AnalyticsView';
 import { AutomationBuilderView } from './components/AutomationBuilderView';
 import { SettingsView } from './components/SettingsView';
@@ -30,7 +26,6 @@ import { LoginView } from './components/LoginView';
 import { TeamManagementView } from './components/TeamManagementView';
 import { ApprovalsView } from './components/ApprovalsView';
 import { SubscriptionView } from './components/SubscriptionView';
-import { AuditLogsView } from './components/AuditLogsView';
 import { AccessDeniedView } from './components/AccessDeniedView';
 import { GovernanceFeedback } from './components/GovernanceFeedback';
 import { useGovernance } from './context/GovernanceContext';
@@ -46,10 +41,17 @@ import {
   AI_SUGGESTIONS,
 } from './data/mockData';
 
+const initialNavigationTab = (): NavigationTab => {
+  const path = window.location.pathname.replace(/\/+$/, '');
+  if (path === '/connected-accounts') return 'connected-accounts';
+  if (path === '/calendar') return 'calendar';
+  return 'dashboard';
+};
+
 export default function App() {
   const { currentUser, canAccess, loading: governanceLoading } = useGovernance();
   const { activeWorkspace, posts, addPosts, updatePosts } = useOperations();
-  const [currentTab, setCurrentTab] = React.useState<NavigationTab>('dashboard');
+  const [currentTab, setCurrentTab] = React.useState<NavigationTab>(initialNavigationTab);
   const [suggestions] = React.useState<AIActionSuggestion[]>(AI_SUGGESTIONS);
 
   const [isSpotlightOpen, setIsSpotlightOpen] = React.useState(false);
@@ -88,7 +90,7 @@ export default function App() {
       clientId: p.clientId,
       campaignId: p.campaignId,
       strategyId: p.strategyId,
-      brainRevision: p.brainRevision,
+      contextRevision: p.contextRevision,
       objective: p.objective,
       origin: p.origin,
       creativeIdeaId: p.creativeIdeaId,
@@ -123,7 +125,7 @@ export default function App() {
   }
 
   return (
-    <div data-theme={isDarkMode ? 'dark' : 'light'} className="clicko-app-shell flex min-h-screen font-sans antialiased selection:bg-[#B8B8B8] selection:text-[#0B0B0B]">
+    <div data-theme={isDarkMode ? 'dark' : 'light'} data-current-tab={currentTab} className="clicko-app-shell flex min-h-screen font-sans antialiased selection:bg-[#B8B8B8] selection:text-[#0B0B0B]">
       {showSplash && (
         <div className="clicko-splash fixed inset-0 z-[100] grid place-items-center bg-black">
           <div className="clicko-splash-logo text-center">
@@ -178,13 +180,9 @@ export default function App() {
 
           {hasAccessToCurrentTab && currentTab === 'workspace' && <WorkspaceView onNavigate={setCurrentTab} />}
 
-          {hasAccessToCurrentTab && currentTab === 'brain' && <BrainView />}
+          {hasAccessToCurrentTab && currentTab === 'strategy' && <StrategyView onOpenStudio={() => setCurrentTab('create-image')} />}
 
-          {hasAccessToCurrentTab && currentTab === 'strategy' && <StrategyView onOpenStudio={() => setCurrentTab('studio')} />}
-
-          {hasAccessToCurrentTab && currentTab === 'studio' && <StudioView onSavePost={handleSaveSinglePost} />}
-
-          {hasAccessToCurrentTab && currentTab === 'library' && <LibraryView onOpenStudio={() => setCurrentTab('studio')} />}
+          {hasAccessToCurrentTab && currentTab === 'library' && <LibraryView onOpenStudio={() => setCurrentTab('create-image')} />}
 
           {hasAccessToCurrentTab && currentTab === 'create-image' && <ImageStudioView />}
 
@@ -194,8 +192,6 @@ export default function App() {
 
           {hasAccessToCurrentTab && currentTab === 'ai-chat' && <AIChatView onNavigate={setCurrentTab} />}
 
-          {hasAccessToCurrentTab && currentTab === 'templates' && <TemplatesView />}
-
           {hasAccessToCurrentTab && currentTab === 'connected-accounts' && <ConnectedAccountsView />}
 
           {hasAccessToCurrentTab && currentTab === 'calendar' && (
@@ -203,12 +199,11 @@ export default function App() {
               posts={posts}
               onSelectPost={() => {}}
               onNewPost={() => setCurrentTab('create-copy')}
+              onNavigate={setCurrentTab}
             />
           )}
 
-          {hasAccessToCurrentTab && currentTab === 'publisher' && <PublisherView />}
-
-          {hasAccessToCurrentTab && currentTab === 'analytics' && <AnalyticsView onOpenStudio={() => setCurrentTab('studio')} />}
+          {hasAccessToCurrentTab && currentTab === 'analytics' && <AnalyticsView onOpenStudio={() => setCurrentTab('create-image')} />}
 
           {hasAccessToCurrentTab && currentTab === 'automations' && <AutomationBuilderView />}
 
@@ -217,8 +212,6 @@ export default function App() {
           {hasAccessToCurrentTab && currentTab === 'team' && <TeamManagementView />}
 
           {hasAccessToCurrentTab && currentTab === 'subscription' && <SubscriptionView />}
-
-          {hasAccessToCurrentTab && currentTab === 'audit-logs' && <AuditLogsView />}
 
           {hasAccessToCurrentTab && currentTab === 'settings' && <SettingsView />}
         </main>
@@ -231,7 +224,7 @@ export default function App() {
         onNavigate={setCurrentTab}
       />
       <GovernanceFeedback />
-      <FloatingAIAssistant currentTab={currentTab} onOpenFullChat={() => setCurrentTab('ai-chat')} />
+      {currentTab !== 'ai-chat' && <FloatingAIAssistant currentTab={currentTab} onOpenFullChat={() => setCurrentTab('ai-chat')} />}
     </div>
   );
 }

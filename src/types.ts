@@ -4,21 +4,16 @@ export type NavigationTab =
   | 'create-video'
   | 'create-copy'
   | 'ai-chat'
-  | 'templates'
   | 'connected-accounts'
   | 'workspace'
-  | 'brain'
   | 'strategy'
-  | 'studio'
   | 'library'
   | 'calendar'
-  | 'publisher'
   | 'analytics'
   | 'automations'
   | 'approvals'
   | 'team'
   | 'subscription'
-  | 'audit-logs'
   | 'settings';
 
 export type UserRole = 'master' | 'collaborator';
@@ -29,12 +24,9 @@ export type WorkspaceModule =
   | 'create-video'
   | 'create-copy'
   | 'ai-chat'
-  | 'templates'
   | 'connected-accounts'
   | 'workspace'
-  | 'brain'
   | 'strategy'
-  | 'studio'
   | 'library'
   | 'calendar'
   | 'automations'
@@ -44,6 +36,8 @@ export type MemberStatus = 'active' | 'invited' | 'disabled';
 
 export interface UserAccount {
   id: string;
+  workspaceId: string;
+  userId: string;
   name: string;
   type: 'personal' | 'company';
   role?: string;
@@ -246,6 +240,14 @@ export type SocialPlatform =
   | 'x'
   | 'facebook';
 
+export interface ConnectedResource {
+  id: string;
+  name: string;
+  type: 'profile' | 'page' | 'channel' | 'board';
+  handle?: string;
+  avatar?: string;
+}
+
 export type PostFormat =
   | 'post'
   | 'story'
@@ -264,7 +266,7 @@ export type PostFormat =
   | 'presentation'
   | 'script';
 
-export type PostStatus = 'draft' | 'in_review' | 'pending_approval' | 'approved' | 'changes_requested' | 'rejected' | 'scheduled' | 'published';
+export type PostStatus = 'draft' | 'in_production' | 'in_review' | 'pending_approval' | 'approved' | 'changes_requested' | 'rejected' | 'scheduled' | 'published' | 'error';
 
 export interface BrandProfile {
   name: string;
@@ -276,10 +278,9 @@ export interface BrandProfile {
   primaryColor: string;
 }
 
-export interface BrandBrain {
+export interface AIContextSnapshot {
   workspaceId: string;
   revision: number;
-  updatedAt: string;
   company: string;
   products: string;
   services: string;
@@ -297,8 +298,6 @@ export interface BrandBrain {
   requiredWords: string;
   forbiddenWords: string;
   history: string;
-  sourceLinks: string[];
-  sourceFiles: BrainSource[];
 }
 
 export interface ClientIntelligenceProfile {
@@ -384,14 +383,6 @@ export interface LearningSignal {
   createdAt: string;
 }
 
-export interface BrainSource {
-  id: string;
-  name: string;
-  type: 'document' | 'image' | 'video' | 'logo' | 'link' | 'social';
-  url?: string;
-  addedAt: string;
-}
-
 export type StrategyStatus = 'draft' | 'planned' | 'active' | 'completed';
 
 export interface StrategyCampaign {
@@ -416,7 +407,7 @@ export interface StrategyCampaign {
   contentPlan?: CampaignContentItem[];
   clientId?: string;
   status: StrategyStatus;
-  brainRevision: number;
+  contextRevision: number;
   createdAt: string;
   updatedAt: string;
 }
@@ -473,6 +464,13 @@ export interface Post {
   workspaceId: string;
   title: string;
   platform: SocialPlatform;
+  channels?: SocialPlatform[];
+  platformAdaptations?: Array<{
+    platform: SocialPlatform;
+    format?: PostFormat;
+    copy?: string;
+    caption?: string;
+  }>;
   format: PostFormat;
   copy: string;
   hashtags: string[];
@@ -491,9 +489,20 @@ export interface Post {
   aiScore?: number;
   strategyId?: string;
   campaignId?: string;
-  brainRevision?: number;
+  responsibleId?: string;
+  responsibleName?: string;
+  assetIds?: string[];
+  publicationError?: string;
+  history?: Array<{
+    id: string;
+    action: string;
+    detail: string;
+    actorName: string;
+    createdAt: string;
+  }>;
+  contextRevision?: number;
   objective?: string;
-  origin?: 'manual' | 'brain' | 'strategy' | 'automation' | 'analytics';
+  origin?: 'manual' | 'context' | 'strategy' | 'automation' | 'analytics' | 'ai';
   versions?: ContentVersion[];
   clientId?: string;
   creativeIdeaId?: string;
@@ -519,6 +528,7 @@ export interface AutomationFlow {
 
 export interface ConnectedAccount {
   id: string;
+  workspaceId?: string;
   platform: SocialPlatform;
   handle: string;
   connected: boolean;
@@ -529,8 +539,13 @@ export interface ConnectedAccount {
   avatar?: string;
   lastSync?: string;
   permissions?: string[];
+  availableResources?: ConnectedResource[];
+  selectedResourceIds?: string[];
+  syncPreferences?: Array<'profile' | 'publishing' | 'analytics'>;
   isDefault?: boolean;
   company?: string;
+  connectionStatus?: 'not_configured' | 'authorization_required' | 'connecting' | 'connected' | 'syncing' | 'synced' | 'sync_error' | 'expired' | 'error';
+  lastError?: string;
 }
 
 export interface AIChatMessage {
@@ -540,11 +555,32 @@ export interface AIChatMessage {
   createdAt: string;
   module?: NavigationTab;
   favorite?: boolean;
+  brandScore?: number;
+  researchedExternally?: boolean;
   actions?: Array<{
     label: string;
     tab: NavigationTab;
     kind: 'campaign' | 'studio' | 'calendar' | 'variants';
+    actionId?: string;
   }>;
+}
+
+export type AIMemoryCategory = 'identity' | 'communication' | 'content' | 'visual' | 'preference';
+export type AIMemoryScope = 'task' | 'temporary' | 'recurring' | 'permanent';
+
+export interface AIMemoryEntry {
+  id: string;
+  workspaceId: string;
+  category: AIMemoryCategory;
+  label: string;
+  value: string;
+  scope: AIMemoryScope;
+  confidence: number;
+  source: 'conversation' | 'user' | 'approval' | 'analytics' | 'manual';
+  occurrences: number;
+  createdAt: string;
+  updatedAt: string;
+  evolution?: Array<{ value: string; changedAt: string; source: AIMemoryEntry['source'] }>;
 }
 
 export interface ContentTemplate {

@@ -25,7 +25,7 @@ type GovernanceContextValue = {
   activeAccountId: string;
   activeAccount: UserAccount;
   switchAccount: (accountId: string) => void;
-  addAccount: (account: Omit<UserAccount, 'id'>) => string;
+  addAccount: (account: Omit<UserAccount, 'id' | 'workspaceId' | 'userId'>) => Promise<string | null>;
   removeAccount: (accountId: string) => void;
   loading: boolean;
   feedback: Feedback;
@@ -45,6 +45,7 @@ type GovernanceContextValue = {
   resendInvite: (userId: string) => Promise<boolean>;
   changePlan: (planId: SaaSPlan['id']) => Promise<boolean>;
   recordOfferEvent: (payload: OfferEventPayload) => Promise<void>;
+  createApproval: (payload: Pick<ContentApprovalItem, 'contentId' | 'title' | 'copy' | 'platform' | 'format' | 'scheduledAt' | 'campaignId' | 'strategyId'>) => Promise<ContentApprovalItem | null>;
   approvalAction: (approvalId: string, action: 'approve' | 'request_changes' | 'reject' | 'publish' | 'schedule' | 'comment', comment?: string, scheduledAt?: string) => Promise<ContentApprovalItem | null>;
   refresh: () => Promise<void>;
 };
@@ -54,7 +55,9 @@ const GovernanceContext = React.createContext<GovernanceContextValue | null>(nul
 const DEFAULT_ACCOUNTS: UserAccount[] = [
   {
     id: 'acc-personal-1',
-    name: 'Conta Pessoal',
+    workspaceId: 'ws-personal',
+    userId: 'usr-master-personal',
+    name: 'Pedro Henrique',
     type: 'personal',
     role: 'Solo Creator',
     planName: 'Plano Solo',
@@ -62,7 +65,9 @@ const DEFAULT_ACCOUNTS: UserAccount[] = [
   },
   {
     id: 'acc-ws-1',
-    name: 'Conta Workspace',
+    workspaceId: 'ws-1',
+    userId: 'usr-master',
+    name: 'Clicko Studio',
     type: 'company',
     role: 'Equipe & Governança',
     planName: 'Plano Enterprise',
@@ -70,6 +75,19 @@ const DEFAULT_ACCOUNTS: UserAccount[] = [
     email: 'equipe@clickostudio.com',
   },
 ];
+
+function normalizeAccount(account: Partial<UserAccount> & Pick<UserAccount, 'id' | 'name' | 'type'>): UserAccount {
+  const isDefaultPersonal = account.id === 'acc-personal-1';
+  const isDefaultCompany = account.id === 'acc-ws-1';
+  const workspaceId = account.workspaceId || (isDefaultPersonal ? 'ws-personal' : isDefaultCompany ? 'ws-1' : `ws-${account.id.replace(/^acc-/, '')}`);
+  const userId = account.userId || (isDefaultPersonal ? 'usr-master-personal' : isDefaultCompany ? 'usr-master' : `usr-master-${workspaceId}`);
+  const name = isDefaultPersonal && account.name === 'Conta Pessoal'
+    ? 'Pedro Henrique'
+    : isDefaultCompany && account.name === 'Conta Workspace'
+      ? 'Clicko Studio'
+      : account.name;
+  return { ...account, name, workspaceId, userId } as UserAccount;
+}
 
 function getStoredAccounts(): UserAccount[] {
   try {
@@ -79,7 +97,7 @@ function getStoredAccounts(): UserAccount[] {
       if (Array.isArray(parsed) && parsed.length > 0) {
         const hasPersonal = parsed.some((a: UserAccount) => a.type === 'personal');
         const hasCompany = parsed.some((a: UserAccount) => a.type === 'company');
-        let updated = [...parsed];
+        let updated = parsed.map((account: UserAccount) => normalizeAccount(account));
         if (!hasPersonal) {
           updated.unshift(DEFAULT_ACCOUNTS[0]);
         }
@@ -92,7 +110,7 @@ function getStoredAccounts(): UserAccount[] {
   } catch (e) {
     console.error('Error reading stored accounts', e);
   }
-  return DEFAULT_ACCOUNTS;
+  return DEFAULT_ACCOUNTS.map(normalizeAccount);
 }
 
 function getStoredEnvironment(): EnvironmentMode {
@@ -100,23 +118,13 @@ function getStoredEnvironment(): EnvironmentMode {
   return stored === 'personal' ? 'personal' : 'company';
 }
 
-function getActiveWorkspaceId(envMode: EnvironmentMode) {
-  return envMode === 'personal' ? 'ws-personal' : 'ws-1';
-}
-
-function getUserId(envMode: EnvironmentMode) {
-  const stored = window.localStorage.getItem('clicko-studio:session-user');
-  if (stored) return stored;
-  return envMode === 'personal' ? 'usr-master-personal' : 'usr-master';
-}
-
-async function request<T>(path: string, envMode: EnvironmentMode, init?: RequestInit): Promise<T> {
+async function request<T>(path: string, account: UserAccount, init?: RequestInit): Promise<T> {
   const response = await fetch(`/api/governance${path}`, {
     ...init,
     headers: {
       'Content-Type': 'application/json',
-      'x-workspace-id': getActiveWorkspaceId(envMode),
-      'x-user-id': getUserId(envMode),
+      'x-workspace-id': account.workspaceId,
+      'x-user-id': account.userId,
       ...init?.headers,
     },
   });
@@ -173,13 +181,28 @@ export const GovernanceProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     }
   }, [accounts, environmentMode, setEnvironmentMode]);
 
-  const addAccount = React.useCallback((newAccData: Omit<UserAccount, 'id'>) => {
+  const addAccount = React.useCallback(async (newAccData: Omit<UserAccount, 'id' | 'workspaceId' | 'userId'>) => {
     const id = `acc-${newAccData.type}-${Date.now()}`;
+    const workspaceId = `ws-${newAccData.type}-${Date.now()}`;
+    const userId = `usr-master-${workspaceId}`;
     const newAcc: UserAccount = {
       id,
+      workspaceId,
+      userId,
       ...newAccData,
       createdAt: new Date().toISOString(),
     };
+    try {
+      const response = await fetch('/api/governance/workspaces/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ workspaceId, userId, name: newAcc.name, type: newAcc.type, email: newAcc.email, planName: newAcc.planName }),
+      });
+      if (!response.ok) throw new Error('Não foi possível criar o ambiente isolado.');
+    } catch (error) {
+      setFeedback({ type: 'error', message: error instanceof Error ? error.message : 'Não foi possível criar o ambiente.' });
+      return null;
+    }
     setAccounts((current) => {
       const updated = [...current, newAcc];
       window.localStorage.setItem('clicko-studio:user-accounts', JSON.stringify(updated));
@@ -209,17 +232,20 @@ export const GovernanceProvider: React.FC<{ children: React.ReactNode }> = ({ ch
   const refresh = React.useCallback(async () => {
     setLoading(true);
     try {
-      const nextSession = await request<GovernanceSession>('/session', environmentMode);
-      const nextWorkspace = await request<GovernanceWorkspace>('/workspace', environmentMode);
+      if (!['ws-1', 'ws-personal'].includes(activeAccount.workspaceId)) {
+        await fetch('/api/governance/workspaces/register', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ workspaceId: activeAccount.workspaceId, userId: activeAccount.userId, name: activeAccount.name, type: activeAccount.type, email: activeAccount.email, planName: activeAccount.planName }) });
+      }
+      const nextSession = await request<GovernanceSession>('/session', activeAccount);
+      const nextWorkspace = await request<GovernanceWorkspace>('/workspace', activeAccount);
       setSession(nextSession);
       setWorkspace(nextWorkspace);
       if (nextSession.currentUser.role === 'master') {
         const [nextUsers, nextPlans, nextSubscription, nextApprovals, nextAuditLogs] = await Promise.all([
-          request<WorkspaceMember[]>('/users', environmentMode),
-          request<SaaSPlan[]>('/plans', environmentMode),
-          request<WorkspaceSubscription>('/subscription', environmentMode),
-          request<ContentApprovalItem[]>('/approvals', environmentMode),
-          request<AuditLogEntry[]>('/audit-logs', environmentMode),
+          request<WorkspaceMember[]>('/users', activeAccount),
+          request<SaaSPlan[]>('/plans', activeAccount),
+          request<WorkspaceSubscription>('/subscription', activeAccount),
+          request<ContentApprovalItem[]>('/approvals', activeAccount),
+          request<AuditLogEntry[]>('/audit-logs', activeAccount),
         ]);
         setUsers(nextUsers);
         setPlans(nextPlans);
@@ -238,7 +264,7 @@ export const GovernanceProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     } finally {
       setLoading(false);
     }
-  }, [environmentMode]);
+  }, [activeAccount]);
 
   React.useEffect(() => { void refresh(); }, [refresh]);
 
@@ -255,37 +281,37 @@ export const GovernanceProvider: React.FC<{ children: React.ReactNode }> = ({ ch
   };
 
   const inviteUser: GovernanceContextValue['inviteUser'] = async (payload) => Boolean(await run(
-    () => request<WorkspaceMember>('/invites', environmentMode, { method: 'POST', body: JSON.stringify(payload) }),
+    () => request<WorkspaceMember>('/invites', activeAccount, { method: 'POST', body: JSON.stringify(payload) }),
     'Convite enviado com sucesso.',
     (member) => setUsers((current) => [...current, member]),
   ));
 
   const updateUser: GovernanceContextValue['updateUser'] = async (userId, payload) => Boolean(await run(
-    () => request<WorkspaceMember>(`/users/${userId}`, environmentMode, { method: 'PATCH', body: JSON.stringify(payload) }),
+    () => request<WorkspaceMember>(`/users/${userId}`, activeAccount, { method: 'PATCH', body: JSON.stringify(payload) }),
     'Usuário atualizado.',
     (member) => setUsers((current) => current.map((item) => item.id === member.id ? member : item)),
   ));
 
   const deleteUser: GovernanceContextValue['deleteUser'] = async (userId) => {
-    const result = await run(() => request<void>(`/users/${userId}`, environmentMode, { method: 'DELETE' }), 'Usuário removido.', () => setUsers((current) => current.filter((item) => item.id !== userId)));
+    const result = await run(() => request<void>(`/users/${userId}`, activeAccount, { method: 'DELETE' }), 'Usuário removido.', () => setUsers((current) => current.filter((item) => item.id !== userId)));
     return result !== null;
   };
 
   const resendInvite: GovernanceContextValue['resendInvite'] = async (userId) => Boolean(await run(
-    () => request<WorkspaceMember>(`/users/${userId}/resend-invite`, environmentMode, { method: 'POST' }),
+    () => request<WorkspaceMember>(`/users/${userId}/resend-invite`, activeAccount, { method: 'POST' }),
     'Convite reenviado e prazo renovado.',
     (member) => setUsers((current) => current.map((item) => item.id === member.id ? member : item)),
   ));
 
   const changePlan: GovernanceContextValue['changePlan'] = async (planId) => Boolean(await run(
-    () => request<{ subscription: WorkspaceSubscription; workspace: GovernanceWorkspace }>('/subscription', environmentMode, { method: 'PATCH', body: JSON.stringify({ planId }) }),
+    () => request<{ subscription: WorkspaceSubscription; workspace: GovernanceWorkspace }>('/subscription', activeAccount, { method: 'PATCH', body: JSON.stringify({ planId }) }),
     'Plano atualizado com sucesso.',
     (result) => { setSubscription(result.subscription); setWorkspace(result.workspace); },
   ));
 
   const recordOfferEvent: GovernanceContextValue['recordOfferEvent'] = async (payload) => {
     try {
-      await request<void>('/offers/events', environmentMode, { method: 'POST', body: JSON.stringify(payload) });
+      await request<void>('/offers/events', activeAccount, { method: 'POST', body: JSON.stringify(payload) });
     } catch {
       const key = 'clicko:offer-events:pending';
       try {
@@ -298,9 +324,15 @@ export const GovernanceProvider: React.FC<{ children: React.ReactNode }> = ({ ch
   };
 
   const approvalAction: GovernanceContextValue['approvalAction'] = async (approvalId, action, comment, scheduledAt) => run(
-    () => request<ContentApprovalItem>(`/approvals/${approvalId}/actions`, environmentMode, { method: 'POST', body: JSON.stringify({ action, comment, scheduledAt }) }),
+    () => request<ContentApprovalItem>(`/approvals/${approvalId}/actions`, activeAccount, { method: 'POST', body: JSON.stringify({ action, comment, scheduledAt }) }),
     action === 'comment' ? 'Comentário adicionado.' : 'Fluxo de aprovação atualizado.',
     (approval) => setApprovals((current) => current.map((item) => item.id === approval.id ? approval : item)),
+  );
+
+  const createApproval: GovernanceContextValue['createApproval'] = async (payload) => run(
+    () => request<ContentApprovalItem>('/approvals', activeAccount, { method: 'POST', body: JSON.stringify(payload) }),
+    'Conteúdo enviado para aprovação.',
+    (approval) => setApprovals((current) => [approval, ...current.filter((item) => item.id !== approval.id)]),
   );
 
   const currentUser = session?.currentUser;
@@ -331,6 +363,7 @@ export const GovernanceProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     resendInvite,
     changePlan,
     recordOfferEvent,
+    createApproval,
     approvalAction,
     refresh,
   };
