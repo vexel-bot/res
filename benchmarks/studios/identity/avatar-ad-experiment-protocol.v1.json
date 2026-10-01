@@ -1,0 +1,87 @@
+{
+  "schemaVersion": "studio.avatar-ad-experiment-protocol.v1",
+  "protocolId": "clicko-avatar-ad-6-24-96-v1",
+  "status": "frozen",
+  "benchmarkPolicyDigestSha256": "c7cfb5898ef0c8a1621787923fe8ed2ef027174bc2577c7007cb3d140cf9bd8e",
+  "frozenAt": "2026-08-26T15:00:00Z",
+  "frozenBy": "clicko-product-engineering-baseline",
+  "catalog": {
+    "totalProfiles": 6,
+    "men": 3,
+    "women": 3,
+    "minimumAge": 18,
+    "castingReleaseRequired": true,
+    "consentRequired": true,
+    "publicationAllowedDuringBenchmark": false
+  },
+  "rounds": [
+    {
+      "roundId": "round-a-smoke-6",
+      "sequence": 1,
+      "profileCount": 6,
+      "copyArchetypes": ["common-smoke-copy"],
+      "durationsSeconds": [15],
+      "scenarios": ["neutral-studio"],
+      "formats": ["9x16"],
+      "expectedOutputCount": 6,
+      "maxExperimentSpendUsd": 25.0,
+      "maxGpuHours": 3.0,
+      "maxWallClockHours": 6.0,
+      "maxRegenerationRate": 0.15,
+      "prerequisiteRoundIds": [],
+      "humanReviewRequired": true,
+      "cleanupReceiptRequired": true
+    },
+    {
+      "roundId": "round-b-creative-24",
+      "sequence": 2,
+      "profileCount": 6,
+      "copyArchetypes": ["problem-solution", "testimonial", "demo", "offer"],
+      "durationsSeconds": [15],
+      "scenarios": ["neutral-studio"],
+      "formats": ["9x16"],
+      "expectedOutputCount": 24,
+      "maxExperimentSpendUsd": 100.0,
+      "maxGpuHours": 12.0,
+      "maxWallClockHours": 24.0,
+      "maxRegenerationRate": 0.15,
+      "prerequisiteRoundIds": ["round-a-smoke-6"],
+      "humanReviewRequired": true,
+      "cleanupReceiptRequired": true
+    },
+    {
+      "roundId": "round-c-matrix-96",
+      "sequence": 3,
+      "profileCount": 6,
+      "copyArchetypes": ["problem-solution", "testimonial", "demo", "offer"],
+      "durationsSeconds": [15, 30],
+      "scenarios": ["neutral-studio", "product-context"],
+      "formats": ["9x16"],
+      "expectedOutputCount": 96,
+      "maxExperimentSpendUsd": 400.0,
+      "maxGpuHours": 48.0,
+      "maxWallClockHours": 72.0,
+      "maxRegenerationRate": 0.15,
+      "prerequisiteRoundIds": ["round-a-smoke-6", "round-b-creative-24"],
+      "humanReviewRequired": true,
+      "cleanupReceiptRequired": true
+    }
+  ],
+  "perOutputMinuteCostCeilingUsd": 0.8,
+  "requiredControls": [
+    "previous_round_passed",
+    "budget_authorized_before_enqueue",
+    "hard_cost_stop_enforced",
+    "catalog_release_and_consent_active",
+    "provider_artifact_inventory_eligible",
+    "private_object_storage",
+    "human_review_complete",
+    "cleanup_receipt_complete",
+    "publication_disabled"
+  ],
+  "notes": [
+    "Spend limits are provisional hard experiment authorization caps, not target COGS or provider quality claims.",
+    "A round cannot start because the previous one merely rendered; every blocking benchmark and governance gate must pass.",
+    "The 14B advanced lane needs a separate budget approval and does not inherit the 24 GB MVP allowance."
+  ]
+}

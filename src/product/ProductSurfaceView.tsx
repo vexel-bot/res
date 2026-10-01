@@ -1,5 +1,12 @@
 import React from "react";
 import {
+  routeForPath,
+  effectiveRouteOwnerForPath,
+} from "../app/router/routeRegistry";
+import { experienceScreenForLocation } from "../app/experience/registry";
+import { ExperienceShell } from "../app/experience/shells";
+import "../app/experience/shells.css";
+import {
   Activity,
   ArrowRight,
   BadgeCheck,
@@ -103,34 +110,7 @@ function idFromPath(pathname: string, segment: string, fallback: string) {
 }
 
 export function isProductSurfacePath(pathname: string) {
-  return (
-    pathname === "/today" ||
-    pathname === "/projects" ||
-    pathname.startsWith("/projects/") ||
-    pathname === "/campaigns" ||
-    pathname === "/discover" ||
-    pathname === "/radar" ||
-    pathname === "/workspaces/new" ||
-    pathname === "/settings/ai-governance" ||
-    pathname === "/library/lineage" ||
-    pathname === "/library/assets" ||
-    pathname === "/templates" ||
-    pathname === "/brand-memory" ||
-    pathname === "/calendar" ||
-    pathname === "/analytics/learning" ||
-    pathname === "/content" ||
-    pathname === "/content/dashboard" ||
-    pathname.startsWith("/content/") ||
-    /^\/campaigns\/.+/.test(pathname) ||
-    /^\/approvals\/.+/.test(pathname) ||
-    /^\/publish\/.+/.test(pathname) ||
-    /^\/automations\/.+/.test(pathname) ||
-    pathname === "/settings/channels" ||
-    pathname === "/settings/team" ||
-    pathname === "/settings/billing" ||
-    pathname === "/settings/audit" ||
-    pathname === "/reference/screens"
-  );
+  return effectiveRouteOwnerForPath(pathname) === "product-surface";
 }
 
 function TodayCommandSurface({ onNavigate }: { onNavigate: Navigate }) {
@@ -696,6 +676,8 @@ function CreativeLabHub({
         </button>
         <button
           type="button"
+          disabled
+          title="Você já está no Creative Lab."
           className={`${ACTION_CLASS} pointer-events-none`}
           aria-current="page"
         >
@@ -1961,9 +1943,10 @@ function CreateHub({
           <button
             key={mode}
             type="button"
+            data-action-id="CREATE-START-DIRECTION"
             onClick={() =>
               onNavigate(
-                `/content/draft/edit?mode=${mode}${type ? "&type=post" : ""}`,
+                `/campaigns/new?intent=content&mode=${mode}${type ? "&type=post" : ""}`,
               )
             }
             className="group min-h-56 rounded-2xl border border-white/[0.08] bg-white/[0.025] p-5 text-left transition hover:-translate-y-1 hover:border-[var(--clicko-action)]/35"
@@ -3840,9 +3823,25 @@ export function ProductSurfaceView({
     content = <WorkspaceEntrySurface onNavigate={onNavigate} />;
   else content = <ReferenceMatrix onNavigate={onNavigate} />;
 
-  return (
+  const body = (
     <div className="clicko-product-surface min-h-full px-4 py-5 sm:px-6 lg:px-8">
       {content}
     </div>
+  );
+  const location = `${pathname}${search}`;
+  const route = routeForPath(location);
+  const screen = experienceScreenForLocation(location);
+  const canonicalCxShellsEnabled =
+    import.meta.env.VITE_CANONICAL_CX_SHELLS !== "false";
+  if (!canonicalCxShellsEnabled || !route) return body;
+  return (
+    <ExperienceShell
+      shell={route.shell}
+      routeId={route.routeId}
+      screenId={screen?.screenId}
+      state="ready"
+    >
+      {body}
+    </ExperienceShell>
   );
 }

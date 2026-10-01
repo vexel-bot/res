@@ -1,0 +1,1818 @@
+{
+  "schema_version": "studio.repository-audit-registry.v1",
+  "expected_count": 42,
+  "actual_count": 42,
+  "audits": [
+    {
+      "schema_version": "studio.repository-capability-audit.v1",
+      "repository_id": "chatterbox",
+      "path": "C:\\Users\\edugu\\Downloads\\clicko-oss-evaluation\\Chatterbox",
+      "origin_url": "https://github.com/resemble-ai/chatterbox.git",
+      "commit_sha": "5de7a54aa4e5e2baadb0182dde554908b48b85c2",
+      "license_spdx": "MIT",
+      "license_evidence": "LICENSE",
+      "purpose": "speech synthesis and expressive voice research",
+      "manifests": [
+        "pyproject.toml"
+      ],
+      "languages_sampled": [
+        "Python"
+      ],
+      "readme_summary_unverified": "Chatterbox is a family of state of the art, open source text to speech models by Resemble AI. Latest Release: Chatterbox Multilingual V3 Chatterbox Multilingual V3 is the latest general purpose multilingual TTS model in the Chatterbox family. It keeps the same 0.5B model size while improving speaker similarity, reducing hallucinations, and producing more natural, conversational speech across languages. V3 is designed for broad language coverage like V2, but with stronger stability and more expressive generation. It is the recommended multilingual model for users who want one voice cloning mode",
+      "capability_signals": {
+        "gpu_signal": true,
+        "container_recipe": false,
+        "test_directory": false,
+        "pt_br_signal": true
+      },
+      "inputs": [
+        "provider-specific; focused audit pending"
+      ],
+      "outputs": [
+        "provider-specific; must be projected to canonical contracts"
+      ],
+      "hardware": "GPU-related dependencies detected; exact VRAM/RAM envelope requires preflight",
+      "pt_br_support": "partial_signal",
+      "quality": "not inferred from README; benchmark required",
+      "determinism": "unknown",
+      "observability": "partial: git provenance and manifests inventoried",
+      "risks": [
+        "machine inventory does not validate model-weight or dataset licensing"
+      ],
+      "integration": "Evaluate behind an isolated worker/adapter; persist only canonical Clicko contracts.",
+      "decision": "adapt",
+      "benchmark": "license + dependency preflight, fixed fixture, resource envelope, output quality, repeatability, failure observability and PT-BR where relevant",
+      "audit_status": "machine_inventory_complete_human_review_pending",
+      "reviewed_at": "2026-09-01T19:55:03.872608+00:00"
+    },
+    {
+      "schema_version": "studio.repository-capability-audit.v1",
+      "repository_id": "depth-anything-v2",
+      "path": "C:\\Users\\edugu\\Downloads\\clicko-oss-evaluation\\Depth-Anything-V2",
+      "origin_url": "https://github.com/DepthAnything/Depth-Anything-V2.git",
+      "commit_sha": "a561b849ebae10a6f5ef49e26c83cbbcd36c71bf",
+      "license_spdx": "Apache-2.0",
+      "license_evidence": "LICENSE",
+      "purpose": "monocular depth estimation",
+      "manifests": [
+        "requirements.txt"
+      ],
+      "languages_sampled": [
+        "Python"
+      ],
+      "readme_summary_unverified": "1 HKU&emsp;&emsp;&emsp; 2 TikTok &dagger;project lead&emsp; corresponding author This work presents Depth Anything V2. It significantly outperforms in fine grained details and robustness. Compared with SD based models, it enjoys faster inference speed, fewer parameters, and higher depth accuracy. 2025 01 22: has been released. It generates consistent depth maps for super long videos (e.g., over 5 minutes). 2024 12 22: has been released. It supports 4K resolution metric depth estimation when low res LiDAR is used to prompt the DA models.",
+      "capability_signals": {
+        "gpu_signal": true,
+        "container_recipe": false,
+        "test_directory": false,
+        "pt_br_signal": false
+      },
+      "inputs": [
+        "provider-specific; focused audit pending"
+      ],
+      "outputs": [
+        "provider-specific; must be projected to canonical contracts"
+      ],
+      "hardware": "GPU-related dependencies detected; exact VRAM/RAM envelope requires preflight",
+      "pt_br_support": "unknown",
+      "quality": "not inferred from README; benchmark required",
+      "determinism": "unknown",
+      "observability": "partial: git provenance and manifests inventoried",
+      "risks": [
+        "machine inventory does not validate model-weight or dataset licensing"
+      ],
+      "integration": "Evaluate behind an isolated worker/adapter; persist only canonical Clicko contracts.",
+      "decision": "adapt",
+      "benchmark": "license + dependency preflight, fixed fixture, resource envelope, output quality, repeatability, failure observability and PT-BR where relevant",
+      "audit_status": "machine_inventory_complete_human_review_pending",
+      "reviewed_at": "2026-09-01T19:55:04.032648+00:00"
+    },
+    {
+      "schema_version": "studio.repository-capability-audit.v1",
+      "repository_id": "ditto-talkinghead",
+      "path": "C:\\Users\\edugu\\Downloads\\clicko-oss-evaluation\\ditto-talkinghead",
+      "origin_url": "https://github.com/antgroup/ditto-talkinghead.git",
+      "commit_sha": "c3e47eee2e626500017a0556b470d6d4182f85e8",
+      "license_spdx": "Apache-2.0",
+      "license_evidence": "LICENSE",
+      "purpose": "authorized talking-head animation candidate",
+      "manifests": [],
+      "languages_sampled": [
+        "Python",
+        "C"
+      ],
+      "readme_summary_unverified": "Ditto: Motion Space Diffusion for Controllable Realtime Talking Head Synthesis ✨ For more results, visit our Project Page ✨ [2025.11.12] 🔥🔥 We noticed the community's enthusiasm for open source training code. is now available, since there have been multiple versions and limited time to organize, it may differ slightly from the paper version. [2025.07.11] 🔥 The is now available. [2025.07.07] 🔥 Ditto is accepted by ACM MM 2025. [2025.01.21] 🔥 We update the demo, welcome to try it. [2025.01.10] 🔥 We release our inference and .",
+      "capability_signals": {
+        "gpu_signal": true,
+        "container_recipe": false,
+        "test_directory": false,
+        "pt_br_signal": false
+      },
+      "inputs": [
+        "provider-specific; focused audit pending"
+      ],
+      "outputs": [
+        "provider-specific; must be projected to canonical contracts"
+      ],
+      "hardware": "GPU-related dependencies detected; exact VRAM/RAM envelope requires preflight",
+      "pt_br_support": "unknown",
+      "quality": "not inferred from README; benchmark required",
+      "determinism": "unknown",
+      "observability": "partial: git provenance and manifests inventoried",
+      "risks": [
+        "machine inventory does not validate model-weight or dataset licensing",
+        "biometric/identity use requires explicit consent, private benchmark and deletion controls"
+      ],
+      "integration": "Keep outside the production domain until license, model assets, hardware and quality pass focused review.",
+      "decision": "reference-only",
+      "benchmark": "license + dependency preflight, fixed fixture, resource envelope, output quality, repeatability, failure observability and PT-BR where relevant",
+      "audit_status": "machine_inventory_complete_human_review_pending",
+      "reviewed_at": "2026-09-01T19:55:04.226710+00:00"
+    },
+    {
+      "schema_version": "studio.repository-capability-audit.v1",
+      "repository_id": "duix-avatar",
+      "path": "C:\\Users\\edugu\\Downloads\\clicko-oss-evaluation\\Duix-Avatar",
+      "origin_url": "https://github.com/duixcom/Duix-Avatar.git",
+      "commit_sha": "1328feb5871448c8fa3d0e45b3bbc87e7c1d458a",
+      "license_spdx": "OTHER",
+      "license_evidence": "LICENSE",
+      "purpose": "authorized avatar generation candidate",
+      "manifests": [
+        "package.json"
+      ],
+      "languages_sampled": [
+        "JavaScript"
+      ],
+      "readme_summary_unverified": "🚀🚀🚀 Duix Avatar — Truly open source AI avatar toolkit for offline video generation and digital human cloning 1. What's Duix.Avatar Duix.Avatar is a free and open source AI avatar project developed by Duix.com . Seven years ago, a group of young pioneers chose an unconventional technical path, developing a method to train digital human models using real person video data. Unlike traditional costly 3D digital human approaches, we leveraged AI generated technology to create ultra realistic digital humans, slashing production costs from hundreds of thousands of dollars to just $1,000. This innovat",
+      "capability_signals": {
+        "gpu_signal": true,
+        "container_recipe": false,
+        "test_directory": false,
+        "pt_br_signal": false
+      },
+      "inputs": [
+        "provider-specific; focused audit pending"
+      ],
+      "outputs": [
+        "provider-specific; must be projected to canonical contracts"
+      ],
+      "hardware": "GPU-related dependencies detected; exact VRAM/RAM envelope requires preflight",
+      "pt_br_support": "unknown",
+      "quality": "not inferred from README; benchmark required",
+      "determinism": "unknown",
+      "observability": "partial: git provenance and manifests inventoried",
+      "risks": [
+        "machine inventory does not validate model-weight or dataset licensing",
+        "biometric/identity use requires explicit consent, private benchmark and deletion controls"
+      ],
+      "integration": "Keep outside the production domain until license, model assets, hardware and quality pass focused review.",
+      "decision": "reference-only",
+      "benchmark": "license + dependency preflight, fixed fixture, resource envelope, output quality, repeatability, failure observability and PT-BR where relevant",
+      "audit_status": "machine_inventory_complete_human_review_pending",
+      "reviewed_at": "2026-09-01T19:55:04.525049+00:00"
+    },
+    {
+      "schema_version": "studio.repository-capability-audit.v1",
+      "repository_id": "echomimic_v3",
+      "path": "C:\\Users\\edugu\\Downloads\\clicko-oss-evaluation\\echomimic_v3",
+      "origin_url": "https://github.com/antgroup/echomimic_v3.git",
+      "commit_sha": "7e89489ca51c0d008fc1963ec6c03fc5bd0b9397",
+      "license_spdx": "Apache-2.0",
+      "license_evidence": "LICENSE.txt",
+      "purpose": "audio-driven portrait animation candidate",
+      "manifests": [
+        "requirements.txt"
+      ],
+      "languages_sampled": [
+        "Python"
+      ],
+      "readme_summary_unverified": "EchoMimicV3: 1.3B Parameters are All You Need for Unified Multi Modal and Multi Task Human Animation Ruobing Zheng &emsp; Terminal Technology Department, Alipay, Ant Group. 1 Core Contributor&emsp; 2 Corresponding Authors & x1F680; EchoMimic Series EchoMimicV1: Lifelike Audio Driven Portrait Animations through Editable Landmark Conditioning. EchoMimicV2: Towards Striking, Simplified, and Semi Body Human Animation. EchoMimicV3: 1.3B Parameters are All You Need for Unified Multi Modal and Multi Task Human Animation.",
+      "capability_signals": {
+        "gpu_signal": true,
+        "container_recipe": false,
+        "test_directory": false,
+        "pt_br_signal": false
+      },
+      "inputs": [
+        "provider-specific; focused audit pending"
+      ],
+      "outputs": [
+        "provider-specific; must be projected to canonical contracts"
+      ],
+      "hardware": "GPU-related dependencies detected; exact VRAM/RAM envelope requires preflight",
+      "pt_br_support": "unknown",
+      "quality": "not inferred from README; benchmark required",
+      "determinism": "unknown",
+      "observability": "partial: git provenance and manifests inventoried",
+      "risks": [
+        "machine inventory does not validate model-weight or dataset licensing",
+        "biometric/identity use requires explicit consent, private benchmark and deletion controls"
+      ],
+      "integration": "Keep outside the production domain until license, model assets, hardware and quality pass focused review.",
+      "decision": "reference-only",
+      "benchmark": "license + dependency preflight, fixed fixture, resource envelope, output quality, repeatability, failure observability and PT-BR where relevant",
+      "audit_status": "machine_inventory_complete_human_review_pending",
+      "reviewed_at": "2026-09-01T19:55:04.706874+00:00"
+    },
+    {
+      "schema_version": "studio.repository-capability-audit.v1",
+      "repository_id": "espeak-ng",
+      "path": "C:\\Users\\edugu\\Downloads\\clicko-oss-evaluation\\espeak-ng",
+      "origin_url": "https://github.com/espeak-ng/espeak-ng.git",
+      "commit_sha": "7d426728fe146f4168fa716e29d8e276c7da33f2",
+      "license_spdx": "GPL-3.0",
+      "license_evidence": "COPYING",
+      "purpose": "offline speech synthesis runtime and pronunciation fallback",
+      "manifests": [],
+      "languages_sampled": [
+        "C",
+        "C++",
+        "Python",
+        "JavaScript"
+      ],
+      "readme_summary_unverified": "eSpeak NG Text to Speech The eSpeak NG is a compact open source software text to speech synthesizer for Linux, Windows, Android and other operating systems. It supports . It is based on the eSpeak engine created by Jonathan Duddington. eSpeak NG uses a \"formant synthesis\" method. This allows many languages to be provided in a small size. The speech is clear, and can be used at high speeds, but is not as natural or smooth as larger synthesizers which are based on human speech recordings. It also supports Klatt formant synthesis, and the ability",
+      "capability_signals": {
+        "gpu_signal": false,
+        "container_recipe": false,
+        "test_directory": true,
+        "pt_br_signal": false
+      },
+      "inputs": [
+        "provider-specific; focused audit pending"
+      ],
+      "outputs": [
+        "provider-specific; must be projected to canonical contracts"
+      ],
+      "hardware": "no GPU requirement established by static inventory; reproducible preflight still required",
+      "pt_br_support": "unknown",
+      "quality": "not inferred from README; benchmark required",
+      "determinism": "unknown",
+      "observability": "partial: git provenance and manifests inventoried",
+      "risks": [
+        "machine inventory does not validate model-weight or dataset licensing",
+        "strong copyleft requires explicit legal/architecture review"
+      ],
+      "integration": "Evaluate behind an isolated worker/adapter; persist only canonical Clicko contracts.",
+      "decision": "adapt",
+      "benchmark": "license + dependency preflight, fixed fixture, resource envelope, output quality, repeatability, failure observability and PT-BR where relevant",
+      "audit_status": "machine_inventory_complete_human_review_pending",
+      "reviewed_at": "2026-09-01T19:55:05.185489+00:00"
+    },
+    {
+      "schema_version": "studio.repository-capability-audit.v1",
+      "repository_id": "espeakng-loader",
+      "path": "C:\\Users\\edugu\\Downloads\\clicko-oss-evaluation\\espeakng-loader",
+      "origin_url": "https://github.com/thewh1teagle/espeakng-loader.git",
+      "commit_sha": "0ddc87adf77e5850d7eeb542ac8a87d421b64daa",
+      "license_spdx": "MIT",
+      "license_evidence": "LICENSE",
+      "purpose": "runtime packaging and loading support for eSpeak NG",
+      "manifests": [
+        "pyproject.toml"
+      ],
+      "languages_sampled": [
+        "Python"
+      ],
+      "readme_summary_unverified": "This package loads the espeak ng shared library so it will be available for other libraries. Linux (x86 64, arm64) Windows (x86 64, arm64) pip install espeakng loader from espeakng loader import get library path, load library, make library available library path = get library path() Pass it to the library Or use load library() for load it directly Or use make library available() for making it available for other libraries Note: please use phonemizer fork instead of phonemizer package until merged. from phonemizer.backend.espeak.wrapper import EspeakWrapper",
+      "capability_signals": {
+        "gpu_signal": false,
+        "container_recipe": false,
+        "test_directory": false,
+        "pt_br_signal": false
+      },
+      "inputs": [
+        "provider-specific; focused audit pending"
+      ],
+      "outputs": [
+        "provider-specific; must be projected to canonical contracts"
+      ],
+      "hardware": "no GPU requirement established by static inventory; reproducible preflight still required",
+      "pt_br_support": "unknown",
+      "quality": "not inferred from README; benchmark required",
+      "determinism": "unknown",
+      "observability": "partial: git provenance and manifests inventoried",
+      "risks": [
+        "machine inventory does not validate model-weight or dataset licensing"
+      ],
+      "integration": "Keep outside the production domain until license, model assets, hardware and quality pass focused review.",
+      "decision": "reference-only",
+      "benchmark": "license + dependency preflight, fixed fixture, resource envelope, output quality, repeatability, failure observability and PT-BR where relevant",
+      "audit_status": "machine_inventory_complete_human_review_pending",
+      "reviewed_at": "2026-09-01T19:55:05.341977+00:00"
+    },
+    {
+      "schema_version": "studio.repository-capability-audit.v1",
+      "repository_id": "fabric.js",
+      "path": "C:\\Users\\edugu\\Downloads\\clicko-oss-evaluation\\fabric.js",
+      "origin_url": "https://github.com/fabricjs/fabric.js.git",
+      "commit_sha": "2bd4992cabf4ec9609aa349ea09b723cadc94bef",
+      "license_spdx": "MIT",
+      "license_evidence": "LICENSE",
+      "purpose": "interactive canvas composition and object manipulation",
+      "manifests": [
+        "package.json"
+      ],
+      "languages_sampled": [
+        "TypeScript",
+        "JavaScript",
+        "TypeScript/React"
+      ],
+      "readme_summary_unverified": "A simple and powerful Javascript HTML5 canvas library . [ Website ][website] [ GOTCHAS ][gotchas] Here is a section for recognition of companies or individuals that support fabricJS with a sponsorship Atlas Cloud is a full modal AI inference platform that gives developers a single AI API to access video generation, image generation, and LLM APIs. Instead of managing multiple vendor integrations, you connect once and get unified access to 300+ curated models across all modalities. Check out Atlas Cloud's new coding plan promotion for more budget friendly API access：",
+      "capability_signals": {
+        "gpu_signal": false,
+        "container_recipe": false,
+        "test_directory": true,
+        "pt_br_signal": false
+      },
+      "inputs": [
+        "provider-specific; focused audit pending"
+      ],
+      "outputs": [
+        "provider-specific; must be projected to canonical contracts"
+      ],
+      "hardware": "no GPU requirement established by static inventory; reproducible preflight still required",
+      "pt_br_support": "unknown",
+      "quality": "not inferred from README; benchmark required",
+      "determinism": "unknown",
+      "observability": "partial: git provenance and manifests inventoried",
+      "risks": [
+        "machine inventory does not validate model-weight or dataset licensing"
+      ],
+      "integration": "Evaluate behind an isolated worker/adapter; persist only canonical Clicko contracts.",
+      "decision": "adapt",
+      "benchmark": "license + dependency preflight, fixed fixture, resource envelope, output quality, repeatability, failure observability and PT-BR where relevant",
+      "audit_status": "machine_inventory_complete_human_review_pending",
+      "reviewed_at": "2026-09-01T19:55:05.868159+00:00"
+    },
+    {
+      "schema_version": "studio.repository-capability-audit.v1",
+      "repository_id": "ffmpeg",
+      "path": "C:\\Users\\edugu\\Downloads\\clicko-oss-evaluation\\FFmpeg",
+      "origin_url": "https://github.com/FFmpeg/FFmpeg.git",
+      "commit_sha": "1019f8f036602a8464185baa4857654337eeca14",
+      "license_spdx": "GPL-3.0",
+      "license_evidence": "COPYING.GPLv2",
+      "purpose": "deterministic media probe, transform and encode foundation",
+      "manifests": [],
+      "languages_sampled": [
+        "C",
+        "C++",
+        "Python",
+        "JavaScript"
+      ],
+      "readme_summary_unverified": "FFmpeg is a collection of libraries and tools to process multimedia content such as audio, video, subtitles and related metadata. libavcodec provides implementation of a wider range of codecs. libavformat implements streaming protocols, container formats and basic I/O access. libavutil includes hashers, decompressors and miscellaneous utility functions. libavfilter provides means to alter decoded audio and video through a directed graph of connected filters. libavdevice provides an abstraction to access capture and playback devices.",
+      "capability_signals": {
+        "gpu_signal": false,
+        "container_recipe": false,
+        "test_directory": true,
+        "pt_br_signal": false
+      },
+      "inputs": [
+        "provider-specific; focused audit pending"
+      ],
+      "outputs": [
+        "provider-specific; must be projected to canonical contracts"
+      ],
+      "hardware": "no GPU requirement established by static inventory; reproducible preflight still required",
+      "pt_br_support": "unknown",
+      "quality": "not inferred from README; benchmark required",
+      "determinism": "unknown",
+      "observability": "partial: git provenance and manifests inventoried",
+      "risks": [
+        "machine inventory does not validate model-weight or dataset licensing",
+        "strong copyleft requires explicit legal/architecture review"
+      ],
+      "integration": "Use behind a provider-neutral adapter with pinned version, deterministic fixtures and artifact lineage.",
+      "decision": "adopt",
+      "benchmark": "license + dependency preflight, fixed fixture, resource envelope, output quality, repeatability, failure observability and PT-BR where relevant",
+      "audit_status": "machine_inventory_complete_human_review_pending",
+      "reviewed_at": "2026-09-01T19:55:06.900388+00:00"
+    },
+    {
+      "schema_version": "studio.repository-capability-audit.v1",
+      "repository_id": "heygem-caladog",
+      "path": "C:\\Users\\edugu\\Downloads\\clicko-oss-evaluation\\HeyGem-Caladog",
+      "origin_url": "https://github.com/Caladog/HeyGem.git",
+      "commit_sha": "a0053f7cd6440203d76737ac2920db8b293fb3f6",
+      "license_spdx": "OTHER",
+      "license_evidence": "LICENSE",
+      "purpose": "authorized avatar benchmark candidate",
+      "manifests": [
+        "package.json"
+      ],
+      "languages_sampled": [
+        "JavaScript"
+      ],
+      "readme_summary_unverified": "Heygem Open Source Alternative to Heygen [New Ubuntu Version Notice] Ubuntu Version Officially Released 1. Adaptation and verification work for Ubuntu 22.04 Desktop version (kernel 6.8.0 52 generic) has been completed. Compatibility testing for other Linux versions has not yet been conducted. 2. Added internationalization (English) for the client program interface. 3. Fixed some known issues Important Notice to Developer Partners Dear Heygem Open Source Community Members: We sincerely thank you for your enthusiastic attention and active participation in the Heygem digital human open source pro",
+      "capability_signals": {
+        "gpu_signal": true,
+        "container_recipe": false,
+        "test_directory": false,
+        "pt_br_signal": false
+      },
+      "inputs": [
+        "provider-specific; focused audit pending"
+      ],
+      "outputs": [
+        "provider-specific; must be projected to canonical contracts"
+      ],
+      "hardware": "GPU-related dependencies detected; exact VRAM/RAM envelope requires preflight",
+      "pt_br_support": "unknown",
+      "quality": "not inferred from README; benchmark required",
+      "determinism": "unknown",
+      "observability": "partial: git provenance and manifests inventoried",
+      "risks": [
+        "machine inventory does not validate model-weight or dataset licensing",
+        "biometric/identity use requires explicit consent, private benchmark and deletion controls"
+      ],
+      "integration": "Keep outside the production domain until license, model assets, hardware and quality pass focused review.",
+      "decision": "reference-only",
+      "benchmark": "license + dependency preflight, fixed fixture, resource envelope, output quality, repeatability, failure observability and PT-BR where relevant",
+      "audit_status": "machine_inventory_complete_human_review_pending",
+      "reviewed_at": "2026-09-01T19:55:07.441954+00:00"
+    },
+    {
+      "schema_version": "studio.repository-capability-audit.v1",
+      "repository_id": "hyperframes",
+      "path": "C:\\Users\\edugu\\Downloads\\clicko-oss-evaluation\\hyperframes",
+      "origin_url": "https://github.com/heygen-com/hyperframes.git",
+      "commit_sha": "2ca578f9455ca928ab168e7dd08a1a3a9d834788",
+      "license_spdx": "Apache-2.0",
+      "license_evidence": "LICENSE",
+      "purpose": "programmatic motion/video composition candidate",
+      "manifests": [
+        "package.json"
+      ],
+      "languages_sampled": [
+        "JavaScript",
+        "TypeScript"
+      ],
+      "readme_summary_unverified": "Write HTML. Render video. Built for agents. HyperFrames is an open source framework for turning HTML, CSS, media, and seekable animations into deterministic MP4 videos. Use it locally with the CLI, from AI coding agents with skills, or as the rendering core behind hosted authoring workflows. With an AI coding agent Install the HyperFrames skills, then describe the video you want: npx skills add heygen com/hyperframes The picker opens with nothing pre selected — the Core Skills group is all you need: the /hyperframes router installs each creation workflow on demand. Agents and non interactive r",
+      "capability_signals": {
+        "gpu_signal": true,
+        "container_recipe": false,
+        "test_directory": false,
+        "pt_br_signal": false
+      },
+      "inputs": [
+        "provider-specific; focused audit pending"
+      ],
+      "outputs": [
+        "provider-specific; must be projected to canonical contracts"
+      ],
+      "hardware": "GPU-related dependencies detected; exact VRAM/RAM envelope requires preflight",
+      "pt_br_support": "unknown",
+      "quality": "not inferred from README; benchmark required",
+      "determinism": "unknown",
+      "observability": "partial: git provenance and manifests inventoried",
+      "risks": [
+        "machine inventory does not validate model-weight or dataset licensing"
+      ],
+      "integration": "Evaluate behind an isolated worker/adapter; persist only canonical Clicko contracts.",
+      "decision": "adapt",
+      "benchmark": "license + dependency preflight, fixed fixture, resource envelope, output quality, repeatability, failure observability and PT-BR where relevant",
+      "audit_status": "machine_inventory_complete_human_review_pending",
+      "reviewed_at": "2026-09-01T19:55:11.577946+00:00"
+    },
+    {
+      "schema_version": "studio.repository-capability-audit.v1",
+      "repository_id": "hyperframes-launch-video",
+      "path": "C:\\Users\\edugu\\Downloads\\clicko-oss-evaluation\\hyperframes-launch-video",
+      "origin_url": "https://github.com/heygen-com/hyperframes-launch-video.git",
+      "commit_sha": "930f89186b8e155d632d9afe49054c02d4d7d85a",
+      "license_spdx": "NOASSERTION",
+      "license_evidence": "license file not found at repository root",
+      "purpose": "reference implementation for launch-video composition",
+      "manifests": [],
+      "languages_sampled": [],
+      "readme_summary_unverified": "HyperFrames Launch Video The composition source for HeyGen's HyperFrames launch video — a real production project you can clone, preview, and render yourself. Use it as a worked example of how to assemble a non trivial video in . Resolution: 1920×1080 @ 30fps Structure: 1 root composition ( index.html ) + 17 sub compositions wired together Techniques on display: CSS animations, GSAP, Lottie, shaders, Three.js, footage compositing, captions, SFX That's it. No package install step — HyperFrames runs via npx .",
+      "capability_signals": {
+        "gpu_signal": false,
+        "container_recipe": false,
+        "test_directory": false,
+        "pt_br_signal": false
+      },
+      "inputs": [
+        "provider-specific; focused audit pending"
+      ],
+      "outputs": [
+        "provider-specific; must be projected to canonical contracts"
+      ],
+      "hardware": "no GPU requirement established by static inventory; reproducible preflight still required",
+      "pt_br_support": "unknown",
+      "quality": "not inferred from README; benchmark required",
+      "determinism": "unknown",
+      "observability": "partial: git provenance and manifests inventoried",
+      "risks": [
+        "machine inventory does not validate model-weight or dataset licensing",
+        "root license not detected; fail closed"
+      ],
+      "integration": "Keep outside the production domain until license, model assets, hardware and quality pass focused review.",
+      "decision": "reference-only",
+      "benchmark": "license + dependency preflight, fixed fixture, resource envelope, output quality, repeatability, failure observability and PT-BR where relevant",
+      "audit_status": "machine_inventory_complete_human_review_pending",
+      "reviewed_at": "2026-09-01T19:55:11.769798+00:00"
+    },
+    {
+      "schema_version": "studio.repository-capability-audit.v1",
+      "repository_id": "kimi-k2.5",
+      "path": "C:\\Users\\edugu\\Downloads\\clicko-oss-evaluation\\Kimi-K2.5",
+      "origin_url": "https://github.com/MoonshotAI/Kimi-K2.5.git",
+      "commit_sha": "c119f68d1a9a13f88f6a59b8e5e0840983b22689",
+      "license_spdx": "MIT",
+      "license_evidence": "LICENSE",
+      "purpose": "language-model planning research candidate",
+      "manifests": [],
+      "languages_sampled": [],
+      "readme_summary_unverified": "📰&nbsp;&nbsp; Tech Blog &nbsp;&nbsp;&nbsp; 📄&nbsp;&nbsp; Full Report 1. Model Introduction Kimi K2.5 is an open source, native multimodal agentic model built through continual pretraining on approximately 15 trillion mixed visual and text tokens atop Kimi K2 Base. It seamlessly integrates vision and language understanding with advanced agentic capabilities, instant and thinking modes, as well as conversational and agentic paradigms. Native Multimodality : Pre trained on vision–language tokens, K2.5 excels in visual knowledge, cross modal reasoning, and agentic tool use grounded in visual input",
+      "capability_signals": {
+        "gpu_signal": false,
+        "container_recipe": false,
+        "test_directory": false,
+        "pt_br_signal": false
+      },
+      "inputs": [
+        "provider-specific; focused audit pending"
+      ],
+      "outputs": [
+        "provider-specific; must be projected to canonical contracts"
+      ],
+      "hardware": "no GPU requirement established by static inventory; reproducible preflight still required",
+      "pt_br_support": "unknown",
+      "quality": "not inferred from README; benchmark required",
+      "determinism": "unknown",
+      "observability": "partial: git provenance and manifests inventoried",
+      "risks": [
+        "machine inventory does not validate model-weight or dataset licensing"
+      ],
+      "integration": "Keep outside the production domain until license, model assets, hardware and quality pass focused review.",
+      "decision": "reference-only",
+      "benchmark": "license + dependency preflight, fixed fixture, resource envelope, output quality, repeatability, failure observability and PT-BR where relevant",
+      "audit_status": "machine_inventory_complete_human_review_pending",
+      "reviewed_at": "2026-09-01T19:55:11.995293+00:00"
+    },
+    {
+      "schema_version": "studio.repository-capability-audit.v1",
+      "repository_id": "kokoro",
+      "path": "C:\\Users\\edugu\\Downloads\\clicko-oss-evaluation\\Kokoro",
+      "origin_url": "https://github.com/hexgrad/kokoro.git",
+      "commit_sha": "dfb907a02bba8152ca444717ca5d78747ccb4bec",
+      "license_spdx": "Apache-2.0",
+      "license_evidence": "LICENSE",
+      "purpose": "speech synthesis candidate",
+      "manifests": [
+        "pyproject.toml"
+      ],
+      "languages_sampled": [
+        "Python",
+        "JavaScript"
+      ],
+      "readme_summary_unverified": "An inference library for . You can . Kokoro is an open weight TTS model with 82 million parameters. Despite its lightweight architecture, it delivers comparable quality to larger models while being significantly faster and more cost efficient. With Apache licensed weights, Kokoro can be deployed anywhere from production environments to personal projects. You can run this basic cell on . . !pip install q kokoro =0.9.4 soundfile !apt get qq y install espeak ng /dev/null 2 &1 from kokoro import KPipeline",
+      "capability_signals": {
+        "gpu_signal": true,
+        "container_recipe": false,
+        "test_directory": true,
+        "pt_br_signal": true
+      },
+      "inputs": [
+        "provider-specific; focused audit pending"
+      ],
+      "outputs": [
+        "provider-specific; must be projected to canonical contracts"
+      ],
+      "hardware": "GPU-related dependencies detected; exact VRAM/RAM envelope requires preflight",
+      "pt_br_support": "partial_signal",
+      "quality": "not inferred from README; benchmark required",
+      "determinism": "unknown",
+      "observability": "partial: git provenance and manifests inventoried",
+      "risks": [
+        "machine inventory does not validate model-weight or dataset licensing"
+      ],
+      "integration": "Evaluate behind an isolated worker/adapter; persist only canonical Clicko contracts.",
+      "decision": "adapt",
+      "benchmark": "license + dependency preflight, fixed fixture, resource envelope, output quality, repeatability, failure observability and PT-BR where relevant",
+      "audit_status": "machine_inventory_complete_human_review_pending",
+      "reviewed_at": "2026-09-01T19:55:12.222529+00:00"
+    },
+    {
+      "schema_version": "studio.repository-capability-audit.v1",
+      "repository_id": "konva",
+      "path": "C:\\Users\\edugu\\Downloads\\clicko-oss-evaluation\\konva",
+      "origin_url": "https://github.com/konvajs/konva.git",
+      "commit_sha": "aa3432ebf1c48606764fef0918e68bfc4aec3684",
+      "license_spdx": "MIT",
+      "license_evidence": "LICENSE",
+      "purpose": "interactive canvas scene graph for the editor",
+      "manifests": [
+        "package.json"
+      ],
+      "languages_sampled": [
+        "TypeScript",
+        "JavaScript"
+      ],
+      "readme_summary_unverified": "Build interactive graphics, editors, and diagrams for the web. Konva is an open source 2D canvas framework for interactive graphics. Its scene graph gives each shape its own events, drag behavior, transforms, animation, cache, and export controls. Use Konva for design editors, whiteboards, diagrams, annotations, maps, and other visual tools. Konva is MIT licensed and does not require a license key. This repository began as a GitHub fork of . Visit: The and follow on Used by: (design editor SDK) and many others — see the full showcase on the",
+      "capability_signals": {
+        "gpu_signal": false,
+        "container_recipe": false,
+        "test_directory": true,
+        "pt_br_signal": false
+      },
+      "inputs": [
+        "provider-specific; focused audit pending"
+      ],
+      "outputs": [
+        "provider-specific; must be projected to canonical contracts"
+      ],
+      "hardware": "no GPU requirement established by static inventory; reproducible preflight still required",
+      "pt_br_support": "unknown",
+      "quality": "not inferred from README; benchmark required",
+      "determinism": "unknown",
+      "observability": "partial: git provenance and manifests inventoried",
+      "risks": [
+        "machine inventory does not validate model-weight or dataset licensing"
+      ],
+      "integration": "Evaluate behind an isolated worker/adapter; persist only canonical Clicko contracts.",
+      "decision": "adapt",
+      "benchmark": "license + dependency preflight, fixed fixture, resource envelope, output quality, repeatability, failure observability and PT-BR where relevant",
+      "audit_status": "machine_inventory_complete_human_review_pending",
+      "reviewed_at": "2026-09-01T19:55:12.520208+00:00"
+    },
+    {
+      "schema_version": "studio.repository-capability-audit.v1",
+      "repository_id": "latentsync",
+      "path": "C:\\Users\\edugu\\Downloads\\clicko-oss-evaluation\\LatentSync",
+      "origin_url": "https://github.com/bytedance/LatentSync.git",
+      "commit_sha": "a229c3948406bc2cf6eaf4873e662e70c6a04746",
+      "license_spdx": "Apache-2.0",
+      "license_evidence": "LICENSE",
+      "purpose": "lip synchronization candidate",
+      "manifests": [
+        "requirements.txt"
+      ],
+      "languages_sampled": [
+        "Python"
+      ],
+      "readme_summary_unverified": "2025/06/11 : We released LatentSync 1.6 , which is trained on 512 $\\times$ 512 resolution videos to mitigate the blurriness problem. Watch the demo . 2025/03/14 : We released LatentSync 1.5 , which (1) improves temporal consistency via adding temporal layer, (2) improves performance on Chinese videos and (3) reduces the VRAM requirement of the stage2 training to 20 GB through a series of optimizations. Learn more details . We present LatentSync , an end to end lip sync method based on audio conditioned latent diffusion models without any intermediate motion representation, diverging from previ",
+      "capability_signals": {
+        "gpu_signal": true,
+        "container_recipe": false,
+        "test_directory": false,
+        "pt_br_signal": false
+      },
+      "inputs": [
+        "provider-specific; focused audit pending"
+      ],
+      "outputs": [
+        "provider-specific; must be projected to canonical contracts"
+      ],
+      "hardware": "GPU-related dependencies detected; exact VRAM/RAM envelope requires preflight",
+      "pt_br_support": "unknown",
+      "quality": "not inferred from README; benchmark required",
+      "determinism": "unknown",
+      "observability": "partial: git provenance and manifests inventoried",
+      "risks": [
+        "machine inventory does not validate model-weight or dataset licensing",
+        "biometric/identity use requires explicit consent, private benchmark and deletion controls"
+      ],
+      "integration": "Keep outside the production domain until license, model assets, hardware and quality pass focused review.",
+      "decision": "reference-only",
+      "benchmark": "license + dependency preflight, fixed fixture, resource envelope, output quality, repeatability, failure observability and PT-BR where relevant",
+      "audit_status": "machine_inventory_complete_human_review_pending",
+      "reviewed_at": "2026-09-01T19:55:12.824935+00:00"
+    },
+    {
+      "schema_version": "studio.repository-capability-audit.v1",
+      "repository_id": "lexical",
+      "path": "C:\\Users\\edugu\\Downloads\\clicko-oss-evaluation\\lexical",
+      "origin_url": "https://github.com/facebook/lexical.git",
+      "commit_sha": "3984d88bf28960dfcb6fa36977b923396ad9ae70",
+      "license_spdx": "MIT",
+      "license_evidence": "LICENSE",
+      "purpose": "structured rich-text editing candidate",
+      "manifests": [
+        "package.json"
+      ],
+      "languages_sampled": [
+        "TypeScript",
+        "TypeScript/React",
+        "JavaScript",
+        "Python"
+      ],
+      "readme_summary_unverified": "An extensible text editor framework that provides excellent reliability, accessibility and performance. Documentation Getting Started Playground Gallery Framework Agnostic Core Works with any UI framework, with official Reliable & Accessible Built in accessibility support and WCAG compliance Extensible Plugin based architecture with powerful extension points Immutable State Model Time travel ready with built in undo/redo Collaborative Editing Real time collaboration via integration Serialization Import/export from JSON, Markdown, and HTML",
+      "capability_signals": {
+        "gpu_signal": false,
+        "container_recipe": false,
+        "test_directory": false,
+        "pt_br_signal": false
+      },
+      "inputs": [
+        "provider-specific; focused audit pending"
+      ],
+      "outputs": [
+        "provider-specific; must be projected to canonical contracts"
+      ],
+      "hardware": "no GPU requirement established by static inventory; reproducible preflight still required",
+      "pt_br_support": "unknown",
+      "quality": "not inferred from README; benchmark required",
+      "determinism": "unknown",
+      "observability": "partial: git provenance and manifests inventoried",
+      "risks": [
+        "machine inventory does not validate model-weight or dataset licensing"
+      ],
+      "integration": "Keep outside the production domain until license, model assets, hardware and quality pass focused review.",
+      "decision": "reference-only",
+      "benchmark": "license + dependency preflight, fixed fixture, resource envelope, output quality, repeatability, failure observability and PT-BR where relevant",
+      "audit_status": "machine_inventory_complete_human_review_pending",
+      "reviewed_at": "2026-09-01T19:55:14.061987+00:00"
+    },
+    {
+      "schema_version": "studio.repository-capability-audit.v1",
+      "repository_id": "liveportrait",
+      "path": "C:\\Users\\edugu\\Downloads\\clicko-oss-evaluation\\LivePortrait",
+      "origin_url": "https://github.com/KwaiVGI/LivePortrait.git",
+      "commit_sha": "9b294b3d0536135442ea73cb01e6cb3ca7029dd3",
+      "license_spdx": "MIT",
+      "license_evidence": "LICENSE",
+      "purpose": "authorized portrait animation candidate",
+      "manifests": [
+        "requirements.txt"
+      ],
+      "languages_sampled": [
+        "Python",
+        "C++"
+      ],
+      "readme_summary_unverified": "LivePortrait: Efficient Portrait Animation with Stitching and Retargeting Control Jianzhu Guo 1 † &emsp; Dingyun Zhang 1,2 &emsp; Xiaoqiang Liu 1 &emsp; Zhizhou Zhong 1,3 &emsp; Pengfei Wan 1 &emsp; 1 Kuaishou Technology&emsp; 2 University of Science and Technology of China&emsp; 3 Fudan University&emsp; 🔥 For more results, visit our homepage 🔥 2025/06/01 : 🌍 Over the past year, LivePortrait has 🚀 become an efficient portrait animation (humans, cats and dogs) solution adopted by major video platforms—Kuaishou, Douyin, Jianying, WeChat Channels—as well as numerous startups and creators. 🎉",
+      "capability_signals": {
+        "gpu_signal": true,
+        "container_recipe": false,
+        "test_directory": false,
+        "pt_br_signal": false
+      },
+      "inputs": [
+        "provider-specific; focused audit pending"
+      ],
+      "outputs": [
+        "provider-specific; must be projected to canonical contracts"
+      ],
+      "hardware": "GPU-related dependencies detected; exact VRAM/RAM envelope requires preflight",
+      "pt_br_support": "unknown",
+      "quality": "not inferred from README; benchmark required",
+      "determinism": "unknown",
+      "observability": "partial: git provenance and manifests inventoried",
+      "risks": [
+        "machine inventory does not validate model-weight or dataset licensing",
+        "biometric/identity use requires explicit consent, private benchmark and deletion controls"
+      ],
+      "integration": "Keep outside the production domain until license, model assets, hardware and quality pass focused review.",
+      "decision": "reference-only",
+      "benchmark": "license + dependency preflight, fixed fixture, resource envelope, output quality, repeatability, failure observability and PT-BR where relevant",
+      "audit_status": "machine_inventory_complete_human_review_pending",
+      "reviewed_at": "2026-09-01T19:55:14.381095+00:00"
+    },
+    {
+      "schema_version": "studio.repository-capability-audit.v1",
+      "repository_id": "misaki",
+      "path": "C:\\Users\\edugu\\Downloads\\clicko-oss-evaluation\\misaki",
+      "origin_url": "https://github.com/hexgrad/misaki.git",
+      "commit_sha": "fba1236595f2d2bf21d414ba6e57d25256afada3",
+      "license_spdx": "Apache-2.0",
+      "license_evidence": "LICENSE",
+      "purpose": "grapheme-to-phoneme and language preprocessing candidate",
+      "manifests": [
+        "pyproject.toml"
+      ],
+      "languages_sampled": [
+        "Python"
+      ],
+      "readme_summary_unverified": "Misaki is a G2P engine designed for models. Hosted demo: https://hf.co/spaces/hexgrad/Misaki G2P You can run this in one cell on : !pip install q \"misaki[en]\" from misaki import en g2p = en.G2P(trf=False, british=False, fallback=None) no transformer, American English text = ' is a G2P engine designed for models.' phonemes, tokens = g2p(text) print(phonemes) misˈɑki ɪz ə ʤˈitəpˈi ˈɛnʤən dəzˈInd fɔɹ kˈOkəɹO mˈɑdᵊlz. To fallback to espeak: Installing espeak varies across platforms, this silent install works on Colab:",
+      "capability_signals": {
+        "gpu_signal": true,
+        "container_recipe": false,
+        "test_directory": false,
+        "pt_br_signal": false
+      },
+      "inputs": [
+        "provider-specific; focused audit pending"
+      ],
+      "outputs": [
+        "provider-specific; must be projected to canonical contracts"
+      ],
+      "hardware": "GPU-related dependencies detected; exact VRAM/RAM envelope requires preflight",
+      "pt_br_support": "unknown",
+      "quality": "not inferred from README; benchmark required",
+      "determinism": "unknown",
+      "observability": "partial: git provenance and manifests inventoried",
+      "risks": [
+        "machine inventory does not validate model-weight or dataset licensing"
+      ],
+      "integration": "Evaluate behind an isolated worker/adapter; persist only canonical Clicko contracts.",
+      "decision": "adapt",
+      "benchmark": "license + dependency preflight, fixed fixture, resource envelope, output quality, repeatability, failure observability and PT-BR where relevant",
+      "audit_status": "machine_inventory_complete_human_review_pending",
+      "reviewed_at": "2026-09-01T19:55:14.597565+00:00"
+    },
+    {
+      "schema_version": "studio.repository-capability-audit.v1",
+      "repository_id": "motion-canvas",
+      "path": "C:\\Users\\edugu\\Downloads\\clicko-oss-evaluation\\motion-canvas",
+      "origin_url": "https://github.com/motion-canvas/motion-canvas.git",
+      "commit_sha": "7b91435c301d530351dcf5ebb91dd139c002e405",
+      "license_spdx": "MIT",
+      "license_evidence": "LICENSE",
+      "purpose": "programmatic TypeScript motion design candidate",
+      "manifests": [
+        "package.json"
+      ],
+      "languages_sampled": [
+        "TypeScript",
+        "TypeScript/React",
+        "JavaScript"
+      ],
+      "readme_summary_unverified": "Motion Canvas is two things: A TypeScript library that uses generators to program animations. An editor providing a real time preview of said animations. It's a specialized tool designed to create informative vector animations and synchronize them with voice overs. Aside from providing the preview, the editor allows you to edit certain aspects of the animation which could otherwise be tedious. Check out our [getting started][docs] guide to learn how to use Motion Canvas. Developing Motion Canvas locally",
+      "capability_signals": {
+        "gpu_signal": false,
+        "container_recipe": false,
+        "test_directory": false,
+        "pt_br_signal": false
+      },
+      "inputs": [
+        "provider-specific; focused audit pending"
+      ],
+      "outputs": [
+        "provider-specific; must be projected to canonical contracts"
+      ],
+      "hardware": "no GPU requirement established by static inventory; reproducible preflight still required",
+      "pt_br_support": "unknown",
+      "quality": "not inferred from README; benchmark required",
+      "determinism": "unknown",
+      "observability": "partial: git provenance and manifests inventoried",
+      "risks": [
+        "machine inventory does not validate model-weight or dataset licensing"
+      ],
+      "integration": "Evaluate behind an isolated worker/adapter; persist only canonical Clicko contracts.",
+      "decision": "adapt",
+      "benchmark": "license + dependency preflight, fixed fixture, resource envelope, output quality, repeatability, failure observability and PT-BR where relevant",
+      "audit_status": "machine_inventory_complete_human_review_pending",
+      "reviewed_at": "2026-09-01T19:55:15.498436+00:00"
+    },
+    {
+      "schema_version": "studio.repository-capability-audit.v1",
+      "repository_id": "musetalk",
+      "path": "C:\\Users\\edugu\\Downloads\\clicko-oss-evaluation\\MuseTalk",
+      "origin_url": "https://github.com/TMElyralab/MuseTalk.git",
+      "commit_sha": "0a89dec45a0192b824e3cf4daf96c239440c5ed8",
+      "license_spdx": "Apache-2.0",
+      "license_evidence": "LICENSE",
+      "purpose": "lip synchronization candidate",
+      "manifests": [
+        "requirements.txt"
+      ],
+      "languages_sampled": [
+        "Python"
+      ],
+      "readme_summary_unverified": "MuseTalk: Real Time High Fidelity Video Dubbing via Spatio Temporal Sampling ( Equal Contribution, † Corresponding Author, benbinwu@tencent.com) Lyra Lab, Tencent Music Entertainment We introduce MuseTalk , a real time high quality lip syncing model (30fps+ on an NVIDIA Tesla V100). MuseTalk can be applied with input videos, e.g., generated by , as a complete virtual human solution. We're excited to unveil MuseTalk 1.5. This version (1) integrates training with perceptual loss, GAN loss, and sync loss, significantly boosting its overall performance. (2) We've implemented a two stage training s",
+      "capability_signals": {
+        "gpu_signal": true,
+        "container_recipe": false,
+        "test_directory": false,
+        "pt_br_signal": false
+      },
+      "inputs": [
+        "provider-specific; focused audit pending"
+      ],
+      "outputs": [
+        "provider-specific; must be projected to canonical contracts"
+      ],
+      "hardware": "GPU-related dependencies detected; exact VRAM/RAM envelope requires preflight",
+      "pt_br_support": "unknown",
+      "quality": "not inferred from README; benchmark required",
+      "determinism": "unknown",
+      "observability": "partial: git provenance and manifests inventoried",
+      "risks": [
+        "machine inventory does not validate model-weight or dataset licensing",
+        "biometric/identity use requires explicit consent, private benchmark and deletion controls"
+      ],
+      "integration": "Keep outside the production domain until license, model assets, hardware and quality pass focused review.",
+      "decision": "reference-only",
+      "benchmark": "license + dependency preflight, fixed fixture, resource envelope, output quality, repeatability, failure observability and PT-BR where relevant",
+      "audit_status": "machine_inventory_complete_human_review_pending",
+      "reviewed_at": "2026-09-01T19:55:15.764833+00:00"
+    },
+    {
+      "schema_version": "studio.repository-capability-audit.v1",
+      "repository_id": "opencut",
+      "path": "C:\\Users\\edugu\\Downloads\\clicko-oss-evaluation\\opencut",
+      "origin_url": "https://github.com/opencut-app/opencut.git",
+      "commit_sha": "400f097becba5db0fbc305d5a65348cb81c20356",
+      "license_spdx": "OTHER",
+      "license_evidence": "LICENSE",
+      "purpose": "open-source video-editor product and architecture reference",
+      "manifests": [
+        "Cargo.toml"
+      ],
+      "languages_sampled": [
+        "TypeScript/React",
+        "Rust",
+        "TypeScript"
+      ],
+      "readme_summary_unverified": "A free and open source video editor for web, desktop, and mobile. OpenCut is being rewritten from the ground up. What's coming: First class third party plugins (made possible by a plugin first architecture) Desktop, mobile, and browser from one codebase (Rust core) MCP server (for AI agents) Headless mode (automation, batch rendering) A scripting tab directly in the editor You can still find the previous version at , which is the one to reach for today. still runs the classic version. The rewrite will live at until it's ready to take over.",
+      "capability_signals": {
+        "gpu_signal": false,
+        "container_recipe": false,
+        "test_directory": false,
+        "pt_br_signal": false
+      },
+      "inputs": [
+        "provider-specific; focused audit pending"
+      ],
+      "outputs": [
+        "provider-specific; must be projected to canonical contracts"
+      ],
+      "hardware": "no GPU requirement established by static inventory; reproducible preflight still required",
+      "pt_br_support": "unknown",
+      "quality": "not inferred from README; benchmark required",
+      "determinism": "unknown",
+      "observability": "partial: git provenance and manifests inventoried",
+      "risks": [
+        "machine inventory does not validate model-weight or dataset licensing"
+      ],
+      "integration": "Keep outside the production domain until license, model assets, hardware and quality pass focused review.",
+      "decision": "reference-only",
+      "benchmark": "license + dependency preflight, fixed fixture, resource envelope, output quality, repeatability, failure observability and PT-BR where relevant",
+      "audit_status": "machine_inventory_complete_human_review_pending",
+      "reviewed_at": "2026-09-01T19:55:16.044406+00:00"
+    },
+    {
+      "schema_version": "studio.repository-capability-audit.v1",
+      "repository_id": "opencut-classic",
+      "path": "C:\\Users\\edugu\\Downloads\\clicko-oss-evaluation\\opencut-classic",
+      "origin_url": "https://github.com/opencut-app/opencut-classic.git",
+      "commit_sha": "cf5e79e919144200294fb9fed22a222592a0aeea",
+      "license_spdx": "OTHER",
+      "license_evidence": "LICENSE",
+      "purpose": "legacy OpenCut editor architecture reference",
+      "manifests": [
+        "package.json",
+        "Cargo.toml",
+        "docker-compose.yml"
+      ],
+      "languages_sampled": [
+        "TypeScript",
+        "TypeScript/React",
+        "Rust"
+      ],
+      "readme_summary_unverified": "This is the original OpenCut codebase. It's archived and no longer maintained. The rewrite is happening at . Thanks to and for their support of open source software. Privacy : Your videos stay on your device Free features : Most basic CapCut features are now paywalled Simple : People want editors that are easy to use CapCut proved that apps/web/ : Next.js web application apps/desktop/ : Native desktop app built with GPUI (in progress) rust/ : Platform agnostic core: GPU compositor, effects, masks, and WASM bindings. We're actively migrating business logic here from TypeScript.",
+      "capability_signals": {
+        "gpu_signal": true,
+        "container_recipe": true,
+        "test_directory": false,
+        "pt_br_signal": false
+      },
+      "inputs": [
+        "provider-specific; focused audit pending"
+      ],
+      "outputs": [
+        "provider-specific; must be projected to canonical contracts"
+      ],
+      "hardware": "GPU-related dependencies detected; exact VRAM/RAM envelope requires preflight",
+      "pt_br_support": "unknown",
+      "quality": "not inferred from README; benchmark required",
+      "determinism": "unknown",
+      "observability": "partial: git provenance and manifests inventoried",
+      "risks": [
+        "machine inventory does not validate model-weight or dataset licensing"
+      ],
+      "integration": "Keep outside the production domain until license, model assets, hardware and quality pass focused review.",
+      "decision": "reference-only",
+      "benchmark": "license + dependency preflight, fixed fixture, resource envelope, output quality, repeatability, failure observability and PT-BR where relevant",
+      "audit_status": "machine_inventory_complete_human_review_pending",
+      "reviewed_at": "2026-09-01T19:55:16.722578+00:00"
+    },
+    {
+      "schema_version": "studio.repository-capability-audit.v1",
+      "repository_id": "opencv",
+      "path": "C:\\Users\\edugu\\Downloads\\clicko-oss-evaluation\\opencv",
+      "origin_url": "https://github.com/opencv/opencv.git",
+      "commit_sha": "8b7dc43c227746366213a65ad1477ed37fb8d365",
+      "license_spdx": "Apache-2.0",
+      "license_evidence": "LICENSE",
+      "purpose": "classical vision, geometry, color and measurement",
+      "manifests": [],
+      "languages_sampled": [
+        "C++",
+        "C",
+        "Python",
+        "JavaScript"
+      ],
+      "readme_summary_unverified": "OpenCV: Open Source Computer Vision Library previous forum (read only): Additional OpenCV functionality: Please read the before starting work on a pull request. Summary of the guidelines: One pull request per issue; Choose the right base branch; Include tests and documentation; Clean up \"oops\" commits before submitting; Additional Resources for inclusion in Community Friday on opencv.org featuring OpenCV Live, an hour long streaming show for daily posts showing the state of the art in computer vision & AI to help organize events and online campaigns as well as amplify them",
+      "capability_signals": {
+        "gpu_signal": false,
+        "container_recipe": false,
+        "test_directory": false,
+        "pt_br_signal": false
+      },
+      "inputs": [
+        "provider-specific; focused audit pending"
+      ],
+      "outputs": [
+        "provider-specific; must be projected to canonical contracts"
+      ],
+      "hardware": "no GPU requirement established by static inventory; reproducible preflight still required",
+      "pt_br_support": "unknown",
+      "quality": "not inferred from README; benchmark required",
+      "determinism": "unknown",
+      "observability": "partial: git provenance and manifests inventoried",
+      "risks": [
+        "machine inventory does not validate model-weight or dataset licensing"
+      ],
+      "integration": "Use behind a provider-neutral adapter with pinned version, deterministic fixtures and artifact lineage.",
+      "decision": "adopt",
+      "benchmark": "license + dependency preflight, fixed fixture, resource envelope, output quality, repeatability, failure observability and PT-BR where relevant",
+      "audit_status": "machine_inventory_complete_human_review_pending",
+      "reviewed_at": "2026-09-01T19:55:19.645137+00:00"
+    },
+    {
+      "schema_version": "studio.repository-capability-audit.v1",
+      "repository_id": "openmontage",
+      "path": "C:\\Users\\edugu\\Downloads\\clicko-oss-evaluation\\OpenMontage",
+      "origin_url": "https://github.com/calesthio/OpenMontage.git",
+      "commit_sha": "cd9f3c1f03368be87b140af494914b8ee4e3c7a4",
+      "license_spdx": "AGPL-3.0",
+      "license_evidence": "LICENSE",
+      "purpose": "reference architecture for manifests, checkpoints, human gates and post-render inspection",
+      "manifests": [
+        "requirements.txt",
+        "setup.py"
+      ],
+      "languages_sampled": [
+        "Python",
+        "TypeScript/React",
+        "TypeScript",
+        "JavaScript"
+      ],
+      "readme_summary_unverified": "Monty the Clapper — the official mascot of OpenMontage The first open source, agentic video production system. Paste A Video &nbsp;·&nbsp; Quick Start &nbsp;·&nbsp; Try These Prompts &nbsp;·&nbsp; Pipelines &nbsp;·&nbsp; How It Works &nbsp;·&nbsp; Sponsors &nbsp;·&nbsp; Providers &nbsp;·&nbsp; Review Guide &nbsp;·&nbsp; Want to support OpenMontage? . Bloome lets multiple AI agents (Claude, ChatGPT, DeepSeek, and more) collaborate in one conversation for agentic video pipelines. It has zero setup, runs in the cloud, works on web and mobile, and lets you share a configured agent with your whole ",
+      "capability_signals": {
+        "gpu_signal": true,
+        "container_recipe": false,
+        "test_directory": true,
+        "pt_br_signal": false
+      },
+      "inputs": [
+        "provider-specific; focused audit pending"
+      ],
+      "outputs": [
+        "provider-specific; must be projected to canonical contracts"
+      ],
+      "hardware": "GPU-related dependencies detected; exact VRAM/RAM envelope requires preflight",
+      "pt_br_support": "unknown",
+      "quality": "not inferred from README; benchmark required",
+      "determinism": "unknown",
+      "observability": "partial: git provenance and manifests inventoried",
+      "risks": [
+        "machine inventory does not validate model-weight or dataset licensing",
+        "strong copyleft requires explicit legal/architecture review"
+      ],
+      "integration": "Reimplement manifest, checkpoint, decision-log and validation patterns independently; do not copy AGPL backend code without legal review.",
+      "decision": "reference-only",
+      "benchmark": "license + dependency preflight, fixed fixture, resource envelope, output quality, repeatability, failure observability and PT-BR where relevant",
+      "audit_status": "machine_inventory_complete_human_review_pending",
+      "reviewed_at": "2026-09-01T19:55:21.033870+00:00"
+    },
+    {
+      "schema_version": "studio.repository-capability-audit.v1",
+      "repository_id": "opentimelineio",
+      "path": "C:\\Users\\edugu\\Downloads\\clicko-oss-evaluation\\OpenTimelineIO",
+      "origin_url": "https://github.com/AcademySoftwareFoundation/OpenTimelineIO.git",
+      "commit_sha": "bc5fe2d78dc3f8b2a8feb7e04483d85a12e80072",
+      "license_spdx": "Apache-2.0",
+      "license_evidence": "LICENSE.txt",
+      "purpose": "provider-neutral editorial interchange",
+      "manifests": [
+        "pyproject.toml",
+        "setup.py"
+      ],
+      "languages_sampled": [
+        "Python",
+        "C++"
+      ],
+      "readme_summary_unverified": "Main web site: http://opentimeline.io/ Documentation: https://opentimelineio.readthedocs.io/ Wiki (more documentation): https://github.com/AcademySoftwareFoundation/OpenTimelineIO/wiki GitHub: https://github.com/AcademySoftwareFoundation/OpenTimelineIO To join, create an account here first: https://slack.aswf.io/ OpenTimelineIO is a mature framework widely deployed across the film and television industries. It is natively supported in most non linear editing applications, and has deep integration in game engines, digital content creation",
+      "capability_signals": {
+        "gpu_signal": false,
+        "container_recipe": false,
+        "test_directory": true,
+        "pt_br_signal": false
+      },
+      "inputs": [
+        "provider-specific; focused audit pending"
+      ],
+      "outputs": [
+        "provider-specific; must be projected to canonical contracts"
+      ],
+      "hardware": "no GPU requirement established by static inventory; reproducible preflight still required",
+      "pt_br_support": "unknown",
+      "quality": "not inferred from README; benchmark required",
+      "determinism": "unknown",
+      "observability": "partial: git provenance and manifests inventoried",
+      "risks": [
+        "machine inventory does not validate model-weight or dataset licensing"
+      ],
+      "integration": "Use behind a provider-neutral adapter with pinned version, deterministic fixtures and artifact lineage.",
+      "decision": "adopt",
+      "benchmark": "license + dependency preflight, fixed fixture, resource envelope, output quality, repeatability, failure observability and PT-BR where relevant",
+      "audit_status": "machine_inventory_complete_human_review_pending",
+      "reviewed_at": "2026-09-01T19:55:21.451959+00:00"
+    },
+    {
+      "schema_version": "studio.repository-capability-audit.v1",
+      "repository_id": "openvoice",
+      "path": "C:\\Users\\edugu\\Downloads\\clicko-oss-evaluation\\OpenVoice",
+      "origin_url": "https://github.com/myshell-ai/OpenVoice.git",
+      "commit_sha": "74a1d147b17a8c3092dd5430504bd83ef6c7eb23",
+      "license_spdx": "OTHER",
+      "license_evidence": "LICENSE",
+      "purpose": "authorized voice-clone research candidate",
+      "manifests": [
+        "requirements.txt",
+        "setup.py"
+      ],
+      "languages_sampled": [
+        "Python"
+      ],
+      "readme_summary_unverified": "As we detailed in our and , the advantages of OpenVoice are three fold: 1. Accurate Tone Color Cloning. OpenVoice can accurately clone the reference tone color and generate speech in multiple languages and accents. 2. Flexible Voice Style Control. OpenVoice enables granular control over voice styles, such as emotion and accent, as well as other style parameters including rhythm, pauses, and intonation. 3. Zero shot Cross lingual Voice Cloning. Neither of the language of the generated speech nor the language of the reference speech needs to be presented in the massive speaker multi lingual trai",
+      "capability_signals": {
+        "gpu_signal": false,
+        "container_recipe": false,
+        "test_directory": false,
+        "pt_br_signal": false
+      },
+      "inputs": [
+        "provider-specific; focused audit pending"
+      ],
+      "outputs": [
+        "provider-specific; must be projected to canonical contracts"
+      ],
+      "hardware": "no GPU requirement established by static inventory; reproducible preflight still required",
+      "pt_br_support": "unknown",
+      "quality": "not inferred from README; benchmark required",
+      "determinism": "unknown",
+      "observability": "partial: git provenance and manifests inventoried",
+      "risks": [
+        "machine inventory does not validate model-weight or dataset licensing",
+        "biometric/identity use requires explicit consent, private benchmark and deletion controls"
+      ],
+      "integration": "Keep outside the production domain until license, model assets, hardware and quality pass focused review.",
+      "decision": "reference-only",
+      "benchmark": "license + dependency preflight, fixed fixture, resource envelope, output quality, repeatability, failure observability and PT-BR where relevant",
+      "audit_status": "machine_inventory_complete_human_review_pending",
+      "reviewed_at": "2026-09-01T19:55:21.652805+00:00"
+    },
+    {
+      "schema_version": "studio.repository-capability-audit.v1",
+      "repository_id": "perth",
+      "path": "C:\\Users\\edugu\\Downloads\\clicko-oss-evaluation\\Perth",
+      "origin_url": "https://github.com/resemble-ai/Perth.git",
+      "commit_sha": "ce86c49d029f42272c1902eccb675556b9ed2330",
+      "license_spdx": "MIT",
+      "license_evidence": "LICENSE",
+      "purpose": "candidate capability whose exact role must be established from code and benchmark",
+      "manifests": [
+        "pyproject.toml"
+      ],
+      "languages_sampled": [
+        "Python"
+      ],
+      "readme_summary_unverified": "Perth is a comprehensive Python library for audio watermarking and detection. Perth enables you to embed imperceptible watermarks in audio files and later detect them, even after the audio has undergone various transformations or manipulations. The library implements multiple watermarking techniques including neural network based approaches. Multiple Watermarking Techniques : Including the Perth Net Implicit neural network approach Robust Watermarks : Watermarks can survive common audio transformations like compression, resampling, and more",
+      "capability_signals": {
+        "gpu_signal": true,
+        "container_recipe": false,
+        "test_directory": true,
+        "pt_br_signal": false
+      },
+      "inputs": [
+        "provider-specific; focused audit pending"
+      ],
+      "outputs": [
+        "provider-specific; must be projected to canonical contracts"
+      ],
+      "hardware": "GPU-related dependencies detected; exact VRAM/RAM envelope requires preflight",
+      "pt_br_support": "unknown",
+      "quality": "not inferred from README; benchmark required",
+      "determinism": "unknown",
+      "observability": "partial: git provenance and manifests inventoried",
+      "risks": [
+        "machine inventory does not validate model-weight or dataset licensing"
+      ],
+      "integration": "Keep outside the production domain until license, model assets, hardware and quality pass focused review.",
+      "decision": "reference-only",
+      "benchmark": "license + dependency preflight, fixed fixture, resource envelope, output quality, repeatability, failure observability and PT-BR where relevant",
+      "audit_status": "machine_inventory_complete_human_review_pending",
+      "reviewed_at": "2026-09-01T19:55:21.823006+00:00"
+    },
+    {
+      "schema_version": "studio.repository-capability-audit.v1",
+      "repository_id": "pyscenedetect",
+      "path": "C:\\Users\\edugu\\Downloads\\clicko-oss-evaluation\\PySceneDetect",
+      "origin_url": "https://github.com/Breakthrough/PySceneDetect.git",
+      "commit_sha": "4fc4cdbe969f347f77eea996a18cae85eaa3ce58",
+      "license_spdx": "BSD-3-Clause",
+      "license_evidence": "LICENSE",
+      "purpose": "shot-boundary candidate detection",
+      "manifests": [
+        "pyproject.toml",
+        "Dockerfile"
+      ],
+      "languages_sampled": [
+        "Python",
+        "JavaScript"
+      ],
+      "readme_summary_unverified": "Video Cut Detection and Analysis Tool Latest Release: v0.7.1 (July 21, 2026) Quickstart Example : Discord : https://discord.gg/H83HbJngk7 pip install scenedetect upgrade Requires ffmpeg/mkvmerge for video splitting support. Windows builds (MSI installer/portable ZIP) can be found on . A Docker image with all dependencies included is available as . Quick Start (Command Line) : Split input video on each fast cut using ffmpeg : scenedetect i video.mp4 split video Save some frames from each cut: scenedetect i video.mp4 save images",
+      "capability_signals": {
+        "gpu_signal": false,
+        "container_recipe": true,
+        "test_directory": true,
+        "pt_br_signal": false
+      },
+      "inputs": [
+        "provider-specific; focused audit pending"
+      ],
+      "outputs": [
+        "provider-specific; must be projected to canonical contracts"
+      ],
+      "hardware": "no GPU requirement established by static inventory; reproducible preflight still required",
+      "pt_br_support": "unknown",
+      "quality": "not inferred from README; benchmark required",
+      "determinism": "unknown",
+      "observability": "partial: git provenance and manifests inventoried",
+      "risks": [
+        "machine inventory does not validate model-weight or dataset licensing"
+      ],
+      "integration": "Use behind a provider-neutral adapter with pinned version, deterministic fixtures and artifact lineage.",
+      "decision": "adopt",
+      "benchmark": "license + dependency preflight, fixed fixture, resource envelope, output quality, repeatability, failure observability and PT-BR where relevant",
+      "audit_status": "machine_inventory_complete_human_review_pending",
+      "reviewed_at": "2026-09-01T19:55:22.158303+00:00"
+    },
+    {
+      "schema_version": "studio.repository-capability-audit.v1",
+      "repository_id": "qwen3",
+      "path": "C:\\Users\\edugu\\Downloads\\clicko-oss-evaluation\\Qwen3",
+      "origin_url": "https://github.com/QwenLM/Qwen3.git",
+      "commit_sha": "7a2f61ffc7a20d47efcd2bf97f6f2bf52729042e",
+      "license_spdx": "NOASSERTION",
+      "license_evidence": "license file not found at repository root",
+      "purpose": "language-model planning and critique candidate",
+      "manifests": [],
+      "languages_sampled": [
+        "Python",
+        "JavaScript"
+      ],
+      "readme_summary_unverified": "💜 Qwen Chat &nbsp&nbsp &nbsp&nbsp🤗 Hugging Face &nbsp&nbsp &nbsp&nbsp🤖 ModelScope &nbsp&nbsp &nbsp&nbsp 📑 Paper &nbsp&nbsp &nbsp&nbsp 📑 Blog &nbsp&nbsp ｜ &nbsp&nbsp📖 Documentation 🖥️ Demo &nbsp&nbsp &nbsp&nbsp💬 WeChat (微信) &nbsp&nbsp &nbsp&nbsp🫨 Discord &nbsp&nbsp Visit our Hugging Face or ModelScope organization (click links above), search checkpoints with names starting with Qwen3 or visit the , and you will find all you need! Enjoy! To learn more about Qwen3, feel free to read our documentation \\ \\]. Our documentation consists of the following sections:",
+      "capability_signals": {
+        "gpu_signal": true,
+        "container_recipe": false,
+        "test_directory": false,
+        "pt_br_signal": false
+      },
+      "inputs": [
+        "provider-specific; focused audit pending"
+      ],
+      "outputs": [
+        "provider-specific; must be projected to canonical contracts"
+      ],
+      "hardware": "GPU-related dependencies detected; exact VRAM/RAM envelope requires preflight",
+      "pt_br_support": "unknown",
+      "quality": "not inferred from README; benchmark required",
+      "determinism": "unknown",
+      "observability": "partial: git provenance and manifests inventoried",
+      "risks": [
+        "machine inventory does not validate model-weight or dataset licensing",
+        "root license not detected; fail closed"
+      ],
+      "integration": "Keep outside the production domain until license, model assets, hardware and quality pass focused review.",
+      "decision": "reference-only",
+      "benchmark": "license + dependency preflight, fixed fixture, resource envelope, output quality, repeatability, failure observability and PT-BR where relevant",
+      "audit_status": "machine_inventory_complete_human_review_pending",
+      "reviewed_at": "2026-09-01T19:55:22.398440+00:00"
+    },
+    {
+      "schema_version": "studio.repository-capability-audit.v1",
+      "repository_id": "qwen3-vl",
+      "path": "C:\\Users\\edugu\\Downloads\\clicko-oss-evaluation\\Qwen3-VL",
+      "origin_url": "https://github.com/QwenLM/Qwen3-VL.git",
+      "commit_sha": "96588727e44c78b25ba03ea03b8e12f7e64fd0da",
+      "license_spdx": "Apache-2.0",
+      "license_evidence": "LICENSE",
+      "purpose": "semantic visual description candidate",
+      "manifests": [],
+      "languages_sampled": [
+        "Python"
+      ],
+      "readme_summary_unverified": "💜 Qwen Chat &nbsp&nbsp &nbsp&nbsp🤗 Hugging Face &nbsp&nbsp &nbsp&nbsp🤖 ModelScope &nbsp&nbsp &nbsp&nbsp📑 Blog &nbsp&nbsp &nbsp&nbsp📚 Cookbooks &nbsp&nbsp &nbsp&nbsp📑 Paper &nbsp&nbsp 🖥️ Demo &nbsp&nbsp &nbsp&nbsp💬 WeChat (微信) &nbsp&nbsp &nbsp&nbsp🫨 Discord &nbsp&nbsp &nbsp&nbsp📑 API &nbsp&nbsp &nbsp&nbsp🖥️ PAI DSW Meet Qwen3 VL — the most powerful vision language model in the Qwen series to date. This generation delivers comprehensive upgrades across the board: superior text understanding & generation, deeper visual perception & reasoning, extended context length, enhanced spatial and video dy",
+      "capability_signals": {
+        "gpu_signal": true,
+        "container_recipe": false,
+        "test_directory": false,
+        "pt_br_signal": false
+      },
+      "inputs": [
+        "provider-specific; focused audit pending"
+      ],
+      "outputs": [
+        "provider-specific; must be projected to canonical contracts"
+      ],
+      "hardware": "GPU-related dependencies detected; exact VRAM/RAM envelope requires preflight",
+      "pt_br_support": "unknown",
+      "quality": "not inferred from README; benchmark required",
+      "determinism": "unknown",
+      "observability": "partial: git provenance and manifests inventoried",
+      "risks": [
+        "machine inventory does not validate model-weight or dataset licensing"
+      ],
+      "integration": "Evaluate behind an isolated worker/adapter; persist only canonical Clicko contracts.",
+      "decision": "adapt",
+      "benchmark": "license + dependency preflight, fixed fixture, resource envelope, output quality, repeatability, failure observability and PT-BR where relevant",
+      "audit_status": "machine_inventory_complete_human_review_pending",
+      "reviewed_at": "2026-09-01T19:55:22.736896+00:00"
+    },
+    {
+      "schema_version": "studio.repository-capability-audit.v1",
+      "repository_id": "raft",
+      "path": "C:\\Users\\edugu\\Downloads\\clicko-oss-evaluation\\RAFT",
+      "origin_url": "https://github.com/princeton-vl/RAFT.git",
+      "commit_sha": "2888e15a51fa41140771d3f498ed8023cff098d1",
+      "license_spdx": "BSD-3-Clause",
+      "license_evidence": "LICENSE",
+      "purpose": "optical flow candidate",
+      "manifests": [],
+      "languages_sampled": [
+        "Python",
+        "C++"
+      ],
+      "readme_summary_unverified": "This repository contains the source code for our paper: Zachary Teed and Jia Deng The code has been tested with PyTorch 1.6 and Cuda 10.1. conda create name raft conda install pytorch=1.6.0 torchvision=0.7.0 cudatoolkit=10.1 matplotlib tensorboard scipy opencv c pytorch Pretrained models can be downloaded by running ./download models.sh You can demo a trained model on a sequence of frames python demo.py model=models/raft things.pth path=demo frames To evaluate/train RAFT, you will need to download the required datasets.",
+      "capability_signals": {
+        "gpu_signal": true,
+        "container_recipe": false,
+        "test_directory": false,
+        "pt_br_signal": false
+      },
+      "inputs": [
+        "provider-specific; focused audit pending"
+      ],
+      "outputs": [
+        "provider-specific; must be projected to canonical contracts"
+      ],
+      "hardware": "GPU-related dependencies detected; exact VRAM/RAM envelope requires preflight",
+      "pt_br_support": "unknown",
+      "quality": "not inferred from README; benchmark required",
+      "determinism": "unknown",
+      "observability": "partial: git provenance and manifests inventoried",
+      "risks": [
+        "machine inventory does not validate model-weight or dataset licensing"
+      ],
+      "integration": "Evaluate behind an isolated worker/adapter; persist only canonical Clicko contracts.",
+      "decision": "adapt",
+      "benchmark": "license + dependency preflight, fixed fixture, resource envelope, output quality, repeatability, failure observability and PT-BR where relevant",
+      "audit_status": "machine_inventory_complete_human_review_pending",
+      "reviewed_at": "2026-09-01T19:55:22.951082+00:00"
+    },
+    {
+      "schema_version": "studio.repository-capability-audit.v1",
+      "repository_id": "react-timeline-editor",
+      "path": "C:\\Users\\edugu\\Downloads\\clicko-oss-evaluation\\react-timeline-editor",
+      "origin_url": "https://github.com/xzdarcy/react-timeline-editor.git",
+      "commit_sha": "4148f4a837dd767ea66807560d05bc7b65c7e578",
+      "license_spdx": "MIT",
+      "license_evidence": "LICENSE",
+      "purpose": "timeline interaction component candidate",
+      "manifests": [
+        "package.json"
+      ],
+      "languages_sampled": [
+        "TypeScript/React",
+        "TypeScript",
+        "JavaScript"
+      ],
+      "readme_summary_unverified": "React Timeline Editor is a react component used to quickly build a timeline animation editor. npm install @xzdarcy/react timeline editor import { Timeline, TimelineEffect, TimelineRow } from '@xzdarcy/react timeline editor'; import React from 'react'; const mockData: TimelineRow[] = [{ effectId: \"effect0\", effectId: \"effect1\", const mockEffect: Record = { const TimelineEditor = () = { editorData={mockData} effects={mockEffect} Checkout the for a demonstration of some basic and advanced features.",
+      "capability_signals": {
+        "gpu_signal": false,
+        "container_recipe": false,
+        "test_directory": false,
+        "pt_br_signal": false
+      },
+      "inputs": [
+        "provider-specific; focused audit pending"
+      ],
+      "outputs": [
+        "provider-specific; must be projected to canonical contracts"
+      ],
+      "hardware": "no GPU requirement established by static inventory; reproducible preflight still required",
+      "pt_br_support": "unknown",
+      "quality": "not inferred from README; benchmark required",
+      "determinism": "unknown",
+      "observability": "partial: git provenance and manifests inventoried",
+      "risks": [
+        "machine inventory does not validate model-weight or dataset licensing"
+      ],
+      "integration": "Evaluate behind an isolated worker/adapter; persist only canonical Clicko contracts.",
+      "decision": "adapt",
+      "benchmark": "license + dependency preflight, fixed fixture, resource envelope, output quality, repeatability, failure observability and PT-BR where relevant",
+      "audit_status": "machine_inventory_complete_human_review_pending",
+      "reviewed_at": "2026-09-01T19:55:23.323815+00:00"
+    },
+    {
+      "schema_version": "studio.repository-capability-audit.v1",
+      "repository_id": "remotion",
+      "path": "C:\\Users\\edugu\\Downloads\\clicko-oss-evaluation\\remotion",
+      "origin_url": "https://github.com/remotion-dev/remotion.git",
+      "commit_sha": "e624eb770082630dd596fa6783ee1be96db64bba",
+      "license_spdx": "OTHER",
+      "license_evidence": "LICENSE.md",
+      "purpose": "React-based deterministic video composition and rendering",
+      "manifests": [
+        "package.json"
+      ],
+      "languages_sampled": [
+        "TypeScript",
+        "TypeScript/React",
+        "JavaScript",
+        "Rust"
+      ],
+      "readme_summary_unverified": "Video tools for the agent era. Make videos agentically : Turn your idea into a video using your coding agent. Make videos interactively : Edit and animate using drag and drop. Make videos programmatically : Connect to data, and manage complexity with code. React Code is the source of truth. Switch your workflow at any point. Design systems : Create a library of animated assets for your organization. Batch rendering : Render millions of videos on your own infrastructure. Applications : Publish a simple tool or a complex video editor.",
+      "capability_signals": {
+        "gpu_signal": false,
+        "container_recipe": false,
+        "test_directory": false,
+        "pt_br_signal": false
+      },
+      "inputs": [
+        "provider-specific; focused audit pending"
+      ],
+      "outputs": [
+        "provider-specific; must be projected to canonical contracts"
+      ],
+      "hardware": "no GPU requirement established by static inventory; reproducible preflight still required",
+      "pt_br_support": "unknown",
+      "quality": "not inferred from README; benchmark required",
+      "determinism": "unknown",
+      "observability": "partial: git provenance and manifests inventoried",
+      "risks": [
+        "machine inventory does not validate model-weight or dataset licensing"
+      ],
+      "integration": "Use behind a provider-neutral adapter with pinned version, deterministic fixtures and artifact lineage.",
+      "decision": "adopt",
+      "benchmark": "license + dependency preflight, fixed fixture, resource envelope, output quality, repeatability, failure observability and PT-BR where relevant",
+      "audit_status": "machine_inventory_complete_human_review_pending",
+      "reviewed_at": "2026-09-01T19:55:25.592782+00:00"
+    },
+    {
+      "schema_version": "studio.repository-capability-audit.v1",
+      "repository_id": "sam2",
+      "path": "C:\\Users\\edugu\\Downloads\\clicko-oss-evaluation\\sam2",
+      "origin_url": "https://github.com/facebookresearch/sam2.git",
+      "commit_sha": "2b90b9f5ceec907a1c18123530e92e794ad901a4",
+      "license_spdx": "Apache-2.0",
+      "license_evidence": "LICENSE",
+      "purpose": "segmentation and mask continuity candidate",
+      "manifests": [
+        "pyproject.toml",
+        "setup.py"
+      ],
+      "languages_sampled": [
+        "TypeScript",
+        "TypeScript/React",
+        "Python",
+        "JavaScript"
+      ],
+      "readme_summary_unverified": "SAM 2: Segment Anything in Images and Videos , , , , , , , , , , , , , , , , , Segment Anything Model 2 (SAM 2) is a foundation model towards solving promptable visual segmentation in images and videos. We extend SAM to video by considering images as a video with a single frame. The model design is a simple transformer architecture with streaming memory for real time video processing. We build a model in the loop data engine, which improves model and data via user interaction, to collect , the largest video segmentation dataset to date. SAM 2 trained on our data provides strong performance acr",
+      "capability_signals": {
+        "gpu_signal": true,
+        "container_recipe": false,
+        "test_directory": false,
+        "pt_br_signal": false
+      },
+      "inputs": [
+        "provider-specific; focused audit pending"
+      ],
+      "outputs": [
+        "provider-specific; must be projected to canonical contracts"
+      ],
+      "hardware": "GPU-related dependencies detected; exact VRAM/RAM envelope requires preflight",
+      "pt_br_support": "unknown",
+      "quality": "not inferred from README; benchmark required",
+      "determinism": "unknown",
+      "observability": "partial: git provenance and manifests inventoried",
+      "risks": [
+        "machine inventory does not validate model-weight or dataset licensing"
+      ],
+      "integration": "Evaluate behind an isolated worker/adapter; persist only canonical Clicko contracts.",
+      "decision": "adapt",
+      "benchmark": "license + dependency preflight, fixed fixture, resource envelope, output quality, repeatability, failure observability and PT-BR where relevant",
+      "audit_status": "machine_inventory_complete_human_review_pending",
+      "reviewed_at": "2026-09-01T19:55:26.005704+00:00"
+    },
+    {
+      "schema_version": "studio.repository-capability-audit.v1",
+      "repository_id": "supervision",
+      "path": "C:\\Users\\edugu\\Downloads\\res\\.candidate-build\\sources\\supervision",
+      "origin_url": "https://github.com/roboflow/supervision.git",
+      "commit_sha": "5f25aa0ee6dc22891415b6e3d2e1689ce7a32952",
+      "license_spdx": "MIT",
+      "license_evidence": "LICENSE.md",
+      "purpose": "provider-isolated organization of detections, tracks, zones and annotations",
+      "manifests": [
+        "pyproject.toml"
+      ],
+      "languages_sampled": [
+        "Python",
+        "JavaScript"
+      ],
+      "readme_summary_unverified": "src=\"https://media.roboflow.com/open source/supervision/rf supervision banner.png?updatedAt=1678995927529\" We are your essential toolkit for computer vision. From data loading to real time zone counting, we provide the building blocks so you can focus on building applications around your models. 🤝 Pip install the supervision package in a environment. pip install supervision Read more about conda, mamba, and installing from source in our . Supervision was designed to be model agnostic. Just plug in any classification, detection, or segmentation model. For your convenience, we have created for t",
+      "capability_signals": {
+        "gpu_signal": false,
+        "container_recipe": false,
+        "test_directory": true,
+        "pt_br_signal": false
+      },
+      "inputs": [
+        "provider-specific; focused audit pending"
+      ],
+      "outputs": [
+        "provider-specific; must be projected to canonical contracts"
+      ],
+      "hardware": "no GPU requirement established by static inventory; reproducible preflight still required",
+      "pt_br_support": "unknown",
+      "quality": "not inferred from README; benchmark required",
+      "determinism": "unknown",
+      "observability": "partial: git provenance and manifests inventoried",
+      "risks": [
+        "machine inventory does not validate model-weight or dataset licensing"
+      ],
+      "integration": "Evaluate behind an isolated worker/adapter; persist only canonical Clicko contracts.",
+      "decision": "adapt",
+      "benchmark": "license + dependency preflight, fixed fixture, resource envelope, output quality, repeatability, failure observability and PT-BR where relevant",
+      "audit_status": "machine_inventory_complete_human_review_pending",
+      "reviewed_at": "2026-09-01T19:55:26.557656+00:00"
+    },
+    {
+      "schema_version": "studio.repository-capability-audit.v1",
+      "repository_id": "tapnet",
+      "path": "C:\\Users\\edugu\\Downloads\\clicko-oss-evaluation\\tapnet",
+      "origin_url": "https://github.com/google-deepmind/tapnet.git",
+      "commit_sha": "c2cbab81cc06092b5f05bfe2da7bfec54e2079c9",
+      "license_spdx": "Apache-2.0",
+      "license_evidence": "LICENSE",
+      "purpose": "point tracking candidate",
+      "manifests": [
+        "pyproject.toml",
+        "requirements.txt"
+      ],
+      "languages_sampled": [
+        "Python"
+      ],
+      "readme_summary_unverified": "Tracking Any Point (TAP) https://github.com/google deepmind/tapnet/assets/4534987/9f66b81a 7efb 48e7 a59c f5781c35bebc Welcome to the official Google Deepmind repository for Tracking Any Point (TAP), home of the TAP Vid and TAPVid 3D Datasets, our top performing TAPIR model, and our RoboTAP extension. is a benchmark for models that perform this task, with a collection of ground truth points for both real and synthetic videos. is a two stage algorithm which employs two stages: 1) a matching stage, which independently locates a suitable candidate point match for the query point on every other fr",
+      "capability_signals": {
+        "gpu_signal": true,
+        "container_recipe": false,
+        "test_directory": false,
+        "pt_br_signal": false
+      },
+      "inputs": [
+        "provider-specific; focused audit pending"
+      ],
+      "outputs": [
+        "provider-specific; must be projected to canonical contracts"
+      ],
+      "hardware": "GPU-related dependencies detected; exact VRAM/RAM envelope requires preflight",
+      "pt_br_support": "unknown",
+      "quality": "not inferred from README; benchmark required",
+      "determinism": "unknown",
+      "observability": "partial: git provenance and manifests inventoried",
+      "risks": [
+        "machine inventory does not validate model-weight or dataset licensing"
+      ],
+      "integration": "Evaluate behind an isolated worker/adapter; persist only canonical Clicko contracts.",
+      "decision": "adapt",
+      "benchmark": "license + dependency preflight, fixed fixture, resource envelope, output quality, repeatability, failure observability and PT-BR where relevant",
+      "audit_status": "machine_inventory_complete_human_review_pending",
+      "reviewed_at": "2026-09-01T19:55:26.928115+00:00"
+    },
+    {
+      "schema_version": "studio.repository-capability-audit.v1",
+      "repository_id": "vane",
+      "path": "C:\\Users\\edugu\\Downloads\\clicko-oss-evaluation\\Vane",
+      "origin_url": "https://github.com/ItzCrazyKns/Vane.git",
+      "commit_sha": "7dc5d088f7262fbc5e39037f84940a8a2193c5fb",
+      "license_spdx": "MIT",
+      "license_evidence": "LICENSE",
+      "purpose": "candidate capability whose exact role must be established from code and benchmark",
+      "manifests": [
+        "package.json",
+        "Dockerfile"
+      ],
+      "languages_sampled": [
+        "TypeScript",
+        "TypeScript/React",
+        "JavaScript"
+      ],
+      "readme_summary_unverified": "Vane is a privacy focused AI answering engine that runs entirely on your own hardware. It combines knowledge from the vast internet with support for local LLMs (Ollama) and cloud providers (OpenAI, Claude, Groq), delivering accurate answers with cited sources while keeping your searches completely private. Want to know more about its architecture and how it works? You can read it . 🤖 Support for all major AI providers Use local LLMs through Ollama or connect to OpenAI, Anthropic Claude, Google Gemini, Groq, and more. Mix and match models based on your needs.",
+      "capability_signals": {
+        "gpu_signal": false,
+        "container_recipe": true,
+        "test_directory": false,
+        "pt_br_signal": false
+      },
+      "inputs": [
+        "provider-specific; focused audit pending"
+      ],
+      "outputs": [
+        "provider-specific; must be projected to canonical contracts"
+      ],
+      "hardware": "no GPU requirement established by static inventory; reproducible preflight still required",
+      "pt_br_support": "unknown",
+      "quality": "not inferred from README; benchmark required",
+      "determinism": "unknown",
+      "observability": "partial: git provenance and manifests inventoried",
+      "risks": [
+        "machine inventory does not validate model-weight or dataset licensing"
+      ],
+      "integration": "Keep outside the production domain until license, model assets, hardware and quality pass focused review.",
+      "decision": "reference-only",
+      "benchmark": "license + dependency preflight, fixed fixture, resource envelope, output quality, repeatability, failure observability and PT-BR where relevant",
+      "audit_status": "machine_inventory_complete_human_review_pending",
+      "reviewed_at": "2026-09-01T19:55:27.284608+00:00"
+    },
+    {
+      "schema_version": "studio.repository-capability-audit.v1",
+      "repository_id": "vjepa2",
+      "path": "C:\\Users\\edugu\\Downloads\\clicko-oss-evaluation\\vjepa2",
+      "origin_url": "https://github.com/facebookresearch/vjepa2.git",
+      "commit_sha": "204698b45b3712590f06245fbfba32d3be539812",
+      "license_spdx": "MIT",
+      "license_evidence": "LICENSE",
+      "purpose": "temporal representation research candidate",
+      "manifests": [
+        "pyproject.toml",
+        "requirements.txt",
+        "setup.py"
+      ],
+      "languages_sampled": [
+        "Python"
+      ],
+      "readme_summary_unverified": "🆕 [2026 03 16]: :fire: V JEPA 2.1 is released :fire: A new familly of models trained with a novel recipe that learns high quality and temporolly consistent dense features !!! [2025 06 25]: V JEPA 2 is released. ] V JEPA 2: Self Supervised Video Models Enable Understanding, Prediction and Planning Mahmoud Assran∗, Adrien Bardes∗, David Fan∗, Quentin Garrido∗, Russell Howes∗, Mojtaba Komeili∗, Matthew Muckley∗, Ammar Rizvi∗, Claire Roberts∗, Koustuv Sinha∗, Artem Zholus , Sergio Arnaud , Abha Gejji , Ada Martin , Francois Robert Hogan , Daniel Dugas , Piotr",
+      "capability_signals": {
+        "gpu_signal": true,
+        "container_recipe": false,
+        "test_directory": true,
+        "pt_br_signal": false
+      },
+      "inputs": [
+        "provider-specific; focused audit pending"
+      ],
+      "outputs": [
+        "provider-specific; must be projected to canonical contracts"
+      ],
+      "hardware": "GPU-related dependencies detected; exact VRAM/RAM envelope requires preflight",
+      "pt_br_support": "unknown",
+      "quality": "not inferred from README; benchmark required",
+      "determinism": "unknown",
+      "observability": "partial: git provenance and manifests inventoried",
+      "risks": [
+        "machine inventory does not validate model-weight or dataset licensing"
+      ],
+      "integration": "Evaluate behind an isolated worker/adapter; persist only canonical Clicko contracts.",
+      "decision": "adapt",
+      "benchmark": "license + dependency preflight, fixed fixture, resource envelope, output quality, repeatability, failure observability and PT-BR where relevant",
+      "audit_status": "machine_inventory_complete_human_review_pending",
+      "reviewed_at": "2026-09-01T19:55:27.632687+00:00"
+    },
+    {
+      "schema_version": "studio.repository-capability-audit.v1",
+      "repository_id": "wan2.2",
+      "path": "C:\\Users\\edugu\\Downloads\\clicko-oss-evaluation\\Wan2.2",
+      "origin_url": "https://github.com/Wan-Video/Wan2.2.git",
+      "commit_sha": "42bf4cfaa384bc21833865abc2f9e6c0e67233dc",
+      "license_spdx": "Apache-2.0",
+      "license_evidence": "LICENSE.txt",
+      "purpose": "generative video research candidate",
+      "manifests": [
+        "pyproject.toml",
+        "requirements.txt"
+      ],
+      "languages_sampled": [
+        "Python"
+      ],
+      "readme_summary_unverified": "💜 Wan &nbsp&nbsp ｜ &nbsp&nbsp 🖥️ GitHub &nbsp&nbsp &nbsp&nbsp🤗 Hugging Face &nbsp&nbsp &nbsp&nbsp🤖 ModelScope &nbsp&nbsp &nbsp&nbsp 📑 Paper &nbsp&nbsp &nbsp&nbsp 📑 Blog &nbsp&nbsp &nbsp&nbsp 💬 Discord &nbsp&nbsp 📕 使用指南(中文) &nbsp&nbsp &nbsp&nbsp 📘 User Guide(English) &nbsp&nbsp &nbsp&nbsp💬 WeChat(微信) &nbsp&nbsp We are excited to introduce Wan2.2 , a major upgrade to our foundational video models. With Wan2.2 , we have focused on incorporating the following innovations: 👍 Effective MoE Architecture : Wan2.2 introduces a Mixture of Experts (MoE) architecture into video diffusion models. By separa",
+      "capability_signals": {
+        "gpu_signal": true,
+        "container_recipe": false,
+        "test_directory": true,
+        "pt_br_signal": false
+      },
+      "inputs": [
+        "provider-specific; focused audit pending"
+      ],
+      "outputs": [
+        "provider-specific; must be projected to canonical contracts"
+      ],
+      "hardware": "GPU-related dependencies detected; exact VRAM/RAM envelope requires preflight",
+      "pt_br_support": "unknown",
+      "quality": "not inferred from README; benchmark required",
+      "determinism": "unknown",
+      "observability": "partial: git provenance and manifests inventoried",
+      "risks": [
+        "machine inventory does not validate model-weight or dataset licensing"
+      ],
+      "integration": "Keep outside the production domain until license, model assets, hardware and quality pass focused review.",
+      "decision": "reference-only",
+      "benchmark": "license + dependency preflight, fixed fixture, resource envelope, output quality, repeatability, failure observability and PT-BR where relevant",
+      "audit_status": "machine_inventory_complete_human_review_pending",
+      "reviewed_at": "2026-09-01T19:55:27.922811+00:00"
+    },
+    {
+      "schema_version": "studio.repository-capability-audit.v1",
+      "repository_id": "wavesurfer.js",
+      "path": "C:\\Users\\edugu\\Downloads\\clicko-oss-evaluation\\wavesurfer.js",
+      "origin_url": "https://github.com/katspaugh/wavesurfer.js.git",
+      "commit_sha": "666ba74d4d1138137b235b5aeeac2cb383b7e022",
+      "license_spdx": "BSD-3-Clause",
+      "license_evidence": "LICENSE",
+      "purpose": "waveform visualization and audio navigation",
+      "manifests": [
+        "package.json"
+      ],
+      "languages_sampled": [
+        "TypeScript",
+        "JavaScript"
+      ],
+      "readme_summary_unverified": "Wavesurfer.js is an interactive waveform rendering and audio playback library, perfect for web applications. It leverages modern web technologies to provide a robust and visually engaging audio experience. Gold Sponsor 💖 – Professional Subtitle Editor Install and import the package: npm install save wavesurfer.js import WaveSurfer from 'wavesurfer.js' Alternatively, insert a UMD script tag which exports the library as a global WaveSurfer variable: Create a wavesurfer instance and pass various : const wavesurfer = WaveSurfer.create({",
+      "capability_signals": {
+        "gpu_signal": false,
+        "container_recipe": false,
+        "test_directory": false,
+        "pt_br_signal": false
+      },
+      "inputs": [
+        "provider-specific; focused audit pending"
+      ],
+      "outputs": [
+        "provider-specific; must be projected to canonical contracts"
+      ],
+      "hardware": "no GPU requirement established by static inventory; reproducible preflight still required",
+      "pt_br_support": "unknown",
+      "quality": "not inferred from README; benchmark required",
+      "determinism": "unknown",
+      "observability": "partial: git provenance and manifests inventoried",
+      "risks": [
+        "machine inventory does not validate model-weight or dataset licensing"
+      ],
+      "integration": "Evaluate behind an isolated worker/adapter; persist only canonical Clicko contracts.",
+      "decision": "adapt",
+      "benchmark": "license + dependency preflight, fixed fixture, resource envelope, output quality, repeatability, failure observability and PT-BR where relevant",
+      "audit_status": "machine_inventory_complete_human_review_pending",
+      "reviewed_at": "2026-09-01T19:55:28.190736+00:00"
+    },
+    {
+      "schema_version": "studio.repository-capability-audit.v1",
+      "repository_id": "whisperx",
+      "path": "C:\\Users\\edugu\\Downloads\\clicko-oss-evaluation\\whisperX",
+      "origin_url": "https://github.com/m-bain/whisperX.git",
+      "commit_sha": "2cfd7b7c5c7bba144954364db747319b50e8232b",
+      "license_spdx": "BSD-3-Clause",
+      "license_evidence": "LICENSE",
+      "purpose": "speech transcription and word alignment candidate",
+      "manifests": [
+        "pyproject.toml"
+      ],
+      "languages_sampled": [
+        "Python"
+      ],
+      "readme_summary_unverified": "Recall.ai Meeting Transcription API If you’re looking for a transcription API for meetings, consider checking out , an API that works with Zoom, Google Meet, Microsoft Teams, and more. Recall.ai diarizes by pulling the speaker data and separate audio streams from the meeting platforms, which means 100% accurate speaker diarization with actual speaker names. <img src=\"https://img.shields.io/github/stars/m bain/whisperX.svg?colorA=orange&colorB=orange&logo=github\" <img src=\"https://img.shields.io/github/issues/m bain/whisperx.svg\"",
+      "capability_signals": {
+        "gpu_signal": true,
+        "container_recipe": false,
+        "test_directory": true,
+        "pt_br_signal": false
+      },
+      "inputs": [
+        "provider-specific; focused audit pending"
+      ],
+      "outputs": [
+        "provider-specific; must be projected to canonical contracts"
+      ],
+      "hardware": "GPU-related dependencies detected; exact VRAM/RAM envelope requires preflight",
+      "pt_br_support": "unknown",
+      "quality": "not inferred from README; benchmark required",
+      "determinism": "unknown",
+      "observability": "partial: git provenance and manifests inventoried",
+      "risks": [
+        "machine inventory does not validate model-weight or dataset licensing"
+      ],
+      "integration": "Evaluate behind an isolated worker/adapter; persist only canonical Clicko contracts.",
+      "decision": "adapt",
+      "benchmark": "license + dependency preflight, fixed fixture, resource envelope, output quality, repeatability, failure observability and PT-BR where relevant",
+      "audit_status": "machine_inventory_complete_human_review_pending",
+      "reviewed_at": "2026-09-01T19:55:28.365712+00:00"
+    }
+  ]
+}

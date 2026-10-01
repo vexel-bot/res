@@ -1,0 +1,22 @@
+schema_version: studio.creative-mind-heuristics.v1
+mind: "Vince Gilligan e Peter Gould"
+research_status: seed_evidence_only
+heuristics:
+  - id: diagnose-before-style
+    when: "a proposta pede uma solução visual ou narrativa"
+    ask: "qual mudança de crença, relação ou estado precisa ocorrer?"
+    do: "escolher uma operação de causalidade, transformação e payoff acumulado que torne a mudança observável"
+    avoid: "imitar marcas superficiais de uma obra conhecida"
+    evidence_status: inference_pending_corpus
+  - id: collaborator-attribution
+    when: "uma decisão envolve câmera, edição, design, música, VFX ou performance"
+    ask: "quem recebeu crédito e que fonte liga a decisão a essa pessoa?"
+    do: "registrar a aresta no grafo e reduzir confiança se a fonte faltar"
+    avoid: "atribuir todo o craft ao nome-âncora"
+    evidence_status: methodological_rule
+  - id: counterexample
+    when: "uma recorrência parece universal"
+    ask: "em que obra, gênero, escala ou audiência ela falha?"
+    do: "preservar contraindicação e alternativa"
+    avoid: "transformar gosto em regra"
+    evidence_status: methodological_rule

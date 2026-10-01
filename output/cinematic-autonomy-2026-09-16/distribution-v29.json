@@ -1,0 +1,1565 @@
+{
+  "recordedAt": "2026-09-18T18:57:43.507619+00:00",
+  "pilot": "distribution-v29",
+  "run": {
+    "schemaVersion": "studio.editorial-production.v1",
+    "id": "eda1b3e5-24a1-5116-9cd1-87fb0fbbba8a",
+    "documentId": "e5400ad8-183a-43b2-a932-033e86f99f9f",
+    "documentRevision": 1,
+    "sourceChecksums": {},
+    "request": {
+      "schemaVersion": "studio.editorial-production-request.v1",
+      "direction": {
+        "materialNeeds": [],
+        "fontAssetId": null,
+        "expectedDocumentRevision": 1,
+        "intent": {
+          "objective": "Explicar visualmente como distribuição conecta uma ideia às pessoas, mostrando adaptação de formato e caminho. Preservar a ressalva de que alcance não garante atenção.",
+          "format": "general",
+          "script": "Uma ideia só encontra pessoas quando circula. Distribuir é adaptar a mensagem a cada formato e colocá-la nos caminhos do público. Isso amplia o alcance, mas não garante atenção.",
+          "lockedFacts": [
+            "Isso amplia o alcance, mas não garante atenção."
+          ],
+          "pacing": "balanced",
+          "emphasis": "demonstration",
+          "reducedMotion": false,
+          "preserveMessage": true
+        },
+        "beats": [],
+        "requiredTechniques": [],
+        "clipOrder": [],
+        "referenceTechniqueIds": []
+      },
+      "durationSeconds": 18,
+      "mode": "mixed_montage",
+      "evaluationScope": "visual_only",
+      "requireVisualBlueprint": true,
+      "useSemanticCompositions": true,
+      "demonstrationPolicy": "required",
+      "materialSemanticsPolicy": "contextual_video_v1",
+      "cinematicDirectionPolicy": "mixed_motion_v1",
+      "generatedVideoPolicy": "disabled",
+      "generatedVideo": null,
+      "hybridPolicy": null,
+      "narrationAssetId": null,
+      "stockVoiceProvider": "kokoro-82m-stock",
+      "stockVoiceKey": "pf_dora"
+    },
+    "requestDigest": "1d0f9070f7c4f402b18e9fddcf782f09ce01d69fd2f71a4945076d67cce01d47",
+    "stage": "composition",
+    "status": "blocked",
+    "jobs": {
+      "direction": "6c515baa-ae03-4bda-96d1-b05e3c31a1ec",
+      "composition": "7f883cdd-4f3a-4edc-8dac-c0fa2874fa37"
+    },
+    "artifacts": {
+      "direction": {
+        "schemaVersion": "studio.editorial-direction.v1",
+        "concepts": [
+          {
+            "id": "concept_1_circulation_path_metaphor",
+            "premise": "Visualizar a distribuição como circulação dinâmica de uma ideia, enfatizando o caminho e adaptação da mensagem em diferentes formatos para o público.",
+            "visualMechanism": "Animação de um símbolo de ideia (como uma lâmpada estilizada) circulando por diversos ambientes e formatos de mídia (cartaz, smartphone, outdoor), com linhas e setas que indicam trajetos e mudanças de formato. Uso de transições fluidas entre o símbolo da ideia e seus formatos adaptados, junto a caminhos animados que remetem a fluxos e conectividade. Inclusão de um toque final visual que destaca a ressalva sobre alcance e atenção.",
+            "clarity": "Média-alta: A metáfora do percurso da ideia através de caminhos e formatos mostra bem a conexão, porém o entendimento pleno da ressalva pode requerer uma atenção dedicada; os caminhos e adaptações são visuais e explícitos.",
+            "specificity": "Alta: Cada trecho detalha formatos específicos e o trajeto da ideia, diferenciando claramente os passos da distribuição e adaptação, formando um processo visualmente coerente e estrutural.",
+            "continuity": "Boa continuidade na passagem dos formatos e trajetos conectados por linhas animadas, facilitando a percepção da progressão da ideia até o público.",
+            "identityFit": "Adequado para o público de criadores e equipes pequenas, com foco editorial claro, contrastes consistentes, tipografia legível e elementos humanos discretos que reforçam a acessibilidade e aplicação prática.",
+            "feasibility": "Viável com recursos de filmagem contextual (vídeos de pessoas recebendo mensagens em variados formatos) e composição gráfica para os caminhos e transformações. Requer licença de vídeos ativos e ferramentas para animações fluídas de percurso e transformação visual."
+          },
+          {
+            "id": "concept_2_split_screen_adaptation_and_reach",
+            "premise": "Mostrar a distribuição dividindo a tela para contrastar o formato da ideia e sua adaptação com o alcance gerado, destacando que maior alcance não garante atenção.",
+            "visualMechanism": "Tela dividida em sequência: à esquerda, a ideia original passa visualmente por uma transformação em vários formatos (exemplos visuais: tela de smartphone, folheto, TV), com a mensagem acompanhando adaptação em tempo real; à direita, mapas de calor, gráficos ou crowdshots representam a ampliação do alcance, porém com pausas ou indicativos visuais que a atenção não é garantida (ex: olhos desviando, distrações). Integração tipográfica reforça o texto da ressalva no final.",
+            "clarity": "Alta: O contraste lado a lado entre adaptação e alcance deixa claro o processo e os seus limites, enfatizando por meio visual e gráfico a ressalva sobre atenção.",
+            "specificity": "Média-alta: mostra as fases distintas (adaptação, alcance e atenção) com imagens bem definidas, que facilitam a comparação e assimilação dos conceitos na tela dividida.",
+            "continuity": "Continuidade feita por transições sincronizadas entre os dois lados e pela narrativa paralela; porém o corte entre estados e foco duplo no split pode exigir cuidado para não dispersar a atenção do espectador.",
+            "identityFit": "Encaixa-se na proposta para criadores pequenos; o formato dividido e a ênfase tipográfica ajustam-se a edição clara e contrastada, apoiada em gráficos e clips humanos reais.",
+            "feasibility": "Praticável com acessos a vídeos licenciados mostrando pessoas consumindo formatos e mapas visuais, requer pós-produção gráfica e sincronização. Menor complexidade em animação de percurso, maior em sincronização e composição."
+          }
+        ],
+        "selectedConceptId": "concept_1_circulation_path_metaphor",
+        "selectionReason": "O conceito 1 oferece maior especificidade e continuidade para explicar de maneira integrada como a distribuição circula a ideia e adapta sua mensagem, alinhando-se melhor à identidade desejada e aproveitando a combinação de filmagem e gráficos animados. Apesar de a ressalva ser um pouco mais sutil, sua integração no fluxo visual promove melhor assimilação do processo completo. O conceito 2 tem clareza alta, mas o formato dividido e a necessidade de equilibrar dois focos visuais paralelos podem dispersar a concentração, reduzindo a continuidade e impacto.",
+        "beats": [
+          {
+            "id": "beat_1_intro_circulation",
+            "sourceExcerpt": "Uma ideia só encontra pessoas quando circula.",
+            "narration": "Uma ideia só encontra pessoas quando circula.",
+            "initialState": "Ideia representada como um ícone estático em centro escuro e vazio, sem conexão visual com o público.",
+            "action": "A ideia começa a se movimentar de forma fluida, ao centro surgem caminhos animados que conectam a ideia a diferentes perfis de pessoas e a múltiplos dispositivos.",
+            "consequence": "A percepção se amplia para mostrar que a ideia circula e conecta a mensagem às pessoas, desencadeando o conceito de circulação.",
+            "focus": "O percurso e expansão da ideia como um símbolo ativo que se move e conecta com o público através de caminhos visuais.",
+            "knowledgeGained": "Entender que para uma ideia ser encontrada pelas pessoas, é necessário que ela circule, ou seja, esteja em movimento e conexão.",
+            "transitionReason": "Avançar para detalhar como essa circulação acontece na prática, focando em adaptação da mensagem em diferentes formatos visualizados.",
+            "materialQueries": [
+              "vídeo essencial de pessoa interagindo com vários dispositivos simultaneamente, demonstrando circulação da mensagem (licenciado, contexto humano)"
+            ],
+            "techniqueIds": [
+              "res-composition-demonstrative_interface",
+              "cinema-attention-transfer-v1"
+            ],
+            "holdReason": null,
+            "visualBlueprint": {
+              "schemaVersion": "studio.visual-blueprint.v1",
+              "message": "Mostrar a ideia simbólica como objeto dinâmico e seus caminhos visuais que ligam ao público, evidenciando circulação.",
+              "evidence": "Símbolo animado da ideia e trajetos crescentes conectando ao público em diferentes ambientes com pessoas.",
+              "representation": "mixed",
+              "rejectedAlternatives": [
+                "Usar só animação gráfica sem presença humana",
+                "Não mostrar caminhos visuais, só texto"
+              ],
+              "primaryMaterialQuery": "pessoa usando vários dispositivos distintos em rápido sequência",
+              "supportingMaterialQueries": [
+                "clipes de falas e reações humanas variadas que reforcem sentimento de conexão"
+              ],
+              "regionOfInterest": "símbolo central da ideia e trajetos animados ao redor",
+              "hierarchy": [
+                "ideia simbolizada",
+                "caminhos",
+                "pessoas",
+                "dispositivos"
+              ],
+              "completionCriteria": [
+                "A ideia inicia imóvel e passa a circular conectando o público",
+                "Trajetos amarram o ícone da ideia a múltiplas pessoas"
+              ],
+              "visualRegister": "modern illustrative live-action blend",
+              "demonstration": {
+                "schemaVersion": "studio.visual-demonstration.v1",
+                "observableAction": "A ideia simbolizada começa imóvel e passa a se mover e conectar por caminhos animados a pessoas em meios distintos.",
+                "intendedUnderstanding": "Visualizar que a circulação da ideia é o que permite conectar à audiência.",
+                "proofElements": [
+                  "Símbolo da ideia",
+                  "Linhas animadas que se expandem",
+                  "Pessoas e dispositivos variáveis"
+                ],
+                "indispensableMaterials": [
+                  {
+                    "id": "vid1_idea_circulation_human_context",
+                    "kind": "video",
+                    "visualRole": "hero",
+                    "query": "uma pessoa jovem interagindo com smartphone, laptop e um tablet; expressão de foco e interesse",
+                    "purpose": "Demonstrar conexão humana realista da ideia aos formatos onde circula",
+                    "acceptanceCriteria": [
+                      "Pessoa claramente visível e engajada com dispositivos",
+                      "Cenas inclusive exteriores e interiores para diversidade"
+                    ],
+                    "sourceClass": "licensed_stock",
+                    "proceduralAllowed": false,
+                    "requirementClass": "mandatory",
+                    "preferredCriteria": [
+                      "close e medium shots",
+                      "iluminação natural"
+                    ],
+                    "componentId": null
+                  }
+                ],
+                "genericFailureSignals": [
+                  "Estática do símbolo sem movimento",
+                  "Ausência de conexões visuais entre ideia e pessoas",
+                  "Pessoas sem dispositivos ou desconexas"
+                ],
+                "proceduralSufficiencyReason": "Indispensável vídeo humano para mostrar circulação real e conexão contextual."
+              },
+              "shotSequence": [
+                {
+                  "id": "shot_1_1_establish_idea_static",
+                  "function": "establish",
+                  "subject": "símbolo da ideia imóvel",
+                  "observableAction": "símbolo fixo no centro sem conexão",
+                  "shotScale": "medium",
+                  "angle": "eye_level",
+                  "regionOfInterest": "símbolo da ideia",
+                  "attentionStart": "símbolo imóvel",
+                  "attentionEnd": "trajeto iniciando",
+                  "lighting": {
+                    "quality": "soft",
+                    "direction": "motivated",
+                    "contrast": "medium",
+                    "temperatureRelationship": "warm-cool",
+                    "subjectSeparation": "high",
+                    "executionMode": "deterministic_composite"
+                  },
+                  "cutMotivation": "estabelecer ícone da ideia",
+                  "continuity": [
+                    "continuidade temática"
+                  ],
+                  "materialRequirementIds": [
+                    "vid1_idea_circulation_human_context"
+                  ],
+                  "executionComponentIds": [
+                    "res-composition-demonstrative_interface"
+                  ],
+                  "targetElementIds": [
+                    "ideia_simbolo"
+                  ],
+                  "verification": [
+                    "símbolo inico parado observado"
+                  ],
+                  "startFrame": 0,
+                  "endFrameExclusive": 30
+                },
+                {
+                  "id": "shot_1_2_action_idea_move_connect",
+                  "function": "demonstrate",
+                  "subject": "símbolo da ideia em movimento",
+                  "observableAction": "símbolo movimenta e conecta por linhas a dispositivos e pessoas",
+                  "shotScale": "wide",
+                  "angle": "eye_level",
+                  "regionOfInterest": "trajetos conectando e dispositivos",
+                  "attentionStart": "símbolo imóvel",
+                  "attentionEnd": "trajetos conectados",
+                  "lighting": {
+                    "quality": "soft",
+                    "direction": "motivated",
+                    "contrast": "medium",
+                    "temperatureRelationship": "warm-cool",
+                    "subjectSeparation": "high",
+                    "executionMode": "deterministic_composite"
+                  },
+                  "cutMotivation": "mostrar circulação e conexão",
+                  "continuity": [
+                    "continuidade do símbolo",
+                    "transição para conexão humana"
+                  ],
+                  "materialRequirementIds": [
+                    "vid1_idea_circulation_human_context"
+                  ],
+                  "executionComponentIds": [
+                    "res-composition-demonstrative_interface",
+                    "cinema-attention-transfer-v1"
+                  ],
+                  "targetElementIds": [
+                    "trajetos"
+                  ],
+                  "verification": [
+                    "trajetos animados começam e tocam dispositivos"
+                  ],
+                  "startFrame": 30,
+                  "endFrameExclusive": 90
+                }
+              ]
+            }
+          },
+          {
+            "id": "beat_2_message_adaptation_and_paths",
+            "sourceExcerpt": "Distribuir é adaptar a mensagem a cada formato e colocá-la nos caminhos do público.",
+            "narration": "Distribuir é adaptar a mensagem a cada formato e colocá-la nos caminhos do público.",
+            "initialState": "Agora a ideia é vista chegando em formatos variados representados por dispositivos digitais, impressos e outdoors, mas sem interação.",
+            "action": "A mensagem dentro do símbolo da ideia se transforma para se adaptar claramente a cada formato que aparece, enquanto linhas ajudam a conectar esses formatos a ambientes onde o público está presente.",
+            "consequence": "Mostrar que distribuir envolve adaptação visual e de formato para diferentes suportes e que isto é acompanhado por caminhos que indicam circulação e conexão.",
+            "focus": "Adaptação da mensagem dentro do símbolo em diferentes formatos e os trajetos de circulação visualmente reforçados.",
+            "knowledgeGained": "Compreender que distribuir não é só enviar a mensagem, mas adaptá-la ao formato para alcançar o público de maneira eficaz.",
+            "transitionReason": "Preparar a transição para focar no alcance ampliado e a ressalva sobre não garantir atenção, fechando a mensagem.",
+            "materialQueries": [
+              "clipes de telas variadas e mapas digitais de conexão do público",
+              "imagens de outdoors, smartphones e impressos em ambientes industriais e urbanos"
+            ],
+            "techniqueIds": [
+              "res-composition-format_transformation",
+              "editorial_desenho_de_tracado",
+              "cinema-attention-transfer-v1"
+            ],
+            "holdReason": null,
+            "visualBlueprint": {
+              "schemaVersion": "studio.visual-blueprint.v1",
+              "message": "Visualizar adaptação da mensagem em diferentes formatos, conectados por caminhos animados ao público alvo.",
+              "evidence": "Animação dos diferentes formatos do símbolo da ideia, as linhas indicando circulação e pessoas ou lugares correspondentes.",
+              "representation": "mixed",
+              "rejectedAlternatives": [
+                "Usar apenas texto explicativo",
+                "Mostrar formatos genéricos sem conexão visual"
+              ],
+              "primaryMaterialQuery": "vídeo mostrando variedade de dispositivos e mídias com pessoas reais",
+              "supportingMaterialQueries": [
+                "vídeo de pessoas em ambientes urbanos e industriais com telas diversas"
+              ],
+              "regionOfInterest": "símbolo da ideia transformando-se em formatos variados e linhas de conexão",
+              "hierarchy": [
+                "símbolo ideial",
+                "formatos transformados",
+                "linhas de circulação",
+                "pessoas e ambientes"
+              ],
+              "completionCriteria": [
+                "Mensagem transforma-se claramente para cada formato",
+                "Linhas conectam formatos a pessoas/ambientes"
+              ],
+              "visualRegister": "harmonia de imagem real com animação gráfica coerente",
+              "demonstration": {
+                "schemaVersion": "studio.visual-demonstration.v1",
+                "observableAction": "Transformação do símbolo da ideia em formatos variados, com linhas animadas direcionando para ambientes ou pessoas.",
+                "intendedUnderstanding": "Mostrar que distribuir é adaptar a mensagem a cada formato e colocá-la nos caminhos do público.",
+                "proofElements": [
+                  "Transformação da mensagem",
+                  "Linhas de conexão",
+                  "Formatos reconhecíveis"
+                ],
+                "indispensableMaterials": [
+                  {
+                    "id": "vid2_format_transformation_human_context",
+                    "kind": "video",
+                    "visualRole": "hero",
+                    "query": "pessoas utilizando ou observando diferentes mídias: outdoor, smartphone, folheto impresso",
+                    "purpose": "Comprovar a diversidade de formatos e a conexão real com o público alvo",
+                    "acceptanceCriteria": [
+                      "Pessoas interagindo visivelmente e em contexto urbano/industrial",
+                      "Diversidade de dispositivos e formatos"
+                    ],
+                    "sourceClass": "licensed_stock",
+                    "proceduralAllowed": false,
+                    "requirementClass": "mandatory",
+                    "preferredCriteria": [
+                      "planos médios e fechados",
+                      "iluminação adequada"
+                    ],
+                    "componentId": null
+                  }
+                ],
+                "genericFailureSignals": [
+                  "Falta de diversidade de formatos",
+                  "Conexão visual falha entre formato e pessoas",
+                  "Ausência de transformação visível na mensagem"
+                ],
+                "proceduralSufficiencyReason": "Vídeo contextual com interação humana garante a demonstração realista da adaptação e conexão da mensagem."
+              },
+              "shotSequence": [
+                {
+                  "id": "shot_2_1_format_expand",
+                  "function": "demonstrate",
+                  "subject": "símbolo da ideia transformando em vários formatos",
+                  "observableAction": "símbolo muda e se divide visivelmente em telas, cartazes e impressos",
+                  "shotScale": "medium",
+                  "angle": "eye_level",
+                  "regionOfInterest": "transformação do símbolo",
+                  "attentionStart": "símbolo original",
+                  "attentionEnd": "formatos distintos",
+                  "lighting": {
+                    "quality": "soft",
+                    "direction": "motivated",
+                    "contrast": "medium",
+                    "temperatureRelationship": "warm-cool",
+                    "subjectSeparation": "high",
+                    "executionMode": "deterministic_composite"
+                  },
+                  "cutMotivation": "mostrar adaptação visual da mensagem",
+                  "continuity": [
+                    "continuidade do símbolo",
+                    "progressão de formato"
+                  ],
+                  "materialRequirementIds": [
+                    "vid2_format_transformation_human_context"
+                  ],
+                  "executionComponentIds": [
+                    "res-composition-format_transformation"
+                  ],
+                  "targetElementIds": [
+                    "transformação_formato"
+                  ],
+                  "verification": [
+                    "símbolo divide e muda formatos visíveis"
+                  ],
+                  "startFrame": 90,
+                  "endFrameExclusive": 135
+                },
+                {
+                  "id": "shot_2_2_path_connections",
+                  "function": "demonstrate",
+                  "subject": "linhas animadas ligando formatos ao público",
+                  "observableAction": "linhas conectam formatos em dispositivos a locais com pessoas",
+                  "shotScale": "wide",
+                  "angle": "eye_level",
+                  "regionOfInterest": "linhas e público",
+                  "attentionStart": "formatos visuais",
+                  "attentionEnd": "linhas animadas e pessoas",
+                  "lighting": {
+                    "quality": "soft",
+                    "direction": "motivated",
+                    "contrast": "medium",
+                    "temperatureRelationship": "warm-cool",
+                    "subjectSeparation": "high",
+                    "executionMode": "deterministic_composite"
+                  },
+                  "cutMotivation": "mostrar circulação visual pelos caminhos",
+                  "continuity": [
+                    "continuidade das linhas e formatos"
+                  ],
+                  "materialRequirementIds": [
+                    "vid2_format_transformation_human_context"
+                  ],
+                  "executionComponentIds": [
+                    "editorial_desenho_de_tracado",
+                    "cinema-attention-transfer-v1"
+                  ],
+                  "targetElementIds": [
+                    "linhas_conexao"
+                  ],
+                  "verification": [
+                    "linhas fluem de formatos para pessoas e lugares"
+                  ],
+                  "startFrame": 135,
+                  "endFrameExclusive": 180
+                }
+              ]
+            }
+          },
+          {
+            "id": "beat_3_reach_vs_attention_reserva",
+            "sourceExcerpt": "Isso amplia o alcance, mas não garante atenção.",
+            "narration": "Isso amplia o alcance, mas não garante atenção.",
+            "initialState": "Após mostrar formatos e circulação, a tela destaca a ideia de crescimento de alcance com mapas ou representações gráficas do público ampliado.",
+            "action": "Ressaltar visualmente que apesar do crescimento do alcance, atenção real pode estar ausente, usando símbolos como olhos que desviam, alertas visuais ou contraste de foco para caminhar para a ressalva final.",
+            "consequence": "Transmitir a ressalva importante de que ampliar o alcance não assegura que o público vá prestar atenção à mensagem.",
+            "focus": "A tensão entre alcance e atenção, enfatizada por recursos visuais contrastantes que prendem o olhar no conceito chave da ressalva.",
+            "knowledgeGained": "Entender que alcance é uma expansão, mas atenção é um desafio distinto e essencial para o sucesso da distribuição.",
+            "transitionReason": "Encerrar a explicação reforçando a mensagem principal para compreensão e reflexão, motivando a ação do espectador.",
+            "materialQueries": [
+              "vídeo mostrando público em eventos, pessoas olhando distraídas ou usando dispositivos com expressão de desatenção"
+            ],
+            "techniqueIds": [
+              "editorial_acento_sincronizado",
+              "res-editorial-dominant-evidence"
+            ],
+            "holdReason": "Timing para leitura e reflexão sobre a ressalva final",
+            "visualBlueprint": {
+              "schemaVersion": "studio.visual-blueprint.v1",
+              "message": "Destacar a diferença entre alcance e atenção usando representações visuais contrastantes e reais do público.",
+              "evidence": "Clipes reais de pessoas em contextos com alcance elevado, mas com atenção limitada demonstrada por linguagem corporal e expressões.",
+              "representation": "mixed",
+              "rejectedAlternatives": [
+                "Mostrar só gráficos e estatísticas abstratas",
+                "Usar apenas texto sem evidência contextual"
+              ],
+              "primaryMaterialQuery": "vídeo de pessoas em eventos diversos, com gestos de distração ou olhar passivo",
+              "supportingMaterialQueries": [
+                "planos de multidões e interações digitais desconectadas"
+              ],
+              "regionOfInterest": "pessoas e expressões corporais de atenção ou falta dela",
+              "hierarchy": [
+                "público",
+                "expressões de atenção",
+                "elementos gráficos de alcance"
+              ],
+              "completionCriteria": [
+                "Demonstração clara do público ampliado",
+                "Indicação visual da falta de atenção"
+              ],
+              "visualRegister": "realista com realce gráfico sutil",
+              "demonstration": {
+                "schemaVersion": "studio.visual-demonstration.v1",
+                "observableAction": "Pessoas em eventos e espaços ampliados com gestos explícitos de distração ou desatenção",
+                "intendedUnderstanding": "Compreender que aumentar alcance não implica atenção garantida.",
+                "proofElements": [
+                  "Vídeo humano contextual",
+                  "Expressões e gestos de distração",
+                  "Gráficos ou símbolos de alerta"
+                ],
+                "indispensableMaterials": [
+                  {
+                    "id": "vid3_reach_attention_distraction",
+                    "kind": "video",
+                    "visualRole": "hero",
+                    "query": "grupos de pessoas em ambientes públicos ou eventos, olhando ao redor distraídas, mexendo no celular, afastando o olhar",
+                    "purpose": "Demonstrar falta de atenção apesar do alcance ampliado da mensagem",
+                    "acceptanceCriteria": [
+                      "Pessoas claramente visíveis e distintas",
+                      "Expressões naturais de desatenção ou distração"
+                    ],
+                    "sourceClass": "licensed_stock",
+                    "proceduralAllowed": false,
+                    "requirementClass": "mandatory",
+                    "preferredCriteria": [
+                      "planos médios e gerais",
+                      "iluminação natural"
+                    ],
+                    "componentId": null
+                  }
+                ],
+                "genericFailureSignals": [
+                  "Pessoas focadas que contradizem a ressalva",
+                  "Falta de evidência visual de distração",
+                  "Ambientes não contextualizados"
+                ],
+                "proceduralSufficiencyReason": "Vídeo com expressão humana real é essencial para ilustrar a ressalva visualmente."
+              },
+              "shotSequence": [
+                {
+                  "id": "shot_3_1_reach_visualization",
+                  "function": "demonstrate",
+                  "subject": "público ampliado visualmente",
+                  "observableAction": "mapas e crowdshots simulam ampliação do alcance da ideia",
+                  "shotScale": "wide",
+                  "angle": "eye_level",
+                  "regionOfInterest": "mapas e multidões",
+                  "attentionStart": "último foco na adaptação",
+                  "attentionEnd": "mapas e multidões",
+                  "lighting": {
+                    "quality": "soft",
+                    "direction": "motivated",
+                    "contrast": "medium",
+                    "temperatureRelationship": "neutral",
+                    "subjectSeparation": "medium",
+                    "executionMode": "select_existing_footage"
+                  },
+                  "cutMotivation": "mostrar ampliação do alcance",
+                  "continuity": [
+                    "continuidade da circulação e formatos"
+                  ],
+                  "materialRequirementIds": [
+                    "vid3_reach_attention_distraction"
+                  ],
+                  "executionComponentIds": [
+                    "editorial_acento_sincronizado"
+                  ],
+                  "targetElementIds": [
+                    "mapas_alcance"
+                  ],
+                  "verification": [
+                    "mapas exibidos com público destacado"
+                  ],
+                  "startFrame": 180,
+                  "endFrameExclusive": 210
+                },
+                {
+                  "id": "shot_3_2_attention_contrast",
+                  "function": "demonstrate",
+                  "subject": "falta de atenção evidenciada em expressões",
+                  "observableAction": "pessoas mostram distração e falta de foco",
+                  "shotScale": "medium",
+                  "angle": "eye_level",
+                  "regionOfInterest": "expressões de desatenção",
+                  "attentionStart": "mapas amplos",
+                  "attentionEnd": "foco em reações",
+                  "lighting": {
+                    "quality": "soft",
+                    "direction": "motivated",
+                    "contrast": "medium",
+                    "temperatureRelationship": "neutral",
+                    "subjectSeparation": "medium",
+                    "executionMode": "select_existing_footage"
+                  },
+                  "cutMotivation": "reforçar que alcance não garante atenção",
+                  "continuity": [
+                    "continuidade temática do alcance à atenção"
+                  ],
+                  "materialRequirementIds": [
+                    "vid3_reach_attention_distraction"
+                  ],
+                  "executionComponentIds": [
+                    "res-editorial-dominant-evidence"
+                  ],
+                  "targetElementIds": [
+                    "expressoes_distracao"
+                  ],
+                  "verification": [
+                    "expressões e gestos claros de desatenção"
+                  ],
+                  "startFrame": 210,
+                  "endFrameExclusive": 270
+                }
+              ]
+            }
+          }
+        ],
+        "artDirection": {
+          "schemaVersion": "studio.cinematic-art-direction.v1",
+          "visualSystem": "modern_hybrid_live-action_graphics",
+          "palette": [
+            "#101c29",
+            "#3a4a62",
+            "#e0e6f2",
+            "#ffd24c",
+            "#f0544f"
+          ],
+          "typography": "Helvetica Neue, sans-serif",
+          "contrastStrategy": "high_contrast_for_legibility",
+          "footageTreatment": "natural_lighting_balanced_color",
+          "graphicsRelationship": "supportive_and_integrated",
+          "continuityRules": [
+            "maintain visual connection between shots",
+            "preserve thematic color palette",
+            "smooth transitions between graphics and footage"
+          ],
+          "rejectedStyleMoves": [
+            "excessive decorative animation",
+            "neon or overly saturated colors",
+            "fragmented typography disrupting text flow"
+          ]
+        }
+      },
+      "directionAuthorship": {
+        "kind": "provider",
+        "provider": "compatible.editing-planner",
+        "model": "gpt-4.1-mini-2025-04-14",
+        "jobId": "6c515baa-ae03-4bda-96d1-b05e3c31a1ec"
+      },
+      "preliminaryMaterialInventory": [
+        {
+          "beatId": "beat_1_intro_circulation",
+          "requirementId": "vid1_idea_circulation_human_context",
+          "requirementClass": "mandatory",
+          "status": "candidates",
+          "query": "uma pessoa jovem interagindo com smartphone, laptop e um tablet; expressão de foco e interesse",
+          "candidates": [
+            {
+              "provider": "pexels",
+              "providerId": "6898009",
+              "kind": "video",
+              "width": 1920,
+              "height": 1080,
+              "durationSeconds": 16,
+              "description": "",
+              "observation": "not_inspected"
+            },
+            {
+              "provider": "pexels",
+              "providerId": "30712136",
+              "kind": "video",
+              "width": 1920,
+              "height": 1080,
+              "durationSeconds": 17,
+              "description": "",
+              "observation": "not_inspected"
+            },
+            {
+              "provider": "pexels",
+              "providerId": "4035216",
+              "kind": "video",
+              "width": 3840,
+              "height": 2160,
+              "durationSeconds": 14,
+              "description": "",
+              "observation": "not_inspected"
+            },
+            {
+              "provider": "pexels",
+              "providerId": "4961797",
+              "kind": "video",
+              "width": 3840,
+              "height": 2160,
+              "durationSeconds": 16,
+              "description": "",
+              "observation": "not_inspected"
+            },
+            {
+              "provider": "pexels",
+              "providerId": "6897971",
+              "kind": "video",
+              "width": 1920,
+              "height": 1080,
+              "durationSeconds": 23,
+              "description": "",
+              "observation": "not_inspected"
+            },
+            {
+              "provider": "pexels",
+              "providerId": "5704059",
+              "kind": "video",
+              "width": 3840,
+              "height": 2160,
+              "durationSeconds": 14,
+              "description": "",
+              "observation": "not_inspected"
+            }
+          ],
+          "visualSuitability": "not_observed",
+          "reason": null
+        },
+        {
+          "beatId": "beat_2_message_adaptation_and_paths",
+          "requirementId": "vid2_format_transformation_human_context",
+          "requirementClass": "mandatory",
+          "status": "candidates",
+          "query": "pessoas utilizando ou observando diferentes mídias: outdoor, smartphone, folheto impresso",
+          "candidates": [
+            {
+              "provider": "pexels",
+              "providerId": "39500866",
+              "kind": "video",
+              "width": 1080,
+              "height": 1920,
+              "durationSeconds": 12,
+              "description": "",
+              "observation": "not_inspected"
+            },
+            {
+              "provider": "pexels",
+              "providerId": "12788788",
+              "kind": "video",
+              "width": 2160,
+              "height": 3840,
+              "durationSeconds": 10,
+              "description": "",
+              "observation": "not_inspected"
+            },
+            {
+              "provider": "pexels",
+              "providerId": "12796680",
+              "kind": "video",
+              "width": 1080,
+              "height": 1920,
+              "durationSeconds": 11,
+              "description": "",
+              "observation": "not_inspected"
+            },
+            {
+              "provider": "pexels",
+              "providerId": "6565733",
+              "kind": "video",
+              "width": 2160,
+              "height": 3840,
+              "durationSeconds": 10,
+              "description": "",
+              "observation": "not_inspected"
+            },
+            {
+              "provider": "pexels",
+              "providerId": "3894045",
+              "kind": "video",
+              "width": 1920,
+              "height": 1080,
+              "durationSeconds": 22,
+              "description": "",
+              "observation": "not_inspected"
+            },
+            {
+              "provider": "pexels",
+              "providerId": "30290152",
+              "kind": "video",
+              "width": 2160,
+              "height": 3840,
+              "durationSeconds": 19,
+              "description": "",
+              "observation": "not_inspected"
+            }
+          ],
+          "visualSuitability": "not_observed",
+          "reason": null
+        },
+        {
+          "beatId": "beat_3_reach_vs_attention_reserva",
+          "requirementId": "vid3_reach_attention_distraction",
+          "requirementClass": "mandatory",
+          "status": "candidates",
+          "query": "grupos de pessoas em ambientes públicos ou eventos, olhando ao redor distraídas, mexendo no celular, afastando o olhar",
+          "candidates": [
+            {
+              "provider": "pexels",
+              "providerId": "8088617",
+              "kind": "video",
+              "width": 4096,
+              "height": 2160,
+              "durationSeconds": 36,
+              "description": "",
+              "observation": "not_inspected"
+            },
+            {
+              "provider": "pexels",
+              "providerId": "32205514",
+              "kind": "video",
+              "width": 3840,
+              "height": 2160,
+              "durationSeconds": 9,
+              "description": "",
+              "observation": "not_inspected"
+            },
+            {
+              "provider": "pexels",
+              "providerId": "8088611",
+              "kind": "video",
+              "width": 4096,
+              "height": 2160,
+              "durationSeconds": 42,
+              "description": "",
+              "observation": "not_inspected"
+            },
+            {
+              "provider": "pexels",
+              "providerId": "8088612",
+              "kind": "video",
+              "width": 4096,
+              "height": 2160,
+              "durationSeconds": 29,
+              "description": "",
+              "observation": "not_inspected"
+            },
+            {
+              "provider": "pexels",
+              "providerId": "19319670",
+              "kind": "video",
+              "width": 1920,
+              "height": 1080,
+              "durationSeconds": 90,
+              "description": "",
+              "observation": "not_inspected"
+            },
+            {
+              "provider": "pexels",
+              "providerId": "3248177",
+              "kind": "video",
+              "width": 3840,
+              "height": 2160,
+              "durationSeconds": 12,
+              "description": "",
+              "observation": "not_inspected"
+            }
+          ],
+          "visualSuitability": "not_observed",
+          "reason": null
+        }
+      ],
+      "narration": []
+    },
+    "blockers": [
+      "production_provider_job_failed"
+    ],
+    "technicalEvaluation": "pending",
+    "audiovisualEvaluation": "pending",
+    "humanReview": "pending",
+    "autonomousProductionQualified": false,
+    "productionGates": {
+      "schemaVersion": "studio.production-gates.v1",
+      "fidelity": {
+        "status": "passed",
+        "evidence": [
+          "Uma ideia só encontra pessoas quando circula.",
+          "Distribuir é adaptar a mensagem a cada formato e colocá-la nos caminhos do público.",
+          "Isso amplia o alcance, mas não garante atenção."
+        ],
+        "reason": "Script coverage and locked facts are preserved verbatim.",
+        "nextAction": null
+      },
+      "demonstrability": {
+        "status": "passed",
+        "evidence": [
+          {
+            "beatId": "beat_1_intro_circulation",
+            "observableAction": "A ideia simbolizada começa imóvel e passa a se mover e conectar por caminhos animados a pessoas em meios distintos.",
+            "intendedUnderstanding": "Visualizar que a circulação da ideia é o que permite conectar à audiência.",
+            "proofElements": [
+              "Símbolo da ideia",
+              "Linhas animadas que se expandem",
+              "Pessoas e dispositivos variáveis"
+            ]
+          },
+          {
+            "beatId": "beat_2_message_adaptation_and_paths",
+            "observableAction": "Transformação do símbolo da ideia em formatos variados, com linhas animadas direcionando para ambientes ou pessoas.",
+            "intendedUnderstanding": "Mostrar que distribuir é adaptar a mensagem a cada formato e colocá-la nos caminhos do público.",
+            "proofElements": [
+              "Transformação da mensagem",
+              "Linhas de conexão",
+              "Formatos reconhecíveis"
+            ]
+          },
+          {
+            "beatId": "beat_3_reach_vs_attention_reserva",
+            "observableAction": "Pessoas em eventos e espaços ampliados com gestos explícitos de distração ou desatenção",
+            "intendedUnderstanding": "Compreender que aumentar alcance não implica atenção garantida.",
+            "proofElements": [
+              "Vídeo humano contextual",
+              "Expressões e gestos de distração",
+              "Gráficos ou símbolos de alerta"
+            ]
+          }
+        ],
+        "reason": "Every beat declares an observable action, intended understanding and falsifiable proof.",
+        "nextAction": null
+      },
+      "techniqueSuitability": {
+        "status": "inconclusive",
+        "evidence": [],
+        "reason": "Technique suitability requires an executable composition and resolved material needs.",
+        "nextAction": "select_route"
+      },
+      "sceneStages": [
+        {
+          "sceneId": "beat_1_intro_circulation",
+          "stage": "planned",
+          "evidence": []
+        },
+        {
+          "sceneId": "beat_2_message_adaptation_and_paths",
+          "stage": "planned",
+          "evidence": []
+        },
+        {
+          "sceneId": "beat_3_reach_vs_attention_reserva",
+          "stage": "planned",
+          "evidence": []
+        }
+      ],
+      "observedResult": {
+        "status": "inconclusive",
+        "evidence": [],
+        "reason": "Rendered frames and temporal evidence are not available yet.",
+        "nextAction": "inspect_interval"
+      }
+    },
+    "providerReadiness": [
+      {
+        "id": "pexels",
+        "kinds": [
+          "image",
+          "video"
+        ],
+        "capabilities": [
+          "discover",
+          "acquire",
+          "license_receipt"
+        ],
+        "acquisition": "download_then_inspect",
+        "cost_policy": "api_free_tier_request",
+        "configured": true
+      },
+      {
+        "id": "brandfetch",
+        "kinds": [
+          "logo"
+        ],
+        "capabilities": [
+          "discover",
+          "preview",
+          "brand_metadata"
+        ],
+        "acquisition": "preview_only_without_verified_brand_asset",
+        "cost_policy": "provider_contract",
+        "configured": false
+      },
+      {
+        "id": "procedural-icon",
+        "kinds": [
+          "image"
+        ],
+        "capabilities": [
+          "discover",
+          "acquire",
+          "deterministic"
+        ],
+        "acquisition": "local_registered_component",
+        "cost_policy": "local",
+        "configured": true
+      },
+      {
+        "id": "gemini-image",
+        "kinds": [
+          "image",
+          "wardrobe"
+        ],
+        "capabilities": [
+          "generate",
+          "acquire",
+          "original_only"
+        ],
+        "acquisition": "generate_then_inspect",
+        "cost_policy": "reserved_before_submission",
+        "configured": false
+      },
+      {
+        "id": "local-diffusion",
+        "kinds": [
+          "video"
+        ],
+        "capabilities": [
+          "generate",
+          "acquire",
+          "original_only",
+          "quarantine",
+          "experimental"
+        ],
+        "acquisition": "generate_then_inspect_and_review",
+        "cost_policy": "local_compute_measured",
+        "configured": true
+      },
+      {
+        "id": "gemini-video",
+        "kinds": [
+          "video"
+        ],
+        "capabilities": [
+          "generate",
+          "acquire",
+          "original_only",
+          "experimental"
+        ],
+        "acquisition": "generate_then_inspect",
+        "cost_policy": "reserved_before_submission",
+        "configured": false
+      },
+      {
+        "id": "sora-video",
+        "kinds": [
+          "video"
+        ],
+        "capabilities": [
+          "generate",
+          "acquire",
+          "original_only"
+        ],
+        "acquisition": "single_four_second_clip_then_inspect",
+        "cost_policy": "usd_0.10_per_second_until_retirement",
+        "configured": false
+      }
+    ],
+    "hybridCapabilities": {
+      "schemaVersion": "studio.hybrid-capability-manifest.v1",
+      "profiles": [
+        {
+          "profileId": "hyperframes-motion-v1",
+          "providerId": "builtin.hyperframes-motion-v1",
+          "capability": "motion",
+          "operations": [
+            "compose_motion_graph"
+          ],
+          "environment": "local",
+          "qualificationState": "experimental",
+          "commercialUse": "approved",
+          "readiness": {
+            "serviceConfigured": true,
+            "serviceAccessible": true,
+            "modelInstalled": true,
+            "resourcesAvailable": true,
+            "inferenceValidated": false,
+            "qualifiedUseCases": [],
+            "blockingReasons": []
+          },
+          "inputRequirements": [
+            "motion_graph"
+          ],
+          "maximumNativeSeconds": null,
+          "cost": {
+            "currency": "LOCAL",
+            "unit": "local_execution",
+            "amount": null,
+            "priceVersion": "local-unpriced-v1",
+            "includesColdStart": false,
+            "includesStorage": false
+          },
+          "modelId": null,
+          "modelRevision": null,
+          "runtimeRevision": null,
+          "defaultParameters": {},
+          "useCaseEvidence": [],
+          "evidenceRefs": [
+            "docs/studios/OPEN_SOURCE_INTEGRATION_ROADMAP.md"
+          ]
+        },
+        {
+          "profileId": "motion-canvas-experimental-v1",
+          "providerId": "motion-canvas",
+          "capability": "motion",
+          "operations": [
+            "compose_motion_graph"
+          ],
+          "environment": "local",
+          "qualificationState": "unavailable",
+          "commercialUse": "approved",
+          "readiness": {
+            "serviceConfigured": false,
+            "serviceAccessible": false,
+            "modelInstalled": false,
+            "resourcesAvailable": false,
+            "inferenceValidated": false,
+            "qualifiedUseCases": [],
+            "blockingReasons": [
+              "motion_canvas_adapter_not_qualified"
+            ]
+          },
+          "inputRequirements": [
+            "motion_graph"
+          ],
+          "maximumNativeSeconds": null,
+          "cost": {
+            "currency": "LOCAL",
+            "unit": "local_execution",
+            "amount": null,
+            "priceVersion": "local-unpriced-v1",
+            "includesColdStart": false,
+            "includesStorage": false
+          },
+          "modelId": null,
+          "modelRevision": null,
+          "runtimeRevision": null,
+          "defaultParameters": {},
+          "useCaseEvidence": [],
+          "evidenceRefs": [
+            "https://motion-canvas.io/docs/rendering/video/"
+          ]
+        },
+        {
+          "profileId": "musetalk-1.5-evidence-v1",
+          "providerId": "musetalk",
+          "capability": "lip_sync",
+          "operations": [
+            "dub_existing_presenter"
+          ],
+          "environment": "local",
+          "qualificationState": "unavailable",
+          "commercialUse": "conditional",
+          "readiness": {
+            "serviceConfigured": false,
+            "serviceAccessible": false,
+            "modelInstalled": false,
+            "resourcesAvailable": false,
+            "inferenceValidated": false,
+            "qualifiedUseCases": [],
+            "blockingReasons": [
+              "license_review_required",
+              "benchmark_evidence_pending"
+            ]
+          },
+          "inputRequirements": [
+            "authorized_presenter_video",
+            "speech_audio",
+            "identity_consent"
+          ],
+          "maximumNativeSeconds": null,
+          "cost": {
+            "currency": "LOCAL",
+            "unit": "local_execution",
+            "amount": null,
+            "priceVersion": "local-unpriced-v1",
+            "includesColdStart": false,
+            "includesStorage": false
+          },
+          "modelId": null,
+          "modelRevision": null,
+          "runtimeRevision": null,
+          "defaultParameters": {},
+          "useCaseEvidence": [],
+          "evidenceRefs": [
+            "benchmarks/studios/identity/avatar-pt-br-policy.v1.json"
+          ]
+        },
+        {
+          "profileId": "latentsync-1.6-evidence-v1",
+          "providerId": "latentsync",
+          "capability": "lip_sync",
+          "operations": [
+            "dub_existing_presenter"
+          ],
+          "environment": "serverless",
+          "qualificationState": "unavailable",
+          "commercialUse": "rejected",
+          "readiness": {
+            "serviceConfigured": false,
+            "serviceAccessible": false,
+            "modelInstalled": false,
+            "resourcesAvailable": false,
+            "inferenceValidated": false,
+            "qualifiedUseCases": [],
+            "blockingReasons": [
+              "model_license_rejected",
+              "local_vram_insufficient"
+            ]
+          },
+          "inputRequirements": [
+            "authorized_presenter_video",
+            "speech_audio",
+            "identity_consent"
+          ],
+          "maximumNativeSeconds": null,
+          "cost": {
+            "currency": "USD",
+            "unit": "gpu_second",
+            "amount": null,
+            "priceVersion": "unpriced",
+            "includesColdStart": false,
+            "includesStorage": false
+          },
+          "modelId": null,
+          "modelRevision": null,
+          "runtimeRevision": null,
+          "defaultParameters": {},
+          "useCaseEvidence": [],
+          "evidenceRefs": [
+            "benchmarks/studios/identity/avatar-pt-br-policy.v1.json"
+          ]
+        },
+        {
+          "profileId": "longcat-avatar-1.5-ai2v-480p-int8-experimental-v1",
+          "providerId": "local.longcat-avatar-1.5",
+          "capability": "avatar_video",
+          "operations": [
+            "image_audio_to_avatar"
+          ],
+          "environment": "local",
+          "qualificationState": "unavailable",
+          "commercialUse": "conditional",
+          "readiness": {
+            "serviceConfigured": false,
+            "serviceAccessible": false,
+            "modelInstalled": false,
+            "resourcesAvailable": false,
+            "inferenceValidated": false,
+            "qualifiedUseCases": [],
+            "blockingReasons": [
+              "longcat_avatar_disabled",
+              "compatible_multi_gpu_hardware_required",
+              "dependency_license_chain_pending",
+              "pt_br_visual_qualification_pending"
+            ]
+          },
+          "inputRequirements": [
+            "authorized_reference_image",
+            "final_speech_audio",
+            "identity_consent"
+          ],
+          "maximumNativeSeconds": 3.72,
+          "cost": {
+            "currency": "LOCAL",
+            "unit": "local_execution",
+            "amount": null,
+            "priceVersion": "local-unmeasured-v1",
+            "includesColdStart": false,
+            "includesStorage": false
+          },
+          "modelId": "meituan-longcat/LongCat-Video-Avatar-1.5",
+          "modelRevision": "92016c71d5d318d0f5d84e4db30015a571484ab6",
+          "runtimeRevision": "6b3f4b8582a8bc3f20f795735f5383716c4ba794",
+          "defaultParameters": {
+            "resolution": "832x480",
+            "fps": 25,
+            "inferenceSteps": 8,
+            "quantization": "int8",
+            "textGuidanceScale": 1.0,
+            "audioGuidanceScale": 1.0,
+            "segmentFrames": 93,
+            "overlapFrames": 13,
+            "presenters": 1,
+            "framing": "medium"
+          },
+          "useCaseEvidence": [],
+          "evidenceRefs": [
+            "benchmarks/studios/identity/longcat-avatar-1.5-screening-policy.v1.json",
+            "workers/longcat-avatar/model-manifest.json",
+            "https://github.com/meituan-longcat/LongCat-Video"
+          ]
+        },
+        {
+          "profileId": "animatediff-lightning-sd15-a-v1",
+          "providerId": "local-diffusion",
+          "capability": "generative_video",
+          "operations": [
+            "text_to_video"
+          ],
+          "environment": "local",
+          "qualificationState": "experimental",
+          "commercialUse": "conditional",
+          "readiness": {
+            "serviceConfigured": true,
+            "serviceAccessible": false,
+            "modelInstalled": true,
+            "resourcesAvailable": false,
+            "inferenceValidated": false,
+            "qualifiedUseCases": [],
+            "blockingReasons": [
+              "numerical_equivalence_pending",
+              "visual_qualification_pending"
+            ]
+          },
+          "inputRequirements": [],
+          "maximumNativeSeconds": 1.0,
+          "cost": {
+            "currency": "LOCAL",
+            "unit": "local_execution",
+            "amount": null,
+            "priceVersion": "local-measured-v1",
+            "includesColdStart": false,
+            "includesStorage": false
+          },
+          "modelId": null,
+          "modelRevision": null,
+          "runtimeRevision": null,
+          "defaultParameters": {},
+          "useCaseEvidence": [],
+          "evidenceRefs": [
+            "docs/studios/LOCAL_DIFFUSION_REVISED_PLAN_2026-09-10.md"
+          ]
+        },
+        {
+          "profileId": "veo-3.1-lite-720p-experimental-v1",
+          "providerId": "google-veo",
+          "capability": "generative_video",
+          "operations": [
+            "text_to_video",
+            "image_to_video"
+          ],
+          "environment": "remote_api",
+          "qualificationState": "unavailable",
+          "commercialUse": "approved",
+          "readiness": {
+            "serviceConfigured": false,
+            "serviceAccessible": false,
+            "modelInstalled": true,
+            "resourcesAvailable": true,
+            "inferenceValidated": false,
+            "qualifiedUseCases": [],
+            "blockingReasons": [
+              "gemini_video_disabled"
+            ]
+          },
+          "inputRequirements": [],
+          "maximumNativeSeconds": 10.0,
+          "cost": {
+            "currency": "USD",
+            "unit": "second",
+            "amount": 0.05,
+            "priceVersion": "google-2026-09-14",
+            "includesColdStart": false,
+            "includesStorage": false
+          },
+          "modelId": "gemini-omni-1.1-flash",
+          "modelRevision": "google-api-price-and-model-binding-2026-09-14",
+          "runtimeRevision": "res-gemini-editing-adapter-v1",
+          "defaultParameters": {},
+          "useCaseEvidence": [],
+          "evidenceRefs": [
+            "https://ai.google.dev/gemini-api/docs/pricing"
+          ]
+        },
+        {
+          "profileId": "wan2.2-ti2v-5b-serverless-experimental-v1",
+          "providerId": "wan2.2",
+          "capability": "generative_video",
+          "operations": [
+            "text_to_video",
+            "image_to_video"
+          ],
+          "environment": "serverless",
+          "qualificationState": "unavailable",
+          "commercialUse": "conditional",
+          "readiness": {
+            "serviceConfigured": false,
+            "serviceAccessible": false,
+            "modelInstalled": false,
+            "resourcesAvailable": false,
+            "inferenceValidated": false,
+            "qualifiedUseCases": [],
+            "blockingReasons": [
+              "serverless_gpu_not_authorized",
+              "worker_not_deployed"
+            ]
+          },
+          "inputRequirements": [],
+          "maximumNativeSeconds": 5.0,
+          "cost": {
+            "currency": "USD",
+            "unit": "gpu_second",
+            "amount": null,
+            "priceVersion": "unpriced",
+            "includesColdStart": false,
+            "includesStorage": false
+          },
+          "modelId": null,
+          "modelRevision": null,
+          "runtimeRevision": null,
+          "defaultParameters": {},
+          "useCaseEvidence": [],
+          "evidenceRefs": [
+            "https://github.com/Wan-Video/Wan2.2"
+          ]
+        }
+      ],
+      "paidFallbackEnabled": false,
+      "remoteGpuAuthorized": false
+    },
+    "budgetEnvelope": {
+      "policy": "res.motion-pilot.v1",
+      "limitUsd": 1.0,
+      "allocations": {
+        "planning": 0.4,
+        "image": 0.2,
+        "critique": 0.2,
+        "video": 0.0,
+        "reserve": 0.2,
+        "preRenderLimitUsd": 0.4,
+        "allowReserveSpillover": true
+      },
+      "videoGenerationEnabled": false,
+      "generatedVideoPolicy": {
+        "schemaVersion": "studio.generated-video-policy.v2",
+        "mode": "disabled",
+        "allowedProfileIds": [
+          "animatediff-lightning-sd15-a-v1"
+        ],
+        "maxCandidates": 1,
+        "allowExperimental": false,
+        "maximumGeneratedSeconds": 1.0
+      },
+      "hybridPolicy": {
+        "schemaVersion": "studio.hybrid-production-policy.v1",
+        "mode": "disabled",
+        "allowedProfileIds": [],
+        "allowExperimental": false,
+        "allowConditionalCommercialUse": false,
+        "allowRemoteApi": false,
+        "allowServerlessGpu": false,
+        "paidFallbackEnabled": false,
+        "maxCandidatesPerNeed": 1,
+        "maximumGeneratedSecondsTotal": 0.0,
+        "budgetEnvelopeId": null,
+        "maximumApiSpendUsd": 0.0
+      }
+    },
+    "revision": 45,
+    "dispatchedJobs": [
+      "6c515baa-ae03-4bda-96d1-b05e3c31a1ec",
+      "7f883cdd-4f3a-4edc-8dac-c0fa2874fa37",
+      "45f66b1b-b17d-4c02-b2a5-6e88a6d9f3a3",
+      "28e75d62-d230-400d-a817-809d877c9b2b"
+    ],
+    "responseCorrections": {
+      "composition": 2
+    },
+    "correctionHistory": [
+      {
+        "stage": "composition",
+        "jobId": "7f883cdd-4f3a-4edc-8dac-c0fa2874fa37",
+        "responseKey": "e5a476a1-b15a-4fc1-925c-55cf2e5da32b/temporary/a8f78947cdd942bfac955a008eb7e3e1.json",
+        "category": "invalid_response",
+        "attempt": 1,
+        "error": "1 validation error for ContextualPlanRequestV2\nscenes.0.elements.1\n  Value error, editing_v2_path_reveal_requires_path [type=value_error, input_value={'id': 'trajetos', 'kind'...: 0, 'staggerFrames': 0}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.11/v/value_error"
+      },
+      {
+        "stage": "composition",
+        "jobId": "45f66b1b-b17d-4c02-b2a5-6e88a6d9f3a3",
+        "responseKey": "e5a476a1-b15a-4fc1-925c-55cf2e5da32b/temporary/1e22b2dc5d3c4d67be449846690220fb.json",
+        "category": "invalid_response",
+        "attempt": 2,
+        "error": "2 validation errors for ContextualPlanRequestV2\nscenes.0.elements.2.animations.0.keyframes.0\n  Value error, Bezier controls are only valid for cubic-bezier easing [type=value_error, input_value={'frame': 0, 'value': 0, ...er': [0.42, 0, 0.58, 1]}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.11/v/value_error\nscenes.0.elements.2.animations.0.keyframes.1\n  Value error, Bezier controls are only valid for cubic-bezier easing [type=value_error, input_value={'frame': 59, 'value': 1,...er': [0.42, 0, 0.58, 1]}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.11/v/value_error"
+      }
+    ],
+    "responseCorrection": {
+      "stage": "composition",
+      "attempt": 2,
+      "error": "2 validation errors for ContextualPlanRequestV2\nscenes.0.elements.2.animations.0.keyframes.0\n  Value error, Bezier controls are only valid for cubic-bezier easing [type=value_error, input_value={'frame': 0, 'value': 0, ...er': [0.42, 0, 0.58, 1]}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.11/v/value_error\nscenes.0.elements.2.animations.0.keyframes.1\n  Value error, Bezier controls are only valid for cubic-bezier easing [type=value_error, input_value={'frame': 59, 'value': 1,...er': [0.42, 0, 0.58, 1]}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.11/v/value_error"
+    },
+    "deterministicResponseReplays": [
+      "e5a476a1-b15a-4fc1-925c-55cf2e5da32b/temporary/d54e35419c424125935b44c9d81fbc1d.json:res.editorial-components.repairs.v2.40",
+      "e5a476a1-b15a-4fc1-925c-55cf2e5da32b/temporary/1e22b2dc5d3c4d67be449846690220fb.json:res.editorial-components.repairs.v2.40",
+      "e5a476a1-b15a-4fc1-925c-55cf2e5da32b/temporary/a8f78947cdd942bfac955a008eb7e3e1.json:res.editorial-components.repairs.v2.40",
+      "e5a476a1-b15a-4fc1-925c-55cf2e5da32b/temporary/d54e35419c424125935b44c9d81fbc1d.json:res.editorial-components.repairs.v2.42",
+      "e5a476a1-b15a-4fc1-925c-55cf2e5da32b/temporary/1e22b2dc5d3c4d67be449846690220fb.json:res.editorial-components.repairs.v2.42",
+      "e5a476a1-b15a-4fc1-925c-55cf2e5da32b/temporary/a8f78947cdd942bfac955a008eb7e3e1.json:res.editorial-components.repairs.v2.42"
+    ],
+    "replayHistory": [
+      {
+        "stage": "composition",
+        "jobId": "28e75d62-d230-400d-a817-809d877c9b2b",
+        "responseKey": "e5a476a1-b15a-4fc1-925c-55cf2e5da32b/temporary/d54e35419c424125935b44c9d81fbc1d.json",
+        "repairVersion": "res.editorial-components.repairs.v2.40",
+        "providerSubmission": false
+      },
+      {
+        "stage": "composition",
+        "jobId": "45f66b1b-b17d-4c02-b2a5-6e88a6d9f3a3",
+        "responseKey": "e5a476a1-b15a-4fc1-925c-55cf2e5da32b/temporary/1e22b2dc5d3c4d67be449846690220fb.json",
+        "repairVersion": "res.editorial-components.repairs.v2.40",
+        "providerSubmission": false
+      },
+      {
+        "stage": "composition",
+        "jobId": "7f883cdd-4f3a-4edc-8dac-c0fa2874fa37",
+        "responseKey": "e5a476a1-b15a-4fc1-925c-55cf2e5da32b/temporary/a8f78947cdd942bfac955a008eb7e3e1.json",
+        "repairVersion": "res.editorial-components.repairs.v2.40",
+        "providerSubmission": false
+      },
+      {
+        "stage": "composition",
+        "jobId": "28e75d62-d230-400d-a817-809d877c9b2b",
+        "responseKey": "e5a476a1-b15a-4fc1-925c-55cf2e5da32b/temporary/d54e35419c424125935b44c9d81fbc1d.json",
+        "repairVersion": "res.editorial-components.repairs.v2.42",
+        "providerSubmission": false
+      },
+      {
+        "stage": "composition",
+        "jobId": "45f66b1b-b17d-4c02-b2a5-6e88a6d9f3a3",
+        "responseKey": "e5a476a1-b15a-4fc1-925c-55cf2e5da32b/temporary/1e22b2dc5d3c4d67be449846690220fb.json",
+        "repairVersion": "res.editorial-components.repairs.v2.42",
+        "providerSubmission": false
+      },
+      {
+        "stage": "composition",
+        "jobId": "7f883cdd-4f3a-4edc-8dac-c0fa2874fa37",
+        "responseKey": "e5a476a1-b15a-4fc1-925c-55cf2e5da32b/temporary/a8f78947cdd942bfac955a008eb7e3e1.json",
+        "repairVersion": "res.editorial-components.repairs.v2.42",
+        "providerSubmission": false
+      }
+    ]
+  },
+  "executedJobs": [
+    {
+      "jobId": "6c515baa-ae03-4bda-96d1-b05e3c31a1ec",
+      "kind": "editing_ai",
+      "provider": "compatible.editing-planner",
+      "outcome": "succeeded",
+      "error": null
+    },
+    {
+      "jobId": "7f883cdd-4f3a-4edc-8dac-c0fa2874fa37",
+      "kind": "editing_ai",
+      "provider": "compatible.editing-planner",
+      "outcome": "failed",
+      "error": "ValidationError"
+    },
+    {
+      "jobId": "45f66b1b-b17d-4c02-b2a5-6e88a6d9f3a3",
+      "kind": "editing_ai",
+      "provider": "compatible.editing-planner",
+      "outcome": "failed",
+      "error": "ValidationError"
+    },
+    {
+      "jobId": "28e75d62-d230-400d-a817-809d877c9b2b",
+      "kind": "editing_ai",
+      "provider": "compatible.editing-planner",
+      "outcome": "failed",
+      "error": "ValidationError"
+    },
+    {
+      "jobId": "28e75d62-d230-400d-a817-809d877c9b2b",
+      "kind": "editing_ai",
+      "provider": "compatible.editing-planner",
+      "outcome": "failed",
+      "error": "ValidationError"
+    },
+    {
+      "jobId": "45f66b1b-b17d-4c02-b2a5-6e88a6d9f3a3",
+      "kind": "editing_ai",
+      "provider": "compatible.editing-planner",
+      "outcome": "failed",
+      "error": "ValueError"
+    },
+    {
+      "jobId": "7f883cdd-4f3a-4edc-8dac-c0fa2874fa37",
+      "kind": "editing_ai",
+      "provider": "compatible.editing-planner",
+      "outcome": "failed",
+      "error": "ValueError"
+    },
+    {
+      "jobId": "28e75d62-d230-400d-a817-809d877c9b2b",
+      "kind": "editing_ai",
+      "provider": "compatible.editing-planner",
+      "outcome": "failed",
+      "error": "ValueError"
+    },
+    {
+      "jobId": "45f66b1b-b17d-4c02-b2a5-6e88a6d9f3a3",
+      "kind": "editing_ai",
+      "provider": "compatible.editing-planner",
+      "outcome": "failed",
+      "error": "ValueError"
+    },
+    {
+      "jobId": "7f883cdd-4f3a-4edc-8dac-c0fa2874fa37",
+      "kind": "editing_ai",
+      "provider": "compatible.editing-planner",
+      "outcome": "failed",
+      "error": "ValueError"
+    }
+  ],
+  "manualSceneOrAssetSelection": false,
+  "apiLimitUsd": 1.0,
+  "director": "compatible"
+}

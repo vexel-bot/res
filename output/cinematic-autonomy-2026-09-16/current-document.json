@@ -1,0 +1,35 @@
+{
+  "schemaVersion": "creative-v1",
+  "width": 720,
+  "height": 1280,
+  "safeArea": 48,
+  "background": "#10181c",
+  "brandTokens": {
+    "editorialV2": true,
+    "readOnly": true
+  },
+  "layers": [
+    {
+      "id": "editorial-studio-poster",
+      "name": "Abrir no estúdio",
+      "x": 24.0,
+      "y": 24.0,
+      "width": 672.0,
+      "height": 1232.0,
+      "rotation": 0,
+      "opacity": 1,
+      "visible": true,
+      "locked": false,
+      "zIndex": 0,
+      "type": "text",
+      "text": "Vídeo com edição e motion.\nAbra no estúdio de vídeo para visualizar e revisar.",
+      "fontSize": 24,
+      "minFontSize": 18,
+      "fontFamily": "DejaVu Sans",
+      "fontWeight": "bold",
+      "color": "#ffffff",
+      "align": "left",
+      "lineHeight": 1.15
+    }
+  ]
+}

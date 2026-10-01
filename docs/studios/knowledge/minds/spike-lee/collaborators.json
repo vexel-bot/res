@@ -1,0 +1,24 @@
+{
+  "schema_version": "studio.collaboration-graph.v1",
+  "anchor": "Spike Lee",
+  "status": "credits_pending_per_work_verification",
+  "nodes": [
+    {
+      "name": "Ernest Dickerson",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Barry Alexander Brown",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Terence Blanchard",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Ruth E. Carter",
+      "role": "verify_per_work"
+    }
+  ],
+  "edges": []
+}

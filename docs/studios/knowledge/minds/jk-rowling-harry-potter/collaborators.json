@@ -1,0 +1,32 @@
+{
+  "schema_version": "studio.collaboration-graph.v1",
+  "anchor": "J. K. Rowling e equipe Harry Potter",
+  "status": "credits_pending_per_work_verification",
+  "nodes": [
+    {
+      "name": "Steve Kloves",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Stuart Craig",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "David Heyman",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Chris Columbus",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Alfonso Cuarón",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "David Yates",
+      "role": "verify_per_work"
+    }
+  ],
+  "edges": []
+}

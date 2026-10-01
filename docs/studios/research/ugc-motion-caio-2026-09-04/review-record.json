@@ -1,0 +1,29 @@
+{
+  "schema_version": "research-review-1",
+  "recorded_local_date": "2026-09-04",
+  "subject": "clicko-studios-caio-vale-raw-ad-v1",
+  "asset_path": "C:/Users/edugu/Downloads/clicko-private-evaluation/avatar-renders/caio-vale/clicko-studios-caio-vale-raw-ad-v1.mp4",
+  "sha256": "7a994145054f8c6b192b791c7800e08d06118f5925bb5158e21bd9abd700ee0a",
+  "sha256_rechecked": true,
+  "human_feedback_source": "Mensagem do usuário nesta conversa: voz, rosto, vídeo, cenário e edição estão ruins.",
+  "decision": "rejected_for_creative_use",
+  "axes": {
+    "voice": "rejected_by_user",
+    "face": "rejected_by_user",
+    "video": "rejected_by_user",
+    "scenario": "rejected_by_user",
+    "editing": "rejected_by_user"
+  },
+  "lineage": {
+    "visual_source": "openai-sora-2",
+    "lip_sync_renderer": "musetalk-v1.5-local",
+    "voice": "local-chatterbox-reference-conditioned",
+    "heygemModelCreated": false
+  },
+  "scope_note": "Registro de revisão documental; não alterou o enum de estado de produção ou ledgers anteriores. Aprovação global de R1 preservada.",
+  "new_paid_calls": 0,
+  "new_video_generated": false,
+  "publication_authorized": false,
+  "provider_promoted": false,
+  "next_gate": "prova do produto e aprovação perceptiva curta de voz/rosto antes de novo anúncio integral"
+}

@@ -1,0 +1,97 @@
+{
+  "version": 1,
+  "source": "User supplied motion-vox font bundle",
+  "fonts": [
+    {
+      "file": "ArchivoNarrow[wght].ttf",
+      "family": "Archivo Narrow",
+      "license": "OFL-ArchivoNarrow.txt",
+      "axes": [
+        {
+          "tag": "wght",
+          "minimum": 400.0,
+          "default": 400.0,
+          "maximum": 700.0
+        }
+      ],
+      "sha256": "adbe027f625c8393ae0f6e174e32e233dda485bc3eda5153ce428275394ef97f",
+      "licenseSha256": "b2087ef3fb91248e346600d19021249152a9688efea72905aa1996bb16a4c8de"
+    },
+    {
+      "file": "Inter[opsz,wght].ttf",
+      "family": "Inter",
+      "license": "OFL-Inter.txt",
+      "axes": [
+        {
+          "tag": "opsz",
+          "minimum": 14.0,
+          "default": 14.0,
+          "maximum": 32.0
+        },
+        {
+          "tag": "wght",
+          "minimum": 100.0,
+          "default": 400.0,
+          "maximum": 900.0
+        }
+      ],
+      "sha256": "29160a80ff49ddcab2c97711247e08b1fab27a484a329ce8b813d820dc559031",
+      "licenseSha256": "5b9321a4298cfeb6b34354164a1c3afc3db114569984c502b9b35d988fd58c57"
+    },
+    {
+      "file": "Fraunces[SOFT,WONK,opsz,wght].ttf",
+      "family": "Fraunces",
+      "license": "OFL-Fraunces.txt",
+      "axes": [
+        {
+          "tag": "opsz",
+          "minimum": 9.0,
+          "default": 9.0,
+          "maximum": 144.0
+        },
+        {
+          "tag": "wght",
+          "minimum": 100.0,
+          "default": 900.0,
+          "maximum": 900.0
+        },
+        {
+          "tag": "SOFT",
+          "minimum": 0.0,
+          "default": 0.0,
+          "maximum": 100.0
+        },
+        {
+          "tag": "WONK",
+          "minimum": 0.0,
+          "default": 1.0,
+          "maximum": 1.0
+        }
+      ],
+      "sha256": "177ff6c0f14e5550a3c624247cd1189611d4eb65d000b14944c63d967958abbb",
+      "licenseSha256": "bdf4c22802eaf804f998195871c6b8938aac2ac14b2d78a8bd66a6f1eced833b"
+    },
+    {
+      "file": "IBMPlexMono-Medium.ttf",
+      "family": "IBM Plex Mono Medium",
+      "license": "OFL-IBMPlexMono.txt",
+      "axes": [],
+      "sha256": "a9b4c49bb299e05b5f6c481e7fb5e78943d2793249a0c8874ab574a2d1ea6755",
+      "licenseSha256": "7e6b2818edbd8f6a01ae80641cc8f16a51080d08fb4e532be3a0b6f74adb07da"
+    },
+    {
+      "file": "PermanentMarker-Regular.ttf",
+      "family": "Permanent Marker",
+      "license": "LICENSE-PermanentMarker.txt",
+      "axes": [],
+      "sha256": "28f82c8a7943cb8e9d599f8554da1d4fc75dbcf69b9885ad6c0611d20c6946c5",
+      "licenseSha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    }
+  ],
+  "missingAssets": {
+    "status": "unavailable",
+    "expected": 16,
+    "included": 0
+  },
+  "qualification": "font_files_verified_not_style_qualification"
+}

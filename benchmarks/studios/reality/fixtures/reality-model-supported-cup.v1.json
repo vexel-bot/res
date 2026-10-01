@@ -1,0 +1,137 @@
+{
+  "schemaVersion": "studio.reality-model.v1",
+  "realityModelId": "reality-model-supported-cup-001",
+  "analysisId": "analysis-supported-cup-001",
+  "workspaceId": "workspace-fixture-001",
+  "sourceAsset": {
+    "id": "asset-supported-cup-001",
+    "version": 1,
+    "mediaType": "video/mp4",
+    "checksum": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "origin": "synthetic-fixture",
+    "rightsStatus": "verified",
+    "provenance": {"fixture": true}
+  },
+  "sourceTimeMapId": "time-map-supported-cup-001",
+  "sourceTimeMapDigestSha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "analysisPolicyDigestSha256": "7777777777777777777777777777777777777777777777777777777777777777",
+  "frameRate": {"numerator": 30, "denominator": 1},
+  "totalFrames": 90,
+  "shots": [
+    {
+      "shotId": "shot-001",
+      "frameRange": {"startFrame": 0, "endFrameExclusive": 90},
+      "transitionIn": "start",
+      "transitionOut": "end"
+    }
+  ],
+  "status": "complete",
+  "cameraObservations": [
+    {
+      "observationId": "camera-001",
+      "shotId": "shot-001",
+      "frameRange": {"startFrame": 0, "endFrameExclusive": 90},
+      "motion": "static",
+      "upVector": {"x": 0.0, "y": -1.0},
+      "gravityDirection": {"x": 0.0, "y": 1.0},
+      "horizonY": 0.38,
+      "confidence": 0.96,
+      "evidenceIds": ["evidence-camera-001"]
+    }
+  ],
+  "entities": [
+    {
+      "entityId": "table-001",
+      "displayName": "Mesa",
+      "entityType": "surface",
+      "semanticTags": ["support", "furniture"],
+      "properties": {"rigid": true},
+      "confidence": 0.99
+    },
+    {
+      "entityId": "cup-001",
+      "displayName": "Copo",
+      "entityType": "rigid_object",
+      "semanticTags": ["prop", "container"],
+      "properties": {"rigid": true},
+      "confidence": 0.98
+    }
+  ],
+  "tracks": [
+    {
+      "trackId": "track-table-001",
+      "entityId": "table-001",
+      "frameRange": {"startFrame": 0, "endFrameExclusive": 90},
+      "samples": [
+        {"frameIndex": 0, "centroid": {"x": 0.5, "y": 0.72}, "boundingBox": {"xMin": 0.05, "yMin": 0.62, "xMax": 0.95, "yMax": 0.94}, "normalizedDepth": 0.6, "visibility": "visible", "confidence": 0.99, "evidenceIds": ["evidence-table-track-001"]},
+        {"frameIndex": 45, "centroid": {"x": 0.5, "y": 0.72}, "boundingBox": {"xMin": 0.05, "yMin": 0.62, "xMax": 0.95, "yMax": 0.94}, "normalizedDepth": 0.6, "visibility": "visible", "confidence": 0.99, "evidenceIds": ["evidence-table-track-001"]},
+        {"frameIndex": 89, "centroid": {"x": 0.5, "y": 0.72}, "boundingBox": {"xMin": 0.05, "yMin": 0.62, "xMax": 0.95, "yMax": 0.94}, "normalizedDepth": 0.6, "visibility": "visible", "confidence": 0.99, "evidenceIds": ["evidence-table-track-001"]}
+      ],
+      "confidence": 0.99
+    },
+    {
+      "trackId": "track-cup-001",
+      "entityId": "cup-001",
+      "frameRange": {"startFrame": 0, "endFrameExclusive": 90},
+      "samples": [
+        {"frameIndex": 0, "centroid": {"x": 0.5, "y": 0.52}, "boundingBox": {"xMin": 0.44, "yMin": 0.4, "xMax": 0.56, "yMax": 0.62}, "normalizedDepth": 0.55, "visibility": "visible", "confidence": 0.98, "evidenceIds": ["evidence-cup-track-001"]},
+        {"frameIndex": 45, "centroid": {"x": 0.5, "y": 0.52}, "boundingBox": {"xMin": 0.44, "yMin": 0.4, "xMax": 0.56, "yMax": 0.62}, "normalizedDepth": 0.55, "visibility": "visible", "confidence": 0.98, "evidenceIds": ["evidence-cup-track-001"]},
+        {"frameIndex": 89, "centroid": {"x": 0.5, "y": 0.52}, "boundingBox": {"xMin": 0.44, "yMin": 0.4, "xMax": 0.56, "yMax": 0.62}, "normalizedDepth": 0.55, "visibility": "visible", "confidence": 0.98, "evidenceIds": ["evidence-cup-track-001"]}
+      ],
+      "confidence": 0.98
+    }
+  ],
+  "relations": [
+    {
+      "relationId": "relation-support-001",
+      "relationType": "supports",
+      "sourceEntityId": "table-001",
+      "targetEntityId": "cup-001",
+      "frameRange": {"startFrame": 0, "endFrameExclusive": 90},
+      "state": "present",
+      "confidence": 0.94,
+      "evidenceIds": ["evidence-contact-001", "evidence-camera-001"]
+    }
+  ],
+  "events": [
+    {
+      "eventId": "event-contact-001",
+      "eventType": "contact",
+      "frameRange": {"startFrame": 0, "endFrameExclusive": 90},
+      "entityIds": ["table-001", "cup-001"],
+      "causeEventIds": [],
+      "description": "O copo permanece apoiado sobre a mesa durante o shot.",
+      "confidence": 0.94,
+      "evidenceIds": ["evidence-contact-001"]
+    }
+  ],
+  "hypotheses": [
+    {
+      "hypothesisId": "hypothesis-support-001",
+      "principle": "support_gravity",
+      "frameRange": {"startFrame": 0, "endFrameExclusive": 90},
+      "entityIds": ["table-001", "cup-001"],
+      "claim": "A mesa sustenta o copo contra a direção estimada da gravidade.",
+      "expectedObservation": "A base do copo permanece em contato com a superfície e sua trajetória fica estável.",
+      "observedEvidence": "Track estável, contato persistente e gravidade vertical para baixo.",
+      "status": "supported",
+      "confidence": 0.93,
+      "supportingEvidenceIds": ["evidence-contact-001", "evidence-cup-track-001", "evidence-camera-001"],
+      "contradictingEvidenceIds": []
+    }
+  ],
+  "evidence": [
+    {"evidenceId": "evidence-camera-001", "contributionId": "geometry-001", "kind": "camera_geometry", "frameRange": {"startFrame": 0, "endFrameExclusive": 90}, "entityIds": [], "description": "Orientação e horizonte estimados no shot.", "confidence": 0.96},
+    {"evidenceId": "evidence-table-track-001", "contributionId": "tracking-001", "kind": "point_track", "frameRange": {"startFrame": 0, "endFrameExclusive": 90}, "entityIds": ["table-001"], "description": "Trajetória normalizada da mesa.", "confidence": 0.99},
+    {"evidenceId": "evidence-cup-track-001", "contributionId": "tracking-001", "kind": "point_track", "frameRange": {"startFrame": 0, "endFrameExclusive": 90}, "entityIds": ["cup-001"], "description": "Trajetória normalizada do copo.", "confidence": 0.98},
+    {"evidenceId": "evidence-contact-001", "contributionId": "scene-001", "kind": "rule_trace", "frameRange": {"startFrame": 0, "endFrameExclusive": 90}, "entityIds": ["table-001", "cup-001"], "description": "Contato inferido entre a base do copo e o topo da mesa.", "confidence": 0.94}
+  ],
+  "lineage": [
+    {"contributionId": "geometry-001", "contributionKind": "geometry", "provider": "fixture.geometry", "providerVersion": "1.0.0", "codeDigestSha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc", "inputDigestSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "parametersDigestSha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd", "generatedAt": "2026-08-25T12:00:00Z"},
+    {"contributionId": "tracking-001", "contributionKind": "tracking", "provider": "fixture.tracking", "providerVersion": "1.0.0", "codeDigestSha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "inputDigestSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "parametersDigestSha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff", "generatedAt": "2026-08-25T12:00:00Z"},
+    {"contributionId": "scene-001", "contributionKind": "scene", "provider": "fixture.scene", "providerVersion": "1.0.0", "codeDigestSha256": "1111111111111111111111111111111111111111111111111111111111111111", "inputDigestSha256": "2222222222222222222222222222222222222222222222222222222222222222", "parametersDigestSha256": "3333333333333333333333333333333333333333333333333333333333333333", "generatedAt": "2026-08-25T12:00:00Z"}
+  ],
+  "abstainedPrinciples": ["biomechanics", "event_sound", "material_behavior"],
+  "limitations": ["Fixture sem áudio, pessoas ou materiais deformáveis."],
+  "generatedAt": "2026-08-25T12:00:00Z"
+}

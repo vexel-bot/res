@@ -1,0 +1,99 @@
+{
+  "schemaVersion": "clicko.local-self-hosted-readiness.v1",
+  "recordedAt": "2026-08-28T16:50:00Z",
+  "host": {
+    "operatingSystem": "Windows",
+    "logicalProcessors": 12,
+    "physicalMemoryBytes": 8300584960,
+    "gpu": {
+      "name": "NVIDIA GeForce RTX 2050",
+      "totalMemoryMiB": 4096
+    }
+  },
+  "assetManifest": {
+    "path": "workers/local-evaluation/self-hosted-model-assets.v1.json",
+    "sha256": "50ac7408f2fd17f10a2822dcda3a75ecdfa0ace69fb1c5d0991195cd259e6fc9",
+    "allSelectedAssetsVerified": true,
+    "totalSelectedBytes": 5738848069,
+    "trackedByGit": false
+  },
+  "qwen": {
+    "candidateId": "qwen3-4b-gguf-q4-k-m-local-evaluation",
+    "modelRepository": "Qwen/Qwen3-4B-GGUF",
+    "modelRevision": "bc640142c66e1fdd12af0bd68f40445458f3869b",
+    "modelSha256": "7485fe6f11af29433bc51cab58009521f205840f5b4ae3a32fa7f92e8534fdf5",
+    "modelSizeBytes": 2497280256,
+    "parameterCount": 4022468096,
+    "quantization": "Q4_K_M",
+    "runtime": {
+      "repository": "ggml-org/llama.cpp",
+      "sourceRevision": "90c26fcd4b2114b4aa39d09d69318cb8f438d27a",
+      "build": "b10675-90c26fcd4",
+      "backend": "Vulkan",
+      "archiveSha256": "dd25aa57f76111d97755175b91a16a8d2f27aceaba9829ae85b698b1981d918b"
+    },
+    "cliSmoke": {
+      "completed": true,
+      "completion": "OK.",
+      "promptTokensPerSecond": 215.3,
+      "generationTokensPerSecond": 14.8,
+      "rawLogSha256": "e6869cc731a0ebf5e0952d5e0e04b2ed273fee58b4846d5ac8e7668657a208e0"
+    },
+    "api": {
+      "protocol": "OpenAI-compatible",
+      "baseUrl": "http://127.0.0.1:18080/v1",
+      "modelAlias": "clicko-qwen3-4b-q4-k-m",
+      "authentication": "Bearer key from .env:AI_API_KEY",
+      "unauthorizedStatus": 401,
+      "authorizedCompletion": "OK.",
+      "promptTokensPerSecond": 58.57290926547025,
+      "generationTokensPerSecond": 33.41185118361483,
+      "loopbackOnly": true,
+      "productionOrInternetExposed": false
+    },
+    "providerActivated": false,
+    "decision": "usable-local-evaluation-api"
+  },
+  "chatterbox": {
+    "candidateId": "chatterbox-pt-br",
+    "modelRepository": "ResembleAI/Chatterbox-Multilingual-pt-br",
+    "modelRevision": "b3952f18bc2eaa72b9bd7c17d2c4653bcad4770d",
+    "parameterCount": 500000000,
+    "assets": [
+      {"path": "ve.pt", "sizeBytes": 5698626, "sha256": "4b16d836bc598509860f6fa068165a8bb5e9ac84f05582dfcf278a5a372879f1"},
+      {"path": "grapheme_mtl_merged_expanded_v1.json", "sizeBytes": 69989, "sha256": "69632f47220a788a52ce2661d096453c5655e9bf25289d89a8d832c46ee07dbf"},
+      {"path": "s3gen.pt", "sizeBytes": 1056903694, "sha256": "f7abce4b196dae2d08d9296cbebc6521b046079577643b42a19a03499d08721e"},
+      {"path": "t3_pt_br.safetensors", "sizeBytes": 2143990296, "sha256": "074aaf65255eb9cb960288f7cc72e09d3b5008f6e0b14868c0d4e5b0bd7cbb6c"}
+    ],
+    "containerPreflight": {
+      "image": "clicko/chatterbox-voice-clone:0.2.0-evaluation",
+      "imageId": "sha256:ed360fd294a00ae727652067295796937466ebd0d9883e56d0f9e918bab13444",
+      "imageSizeBytes": 3391916029,
+      "runAsUser": "clicko",
+      "network": "none",
+      "readOnlyRootFilesystem": true,
+      "assetMount": "read-only",
+      "assetLayoutExact": true,
+      "cudaAvailable": true,
+      "observedGpuMemoryMiB": 4095,
+      "requiredWorkerMemoryMiB": 16384,
+      "meetsWorkerFloor": false
+    },
+    "biometricInputUsed": false,
+    "inferenceAttempted": false,
+    "providerActivated": false,
+    "decision": "assets-ready-external-gpu-required"
+  },
+  "excluded": {
+    "qwen3Vl": "official BF16 2B weight and runtime do not safely fit this host",
+    "qwen3Omni": "70,523,299,202 weight bytes plus unresolved license gate",
+    "avatarModels": "external 12+ GiB GPU lane and complete dependency/weight review required"
+  },
+  "workerManifestBindings": {
+    "llmGpuManifestSha256": "ce3c027ca5e3a259621a4e852c544d70ac0e581fc6a7d0f9f4085b50172aa260",
+    "speechGpuManifestSha256": "a222855c555b6b44ba483364d2128ab60c27c9e0b080e410ec87060f70d9900c",
+    "llmGpuProviders": [],
+    "speechGpuProviders": []
+  },
+  "vpsTouched": false
+}

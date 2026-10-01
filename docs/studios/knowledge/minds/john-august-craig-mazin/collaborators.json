@@ -1,0 +1,20 @@
+{
+  "schema_version": "studio.collaboration-graph.v1",
+  "anchor": "John August e Craig Mazin",
+  "status": "credits_pending_per_work_verification",
+  "nodes": [
+    {
+      "name": "Scriptnotes guests",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Three Page Challenge writers",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "production collaborators per work",
+      "role": "verify_per_work"
+    }
+  ],
+  "edges": []
+}

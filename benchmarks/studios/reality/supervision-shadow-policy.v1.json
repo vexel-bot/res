@@ -1,0 +1,23 @@
+{
+  "schemaVersion": "clicko.supervision-shadow-policy.v1",
+  "policyId": "supervision-sv4-synthetic-shadow-v1",
+  "frozenAt": "2026-08-28T00:00:00Z",
+  "syntheticOnly": true,
+  "thresholds": {
+    "maxProjectionDivergenceRate": 0.0,
+    "minZoneParity": 1.0,
+    "minOverlayPixelParity": 1.0,
+    "maxFailureRate": 0.0,
+    "maxAbstentionRate": 0.0,
+    "maxOrphanEvidence": 0,
+    "maxOrphanDerivedAssets": 0,
+    "maxLatencyP95Ms": 50.0,
+    "maxPythonPeakMemoryMib": 128.0
+  },
+  "promotionEffect": "none",
+  "notes": [
+    "Thresholds are frozen before the first SV-4 synthetic shadow run.",
+    "The OpenCV primitive reference remains authoritative in shadow mode.",
+    "Passing this policy cannot activate or advertise a provider."
+  ]
+}

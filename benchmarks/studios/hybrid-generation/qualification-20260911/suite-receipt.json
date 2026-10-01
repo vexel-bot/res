@@ -1,0 +1,70 @@
+{
+  "schemaVersion": "res.local-video-qualification-suite.v1",
+  "profileId": "animatediff-lightning-sd15-a-v1",
+  "status": "blocked_resources",
+  "capability": {
+    "schemaVersion": "res.local-video-preflight.v2",
+    "profileId": "animatediff-lightning-sd15-a-v1",
+    "phase": "execution",
+    "status": "blocked_resources",
+    "reasons": [
+      "blocked_current_load"
+    ],
+    "modelDownloadStarted": false,
+    "resources": {
+      "diskFreeBytes": 32772227072,
+      "requiredDiskFreeBytes": 16213918240,
+      "minimumExecutionDiskFreeBytes": 1073741824,
+      "expectedDownloadBytes": 3651000000,
+      "downloadScratchBytes": 1825500000,
+      "minimumFreeBytesAfterInstall": 10737418240,
+      "systemRamTotalMiB": 7916,
+      "systemRamFreeMiB": 1391,
+      "systemCommitTotalMiB": 19938,
+      "systemCommitFreeMiB": 7741,
+      "gpus": [
+        {
+          "name": "NVIDIA GeForce RTX 2050",
+          "totalMiB": 4096,
+          "freeMiB": 3962,
+          "driverVersion": "591.86"
+        }
+      ],
+      "cachePath": "C:\\Users\\edugu\\Downloads\\res\\workers\\media-generation-local\\.model-cache",
+      "offloadPath": "C:\\Users\\edugu\\Downloads\\res\\workers\\media-generation-local\\.offload"
+    },
+    "environment": {
+      "lockStatus": "qualified",
+      "lockDigestSha256": "693ffbc0fefc0d77abd81b4336b8de837ec07318e0f5083bcec66f93aaa24d31",
+      "lockedVersions": {
+        "torch": "2.7.0+cu118",
+        "diffusers": "0.40.0",
+        "transformers": "5.17.0",
+        "accelerate": "1.15.0",
+        "safetensors": "0.8.0",
+        "huggingface-hub": "1.31.0"
+      },
+      "versionMismatches": {},
+      "missingPackages": [],
+      "versions": {
+        "torch": "2.7.0+cu118",
+        "diffusers": "0.40.0",
+        "transformers": "5.17.0",
+        "accelerate": "1.15.0",
+        "safetensors": "0.8.0",
+        "huggingface-hub": "1.31.0"
+      },
+      "cudaAvailable": true
+    },
+    "model": {
+      "adapter": "animatediff_lightning",
+      "expectedDownloadBytes": 3651000000
+    },
+    "resourceAdmission": "blocked_resources",
+    "modelReadiness": "ready",
+    "adapterSupport": "available",
+    "qualificationState": "experimental",
+    "usableNow": false
+  },
+  "matrix": []
+}

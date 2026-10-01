@@ -1,0 +1,22 @@
+{
+  "schema_version": "studio.creative-mind-sources.v1",
+  "mind": "Hayao Miyazaki",
+  "research_status": "seed_evidence_only",
+  "sources": [
+    {
+      "url": "https://www.ghibli.jp/",
+      "tier": "institutional_or_primary_starting_point",
+      "reviewed": false
+    },
+    {
+      "url": "https://www.oscars.org/collection-highlights/hayao-miyazaki",
+      "tier": "institutional_or_primary_starting_point",
+      "reviewed": false
+    }
+  ],
+  "global_methods": [
+    "https://www.wgfoundation.org/screenplay-primers",
+    "https://www.bafta.org/programmes/screenwriters-lecture-series",
+    "https://www.dga.org/Craft/VisualHistory"
+  ]
+}

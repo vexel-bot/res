@@ -1,0 +1,30 @@
+{
+  "schemaVersion": "studio.visual-quality-phase-validation.v1",
+  "recordedAt": "2026-10-01",
+  "technicalFunctioning": {
+    "status": "passed_for_indicator_and_contracts",
+    "checks": [
+      "77 focused backend tests passed: visual quality program, editorial production, editing resources, visual direction audit",
+      "9 phase-specific tests passed, including real SQLite shared-budget reservation across two workspaces",
+      "TypeScript: npx tsc --noEmit passed",
+      "2 Playwright tests passed: pending indicator and audiovisual request; comparison playback, bound receipt and obsolete session discard",
+      "Comparison integrity: distinct control, active/checksummed sources, verified duration, trim bounds and stale render rejection",
+      "Ruff: new visual quality services and tests passed",
+      "Viewed A/B checksums required by comparison API; concurrent export replacement rejected"
+    ]
+  },
+  "visualQuality": "pending_actual_full_video_human_review",
+  "autonomy": "not_demonstrated_for_this_phase",
+  "blindComparison": "pending_actual_independent_human_comparison",
+  "apiCostUsd": 0,
+  "promotionToRenderVerified": false,
+  "userScopeAdjustment": "Use safe local diagnostic materials; do not search other projects.",
+  "diagnosticMedia": {
+    "file": "output/editorial-operations-20260930/bebida/animatic-A.mp4",
+    "sha256": "b71d0367a71ccbe81296be1f586a7313200072189726655ecc907dd4d785c0cf",
+    "use": "UI contract test only; same file in all mocked previews, not a visual comparison",
+    "humanScoresRecorded": false
+  },
+  "newCommercialExports": 0,
+  "apiCallsThisContinuation": 0
+}

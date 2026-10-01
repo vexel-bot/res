@@ -1,0 +1,162 @@
+{
+  "schemaVersion": "studio.raw-avatar-ad-pilot.v1",
+  "pilotId": "clicko-studios-caio-vale-raw-ad-v1",
+  "state": "avatar_rendered_private_review",
+  "publicationState": "private_review",
+  "avatarId": "avatar-caio-vale",
+  "audience": "Agências de conteúdo que precisam aumentar produção sem perder estratégia, identidade e revisão.",
+  "cta": "Solicitar acesso ao piloto",
+  "spokenCopy": "Se sua agência começa um vídeo escolhendo cenas, ela já começou pela etapa errada. Sem uma lógica comum, oferta, audiência e referências viram decisões soltas na produção. O Clicko Studios organiza estratégia, copy, roteiro, personagem e produção em um fluxo revisável. Cada decisão fica ligada ao objetivo da campanha. Assim, sua equipe pode avaliar o que funciona, corrigir a etapa certa e preservar a identidade de cada projeto. Solicite acesso ao piloto do Clicko Studios.",
+  "durationPolicy": {
+    "schemaVersion": "studio.content-fit-duration-policy.v1",
+    "mode": "content_fit",
+    "minimumSeconds": 24,
+    "maximumSeconds": 45,
+    "measuredWavSeconds": 44.52,
+    "cutSentencesAllowed": false,
+    "artificialSpeedChangeAllowed": false
+  },
+  "voice": {
+    "provider": "chatterbox-multilingual-pt-br-reference-conditioned",
+    "locale": "pt-BR",
+    "clone": true,
+    "referenceAudioProvided": true,
+    "voiceEncoderLoaded": true,
+    "consentGrantId": "user-session-authorization-2026-09-04",
+    "referencePathPersisted": false,
+    "artifactFilename": "caio-full-ad-v3.wav",
+    "privateArtifactRoot": "outside_repository",
+    "artifactChecksumSha256": "8f5df5e8efc4bd7d4ab54b3cc1ec9dd50d62b9be1ba01f3faeb983b64b68419b",
+    "durationSeconds": 44.52,
+    "status": "automatic_transcript_checked_pending_human_naturalness",
+    "watermark": "PerTh",
+    "referenceIntegerCodesPreserved": true
+  },
+  "rejectedVoiceAttempts": [
+    {
+      "provider": "kokoro-82m-stock",
+      "voiceKey": "pm_alex",
+      "artifactPath": "artifacts/studios/avatar-pilots/caio-vale/clicko-studios-caio-vale-pm-alex-v1.wav",
+      "artifactChecksumSha256": "3f9de769acfd73c7f7f65885c66697cd3ac32d3b678f0d164b8e94c99e648582",
+      "durationSeconds": 32.125,
+      "status": "rejected_human_naturality",
+      "reason": "Perceived as a generic AI voice by the user on 2026-09-04."
+    }
+  ],
+  "voiceCasting": {
+    "provider": "chatterbox-multilingual-pt-br-reference-conditioned",
+    "referenceAuthorized": true,
+    "referencePathPersisted": false,
+    "consentGrantId": "user-session-authorization-2026-09-04",
+    "status": "reference_conditioning_corrected_v3_generated",
+    "privateArtifactRoot": "outside_repository",
+    "variantIds": [
+      "a-close-conversation",
+      "b-agile-warmth",
+      "c-clear-invitation"
+    ]
+  },
+  "baseVideo": {
+    "provider": "openai.sora-2",
+    "model": "sora-2",
+    "durationSeconds": 12,
+    "resolution": "720x1280",
+    "maximumCostUsd": 1.5,
+    "status": "generated_sampled_visual_admission",
+    "preflightLastAttemptAt": "2026-09-04",
+    "preflightError": null,
+    "previousPreflightError": "provider_authentication_failed",
+    "operationCreated": true,
+    "postCount": 1,
+    "costIncurredUsd": null,
+    "estimatedAccruedCostUsd": 1.2,
+    "invoiceVerified": false,
+    "operationId": "video_6a9b4a23a3348191ac64616dd4dee7430ce114a31905529b",
+    "checksumSha256": "e777ee42a96a44c4f1e56b8ff8273e9f1a12d2d2127a6fe11fa0675234921912",
+    "artifactPath": "artifacts/studios/avatar-pilots/caio-vale/base-video-v1.mp4"
+  },
+  "avatarRenderer": {
+    "architecturalReference": "heygem-visual-only",
+    "effectiveProvider": "musetalk-v1.5-local",
+    "heygemModelCreated": false,
+    "status": "rendered_private_review",
+    "adapter": "fixed-camera-roi-v1"
+  },
+  "copyAudit": {
+    "qualityScale": "0-10; higher is better",
+    "johnCarlton": 9,
+    "claudeHopkins": 9,
+    "garyBencivenga": 9,
+    "danKennedy": 9,
+    "cubRiskScale": "1-10; lower is better",
+    "cub": {
+      "confusing": 2,
+      "unbelievable": 2,
+      "boring": 3
+    },
+    "approved": false,
+    "previousVersionAudit": {
+      "qualityScale": "0-10; higher is better",
+      "johnCarlton": 9,
+      "claudeHopkins": 9,
+      "garyBencivenga": 9,
+      "danKennedy": 9,
+      "cubRiskScale": "1-10; lower is better",
+      "cub": {
+        "confusing": 2,
+        "unbelievable": 2,
+        "boring": 3
+      },
+      "approved": true
+    },
+    "revisionNote": "Two redundant sentences removed. Five beats and CTA retained; previous numerical lens scores are historical, not a new independent audit."
+  },
+  "voiceHistory": [
+    {
+      "provider": "chatterbox-multilingual-pt-br-stock",
+      "voiceKey": "builtin-stock-voice",
+      "locale": "pt-BR",
+      "clone": false,
+      "referenceAudioProvided": false,
+      "voiceEncoderLoaded": false,
+      "watermark": "PerTh",
+      "status": "rejected_human_naturality",
+      "humanReviewReason": "User rejected the Chatterbox stock voice on 2026-09-04 and requested planning for a reference-conditioned voice.",
+      "artifactPath": "artifacts/studios/avatar-pilots/caio-vale/clicko-studios-caio-vale-chatterbox-ptbr-v1.wav",
+      "artifactChecksumSha256": "ce7e1ef200798f486d94abb8b9c365eeca9636295747eef0fc927aad4c9fc55e",
+      "durationSeconds": 27.12,
+      "integratedLoudnessLufs": -16.1,
+      "truePeakDbfs": -1.4,
+      "clippingDetected": false
+    }
+  ],
+  "output": {
+    "path": "C:\\Users\\edugu\\Downloads\\clicko-private-evaluation\\avatar-renders\\caio-vale\\clicko-studios-caio-vale-raw-ad-v1.mp4",
+    "checksumSha256": "7a994145054f8c6b192b791c7800e08d06118f5925bb5158e21bd9abd700ee0a",
+    "durationSeconds": 44.52,
+    "width": 720,
+    "height": 1280,
+    "fps": 25,
+    "frameCount": 1113,
+    "bytes": 11215416,
+    "renderElapsedSeconds": 691.3,
+    "gpuPeakAllocatedBytes": 2055689728,
+    "publicationState": "private_review",
+    "humanApproved": false
+  },
+  "qc": {
+    "decodedFrames": 1113,
+    "nearBlackFrames": 0,
+    "outsideHeadMaxMeanPixelError": 1.6389468908309937,
+    "outsideHeadThreshold": 3,
+    "integratedLoudnessLufs": -17,
+    "truePeakDbfs": -1.46,
+    "syntheticDisclosureInMetadata": true,
+    "subjectiveLipSyncApproved": false,
+    "limitations": [
+      "Beard and mouth detail softened.",
+      "12-second source repeats bidirectionally.",
+      "Human naturalness and identity review pending."
+    ]
+  }
+}

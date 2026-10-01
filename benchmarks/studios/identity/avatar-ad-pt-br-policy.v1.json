@@ -1,0 +1,176 @@
+{
+  "schemaVersion": "studio.benchmark-policy.v1",
+  "suiteId": "clicko.avatar-ad.pt-br.v1",
+  "policyVersion": "1.0.0",
+  "capability": "avatar_ad",
+  "locale": "pt-BR",
+  "status": "frozen",
+  "frozenAt": "2026-08-26T15:00:00Z",
+  "frozenBy": "clicko-product-engineering-baseline",
+  "corpus": {
+    "manifestSchema": "studio.avatar-ad-benchmark-corpus.v1",
+    "minimumSubjects": 6,
+    "minimumCases": 96,
+    "minimumConsentCoverage": 1.0,
+    "requiredLocales": ["pt-BR"],
+    "requiredScenarios": [
+      "catalog-three-men-three-women",
+      "copy-problem-solution",
+      "copy-testimonial",
+      "copy-demo",
+      "copy-offer",
+      "duration-15s",
+      "duration-30s",
+      "scenario-neutral-studio",
+      "scenario-product-context",
+      "format-9x16",
+      "pt-br-brand-names-numbers-currency",
+      "moderate-head-and-hand-motion",
+      "skin-tone-age-hair-and-lighting-diversity"
+    ],
+    "rawBiometricDataAllowedInRepository": false
+  },
+  "candidates": [
+    {
+      "candidateId": "ditto-upstream",
+      "displayName": "Ditto upstream",
+      "role": "talking_head",
+      "executionCapability": "vision_gpu",
+      "licenseGate": "rejected",
+      "benchmarkScope": "evidence_only",
+      "components": [
+        {
+          "componentId": "ditto-code",
+          "kind": "code",
+          "sourceUrl": "https://github.com/antgroup/ditto-talkinghead",
+          "sourceRevision": "c3e47eee2e626500017a0556b470d6d4182f85e8",
+          "license": "Apache-2.0",
+          "commercialUse": "approved"
+        },
+        {
+          "componentId": "ditto-checkpoints-upstream",
+          "kind": "model",
+          "sourceUrl": "https://huggingface.co/digital-avatar/ditto-talkinghead",
+          "sourceRevision": "unresolved-hf-revision",
+          "license": "Apache-2.0 plus bundled InsightFace model terms",
+          "commercialUse": "restricted",
+          "notes": "The documented checkpoint tree includes insightface_det.onnx. Upstream bytes are excluded until a permissive detector/landmark replacement is selected and rebenchmarked."
+        }
+      ]
+    },
+    {
+      "candidateId": "echomimic-v3-flash",
+      "displayName": "EchoMimicV3 Flash",
+      "role": "body_avatar",
+      "executionCapability": "vision_gpu",
+      "licenseGate": "review_required",
+      "benchmarkScope": "synthetic_only",
+      "components": [
+        {
+          "componentId": "echomimic-v3-code",
+          "kind": "code",
+          "sourceUrl": "https://github.com/antgroup/echomimic_v3",
+          "sourceRevision": "7e89489ca51c0d008fc1963ec6c03fc5bd0b9397",
+          "license": "Apache-2.0",
+          "commercialUse": "approved"
+        },
+        {
+          "componentId": "echomimic-v3-flash-weights",
+          "kind": "model",
+          "sourceUrl": "https://huggingface.co/BadToBest/EchoMimicV3",
+          "sourceRevision": "unresolved-hf-revision",
+          "license": "Apache-2.0 declared upstream",
+          "commercialUse": "unknown"
+        },
+        {
+          "componentId": "echomimic-transitive-model-chain",
+          "kind": "runtime",
+          "sourceUrl": "https://github.com/antgroup/echomimic_v3/blob/7e89489ca51c0d008fc1963ec6c03fc5bd0b9397/README.md",
+          "sourceRevision": "unresolved-transitive-lock",
+          "license": "Mixed/UNKNOWN",
+          "commercialUse": "unknown",
+          "notes": "Wan base, Wav2Vec2, Chinese Wav2Vec2, face detection and all binary wheels require independent pins, hashes and license decisions."
+        }
+      ]
+    },
+    {
+      "candidateId": "wan2-2-animate-14b",
+      "displayName": "Wan2.2 Animate 14B",
+      "role": "generative_avatar",
+      "executionCapability": "vision_gpu",
+      "licenseGate": "review_required",
+      "benchmarkScope": "synthetic_only",
+      "components": [
+        {
+          "componentId": "wan2-2-code",
+          "kind": "code",
+          "sourceUrl": "https://github.com/Wan-Video/Wan2.2",
+          "sourceRevision": "42bf4cfaa384bc21833865abc2f9e6c0e67233dc",
+          "license": "Apache-2.0",
+          "commercialUse": "approved"
+        },
+        {
+          "componentId": "wan2-2-animate-14b-weights",
+          "kind": "model",
+          "sourceUrl": "https://huggingface.co/Wan-AI/Wan2.2-Animate-14B",
+          "sourceRevision": "unresolved-hf-revision",
+          "license": "Apache-2.0 declared upstream",
+          "commercialUse": "unknown"
+        },
+        {
+          "componentId": "wan2-2-runtime-chain",
+          "kind": "runtime",
+          "sourceUrl": "https://github.com/Wan-Video/Wan2.2/blob/42bf4cfaa384bc21833865abc2f9e6c0e67233dc/requirements.txt",
+          "sourceRevision": "unresolved-production-lock",
+          "license": "Mixed/UNKNOWN",
+          "commercialUse": "unknown",
+          "notes": "The 14B path is an advanced lane and may require multi-GPU/80 GB-class execution; it cannot consume the 24 GB MVP budget without a separately proven optimized build."
+        }
+      ]
+    }
+  ],
+  "thresholds": [
+    {"metricId":"human_visual_realism_mos","displayName":"Realismo visual humano MOS","unit":"mos_1_5","aggregation":"mean","direction":"minimum","threshold":4.0,"minimumSamples":288,"minimumUniqueReviewers":3,"minimumRatingsPerCase":3,"rationale":"Every one of the 96 outputs receives three blinded ratings."},
+    {"metricId":"avatar_profile_pass_rate","displayName":"Perfis aprovados individualmente","unit":"ratio","aggregation":"rate","direction":"exact","threshold":1.0,"minimumSamples":6,"rationale":"A catalog average cannot hide a failed presenter."},
+    {"metricId":"critical_identity_artifact_rate","displayName":"Artefatos críticos de identidade","unit":"ratio","aggregation":"rate","direction":"maximum","threshold":0.01,"minimumSamples":96,"rationale":"Mouth, teeth, eyes, hands, edges or identity drift make an ad unusable."},
+    {"metricId":"lip_sync_acceptance_rate","displayName":"Aceitação humana de lip-sync pt-BR","unit":"ratio","aggregation":"rate","direction":"minimum","threshold":0.95,"minimumSamples":96,"rationale":"Native reviewers assess phonetic and perceptual sync."},
+    {"metricId":"p95_av_sync_offset_ms","displayName":"Offset audiovisual absoluto p95","unit":"milliseconds","aggregation":"p95","direction":"maximum","threshold":80.0,"minimumSamples":96,"rationale":"Two frames at 25 fps is the pre-run ceiling."},
+    {"metricId":"ad_message_acceptance_rate","displayName":"Aceitação de hook, tese, benefício e CTA","unit":"ratio","aggregation":"rate","direction":"minimum","threshold":0.9,"minimumSamples":96,"rationale":"Avatar quality does not compensate for an incoherent advertisement."},
+    {"metricId":"physical_continuity_failure_rate","displayName":"Falhas de continuidade física/temporal","unit":"ratio","aggregation":"rate","direction":"maximum","threshold":0.02,"minimumSamples":96,"rationale":"Contact, occlusion, scale, trajectories and scene continuity are reviewed per output."},
+    {"metricId":"regeneration_rate","displayName":"Taxa de regeneração necessária","unit":"ratio","aggregation":"rate","direction":"maximum","threshold":0.15,"minimumSamples":96,"rationale":"Repeated retries are both a quality and cost failure."},
+    {"metricId":"peak_vram_gb","displayName":"Pico de VRAM na lane MVP","unit":"gb","aggregation":"maximum","direction":"maximum","threshold":24.0,"minimumSamples":24,"appliesToRoles":["talking_head","body_avatar"],"rationale":"The first standard avatar worker is one 24 GB accelerator; Wan remains an advanced lane."},
+    {"metricId":"usd_per_output_minute","displayName":"Custo direto por minuto final","unit":"usd_per_output_minute","aggregation":"mean","direction":"maximum","threshold":0.8,"minimumSamples":96,"rationale":"Pre-run unit economics ceiling, distinct from the experiment authorization cap."},
+    {"metricId":"job_failure_rate","displayName":"Taxa de falha terminal","unit":"ratio","aggregation":"rate","direction":"maximum","threshold":0.02,"minimumSamples":96,"rationale":"Retries may not hide systematic provider failures."},
+    {"metricId":"cleanup_success_rate","displayName":"Exclusão física de derivados","unit":"ratio","aggregation":"rate","direction":"exact","threshold":1.0,"minimumSamples":96,"rationale":"Every biometric derivative must be deleted and evidenced after the private benchmark."}
+  ],
+  "requiredControls": [
+    "commercial_license_chain_approved",
+    "casting_release_verified",
+    "consent_verified_at_enqueue_and_export",
+    "source_assets_private",
+    "tenant_isolation_verified",
+    "no_egress_verified",
+    "human_review_completed",
+    "synthetic_disclosure_present",
+    "synthetic_provenance_emitted",
+    "publication_disabled_during_benchmark",
+    "deletion_cleanup_verified"
+  ],
+  "requiredEvidence": [
+    "private_catalog_manifest",
+    "private_corpus_manifest",
+    "artifact_inventories",
+    "license_manifest",
+    "container_sbom_and_provenance",
+    "raw_metric_bundle",
+    "blinded_human_review",
+    "frame_level_qc_bundle",
+    "cost_ledger",
+    "cleanup_receipt"
+  ],
+  "notes": [
+    "Thresholds are frozen before model execution and are product policy, not claims about candidate quality.",
+    "The staged 6/24/96 authorization protocol is a separate digest-bound artifact.",
+    "No candidate is currently eligible for a real-data benchmark or provider advertisement."
+  ]
+}

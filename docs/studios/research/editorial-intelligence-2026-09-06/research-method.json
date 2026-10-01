@@ -1,0 +1,16 @@
+{
+  "method": "Bounded thematic searches and primary-source follow-ups; topic groups, not a verbatim tool transcript.",
+  "waves": [
+    "Professional studio process and editorial representation",
+    "Narrative rhythm, text animation, procedural motion",
+    "Sound design, sound-library taxonomy and acquisition",
+    "Renderer determinism, timeline and motion integration",
+    "Instagram case reinspection in the local GPT browser"
+  ],
+  "stop_rationale": "Each knowledge group has primary references and operational proposals; remaining uncertainties require media listening, real renders or a planning decision rather than further generic web searches.",
+  "unavailable_sources": [
+    "Pearlman publisher full page returned 403; used indexed bibliographic reference only",
+    "Blender manual page fetch failed; used official Blender VFX page for capability claims",
+    "The Visual Story sample chapter fetch failed; used publisher description/table of contents only"
+  ]
+}

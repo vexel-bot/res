@@ -1,0 +1,177 @@
+name: Studios Kokoro stock candidate OCI
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-linux-amd64-candidate:
+    name: Build unadvertised Kokoro candidate (linux/amd64)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    env:
+      PYTHONPATH: ${{ github.workspace }}/backend
+      HF_HOME: ${{ github.workspace }}/.candidate-build/hf-home
+      HF_HUB_DISABLE_TELEMETRY: "1"
+      KOKORO_MODEL_REVISION: f3ff3571791e39611d31c381e3a41a3af07b4987
+      ESPEAK_SOURCE_REVISION: 7d426728fe146f4168fa716e29d8e276c7da33f2
+      ESPEAK_BUNDLED_REVISION: 4870adfa25b1a32b4361592f1be8a40337c58d6c
+      ESPEAK_LOADER_WHEEL_DIGEST: 08721baf27d13d461f6be6eed9a65277e70d68234ff484fd8b9897b222cdcb6d
+    steps:
+      - name: Checkout pinned Clicko source
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11 and BuildKit
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - uses: docker/setup-buildx-action@v3
+
+      - name: Install external resolvers and contract dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check \
+            "uv==0.12.3" \
+            "huggingface-hub==0.28.1" \
+            "pydantic==2.12.5"
+
+      - name: Resolve Clicko-owned Linux lock and verify it
+        working-directory: workers/speech-cpu/candidate
+        shell: bash
+        run: |
+          set -euo pipefail
+          uv lock --python 3.11
+          uv tree --frozen > dependency-tree.txt
+          python ../../../backend/scripts/verify_kokoro_candidate_lock.py uv.lock \
+            | tee lock-verification.json
+          mkdir -p ../../../.candidate-build
+          cp dependency-tree.txt ../../../.candidate-build/dependency-tree.txt
+          cp lock-verification.json ../../../.candidate-build/lock-verification.json
+
+      - name: Download exact Kokoro snapshot and generate byte manifest
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p .candidate-build
+          python - <<'PY'
+          import os
+          from pathlib import Path
+          from huggingface_hub import snapshot_download
+          revision = os.environ["KOKORO_MODEL_REVISION"]
+          snapshot = Path(snapshot_download(
+              repo_id="hexgrad/Kokoro-82M",
+              revision=revision,
+              allow_patterns=[
+                  "README.md",
+                  "config.json",
+                  "kokoro-v1_0.pth",
+                  "voices/pf_dora.pt",
+                  "voices/pm_alex.pt",
+                  "voices/pm_santa.pt",
+              ],
+          ))
+          if snapshot.name != revision:
+              raise SystemExit("kokoro_snapshot_revision_mismatch")
+          reference = snapshot.parent.parent / "refs" / "main"
+          reference.parent.mkdir(parents=True, exist_ok=True)
+          reference.write_text(revision, encoding="utf-8")
+          PY
+          python backend/scripts/generate_kokoro_model_manifest.py \
+            --snapshot "$HF_HOME/hub/models--hexgrad--Kokoro-82M/snapshots/$KOKORO_MODEL_REVISION" \
+            --revision "$KOKORO_MODEL_REVISION" \
+            --output .candidate-build/kokoro-model-assets.json \
+            | tee .candidate-build/kokoro-model-assets.verification.json
+
+      - name: Fetch exact eSpeak source and archive corresponding source
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p .candidate-build/espeak-ng
+          git -C .candidate-build/espeak-ng init
+          git -C .candidate-build/espeak-ng remote add origin https://github.com/espeak-ng/espeak-ng.git
+          git -C .candidate-build/espeak-ng fetch --depth 1 origin "$ESPEAK_SOURCE_REVISION"
+          git -C .candidate-build/espeak-ng checkout --detach FETCH_HEAD
+          test "$(git -C .candidate-build/espeak-ng rev-parse HEAD)" = "$ESPEAK_SOURCE_REVISION"
+          git -C .candidate-build/espeak-ng archive \
+            --format=tar.gz \
+            --output=.candidate-build/espeak-ng.tar.gz \
+            "$ESPEAK_SOURCE_REVISION"
+
+      - name: Export exact eSpeak runtime and generate manifest
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: workers/speech-cpu/Dockerfile.espeak-runtime
+          platforms: linux/amd64
+          push: false
+          outputs: type=local,dest=/tmp/clicko-espeak-runtime
+          build-args: |
+            ESPEAK_SOURCE_REVISION=${{ env.ESPEAK_SOURCE_REVISION }}
+      - name: Stage eSpeak runtime and candidate lock
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p .candidate-build/espeak-runtime
+          cp -a /tmp/clicko-espeak-runtime/. .candidate-build/espeak-runtime/
+          cp workers/speech-cpu/candidate/uv.lock .candidate-build/uv.lock
+          python backend/scripts/generate_espeak_runtime_manifest.py \
+            --runtime-root .candidate-build/espeak-runtime \
+            --build-recipe workers/speech-cpu/Dockerfile.espeak-runtime \
+            --loader-wheel-digest "$ESPEAK_LOADER_WHEEL_DIGEST" \
+            --bundled-espeak-revision "$ESPEAK_BUNDLED_REVISION" \
+            --output .candidate-build/espeak-runtime.manifest.json \
+            | tee .candidate-build/espeak-runtime.verification.json
+
+      - name: Resolve digests for candidate image labels
+        id: digests
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "lock=$(sha256sum .candidate-build/uv.lock | awk '{print $1}')" >> "$GITHUB_OUTPUT"
+          echo "model=$(python -c 'import json; from app.domain.studios.speech_assets import KokoroModelAssetManifestV1, kokoro_model_asset_manifest_digest; from pathlib import Path; m=KokoroModelAssetManifestV1.model_validate_json(Path(".candidate-build/kokoro-model-assets.json").read_text()); print(kokoro_model_asset_manifest_digest(m))')" >> "$GITHUB_OUTPUT"
+          echo "espeak=$(python -c 'import json; from app.domain.studios.speech_assets import EspeakRuntimeManifestV1, espeak_runtime_manifest_digest; from pathlib import Path; m=EspeakRuntimeManifestV1.model_validate_json(Path(".candidate-build/espeak-runtime.manifest.json").read_text()); print(espeak_runtime_manifest_digest(m))')" >> "$GITHUB_OUTPUT"
+
+      - name: Build unadvertised candidate OCI with SBOM and provenance
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: workers/speech-cpu/Dockerfile.candidate
+          platforms: linux/amd64
+          push: false
+          outputs: type=oci,dest=/tmp/clicko-kokoro-stock-candidate.oci.tar
+          provenance: mode=max
+          sbom: true
+          build-args: |
+            KOKORO_MODEL_MANIFEST_DIGEST=${{ steps.digests.outputs.model }}
+            ESPEAK_RUNTIME_MANIFEST_DIGEST=${{ steps.digests.outputs.espeak }}
+            CANDIDATE_LOCK_DIGEST=${{ steps.digests.outputs.lock }}
+
+      - name: Verify candidate OCI boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          python backend/scripts/verify_preflight_oci.py \
+            /tmp/clicko-kokoro-stock-candidate.oci.tar \
+            --title "Clicko Kokoro stock benchmark candidate" \
+            --provider-label none \
+            | tee .candidate-build/candidate-oci-verification.json
+
+      - name: Upload OCI and audit artifacts without push/deploy
+        uses: actions/upload-artifact@v4
+        with:
+          name: clicko-kokoro-stock-candidate-linux-amd64
+          path: |
+            /tmp/clicko-kokoro-stock-candidate.oci.tar
+            .candidate-build/uv.lock
+            .candidate-build/dependency-tree.txt
+            .candidate-build/lock-verification.json
+            .candidate-build/kokoro-model-assets.json
+            .candidate-build/kokoro-model-assets.verification.json
+            .candidate-build/espeak-runtime.manifest.json
+            .candidate-build/espeak-runtime.verification.json
+            .candidate-build/candidate-oci-verification.json
+          if-no-files-found: error
+          retention-days: 14

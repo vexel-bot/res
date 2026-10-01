@@ -1,0 +1,35 @@
+[project]
+name = "clicko-chatterbox-clone-candidate-v2"
+version = "0.2.0"
+requires-python = "==3.11.*"
+dependencies = [
+  "conformer==0.3.2",
+  "diffusers==0.29.0",
+  "librosa==0.11.0",
+  "numpy==1.26.4",
+  "omegaconf==2.3.0",
+  "pyloudnorm==0.1.1",
+  "pyyaml",
+  "s3tokenizer",
+  "safetensors==0.5.3",
+  "spacy-pkuseg",
+  "torch==2.6.0",
+  "torchaudio==2.6.0",
+  "transformers==5.2.0",
+]
+
+[tool.uv]
+package = false
+exclude-newer = "2026-08-26T23:59:59Z"
+environments = [
+  "sys_platform == 'linux' and platform_machine == 'x86_64'",
+]
+
+[tool.uv.sources]
+torch = { index = "pytorch-cu124" }
+torchaudio = { index = "pytorch-cu124" }
+
+[[tool.uv.index]]
+name = "pytorch-cu124"
+url = "https://download.pytorch.org/whl/cu124"
+explicit = true

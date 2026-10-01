@@ -392,6 +392,167 @@
   }
 }
 
+/*
+ * Presenter is frequently opened in the Codex side panel (roughly 760px).
+ * Keep the production cell readable instead of retaining the desktop canvas
+ * and forcing its three columns into a horizontally scrolling viewport.
+ */
+@media (max-width: 900px) {
+  .cx-focus .cx-main:has(.cx-presenter-studio) {
+    height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
+  }
+
+  .cx-presenter-studio {
+    display: block;
+    min-height: 100vh;
+    height: auto;
+    overflow: visible;
+  }
+
+  .cx-presenter-studio .cx-production-rail {
+    display: none;
+  }
+
+  .cx-presenter-main {
+    min-width: 0;
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .cx-presenter-main > header {
+    min-height: 0;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    padding: 24px 16px 16px;
+  }
+
+  .cx-presenter-main > header > span,
+  .cx-presenter-main > header > div,
+  .cx-presenter-main > header > nav,
+  .cx-presenter-main > header > .cx-button {
+    grid-column: 1;
+    min-width: 0;
+  }
+
+  .cx-presenter-main > header nav {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .cx-presenter-main > header .cx-button {
+    width: 100%;
+  }
+
+  .cx-presenter-focusbar {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 10px 12px 0;
+  }
+
+  .cx-presenter-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: none;
+    gap: 12px;
+    padding: 12px;
+    overflow: visible;
+  }
+
+  .cx-presenter-grid > aside,
+  .cx-presenter-grid > main,
+  .cx-presenter-tests,
+  .cx-presenter-limits {
+    grid-column: 1;
+    grid-row: auto;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .cx-presenter-materials img {
+    height: min(300px, 42vw);
+    min-height: 190px;
+  }
+
+  .cx-presenter-composition {
+    height: auto;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+  }
+
+  .cx-presenter-composition > article {
+    min-height: 250px;
+  }
+
+  .cx-presenter-composition > article > img,
+  .cx-presenter-composition .cx-generated-scene img {
+    height: 205px;
+  }
+
+  .cx-presenter-composition > i {
+    padding: 2px 0;
+  }
+
+  .cx-presenter-scores {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .cx-presenter-next {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+  }
+
+  .cx-presenter-next .cx-button {
+    grid-column: 1;
+    grid-row: auto;
+    width: 100%;
+  }
+
+  .cx-presenter-tests > div {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.cx-presenter-editor-switcher {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.cx-presenter-editor-switcher button {
+  min-height: 34px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid #343434;
+  border-radius: 7px;
+  background: #151515;
+  color: #d7d7d7;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+
+.cx-presenter-editor-switcher button:hover,
+.cx-presenter-editor-switcher button.is-active {
+  border-color: var(--studio-orange);
+  color: var(--studio-orange);
+}
+
+.cx-presenter-rule-detail {
+  border-left: 2px solid var(--studio-orange);
+  padding-left: 8px;
+}
+
+@media (max-width: 540px) {
+  .cx-presenter-tests > div,
+  .cx-presenter-scores {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
 /* Minimum readable labels in the dense operational surfaces. */
 .cx-calendar-approved
   :is(

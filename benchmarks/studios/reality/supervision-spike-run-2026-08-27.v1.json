@@ -1,0 +1,58 @@
+{
+  "schemaVersion": "clicko.supervision-spike-report.v1",
+  "candidate": {
+    "name": "supervision",
+    "version": "0.30.1",
+    "sourceRevision": "5f25aa0ee6dc22891415b6e3d2e1689ce7a32952",
+    "status": "evaluation",
+    "advertisedByWorkerManifest": false
+  },
+  "environment": {
+    "python": "3.11.9",
+    "numpy": "2.4.6",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "isolatedRuntime": true,
+    "networkDeniedDuringRun": true
+  },
+  "input": {
+    "kind": "synthetic",
+    "frames": 2,
+    "detections": 3,
+    "humanData": false,
+    "modelWeights": false
+  },
+  "output": {
+    "contributionDigestSha256": "b93bfdee55974bd209db8630022778c2d805b5246a4a2c131c0c5aead747deba",
+    "entities": 2,
+    "tracks": 2,
+    "evidence": 3,
+    "overlayDigestsSha256": [
+      "3e9f308c923ec2fcd9443d332d4136089105cfb533a706364a3395b80de8c2e4",
+      "5c475a7017261f6dfd4b3da7878ae9b0362e6a7c8b6fa8e857961175a84ebc03"
+    ],
+    "progress": [
+      0,
+      35,
+      70,
+      100
+    ]
+  },
+  "checks": {
+    "canonical_contract": true,
+    "deterministic_contract": true,
+    "deterministic_overlays": true,
+    "evidence_bound": true,
+    "external_tracker_preserved_without_raw_id": true,
+    "no_physics_claims": true,
+    "network_guard_active": true,
+    "worker_provider_manifest_empty": true,
+    "synthetic_only": true,
+    "weights_absent": true
+  },
+  "passed": true,
+  "limitations": [
+    "SV-1 proves projection and explainable overlays, not detector quality.",
+    "The candidate runtime is a local Windows evaluation target, not the Linux OCI promotion artifact.",
+    "No zone, metrics, throughput, SBOM or provider promotion claim is made by this report."
+  ]
+}

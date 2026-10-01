@@ -1,0 +1,28 @@
+{
+  "date": "2026-09-06",
+  "artifact": "C:\\Users\\edugu\\Downloads\\res\\output\\pdf\\res-inteligencia-editorial-2026-09-06.pdf",
+  "sha256": "49811f0d3556bd8440627b8299e06c8c88a4f6abee7ab2ed669b80d0a3a7fae1",
+  "pages": 15,
+  "techniques_by_group": {
+    "Grupo A — montagem e narrativa": 7,
+    "Grupo B — composição, tipografia e movimento": 12,
+    "Grupo C — desenho e edição sonora": 6
+  },
+  "techniques_total": 25,
+  "links": 26,
+  "empty_pages": [],
+  "visual_review_pages": [
+    1,
+    7,
+    8,
+    10,
+    11,
+    15
+  ],
+  "latest_cover_and_end_reviewed": true,
+  "html_visual_review": "blocked by browser local-file URL policy; not bypassed",
+  "pdf_generation": "ReportLab; visual review through Poppler PNGs and local image tool",
+  "application_changes": "none in this research step",
+  "application_tests": "not run; static review",
+  "instagram_audio": "not verified by listening"
+}

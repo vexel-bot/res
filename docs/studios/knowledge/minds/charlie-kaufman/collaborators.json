@@ -1,0 +1,24 @@
+{
+  "schema_version": "studio.collaboration-graph.v1",
+  "anchor": "Charlie Kaufman",
+  "status": "credits_pending_per_work_verification",
+  "nodes": [
+    {
+      "name": "Spike Jonze",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Michel Gondry",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Duke Johnson",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Robert Frazen",
+      "role": "verify_per_work"
+    }
+  ],
+  "edges": []
+}

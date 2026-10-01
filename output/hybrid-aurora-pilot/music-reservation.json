@@ -1,0 +1,9 @@
+{
+  "provider": "google.gemini-editing",
+  "model": "lyria-3-clip-preview",
+  "priceVersion": "google-lyria-2026-09-30",
+  "reservedUsd": 0.04,
+  "status": "submission_uncertain",
+  "prompt": "Instrumental only: warm intimate bossa jazz for a premium Brazilian coffee ritual ad. Soft brushed drums, upright bass, mellow piano, subtle rhythmic pulse, gentle lift near the final four seconds. No voice, no lyrics, no sound effects. Seamless 30 second cue.",
+  "error": "gemini_http_429"
+}

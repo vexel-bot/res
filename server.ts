@@ -1,4 +1,5 @@
 import express from 'express';
+import { readFileSync } from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { createServer as createViteServer } from 'vite';
@@ -578,9 +579,53 @@ Monte automaticamente o planejamento completo com cronograma, lista de conteúdo
   // Vite middleware for development vs static serve for production
   if (!isProduction) {
     const vite = await createViteServer({
-      server: { middlewareMode: true },
+      server: {
+        middlewareMode: true,
+        // The E2E server is isolated from any user-owned Vite/HMR process.
+        // Keep hot reload unchanged for normal local development.
+        hmr: process.env.CLICKO_E2E === 'true' ? false : undefined,
+        ws: process.env.CLICKO_E2E === 'true' ? false : undefined,
+      },
       appType: 'spa',
     });
+    if (process.env.CLICKO_E2E === 'true') {
+      // Vite injects /@vite/client in middleware mode even when HMR/WS are
+      // disabled. Strip that dev-only client for isolated browser runs so it
+      // cannot attach to a user-owned HMR process on another port.
+      app.get('/@vite/client', (_req, res) => {
+        res.type('js').send(
+          'const styles = new Map();' +
+          'export const createHotContext = () => ({ accept() {}, prune() {}, dispose() {}, on() {}, send() {} });' +
+          'export const injectQuery = (url, query) => {' +
+            'if (url[0] !== "." && url[0] !== "/") return url;' +
+            'const path = url.replace(/[?#].*$/, "");' +
+            'const { search, hash } = new URL(url, "http://vite.dev");' +
+            'return path + "?" + query + (search ? "&" + search.slice(1) : "") + (hash || "");' +
+          '};' +
+          'export const updateStyle = (id, css) => {' +
+            'let style = styles.get(id) || document.querySelector(`style[data-vite-dev-id="${id}"]`);' +
+            'if (!style) { style = document.createElement("style"); style.setAttribute("data-vite-dev-id", id); document.head.appendChild(style); }' +
+            'style.textContent = css; styles.set(id, style);' +
+          '};' +
+          'export const removeStyle = (id) => { const style = styles.get(id) || document.querySelector(`style[data-vite-dev-id="${id}"]`); if (style) style.remove(); styles.delete(id); };',
+        );
+      });
+      app.use(async (req, res, next) => {
+        if (req.method !== 'GET' || !req.headers.accept?.includes('text/html')) {
+          next();
+          return;
+        }
+        try {
+          const source = readFileSync(path.join(process.cwd(), 'index.html'), 'utf8');
+          const html = await vite.transformIndexHtml(req.originalUrl, source);
+          res.type('html').send(
+            html.replace(/\s*<script\b[^>]*src=["']\/@vite\/client["'][^>]*><\/script>\s*/i, '\n'),
+          );
+        } catch (error) {
+          next(error);
+        }
+      });
+    }
     app.use(vite.middlewares);
   } else {
     const distPath = path.join(process.cwd(), 'dist');

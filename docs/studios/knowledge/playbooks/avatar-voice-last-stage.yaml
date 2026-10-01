@@ -1,0 +1,37 @@
+schema_version: studio.authorized-avatar-voice-benchmark.v1
+status: blocked_until_non_biometric_100_video_validation
+private_only: true
+identities_required: 6
+cases_required: 24
+cases_per_identity: 4
+candidates:
+  avatar:
+    - HeyGem-Caladog
+    - Duix-Avatar
+    - LivePortrait
+    - Ditto
+    - EchoMimic
+    - MuseTalk
+    - LatentSync
+  voice:
+    - OpenVoice
+    - Chatterbox
+    - Kokoro
+hard_gates:
+  - specific_identity_consent
+  - environment_authorization_when_applicable
+  - code_weight_dataset_license_review
+  - hardware_and_security_preflight
+  - private_storage_and_deletion_plan
+  - synthetic_media_disclosure
+  - represented_person_final_approval
+dimensions:
+  - facial_fidelity_without_deformation
+  - pt_br_lip_sync
+  - temporal_stability
+  - blink_gaze_head_gesture_performance
+  - face_body_light_scene_consistency
+  - intelligibility_prosody_rhythm_emotion
+  - real_fictional_hybrid_scene_compatibility
+promotion: prohibited_until_all_24_cases_approved
+

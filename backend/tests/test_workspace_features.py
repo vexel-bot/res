@@ -40,6 +40,46 @@ def test_workspace_resources_are_persistent_and_audited(client):
     assert any(item["resource"] == "template" for item in governance.json()["auditLogs"])
 
 
+def test_factory_round_resource_preserves_cells_and_job_identity(client):
+    token, workspace_id = register(client, "factory-round@example.com")
+    payload = {
+        "schemaVersion": "clicko.factory-round.v1",
+        "id": "round-1",
+        "status": "queued",
+        "cells": [
+            {
+                "postId": "post-derived-1",
+                "documentId": "document-1",
+                "versionNumber": 2,
+                "jobId": "job-1",
+                "status": "queued",
+                "gate": "human_review",
+            }
+        ],
+    }
+    created = client.post(
+        "/api/v1/workspace-resources",
+        headers=auth(token),
+        json={
+            "workspaceId": workspace_id,
+            "kind": "factory_round",
+            "resourceKey": "round-1",
+            "payload": payload,
+        },
+    )
+    assert created.status_code == 201, created.text
+
+    listed = client.get(
+        f"/api/v1/workspace-resources?workspace_id={workspace_id}&kind=factory_round",
+        headers=auth(token),
+    )
+    assert listed.status_code == 200, listed.text
+    round_payload = listed.json()[0]["payload"]
+    assert round_payload["schemaVersion"] == "clicko.factory-round.v1"
+    assert round_payload["cells"][0]["jobId"] == "job-1"
+    assert round_payload["cells"][0]["versionNumber"] == 2
+
+
 def test_settings_team_and_subscription_flow(client):
     token, workspace_id = register(client, "owner@example.com")
 

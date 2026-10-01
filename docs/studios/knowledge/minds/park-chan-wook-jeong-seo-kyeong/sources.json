@@ -1,0 +1,22 @@
+{
+  "schema_version": "studio.creative-mind-sources.v1",
+  "mind": "Park Chan-wook e Jeong Seo-kyeong",
+  "research_status": "seed_evidence_only",
+  "sources": [
+    {
+      "url": "https://static.bafta.org/uploads_pre_202411/transcripts/sls_-_park_chan-wook.pdf",
+      "tier": "institutional_or_primary_starting_point",
+      "reviewed": false
+    },
+    {
+      "url": "https://www.dga.org/Craft/VisualHistory",
+      "tier": "institutional_or_primary_starting_point",
+      "reviewed": false
+    }
+  ],
+  "global_methods": [
+    "https://www.wgfoundation.org/screenplay-primers",
+    "https://www.bafta.org/programmes/screenwriters-lecture-series",
+    "https://www.dga.org/Craft/VisualHistory"
+  ]
+}

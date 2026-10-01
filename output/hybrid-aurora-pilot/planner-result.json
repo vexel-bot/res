@@ -1,0 +1,40 @@
+{
+  "status": "failed",
+  "error": "1 validation error for ContextualPlanRequestV2\nscenes.0\n  Value error, editing_v2_shot_material_requirement_missing [type=value_error, input_value={'id': 'scene-aurora-hybr...dFrameExclusive': 450}]}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.11/v/value_error",
+  "result": {
+    "testReservationUsd": 0.163,
+    "budgetCategory": "planning",
+    "budgetEnvelopeUsd": 10,
+    "budgetCategoryCapUsd": 2.0,
+    "budgetSubcategory": null,
+    "budgetSubcategoryCapUsd": null,
+    "budgetPolicy": "res.native-hybrid-pilot.v1",
+    "worstCaseRequestUsd": 0.163,
+    "submissionStarted": true,
+    "submissionOutcome": "accepted",
+    "submittedAt": "2026-09-30T19:38:07.496361+00:00",
+    "model": "gpt-4.1-2025-04-14",
+    "modelValidation": {
+      "name": "gpt-4.1-2025-04-14",
+      "availability": "pending_first_response"
+    },
+    "responseKey": "2e32cec9-7426-4d76-9e95-3bc233e0717e/temporary/6e331edf19794d0d839a7b21c82ce7c7.json",
+    "usage": {
+      "prompt_tokens": 15577,
+      "completion_tokens": 7681,
+      "total_tokens": 23258,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "measuredCostUsd": 0.092602,
+    "priceVersion": "openai-gpt41-2026-09-30"
+  }
+}

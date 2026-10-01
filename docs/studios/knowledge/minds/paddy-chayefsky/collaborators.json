@@ -1,0 +1,24 @@
+{
+  "schema_version": "studio.collaboration-graph.v1",
+  "anchor": "Paddy Chayefsky",
+  "status": "credits_pending_per_work_verification",
+  "nodes": [
+    {
+      "name": "Sidney Lumet",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Howard Gottfried",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Owen Roizman",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Alan Heim",
+      "role": "verify_per_work"
+    }
+  ],
+  "edges": []
+}

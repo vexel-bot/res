@@ -1,0 +1,63 @@
+name: Studios Kokoro candidate lock
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  resolve-linux-amd64-lock:
+    name: Resolve and verify Kokoro lock (linux/amd64)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - name: Checkout pinned Clicko source
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install pinned uv resolver
+        shell: bash
+        run: python -m pip install --disable-pip-version-check "uv==0.12.3"
+
+      - name: Resolve Clicko-owned candidate lock
+        working-directory: workers/speech-cpu/candidate
+        shell: bash
+        run: |
+          set -euo pipefail
+          uv lock --python 3.11
+          uv tree --frozen > dependency-tree.txt
+
+      - name: Verify immutable Git bindings and registry hashes
+        shell: bash
+        run: |
+          set -euo pipefail
+          python backend/scripts/verify_kokoro_candidate_lock.py \
+            workers/speech-cpu/candidate/uv.lock \
+            | tee workers/speech-cpu/candidate/lock-verification.json
+
+      - name: Install and import from the frozen lock
+        working-directory: workers/speech-cpu/candidate
+        env:
+          PYTHONPATH: ${{ github.workspace }}/backend
+        shell: bash
+        run: |
+          set -euo pipefail
+          uv sync --frozen --no-dev
+          uv run --frozen python -c \
+            "import espeakng_loader, kokoro, misaki, numpy, phonemizer, pydantic, pydantic_settings, torch, transformers; from app.services.studios.speech_benchmark import run_stock_voice_benchmark; print('candidate-lock-and-clicko-runner-imported-espeak-replacement-still-required')"
+
+      - name: Upload lock for SBOM and license review
+        uses: actions/upload-artifact@v4
+        with:
+          name: clicko-kokoro-candidate-lock-linux-amd64
+          path: |
+            workers/speech-cpu/candidate/uv.lock
+            workers/speech-cpu/candidate/dependency-tree.txt
+            workers/speech-cpu/candidate/lock-verification.json
+          if-no-files-found: error
+          retention-days: 14

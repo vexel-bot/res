@@ -109,6 +109,11 @@ def normalize_and_store(db: Session, data: SignalIn) -> tuple[ExternalSignal, bo
         cluster_key=find_cluster_key(db, data, published_at),
         status="normalized",
         collected_at=datetime.now(UTC),
+        schema_version=data.schema_version,
+        source_type=data.source_type,
+        confidence=data.confidence,
+        knowledge_type=data.knowledge_type,
+        provider_trace=data.provider_trace,
     )
     db.add(signal)
     db.commit()

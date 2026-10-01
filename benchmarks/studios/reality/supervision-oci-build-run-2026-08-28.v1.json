@@ -1,0 +1,54 @@
+{
+  "schemaVersion": "clicko.supervision-oci-build-run.v1",
+  "recordedAt": "2026-08-28T16:15:00Z",
+  "candidateId": "supervision-toolkit-evaluation",
+  "archive": {
+    "pathClass": "gitignored-local-candidate-build",
+    "sizeBytes": 323846144,
+    "sha256": "6507d1ebad6602c378c3dd63bd1762d9cc7ab64b612e28633affb546f33c6b2c"
+  },
+  "oci": {
+    "platform": "linux/amd64",
+    "imageManifestDigest": "sha256:92dbfe133f63ce899637d9bad3fc24a53448eee32043d0773f1f8a2fb875d6a6",
+    "attestationCount": 1,
+    "attestationBindingMethods": ["statement_subject"],
+    "buildKitProvenancePresent": true,
+    "sbomAttestationPresent": true,
+    "signaturePresent": false
+  },
+  "imagePolicy": {
+    "title": "Clicko Supervision evaluation",
+    "providerLabel": "none",
+    "runtimeUser": "clicko",
+    "runtimeUid": 10001,
+    "providersAdvertised": []
+  },
+  "hardenedRuntime": {
+    "network": "none",
+    "readOnlyRootFilesystem": true,
+    "capabilitiesDropped": ["ALL"],
+    "noNewPrivileges": true,
+    "pidsLimit": 128,
+    "memoryLimitBytes": 1073741824,
+    "cpuLimit": 1,
+    "tmpfs": "/tmp:rw,nosuid,nodev,noexec,size=64m",
+    "probeStatus": "ready",
+    "checks": {
+      "adapter": true,
+      "detections": true,
+      "providers": true,
+      "runtimeUser": true,
+      "supervision": true
+    }
+  },
+  "promotion": {
+    "authorized": false,
+    "remainingGates": [
+      "human review of native wheels and bundled notices",
+      "promotion-grade image signature and authorized signer policy",
+      "separately consented human shadow review",
+      "operational cancellation, cleanup, tenancy and rollback evidence"
+    ]
+  },
+  "vpsTouched": false
+}

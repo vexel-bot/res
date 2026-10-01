@@ -1,0 +1,119 @@
+[
+  {
+    "operationId": "op-6db2434fb6ad0a3a7017dc0c",
+    "evidenceIds": [
+      "scene:adaptation"
+    ],
+    "confidence": 1.0,
+    "rationale": "Estado portrait da mesma peça",
+    "kind": "compose_group",
+    "beatId": "adaptation",
+    "targetId": "ed2-cb1c8abc73ffa3468348a451",
+    "expectedResult": "Imagem, título e identidade permanecem reconhecíveis; O layout muda entre vertical e quadrado; O evento de publicação está audível",
+    "techniqueIds": []
+  },
+  {
+    "operationId": "op-f5334dc67914c198de3bce34",
+    "evidenceIds": [
+      "scene:adaptation"
+    ],
+    "confidence": 1.0,
+    "rationale": "Imagem principal persistente",
+    "kind": "compose_image",
+    "beatId": "adaptation",
+    "targetId": "ed2-1311da60c4f37c6e89b6ab3e",
+    "expectedResult": "Imagem, título e identidade permanecem reconhecíveis; O layout muda entre vertical e quadrado; O evento de publicação está audível",
+    "techniqueIds": []
+  },
+  {
+    "operationId": "op-3851f3be7390b64074b37cfc",
+    "evidenceIds": [
+      "scene:adaptation"
+    ],
+    "confidence": 1.0,
+    "rationale": "Título persistente",
+    "kind": "compose_text",
+    "beatId": "adaptation",
+    "targetId": "ed2-55062e33ed55fb3c06459ee8",
+    "expectedResult": "Imagem, título e identidade permanecem reconhecíveis; O layout muda entre vertical e quadrado; O evento de publicação está audível",
+    "techniqueIds": []
+  },
+  {
+    "operationId": "op-92f6fd55fb6a1f92e272c49d",
+    "evidenceIds": [
+      "scene:adaptation"
+    ],
+    "confidence": 1.0,
+    "rationale": "Identidade persistente",
+    "kind": "compose_text",
+    "beatId": "adaptation",
+    "targetId": "ed2-a54a782a9d309f723dc1ef5a",
+    "expectedResult": "Imagem, título e identidade permanecem reconhecíveis; O layout muda entre vertical e quadrado; O evento de publicação está audível",
+    "techniqueIds": []
+  },
+  {
+    "operationId": "op-7a4f8f621fbd936d0d51d140",
+    "evidenceIds": [
+      "scene:adaptation"
+    ],
+    "confidence": 1.0,
+    "rationale": "Estado square da mesma peça",
+    "kind": "compose_group",
+    "beatId": "adaptation",
+    "targetId": "ed2-c36c791577509df6313f3a0a",
+    "expectedResult": "Imagem, título e identidade permanecem reconhecíveis; O layout muda entre vertical e quadrado; O evento de publicação está audível",
+    "techniqueIds": []
+  },
+  {
+    "operationId": "op-7131686485ddb450f012dd36",
+    "evidenceIds": [
+      "scene:adaptation"
+    ],
+    "confidence": 1.0,
+    "rationale": "Imagem principal persistente",
+    "kind": "compose_image",
+    "beatId": "adaptation",
+    "targetId": "ed2-a37b5864628eee1a1e98bc40",
+    "expectedResult": "Imagem, título e identidade permanecem reconhecíveis; O layout muda entre vertical e quadrado; O evento de publicação está audível",
+    "techniqueIds": []
+  },
+  {
+    "operationId": "op-292d36a16841639f03dfd507",
+    "evidenceIds": [
+      "scene:adaptation"
+    ],
+    "confidence": 1.0,
+    "rationale": "Título persistente",
+    "kind": "compose_text",
+    "beatId": "adaptation",
+    "targetId": "ed2-f3e45fd9a284c86f672e31f0",
+    "expectedResult": "Imagem, título e identidade permanecem reconhecíveis; O layout muda entre vertical e quadrado; O evento de publicação está audível",
+    "techniqueIds": []
+  },
+  {
+    "operationId": "op-153f169c7daaa153f05705e5",
+    "evidenceIds": [
+      "scene:adaptation"
+    ],
+    "confidence": 1.0,
+    "rationale": "Identidade persistente",
+    "kind": "compose_text",
+    "beatId": "adaptation",
+    "targetId": "ed2-4efef6cb8d7dbd4e5ea09087",
+    "expectedResult": "Imagem, título e identidade permanecem reconhecíveis; O layout muda entre vertical e quadrado; O evento de publicação está audível",
+    "techniqueIds": []
+  },
+  {
+    "operationId": "op-699b7c5f60a2f64fe2df18a0",
+    "evidenceIds": [
+      "scene:adaptation"
+    ],
+    "confidence": 1.0,
+    "rationale": "Sinal sintético de publicação",
+    "kind": "audio_mix",
+    "beatId": "adaptation",
+    "targetId": "ed2-928b28cf24d9c3e042b513bd",
+    "expectedResult": "Imagem, título e identidade permanecem reconhecíveis; O layout muda entre vertical e quadrado; O evento de publicação está audível",
+    "techniqueIds": []
+  }
+]

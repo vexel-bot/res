@@ -1,0 +1,23 @@
+{
+  "jobId": "eaea27a9-cf72-455f-b00d-502027b9086c",
+  "status": "retrying",
+  "error": "gemini_http_429",
+  "result": {
+    "testReservationUsd": 0.4,
+    "budgetCategory": "video",
+    "budgetEnvelopeUsd": 10,
+    "budgetCategoryCapUsd": 5.0,
+    "budgetSubcategory": null,
+    "budgetSubcategoryCapUsd": null,
+    "budgetPolicy": "res.native-hybrid-pilot.v1",
+    "worstCaseRequestUsd": 0.4,
+    "submissionStarted": true,
+    "submissionOutcome": "pending",
+    "submittedAt": "2026-09-30T19:31:14.606128+00:00",
+    "model": "veo-3.1-fast-generate-preview",
+    "modelValidation": {
+      "name": "models/veo-3.1-fast-generate-preview",
+      "version": "3.1"
+    }
+  }
+}

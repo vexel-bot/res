@@ -1,0 +1,305 @@
+{
+  "schema_version": "studio.artifact-inventory.v1",
+  "inventory_id": "pgv1-reality-analysis-artifacts-2026-08-25",
+  "capability": "PGV-1 deterministic reality analysis and physical plausibility QC",
+  "policy_digests_sha256": [
+    "16ae8a5985c19ba5a620bb6097baccdc0bb7329ead0cc9bcaec7b0b21a927301",
+    "909f3b556f3928cb099760a0e088eaacb8603194a325ea58cda37613c08190b0",
+    "753eabd940ca10e9d74edab2c52ffdf805f293cb114105fe29ffec533123b4f6"
+  ],
+  "status": "review_required",
+  "frozen_at": "2026-08-25T00:00:00Z",
+  "frozen_by": "codex-pgv1-preflight",
+  "required_artifact_ids": [
+    "opencv-code",
+    "tapnet-code",
+    "tapir-checkpoint-panning",
+    "raft-code",
+    "raft-things-checkpoint",
+    "depth-anything-v2-code",
+    "depth-anything-v2-small-checkpoint",
+    "pytorch-cuda-runtime"
+  ],
+  "artifacts": [
+    {
+      "artifact_id": "opencv-code",
+      "component_id": "opencv-preprocessing",
+      "kind": "code",
+      "role": "Video decode, calibration primitives and deterministic image preprocessing",
+      "required": true,
+      "source_url": "https://github.com/opencv/opencv.git",
+      "source_revision": "8b7dc43c227746366213a65ad1477ed37fb8d365",
+      "resolution_status": "resolved",
+      "integrity": {
+        "method": "git_commit",
+        "value": "8b7dc43c227746366213a65ad1477ed37fb8d365"
+      },
+      "verification_method": "git_remote",
+      "license": {
+        "declared_license": "Apache-2.0",
+        "evidence_url": "https://raw.githubusercontent.com/opencv/opencv/8b7dc43c227746366213a65ad1477ed37fb8d365/LICENSE",
+        "evidence_digest_sha256": "3ddf9be5c28fe27dad143a5dc76eea25222ad1dd68934a047064e56ed2fa40c5",
+        "commercial_saas_use_allowed": true,
+        "decision": "approved",
+        "rationale": "The pinned source revision carries the Apache-2.0 license."
+      },
+      "notes": [
+        "Code pin only; no upstream service is activated by this inventory."
+      ]
+    },
+    {
+      "artifact_id": "opencv-python-headless-linux-wheel",
+      "component_id": "opencv-python-headless-runtime",
+      "kind": "runtime",
+      "role": "Linux AMD64 OpenCV Python binary used only by the disabled classical baseline",
+      "required": false,
+      "source_url": "https://files.pythonhosted.org/packages/92/ce/bd17ff5772938267fd49716e94ca24f616ff4cb1ff4c6be13085108037be/opencv_python_headless-4.13.0.92-cp37-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+      "source_revision": "opencv-python-tag-92-6a6c27d547bf95eeb092f26ab7d0ecd18569d76b",
+      "expected_filename": "opencv_python_headless-4.13.0.92-cp37-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+      "resolution_status": "resolved",
+      "integrity": {
+        "method": "sha256",
+        "value": "0525a3d2c0b46c611e2130b5fdebc94cf404845d8fa64d2f3a3b679572a5bd22",
+        "size_bytes": 56016764
+      },
+      "verification_method": "downloaded_external",
+      "external_evaluation_ref": "pgv1-opencv-python-linux-wheel",
+      "license": {
+        "declared_license": "Apache-2.0 plus bundled third-party terms including LGPL-2.1 FFmpeg",
+        "evidence_url": "https://raw.githubusercontent.com/opencv/opencv-python/92/LICENSE-3RD-PARTY.txt",
+        "evidence_digest_sha256": "0e8fac55c2f5bff939c1e7aae1fa2799e1cece5fd0857d8e5fafeb46562aafc9",
+        "commercial_saas_use_allowed": null,
+        "decision": "review_required",
+        "rationale": "The exact wheel carries open-source notices, but its bundled binary obligations must be reflected in the promoted image SBOM and notices before approval."
+      },
+      "notes": [
+        "Optional evaluation artifact; Dockerfile.preflight does not install it.",
+        "The embedded primary LICENSE.txt SHA-256 is 09d719058e782ac7bc71ba21c944e1136cde2bb957c0e888121f0218d6b5f02c."
+      ]
+    },
+    {
+      "artifact_id": "numpy-linux-wheel",
+      "component_id": "opencv-baseline-numpy-runtime",
+      "kind": "runtime",
+      "role": "Linux AMD64 NumPy runtime pinned for the disabled OpenCV baseline",
+      "required": false,
+      "source_url": "https://files.pythonhosted.org/packages/b3/dd/2238b898e51bd6d389b7389ffb20d7f4c10066d80351187ec8e303a5a475/numpy-2.2.6-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "source_revision": "numpy-v2.2.6-bbb76e7d76c3748fb2747fc3d8e06b944005362a",
+      "expected_filename": "numpy-2.2.6-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "resolution_status": "resolved",
+      "integrity": {
+        "method": "sha256",
+        "value": "ba10f8411898fc418a521833e014a77d3ca01c15b0c6cdcce6a0d2897e6dbbdf",
+        "size_bytes": 16821570
+      },
+      "verification_method": "downloaded_external",
+      "external_evaluation_ref": "pgv1-numpy-linux-wheel",
+      "license": {
+        "declared_license": "BSD-3-Clause source plus bundled wheel notices",
+        "evidence_url": "https://raw.githubusercontent.com/numpy/numpy/v2.2.6/LICENSE.txt",
+        "evidence_digest_sha256": "01fb016849aa427edb1bbbbd55f91c26ca6cadb32a5b20e7f000655dd05b0760",
+        "commercial_saas_use_allowed": null,
+        "decision": "review_required",
+        "rationale": "Source terms are permissive, but the exact binary wheel and bundled BLAS notices still require SBOM/notice verification."
+      },
+      "notes": [
+        "Optional evaluation artifact; Dockerfile.preflight does not install it."
+      ]
+    },
+    {
+      "artifact_id": "tapnet-code",
+      "component_id": "tapir-point-tracking-runtime",
+      "kind": "code",
+      "role": "TAPIR point tracking implementation",
+      "required": true,
+      "source_url": "https://github.com/google-deepmind/tapnet.git",
+      "source_revision": "c2cbab81cc06092b5f05bfe2da7bfec54e2079c9",
+      "resolution_status": "resolved",
+      "integrity": {
+        "method": "git_commit",
+        "value": "c2cbab81cc06092b5f05bfe2da7bfec54e2079c9"
+      },
+      "verification_method": "git_remote",
+      "license": {
+        "declared_license": "Apache-2.0",
+        "evidence_url": "https://raw.githubusercontent.com/google-deepmind/tapnet/c2cbab81cc06092b5f05bfe2da7bfec54e2079c9/LICENSE",
+        "evidence_digest_sha256": "3ddf9be5c28fe27dad143a5dc76eea25222ad1dd68934a047064e56ed2fa40c5",
+        "commercial_saas_use_allowed": true,
+        "decision": "approved",
+        "rationale": "The pinned source revision carries the Apache-2.0 license."
+      },
+      "notes": []
+    },
+    {
+      "artifact_id": "tapir-checkpoint-panning",
+      "component_id": "tapir-point-tracking-weights",
+      "kind": "model",
+      "role": "TAPIR panning checkpoint used to estimate point trajectories and occlusion",
+      "required": true,
+      "source_url": "https://storage.googleapis.com/dm-tapnet/tapir_checkpoint_panning.pt",
+      "source_revision": "tapnet-readme-c2cbab81cc06092b5f05bfe2da7bfec54e2079c9",
+      "expected_filename": "tapir_checkpoint_panning.pt",
+      "resolution_status": "resolved",
+      "integrity": {
+        "method": "sha256",
+        "value": "628611c656b3bd65d4a70fbf5526b62afe82d1b085ce6044685287fb78509daa",
+        "size_bytes": 124348474
+      },
+      "verification_method": "downloaded_external",
+      "external_evaluation_ref": "pgv1-tapir-checkpoint-panning",
+      "license": {
+        "declared_license": "Apache-2.0",
+        "evidence_url": "https://raw.githubusercontent.com/google-deepmind/tapnet/c2cbab81cc06092b5f05bfe2da7bfec54e2079c9/README.md",
+        "evidence_digest_sha256": "dbd3b85266cd64a1ebf9553189e78066f1180ca23803161be18ef26f6a269057",
+        "commercial_saas_use_allowed": true,
+        "decision": "approved",
+        "rationale": "The pinned TAPNet README explicitly states that released checkpoints are Apache-2.0."
+      },
+      "notes": [
+        "Bytes were downloaded only to the external OSS evaluation directory; they are not committed to the product repository."
+      ]
+    },
+    {
+      "artifact_id": "raft-code",
+      "component_id": "raft-optical-flow-runtime",
+      "kind": "code",
+      "role": "Dense optical-flow implementation",
+      "required": true,
+      "source_url": "https://github.com/princeton-vl/RAFT.git",
+      "source_revision": "2888e15a51fa41140771d3f498ed8023cff098d1",
+      "resolution_status": "resolved",
+      "integrity": {
+        "method": "git_commit",
+        "value": "2888e15a51fa41140771d3f498ed8023cff098d1"
+      },
+      "verification_method": "git_remote",
+      "license": {
+        "declared_license": "BSD-3-Clause",
+        "evidence_url": "https://raw.githubusercontent.com/princeton-vl/RAFT/2888e15a51fa41140771d3f498ed8023cff098d1/LICENSE",
+        "evidence_digest_sha256": "f36d48bb9ec61ea02600bc1fe2e771faa67a9b6ef9bf5696e3ba1f43ab41de43",
+        "commercial_saas_use_allowed": true,
+        "decision": "approved",
+        "rationale": "The pinned source revision carries the BSD-3-Clause license."
+      },
+      "notes": [
+        "This decision covers source code, not the separately hosted checkpoint bytes."
+      ]
+    },
+    {
+      "artifact_id": "raft-things-checkpoint",
+      "component_id": "raft-optical-flow-weights",
+      "kind": "model",
+      "role": "RAFT Things checkpoint used for dense motion estimation",
+      "required": true,
+      "source_url": "https://dl.dropboxusercontent.com/s/4j4z58wuv8o0mfz/models.zip",
+      "source_revision": "raft-readme-2888e15a51fa41140771d3f498ed8023cff098d1",
+      "expected_filename": "raft-things.pth",
+      "resolution_status": "resolved",
+      "integrity": {
+        "method": "sha256",
+        "value": "fcfa4125d6418f4de95d84aec20a3c5f4e205101715a79f193243c186ac9a7e1",
+        "size_bytes": 21108000
+      },
+      "verification_method": "downloaded_external",
+      "external_evaluation_ref": "pgv1-raft-things-checkpoint",
+      "license": {
+        "declared_license": "No separate checkpoint terms found in the pinned repository",
+        "evidence_url": "https://raw.githubusercontent.com/princeton-vl/RAFT/2888e15a51fa41140771d3f498ed8023cff098d1/README.md",
+        "evidence_digest_sha256": "8fff68a65d8bc2a350745b75db2d7366911f339b951b4760ba40440a644bef75",
+        "commercial_saas_use_allowed": null,
+        "decision": "review_required",
+        "rationale": "The README distributes the archive but does not explicitly grant commercial SaaS rights for checkpoint bytes; the code license is not inferred onto weights."
+      },
+      "notes": [
+        "The complete upstream archive SHA-256 is 4be6101b271f58ec49866da5cf609fd17e86e9cae2483f70630ef4a295dc66bd (81977417 bytes).",
+        "Provider activation remains blocked until legal review resolves checkpoint rights."
+      ]
+    },
+    {
+      "artifact_id": "depth-anything-v2-code",
+      "component_id": "depth-anything-v2-runtime",
+      "kind": "code",
+      "role": "Monocular relative-depth implementation",
+      "required": true,
+      "source_url": "https://github.com/DepthAnything/Depth-Anything-V2.git",
+      "source_revision": "a561b849ebae10a6f5ef49e26c83cbbcd36c71bf",
+      "resolution_status": "resolved",
+      "integrity": {
+        "method": "git_commit",
+        "value": "a561b849ebae10a6f5ef49e26c83cbbcd36c71bf"
+      },
+      "verification_method": "git_remote",
+      "license": {
+        "declared_license": "Apache-2.0",
+        "evidence_url": "https://raw.githubusercontent.com/DepthAnything/Depth-Anything-V2/a561b849ebae10a6f5ef49e26c83cbbcd36c71bf/LICENSE",
+        "evidence_digest_sha256": "1eb85fc97224598dad1852b5d6483bbcf0aa8608790dcc657a5a2a761ae9c8c6",
+        "commercial_saas_use_allowed": true,
+        "decision": "approved",
+        "rationale": "The pinned source revision carries the Apache-2.0 license."
+      },
+      "notes": [
+        "Only the Small checkpoint is admitted; Base, Large and Giant are excluded because their published terms are non-commercial."
+      ]
+    },
+    {
+      "artifact_id": "depth-anything-v2-small-checkpoint",
+      "component_id": "depth-anything-v2-small-weights",
+      "kind": "model",
+      "role": "Depth Anything V2 Small checkpoint for relative depth",
+      "required": true,
+      "source_url": "https://huggingface.co/depth-anything/Depth-Anything-V2-Small/resolve/03876f8651c73a60fe4c2c48294e09fcb6838fcf/depth_anything_v2_vits.pth",
+      "source_revision": "03876f8651c73a60fe4c2c48294e09fcb6838fcf",
+      "expected_filename": "depth_anything_v2_vits.pth",
+      "resolution_status": "resolved",
+      "integrity": {
+        "method": "sha256",
+        "value": "715fade13be8f229f8a70cc02066f656f2423a59effd0579197bbf57860e1378",
+        "size_bytes": 99218434
+      },
+      "verification_method": "vendor_metadata",
+      "license": {
+        "declared_license": "Apache-2.0",
+        "evidence_url": "https://huggingface.co/depth-anything/Depth-Anything-V2-Small/raw/03876f8651c73a60fe4c2c48294e09fcb6838fcf/README.md",
+        "evidence_digest_sha256": "d96b19c959007126110b199a7c2e9c24530b61796a26f1af035420625a10f916",
+        "commercial_saas_use_allowed": true,
+        "decision": "approved",
+        "rationale": "The exact Small model revision declares Apache-2.0; larger variants are not substituted."
+      },
+      "notes": [
+        "The SHA-256 and size are the exact Hugging Face LFS metadata values for the pinned revision."
+      ]
+    },
+    {
+      "artifact_id": "pytorch-cuda-runtime",
+      "component_id": "vision-gpu-base-container",
+      "kind": "container",
+      "role": "Linux AMD64 PyTorch 2.5.1, CUDA 12.4 and cuDNN 9 runtime base",
+      "required": true,
+      "source_url": "https://hub.docker.com/r/pytorch/pytorch/tags?name=2.5.1-cuda12.4-cudnn9-runtime",
+      "source_revision": "sha256:c8268a92a69bd500f8be0e665b2630ee006dadaf7bfbc24249141b15ff622755",
+      "resolution_status": "resolved",
+      "integrity": {
+        "method": "oci_digest",
+        "value": "sha256:c8268a92a69bd500f8be0e665b2630ee006dadaf7bfbc24249141b15ff622755"
+      },
+      "verification_method": "registry_manifest",
+      "license": {
+        "declared_license": "Bundled PyTorch, CUDA and cuDNN terms",
+        "evidence_url": "https://developer.download.nvidia.com/licenses/NVIDIA_Deep_Learning_Container_License.pdf",
+        "evidence_digest_sha256": "7751feaf67e7f9d9003e829ab00b35cbdbc2f040513a2f8e0a066ae64850420c",
+        "commercial_saas_use_allowed": null,
+        "decision": "review_required",
+        "rationale": "The container bundles multiple runtimes; the image scripts' source license is insufficient to approve redistribution or SaaS operation of the full bundle."
+      },
+      "notes": [
+        "The OCI digest is the registry manifest returned for the exact runtime tag on 2026-08-25.",
+        "This record admits no provider and does not authorize deployment."
+      ]
+    }
+  ],
+  "notes": [
+    "Fail closed: the inventory cannot become approved while a required legal decision is review_required.",
+    "All model bytes remain outside the product repository and must be fetched only by a digest-verifying build step.",
+    "OpenCut is intentionally absent: it belongs to the editor integration boundary, not the PGV-1 perception runtime."
+  ]
+}

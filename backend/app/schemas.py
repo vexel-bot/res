@@ -124,6 +124,7 @@ class WorkspaceResourceIn(APIModel):
         "video_project",
         "ai_chat",
         "presenter_session",
+        "factory_round",
     ]
     resource_key: str = Field(min_length=1, max_length=120)
     payload: dict[str, Any] = Field(default_factory=dict)
@@ -141,6 +142,30 @@ class WorkspaceResourceOut(APIModel):
     payload: dict[str, Any]
     created_at: datetime
     updated_at: datetime
+
+
+class FactoryRoundReservationIn(APIModel):
+    workspace_id: str
+    source_post_id: str | None = None
+    derivative_ids: list[str] = Field(min_length=1, max_length=50)
+
+    @model_validator(mode="after")
+    def derivative_ids_are_unique(self) -> "FactoryRoundReservationIn":
+        if len(self.derivative_ids) != len(set(self.derivative_ids)):
+            raise ValueError("Factory round derivative ids must be unique")
+        if self.source_post_id and self.source_post_id in self.derivative_ids:
+            raise ValueError("Factory round source cannot also be a derivative")
+        return self
+
+
+class FactoryRoundReservationOut(APIModel):
+    schema_version: Literal["clicko.factory-round-reservation.v1"] = (
+        "clicko.factory-round-reservation.v1"
+    )
+    round_id: str
+    input_digest_sha256: str
+    ownership: Literal["acquired", "existing"]
+    resource: WorkspaceResourceOut
 
 
 class MemberInviteIn(APIModel):
@@ -467,7 +492,20 @@ class CampaignPiecesIn(APIModel):
 class AssetIn(APIModel):
     workspace_id: str
     title: str = Field(min_length=1, max_length=240)
-    type: Literal["content", "upload", "campaign", "version", "prompt", "image", "video", "template", "document"]
+    type: Literal[
+        "content",
+        "upload",
+        "campaign",
+        "version",
+        "prompt",
+        "image",
+        "video",
+        "audio",
+        "waveform",
+        "template",
+        "document",
+        "archive",
+    ]
     tags: list[str] = Field(default_factory=list)
     campaign_id: str | None = None
     content_id: str | None = None
@@ -476,6 +514,11 @@ class AssetIn(APIModel):
 
 class AssetOut(AssetIn):
     id: str
+    storage_backend: str | None = None
+    media_type: str | None = None
+    size_bytes: int | None = None
+    checksum_sha256: str | None = None
+    metadata: dict[str, Any] = Field(default_factory=dict)
     created_at: datetime
     updated_at: datetime
 
@@ -534,6 +577,7 @@ class BootstrapOut(APIModel):
 
 
 class SignalIn(APIModel):
+    schema_version: Literal["radar.signal.v1", "radar.signal.v2"] = "radar.signal.v2"
     workspace_id: str | None = None
     source: str = Field(min_length=2, max_length=120)
     url: str = Field(min_length=8, max_length=4000)
@@ -548,6 +592,10 @@ class SignalIn(APIModel):
     topics: list[str] = Field(default_factory=list)
     entities: list[str] = Field(default_factory=list)
     metrics: dict[str, Any] = Field(default_factory=dict)
+    source_type: Literal["external", "rss", "manual", "research_provider"] = "external"
+    confidence: float | None = Field(default=None, ge=0, le=1)
+    knowledge_type: Literal["fact", "inference", "suggestion"] = "fact"
+    provider_trace: dict[str, Any] = Field(default_factory=dict)
 
     @field_validator("raw_text")
     @classmethod
@@ -667,6 +715,22 @@ class RadarStateOut(APIModel):
     opportunities: list[OpportunityOut]
 
 
+class RadarShadowEvaluationOut(APIModel):
+    id: str
+    workspace_id: str
+    signal_id: str
+    active_opportunity_id: str | None
+    baseline_version: str
+    baseline_score: float
+    candidate_version: str
+    candidate_score: float | None
+    brand_revision: int
+    candidate: dict[str, Any]
+    comparison: dict[str, Any]
+    provider_trace: dict[str, Any]
+    created_at: datetime
+
+
 class FeedbackIn(APIModel):
     workspace_id: str
     opportunity_id: str | None = None
@@ -745,6 +809,13 @@ class HistoryItemOut(APIModel):
 
 class HistoryReuseIn(APIModel):
     title: str | None = Field(default=None, min_length=1, max_length=240)
+    format: str | None = Field(default=None, min_length=1, max_length=32)
+    platform: str | None = Field(default=None, min_length=1, max_length=32)
+    objective: str | None = Field(default=None, max_length=2000)
+    derivation_key: str | None = Field(default=None, pattern=r"^[a-z0-9][a-z0-9-]{1,79}$")
+    hypothesis: str | None = Field(default=None, max_length=2000)
+    preserve: list[str] = Field(default_factory=list, max_length=50)
+    adapt: list[str] = Field(default_factory=list, max_length=50)
 
 
 class LearningPreferenceOut(APIModel):

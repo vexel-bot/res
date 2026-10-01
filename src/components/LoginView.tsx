@@ -91,9 +91,13 @@ export const LoginView: React.FC = () => {
             {error && <div role="alert" className="rounded-lg border border-[var(--clicko-danger)]/30 bg-[var(--clicko-danger)]/10 px-3 py-2 text-[10px] text-[var(--clicko-danger)]">{error}</div>}
             <div className="flex items-center justify-between text-[9px]">
               <label className="flex items-center gap-2 text-[#7C7C7C]"><input type="checkbox" defaultChecked className="accent-white" />Lembrar de mim</label>
-              <button type="button" className="text-[#B8B8B8] hover:text-white">Esqueci minha senha</button>
+              <button type="button" disabled title="A recuperação de senha ainda não está configurada neste ambiente." className="text-[#B8B8B8] hover:text-white">Esqueci minha senha</button>
             </div>
-            <button disabled={submitting} className="mt-2 flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-white text-[10px] font-semibold text-[#0B0B0B] transition-transform hover:scale-[1.01] disabled:opacity-70">
+            <button
+              disabled={submitting}
+              title={submitting ? "Aguarde a conclusão da autenticação." : undefined}
+              className="mt-2 flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-white text-[10px] font-semibold text-[#0B0B0B] transition-transform hover:scale-[1.01] disabled:opacity-70"
+            >
               {submitting ? <><ClickoLoader className="h-5 w-10" />Aguarde...</> : <>{registering ? 'Criar conta' : 'Entrar no Estúdio'}<ArrowRight className="h-4 w-4" /></>}
             </button>
           </form>

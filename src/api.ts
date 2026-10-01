@@ -26,7 +26,12 @@ export async function apiFetch<T>(path: string, init: RequestInit = {}): Promise
     let message = `Erro HTTP ${response.status}`;
     try {
       const body = await response.json();
-      message = body.detail || body.error || message;
+      const detail = body.detail || body.error;
+      message = typeof detail === "string"
+        ? detail
+        : typeof detail?.code === "string"
+          ? detail.code
+          : message;
     } catch {
       // The status remains the authoritative error when the response is not JSON.
     }
@@ -37,12 +42,12 @@ export async function apiFetch<T>(path: string, init: RequestInit = {}): Promise
   return response.json() as Promise<T>;
 }
 
-export async function apiFetchBlob(path: string): Promise<Blob> {
+export async function apiFetchBlob(path: string, signal?: AbortSignal): Promise<Blob> {
   const token = authToken.get();
   const headers = new Headers();
   if (token) headers.set('Authorization', `Bearer ${token}`);
   headers.set('X-Correlation-ID', crypto.randomUUID());
-  const response = await fetch(path, { headers });
+  const response = await fetch(path, { headers, signal });
   if (!response.ok) throw new APIError(`Erro HTTP ${response.status}`, response.status);
   return response.blob();
 }

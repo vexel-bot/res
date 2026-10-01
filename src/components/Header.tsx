@@ -110,6 +110,8 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSpotlight }) => {
         {/* Help Button */}
         <button
           type="button"
+          disabled
+          title="A central de ajuda ainda não está conectada nesta rota de compatibilidade."
           className="grid h-9 w-9 place-items-center rounded-xl border border-white/[0.06] bg-transparent text-[#8b959b] transition-colors hover:border-white/15 hover:bg-white/[0.025] hover:text-white max-[700px]:hidden"
           aria-label="Ajuda"
         >

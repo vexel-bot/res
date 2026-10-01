@@ -1,0 +1,36 @@
+[project]
+name = "clicko-kokoro-openvoice-clone-candidate-v2"
+version = "0.2.0"
+requires-python = "==3.11.*"
+dependencies = [
+  "attrs",
+  "espeakng-loader==0.2.4",
+  "huggingface-hub==1.28.0",
+  "librosa==0.11.0",
+  "loguru==0.7.3",
+  "misaki==0.9.4",
+  "numpy==1.26.4",
+  "phonemizer-fork==3.3.2",
+  "soundfile==0.13.1",
+  "torch==2.6.0",
+  "torchaudio==2.6.0",
+  "transformers==5.16.1",
+  "wavmark==0.0.3",
+]
+
+[tool.uv]
+package = false
+exclude-newer = "2026-08-26T23:59:59Z"
+environments = [
+  "sys_platform == 'linux' and platform_machine == 'x86_64'",
+]
+
+[tool.uv.sources]
+misaki = { git = "https://github.com/hexgrad/misaki.git", rev = "fba1236595f2d2bf21d414ba6e57d25256afada3" }
+torch = { index = "pytorch-cu124" }
+torchaudio = { index = "pytorch-cu124" }
+
+[[tool.uv.index]]
+name = "pytorch-cu124"
+url = "https://download.pytorch.org/whl/cu124"
+explicit = true

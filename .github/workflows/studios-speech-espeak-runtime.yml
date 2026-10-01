@@ -1,0 +1,81 @@
+name: Studios eSpeak policy runtime bundle
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-linux-amd64-runtime:
+    name: Build exact eSpeak replacement runtime (linux/amd64)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    env:
+      ESPEAK_SOURCE_REVISION: 7d426728fe146f4168fa716e29d8e276c7da33f2
+      ESPEAK_BUNDLED_REVISION: 4870adfa25b1a32b4361592f1be8a40337c58d6c
+      ESPEAK_LOADER_WHEEL_DIGEST: 08721baf27d13d461f6be6eed9a65277e70d68234ff484fd8b9897b222cdcb6d
+    steps:
+      - name: Checkout pinned Clicko source
+        uses: actions/checkout@v4
+
+      - name: Fetch exact eSpeak source and corresponding-source archive
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p .candidate-build/espeak-ng
+          git -C .candidate-build/espeak-ng init
+          git -C .candidate-build/espeak-ng remote add origin https://github.com/espeak-ng/espeak-ng.git
+          git -C .candidate-build/espeak-ng fetch --depth 1 origin "$ESPEAK_SOURCE_REVISION"
+          git -C .candidate-build/espeak-ng checkout --detach FETCH_HEAD
+          test "$(git -C .candidate-build/espeak-ng rev-parse HEAD)" = "$ESPEAK_SOURCE_REVISION"
+          git -C .candidate-build/espeak-ng archive \
+            --format=tar.gz \
+            --output=.candidate-build/espeak-ng.tar.gz \
+            "$ESPEAK_SOURCE_REVISION"
+
+      - name: Set up BuildKit
+        uses: docker/setup-buildx-action@v3
+
+      - name: Export replacement runtime bytes
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: workers/speech-cpu/Dockerfile.espeak-runtime
+          platforms: linux/amd64
+          push: false
+          outputs: type=local,dest=/tmp/clicko-espeak-runtime
+          build-args: |
+            ESPEAK_SOURCE_REVISION=${{ env.ESPEAK_SOURCE_REVISION }}
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install manifest contract dependency
+        shell: bash
+        run: python -m pip install --disable-pip-version-check "pydantic==2.12.5"
+
+      - name: Generate and verify runtime byte manifest
+        shell: bash
+        run: |
+          set -euo pipefail
+          python backend/scripts/generate_espeak_runtime_manifest.py \
+            --runtime-root /tmp/clicko-espeak-runtime \
+            --build-recipe workers/speech-cpu/Dockerfile.espeak-runtime \
+            --loader-wheel-digest "$ESPEAK_LOADER_WHEEL_DIGEST" \
+            --bundled-espeak-revision "$ESPEAK_BUNDLED_REVISION" \
+            --output /tmp/clicko-espeak-runtime.manifest.json \
+            | tee /tmp/clicko-espeak-runtime.verification.json
+
+      - name: Upload runtime, corresponding source and manifest only
+        uses: actions/upload-artifact@v4
+        with:
+          name: clicko-espeak-runtime-7d42672-linux-amd64
+          path: |
+            /tmp/clicko-espeak-runtime
+            /tmp/clicko-espeak-runtime.manifest.json
+            /tmp/clicko-espeak-runtime.verification.json
+          if-no-files-found: error
+          retention-days: 14

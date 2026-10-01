@@ -82,6 +82,30 @@ def test_content_versions_calendar_metrics_feedback_history_and_reuse(client):
     assert reused.json()["status"] == "draft" and reused.json()["scheduledAt"] is None
     assert reused.json()["copy"] == "Texto editorial revisado"
     assert "cópia" in reused.json()["title"]
+
+    derivative = client.post(
+        f"/api/v1/history/posts/{post_id}/reuse",
+        headers=headers,
+        json={
+            "title": "Guia em story",
+            "format": "story",
+            "platform": "instagram",
+            "objective": "Testar leitura rápida",
+            "derivationKey": "story",
+            "hypothesis": "Um hook curto aumenta conclusão",
+            "preserve": ["promessa", "asset principal"],
+            "adapt": ["formato", "CTA"],
+        },
+    )
+    assert derivative.status_code == 201, derivative.text
+    derivative_payload = derivative.json()
+    assert derivative_payload["format"] == "story"
+    assert derivative_payload["origin"] == "analytics"
+    lineage = derivative_payload["versions"][0]["lineage"]
+    assert lineage["sourcePostId"] == post_id
+    assert lineage["derivationKey"] == "story"
+    assert lineage["hypothesis"] == "Um hook curto aumenta conclusão"
+    assert lineage["preserve"] == ["promessa", "asset principal"]
     assert client.post(f"/api/v1/history/posts/{post_id}/reuse", headers=auth(other_token), json={}).status_code == 404
 
     restored = client.post(f"/api/v1/posts/{post_id}/versions/1/restore", headers=headers)

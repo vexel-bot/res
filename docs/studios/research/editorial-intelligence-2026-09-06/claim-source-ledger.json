@@ -1,0 +1,283 @@
+{
+  "external_sources": [
+    {
+      "id": "S01",
+      "title": "Ordinary Folk — Process",
+      "url": "https://www.ordinaryfolk.co/process",
+      "source_type": "processo primário",
+      "published": "não datado",
+      "accessed": "2026-09-06",
+      "supports": "Mensagem, design, animação e áudio articulados; base para artefatos intermediários.",
+      "limitation": "Página do processo lida; não é prova da qualidade do res.",
+      "confidence": "primary_source_for_stated_scope"
+    },
+    {
+      "id": "S02",
+      "title": "Ben Marriott — Motion Foundation",
+      "url": "https://www.benmarriott.com/motion-foundation",
+      "source_type": "programa do próprio autor",
+      "published": "não datado",
+      "accessed": "2026-09-06",
+      "supports": "Currículo com curvas, máscaras, match cuts, parallax e animatic.",
+      "limitation": "Programa público lido; curso não assistido.",
+      "confidence": "primary_source_for_stated_scope"
+    },
+    {
+      "id": "S03",
+      "title": "Walter Murch — In the Blink of an Eye",
+      "url": "https://www.silmanjamespress.com/shop/filmmaking-directing/in-the-blink-of-an-eye2nd-edition/",
+      "source_type": "editora",
+      "published": "2ª edição",
+      "accessed": "2026-09-06",
+      "supports": "Referência bibliográfica para decisão de corte e continuidade.",
+      "limitation": "Descrição editorial consultada; livro não lido integralmente.",
+      "confidence": "primary_source_for_stated_scope"
+    },
+    {
+      "id": "S04",
+      "title": "Karen Pearlman — Cutting Rhythms",
+      "url": "https://www.routledge.com/Cutting-Rhythms-Creative-Film-Editing/Pearlman/p/book/9781041024088",
+      "source_type": "editora / resultado indexado",
+      "published": "3ª edição",
+      "accessed": "2026-09-06",
+      "supports": "Referência bibliográfica sobre ritmo e criatividade na montagem.",
+      "limitation": "Texto integral da página bloqueado por 403; apenas referência indexada.",
+      "confidence": "limited"
+    },
+    {
+      "id": "S05",
+      "title": "Bruce Block — The Visual Story",
+      "url": "https://www.routledge.com/The-Visual-Story-Creating-the-Visual-Structure-of-Film-TV-and-Digital-Media/Block/p/book/9781138014152",
+      "source_type": "editora",
+      "published": "2021, 3ª edição",
+      "accessed": "2026-09-06",
+      "supports": "Componentes visuais relacionados à estrutura da história.",
+      "limitation": "Descrição e sumário consultados; livro não lido integralmente.",
+      "confidence": "primary_source_for_stated_scope"
+    },
+    {
+      "id": "S06",
+      "title": "Randy Thom — Designing a Movie for Sound",
+      "url": "https://www.filmsound.org/articles/designing_for_sound.htm",
+      "source_type": "artigo assinado",
+      "published": "1999",
+      "accessed": "2026-09-06",
+      "supports": "Som deve participar das decisões de construção do filme, incluindo pausas e ponto de vista.",
+      "limitation": "Princípio de criação; não benchmark automatizado.",
+      "confidence": "primary_source_for_stated_scope"
+    },
+    {
+      "id": "S07",
+      "title": "Scrolly2Reel",
+      "url": "https://arxiv.org/abs/2403.18111",
+      "source_type": "artigo dos autores",
+      "published": "2024",
+      "accessed": "2026-09-06",
+      "supports": "Unidades narrativas para relacionar gráficos, narração e ritmo.",
+      "limitation": "Escopo de retargeting de gráficos; não generalizar para edição universal.",
+      "confidence": "primary_source_for_stated_scope"
+    },
+    {
+      "id": "S08",
+      "title": "Blackmagic — DaVinci Resolve Training",
+      "url": "https://www.blackmagicdesign.com/products/davinciresolve/training",
+      "source_type": "documentação e currículo oficial",
+      "published": "página atual consultada",
+      "accessed": "2026-09-06",
+      "supports": "Formação em montagem, cor, Fairlight, Fusion, composição e tracking.",
+      "limitation": "Página/currículo lidos; exercícios não executados.",
+      "confidence": "primary_source_for_stated_scope"
+    },
+    {
+      "id": "S09",
+      "title": "Adobe — J cuts and L cuts",
+      "url": "https://helpx.adobe.com/uk/premiere/desktop/edit-projects/trim-clips/perform-j-cuts-and-l-cuts.html",
+      "source_type": "documentação oficial",
+      "published": "2025-10-19",
+      "accessed": "2026-09-06",
+      "supports": "Áudio e imagem podem trocar de plano em momentos diferentes.",
+      "limitation": "Mecanismo documentado; aplicação editorial depende da cena.",
+      "confidence": "primary_source_for_stated_scope"
+    },
+    {
+      "id": "S10",
+      "title": "Adobe — Animating text",
+      "url": "https://helpx.adobe.com/after-effects/desktop/animating-text/text-animation/animating-text.html",
+      "source_type": "documentação oficial",
+      "published": "2026-04-30",
+      "accessed": "2026-09-06",
+      "supports": "Animadores e seletores permitem controlar grupos e unidades de texto.",
+      "limitation": "Capacidade do After Effects, não do res.",
+      "confidence": "primary_source_for_stated_scope"
+    },
+    {
+      "id": "S11",
+      "title": "Cavalry — Duplicator",
+      "url": "https://cavalry.studio/docs/nodes/shapes/duplicator/",
+      "source_type": "documentação oficial",
+      "published": "não datado",
+      "accessed": "2026-09-06",
+      "supports": "Distribuição e propriedades por instância.",
+      "limitation": "Referência técnica de outro produto.",
+      "confidence": "primary_source_for_stated_scope"
+    },
+    {
+      "id": "S12",
+      "title": "Cavalry — Stagger",
+      "url": "https://cavalry.studio/docs/nodes/behaviours/stagger/",
+      "source_type": "documentação oficial",
+      "published": "não datado",
+      "accessed": "2026-09-06",
+      "supports": "Valores sequenciais e deslocamento temporal por instância.",
+      "limitation": "Não determina a escolha artística do atraso.",
+      "confidence": "primary_source_for_stated_scope"
+    },
+    {
+      "id": "S13",
+      "title": "Blender — VFX",
+      "url": "https://www.blender.org/features/vfx/",
+      "source_type": "documentação oficial",
+      "published": "não datado",
+      "accessed": "2026-09-06",
+      "supports": "Compositor, tracking de câmera/objeto e render layers.",
+      "limitation": "Página de capacidades; integração no res não certificada.",
+      "confidence": "primary_source_for_stated_scope"
+    },
+    {
+      "id": "S14",
+      "title": "HyperFrames — Determinism",
+      "url": "https://hyperframes.heygen.com/concepts/determinism",
+      "source_type": "documentação oficial",
+      "published": "não datado",
+      "accessed": "2026-09-06",
+      "supports": "Tempo por frame, carga prévia de assets e ambiente fixado para repetibilidade.",
+      "limitation": "A promessa da ferramenta precisa ser validada na integração.",
+      "confidence": "primary_source_for_stated_scope"
+    },
+    {
+      "id": "S15",
+      "title": "Motion Canvas — Tweening",
+      "url": "https://motion-canvas.io/docs/tweening/",
+      "source_type": "documentação oficial",
+      "published": "não datado",
+      "accessed": "2026-09-06",
+      "supports": "Interpolação e funções de tempo para animações.",
+      "limitation": "Não substitui direção editorial.",
+      "confidence": "primary_source_for_stated_scope"
+    },
+    {
+      "id": "S16",
+      "title": "Universal Category System",
+      "url": "https://universalcategorysystem.com/",
+      "source_type": "iniciativa original",
+      "published": "recursos 8.2.1 citados na página",
+      "accessed": "2026-09-06",
+      "supports": "Categorias e convenções para biblioteca de efeitos sonoros.",
+      "limitation": "Taxonomia não resolve seleção de som por intenção.",
+      "confidence": "primary_source_for_stated_scope"
+    },
+    {
+      "id": "S17",
+      "title": "Freesound — FAQ",
+      "url": "https://freesound.org/help/faq/",
+      "source_type": "documentação da biblioteca",
+      "published": "não datado",
+      "accessed": "2026-09-06",
+      "supports": "Busca de sons e condições variáveis por arquivo.",
+      "limitation": "Nenhum download, compra ou integração ativada.",
+      "confidence": "primary_source_for_stated_scope"
+    },
+    {
+      "id": "S18",
+      "title": "YouTube — Audio Library",
+      "url": "https://support.google.com/youtube/answer/3376882?hl=en",
+      "source_type": "documentação oficial",
+      "published": "não datado",
+      "accessed": "2026-09-06",
+      "supports": "Biblioteca de música/efeitos, busca e downloads no Studio.",
+      "limitation": "Não inferir autorização geral de redistribuição em SaaS.",
+      "confidence": "primary_source_for_stated_scope"
+    },
+    {
+      "id": "S19",
+      "title": "Meta — One year of Edits",
+      "url": "https://about.fb.com/news/2026/04/one-year-of-edits-built-for-and-with-creators/amp/",
+      "source_type": "anúncio oficial",
+      "published": "2026-04",
+      "accessed": "2026-09-06",
+      "supports": "Inspiração, organização e exploração de projetos/templates.",
+      "limitation": "Anúncio não fornece automaticamente conector de coleta; recursos futuros não tratados como entregues.",
+      "confidence": "primary_source_for_stated_scope"
+    }
+  ],
+  "code_evidence": [
+    {
+      "id": "renderer",
+      "path": "C:\\Users\\edugu\\Downloads\\res\\backend\\app\\providers\\studios\\contextual_render.py",
+      "sha256": "73e5f858083f06f8b7dd3374b7a2f744873fdb3f637104da816443d1510f66fd",
+      "scope": "static inspection; no application tests run in this research step"
+    },
+    {
+      "id": "plan_contract",
+      "path": "C:\\Users\\edugu\\Downloads\\res\\backend\\app\\domain\\studios\\contextual_editing.py",
+      "sha256": "15e13b6d538b8757881ebe7652fe11067119a4e21e8dc5541878737dd04b7e5b",
+      "scope": "static inspection; no application tests run in this research step"
+    },
+    {
+      "id": "contextual_service",
+      "path": "C:\\Users\\edugu\\Downloads\\res\\backend\\app\\services\\studios\\contextual_editing.py",
+      "sha256": "46aa5384a807e63137f627f2119e39e5d0b4bbdfc96049a57c6a38b117bb922f",
+      "scope": "static inspection; no application tests run in this research step"
+    },
+    {
+      "id": "planner",
+      "path": "C:\\Users\\edugu\\Downloads\\res\\backend\\app\\services\\studios\\gemini_editing.py",
+      "sha256": "838c56082a7eabfb9c8c965c5d909a02761439098ad9329902314dcaa5e7b1e7",
+      "scope": "static inspection; no application tests run in this research step"
+    },
+    {
+      "id": "repertoire",
+      "path": "C:\\Users\\edugu\\Downloads\\res\\backend\\app\\services\\studios\\editing_repertoire.py",
+      "sha256": "2922fdc6cf08d73258d63d5b94ac26e3ed6f2d90df565287e8d8fbf123730490",
+      "scope": "static inspection; no application tests run in this research step"
+    },
+    {
+      "id": "materials",
+      "path": "C:\\Users\\edugu\\Downloads\\res\\backend\\app\\services\\studios\\material_director.py",
+      "sha256": "b93615c1c912cc18616bc3f9c539ef9a802549df320e6c36e5d167c3e7502d8a",
+      "scope": "static inspection; no application tests run in this research step"
+    },
+    {
+      "id": "resources",
+      "path": "C:\\Users\\edugu\\Downloads\\res\\backend\\app\\services\\studios\\editing_resources.py",
+      "sha256": "b4f42e21b7579f655daac37317d41c055c8694ee65c94921c02c86a4ee8b2931",
+      "scope": "static inspection; no application tests run in this research step"
+    },
+    {
+      "id": "motion",
+      "path": "C:\\Users\\edugu\\Downloads\\res\\backend\\app\\domain\\studios\\motion.py",
+      "sha256": "e06a1c5e4e5a31e3699b8bef9843fa9915974e67dfd6f91edc2fe62003b0e662",
+      "scope": "static inspection; no application tests run in this research step"
+    },
+    {
+      "id": "render_service",
+      "path": "C:\\Users\\edugu\\Downloads\\res\\backend\\app\\services\\studios\\video_render.py",
+      "sha256": "ff1da398b0340a37248e3d6a95838657ea4cb4484c89e6ac2f6db26d95ab5e7c",
+      "scope": "static inspection; no application tests run in this research step"
+    },
+    {
+      "id": "hyperframes",
+      "path": "C:\\Users\\edugu\\Downloads\\res\\backend\\app\\providers\\studios\\hyperframes_projection.py",
+      "sha256": "953e9003d3bdb5e6f131b567bb0e44692fa795f89cf368ae0dadf56403d3dbd5",
+      "scope": "static inspection; no application tests run in this research step"
+    },
+    {
+      "id": "ai_adapters",
+      "path": "C:\\Users\\edugu\\Downloads\\res\\backend\\app\\providers\\studios\\editing_ai.py",
+      "sha256": "14cfae9c3647cc776992d42697469d5afcbacca37caab14f2029545d701cde2f",
+      "scope": "static inspection; no application tests run in this research step"
+    }
+  ],
+  "audit_date": "2026-09-06",
+  "claims_of_causality": false
+}

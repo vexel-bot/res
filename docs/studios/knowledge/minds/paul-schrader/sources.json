@@ -1,0 +1,22 @@
+{
+  "schema_version": "studio.creative-mind-sources.v1",
+  "mind": "Paul Schrader",
+  "research_status": "seed_evidence_only",
+  "sources": [
+    {
+      "url": "https://www.bafta.org/media-centre/press-releases/bafta-screenwriters-lecture-series-paul-schrader/",
+      "tier": "institutional_or_primary_starting_point",
+      "reviewed": false
+    },
+    {
+      "url": "https://www.dga.org/Craft/VisualHistory",
+      "tier": "institutional_or_primary_starting_point",
+      "reviewed": false
+    }
+  ],
+  "global_methods": [
+    "https://www.wgfoundation.org/screenplay-primers",
+    "https://www.bafta.org/programmes/screenwriters-lecture-series",
+    "https://www.dga.org/Craft/VisualHistory"
+  ]
+}

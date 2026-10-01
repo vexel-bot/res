@@ -1,0 +1,24 @@
+{
+  "schema_version": "studio.collaboration-graph.v1",
+  "anchor": "Billy Wilder e I. A. L. Diamond",
+  "status": "credits_pending_per_work_verification",
+  "nodes": [
+    {
+      "name": "Charles Brackett",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "I. A. L. Diamond",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Doane Harrison",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Alexandre Trauner",
+      "role": "verify_per_work"
+    }
+  ],
+  "edges": []
+}

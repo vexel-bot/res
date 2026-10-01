@@ -1,0 +1,22 @@
+{
+  "schema_version": "studio.creative-mind-sources.v1",
+  "mind": "Armando Iannucci e Jesse Armstrong",
+  "research_status": "seed_evidence_only",
+  "sources": [
+    {
+      "url": "https://www.bafta.org/stories/armando-iannucci-annual-television-lecture-in-2012/",
+      "tier": "institutional_or_primary_starting_point",
+      "reviewed": false
+    },
+    {
+      "url": "https://www.bafta.org/media-centre/press-releases/bafta-tv-sessions-2022-screenwriting/",
+      "tier": "institutional_or_primary_starting_point",
+      "reviewed": false
+    }
+  ],
+  "global_methods": [
+    "https://www.wgfoundation.org/screenplay-primers",
+    "https://www.bafta.org/programmes/screenwriters-lecture-series",
+    "https://www.dga.org/Craft/VisualHistory"
+  ]
+}

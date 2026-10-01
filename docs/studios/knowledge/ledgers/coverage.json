@@ -1,0 +1,21 @@
+{
+  "schema_version": "studio.corpus-coverage.v1",
+  "target": 900,
+  "planned": 900,
+  "annotated_in_main_corpus": 0,
+  "r1_calibration_units": 12,
+  "human_approved": 0,
+  "second_review_required": 90,
+  "counts": {
+    "creators": 200,
+    "screenwriting": 300,
+    "direction": 100,
+    "editing": 100,
+    "cinematography": 50,
+    "production_design": 50,
+    "motion_vfx": 50,
+    "sound_music": 50
+  },
+  "complete": false,
+  "blocker": "R1 human review and taxonomy approval required before selection and annotation"
+}

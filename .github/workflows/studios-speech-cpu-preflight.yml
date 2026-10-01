@@ -1,0 +1,83 @@
+name: Studios speech CPU preflight
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-linux-amd64-preflight:
+    name: Build speech_cpu preflight (linux/amd64)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - name: Checkout pinned source
+        uses: actions/checkout@v4
+
+      - name: Set up BuildKit
+        uses: docker/setup-buildx-action@v3
+
+      - name: Set up Python for source-pin verification
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install contract verifier dependencies
+        shell: bash
+        run: python -m pip install --disable-pip-version-check --requirement backend/requirements.txt
+
+      - name: Resolve immutable digests
+        id: digests
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "requirements=$(sha256sum backend/requirements.txt | awk '{print $1}')" >> "$GITHUB_OUTPUT"
+          echo "manifest=36f45dd041744f671a68c8980711c44088592da1b06a3ce77c725bce074b4837" >> "$GITHUB_OUTPUT"
+          echo "policy=97dcfb0f58775e4a6b779c0158a72746d39eb24425cf027d1decab2bf9ef55e7" >> "$GITHUB_OUTPUT"
+
+      - name: Verify source pins before BuildKit
+        shell: bash
+        run: |
+          set -euo pipefail
+          python workers/speech-cpu/verify_build.py \
+            --backend backend \
+            --requirements backend/requirements.txt \
+            --requirements-digest "${{ steps.digests.outputs.requirements }}" \
+            --manifest workers/speech-cpu/worker.manifest.json \
+            --manifest-digest "${{ steps.digests.outputs.manifest }}" \
+            --policy benchmarks/studios/identity/voice-stock-pt-br-policy.v1.json \
+            --policy-digest "${{ steps.digests.outputs.policy }}"
+
+      - name: Build immutable preflight OCI artifact
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: workers/speech-cpu/Dockerfile.preflight
+          platforms: linux/amd64
+          push: false
+          outputs: type=oci,dest=/tmp/clicko-speech-cpu-preflight.oci.tar
+          provenance: mode=max
+          sbom: true
+          build-args: |
+            BACKEND_REQUIREMENTS_DIGEST=${{ steps.digests.outputs.requirements }}
+            WORKER_MANIFEST_DIGEST=${{ steps.digests.outputs.manifest }}
+            STOCK_POLICY_DIGEST=${{ steps.digests.outputs.policy }}
+
+      - name: Verify OCI attestations and provider boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          python backend/scripts/verify_preflight_oci.py \
+            /tmp/clicko-speech-cpu-preflight.oci.tar \
+            --title "Clicko speech CPU preflight" \
+            --provider-label none
+
+      - name: Upload preflight OCI artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: clicko-speech-cpu-preflight-linux-amd64
+          path: /tmp/clicko-speech-cpu-preflight.oci.tar
+          if-no-files-found: error
+          retention-days: 7

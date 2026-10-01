@@ -1,0 +1,120 @@
+{
+  "schema_version": "studio.creative-research-gate.v1",
+  "pilot_id": "r1-2026-09-01",
+  "analyses": [
+    {
+      "unit_id": "instagram-DTRBJoOAUl1",
+      "analysis_path": "corpus\\instagram-DTRBJoOAUl1\\analysis.md",
+      "shots_path": "corpus\\instagram-DTRBJoOAUl1\\shots.json",
+      "temporal_map_complete": true,
+      "provenance_complete": true,
+      "human_reviewed": true,
+      "human_review_decision": "approved"
+    },
+    {
+      "unit_id": "instagram-DcuHK9ChRrP",
+      "analysis_path": "corpus\\instagram-DcuHK9ChRrP\\analysis.md",
+      "shots_path": "corpus\\instagram-DcuHK9ChRrP\\shots.json",
+      "temporal_map_complete": true,
+      "provenance_complete": true,
+      "human_reviewed": true,
+      "human_review_decision": "approved"
+    },
+    {
+      "unit_id": "instagram-DcRjR01BFVM",
+      "analysis_path": "corpus\\instagram-DcRjR01BFVM\\analysis.md",
+      "shots_path": "corpus\\instagram-DcRjR01BFVM\\shots.json",
+      "temporal_map_complete": true,
+      "provenance_complete": true,
+      "human_reviewed": true,
+      "human_review_decision": "approved"
+    },
+    {
+      "unit_id": "instagram-DciIBRYBHBK",
+      "analysis_path": "corpus\\instagram-DciIBRYBHBK\\analysis.md",
+      "shots_path": "corpus\\instagram-DciIBRYBHBK\\shots.json",
+      "temporal_map_complete": true,
+      "provenance_complete": true,
+      "human_reviewed": true,
+      "human_review_decision": "approved"
+    },
+    {
+      "unit_id": "instagram-DcsuFSGhnlw",
+      "analysis_path": "corpus\\instagram-DcsuFSGhnlw\\analysis.md",
+      "shots_path": "corpus\\instagram-DcsuFSGhnlw\\shots.json",
+      "temporal_map_complete": true,
+      "provenance_complete": true,
+      "human_reviewed": true,
+      "human_review_decision": "approved"
+    },
+    {
+      "unit_id": "instagram-Dcq32xNgO1d",
+      "analysis_path": "corpus\\instagram-Dcq32xNgO1d\\analysis.md",
+      "shots_path": "corpus\\instagram-Dcq32xNgO1d\\shots.json",
+      "temporal_map_complete": true,
+      "provenance_complete": true,
+      "human_reviewed": true,
+      "human_review_decision": "approved"
+    },
+    {
+      "unit_id": "instagram-DaJVyavI65T",
+      "analysis_path": "corpus\\instagram-DaJVyavI65T\\analysis.md",
+      "shots_path": "corpus\\instagram-DaJVyavI65T\\shots.json",
+      "temporal_map_complete": true,
+      "provenance_complete": true,
+      "human_reviewed": true,
+      "human_review_decision": "approved"
+    },
+    {
+      "unit_id": "instagram-DZiYEzBvZOc",
+      "analysis_path": "corpus\\instagram-DZiYEzBvZOc\\analysis.md",
+      "shots_path": "corpus\\instagram-DZiYEzBvZOc\\shots.json",
+      "temporal_map_complete": true,
+      "provenance_complete": true,
+      "human_reviewed": true,
+      "human_review_decision": "approved"
+    },
+    {
+      "unit_id": "instagram-DbBddW3JNKD",
+      "analysis_path": "corpus\\instagram-DbBddW3JNKD\\analysis.md",
+      "shots_path": "corpus\\instagram-DbBddW3JNKD\\shots.json",
+      "temporal_map_complete": true,
+      "provenance_complete": true,
+      "human_reviewed": true,
+      "human_review_decision": "approved"
+    },
+    {
+      "unit_id": "instagram-Dbhmn9eOiXN",
+      "analysis_path": "corpus\\instagram-Dbhmn9eOiXN\\analysis.md",
+      "shots_path": "corpus\\instagram-Dbhmn9eOiXN\\shots.json",
+      "temporal_map_complete": true,
+      "provenance_complete": true,
+      "human_reviewed": true,
+      "human_review_decision": "approved"
+    },
+    {
+      "unit_id": "blender-charge-factory-invasion",
+      "analysis_path": "corpus\\blender-charge-factory-invasion\\analysis.md",
+      "shots_path": "corpus\\blender-charge-factory-invasion\\shots.json",
+      "temporal_map_complete": true,
+      "provenance_complete": true,
+      "human_reviewed": true,
+      "human_review_decision": "approved"
+    },
+    {
+      "unit_id": "blender-sprite-fright-forest-reveal",
+      "analysis_path": "corpus\\blender-sprite-fright-forest-reveal\\analysis.md",
+      "shots_path": "corpus\\blender-sprite-fright-forest-reveal\\shots.json",
+      "temporal_map_complete": true,
+      "provenance_complete": true,
+      "human_reviewed": true,
+      "human_review_decision": "approved"
+    }
+  ],
+  "taxonomy_report_path": "R1_TAXONOMY_CORRECTION_REPORT.md",
+  "taxonomy_human_approved": true,
+  "corpus_expansion_eligible": true,
+  "expensive_generation_eligible": false,
+  "blockers": [],
+  "evaluated_at": "2026-09-02T15:14:44.809208+00:00"
+}

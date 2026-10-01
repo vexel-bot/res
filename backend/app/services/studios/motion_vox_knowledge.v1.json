@@ -1,0 +1,272 @@
+[
+  {
+    "id": "res-editorial-dominant-evidence",
+    "group": "composition",
+    "title": "Evidência dominante",
+    "purpose": "Escolher material reconhecível que demonstre a mensagem antes de ornamentar.",
+    "suitableWhen": [
+      "Produto, processo, comparação e montagem mista"
+    ],
+    "avoidWhen": [
+      "Objetos decorativos sem relação com a afirmação"
+    ],
+    "prerequisites": [
+      "Aplicar somente quando adequado ao objetivo e à identidade"
+    ],
+    "parameters": {
+      "scope": "Política editorial condicional; não é um template fixo"
+    },
+    "requiredCapabilities": [],
+    "components": [],
+    "requiredMaterialKinds": [],
+    "verification": [
+      "Qual elemento comprova ou ilustra a afirmação?",
+      "Sua retirada prejudica a compreensão?"
+    ],
+    "evidenceType": "principle",
+    "sources": [
+      "motion-vox/referencias/registros.md"
+    ],
+    "version": 1,
+    "qualification": "knowledge_only",
+    "sourceDigest": "77bda5e6383990c76991788f8c071df2373d8dc1a4f04aecfdeb8a45d7700004"
+  },
+  {
+    "id": "res-editorial-scene-states",
+    "group": "composition",
+    "title": "Estados de demonstração",
+    "purpose": "Planejar entrada, demonstração, consequência e saída na mesma timeline.",
+    "suitableWhen": [
+      "Explicação de mudança e relações causais"
+    ],
+    "avoidWhen": [
+      "Quatro layouts independentes sem continuidade"
+    ],
+    "prerequisites": [
+      "Aplicar somente quando adequado ao objetivo e à identidade"
+    ],
+    "parameters": {
+      "scope": "Política editorial condicional; não é um template fixo"
+    },
+    "requiredCapabilities": [],
+    "components": [],
+    "requiredMaterialKinds": [],
+    "verification": [
+      "A sequência mostra o que mudou?",
+      "A conclusão ocorre depois da ação essencial?"
+    ],
+    "evidenceType": "principle",
+    "sources": [
+      "motion-vox/referencias/rubricas-diretor.md"
+    ],
+    "version": 1,
+    "qualification": "knowledge_only",
+    "sourceDigest": "14ce2cc461c2facf883f0d35fdda678261d7755af01ab40abd22def51aa82680"
+  },
+  {
+    "id": "res-editorial-inherited-object",
+    "group": "composition",
+    "title": "Objeto herdado",
+    "purpose": "Preservar identidade do objeto quando a cena seguinte desenvolve seu estado.",
+    "suitableWhen": [
+      "Progressão e comparação"
+    ],
+    "avoidWhen": [
+      "Chamar recorrência distante de match cut"
+    ],
+    "prerequisites": [
+      "Aplicar somente quando adequado ao objetivo e à identidade"
+    ],
+    "parameters": {
+      "scope": "Política editorial condicional; não é um template fixo"
+    },
+    "requiredCapabilities": [
+      "continuity"
+    ],
+    "components": [
+      "continuity"
+    ],
+    "requiredMaterialKinds": [],
+    "verification": [
+      "O objeto persiste e a mudança é compreensível?"
+    ],
+    "evidenceType": "principle",
+    "sources": [
+      "motion-vox/referencias/transicoes.md"
+    ],
+    "version": 1,
+    "qualification": "knowledge_only",
+    "sourceDigest": "27d45bbfbfb478e73fe175376326e1b0b79a545b57cae0bd18c88ad3cb038ad2"
+  },
+  {
+    "id": "res-editorial-target-annotation",
+    "group": "composition",
+    "title": "Anotação ligada ao alvo",
+    "purpose": "Conectar setas e destaques a uma região específica do material.",
+    "suitableWhen": [
+      "Demonstração de detalhe"
+    ],
+    "avoidWhen": [
+      "Seta genérica sem alvo ou cobrindo evidência"
+    ],
+    "prerequisites": [
+      "Aplicar somente quando adequado ao objetivo e à identidade"
+    ],
+    "parameters": {
+      "scope": "Política editorial condicional; não é um template fixo"
+    },
+    "requiredCapabilities": [
+      "paths"
+    ],
+    "components": [
+      "paths"
+    ],
+    "requiredMaterialKinds": [],
+    "verification": [
+      "A ponta aponta o detalhe na entrada e na saída?"
+    ],
+    "evidenceType": "principle",
+    "sources": [
+      "motion-vox/referencias/armadilhas.md"
+    ],
+    "version": 1,
+    "qualification": "knowledge_only",
+    "sourceDigest": "e5394e7dd770a17bdfd2a792c43226438c7113f24ff2577499422aa846548639"
+  },
+  {
+    "id": "res-editorial-measured-type",
+    "group": "composition",
+    "title": "Tipografia medida",
+    "purpose": "Fixar arquivo, peso e eixos e medir o texto renderizado antes de capturar frames.",
+    "suitableWhen": [
+      "Texto seletivo e rótulos"
+    ],
+    "avoidWhen": [
+      "Confiar em contagem de caracteres ou fonte do sistema"
+    ],
+    "prerequisites": [
+      "Aplicar somente quando adequado ao objetivo e à identidade"
+    ],
+    "parameters": {
+      "scope": "Política editorial condicional; não é um template fixo"
+    },
+    "requiredCapabilities": [
+      "typography"
+    ],
+    "components": [
+      "typography"
+    ],
+    "requiredMaterialKinds": [],
+    "verification": [
+      "Acentos e peso estão corretos?",
+      "Há leitura confortável em 300px?"
+    ],
+    "evidenceType": "principle",
+    "sources": [
+      "motion-vox/referencias/armadilhas.md"
+    ],
+    "version": 1,
+    "qualification": "knowledge_only",
+    "sourceDigest": "e5394e7dd770a17bdfd2a792c43226438c7113f24ff2577499422aa846548639"
+  },
+  {
+    "id": "res-editorial-editorial-collage",
+    "group": "composition",
+    "title": "Colagem editorial material",
+    "purpose": "Combinar recortes, molduras e sombras por camadas quando a identidade pedir materialidade.",
+    "suitableWhen": [
+      "Demonstração editorial com fotos e objetos"
+    ],
+    "avoidWhen": [
+      "Impor papel e textura a todas as marcas"
+    ],
+    "prerequisites": [
+      "Aplicar somente quando adequado ao objetivo e à identidade"
+    ],
+    "parameters": {
+      "scope": "Política editorial condicional; não é um template fixo"
+    },
+    "requiredCapabilities": [
+      "panels"
+    ],
+    "components": [
+      "panels"
+    ],
+    "requiredMaterialKinds": [],
+    "verification": [
+      "O recorte tem halo?",
+      "As sombras separam planos sem esconder detalhes?"
+    ],
+    "evidenceType": "observation",
+    "sources": [
+      "motion-vox/referencias/identidade.md"
+    ],
+    "version": 1,
+    "qualification": "knowledge_only",
+    "sourceDigest": "d45fc006c0e2323642be4f85ba4c762c9b470a1fa5761b480fa64c192abf42d5"
+  },
+  {
+    "id": "res-editorial-motivated-hold",
+    "group": "composition",
+    "title": "Pausa motivada",
+    "purpose": "Permitir leitura e conclusão sem confundir ausência de movimento com falha.",
+    "suitableWhen": [
+      "Conteúdo denso ou conclusão"
+    ],
+    "avoidWhen": [
+      "Aplicar limite universal de 1,5s ou inserir tremor para passar métricas"
+    ],
+    "prerequisites": [
+      "Aplicar somente quando adequado ao objetivo e à identidade"
+    ],
+    "parameters": {
+      "scope": "Política editorial condicional; não é um template fixo"
+    },
+    "requiredCapabilities": [],
+    "components": [],
+    "requiredMaterialKinds": [],
+    "verification": [
+      "A pausa tem função de leitura ou conclusão?",
+      "A ação essencial foi executada antes da pausa?"
+    ],
+    "evidenceType": "principle",
+    "sources": [
+      "motion-vox/referencias/rubricas-diretor.md"
+    ],
+    "version": 1,
+    "qualification": "knowledge_only",
+    "sourceDigest": "14ce2cc461c2facf883f0d35fdda678261d7755af01ab40abd22def51aa82680"
+  },
+  {
+    "id": "res-editorial-local-review",
+    "group": "composition",
+    "title": "Revisão visual localizada",
+    "purpose": "Relacionar defeito observado a elemento e intervalo e preservar o restante.",
+    "suitableWhen": [
+      "Correção de legibilidade e continuidade"
+    ],
+    "avoidWhen": [
+      "Aprovar por beleza ou redesenhar tudo por falha pontual"
+    ],
+    "prerequisites": [
+      "Aplicar somente quando adequado ao objetivo e à identidade"
+    ],
+    "parameters": {
+      "scope": "Política editorial condicional; não é um template fixo"
+    },
+    "requiredCapabilities": [],
+    "components": [],
+    "requiredMaterialKinds": [],
+    "verification": [
+      "Achado inclui evidência, intervalo e correção?",
+      "Revisão preservou os elementos não envolvidos?"
+    ],
+    "evidenceType": "principle",
+    "sources": [
+      "motion-vox/referencias/rubricas-diretor.md"
+    ],
+    "version": 1,
+    "qualification": "knowledge_only",
+    "sourceDigest": "14ce2cc461c2facf883f0d35fdda678261d7755af01ab40abd22def51aa82680"
+  }
+]

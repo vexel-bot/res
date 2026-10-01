@@ -1,0 +1,147 @@
+{
+  "schemaVersion": "clicko.supervision-shadow-report.v1",
+  "runId": "supervision-sv4-shadow-20260828T150816Z",
+  "generatedAt": "2026-08-28T15:08:16.163851Z",
+  "mode": "synthetic-shadow",
+  "authoritativeProvider": "opencv-primitive-reference",
+  "candidate": {
+    "advertisedByWorkerManifest": false,
+    "influencedAuthoritativeOutput": false,
+    "name": "toolkit.supervision-detection-projection",
+    "status": "evaluation",
+    "version": "1.0.0+supervision.0.30.1"
+  },
+  "bindings": {
+    "corpusDigestSha256": "8b6155855dc6198d38f0e60cf7df35084ce93f50fdf0cbbe434b23c1111280bb",
+    "policyDigestSha256": "41c03d5d69cc240c46b80c26cffbdafd0ef4c8aac900b7f0fe010a923a5bdba7",
+    "workerManifestDigestSha256": "381f5809a61bceb7f24b446f664666969418efa33b5bfb6138e3d99de114a622"
+  },
+  "comparison": {
+    "baselineDigestSha256": "5c8ce5ee0a33d4241bdb25bcf4c210bf78e0d32f8fc66910406937cd84f0eec2",
+    "candidateDigestSha256": "e2569a99aadc00064dec9ba5dd79b5baa55d5138f56e37b317294b693a72d6cf",
+    "caseCount": 8,
+    "cases": [
+      {
+        "baselineCount": 0,
+        "candidateCount": 0,
+        "caseId": "empty",
+        "diverged": false,
+        "frameIndex": 0
+      },
+      {
+        "baselineCount": 1,
+        "candidateCount": 1,
+        "caseId": "perfect-inside",
+        "diverged": false,
+        "frameIndex": 1
+      },
+      {
+        "baselineCount": 1,
+        "candidateCount": 1,
+        "caseId": "perfect-outside",
+        "diverged": false,
+        "frameIndex": 2
+      },
+      {
+        "baselineCount": 2,
+        "candidateCount": 2,
+        "caseId": "false-positive",
+        "diverged": false,
+        "frameIndex": 3
+      },
+      {
+        "baselineCount": 1,
+        "candidateCount": 1,
+        "caseId": "false-negative",
+        "diverged": false,
+        "frameIndex": 4
+      },
+      {
+        "baselineCount": 1,
+        "candidateCount": 1,
+        "caseId": "low-iou",
+        "diverged": false,
+        "frameIndex": 5
+      },
+      {
+        "baselineCount": 1,
+        "candidateCount": 1,
+        "caseId": "boundary-anchor",
+        "diverged": false,
+        "frameIndex": 6
+      },
+      {
+        "baselineCount": 1,
+        "candidateCount": 1,
+        "caseId": "class-mismatch-projection-only",
+        "diverged": false,
+        "frameIndex": 7
+      }
+    ],
+    "divergenceRate": 0.0,
+    "inputDetectionCount": 8,
+    "outputSampleCount": 8,
+    "zoneParity": 1.0,
+    "overlayPixelParity": 1.0
+  },
+  "operations": {
+    "abstentionRate": 0.0,
+    "failureRate": 0.0,
+    "latencyMeanMs": 5.578036,
+    "latencyP95Ms": 11.104459999999998,
+    "missingEvidenceIds": [],
+    "orphanDerivedAssetCount": 0,
+    "orphanEvidenceIds": [],
+    "pythonPeakMemoryMib": 0.083251953125
+  },
+  "rollback": {
+    "authoritativeDigestShadowDisabled": "5c8ce5ee0a33d4241bdb25bcf4c210bf78e0d32f8fc66910406937cd84f0eec2",
+    "authoritativeDigestShadowEnabled": "5c8ce5ee0a33d4241bdb25bcf4c210bf78e0d32f8fc66910406937cd84f0eec2",
+    "equivalent": true,
+    "migrationRequired": false,
+    "mechanism": "disable candidate observation and retain OpenCV baseline"
+  },
+  "thresholds": {
+    "maxProjectionDivergenceRate": 0.0,
+    "minZoneParity": 1.0,
+    "minOverlayPixelParity": 1.0,
+    "maxFailureRate": 0.0,
+    "maxAbstentionRate": 0.0,
+    "maxOrphanEvidence": 0,
+    "maxOrphanDerivedAssets": 0,
+    "maxLatencyP95Ms": 50.0,
+    "maxPythonPeakMemoryMib": 128.0
+  },
+  "checks": {
+    "abstention_rate": true,
+    "candidate_not_authoritative": true,
+    "failure_rate": true,
+    "latency_p95": true,
+    "manifest_providers_empty": true,
+    "memory_peak": true,
+    "network_denied": true,
+    "no_missing_evidence": true,
+    "no_orphan_assets": true,
+    "no_orphan_evidence": true,
+    "overlay_parity": true,
+    "projection_divergence": true,
+    "rollback_equivalent": true,
+    "synthetic_only": true,
+    "zone_parity": true
+  },
+  "technicalDecision": "passed",
+  "activationDecision": "incomplete",
+  "activationBlockers": [
+    "human_native_bundle_review_required",
+    "oci_digest_missing",
+    "image_provenance_missing",
+    "image_signature_missing",
+    "runtime_attestation_missing",
+    "human_shadow_review_missing"
+  ],
+  "limitations": [
+    "Synthetic shadow validates plumbing and rollback, not detector quality.",
+    "The OpenCV reference covers zones and overlays, not a semantic detector.",
+    "No human media, provider activation, registry mutation or deployment occurred."
+  ]
+}

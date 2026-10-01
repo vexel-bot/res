@@ -1,0 +1,56 @@
+FROM pytorch/pytorch:2.5.1-cuda12.4-cudnn9-runtime@sha256:c8268a92a69bd500f8be0e665b2630ee006dadaf7bfbc24249141b15ff622755
+
+ARG ARTIFACT_INVENTORY_DIGEST=d1935d35ed3af59d792a5b0c9607d477ea661a862170f4e8574c7a94015dea0c
+ARG REQUIREMENTS_LOCK_DIGEST
+ARG WORKER_MANIFEST_DIGEST
+ARG PHYSICAL_POLICY_DIGEST=8f4ff3bb19caf1c50dd6a6cd627ad6cd8b58f20bd6340f2efdd9abf01712aad0
+
+LABEL org.opencontainers.image.title="Clicko vision GPU preflight" \
+      org.opencontainers.image.version="0.1.0-preflight" \
+      io.clicko.providers="none" \
+      io.clicko.base.digest="sha256:c8268a92a69bd500f8be0e665b2630ee006dadaf7bfbc24249141b15ff622755"
+
+WORKDIR /opt/clicko
+
+COPY workers/vision-gpu/requirements.lock ./vision-runtime/requirements.lock
+RUN test -n "${REQUIREMENTS_LOCK_DIGEST}" \
+    && python -m pip install \
+        --disable-pip-version-check \
+        --no-cache-dir \
+        --no-deps \
+        --only-binary=:all: \
+        --require-hashes \
+        --requirement vision-runtime/requirements.lock
+
+COPY backend ./backend
+COPY workers/vision-gpu/worker.manifest.json ./worker-manifest.json
+COPY workers/vision-gpu/verify_build.py ./vision-runtime/verify_build.py
+COPY benchmarks/studios/reality/physical-plausibility-policy.v1.json ./vision-runtime/policy/physical-plausibility-policy.v1.json
+COPY benchmarks/studios/reality/pgv1-artifact-inventory.v1.json ./vision-runtime/pgv1-artifact-inventory.v1.json
+
+RUN test -n "${WORKER_MANIFEST_DIGEST}" \
+    && python ./vision-runtime/verify_build.py \
+        --backend ./backend \
+        --inventory ./vision-runtime/pgv1-artifact-inventory.v1.json \
+        --inventory-digest "${ARTIFACT_INVENTORY_DIGEST}" \
+        --lock ./vision-runtime/requirements.lock \
+        --lock-digest "${REQUIREMENTS_LOCK_DIGEST}" \
+        --manifest ./worker-manifest.json \
+        --manifest-digest "${WORKER_MANIFEST_DIGEST}" \
+        --policy ./vision-runtime/policy/physical-plausibility-policy.v1.json \
+        --policy-digest "${PHYSICAL_POLICY_DIGEST}" \
+    && useradd --create-home --uid 10001 clicko \
+    && install -d -o clicko -g clicko /tmp/clicko-vision
+
+ENV PYTHONPATH="/opt/clicko/backend" \
+    HOME="/home/clicko" \
+    TMPDIR="/tmp/clicko-vision" \
+    OBJECT_STORAGE_BACKEND="s3" \
+    STUDIO_ISOLATED_QUEUES_ENABLED="true" \
+    STUDIO_WORKER_MANIFEST_PATH="/opt/clicko/worker-manifest.json" \
+    STUDIO_WORKER_CAPABILITY="vision_gpu"
+
+USER clicko
+WORKDIR /opt/clicko/backend
+
+CMD ["celery", "-A", "app.vision_celery_app:vision_celery_app", "worker", "--loglevel=INFO", "--queues=studio.gpu.vision", "--concurrency=1", "--prefetch-multiplier=1"]

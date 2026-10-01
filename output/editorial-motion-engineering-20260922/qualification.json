@@ -1,0 +1,54 @@
+{
+  "schemaVersion": "studio.semantic-demonstration-qualification.v2",
+  "classification": "controlled_engineering_fixture",
+  "autonomousCreativePilot": false,
+  "renderChecksumSha256": "d08d38692443dc2285c253e4471e494bf4acd1021b37200ac9c04d47e4488e2e",
+  "status": "failed",
+  "technical": "passed",
+  "execution": "observed",
+  "semantic": "passed",
+  "visualEditorial": "requires_correction",
+  "observedResult": {
+    "status": "failed",
+    "evidence": [
+      {
+        "sceneId": "adaptation",
+        "elementId": "square-photo",
+        "startSeconds": 4.0,
+        "endSeconds": 4.666666666666667,
+        "code": "material_region_of_interest_clipped",
+        "severity": "correction",
+        "category": "material_framing",
+        "impact": "essential_content_visibility",
+        "evidence": {
+          "minimumVisibleRatio": 0.8759164205354667,
+          "samples": 3,
+          "measurement": "renderer_axis_aligned_object_fit"
+        },
+        "confidence": 0.9,
+        "uncertainty": "Axis-aligned browser measurement does not reconstruct perspective or a rotated ancestor's source-space polygon.",
+        "correction": "Reframe the material so the declared region of interest remains visible."
+      }
+    ],
+    "reason": "The rendered candidate contains a blocking visual finding.",
+    "nextAction": "resolve_material"
+  },
+  "coverage": {
+    "schemaVersion": "studio.visual-coverage.v2",
+    "requestedFrames": 9,
+    "observedFrames": 9,
+    "complete": true,
+    "frameSampleComplete": true,
+    "wholeVideoInspected": false,
+    "rendererGeometryFrames": 13
+  },
+  "humanReview": "pending",
+  "commerciallyQualified": false,
+  "limitations": [
+    "This fixture is authored by an engineering script and does not prove autonomous creative direction.",
+    "Checkpoints do not prove continuous motion, material relevance or action completion.",
+    "Declared contrast findings require review against the decoded images.",
+    "Human scores are never inferred from successful decoding.",
+    "Whole-video coverage is false until every required interval is inspected at its declared density."
+  ]
+}

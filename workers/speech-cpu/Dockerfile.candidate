@@ -1,0 +1,90 @@
+# syntax=docker/dockerfile:1.7
+
+FROM python:3.11-slim@sha256:272efc3f94bec901e2bc7a5c9984b3d113c317839edca2714c6a388b9476f8fc AS dependencies
+
+ARG UV_VERSION=0.12.3
+ARG KOKORO_MODEL_REVISION=f3ff3571791e39611d31c381e3a41a3af07b4987
+ARG KOKORO_MODEL_MANIFEST_DIGEST
+ARG ESPEAK_RUNTIME_MANIFEST_DIGEST
+ARG CANDIDATE_LOCK_DIGEST
+
+RUN apt-get update \
+    && apt-get install --yes --no-install-recommends ca-certificates git \
+    && rm -rf /var/lib/apt/lists/* \
+    && python -m pip install --disable-pip-version-check --no-cache-dir "uv==${UV_VERSION}"
+
+WORKDIR /opt/clicko/candidate
+COPY workers/speech-cpu/candidate/pyproject.toml ./pyproject.toml
+COPY .candidate-build/uv.lock ./uv.lock
+RUN uv sync --frozen --no-dev
+
+COPY backend /opt/clicko/backend
+COPY benchmarks/studios/identity/voice-stock-pt-br-policy.v1.json /opt/clicko/policy.json
+COPY workers/speech-cpu/worker.manifest.json /opt/clicko/worker-manifest.json
+COPY workers/speech-cpu/providers/kokoro-82m-stock.artifacts.json /opt/clicko/candidate-artifacts.json
+COPY workers/speech-cpu/providers/kokoro-82m-stock.provider.json /opt/clicko/candidate-provider.json
+COPY .candidate-build/kokoro-model-assets.json /opt/clicko/kokoro-model-assets.json
+COPY .candidate-build/hf-home /opt/clicko/hf
+COPY .candidate-build/espeak-runtime /opt/clicko/espeak-runtime
+COPY .candidate-build/espeak-runtime.manifest.json /opt/clicko/espeak-runtime.manifest.json
+
+ENV PATH="/opt/clicko/candidate/.venv/bin:${PATH}" \
+    PYTHONPATH="/opt/clicko/backend" \
+    HF_HOME="/opt/clicko/hf" \
+    HF_HUB_OFFLINE="1" \
+    TRANSFORMERS_OFFLINE="1" \
+    CLICKO_KOKORO_MODEL_REVISION="${KOKORO_MODEL_REVISION}" \
+    CLICKO_KOKORO_MODEL_DIGEST_SHA256="${KOKORO_MODEL_MANIFEST_DIGEST}"
+
+RUN set -eux; \
+    test "$(sha256sum uv.lock | awk '{print $1}')" = "${CANDIDATE_LOCK_DIGEST}"; \
+    python /opt/clicko/backend/scripts/verify_kokoro_candidate_lock.py uv.lock; \
+    python -c "from pathlib import Path; from app.domain.studios.speech_assets import KokoroModelAssetManifestV1, verify_kokoro_model_snapshot; p=Path('/opt/clicko/kokoro-model-assets.json'); m=KokoroModelAssetManifestV1.model_validate_json(p.read_text()); d=verify_kokoro_model_snapshot(m, Path('/opt/clicko/hf/hub/models--hexgrad--Kokoro-82M/snapshots/${KOKORO_MODEL_REVISION}')); assert d == '${KOKORO_MODEL_MANIFEST_DIGEST}'"; \
+    python -c "from pathlib import Path; from app.domain.studios.speech_assets import EspeakRuntimeManifestV1, verify_espeak_runtime; p=Path('/opt/clicko/espeak-runtime.manifest.json'); m=EspeakRuntimeManifestV1.model_validate_json(p.read_text()); d=verify_espeak_runtime(m, Path('/opt/clicko/espeak-runtime')); assert d == '${ESPEAK_RUNTIME_MANIFEST_DIGEST}'"; \
+    loader_root="$(python -c 'from pathlib import Path; import espeakng_loader; print(Path(espeakng_loader.__file__).parent)')"; \
+    python /opt/clicko/backend/scripts/install_espeak_runtime_replacement.py \
+      --manifest /opt/clicko/espeak-runtime.manifest.json \
+      --runtime-root /opt/clicko/espeak-runtime \
+      --loader-root "${loader_root}"; \
+    python -c "from kokoro import KPipeline; pipeline=KPipeline(lang_code='p', model=False); assert pipeline.g2p('A Clicko cria vídeos em português.')[0]"
+
+FROM python:3.11-slim@sha256:272efc3f94bec901e2bc7a5c9984b3d113c317839edca2714c6a388b9476f8fc
+
+ARG KOKORO_MODEL_REVISION=f3ff3571791e39611d31c381e3a41a3af07b4987
+ARG KOKORO_MODEL_MANIFEST_DIGEST
+ARG ESPEAK_RUNTIME_MANIFEST_DIGEST
+ARG CANDIDATE_LOCK_DIGEST
+
+LABEL org.opencontainers.image.title="Clicko Kokoro stock benchmark candidate" \
+      org.opencontainers.image.version="0.1.0-evaluation" \
+      io.clicko.providers="none" \
+      io.clicko.candidate="kokoro-82m-stock" \
+      io.clicko.candidate.status="evaluation" \
+      io.clicko.cpu.threading="omp=4,mkl=4,openblas=4,numexpr=4" \
+      io.clicko.dependency-lock.digest="${CANDIDATE_LOCK_DIGEST}" \
+      io.clicko.model-manifest.digest="${KOKORO_MODEL_MANIFEST_DIGEST}" \
+      io.clicko.espeak-runtime-manifest.digest="${ESPEAK_RUNTIME_MANIFEST_DIGEST}"
+
+RUN useradd --create-home --uid 10001 clicko \
+    && install -d -o clicko -g clicko /tmp/clicko-speech-benchmark
+
+COPY --from=dependencies /opt/clicko /opt/clicko
+
+ENV PATH="/opt/clicko/candidate/.venv/bin:${PATH}" \
+    PYTHONPATH="/opt/clicko/backend" \
+    HOME="/home/clicko" \
+    TMPDIR="/tmp/clicko-speech-benchmark" \
+    HF_HOME="/opt/clicko/hf" \
+    HF_HUB_OFFLINE="1" \
+    TRANSFORMERS_OFFLINE="1" \
+    OMP_NUM_THREADS="4" \
+    MKL_NUM_THREADS="4" \
+    OPENBLAS_NUM_THREADS="4" \
+    NUMEXPR_NUM_THREADS="4" \
+    CLICKO_KOKORO_MODEL_REVISION="${KOKORO_MODEL_REVISION}" \
+    CLICKO_KOKORO_MODEL_DIGEST_SHA256="${KOKORO_MODEL_MANIFEST_DIGEST}"
+
+USER clicko
+WORKDIR /opt/clicko/backend
+
+CMD ["python", "scripts/run_kokoro_stock_benchmark.py", "--help"]

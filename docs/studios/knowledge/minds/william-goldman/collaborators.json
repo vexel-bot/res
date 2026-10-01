@@ -1,0 +1,24 @@
+{
+  "schema_version": "studio.collaboration-graph.v1",
+  "anchor": "William Goldman",
+  "status": "credits_pending_per_work_verification",
+  "nodes": [
+    {
+      "name": "George Roy Hill",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Richard Lester",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Rob Reiner",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "David V. Picker",
+      "role": "verify_per_work"
+    }
+  ],
+  "edges": []
+}

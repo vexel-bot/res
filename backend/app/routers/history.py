@@ -129,7 +129,10 @@ def search_history(
             )
 
     if item_matches(item_type, "asset"):
-        statement = select(LibraryAsset).where(LibraryAsset.workspace_id == workspace_id)
+        statement = select(LibraryAsset).where(
+            LibraryAsset.workspace_id == workspace_id,
+            LibraryAsset.lifecycle_status == "active",
+        )
         if query.strip():
             statement = statement.where(LibraryAsset.title.ilike(pattern))
         for asset in db.scalars(statement.order_by(LibraryAsset.updated_at.desc()).limit(per_type_limit)).all():
@@ -167,8 +170,8 @@ def reuse_post(
     post = Post(
         workspace_id=source.workspace_id,
         title=(data.title or f"{source.title} — cópia").strip(),
-        platform=source.platform,
-        format=source.format,
+        platform=data.platform or source.platform,
+        format=data.format or source.format,
         copy=source.copy,
         hashtags=deepcopy(source.hashtags or []),
         image_url=source.image_url,
@@ -179,8 +182,8 @@ def reuse_post(
         campaign_id=source.campaign_id,
         strategy_id=source.strategy_id,
         brain_revision=source.brain_revision,
-        objective=source.objective,
-        origin="manual",
+        objective=data.objective or source.objective,
+        origin="analytics",
         versions=[],
         metrics={},
     )
@@ -195,6 +198,16 @@ def reuse_post(
             "createdAt": utcnow().isoformat(),
             "title": post.title,
             "copy": post.copy,
+            "lineage": {
+                "schemaVersion": "clicko.content-lineage.v1",
+                "relation": "derived_from",
+                "sourcePostId": source.id,
+                "sourceVersionCount": len(source.versions or []),
+                "derivationKey": data.derivation_key,
+                "hypothesis": data.hypothesis,
+                "preserve": data.preserve,
+                "adapt": data.adapt,
+            },
         }
     ]
     db.add(
@@ -204,7 +217,16 @@ def reuse_post(
             content_id=post.id,
             user_id=user.id,
             event_type="reused",
-            payload={"sourcePostId": source.id},
+            payload={
+                "sourcePostId": source.id,
+                "derivedPostId": post.id,
+                "derivationKey": data.derivation_key,
+                "hypothesis": data.hypothesis,
+                "preserve": data.preserve,
+                "adapt": data.adapt,
+                "format": post.format,
+                "platform": post.platform,
+            },
         )
     )
     db.commit()

@@ -1,0 +1,142 @@
+{
+  "schemaVersion": "1.0.0",
+  "generatedAt": "2026-08-29",
+  "status": "phase-6-user-validation-ready",
+  "figma": {
+    "fileKey": "9qNitJb73bJt4nwQ5zlhft",
+    "fileName": "Clicko",
+    "url": "https://www.figma.com/design/9qNitJb73bJt4nwQ5zlhft/Clicko",
+    "mutationPolicy": {
+      "deleteExistingNodes": false,
+      "preserveLegacyFrames": true,
+      "legacyPagePrefix": "LEGACY / ",
+      "canonicalFrameGate": "CANONICAL + Approved",
+      "externalLibraryPolicy": "reference-only"
+    }
+  },
+  "authority": [
+    "docs/studios/STUDIOS_CX_SCREEN_FLOW_AND_INTERACTION_MASTER_PLAN_2026-08-28.md",
+    "docs/studios/research/ACTION_FIRST_STUDIO_REFERENCE_SYNTHESIS_2026-08-29.md",
+    "src/app/experience/registry.ts",
+    "src/design-system/tokens.css",
+    "verified runtime behavior",
+    "local Clicko Figma system"
+  ],
+  "experiencePattern": {
+    "name": "Action-first Studio Surface",
+    "loop": ["request", "draft", "scoped-refinement", "compare", "fixed-version", "review"],
+    "zones": ["context-bar", "production-rail", "dominant-stage", "action-dock", "contextual-inspector", "details-drawer"],
+    "controlLevels": ["quick", "directed", "pro"],
+    "actionDock": {
+      "maxContextChips": 4,
+      "primaryActionCount": 1,
+      "requiresActionContract": true,
+      "fullRegenerationIsDefault": false,
+      "emojiPolicy": "prohibited"
+    }
+  },
+  "sharedShellFrames": [
+    { "shell": "global", "sectionId": "292:189", "breakpoints": [1440, 1024], "status": "CANONICAL + Approved" },
+    { "shell": "project", "sectionId": "292:426", "breakpoints": [1440, 1024], "status": "CANONICAL + Approved" },
+    { "shell": "studio", "sectionId": "291:2", "wideFrameId": "291:9", "compactFrameId": "291:168", "breakpoints": [1440, 1024], "status": "CANONICAL + Approved" },
+    { "shell": "decision", "sectionId": "292:657", "breakpoints": [1440, 1024], "status": "CANONICAL + Approved" },
+    { "shell": "operation", "sectionId": "292:831", "breakpoints": [1440, 1024], "status": "CANONICAL + Approved" }
+  ],
+  "responsiveEvidence": {
+    "rootId": "318:2",
+    "screenId": "SCREEN-VIDEO",
+    "specimens": [
+      { "breakpoint": 1440, "frameId": "319:6", "primaryActionInViewport": true },
+      { "breakpoint": 1024, "frameId": "319:39", "primaryActionInViewport": true },
+      { "breakpoint": 768, "frameId": "319:69", "primaryActionInViewport": true },
+      { "breakpoint": 360, "frameId": "319:93", "primaryActionInViewport": true }
+    ],
+    "stateMatrixId": "320:10",
+    "requiredStateCount": 17,
+    "recoverySpecimensId": "321:10"
+  },
+  "prototypeEvidence": {
+    "indexId": "324:2",
+    "pageId": "272:12",
+    "journeys": 6,
+    "topLevelFlowFrames": 39,
+    "reactionOwners": 45,
+    "allTerminalsReachable": true,
+    "allRecoveriesReachable": true,
+    "missingDestinations": 0,
+    "deadEnds": 0,
+    "emojiHits": 0
+  },
+  "canonicalPages": [
+    { "order": 0, "figmaPageId": "272:2", "name": "00 — Readme & Decisions", "purpose": "principles, owners, status and links" },
+    { "order": 1, "figmaPageId": "272:3", "name": "01 — IA & Golden Flows", "purpose": "product map and journeys J1-J6" },
+    { "order": 2, "figmaPageId": "272:4", "name": "02 — Foundations", "purpose": "tokens, grids, focus, states and responsiveness" },
+    { "order": 3, "figmaPageId": "272:5", "name": "03 — Shared Shells", "purpose": "Global, Project, Studio, Decision and Operation shells" },
+    { "order": 4, "figmaPageId": "272:6", "name": "04 — Create & Direction", "purpose": "Create Hub, Radar handoff and Creative Direction" },
+    { "order": 5, "figmaPageId": "272:7", "name": "05 — Editorial & Visual", "purpose": "post, carousel, image and motion" },
+    { "order": 6, "figmaPageId": "272:8", "name": "06 — Video & Presenter", "purpose": "ingest, timeline, identities and production" },
+    { "order": 7, "figmaPageId": "272:9", "name": "07 — Factory & Library", "purpose": "rounds, jobs, assets and lineage" },
+    { "order": 8, "figmaPageId": "272:10", "name": "08 — Review, Publish & Learn", "purpose": "decision, preflight, calendar and analytics" },
+    { "order": 9, "figmaPageId": "272:11", "name": "09 — Responsive & Edge States", "purpose": "360, 768, 1024, 1440 and recovery states" },
+    { "order": 10, "figmaPageId": "272:12", "name": "10 — Prototype Tests", "purpose": "clickable task prototypes" },
+    { "order": 99, "figmaPageId": "178:3", "name": "99 — Archive", "purpose": "retained non-canonical explorations" }
+  ],
+  "screenAllocation": [
+    { "screenId": "SCREEN-HOME", "page": "04 — Create & Direction", "shell": "global", "route": "/dashboard", "figmaFrameId": "294:9", "figmaState": "ready", "figmaStatus": "CANONICAL + Approved" },
+    { "screenId": "SCREEN-CREATE-HUB", "page": "04 — Create & Direction", "shell": "decision", "route": "/content/new", "figmaFrameId": "294:141", "figmaState": "ready", "figmaStatus": "CANONICAL + Approved" },
+    { "screenId": "SCREEN-DIRECTION", "page": "04 — Create & Direction", "shell": "decision", "route": "/campaigns/new", "figmaFrameId": "294:254", "figmaState": "dirty", "figmaStatus": "CANONICAL + Approved" },
+    { "screenId": "SCREEN-EDITORIAL", "page": "05 — Editorial & Visual", "shell": "studio", "route": "/content/:contentId/edit?mode=editorial", "figmaFrameId": "297:4", "figmaState": "ready", "figmaStatus": "CANONICAL + Approved" },
+    { "screenId": "SCREEN-VISUAL", "page": "05 — Editorial & Visual", "shell": "studio", "route": "/content/:contentId/edit?mode=visual", "figmaFrameId": "298:114", "figmaState": "ready + motion selected", "figmaStatus": "CANONICAL + Approved" },
+    { "screenId": "SCREEN-CAROUSEL", "page": "05 — Editorial & Visual", "shell": "studio", "route": "/content/:contentId/edit?mode=carousel", "figmaFrameId": "299:205", "figmaState": "ready", "figmaStatus": "CANONICAL + Approved" },
+    { "screenId": "SCREEN-IMAGE-LAB", "page": "05 — Editorial & Visual", "shell": "studio", "route": "/library/assets/:assetId/edit?mode=image", "figmaFrameId": "300:290", "figmaState": "ready", "figmaStatus": "CANONICAL + Approved" },
+    { "screenId": "SCREEN-VIDEO", "page": "06 — Video & Presenter", "shell": "studio", "route": "/content/:contentId/edit?mode=video", "figmaFrameId": "304:4", "figmaState": "ready", "figmaStatus": "CANONICAL + Approved" },
+    { "screenId": "SCREEN-PRESENTER", "page": "06 — Video & Presenter", "shell": "studio", "route": "/content/:contentId/edit?mode=presenter", "figmaFrameId": "305:124", "figmaState": "ready", "figmaStatus": "CANONICAL + Approved" },
+    { "screenId": "SCREEN-IDENTITY-LIBRARY", "page": "06 — Video & Presenter", "shell": "operation", "route": "/library/identities", "figmaFrameId": "306:213", "figmaState": "ready", "figmaStatus": "CANONICAL + Approved" },
+    { "screenId": "SCREEN-LIBRARY-ASSETS", "page": "07 — Factory & Library", "shell": "global", "route": "/library/assets", "figmaFrameId": "309:4", "figmaState": "ready", "figmaStatus": "CANONICAL + Approved" },
+    { "screenId": "SCREEN-REUSE", "page": "07 — Factory & Library", "shell": "studio", "route": "/content/:contentId/remix", "figmaFrameId": "310:108", "figmaState": "ready", "figmaStatus": "CANONICAL + Approved" },
+    { "screenId": "SCREEN-FACTORY", "page": "07 — Factory & Library", "shell": "operation", "route": "/factory", "figmaFrameId": "311:213", "figmaState": "ready", "figmaStatus": "CANONICAL + Approved" },
+    { "screenId": "SCREEN-FACTORY-ROUND", "page": "07 — Factory & Library", "shell": "operation", "route": "/factory/:roundId", "figmaFrameId": "313:297", "figmaState": "job-running", "figmaStatus": "CANONICAL + Approved" },
+    { "screenId": "SCREEN-BATCH-REVIEW", "page": "07 — Factory & Library", "shell": "decision", "route": "/approvals/:contentId?batch=:roundId", "figmaFrameId": "314:358", "figmaState": "ready", "figmaStatus": "CANONICAL + Approved" },
+    { "screenId": "SCREEN-REVIEW", "page": "08 — Review, Publish & Learn", "shell": "decision", "route": "/approvals/:contentId", "figmaFrameId": "316:9", "figmaState": "ready", "figmaStatus": "CANONICAL + Approved" },
+    { "screenId": "SCREEN-PUBLISH", "page": "08 — Review, Publish & Learn", "shell": "decision", "route": "/publish/:contentId", "figmaFrameId": "316:134", "figmaState": "ready", "figmaStatus": "CANONICAL + Approved" }
+  ],
+  "requiredFrameProperties": [
+    "screenId",
+    "route",
+    "journey",
+    "state",
+    "breakpoint",
+    "requirementIds",
+    "owner",
+    "status",
+    "date"
+  ],
+  "requiredStateCoverage": [
+    "loading",
+    "empty",
+    "ready",
+    "dirty",
+    "saving",
+    "saved",
+    "recoverable-error",
+    "terminal-error",
+    "readonly",
+    "forbidden",
+    "conflict",
+    "offline",
+    "stale",
+    "job-queued",
+    "job-running",
+    "job-cancelling",
+    "job-cancelled"
+  ],
+  "breakpoints": [360, 768, 1024, 1440],
+  "implementationBatches": [
+    { "id": "P1", "name": "canonical pages and foundations", "status": "complete" },
+    { "id": "P2", "name": "five shared shells, Production Rail and Action Dock", "status": "complete" },
+    { "id": "P3", "name": "17 screen families and six golden flows", "status": "complete" },
+    { "id": "P4", "name": "responsive and edge-state matrix", "status": "complete" },
+    { "id": "P5", "name": "prototype tasks and Figma-to-code audit", "status": "complete" },
+    { "id": "P6", "name": "moderated user validation", "status": "pending" }
+  ]
+}

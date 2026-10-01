@@ -1,0 +1,22 @@
+{
+  "schema_version": "studio.creative-mind-sources.v1",
+  "mind": "Spike Lee",
+  "research_status": "seed_evidence_only",
+  "sources": [
+    {
+      "url": "https://www.dga.org/craft/dgaq/issues/0801-spring-2008/dga-interview-spike-lee",
+      "tier": "institutional_or_primary_starting_point",
+      "reviewed": false
+    },
+    {
+      "url": "https://www.dga.org/news/guild-news/2020/december2020/cod_spikelee_pb",
+      "tier": "institutional_or_primary_starting_point",
+      "reviewed": false
+    }
+  ],
+  "global_methods": [
+    "https://www.wgfoundation.org/screenplay-primers",
+    "https://www.bafta.org/programmes/screenwriters-lecture-series",
+    "https://www.dga.org/Craft/VisualHistory"
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "studio.worker-runtime-manifest.v1",
+  "runtimeName": "clicko-vision-gpu",
+  "runtimeVersion": "0.1.0-preflight",
+  "capability": "vision_gpu",
+  "queues": ["studio.gpu.vision"],
+  "resourceClasses": ["gpu.vision"],
+  "jobTypes": ["reality_analysis", "video_physical_qc"],
+  "providers": [],
+  "requiredEnvironment": [
+    "DATABASE_URL",
+    "REDIS_URL",
+    "OBJECT_STORAGE_BACKEND",
+    "STUDIO_ISOLATED_QUEUES_ENABLED",
+    "STUDIO_WORKER_MANIFEST_PATH",
+    "STUDIO_WORKER_CAPABILITY"
+  ],
+  "requiredPaths": [
+    "/opt/clicko/vision-runtime/requirements.lock",
+    "/opt/clicko/vision-runtime/policy/physical-plausibility-policy.v1.json"
+  ],
+  "tools": [
+    {"id": "python", "command": ["python", "--version"], "versionPattern": "Python 3\\.11\\.[0-9]+"},
+    {"id": "celery", "command": ["celery", "--version"], "versionPattern": "5\\.6\\.2"},
+    {"id": "nvidia_smi", "command": ["nvidia-smi", "--query-gpu=driver_version", "--format=csv,noheader"], "versionPattern": "5(35|50|60|70|75|80)\\.[0-9.]+"}
+  ],
+  "accelerator": {
+    "vendor": "nvidia",
+    "runtime": "cuda",
+    "minimumDevices": 1,
+    "minimumMemoryMib": 22528,
+    "minimumComputeCapability": 8.0,
+    "driverVersionPattern": "^5(35|50|60|70|75|80)\\.",
+    "inventoryCommand": ["nvidia-smi", "--query-gpu=name,driver_version,memory.total,compute_cap", "--format=csv,noheader,nounits"]
+  },
+  "isolation": {
+    "runAsNonRoot": true,
+    "readOnlyRootFilesystem": true,
+    "allowPrivilegeEscalation": false,
+    "networkEgressPolicy": "private-dependencies-only",
+    "maxConcurrentJobs": 1,
+    "ephemeralTempPath": "/tmp/clicko-vision",
+    "minimumTempBytes": 8589934592
+  }
+}

@@ -1,0 +1,127 @@
+{
+  "schemaVersion": "clicko.supervision-benchmark-corpus.v1",
+  "corpusId": "supervision-synthetic-v1",
+  "frozenAt": "2026-08-28T00:00:00Z",
+  "source": "procedural-json",
+  "syntheticOnly": true,
+  "humanData": false,
+  "frame": {
+    "width": 320,
+    "height": 180
+  },
+  "polygonZone": [
+    [0, 0],
+    [160, 0],
+    [160, 179],
+    [0, 179]
+  ],
+  "cases": [
+    {
+      "caseId": "empty",
+      "includeInMetrics": true,
+      "predictions": [],
+      "targets": [],
+      "expectedZone": []
+    },
+    {
+      "caseId": "perfect-inside",
+      "includeInMetrics": true,
+      "predictions": [
+        {"xyxy": [20, 20, 80, 100], "classId": 0, "confidence": 0.95, "trackerId": 1}
+      ],
+      "targets": [
+        {"xyxy": [20, 20, 80, 100], "classId": 0}
+      ],
+      "expectedZone": [true]
+    },
+    {
+      "caseId": "perfect-outside",
+      "includeInMetrics": true,
+      "predictions": [
+        {"xyxy": [220, 30, 300, 120], "classId": 0, "confidence": 0.93, "trackerId": 2}
+      ],
+      "targets": [
+        {"xyxy": [220, 30, 300, 120], "classId": 0}
+      ],
+      "expectedZone": [false]
+    },
+    {
+      "caseId": "false-positive",
+      "includeInMetrics": true,
+      "predictions": [
+        {"xyxy": [30, 40, 90, 130], "classId": 0, "confidence": 0.91, "trackerId": 3},
+        {"xyxy": [230, 50, 290, 140], "classId": 0, "confidence": 0.62, "trackerId": 4}
+      ],
+      "targets": [
+        {"xyxy": [30, 40, 90, 130], "classId": 0}
+      ],
+      "expectedZone": [true, false]
+    },
+    {
+      "caseId": "false-negative",
+      "includeInMetrics": true,
+      "predictions": [
+        {"xyxy": [25, 25, 75, 95], "classId": 0, "confidence": 0.89, "trackerId": 5}
+      ],
+      "targets": [
+        {"xyxy": [25, 25, 75, 95], "classId": 0},
+        {"xyxy": [210, 25, 270, 95], "classId": 0}
+      ],
+      "expectedZone": [true]
+    },
+    {
+      "caseId": "low-iou",
+      "includeInMetrics": true,
+      "predictions": [
+        {"xyxy": [10, 10, 25, 25], "classId": 0, "confidence": 0.84, "trackerId": 6}
+      ],
+      "targets": [
+        {"xyxy": [10, 10, 40, 40], "classId": 0}
+      ],
+      "expectedZone": [true]
+    },
+    {
+      "caseId": "boundary-anchor",
+      "includeInMetrics": true,
+      "predictions": [
+        {"xyxy": [140, 100, 180, 179], "classId": 0, "confidence": 0.81, "trackerId": 7}
+      ],
+      "targets": [
+        {"xyxy": [140, 100, 180, 179], "classId": 0}
+      ],
+      "expectedZone": [true]
+    },
+    {
+      "caseId": "class-mismatch-projection-only",
+      "includeInMetrics": false,
+      "predictions": [
+        {"xyxy": [70, 40, 130, 140], "classId": 1, "confidence": 0.78, "trackerId": 8}
+      ],
+      "targets": [
+        {"xyxy": [70, 40, 130, 140], "classId": 0}
+      ],
+      "expectedZone": [true]
+    }
+  ],
+  "expectedAggregateAtIou50": {
+    "truePositive": 5,
+    "falsePositive": 2,
+    "falseNegative": 2,
+    "precision": 0.7142857142857143,
+    "recall": 0.7142857142857143,
+    "f1": 0.7142857142857143
+  },
+  "thresholds": {
+    "adapterFidelity": 1.0,
+    "determinism": 1.0,
+    "zoneParity": 1.0,
+    "overlayBoxPixelParity": 1.0,
+    "metricAbsoluteErrorMax": 0.000001,
+    "perfectCaseMap50Min": 0.999,
+    "invalidInputRejection": 1.0,
+    "projectionDetectionsPerSecondMin": 500,
+    "projectionPythonPeakMemoryMibMax": 128,
+    "zoneLatencyRatioVsOpenCvP95Max": 10,
+    "overlayLatencyRatioVsOpenCvP95Max": 10
+  }
+}

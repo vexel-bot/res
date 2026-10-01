@@ -1,0 +1,32 @@
+{
+  "schema_version": "studio.collaboration-graph.v1",
+  "anchor": "David Simon e Ed Burns",
+  "status": "credits_pending_per_work_verification",
+  "nodes": [
+    {
+      "name": "George Pelecanos",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Richard Price",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Dennis Lehane",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Nina Noble",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Clark Johnson",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Joe Chappelle",
+      "role": "verify_per_work"
+    }
+  ],
+  "edges": []
+}

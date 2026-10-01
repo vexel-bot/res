@@ -1,0 +1,51 @@
+{
+  "schema_version": "studio.heygem-runtime-preflight.v1",
+  "evaluated_at": "2026-09-02",
+  "repository": {
+    "path": "C:\\Users\\edugu\\Downloads\\clicko-oss-evaluation\\HeyGem-Caladog",
+    "commit": "a0053f7cd6440203d76737ac2920db8b293fb3f6",
+    "license": "Silicon Intelligence Community License",
+    "commercial_threshold_mau": 1000
+  },
+  "host": {
+    "gpu": "NVIDIA GeForce RTX 2050",
+    "vram_mib": 4096,
+    "nvidia_driver": "591.86",
+    "docker_cli_present": true,
+    "docker_daemon_responded": false,
+    "wsl_present": true
+  },
+  "upstream_requirements": {
+    "recommended_gpu": "NVIDIA RTX 4070",
+    "recommended_ram_gib": 32,
+    "recommended_free_disk_gib": 100,
+    "requires_nvidia_runtime": true,
+    "visual_container": "guiji2025/heygem.ai",
+    "visual_container_source_audited": false
+  },
+  "decision": "blocked",
+  "blocking_reasons": [
+    "visual_source_videos_missing_for_all_six_avatar_slots",
+    "host_vram_below_recommended_envelope",
+    "docker_daemon_unavailable",
+    "opaque_visual_container_without_sbom_or_complete_license_evidence",
+    "private_24_case_benchmark_not_run",
+    "commercial_license_threshold_requires_product_owner_review"
+  ],
+  "actions_performed": [
+    "static_repository_review",
+    "gpu_inventory",
+    "docker_and_wsl_presence_check",
+    "six_typed_avatar_slots_created",
+    "gemini_key_presence_verified_without_secret_output"
+  ],
+  "actions_not_performed": [
+    "container_pull",
+    "container_start",
+    "voice_training",
+    "video_synthesis",
+    "gemini_api_call",
+    "external_paid_request"
+  ],
+  "external_cost_incurred_usd": 0
+}

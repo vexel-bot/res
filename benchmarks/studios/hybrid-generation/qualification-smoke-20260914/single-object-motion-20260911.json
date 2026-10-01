@@ -1,0 +1,286 @@
+{
+  "promptId": "single-object-motion",
+  "prompt": "One small blue toy car moves steadily from left to right across a plain light floor, locked camera, centered medium shot, one recognizable object, one observable action, clean background, no text, no logo, no watermark",
+  "seed": 20260911,
+  "receipt": {
+    "acceptance": "quarantined_content_signal",
+    "adapter": "animatediff_lightning",
+    "artifact": {
+      "checksumSha256": "919b82158407df29ae83bf6766a4c3c5b816fda6ee765ef469692af30286760b",
+      "path": "C:\\Users\\edugu\\Downloads\\res\\workers\\media-generation-local\\.runs\\a2372e16-84ac-5344-8ebf-4bbdee6c682a\\candidate.mp4",
+      "preservedPath": "C:\\Users\\edugu\\Downloads\\res\\benchmarks\\studios\\hybrid-generation\\qualification-smoke-20260914\\single-object-motion-20260911.mp4"
+    },
+    "cameraControl": "prompt_guidance",
+    "contentSafety": {
+      "disposition": "quarantine",
+      "flaggedFrames": [
+        4
+      ],
+      "framesChecked": 8,
+      "status": "flagged"
+    },
+    "durationProducedSeconds": 1.0,
+    "durationRequestedSeconds": 1.0,
+    "effectiveParameters": {
+      "fps": 8,
+      "frames": 8,
+      "guidanceScale": 1.0,
+      "height": 256,
+      "inferenceSteps": 4,
+      "scheduler": "EulerDiscreteScheduler.trailing.linear",
+      "width": 256
+    },
+    "elapsedSeconds": 142.875,
+    "executionId": "a2372e16-84ac-5344-8ebf-4bbdee6c682a",
+    "minimumAvailableSystemRamMiB": 528,
+    "minimumAvailableVramMiB": 810,
+    "modelRepositories": [
+      {
+        "id": "ByteDance/AnimateDiff-Lightning",
+        "pinnedArtifacts": [
+          {
+            "path": "animatediff_lightning_4step_diffusers.safetensors",
+            "sha256": "8f3330914edd8fc2ee5659e6944323858feb0ec21cc913789202d043f69b5e17",
+            "sizeBytes": 907702248
+          }
+        ],
+        "revision": "027c893eec01df7330f5d4b733bc9485ee02e8b2"
+      },
+      {
+        "id": "stable-diffusion-v1-5/stable-diffusion-v1-5",
+        "pinnedArtifacts": [
+          {
+            "path": "text_encoder/model.fp16.safetensors",
+            "sha256": "77795e2023adcf39bc29a884661950380bd093cf0750a966d473d1718dc9ef4e",
+            "sizeBytes": 246144864
+          },
+          {
+            "path": "unet/diffusion_pytorch_model.fp16.safetensors",
+            "sha256": "c83908253f9a64d08c25fc90874c9c8aef9a329ce1ca5fb909d73b0c83d1ea21",
+            "sizeBytes": 1719125304
+          },
+          {
+            "path": "vae/diffusion_pytorch_model.fp16.safetensors",
+            "sha256": "4fbcf0ebe55a0984f5a5e00d8c4521d52359af7229bb4d81890039d2aa16dd7c",
+            "sizeBytes": 167335342
+          },
+          {
+            "path": "safety_checker/model.fp16.safetensors",
+            "sha256": "08902f19b1cfebd7c989f152fc0507bef6898c706a91d666509383122324b511",
+            "sizeBytes": 608018440
+          }
+        ],
+        "revision": "451f4fe16113bff5a5d2269ed5ad43b0592e9a14"
+      }
+    ],
+    "negativePromptApplied": false,
+    "observedSystemRamDeltaPeakMiB": 2856,
+    "observedVramDeltaPeakMiB": 3152,
+    "peakCudaMemoryBytes": 3088134144,
+    "profileDigestSha256": "60f09a8b2b815cf4adc0187452828c50acc9f2ccb7a09ef94ae041e087071bec",
+    "profileId": "animatediff-lightning-sd15-a-v1",
+    "requestDigestSha256": "9ef0accc52b4ffa5143ab0bd2bf5160bd943d507062dc6d772145fa3a1485758",
+    "runtime": {
+      "cuda": "11.8",
+      "dependencies": {
+        "accelerate": "1.15.0",
+        "diffusers": "0.40.0",
+        "safetensors": "0.8.0",
+        "transformers": "5.17.0"
+      },
+      "device": "NVIDIA GeForce RTX 2050",
+      "python": "3.11.9",
+      "torch": "2.7.0+cu118"
+    },
+    "runtimeDigests": {
+      "adapter": "7e8140d5bfab832638023e6d87cd1bae9c210124ad123ccdd2d47073f914f2fd",
+      "api": "e1f605891a38702630ad035db991ce3a4f62ee1249b51a7c8524ae6bc9510706",
+      "lock": "693ffbc0fefc0d77abd81b4336b8de837ec07318e0f5083bcec66f93aaa24d31",
+      "runner": "703abc523fdf3be9ec3d52906566bafb8de039ba3e8a88e4ece762e3d88aa992",
+      "supervisor": "6084dca6d72b77026dca18237c50d02512b1b7eefcdb7933e61493a35b146881"
+    },
+    "schemaVersion": "studio.scene-generation-receipt.v2",
+    "seed": 20260911,
+    "stageTimings": {
+      "contentSafetyDisposition": "quarantine",
+      "contentSafetyFlaggedFrames": [
+        4
+      ],
+      "contentSafetyFramesChecked": 8,
+      "contentSafetySeconds": 60.28100000001723,
+      "contentSafetyStatus": "flagged",
+      "decodedFrameStatistics": [
+        {
+          "contentSafety": {
+            "flaggedConceptIds": [],
+            "maximumConceptMargin": -0.003856867551803589,
+            "maximumSpecialMargin": -0.020945295691490173
+          },
+          "index": 0,
+          "maximum": 1.0,
+          "mean": 0.5115474462509155,
+          "minimum": 0.0,
+          "standardDeviation": 0.3974539041519165
+        },
+        {
+          "contentSafety": {
+            "flaggedConceptIds": [],
+            "maximumConceptMargin": -0.021999910473823547,
+            "maximumSpecialMargin": -0.03241720795631409
+          },
+          "index": 1,
+          "maximum": 1.0,
+          "mean": 0.3348360061645508,
+          "minimum": 0.0,
+          "standardDeviation": 0.36178016662597656
+        },
+        {
+          "contentSafety": {
+            "flaggedConceptIds": [],
+            "maximumConceptMargin": -0.02540460228919983,
+            "maximumSpecialMargin": -0.04372943937778473
+          },
+          "index": 2,
+          "maximum": 1.0,
+          "mean": 0.4293297231197357,
+          "minimum": 0.0,
+          "standardDeviation": 0.38395822048187256
+        },
+        {
+          "contentSafety": {
+            "flaggedConceptIds": [],
+            "maximumConceptMargin": 0.0002490133047103882,
+            "maximumSpecialMargin": -0.01889932155609131
+          },
+          "index": 3,
+          "maximum": 1.0,
+          "mean": 0.43124616146087646,
+          "minimum": 0.0,
+          "standardDeviation": 0.3833111524581909
+        },
+        {
+          "contentSafety": {
+            "flaggedConceptIds": [
+              1
+            ],
+            "maximumConceptMargin": 0.0060623884201049805,
+            "maximumSpecialMargin": -0.007781982421875
+          },
+          "index": 4,
+          "maximum": 1.0,
+          "mean": 0.6210374236106873,
+          "minimum": 0.0,
+          "standardDeviation": 0.3700486719608307
+        },
+        {
+          "contentSafety": {
+            "flaggedConceptIds": [],
+            "maximumConceptMargin": -0.014171004295349121,
+            "maximumSpecialMargin": -0.04830843210220337
+          },
+          "index": 5,
+          "maximum": 1.0,
+          "mean": 0.5572763085365295,
+          "minimum": 0.0,
+          "standardDeviation": 0.41301673650741577
+        },
+        {
+          "contentSafety": {
+            "flaggedConceptIds": [],
+            "maximumConceptMargin": -0.005925044417381287,
+            "maximumSpecialMargin": -0.032758623361587524
+          },
+          "index": 6,
+          "maximum": 1.0,
+          "mean": 0.5556738972663879,
+          "minimum": 0.0,
+          "standardDeviation": 0.41571319103240967
+        },
+        {
+          "contentSafety": {
+            "flaggedConceptIds": [],
+            "maximumConceptMargin": -0.01190003752708435,
+            "maximumSpecialMargin": -0.029231905937194824
+          },
+          "index": 7,
+          "maximum": 1.0,
+          "mean": 0.5897279381752014,
+          "minimum": 0.0,
+          "standardDeviation": 0.4030536413192749
+        }
+      ],
+      "denoisingAndDecodeSeconds": 27.43799999996554,
+      "denoisingStatistics": [
+        {
+          "maximum": 25.921875,
+          "mean": 0.11533252149820328,
+          "minimum": -27.546875,
+          "shape": [
+            1,
+            4,
+            8,
+            32,
+            32
+          ],
+          "standardDeviation": 6.652647495269775,
+          "step": 0,
+          "timestep": 999
+        },
+        {
+          "maximum": 10.8125,
+          "mean": 0.11553017795085907,
+          "minimum": -11.203125,
+          "shape": [
+            1,
+            4,
+            8,
+            32,
+            32
+          ],
+          "standardDeviation": 2.7996861934661865,
+          "step": 1,
+          "timestep": 749
+        },
+        {
+          "maximum": 7.015625,
+          "mean": 0.11802621185779572,
+          "minimum": -6.703125,
+          "shape": [
+            1,
+            4,
+            8,
+            32,
+            32
+          ],
+          "standardDeviation": 1.871025800704956,
+          "step": 2,
+          "timestep": 499
+        },
+        {
+          "maximum": 5.0546875,
+          "mean": 0.12030304968357086,
+          "minimum": -4.8515625,
+          "shape": [
+            1,
+            4,
+            8,
+            32,
+            32
+          ],
+          "standardDeviation": 1.5494927167892456,
+          "step": 3,
+          "timestep": 249
+        }
+      ],
+      "modelLoadSeconds": 52.96900000004098,
+      "stateValidation": {
+        "allCheckpointValuesFinite": true,
+        "expectedStateEntries": 1253,
+        "loadedStateEntries": 1253,
+        "missingStateEntries": []
+      },
+      "videoExportSeconds": 1.8589999999967404
+    },
+    "status": "content_flagged"
+  }
+}

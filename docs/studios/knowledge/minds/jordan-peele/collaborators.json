@@ -1,0 +1,28 @@
+{
+  "schema_version": "studio.collaboration-graph.v1",
+  "anchor": "Jordan Peele",
+  "status": "credits_pending_per_work_verification",
+  "nodes": [
+    {
+      "name": "Monkeypaw Productions",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Ian Cooper",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Hoyte van Hoytema",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Nicholas Monsour",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Michael Abels",
+      "role": "verify_per_work"
+    }
+  ],
+  "edges": []
+}

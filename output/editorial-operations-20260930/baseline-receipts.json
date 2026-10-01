@@ -1,0 +1,23 @@
+[
+  {
+    "brief": "bebida",
+    "video": "C:\\Users\\edugu\\Downloads\\res\\output\\editorial-operations-20260930\\bebida\\concat-baseline.mp4",
+    "videoSha256": "deb447c0464330181df77ee91bf7b26a18ffa478fb7676a909fb22fbacb83197",
+    "apiCostUsd": 0,
+    "humanComparison": "pending"
+  },
+  {
+    "brief": "mochila",
+    "video": "C:\\Users\\edugu\\Downloads\\res\\output\\editorial-operations-20260930\\mochila\\concat-baseline.mp4",
+    "videoSha256": "44c762cb7c1c118c3faa970cb2865f1726624ba3533491366af9d65ad69c6925",
+    "apiCostUsd": 0,
+    "humanComparison": "pending"
+  },
+  {
+    "brief": "tarefas",
+    "video": "C:\\Users\\edugu\\Downloads\\res\\output\\editorial-operations-20260930\\tarefas\\concat-baseline.mp4",
+    "videoSha256": "ca0050ee1e8bb2114c7d347fe4b5cbe21a5b5a0dce2ce0811ee3bda1affe27e0",
+    "apiCostUsd": 0,
+    "humanComparison": "pending"
+  }
+]

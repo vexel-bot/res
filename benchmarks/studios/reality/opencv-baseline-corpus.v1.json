@@ -1,0 +1,296 @@
+{
+  "schema_version": "studio.synthetic-reality-corpus.v1",
+  "corpus_id": "opencv-baseline-corpus-v1",
+  "candidate_id": "opencv-reality-baseline",
+  "candidate_manifest_digest_sha256": "4be8fc9c8f66d56279543324c1c5bb74a0a42e62ba33b7ed21b96bd5a0417fcd",
+  "frozen_at": "2026-08-25T12:00:00Z",
+  "frozen_by": "clicko-studios-pgv1",
+  "required_scenarios": [
+    "static",
+    "pan",
+    "tilt",
+    "roll",
+    "zoom",
+    "no_horizon",
+    "low_texture",
+    "cut",
+    "blur",
+    "foreground",
+    "distractors"
+  ],
+  "thresholds": [
+    {
+      "metric_id": "motion_label_accuracy",
+      "minimum": 0.8,
+      "blocking": true,
+      "rationale": "The model must identify the dominant camera motion on ordinary textured shots."
+    },
+    {
+      "metric_id": "horizon_presence_accuracy",
+      "minimum": 0.9,
+      "blocking": true,
+      "rationale": "Horizon claims must be correct before perspective constraints are exposed to downstream generation."
+    },
+    {
+      "metric_id": "gravity_presence_accuracy",
+      "minimum": 0.9,
+      "blocking": true,
+      "rationale": "Gravity is only advertised when the observable scene supports an up direction."
+    },
+    {
+      "metric_id": "track_requirement_accuracy",
+      "minimum": 0.8,
+      "blocking": true,
+      "rationale": "Tracking must provide enough stable evidence for temporal continuity or abstain."
+    },
+    {
+      "metric_id": "status_accuracy",
+      "minimum": 0.8,
+      "blocking": true,
+      "rationale": "The provider must distinguish complete, partial and incomplete evidence honestly."
+    },
+    {
+      "metric_id": "abstention_compliance",
+      "minimum": 1.0,
+      "blocking": true,
+      "rationale": "Unsupported physical claims must remain abstentions rather than inferred facts."
+    }
+  ],
+  "cases": [
+    {
+      "case_id": "static-textured-horizon",
+      "generator": "static_textured",
+      "scenarios": ["static"],
+      "width": 320,
+      "height": 180,
+      "total_frames": 48,
+      "fps": 30,
+      "shots": [
+        {
+          "shot_id": "shot-0",
+          "frame_range": {"start_frame": 0, "end_frame_exclusive": 48},
+          "transition_in": "start",
+          "transition_out": "end"
+        }
+      ],
+      "generator_parameters": {"horizon_y": 0.52, "seed": 11},
+      "expectation": {
+        "accepted_motion_by_shot": {"shot-0": ["static"]},
+        "horizon_present_by_shot": {"shot-0": true},
+        "gravity_present_by_shot": {"shot-0": true},
+        "minimum_tracks_by_shot": {"shot-0": 3},
+        "maximum_tracks_by_shot": {"shot-0": 10000},
+        "expected_model_status": "partial",
+        "required_abstentions": ["support_gravity", "contact_collision", "solidity", "causality", "material_behavior"]
+      }
+    },
+    {
+      "case_id": "pan-textured-horizon",
+      "generator": "pan_textured",
+      "scenarios": ["pan"],
+      "width": 320,
+      "height": 180,
+      "total_frames": 48,
+      "fps": 30,
+      "shots": [{"shot_id": "shot-0", "frame_range": {"start_frame": 0, "end_frame_exclusive": 48}, "transition_in": "start", "transition_out": "end"}],
+      "generator_parameters": {"horizon_y": 0.52, "pixels_per_frame": 2, "seed": 12},
+      "expectation": {
+        "accepted_motion_by_shot": {"shot-0": ["pan"]},
+        "horizon_present_by_shot": {"shot-0": true},
+        "gravity_present_by_shot": {"shot-0": true},
+        "minimum_tracks_by_shot": {"shot-0": 3},
+        "maximum_tracks_by_shot": {"shot-0": 10000},
+        "expected_model_status": "partial",
+        "required_abstentions": ["support_gravity", "contact_collision", "solidity", "causality", "material_behavior"]
+      }
+    },
+    {
+      "case_id": "tilt-textured-horizon",
+      "generator": "tilt_textured",
+      "scenarios": ["tilt"],
+      "width": 320,
+      "height": 180,
+      "total_frames": 48,
+      "fps": 30,
+      "shots": [{"shot_id": "shot-0", "frame_range": {"start_frame": 0, "end_frame_exclusive": 48}, "transition_in": "start", "transition_out": "end"}],
+      "generator_parameters": {"horizon_y": 0.52, "pixels_per_frame": 1, "seed": 13},
+      "expectation": {
+        "accepted_motion_by_shot": {"shot-0": ["tilt"]},
+        "horizon_present_by_shot": {"shot-0": true},
+        "gravity_present_by_shot": {"shot-0": true},
+        "minimum_tracks_by_shot": {"shot-0": 3},
+        "maximum_tracks_by_shot": {"shot-0": 10000},
+        "expected_model_status": "partial",
+        "required_abstentions": ["support_gravity", "contact_collision", "solidity", "causality", "material_behavior"]
+      }
+    },
+    {
+      "case_id": "roll-textured-horizon",
+      "generator": "roll_textured",
+      "scenarios": ["roll"],
+      "width": 320,
+      "height": 180,
+      "total_frames": 48,
+      "fps": 30,
+      "shots": [{"shot_id": "shot-0", "frame_range": {"start_frame": 0, "end_frame_exclusive": 48}, "transition_in": "start", "transition_out": "end"}],
+      "generator_parameters": {"horizon_y": 0.52, "degrees_per_frame": 1.0, "seed": 14},
+      "expectation": {
+        "accepted_motion_by_shot": {"shot-0": ["roll", "unknown"]},
+        "horizon_present_by_shot": {"shot-0": true},
+        "gravity_present_by_shot": {"shot-0": true},
+        "minimum_tracks_by_shot": {"shot-0": 3},
+        "maximum_tracks_by_shot": {"shot-0": 10000},
+        "expected_model_status": "partial",
+        "required_abstentions": ["support_gravity", "contact_collision", "solidity", "causality", "material_behavior"]
+      }
+    },
+    {
+      "case_id": "zoom-textured-horizon",
+      "generator": "zoom_textured",
+      "scenarios": ["zoom"],
+      "width": 320,
+      "height": 180,
+      "total_frames": 48,
+      "fps": 30,
+      "shots": [{"shot_id": "shot-0", "frame_range": {"start_frame": 0, "end_frame_exclusive": 48}, "transition_in": "start", "transition_out": "end"}],
+      "generator_parameters": {"horizon_y": 0.52, "scale_per_frame": 0.015, "seed": 15},
+      "expectation": {
+        "accepted_motion_by_shot": {"shot-0": ["zoom", "unknown"]},
+        "horizon_present_by_shot": {"shot-0": true},
+        "gravity_present_by_shot": {"shot-0": true},
+        "minimum_tracks_by_shot": {"shot-0": 3},
+        "maximum_tracks_by_shot": {"shot-0": 10000},
+        "expected_model_status": "partial",
+        "required_abstentions": ["support_gravity", "contact_collision", "solidity", "causality", "material_behavior"]
+      }
+    },
+    {
+      "case_id": "pan-no-horizon",
+      "generator": "pan_no_horizon",
+      "scenarios": ["pan", "no_horizon"],
+      "width": 320,
+      "height": 180,
+      "total_frames": 48,
+      "fps": 30,
+      "shots": [{"shot_id": "shot-0", "frame_range": {"start_frame": 0, "end_frame_exclusive": 48}, "transition_in": "start", "transition_out": "end"}],
+      "generator_parameters": {"pixels_per_frame": 2, "seed": 16},
+      "expectation": {
+        "accepted_motion_by_shot": {"shot-0": ["pan"]},
+        "horizon_present_by_shot": {"shot-0": false},
+        "gravity_present_by_shot": {"shot-0": false},
+        "minimum_tracks_by_shot": {"shot-0": 3},
+        "maximum_tracks_by_shot": {"shot-0": 10000},
+        "expected_model_status": "partial",
+        "required_abstentions": ["support_gravity", "contact_collision", "solidity", "causality", "material_behavior"]
+      }
+    },
+    {
+      "case_id": "low-texture",
+      "generator": "low_texture",
+      "scenarios": ["low_texture"],
+      "width": 320,
+      "height": 180,
+      "total_frames": 48,
+      "fps": 30,
+      "shots": [{"shot_id": "shot-0", "frame_range": {"start_frame": 0, "end_frame_exclusive": 48}, "transition_in": "start", "transition_out": "end"}],
+      "generator_parameters": {"gray_level": 128},
+      "expectation": {
+        "accepted_motion_by_shot": {"shot-0": ["unknown"]},
+        "horizon_present_by_shot": {"shot-0": false},
+        "gravity_present_by_shot": {"shot-0": false},
+        "minimum_tracks_by_shot": {"shot-0": 0},
+        "maximum_tracks_by_shot": {"shot-0": 0},
+        "expected_model_status": "incomplete",
+        "required_abstentions": ["camera_perspective", "motion", "support_gravity", "contact_collision", "solidity", "causality", "material_behavior"]
+      }
+    },
+    {
+      "case_id": "two-shot-cut",
+      "generator": "two_shot_cut",
+      "scenarios": ["static", "cut"],
+      "width": 320,
+      "height": 180,
+      "total_frames": 48,
+      "fps": 30,
+      "shots": [
+        {"shot_id": "shot-a", "frame_range": {"start_frame": 0, "end_frame_exclusive": 24}, "transition_in": "start", "transition_out": "cut"},
+        {"shot_id": "shot-b", "frame_range": {"start_frame": 24, "end_frame_exclusive": 48}, "transition_in": "cut", "transition_out": "end"}
+      ],
+      "generator_parameters": {"horizon_y": 0.52, "seed": 17},
+      "expectation": {
+        "accepted_motion_by_shot": {"shot-a": ["static"], "shot-b": ["static"]},
+        "horizon_present_by_shot": {"shot-a": true, "shot-b": true},
+        "gravity_present_by_shot": {"shot-a": true, "shot-b": true},
+        "minimum_tracks_by_shot": {"shot-a": 3, "shot-b": 3},
+        "maximum_tracks_by_shot": {"shot-a": 10000, "shot-b": 10000},
+        "expected_model_status": "partial",
+        "required_abstentions": ["support_gravity", "contact_collision", "solidity", "causality", "material_behavior"]
+      }
+    },
+    {
+      "case_id": "blurred-pan",
+      "generator": "blurred_pan",
+      "scenarios": ["pan", "blur"],
+      "width": 320,
+      "height": 180,
+      "total_frames": 48,
+      "fps": 30,
+      "shots": [{"shot_id": "shot-0", "frame_range": {"start_frame": 0, "end_frame_exclusive": 48}, "transition_in": "start", "transition_out": "end"}],
+      "generator_parameters": {"pixels_per_frame": 2, "blur_kernel": 9, "seed": 18},
+      "expectation": {
+        "accepted_motion_by_shot": {"shot-0": ["pan", "unknown"]},
+        "horizon_present_by_shot": {"shot-0": true},
+        "gravity_present_by_shot": {"shot-0": true},
+        "minimum_tracks_by_shot": {"shot-0": 0},
+        "maximum_tracks_by_shot": {"shot-0": 10000},
+        "expected_model_status": "partial",
+        "required_abstentions": ["support_gravity", "contact_collision", "solidity", "causality", "material_behavior"]
+      }
+    },
+    {
+      "case_id": "foreground-motion",
+      "generator": "foreground_motion",
+      "scenarios": ["static", "foreground"],
+      "width": 320,
+      "height": 180,
+      "total_frames": 48,
+      "fps": 30,
+      "shots": [{"shot_id": "shot-0", "frame_range": {"start_frame": 0, "end_frame_exclusive": 48}, "transition_in": "start", "transition_out": "end"}],
+      "generator_parameters": {"horizon_y": 0.52, "pixels_per_frame": 3, "seed": 19},
+      "expectation": {
+        "accepted_motion_by_shot": {"shot-0": ["static", "unknown"]},
+        "horizon_present_by_shot": {"shot-0": true},
+        "gravity_present_by_shot": {"shot-0": true},
+        "minimum_tracks_by_shot": {"shot-0": 0},
+        "maximum_tracks_by_shot": {"shot-0": 10000},
+        "expected_model_status": "partial",
+        "required_abstentions": ["support_gravity", "contact_collision", "solidity", "causality", "material_behavior"]
+      }
+    },
+    {
+      "case_id": "horizon-distractors",
+      "generator": "horizon_distractors",
+      "scenarios": ["static", "distractors"],
+      "width": 320,
+      "height": 180,
+      "total_frames": 48,
+      "fps": 30,
+      "shots": [{"shot_id": "shot-0", "frame_range": {"start_frame": 0, "end_frame_exclusive": 48}, "transition_in": "start", "transition_out": "end"}],
+      "generator_parameters": {"horizon_y": 0.52, "seed": 20},
+      "expectation": {
+        "accepted_motion_by_shot": {"shot-0": ["static"]},
+        "horizon_present_by_shot": {"shot-0": true},
+        "gravity_present_by_shot": {"shot-0": true},
+        "minimum_tracks_by_shot": {"shot-0": 3},
+        "maximum_tracks_by_shot": {"shot-0": 10000},
+        "expected_model_status": "partial",
+        "required_abstentions": ["support_gravity", "contact_collision", "solidity", "causality", "material_behavior"]
+      }
+    }
+  ],
+  "notes": [
+    "This corpus is synthetic-only and is a release gate for the classical OpenCV reality baseline.",
+    "Accepted unknown labels in adverse cases are intentional: the provider must abstain instead of overclaiming.",
+    "Technical passage never authorizes production activation; candidate legal, artifact and benchmark gates remain separate."
+  ]
+}

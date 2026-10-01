@@ -1,0 +1,28 @@
+{
+  "schema_version": "studio.collaboration-graph.v1",
+  "anchor": "Bong Joon-ho e Han Jin-won",
+  "status": "credits_pending_per_work_verification",
+  "nodes": [
+    {
+      "name": "Han Jin-won",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Hong Kyung-pyo",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Yang Jin-mo",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Lee Ha-jun",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Jung Jae-il",
+      "role": "verify_per_work"
+    }
+  ],
+  "edges": []
+}

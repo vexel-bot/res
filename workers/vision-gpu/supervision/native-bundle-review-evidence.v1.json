@@ -1,0 +1,434 @@
+{
+  "schemaVersion": "clicko.native-wheel-bundle-review-evidence.v1",
+  "candidate": "supervision-toolkit-0.30.1",
+  "generatedAt": "2026-08-28T00:00:00Z",
+  "packageCount": 10,
+  "allWheelsContainLicenseEvidence": true,
+  "packagesMissingLicenseEvidence": [],
+  "status": "human_review_required",
+  "packages": [
+    {
+      "package": "av",
+      "version": "14.2.0",
+      "wheel": "av-14.2.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "wheelSha256": "e7647d4a8d1855d05fe70784a962b15e103a2d4a0eba1dea7bfbfd95753dedb9",
+      "licenseEvidence": [
+        {
+          "path": "av-14.2.0.dist-info/LICENSE.txt",
+          "sha256": "76af0461ffb92e19f1c14449e95557d83a2dfaa1baf202d49e5f1d8746c0da19",
+          "sizeBytes": 1505
+        }
+      ],
+      "nativeObjectCount": 52,
+      "vendoredNativeObjectCount": 1,
+      "nativeObjectPaths": [
+        "av.libs/libselinux-0922c95c.so.1",
+        "av/_core.cpython-311-x86_64-linux-gnu.so",
+        "av/attachments/stream.cpython-311-x86_64-linux-gnu.so",
+        "av/audio/codeccontext.cpython-311-x86_64-linux-gnu.so",
+        "av/audio/fifo.cpython-311-x86_64-linux-gnu.so",
+        "av/audio/format.cpython-311-x86_64-linux-gnu.so",
+        "av/audio/frame.cpython-311-x86_64-linux-gnu.so",
+        "av/audio/layout.cpython-311-x86_64-linux-gnu.so",
+        "av/audio/plane.cpython-311-x86_64-linux-gnu.so",
+        "av/audio/resampler.cpython-311-x86_64-linux-gnu.so",
+        "av/audio/stream.cpython-311-x86_64-linux-gnu.so",
+        "av/bitstream.cpython-311-x86_64-linux-gnu.so",
+        "av/buffer.cpython-311-x86_64-linux-gnu.so",
+        "av/bytesource.cpython-311-x86_64-linux-gnu.so",
+        "av/codec/codec.cpython-311-x86_64-linux-gnu.so",
+        "av/codec/context.cpython-311-x86_64-linux-gnu.so",
+        "av/codec/hwaccel.cpython-311-x86_64-linux-gnu.so",
+        "av/container/core.cpython-311-x86_64-linux-gnu.so",
+        "av/container/input.cpython-311-x86_64-linux-gnu.so",
+        "av/container/output.cpython-311-x86_64-linux-gnu.so",
+        "av/container/pyio.cpython-311-x86_64-linux-gnu.so",
+        "av/container/streams.cpython-311-x86_64-linux-gnu.so",
+        "av/data/stream.cpython-311-x86_64-linux-gnu.so",
+        "av/descriptor.cpython-311-x86_64-linux-gnu.so",
+        "av/dictionary.cpython-311-x86_64-linux-gnu.so",
+        "av/error.cpython-311-x86_64-linux-gnu.so",
+        "av/filter/context.cpython-311-x86_64-linux-gnu.so",
+        "av/filter/filter.cpython-311-x86_64-linux-gnu.so",
+        "av/filter/graph.cpython-311-x86_64-linux-gnu.so",
+        "av/filter/link.cpython-311-x86_64-linux-gnu.so",
+        "av/filter/loudnorm.cpython-311-x86_64-linux-gnu.so",
+        "av/filter/pad.cpython-311-x86_64-linux-gnu.so",
+        "av/format.cpython-311-x86_64-linux-gnu.so",
+        "av/frame.cpython-311-x86_64-linux-gnu.so",
+        "av/logging.cpython-311-x86_64-linux-gnu.so",
+        "av/opaque.cpython-311-x86_64-linux-gnu.so",
+        "av/option.cpython-311-x86_64-linux-gnu.so",
+        "av/packet.cpython-311-x86_64-linux-gnu.so",
+        "av/plane.cpython-311-x86_64-linux-gnu.so",
+        "av/sidedata/motionvectors.cpython-311-x86_64-linux-gnu.so",
+        "av/sidedata/sidedata.cpython-311-x86_64-linux-gnu.so",
+        "av/stream.cpython-311-x86_64-linux-gnu.so",
+        "av/subtitles/codeccontext.cpython-311-x86_64-linux-gnu.so",
+        "av/subtitles/stream.cpython-311-x86_64-linux-gnu.so",
+        "av/subtitles/subtitle.cpython-311-x86_64-linux-gnu.so",
+        "av/utils.cpython-311-x86_64-linux-gnu.so",
+        "av/video/codeccontext.cpython-311-x86_64-linux-gnu.so",
+        "av/video/format.cpython-311-x86_64-linux-gnu.so",
+        "av/video/frame.cpython-311-x86_64-linux-gnu.so",
+        "av/video/plane.cpython-311-x86_64-linux-gnu.so",
+        "av/video/reformatter.cpython-311-x86_64-linux-gnu.so",
+        "av/video/stream.cpython-311-x86_64-linux-gnu.so"
+      ],
+      "reviewStatus": "human_review_required"
+    },
+    {
+      "package": "contourpy",
+      "version": "1.3.2",
+      "wheel": "contourpy-1.3.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "wheelSha256": "3859783aefa2b8355697f16642695a5b9792e7a46ab86da1118a4a23a51a33d7",
+      "licenseEvidence": [
+        {
+          "path": "contourpy-1.3.2.dist-info/LICENSE",
+          "sha256": "34170979fc64f4f5e6dfa66ef27dec314ffffc5852000c60f4836ec1dfbf156e",
+          "sizeBytes": 1534
+        }
+      ],
+      "nativeObjectCount": 1,
+      "vendoredNativeObjectCount": 0,
+      "nativeObjectPaths": [
+        "contourpy/_contourpy.cpython-311-x86_64-linux-gnu.so"
+      ],
+      "reviewStatus": "human_review_required"
+    },
+    {
+      "package": "fonttools",
+      "version": "4.63.0",
+      "wheel": "fonttools-4.63.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+      "wheelSha256": "d76ac49f929aecaf82d83250b8347e099d7aecba0f4726c1d9b6df3b8bb5fe18",
+      "licenseEvidence": [
+        {
+          "path": "fonttools-4.63.0.dist-info/licenses/LICENSE",
+          "sha256": "6787208f83f659ccbc2223b2fde952ffa6f7e8aca62f1a8a2bf5bc51bb1b2383",
+          "sizeBytes": 1072
+        },
+        {
+          "path": "fonttools-4.63.0.dist-info/licenses/LICENSE.external",
+          "sha256": "94a83aaee0729a0f302d34acc4acecbd9d58366f262429075fe557e4a54b2e69",
+          "sizeBytes": 20022
+        }
+      ],
+      "nativeObjectCount": 6,
+      "vendoredNativeObjectCount": 0,
+      "nativeObjectPaths": [
+        "fontTools/cu2qu/cu2qu.cpython-311-x86_64-linux-gnu.so",
+        "fontTools/feaLib/lexer.cpython-311-x86_64-linux-gnu.so",
+        "fontTools/misc/bezierTools.cpython-311-x86_64-linux-gnu.so",
+        "fontTools/pens/momentsPen.cpython-311-x86_64-linux-gnu.so",
+        "fontTools/qu2cu/qu2cu.cpython-311-x86_64-linux-gnu.so",
+        "fontTools/varLib/iup.cpython-311-x86_64-linux-gnu.so"
+      ],
+      "reviewStatus": "human_review_required"
+    },
+    {
+      "package": "kiwisolver",
+      "version": "1.5.1",
+      "wheel": "kiwisolver-1.5.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+      "wheelSha256": "95a02752aa032eef4aed01cda6d9b687c669bd0396bf4519eef8bba22a286720",
+      "licenseEvidence": [
+        {
+          "path": "kiwisolver-1.5.1.dist-info/licenses/LICENSE",
+          "sha256": "529c40e5f67f2f88904657a9f7879ae2f8dc76bc9bfef9cb10d988b48804ed61",
+          "sizeBytes": 3289
+        }
+      ],
+      "nativeObjectCount": 1,
+      "vendoredNativeObjectCount": 0,
+      "nativeObjectPaths": [
+        "kiwisolver/_cext.cpython-311-x86_64-linux-gnu.so"
+      ],
+      "reviewStatus": "human_review_required"
+    },
+    {
+      "package": "matplotlib",
+      "version": "3.11.1",
+      "wheel": "matplotlib-3.11.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+      "wheelSha256": "aee55e9041211bf84302ab55ec3965df18dd90ae19f8b58332a7feaf208bfe83",
+      "licenseEvidence": [
+        {
+          "path": "matplotlib-3.11.1.dist-info/LICENSE",
+          "sha256": "822e8e528147569a41975592aee19c11992ab667ba50451cd929031d5fc74491",
+          "sizeBytes": 63442
+        }
+      ],
+      "nativeObjectCount": 8,
+      "vendoredNativeObjectCount": 0,
+      "nativeObjectPaths": [
+        "matplotlib/_c_internal_utils.cpython-311-x86_64-linux-gnu.so",
+        "matplotlib/_image.cpython-311-x86_64-linux-gnu.so",
+        "matplotlib/_path.cpython-311-x86_64-linux-gnu.so",
+        "matplotlib/_qhull.cpython-311-x86_64-linux-gnu.so",
+        "matplotlib/_tri.cpython-311-x86_64-linux-gnu.so",
+        "matplotlib/backends/_backend_agg.cpython-311-x86_64-linux-gnu.so",
+        "matplotlib/backends/_tkagg.cpython-311-x86_64-linux-gnu.so",
+        "matplotlib/ft2font.cpython-311-x86_64-linux-gnu.so"
+      ],
+      "reviewStatus": "human_review_required"
+    },
+    {
+      "package": "numpy",
+      "version": "2.2.6",
+      "wheel": "numpy-2.2.6-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "wheelSha256": "ba10f8411898fc418a521833e014a77d3ca01c15b0c6cdcce6a0d2897e6dbbdf",
+      "licenseEvidence": [
+        {
+          "path": "numpy-2.2.6.dist-info/LICENSE.txt",
+          "sha256": "c002bd26de7dc7aa464250a0de063d58fe55974452e4389e5c21c350a820bf06",
+          "sizeBytes": 47755
+        },
+        {
+          "path": "numpy/_core/include/numpy/random/LICENSE.txt",
+          "sha256": "fbc539f47d0cf83bc61378080fb873d5c14630126cacbfe754035c3926daa5ec",
+          "sizeBytes": 1018
+        },
+        {
+          "path": "numpy/ma/LICENSE",
+          "sha256": "05f3b88351988ecfad10abe92c0c50e5875c6452d5009a0084cc291551ffcca6",
+          "sizeBytes": 1593
+        }
+      ],
+      "nativeObjectCount": 20,
+      "vendoredNativeObjectCount": 1,
+      "nativeObjectPaths": [
+        "numpy.libs/libscipy_openblas64_-56d6093b.so",
+        "numpy/_core/_multiarray_tests.cpython-311-x86_64-linux-gnu.so",
+        "numpy/_core/_multiarray_umath.cpython-311-x86_64-linux-gnu.so",
+        "numpy/_core/_operand_flag_tests.cpython-311-x86_64-linux-gnu.so",
+        "numpy/_core/_rational_tests.cpython-311-x86_64-linux-gnu.so",
+        "numpy/_core/_simd.cpython-311-x86_64-linux-gnu.so",
+        "numpy/_core/_struct_ufunc_tests.cpython-311-x86_64-linux-gnu.so",
+        "numpy/_core/_umath_tests.cpython-311-x86_64-linux-gnu.so",
+        "numpy/fft/_pocketfft_umath.cpython-311-x86_64-linux-gnu.so",
+        "numpy/linalg/_umath_linalg.cpython-311-x86_64-linux-gnu.so",
+        "numpy/linalg/lapack_lite.cpython-311-x86_64-linux-gnu.so",
+        "numpy/random/_bounded_integers.cpython-311-x86_64-linux-gnu.so",
+        "numpy/random/_common.cpython-311-x86_64-linux-gnu.so",
+        "numpy/random/_generator.cpython-311-x86_64-linux-gnu.so",
+        "numpy/random/_mt19937.cpython-311-x86_64-linux-gnu.so",
+        "numpy/random/_pcg64.cpython-311-x86_64-linux-gnu.so",
+        "numpy/random/_philox.cpython-311-x86_64-linux-gnu.so",
+        "numpy/random/_sfc64.cpython-311-x86_64-linux-gnu.so",
+        "numpy/random/bit_generator.cpython-311-x86_64-linux-gnu.so",
+        "numpy/random/mtrand.cpython-311-x86_64-linux-gnu.so"
+      ],
+      "reviewStatus": "human_review_required"
+    },
+    {
+      "package": "pillow",
+      "version": "12.2.0",
+      "wheel": "pillow-12.2.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+      "wheelSha256": "8bd7903a5f2a4545f6fd5935c90058b89d30045568985a71c79f5fd6edf9b91e",
+      "licenseEvidence": [
+        {
+          "path": "pillow-12.2.0.dist-info/licenses/LICENSE",
+          "sha256": "13e1d5014de0064b4b1ca4d837111797673cc91a116616e3dde555009243aaf6",
+          "sizeBytes": 68065
+        }
+      ],
+      "nativeObjectCount": 8,
+      "vendoredNativeObjectCount": 0,
+      "nativeObjectPaths": [
+        "PIL/_avif.cpython-311-x86_64-linux-gnu.so",
+        "PIL/_imaging.cpython-311-x86_64-linux-gnu.so",
+        "PIL/_imagingcms.cpython-311-x86_64-linux-gnu.so",
+        "PIL/_imagingft.cpython-311-x86_64-linux-gnu.so",
+        "PIL/_imagingmath.cpython-311-x86_64-linux-gnu.so",
+        "PIL/_imagingmorph.cpython-311-x86_64-linux-gnu.so",
+        "PIL/_imagingtk.cpython-311-x86_64-linux-gnu.so",
+        "PIL/_webp.cpython-311-x86_64-linux-gnu.so"
+      ],
+      "reviewStatus": "human_review_required"
+    },
+    {
+      "package": "pydantic-core",
+      "version": "2.46.4",
+      "wheel": "pydantic_core-2.46.4-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "wheelSha256": "f9fa868638bf362d3d138ea55829cefb3d5f4b0d7f142234382a15e2485dbec4",
+      "licenseEvidence": [
+        {
+          "path": "pydantic_core-2.46.4.dist-info/licenses/LICENSE",
+          "sha256": "2afdd30d54b4d62b6f488a6bcc1546e84ec5061f13f4209c03d012348783795a",
+          "sizeBytes": 1080
+        }
+      ],
+      "nativeObjectCount": 1,
+      "vendoredNativeObjectCount": 0,
+      "nativeObjectPaths": [
+        "pydantic_core/_pydantic_core.cpython-311-x86_64-linux-gnu.so"
+      ],
+      "reviewStatus": "human_review_required"
+    },
+    {
+      "package": "pyyaml",
+      "version": "6.0.3",
+      "wheel": "pyyaml-6.0.3-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+      "wheelSha256": "b8bb0864c5a28024fac8a632c443c87c5aa6f215c0b126c449ae1a150412f31d",
+      "licenseEvidence": [
+        {
+          "path": "pyyaml-6.0.3.dist-info/licenses/LICENSE",
+          "sha256": "8d3928f9dc4490fd635707cb88eb26bd764102a7282954307d3e5167a577e8a4",
+          "sizeBytes": 1101
+        }
+      ],
+      "nativeObjectCount": 1,
+      "vendoredNativeObjectCount": 0,
+      "nativeObjectPaths": [
+        "yaml/_yaml.cpython-311-x86_64-linux-gnu.so"
+      ],
+      "reviewStatus": "human_review_required"
+    },
+    {
+      "package": "scipy",
+      "version": "1.16.3",
+      "wheel": "scipy-1.16.3-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+      "wheelSha256": "0151a0749efeaaab78711c78422d413c583b8cdd2011a3c1d6c794938ee9fdb2",
+      "licenseEvidence": [
+        {
+          "path": "scipy-1.16.3.dist-info/LICENSE.txt",
+          "sha256": "4daf14e37432e7026165979ecb7a39930707a3e89bef4876cfaf9dad36ed364a",
+          "sizeBytes": 46838
+        },
+        {
+          "path": "scipy/_lib/_uarray/LICENSE",
+          "sha256": "c80c39b5fce06ba4897e14e0b0a88b54458334d951eb1361402ffad2cfb863b4",
+          "sizeBytes": 1514
+        },
+        {
+          "path": "scipy/sparse/linalg/_eigen/arpack/COPYING",
+          "sha256": "0926566f9f406178d1214f8cc796e166b1213dd7c05e0c5b461a8b8ac9e50bbe",
+          "sizeBytes": 1892
+        }
+      ],
+      "nativeObjectCount": 115,
+      "vendoredNativeObjectCount": 1,
+      "nativeObjectPaths": [
+        "scipy.libs/libscipy_openblas-b75cc656.so",
+        "scipy/_cyutility.cpython-311-x86_64-linux-gnu.so",
+        "scipy/_lib/_ccallback_c.cpython-311-x86_64-linux-gnu.so",
+        "scipy/_lib/_fpumode.cpython-311-x86_64-linux-gnu.so",
+        "scipy/_lib/_test_ccallback.cpython-311-x86_64-linux-gnu.so",
+        "scipy/_lib/_test_deprecation_call.cpython-311-x86_64-linux-gnu.so",
+        "scipy/_lib/_test_deprecation_def.cpython-311-x86_64-linux-gnu.so",
+        "scipy/_lib/_uarray/_uarray.cpython-311-x86_64-linux-gnu.so",
+        "scipy/_lib/messagestream.cpython-311-x86_64-linux-gnu.so",
+        "scipy/cluster/_hierarchy.cpython-311-x86_64-linux-gnu.so",
+        "scipy/cluster/_optimal_leaf_ordering.cpython-311-x86_64-linux-gnu.so",
+        "scipy/cluster/_vq.cpython-311-x86_64-linux-gnu.so",
+        "scipy/fft/_pocketfft/pypocketfft.cpython-311-x86_64-linux-gnu.so",
+        "scipy/fftpack/convolve.cpython-311-x86_64-linux-gnu.so",
+        "scipy/integrate/_dop.cpython-311-x86_64-linux-gnu.so",
+        "scipy/integrate/_lsoda.cpython-311-x86_64-linux-gnu.so",
+        "scipy/integrate/_odepack.cpython-311-x86_64-linux-gnu.so",
+        "scipy/integrate/_quadpack.cpython-311-x86_64-linux-gnu.so",
+        "scipy/integrate/_test_multivariate.cpython-311-x86_64-linux-gnu.so",
+        "scipy/integrate/_test_odeint_banded.cpython-311-x86_64-linux-gnu.so",
+        "scipy/integrate/_vode.cpython-311-x86_64-linux-gnu.so",
+        "scipy/interpolate/_dfitpack.cpython-311-x86_64-linux-gnu.so",
+        "scipy/interpolate/_dierckx.cpython-311-x86_64-linux-gnu.so",
+        "scipy/interpolate/_fitpack.cpython-311-x86_64-linux-gnu.so",
+        "scipy/interpolate/_interpnd.cpython-311-x86_64-linux-gnu.so",
+        "scipy/interpolate/_ppoly.cpython-311-x86_64-linux-gnu.so",
+        "scipy/interpolate/_rbfinterp_pythran.cpython-311-x86_64-linux-gnu.so",
+        "scipy/interpolate/_rgi_cython.cpython-311-x86_64-linux-gnu.so",
+        "scipy/io/_fast_matrix_market/_fmm_core.cpython-311-x86_64-linux-gnu.so",
+        "scipy/io/_test_fortran.cpython-311-x86_64-linux-gnu.so",
+        "scipy/io/matlab/_mio5_utils.cpython-311-x86_64-linux-gnu.so",
+        "scipy/io/matlab/_mio_utils.cpython-311-x86_64-linux-gnu.so",
+        "scipy/io/matlab/_streams.cpython-311-x86_64-linux-gnu.so",
+        "scipy/linalg/_cythonized_array_utils.cpython-311-x86_64-linux-gnu.so",
+        "scipy/linalg/_decomp_interpolative.cpython-311-x86_64-linux-gnu.so",
+        "scipy/linalg/_decomp_lu_cython.cpython-311-x86_64-linux-gnu.so",
+        "scipy/linalg/_decomp_update.cpython-311-x86_64-linux-gnu.so",
+        "scipy/linalg/_fblas.cpython-311-x86_64-linux-gnu.so",
+        "scipy/linalg/_flapack.cpython-311-x86_64-linux-gnu.so",
+        "scipy/linalg/_linalg_pythran.cpython-311-x86_64-linux-gnu.so",
+        "scipy/linalg/_matfuncs_expm.cpython-311-x86_64-linux-gnu.so",
+        "scipy/linalg/_matfuncs_schur_sqrtm.cpython-311-x86_64-linux-gnu.so",
+        "scipy/linalg/_matfuncs_sqrtm_triu.cpython-311-x86_64-linux-gnu.so",
+        "scipy/linalg/_solve_toeplitz.cpython-311-x86_64-linux-gnu.so",
+        "scipy/linalg/cython_blas.cpython-311-x86_64-linux-gnu.so",
+        "scipy/linalg/cython_lapack.cpython-311-x86_64-linux-gnu.so",
+        "scipy/ndimage/_ctest.cpython-311-x86_64-linux-gnu.so",
+        "scipy/ndimage/_cytest.cpython-311-x86_64-linux-gnu.so",
+        "scipy/ndimage/_nd_image.cpython-311-x86_64-linux-gnu.so",
+        "scipy/ndimage/_ni_label.cpython-311-x86_64-linux-gnu.so",
+        "scipy/ndimage/_rank_filter_1d.cpython-311-x86_64-linux-gnu.so",
+        "scipy/odr/__odrpack.cpython-311-x86_64-linux-gnu.so",
+        "scipy/optimize/_bglu_dense.cpython-311-x86_64-linux-gnu.so",
+        "scipy/optimize/_direct.cpython-311-x86_64-linux-gnu.so",
+        "scipy/optimize/_group_columns.cpython-311-x86_64-linux-gnu.so",
+        "scipy/optimize/_highspy/_core.cpython-311-x86_64-linux-gnu.so",
+        "scipy/optimize/_highspy/_highs_options.cpython-311-x86_64-linux-gnu.so",
+        "scipy/optimize/_lbfgsb.cpython-311-x86_64-linux-gnu.so",
+        "scipy/optimize/_lsap.cpython-311-x86_64-linux-gnu.so",
+        "scipy/optimize/_lsq/givens_elimination.cpython-311-x86_64-linux-gnu.so",
+        "scipy/optimize/_minpack.cpython-311-x86_64-linux-gnu.so",
+        "scipy/optimize/_moduleTNC.cpython-311-x86_64-linux-gnu.so",
+        "scipy/optimize/_pava_pybind.cpython-311-x86_64-linux-gnu.so",
+        "scipy/optimize/_slsqplib.cpython-311-x86_64-linux-gnu.so",
+        "scipy/optimize/_trlib/_trlib.cpython-311-x86_64-linux-gnu.so",
+        "scipy/optimize/_zeros.cpython-311-x86_64-linux-gnu.so",
+        "scipy/optimize/cython_optimize/_zeros.cpython-311-x86_64-linux-gnu.so",
+        "scipy/signal/_max_len_seq_inner.cpython-311-x86_64-linux-gnu.so",
+        "scipy/signal/_peak_finding_utils.cpython-311-x86_64-linux-gnu.so",
+        "scipy/signal/_sigtools.cpython-311-x86_64-linux-gnu.so",
+        "scipy/signal/_sosfilt.cpython-311-x86_64-linux-gnu.so",
+        "scipy/signal/_spline.cpython-311-x86_64-linux-gnu.so",
+        "scipy/signal/_upfirdn_apply.cpython-311-x86_64-linux-gnu.so",
+        "scipy/sparse/_csparsetools.cpython-311-x86_64-linux-gnu.so",
+        "scipy/sparse/_sparsetools.cpython-311-x86_64-linux-gnu.so",
+        "scipy/sparse/csgraph/_flow.cpython-311-x86_64-linux-gnu.so",
+        "scipy/sparse/csgraph/_matching.cpython-311-x86_64-linux-gnu.so",
+        "scipy/sparse/csgraph/_min_spanning_tree.cpython-311-x86_64-linux-gnu.so",
+        "scipy/sparse/csgraph/_reordering.cpython-311-x86_64-linux-gnu.so",
+        "scipy/sparse/csgraph/_shortest_path.cpython-311-x86_64-linux-gnu.so",
+        "scipy/sparse/csgraph/_tools.cpython-311-x86_64-linux-gnu.so",
+        "scipy/sparse/csgraph/_traversal.cpython-311-x86_64-linux-gnu.so",
+        "scipy/sparse/linalg/_dsolve/_superlu.cpython-311-x86_64-linux-gnu.so",
+        "scipy/sparse/linalg/_eigen/arpack/_arpack.cpython-311-x86_64-linux-gnu.so",
+        "scipy/sparse/linalg/_propack/_cpropack.cpython-311-x86_64-linux-gnu.so",
+        "scipy/sparse/linalg/_propack/_dpropack.cpython-311-x86_64-linux-gnu.so",
+        "scipy/sparse/linalg/_propack/_spropack.cpython-311-x86_64-linux-gnu.so",
+        "scipy/sparse/linalg/_propack/_zpropack.cpython-311-x86_64-linux-gnu.so",
+        "scipy/spatial/_ckdtree.cpython-311-x86_64-linux-gnu.so",
+        "scipy/spatial/_distance_pybind.cpython-311-x86_64-linux-gnu.so",
+        "scipy/spatial/_distance_wrap.cpython-311-x86_64-linux-gnu.so",
+        "scipy/spatial/_hausdorff.cpython-311-x86_64-linux-gnu.so",
+        "scipy/spatial/_qhull.cpython-311-x86_64-linux-gnu.so",
+        "scipy/spatial/_voronoi.cpython-311-x86_64-linux-gnu.so",
+        "scipy/spatial/transform/_rigid_transform.cpython-311-x86_64-linux-gnu.so",
+        "scipy/spatial/transform/_rotation.cpython-311-x86_64-linux-gnu.so",
+        "scipy/special/_comb.cpython-311-x86_64-linux-gnu.so",
+        "scipy/special/_ellip_harm_2.cpython-311-x86_64-linux-gnu.so",
+        "scipy/special/_gufuncs.cpython-311-x86_64-linux-gnu.so",
+        "scipy/special/_specfun.cpython-311-x86_64-linux-gnu.so",
+        "scipy/special/_special_ufuncs.cpython-311-x86_64-linux-gnu.so",
+        "scipy/special/_test_internal.cpython-311-x86_64-linux-gnu.so",
+        "scipy/special/_ufuncs.cpython-311-x86_64-linux-gnu.so",
+        "scipy/special/_ufuncs_cxx.cpython-311-x86_64-linux-gnu.so",
+        "scipy/special/cython_special.cpython-311-x86_64-linux-gnu.so",
+        "scipy/stats/_ansari_swilk_statistics.cpython-311-x86_64-linux-gnu.so",
+        "scipy/stats/_biasedurn.cpython-311-x86_64-linux-gnu.so",
+        "scipy/stats/_levy_stable/levyst.cpython-311-x86_64-linux-gnu.so",
+        "scipy/stats/_qmc_cy.cpython-311-x86_64-linux-gnu.so",
+        "scipy/stats/_qmvnt_cy.cpython-311-x86_64-linux-gnu.so",
+        "scipy/stats/_rcont/rcont.cpython-311-x86_64-linux-gnu.so",
+        "scipy/stats/_sobol.cpython-311-x86_64-linux-gnu.so",
+        "scipy/stats/_stats.cpython-311-x86_64-linux-gnu.so",
+        "scipy/stats/_stats_pythran.cpython-311-x86_64-linux-gnu.so",
+        "scipy/stats/_unuran/unuran_wrapper.cpython-311-x86_64-linux-gnu.so"
+      ],
+      "reviewStatus": "human_review_required"
+    }
+  ],
+  "notes": [
+    "This artifact inventories bundled objects and hashes notices; it is not legal approval.",
+    "Vendored shared objects require transitive notice and ABI review before promotion.",
+    "No package, model, detector or provider is activated by this evidence."
+  ]
+}

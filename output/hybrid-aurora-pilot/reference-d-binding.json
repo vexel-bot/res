@@ -1,0 +1,13 @@
+{
+  "documentId": "a1384d96-8fd6-4ef4-bcbc-337582920db5",
+  "materialIds": {
+    "beans": "48669823-e76d-4100-b246-ae26100ad32d",
+    "brew": "3135a6ac-363c-4218-9caf-1ebcbee4e86d",
+    "pour": "ee371554-79a9-4cdd-8748-a98d85b47a0a",
+    "wide": "aa29ca5e-28cd-49d4-856a-9aefebd27313",
+    "product": "4c8ba2b0-c9a9-4b98-96ba-ba9d9ecd08a6",
+    "music": "fa00b46a-0139-4303-8f49-41d97ca0c66d",
+    "pour_sfx": "56b66f52-9f67-49d6-a968-7824993e4673",
+    "cup_sfx": "30a6b285-0ed2-4979-a0fb-d881f477ed92"
+  }
+}

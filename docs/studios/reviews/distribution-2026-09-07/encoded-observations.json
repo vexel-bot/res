@@ -1,0 +1,77 @@
+{
+  "schemaVersion": "studio.editorial-observation.v1",
+  "status": "partial",
+  "checksum": "48009a73e419c3dc588c492d2938cec6a134edd02d71a2565b24603a9c2184de",
+  "durationSeconds": 51.0,
+  "coverageSeconds": 51.0,
+  "sampleRate": 2,
+  "sampleCount": 102,
+  "nearStaticSampleRatio": 0.7227722772277227,
+  "audioStreamPresent": true,
+  "speechIntelligibility": "unknown",
+  "soundEventAccuracy": "unknown",
+  "editorialQuality": "unreviewed",
+  "humanReview": "pending",
+  "findings": [
+    {
+      "code": "near_static_sampled_interval",
+      "sceneId": null,
+      "startSeconds": 1.5,
+      "endSeconds": 7.0,
+      "severity": "observation",
+      "evidence": "normalized_mean_pixel_difference_at_2fps_lte_0.001",
+      "suggestedReview": "Verificar se a pausa sustenta a compreensão ou interrompe a progressão.",
+      "uncertainty": "Movimentos pequenos ou entre amostras podem não ter sido observados."
+    },
+    {
+      "code": "near_static_sampled_interval",
+      "sceneId": null,
+      "startSeconds": 10.0,
+      "endSeconds": 15.0,
+      "severity": "observation",
+      "evidence": "normalized_mean_pixel_difference_at_2fps_lte_0.001",
+      "suggestedReview": "Verificar se a pausa sustenta a compreensão ou interrompe a progressão.",
+      "uncertainty": "Movimentos pequenos ou entre amostras podem não ter sido observados."
+    },
+    {
+      "code": "near_static_sampled_interval",
+      "sceneId": null,
+      "startSeconds": 18.0,
+      "endSeconds": 24.0,
+      "severity": "observation",
+      "evidence": "normalized_mean_pixel_difference_at_2fps_lte_0.001",
+      "suggestedReview": "Verificar se a pausa sustenta a compreensão ou interrompe a progressão.",
+      "uncertainty": "Movimentos pequenos ou entre amostras podem não ter sido observados."
+    },
+    {
+      "code": "near_static_sampled_interval",
+      "sceneId": null,
+      "startSeconds": 26.0,
+      "endSeconds": 32.0,
+      "severity": "observation",
+      "evidence": "normalized_mean_pixel_difference_at_2fps_lte_0.001",
+      "suggestedReview": "Verificar se a pausa sustenta a compreensão ou interrompe a progressão.",
+      "uncertainty": "Movimentos pequenos ou entre amostras podem não ter sido observados."
+    },
+    {
+      "code": "near_static_sampled_interval",
+      "sceneId": null,
+      "startSeconds": 34.5,
+      "endSeconds": 40.5,
+      "severity": "observation",
+      "evidence": "normalized_mean_pixel_difference_at_2fps_lte_0.001",
+      "suggestedReview": "Verificar se a pausa sustenta a compreensão ou interrompe a progressão.",
+      "uncertainty": "Movimentos pequenos ou entre amostras podem não ter sido observados."
+    },
+    {
+      "code": "near_static_sampled_interval",
+      "sceneId": null,
+      "startSeconds": 42.5,
+      "endSeconds": 50.5,
+      "severity": "observation",
+      "evidence": "normalized_mean_pixel_difference_at_2fps_lte_0.001",
+      "suggestedReview": "Verificar se a pausa sustenta a compreensão ou interrompe a progressão.",
+      "uncertainty": "Movimentos pequenos ou entre amostras podem não ter sido observados."
+    }
+  ]
+}

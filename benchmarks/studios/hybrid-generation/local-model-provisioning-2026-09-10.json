@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "res.local-video-model-provisioning-evidence.v1",
+  "observedAt": "2026-09-10",
+  "profileId": "animatediff-lightning-sd15-a-v1",
+  "status": "ready",
+  "modelCacheBytes": 3649945345,
+  "repositories": [
+    {
+      "id": "ByteDance/AnimateDiff-Lightning",
+      "revision": "027c893eec01df7330f5d4b733bc9485ee02e8b2"
+    },
+    {
+      "id": "stable-diffusion-v1-5/stable-diffusion-v1-5",
+      "revision": "451f4fe16113bff5a5d2269ed5ad43b0592e9a14"
+    }
+  ],
+  "integrity": {
+    "missing": [],
+    "mismatched": [],
+    "provisionReceipt": "workers/media-generation-local/.model-cache/profiles/animatediff-lightning-sd15-a-v1/provision-receipt.json"
+  },
+  "executionPreflight": {
+    "status": "blocked_resources",
+    "reasons": ["blocked_current_load"],
+    "systemRamFreeMiB": 857,
+    "systemRamRequiredMiB": 1536,
+    "gpuMemoryFreeMiB": 3962,
+    "gpuMemoryRequiredMiB": 3072
+  },
+  "inferenceStarted": false,
+  "paidApiCalled": false
+}

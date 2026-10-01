@@ -302,6 +302,8 @@ export function GlobalSurfaces({
             )}
           </div>
           <button
+            disabled
+            title="As notificações ainda não estão conectadas nesta rota de compatibilidade."
             className="grid h-12 w-9 place-items-center text-[#b7aaaa] hover:text-[#ffb5b5]"
             aria-label="Notificações"
           >

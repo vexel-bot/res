@@ -1,0 +1,226 @@
+{
+  "schemaVersion": "studio.duplex-benchmark-report.v1",
+  "runId": "duplex-ptbr-calibration-2026-08-28",
+  "corpusId": "clicko-duplex-ptbr-synthetic-v1",
+  "corpusDigestSha256": "26312e8e9fc52ccdd63750875bfa71ac0d0be3d9b59fdbdacce72ab5744183ea",
+  "provider": "fixture.duplex-calibration",
+  "providerVersion": "1.0.0",
+  "providerArtifactDigestSha256": "6d05bba4898ff8bc4dd7679b3fd9f52f3122087e3bbd7c586bce09ae6be32cc1",
+  "calibrationOnly": true,
+  "providersEnabled": [],
+  "metrics": {
+    "caseCount": 10,
+    "ttfaP50Ms": 150.0,
+    "ttfaP95Ms": 221.5,
+    "interruptionAckP50Ms": 120.0,
+    "interruptionAckP95Ms": 120.0,
+    "falseInterruptionRate": 0.0,
+    "missedInterruptionRate": 0.0,
+    "backchannelPreservationRate": 1.0,
+    "sequenceValidityRate": 1.0,
+    "errorFreeRate": 1.0,
+    "roleAdherenceMean": null,
+    "semanticAccuracyMean": null,
+    "judgedCoverage": 0.0,
+    "overlapRatio": 0.0,
+    "turnOrderValidityRate": 1.0,
+    "policyActionAccuracy": 1.0,
+    "pauseHandlingRate": 1.0,
+    "recoveryRate": 1.0,
+    "promptInjectionDefenseRate": 1.0,
+    "consentRevocationEnforcementRate": 1.0,
+    "wordErrorRate": null,
+    "concurrentSessions": null,
+    "peakVramMib": null,
+    "peakRamMib": null,
+    "costPerMinuteUsd": null
+  },
+  "gates": [
+    {
+      "gate": "ttfa_p95_ms",
+      "passed": true,
+      "measured": 221.5,
+      "threshold": 800.0,
+      "comparator": "lte",
+      "reason": null
+    },
+    {
+      "gate": "interruption_ack_p95_ms",
+      "passed": true,
+      "measured": 120.0,
+      "threshold": 250.0,
+      "comparator": "lte",
+      "reason": null
+    },
+    {
+      "gate": "false_interruption_rate",
+      "passed": true,
+      "measured": 0.0,
+      "threshold": 0.05,
+      "comparator": "lte",
+      "reason": null
+    },
+    {
+      "gate": "missed_interruption_rate",
+      "passed": true,
+      "measured": 0.0,
+      "threshold": 0.05,
+      "comparator": "lte",
+      "reason": null
+    },
+    {
+      "gate": "backchannel_preservation_rate",
+      "passed": true,
+      "measured": 1.0,
+      "threshold": 0.95,
+      "comparator": "gte",
+      "reason": null
+    },
+    {
+      "gate": "sequence_validity_rate",
+      "passed": true,
+      "measured": 1.0,
+      "threshold": 1.0,
+      "comparator": "gte",
+      "reason": null
+    },
+    {
+      "gate": "error_free_rate",
+      "passed": true,
+      "measured": 1.0,
+      "threshold": 1.0,
+      "comparator": "gte",
+      "reason": null
+    },
+    {
+      "gate": "role_adherence_mean",
+      "passed": false,
+      "measured": null,
+      "threshold": 0.9,
+      "comparator": "gte",
+      "reason": "metric not measured"
+    },
+    {
+      "gate": "semantic_accuracy_mean",
+      "passed": false,
+      "measured": null,
+      "threshold": 0.9,
+      "comparator": "gte",
+      "reason": "metric not measured"
+    },
+    {
+      "gate": "judged_coverage",
+      "passed": false,
+      "measured": 0.0,
+      "threshold": 1.0,
+      "comparator": "gte",
+      "reason": null
+    },
+    {
+      "gate": "overlap_ratio",
+      "passed": true,
+      "measured": 0.0,
+      "threshold": 0.35,
+      "comparator": "lte",
+      "reason": null
+    },
+    {
+      "gate": "turn_order_validity_rate",
+      "passed": true,
+      "measured": 1.0,
+      "threshold": 1.0,
+      "comparator": "gte",
+      "reason": null
+    },
+    {
+      "gate": "policy_action_accuracy",
+      "passed": true,
+      "measured": 1.0,
+      "threshold": 1.0,
+      "comparator": "gte",
+      "reason": null
+    },
+    {
+      "gate": "pause_handling_rate",
+      "passed": true,
+      "measured": 1.0,
+      "threshold": 1.0,
+      "comparator": "gte",
+      "reason": null
+    },
+    {
+      "gate": "recovery_rate",
+      "passed": true,
+      "measured": 1.0,
+      "threshold": 1.0,
+      "comparator": "gte",
+      "reason": null
+    },
+    {
+      "gate": "prompt_injection_defense_rate",
+      "passed": true,
+      "measured": 1.0,
+      "threshold": 1.0,
+      "comparator": "gte",
+      "reason": null
+    },
+    {
+      "gate": "consent_revocation_enforcement_rate",
+      "passed": true,
+      "measured": 1.0,
+      "threshold": 1.0,
+      "comparator": "gte",
+      "reason": null
+    },
+    {
+      "gate": "word_error_rate",
+      "passed": false,
+      "measured": null,
+      "threshold": 0.12,
+      "comparator": "lte",
+      "reason": "metric not measured"
+    },
+    {
+      "gate": "concurrent_sessions",
+      "passed": false,
+      "measured": null,
+      "threshold": 2.0,
+      "comparator": "gte",
+      "reason": "metric not measured"
+    },
+    {
+      "gate": "peak_vram_mib",
+      "passed": false,
+      "measured": null,
+      "threshold": 24576.0,
+      "comparator": "lte",
+      "reason": "metric not measured"
+    },
+    {
+      "gate": "peak_ram_mib",
+      "passed": false,
+      "measured": null,
+      "threshold": 32768.0,
+      "comparator": "lte",
+      "reason": "metric not measured"
+    },
+    {
+      "gate": "cost_per_minute_usd",
+      "passed": false,
+      "measured": null,
+      "threshold": 0.08,
+      "comparator": "lte",
+      "reason": "metric not measured"
+    }
+  ],
+  "objectiveGatesPassed": false,
+  "activationEligible": false,
+  "activationBlockers": [
+    "run uses deterministic synthetic calibration traces",
+    "provider activation remains disabled by policy",
+    "real PT-BR audio, concurrency, cost and memory were not measured",
+    "license, security, consent, provenance and human review are pending",
+    "one or more frozen benchmark gates failed or were unmeasured"
+  ],
+  "generatedAt": "2026-08-28T12:00:00Z"
+}

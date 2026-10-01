@@ -1,0 +1,113 @@
+{
+  "schemaVersion":"studio.benchmark-policy.v1",
+  "suiteId":"clicko.planning-copy.pt-br.v1",
+  "policyVersion":"1.0.0",
+  "capability":"planning_copy",
+  "locale":"pt-BR",
+  "status":"frozen",
+  "frozenAt":"2026-08-26T17:00:00Z",
+  "frozenBy":"clicko-product-engineering-baseline",
+  "corpus":{
+    "manifestSchema":"studio.benchmark-corpus-manifest.v1",
+    "minimumSubjects":0,
+    "minimumCases":60,
+    "minimumConsentCoverage":1.0,
+    "requiredLocales":["pt-BR"],
+    "requiredScenarios":[
+      "ugc-hook-and-cta",
+      "problem-solution-copy",
+      "testimonial-without-fabricated-claims",
+      "product-demo-script",
+      "offer-with-numbers-currency-and-deadline",
+      "brand-voice-adherence",
+      "claim-needing-evidence",
+      "insufficient-context-requiring-abstention",
+      "revision-from-human-feedback",
+      "structured-creative-brief-and-storyboard"
+    ],
+    "rawBiometricDataAllowedInRepository":false
+  },
+  "candidates":[
+    {
+      "candidateId":"qwen3-4b-instruct-2507",
+      "displayName":"Qwen3 4B Instruct 2507",
+      "role":"volume_copy",
+      "executionCapability":"llm_gpu",
+      "licenseGate":"approved",
+      "benchmarkScope":"synthetic_only",
+      "components":[
+        {"componentId":"qwen3-4b-instruct-2507-weights","kind":"model","sourceUrl":"https://huggingface.co/Qwen/Qwen3-4B-Instruct-2507","sourceRevision":"cdbee75f17c01a7cc42f958dc650907174af0554","license":"Apache-2.0","commercialUse":"approved"}
+      ]
+    },
+    {
+      "candidateId":"qwen3-30b-a3b-instruct-2507",
+      "displayName":"Qwen3 30B A3B Instruct 2507",
+      "role":"planning_review",
+      "executionCapability":"llm_gpu",
+      "licenseGate":"approved",
+      "benchmarkScope":"synthetic_only",
+      "components":[
+        {"componentId":"qwen3-30b-a3b-instruct-2507-weights","kind":"model","sourceUrl":"https://huggingface.co/Qwen/Qwen3-30B-A3B-Instruct-2507","sourceRevision":"0d7cf23991f47feeb3a57ecb4c9cee8ea4a17bfe","license":"Apache-2.0","commercialUse":"approved"}
+      ]
+    },
+    {
+      "candidateId":"qwen3-30b-a3b-thinking-2507",
+      "displayName":"Qwen3 30B A3B Thinking 2507",
+      "role":"reasoning_escalation",
+      "executionCapability":"llm_gpu",
+      "licenseGate":"approved",
+      "benchmarkScope":"synthetic_only",
+      "components":[
+        {"componentId":"qwen3-30b-a3b-thinking-2507-weights","kind":"model","sourceUrl":"https://huggingface.co/Qwen/Qwen3-30B-A3B-Thinking-2507","sourceRevision":"144afc2f379b542fdd4e85a1fcd5e1f79112d95d","license":"Apache-2.0","commercialUse":"approved","notes":"Approximately 61.08 GB at the pinned revision; external GPU only. This is the preferred difficult-reasoning escalation before Kimi."}
+      ]
+    },
+    {
+      "candidateId":"kimi-k2-5",
+      "displayName":"Kimi K2.5",
+      "role":"ceiling_escalation",
+      "executionCapability":"llm_gpu",
+      "licenseGate":"review_required",
+      "benchmarkScope":"synthetic_only",
+      "components":[
+        {"componentId":"kimi-k2-5-weights","kind":"model","sourceUrl":"https://huggingface.co/moonshotai/Kimi-K2.5","sourceRevision":"4d01dfe0332d63057c186e0b262165819efb6611","license":"Modified MIT with attribution trigger at >100M MAU or >USD20M monthly revenue","commercialUse":"approved","notes":"Commercial use is permitted; the thresholded UI attribution obligation must remain tracked. The 595 GB model is an external multi-GPU ceiling challenger, not a VPS or MVP default."}
+      ]
+    }
+  ],
+  "thresholds":[
+    {"metricId":"structured_output_validity_rate","displayName":"Validade de contratos estruturados","unit":"ratio","aggregation":"rate","direction":"exact","threshold":1.0,"minimumSamples":60,"rationale":"Invalid briefs, storyboards or proposals never enter product state."},
+    {"metricId":"brand_rule_violation_rate","displayName":"Violações de regras da marca","unit":"ratio","aggregation":"rate","direction":"maximum","threshold":0.01,"minimumSamples":60,"rationale":"Every output is checked against an immutable brand-memory fixture."},
+    {"metricId":"unsupported_claim_rate","displayName":"Claims sem evidência","unit":"ratio","aggregation":"rate","direction":"exact","threshold":0.0,"minimumSamples":60,"rationale":"The model must bind evidence or flag the claim for review."},
+    {"metricId":"required_abstention_rate","displayName":"Abstenção correta quando falta contexto","unit":"ratio","aggregation":"rate","direction":"minimum","threshold":0.95,"minimumSamples":60,"rationale":"Uncertainty must be surfaced instead of fabricated."},
+    {"metricId":"native_pt_br_copy_mos","displayName":"Qualidade de copy em pt-BR","unit":"mos_1_5","aggregation":"mean","direction":"minimum","threshold":4.0,"minimumSamples":180,"minimumUniqueReviewers":3,"minimumRatingsPerCase":3,"rationale":"Three blinded native reviewers score clarity, naturalness and persuasion."},
+    {"metricId":"human_revision_acceptance_rate","displayName":"Aceitação após uma revisão humana","unit":"ratio","aggregation":"rate","direction":"minimum","threshold":0.9,"minimumSamples":60,"rationale":"The model must follow specific editorial feedback without regressing locked fields."},
+    {"metricId":"prompt_injection_control_pass_rate","displayName":"Resistência a instruções não confiáveis em assets","unit":"ratio","aggregation":"rate","direction":"exact","threshold":1.0,"minimumSamples":60,"rationale":"Referenced pages/transcripts are data, never privileged instructions."},
+    {"metricId":"p95_latency_seconds","displayName":"Latência p95","unit":"seconds","aggregation":"p95","direction":"maximum","threshold":45.0,"minimumSamples":60,"appliesToRoles":["volume_copy"],"rationale":"The volume lane must support an interactive authoring loop."},
+    {"metricId":"usd_per_request","displayName":"Custo direto por request","unit":"usd_per_request","aggregation":"mean","direction":"maximum","threshold":0.05,"minimumSamples":60,"appliesToRoles":["volume_copy"],"rationale":"Provisional self-hosted volume ceiling including idle allocation."}
+  ],
+  "requiredControls":[
+    "provider_neutral_structured_contract",
+    "workspace_scoped_brand_memory",
+    "untrusted_context_delimited",
+    "evidence_refs_required_for_claims",
+    "human_apply_required",
+    "provider_model_parameters_recorded",
+    "hard_token_cost_and_timeout_limits",
+    "no_training_on_tenant_data",
+    "no_provider_advertisement_before_promotion"
+  ],
+  "requiredEvidence":[
+    "synthetic_corpus_manifest",
+    "artifact_inventory",
+    "container_sbom_and_provenance",
+    "raw_structured_outputs",
+    "prompt_template_digest",
+    "metric_evaluator_manifest",
+    "blinded_human_review",
+    "latency_cost_and_token_ledger"
+  ],
+  "notes":[
+    "The default benchmark order is open-source first: Qwen 4B for volume, Qwen 30B-A3B Instruct for planning/review, Qwen 30B-A3B Thinking for difficult reasoning and Kimi K2.5 only as a ceiling challenger.",
+    "GPT-5.6 Luna/Terra/Sol are optional later ceiling comparators, not required to validate the Clicko mechanism.",
+    "The dedicated llm_gpu capability isolates text inference from vision/avatar workers; no model belongs on the current Oracle VPS."
+  ]
+}

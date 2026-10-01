@@ -10,9 +10,11 @@ import {
   type CreativeRecord,
   type CreativeUpdate,
   type PostInput,
+  type HistoryReuseInput,
   type PostUpdate,
   type ProductSnapshot,
   type WorkspaceResourceInput,
+  type WorkspaceResourceRecord,
   type WorkspaceRecord,
 } from "../api/productApi";
 
@@ -33,6 +35,7 @@ interface ProductDataValue {
   ) => Promise<string>;
   updateCampaign: (campaignId: string, input: CampaignUpdate) => Promise<void>;
   createPost: (input: Omit<PostInput, "workspaceId">) => Promise<string>;
+  createPostDerivation: (postId: string, input: HistoryReuseInput) => Promise<string>;
   updatePost: (postId: string, input: PostUpdate) => Promise<void>;
   decidePost: (postId: string, input: ApprovalActionInput) => Promise<void>;
   createCreative: (
@@ -46,7 +49,7 @@ interface ProductDataValue {
     kind: WorkspaceResourceInput["kind"],
     resourceKey: string,
     payload: Record<string, unknown>,
-  ) => Promise<void>;
+  ) => Promise<WorkspaceResourceRecord>;
 }
 
 const ACTIVE_WORKSPACE_KEY = "clicko:active-workspace";
@@ -208,6 +211,12 @@ export function ProductDataProvider({
         );
         return record.id;
       },
+      createPostDerivation: async (postId, input) => {
+        const record = await runMutation("create-post-derivation", () =>
+          productApi.reusePost(postId, input),
+        );
+        return record.id;
+      },
       updatePost: async (postId, input) => {
         await runMutation("update-post", () =>
           productApi.updatePost(postId, input),
@@ -237,11 +246,13 @@ export function ProductDataProvider({
             ? current?.connectedAccounts
             : kind === "presenter_session"
               ? current?.presenterSessions
+              : kind === "factory_round"
+                ? current?.factoryRounds
               : [];
         const existing = resources?.find(
           (item) => item.resourceKey === resourceKey,
         );
-        await runMutation(`save-${kind}`, () =>
+        return runMutation(`save-${kind}`, () =>
           existing
             ? productApi.updateWorkspaceResource(existing.id, workspaceId, {
                 payload,

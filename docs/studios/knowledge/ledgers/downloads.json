@@ -1,0 +1,125 @@
+{
+  "schema_version": "studio.temporary-download-ledger.v1",
+  "entries": [
+    {
+      "unit_id": "instagram-DTRBJoOAUl1",
+      "source_url": "https://www.instagram.com/reels/DTRBJoOAUl1/",
+      "checksum_sha256": "222a3ccd736e3659d234075bdb43c6ac50fd3f7be4a286b546f829e9f7fc9eff",
+      "accessed_at": "2026-09-01",
+      "purpose": "R1 audiovisual research",
+      "persisted_in_repository": false,
+      "temporary_source_deleted": false,
+      "deletion_recorded_at": null
+    },
+    {
+      "unit_id": "instagram-DcuHK9ChRrP",
+      "source_url": "https://www.instagram.com/reels/DcuHK9ChRrP/",
+      "checksum_sha256": "cfe5acd72c42084e44f0de1a3a3cecef56144247b3b941af5445817ac031b29a",
+      "accessed_at": "2026-09-01",
+      "purpose": "R1 audiovisual research",
+      "persisted_in_repository": false,
+      "temporary_source_deleted": false,
+      "deletion_recorded_at": null
+    },
+    {
+      "unit_id": "instagram-DcRjR01BFVM",
+      "source_url": "https://www.instagram.com/reels/DcRjR01BFVM/",
+      "checksum_sha256": "d68d8fe4ccd9631f8b76b63b6b3abe3e1baa23fe1cb962f7f989c4a67960ce48",
+      "accessed_at": "2026-09-01",
+      "purpose": "R1 audiovisual research",
+      "persisted_in_repository": false,
+      "temporary_source_deleted": false,
+      "deletion_recorded_at": null
+    },
+    {
+      "unit_id": "instagram-DciIBRYBHBK",
+      "source_url": "https://www.instagram.com/reels/DciIBRYBHBK/",
+      "checksum_sha256": "49a55c5fe0aeadab47e3b76782fd464392c48bb453b27f1242fdf198dea34cf4",
+      "accessed_at": "2026-09-01",
+      "purpose": "R1 audiovisual research",
+      "persisted_in_repository": false,
+      "temporary_source_deleted": false,
+      "deletion_recorded_at": null
+    },
+    {
+      "unit_id": "instagram-DcsuFSGhnlw",
+      "source_url": "https://www.instagram.com/reels/DcsuFSGhnlw/",
+      "checksum_sha256": "1bad654e686a002a726a14ba2ae3c626339e0041c373e4057a12ba095fd3dbfb",
+      "accessed_at": "2026-09-01",
+      "purpose": "R1 audiovisual research",
+      "persisted_in_repository": false,
+      "temporary_source_deleted": false,
+      "deletion_recorded_at": null
+    },
+    {
+      "unit_id": "instagram-Dcq32xNgO1d",
+      "source_url": "https://www.instagram.com/reels/Dcq32xNgO1d/",
+      "checksum_sha256": "d06095e0965463e40b064535a7d3289f9a93e9042bfd1b0280a2bed6acea9540",
+      "accessed_at": "2026-09-01",
+      "purpose": "R1 audiovisual research",
+      "persisted_in_repository": false,
+      "temporary_source_deleted": false,
+      "deletion_recorded_at": null
+    },
+    {
+      "unit_id": "instagram-DaJVyavI65T",
+      "source_url": "https://www.instagram.com/reels/DaJVyavI65T/",
+      "checksum_sha256": "4b9977f91a7b7d0966a44768636bd53f0f50c6817cebc34601307925abe00d1e",
+      "accessed_at": "2026-09-01",
+      "purpose": "R1 audiovisual research",
+      "persisted_in_repository": false,
+      "temporary_source_deleted": false,
+      "deletion_recorded_at": null
+    },
+    {
+      "unit_id": "instagram-DZiYEzBvZOc",
+      "source_url": "https://www.instagram.com/reels/DZiYEzBvZOc/",
+      "checksum_sha256": "cddfbdc617bb68eaac33a0629363e4c5de9e3df9c909043bc39ac6e41b9945cf",
+      "accessed_at": "2026-09-01",
+      "purpose": "R1 audiovisual research",
+      "persisted_in_repository": false,
+      "temporary_source_deleted": false,
+      "deletion_recorded_at": null
+    },
+    {
+      "unit_id": "instagram-DbBddW3JNKD",
+      "source_url": "https://www.instagram.com/reels/DbBddW3JNKD/",
+      "checksum_sha256": "22046061be7b78ff14b645033e0cd0a44cfde480c3b488f198331ecc21575776",
+      "accessed_at": "2026-09-01",
+      "purpose": "R1 audiovisual research",
+      "persisted_in_repository": false,
+      "temporary_source_deleted": false,
+      "deletion_recorded_at": null
+    },
+    {
+      "unit_id": "instagram-Dbhmn9eOiXN",
+      "source_url": "https://www.instagram.com/reels/Dbhmn9eOiXN/",
+      "checksum_sha256": "b995d3f619413b7991e200579b5d44f4a91700038fe1c2dd8e92fc68f60872b6",
+      "accessed_at": "2026-09-01",
+      "purpose": "R1 audiovisual research",
+      "persisted_in_repository": false,
+      "temporary_source_deleted": false,
+      "deletion_recorded_at": null
+    },
+    {
+      "unit_id": "blender-charge-factory-invasion",
+      "source_url": "https://www.youtube.com/watch?v=UXqq0ZvbOnk",
+      "checksum_sha256": "2226eae9378103f89efef94633c9c94843da7717094e624c60f66f94a3d92adb",
+      "accessed_at": "2026-09-01",
+      "purpose": "R1 audiovisual research",
+      "persisted_in_repository": false,
+      "temporary_source_deleted": false,
+      "deletion_recorded_at": null
+    },
+    {
+      "unit_id": "blender-sprite-fright-forest-reveal",
+      "source_url": "https://studio.blender.org/films/sprite-fright/",
+      "checksum_sha256": "90561fd13faba7bd1853c69d4abcb0b205074e5627265d844424b51be3c9c07e",
+      "accessed_at": "2026-09-01",
+      "purpose": "R1 audiovisual research",
+      "persisted_in_repository": false,
+      "temporary_source_deleted": false,
+      "deletion_recorded_at": null
+    }
+  ]
+}

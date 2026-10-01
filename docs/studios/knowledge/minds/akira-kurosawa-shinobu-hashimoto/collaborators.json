@@ -1,0 +1,24 @@
+{
+  "schema_version": "studio.collaboration-graph.v1",
+  "anchor": "Akira Kurosawa e Shinobu Hashimoto",
+  "status": "credits_pending_per_work_verification",
+  "nodes": [
+    {
+      "name": "Hideo Oguni",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Ryuzo Kikushima",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Takashi Shimura",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Toshiro Mifune",
+      "role": "verify_per_work"
+    }
+  ],
+  "edges": []
+}

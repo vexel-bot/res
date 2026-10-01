@@ -1,0 +1,62 @@
+{
+  "schemaVersion": "studio.benchmark-policy.v1",
+  "suiteId": "clicko.reality-understanding.v1",
+  "policyVersion": "1.0.0",
+  "capability": "physical_scene_understanding",
+  "locale": "pt-BR",
+  "status": "frozen",
+  "frozenAt": "2026-08-25T12:00:00Z",
+  "frozenBy": "clicko-product-engineering-baseline",
+  "corpus": {
+    "manifestSchema": "studio.benchmark-corpus-manifest.v1",
+    "minimumSubjects": 0,
+    "minimumCases": 240,
+    "minimumConsentCoverage": 1.0,
+    "requiredLocales": ["pt-BR"],
+    "requiredScenarios": ["minimal-possible-impossible-pairs", "object-permanence", "continuity", "solidity", "support-and-gravity", "contact-and-collision", "causal-counterfactual", "held-out-compositions", "camera-motion-control", "declared-editorial-techniques"],
+    "rawBiometricDataAllowedInRepository": false
+  },
+  "candidates": [
+    {
+      "candidateId": "pgv1-permissive-observation-baseline",
+      "displayName": "PGV-1 permissive geometry and tracking baseline",
+      "role": "hybrid_reality",
+      "executionCapability": "vision_gpu",
+      "licenseGate": "review_required",
+      "benchmarkScope": "synthetic_only",
+      "components": [
+        {"componentId": "opencv-code", "kind": "code", "sourceUrl": "https://github.com/opencv/opencv", "sourceRevision": "8b7dc43c227746366213a65ad1477ed37fb8d365", "license": "Apache-2.0", "commercialUse": "approved"},
+        {"componentId": "tapir-code", "kind": "code", "sourceUrl": "https://github.com/google-deepmind/tapnet", "sourceRevision": "c2cbab81cc06092b5f05bfe2da7bfec54e2079c9", "license": "Apache-2.0", "commercialUse": "approved"},
+        {"componentId": "tapir-checkpoint", "kind": "model", "sourceUrl": "https://github.com/google-deepmind/tapnet", "sourceRevision": "c2cbab81cc06092b5f05bfe2da7bfec54e2079c9", "license": "Apache-2.0", "commercialUse": "approved", "notes": "README binds released TAPIR checkpoints to Apache-2.0; artifact digest is still required."},
+        {"componentId": "raft-code", "kind": "code", "sourceUrl": "https://github.com/princeton-vl/RAFT", "sourceRevision": "2888e15a51fa41140771d3f498ed8023cff098d1", "license": "BSD-3-Clause", "commercialUse": "approved"},
+        {"componentId": "raft-checkpoint", "kind": "model", "sourceUrl": "https://drive.google.com/drive/folders/1sWDsfuZ3Up38EUQt7-JDTT1HcGHuJgvT", "sourceRevision": "raft-things-pending-artifact-digest", "license": "unknown", "commercialUse": "unknown", "notes": "Code license does not prove the separately downloaded weight terms; candidate remains review_required."},
+        {"componentId": "depth-anything-v2-code", "kind": "code", "sourceUrl": "https://github.com/DepthAnything/Depth-Anything-V2", "sourceRevision": "a561b849ebae10a6f5ef49e26c83cbbcd36c71bf", "license": "Apache-2.0", "commercialUse": "approved"},
+        {"componentId": "depth-anything-v2-small-checkpoint", "kind": "model", "sourceUrl": "https://huggingface.co/depth-anything/Depth-Anything-V2-Small", "sourceRevision": "a561b849ebae10a6f5ef49e26c83cbbcd36c71bf", "license": "Apache-2.0", "commercialUse": "approved", "notes": "Only Small is in scope; Base/Large/Giant remain blocked as CC-BY-NC-4.0. Artifact digest is required."}
+      ]
+    },
+    {
+      "candidateId": "pgv3-vjepa2-latent-augmentation",
+      "displayName": "PGV baseline plus V-JEPA 2 latent prediction",
+      "role": "hybrid_reality_world_model",
+      "executionCapability": "vision_gpu",
+      "licenseGate": "review_required",
+      "benchmarkScope": "synthetic_only",
+      "components": [
+        {"componentId": "pgv1-baseline-manifest", "kind": "runtime", "sourceUrl": "https://github.com/opencv/opencv", "sourceRevision": "8b7dc43c227746366213a65ad1477ed37fb8d365", "license": "mixed-permissive-review-required", "commercialUse": "unknown", "notes": "Represents the same fully audited PGV-1 chain; the evidence bundle must expand every transitive component."},
+        {"componentId": "vjepa2-code", "kind": "code", "sourceUrl": "https://github.com/facebookresearch/vjepa2", "sourceRevision": "204698b45b3712590f06245fbfba32d3be539812", "license": "MIT-with-Apache-2.0-files", "commercialUse": "approved"},
+        {"componentId": "vjepa2-vitl-checkpoint", "kind": "model", "sourceUrl": "https://dl.fbaipublicfiles.com/vjepa2/vitl.pt", "sourceRevision": "204698b45b3712590f06245fbfba32d3be539812", "license": "review_required", "commercialUse": "unknown", "notes": "Checkpoint terms and artifact SHA-256 must be audited independently before execution."}
+      ]
+    }
+  ],
+  "thresholds": [
+    {"metricId": "minimal_pair_accuracy", "displayName": "Paired accuracy em possíveis/impossíveis", "unit": "ratio", "aggregation": "rate", "direction": "minimum", "threshold": 0.75, "minimumSamples": 240, "blocking": true, "rationale": "O candidato precisa acertar ambos os lados de pares quase idênticos para reduzir atalhos."},
+    {"metricId": "counterfactual_consistency", "displayName": "Consistência contrafactual", "unit": "ratio", "aggregation": "rate", "direction": "minimum", "threshold": 0.8, "minimumSamples": 120, "blocking": true, "rationale": "Mudanças causais mínimas devem produzir respostas compatíveis."},
+    {"metricId": "critical_confident_error_rate", "displayName": "Erro crítico com alta confiança", "unit": "ratio", "aggregation": "rate", "direction": "maximum", "threshold": 0.05, "minimumSamples": 240, "blocking": true, "rationale": "Erros confiantes são mais perigosos do que abstenções explícitas."},
+    {"metricId": "expected_calibration_error", "displayName": "Expected calibration error", "unit": "ratio", "aggregation": "mean", "direction": "maximum", "threshold": 0.1, "minimumSamples": 240, "blocking": true, "rationale": "Confidence precisa refletir frequência observada, não apenas ranking."},
+    {"metricId": "latency_seconds", "displayName": "Latência por caso", "unit": "seconds", "aggregation": "p95", "direction": "maximum", "threshold": 600, "minimumSamples": 240, "blocking": false, "rationale": "Métrica de capacidade; o limite será endurecido após a primeira execução reproduzível."},
+    {"metricId": "peak_vram_gb", "displayName": "VRAM de pico", "unit": "gigabytes", "aggregation": "maximum", "direction": "maximum", "threshold": 24, "minimumSamples": 240, "blocking": false, "rationale": "O candidato precisa caber na classe inicial planejada de worker GPU."}
+  ],
+  "requiredControls": ["isolated_workspace", "no_egress", "pinned_code", "pinned_model_artifacts", "rational_timebase", "minimal_pair_integrity", "private_holdout", "shortcut_audit", "confidence_calibration", "abstention_enabled", "no_automatic_correction", "no_automatic_publish"],
+  "requiredEvidence": ["corpus_manifest", "pair_mapping", "case_outputs", "raw_metric_bundle", "localized_evidence", "provider_lineage", "worker_manifest", "license_manifest", "calibration_report", "human_error_audit"],
+  "notes": ["Thresholds are frozen before any model run and are not observed quality claims.", "Every candidate remains review_required until code, checkpoint, dependency and artifact digests pass the license manifest.", "Public benchmarks never replace the private held-out Clicko suite."]
+}

@@ -1,0 +1,22 @@
+{
+  "schema_version": "studio.creative-mind-sources.v1",
+  "mind": "Guillermo del Toro",
+  "research_status": "seed_evidence_only",
+  "sources": [
+    {
+      "url": "https://www.dga.org/craft/dgaq/issues/1401-winter-2014/dga-interview-del-toro",
+      "tier": "institutional_or_primary_starting_point",
+      "reviewed": false
+    },
+    {
+      "url": "https://www.dga.org/craft/dgaq/issues/0701-spring-2007/director-profile-guillermo-del-toro",
+      "tier": "institutional_or_primary_starting_point",
+      "reviewed": false
+    }
+  ],
+  "global_methods": [
+    "https://www.wgfoundation.org/screenplay-primers",
+    "https://www.bafta.org/programmes/screenwriters-lecture-series",
+    "https://www.dga.org/Craft/VisualHistory"
+  ]
+}

@@ -1,0 +1,253 @@
+{
+  "testReservationUsd": 0.05,
+  "budgetCategory": "critique",
+  "budgetEnvelopeUsd": 1.0,
+  "budgetCategoryCapUsd": 0.2,
+  "budgetPolicy": "res.motion-pilot.v1",
+  "worstCaseRequestUsd": 0.05,
+  "submissionStarted": true,
+  "submissionOutcome": "accepted",
+  "submittedAt": "2026-09-18T15:49:36.004982+00:00",
+  "model": "gpt-4.1-mini-2025-04-14",
+  "modelValidation": {
+    "name": "gpt-4.1-mini-2025-04-14",
+    "availability": "pending_first_response"
+  },
+  "responseKey": "06614dc7-c532-40c7-b9ca-8653c6ad7686/temporary/a3cdb8bc6e954aa6a4bd2a6c2ae58655.json",
+  "usage": {
+    "prompt_tokens": 10342,
+    "completion_tokens": 1112,
+    "total_tokens": 11454,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "audio_tokens": 0,
+      "accepted_prediction_tokens": 0,
+      "rejected_prediction_tokens": 0
+    }
+  },
+  "measuredCostUsd": 0.005916,
+  "priceVersion": "local-test-unpriced",
+  "critique": {
+    "schemaVersion": "studio.production-critique.v1",
+    "coverage": "partial",
+    "summary": "O vídeo apresenta coerência clara com o roteiro, mostrando sequência visual ligada a cada parte do texto narrado. As composições incluem filmagens de pessoas e textos sincronizados visualmente, com destaque adequado para as palavras-chave. No entanto, não há evidências visuais claras das transformações e conexões entre formatos e caminhos do público na segunda parte, nem indicações visuais explícitas sobre heterogeneidade de atenção no público na última parte, o que estaria alinhado com o roteiro. A interação e adaptação visual aos formatos mencionados no roteiro são pouco evidentes nestas amostras. O estilo visual é limpo e legível, porém a narrativa carece de demonstrações visuais mais explícitas para reforçar a mensagem conceitual de adaptação e atenção. Não foram observados erros de texto, falta de sincronia ou problemas de composição visuais. Avaliação de áudio fora do escopo.",
+    "findings": [
+      {
+        "sceneId": "beat_1",
+        "startSeconds": 0.0,
+        "endSeconds": 6.0,
+        "severity": "observation",
+        "observation": "O texto \"Uma ideia só encontra pessoas quando circula.\" está corretamente apresentado com destaque na palavra-chave 'circula', e o fundo mostra uma filmagem contextual adequada. Porém não são visíveis elementos gráficos que demonstrem visualmente a circulação da ideia em movimento circular conforme o planeamento.",
+        "evidence": "Frames 0 a 180 mostram texto narrado com filmagem, sem elementos gráficos destacados em movimento.",
+        "correction": "Incorporar um ícone ou elemento gráfico visual em movimento circular para ilustrar a circulação da ideia de forma clara sobre a filmagem.",
+        "confidence": 0.9,
+        "uncertainty": "baseado em frames estáticos sem observação de movimento real"
+      },
+      {
+        "sceneId": "beat_2",
+        "startSeconds": 6.0,
+        "endSeconds": 12.0,
+        "severity": "observation",
+        "observation": "O texto da narração \"Distribuir é adaptar a mensagem a cada formato e colocá-la nos caminhos do público.\" está presente e legível junto a filmagens de pessoas com dispositivos. Contudo, não há evidências visuais claras de transformação progressiva do ícone em vários formatos, nem linhas conectando visivelmente dispositivos como indicado no plano.",
+        "evidence": "Frames 180 a 360 apresentam o texto e filmagem, sem animações ou gráficos visuais que demonstrem adaptação e conexão.",
+        "correction": "Adicionar elementos visuais que mostrem transformação da mensagem em diferentes formatos e linhas conectando tais formatos aos caminhos do público para reforçar o conceito visualmente.",
+        "confidence": 0.85,
+        "uncertainty": "avaliação limitada por amostragem estática e possível ausência de frames dinâmicos"
+      },
+      {
+        "sceneId": "beat_3",
+        "startSeconds": 12.0,
+        "endSeconds": 18.0,
+        "severity": "observation",
+        "observation": "O texto \"Isso amplia o alcance, mas não garante atenção.\" está claramente visível e legível. A filmagem mostra pessoas diversas, mas não há indicações visuais do destaque ou desfoco em indivíduos para representar diferentes níveis de atenção, essencial para reforçar o conceito de atenção não garantida.",
+        "evidence": "Frames 360 a 540 mostram texto e filmagem, sem evidências visuais de realce ou desfoque seletivo conforme descrito no plano.",
+        "correction": "Incluir realces visuais ou camadas de desfoque seletivo em indivíduos no público para expressar visualmente o contraste entre alcance e atenção efetiva.",
+        "confidence": 0.85,
+        "uncertainty": "com base em frames estáticos"
+      },
+      {
+        "sceneId": "beat_1",
+        "startSeconds": 0.0,
+        "endSeconds": 6.0,
+        "severity": "blocker",
+        "observation": "Ausência de elementos visuais da circulação da ideia torna a explicação menos clara, prejudicando a demonstração central do vídeo.",
+        "evidence": "Ausência de gráfico em movimento circular no elemento visual apesar do texto indicativo.",
+        "correction": "Inserir animação ou gráfico em circulação visual para atender ao propósito da cena e reforçar a mensagem.",
+        "confidence": 0.95,
+        "uncertainty": "baseado em análise visual clara e intenção original"
+      },
+      {
+        "sceneId": "beat_2",
+        "startSeconds": 6.0,
+        "endSeconds": 12.0,
+        "severity": "blocker",
+        "observation": "Falta visual clara dos formatos múltiplos e linhas conectando dispositivos, essencial para demonstrar o conceito-chave da distribuição adaptativa.",
+        "evidence": "Nenhum gráfico ou animação explícita representando adaptação ou conexão visível nos frames analisados.",
+        "correction": "Adicionar gráficos representando a adaptação da mensagem em vários formatos e conexões visuais para melhora da compreensão.",
+        "confidence": 0.95,
+        "uncertainty": "avaliação baseada em discrepância clara com o roteiro visual"
+      },
+      {
+        "sceneId": "beat_3",
+        "startSeconds": 12.0,
+        "endSeconds": 18.0,
+        "severity": "blocker",
+        "observation": "Ausência de demonstração visual da variação de atenção entre indivíduos compromete a compreensão da ressalva principal da narrativa.",
+        "evidence": "Frames estáticos não indicam elementos gráficos de destaque ou desfoco conforme esperado.",
+        "correction": "Implementar realce seletivo e desfocagem em pessoas para representar a questão da atenção diferenciada visualmente.",
+        "confidence": 0.95,
+        "uncertainty": "confirmação baseada em observação visual e alinhamento narrativo"
+      }
+    ],
+    "speechIntelligibility": "unknown",
+    "soundEventAccuracy": "unknown",
+    "humanReview": "pending"
+  },
+  "renderBinding": {
+    "renderJobId": "8f5362da-11e1-4e20-a685-944a5b23b00e",
+    "assetId": "eef1a90e-36e3-4737-baaa-0e866dc5e649",
+    "checksum": "ed52151b51602403a8f5032fa24d91f0f9ba76459bb8ef528c5828f729d3668a",
+    "durationMs": 18000,
+    "sampledFrames": [
+      {
+        "frame": 0,
+        "encodedFrame": 0,
+        "timestampSeconds": 0.0,
+        "checksumSha256": "bbe007932f66a811e1e2b3227dc68260def26aca66bad99562482e328aa3507b",
+        "previewWidth": 300,
+        "origin": "decoded_export_frame"
+      },
+      {
+        "frame": 20,
+        "encodedFrame": 20,
+        "timestampSeconds": 0.6666666666666666,
+        "checksumSha256": "ca79a8583ddae9090d2a5d8f9d39ece5456aeb2284d58f40f2cc7a7a4e40a922",
+        "previewWidth": 300,
+        "origin": "decoded_export_frame"
+      },
+      {
+        "frame": 89,
+        "encodedFrame": 89,
+        "timestampSeconds": 2.966666666666667,
+        "checksumSha256": "f28fb2d5caa0f47356f054fed6066f95facc1bb494a4db15ea1fbbb5b1bcbe2a",
+        "previewWidth": 300,
+        "origin": "decoded_export_frame"
+      },
+      {
+        "frame": 179,
+        "encodedFrame": 179,
+        "timestampSeconds": 5.966666666666667,
+        "checksumSha256": "8eeb63da770084913b06fe27dab868a197e0a7544012cce12f085db0f73db320",
+        "previewWidth": 300,
+        "origin": "decoded_export_frame"
+      },
+      {
+        "frame": 180,
+        "encodedFrame": 180,
+        "timestampSeconds": 6.0,
+        "checksumSha256": "c1a830075c61146b6233f365890b4640e05174b6e0bb2b70ca4116b0d076c5c3",
+        "previewWidth": 300,
+        "origin": "decoded_export_frame"
+      },
+      {
+        "frame": 203,
+        "encodedFrame": 203,
+        "timestampSeconds": 6.766666666666667,
+        "checksumSha256": "329f582f36ed026c4d89663239eee4c271517d1cda39dbacd18dbcd983d963ab",
+        "previewWidth": 300,
+        "origin": "decoded_export_frame"
+      },
+      {
+        "frame": 219,
+        "encodedFrame": 219,
+        "timestampSeconds": 7.3,
+        "checksumSha256": "ff2e2ba82225628d6460d988615c89906775cbeee574468c975e8f4a7060c146",
+        "previewWidth": 300,
+        "origin": "decoded_export_frame"
+      },
+      {
+        "frame": 269,
+        "encodedFrame": 269,
+        "timestampSeconds": 8.966666666666667,
+        "checksumSha256": "707bb15f3580e440ec6d20fa4500b0cc7c27113b78b42260d1070d35ce67f2dd",
+        "previewWidth": 300,
+        "origin": "decoded_export_frame"
+      },
+      {
+        "frame": 270,
+        "encodedFrame": 270,
+        "timestampSeconds": 9.0,
+        "checksumSha256": "6a77469d242e1a0762b93fdbe9948068dbfd02cdcdc9a5501c4c598a5c3d8c6e",
+        "previewWidth": 300,
+        "origin": "decoded_export_frame"
+      },
+      {
+        "frame": 359,
+        "encodedFrame": 359,
+        "timestampSeconds": 11.966666666666667,
+        "checksumSha256": "33cedf5b0696113a9ec8b46672ddde2a47e7f9ff9a38c6a1d960e15e052494af",
+        "previewWidth": 300,
+        "origin": "decoded_export_frame"
+      },
+      {
+        "frame": 360,
+        "encodedFrame": 360,
+        "timestampSeconds": 12.0,
+        "checksumSha256": "a10dc7838f023fbb5ba33d84e49fc64803739010a769b1a2ef2362c7c5da46f4",
+        "previewWidth": 300,
+        "origin": "decoded_export_frame"
+      },
+      {
+        "frame": 383,
+        "encodedFrame": 383,
+        "timestampSeconds": 12.766666666666667,
+        "checksumSha256": "729abdff270e414bfb834a530204bcd315865e8d515ad7ba584fc1da6dd9564e",
+        "previewWidth": 300,
+        "origin": "decoded_export_frame"
+      },
+      {
+        "frame": 399,
+        "encodedFrame": 399,
+        "timestampSeconds": 13.3,
+        "checksumSha256": "db29b3cf03b1c6802f475a5b8132fceb0b6a08c793e08d1370f4100d0538a1f7",
+        "previewWidth": 300,
+        "origin": "decoded_export_frame"
+      },
+      {
+        "frame": 449,
+        "encodedFrame": 449,
+        "timestampSeconds": 14.966666666666667,
+        "checksumSha256": "ef6970f1854c808dbc2a948949240b82920f2fd15f4259a6af87176f8d63efd4",
+        "previewWidth": 300,
+        "origin": "decoded_export_frame"
+      },
+      {
+        "frame": 450,
+        "encodedFrame": 450,
+        "timestampSeconds": 15.0,
+        "checksumSha256": "f87cc8fbc694431b5c695a430c5f75d00ec6c578b4e14bb1b4fe3df656fcb3fd",
+        "previewWidth": 300,
+        "origin": "decoded_export_frame"
+      },
+      {
+        "frame": 539,
+        "encodedFrame": 539,
+        "timestampSeconds": 17.966666666666665,
+        "checksumSha256": "9b4cb48e00d4a646a035e3f7b9ce869f29489b2851a0b03ffb7726cf53caab3b",
+        "previewWidth": 300,
+        "origin": "decoded_export_frame"
+      }
+    ],
+    "coverage": "partial"
+  },
+  "authorship": {
+    "kind": "provider",
+    "provider": "compatible.editing-planner",
+    "model": "gpt-4.1-mini-2025-04-14",
+    "jobId": "653d575d-365e-4772-b518-d66d5bec7f8f"
+  }
+}

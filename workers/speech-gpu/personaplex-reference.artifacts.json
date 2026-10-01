@@ -1,0 +1,71 @@
+{
+  "schema_version": "studio.artifact-inventory.v1",
+  "inventory_id": "personaplex-reference-artifacts-2026-08-27",
+  "capability": "full-duplex conversational speech research reference",
+  "policy_digests_sha256": [
+    "88a37ca064d36a8b0f3c58fe4751f0a721b008359a80fe62212c452b4b17bc54"
+  ],
+  "status": "rejected",
+  "frozen_at": "2026-08-27T22:00:00Z",
+  "frozen_by": "clicko-supervision-personaplex-research",
+  "required_artifact_ids": [
+    "personaplex-code",
+    "personaplex-7b-v1-weights"
+  ],
+  "artifacts": [
+    {
+      "artifact_id": "personaplex-code",
+      "component_id": "personaplex-reference-code",
+      "kind": "code",
+      "role": "Reference implementation for duplex audio streaming, hybrid role/voice prompting and offline evaluation",
+      "required": true,
+      "source_url": "https://github.com/NVIDIA/personaplex",
+      "source_revision": "3428dfd95309a7f3c84fd93259ded0f810d1ff91",
+      "resolution_status": "resolved",
+      "integrity": {
+        "method": "git_commit",
+        "value": "3428dfd95309a7f3c84fd93259ded0f810d1ff91"
+      },
+      "verification_method": "git_remote",
+      "license": {
+        "declared_license": "MIT",
+        "evidence_url": "https://github.com/NVIDIA/personaplex/blob/3428dfd95309a7f3c84fd93259ded0f810d1ff91/LICENSE-MIT",
+        "evidence_digest_sha256": "36516aefdc84c5d5a1e7485425913a22dbda69eb1930c5e84d6ae4972b5194b9",
+        "commercial_saas_use_allowed": true,
+        "decision": "approved",
+        "rationale": "The exact repository code revision is MIT. This does not approve the separately licensed model weights or the upstream server architecture for production."
+      },
+      "notes": [
+        "Reference patterns may be reimplemented behind Clicko contracts; the upstream server is not tenant-safe by construction.",
+        "The upstream server serializes sessions, auto-downloads artifacts, logs prompts and loads .pt voice embeddings with torch.load."
+      ]
+    },
+    {
+      "artifact_id": "personaplex-7b-v1-weights",
+      "component_id": "personaplex-model-weights",
+      "kind": "model",
+      "role": "English full-duplex speech-to-speech model with voice and role conditioning",
+      "required": true,
+      "source_url": "https://huggingface.co/nvidia/personaplex-7b-v1",
+      "source_revision": "fdaf4090a61cb315c138a1faee287ffd6c716309",
+      "resolution_status": "rejected",
+      "verification_method": "vendor_metadata",
+      "license": {
+        "declared_license": "NVIDIA Open Model License Agreement (custom; Hugging Face license: other)",
+        "evidence_url": "https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-open-model-license/",
+        "evidence_digest_sha256": "2dcd739ae43e48c11125c8ed50ed464284df20b59cec050e480435730ec12684",
+        "commercial_saas_use_allowed": null,
+        "decision": "rejected",
+        "rationale": "Commercial use is stated, but the custom model agreement is not an OSI open-source license and acceptance is gated. It conflicts with the current Clicko open-source-only policy."
+      },
+      "notes": [
+        "No model bytes or voice pack were downloaded and no license was accepted on the user's behalf.",
+        "The published model is English input/output only and lists A100/H100 Linux support; it is not a PT-BR ad-voice candidate."
+      ]
+    }
+  ],
+  "notes": [
+    "Rejected means no provider, image, benchmark with human voice, deployment or automatic model download.",
+    "The research value is retained in the duplex session protocol, interruption metrics and hybrid prompt separation."
+  ]
+}

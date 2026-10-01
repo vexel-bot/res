@@ -1,0 +1,40 @@
+{
+  "schema_version": "studio.research-claim-ledger.v1",
+  "claims": [
+    {
+      "claim_id": "r1-artifacts-exist",
+      "statement": "Doze análises e doze mapas temporais R1 foram materializados.",
+      "kind": "observation",
+      "confidence": 1.0,
+      "evidence": ["corpus/*/analysis.md", "corpus/*/shots.json", "ledgers/validation.json"]
+    },
+    {
+      "claim_id": "pixel-change-not-cut",
+      "statement": "Mudança de pixels é apenas candidata a boundary e pode representar flash, motion ou câmera.",
+      "kind": "inference",
+      "confidence": 0.95,
+      "evidence": ["taxonomy.md", "R1_TAXONOMY_CORRECTION_REPORT.md"]
+    },
+    {
+      "claim_id": "openmontage-license",
+      "statement": "O clone oficial auditado do OpenMontage declara AGPL-3.0.",
+      "kind": "documented_statement",
+      "confidence": 1.0,
+      "evidence": ["repositories/openmontage.md", "https://github.com/calesthio/OpenMontage/blob/main/LICENSE"]
+    },
+    {
+      "claim_id": "corpus-not-complete",
+      "statement": "O manifesto possui 900 slots, mas nenhuma unidade do corpus principal está anotada ou aprovada.",
+      "kind": "observation",
+      "confidence": 1.0,
+      "evidence": ["ledgers/coverage.json", "ledgers/corpus-manifest.csv"]
+    },
+    {
+      "claim_id": "r1-gate-closed",
+      "statement": "O gate de expansão e toda geração cara permanecem fechados até revisão humana do R1 e da taxonomia.",
+      "kind": "observation",
+      "confidence": 1.0,
+      "evidence": ["ledgers/r1-gate.json"]
+    }
+  ]
+}

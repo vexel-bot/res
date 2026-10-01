@@ -1,5 +1,18 @@
 import React from "react";
 import {
+  routeForPath,
+  effectiveRouteOwnerForPath,
+} from "../app/router/routeRegistry";
+import {
+  experienceActionForId,
+  experienceScreenForLocation,
+} from "../app/experience/registry";
+import { emitExperienceTelemetry } from "../app/experience/telemetry";
+import {
+  ExperienceShell,
+  HonestState,
+} from "../app/experience/shells";
+import {
   siDropbox,
   siFacebook,
   siGooglecalendar,
@@ -62,12 +75,30 @@ import {
   Target,
   Type,
   Upload,
+  UserRoundCheck,
   Users,
   WandSparkles,
   X,
   Zap,
 } from "lucide-react";
 import { useProductData } from "../context/ProductDataContext";
+import {
+  productApi,
+  type StudioAcousticAnalysisCapability,
+  type StudioDocumentRecord,
+  type StudioGenerationJobRecord,
+  type StudioListeningReviewSubmission,
+  type StudioPublicationPreflightRecord,
+  type StudioReviewRecord,
+} from "../api/productApi";
+import { BackendRequestError } from "../api/client";
+import { ReviewSnapshotPreview } from "../studios/ReviewSnapshotPreview";
+import { STOCK_AVATAR_CANDIDATES } from "../studios/stockAvatars";
+import {
+  studioHeadlines,
+  useStudioDocument,
+} from "../studios/useStudioDocument";
+import { VideoStudio } from "../studios/VideoStudio";
 import {
   demoCampaign,
   demoMedia,
@@ -76,6 +107,7 @@ import {
   statusLabel,
 } from "./demo";
 import "./canonical.css";
+import "../app/experience/shells.css";
 import "./feedback.css";
 
 type Navigate = (path: string, options?: { replace?: boolean }) => void;
@@ -246,30 +278,7 @@ function normalize(pathname: string) {
 }
 
 export function isCanonicalPath(pathname: string) {
-  const p = normalize(pathname);
-  return (
-    p === "/" ||
-    p === "/dashboard" ||
-    p === "/today" ||
-    p === "/radar" ||
-    p.startsWith("/radar/opportunities/") ||
-    p === "/campaigns/new" ||
-    /^\/campaigns\/[^/]+$/.test(p) ||
-    /^\/campaigns\/[^/]+\/(world|moodboard)$/.test(p) ||
-    p === "/content" ||
-    /^\/content\/[^/]+$/.test(p) ||
-    /^\/content\/[^/]+\/(edit|remix)$/.test(p) ||
-    /^\/approvals\/[^/]+$/.test(p) ||
-    p === "/calendar" ||
-    /^\/publish\/[^/]+$/.test(p) ||
-    p === "/brand-memory" ||
-    p === "/library/assets" ||
-    p === "/analytics/learning" ||
-    p === "/factory" ||
-    p === "/projects" ||
-    p === "/apps" ||
-    /^\/apps\/[^/]+$/.test(p)
-  );
+  return effectiveRouteOwnerForPath(pathname) === "canonical";
 }
 
 export function CanonicalProduct({
@@ -361,10 +370,87 @@ export function CanonicalProduct({
     navigate,
     setToast,
   };
+  const canonicalLocation = `${pathname}${search}`;
+  const route = routeForPath(canonicalLocation);
+  const experienceScreen = experienceScreenForLocation(canonicalLocation);
+  React.useEffect(() => {
+    if (!experienceScreen) return;
+    emitExperienceTelemetry({
+      event: experienceScreen.analyticsViewEvent,
+      kind: "view",
+      route: canonicalLocation,
+      screenId: experienceScreen.screenId,
+    });
+  }, [canonicalLocation, experienceScreen]);
+  const routeState =
+    data.status === "loading"
+      ? "loading"
+      : data.status === "error"
+        ? "recoverable-error"
+        : "ready";
+  const canonicalCxShellsEnabled =
+    import.meta.env.VITE_CANONICAL_CX_SHELLS !== "false";
+  const captureNativeActionTelemetry = React.useCallback(
+    (event: React.MouseEvent<HTMLDivElement>) => {
+      const origin = event.target;
+      if (!(origin instanceof Element)) return;
+      const control = origin.closest<HTMLElement>("[data-action-id]");
+      if (!control || control.classList.contains("cx-button")) return;
+      const actionId = control.dataset.actionId;
+      if (!actionId) return;
+      const contract = experienceActionForId(actionId);
+      emitExperienceTelemetry({
+        event:
+          contract?.analyticsEvent ||
+          `unregistered.${actionId.toLowerCase()}`,
+        kind: "action",
+        route: canonicalLocation,
+        actionId,
+      });
+    },
+    [canonicalLocation],
+  );
+  const routeContent = (
+    <>
+      {data.status === "error" && (
+        <HonestState
+          compact
+          state="recoverable-error"
+          title="A sincronização falhou"
+          detail={data.error || "Os dados remotos não puderam ser atualizados."}
+          preserved="o conteúdo que já estava aberto nesta sessão"
+          impact="publicação e alterações remotas permanecem pausadas"
+          actionLabel="Tentar novamente"
+          actionId="WORKSPACE-RETRY-SYNC"
+          onAction={() => void data.refresh()}
+        />
+      )}
+      {demo && (
+        <div className="cx-demo-banner">
+          <Sparkles size={14} /> Workspace demonstrativo · exemplos não são
+          persistidos{" "}
+          <button data-action-id="AUTH-OPEN-LOGIN" onClick={() => navigate("/login")}>
+            Entrar para conectar dados reais
+          </button>
+        </div>
+      )}
+      {data.status === "loading" ? (
+        <HonestState
+          state="loading"
+          detail="Estamos reconstruindo o workspace e o contexto desta rota."
+          preserved="a rota, o documento solicitado e a intenção de criação"
+          impact="nenhuma alteração pode ser enviada até o carregamento terminar"
+        />
+      ) : (
+        <RouteSurface {...state} />
+      )}
+    </>
+  );
 
   return (
     <div
       className={`cx-product ${focus ? "cx-focus" : ""}`}
+      onClickCapture={captureNativeActionTelemetry}
       data-theme="dark"
       data-demo={demo}
       data-brand={brand?.id || "workspace"}
@@ -383,7 +469,7 @@ export function CanonicalProduct({
           onWorkspace={() => navigate(`${normalize(pathname)}?workspace=menu`)}
         />
       )}
-      {focus && <FocusRail navigate={navigate} />}
+      {focus && <FocusRail navigate={navigate} pathname={pathname} />}
       <div className="cx-stage">
         <Header
           workspace={workspace}
@@ -394,27 +480,24 @@ export function CanonicalProduct({
           onSearch={() => setSpotlight(true)}
           triggerRef={triggerRef}
           onActivity={() => navigate(`${normalize(pathname)}?activity=open`)}
+          onHelp={() =>
+            setToast("Atalhos: use a busca global ou pressione C para criar.")
+          }
+          onProfile={() => navigate("/settings/ai-governance")}
         />
         <main id="cx-main" className="cx-main" tabIndex={-1}>
-          {data.status === "error" && (
-            <StateBanner
-              tone="danger"
-              title="A sincronização falhou"
-              detail={data.error || "Tente novamente."}
-              action="Tentar novamente"
-              onAction={() => void data.refresh()}
-            />
+          {canonicalCxShellsEnabled && route ? (
+            <ExperienceShell
+              shell={route.shell}
+              routeId={route.routeId}
+              screenId={experienceScreen?.screenId}
+              state={routeState}
+            >
+              {routeContent}
+            </ExperienceShell>
+          ) : (
+            routeContent
           )}
-          {demo && (
-            <div className="cx-demo-banner">
-              <Sparkles size={14} /> Workspace demonstrativo · exemplos não são
-              persistidos{" "}
-              <button onClick={() => navigate("/login")}>
-                Entrar para conectar dados reais
-              </button>
-            </div>
-          )}
-          <RouteSurface {...state} />
         </main>
       </div>
       {params.get("create") === "open" && (
@@ -475,6 +558,7 @@ function Sidebar({
     <>
       {open && (
         <button
+          data-action-id="SHELL-TOGGLE-NAV"
           className="cx-nav-scrim"
           aria-label="Fechar navegação"
           onClick={onClose}
@@ -492,6 +576,7 @@ function Sidebar({
         </div>
         <button
           className="cx-create"
+          data-action-id="HOME-OPEN-CREATE"
           onClick={() => navigate("/dashboard?create=open")}
         >
           <Plus size={18} />
@@ -505,6 +590,7 @@ function Sidebar({
             return (
               <button
                 key={path}
+                data-action-id="SHELL-NAVIGATE"
                 className={active ? "is-active" : ""}
                 onClick={() => navigate(path)}
               >
@@ -516,6 +602,7 @@ function Sidebar({
           })}
         </nav>
         <button
+          data-action-id="SHELL-SELECT-WORKSPACE"
           className="cx-sidebar-workspace"
           onClick={onWorkspace}
           aria-label={`Trocar workspace: ${workspace?.name || "Workspace"}`}
@@ -534,27 +621,52 @@ function Sidebar({
   );
 }
 
-function FocusRail({ navigate }: { navigate: Navigate }) {
+function FocusRail({
+  navigate,
+  pathname,
+}: {
+  navigate: Navigate;
+  pathname: string;
+}) {
+  const contentId = pathname.split("/")[2] || "draft";
+  const editorPath = `/content/${contentId}/edit`;
   return (
     <aside className="cx-focus-rail">
       <button
-        aria-label="Voltar à campanha"
-        onClick={() => navigate("/campaigns/active")}
+        data-action-id="CONTENT-BACK-INVENTORY"
+        aria-label="Voltar aos conteúdos"
+        onClick={() => navigate("/content")}
       >
         <ArrowLeft size={20} />
       </button>
       <div className="cx-mark">c</div>
-      <button aria-label="Camadas">
+      <button
+        data-action-id="CONTENT-OPEN-VISUAL"
+        aria-label="Editar foto e camadas"
+        onClick={() => navigate(`${editorPath}?mode=visual`)}
+      >
         <Layers3 size={19} />
       </button>
-      <button aria-label="Assets">
+      <button
+        data-action-id="CONTENT-OPEN-LIBRARY"
+        aria-label="Abrir biblioteca de assets"
+        onClick={() => navigate("/library/assets")}
+      >
         <Image size={19} />
       </button>
-      <button aria-label="Comentários">
+      <button
+        data-action-id="CONTENT-OPEN-REVIEW"
+        aria-label="Abrir comentários e revisão"
+        onClick={() => navigate(`/approvals/${contentId}`)}
+      >
         <MessageSquare size={19} />
       </button>
       <span />
-      <button aria-label="Ajuda">
+      <button
+        data-action-id="CONTENT-OPEN-DETAIL"
+        aria-label="Ver detalhes do conteúdo"
+        onClick={() => navigate(`/content/${contentId}`)}
+      >
         <CircleHelp size={19} />
       </button>
     </aside>
@@ -567,12 +679,15 @@ function Header({
   onMenu,
   onSearch,
   onActivity,
+  onHelp,
+  onProfile,
   triggerRef,
 }: AnyRecord) {
   return (
     <header className="cx-header">
       {!focus && (
         <button
+          data-action-id="SHELL-TOGGLE-NAV"
           className="cx-mobile-menu"
           onClick={onMenu}
           aria-label="Abrir navegação"
@@ -581,6 +696,7 @@ function Header({
         </button>
       )}
       <button
+        data-action-id="SHELL-OPEN-SEARCH"
         ref={triggerRef}
         className="cx-search"
         onClick={onSearch}
@@ -600,16 +716,27 @@ function Header({
       )}
       <button
         className="cx-icon-button"
+        data-action-id="SHELL-OPEN-ACTIVITY"
         onClick={onActivity}
         aria-label="Abrir atividade"
       >
         <Bell size={19} />
         <i />
       </button>
-      <button className="cx-icon-button" aria-label="Abrir ajuda">
+      <button
+        className="cx-icon-button"
+        data-action-id="SHELL-OPEN-HELP"
+        aria-label="Abrir ajuda"
+        onClick={onHelp}
+      >
         <CircleHelp size={19} />
       </button>
-      <button className="cx-avatar" aria-label="Menu do perfil">
+      <button
+        className="cx-avatar"
+        data-action-id="SHELL-OPEN-PROFILE"
+        aria-label="Abrir configurações do perfil"
+        onClick={onProfile}
+      >
         EG
       </button>
     </header>
@@ -648,17 +775,27 @@ function RouteSurface(props: AnyRecord) {
     return <ApprovedRemixSurface {...props} />;
   if (/^\/content\/[^/]+$/.test(p)) return <ApprovedPostDetail {...props} />;
   if (p === "/brand-memory") return <BrandMemory {...props} />;
+  if (p === "/library/identities") return <IdentityLibrarySurface {...props} />;
+  if (/^\/library\/assets\/[^/]+\/edit$/.test(p))
+    return <ImageLabSurface {...props} />;
   if (p === "/library/assets") return <ApprovedLibrarySurface {...props} />;
   if (p === "/analytics/learning")
     return <ApprovedAnalyticsSurface {...props} />;
-  if (p === "/factory") return <ApprovedFactorySurface {...props} />;
+  if (p === "/factory" || /^\/factory\/[^/]+$/.test(p))
+    return <ApprovedFactorySurface {...props} />;
   if (p === "/projects") return <ProjectsSurface {...props} />;
   if (p === "/apps") return <ApprovedAppsSurface {...props} />;
   if (/^\/apps\/[^/]+$/.test(p)) return <SocialIntegrationSurface {...props} />;
   return (
-    <EmptyState
-      title="Ainda não há nada aqui"
-      detail="Volte à Home para iniciar um projeto."
+    <HonestState
+      state="empty"
+      title="Esta rota ainda não possui uma superfície canônica"
+      detail="O contexto foi preservado, mas não existe uma tarefa implementada para este endereço."
+      preserved="o endereço e o workspace atual"
+      impact="nenhuma alteração foi feita"
+      actionLabel="Voltar à Home"
+      actionId="ROUTE-RETURN-HOME"
+      onAction={() => props.navigate("/dashboard")}
     />
   );
 }
@@ -693,14 +830,44 @@ function Button({
   disabled = false,
   type = "button",
   ariaLabel,
+  actionId,
+  title,
+  className = "",
 }: AnyRecord) {
+  const hasConsequence = typeof onClick === "function" || type === "submit";
+  const isDisabled = disabled || !hasConsequence;
+  const disabledReason =
+    title ||
+    (!hasConsequence
+      ? "Ação ainda não disponível neste contexto."
+      : disabled
+        ? "Ação indisponível enquanto esta etapa está bloqueada."
+        : undefined);
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    if (actionId) {
+      const contract = experienceActionForId(actionId);
+      emitExperienceTelemetry({
+        event:
+          contract?.analyticsEvent ||
+          `unregistered.${String(actionId).toLowerCase()}`,
+        kind: "action",
+        route: `${window.location.pathname}${window.location.search}`,
+        actionId,
+      });
+    }
+    onClick?.(event);
+  };
   return (
     <button
       type={type}
-      className={`cx-button cx-button--${tone}`}
-      onClick={onClick}
-      disabled={disabled}
+      className={`cx-button cx-button--${tone} ${className}`.trim()}
+      onClick={handleClick}
+      disabled={isDisabled}
+      aria-disabled={isDisabled || undefined}
       aria-label={ariaLabel}
+      title={disabledReason}
+      data-disabled-reason={isDisabled ? disabledReason : undefined}
+      data-action-id={actionId}
     >
       {Icon && <Icon size={16} />}
       <span>{children}</span>
@@ -716,6 +883,7 @@ function StateBanner({
   detail,
   action,
   onAction,
+  actionId,
 }: AnyRecord) {
   return (
     <div className={`cx-state-banner cx-state-banner--${tone}`} role="status">
@@ -723,11 +891,15 @@ function StateBanner({
         <b>{title}</b>
         <span>{detail}</span>
       </div>
-      {action && <Button onClick={onAction}>{action}</Button>}
+      {action && (
+        <Button actionId={actionId} onClick={onAction}>
+          {action}
+        </Button>
+      )}
     </div>
   );
 }
-function EmptyState({ title, detail, action, onAction }: AnyRecord) {
+function EmptyState({ title, detail, action, actionId, onAction }: AnyRecord) {
   return (
     <div className="cx-empty">
       <div>
@@ -736,7 +908,7 @@ function EmptyState({ title, detail, action, onAction }: AnyRecord) {
       <h2>{title}</h2>
       <p>{detail}</p>
       {action && (
-        <Button tone="primary" onClick={onAction}>
+        <Button tone="primary" actionId={actionId} onClick={onAction}>
           {action}
         </Button>
       )}
@@ -845,7 +1017,11 @@ function HomeSurface({ data, demo, navigate, brand }: AnyRecord) {
             "/content/post-ritual/remix",
           ],
         ].map(([Icon, title, action, path], index) => (
-          <button key={String(title)} onClick={() => navigate(String(path))}>
+          <button
+            key={String(title)}
+            data-action-id="HOME-OPEN-PRIORITY"
+            onClick={() => navigate(String(path))}
+          >
             <span className={`tone-${index}`}>
               <Icon />
             </span>
@@ -863,6 +1039,7 @@ function HomeSurface({ data, demo, navigate, brand }: AnyRecord) {
             placeholder="Descreva uma ideia, campanha ou conteúdo..."
           />
           <button
+            data-action-id="HOME-START-FROM-PROMPT"
             aria-label="Gerar ponto de partida"
             onClick={() => navigate("/campaigns/new")}
           >
@@ -873,6 +1050,7 @@ function HomeSurface({ data, demo, navigate, brand }: AnyRecord) {
           {formats.map(([Icon, label, size]) => (
             <button
               key={label}
+              data-action-id="HOME-OPEN-FORMAT"
               onClick={() =>
                 navigate(
                   label === "Campanha"
@@ -888,14 +1066,20 @@ function HomeSurface({ data, demo, navigate, brand }: AnyRecord) {
               <small>{size}</small>
             </button>
           ))}
-          <button onClick={() => navigate("/dashboard?create=open")}>
+          <button
+            data-action-id="HOME-OPEN-CREATE"
+            onClick={() => navigate("/dashboard?create=open")}
+          >
             <Plus size={17} />
             <span>Tamanho personalizado</span>
           </button>
-          <button onClick={() => navigate("/library/assets")}>
-            <Upload size={17} />
-            <span>Importar</span>
-          </button>
+          <Button
+            icon={Upload}
+            actionId="HOME-OPEN-LIBRARY"
+            onClick={() => navigate("/library/assets")}
+          >
+            Importar da Biblioteca
+          </Button>
         </footer>
       </div>
       <div className="cx-approved-section-head">
@@ -903,12 +1087,13 @@ function HomeSurface({ data, demo, navigate, brand }: AnyRecord) {
           <small>PARA VOCÊ</small>
           <h2>Recomendado para sua marca hoje</h2>
         </div>
-        <button onClick={() => navigate("/radar")}>
+        <button data-action-id="HOME-OPEN-RADAR" onClick={() => navigate("/radar")}>
           Ver radar completo <ArrowRight size={15} />
         </button>
       </div>
       <div className="cx-recommendations">
         <button
+          data-action-id="HOME-OPEN-OPPORTUNITY"
           onClick={() => navigate(`/radar/opportunities/${demoOpportunity.id}`)}
         >
           <img
@@ -946,6 +1131,7 @@ function HomeSurface({ data, demo, navigate, brand }: AnyRecord) {
           </div>
         </button>
         <button
+          data-action-id="HOME-OPEN-REUSE"
           onClick={() =>
             navigate(`/content/${posts[0]?.id || "post-ritual"}/remix`)
           }
@@ -975,6 +1161,7 @@ function HomeSurface({ data, demo, navigate, brand }: AnyRecord) {
           </div>
         </button>
         <button
+          data-action-id="HOME-OPEN-MOODBOARD"
           onClick={() =>
             navigate(
               `/campaigns/${firstCampaign.id || "campaign-aurora"}/moodboard`,
@@ -1016,13 +1203,20 @@ function HomeSurface({ data, demo, navigate, brand }: AnyRecord) {
           <small>EM ANDAMENTO</small>
           <h2>Continue de onde parou</h2>
         </div>
-        <button onClick={() => navigate("/projects")}>
+        <button
+          data-action-id="HOME-OPEN-PROJECTS"
+          onClick={() => navigate("/projects")}
+        >
           Ver projetos <ArrowRight size={15} />
         </button>
       </div>
       <div className="cx-continue-grid">
         {continues.map(([title, state, meta, path, image]) => (
-          <button key={String(title)} onClick={() => navigate(String(path))}>
+          <button
+            key={String(title)}
+            data-action-id="HOME-CONTINUE-WORK"
+            onClick={() => navigate(String(path))}
+          >
             <img src={String(image)} alt="" />
             <div>
               <Chip
@@ -1054,16 +1248,10 @@ function Metric({ value, label }: AnyRecord) {
     </div>
   );
 }
-function SectionHead({ title, action, onAction }: AnyRecord) {
+function SectionHead({ title }: AnyRecord) {
   return (
     <div className="cx-section-head">
       <h2>{title}</h2>
-      {action && (
-        <button onClick={onAction}>
-          {action}
-          <ArrowRight size={15} />
-        </button>
-      )}
     </div>
   );
 }
@@ -1151,6 +1339,19 @@ function RadarSurface({ data, demo, navigate }: AnyRecord) {
     opportunities.find((op: AnyRecord) => op.id === selectedId) ||
     opportunities[0];
   const [saved, setSaved] = React.useState(false);
+  const [timeframe, setTimeframe] = React.useState("Últimas 24h");
+  const [region, setRegion] = React.useState("Brasil");
+  const [theme, setTheme] = React.useState("Todos os temas");
+  const [view, setView] = React.useState<"queue" | "grid">("queue");
+  const [radarTab, setRadarTab] = React.useState<
+    "Prioridades" | "Salvos" | "Descartados"
+  >("Prioridades");
+  const visibleOpportunities =
+    radarTab === "Prioridades"
+      ? opportunities
+      : radarTab === "Salvos" && saved && selected
+        ? [selected]
+        : [];
   return (
     <section className="cx-radar-approved">
       <div className="cx-radar-approved-head">
@@ -1162,43 +1363,92 @@ function RadarSurface({ data, demo, navigate }: AnyRecord) {
           <p>Sinais atuais cruzados com sua marca, público e oferta.</p>
         </div>
         <div>
-          <button>
-            Últimas 24h <ChevronDown />
+          <button
+            data-action-id="RADAR-SELECT-FILTER"
+            onClick={() =>
+              setTimeframe((current) =>
+                current === "Últimas 24h" ? "Últimos 7 dias" : "Últimas 24h",
+              )
+            }
+            aria-label="Alterar período do Radar"
+          >
+            {timeframe} <ChevronDown />
           </button>
-          <button>
-            Brasil <ChevronDown />
+          <button
+            data-action-id="RADAR-SELECT-FILTER"
+            onClick={() =>
+              setRegion((current) =>
+                current === "Brasil" ? "Global" : "Brasil",
+              )
+            }
+            aria-label="Alterar região do Radar"
+          >
+            {region} <ChevronDown />
           </button>
-          <button>
-            Todos os temas <ChevronDown />
+          <button
+            data-action-id="RADAR-SELECT-FILTER"
+            onClick={() =>
+              setTheme((current) =>
+                current === "Todos os temas"
+                  ? "Café e cultura"
+                  : "Todos os temas",
+              )
+            }
+            aria-label="Alterar tema do Radar"
+          >
+            {theme} <ChevronDown />
           </button>
-          <button aria-label="Alternar visualização">
-            <Grid2X2 />
+          <button
+            data-action-id="RADAR-SELECT-VIEW"
+            aria-label={`Alternar para visualização em ${view === "queue" ? "grade" : "fila"}`}
+            aria-pressed={view === "grid"}
+            onClick={() =>
+              setView((current) => (current === "queue" ? "grid" : "queue"))
+            }
+          >
+            {view === "queue" ? <Grid2X2 /> : <LayoutGrid />}
           </button>
-          <small>↘ 12 fontes monitoradas</small>
+          <small>
+            <Activity size={14} aria-hidden="true" /> 12 fontes monitoradas
+          </small>
         </div>
       </div>
       {!demo && radarState?.state !== "ready" && (
-        <StateBanner
-          tone="orange"
-          title="Radar em preparação"
-          detail={
-            radarState?.reason ||
-            "Conecte fontes para revelar oportunidades relevantes."
-          }
-          action="Configurar fontes"
-          onAction={() => navigate("/settings/channels")}
-        />
+        <div className="cx-state-banner cx-state-banner--orange" role="status">
+          <div>
+            <b>Radar em preparação</b>
+            <span>
+              {radarState?.reason ||
+                "Conecte fontes para revelar oportunidades relevantes."}
+            </span>
+          </div>
+          <Button
+            actionId="RADAR-CONFIGURE-SOURCES"
+            onClick={() => navigate("/settings/channels")}
+          >
+            Configurar fontes
+          </Button>
+        </div>
       )}
       <div className="cx-radar-tabs">
-        <button className="is-active">Prioridades</button>
-        <button>Salvos</button>
-        <button>Descartados</button>
+        {(["Prioridades", "Salvos", "Descartados"] as const).map((item) => (
+          <button
+            data-action-id="RADAR-SELECT-TAB"
+            className={radarTab === item ? "is-active" : ""}
+            aria-pressed={radarTab === item}
+            onClick={() => setRadarTab(item)}
+            key={item}
+          >
+            {item}
+          </button>
+        ))}
       </div>
-      {opportunities.length ? (
-        <div className="cx-radar-layout">
+      {visibleOpportunities.length ? (
+        <div className="cx-radar-layout" data-view={view}>
           <div className="cx-radar-queue">
-            {opportunities.map((op: AnyRecord) => (
+            {visibleOpportunities.map((op: AnyRecord) => (
               <button
+                data-action-id="RADAR-SELECT-OPPORTUNITY"
                 key={op.id}
                 className={selected?.id === op.id ? "is-selected" : ""}
                 onClick={() => setSelectedId(op.id)}
@@ -1278,6 +1528,7 @@ function RadarSurface({ data, demo, navigate }: AnyRecord) {
             <Button
               tone="primary"
               icon={ArrowRight}
+              actionId="RADAR-CREATE-CAMPAIGN"
               onClick={() =>
                 navigate(`/campaigns/new?opportunity=${selected.id}`)
               }
@@ -1286,6 +1537,7 @@ function RadarSurface({ data, demo, navigate }: AnyRecord) {
             </Button>
             <Button
               icon={Sparkles}
+              actionId="RADAR-EXPLORE-ANGLE"
               onClick={() =>
                 setSelectedId(
                   opportunities[
@@ -1298,6 +1550,7 @@ function RadarSurface({ data, demo, navigate }: AnyRecord) {
             </Button>
             <Button
               icon={saved ? Check : BookOpen}
+              actionId="RADAR-SAVE-OPPORTUNITY"
               onClick={() => setSaved(!saved)}
             >
               {saved ? "Oportunidade salva" : "Salvar oportunidade"}
@@ -1309,6 +1562,7 @@ function RadarSurface({ data, demo, navigate }: AnyRecord) {
           title="Nenhuma oportunidade pronta"
           detail="O Radar continua coletando sinais. Você pode criar uma campanha evergreen enquanto isso."
           action="Criar campanha"
+          actionId="RADAR-CREATE-CAMPAIGN"
           onAction={() => navigate("/campaigns/new")}
         />
       )}
@@ -1518,7 +1772,7 @@ function OpportunitySurface({ navigate }: AnyRecord) {
           </div>
         </dl>
         <hr />
-        <h3>♢ Guardrails</h3>
+        <h3>Guardrails</h3>
         <p>
           · Creditar produtores e fontes.
           <br />· Não alegar premiações ou exclusividade.
@@ -1531,6 +1785,7 @@ function OpportunitySurface({ navigate }: AnyRecord) {
         <Button
           tone="primary"
           icon={ArrowRight}
+          actionId="RADAR-CREATE-CAMPAIGN"
           onClick={() =>
             navigate(`/campaigns/new?opportunity=${demoOpportunity.id}`)
           }
@@ -1539,6 +1794,7 @@ function OpportunitySurface({ navigate }: AnyRecord) {
         </Button>
         <Button
           icon={Sparkles}
+          actionId="RADAR-EXPLORE-ANGLE"
           onClick={() => setApproach((value) => value + 1)}
         >
           {approach
@@ -1547,6 +1803,7 @@ function OpportunitySurface({ navigate }: AnyRecord) {
         </Button>
         <Button
           icon={saved ? Check : BookOpen}
+          actionId="RADAR-SAVE-OPPORTUNITY"
           onClick={() => setSaved(!saved)}
         >
           {saved ? "Salva para depois" : "Salvar para depois"}
@@ -1557,13 +1814,21 @@ function OpportunitySurface({ navigate }: AnyRecord) {
 }
 
 function CampaignIntake({ data, demo, params, navigate, setToast }: AnyRecord) {
+  const targetMode = params.get("mode");
+  const contentIntent = params.get("intent") === "content" && Boolean(targetMode);
   const [name, setName] = React.useState(
-    params.get("opportunity") ? "O Brasil cabe em uma xícara" : "",
+    params.get("opportunity")
+      ? "O Brasil cabe em uma xícara"
+      : contentIntent
+        ? "Nova criação com contexto"
+        : "",
   );
   const [objective, setObjective] = React.useState(
     params.get("opportunity")
       ? "Transformar o interesse por origens brasileiras em alcance qualificado e pedidos do Kit Degustação."
-      : demoCampaign.objective,
+      : contentIntent
+        ? "Transformar a oferta e a memória da marca em uma peça clara, revisável e pronta para produção."
+        : demoCampaign.objective,
   );
   const [busy, setBusy] = React.useState(false);
   const [formats, setFormats] = React.useState([
@@ -1585,7 +1850,11 @@ function CampaignIntake({ data, demo, params, navigate, setToast }: AnyRecord) {
           objective,
           status: "draft",
           opportunityId: params.get("opportunity"),
-          originContext: { source: "canonical-intake" },
+          originContext: {
+            source: "canonical-intake",
+            intent: contentIntent ? "content" : "campaign",
+            targetMode: targetMode || undefined,
+          },
           startDate: "",
           endDate: "",
           budget: "",
@@ -1618,7 +1887,13 @@ function CampaignIntake({ data, demo, params, navigate, setToast }: AnyRecord) {
           ? "Campanha demonstrativa preparada"
           : "Campanha criada e sincronizada",
       );
-      navigate(`/campaigns/${id}`);
+      if (contentIntent) {
+        navigate(
+          `/content/draft/edit?mode=${encodeURIComponent(targetMode)}&campaign=${encodeURIComponent(id)}`,
+        );
+      } else {
+        navigate(`/campaigns/${id}`);
+      }
     } catch {
       setToast("Não foi possível criar a campanha");
     } finally {
@@ -1664,6 +1939,7 @@ function CampaignIntake({ data, demo, params, navigate, setToast }: AnyRecord) {
             <label>
               <span>Nome da campanha</span>
               <input
+                data-action-id="CAMPAIGN-EDIT-FOUNDATION"
                 autoFocus
                 value={name}
                 onChange={(e) => setName(e.target.value)}
@@ -1672,6 +1948,7 @@ function CampaignIntake({ data, demo, params, navigate, setToast }: AnyRecord) {
             <label>
               <span>Objetivo</span>
               <textarea
+                data-action-id="CAMPAIGN-EDIT-FOUNDATION"
                 value={objective}
                 onChange={(e) => setObjective(e.target.value)}
               />
@@ -1687,7 +1964,7 @@ function CampaignIntake({ data, demo, params, navigate, setToast }: AnyRecord) {
           </div>
         </section>
         <section className="cx-intake-section">
-          <h2>♧ Oferta e público</h2>
+          <h2>Oferta e público</h2>
           <div className="cx-offer-public">
             <article>
               <img src="/canonical/figma/phase2/s05-product.png" />
@@ -1719,6 +1996,7 @@ function CampaignIntake({ data, demo, params, navigate, setToast }: AnyRecord) {
             ].map((x) => (
               <button
                 type="button"
+                data-action-id="DIRECTION-SELECT-FORMAT"
                 key={x}
                 className={formats.includes(x) ? "is-selected" : ""}
                 onClick={() =>
@@ -1740,7 +2018,7 @@ function CampaignIntake({ data, demo, params, navigate, setToast }: AnyRecord) {
           </p>
         </section>
         <section className="cx-intake-section">
-          <h2>♢ Guardrails preservados</h2>
+          <h2>Guardrails preservados</h2>
           <div className="cx-guardrail-grid">
             {[
               "Creditar produtores e fontes",
@@ -1789,7 +2067,7 @@ function CampaignIntake({ data, demo, params, navigate, setToast }: AnyRecord) {
             <dd>Descoberta → Consideração → Decisão</dd>
           </div>
         </dl>
-        <h3>♢ Kit inicial previsto</h3>
+        <h3>Kit inicial previsto</h3>
         {formats.map((x, i) => (
           <p className="cx-kit-line" key={x}>
             <span>{x}</span>
@@ -1806,12 +2084,28 @@ function CampaignIntake({ data, demo, params, navigate, setToast }: AnyRecord) {
           type="submit"
           tone="primary"
           icon={ArrowRight}
+          actionId="DIRECTION-APPROVE"
           disabled={busy || !name.trim()}
         >
-          {busy ? "Criando…" : "Criar campanha"}
+          {busy
+            ? contentIntent
+              ? "Aprovando direção…"
+              : "Criando…"
+            : contentIntent
+              ? `Aprovar direção e abrir ${
+                  targetMode === "editorial"
+                    ? "Editorial"
+                    : targetMode === "visual"
+                      ? "Visual"
+                      : targetMode === "video"
+                        ? "Vídeo"
+                        : "Studio"
+                }`
+              : "Criar campanha"}
         </Button>
         <Button
           icon={Sparkles}
+          actionId="DIRECTION-REFINE"
           onClick={() =>
             setToast(
               "Direção inicial refinada sem perder o contexto da oportunidade",
@@ -1822,6 +2116,7 @@ function CampaignIntake({ data, demo, params, navigate, setToast }: AnyRecord) {
         </Button>
         <Button
           icon={ArrowLeft}
+          actionId="DIRECTION-BACK-OPPORTUNITY"
           onClick={() =>
             navigate(
               `/radar/opportunities/${params.get("opportunity") || demoOpportunity.id}`,
@@ -1830,7 +2125,7 @@ function CampaignIntake({ data, demo, params, navigate, setToast }: AnyRecord) {
         >
           Voltar à oportunidade
         </Button>
-        <small>♙ Nada será publicado automaticamente.</small>
+        <small>Nada será publicado automaticamente.</small>
       </aside>
     </form>
   );
@@ -1848,6 +2143,7 @@ function CampaignTabs({ id, navigate, active = "Visão geral" }: AnyRecord) {
     <div className="cx-campaign-tabs-approved">
       {tabs.map(([x, sub, p]) => (
         <button
+          data-action-id="SHELL-NAVIGATE"
           key={x}
           onClick={() => navigate(p)}
           className={active === x ? "is-active" : ""}
@@ -1871,6 +2167,7 @@ function CampaignSurface({ data, demo, pathname, navigate }: AnyRecord) {
         title="Campanha não encontrada"
         detail="Crie uma campanha para começar."
         action="Nova campanha"
+        actionId="CREATE-START-DIRECTION"
         onAction={() => navigate("/campaigns/new")}
       />
     );
@@ -1920,12 +2217,14 @@ function CampaignSurface({ data, demo, pathname, navigate }: AnyRecord) {
           <Button
             tone="primary"
             icon={Plus}
+            actionId="CAMPAIGN-CREATE-PIECE"
             onClick={() => navigate("/content/draft/edit?mode=visual")}
           >
             Criar peça
           </Button>
           <Button
             icon={Sparkles}
+            actionId="CAMPAIGN-OPEN-WORLD"
             onClick={() => navigate(`/campaigns/${id}/world`)}
           >
             Explorar direção
@@ -1985,6 +2284,7 @@ function CampaignSurface({ data, demo, pathname, navigate }: AnyRecord) {
             </div>
             <Button
               tone="primary"
+              actionId="CAMPAIGN-RESUME-CREATION"
               onClick={() =>
                 navigate("/content/post-ritual/edit?mode=carousel")
               }
@@ -1994,7 +2294,7 @@ function CampaignSurface({ data, demo, pathname, navigate }: AnyRecord) {
           </div>
         </section>
         <section className="cx-campaign-kit">
-          <h3>♢ Kit da campanha</h3>
+          <h3>Kit da campanha</h3>
           <div>
             {kit.map(([title, status, image, action, path]) => (
               <article key={title}>
@@ -2012,14 +2312,19 @@ function CampaignSurface({ data, demo, pathname, navigate }: AnyRecord) {
                         ? "João"
                         : "Mariana"}
                   </small>
-                  <button onClick={() => navigate(path)}>{action}</button>
+                  <button
+                    data-action-id="CAMPAIGN-OPEN-KIT-ITEM"
+                    onClick={() => navigate(path)}
+                  >
+                    {action}
+                  </button>
                 </footer>
               </article>
             ))}
           </div>
         </section>
         <section className="cx-campaign-flow">
-          <h3>♧ Fluxo da campanha</h3>
+          <h3>Fluxo da campanha</h3>
           <div>
             {[
               ["Oportunidade", "Festival Brasileiro de Cafés Especiais"],
@@ -2067,7 +2372,7 @@ function CampaignSurface({ data, demo, pathname, navigate }: AnyRecord) {
           </div>
         </dl>
         <hr />
-        <h3>♢ Guardrails</h3>
+        <h3>Guardrails</h3>
         {[
           "Creditar produtores e fontes",
           "Não alegar premiações ou exclusividade",
@@ -2094,10 +2399,10 @@ function CampaignSurface({ data, demo, pathname, navigate }: AnyRecord) {
         <hr />
         <h3 className="cx-health">▥ Saúde da campanha</h3>
         <p>4 peças · 1 pronta para revisão · 0 aprovadas</p>
-        <Button onClick={() => navigate(`/campaigns/${id}/world`)}>
+        <Button actionId="CAMPAIGN-OPEN-WORLD" onClick={() => navigate(`/campaigns/${id}/world`)}>
           Abrir mundo da campanha
         </Button>
-        <Button onClick={() => navigate(`/campaigns/${id}/moodboard`)}>
+        <Button actionId="CAMPAIGN-OPEN-MOODBOARD" onClick={() => navigate(`/campaigns/${id}/moodboard`)}>
           Abrir moodboard
         </Button>
       </aside>
@@ -2114,9 +2419,178 @@ const phase3Arts = [
   "/canonical/figma/phase2/s16-texture.png",
 ];
 
+const studioVisualHeadline = "O Brasil cabe em uma xícara.";
+const studioKernelEnabled =
+  import.meta.env.VITE_STUDIO_KERNEL_ENABLED !== "false";
+const studioCarouselHeadlines = [
+  "Ritual de foco",
+  "Mais ruído, menos clareza",
+  "Foco é escolha",
+  "Um ritual muda o ritmo",
+  "Comece pequeno",
+  "Salve para amanhã",
+];
+
+function activeBrandRevision(data: AnyRecord) {
+  const raw = data.activeWorkspace?.brandProfile?.watchlist?.brainRevision;
+  const revision = Number(raw);
+  return Number.isInteger(revision) && revision > 0 ? revision : 1;
+}
+
+function linkedOpportunityId(data: AnyRecord, post: AnyRecord) {
+  return data.snapshot?.campaigns?.find(
+    (campaign: AnyRecord) => campaign.id === post?.campaignId,
+  )?.opportunityId;
+}
+
+function StudioVersionHistory({ studio, onClose, setToast }: AnyRecord) {
+  const [selectedNumber, setSelectedNumber] = React.useState<number>();
+  const [loading, setLoading] = React.useState(true);
+  const [restoring, setRestoring] = React.useState(false);
+
+  React.useEffect(() => {
+    let active = true;
+    studio.loadVersions()
+      .then((history: AnyRecord[]) => {
+        if (active) setSelectedNumber(history[0]?.number);
+      })
+      .catch(() => setToast("O histórico não pôde ser carregado"))
+      .finally(() => active && setLoading(false));
+    return () => {
+      active = false;
+    };
+  }, [setToast, studio.loadVersions]);
+
+  const selected = studio.versions.find(
+    (item: AnyRecord) => item.number === selectedNumber,
+  );
+  const selectedHeadlines = studioHeadlines(selected?.snapshot);
+  const currentHeadlines = studioHeadlines(studio.document);
+  const maxRows = Math.max(selectedHeadlines.length, currentHeadlines.length);
+  const restore = async () => {
+    if (!selected) return;
+    setRestoring(true);
+    try {
+      await studio.restoreVersion(selected.number);
+      setToast(`v${selected.number} restaurada como uma nova versão`);
+      onClose();
+    } catch {
+      setToast("A versão não pôde ser restaurada");
+    } finally {
+      setRestoring(false);
+    }
+  };
+
+  return (
+    <ModalFrame onClose={onClose} label="Histórico de versões do Studio">
+      <section className="cx-studio-history-modal">
+        <header>
+          <div className="cx-presenter-heading">
+            <small>DOCUMENTO CANÔNICO</small>
+            <h2>Histórico de versões</h2>
+            <p>Compare snapshots e restaure sem sobrescrever o histórico.</p>
+          </div>
+          <button
+            data-action-id="VERSION-HISTORY-CLOSE"
+            onClick={onClose}
+            aria-label="Fechar histórico"
+          >
+            <X />
+          </button>
+        </header>
+        <div className="cx-studio-history-body">
+          <aside aria-label="Versões disponíveis">
+            {loading && <p>Carregando histórico…</p>}
+            {!loading && !studio.versions.length && (
+              <p>Crie uma versão para iniciar o histórico comparável.</p>
+            )}
+            {studio.versions.map((item: AnyRecord) => (
+              <button
+                data-action-id="VERSION-HISTORY-SELECT"
+                key={item.number}
+                className={item.number === selectedNumber ? "is-active" : ""}
+                onClick={() => setSelectedNumber(item.number)}
+              >
+                <span>v{item.number}</span>
+                <b>{item.label}</b>
+                <small>
+                  {new Intl.DateTimeFormat("pt-BR", {
+                    dateStyle: "short",
+                    timeStyle: "short",
+                  }).format(new Date(item.createdAt))}
+                </small>
+              </button>
+            ))}
+          </aside>
+          <main>
+            {selected ? (
+              <>
+                <div className="cx-studio-history-summary">
+                  <span>
+                    Snapshot selecionado <b>v{selected.number}</b>
+                  </span>
+                  <span>
+                    Estado atual <b>v{studio.document?.version}</b>
+                  </span>
+                </div>
+                <div className="cx-studio-version-compare">
+                  <div>
+                    <small>VERSÃO SELECIONADA</small>
+                    <b>{selected.snapshot.title}</b>
+                  </div>
+                  <div>
+                    <small>DOCUMENTO ATUAL</small>
+                    <b>{studio.document?.title}</b>
+                  </div>
+                  {Array.from({ length: maxRows }, (_, index) => {
+                    const before = selectedHeadlines[index] || "—";
+                    const after = currentHeadlines[index] || "—";
+                    const changed = before !== after;
+                    return (
+                      <React.Fragment key={`${selected.number}-${index}`}>
+                        <p className={changed ? "is-changed" : ""}>{before}</p>
+                        <p className={changed ? "is-changed" : ""}>{after}</p>
+                      </React.Fragment>
+                    );
+                  })}
+                </div>
+                <div className="cx-studio-history-warning">
+                  <b>Restauração não destrutiva</b>
+                  <p>
+                    A Clicko cria um backup automático do estado atual e restaura o
+                    snapshot como uma nova versão auditável.
+                  </p>
+                </div>
+              </>
+            ) : (
+              <div className="cx-studio-history-empty">Selecione uma versão para comparar.</div>
+            )}
+          </main>
+        </div>
+        <footer>
+          <Button actionId="VERSION-HISTORY-CLOSE" onClick={onClose}>
+            Cancelar
+          </Button>
+          <Button
+            tone="primary"
+            actionId="VERSION-HISTORY-RESTORE"
+            disabled={!selected || restoring}
+            onClick={() => void restore()}
+          >
+            {restoring ? "Restaurando…" : "Restaurar como nova versão"}
+          </Button>
+        </footer>
+      </section>
+    </ModalFrame>
+  );
+}
+
 function ApprovedContentHub({ navigate }: AnyRecord) {
   const [query, setQuery] = React.useState("");
   const [tab, setTab] = React.useState("Para criar");
+  const [viewMode, setViewMode] = React.useState<"board" | "inventory">(
+    "board",
+  );
   const continueItems = [
     [
       "Campanha · Ritual de Foco",
@@ -2158,11 +2632,21 @@ function ApprovedContentHub({ navigate }: AnyRecord) {
           </p>
         </div>
         <div className="cx-view-switch">
-          <button className="is-active">
+          <button
+            data-action-id="CONTENT-HUB-SELECT-VIEW"
+            className={viewMode === "board" ? "is-active" : ""}
+            aria-pressed={viewMode === "board"}
+            onClick={() => setViewMode("board")}
+          >
             <Grid2X2 />
             Board visual
           </button>
-          <button>
+          <button
+            data-action-id="CONTENT-HUB-SELECT-VIEW"
+            className={viewMode === "inventory" ? "is-active" : ""}
+            aria-pressed={viewMode === "inventory"}
+            onClick={() => setViewMode("inventory")}
+          >
             <LayoutGrid />
             Inventário
           </button>
@@ -2170,6 +2654,7 @@ function ApprovedContentHub({ navigate }: AnyRecord) {
         <Button
           tone="primary"
           icon={Plus}
+          actionId="HOME-OPEN-CREATE"
           onClick={() => navigate("/dashboard?create=open")}
         >
           Novo conteúdo
@@ -2183,6 +2668,7 @@ function ApprovedContentHub({ navigate }: AnyRecord) {
           "Vencedores e reuso",
         ].map((item) => (
           <button
+            data-action-id="CONTENT-HUB-SELECT-VIEW"
             className={tab === item ? "is-active" : ""}
             onClick={() => setTab(item)}
             key={item}
@@ -2202,6 +2688,7 @@ function ApprovedContentHub({ navigate }: AnyRecord) {
         ].map(([Icon, title, detail], i) => (
           <button
             key={String(title)}
+            data-action-id="HOME-OPEN-FORMAT"
             disabled={i === 4}
             onClick={() =>
               i === 3
@@ -2225,6 +2712,7 @@ function ApprovedContentHub({ navigate }: AnyRecord) {
         <label>
           <Search />
           <input
+            data-action-id="CONTENT-HUB-SELECT-FILTER"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             placeholder="Buscar conteúdo"
@@ -2237,14 +2725,25 @@ function ApprovedContentHub({ navigate }: AnyRecord) {
           "Responsável  Equipe",
           "Ordenar por  Atualizados recentemente",
         ].map((x) => (
-          <button key={x}>{x}⌄</button>
+          <button
+            key={x}
+            disabled
+            title="Os filtros combinados serão liberados quando houver dados suficientes neste workspace."
+          >
+            {x}⌄
+          </button>
         ))}
-        <button>
+        <button
+          disabled
+          title="Os filtros avançados serão liberados quando houver dados suficientes neste workspace."
+        >
           <ListFilter />
           Filtros
         </button>
       </div>
-      <div className="cx-content-hub-layout">
+      <div
+        className={`cx-content-hub-layout cx-content-hub-layout--${viewMode}`}
+      >
         <main>
           <h2>Continue criando</h2>
           <div className="cx-continue-grid">
@@ -2262,6 +2761,7 @@ function ApprovedContentHub({ navigate }: AnyRecord) {
                   <footer>
                     ● {i === 1 ? "João" : "Mariana"} · Editado há {i + 2}h{" "}
                     <button
+                      data-action-id="CONTENT-HUB-OPEN-ITEM"
                       onClick={() =>
                         navigate(
                           `/content/draft/edit?mode=${i === 0 ? "carousel" : "visual"}`,
@@ -2277,7 +2777,12 @@ function ApprovedContentHub({ navigate }: AnyRecord) {
           </div>
           <div className="cx-awaiting-head">
             <h2>Aguardando decisão</h2>
-            <button>Ver todos</button>
+            <button
+              data-action-id="CONTENT-OPEN-REVIEW"
+              onClick={() => navigate("/approvals/post-ritual")}
+            >
+              Ver todos
+            </button>
           </div>
           <div className="cx-awaiting-grid">
             {[
@@ -2300,6 +2805,7 @@ function ApprovedContentHub({ navigate }: AnyRecord) {
                 </div>
                 <Chip tone={i ? "orange" : "green"}>{status}</Chip>
                 <button
+                  data-action-id="CONTENT-OPEN-REVIEW"
                   onClick={() =>
                     navigate("/approvals/post-ritual?view=creative")
                   }
@@ -2313,7 +2819,12 @@ function ApprovedContentHub({ navigate }: AnyRecord) {
         <aside>
           <div>
             <h2>Vencedores para reutilizar</h2>
-            <button>Ver todos</button>
+            <button
+              data-action-id="HOME-OPEN-REUSE"
+              onClick={() => navigate("/content/post-ritual/remix")}
+            >
+              Ver todos
+            </button>
           </div>
           {winners.map(([title, metric, image]) => (
             <article key={title}>
@@ -2322,7 +2833,10 @@ function ApprovedContentHub({ navigate }: AnyRecord) {
                 <b>{title}</b>
                 <small>Campanha Ritual de Foco</small>
                 <strong>{metric}</strong>
-                <button onClick={() => navigate("/content/post-ritual/remix")}>
+                <button
+                  data-action-id="HOME-OPEN-REUSE"
+                  onClick={() => navigate("/content/post-ritual/remix")}
+                >
                   Abrir no Reuse Lab →
                 </button>
               </div>
@@ -2337,6 +2851,7 @@ function ApprovedContentHub({ navigate }: AnyRecord) {
 function ApprovedEditorSurface(props: AnyRecord) {
   if (props.mode === "editorial") return <ApprovedEditorialDesk {...props} />;
   if (props.mode === "carousel") return <ApprovedCarouselBuilder {...props} />;
+  if (props.mode === "video") return <VideoStudio {...props} />;
   return <ApprovedVisualEditor {...props} />;
 }
 
@@ -2345,6 +2860,9 @@ function ApprovedEditorialDesk({ navigate, setToast }: AnyRecord) {
   const [hook, setHook] = React.useState(
     "O Brasil cabe em uma xícara — mas você sabe reconhecer a origem do que bebe?",
   );
+  const [activeTool, setActiveTool] = React.useState("Estrutura");
+  const [previewTab, setPreviewTab] = React.useState("Feed");
+  const [safeArea, setSafeArea] = React.useState(false);
   const slides = [
     "Hook",
     "Origem",
@@ -2357,6 +2875,7 @@ function ApprovedEditorialDesk({ navigate, setToast }: AnyRecord) {
     <section className="cx-editor-approved cx-editorial-approved">
       <header>
         <button
+          data-action-id="SHELL-NAVIGATE"
           className="cx-editor-home"
           onClick={() => navigate("/dashboard")}
         >
@@ -2365,21 +2884,53 @@ function ApprovedEditorialDesk({ navigate, setToast }: AnyRecord) {
           </strong>
           <small>Home</small>
         </button>
-        <button onClick={() => navigate("/campaigns/campaign-aurora")}>
+        <button
+          data-action-id="EDITORIAL-BACK-CAMPAIGN"
+          onClick={() => navigate("/campaigns/campaign-aurora")}
+        >
           ← O Brasil cabe em uma xícara
         </button>
         <h1>Carrossel editorial</h1>
         <span>◉ Instagram · 4:5　● Salvo há poucos segundos</span>
         <div />
-        <Button>Preview</Button>
-        <Button onClick={() => setToast("Conteúdo salvo")}>Salvar</Button>
         <Button
+          actionId="EDITORIAL-PREVIEW"
+          onClick={() =>
+            setToast("O canvas atual é o preview disponível neste primeiro slice.")
+          }
+        >
+          Preview
+        </Button>
+        <Button actionId="EDITORIAL-SAVE" onClick={() => setToast("Conteúdo salvo")}>
+          Salvar
+        </Button>
+        <Button
+          actionId="EDITORIAL-OPEN-VISUAL"
           onClick={() => navigate("/content/post-ritual/edit?mode=visual")}
         >
           Abrir no Visual
         </Button>
         <Button
+          actionId="EDITORIAL-OPEN-CAROUSEL"
+          onClick={() => navigate("/content/post-ritual/edit?mode=carousel")}
+        >
+          Abrir no Carrossel
+        </Button>
+        <Button
+          actionId="EDITORIAL-OPEN-VIDEO"
+          onClick={() => navigate("/content/post-ritual/edit?mode=video")}
+        >
+          Abrir no Vídeo
+        </Button>
+        <Button
+          actionId="EDITORIAL-OPEN-PRESENTER"
+          onClick={() => navigate("/content/post-ritual/edit?mode=presenter")}
+        >
+          Abrir no Presenter
+        </Button>
+        <Button
           tone="primary"
+          actionId="EDITORIAL-SEND-REVIEW"
           onClick={() => navigate("/approvals/post-ritual?view=creative")}
         >
           Enviar para revisão
@@ -2395,9 +2946,12 @@ function ApprovedEditorialDesk({ navigate, setToast }: AnyRecord) {
           [CalendarDays, "Agenda"],
         ].map(([Icon, label], i) => (
           <button
-            className={i === 0 ? "is-active" : ""}
+            data-action-id="EDITORIAL-SELECT-TOOL"
+            className={activeTool === label ? "is-active" : ""}
+            aria-pressed={activeTool === label}
             title={String(label)}
             key={String(label)}
+            onClick={() => setActiveTool(String(label))}
           >
             <Icon />
           </button>
@@ -2410,12 +2964,28 @@ function ApprovedEditorialDesk({ navigate, setToast }: AnyRecord) {
           <KeyValue label="Funil" value="Consideração" />
         </div>
         <h2>Hook</h2>
-        <textarea value={hook} onChange={(e) => setHook(e.target.value)} />
-        <Button icon={Sparkles}>Fortalecer hook</Button>
+        <textarea
+          data-action-id="EDITORIAL-EDIT-HOOK"
+          value={hook}
+          onChange={(e) => setHook(e.target.value)}
+        />
+        <Button
+          icon={Sparkles}
+          actionId="EDITORIAL-STRENGTHEN-HOOK"
+          onClick={() => {
+            setHook(
+              "O Brasil cabe em uma xícara — descubra a origem que transforma cada gole em uma história.",
+            );
+            setToast("Hook fortalecido; a alteração continua editável.");
+          }}
+        >
+          Fortalecer hook
+        </Button>
         <h2>Sequência do carrossel</h2>
         <div className="cx-sequence-list">
           {slides.map((slide, i) => (
             <button
+              data-action-id="EDITORIAL-SELECT-SLIDE"
               className={selected === i ? "is-active" : ""}
               onClick={() => setSelected(i)}
               key={slide}
@@ -2441,7 +3011,7 @@ function ApprovedEditorialDesk({ navigate, setToast }: AnyRecord) {
         </div>
         <h2>Legenda e CTA</h2>
         <div className="cx-rich-copy">
-          B　I　•　☷　↗　◇
+          Negrito　Itálico　Lista　Link
           <textarea defaultValue="Quatro territórios. Muitas histórias. Um só propósito: levar o melhor do café brasileiro até você.\n\nDescubra origens, aromas e experiências únicas com o Kit Degustação Café Aurora." />
           <label>
             CTA do post <input defaultValue="Conheça o Kit Degustação" />
@@ -2465,20 +3035,45 @@ function ApprovedEditorialDesk({ navigate, setToast }: AnyRecord) {
       </main>
       <section className="cx-editorial-preview">
         <nav>
-          <button className="is-active">Feed</button>
-          <button>Legenda</button>
-          <button>Slides</button>
+          {["Feed", "Legenda", "Slides"].map((item) => (
+            <button
+              data-action-id="EDITORIAL-SELECT-PREVIEW"
+              className={previewTab === item ? "is-active" : ""}
+              aria-pressed={previewTab === item}
+              onClick={() => setPreviewTab(item)}
+              key={item}
+            >
+              {item}
+            </button>
+          ))}
         </nav>
         <span>{selected + 1} / 6</span>
         <img src={selected === 5 ? phase3Arts[3] : phase3Arts[0]} />
         <div className="cx-preview-arrows">
-          <button onClick={() => setSelected((selected + 5) % 6)}>‹</button>
-          <button>○ Exibir área segura</button>
-          <button onClick={() => setSelected((selected + 1) % 6)}>›</button>
+          <button
+            data-action-id="EDITORIAL-STEP-SLIDE"
+            onClick={() => setSelected((selected + 5) % 6)}
+          >
+            ‹
+          </button>
+          <button
+            data-action-id="EDITORIAL-SELECT-PREVIEW"
+            aria-pressed={safeArea}
+            onClick={() => setSafeArea((current) => !current)}
+          >
+            {safeArea ? "Ocultar área segura" : "Exibir área segura"}
+          </button>
+          <button
+            data-action-id="EDITORIAL-STEP-SLIDE"
+            onClick={() => setSelected((selected + 1) % 6)}
+          >
+            ›
+          </button>
         </div>
         <div className="cx-preview-strip">
           {slides.map((_, i) => (
             <button
+              data-action-id="EDITORIAL-SELECT-SLIDE"
               className={selected === i ? "is-active" : ""}
               onClick={() => setSelected(i)}
               key={i}
@@ -2511,7 +3106,11 @@ function ApprovedEditorialDesk({ navigate, setToast }: AnyRecord) {
           ["Ritual de foco", "3× saves", phase3Arts[0]],
           ["Origem que conta histórias", "", phase3Arts[1]],
         ].map(([title, meta, image]) => (
-          <button key={title}>
+          <button
+            key={title}
+            data-action-id="EDITORIAL-SELECT-TOOL"
+            onClick={() => setToast(`Referência selecionada: ${title}`)}
+          >
             <img src={image} />
             <span>
               {title}
@@ -2528,6 +3127,7 @@ function ApprovedEditorialDesk({ navigate, setToast }: AnyRecord) {
         ].map((x) => (
           <button
             className="cx-assist"
+            data-action-id="EDITORIAL-SELECT-TOOL"
             onClick={() => setToast(`${x}: sugestão aplicada`)}
             key={x}
           >
@@ -2541,23 +3141,361 @@ function ApprovedEditorialDesk({ navigate, setToast }: AnyRecord) {
   );
 }
 
-function ApprovedVisualEditor({ navigate, setToast }: AnyRecord) {
+function ApprovedVisualEditor({
+  data,
+  demo,
+  navigate,
+  pathname,
+  search,
+  setToast,
+}: AnyRecord) {
   const [layer, setLayer] = React.useState(0);
   const [zoom, setZoom] = React.useState(82);
+  const [fontFamily, setFontFamily] = React.useState("Bricolage Grotesque");
+  const [fontWeight, setFontWeight] = React.useState("Semibold");
+  const [fontSize, setFontSize] = React.useState(76);
+  const [textAlign, setTextAlign] = React.useState<"left" | "center">("left");
+  const [positionX, setPositionX] = React.useState(90);
+  const [positionY, setPositionY] = React.useState(120);
+  const [activeSlide, setActiveSlide] = React.useState(1);
   const [synced, setSynced] = React.useState(true);
   const [slidesOpen, setSlidesOpen] = React.useState(true);
+  const [historyOpen, setHistoryOpen] = React.useState(false);
+  const requestedTool = new URLSearchParams(search || "").get("tool");
+  const [visualTool, setVisualTool] = React.useState(
+    requestedTool === "motion" ? "Movimento" : "Camadas",
+  );
+  const [designPanel, setDesignPanel] = React.useState<"design" | "motion">(
+    requestedTool === "motion" ? "motion" : "design",
+  );
+  const [motionPreset, setMotionPreset] = React.useState<
+    "subtle" | "balanced" | "emphasis"
+  >("balanced");
+  const [motionDuration, setMotionDuration] = React.useState(60);
+  const [motionReduced, setMotionReduced] = React.useState(() =>
+    typeof window === "undefined"
+      ? false
+      : window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+  );
+  const [motionBefore, setMotionBefore] = React.useState(false);
+  const [motionPreviewing, setMotionPreviewing] = React.useState(false);
+  const [motionRecord, setMotionRecord] = React.useState<AnyRecord>();
+  const [motionProjection, setMotionProjection] = React.useState<AnyRecord>();
+  const [motionStatus, setMotionStatus] = React.useState<
+    "idle" | "loading" | "saving" | "reviewing" | "ready" | "error"
+  >("idle");
+  const [motionError, setMotionError] = React.useState("");
+  const routeId = pathname.split("/")[2];
+  const targetId = demo ? "post-ritual" : routeId;
+  const localStudioMode = demo || !studioKernelEnabled;
+  const post = data.snapshot?.posts?.find((item: AnyRecord) => item.id === routeId);
+  const studio = useStudioDocument({
+    enabled: studioKernelEnabled && !demo && Boolean(post),
+    workspaceId: data.activeWorkspace?.id,
+    postId: post?.id,
+    campaignId: post?.campaignId ?? undefined,
+    contentType: "visual",
+    title: post?.title || "Peça visual",
+    initialHeadlines: [studioVisualHeadline],
+    objective: post?.objective || "Criar uma peça visual pronta para revisão",
+    audience: "Audiência do conteúdo",
+    brandRevision: activeBrandRevision(data),
+    opportunityId: linkedOpportunityId(data, post),
+  });
+  const [headline, setHeadline] = React.useState(studioVisualHeadline);
+  React.useEffect(() => {
+    const savedHeadline = studioHeadlines(studio.document)[0];
+    if (savedHeadline) {
+      setHeadline(savedHeadline);
+      setSynced(true);
+    }
+  }, [studio.document]);
+  React.useEffect(() => {
+    if (requestedTool === "motion") {
+      setVisualTool("Movimento");
+      setDesignPanel("motion");
+    }
+  }, [requestedTool]);
+  React.useEffect(() => {
+    if (localStudioMode || !data.activeWorkspace?.id || !studio.document?.documentId) {
+      return;
+    }
+    let current = true;
+    setMotionStatus("loading");
+    setMotionError("");
+    void productApi
+      .studioMotionGraphs(data.activeWorkspace.id, studio.document.documentId)
+      .then((records) => {
+        if (!current) return;
+        const latest = records[0];
+        setMotionRecord(latest);
+        setMotionProjection(undefined);
+        setMotionStatus("ready");
+      })
+      .catch((error) => {
+        if (!current) return;
+        setMotionError(
+          error instanceof Error
+            ? error.message
+            : "Não foi possível recuperar o movimento deste documento.",
+        );
+        setMotionStatus("error");
+      });
+    return () => {
+      current = false;
+    };
+  }, [data.activeWorkspace?.id, localStudioMode, studio.document?.documentId]);
+  const saveVisual = async () => {
+    if (localStudioMode) {
+      setSynced(true);
+      setToast("Peça visual salva");
+      return;
+    }
+    try {
+      await studio.save({
+        headlines: [headline],
+        narrative: { headline },
+      });
+      setSynced(true);
+      setToast("Peça visual salva");
+    } catch {
+      setToast("A peça visual não pôde ser salva");
+    }
+  };
+  const versionVisual = async () => {
+    try {
+      await studio.createVersion("Direção visual");
+      setToast("Nova versão visual criada");
+    } catch {
+      setToast("A versão não pôde ser criada");
+    }
+  };
+  const reviewVisual = async () => {
+    if (localStudioMode) {
+      navigate(`/approvals/${targetId}?view=creative`);
+      return;
+    }
+    try {
+      await studio.requestReview();
+      navigate(`/approvals/${targetId}?view=creative`);
+    } catch {
+      setToast("A revisão não pôde ser solicitada");
+    }
+  };
+  const exportVisual = async () => {
+    if (localStudioMode) {
+      setToast("Exportação demonstrativa preparada");
+      return;
+    }
+    try {
+      await studio.exportPng();
+      setToast("PNG exportado para a biblioteca");
+    } catch {
+      setToast("A exportação não pôde ser concluída");
+    }
+  };
   const layers = [
-    "O Brasil cabe em uma xícara.",
+    headline,
     "Quatro territórios. Uma caixa.",
     "Imagem do produto",
     "Xícara de café",
     "Textura de fundo",
     "Café Aurora (assinatura)",
   ];
+  const selectedDocumentLayer = studio.document?.composition.pages[0]?.layers[layer];
+  const motionLayerUnavailable = !localStudioMode && !selectedDocumentLayer;
+  const motionLayerLocked = Boolean(selectedDocumentLayer?.locked);
+  const motionStale = Boolean(
+    motionRecord &&
+      studio.document &&
+      motionRecord.graph.documentRevision !== studio.document.revision,
+  );
+  const previewMotion = () => {
+    setMotionBefore(false);
+    setMotionPreviewing(false);
+    window.requestAnimationFrame(() => setMotionPreviewing(!motionReduced));
+    setToast(
+      motionReduced
+        ? "Prévia estática: preferência de movimento reduzido respeitada"
+        : "Prévia local reproduzida; o documento ainda não mudou",
+    );
+  };
+  const saveMotionSuggestion = async () => {
+    setMotionError("");
+    if (motionLayerUnavailable || motionLayerLocked) {
+      setMotionError(
+        motionLayerLocked
+          ? "A camada selecionada está bloqueada. Desbloqueie-a antes de animar."
+          : "Esta camada ainda não existe no documento persistido. Selecione a headline.",
+      );
+      return;
+    }
+    if (localStudioMode) {
+      setMotionRecord({
+        graph: {
+          graphId: "motion-demo",
+          status: "suggested",
+          documentRevision: 1,
+          tracks: [{ trackId: "opacity-demo" }],
+        },
+        storageRevision: 1,
+      });
+      setMotionStatus("ready");
+      setToast("Sugestão demonstrativa criada; nenhum dado foi persistido");
+      return;
+    }
+    if (!data.activeWorkspace?.id || !studio.document) return;
+    setMotionStatus("saving");
+    try {
+      const activeDocument = studio.document.composition.mediaTimeline
+        ? studio.document
+        : await studio.save({
+            headlines: [headline],
+            narrative: { headline },
+          });
+      const timeline = activeDocument.composition.mediaTimeline;
+      const page = activeDocument.composition.pages[0];
+      const targetLayer = page.layers[layer];
+      if (!timeline || !targetLayer) {
+        throw new Error("O documento ainda não possui timeline ou camada compatível.");
+      }
+      if (targetLayer.locked) {
+        throw new Error("A camada selecionada está bloqueada.");
+      }
+      const graphId = `motion-${crypto.randomUUID()}`;
+      const endFrame = Math.max(
+        1,
+        Math.min(motionDuration, timeline.durationFrames - 1),
+      );
+      const scaleStart =
+        motionPreset === "subtle" ? 0.98 : motionPreset === "balanced" ? 0.94 : 0.88;
+      const opacityStart =
+        motionPreset === "subtle" ? 0.62 : motionPreset === "balanced" ? 0.28 : 0;
+      const trackIds = ["opacity", "scale-x", "scale-y"].map(
+        (name) => `${graphId}-${name}`,
+      );
+      const tracks = [
+        {
+          trackId: trackIds[0],
+          targetLayerId: targetLayer.id,
+          property: "opacity" as const,
+          unit: "ratio" as const,
+          keyframes: [
+            { frame: 0, value: opacityStart, easing: "ease_out" as const },
+            { frame: endFrame, value: 1, easing: "ease_out" as const },
+          ],
+        },
+        ...(["scale_x", "scale_y"] as const).map((property, index) => ({
+          trackId: trackIds[index + 1],
+          targetLayerId: targetLayer.id,
+          property,
+          unit: "ratio" as const,
+          keyframes: [
+            { frame: 0, value: scaleStart, easing: "ease_out" as const },
+            { frame: endFrame, value: 1, easing: "ease_out" as const },
+          ],
+        })),
+      ];
+      const created = await productApi.createStudioMotionGraph({
+        workspaceId: data.activeWorkspace.id,
+        graph: {
+          schemaVersion: "studio.motion-graph.v1",
+          graphId,
+          workspaceId: data.activeWorkspace.id,
+          documentId: activeDocument.documentId,
+          documentRevision: activeDocument.revision,
+          frameRate: timeline.frameRate,
+          durationFrames: timeline.durationFrames,
+          canvasWidth: page.width,
+          canvasHeight: page.height,
+          realityMode: "graphic",
+          completeness: "complete",
+          status: "suggested",
+          nodes: [],
+          tracks,
+          transitions: [],
+          audioEvents: [],
+          reducedMotionSupported: true,
+          constraints: [
+            {
+              constraintId: `${graphId}-no-overshoot`,
+              kind: "no_overshoot",
+              targetTrackIds: trackIds,
+              frameRange: {
+                startFrame: 0,
+                endFrameExclusive: timeline.durationFrames,
+              },
+              severity: "blocking",
+            },
+          ],
+          sourceEvidenceIds: [],
+          abstentions: [],
+          createdBy: "studio-ui",
+          humanReviewRequired: true,
+          createdAt: new Date().toISOString(),
+        },
+        idempotencyKey: graphId,
+      });
+      setMotionRecord(created);
+      setMotionProjection(
+        await productApi.studioMotionProjection(created.graph.graphId, "hyperframes"),
+      );
+      setMotionStatus("ready");
+      setToast("Sugestão reversível salva; revisão humana ainda obrigatória");
+    } catch (error) {
+      setMotionError(
+        error instanceof Error ? error.message : "Não foi possível salvar a sugestão.",
+      );
+      setMotionStatus("error");
+    }
+  };
+  const applyMotion = async () => {
+    if (!motionRecord) return;
+    if (localStudioMode) {
+      setMotionRecord({
+        ...motionRecord,
+        graph: { ...motionRecord.graph, status: "reviewed" },
+        storageRevision: motionRecord.storageRevision + 1,
+      });
+      setToast("Movimento demonstrativo aplicado");
+      return;
+    }
+    if (!data.activeWorkspace?.id || motionStale) {
+      setMotionError(
+        "O documento mudou depois desta sugestão. Salve uma nova sugestão para a revisão atual.",
+      );
+      return;
+    }
+    setMotionStatus("reviewing");
+    setMotionError("");
+    try {
+      const reviewed = await productApi.reviewStudioMotionGraph(
+        motionRecord.graph.graphId,
+        {
+          workspaceId: data.activeWorkspace.id,
+          expectedRevision: motionRecord.storageRevision,
+        },
+      );
+      setMotionRecord(reviewed);
+      setMotionProjection(
+        await productApi.studioMotionProjection(reviewed.graph.graphId, "hyperframes"),
+      );
+      setMotionStatus("ready");
+      setToast("Movimento revisado e aplicado sem achatar o documento");
+    } catch (error) {
+      setMotionError(
+        error instanceof Error ? error.message : "Não foi possível aplicar o movimento.",
+      );
+      setMotionStatus("error");
+    }
+  };
   return (
-    <section className="cx-visual-approved">
+    <section
+      className={`cx-visual-approved ${designPanel === "motion" ? "is-motion-open" : ""}`}
+    >
       <header>
         <button
+          data-action-id="SHELL-NAVIGATE"
           className="cx-editor-home"
           onClick={() => navigate("/dashboard")}
         >
@@ -2567,29 +3505,60 @@ function ApprovedVisualEditor({ navigate, setToast }: AnyRecord) {
           <small>Home</small>
         </button>
         <button
+          data-action-id="VISUAL-BACK-EDITORIAL"
           className="cx-editor-back"
-          onClick={() => navigate("/content/post-ritual/edit?mode=editorial")}
+          onClick={() => navigate(`/content/${targetId}/edit?mode=editorial`)}
         >
           ← Carrossel editorial
         </button>
-        <b>O Brasil cabe em uma xícara · Slide 1</b>
+        <b>{post?.title || "O Brasil cabe em uma xícara"} · Slide 1</b>
         <span>1080×1350 · Instagram 4:5</span>
-        <strong>v3</strong>
-        <i>● {synced ? "Sincronizado" : "Alterado"}</i>
+        <strong>v{studio.document?.version || 3}</strong>
+        <i>
+          ● {studio.status === "loading" ? "Abrindo" : studio.status === "saving" ? "Salvando" : studio.status === "dirty" ? "Alterado" : studio.status === "conflict" ? "Conflito" : studio.status === "offline" ? "Offline" : studio.status === "error" ? "Falha ao sincronizar" : synced ? "Sincronizado" : "Alterado"}
+        </i>
         <div />
-        <Button>Preview</Button>
+        <Button actionId="VISUAL-PREVIEW" onClick={() => setToast("Prévia atualizada no canvas")}>
+          Preview
+        </Button>
         <Button
-          onClick={() => {
-            setSynced(true);
-            setToast("Peça visual salva");
-          }}
+          actionId="VISUAL-SAVE"
+          disabled={!localStudioMode && studio.status !== "ready"}
+          onClick={() => void saveVisual()}
         >
           Salvar
         </Button>
-        <Button>Exportar</Button>
+        <Button
+          actionId="VISUAL-EXPORT"
+          disabled={!localStudioMode && !studio.document}
+          onClick={() => void exportVisual()}
+        >
+          Exportar
+        </Button>
+        <Button
+          actionId="VISUAL-OPEN-VIDEO"
+          onClick={() => navigate(`/content/${targetId}/edit?mode=video`)}
+        >
+          Editar vídeo
+        </Button>
+        <Button
+          actionId="VISUAL-OPEN-HISTORY"
+          disabled={localStudioMode || !studio.document}
+          onClick={() => setHistoryOpen(true)}
+        >
+          Histórico
+        </Button>
+        <Button
+          actionId="VISUAL-CREATE-VERSION"
+          disabled={!localStudioMode && !studio.document}
+          onClick={() => void versionVisual()}
+        >
+          Criar versão
+        </Button>
         <Button
           tone="primary"
-          onClick={() => navigate("/approvals/post-ritual?view=creative")}
+          actionId="VISUAL-SEND-REVIEW"
+          onClick={() => void reviewVisual()}
         >
           Enviar para revisão
         </Button>
@@ -2603,7 +3572,15 @@ function ApprovedVisualEditor({ navigate, setToast }: AnyRecord) {
           [Boxes, "Elementos"],
           [Layers3, "Camadas"],
         ].map(([Icon, label], i) => (
-          <button className={i === 5 ? "is-active" : ""} key={String(label)}>
+          <button
+            data-action-id="VISUAL-SELECT-TOOL"
+            className={visualTool === label ? "is-active" : ""}
+            key={String(label)}
+            onClick={() => {
+              setVisualTool(String(label));
+              setToast(`${String(label)} selecionado`);
+            }}
+          >
             <Icon />
             <span>{label}</span>
           </button>
@@ -2615,37 +3592,95 @@ function ApprovedVisualEditor({ navigate, setToast }: AnyRecord) {
         </h2>
         {layers.map((x, i) => (
           <button
+            data-action-id="VISUAL-SELECT-LAYER"
             className={layer === i ? "is-active" : ""}
             onClick={() => setLayer(i)}
             key={x}
           >
-            ◉　{i < 2 ? "T" : "▣"}
-            <span>{x}</span>♙
+            <span>{i < 2 ? "Texto" : "Imagem"}</span>
+            <span>{x}</span>
           </button>
         ))}
-        <Button icon={Plus}>Adicionar camada</Button>
+        <Button
+          icon={Plus}
+          title="A criação de novas camadas será liberada após o editor persistir geometria completa."
+        >
+          Adicionar camada
+        </Button>
       </aside>
       <main className="cx-visual-canvas">
         <div className="cx-visual-toolbar">
-          <button>Bricolage Grotesque</button>
-          <button>Semibold</button>
-          <button>76</button>
-          <button>▣</button>
-          <button>☰</button>
-          <button>X 90</button>
-          <button>Y 120</button>
+          <button
+            data-action-id="VISUAL-TRANSFORM-LAYER"
+            onClick={() =>
+              setFontFamily((current) =>
+                current === "Bricolage Grotesque" ? "Manrope" : "Bricolage Grotesque",
+              )
+            }
+          >
+            {fontFamily}
+          </button>
+          <button
+            data-action-id="VISUAL-TRANSFORM-LAYER"
+            onClick={() =>
+              setFontWeight((current) =>
+                current === "Semibold" ? "Bold" : "Semibold",
+              )
+            }
+          >
+            {fontWeight}
+          </button>
+          <button
+            data-action-id="VISUAL-TRANSFORM-LAYER"
+            onClick={() => setFontSize((current) => (current === 76 ? 64 : 76))}
+          >
+            {fontSize}
+          </button>
+          <button
+            data-action-id="VISUAL-TRANSFORM-LAYER"
+            aria-label="Alternar alinhamento do texto"
+            aria-pressed={textAlign === "center"}
+            onClick={() =>
+              setTextAlign((current) => (current === "left" ? "center" : "left"))
+            }
+          >
+            Alinhamento
+          </button>
+          <button
+            data-action-id="VISUAL-TRANSFORM-LAYER"
+            onClick={() => setTextAlign((current) => (current === "left" ? "center" : "left"))}
+          >
+            {textAlign === "left" ? "À esquerda" : "Centralizado"}
+          </button>
+          <button data-action-id="VISUAL-TRANSFORM-LAYER" onClick={() => setPositionX((current) => current + 8)}>
+            X {positionX}
+          </button>
+          <button data-action-id="VISUAL-TRANSFORM-LAYER" onClick={() => setPositionY((current) => current + 8)}>
+            Y {positionY}
+          </button>
         </div>
         <div className="cx-visual-stage">
-          <div>
-            <img src={phase3Arts[0]} />
+          <div
+            className={`${designPanel === "motion" && motionPreviewing && !motionBefore ? `is-motion-preview is-${motionPreset}` : ""} ${motionReduced ? "is-reduced-motion" : ""}`}
+            onAnimationEnd={() => setMotionPreviewing(false)}
+          >
+            <img
+              src={phase3Arts[0]}
+              alt="Composição visual do slide ativo"
+            />
             <span className="cx-safe-area" />
-            <span className="cx-selection">
+            <span
+              className="cx-selection"
+              style={{
+                fontFamily,
+                fontSize: `${fontSize}px`,
+                fontWeight: fontWeight === "Bold" ? 700 : 600,
+                textAlign,
+                transform: `translate(${positionX - 90}px, ${positionY - 120}px)`,
+              }}
+            >
               <strong>
-                O BRASIL
-                <br />
-                CABE EM UMA
-                <br />
-                XÍCARA.
+                {headline.toUpperCase()}
               </strong>
               <i />
               <i />
@@ -2655,32 +3690,239 @@ function ApprovedVisualEditor({ navigate, setToast }: AnyRecord) {
           </div>
         </div>
         <div className="cx-zoom">
-          <button onClick={() => setZoom(Math.max(40, zoom - 5))}>−</button>
+          <button data-action-id="VISUAL-SET-ZOOM" onClick={() => setZoom(Math.max(40, zoom - 5))}>−</button>
           {zoom}%
-          <button onClick={() => setZoom(Math.min(120, zoom + 5))}>+</button>
-          　☝　⌗
+          <button data-action-id="VISUAL-SET-ZOOM" onClick={() => setZoom(Math.min(120, zoom + 5))}>+</button>
         </div>
       </main>
       <aside className="cx-design-approved">
         <nav>
-          <button className="is-active">Design</button>
-          <button>Efeitos · Beta</button>
-          <button>Movimento · Depois</button>
+          <button
+            data-action-id="VISUAL-SELECT-PANEL"
+            className={designPanel === "design" ? "is-active" : ""}
+            onClick={() => {
+              setDesignPanel("design");
+              navigate(`${pathname}?mode=visual`, { replace: true });
+            }}
+          >
+            Design
+          </button>
+          <button disabled title="Efeitos chegarão em uma etapa posterior">Efeitos · Depois</button>
+          <Button
+            className={designPanel === "motion" ? "is-active" : ""}
+            actionId="VISUAL-OPEN-MOTION"
+            onClick={() => {
+              setDesignPanel("motion");
+              setVisualTool("Movimento");
+              navigate(`${pathname}?mode=visual&tool=motion`, { replace: true });
+            }}
+          >
+            Movimento
+          </Button>
         </nav>
+        {designPanel === "motion" ? (
+          <div className="cx-motion-inspector" data-testid="motion-inspector">
+            <header>
+              <span>Motion Inspector</span>
+              <small>Camada: {layers[layer]}</small>
+            </header>
+            {motionLayerUnavailable && (
+              <StateBanner
+                tone="orange"
+                title="Camada ainda não vinculada"
+                detail="Selecione a headline, que é a camada editável persistida neste documento."
+              />
+            )}
+            {motionLayerLocked && (
+              <StateBanner
+                tone="orange"
+                title="Camada bloqueada"
+                detail="O movimento não pode alterar uma camada protegida."
+              />
+            )}
+            <section>
+              <h2>Intenção</h2>
+              <div className="cx-motion-presets" role="group" aria-label="Intenção do movimento">
+                {[
+                  ["subtle", "Sutil"],
+                  ["balanced", "Equilibrado"],
+                  ["emphasis", "Ênfase"],
+                ].map(([value, label]) => (
+                  <button
+                    data-action-id="MOTION-SELECT-PRESET"
+                    key={value}
+                    className={motionPreset === value ? "is-active" : ""}
+                    onClick={() => setMotionPreset(value as typeof motionPreset)}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+              <label>
+                Duração <b>{motionDuration} frames</b>
+                <input
+                  data-action-id="MOTION-CONFIGURE-PREVIEW"
+                  aria-label="Duração do movimento em frames"
+                  type="range"
+                  min="24"
+                  max="120"
+                  step="6"
+                  value={motionDuration}
+                  onChange={(event) => setMotionDuration(Number(event.target.value))}
+                />
+              </label>
+              <label className="cx-motion-toggle">
+                <input
+                  data-action-id="MOTION-CONFIGURE-PREVIEW"
+                  type="checkbox"
+                  checked={motionReduced}
+                  onChange={(event) => setMotionReduced(event.target.checked)}
+                />
+                Respeitar movimento reduzido
+              </label>
+            </section>
+            <section>
+              <h2>Comparação segura</h2>
+              <div className="cx-motion-compare">
+                <button
+                  data-action-id="MOTION-COMPARE"
+                  className={motionBefore ? "is-active" : ""}
+                  onClick={() => setMotionBefore(true)}
+                >
+                  Antes
+                </button>
+                <button
+                  data-action-id="MOTION-COMPARE"
+                  className={!motionBefore ? "is-active" : ""}
+                  onClick={() => setMotionBefore(false)}
+                >
+                  Depois
+                </button>
+              </div>
+              <Button actionId="MOTION-PREVIEW" onClick={previewMotion}>
+                <Play size={15} aria-hidden="true" /> Pré-visualizar localmente
+              </Button>
+            </section>
+            {motionStatus === "loading" && (
+              <StateBanner tone="blue" title="Recuperando movimento salvo…" />
+            )}
+            {motionError && (
+              <StateBanner
+                tone="orange"
+                title="O movimento não foi alterado"
+                detail={motionError}
+              />
+            )}
+            {motionRecord && (
+              <section className="cx-motion-record">
+                <small>
+                  {motionRecord.graph.status === "reviewed" ? "APLICADO" : "SUGESTÃO"}
+                </small>
+                <b>{motionRecord.graph.tracks.length} trilhas · revisão {motionRecord.graph.documentRevision}</b>
+                <p>
+                  {motionStale
+                    ? "Documento mudou: esta sugestão ficou histórica."
+                    : motionProjection?.previewOnly
+                      ? "Projeção de preview; aplicação humana pendente."
+                      : motionRecord.graph.status === "reviewed"
+                        ? "Projeção HyperFrames liberada para produção."
+                        : "Sugestão recuperada e ainda não aplicada."}
+                </p>
+              </section>
+            )}
+            <footer>
+              <Button
+                actionId="MOTION-SAVE-SUGGESTION"
+                disabled={
+                  motionStatus === "saving" ||
+                  motionStatus === "reviewing" ||
+                  motionLayerUnavailable ||
+                  motionLayerLocked
+                }
+                onClick={() => void saveMotionSuggestion()}
+              >
+                {motionStatus === "saving" ? "Salvando…" : "Salvar sugestão"}
+              </Button>
+              <Button
+                tone="primary"
+                actionId="MOTION-APPLY"
+                disabled={
+                  !motionRecord ||
+                  motionRecord.graph.status === "reviewed" ||
+                  motionStatus === "reviewing" ||
+                  motionStale
+                }
+                onClick={() => void applyMotion()}
+              >
+                {motionStatus === "reviewing" ? "Validando…" : "Revisar e aplicar"}
+              </Button>
+              <button
+                data-action-id="MOTION-RESET-PREVIEW"
+                className="cx-motion-reset"
+                onClick={() => {
+                  setMotionPreset("balanced");
+                  setMotionDuration(60);
+                  setMotionBefore(true);
+                  setMotionPreviewing(false);
+                  setToast("A prévia local foi redefinida; registros salvos foram preservados");
+                }}
+              >
+                Redefinir apenas a prévia
+              </button>
+            </footer>
+          </div>
+        ) : (
+          <>
         <h2>Tipografia</h2>
-        <input value="Bricolage Grotesque" readOnly />
+        <textarea
+          data-action-id="VISUAL-EDIT-HEADLINE"
+          className="cx-visual-headline-field"
+          aria-label="Headline visual"
+          disabled={!localStudioMode && studio.status !== "ready"}
+          value={headline}
+          onChange={(event) => {
+            const nextHeadline = event.target.value;
+            setHeadline(nextHeadline);
+            setSynced(false);
+            if (!localStudioMode) {
+              studio.queueSave({
+                headlines: [nextHeadline],
+                narrative: { headline: nextHeadline },
+              });
+            }
+          }}
+        />
+        {studio.status === "conflict" && (
+          <StateBanner
+            tone="orange"
+            title="Este documento mudou em outra sessão."
+            action="Recarregar versão atual"
+            onAction={() => void studio.reload()}
+          />
+        )}
+        <input
+          aria-label="Família tipográfica selecionada"
+          value="Bricolage Grotesque"
+          readOnly
+        />
         <div>
-          <input value="Semibold" readOnly />
-          <input value="76 px" readOnly />
+          <input aria-label="Peso tipográfico selecionado" value="Semibold" readOnly />
+          <input aria-label="Tamanho tipográfico selecionado" value="76 px" readOnly />
         </div>
         <small>Altura da linha　 Espaçamento　 Alinhamento</small>
-        <p>0,95　　　　 0%　　　　 ☰ ≡</p>
+        <p>0,95　　　　 0%　　　　 Alinhamento à esquerda</p>
         <hr />
         <h2>Posição e tamanho</h2>
         <div className="cx-design-grid">
           {["X 90", "Y 120", "L 900", "A 540", "↻ 0°", "Opacidade 100%"].map(
             (x) => (
-              <button key={x}>{x}</button>
+              <button
+                key={x}
+                disabled
+                title="Edite posição e tamanho pela barra do canvas neste slice."
+              >
+                {x}
+              </button>
             ),
           )}
         </div>
@@ -2689,18 +3931,25 @@ function ApprovedVisualEditor({ navigate, setToast }: AnyRecord) {
         <p>✓ Contraste aprovado</p>
         <p>✓ Headline dentro da área segura</p>
         <p>✓ Tom visual alinhado à Memória v4</p>
-        <Button onClick={() => setToast("Composition Coach aberto")}>
+        <Button actionId="VISUAL-OPEN-COACH" onClick={() => setToast("Composition Coach aberto")}>
           ✦ Ver Composition Coach
         </Button>
         <hr />
         <h2>Plano de fundo</h2>
         <article>
-          <img src={phase3Arts[0]} />
+          <img src={phase3Arts[0]} alt="Textura de fundo selecionada" />
           <span>
             Textura de fundo · Café Aurora
             <small>Asset aprovado da campanha</small>
           </span>
-          <button>Substituir</button>
+          <button
+            data-action-id="VISUAL-REPLACE-ASSET"
+            onClick={() =>
+              navigate(`/library/assets?returnTo=${encodeURIComponent(`${pathname}${search || ""}`)}`)
+            }
+          >
+            Substituir
+          </button>
         </article>
         <hr />
         <h2>Recursos avançados</h2>
@@ -2709,16 +3958,24 @@ function ApprovedVisualEditor({ navigate, setToast }: AnyRecord) {
           "Máscaras　Beta △",
           "Modos de mesclagem　Beta △",
         ].map((x) => (
-          <button className="cx-disabled" key={x}>
+          <button
+            className="cx-disabled"
+            key={x}
+            disabled
+            title="Recurso em avaliação; nenhuma alteração será aplicada."
+          >
             {x}
           </button>
         ))}
+          </>
+        )}
       </aside>
       <div
         className={`cx-slide-strip-approved ${slidesOpen ? "" : "is-collapsed"}`}
       >
         <b>Slides do carrossel</b>
         <button
+          data-action-id="VISUAL-SELECT-PANEL"
           className="cx-slide-strip-toggle"
           onClick={() => setSlidesOpen(!slidesOpen)}
         >
@@ -2726,60 +3983,249 @@ function ApprovedVisualEditor({ navigate, setToast }: AnyRecord) {
         </button>
         <div>
           {[1, 2, 3, 4, 5, 6].map((x) => (
-            <button className={x === 1 ? "is-active" : ""} key={x}>
-              <img src={x === 6 ? phase3Arts[3] : phase3Arts[0]} />
+            <button
+              data-action-id="VISUAL-SELECT-LAYER"
+              className={x === activeSlide ? "is-active" : ""}
+              aria-pressed={x === activeSlide}
+              aria-label={`Selecionar slide ${x}`}
+              onClick={() => setActiveSlide(x)}
+              key={x}
+            >
+              <img src={x === 6 ? phase3Arts[3] : phase3Arts[0]} alt="" />
               <span>{x}</span>
             </button>
           ))}
-          <button className="cx-add-slide">
+          <button
+            className="cx-add-slide"
+            disabled
+            title="Adicione slides no Studio de Carrossel para preservar a narrativa e o versionamento."
+          >
             <Plus />
             Adicionar slide
           </button>
           <aside>
-            <button>⌁ Variações</button>
-            <button>▣ Referências</button>
+            <button
+              disabled
+              title="Crie variações pelo fluxo Reuse para preservar lineage."
+            >
+              Variações
+            </button>
+            <button
+              data-action-id="VISUAL-OPEN-REFERENCES"
+              onClick={() => navigate("/library/assets")}
+            >
+              Referências
+            </button>
           </aside>
         </div>
       </div>
+      {historyOpen && (
+        <StudioVersionHistory
+          studio={studio}
+          onClose={() => setHistoryOpen(false)}
+          setToast={setToast}
+        />
+      )}
     </section>
   );
 }
 
-function ApprovedCarouselBuilder({ setToast }: AnyRecord) {
-  const initial = [
-    "Ritual de foco",
-    "Mais ruído, menos clareza",
-    "Foco é escolha",
-    "Um ritual muda o ritmo",
-    "Comece pequeno",
-    "Salve para amanhã",
-  ];
-  const [slides, setSlides] = React.useState(initial);
+function ApprovedCarouselBuilder({
+  data,
+  demo,
+  navigate,
+  pathname,
+  setToast,
+}: AnyRecord) {
+  const routeId = pathname.split("/")[2];
+  const targetId = demo ? "post-ritual" : routeId;
+  const localStudioMode = demo || !studioKernelEnabled;
+  const post = data.snapshot?.posts?.find((item: AnyRecord) => item.id === routeId);
+  const studio = useStudioDocument({
+    enabled: studioKernelEnabled && !demo && Boolean(post),
+    workspaceId: data.activeWorkspace?.id,
+    postId: post?.id,
+    campaignId: post?.campaignId ?? undefined,
+    contentType: "carousel",
+    title: post?.title || "Carrossel",
+    initialHeadlines: studioCarouselHeadlines,
+    objective: post?.objective || "Criar um carrossel com progressão narrativa",
+    audience: "Audiência do conteúdo",
+    brandRevision: activeBrandRevision(data),
+    opportunityId: linkedOpportunityId(data, post),
+  });
+  const [slides, setSlides] = React.useState(studioCarouselHeadlines);
   const [selected, setSelected] = React.useState(0);
   const [shared, setShared] = React.useState(false);
-  const [title, setTitle] = React.useState("FOCO NÃO É SILÊNCIO. É ESCOLHA.");
+  const [previewOpen, setPreviewOpen] = React.useState(false);
+  const [historyOpen, setHistoryOpen] = React.useState(false);
+  const [canvasTab, setCanvasTab] = React.useState("Conteúdo");
+  const [inspectorTab, setInspectorTab] = React.useState("Conteúdo");
+  const [transition, setTransition] = React.useState("Corte limpo · 0,4s");
+  const [cta, setCta] = React.useState("Salve para amanhã");
+  const carouselRole = (index: number) =>
+    ["promessa", "tensão", "virada", "prova", "ação", "cta"][index] ||
+    "apoio";
+  React.useEffect(() => {
+    const savedHeadlines = studioHeadlines(studio.document);
+    if (savedHeadlines.length > 1) setSlides(savedHeadlines);
+  }, [studio.document]);
+  React.useEffect(() => {
+    if (!previewOpen) return;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setPreviewOpen(false);
+    };
+    window.addEventListener("keydown", closeOnEscape);
+    return () => window.removeEventListener("keydown", closeOnEscape);
+  }, [previewOpen]);
+  const title = slides[selected] || "Novo momento";
+  const saveCarousel = async () => {
+    if (localStudioMode) {
+      setToast("Carrossel salvo");
+      return;
+    }
+    try {
+      await studio.save({
+        headlines: slides,
+        narrative: {
+          arc: slides,
+          roles: slides.map((_, index) => carouselRole(index)),
+          selectedSlide: selected + 1,
+        },
+      });
+      setToast("Carrossel salvo");
+    } catch {
+      setToast("O carrossel não pôde ser salvo");
+    }
+  };
+  const exportCarousel = async () => {
+    if (localStudioMode) {
+      setToast("Exportação demonstrativa preparada");
+      return;
+    }
+    try {
+      await studio.exportPng();
+      setToast("Pacote PNG ordenado exportado para a biblioteca");
+    } catch {
+      setToast("A exportação não pôde ser concluída");
+    }
+  };
+  const updateSlides = (next: string[]) => {
+    setSlides(next);
+    if (!localStudioMode) {
+      studio.queueSave({
+        headlines: next,
+        narrative: {
+          arc: next,
+          roles: next.map((_, index) => carouselRole(index)),
+          selectedSlide: Math.min(selected + 1, next.length),
+        },
+      });
+    }
+  };
+  const moveSelected = (direction: -1 | 1) => {
+    const destination = selected + direction;
+    if (destination < 0 || destination >= slides.length) return;
+    const next = [...slides];
+    [next[selected], next[destination]] = [next[destination], next[selected]];
+    setSelected(destination);
+    updateSlides(next);
+  };
+  const duplicateSelected = () => {
+    const next = [...slides];
+    next.splice(selected + 1, 0, `${slides[selected]} — variação`);
+    setSelected(selected + 1);
+    updateSlides(next);
+  };
+  const removeSelected = () => {
+    if (slides.length <= 2) return;
+    const next = slides.filter((_, index) => index !== selected);
+    setSelected(Math.min(selected, next.length - 1));
+    updateSlides(next);
+  };
+  const reviewCarousel = async () => {
+    if (localStudioMode) {
+      navigate(`/approvals/${targetId}?view=creative`);
+      return;
+    }
+    try {
+      await studio.requestReview();
+      navigate(`/approvals/${targetId}?view=creative`);
+    } catch {
+      setToast("A revisão não pôde ser solicitada");
+    }
+  };
   return (
     <section className="cx-carousel-approved">
       <header>
         <strong>Clicko*</strong>
-        <b>Carrossel — Ritual de foco</b>
-        <span>Salvo agora</span>
+        <b>Carrossel — {post?.title || "Ritual de foco"}</b>
+        <span>
+          {studio.status === "loading" ? "Abrindo…" : studio.status === "saving" ? "Salvando…" : studio.status === "dirty" ? "Alterações pendentes" : studio.status === "conflict" ? "Conflito de edição" : studio.status === "offline" ? "Offline · alterações pendentes" : studio.status === "error" ? "Falha ao sincronizar" : `v${studio.document?.version || 1} · Salvo agora`}
+        </span>
         <div />
-        <Button>↶</Button>
-        <Button>Visualizar</Button>
         <Button
-          icon={shared ? Check : Share2}
-          onClick={() => setShared(!shared)}
+          actionId="CAROUSEL-UNDO"
+          disabled={!localStudioMode}
+          onClick={() => setToast("Desfazer permanece disponível somente no modo demonstrativo.")}
         >
-          {shared ? "Link copiado" : "Compartilhar"}
+          ↶
         </Button>
-        <Button tone="primary">Exportar</Button>
+        <Button
+          actionId="CAROUSEL-VISUALIZE-SET"
+          onClick={() => setPreviewOpen(true)}
+        >
+          Visualizar conjunto
+        </Button>
+        <Button
+          actionId="CAROUSEL-SHARE"
+          icon={shared ? Check : Share2}
+          onClick={() => {
+            if (localStudioMode) setShared(!shared);
+            else setToast("Compartilhamento externo ainda não está habilitado.");
+          }}
+        >
+          {localStudioMode && shared ? "Link copiado" : "Compartilhar"}
+        </Button>
+        <Button
+          actionId="CAROUSEL-SAVE"
+          disabled={!localStudioMode && studio.status !== "ready"}
+          onClick={() => void saveCarousel()}
+        >
+          Salvar
+        </Button>
+        <Button
+          tone="primary"
+          actionId="CAROUSEL-EXPORT"
+          disabled={!localStudioMode && !studio.document}
+          onClick={() => void exportCarousel()}
+        >
+          Exportar
+        </Button>
+        <Button
+          actionId="CAROUSEL-CREATE-VERSION"
+          disabled={!localStudioMode && !studio.document}
+          onClick={() => void studio.createVersion("Direção do carrossel").then(() => setToast("Nova versão do carrossel criada")).catch(() => setToast("A versão não pôde ser criada"))}
+        >
+          Criar versão
+        </Button>
+        <Button
+          actionId="CAROUSEL-OPEN-HISTORY"
+          disabled={localStudioMode || !studio.document}
+          onClick={() => setHistoryOpen(true)}
+        >
+          Histórico
+        </Button>
+        <Button actionId="CAROUSEL-SEND-REVIEW" onClick={() => void reviewCarousel()}>
+          Revisar
+        </Button>
       </header>
       <aside className="cx-carousel-narrative">
         <small>NARRATIVA</small>
         <p>{slides.length} slides · 48s de leitura</p>
         {slides.map((text, i) => (
           <button
+            data-action-id="CAROUSEL-SELECT-SLIDE"
             className={selected === i ? "is-active" : ""}
             onClick={() => setSelected(i)}
             key={`${text}-${i}`}
@@ -2797,10 +4243,39 @@ function ApprovedCarouselBuilder({ setToast }: AnyRecord) {
         ))}
         <Button
           icon={Plus}
-          onClick={() => setSlides([...slides, "Novo momento"])}
+          actionId="CAROUSEL-ADD-SLIDE"
+          onClick={() => updateSlides([...slides, "Novo momento"])}
         >
           Adicionar slide
         </Button>
+        <div className="cx-carousel-order-tools" aria-label="Organizar slide selecionado">
+          <button
+            data-action-id="CAROUSEL-MOVE-SLIDE"
+            disabled={selected === 0}
+            onClick={() => moveSelected(-1)}
+            aria-label="Mover slide para cima"
+          >
+            ↑
+          </button>
+          <button
+            data-action-id="CAROUSEL-MOVE-SLIDE"
+            disabled={selected === slides.length - 1}
+            onClick={() => moveSelected(1)}
+            aria-label="Mover slide para baixo"
+          >
+            ↓
+          </button>
+          <button data-action-id="CAROUSEL-DUPLICATE-SLIDE" onClick={duplicateSelected}>
+            Duplicar
+          </button>
+          <button
+            data-action-id="CAROUSEL-DELETE-SLIDE"
+            disabled={slides.length <= 2}
+            onClick={removeSelected}
+          >
+            Excluir
+          </button>
+        </div>
         <footer>
           Ritmo narrativo
           <br />
@@ -2809,9 +4284,17 @@ function ApprovedCarouselBuilder({ setToast }: AnyRecord) {
       </aside>
       <main className="cx-carousel-stage">
         <nav>
-          <button className="is-active">Conteúdo</button>
-          <button>Design</button>
-          <button>Animação</button>
+          {["Conteúdo", "Design", "Animação"].map((item) => (
+            <button
+              data-action-id="CAROUSEL-SELECT-TOOL"
+              className={canvasTab === item ? "is-active" : ""}
+              aria-pressed={canvasTab === item}
+              onClick={() => setCanvasTab(item)}
+              key={item}
+            >
+              {item}
+            </button>
+          ))}
           <span>−　82%　+</span>
         </nav>
         <div className="cx-carousel-art">
@@ -2833,6 +4316,7 @@ function ApprovedCarouselBuilder({ setToast }: AnyRecord) {
         </div>
         <div className="cx-carousel-transition">
           <button
+            data-action-id="CAROUSEL-STEP-SLIDE"
             onClick={() =>
               setSelected((selected - 1 + slides.length) % slides.length)
             }
@@ -2840,26 +4324,77 @@ function ApprovedCarouselBuilder({ setToast }: AnyRecord) {
             ‹
           </button>
           <span>
-            Transição entre slides<button>Corte limpo · 0,4s</button>
+            Transição entre slides
+            <button
+              data-action-id="CAROUSEL-SELECT-TOOL"
+              onClick={() =>
+                setTransition((current) =>
+                  current === "Corte limpo · 0,4s"
+                    ? "Dissolver · 0,6s"
+                    : "Corte limpo · 0,4s",
+                )
+              }
+            >
+              {transition}
+            </button>
           </span>
-          <button>▶</button>
-          <button onClick={() => setSelected((selected + 1) % slides.length)}>
+          <button
+            data-action-id="CAROUSEL-VISUALIZE-SET"
+            aria-label="Abrir preview contínuo"
+            onClick={() => setPreviewOpen(true)}
+          >
+            Reproduzir
+          </button>
+          <button
+            data-action-id="CAROUSEL-STEP-SLIDE"
+            onClick={() => setSelected((selected + 1) % slides.length)}
+          >
             ›
           </button>
         </div>
       </main>
       <aside className="cx-carousel-inspector">
         <nav>
-          {["Conteúdo", "Design", "Marca", "Sequência"].map((x, i) => (
-            <button className={i === 0 ? "is-active" : ""} key={x}>
+          {["Conteúdo", "Design", "Marca", "Sequência"].map((x) => (
+            <button
+              data-action-id="CAROUSEL-SELECT-TOOL"
+              className={inspectorTab === x ? "is-active" : ""}
+              aria-pressed={inspectorTab === x}
+              onClick={() => setInspectorTab(x)}
+              key={x}
+            >
               {x}
             </button>
           ))}
         </nav>
         <small>FUNÇÃO NARRATIVA</small>
-        <button>Promessa principal</button>
+        <button
+          disabled
+          title="A função narrativa é calculada pela posição; reordene o slide para alterá-la."
+        >
+          Promessa principal
+        </button>
         <small>TÍTULO</small>
-        <textarea value={title} onChange={(e) => setTitle(e.target.value)} />
+        <textarea
+          data-action-id="CAROUSEL-EDIT-TITLE"
+          aria-label="Título do slide"
+          disabled={!localStudioMode && studio.status !== "ready"}
+          value={title}
+          onChange={(event) => {
+            const next = slides.map((headline, index) =>
+              index === selected ? event.target.value : headline,
+            );
+            updateSlides(next);
+          }}
+        />
+        {studio.status === "conflict" && (
+          <StateBanner
+            tone="orange"
+            title="Este carrossel mudou em outra sessão."
+            action="Recarregar versão atual"
+            onAction={() => void studio.reload()}
+          />
+        )}
         <small>TEXTO DE APOIO</small>
         <textarea defaultValue="Um ritual simples ajuda a separar o que importa do que apenas chama." />
         <small>ASSET PRINCIPAL</small>
@@ -2868,10 +4403,29 @@ function ApprovedCarouselBuilder({ setToast }: AnyRecord) {
           <span>
             ritual_de_foco_01.jpg<small>Campanha Aurora · Licenciado</small>
           </span>
-          <button>Trocar</button>
+          <button
+            data-action-id="CAROUSEL-REPLACE-ASSET"
+            onClick={() =>
+              navigate(`/library/assets?returnTo=${encodeURIComponent(pathname)}`)
+            }
+          >
+            Trocar
+          </button>
         </article>
         <small>CTA</small>
-        <button>Salve para amanhã</button>
+        <button
+          data-action-id="CAROUSEL-SELECT-TOOL"
+          onClick={() => {
+            setCta((current) =>
+              current === "Salve para amanhã"
+                ? "Conheça o ritual"
+                : "Salve para amanhã",
+            );
+            setToast("CTA alterado no rascunho atual.");
+          }}
+        >
+          {cta}
+        </button>
         <small>CONSISTÊNCIA DA SEQUÊNCIA</small>
         <p className="cx-sequence-check">
           ✓ Tipografia consistente
@@ -2880,26 +4434,94 @@ function ApprovedCarouselBuilder({ setToast }: AnyRecord) {
         </p>
         <StateBanner
           tone="orange"
-          title="✦ Sugestão Clicko Intelligence"
+          title="Sugestão Clicko Intelligence"
           detail="Encurte o título do slide 03 para preservar o ritmo da sequência."
         />
         <button
+          data-action-id="CAROUSEL-APPLY-SUGGESTION"
           className="cx-apply-suggestion"
           onClick={() => {
-            setTitle("FOCO É ESCOLHA.");
+            updateSlides(
+              slides.map((headline, index) =>
+                index === selected ? "FOCO É ESCOLHA." : headline,
+              ),
+            );
             setToast("Sugestão aplicada");
           }}
         >
           Aplicar sugestão
         </button>
-        <button>Ajustes avançados　⌄</button>
+        <button
+          disabled
+          title="Ajustes avançados ainda não estão disponíveis neste slice."
+        >
+          Ajustes avançados
+        </button>
       </aside>
+      {previewOpen && (
+        <div className="cx-carousel-preview-backdrop" role="presentation">
+          <section
+            className="cx-carousel-set-preview"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="carousel-preview-title"
+          >
+            <header>
+              <div>
+                <small>PREVIEW CONTÍNUO</small>
+                <h2 id="carousel-preview-title">Carrossel completo</h2>
+                <p>{slides.length} slides na ordem que será exportada.</p>
+              </div>
+              <button
+                data-action-id="CAROUSEL-CLOSE-PREVIEW"
+                onClick={() => setPreviewOpen(false)}
+                aria-label="Fechar preview do carrossel"
+              >
+                <X />
+              </button>
+            </header>
+            <div>
+              {slides.map((headline, index) => (
+                <button
+                  key={`${headline}-preview-${index}`}
+                  data-action-id="CAROUSEL-SELECT-PREVIEW-SLIDE"
+                  onClick={() => {
+                    setSelected(index);
+                    setPreviewOpen(false);
+                  }}
+                  aria-label={`Abrir slide ${index + 1}: ${headline}`}
+                >
+                  <img src="/canonical/figma/phase3/s17-visual.png" alt="" />
+                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  <small>{carouselRole(index).toUpperCase()}</small>
+                  <strong>{headline}</strong>
+                </button>
+              ))}
+            </div>
+          </section>
+        </div>
+      )}
+      {historyOpen && (
+        <StudioVersionHistory
+          studio={studio}
+          onClose={() => setHistoryOpen(false)}
+          setToast={setToast}
+        />
+      )}
     </section>
   );
 }
 
 function ContentBoard({ data, demo, navigate }: AnyRecord) {
   const posts = demo ? demoPosts : data.snapshot?.posts || [];
+  const [viewMode, setViewMode] = React.useState<"board" | "list">("board");
+  const [statusFilter, setStatusFilter] = React.useState<string | null>(null);
+  const [query, setQuery] = React.useState("");
+  const visiblePosts = posts.filter(
+    (post: AnyRecord) =>
+      (!statusFilter || post.status === statusFilter) &&
+      (!query || post.title?.toLowerCase().includes(query.toLowerCase())),
+  );
   return (
     <Page
       eyebrow="Produção"
@@ -2909,6 +4531,7 @@ function ContentBoard({ data, demo, navigate }: AnyRecord) {
         <Button
           tone="primary"
           icon={Plus}
+          actionId="HOME-OPEN-CREATE"
           onClick={() => navigate("/dashboard?create=open")}
         >
           Novo conteúdo
@@ -2917,25 +4540,46 @@ function ContentBoard({ data, demo, navigate }: AnyRecord) {
     >
       <div className="cx-toolbar">
         <div className="cx-view-switch">
-          <button className="is-active">
+          <button
+            data-action-id="CONTENT-HUB-SELECT-VIEW"
+            className={viewMode === "board" ? "is-active" : ""}
+            aria-pressed={viewMode === "board"}
+            onClick={() => setViewMode("board")}
+          >
             <Grid2X2 size={16} />
             Quadro
           </button>
-          <button>
+          <button
+            data-action-id="CONTENT-HUB-SELECT-VIEW"
+            className={viewMode === "list" ? "is-active" : ""}
+            aria-pressed={viewMode === "list"}
+            onClick={() => setViewMode("list")}
+          >
             <LayoutGrid size={16} />
             Lista
           </button>
         </div>
-        <button>
+        <button
+          data-action-id="CONTENT-HUB-SELECT-FILTER"
+          aria-pressed={Boolean(statusFilter)}
+          onClick={() =>
+            setStatusFilter((current) => (current ? null : "in_review"))
+          }
+        >
           <ListFilter size={16} />
-          Filtrar
+          {statusFilter ? "Limpar filtro" : "Filtrar revisão"}
         </button>
         <label>
           <Search size={15} />
-          <input placeholder="Buscar conteúdo" />
+          <input
+            data-action-id="REVIEW-FILTER-CONTENT"
+            placeholder="Buscar conteúdo"
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
+          />
         </label>
       </div>
-      <div className="cx-board">
+      <div className={`cx-board cx-board--${viewMode}`}>
         {[
           ["Ideias", "draft"],
           ["Em produção", "in_review"],
@@ -2946,15 +4590,16 @@ function ContentBoard({ data, demo, navigate }: AnyRecord) {
             <header>
               <b>{title}</b>
               <span>
-                {posts.filter((p: AnyRecord) => p.status === status).length ||
+                {visiblePosts.filter((p: AnyRecord) => p.status === status).length ||
                   [3, 2, 2, 1][col]}
               </span>
               <Plus size={15} />
             </header>
-            {posts
+            {visiblePosts
               .filter((p: AnyRecord) => p.status === status)
               .map((p: AnyRecord) => (
                 <button
+                  data-action-id="CONTENT-HUB-OPEN-ITEM"
                   className="cx-content-card"
                   key={p.id}
                   onClick={() => navigate(`/content/${p.id}`)}
@@ -2972,8 +4617,9 @@ function ContentBoard({ data, demo, navigate }: AnyRecord) {
                   </footer>
                 </button>
               ))}
-            {!posts.some((p: AnyRecord) => p.status === status) && (
+            {!visiblePosts.some((p: AnyRecord) => p.status === status) && (
               <button
+                data-action-id="CAMPAIGN-CREATE-PIECE"
                 className="cx-ghost-card"
                 onClick={() => navigate("/content/draft/edit?mode=visual")}
               >
@@ -2993,6 +4639,15 @@ function EditorSurface({ data, demo, mode, navigate, setToast }: AnyRecord) {
     "O primeiro gole não acorda apenas o corpo. Ele abre espaço para o que importa.",
   );
   const [saved, setSaved] = React.useState("Salvo agora");
+  const [activeTool, setActiveTool] = React.useState("Selecionar");
+  const [inspectorTab, setInspectorTab] = React.useState("Design");
+  const [fontFamily, setFontFamily] = React.useState("Manrope");
+  const [fontSize, setFontSize] = React.useState(64);
+  const [alignment, setAlignment] = React.useState<"left" | "center" | "right">(
+    "center",
+  );
+  const [carouselPage, setCarouselPage] = React.useState(1);
+  const [carouselPages, setCarouselPages] = React.useState(5);
   const visual = mode !== "editorial";
   const carousel = mode === "carousel";
   const save = async () => {
@@ -3041,7 +4696,10 @@ function EditorSurface({ data, demo, mode, navigate, setToast }: AnyRecord) {
   return (
     <div className="cx-editor">
       <div className="cx-editor-top">
-        <button onClick={() => navigate("/campaigns/active")}>
+        <button
+          data-action-id="EDITOR-BACK-CAMPAIGN"
+          onClick={() => navigate("/campaigns/active")}
+        >
           <ArrowLeft size={17} />
           Ritual Café Aurora
         </button>
@@ -3055,6 +4713,7 @@ function EditorSurface({ data, demo, mode, navigate, setToast }: AnyRecord) {
         </span>
         <div>
           <Button
+            actionId="EDITOR-PREVIEW"
             onClick={() => navigate("/approvals/post-ritual?view=creative")}
           >
             Visualizar
@@ -3062,6 +4721,7 @@ function EditorSurface({ data, demo, mode, navigate, setToast }: AnyRecord) {
           <Button
             tone="primary"
             icon={Send}
+            actionId="EDITOR-SEND-REVIEW"
             onClick={async () => {
               await save();
               navigate(
@@ -3082,7 +4742,14 @@ function EditorSurface({ data, demo, mode, navigate, setToast }: AnyRecord) {
           [Sparkles, "IA"],
           [Upload, "Upload"],
         ].map(([Icon, label]: any) => (
-          <button key={label} title={label}>
+          <button
+            data-action-id="EDITOR-SELECT-TOOL"
+            key={label}
+            title={label}
+            className={activeTool === label ? "is-active" : ""}
+            aria-pressed={activeTool === label}
+            onClick={() => setActiveTool(label)}
+          >
             <Icon size={20} />
             <span>{label}</span>
           </button>
@@ -3099,6 +4766,7 @@ function EditorSurface({ data, demo, mode, navigate, setToast }: AnyRecord) {
             </p>
             <img src={demoMedia.pour} alt="Preparo de café filtrado" />
             <textarea
+              data-action-id="EDITOR-EDIT-COPY"
               value={caption}
               onChange={(e) => setCaption(e.target.value)}
               onBlur={save}
@@ -3125,22 +4793,48 @@ function EditorSurface({ data, demo, mode, navigate, setToast }: AnyRecord) {
       </section>
       <aside className="cx-inspector">
         <div className="cx-inspector-tabs">
-          <button className="is-active">Design</button>
-          <button>Camadas</button>
+          {["Design", "Camadas"].map((item) => (
+            <button
+              data-action-id="EDITOR-SELECT-PANEL"
+              className={inspectorTab === item ? "is-active" : ""}
+              aria-pressed={inspectorTab === item}
+              onClick={() => setInspectorTab(item)}
+              key={item}
+            >
+              {item}
+            </button>
+          ))}
         </div>
         <section>
           <small>TEXTO</small>
           <label>
             Conteúdo
             <textarea
+              data-action-id="EDITOR-EDIT-COPY"
               value={caption}
               onChange={(e) => setCaption(e.target.value)}
               onBlur={save}
             />
           </label>
           <div className="cx-inline-fields">
-            <button>Manrope</button>
-            <button>64 px</button>
+            <button
+              data-action-id="EDITOR-SET-TYPOGRAPHY"
+              onClick={() =>
+                setFontFamily((current) =>
+                  current === "Manrope" ? "Bricolage Grotesque" : "Manrope",
+                )
+              }
+            >
+              {fontFamily}
+            </button>
+            <button
+              data-action-id="EDITOR-SET-TYPOGRAPHY"
+              onClick={() =>
+                setFontSize((current) => (current === 64 ? 56 : 64))
+              }
+            >
+              {fontSize} px
+            </button>
           </div>
         </section>
         <section>
@@ -3155,26 +4849,54 @@ function EditorSurface({ data, demo, mode, navigate, setToast }: AnyRecord) {
         <section>
           <small>POSIÇÃO</small>
           <div className="cx-align-row">
-            <button>↤</button>
-            <button>↔</button>
-            <button>↦</button>
+            {(["left", "center", "right"] as const).map((item) => (
+              <button
+                data-action-id="EDITOR-ALIGN-LAYER"
+                aria-label={`Alinhar ${item}`}
+                aria-pressed={alignment === item}
+                className={alignment === item ? "is-active" : ""}
+                onClick={() => setAlignment(item)}
+                key={item}
+              >
+                {item === "left" ? "Esquerda" : item === "right" ? "Direita" : "Centro"}
+              </button>
+            ))}
           </div>
         </section>
         <section className="cx-ai-box">
           <Sparkles />
           <b>Ajustar com IA</b>
           <p>Peça contraste, uma nova hierarquia ou adapte o texto.</p>
-          <Button icon={Sparkles}>Abrir co-piloto</Button>
+          <Button
+            icon={Sparkles}
+            actionId="EDITOR-OPEN-COPILOT"
+            onClick={() => navigate("/copilot?context=editor")}
+          >
+            Abrir co-piloto
+          </Button>
         </section>
       </aside>
       {carousel && (
         <div className="cx-page-strip">
-          {[1, 2, 3, 4, 5].map((x) => (
-            <button className={x === 1 ? "is-active" : ""} key={x}>
+          {Array.from({ length: carouselPages }, (_, index) => index + 1).map((x) => (
+            <button
+              data-action-id="EDITOR-SELECT-PAGE"
+              className={x === carouselPage ? "is-active" : ""}
+              aria-pressed={x === carouselPage}
+              onClick={() => setCarouselPage(x)}
+              key={x}
+            >
               <span>{x}</span>
             </button>
           ))}
-          <button>
+          <button
+            data-action-id="EDITOR-ADD-PAGE"
+            aria-label="Adicionar página"
+            onClick={() => {
+              setCarouselPages((current) => current + 1);
+              setCarouselPage(carouselPages + 1);
+            }}
+          >
             <Plus />
           </button>
         </div>
@@ -3183,22 +4905,175 @@ function EditorSurface({ data, demo, mode, navigate, setToast }: AnyRecord) {
   );
 }
 
-function ApprovedReviewSurface({ data, demo, navigate, setToast }: AnyRecord) {
-  const post = demo ? demoPosts[0] : data.snapshot?.posts?.[0];
+function ApprovedReviewSurface({
+  data,
+  demo,
+  navigate,
+  pathname,
+  setToast,
+}: AnyRecord) {
+  const routeId = pathname.split("/")[2];
+  const post = demo
+    ? demoPosts[0]
+    : data.snapshot?.posts?.find((item: AnyRecord) => item.id === routeId);
+  const [currentDocument, setCurrentDocument] = React.useState<StudioDocumentRecord>();
+  const [studioReview, setStudioReview] = React.useState<StudioReviewRecord>();
+  const [reviewError, setReviewError] = React.useState<string>();
+  const [previewReady, setPreviewReady] = React.useState(false);
+  const [deciding, setDeciding] = React.useState(false);
+  const [decisionConflict, setDecisionConflict] = React.useState(false);
+  React.useEffect(() => {
+    setStudioReview(undefined);
+    setCurrentDocument(undefined);
+    setReviewError(undefined);
+    setDecisionConflict(false);
+    setPreviewReady(false);
+    if (demo || !studioKernelEnabled || !data.activeWorkspace?.id || !post?.id) return;
+    let current = true;
+    productApi
+      .latestStudioReview(data.activeWorkspace.id, { postId: post.id })
+      .then(async (review) => {
+        const document = await productApi.studioDocument(review.documentId);
+        if (current) { setStudioReview(review); setCurrentDocument(document); }
+      })
+      .catch((error) => {
+        if (current) setReviewError(error instanceof Error ? error.message : "Revisão não encontrada");
+      });
+    return () => {
+      current = false;
+    };
+  }, [data.activeWorkspace?.id, demo, post?.id]);
+  const reviewedDocument = studioReview?.snapshot;
+  const [selectedSlide, setSelectedSlide] = React.useState(1);
+  const persistedHeadline = studioHeadlines(reviewedDocument)[selectedSlide - 1];
+  const currentVersion = `v${studioReview?.documentVersion || reviewedDocument?.version || 3}`;
+  const previousVersion = `v${Math.max(1, (studioReview?.documentVersion || reviewedDocument?.version || 3) - 1)}`;
   const [version, setVersion] = React.useState("v3");
+  React.useEffect(() => {
+    if (studioReview) setVersion(`v${studioReview.documentVersion}`);
+    setSelectedSlide(1);
+  }, [studioReview]);
   const [comment, setComment] = React.useState("");
   const [decision, setDecision] = React.useState("Decisão");
+  const [comparisonMode, setComparisonMode] = React.useState(false);
+  const [listenedEntireMix, setListenedEntireMix] = React.useState(false);
+  const [listeningChecks, setListeningChecks] = React.useState({
+    speechAbsent: "pending",
+    musicAbsent: "pending",
+    naturalSoundsCoherent: "pending",
+    mixBalanced: "pending",
+  });
+  React.useEffect(() => {
+    setListenedEntireMix(false);
+    setListeningChecks({
+      speechAbsent: "pending",
+      musicAbsent: "pending",
+      naturalSoundsCoherent: "pending",
+      mixBalanced: "pending",
+    });
+  }, [studioReview?.id]);
+  const listeningRequired = Boolean(reviewedDocument && ["video", "presenter"].includes(reviewedDocument.contentType) && (
+    reviewedDocument.composition.narrative.naturalSoundPolicy === "required-before-approval"
+    || reviewedDocument.composition.narrative.voicePolicy === "prohibited"
+    || reviewedDocument.composition.narrative.audioMode === "natural-foley-only"
+  ));
+  const [acousticCapability, setAcousticCapability] = React.useState<StudioAcousticAnalysisCapability>();
+  const [acousticJob, setAcousticJob] = React.useState<StudioGenerationJobRecord>();
+  const [acousticError, setAcousticError] = React.useState<string>();
+  React.useEffect(() => {
+    setAcousticCapability(undefined);
+    setAcousticJob(undefined);
+    setAcousticError(undefined);
+    if (demo || !listeningRequired || !studioReview?.id) return;
+    let active = true;
+    void productApi.studioAcousticAnalysisCapability(studioReview.id)
+      .then((capability) => { if (active) setAcousticCapability(capability); })
+      .catch((error) => {
+        if (active) setAcousticError(error instanceof Error ? error.message : "Não foi possível consultar o detector.");
+      });
+    return () => { active = false; };
+  }, [demo, listeningRequired, studioReview?.id]);
+  React.useEffect(() => {
+    if (!acousticJob || !["queued", "running", "retrying"].includes(acousticJob.status)) return;
+    const timer = window.setTimeout(() => {
+      void productApi.studioGenerationJob(acousticJob.id)
+        .then(async (job) => {
+          setAcousticJob(job);
+          if (job.status === "succeeded" && studioReview && data.activeWorkspace?.id) {
+            const refreshed = await productApi.latestStudioReview(data.activeWorkspace.id, {
+              documentId: studioReview.documentId,
+            });
+            setStudioReview(refreshed);
+          }
+        })
+        .catch((error) => setAcousticError(
+          error instanceof Error ? error.message : "Não foi possível atualizar a análise.",
+        ));
+    }, 900);
+    return () => window.clearTimeout(timer);
+  }, [acousticJob, data.activeWorkspace?.id, studioReview]);
+  const runAcousticAnalysis = async () => {
+    if (!studioReview || acousticCapability?.status !== "ready" || ["queued", "running", "retrying"].includes(acousticJob?.status || "")) return;
+    setAcousticError(undefined);
+    try {
+      const job = await productApi.enqueueStudioAcousticAnalysis(
+        studioReview.id,
+        `review-acoustic-${studioReview.id}-${crypto.randomUUID()}`,
+      );
+      setAcousticJob(job);
+      setToast("Análise do MP4 iniciada");
+    } catch (error) {
+      const detail = error instanceof BackendRequestError
+        ? error.detail as { detail?: { code?: string } }
+        : undefined;
+      const code = detail?.detail?.code;
+      setAcousticError(
+        code === "acoustic_detector_not_approved"
+          ? "Nenhum detector foi aprovado para produção."
+          : "A análise não pôde ser iniciada; nenhuma evidência foi registrada.",
+      );
+    }
+  };
+  const listeningComplete = listenedEntireMix && Object.values(listeningChecks).every((value) => value !== "pending");
+  const listeningPassed = listeningComplete && Object.values(listeningChecks).every((value) => value === "pass");
+  const listeningSubmission = (): StudioListeningReviewSubmission | undefined => {
+    if (!listeningComplete || !studioReview?.renderAssetId || !studioReview.renderChecksumSha256) return undefined;
+    return {
+      renderAssetId: studioReview.renderAssetId,
+      renderChecksumSha256: studioReview.renderChecksumSha256,
+      listenedEntireMix: true,
+      speechAbsent: listeningChecks.speechAbsent as "pass" | "fail" | "inconclusive",
+      musicAbsent: listeningChecks.musicAbsent as "pass" | "fail" | "inconclusive",
+      naturalSoundsCoherent: listeningChecks.naturalSoundsCoherent as "pass" | "fail" | "inconclusive",
+      mixBalanced: listeningChecks.mixBalanced as "pass" | "fail" | "inconclusive",
+    };
+  };
+  const stale = !demo && Boolean(studioReview && currentDocument && (
+    currentDocument.version !== studioReview.documentVersion || currentDocument.review.approvalId !== studioReview.id
+  ));
+  const decisionBlocked = !demo && (!previewReady || stale || decisionConflict || !currentDocument || studioReview?.status !== "requested");
+  const approvalBlocked = decisionBlocked || (!demo && listeningRequired && !listeningPassed);
+  const decisionReason = deciding ? "Salvando decisão…" : stale || decisionConflict ? "O documento mudou. Envie a versão atual pelo Studio para nova revisão." : !previewReady ? "Carregue a mídia da versão fixada antes de decidir." : "Esta revisão já foi decidida ou ainda não está disponível.";
+  const approvalReason = !decisionBlocked && listeningRequired && !listeningPassed
+    ? "Ouça o MP4 fixado e aprove todos os critérios de som antes da aprovação criativa."
+    : decisionReason;
   const decide = async (action: "approve" | "request_changes" | "reject") => {
+    if (deciding || decisionBlocked || (action === "approve" && approvalBlocked)) return;
     if (action === "request_changes" && !comment.trim()) {
       setToast("Escreva o comentário obrigatório para solicitar ajustes");
       return;
     }
+    setDeciding(true);
     try {
-      if (!demo && post && action !== "reject")
-        await data.decidePost(post.id, {
+      if (!demo && studioReview) {
+        const decided = await productApi.decideStudioReview(
+          studioReview.id,
           action,
-          comment: comment || "Direção aprovada na revisão canônica.",
-        });
+          comment || undefined,
+          action === "reject" ? undefined : listeningSubmission(),
+        );
+        setStudioReview(decided);
+      }
       setToast(
         action === "approve"
           ? "Versão aprovada"
@@ -3206,79 +5081,148 @@ function ApprovedReviewSurface({ data, demo, navigate, setToast }: AnyRecord) {
             ? "Versão rejeitada"
             : "Ajustes solicitados",
       );
-      if (action === "approve") navigate("/calendar");
-    } catch {
-      setToast("A decisão não pôde ser salva");
+      if (action === "approve") navigate(`/publish/${routeId}`);
+    } catch (error) {
+      if (error instanceof BackendRequestError && error.status === 409) {
+        const detail = error.detail as { detail?: { code?: string } } | undefined;
+        const code = detail?.detail?.code;
+        if (["studio_publication_render_changed", "studio_review_listening_render_mismatch"].includes(code || "")) {
+          setDecisionConflict(true);
+          setToast("O MP4 fixado mudou ou não corresponde à escuta. Gere uma nova prova e envie outra revisão.");
+        } else if (["studio_review_listening_required", "studio_review_listening_failed"].includes(code || "")) {
+          setToast("Conclua a escuta e deixe todos os critérios aprovados antes de aprovar esta versão.");
+        } else {
+          setDecisionConflict(true);
+          setToast("A revisão mudou ou já foi decidida. Reabra a revisão ou envie a versão atual pelo Studio.");
+        }
+      } else setToast("A decisão não pôde ser salva. Tente novamente; nenhuma aprovação foi confirmada.");
+    } finally {
+      setDeciding(false);
     }
   };
   return (
     <section className="cx-review-approved">
       <header>
-        <button onClick={() => navigate("/campaigns/campaign-aurora")}>
-          ← Campaign Room
+        <button
+          data-action-id="REVIEW-BACK-CAMPAIGN"
+          onClick={() =>
+            navigate(post?.campaignId ? `/campaigns/${post.campaignId}` : demo ? "/campaigns/campaign-aurora" : "/content")
+          }
+        >
+          {demo || post?.campaignId ? "← Campaign Room" : "← Voltar à produção"}
         </button>
-        <b>Carrossel editorial · O Brasil cabe em uma xícara</b>
-        <Chip>{version}</Chip>
-        <span>● Em revisão</span>
-        <span>◷ Hoje, 18h</span>
+        <b>{post?.title || "Carrossel editorial · O Brasil cabe em uma xícara"}</b>
+        <Chip>{demo || studioReview ? version : "Sem versão fixada"}</Chip>
+        <span>{demo ? "Em revisão" : studioReview?.status === "approved" ? "Aprovada" : studioReview?.status === "rejected" ? "Rejeitada" : studioReview?.status === "changes_requested" ? "Ajustes solicitados" : studioReview ? "Em revisão" : "Carregando revisão"}</span>
+        <span>{demo ? "Hoje, 18h" : studioReview ? new Date(studioReview.requestedAt).toLocaleString("pt-BR") : ""}</span>
         <div />
         <Button
-          onClick={() => navigate("/content/post-ritual/edit?mode=visual")}
+          actionId="REVIEW-EDIT"
+          onClick={() => navigate(`/content/${routeId}/edit?mode=${reviewedDocument?.contentType === "carousel" ? "carousel" : reviewedDocument?.contentType === "video" ? "video" : "visual"}`)}
         >
           Editar
         </Button>
-        <Button onClick={() => setToast("Variação criada")}>
+        <Button
+          actionId="REVIEW-OPEN-REUSE"
+          onClick={() => navigate(`/content/${routeId}/remix`)}
+        >
           Criar variação
         </Button>
-        <Button onClick={() => setVersion(version === "v3" ? "v2" : "v3")}>
+        <Button
+          actionId="REVIEW-COMPARE-VERSIONS"
+          disabled={!demo}
+          title={!demo ? "Abra o histórico no Studio para comparar versões carregadas." : undefined}
+          onClick={() =>
+            setVersion(
+              version === currentVersion ? previousVersion : currentVersion,
+            )
+          }
+        >
           Comparar versões
         </Button>
       </header>
       <main>
+        {(stale || decisionConflict) && <StateBanner tone="orange" title="Esta revisão não pode aprovar o documento atual" detail="O snapshot abaixo continua preservado. Use Editar e Enviar para revisão no Studio para fixar a nova versão." />}
+        {reviewError && !demo && (
+          <StateBanner
+            tone="orange"
+            title="Nenhuma versão fixada para revisão"
+            detail="Volte ao Studio e use Enviar para revisão para criar um snapshot imutável."
+          />
+        )}
         <section className="cx-review-preview-approved">
           <div className="cx-review-version">
             <button
-              className={version === "v3" ? "is-active" : ""}
-              onClick={() => setVersion("v3")}
+              data-action-id="REVIEW-SELECT-VERSION"
+              className={version === currentVersion ? "is-active" : ""}
+              onClick={() => setVersion(currentVersion)}
             >
-              Versão atual　 <b>v3</b>
+              {demo ? "Versão atual" : "Versão fixada"}　 <b>{studioReview || demo ? currentVersion : "—"}</b>
             </button>
             <button
-              className={version === "v2" ? "is-active" : ""}
-              onClick={() => setVersion("v2")}
+              data-action-id="REVIEW-SELECT-VERSION"
+              disabled={!demo}
+              title={
+                !demo
+                  ? "A comparação anterior fica disponível após carregar as duas versões."
+                  : undefined
+              }
+              onClick={() => setVersion(previousVersion)}
             >
-              Versão anterior　 v2
+              {demo ? `Versão anterior　 ${previousVersion}` : "Anterior indisponível"}
             </button>
-            <button>▣ Lado a lado</button>
+            <button
+              data-action-id="REVIEW-COMPARE-VERSIONS"
+              disabled={!demo}
+              title={!demo ? "Comparação disponível no histórico do Studio; esta tela mostra somente o snapshot fixado." : undefined}
+              aria-pressed={comparisonMode}
+              onClick={() => setComparisonMode((current) => !current)}
+            >
+              {comparisonMode ? "Comparação ativa" : "Comparar lado a lado"}
+            </button>
           </div>
-          <img src={phase3Arts[0]} />
-          <div className="cx-review-zoom">−　82%　+　☝　⌗</div>
-          <div className="cx-review-thumbs">
-            {[1, 2, 3, 4, 5, 6].map((i) => (
-              <button className={i === 1 ? "is-active" : ""} key={i}>
-                <img src={i === 6 ? phase3Arts[3] : phase3Arts[0]} />
+          {demo ? <img src={phase3Arts[0]} alt={`Peça ${version} em revisão`} /> : studioReview ? <ReviewSnapshotPreview review={studioReview} pageId={reviewedDocument?.composition.pages[selectedSlide - 1]?.id} onReady={setPreviewReady} /> : <p role="status">{reviewError ? "Sem mídia fixada para exibir." : "Carregando a versão fixada…"}</p>}
+          <div className="cx-review-zoom">{demo ? "Menos　82%　Mais" : "Ajustado ao espaço disponível"}</div>
+          <div className="cx-review-thumbs" data-comparison={comparisonMode}>
+            {(demo ? [1, 2, 3, 4, 5, 6] : reviewedDocument?.composition.pages.map((_, i) => i + 1) ?? []).map((i) => (
+              <button
+                data-action-id="REVIEW-SELECT-SLIDE"
+                className={i === selectedSlide ? "is-active" : ""}
+                aria-pressed={i === selectedSlide}
+                aria-label={`Revisar slide ${i}`}
+                onClick={() => { if (i !== selectedSlide) setPreviewReady(false); setSelectedSlide(i); }}
+                key={i}
+              >
+                {demo ? <img src={i === 6 ? phase3Arts[3] : phase3Arts[0]} alt="" /> : <p>{studioHeadlines(reviewedDocument)[i - 1]}</p>}
                 <span>{i}</span>
               </button>
             ))}
-            <button className="cx-add-slide">
+            <button
+              className="cx-add-slide"
+              disabled
+              title="A revisão trabalha sobre uma versão fixada; volte ao Studio para adicionar slides."
+            >
               <Plus />
               Adicionar slide
             </button>
           </div>
           <footer>
             <p>
-              Festival Brasileiro de Cafés Especiais　→　O Brasil cabe em uma
-              xícara　→　Carrossel v3
+              {post?.title || "Festival Brasileiro de Cafés Especiais"}　→　
+              <strong data-testid="review-studio-headline">
+                {persistedHeadline || (demo ? "O Brasil cabe em uma xícara" : "Sem texto nesta página")}
+              </strong>
+              　→　Peça {version}
             </p>
             <div>
-              {[
+              {(demo ? [
                 "Produtores creditados",
                 "Sem alegação de premiação",
                 "Contraste aprovado",
-              ].map((x) => (
+              ] : ["Conteúdo do snapshot", "Fontes sob revisão humana", "Sem garantia automática de qualidade"]).map((x) => (
                 <span key={x}>
-                  ♧ {x}
-                  <Check />
+                  {x}
+                  {demo && <Check />}
                 </span>
               ))}
             </div>
@@ -3286,9 +5230,10 @@ function ApprovedReviewSurface({ data, demo, navigate, setToast }: AnyRecord) {
         </section>
         <aside className="cx-review-decision">
           <nav>
-            {["Decisão", "Comentários · 3", "Versões · 3", "Contexto"].map(
+            {["Decisão", demo ? "Comentários · 3" : "Observação", demo ? "Versões · 3" : "Versão fixada", "Contexto"].map(
               (x) => (
                 <button
+                  data-action-id="REVIEW-SELECT-PANEL"
                   className={decision === x ? "is-active" : ""}
                   onClick={() => setDecision(x)}
                   key={x}
@@ -3302,29 +5247,140 @@ function ApprovedReviewSurface({ data, demo, navigate, setToast }: AnyRecord) {
             <>
               <h2>Esta versão está pronta?</h2>
               <div className="cx-review-people">
-                <KeyValue label="Revisão por" value="JO　João" />
-                <KeyValue label="Autor" value="MA　Mariana" />
+                <KeyValue label="Revisão por" value={demo ? "JO　João" : studioReview?.decidedBy || "Decisão pendente"} />
+                <KeyValue label="Solicitante" value={demo ? "MA　Mariana" : studioReview?.requestedBy || "Não informado"} />
               </div>
-              <p>Hook e composição ajustados na v3. CTA preservado.</p>
-              <Button tone="primary" onClick={() => void decide("approve")}>
+              <p>{demo ? "Hook e composição ajustados na v3. CTA preservado." : "Avalie a mídia fixada, a oferta e as alegações. Aprovar não publica o conteúdo."}</p>
+              {!demo && listeningRequired && studioReview && (
+                studioReview.listeningReview ? (
+                  <section className="cx-listening-review" data-result={studioReview.listeningReview.result}>
+                    <h3>Escuta do MP4 fixado</h3>
+                    <p>
+                      {studioReview.listeningReview.result === "pass" ? "Mix aprovado na escuta humana." : "Escuta registrada com necessidade de ajustes."}
+                    </p>
+                    <small>Arquivo {studioReview.renderChecksumSha256?.slice(0, 12)} · versão v{studioReview.documentVersion} · publicação ainda bloqueada até direitos e análise automática.</small>
+                  </section>
+                ) : (
+                  <fieldset className="cx-listening-review" disabled={deciding || decisionBlocked}>
+                    <legend>Escuta do MP4 fixado</legend>
+                    <p>Reproduza o vídeo com som. Avalie somente o mix natural e a legenda; voz e música não fazem parte desta versão.</p>
+                    <label className="cx-listening-attestation">
+                      <input
+                        type="checkbox"
+                        data-action-id="REVIEW-EDIT-LISTENING-ASSESSMENT"
+                        checked={listenedEntireMix}
+                        onChange={(event) => setListenedEntireMix(event.target.checked)}
+                      />
+                      Ouvi o mix inteiro deste MP4
+                    </label>
+                    {([
+                      ["speechAbsent", "Fala ou narração incidental", "Não detectei fala", "Detectei fala"],
+                      ["musicAbsent", "Música incidental", "Não detectei música", "Detectei música"],
+                      ["naturalSoundsCoherent", "Coerência dos sons naturais", "Coerentes com a ação", "Descompassados ou artificiais"],
+                      ["mixBalanced", "Equilíbrio do mix", "Volume e transições adequados", "Volume ou transições inadequados"],
+                    ] as const).map(([key, label, passLabel, failLabel]) => (
+                      <label key={key}>
+                        {label}
+                        <select
+                          data-action-id="REVIEW-EDIT-LISTENING-ASSESSMENT"
+                          value={listeningChecks[key]}
+                          onChange={(event) => setListeningChecks((current) => ({ ...current, [key]: event.target.value }))}
+                        >
+                          <option value="pending">Selecione</option>
+                          <option value="pass">{passLabel}</option>
+                          <option value="fail">{failLabel}</option>
+                          <option value="inconclusive">Não consegui concluir</option>
+                        </select>
+                      </label>
+                    ))}
+                    <small>Este registro fica vinculado ao hash do MP4 e à versão. Ele não comprova licença nem substitui a análise de fala e música.</small>
+                  </fieldset>
+                )
+              )}
+              {!demo && listeningRequired && studioReview && (
+                <section
+                  className="cx-acoustic-analysis"
+                  data-status={studioReview.naturalSoundAdmission ? "admitted" : studioReview.acousticAnalysis?.status || acousticCapability?.status || "loading"}
+                >
+                  <h3>Análise automática do MP4</h3>
+                  {studioReview.naturalSoundAdmission ? (
+                    <>
+                      <p>Fala e música ausentes no arquivo admitido para entrega.</p>
+                      <small>
+                        Evidência {studioReview.naturalSoundAdmission.acousticAnalysisId.slice(0, 8)} ·
+                        escuta {studioReview.naturalSoundAdmission.listeningAssessmentId.slice(0, 8)} ·
+                        arquivo {studioReview.renderChecksumSha256?.slice(0, 12)}
+                      </small>
+                    </>
+                  ) : studioReview.acousticAnalysis ? (
+                    <>
+                      <p>
+                        {studioReview.acousticAnalysis.status === "pass"
+                          ? "O detector qualificado não encontrou fala nem música. A entrega ainda exige direitos e escuta no mesmo arquivo."
+                          : studioReview.acousticAnalysis.status === "fail"
+                            ? "O detector encontrou fala ou música. Este MP4 não pode ser entregue neste perfil."
+                            : "O detector não conseguiu concluir. Gere outra prova ou encaminhe para investigação."}
+                      </p>
+                      <small>
+                        {studioReview.acousticAnalysis.result.provider} · modelo {studioReview.acousticAnalysis.modelDigestSha256.slice(0, 12)} · arquivo {studioReview.acousticAnalysis.renderChecksumSha256.slice(0, 12)}
+                      </small>
+                    </>
+                  ) : (
+                    <>
+                      <p role={acousticError ? "alert" : "status"}>
+                        {acousticError || acousticCapability?.detail || "Consultando detector aprovado…"}
+                      </p>
+                      <Button
+                        actionId="REVIEW-RUN-ACOUSTIC-ANALYSIS"
+                        disabled={acousticCapability?.status !== "ready" || ["queued", "running", "retrying"].includes(acousticJob?.status || "")}
+                        title={acousticCapability?.status !== "ready" ? acousticCapability?.detail : undefined}
+                        onClick={() => void runAcousticAnalysis()}
+                      >
+                        {["queued", "running", "retrying"].includes(acousticJob?.status || "")
+                          ? `Analisando MP4 · ${acousticJob?.progress || 0}%`
+                          : "Analisar fala e música"}
+                      </Button>
+                      <small>A análise usa somente o MP4 fixado. O script YAMNet/VAD de pesquisa não é aceito neste gate.</small>
+                    </>
+                  )}
+                </section>
+              )}
+              <Button
+                tone="primary"
+                actionId="REVIEW-APPROVE"
+                disabled={deciding || approvalBlocked}
+                title={deciding || approvalBlocked ? approvalReason : undefined}
+                onClick={() => void decide("approve")}
+              >
                 Aprovar esta versão　→
               </Button>
-              <Button onClick={() => void decide("request_changes")}>
-                △ Solicitar ajustes　→
+              <Button
+                actionId="REVIEW-REQUEST-CHANGES"
+                disabled={deciding || decisionBlocked}
+                title={deciding || decisionBlocked ? decisionReason : undefined}
+                onClick={() => void decide("request_changes")}
+              >
+                Solicitar ajustes　→
               </Button>
-              <Button onClick={() => void decide("reject")}>
-                ⊗ Rejeitar　→
+              <Button
+                actionId="REVIEW-REJECT"
+                disabled={deciding || decisionBlocked}
+                title={deciding || decisionBlocked ? decisionReason : undefined}
+                onClick={() => void decide("reject")}
+              >
+                Rejeitar　→
               </Button>
               <label>
                 Comentário da decisão
                 <textarea
+                  data-action-id="REVIEW-EDIT-COMMENT"
                   value={comment}
                   onChange={(e) => setComment(e.target.value)}
                   placeholder="Explique o que deve mudar ou por que está aprovado."
                 />
                 <small>Comentário obrigatório para solicitar ajustes.</small>
               </label>
-              <div className="cx-review-comments">
+              {demo ? <div className="cx-review-comments">
                 <p>
                   <b>MA　Mariana · 14:32</b>
                   <br />
@@ -3334,17 +5390,22 @@ function ApprovedReviewSurface({ data, demo, navigate, setToast }: AnyRecord) {
                   <b>JO　João · 15:10</b>
                   <br />A composição ficou mais clara.
                 </p>
-              </div>
+              </div> : <p>{studioReview?.decisionComment || "Nenhuma observação registrada nesta revisão."}</p>}
               <h3>Evidência de performance ⓘ</h3>
               <div className="cx-no-evidence">
                 ⊕ Sem evidência de performance para esta decisão.
               </div>
               <h3>Contexto rápido</h3>
               {[
-                ["Campanha", "O Brasil cabe em uma xícara"],
-                ["Objetivo", "Autoridade + conversão"],
-                ["Público", "café especial · procedência"],
-                ["Brand Memory", "v4"],
+                [
+                  "Campanha",
+                  data.snapshot?.campaigns?.find(
+                    (campaign: AnyRecord) => campaign.id === post?.campaignId,
+                  )?.name || "Sem campanha vinculada",
+                ],
+                ["Objetivo", post?.objective || reviewedDocument?.brief.objective || "Não informado"],
+                ["Público", reviewedDocument?.brief.audience || "Não informado"],
+                ["Brand Memory", `v${reviewedDocument?.brandMemoryRef.revision || 1}`],
               ].map(([a, b]) => (
                 <KeyValue label={a} value={b} key={a} />
               ))}
@@ -3353,7 +5414,7 @@ function ApprovedReviewSurface({ data, demo, navigate, setToast }: AnyRecord) {
             <div className="cx-review-tab-state">
               <h2>{decision}</h2>
               <p>
-                {decision.startsWith("Comentários")
+                {!demo ? decision === "Observação" ? studioReview?.decisionComment || "Nenhuma observação registrada." : decision === "Versão fixada" ? `Snapshot ${studioReview ? `v${studioReview.documentVersion}, revisão ${studioReview.snapshot.revision}` : "ainda não carregado"}. Consulte o histórico no Studio para outras versões.` : reviewedDocument ? `${reviewedDocument.brief.objective} — ${reviewedDocument.brief.audience}` : "Contexto não carregado." : decision.startsWith("Comentários")
                   ? "3 comentários contextuais registrados nesta versão."
                   : decision.startsWith("Versões")
                     ? "v3 atual · v2 anterior · v1 arquivada."
@@ -3369,6 +5430,8 @@ function ApprovedReviewSurface({ data, demo, navigate, setToast }: AnyRecord) {
 
 function ApprovalSurface({ data, demo, navigate, setToast }: AnyRecord) {
   const post = demo ? demoPosts[0] : data.snapshot?.posts?.[0];
+  const [zoom, setZoom] = React.useState(72);
+  const [comment, setComment] = React.useState("");
   const decide = async (action: "approve" | "request_changes") => {
     try {
       if (!demo && post)
@@ -3388,7 +5451,10 @@ function ApprovalSurface({ data, demo, navigate, setToast }: AnyRecord) {
   return (
     <div className="cx-review">
       <header>
-        <button onClick={() => navigate("/content")}>
+        <button
+          data-action-id="CONTENT-BACK-INVENTORY"
+          onClick={() => navigate("/content")}
+        >
           <ArrowLeft />
           Voltar à produção
         </button>
@@ -3410,10 +5476,24 @@ function ApprovalSurface({ data, demo, navigate, setToast }: AnyRecord) {
             <i className="cx-pin">1</i>
           </div>
           <div className="cx-review-controls">
-            <button>−</button>
-            <span>72%</span>
-            <button>+</button>
-            <button>Ajustar</button>
+            <button
+              data-action-id="REVIEW-SET-ZOOM"
+              aria-label="Reduzir zoom"
+              onClick={() => setZoom((current) => Math.max(40, current - 8))}
+            >
+              Menos
+            </button>
+            <span>{zoom}%</span>
+            <button
+              data-action-id="REVIEW-SET-ZOOM"
+              aria-label="Aumentar zoom"
+              onClick={() => setZoom((current) => Math.min(160, current + 8))}
+            >
+              Mais
+            </button>
+            <button data-action-id="REVIEW-SET-ZOOM" onClick={() => setZoom(72)}>
+              Ajustar
+            </button>
           </div>
         </div>
         <aside>
@@ -3432,7 +5512,12 @@ function ApprovalSurface({ data, demo, navigate, setToast }: AnyRecord) {
                   Marina Alves <small>há 12 min</small>
                 </b>
                 <p>Podemos ganhar um pouco mais de contraste no título?</p>
-                <button>Responder</button>
+                <button
+                  data-action-id="REVIEW-REPLY"
+                  onClick={() => setComment("@Marina ")}
+                >
+                  Responder
+                </button>
               </div>
             </article>
             <article>
@@ -3448,23 +5533,45 @@ function ApprovalSurface({ data, demo, navigate, setToast }: AnyRecord) {
             </article>
           </div>
           <label className="cx-comment-box">
-            <textarea placeholder="Deixe um comentário…" />
+            <textarea
+              data-action-id="REVIEW-EDIT-COMMENT"
+              placeholder="Deixe um comentário…"
+              value={comment}
+              onChange={(event) => setComment(event.target.value)}
+            />
             <footer>
-              <button>
+              <button
+                disabled
+                title="Anexos serão liberados quando o armazenamento de revisão estiver ativo."
+              >
                 <Link2 />
               </button>
-              <Button tone="primary" icon={Send}>
+              <Button
+                tone="primary"
+                icon={Send}
+                actionId="REVIEW-ADD-COMMENT"
+                disabled={!comment.trim()}
+                title={!comment.trim() ? "Escreva um comentário antes de enviar." : undefined}
+                onClick={() => {
+                  setToast("Comentário registrado nesta sessão de revisão.");
+                  setComment("");
+                }}
+              >
                 Comentar
               </Button>
             </footer>
           </label>
           <div className="cx-review-actions">
-            <Button onClick={() => void decide("request_changes")}>
+            <Button
+              actionId="REVIEW-REQUEST-CHANGES"
+              onClick={() => void decide("request_changes")}
+            >
               Solicitar ajustes
             </Button>
             <Button
               tone="primary"
               icon={Check}
+              actionId="REVIEW-APPROVE"
               onClick={() => void decide("approve")}
             >
               Aprovar peça
@@ -3480,6 +5587,7 @@ function ApprovedCalendarSurface({ navigate }: AnyRecord) {
   const [selected, setSelected] = React.useState(1);
   const [range, setRange] = React.useState("Semana");
   const [moved, setMoved] = React.useState(false);
+  const [detailOpen, setDetailOpen] = React.useState(true);
   const days = [
     "SEG\n20 mai",
     "TER\n21 mai",
@@ -3507,12 +5615,14 @@ function ApprovedCalendarSurface({ navigate }: AnyRecord) {
         <Button
           tone="primary"
           icon={CalendarDays}
+          actionId="CALENDAR-CREATE-CONTENT"
           onClick={() => navigate("/dashboard?create=open")}
         >
           Agendar conteúdo
         </Button>
         <Button
           icon={Sparkles}
+          actionId="CAMPAIGN-OPEN-WORLD"
           onClick={() => navigate("/campaigns/campaign-aurora/world")}
         >
           Explorar direção
@@ -3522,6 +5632,7 @@ function ApprovedCalendarSurface({ navigate }: AnyRecord) {
         <nav>
           {["Semana", "Mês", "Trimestre"].map((x) => (
             <button
+              data-action-id="CALENDAR-SELECT-FILTER"
               className={range === x ? "is-active" : ""}
               onClick={() => setRange(x)}
               key={x}
@@ -3554,8 +5665,12 @@ function ApprovedCalendarSurface({ navigate }: AnyRecord) {
                 </header>
                 {i < 5 ? (
                   <button
+                    data-action-id="CALENDAR-SELECT-ITEM"
                     className={selected === i ? "is-selected" : ""}
-                    onClick={() => setSelected(i)}
+                    onClick={() => {
+                      setSelected(i);
+                      setDetailOpen(true);
+                    }}
                   >
                     <small>{cards[i][0]}</small>
                     <b>{cards[i][1]}</b>
@@ -3573,7 +5688,14 @@ function ApprovedCalendarSurface({ navigate }: AnyRecord) {
                       ["Reels", "Ritual do Café Aurora", phase3Arts[0]],
                       ["Stories", "Bastidores da torra", phase3Arts[2]],
                     ].map((x) => (
-                      <button onClick={() => setSelected(1)} key={x[1]}>
+                      <button
+                        data-action-id="CALENDAR-SELECT-ITEM"
+                        onClick={() => {
+                          setSelected(1);
+                          setDetailOpen(true);
+                        }}
+                        key={x[1]}
+                      >
                         <small>{x[0]}</small>
                         <b>{x[1]}</b>
                         <img src={x[2]} />
@@ -3585,7 +5707,11 @@ function ApprovedCalendarSurface({ navigate }: AnyRecord) {
                   <div className="cx-calendar-gap">
                     <span>▣</span>
                     <p>Lacuna identificada</p>
-                    <Button tone="primary" onClick={() => navigate("/content")}>
+                    <Button
+                      tone="primary"
+                      actionId="CALENDAR-CREATE-CONTENT"
+                      onClick={() => navigate("/dashboard?create=open")}
+                    >
                       Criar para esta lacuna
                     </Button>
                   </div>
@@ -3593,6 +5719,7 @@ function ApprovedCalendarSurface({ navigate }: AnyRecord) {
                 {i === 3 && (
                   <button
                     className="cx-add-calendar"
+                    data-action-id="CALENDAR-CREATE-CONTENT"
                     onClick={() => navigate("/dashboard?create=open")}
                   >
                     ⊕<br />
@@ -3610,16 +5737,22 @@ function ApprovedCalendarSurface({ navigate }: AnyRecord) {
               "✓ Aprovado",
               "△ Conflito",
               "○ Lacuna",
-              "↔ Arraste para reagendar",
+              "Arraste para reagendar",
             ].map((x) => (
               <span key={x}>{x}</span>
             ))}
           </footer>
         </main>
-        <aside>
+        {detailOpen && <aside>
           <header>
             <h2>O Brasil cabe em uma xícara</h2>
-            <button>×</button>
+            <button
+              data-action-id="CALENDAR-CLOSE-DETAIL"
+              aria-label="Fechar detalhes"
+              onClick={() => setDetailOpen(false)}
+            >
+              Fechar
+            </button>
           </header>
           <Chip tone="green">✓ Aprovado　⌄</Chip>
           <img src={cards[selected]?.[2] || phase3Arts[0]} />
@@ -3648,31 +5781,220 @@ function ApprovedCalendarSurface({ navigate }: AnyRecord) {
           </div>
           <Button
             tone="primary"
+            actionId="CALENDAR-OPEN-PUBLISHER"
             onClick={() => navigate("/publish/post-ritual")}
           >
             Abrir Publisher Control
           </Button>
-          <Button onClick={() => setMoved(!moved)}>
+          <Button actionId="CALENDAR-RESCHEDULE" onClick={() => setMoved(!moved)}>
             {moved ? "Reagendado" : "Reagendar"}
           </Button>
-          <Button onClick={() => navigate("/content/post-ritual")}>
-            Abrir peça ↗
+          <Button
+            actionId="CALENDAR-OPEN-CONTENT"
+            onClick={() => navigate("/content/post-ritual")}
+          >
+            Abrir peça <ArrowRight size={15} aria-hidden="true" />
           </Button>
           <StateBanner
             tone="orange"
             title="O agendamento interno não confirma publicação na rede."
           />
           <small>Campanha　›　Carrossel v3　›　Calendário</small>
+        </aside>}
+      </div>
+    </section>
+  );
+}
+
+function nextScheduleInputValue() {
+  const date = new Date(Date.now() + 24 * 60 * 60 * 1000);
+  date.setMinutes(0, 0, 0);
+  const local = new Date(date.getTime() - date.getTimezoneOffset() * 60_000);
+  return local.toISOString().slice(0, 16);
+}
+
+function downloadBrowserBlob(blob: Blob, filename: string) {
+  const url = URL.createObjectURL(blob);
+  const anchor = document.createElement("a");
+  anchor.href = url;
+  anchor.download = filename;
+  document.body.appendChild(anchor);
+  anchor.click();
+  anchor.remove();
+  window.setTimeout(() => URL.revokeObjectURL(url), 0);
+}
+
+function publicationPreflightError(error: unknown) {
+  const code = error instanceof Error ? error.message : "";
+  if (code.includes("natural_sound_evidence_pending")) return "O mix de sons naturais ainda não foi validado. Direitos, ausência de voz e música e escuta humana devem estar vinculados ao vídeo final antes da entrega.";
+  if (code.includes("acoustic_promotion_revoked")) return "O detector ou modelo usado nesta análise foi revogado. A entrega permanece bloqueada até uma nova análise com runtime aprovado.";
+  if (code.includes("natural_sound_rights_changed")) return "Os direitos de um som expiraram ou mudaram depois da análise. Renove a autorização e envie uma nova versão para revisão.";
+  if (code.includes("copy_changed")) return "A legenda ou os metadados mudaram depois da aprovação. Envie a versão atual para uma nova revisão.";
+  if (code.includes("snapshot_stale")) return "O documento mudou depois da aprovação. Envie a versão atual para uma nova revisão.";
+  if (code.includes("rights_restricted")) return "Há um asset com uso restrito. Regularize os direitos antes de preparar a saída.";
+  if (code.includes("handoff_missing")) return "Esta revisão é anterior ao vínculo verificável de legenda. Envie a versão atual para uma nova revisão.";
+  if (code.includes("not_approved")) return "A versão atual ainda não está aprovada para saída.";
+  if (code.includes("source") || code.includes("render")) return "Um arquivo aprovado não está mais disponível ou não corresponde ao checksum revisado.";
+  return "O pré-flight não pôde ser validado. Reabra a revisão e confira a versão aprovada.";
+}
+
+function AuthenticatedApprovedPublisherSurface({ data, navigate, pathname, setToast }: AnyRecord) {
+  const postId = pathname.split("/")[2];
+  const [review, setReview] = React.useState<StudioReviewRecord>();
+  const [preflight, setPreflight] = React.useState<StudioPublicationPreflightRecord>();
+  const [error, setError] = React.useState<string>();
+  const [loading, setLoading] = React.useState(true);
+  const [busy, setBusy] = React.useState<"schedule" | "package">();
+  const [copied, setCopied] = React.useState(false);
+  const [previewTab, setPreviewTab] = React.useState("Visual");
+  const [selectedCheck, setSelectedCheck] = React.useState(0);
+  const [slide, setSlide] = React.useState(0);
+  const [previewReady, setPreviewReady] = React.useState(false);
+  const [scheduleValue, setScheduleValue] = React.useState(nextScheduleInputValue);
+
+  const load = React.useCallback(async () => {
+    if (!data.activeWorkspace?.id || !postId) return;
+    setLoading(true);
+    setError(undefined);
+    try {
+      const latest = await productApi.latestStudioReview(data.activeWorkspace.id, { postId });
+      if (latest.status !== "approved") throw new Error("A versão mais recente ainda não foi aprovada.");
+      const result = await productApi.studioPublicationPreflight(latest.id);
+      setReview(latest);
+      setPreflight(result);
+      setSlide(0);
+      if (result.scheduledAt) {
+        const scheduled = new Date(result.scheduledAt);
+        const local = new Date(scheduled.getTime() - scheduled.getTimezoneOffset() * 60_000);
+        setScheduleValue(local.toISOString().slice(0, 16));
+      }
+    } catch (requestError) {
+      setReview(undefined);
+      setPreflight(undefined);
+      setError(publicationPreflightError(requestError));
+    } finally {
+      setLoading(false);
+    }
+  }, [data.activeWorkspace?.id, postId]);
+
+  React.useEffect(() => { void load(); }, [load]);
+  React.useEffect(() => { setPreviewReady(false); }, [review?.id, slide]);
+
+  const approvedCaption = preflight
+    ? `${preflight.caption}${preflight.hashtags.length ? `\n\n${preflight.hashtags.join(" ")}` : ""}`
+    : "";
+  const downloadPackage = async () => {
+    if (!review || busy) return;
+    setBusy("package");
+    try {
+      const blob = await productApi.studioPublicationPackageBlob(review.id);
+      downloadBrowserBlob(blob, `clicko-${postId}-v${review.documentVersion}.zip`);
+      setToast("Pacote aprovado baixado");
+    } catch {
+      setToast("O pacote não foi gerado. Revalide a versão e os arquivos.");
+      await load();
+    } finally {
+      setBusy(undefined);
+    }
+  };
+  const schedule = async () => {
+    if (!review || !scheduleValue || busy) return;
+    setBusy("schedule");
+    try {
+      await productApi.scheduleStudioPublication(review.id, new Date(scheduleValue).toISOString());
+      setToast("Agendamento interno salvo; nenhuma publicação externa foi confirmada");
+      await load();
+      await data.refresh?.();
+    } catch {
+      setToast("O agendamento não foi salvo. Use uma data futura e revalide a aprovação.");
+      await load();
+    } finally {
+      setBusy(undefined);
+    }
+  };
+
+  if (loading) return <section className="cx-publisher-approved"><StateBanner title="Validando a versão aprovada…" detail="Conferindo revisão, copy, mídia e permissões do workspace." /></section>;
+  if (error || !review || !preflight) return (
+    <section className="cx-publisher-approved">
+      <StateBanner tone="orange" title="O pré-flight não está disponível" detail={error || "Não foi encontrada uma revisão aprovada vinculada a este conteúdo."} action="Voltar à revisão" actionId="PUBLISH-OPEN-EDITOR" onAction={() => navigate(`/approvals/${postId}`)} />
+    </section>
+  );
+
+  const pages = preflight.pageIds;
+  const selectedPage = pages[slide];
+  const contentLabel = preflight.contentType === "carousel" ? `${pages.length} slides` : preflight.contentType === "visual" ? "Imagem" : "Vídeo";
+  const failed = preflight.checks.some((check) => check.status === "failed");
+  const scheduledText = preflight.scheduledAt
+    ? new Intl.DateTimeFormat("pt-BR", { dateStyle: "medium", timeStyle: "short", timeZone: "America/Sao_Paulo" }).format(new Date(preflight.scheduledAt))
+    : undefined;
+  const editorMode = preflight.contentType === "presenter" ? "presenter" : preflight.contentType === "video" ? "video" : "visual";
+  return (
+    <section className="cx-publisher-approved">
+      <header>
+        <div><small>Conteúdos / {preflight.title} / Publicação</small><h1>Controle de publicação</h1><p>Revise o artefato aprovado e prepare o handoff manual.</p></div>
+        <Chip tone={preflight.status === "scheduled" ? "green" : "orange"}>{preflight.status === "scheduled" ? "Agendamento interno salvo" : "Pré-flight: ação necessária"}</Chip>
+      </header>
+      <div className="cx-publisher-layout">
+        <section className="cx-publisher-content" aria-labelledby="publisher-preview-heading">
+          <h2 id="publisher-preview-heading">Prévia do conteúdo aprovado</h2>
+          <div className="cx-publisher-channel"><b>{preflight.platform}</b><Chip tone="orange">Conector externo indisponível</Chip><span>{preflight.format} · {contentLabel} · v{preflight.documentVersion}</span></div>
+          <nav aria-label="Dados da publicação">
+            {["Visual", "Legenda", "Metadados"].map((item) => <button data-action-id="PUBLISH-SELECT-PREVIEW" className={previewTab === item ? "is-active" : ""} aria-pressed={previewTab === item} onClick={() => setPreviewTab(item)} key={item}>{item}</button>)}
+          </nav>
+          {previewTab === "Visual" && <>
+            <div className="cx-publisher-preview">
+              <span>{pages.length ? `${slide + 1} / ${pages.length}` : "Render aprovado"}</span>
+              {pages.length > 1 && <button data-action-id="PUBLISH-SELECT-PREVIEW" aria-label="Slide anterior" onClick={() => setSlide((slide + pages.length - 1) % pages.length)}>‹</button>}
+              <div className="cx-publisher-approved-media"><ReviewSnapshotPreview review={review} pageId={selectedPage} onReady={setPreviewReady} /></div>
+              {pages.length > 1 && <button data-action-id="PUBLISH-SELECT-PREVIEW" aria-label="Próximo slide" onClick={() => setSlide((slide + 1) % pages.length)}>›</button>}
+            </div>
+            {pages.length > 1 && <div className="cx-publisher-thumbs">{pages.map((pageId, index) => <button data-action-id="PUBLISH-SELECT-PREVIEW" className={slide === index ? "is-active" : ""} aria-label={`Mostrar slide ${index + 1}`} aria-pressed={slide === index} onClick={() => setSlide(index)} key={pageId}><span>{index + 1}</span></button>)}</div>}
+          </>}
+          {previewTab === "Legenda" && <div className="cx-final-caption"><b>Legenda aprovada</b><p>{approvedCaption || "A versão aprovada não possui legenda."}</p></div>}
+          {previewTab === "Metadados" && <dl className="cx-publisher-metadata"><div><dt>Revisão</dt><dd>{review.id}</dd></div><div><dt>Documento</dt><dd>{review.documentId}</dd></div><div><dt>Versão</dt><dd>v{review.documentVersion}</dd></div><div><dt>Formato</dt><dd>{preflight.format}</dd></div></dl>}
+          <div className="cx-final-caption"><b>Legenda final aprovada</b><p>{approvedCaption || "Sem legenda nesta versão."}</p></div>
+          <div className="cx-publisher-actions">
+            <Button actionId="PUBLISH-COPY-CAPTION" disabled={!approvedCaption} onClick={async () => { try { await navigator.clipboard.writeText(approvedCaption); setCopied(true); setToast("Legenda aprovada copiada"); } catch { setCopied(false); setToast("O navegador bloqueou a cópia. Selecione a legenda manualmente."); } }}>{copied ? "Legenda copiada" : "Copiar legenda"}</Button>
+            <Button actionId="PUBLISH-DOWNLOAD-ASSETS" disabled={busy === "package"} onClick={downloadPackage}>{busy === "package" ? "Gerando pacote…" : "Baixar arquivos"}</Button>
+            <Button actionId="PUBLISH-OPEN-EDITOR" onClick={() => navigate(`/content/${postId}/edit?mode=${editorMode}`)}>Abrir no editor</Button>
+          </div>
+          <footer>A prévia vem da revisão fixada. Ela representa o arquivo de saída, não a interface exata da rede social.</footer>
+        </section>
+        <aside>
+          <h2>Checklist de saída</h2>
+          {preflight.checks.map((check, index) => <button data-action-id="PUBLISH-SELECT-CHECK" className={`${check.status !== "passed" ? "is-warning" : ""} ${selectedCheck === index ? "is-active" : ""}`.trim()} aria-pressed={selectedCheck === index} onClick={() => setSelectedCheck(index)} key={check.key}><span>{index + 1}</span><b>{check.label}<small>{check.status === "passed" ? "Verificado" : "Atenção"}</small></b></button>)}
+          <section><h3>Agendamento interno</h3><label className="cx-publisher-schedule">Data e horário em America/São_Paulo<input data-action-id="PUBLISH-SET-SCHEDULE" aria-label="Data e horário do agendamento interno" type="datetime-local" value={scheduleValue} min={nextScheduleInputValue()} onChange={(event) => setScheduleValue(event.target.value)} /></label>{scheduledText && <p>Salvo para {scheduledText}. Isso não confirma postagem externa.</p>}</section>
+          <section><h3>Handoff manual</h3><p>O pacote inclui a mídia aprovada, a legenda e um manifesto vinculado à revisão v{review.documentVersion}.</p></section>
+          <Button tone="primary" actionId="PUBLISH-SCHEDULE" disabled={failed || busy === "schedule" || !previewReady} title={!previewReady ? "Carregue a mídia aprovada antes de agendar." : undefined} onClick={schedule}>{busy === "schedule" ? "Salvando…" : preflight.status === "scheduled" ? "Atualizar agendamento interno" : "Agendar internamente"}</Button>
+          <Button actionId="PUBLISH-EXPORT-PACKAGE" disabled={busy === "package"} onClick={downloadPackage}>Exportar pacote manual</Button>
+          <Button disabled title="Conecte e valide um canal de publicação para liberar esta ação.">Publicar agora · conector indisponível</Button>
+          <StateBanner tone="orange" title="Nenhuma postagem externa será feita" detail="A Clicko salva o horário e prepara o pacote; um operador ainda precisa concluir a publicação no canal." />
+          <footer>Studio → revisão v{review.documentVersion} → pré-flight → agendamento interno → handoff manual</footer>
         </aside>
       </div>
     </section>
   );
 }
 
-function ApprovedPublisherSurface({ navigate, setToast }: AnyRecord) {
+function ApprovedPublisherSurface(props: AnyRecord) {
+  return props.demo ? <DemoApprovedPublisherSurface {...props} /> : <AuthenticatedApprovedPublisherSurface {...props} />;
+}
+
+function DemoApprovedPublisherSurface({ navigate, setToast }: AnyRecord) {
   const [slide, setSlide] = React.useState(0);
   const [scheduled, setScheduled] = React.useState(false);
   const [copied, setCopied] = React.useState(false);
+  const [previewTab, setPreviewTab] = React.useState("Visual");
+  const [selectedCheck, setSelectedCheck] = React.useState(0);
+  const downloadApprovedAssets = () => {
+    phase3Arts.forEach((assetUrl, index) => {
+      const anchor = document.createElement("a");
+      anchor.href = assetUrl;
+      anchor.download = `clicko-publicacao-slide-${index + 1}.png`;
+      anchor.click();
+    });
+    setToast("6 imagens aprovadas enviadas para download");
+  };
   return (
     <section className="cx-publisher-approved">
       <header>
@@ -3694,24 +6016,50 @@ function ApprovedPublisherSurface({ navigate, setToast }: AnyRecord) {
             <span>Carrossel · 4:5 · 6 slides</span>
           </div>
           <nav>
-            <button className="is-active">Visual</button>
-            <button>Legenda</button>
-            <button>Metadados</button>
+            {["Visual", "Legenda", "Metadados"].map((item) => (
+              <button
+                data-action-id="PUBLISH-SELECT-PREVIEW"
+                className={previewTab === item ? "is-active" : ""}
+                aria-pressed={previewTab === item}
+                onClick={() => setPreviewTab(item)}
+                key={item}
+              >
+                {item}
+              </button>
+            ))}
           </nav>
           <div className="cx-publisher-preview">
             <span>{slide + 1} / 6</span>
-            <button onClick={() => setSlide((slide + 5) % 6)}>‹</button>
-            <img src={slide === 5 ? phase3Arts[3] : phase3Arts[0]} />
-            <button onClick={() => setSlide((slide + 1) % 6)}>›</button>
+            <button
+              data-action-id="PUBLISH-SELECT-PREVIEW"
+              aria-label="Slide anterior"
+              onClick={() => setSlide((slide + 5) % 6)}
+            >
+              ‹
+            </button>
+            <img
+              src={slide === 5 ? phase3Arts[3] : phase3Arts[0]}
+              alt={`Prévia do slide ${slide + 1}`}
+            />
+            <button
+              data-action-id="PUBLISH-SELECT-PREVIEW"
+              aria-label="Próximo slide"
+              onClick={() => setSlide((slide + 1) % 6)}
+            >
+              ›
+            </button>
           </div>
           <div className="cx-publisher-thumbs">
             {[1, 2, 3, 4, 5, 6].map((x, i) => (
               <button
+                data-action-id="PUBLISH-SELECT-PREVIEW"
                 className={slide === i ? "is-active" : ""}
+                aria-label={`Mostrar slide ${x}`}
+                aria-pressed={slide === i}
                 onClick={() => setSlide(i)}
                 key={x}
               >
-                <img src={i === 5 ? phase3Arts[3] : phase3Arts[0]} />
+                <img src={i === 5 ? phase3Arts[3] : phase3Arts[0]} alt="" />
               </button>
             ))}
           </div>
@@ -3727,6 +6075,7 @@ function ApprovedPublisherSurface({ navigate, setToast }: AnyRecord) {
           </div>
           <div className="cx-publisher-actions">
             <Button
+              actionId="PUBLISH-COPY-CAPTION"
               onClick={() => {
                 setCopied(true);
                 setToast("Legenda copiada");
@@ -3734,15 +6083,18 @@ function ApprovedPublisherSurface({ navigate, setToast }: AnyRecord) {
             >
               ▣ {copied ? "Legenda copiada" : "Copiar legenda"}
             </Button>
-            <Button>↧ Baixar imagens</Button>
+            <Button actionId="PUBLISH-DOWNLOAD-ASSETS" onClick={downloadApprovedAssets}>
+              Baixar imagens
+            </Button>
             <Button
+              actionId="PUBLISH-OPEN-EDITOR"
               onClick={() => navigate("/content/post-ritual/edit?mode=visual")}
             >
               ⌁ Abrir no editor
             </Button>
           </div>
           <footer>
-            ⓘ A prévia representa o formato, não o chrome exato da rede.
+            Informação: a prévia representa o formato, não o chrome exato da rede.
           </footer>
         </main>
         <aside>
@@ -3755,7 +6107,13 @@ function ApprovedPublisherSurface({ navigate, setToast }: AnyRecord) {
             "Data e horário futuros",
             "Conta/canal confirmado",
           ].map((x, i) => (
-            <button className={i === 5 ? "is-warning" : ""} key={x}>
+            <button
+              data-action-id="PUBLISH-SELECT-CHECK"
+              className={`${i === 5 ? "is-warning" : ""} ${selectedCheck === i ? "is-active" : ""}`.trim()}
+              aria-pressed={selectedCheck === i}
+              onClick={() => setSelectedCheck(i)}
+              key={x}
+            >
               <span>{i + 1}</span>
               <b>
                 {x}
@@ -3782,6 +6140,7 @@ function ApprovedPublisherSurface({ navigate, setToast }: AnyRecord) {
           </section>
           <Button
             tone="primary"
+            actionId="PUBLISH-SCHEDULE"
             onClick={() => {
               setScheduled(true);
               setToast("Agendamento interno salvo");
@@ -3789,10 +6148,15 @@ function ApprovedPublisherSurface({ navigate, setToast }: AnyRecord) {
           >
             ▣ {scheduled ? "Agendamento salvo" : "Agendar internamente"}
           </Button>
-          <Button onClick={() => setToast("Pacote exportado")}>
+          <Button actionId="PUBLISH-EXPORT-PACKAGE" onClick={() => setToast("Pacote exportado")}>
             ↧ Exportar pacote
           </Button>
-          <Button disabled>♧ Publicar agora · conector indisponível</Button>
+          <Button
+            disabled
+            title="Conecte um canal de publicação para liberar esta ação."
+          >
+            Publicar agora · conector indisponível
+          </Button>
           <StateBanner
             tone="orange"
             title="A Clicko salvará o agendamento, mas não confirma postagem externa sem um conector ativo."
@@ -3807,6 +6171,7 @@ function ApprovedPublisherSurface({ navigate, setToast }: AnyRecord) {
 }
 
 function ApprovedPostDetail({ navigate }: AnyRecord) {
+  const [detailTab, setDetailTab] = React.useState("Peça");
   const [tab, setTab] = React.useState("Desempenho");
   return (
     <section className="cx-post-approved">
@@ -3820,6 +6185,7 @@ function ApprovedPostDetail({ navigate }: AnyRecord) {
           </p>
         </div>
         <Button
+          actionId="POST-EDIT"
           onClick={() => navigate("/content/post-ritual/edit?mode=visual")}
         >
           Editar
@@ -3827,6 +6193,7 @@ function ApprovedPostDetail({ navigate }: AnyRecord) {
         <Button>Comparar versões</Button>
         <Button
           tone="primary"
+          actionId="POST-OPEN-REUSE"
           onClick={() => navigate("/content/post-ritual/remix")}
         >
           Abrir no Reuse Lab
@@ -3844,8 +6211,14 @@ function ApprovedPostDetail({ navigate }: AnyRecord) {
             <span>1 / 5</span>
           </div>
           <nav>
-            {["Peça", "Legenda", "Versões", "Comentários"].map((x, i) => (
-              <button className={i === 0 ? "is-active" : ""} key={x}>
+            {["Peça", "Legenda", "Versões", "Comentários"].map((x) => (
+              <button
+                data-action-id="POST-SELECT-DETAIL"
+                className={detailTab === x ? "is-active" : ""}
+                aria-pressed={detailTab === x}
+                onClick={() => setDetailTab(x)}
+                key={x}
+              >
                 {x}
               </button>
             ))}
@@ -3886,6 +6259,7 @@ function ApprovedPostDetail({ navigate }: AnyRecord) {
           <nav>
             {["Desempenho", "Versões", "Comentários", "Linhagem"].map((x) => (
               <button
+                data-action-id="POST-SELECT-DETAIL"
                 className={tab === x ? "is-active" : ""}
                 onClick={() => setTab(x)}
                 key={x}
@@ -3934,7 +6308,7 @@ function ApprovedPostDetail({ navigate }: AnyRecord) {
                 ],
               ].map(([a, b, c], i) => (
                 <article className="cx-learning-action" key={a}>
-                  <span>{i ? "♧" : "✦"}</span>
+                  <span>{i ? "Ação" : "Teste"}</span>
                   <div>
                     <small>{a}</small>
                     <b>{b}</b>
@@ -3948,6 +6322,7 @@ function ApprovedPostDetail({ navigate }: AnyRecord) {
                 <p>Transforme este vencedor em uma derivação rastreável.</p>
                 <Button
                   tone="primary"
+                  actionId="POST-OPEN-REUSE"
                   onClick={() => navigate("/content/post-ritual/remix")}
                 >
                   Abrir no Reuse Lab →
@@ -3989,151 +6364,358 @@ function ApprovedPostDetail({ navigate }: AnyRecord) {
   );
 }
 
-function ApprovedRemixSurface({ navigate, setToast }: AnyRecord) {
+function ApprovedRemixSurface({ data, demo, navigate, pathname, setToast }: AnyRecord) {
+  const sourceId = pathname.split("/")[2];
+  const source = demo
+    ? demoPosts.find((post) => post.id === sourceId) || demoPosts[0]
+    : data.snapshot?.posts?.find((post: AnyRecord) => post.id === sourceId);
   const [hypothesis, setHypothesis] = React.useState(0);
-  const [created, setCreated] = React.useState(false);
-  const formats = [
-    ["Instagram Post 4:5", "Pronto como rascunho", "Baixo"],
-    ["Story 9:16", "Revisão manual necessária", "Médio"],
-    ["Square 1:1", "Ajuste de composição", "Médio"],
-    ["Smart resize automático", "Ainda não disponível", "—"],
+  const [creating, setCreating] = React.useState(false);
+  const [derivativeIds, setDerivativeIds] = React.useState<Record<string, string>>({});
+  const [selectedFormats, setSelectedFormats] = React.useState(() =>
+    new Set(["post", "story", "square"]),
+  );
+  const [reuseError, setReuseError] = React.useState("");
+  const [reuseMode, setReuseMode] = React.useState("Remix guiado");
+  const [sourceView, setSourceView] = React.useState("Derivação");
+  const [hypothesisSelected, setHypothesisSelected] = React.useState(true);
+  const preserveOptions = [
+    ["Texto principal", "Promessa e linguagem da origem"],
+    ["Composição central", "Hierarquia e foco visual"],
+    ["Assinatura da marca", "Elementos de reconhecimento"],
   ];
+  const adaptOptions = [
+    ["Formato", "Proporção e canal de destino"],
+    ["CTA", "Chamada adequada ao novo objetivo"],
+    ["Quantidade de texto", "Leitura adequada ao novo formato"],
+  ];
+  const [selectedPreserve, setSelectedPreserve] = React.useState(
+    () => new Set(preserveOptions.map(([label]) => label)),
+  );
+  const [selectedAdapt, setSelectedAdapt] = React.useState(
+    () => new Set(adaptOptions.map(([label]) => label)),
+  );
+  const formats = [
+    { key: "post", title: "Instagram Post 4:5", state: "Pronto como rascunho", risk: "Baixo", format: "post", mode: "visual" },
+    { key: "story", title: "Story 9:16", state: "Revisão manual necessária", risk: "Médio", format: "story", mode: "visual" },
+    { key: "square", title: "Square 1:1", state: "Ajuste de composição", risk: "Médio", format: "post", mode: "visual" },
+    { key: "smart", title: "Smart resize automático", state: "Ainda não disponível", risk: "—", format: "post", mode: "visual", disabled: true },
+  ];
+  const hypothesisText = hypothesis
+    ? "Seu foco começa no primeiro gole."
+    : "Seu ritual começa antes do primeiro gole.";
+  const sourceCampaign = data.snapshot?.campaigns?.find(
+    (campaign: AnyRecord) => campaign.id === source?.campaignId,
+  );
+  const persistedDerivatives = React.useMemo(() => {
+    const next: Record<string, string> = {};
+    for (const post of data.snapshot?.posts || []) {
+      const lineage = (post.versions || [])
+        .map((version: AnyRecord) => version?.lineage)
+        .find((candidate: AnyRecord) => candidate?.sourcePostId === sourceId);
+      const key = lineage?.derivationKey;
+      if (typeof key === "string" && formats.some((format) => format.key === key)) {
+        next[key] = post.id;
+      }
+    }
+    return next;
+  }, [data.snapshot?.posts, sourceId]);
+  React.useEffect(() => {
+    if (!Object.keys(persistedDerivatives).length) return;
+    setDerivativeIds((current) => ({ ...persistedDerivatives, ...current }));
+  }, [persistedDerivatives]);
+  const selectedDerivativeIds = formats
+    .filter((format) => selectedFormats.has(format.key) && derivativeIds[format.key])
+    .map((format) => derivativeIds[format.key]);
+  const pendingFormats = formats.filter(
+    (format) =>
+      !format.disabled &&
+      selectedFormats.has(format.key) &&
+      !derivativeIds[format.key],
+  );
+  const toggleSelection = (
+    setter: React.Dispatch<React.SetStateAction<Set<string>>>,
+    value: string,
+  ) =>
+    setter((current) => {
+      const next = new Set(current);
+      if (next.has(value)) next.delete(value);
+      else next.add(value);
+      return next;
+    });
+  const createDerivations = async () => {
+    if (creating) return;
+    if (!source) {
+      setReuseError("A peça de origem não foi encontrada neste workspace.");
+      return;
+    }
+    if (!hypothesisSelected) {
+      setReuseError("Selecione a hipótese principal antes de gerar derivações.");
+      return;
+    }
+    if (!pendingFormats.length) {
+      setToast("As derivações selecionadas já estão salvas.");
+      return;
+    }
+    setCreating(true);
+    setReuseError("");
+    const createdNow: Record<string, string> = {};
+    try {
+      for (const format of pendingFormats) {
+        if (demo) {
+          createdNow[format.key] = `${source.id}-${format.key}`;
+          continue;
+        }
+        const id = await data.createPostDerivation(source.id, {
+          title: `${source.title} — ${format.title}`,
+           format: format.format,
+           platform: "instagram",
+           objective: `Testar ${hypothesisText}`,
+           derivationKey: format.key,
+           hypothesis: hypothesisText,
+           preserve: [...selectedPreserve],
+           adapt: [...selectedAdapt],
+        });
+        createdNow[format.key] = id;
+      }
+      setDerivativeIds((current) => ({ ...current, ...createdNow }));
+      setToast(
+        `${Object.keys(createdNow).length} derivações criadas com lineage`,
+      );
+    } catch (error) {
+      setDerivativeIds((current) => ({ ...current, ...createdNow }));
+      setReuseError(
+        error instanceof Error
+          ? error.message
+          : "Nem todas as derivações puderam ser criadas.",
+      );
+    } finally {
+      setCreating(false);
+    }
+  };
   return (
     <section className="cx-remix-approved">
       <header>
         <div>
-          <small>Conteúdos　/　Ritual de foco　/　Reuse Lab</small>
+          <small>Conteúdos　/　{source?.title || "Origem indisponível"}　/　Reuse Lab</small>
           <h1>Transforme o que funcionou em uma nova peça</h1>
           <p>Preserve a força, adapte o formato e registre a hipótese.</p>
         </div>
-        <Button>Duplicar sem adaptar</Button>
-        <Button onClick={() => setHypothesis((hypothesis + 1) % 2)}>
+        <Button
+          actionId="REUSE-SUGGEST-HYPOTHESIS"
+          onClick={() => setHypothesis((hypothesis + 1) % 2)}
+        >
           Sugerir hipótese
         </Button>
         <Button
+          actionId="REUSE-GENERATE-DERIVATIONS"
           tone="primary"
+          disabled={creating || pendingFormats.length === 0 || !source || !hypothesisSelected}
+          onClick={() => void createDerivations()}
+        >
+          {creating
+            ? "Criando derivações…"
+            : pendingFormats.length
+              ? `Gerar derivações · ${pendingFormats.length}`
+              : "Derivações salvas"}
+        </Button>
+        <Button
+          actionId="REUSE-SEND-FACTORY"
+          disabled={selectedDerivativeIds.length === 0}
           onClick={() => {
-            setCreated(true);
-            setToast("Derivação criada");
+            const query = new URLSearchParams({
+              source: source?.id || sourceId,
+              derivatives: selectedDerivativeIds.join(","),
+            });
+            navigate(`/factory?${query.toString()}`);
           }}
         >
-          Criar derivação
+          Enviar à Fábrica
         </Button>
       </header>
       <nav>
-        <button className="is-active">✦ Remix guiado</button>
-        <button>♧ Variações</button>
+        {["Remix guiado", "Variações"].map((item) => (
+          <button
+            data-action-id="REUSE-SELECT-MODE"
+            className={reuseMode === item ? "is-active" : ""}
+            aria-pressed={reuseMode === item}
+            onClick={() => setReuseMode(item)}
+            key={item}
+          >
+            {item}
+          </button>
+        ))}
       </nav>
+      {reuseError && (
+        <HonestState
+          compact
+          state="recoverable-error"
+          detail={reuseError}
+          preserved="a origem, as hipóteses e qualquer derivação já criada"
+          impact="somente os formatos ainda não criados precisam ser tentados novamente"
+          actionLabel="Tentar formatos pendentes"
+          actionId="REUSE-GENERATE-DERIVATIONS"
+          onAction={() => void createDerivations()}
+        />
+      )}
       <div className="cx-remix-approved-grid">
         <aside>
           <h2>Peça de origem</h2>
-          <img src="/canonical/figma/phase3/s17-visual.png" />
-          <Chip tone="green">Publicado</Chip>
+          {source?.imageUrl ? (
+            <img src={source.imageUrl} alt={`Prévia da origem ${source.title}`} />
+          ) : (
+            <div
+              className="cx-remix-source-preview"
+              role="img"
+              aria-label="Origem sem prévia visual"
+            >
+              <small>SEM PRÉVIA VISUAL</small>
+              <strong>{source?.title || "Origem indisponível"}</strong>
+              <span>{source?.copy || "Nenhum texto de origem disponível."}</span>
+            </div>
+          )}
+          <Chip tone={source?.status === "published" ? "green" : "orange"}>
+            {source?.status === "published" ? "Publicado" : "Origem selecionada"}
+          </Chip>
           {[
-            ["Campanha", "Aurora Origens"],
-            ["Formato", "Carrossel v2"],
-            ["Publicado em", "12 mai 2026"],
+            ["Campanha", sourceCampaign?.title || "Sem campanha vinculada"],
+            ["Formato", source ? `${source.platform} · ${source.format}` : "Indisponível"],
+            [
+              "Criado em",
+              source?.createdAt
+                ? new Intl.DateTimeFormat("pt-BR", { dateStyle: "medium" }).format(
+                    new Date(source.createdAt),
+                  )
+                : "Sem data observada",
+            ],
           ].map(([a, b]) => (
             <KeyValue label={a} value={b} key={a} />
           ))}
           <h3>Evidência real</h3>
           <div className="cx-remix-metrics">
-            <KeyValue label="Alcance" value="45,2 mil" />
-            <KeyValue label="Salvamentos" value="1,2 mil" />
-            <StateBanner
-              tone="orange"
-              title="✦ 3× mais salvamentos que a média da campanha"
-            />
+            <KeyValue label="Alcance" value={source?.reach ? String(source.reach) : "Sem dado observado"} />
+            <KeyValue label="Salvamentos" value={source?.saves ? String(source.saves) : "Sem dado observado"} />
+            <KeyValue label="Compartilhamentos" value={source?.shares ? String(source.shares) : "Sem dado observado"} />
           </div>
           <h3>Por que reutilizar</h3>
-          <p>
-            ✓ Clareza do ritual
-            <br />✓ Fotografia de produto
-            <br />✓ Compartilhamento acima da campanha
-          </p>
+          <p>{source?.objective || "Nenhum objetivo foi registrado para esta origem."}</p>
           <h3>Linhagem</h3>
-          <p>
-            Aurora Origens　›　Campanha　›　Carrossel v2　›　Ritual de foco v2
-          </p>
+          <p>{sourceCampaign?.title || "Sem campanha"}　›　{source?.title || "Origem"}　›　v{source?.versions?.length || 1}</p>
         </aside>
-        <main>
-          <h2>Plano da derivação</h2>
+        <section className="cx-remix-plan" aria-labelledby="reuse-plan-title">
+          <h2 id="reuse-plan-title">Plano da derivação</h2>
           <small>PRESERVAR</small>
-          {[
-            ["Texto do ritual", "Conexão emocional e foco"],
-            ["Composição central", "Foco no produto e atmosfera"],
-            ["Assinatura Café Aurora", "Reconhecimento da marca"],
-          ].map((x) => (
+          {preserveOptions.map((x) => (
             <label key={x[0]}>
-              <input type="checkbox" defaultChecked />
+              <input
+                type="checkbox"
+                data-action-id="REUSE-TOGGLE-PRESERVE"
+                checked={selectedPreserve.has(x[0])}
+                onChange={() => toggleSelection(setSelectedPreserve, x[0])}
+              />
               {x[0]}
               <span>{x[1]}</span>
             </label>
           ))}
           <small>ADAPTAR</small>
-          {[
-            ["Formato", "Do carrossel para outro formato"],
-            ["CTA", "Refinar chamada para conversão"],
-            ["Quantidade de texto", "Menos texto para leitura rápida"],
-          ].map((x) => (
+          {adaptOptions.map((x) => (
             <label key={x[0]}>
-              ♧ {x[0]}
+              <input
+                type="checkbox"
+                data-action-id="REUSE-TOGGLE-ADAPT"
+                checked={selectedAdapt.has(x[0])}
+                onChange={() => toggleSelection(setSelectedAdapt, x[0])}
+              />
+              {x[0]}
               <span>{x[1]}</span>
             </label>
           ))}
           <small>TESTAR</small>
-          <button className="cx-hypothesis">
+          <button
+            data-action-id="REUSE-TOGGLE-HYPOTHESIS"
+            className={`cx-hypothesis ${hypothesisSelected ? "is-active" : ""}`}
+            aria-pressed={hypothesisSelected}
+            onClick={() => setHypothesisSelected((current) => !current)}
+          >
             <i />
             Novo hook:{" "}
-            {hypothesis
-              ? "Seu foco começa no primeiro gole."
-              : "Seu ritual começa antes do primeiro gole."}
+            {hypothesisText}
             <span>Hipótese principal</span>
           </button>
-          <label>
-            <input type="radio" />
-            Imagem de produto mais próxima　Hipótese opcional
-          </label>
-          <Button>Objetivo da nova versão　Conversão　⌄</Button>
-          <Button>Campanha de destino　O Brasil cabe em uma xícara　⌄</Button>
+          <KeyValue label="Objetivo" value={source?.objective || "Não informado"} />
+          <KeyValue label="Campanha de destino" value={sourceCampaign?.title || "Sem campanha vinculada"} />
           <footer>ⓘ A hipótese ficará registrada na linhagem.</footer>
-        </main>
+        </section>
         <section>
           <header>
             <h2>Formatos derivados</h2>
             <nav>
-              <button>Original</button>
-              <button className="is-active">Derivação</button>
+              {["Original", "Derivação"].map((item) => (
+                <button
+                  data-action-id="REUSE-SELECT-SOURCE-VIEW"
+                  className={sourceView === item ? "is-active" : ""}
+                  aria-pressed={sourceView === item}
+                  onClick={() => setSourceView(item)}
+                  key={item}
+                >
+                  {item}
+                </button>
+              ))}
             </nav>
           </header>
           <div>
-            {formats.map(([title, state, risk], i) => (
-              <article className={i === 3 ? "is-disabled" : ""} key={title}>
-                <h3>{title}</h3>
+            {formats.map((format, i) => (
+              <article className={format.disabled ? "is-disabled" : ""} key={format.key}>
+                <label className="cx-derivation-select">
+                  <input
+                    type="checkbox"
+                    data-action-id="REUSE-TOGGLE-FORMAT"
+                    checked={selectedFormats.has(format.key)}
+                    disabled={format.disabled || creating}
+                    onChange={() =>
+                      setSelectedFormats((current) => {
+                        const next = new Set(current);
+                        if (next.has(format.key)) next.delete(format.key);
+                        else next.add(format.key);
+                        return next;
+                      })
+                    }
+                  />
+                  Incluir formato
+                </label>
+                <h3>{format.title}</h3>
                 <small>
-                  {i === 0 ? "✓" : "△"} {state}
+                  {i === 0 ? "✓" : "△"} {format.state}
                 </small>
-                {i < 3 ? (
-                  <img src="/canonical/figma/phase3/s17-visual.png" />
-                ) : (
-                  <div className="cx-smart-empty">▣</div>
-                )}
+                <div className="cx-smart-empty">
+                  <small>{sourceView.toUpperCase()}</small>
+                  <strong>
+                    {format.disabled
+                      ? "Formato indisponível"
+                      : derivativeIds[format.key]
+                        ? "Rascunho persistido"
+                        : "Ainda não gerado"}
+                  </strong>
+                </div>
                 <p>
                   Elementos preservados
-                  <br />✓ ◻ T
+                  <br />Cor, forma e tipografia
                 </p>
                 <p>
                   Risco de adaptação
                   <br />
-                  <b>{risk}</b>
+                  <b>{format.risk}</b>
                 </p>
                 <Button
-                  disabled={i === 3}
-                  onClick={() =>
-                    navigate("/content/post-ritual/edit?mode=visual")
-                  }
+                  actionId="REUSE-OPEN-DERIVATION"
+                  disabled={!derivativeIds[format.key]}
+                  onClick={() => navigate(`/content/${derivativeIds[format.key]}/edit?mode=${format.mode}`)}
                 >
-                  {i === 3 ? "Em breve" : "Abrir no editor →"}
+                  {format.disabled
+                    ? "Em breve"
+                    : derivativeIds[format.key]
+                      ? "Abrir derivado no editor →"
+                      : "Gere para abrir"}
                 </Button>
               </article>
             ))}
@@ -4147,11 +6729,13 @@ function ApprovedRemixSurface({ navigate, setToast }: AnyRecord) {
       <footer className="cx-remix-lineage">
         <h3>Linhagem da derivação</h3>
         {[
-          ["Ritual de foco v2", "Peça de origem"],
+          [source?.title || "Origem indisponível", "Peça de origem"],
           ["Reuse event", "Remix guiado"],
           [
-            created ? "Nova derivação v1 criada" : "Nova derivação v1",
-            "Em rascunho",
+            selectedDerivativeIds.length
+              ? `${selectedDerivativeIds.length} derivações persistidas`
+              : "Nova derivação v1",
+            selectedDerivativeIds.length ? "Reidratável após recarregar" : "Ainda não criada",
           ],
           ["Visual Editor", "Próxima estação"],
           ["Métricas não são copiadas", "para nova peça"],
@@ -4171,6 +6755,7 @@ function ApprovedRemixSurface({ navigate, setToast }: AnyRecord) {
 
 function ApprovedAnalyticsSurface({ navigate, setToast }: AnyRecord) {
   const [round, setRound] = React.useState(false);
+  const [metric, setMetric] = React.useState("Alcance");
   return (
     <section className="cx-observatory-approved">
       <header>
@@ -4182,7 +6767,11 @@ function ApprovedAnalyticsSurface({ navigate, setToast }: AnyRecord) {
         </div>
         <Button>Últimos 30 dias⌄</Button>
         <Button>Todos canais⌄</Button>
-        <Button tone="primary" onClick={() => setToast("Importação preparada")}>
+        <Button
+          tone="primary"
+          actionId="ANALYTICS-IMPORT-METRICS"
+          onClick={() => setToast("Importação preparada")}
+        >
           Importar métricas
         </Button>
       </header>
@@ -4232,7 +6821,11 @@ function ApprovedAnalyticsSurface({ navigate, setToast }: AnyRecord) {
               phase3Arts[1],
             ],
           ].map((x) => (
-            <button onClick={() => navigate("/content/post-ritual")} key={x[0]}>
+            <button
+              data-action-id="ANALYTICS-OPEN-CONTENT"
+              onClick={() => navigate("/content/post-ritual")}
+              key={x[0]}
+            >
               <span>{x[0]}</span>
               <img src={x[4]} />
               <b>
@@ -4250,8 +6843,17 @@ function ApprovedAnalyticsSurface({ navigate, setToast }: AnyRecord) {
         <section>
           <h2>Evolução por semana</h2>
           <nav>
-            <button>Alcance</button>
-            <button>Salvamentos</button>
+            {["Alcance", "Salvamentos"].map((item) => (
+              <button
+                data-action-id="ANALYTICS-SELECT-METRIC"
+                className={metric === item ? "is-active" : ""}
+                aria-pressed={metric === item}
+                onClick={() => setMetric(item)}
+                key={item}
+              >
+                {item}
+              </button>
+            ))}
           </nav>
           <div className="cx-observatory-chart">
             <svg viewBox="0 0 400 220">
@@ -4300,6 +6902,7 @@ function ApprovedAnalyticsSurface({ navigate, setToast }: AnyRecord) {
           />
           <Button
             tone="primary"
+            actionId="ANALYTICS-CREATE-ROUND"
             onClick={() => {
               setRound(true);
               setToast("Rodada criada");
@@ -4321,6 +6924,8 @@ function ApprovedAnalyticsSurface({ navigate, setToast }: AnyRecord) {
 
 function CalendarSurface({ data, demo, navigate }: AnyRecord) {
   const posts = demo ? demoPosts : data.snapshot?.posts || [];
+  const [monthOffset, setMonthOffset] = React.useState(0);
+  const [calendarView, setCalendarView] = React.useState("Semana");
   const days = [
     "SEG 17",
     "TER 18",
@@ -4341,6 +6946,7 @@ function CalendarSurface({ data, demo, navigate }: AnyRecord) {
           <Button
             tone="primary"
             icon={Plus}
+            actionId="CALENDAR-CREATE-CONTENT"
             onClick={() => navigate("/dashboard?create=open")}
           >
             Agendar conteúdo
@@ -4350,12 +6956,33 @@ function CalendarSurface({ data, demo, navigate }: AnyRecord) {
       wide
     >
       <div className="cx-calendar-head">
-        <button>‹</button>
-        <h2>Agosto 2026</h2>
-        <button>›</button>
+        <button
+          data-action-id="CALENDAR-STEP-PERIOD"
+          aria-label="Período anterior"
+          onClick={() => setMonthOffset((current) => current - 1)}
+        >
+          Anterior
+        </button>
+        <h2>{monthOffset === 0 ? "Agosto 2026" : monthOffset < 0 ? "Julho 2026" : "Setembro 2026"}</h2>
+        <button
+          data-action-id="CALENDAR-STEP-PERIOD"
+          aria-label="Próximo período"
+          onClick={() => setMonthOffset((current) => current + 1)}
+        >
+          Próximo
+        </button>
         <div />
-        <button className="is-active">Semana</button>
-        <button>Mês</button>
+        {["Semana", "Mês"].map((item) => (
+          <button
+            data-action-id="CALENDAR-SELECT-VIEW"
+            className={calendarView === item ? "is-active" : ""}
+            aria-pressed={calendarView === item}
+            onClick={() => setCalendarView(item)}
+            key={item}
+          >
+            {item}
+          </button>
+        ))}
       </div>
       <div className="cx-calendar">
         {days.map((day, i) => (
@@ -4363,8 +6990,9 @@ function CalendarSurface({ data, demo, navigate }: AnyRecord) {
             <header>{day}</header>
             <div className="cx-time">09:00</div>
             {(i === 1 || i === 3 || i === 5) && (
-              <button
-                onClick={() =>
+        <button
+          data-action-id="CALENDAR-OPEN-PUBLISHER"
+          onClick={() =>
                   navigate(`/publish/${posts[0]?.id || "post-ritual"}`)
                 }
                 style={{ top: `${92 + (i % 2) * 100}px` }}
@@ -4404,6 +7032,7 @@ function CalendarSurface({ data, demo, navigate }: AnyRecord) {
 function PublisherSurface({ data, demo, navigate, setToast }: AnyRecord) {
   const post = demo ? demoPosts[0] : data.snapshot?.posts?.[0];
   const [scheduled, setScheduled] = React.useState("2026-08-20T09:30");
+  const [publishMode, setPublishMode] = React.useState("Agendar");
   const publish = async () => {
     try {
       if (!demo && post)
@@ -4424,6 +7053,7 @@ function PublisherSurface({ data, demo, navigate, setToast }: AnyRecord) {
       description="Última conferência de canal, legenda e horário."
       actions={
         <Button
+          actionId="CONTENT-OPEN-DETAIL"
           onClick={() => navigate(`/content/${post?.id || "post-ritual"}`)}
         >
           Voltar
@@ -4442,9 +7072,9 @@ function PublisherSurface({ data, demo, navigate, setToast }: AnyRecord) {
             alt="Prévia da publicação"
           />
           <div className="cx-phone-actions">
-            <span>♡</span>
-            <span>○</span>
-            <span>⌁</span>
+            <span>Curtir</span>
+            <span>Comentar</span>
+            <span>Compartilhar</span>
           </div>
           <p>
             <b>cafeaurora</b> O primeiro gole não acorda apenas o corpo. Ele
@@ -4454,7 +7084,11 @@ function PublisherSurface({ data, demo, navigate, setToast }: AnyRecord) {
         <aside className="cx-publish-panel">
           <section>
             <small>CANAL</small>
-            <button className="cx-channel">
+            <button
+              className="cx-channel"
+              disabled
+              title="O canal é fixado pelo preflight desta versão. Volte ao projeto para trocá-lo."
+            >
               <span>◎</span>
               <div>
                 <b>Instagram · @cafeaurora</b>
@@ -4476,16 +7110,27 @@ function PublisherSurface({ data, demo, navigate, setToast }: AnyRecord) {
           <section>
             <small>QUANDO PUBLICAR</small>
             <div className="cx-schedule">
-              <button className="is-active">
+              <button
+                data-action-id="PUBLISH-SELECT-MODE"
+                className={publishMode === "Agendar" ? "is-active" : ""}
+                aria-pressed={publishMode === "Agendar"}
+                onClick={() => setPublishMode("Agendar")}
+              >
                 <Clock3 />
                 Agendar
               </button>
-              <button>
+              <button
+                data-action-id="PUBLISH-SELECT-MODE"
+                className={publishMode === "Agora" ? "is-active" : ""}
+                aria-pressed={publishMode === "Agora"}
+                onClick={() => setPublishMode("Agora")}
+              >
                 <Zap />
                 Agora
               </button>
             </div>
             <input
+              data-action-id="CALENDAR-SET-SCHEDULE"
               type="datetime-local"
               value={scheduled}
               onChange={(e) => setScheduled(e.target.value)}
@@ -4499,6 +7144,7 @@ function PublisherSurface({ data, demo, navigate, setToast }: AnyRecord) {
           <Button
             tone="primary"
             icon={CalendarDays}
+            actionId="PUBLISH-SCHEDULE"
             onClick={() => void publish()}
           >
             Agendar publicação
@@ -4537,12 +7183,14 @@ function PostDetail({ data, demo, pathname, navigate }: AnyRecord) {
         <>
           <Button
             icon={Copy}
+            actionId="POST-OPEN-REUSE"
             onClick={() => navigate(`/content/${post.id}/remix`)}
           >
             Reutilizar
           </Button>
           <Button
             tone="primary"
+            actionId="POST-EDIT"
             onClick={() => navigate(`/content/${post.id}/edit?mode=visual`)}
           >
             Editar
@@ -4573,7 +7221,10 @@ function PostDetail({ data, demo, pathname, navigate }: AnyRecord) {
           </section>
           <section>
             <small>CAMPANHA</small>
-            <button onClick={() => navigate("/campaigns/active")}>
+            <button
+              data-action-id="POST-OPEN-CAMPAIGN"
+              onClick={() => navigate("/campaigns/active")}
+            >
               <span className="cx-mini-thumb">
                 <img src={demoMedia.cup} />
               </span>
@@ -4598,7 +7249,11 @@ function PostDetail({ data, demo, pathname, navigate }: AnyRecord) {
               ),
             )}
           </section>
-          <Button icon={Send} onClick={() => navigate(`/publish/${post.id}`)}>
+          <Button
+            icon={Send}
+            actionId="POST-PREPARE-PUBLISH"
+            onClick={() => navigate(`/publish/${post.id}`)}
+          >
             Preparar publicação
           </Button>
         </aside>
@@ -4615,7 +7270,7 @@ function RemixSurface({ navigate }: AnyRecord) {
       title="Uma ideia, novos formatos"
       description="A Clicko preserva a mensagem e adapta ritmo, proporção e canal."
       actions={
-        <Button onClick={() => navigate("/content/post-ritual")}>
+        <Button actionId="REUSE-CANCEL" onClick={() => navigate("/content/post-ritual")}>
           Cancelar
         </Button>
       }
@@ -4639,6 +7294,7 @@ function RemixSurface({ navigate }: AnyRecord) {
             [Image, "Story", "3 telas · 9:16"],
           ].map(([Icon, title, desc]: any, i) => (
             <button
+              data-action-id="REUSE-SELECT-MODE"
               className={selected === i ? "is-selected" : ""}
               onClick={() => setSelected(i)}
               key={title}
@@ -4665,6 +7321,7 @@ function RemixSurface({ navigate }: AnyRecord) {
           <Button
             tone="primary"
             icon={WandSparkles}
+            actionId="REUSE-GENERATE-ADAPTATION"
             onClick={() => navigate("/content/draft/edit?mode=carousel")}
           >
             Gerar adaptação
@@ -4745,12 +7402,14 @@ function WorldSurface({ navigate, pathname }: AnyRecord) {
         <Button
           tone="primary"
           icon={Check}
+          actionId="DIRECTION-APPROVE"
           onClick={() => setApproved(!approved)}
         >
           {approved ? "Direção aprovada" : "Aprovar direção"}
         </Button>
         <Button
           icon={Sparkles}
+          actionId="CAMPAIGN-EXPLORE-ANGLE"
           onClick={() => setAngleVersion((value) => value + 1)}
         >
           {angleVersion ? "Novo ângulo aplicado" : "Explorar outro ângulo"}
@@ -4758,8 +7417,17 @@ function WorldSurface({ navigate, pathname }: AnyRecord) {
       </div>
       <CampaignTabs id={id} navigate={navigate} active="Direção" />
       <div className="cx-world-subtabs">
-        <button className="is-active">Mundo</button>
-        <button onClick={() => navigate(`/campaigns/${id}/moodboard`)}>
+        <button
+          className="is-active"
+          disabled
+          title="Você já está no Mundo da campanha."
+        >
+          Mundo
+        </button>
+        <button
+          data-action-id="CAMPAIGN-OPEN-MOODBOARD"
+          onClick={() => navigate(`/campaigns/${id}/moodboard`)}
+        >
           Moodboard
         </button>
       </div>
@@ -4911,11 +7579,12 @@ function WorldSurface({ navigate, pathname }: AnyRecord) {
               </p>
             ),
           )}
-          <Button onClick={() => navigate(`/campaigns/${id}/moodboard`)}>
+          <Button actionId="CAMPAIGN-OPEN-MOODBOARD" onClick={() => navigate(`/campaigns/${id}/moodboard`)}>
             Abrir Moodboard
           </Button>
           <Button
             tone="primary"
+            actionId="CAMPAIGN-CREATE-PIECE"
             onClick={() => navigate("/content/draft/edit?mode=visual")}
           >
             Criar primeira peça
@@ -4983,16 +7652,35 @@ function MoodboardSurface({ navigate, pathname }: AnyRecord) {
         <Chip tone="orange">Em construção</Chip>
         <Button
           icon={shared ? Check : Share2}
+          actionId="MOODBOARD-SHARE"
           onClick={() => setShared(!shared)}
         >
           {shared ? "Link copiado" : "Compartilhar"}
         </Button>
       </div>
       <div className="cx-moodboard-tabs">
-        <button>Visão geral</button>
-        <button className="is-active">Moodboard</button>
-        <button>Narrativa</button>
-        <button>Peças</button>
+        <button
+          data-action-id="MOODBOARD-NAVIGATE"
+          onClick={() => navigate(`/campaigns/${id}`)}
+        >
+          Visão geral
+        </button>
+        <button
+          className="is-active"
+          disabled
+          title="Você já está no Moodboard."
+        >
+          Moodboard
+        </button>
+        <button
+          data-action-id="MOODBOARD-NAVIGATE"
+          onClick={() => navigate(`/campaigns/${id}/world`)}
+        >
+          Narrativa
+        </button>
+        <button data-action-id="MOODBOARD-NAVIGATE" onClick={() => navigate("/content")}>
+          Peças
+        </button>
       </div>
       <div className="cx-moodboard-layout">
         <main>
@@ -5004,6 +7692,7 @@ function MoodboardSurface({ navigate, pathname }: AnyRecord) {
             <label>
               <Search />
               <input
+                data-action-id="MOODBOARD-SELECT-FILTER"
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
                 placeholder="Buscar referências"
@@ -5012,6 +7701,7 @@ function MoodboardSurface({ navigate, pathname }: AnyRecord) {
             <Button
               tone="primary"
               icon={added ? Check : Plus}
+              actionId="MOODBOARD-ADD-REFERENCE"
               onClick={() => setAdded(!added)}
             >
               {added ? "Referência adicionada" : "Adicionar"}
@@ -5027,6 +7717,7 @@ function MoodboardSurface({ navigate, pathname }: AnyRecord) {
               "Movimento",
             ].map((x) => (
               <button
+                data-action-id="MOODBOARD-SELECT-FILTER"
                 className={filter === x ? "is-active" : ""}
                 onClick={() => setFilter(x)}
                 key={x}
@@ -5099,6 +7790,7 @@ function MoodboardSurface({ navigate, pathname }: AnyRecord) {
           <Button
             tone="primary"
             icon={applied ? Check : Sparkles}
+            actionId="MOODBOARD-APPLY-DIRECTION"
             onClick={() => setApplied(!applied)}
           >
             {applied ? "Direção aplicada" : "Aplicar direção à campanha"}
@@ -5239,6 +7931,7 @@ function BrandMemory({ data, demo, navigate }: AnyRecord) {
         </div>
         <Button
           icon={Clock3}
+          actionId="BRAND-MEMORY-OPEN-HISTORY"
           onClick={() => navigate("/settings/ai-governance")}
         >
           Histórico
@@ -5246,6 +7939,7 @@ function BrandMemory({ data, demo, navigate }: AnyRecord) {
         <Button
           tone="primary"
           icon={Sparkles}
+          actionId="BRAND-MEMORY-UPDATE"
           onClick={() => navigate("/settings/brand-memory")}
         >
           Atualizar
@@ -5270,6 +7964,7 @@ function BrandMemory({ data, demo, navigate }: AnyRecord) {
       <div className="cx-memory-tabs">
         {Object.keys(sections).map((x) => (
           <button
+            data-action-id="BRAND-MEMORY-SELECT-SECTION"
             className={tab === x ? "is-active" : ""}
             onClick={() => setTab(x)}
             key={x}
@@ -5308,7 +8003,10 @@ function BrandMemory({ data, demo, navigate }: AnyRecord) {
             </div>
           </div>
           <footer>
-            <Button onClick={() => navigate("/settings/brand-memory")}>
+            <Button
+              actionId="BRAND-MEMORY-EDIT-SECTION"
+              onClick={() => navigate("/settings/brand-memory")}
+            >
               Editar esta seção
             </Button>
             <span>Última atualização há 2 dias por Mariana</span>
@@ -5354,7 +8052,10 @@ function BrandMemory({ data, demo, navigate }: AnyRecord) {
               </i>
             </div>
           ))}
-          <Button onClick={() => navigate("/settings/brand-memory/sources")}>
+          <Button
+            actionId="BRAND-MEMORY-OPEN-SOURCES"
+            onClick={() => navigate("/settings/brand-memory/sources")}
+          >
             Ver fontes, mudanças e responsáveis
           </Button>
         </aside>
@@ -5363,24 +8064,58 @@ function BrandMemory({ data, demo, navigate }: AnyRecord) {
   );
 }
 
-function ApprovedLibrarySurface({ navigate, setToast }: AnyRecord) {
-  const assets = [
-    ["Ritual de foco 01", "Post · 4 usos", phase3Arts[0]],
-    ["Aurora — UGC", "UGC · 2 usos", phase3Arts[1]],
-    ["Carrossel tipográfico", "Carrossel · 3 usos", phase3Arts[2]],
-    ["Origem e textura", "Foto · 5 usos", phase3Arts[4]],
-    ["Oferta espresso", "Produto · licenciado", phase3Arts[3]],
-    ["Produto limpo", "Produto · próprio", phase3Arts[5]],
-    ["Textura Cerrado", "Referência · interna", phase3Arts[4]],
-    ["Fumaça e movimento", "Referência · licenciada", phase3Arts[0]],
+function ApprovedLibrarySurface({ data, navigate, setToast }: AnyRecord) {
+  const demoAssets = [
+    ["Ritual de foco 01", "Post · 4 usos", phase3Arts[0], "demo-0"],
+    ["Aurora — UGC", "UGC · 2 usos", phase3Arts[1], "demo-1"],
+    ["Carrossel tipográfico", "Carrossel · 3 usos", phase3Arts[2], "demo-2"],
+    ["Origem e textura", "Foto · 5 usos", phase3Arts[4], "demo-3"],
+    ["Oferta espresso", "Produto · licenciado", phase3Arts[3], "demo-4"],
+    ["Produto limpo", "Produto · próprio", phase3Arts[5], "demo-5"],
+    ["Textura Cerrado", "Referência · interna", phase3Arts[4], "demo-6"],
+    ["Fumaça e movimento", "Referência · licenciada", phase3Arts[0], "demo-7"],
   ];
+  const persistedAssets = (data.snapshot?.assets || [])
+    .filter((asset: AnyRecord) => asset.type === "image")
+    .map((asset: AnyRecord) => [
+      asset.title,
+      asset.metadata?.sourceAssetId ? "Derivação · revisão pendente" : "Imagem privada",
+      null,
+      asset.id,
+    ]);
+  const assets = persistedAssets.length ? persistedAssets : demoAssets;
   const [selected, setSelected] = React.useState(0);
   const [query, setQuery] = React.useState("");
   const [deleted, setDeleted] = React.useState(false);
+  const [libraryTab, setLibraryTab] = React.useState("Arquivos");
   const visible = assets.filter((x) =>
-    x[0].toLowerCase().includes(query.toLowerCase()),
+    String(x[0]).toLowerCase().includes(query.toLowerCase()),
   );
   const current = assets[selected] || assets[0];
+  const selectedRecord = data.snapshot?.assets?.find(
+    (asset: AnyRecord) => asset.id === current?.[3],
+  );
+  const [privatePreview, setPrivatePreview] = React.useState("");
+  React.useEffect(() => {
+    if (!selectedRecord?.id) {
+      setPrivatePreview("");
+      return;
+    }
+    let objectUrl = "";
+    let currentRequest = true;
+    void productApi
+      .studioAssetBlob(selectedRecord.id)
+      .then((blob) => {
+        if (!currentRequest) return;
+        objectUrl = URL.createObjectURL(blob);
+        setPrivatePreview(objectUrl);
+      })
+      .catch(() => currentRequest && setPrivatePreview(""));
+    return () => {
+      currentRequest = false;
+      if (objectUrl) URL.revokeObjectURL(objectUrl);
+    };
+  }, [selectedRecord?.id]);
   return (
     <section className="cx-library-approved">
       <header>
@@ -5388,7 +8123,7 @@ function ApprovedLibrarySurface({ navigate, setToast }: AnyRecord) {
           <h1>Biblioteca</h1>
           <p>Tudo o que a marca pode reutilizar, adaptar e provar.</p>
         </div>
-        <Button icon={Upload} onClick={() => setToast("Upload preparado")}>
+        <Button actionId="LIBRARY-UPLOAD" icon={Upload} onClick={() => setToast("Upload preparado")}>
           Upload
         </Button>
         <Button tone="primary" icon={Plus}>
@@ -5397,8 +8132,14 @@ function ApprovedLibrarySurface({ navigate, setToast }: AnyRecord) {
       </header>
       <nav>
         {["Arquivos", "Modelos", "Marca", "Campanhas", "Linhagem"].map(
-          (x, i) => (
-            <button className={i === 0 ? "is-active" : ""} key={x}>
+          (x) => (
+            <button
+              data-action-id="LIBRARY-SELECT-FILTER"
+              className={libraryTab === x ? "is-active" : ""}
+              aria-pressed={libraryTab === x}
+              onClick={() => setLibraryTab(x)}
+              key={x}
+            >
               {x}
             </button>
           ),
@@ -5408,6 +8149,7 @@ function ApprovedLibrarySurface({ navigate, setToast }: AnyRecord) {
         <label>
           <Search />
           <input
+            data-action-id="LIBRARY-SELECT-FILTER"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Buscar por nome, campanha, uso ou direito..."
@@ -5429,16 +8171,22 @@ function ApprovedLibrarySurface({ navigate, setToast }: AnyRecord) {
             <>
               <div className="cx-library-section-head">
                 <h2>Usados na campanha Aurora</h2>
-                <button>Ver campanha →</button>
+                <button
+                  data-action-id="LIBRARY-OPEN-CAMPAIGN"
+                  onClick={() => navigate("/campaigns/campaign-aurora")}
+                >
+                  Ver campanha
+                </button>
               </div>
               <div className="cx-library-used">
                 {visible.slice(0, 4).map((asset, i) => (
                   <button
+                    data-action-id="LIBRARY-SELECT-ASSET"
                     className={selected === i ? "is-active" : ""}
                     onClick={() => setSelected(i)}
                     key={asset[0]}
                   >
-                    <img src={asset[2]} />
+                    {asset[2] ? <img src={String(asset[2])} /> : <span className="cx-private-thumb"><Image /></span>}
                     <b>{asset[0]}</b>
                     <small>{asset[1]}</small>
                   </button>
@@ -5450,8 +8198,12 @@ function ApprovedLibrarySurface({ navigate, setToast }: AnyRecord) {
               </div>
               <div className="cx-library-assets">
                 {visible.slice(4).map((asset, i) => (
-                  <button onClick={() => setSelected(i + 4)} key={asset[0]}>
-                    <img src={asset[2]} />
+                  <button
+                    data-action-id="LIBRARY-SELECT-ASSET"
+                    onClick={() => setSelected(i + 4)}
+                    key={asset[0]}
+                  >
+                    {asset[2] ? <img src={String(asset[2])} /> : <span className="cx-private-thumb"><Image /></span>}
                     <b>{asset[0]}</b>
                     <small>{asset[1]}</small>
                   </button>
@@ -5465,7 +8217,12 @@ function ApprovedLibrarySurface({ navigate, setToast }: AnyRecord) {
                   <small>Moodboard Aurora · adicionada hoje por João</small>
                 </span>
                 <Chip tone="green">Uso interno</Chip>
-                <button>Abrir →</button>
+                <button
+                  data-action-id="HOME-OPEN-MOODBOARD"
+                  onClick={() => navigate("/campaigns/campaign-aurora/moodboard")}
+                >
+                  Abrir
+                </button>
               </article>
             </>
           )}
@@ -5474,7 +8231,11 @@ function ApprovedLibrarySurface({ navigate, setToast }: AnyRecord) {
           <h2>{current[0]}</h2>
           <p>Imagem selecionada</p>
           <div className="cx-library-preview">
-            <img src={current[2]} />
+            {privatePreview || current[2] ? (
+              <img src={privatePreview || String(current[2])} />
+            ) : (
+              <span className="cx-private-thumb"><Image /></span>
+            )}
             <Chip tone="orange">EM USO</Chip>
           </div>
           <small>DETALHES</small>
@@ -5485,20 +8246,46 @@ function ApprovedLibrarySurface({ navigate, setToast }: AnyRecord) {
           <article>
             <b>Carrossel Ritual de foco</b>
             <small>3 variações · 2 publicadas</small>
-            <button>Abrir →</button>
+            <button
+              data-action-id="CONTENT-OPEN-DETAIL"
+              onClick={() => navigate("/content/post-ritual")}
+            >
+              Abrir
+            </button>
           </article>
           <KeyValue label="Origem" value="Moodboard / Ref. 04" />
           <KeyValue label="Alterações" value="Corte, contraste, texto" />
           <Button
             tone="primary"
-            onClick={() => navigate("/content/post-ritual/edit?mode=visual")}
+            actionId="LIBRARY-OPEN-IMAGE-LAB"
+            disabled={Boolean(selectedRecord && !selectedRecord.checksumSha256)}
+            title={selectedRecord && !selectedRecord.checksumSha256 ? "Este asset ainda não possui checksum verificável" : undefined}
+            onClick={() =>
+              navigate(
+                `/library/assets/${encodeURIComponent(String(current[3]))}/edit?mode=image&returnTo=${encodeURIComponent("/library/assets")}`,
+              )
+            }
+          >
+            Editar imagem sem alterar original
+          </Button>
+          <Button
+            actionId="LIBRARY-INSERT-EDITOR"
+            onClick={() =>
+              navigate(
+                `/content/post-ritual/edit?mode=visual&asset=${encodeURIComponent(String(current[3]))}`,
+              )
+            }
           >
             Inserir no editor
           </Button>
-          <Button onClick={() => navigate("/content/post-ritual/remix")}>
+          <Button actionId="HOME-OPEN-REUSE" onClick={() => navigate("/content/post-ritual/remix")}>
             Criar variação com contexto
           </Button>
-          <button className="cx-delete-asset" onClick={() => setDeleted(true)}>
+          <button
+            className="cx-delete-asset"
+            data-action-id="LIBRARY-DELETE-ASSET"
+            onClick={() => setDeleted(true)}
+          >
             Excluir arquivo
           </button>
         </aside>
@@ -5526,6 +8313,15 @@ function LibrarySurface({ data, demo, navigate }: AnyRecord) {
         { id: "a4", title: "Mesa Aurora", type: "image", url: demoMedia.table },
       ]
     : data.snapshot?.assets || [];
+  const [assetFilter, setAssetFilter] = React.useState("Todos");
+  const [assetQuery, setAssetQuery] = React.useState("");
+  const filteredAssets = assets.filter(
+    (asset: AnyRecord) =>
+      (assetFilter === "Todos" ||
+        (assetFilter === "Imagens" && asset.type === "image") ||
+        (assetFilter === "Vídeos" && asset.type === "video")) &&
+      (!assetQuery || asset.title?.toLowerCase().includes(assetQuery.toLowerCase())),
+  );
   return (
     <Page
       eyebrow="Biblioteca"
@@ -5539,21 +8335,33 @@ function LibrarySurface({ data, demo, navigate }: AnyRecord) {
     >
       <div className="cx-toolbar">
         <div className="cx-filter-row">
-          <button className="is-active">Todos</button>
-          <button>Imagens</button>
-          <button>Vídeos</button>
-          <button>Logos</button>
-          <button>Documentos</button>
+          {["Todos", "Imagens", "Vídeos", "Logos", "Documentos"].map((item) => (
+            <button
+              data-action-id="LIBRARY-SELECT-FILTER"
+              className={assetFilter === item ? "is-active" : ""}
+              aria-pressed={assetFilter === item}
+              onClick={() => setAssetFilter(item)}
+              key={item}
+            >
+              {item}
+            </button>
+          ))}
         </div>
         <label>
           <Search />
-          <input placeholder="Buscar por nome ou tag" />
+          <input
+            data-action-id="LIBRARY-SELECT-FILTER"
+            placeholder="Buscar por nome ou tag"
+            value={assetQuery}
+            onChange={(event) => setAssetQuery(event.target.value)}
+          />
         </label>
       </div>
-      {assets.length ? (
+      {filteredAssets.length ? (
         <div className="cx-assets">
-          {assets.map((asset: AnyRecord, i: number) => (
+          {filteredAssets.map((asset: AnyRecord, i: number) => (
             <button
+              data-action-id="LIBRARY-INSERT-EDITOR"
               key={asset.id}
               onClick={() => navigate("/content/draft/edit?mode=visual")}
             >
@@ -5634,7 +8442,10 @@ function AnalyticsSurface({ data, demo, navigate }: AnyRecord) {
             Peças com uma imagem tátil e menos de 9 palavras no título tiveram
             1,8× mais salvamentos.
           </p>
-          <Button onClick={() => navigate("/content/post-ritual/remix")}>
+          <Button
+            actionId="POST-OPEN-REUSE"
+            onClick={() => navigate("/content/post-ritual/remix")}
+          >
             Reutilizar aprendizado
           </Button>
         </aside>
@@ -5655,7 +8466,10 @@ function AnalyticsSurface({ data, demo, navigate }: AnyRecord) {
               </p>
             </div>
             <Chip tone="green">{m}</Chip>
-            <button>
+            <button
+              data-action-id="POST-OPEN-REUSE"
+              onClick={() => navigate("/content/post-ritual/remix")}
+            >
               <ArrowRight />
             </button>
           </article>
@@ -5665,9 +8479,338 @@ function AnalyticsSurface({ data, demo, navigate }: AnyRecord) {
   );
 }
 
-function ApprovedFactorySurface({ navigate, setToast, brand }: AnyRecord) {
-  const [round, setRound] = React.useState(false);
+async function factoryRoundIdFor(
+  workspaceId: string,
+  sourcePostId: string | null,
+  derivativeIds: string[],
+) {
+  const identity = JSON.stringify({
+    workspaceId,
+    sourcePostId,
+    derivativeIds: [...new Set(derivativeIds)].sort(),
+  });
+  const digest = await crypto.subtle.digest(
+    "SHA-256",
+    new TextEncoder().encode(identity),
+  );
+  const fingerprint = Array.from(new Uint8Array(digest))
+    .map((value) => value.toString(16).padStart(2, "0"))
+    .join("")
+    .slice(0, 32);
+  return `round-${fingerprint}`;
+}
+
+function ApprovedFactorySurface({
+  data,
+  demo,
+  navigate,
+  pathname,
+  params,
+  setToast,
+  brand,
+  workspace,
+}: AnyRecord) {
+  const routeRoundId = pathname.startsWith("/factory/")
+    ? pathname.split("/")[2]
+    : undefined;
+  const persistedRound = data.snapshot?.factoryRounds?.find(
+    (item: AnyRecord) => item.resourceKey === routeRoundId,
+  );
+  const [localRound, setLocalRound] = React.useState<AnyRecord>();
+  const [starting, setStarting] = React.useState(false);
+  const [factoryError, setFactoryError] = React.useState("");
+  const roundPayload = localRound || persistedRound?.payload;
+  const derivativeIds = String(params.get("derivatives") || "")
+    .split(",")
+    .map((value) => value.trim())
+    .filter(Boolean);
+  const linkedDerivativeIds: string[] = derivativeIds.length
+    ? derivativeIds
+    : Array.isArray(roundPayload?.derivativeIds)
+      ? roundPayload.derivativeIds
+      : [];
+  const sourcePostId = params.get("source") || roundPayload?.sourcePostId || null;
+  const sourcePost = data.snapshot?.posts?.find(
+    (item: AnyRecord) => item.id === sourcePostId,
+  );
+  const sourceCampaign = data.snapshot?.campaigns?.find(
+    (item: AnyRecord) => item.id === sourcePost?.campaignId,
+  );
+  const derivativePosts = linkedDerivativeIds
+    .map((postId) =>
+      data.snapshot?.posts?.find((item: AnyRecord) => item.id === postId),
+    )
+    .filter(Boolean);
+  const derivativeLineage = derivativePosts
+    .map((post: AnyRecord) =>
+      post.versions?.find(
+        (version: AnyRecord) => version.lineage?.sourcePostId === sourcePostId,
+      )?.lineage,
+    )
+    .filter(Boolean);
+  const preservedDecisions = [
+    ...new Set(
+      derivativeLineage.flatMap((lineage: AnyRecord) => lineage.preserve || []),
+    ),
+  ];
+  const adaptedDecisions = [
+    ...new Set(
+      derivativeLineage.flatMap((lineage: AnyRecord) => lineage.adapt || []),
+    ),
+  ];
+  const observedHypothesis = derivativeLineage.find(
+    (lineage: AnyRecord) => lineage.hypothesis,
+  )?.hypothesis;
+  const cells: AnyRecord[] = Array.isArray(roundPayload?.cells)
+    ? roundPayload.cells
+    : [];
+  const reviewableCells = cells.filter(
+    (cell) => cell.documentId && cell.versionNumber,
+  );
+  const canStart = demo || derivativeIds.length > 0;
+
+  const startRound = async () => {
+    if (starting) return;
+    if (demo) {
+      const demoRound = {
+        schemaVersion: "clicko.factory-round.v1",
+        id: "round-demo",
+        status: "review_required",
+        cells: [{ postId: "post-ritual", documentId: "demo-document", versionNumber: 1 }],
+      };
+      setLocalRound(demoRound);
+      setToast("Rodada demonstrativa preparada");
+      navigate("/factory/round-demo");
+      return;
+    }
+    if (!workspace?.id || derivativeIds.length === 0) {
+      setFactoryError("Envie ao menos uma derivação do Reuse Lab antes de iniciar a rodada.");
+      return;
+    }
+
+    setStarting(true);
+    setFactoryError("");
+    let roundId: string;
+    try {
+      roundId = await factoryRoundIdFor(
+        workspace.id,
+        params.get("source"),
+        derivativeIds,
+      );
+    } catch (error) {
+      setFactoryError(
+        error instanceof Error
+          ? error.message
+          : "Não foi possível identificar esta rodada.",
+      );
+      setStarting(false);
+      return;
+    }
+    const existingRound = data.snapshot?.factoryRounds?.find(
+      (item: AnyRecord) => item.resourceKey === roundId,
+    );
+    if (existingRound?.payload) {
+      setLocalRound(existingRound.payload);
+      setToast("Rodada existente recuperada sem duplicar versões ou jobs");
+      navigate(`/factory/${roundId}`);
+      setStarting(false);
+      return;
+    }
+    const nextCells: AnyRecord[] = [];
+    for (const postId of derivativeIds) {
+      const post = data.snapshot?.posts?.find((item: AnyRecord) => item.id === postId);
+      try {
+        const existingDocuments = await productApi.studioDocuments(workspace.id, { postId });
+        let document = existingDocuments.find(
+          (item) => item.contentType === "visual" || item.contentType === "carousel",
+        );
+        if (!document) {
+          const title = post?.title || `Derivação ${postId.slice(0, 8)}`;
+          document = await productApi.createStudioDocument({
+            workspaceId: workspace.id,
+            title,
+            contentType: "visual",
+            campaignId: post?.campaignId ?? null,
+            postId,
+            opportunityId: null,
+            brandRevision: 1,
+            brief: {
+              schemaVersion: "studio.creative-brief.v1",
+              objective: post?.objective || "Preparar derivação para revisão humana",
+              audience: "Audiência definida no conteúdo de origem",
+              angle: "",
+              promise: "",
+              hook: post?.copy || title,
+              cta: "Revisar antes de publicar",
+              channel: post?.platform || "instagram",
+              format: post?.format || "post",
+              tone: "coerente com a memória da marca",
+              restrictions: [],
+              hypotheses: [],
+              evidence: [],
+            },
+            composition: {
+              pages: [
+                {
+                  id: "page-1",
+                  role: "content",
+                  width: 1080,
+                  height: 1350,
+                  safeArea: 76,
+                  background: "#10181c",
+                  durationMs: null,
+                  layers: [
+                    {
+                      id: "page-1-headline",
+                      kind: "text",
+                      name: title,
+                      x: 90,
+                      y: 120,
+                      width: 900,
+                      height: 540,
+                      rotation: 0,
+                      opacity: 1,
+                      visible: true,
+                      locked: false,
+                      zIndex: 1,
+                      properties: {
+                        type: "text",
+                        text: post?.copy || title,
+                        fontSize: 76,
+                        minFontSize: 24,
+                        fontFamily: "DejaVu Sans",
+                        fontWeight: "bold",
+                        color: "#ffffff",
+                        align: "left",
+                        lineHeight: 0.95,
+                      },
+                    },
+                  ],
+                },
+              ],
+              narrative: {
+                sourcePostId: postId,
+                factoryRoundId: roundId,
+              },
+              tracks: [],
+            },
+            assets: [],
+            correlationId: `${roundId}:${postId}`,
+          });
+        }
+        const version = await productApi.createStudioVersion(
+          document.documentId,
+          `Entrada da rodada ${roundId}`,
+        );
+        const job = await productApi.enqueueStudioGenerationJob(
+          {
+            workspaceId: workspace.id,
+            documentId: document.documentId,
+            jobType: "document_snapshot",
+            provider: "builtin.snapshot",
+            request: { roundId, postId, purpose: "factory_preflight" },
+            correlationId: `${roundId}:${postId}`,
+          },
+          `factory:${roundId}:${postId}:snapshot`,
+        );
+        nextCells.push({
+          postId,
+          title: post?.title || document.title,
+          documentId: document.documentId,
+          versionNumber: version.version,
+          jobId: job.id,
+          status: job.status,
+          gate: "human_review",
+        });
+      } catch (error) {
+        nextCells.push({
+          postId,
+          title: post?.title || `Derivação ${postId.slice(0, 8)}`,
+          status: "blocked",
+          gate: "document_or_job_failed",
+          error: error instanceof Error ? error.message : "Falha ao preparar a célula",
+        });
+      }
+    }
+
+    const payload = {
+      schemaVersion: "clicko.factory-round.v1",
+      id: roundId,
+      sourcePostId: params.get("source"),
+      derivativeIds,
+      status: nextCells.some((cell) => cell.status === "blocked")
+        ? "partially_blocked"
+        : "queued",
+      cells: nextCells,
+      createdAt: new Date().toISOString(),
+      humanGates: ["brand_review", "publication_approval"],
+    };
+    try {
+      await data.saveWorkspaceResource("factory_round", roundId, payload);
+      setLocalRound(payload);
+      const queued = nextCells.filter((cell) => cell.jobId).length;
+      setToast(`${queued} células fixadas e enfileiradas`);
+      navigate(`/factory/${roundId}`);
+    } catch (error) {
+      setFactoryError(
+        error instanceof Error ? error.message : "Não foi possível persistir a rodada.",
+      );
+    } finally {
+      setStarting(false);
+    }
+  };
   const isHorizonte = brand?.id === "horizonte";
+  const factoryInputs: Array<[
+    React.ComponentType<AnyRecord>,
+    string,
+    string,
+    string,
+  ]> = demo
+    ? [
+        [Radar, "Oportunidade", isHorizonte ? "+42% prevenção" : "+38% ritual de foco", "pronto"],
+        [Target, "Oferta", isHorizonte ? "Check-up integrado" : "Kit quatro origens", "pronto"],
+        [FileText, "Briefing", "Promessa e guardrails validados", "pronto"],
+        [BarChart3, "Vencedor", isHorizonte ? "2,6× compartilhamentos" : "3× mais salvamentos", "pronto"],
+      ]
+    : [
+        [FileText, "Conteúdo de origem", sourcePost?.title || "Não vinculado", sourcePost ? "observado" : "ausente"],
+        [Target, "Objetivo", sourcePost?.objective || "Não informado", sourcePost?.objective ? "observado" : "ausente"],
+        [Radar, "Campanha", sourceCampaign?.name || "Não vinculada", sourceCampaign ? "observado" : "ausente"],
+        [BarChart3, "Derivações", `${linkedDerivativeIds.length} vinculadas`, linkedDerivativeIds.length ? "observado" : "ausente"],
+      ];
+  const recipeSteps = demo
+    ? ["Tensão real", "Prova da marca", "Formato certo", "CTA responsável"]
+    : [
+        ...preservedDecisions.map((item) => `Preservar: ${item}`),
+        ...adaptedDecisions.map((item) => `Adaptar: ${item}`),
+      ].slice(0, 4);
+  const decisionCells = demo
+    ? [
+        { title: "Cenário do vídeo", detail: "Aceitar consultório com luz natural?", urgency: "Alta", postId: "post-ritual" },
+        { title: "Contraste do slide 04", detail: "Texto está abaixo do mínimo da marca.", urgency: "Média", postId: "post-ritual" },
+        { title: "Cadência de sábado", detail: "Dois conteúdos disputam o mesmo horário.", urgency: "Média", postId: "post-ritual", calendar: true },
+      ]
+    : cells.map((cell) => ({
+        title:
+          cell.status === "blocked"
+            ? `Corrigir ${cell.title || "célula bloqueada"}`
+            : `Revisar ${cell.title || "versão fixa"}`,
+        detail:
+          cell.status === "blocked"
+            ? cell.error || "A preparação desta célula falhou."
+            : `Documento ${String(cell.documentId).slice(0, 8)} · versão ${cell.versionNumber}`,
+        urgency: cell.status === "blocked" ? "Bloqueada" : "Revisão",
+        postId: cell.postId,
+        blocked: cell.status === "blocked",
+      }));
+  const destinationCounts = derivativePosts.reduce(
+    (counts: Record<string, number>, post: AnyRecord) => {
+      const destination = post.platform || post.format || "Destino não informado";
+      counts[destination] = (counts[destination] || 0) + 1;
+      return counts;
+    },
+    {},
+  );
   const factoryVisuals = isHorizonte
     ? [
         "/canonical/brands/horizonte/signal.svg",
@@ -5675,6 +8818,60 @@ function ApprovedFactorySurface({ navigate, setToast, brand }: AnyRecord) {
         "/canonical/brands/horizonte/campaign.svg",
       ]
     : [phase3Arts[2], phase3Arts[4], phase3Arts[0]];
+  const factoryCells = cells.length
+    ? cells.map((cell, index) => ({
+        title: cell.title || `Derivação ${index + 1}`,
+        format: "Documento canônico · versão fixa",
+        progress:
+          cell.status === "blocked"
+            ? "Preparação bloqueada"
+            : `Job ${cell.status || "queued"}`,
+        gate:
+          cell.status === "blocked"
+            ? "CORREÇÃO NECESSÁRIA"
+            : "REVISÃO HUMANA",
+        destination: "Revisão em lote",
+        percent: cell.status === "succeeded" ? 100 : cell.status === "blocked" ? 0 : 24,
+      }))
+    : linkedDerivativeIds.length
+      ? linkedDerivativeIds.map((postId, index) => ({
+          title:
+            data.snapshot?.posts?.find((post: AnyRecord) => post.id === postId)?.title ||
+            `Derivação ${index + 1}`,
+          format: "Entrada selecionada",
+          progress: "Aguardando início da rodada",
+          gate: "PRÉ-FLIGHT",
+          destination: "Documento do Studio",
+          percent: 0,
+        }))
+      : demo
+        ? [
+          {
+            title: "Carrossel de autoridade",
+            format: "6 slides · 4:5",
+            progress: "Demonstração de montagem",
+            gate: "REVISÃO HUMANA",
+            destination: "Instagram",
+            percent: 78,
+          },
+          {
+            title: isHorizonte ? "Reel com especialista" : "Reel com Mariana",
+            format: "25 s · 9:16",
+            progress: "Demonstração de calibração",
+            gate: "CENA PENDENTE",
+            destination: "Reels + TikTok",
+            percent: 64,
+          },
+          {
+            title: "Sequência de Stories",
+            format: "5 telas · 9:16",
+            progress: "Demonstração de pré-flight",
+            gate: "PRÉ-FLIGHT",
+            destination: "Stories",
+            percent: 91,
+          },
+          ]
+        : [];
   return (
     <section className="cx-factory-approved">
       <header>
@@ -5689,6 +8886,7 @@ function ApprovedFactorySurface({ navigate, setToast, brand }: AnyRecord) {
         <Button
           tone="primary"
           icon={Plus}
+          actionId="FACTORY-NEW-PRODUCTION"
           onClick={() => navigate("/campaigns/new")}
         >
           Nova produção
@@ -5696,18 +8894,34 @@ function ApprovedFactorySurface({ navigate, setToast, brand }: AnyRecord) {
       </header>
       <div className="cx-factory-metrics">
         {[
-          ["12", "PEÇAS EM PROCESSAMENTO"],
-          ["3", "PRECISAM DE VOCÊ"],
-          ["5", "PRONTOS HOJE"],
-          ["18", "PEÇAS NA SEMANA"],
+          [String(cells.filter((cell) => cell.jobId).length), "JOBS OBSERVÁVEIS"],
+          [String(cells.filter((cell) => cell.status === "blocked").length), "CÉLULAS BLOQUEADAS"],
+          [String(reviewableCells.length), "VERSÕES FIXADAS"],
+          [String(linkedDerivativeIds.length || cells.length), "ENTRADAS DA RODADA"],
         ].map(([v, l], i) => (
           <article className={`tone-${i}`} key={l}>
             <strong>{v}</strong>
             <span>{l}</span>
           </article>
         ))}
-        <small>Capacidade saudável · 2 slots livres</small>
+        <small>
+          {roundPayload
+            ? `Estado persistido · ${roundPayload.status}`
+            : "Pré-flight · nenhum processamento começou"}
+        </small>
       </div>
+      {factoryError && (
+        <HonestState
+          compact
+          state="recoverable-error"
+          detail={factoryError}
+          preserved="as derivações, a receita e qualquer célula já criada"
+          impact="nenhuma publicação foi executada"
+          actionLabel="Tentar iniciar novamente"
+          actionId="FACTORY-START-ROUND"
+          onAction={() => void startRound()}
+        />
+      )}
       <div className="cx-factory-system">
         <section className="cx-factory-inputs">
           <header>
@@ -5716,32 +8930,28 @@ function ApprovedFactorySurface({ navigate, setToast, brand }: AnyRecord) {
               <small>ENTRADAS VIVAS</small>
               <h2>Contexto que alimenta esta rodada</h2>
             </div>
-            <Button onClick={() => navigate("/radar")}>Ver origem</Button>
+            <Button
+              actionId="FACTORY-OPEN-SOURCE"
+              onClick={() =>
+                navigate(
+                  sourcePost
+                    ? `/content/${sourcePost.id}/edit?mode=editorial`
+                    : "/radar",
+                )
+              }
+            >
+              Ver origem
+            </Button>
           </header>
           <div>
-            {[
-              [
-                Radar,
-                "Oportunidade",
-                isHorizonte ? "+42% prevenção" : "+38% ritual de foco",
-              ],
-              [
-                Target,
-                "Oferta",
-                isHorizonte ? "Check-up integrado" : "Kit quatro origens",
-              ],
-              [FileText, "Briefing", "Promessa e guardrails validados"],
-              [
-                BarChart3,
-                "Vencedor",
-                isHorizonte ? "2,6× compartilhamentos" : "3× mais salvamentos",
-              ],
-            ].map(([Icon, label, value]) => (
+            {factoryInputs.map(([Icon, label, value, state]) => (
               <article key={String(label)}>
                 <Icon />
                 <small>{label}</small>
                 <b>{value}</b>
-                <i>✓ pronto</i>
+                <i className={state === "ausente" ? "is-missing" : ""}>
+                  {state}
+                </i>
               </article>
             ))}
           </div>
@@ -5753,75 +8963,72 @@ function ApprovedFactorySurface({ navigate, setToast, brand }: AnyRecord) {
             <div>
               <small>RECEITA ESTRATÉGICA APLICADA</small>
               <h2>
-                {isHorizonte
-                  ? "Clareza clínica sem alarmismo"
-                  : "Presença antes da produtividade"}
+                {demo
+                  ? isHorizonte
+                    ? "Clareza clínica sem alarmismo"
+                    : "Presença antes da produtividade"
+                  : observedHypothesis || "Hipótese ainda não registrada"}
               </h2>
             </div>
-            <strong>COERÊNCIA 92%</strong>
+            <strong>
+              {demo
+                ? "COERÊNCIA 92%"
+                : `${recipeSteps.length} decisões de transformação`}
+            </strong>
           </header>
-          <div>
-            {[
-              "Tensão real",
-              "Prova da marca",
-              "Formato certo",
-              "CTA responsável",
-            ].map((item, index) => (
-              <React.Fragment key={item}>
-                <span>
-                  <b>{index + 1}</b>
-                  {item}
-                </span>
-                {index < 3 && <ArrowRight />}
-              </React.Fragment>
-            ))}
-          </div>
+          {recipeSteps.length ? (
+            <div>
+              {recipeSteps.map((item, index) => (
+                <React.Fragment key={item}>
+                  <span>
+                    <b>{index + 1}</b>
+                    {item}
+                  </span>
+                  {index < recipeSteps.length - 1 && <ArrowRight />}
+                </React.Fragment>
+              ))}
+            </div>
+          ) : (
+            <p className="cx-factory-empty-note">
+              Nenhuma decisão de preservação ou adaptação foi registrada na linhagem.
+            </p>
+          )}
         </section>
 
         <section className="cx-factory-engine">
           <header>
             <span>03</span>
             <div>
-              <small>MOTOR CLICKO · PROCESSANDO</small>
-              <h2>Uma promessa, três células de produção</h2>
+              <small>
+                MOTOR CLICKO · {roundPayload ? "RODADA PERSISTIDA" : "PRÉ-FLIGHT"}
+              </small>
+              <h2>
+                {cells.length
+                  ? `${cells.length} células com identidade própria`
+                  : "Entradas aguardando validação da rodada"}
+              </h2>
             </div>
-            <em>7 variações originadas</em>
+            <em>{linkedDerivativeIds.length || cells.length} derivações vinculadas</em>
           </header>
           <div className="cx-factory-cells">
-            {[
-              [
-                "Carrossel de autoridade",
-                "6 slides · 4:5",
-                "Montagem 78%",
-                "REVISÃO HUMANA",
-                "Instagram",
-              ],
-              [
-                isHorizonte ? "Reel com especialista" : "Reel com Mariana",
-                "25 s · 9:16",
-                "Calibrando 64%",
-                "CENA PENDENTE",
-                "Reels + TikTok",
-              ],
-              [
-                "Sequência de Stories",
-                "5 telas · 9:16",
-                "Finalização 91%",
-                "PRÉ-FLIGHT",
-                "Stories",
-              ],
-            ].map(([title, format, progress, gate, destination], index) => (
-              <article key={title}>
-                <img src={factoryVisuals[index]} alt="" />
+            {factoryCells.map((cell, index) => (
+              <article key={`${cell.title}-${index}`}>
+                {demo ? (
+                  <img src={factoryVisuals[index % factoryVisuals.length]} alt="" />
+                ) : (
+                  <figure className="cx-factory-cell-identity" aria-hidden="true">
+                    Documento canônico
+                  </figure>
+                )}
                 <span>{String(index + 1).padStart(2, "0")}</span>
-                <small>{format}</small>
-                <h3>{title}</h3>
+                <small>{cell.format}</small>
+                <h3>{cell.title}</h3>
                 <div>
-                  <i style={{ width: `${[78, 64, 91][index]}%` }} />
+                  <i style={{ width: `${cell.percent}%` }} />
                 </div>
-                <p>{progress}</p>
-                <b>{gate}</b>
-                <footer>Destino · {destination}</footer>
+                <p>{cell.progress}</p>
+                <b>{cell.gate}</b>
+                <footer>Destino · {cell.destination}</footer>
               </article>
             ))}
           </div>
@@ -5832,82 +9039,100 @@ function ApprovedFactorySurface({ navigate, setToast, brand }: AnyRecord) {
             <span>04</span>
             <div>
               <small>GATES HUMANOS</small>
-              <h2>3 decisões antes da saída</h2>
+              <h2>
+                {decisionCells.length
+                  ? `${decisionCells.length} decisões antes da saída`
+                  : "Nenhuma decisão disponível"}
+              </h2>
             </div>
           </header>
-          {[
-            [
-              "Cenário do vídeo",
-              "Aceitar consultório com luz natural?",
-              "Alta",
-            ],
-            [
-              "Contraste do slide 04",
-              "Texto está abaixo do mínimo da marca.",
-              "Média",
-            ],
-            [
-              "Cadência de sábado",
-              "Dois conteúdos disputam o mesmo horário.",
-              "Média",
-            ],
-          ].map(([title, detail, urgency], index) => (
+          {decisionCells.map((decision: AnyRecord, index: number) => (
             <button
-              key={title}
+              data-action-id="FACTORY-OPEN-DECISION"
+              key={`${decision.postId}-${index}`}
               onClick={() =>
                 navigate(
-                  index === 2
+                  decision.calendar
                     ? "/calendar"
-                    : "/approvals/post-ritual?view=creative",
+                    : decision.blocked
+                      ? `/content/${decision.postId}/edit?mode=visual`
+                      : `/approvals/${decision.postId}?view=creative&batch=${roundPayload?.id || "demo"}`,
                 )
               }
             >
               <i>{index + 1}</i>
               <span>
-                <b>{title}</b>
-                <small>{detail}</small>
+                <b>{decision.title}</b>
+                <small>{decision.detail}</small>
               </span>
-              <em>{urgency}</em>
+              <em>{decision.urgency}</em>
               <ChevronRight />
             </button>
           ))}
+          {!decisionCells.length && (
+            <p className="cx-factory-empty-note">
+              Inicie a rodada para materializar versões revisáveis e seus gates humanos.
+            </p>
+          )}
         </aside>
 
         <section className="cx-factory-destinations">
           <small>DESTINOS DESTA RODADA</small>
           <div>
-            {[
-              "Instagram · 3",
-              "TikTok · 1",
-              "Stories · 3",
-              "Biblioteca · 7",
-              "Aprendizado · ligado",
-            ].map((item) => (
-              <span key={item}>{item}</span>
-            ))}
+            {Object.entries(destinationCounts).length ? (
+              Object.entries(destinationCounts).map(([destination, count]) => (
+                <span key={destination}>
+                  {destination} · {count}
+                </span>
+              ))
+            ) : (
+              <span>Nenhum destino registrado</span>
+            )}
           </div>
-          <strong>5 peças prontas hoje · 2 slots de capacidade livres</strong>
+          <strong>
+            {roundPayload
+              ? `${reviewableCells.length} versões aguardando decisão humana`
+              : "Nenhuma capacidade foi consumida"}
+          </strong>
         </section>
       </div>
       <footer className="cx-factory-next">
         <small>✦ PRÓXIMA MELHOR AÇÃO</small>
         <div>
           <b>
-            {round
-              ? "Nova rodada iniciada com contexto preservado."
-              : "Transforme ‘Ritual de foco’ em 3 Reels com rosto mantendo a promessa e a direção visual."}
+            {roundPayload
+              ? "Rodada persistida com documentos, versões e jobs rastreáveis."
+              : canStart
+                ? "Valide as entradas e crie uma rodada observável antes da produção."
+                : "Selecione e gere derivações no Reuse Lab para alimentar esta rodada."}
           </b>
-          <span>Baseado no vencedor dos últimos 30 dias</span>
+          <span>Nenhum conteúdo é publicado sem revisão humana.</span>
         </div>
         <Button
+          actionId="FACTORY-START-ROUND"
           tone="primary"
-          onClick={() => {
-            setRound(true);
-            setToast("Nova rodada iniciada");
-          }}
+          disabled={starting || Boolean(roundPayload) || !canStart}
+          onClick={() => void startRound()}
         >
-          Iniciar nova rodada
+          {starting
+            ? "Fixando versões e criando jobs…"
+            : roundPayload
+              ? "Rodada iniciada"
+              : "Iniciar nova rodada"}
         </Button>
+        {roundPayload && (
+          <Button
+            actionId="FACTORY-OPEN-BATCH-REVIEW"
+            disabled={reviewableCells.length === 0}
+            onClick={() =>
+              navigate(
+                `/approvals/${reviewableCells[0]?.postId}?batch=${roundPayload.id}`,
+              )
+            }
+          >
+            Revisar lote elegível
+          </Button>
+        )}
       </footer>
     </section>
   );
@@ -5931,7 +9156,7 @@ function FactorySurface({ navigate }: AnyRecord) {
           <p>
             “Quero lançar uma sequência sobre a origem do nosso novo microlote.”
           </p>
-          <button onClick={() => navigate("/campaigns/new")}>
+          <button data-action-id="FACTORY-OPEN-AI" onClick={() => navigate("/campaigns/new")}>
             <Sparkles />
             Começar com IA
             <ArrowRight />
@@ -5958,7 +9183,11 @@ function FactorySurface({ navigate }: AnyRecord) {
       <SectionHead title="Escolha uma ferramenta" />
       <div className="cx-tool-grid">
         {createItems.slice(0, 4).map(([Icon, title, path, detail], i) => (
-          <button key={title} onClick={() => navigate(path)}>
+          <button
+            data-action-id="FACTORY-OPEN-TOOL"
+            key={title}
+            onClick={() => navigate(path)}
+          >
             <span className={`tone-${i}`}>
               <Icon />
             </span>
@@ -5988,7 +9217,10 @@ function FactorySurface({ navigate }: AnyRecord) {
           <h3>O primeiro gole</h3>
           <p>Ritual Café Aurora · editado há 18 min</p>
         </div>
-        <Button onClick={() => navigate("/content/draft/edit?mode=visual")}>
+        <Button
+          actionId="FACTORY-CONTINUE"
+          onClick={() => navigate("/content/draft/edit?mode=visual")}
+        >
           Continuar
         </Button>
       </div>
@@ -6159,18 +9391,23 @@ function ProjectsSurface({ data, demo, navigate, brand }: AnyRecord) {
         <Button
           tone="primary"
           icon={Plus}
+          actionId="PROJECTS-NEW"
           onClick={() => navigate("/campaigns/new")}
         >
           Novo projeto
         </Button>
       </div>
       <div className="cx-projects-toolbar">
-        <button>
+        <button
+          disabled
+          title="O workspace já está fixado para esta visão de projetos."
+        >
           {brand?.name || "Workspace"} <ChevronDown />
         </button>
         <label>
           <Search />
           <input
+            data-action-id="PROJECTS-SELECT-FILTER"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Buscar projetos"
@@ -6179,6 +9416,7 @@ function ProjectsSurface({ data, demo, navigate, brand }: AnyRecord) {
         {["Todos", "Em produção", "Em revisão", "Agendados", "Concluídos"].map(
           (x) => (
             <button
+              data-action-id="PROJECTS-SELECT-FILTER"
               className={filter === x ? "is-active" : ""}
               onClick={() => setFilter(x)}
               key={x}
@@ -6193,7 +9431,11 @@ function ProjectsSurface({ data, demo, navigate, brand }: AnyRecord) {
           <h2>Retome o trabalho</h2>
           <div className="cx-project-resume">
             {filtered.slice(0, 3).map((p: AnyRecord) => (
-              <button key={p.id} onClick={() => navigate(`/campaigns/${p.id}`)}>
+              <button
+                data-action-id="PROJECTS-OPEN"
+                key={p.id}
+                onClick={() => navigate(`/campaigns/${p.id}`)}
+              >
                 <img src={p.image} />
                 <span />
                 <div>
@@ -6233,7 +9475,11 @@ function ProjectsSurface({ data, demo, navigate, brand }: AnyRecord) {
           </div>
           <div className="cx-project-universes">
             {filtered.map((p: AnyRecord) => (
-              <button key={p.id} onClick={() => navigate(`/campaigns/${p.id}`)}>
+              <button
+                data-action-id="PROJECTS-OPEN"
+                key={p.id}
+                onClick={() => navigate(`/campaigns/${p.id}`)}
+              >
                 <span className="cx-project-universe-visual">
                   <img src={p.image} />
                   <i style={{ width: `${p.progress}%` }} />
@@ -6363,7 +9609,7 @@ const socialIntegrationConfigs: AnyRecord = {
     ],
   },
   tiktok: {
-    mark: "♪",
+    mark: "TK",
     color: "#f5f5f2",
     name: "TikTok",
     subtitle: "Publicação nativa, segurança comercial e sinais de retenção.",
@@ -6407,7 +9653,7 @@ const socialIntegrationConfigs: AnyRecord = {
     ],
   },
   youtube: {
-    mark: "▶",
+    mark: "YT",
     color: "#ff2727",
     name: "YouTube",
     subtitle: "Vídeos, Shorts e metadados orientados por descoberta.",
@@ -6793,6 +10039,7 @@ function ApprovedAppsSurface({ demo, navigate, setToast, data }: AnyRecord) {
         <label>
           <Search size={15} />
           <input
+            data-action-id="APPS-SEARCH"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Buscar integração"
@@ -6809,6 +10056,7 @@ function ApprovedAppsSurface({ demo, navigate, setToast, data }: AnyRecord) {
           "Automação",
         ].map((x) => (
           <button
+            data-action-id="APPS-SELECT-CATEGORY"
             key={x}
             className={category === x ? "is-active" : ""}
             onClick={() => setCategory(x)}
@@ -6840,6 +10088,7 @@ function ApprovedAppsSurface({ demo, navigate, setToast, data }: AnyRecord) {
                 {isConnected ? "Conectado nesta sessão" : status}
               </strong>
               <Button
+                actionId="APPS-CONNECT"
                 disabled={disabled}
                 onClick={() => {
                   if (slug) navigate(`/apps/${slug}`);
@@ -6898,6 +10147,7 @@ function ApprovedAppsSurface({ demo, navigate, setToast, data }: AnyRecord) {
                   {name === "Importação de dados" ? "Em breve" : "Disponível"}
                 </b>
                 <Button
+                  actionId="APPS-CONNECT"
                   disabled={name === "Importação de dados"}
                   onClick={() => setToast(`${name}: configuração preparada`)}
                 >
@@ -6925,7 +10175,10 @@ function ApprovedAppsSurface({ demo, navigate, setToast, data }: AnyRecord) {
             <span>
               Instagram e Facebook<small>Erro de conexão</small>
             </span>
-            <Button onClick={() => navigate("/apps/instagram")}>
+            <Button
+              actionId="APPS-OPEN-INTEGRATION"
+              onClick={() => navigate("/apps/instagram")}
+            >
               Reconectar
             </Button>
           </article>
@@ -6941,6 +10194,7 @@ function ApprovedAppsSurface({ demo, navigate, setToast, data }: AnyRecord) {
           .filter(([, config]) => match([config.name, config.subtitle]))
           .map(([slug, config]) => (
             <button
+              data-action-id="APPS-OPEN-INTEGRATION"
               key={slug}
               onClick={() => navigate(`/apps/${slug}`)}
               style={{ "--social-color": config.color } as React.CSSProperties}
@@ -6994,6 +10248,7 @@ function SocialIntegrationSurface({
       <header>
         <button
           className="cx-social-back"
+          data-action-id="SOCIAL-BACK-APPS"
           onClick={() => navigate("/apps")}
           aria-label="Voltar para Apps"
         >
@@ -7015,6 +10270,7 @@ function SocialIntegrationSurface({
           </small>
         </div>
         <Button
+          actionId="SOCIAL-TEST-CONNECTION"
           onClick={() => {
             setTested(true);
             if (!demo) {
@@ -7034,13 +10290,18 @@ function SocialIntegrationSurface({
         >
           Testar conexão
         </Button>
-        <Button tone="primary" onClick={() => setManaging(!managing)}>
+        <Button
+          tone="primary"
+          actionId="SOCIAL-TOGGLE-MANAGEMENT"
+          onClick={() => setManaging(!managing)}
+        >
           {managing ? "Concluir" : "Gerenciar"}
         </Button>
       </header>
       <nav>
         {config.tabs.map((x: string) => (
           <button
+            data-action-id="SOCIAL-SELECT-TAB"
             key={x}
             className={tab === x ? "is-active" : ""}
             onClick={() => setTab(x)}
@@ -7159,38 +10420,838 @@ function SocialIntegrationSurface({
   );
 }
 
+function IdentityLibrarySurface({
+  navigate,
+  setToast,
+  data,
+  demo,
+  params,
+}: AnyRecord) {
+  const workspaceId = data.activeWorkspace?.id as string | undefined;
+  const [loading, setLoading] = React.useState(!demo);
+  const [error, setError] = React.useState<string>();
+  const [identities, setIdentities] = React.useState<AnyRecord[]>([]);
+  const [versions, setVersions] = React.useState<Record<string, AnyRecord[]>>({});
+  const [voices, setVoices] = React.useState<AnyRecord[]>([]);
+  const [voiceVersions, setVoiceVersions] = React.useState<Record<string, AnyRecord[]>>({});
+  const [consents, setConsents] = React.useState<AnyRecord[]>([]);
+  const [enrolling, setEnrolling] = React.useState(params?.get("enroll") === "1");
+  const [saving, setSaving] = React.useState(false);
+  const [name, setName] = React.useState("");
+  const [purpose, setPurpose] = React.useState("Criar amostras privadas para anúncios da marca");
+  const [expiresOn, setExpiresOn] = React.useState(() => {
+    const next = new Date();
+    next.setDate(next.getDate() + 30);
+    return next.toISOString().slice(0, 10);
+  });
+  const [capture, setCapture] = React.useState<File>();
+  const [voiceCapture, setVoiceCapture] = React.useState<File>();
+  const [declared, setDeclared] = React.useState(false);
+  const presenterCapability = data.snapshot?.studioCapabilities?.presenter;
+
+  const load = React.useCallback(async () => {
+    if (demo || !workspaceId) {
+      setLoading(false);
+      return;
+    }
+    setLoading(true);
+    setError(undefined);
+    try {
+      const [nextIdentities, nextConsents, nextVoices] = await Promise.all([
+        productApi.studioIdentities(workspaceId),
+        productApi.studioConsents(workspaceId),
+        productApi.studioVoices(workspaceId),
+      ]);
+      const [versionEntries, voiceVersionEntries] = await Promise.all([
+        Promise.all(
+          nextIdentities.map(async (identity) => [
+            identity.id,
+            await productApi.studioIdentityVersions(identity.id),
+          ] as const),
+        ),
+        Promise.all(
+          nextVoices.map(async (voice) => [
+            voice.id,
+            await productApi.studioVoiceVersions(voice.id),
+          ] as const),
+        ),
+      ]);
+      setIdentities(nextIdentities);
+      setVersions(Object.fromEntries(versionEntries));
+      setVoices(nextVoices);
+      setVoiceVersions(Object.fromEntries(voiceVersionEntries));
+      setConsents(nextConsents);
+    } catch (requestError) {
+      setError(requestError instanceof Error ? requestError.message : "Não foi possível carregar as identidades.");
+    } finally {
+      setLoading(false);
+    }
+  }, [demo, workspaceId]);
+
+  React.useEffect(() => {
+    void load();
+  }, [load]);
+
+  const submitEnrollment = async (event: React.FormEvent) => {
+    event.preventDefault();
+    if (!workspaceId || !capture || !voiceCapture || !name.trim() || !purpose.trim() || !declared) return;
+    setSaving(true);
+    setError(undefined);
+    try {
+      const evidence = await productApi.uploadStudioAsset(workspaceId, capture);
+      const voiceEvidence = await productApi.uploadStudioAsset(workspaceId, voiceCapture);
+      const subjectKey = `person/${crypto.randomUUID()}`;
+      const consent = await productApi.createStudioConsent({
+        workspaceId,
+        subjectKey,
+        subjectDisplayName: name.trim(),
+        purpose: purpose.trim(),
+        scopes: ["identity.enroll", "avatar.generate", "voice.enroll", "voice.clone"],
+        brandIds: data.activeWorkspace?.brandProfile?.id
+          ? [data.activeWorkspace.brandProfile.id]
+          : [],
+        channels: ["private-preview"],
+        policyVersion: "clicko.identity-consent.v1",
+        evidenceAssetId: evidence.id,
+        expiresAt: new Date(`${expiresOn}T23:59:59.000Z`).toISOString(),
+      });
+      const identity = await productApi.createStudioIdentity({
+        workspaceId,
+        subjectKey,
+        displayName: name.trim(),
+        identityType: "natural_person",
+        ownerUserId: null,
+      });
+      await productApi.createStudioIdentityVersion(identity.id, {
+        consentGrantId: consent.id,
+        capabilities: ["avatar.generate"],
+        sampleAssetIds: [evidence.id],
+        derivedArtifacts: [],
+      });
+      const voice = await productApi.createStudioVoice({
+        workspaceId,
+        identityProfileId: identity.id,
+        displayName: `${name.trim()} · PT-BR`,
+        locale: "pt-BR",
+        voiceType: "cloned",
+      });
+      await productApi.createStudioVoiceVersion(voice.id, {
+        consentGrantId: consent.id,
+        sampleAssetIds: [voiceEvidence.id],
+        derivedArtifacts: [],
+        pronunciationProfile: {},
+      });
+      setToast("Candidato privado criado. Ele continua bloqueado até avaliação e revisão independentes.");
+      setEnrolling(false);
+      setName("");
+      setCapture(undefined);
+      setVoiceCapture(undefined);
+      setDeclared(false);
+      await load();
+    } catch (requestError) {
+      setError(requestError instanceof Error ? requestError.message : "O cadastro foi bloqueado com segurança.");
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  return (
+    <Page
+      eyebrow="Biblioteca de identidades"
+      title="Escolha presença sem perder o controle"
+      description="Avatares stock e pessoas reais seguem direitos, versões e gates diferentes. Nenhum candidato é liberado por aparência."
+      actions={
+        <Button
+          actionId="IDENTITY-START-ENROLLMENT"
+          tone="primary"
+          onClick={() => setEnrolling((current) => !current)}
+        >
+          Cadastrar identidade própria
+        </Button>
+      }
+    >
+      {loading && <HonestState state="loading" detail="Carregando versões e consentimentos…" />}
+      {error && (
+        <HonestState
+          state="recoverable-error"
+          detail={error}
+          actionLabel="Tentar novamente"
+          actionId="IDENTITY-RETRY-LOAD"
+          onAction={() => void load()}
+        />
+      )}
+
+      <section className="cx-identity-library" aria-label="Avatares stock pré-selecionados">
+        <header>
+          <div>
+            <small>CATÁLOGO STOCK · 3 MULHERES + 3 HOMENS</small>
+            <h2>Seis direções de presença</h2>
+          </div>
+          <p>
+            O slot visual pode ser explorado agora. Produção só habilita quando identidade sintética,
+            modelo, licença e provider estão ativos no workspace.
+          </p>
+        </header>
+        <div className="cx-stock-avatar-grid">
+          {STOCK_AVATAR_CANDIDATES.map((avatar) => {
+            const profile = identities.find((item) => item.subjectKey === avatar.subjectKey);
+            const activeVersion = profile
+              ? versions[profile.id]?.find((version) => version.status === "active")
+              : undefined;
+            const usable = Boolean(
+              activeVersion && profile?.status === "active" && presenterCapability?.providerReady,
+            );
+            return (
+              <article key={avatar.id} data-avatar-status={usable ? "ready" : "candidate"}>
+                <div className="cx-stock-avatar-mark" style={{ "--avatar-accent": avatar.accent } as React.CSSProperties}>
+                  <span>{avatar.displayName.slice(0, 1)}</span>
+                  <small>{avatar.presentation === "woman" ? "F" : "M"}</small>
+                </div>
+                <h3>{avatar.displayName}</h3>
+                <p>{avatar.direction}</p>
+                <small>{avatar.voiceLabel}</small>
+                <em>{usable ? `Ativo · identidade v${activeVersion.version}` : "Candidato · ativação pendente"}</em>
+                {usable ? (
+                  <Button
+                    actionId="IDENTITY-SELECT-STOCK"
+                    onClick={() =>
+                      navigate(
+                        `/content/post-ritual/edit?mode=presenter&avatar=${avatar.id}&identityVersion=${activeVersion.id}`,
+                      )
+                    }
+                  >
+                    Usar no Presenter
+                  </Button>
+                ) : (
+                  <Button
+                    actionId="IDENTITY-PREVIEW-STOCK"
+                    disabled={!demo}
+                    title={!demo ? "Provider, modelo, licença e IdentityVersion ativa são obrigatórios" : undefined}
+                    onClick={() =>
+                      navigate(`/content/post-ritual/edit?mode=presenter&avatar=${avatar.id}&preview=1`)
+                    }
+                  >
+                    {demo ? "Ver prévia local" : "Ativação pendente"}
+                  </Button>
+                )}
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      {enrolling && (
+        <form className="cx-identity-enrollment" onSubmit={submitEnrollment}>
+          <header>
+            <div><small>CAPTURE & CONSENT</small><h2>Candidato privado, nunca ativação automática</h2></div>
+            <button
+              type="button"
+              data-action-id="IDENTITY-CLOSE-ENROLLMENT"
+              onClick={() => setEnrolling(false)}
+              aria-label="Fechar cadastro"
+            >
+              ×
+            </button>
+          </header>
+          <p>
+            Este fluxo registra escopo, expiração e evidência. A versão nasce como rascunho e exige avaliação e revisão independentes antes de qualquer amostra.
+          </p>
+          <div className="cx-identity-enrollment-grid">
+            <label htmlFor="identity-person-name">Nome da pessoa<input data-action-id="IDENTITY-EDIT-ENROLLMENT" id="identity-person-name" required value={name} onChange={(event) => setName(event.target.value)} /></label>
+            <label htmlFor="identity-consent-expiry">Válido até<input data-action-id="IDENTITY-EDIT-ENROLLMENT" id="identity-consent-expiry" required type="date" value={expiresOn} min={new Date().toISOString().slice(0, 10)} onChange={(event) => setExpiresOn(event.target.value)} /></label>
+            <label className="is-wide" htmlFor="identity-purpose">Finalidade<textarea data-action-id="IDENTITY-EDIT-ENROLLMENT" id="identity-purpose" required rows={3} value={purpose} onChange={(event) => setPurpose(event.target.value)} /></label>
+            <label className="is-wide" htmlFor="identity-private-capture">Vídeo privado de consentimento e captura<input data-action-id="IDENTITY-SELECT-PRIVATE-MEDIA" id="identity-private-capture" required type="file" accept="video/*" onChange={(event) => setCapture(event.target.files?.[0])} /><small>Usado como evidência e amostra privada; não é publicado.</small></label>
+            <label className="is-wide" htmlFor="identity-private-voice">Áudio privado para matrícula de voz<input data-action-id="IDENTITY-SELECT-PRIVATE-MEDIA" id="identity-private-voice" required type="file" accept="audio/*" onChange={(event) => setVoiceCapture(event.target.files?.[0])} /><small>Corpus separado para avaliação de voz; nunca é usado como prova visual.</small></label>
+          </div>
+          <label className="cx-identity-declaration">
+            <input data-action-id="IDENTITY-EDIT-ENROLLMENT" type="checkbox" checked={declared} onChange={(event) => setDeclared(event.target.checked)} />
+            Confirmo que a pessoa identificada autorizou identity.enroll, avatar.generate, voice.enroll e voice.clone para a finalidade e prazo informados.
+          </label>
+          <Button
+            actionId="IDENTITY-SUBMIT-ENROLLMENT"
+            tone="primary"
+            type="submit"
+            disabled={saving || !declared || !capture || !voiceCapture || !name.trim() || !purpose.trim()}
+          >
+            {saving ? "Protegendo captura…" : "Criar candidato para revisão"}
+          </Button>
+        </form>
+      )}
+
+      {!demo && !loading && (
+        <section className="cx-governed-identities">
+          <header><small>IDENTIDADES DO WORKSPACE</small><h2>Versões e consentimentos reais</h2></header>
+          {identities.length === 0 ? (
+            <HonestState state="empty" detail="Nenhuma identidade foi cadastrada neste workspace." />
+          ) : identities.map((identity) => {
+            const currentVersions = versions[identity.id] ?? [];
+            const consent = consents.find((item) => item.subjectKey === identity.subjectKey);
+            const linkedVoices = voices.filter((voice) => voice.identityProfileId === identity.id);
+            const activeIdentityVersion = currentVersions.find((version) => version.status === "active");
+            const activeVoice = linkedVoices.find((voice) => voice.status === "active");
+            const activeVoiceVersion = activeVoice
+              ? voiceVersions[activeVoice.id]?.find((version) => version.status === "active")
+              : undefined;
+            return (
+              <article key={identity.id}>
+                <div><b>{identity.displayName}</b><small>{identity.identityType} · {identity.status}</small></div>
+                <span>{currentVersions.length} versão(ões) · {currentVersions[0]?.status ?? "sem versão"}</span>
+                <span>{linkedVoices.length} voz(es) · {activeVoiceVersion ? `voz v${activeVoiceVersion.version} ativa` : "sem voz ativa"}</span>
+                <em>Consentimento: {consent?.status ?? "ausente"}{consent?.expiresAt ? ` · expira ${new Date(consent.expiresAt).toLocaleDateString("pt-BR")}` : ""}</em>
+                {activeIdentityVersion && activeVoiceVersion && consent?.status === "active" && (
+                  <Button
+                    actionId="IDENTITY-SELECT-STOCK"
+                    onClick={() =>
+                      navigate(
+                        `/content/post-ritual/edit?mode=presenter&identityVersion=${activeIdentityVersion.id}&voiceVersion=${activeVoiceVersion.id}&consent=${consent.id}`,
+                      )
+                    }
+                  >
+                    Usar identidade e voz no Presenter
+                  </Button>
+                )}
+                {consent?.status === "active" && (
+                  <Button
+                    actionId="IDENTITY-REVOKE-CONSENT"
+                    onClick={() => {
+                      if (!window.confirm("Revogar este consentimento bloqueará usos futuros e versões vinculadas. Continuar?")) return;
+                      void productApi.revokeStudioConsent(consent.id, "Revogado pelo responsável no Identity Library")
+                        .then(() => load())
+                        .then(() => setToast("Consentimento revogado; usos futuros foram bloqueados."))
+                        .catch((requestError) => setError(requestError instanceof Error ? requestError.message : "Não foi possível revogar."));
+                    }}
+                  >
+                    Revogar consentimento
+                  </Button>
+                )}
+              </article>
+            );
+          })}
+        </section>
+      )}
+    </Page>
+  );
+}
+
+function safeImageLabReturn(value: string | null) {
+  if (!value) return "/library/assets";
+  if (value === "/library/assets") return value;
+  if (/^\/content\/[^/?#]+\/edit(?:\?[^#]*)?$/.test(value)) return value;
+  return "/library/assets";
+}
+
+function ImageLabSurface({ data, navigate, params, pathname, setToast }: AnyRecord) {
+  const assetId = decodeURIComponent(pathname.split("/")[3] || "");
+  const demoIndex = assetId.startsWith("demo-")
+    ? Number(assetId.replace("demo-", "")) || 0
+    : -1;
+  const demoSource = demoIndex >= 0 ? phase3Arts[demoIndex % phase3Arts.length] : "";
+  const asset = data.snapshot?.assets?.find((item: AnyRecord) => item.id === assetId);
+  const returnTarget = safeImageLabReturn(params.get("returnTo"));
+  const [sourceUrl, setSourceUrl] = React.useState(demoSource);
+  const [derivedUrl, setDerivedUrl] = React.useState("");
+  const [derivedAsset, setDerivedAsset] = React.useState<AnyRecord>();
+  const [brightness, setBrightness] = React.useState(1);
+  const [contrast, setContrast] = React.useState(1);
+  const [comparison, setComparison] = React.useState(55);
+  const [maskEnabled, setMaskEnabled] = React.useState(false);
+  const [maskShape, setMaskShape] = React.useState<"rectangle" | "ellipse">("ellipse");
+  const [protectFace, setProtectFace] = React.useState(false);
+  const [protectProduct, setProtectProduct] = React.useState(true);
+  const [protectLogo, setProtectLogo] = React.useState(false);
+  const [status, setStatus] = React.useState<"loading" | "ready" | "saving" | "error">(
+    demoSource ? "ready" : "loading",
+  );
+  const [error, setError] = React.useState("");
+
+  React.useEffect(() => {
+    if (demoSource) {
+      setSourceUrl(demoSource);
+      setStatus("ready");
+      return;
+    }
+    if (!asset?.id) return;
+    let objectUrl = "";
+    let current = true;
+    setStatus("loading");
+    void productApi
+      .studioAssetBlob(asset.id)
+      .then((blob) => {
+        if (!current) return;
+        objectUrl = URL.createObjectURL(blob);
+        setSourceUrl(objectUrl);
+        setStatus("ready");
+      })
+      .catch((requestError) => {
+        if (!current) return;
+        setError(requestError instanceof Error ? requestError.message : "Não foi possível abrir a imagem privada.");
+        setStatus("error");
+      });
+    return () => {
+      current = false;
+      if (objectUrl) URL.revokeObjectURL(objectUrl);
+    };
+  }, [asset?.id, demoSource]);
+  React.useEffect(
+    () => () => {
+      if (derivedUrl.startsWith("blob:")) URL.revokeObjectURL(derivedUrl);
+    },
+    [derivedUrl],
+  );
+
+  if (!demoSource && data.status === "loading") {
+    return <HonestState state="loading" title="Abrindo Image Lab…" detail="Validando o ativo privado e seu checksum." />;
+  }
+  if (!demoSource && !asset) {
+    return (
+      <HonestState
+        state="empty"
+        title="Imagem não encontrada"
+        detail="O ativo não existe neste workspace ou você não possui acesso."
+        preserved="nenhum arquivo foi alterado"
+        actionLabel="Voltar à Biblioteca"
+        actionId="IMAGE-RETURN"
+        onAction={() => navigate("/library/assets")}
+      />
+    );
+  }
+  const protectedRegions = [
+    ...(protectFace
+      ? [{ kind: "face" as const, label: "Rosto", x: 0.32, y: 0.08, width: 0.36, height: 0.28 }]
+      : []),
+    ...(protectProduct
+      ? [{ kind: "product" as const, label: "Produto central", x: 0.3, y: 0.35, width: 0.4, height: 0.42 }]
+      : []),
+    ...(protectLogo
+      ? [{ kind: "logo" as const, label: "Assinatura", x: 0.66, y: 0.84, width: 0.26, height: 0.1 }]
+      : []),
+  ];
+  const createDerivation = async () => {
+    setError("");
+    if (demoSource) {
+      setDerivedUrl(demoSource);
+      setDerivedAsset({ id: `demo-derived-${demoIndex}`, title: "Derivação demonstrativa" });
+      setToast("Derivação demonstrativa criada apenas nesta sessão");
+      return;
+    }
+    if (!asset?.checksumSha256 || !data.activeWorkspace?.id) {
+      setError("Este ativo não possui checksum verificável e não pode ser derivado com segurança.");
+      return;
+    }
+    setStatus("saving");
+    try {
+      const idempotencyKey = `image-${asset.id}-${crypto.randomUUID()}`;
+      const created = await productApi.deriveStudioImage(asset.id, {
+        workspaceId: data.activeWorkspace.id,
+        title: `${asset.title} · derivação`,
+        brightness,
+        contrast,
+        editMask: maskEnabled
+          ? { shape: maskShape, x: 0.1, y: 0.12, width: 0.8, height: 0.72 }
+          : null,
+        protectedRegions,
+        expectedSourceChecksumSha256: asset.checksumSha256,
+        idempotencyKey,
+      });
+      const blob = await productApi.studioAssetBlob(created.id);
+      const objectUrl = URL.createObjectURL(blob);
+      setDerivedUrl((previous: string) => {
+        if (previous.startsWith("blob:")) URL.revokeObjectURL(previous);
+        return objectUrl;
+      });
+      setDerivedAsset(created);
+      setComparison(50);
+      setStatus("ready");
+      await data.refresh();
+      setToast("Derivação privada criada; o original permanece intacto");
+    } catch (requestError) {
+      setError(requestError instanceof Error ? requestError.message : "Não foi possível criar a derivação.");
+      setStatus("error");
+    }
+  };
+  const returnWithAsset = () => {
+    const destination = derivedAsset
+      ? `${returnTarget}${returnTarget.includes("?") ? "&" : "?"}derivedAsset=${encodeURIComponent(derivedAsset.id)}`
+      : returnTarget;
+    navigate(destination);
+  };
+  return (
+    <section className="cx-image-lab">
+      <header>
+        <button data-action-id="IMAGE-RETURN" onClick={() => navigate(returnTarget)}>
+          ← Voltar
+        </button>
+        <div>
+          <small>IMAGE LAB · EDIÇÃO NÃO DESTRUTIVA</small>
+          <h1>{asset?.title || "Imagem demonstrativa"}</h1>
+        </div>
+        <Chip tone="green">ORIGINAL IMUTÁVEL</Chip>
+        <Button actionId="IMAGE-RETURN" onClick={returnWithAsset}>
+          {derivedAsset ? "Voltar com derivação" : "Voltar sem aplicar"}
+        </Button>
+        <Button
+          tone="primary"
+          actionId="IMAGE-CREATE-DERIVATION"
+          disabled={status === "saving" || (!demoSource && !asset?.checksumSha256)}
+          onClick={() => void createDerivation()}
+        >
+          {status === "saving" ? "Criando…" : "Criar derivação privada"}
+        </Button>
+      </header>
+      <aside className="cx-image-controls">
+        <h2>Ajustes</h2>
+        <label>
+          Brilho <b>{Math.round(brightness * 100)}%</b>
+          <input data-action-id="IMAGE-ADJUST-PARAMETER" type="range" min="0.5" max="1.5" step="0.05" value={brightness} onChange={(event) => setBrightness(Number(event.target.value))} />
+        </label>
+        <label>
+          Contraste <b>{Math.round(contrast * 100)}%</b>
+          <input data-action-id="IMAGE-ADJUST-PARAMETER" type="range" min="0.5" max="1.5" step="0.05" value={contrast} onChange={(event) => setContrast(Number(event.target.value))} />
+        </label>
+        <hr />
+        <h2>Máscara de edição</h2>
+        <label className="cx-motion-toggle">
+          <input data-action-id="IMAGE-TOGGLE-MASK" type="checkbox" checked={maskEnabled} onChange={(event) => setMaskEnabled(event.target.checked)} />
+          Limitar ajuste a uma região
+        </label>
+        <div className="cx-image-mask-shape">
+          {(["ellipse", "rectangle"] as const).map((shape) => (
+            <button
+              key={shape}
+              data-action-id="IMAGE-SELECT-MASK-SHAPE"
+              className={maskShape === shape ? "is-active" : ""}
+              disabled={!maskEnabled}
+              onClick={() => setMaskShape(shape)}
+            >
+              {shape === "ellipse" ? "Elipse" : "Retângulo"}
+            </button>
+          ))}
+        </div>
+        <hr />
+        <h2>Regiões protegidas</h2>
+        <p>Pixels nestas áreas são copiados do original.</p>
+        {[
+          ["Rosto", protectFace, setProtectFace],
+          ["Produto central", protectProduct, setProtectProduct],
+          ["Logo", protectLogo, setProtectLogo],
+        ].map(([label, checked, setter]) => (
+          <label className="cx-motion-toggle" key={String(label)}>
+            <input data-action-id="IMAGE-TOGGLE-PROTECTION" type="checkbox" checked={Boolean(checked)} onChange={(event) => (setter as React.Dispatch<React.SetStateAction<boolean>>)(event.target.checked)} />
+            Bloquear {String(label).toLowerCase()}
+          </label>
+        ))}
+        <StateBanner
+          tone="blue"
+          title="Locks explícitos, não inferidos"
+          detail="Neste corte, você define as regiões. Detecção automática só será liberada após benchmark."
+        />
+      </aside>
+      <main className="cx-image-stage">
+        {status === "loading" ? (
+          <HonestState
+            state="loading"
+            title="Carregando mídia privada…"
+            detail="O original está sendo materializado apenas para esta sessão autenticada."
+          />
+        ) : sourceUrl ? (
+          <div className="cx-image-compare-stage">
+            <img src={sourceUrl} alt="Original" />
+            <div className="cx-image-after" style={{ width: `${comparison}%` }}>
+              <img
+                src={derivedUrl || sourceUrl}
+                alt={derivedUrl ? "Derivação exata" : "Prévia local do ajuste"}
+                style={derivedUrl ? undefined : { filter: `brightness(${brightness}) contrast(${contrast})` }}
+              />
+            </div>
+            <i style={{ left: `${comparison}%` }}><span>ANTES</span><span>DEPOIS</span></i>
+            {maskEnabled && <span className={`cx-image-mask is-${maskShape}`} />}
+            {protectedRegions.map((region) => (
+              <span
+                className={`cx-image-lock is-${region.kind}`}
+                key={region.kind}
+                style={{ left: `${region.x * 100}%`, top: `${region.y * 100}%`, width: `${region.width * 100}%`, height: `${region.height * 100}%` }}
+              >
+                {region.label}
+              </span>
+            ))}
+          </div>
+        ) : null}
+        <label className="cx-image-compare-control">
+          Comparação
+          <input
+            data-testid="image-compare"
+            data-action-id="IMAGE-COMPARE"
+            aria-label="Comparar antes e depois"
+            type="range"
+            min="0"
+            max="100"
+            value={comparison}
+            onChange={(event) => setComparison(Number(event.target.value))}
+          />
+        </label>
+        <Button
+          actionId="IMAGE-COMPARE"
+          onClick={() => setComparison((value) => (value < 100 ? 100 : 0))}
+        >
+          {comparison < 100 ? "Ver depois completo" : "Ver original completo"}
+        </Button>
+      </main>
+      <aside className="cx-image-lineage">
+        <h2>Saída e linhagem</h2>
+        <KeyValue label="Origem" value={asset?.id || `demo-${demoIndex}`} />
+        <KeyValue label="Checksum" value={asset?.checksumSha256 ? `${asset.checksumSha256.slice(0, 12)}…` : "Demonstração local"} />
+        <KeyValue label="Máscara" value={maskEnabled ? maskShape : "Imagem inteira"} />
+        <KeyValue label="Locks" value={protectedRegions.map((item) => item.label).join(", ") || "Nenhum"} />
+        {error && <StateBanner tone="orange" title="Nada foi alterado" detail={error} />}
+        {derivedAsset ? (
+          <StateBanner
+            tone="green"
+            title="Derivação pronta para revisão"
+            detail={`Novo asset ${derivedAsset.id}. O original continua disponível.`}
+          />
+        ) : (
+          <StateBanner
+            tone="orange"
+            title="Prévia ainda não é um arquivo"
+            detail="Crie a derivação para fixar checksum, provider e regiões protegidas."
+          />
+        )}
+      </aside>
+    </section>
+  );
+}
+
 function PresenterStudioSurface({
   navigate,
   setToast,
   data,
   demo,
   brand,
+  params,
+  pathname,
 }: AnyRecord) {
   const [generated, setGenerated] = React.useState(false);
   const [captured, setCaptured] = React.useState(false);
   const [scenario, setScenario] = React.useState<"yes" | "no" | "">("");
+  const [materialTab, setMaterialTab] = React.useState<
+    "video" | "voice" | "brand"
+  >("video");
+  const [rulesOpen, setRulesOpen] = React.useState(false);
+  const [avatarProvider, setAvatarProvider] = React.useState<AnyRecord>();
+  const [avatarJob, setAvatarJob] = React.useState<AnyRecord>();
+  const [avatarJobError, setAvatarJobError] = React.useState<string>();
+  const [avatarDocument, setAvatarDocument] = React.useState<AnyRecord>();
+  const workspaceId = data.activeWorkspace?.id as string | undefined;
+  const contentId = pathname?.split("/")[2] as string | undefined;
+  const post = data.snapshot?.posts?.find((item: AnyRecord) => item.id === contentId);
+  const presenterCapability = data.snapshot?.studioCapabilities?.presenter;
+  const providerReady = Boolean(presenterCapability?.providerReady);
+  // Authenticated capture must go through the governed private ingest in the
+  // Identity Library. Capability readiness alone must never persist a fake
+  // capture boolean as evidence.
+  const captureReady = demo;
+  const captureCapabilityReady = Boolean(presenterCapability?.captureReady);
+  const publicationReady = !demo && Boolean(presenterCapability?.publicationAllowed);
+  const selectedAvatar = STOCK_AVATAR_CANDIDATES.find(
+    (avatar) => avatar.id === params?.get("avatar"),
+  );
+  const selectedIdentityVersionId = params?.get("identityVersion") as string | null;
+  const selectedVoiceVersionId = params?.get("voiceVersion") as string | null;
+  const selectedConsentId = params?.get("consent") as string | null;
+  // Authenticated production remains fail-closed until Presenter owns a real
+  // observable avatar_video job. The guest path is explicitly local only.
+  const canGenerate = demo || Boolean(
+    providerReady &&
+      selectedIdentityVersionId &&
+      selectedVoiceVersionId &&
+      selectedConsentId &&
+      avatarProvider,
+  );
+  const productionSelectionReady = Boolean(
+    !demo &&
+      providerReady &&
+      presenterCapability?.captureReady &&
+      selectedIdentityVersionId &&
+      selectedVoiceVersionId &&
+      selectedConsentId,
+  );
+  React.useEffect(() => {
+    if (demo || !workspaceId) return;
+    let active = true;
+    void Promise.all([
+      productApi.studioProviders(workspaceId, "avatar_video"),
+      productApi.studioDocuments(workspaceId, { postId: contentId }),
+    ]).then(async ([providers, documents]) => {
+      if (!active) return;
+      const approved = providers.find((provider) => provider.status === "approved");
+      const document = documents.find((candidate) => candidate.contentType === "presenter");
+      setAvatarProvider(approved);
+      setAvatarDocument(document);
+      if (document) {
+        const jobs = await productApi.studioGenerationJobs(workspaceId, {
+          documentId: document.documentId,
+          jobType: "avatar_video",
+          limit: 1,
+        });
+        if (active) setAvatarJob(jobs[0]);
+      }
+    }).catch((requestError) => {
+      if (active) setAvatarJobError(requestError instanceof Error ? requestError.message : "Falha ao carregar o Presenter.");
+    });
+    return () => { active = false; };
+  }, [contentId, demo, workspaceId]);
+
+  React.useEffect(() => {
+    if (!avatarJob || !["queued", "running", "retrying"].includes(avatarJob.status)) return;
+    const timer = window.setTimeout(() => {
+      void productApi.studioGenerationJob(avatarJob.id)
+        .then(setAvatarJob)
+        .catch((requestError) => setAvatarJobError(requestError instanceof Error ? requestError.message : "Não foi possível atualizar o job."));
+    }, 900);
+    return () => window.clearTimeout(timer);
+  }, [avatarJob]);
+
+  const generatePrivateSample = async () => {
+    if (!workspaceId || !selectedIdentityVersionId || !selectedVoiceVersionId || !selectedConsentId || !avatarProvider) {
+      setToast("Selecione identidade, voz, consentimento e provider aprovados");
+      return;
+    }
+    setAvatarJobError(undefined);
+    try {
+      let document = avatarDocument;
+      if (!document) {
+        document = await productApi.createStudioDocument({
+          workspaceId,
+          title: post?.title || "Amostra Presenter privada",
+          contentType: "presenter",
+          campaignId: post?.campaignId ?? null,
+          postId: post?.id ?? null,
+          opportunityId: null,
+          brandRevision: Math.max(1, data.activeWorkspace?.brandProfile?.versions?.length || 1),
+          brief: {
+            schemaVersion: "studio.creative-brief.v1",
+            objective: post?.objective || "Criar amostra privada para revisão humana",
+            audience: data.activeWorkspace?.brandProfile?.targetAudience || "Público da marca",
+            angle: "Apresentação humana, consentida e fiel à marca",
+            promise: "Uma amostra privada pronta para edição e revisão",
+            tone: data.activeWorkspace?.brandProfile?.tone || "Humano e preciso",
+            hook: post?.copy || "Conheça a proposta.",
+            cta: "Conheça a marca",
+            channel: "instagram",
+            format: "reel-vertical",
+            restrictions: ["Não publicar sem revisão humana", "Não alterar traços da identidade"],
+            hypotheses: ["Uma presença consentida aumenta confiança sem perder controle"],
+            evidence: [],
+          },
+          composition: {
+            pages: [{
+              id: `presenter-${crypto.randomUUID()}`,
+              role: "ugc",
+              width: 1080,
+              height: 1920,
+              safeArea: 48,
+              background: "#10181c",
+              layers: [],
+            }],
+          },
+          assets: [],
+        });
+        setAvatarDocument(document);
+      }
+      const nextJob = await productApi.enqueueStudioGenerationJob({
+        workspaceId,
+        documentId: document.documentId,
+        consentGrantId: selectedConsentId,
+        identityVersionId: selectedIdentityVersionId,
+        voiceVersionId: selectedVoiceVersionId,
+        jobType: "avatar_video",
+        provider: avatarProvider.provider,
+        request: {
+          schemaVersion: "studio.avatar-video-request.v1",
+          script: post?.copy || "Conheça a proposta.",
+          locale: "pt-BR",
+          width: 1080,
+          height: 1920,
+          fps: 30,
+          disclosureLabel: "Conteúdo sintético",
+        },
+      }, `avatar-video-${crypto.randomUUID()}`);
+      setAvatarJob(nextJob);
+      setToast("Amostra privada enviada ao worker de visão");
+    } catch (requestError) {
+      setAvatarJobError(requestError instanceof Error ? requestError.message : "O job foi bloqueado com segurança.");
+    }
+  };
   React.useEffect(() => {
     const session = (data.snapshot?.presenterSessions || []).find(
       (item: AnyRecord) => item.resourceKey === "post-ritual",
     );
     if (!session) return;
-    setGenerated(Boolean(session.payload?.generated));
-    setCaptured(Boolean(session.payload?.captured));
+    setGenerated(Boolean(session.payload?.generated) && demo);
+    setCaptured(Boolean(session.payload?.captured) && captureReady);
     setScenario(session.payload?.scenario || "");
-  }, [data.snapshot?.presenterSessions]);
+  }, [captureReady, data.snapshot?.presenterSessions, demo]);
   const persist = (next: AnyRecord) => {
     if (demo) return;
     void data.saveWorkspaceResource("presenter_session", "post-ritual", {
       generated,
       captured,
       scenario,
-      rights: "valid",
+      rights: "unverified",
       externalPublishing: false,
       updatedAt: new Date().toISOString(),
       ...next,
     });
   };
   const isHorizonte = brand?.id === "horizonte";
+  const materialRowsByTab = {
+    video: demo
+      ? [
+          ["3 takes aprovados", "Expressão, pausas e planos", "✓"],
+          ["4 cenários reais", "Escritório, bancada e externo", "✓"],
+          ["Plano principal", "Vertical · 1080 × 1920", "✓"],
+          ["Luz e continuidade", "Revisão visual demonstrativa", "✓"],
+        ]
+      : [
+          ["Fonte humana não verificada", "Consentimento e asset privado pendentes", "—"],
+          ["Cenário sem evidência", "A análise física ainda não foi executada", "—"],
+          ["Plano principal", "Aguardando mídia privada", "—"],
+          ["Continuidade", "Benchmark visual pendente", "—"],
+        ],
+    voice: demo
+      ? [
+          ["2 áudios limpos", "Voz natural · 4 min 18 s", "✓"],
+          ["Cadência", "PT-BR · conversa segura", "✓"],
+          ["Ruído de fundo", "Dentro do limite demonstrativo", "✓"],
+          ["Clone de voz", "Simulação local · não publicável", "✓"],
+        ]
+      : [
+          ["Voz não matriculada", "Nenhuma versão aprovada para este workspace", "—"],
+          ["Consentimento de voz", "Grant voice.clone pendente", "—"],
+          ["Qualidade acústica", "Corpus privado não avaliado", "—"],
+          ["Clone de voz", "Provider ainda desativado", "—"],
+        ],
+    brand: demo
+      ? [
+          ["Brand kit aplicado", "Cores, tipografia e produto", "✓"],
+          ["Produto preservado", "Forma e embalagem sem alteração", "✓"],
+          ["Tom editorial", "Humano, seguro e preciso", "✓"],
+          ["CTA", "Aplicado ao teste local", "✓"],
+        ]
+      : [
+          ["Brand kit disponível", "Aplicação pode ser revisada sem publicar", "✓"],
+          ["Produto", "Asset final ainda não selecionado", "—"],
+          ["Tom editorial", "Aguardando revisão da marca", "—"],
+          ["CTA", "Aguardando roteiro aprovado", "—"],
+        ],
+  };
+  const materialRows = materialRowsByTab[materialTab];
+  const scoreRows = [
+    ["REALISMO", demo ? "94/100" : "—"],
+    ["VOZ", demo ? "91/100" : "—"],
+    ["MARCA", demo ? "96/100" : "—"],
+    ["CENA", demo ? (captured ? "91/100" : "82/100") : "—"],
+  ];
   return (
     <section className="cx-presenter-studio">
       <aside className="cx-production-rail">
@@ -7236,11 +11297,15 @@ function PresenterStudioSurface({
           </b>
         </section>
         <footer>
-          <button onClick={() => navigate("/content")}>
+          <button
+            data-action-id="CONTENT-BACK-INVENTORY"
+            onClick={() => navigate("/content")}
+          >
             ← Voltar ao projeto
           </button>
           <small>SALVO · HÁ 12 S</small>
           <Button
+            actionId="PRESENTER-SAVE-EXIT"
             onClick={() => {
               setToast("Célula salva");
               navigate("/content");
@@ -7252,41 +11317,126 @@ function PresenterStudioSurface({
       </aside>
       <div className="cx-presenter-main">
         <header>
-          <span>VIDEO STUDIO　/　FACTORY CELL　/　PRODUÇÃO APROVADA</span>
+          <span>
+            VIDEO STUDIO　/　FACTORY CELL　/　{demo
+              ? "DEMONSTRAÇÃO LOCAL"
+              : providerReady
+                ? "PROVIDER ATIVO"
+                : "PRÉVIA SEM PROVIDER"}
+          </span>
           <div>
             <h1>
-              {isHorizonte
-                ? "Dra. Renata × Clínica Horizonte"
-                : "Mariana × Café Aurora"}
+               {selectedAvatar
+                 ? `${selectedAvatar.displayName} × ${brand?.name || "marca"}`
+                 : isHorizonte
+                   ? "Dra. Renata × Clínica Horizonte"
+                   : "Mariana × Café Aurora"}
             </h1>
             <small>
               Identidade de produção para{" "}
               {isHorizonte ? "Cuidar antes da urgência" : "Ritual de Foco"} —
-              pronta para gerar testes, não para publicar.
+              {demo
+                ? "pronta para gerar exemplos locais, não para publicar."
+                : providerReady
+                  ? publicationReady
+                    ? "provider atestado; consentimento de publicação verificado, revisão humana ainda obrigatória."
+                    : "provider atestado; publicação exige consentimento publish.synthetic e revisão humana."
+                  : "interface preparada; provider, consentimento e benchmark ainda não estão ativos."}
             </small>
+            <div
+              className="cx-presenter-editor-switcher"
+              aria-label="Modos de edição"
+            >
+                <button
+                  className="is-active"
+                  aria-current="page"
+                  disabled
+                  title="Você já está na seleção de avatares."
+                >
+                  <Users size={15} /> Avatares
+                </button>
+                <button
+                  data-action-id="PRESENTER-OPEN-IDENTITIES"
+                  onClick={() => navigate("/library/identities")}
+                >
+                  <UserRoundCheck size={15} /> Identidades
+                </button>
+              <button
+                data-action-id="PRESENTER-OPEN-VISUAL"
+                onClick={() =>
+                  navigate("/content/post-ritual/edit?mode=visual")
+                }
+              >
+                <Image size={15} /> Editar foto
+              </button>
+              <button
+                data-action-id="PRESENTER-OPEN-VIDEO"
+                onClick={() =>
+                  navigate("/content/post-ritual/edit?mode=video")
+                }
+              >
+                <Play size={15} /> Editar vídeo
+              </button>
+            </div>
           </div>
           <nav>
             <i>CONTEXTO ✓</i>
             <i>MATERIAIS 8/10</i>
-            <i>CALIBRANDO</i>
+            <i>{demo ? "CALIBRANDO" : providerReady ? "PROVIDER ATIVO" : "PROVIDER PENDENTE"}</i>
             <i>TESTES {generated ? "1/3" : "0/3"}</i>
           </nav>
-          <Button
-            tone="primary"
-            onClick={() => {
-              setGenerated(true);
-              persist({ generated: true });
-              setToast("Primeiro teste gerado para revisão");
-            }}
-          >
-            Gerar primeiro teste
-          </Button>
+          {demo ? (
+            <Button
+              tone="primary"
+              actionId="PRESENTER-PREVIEW-DEMO"
+              onClick={() => {
+                setGenerated(true);
+                setToast("Demonstração local pronta; nenhum job ou artefato publicável foi criado.");
+              }}
+            >
+              Gerar demonstração local
+            </Button>
+          ) : (
+            <Button
+              tone="primary"
+              actionId="PRESENTER-GENERATE-SAMPLE"
+              disabled={!canGenerate || ["queued", "running", "retrying"].includes(avatarJob?.status)}
+              title="A geração real exige um job avatar_video observável e ligado aos direitos exatos"
+              onClick={() => void generatePrivateSample()}
+            >
+              {["queued", "running", "retrying"].includes(avatarJob?.status)
+                ? `Gerando amostra · ${avatarJob.progress ?? 0}%`
+                : productionSelectionReady
+                  ? "Gerar amostra privada"
+                  : "Direitos ou provider pendentes"}
+            </Button>
+          )}
         </header>
+        {avatarJobError && <HonestState compact state="recoverable-error" detail={avatarJobError} />}
+        {avatarJob && !demo && (
+          <div className="cx-presenter-job" role="status" aria-live="polite">
+            <b>Job Presenter · {avatarJob.status}</b>
+            <span>{avatarJob.progress}% · {avatarJob.provider}</span>
+            {avatarJob.status === "succeeded" && avatarJob.result?.assetId && (
+              <Button
+                actionId="PRESENTER-OPEN-VIDEO"
+                onClick={async () => {
+                  await data.refresh();
+                  navigate(`/content/${contentId || "post-ritual"}/edit?mode=video&sourceAsset=${avatarJob.result.assetId}`);
+                }}
+              >
+                Abrir amostra no Video Studio
+              </Button>
+            )}
+          </div>
+        )}
         <div className="cx-presenter-focusbar">
           <article>
             <small>1 · O SISTEMA ESTÁ FAZENDO</small>
             <b>
-              {captured
+              {!canGenerate
+                  ? "Aguardando provider de voz/identidade e evidência de consentimento"
+                : captured
                 ? "Recalibrando a cena com a nova pausa"
                 : "Calibrando rosto, voz, marca e cenário"}
             </b>
@@ -7304,7 +11454,9 @@ function PresenterStudioSurface({
             <b>
               {generated
                 ? "1 teste pronto para revisão humana"
-                : "Primeiro teste não publicável"}
+                : demo
+                  ? "Primeiro teste não publicável"
+                  : "Nenhum teste gerado · provider pendente"}
             </b>
           </article>
         </div>
@@ -7314,27 +11466,42 @@ function PresenterStudioSurface({
             <article>
               <img src="/canonical/figma/phase5/presenter-source.jpeg" />
               <b>
-                {isHorizonte
-                  ? "Renata Lima · fonte real"
-                  : "Mariana Costa · fonte real"}
+                  {selectedAvatar
+                    ? `${selectedAvatar.displayName} · avatar stock candidato`
+                    : isHorizonte
+                    ? "Renata Lima · fonte real"
+                    : "Mariana Costa · fonte real"}
               </b>
-              <em>Rosto + voz · consentimento válido</em>
+              <em>
+                {demo
+                  ? "Exemplo demonstrativo · não é consentimento real"
+                  : providerReady
+                    ? "Consentimento precisa ser verificado no workspace"
+                    : "Consentimento não verificado · provider pendente"}
+              </em>
             </article>
             <nav>
-              <button className="is-active">VÍDEO</button>
-              <button>VOZ</button>
-              <button>MARCA</button>
+              {(["video", "voice", "brand"] as const).map((tab) => (
+                <button
+                  key={tab}
+                  data-action-id="PRESENTER-SELECT-MATERIAL"
+                  className={materialTab === tab ? "is-active" : ""}
+                  aria-pressed={materialTab === tab}
+                  onClick={() => setMaterialTab(tab)}
+                >
+                  {tab === "video"
+                    ? "VÍDEO"
+                    : tab === "voice"
+                      ? "VOZ"
+                      : "MARCA"}
+                </button>
+              ))}
             </nav>
-            {[
-              ["3 takes aprovados", "Expressão, pausas e planos"],
-              ["2 áudios limpos", "Voz natural · 4 min 18 s"],
-              ["4 cenários reais", "Escritório, bancada e externo"],
-              ["Brand kit aplicado", "Cores, tipografia e produto"],
-            ].map(([a, b]) => (
+            {materialRows.map(([a, b, status]) => (
               <span key={a}>
                 <b>{a}</b>
                 <small>{b}</small>
-                <i>✓</i>
+                <i>{status}</i>
               </span>
             ))}
             <section>
@@ -7344,9 +11511,25 @@ function PresenterStudioSurface({
                 <br />· Sem alterar traços do rosto
                 <br />· Produto sempre fiel ao original
               </p>
-              <button>Editar regras →</button>
+              {rulesOpen && (
+                <p className="cx-presenter-rule-detail">
+                  Publicação exige consentimento separado, revisão humana e
+                  aprovação do render exato. A demonstração nunca publica.
+                </p>
+              )}
+              <button
+                data-action-id="PRESENTER-TOGGLE-RULES"
+                onClick={() => setRulesOpen((current) => !current)}
+              >
+                {rulesOpen ? "Fechar regras ↑" : "Editar regras →"}
+              </button>
             </section>
-            <Button>＋ Adicionar fonte real</Button>
+            <Button
+              actionId="PRESENTER-OPEN-IDENTITIES"
+              onClick={() => navigate("/library/identities")}
+            >
+              {demo ? "Ver seis avatares e fontes" : "＋ Adicionar fonte consentida"}
+            </Button>
           </aside>
           <main className="cx-presenter-bench">
             <small>BANCADA DE IDENTIDADE</small>
@@ -7355,25 +11538,28 @@ function PresenterStudioSurface({
               <article>
                 <img src="/canonical/figma/phase5/presenter-source.jpeg" />
                 <small>FONTE HUMANA · TAKE 07</small>
-                <b>Rosto, voz e cadência reais</b>
+                <b>
+                  {selectedAvatar
+                    ? `${selectedAvatar.displayName} · ${selectedAvatar.direction}`
+                    : demo
+                    ? "Rosto, voz e cadência reais · exemplo"
+                    : "Rosto, voz e cadência aguardando verificação"}
+                </b>
               </article>
               <i>
                 ＋<small>MARCA, ROTEIRO, CONTEXTO</small>
               </i>
               <article className="cx-generated-scene">
-                <span>TESTE {generated ? "01" : "00"} · NÃO PUBLICÁVEL</span>
+                <span>
+                  {demo && generated ? "TESTE 01" : demo ? "TESTE 00" : "CONCEITO"} · NÃO PUBLICÁVEL
+                </span>
                 <img src="/canonical/figma/phase5/presenter-scene.jpeg" />
                 <h3>“Clareza começa antes da primeira tarefa.”</h3>
                 <small>25 S · Founder-led · Ritmo 6.5/10</small>
               </article>
             </div>
             <div className="cx-presenter-scores">
-              {[
-                ["REALISMO", "94/100"],
-                ["VOZ", "91/100"],
-                ["MARCA", "96/100"],
-                ["CENA", captured ? "91/100" : "82/100"],
-              ].map(([a, b]) => (
+              {scoreRows.map(([a, b]) => (
                 <span key={a}>
                   <small>{a}</small>
                   <b>{b}</b>
@@ -7383,20 +11569,35 @@ function PresenterStudioSurface({
             <div className="cx-presenter-next">
               <small>PRÓXIMA MELHOR AÇÃO</small>
               <b>
-                {captured
+                {!captureReady
+                  ? captureCapabilityReady
+                    ? "Provider de captura disponível; registre a evidência privada no Identity Library."
+                    : "Captura privada ainda não está conectada a um ingest autorizado."
+                  : captured
                   ? "Pausas capturadas e cena recalibrada."
                   : "Capturar 8 s de pausa olhando para o produto."}
               </b>
-              <Button
-                tone="primary"
-                onClick={() => {
-                  setCaptured(true);
-                  persist({ captured: true });
-                  setToast("Captura de pausa registrada");
-                }}
-              >
-                {captured ? "Capturado" : "Abrir captura"}
-              </Button>
+              {!captureReady ? (
+                <Button
+                  tone="primary"
+                  actionId="PRESENTER-OPEN-IDENTITIES"
+                  onClick={() => navigate("/library/identities?enroll=1")}
+                >
+                  Abrir captura governada
+                </Button>
+              ) : (
+                <Button
+                  tone="primary"
+                  actionId="PRESENTER-CAPTURE-LOCAL"
+                  onClick={() => {
+                    setCaptured(true);
+                    persist({ captured: true });
+                    setToast("Captura de pausa registrada");
+                  }}
+                >
+                  {captured ? "Capturado" : "Abrir captura local"}
+                </Button>
+              )}
             </div>
           </main>
           <aside className="cx-presenter-limits">
@@ -7426,25 +11627,39 @@ function PresenterStudioSurface({
                 DIREITOS　 <em>VÁLIDOS</em>
               </small>
               <p>
-                Rosto + voz <b>Permitido</b>
+                Rosto + voz <b>{demo ? "Exemplo" : "Não verificado"}</b>
                 <br />
-                Social + ads <b>Brasil · 12 meses</b>
+                Social + ads <b>
+                  {demo
+                    ? "Exemplo"
+                    : publicationReady
+                      ? "Consentimento OK · revisão"
+                      : "Bloqueado"}
+                </b>
                 <br />
                 Alterar traços <strong>Bloqueado</strong>
                 <br />
-                Política <em>Aprovação extra</em>
+                Política <em>{demo ? "Aprovação extra" : "Aguardando aprovação"}</em>
               </p>
             </section>
             <section>
               <small>GATES DE AUTENTICIDADE</small>
               <p>
-                Rosto <b>Aprovado</b>
+                Rosto <b>{demo ? "Aprovado · exemplo" : "Não avaliado"}</b>
                 <br />
-                Voz <b>Aprovado</b>
+                Voz <b>{demo ? "Aprovado · exemplo" : "Não avaliado"}</b>
                 <br />
-                Marca <b>Aprovado</b>
+                Marca <b>{demo ? "Aprovado · exemplo" : "Disponível"}</b>
                 <br />
-                Cena <em>{captured ? "Aprovado" : "Revisar luz"}</em>
+                Cena <em>{demo ? (captured ? "Aprovado" : "Revisar luz") : "Não avaliada"}</em>
+                <br />
+                Publicação <b>
+                  {demo
+                    ? "Não publicável"
+                    : publicationReady
+                      ? "Consentimento OK · revisão"
+                      : "Bloqueada"}
+                </b>
               </p>
               <small>Nada sai desta célula sem revisão humana.</small>
             </section>
@@ -7453,6 +11668,7 @@ function PresenterStudioSurface({
               <b>Aceitar o cenário de escritório?</b>
               <div>
                 <button
+                  data-action-id="PRESENTER-DECIDE-SCENARIO"
                   className={scenario === "no" ? "is-active" : ""}
                   onClick={() => {
                     setScenario("no");
@@ -7462,6 +11678,7 @@ function PresenterStudioSurface({
                   Não
                 </button>
                 <button
+                  data-action-id="PRESENTER-DECIDE-SCENARIO"
                   className={scenario === "yes" ? "is-active" : ""}
                   onClick={() => {
                     setScenario("yes");
@@ -7477,7 +11694,9 @@ function PresenterStudioSurface({
             <header>
               <b>TESTES DE SAÍDA</b>
               <small>
-                Provar antes de liberar · {generated ? "1/3" : "0/3"} aprovados
+                {demo
+                  ? `Provar antes de liberar · ${generated ? "1/3" : "0/3"} aprovados`
+                  : "Nenhum teste aprovado · provider pendente"}
               </small>
             </header>
             <div>
@@ -7489,7 +11708,7 @@ function PresenterStudioSurface({
                 <article
                   key={String(a)}
                   className={
-                    generated && a === "FOUNDER-LED" ? "is-active" : ""
+                    demo && generated && a === "FOUNDER-LED" ? "is-active" : ""
                   }
                 >
                   <img
@@ -7501,10 +11720,19 @@ function PresenterStudioSurface({
                   />
                   <small>{a}　25 S</small>
                   <b>{b}</b>
-                  <em>{c}</em>
+                  <em>{demo ? c : "PROVIDER PENDENTE"}</em>
                 </article>
               ))}
             </div>
+            {generated && (
+              <Button
+                actionId="PRESENTER-OPEN-VIDEO"
+                tone="primary"
+                onClick={() => navigate("/content/post-ritual/edit?mode=video&source=presenter-demo")}
+              >
+                Abrir amostra no Video Studio
+              </Button>
+            )}
           </section>
         </div>
       </div>
@@ -7552,7 +11780,11 @@ function AppsSurface({ demo, navigate }: AnyRecord) {
             Conecte um canal para programar posts e trazer métricas reais de
             volta aos aprendizados.
           </p>
-          <Button tone="primary" onClick={() => navigate("/settings/channels")}>
+          <Button
+            tone="primary"
+            actionId="APPS-CONFIGURE-CHANNELS"
+            onClick={() => navigate("/settings/channels")}
+          >
             Configurar canais
           </Button>
         </div>
@@ -7574,6 +11806,7 @@ function AppsSurface({ demo, navigate }: AnyRecord) {
               <p>{desc}</p>
             </div>
             <button
+              data-action-id="APPS-CONFIGURE-CHANNELS"
               disabled={status === "Em breve"}
               onClick={() => navigate("/settings/channels")}
             >
@@ -7660,13 +11893,18 @@ function CreateMenu({ navigate, onClose }: AnyRecord) {
               aplicado.
             </p>
           </div>
-          <button onClick={onClose} aria-label="Fechar launcher">
+          <button
+            data-action-id="CREATE-CLOSE"
+            onClick={onClose}
+            aria-label="Fechar launcher"
+          >
             <X />
           </button>
         </header>
         <label className="cx-create-search">
           <Search />
           <input
+            data-action-id="CREATE-SEARCH"
             data-autofocus
             value={query}
             onChange={(e) => setQuery(e.target.value)}
@@ -7677,7 +11915,11 @@ function CreateMenu({ navigate, onClose }: AnyRecord) {
         {filteredIntents.length > 0 && (
           <div className="cx-intent-grid">
             {filteredIntents.map(([Icon, title, detail, path]) => (
-              <button key={title} onClick={() => navigate(path)}>
+              <button
+                data-action-id="CREATE-START-ITEM"
+                key={title}
+                onClick={() => navigate(path)}
+              >
                 <span>
                   <Icon />
                 </span>
@@ -7696,7 +11938,11 @@ function CreateMenu({ navigate, onClose }: AnyRecord) {
               <section key={title}>
                 <h3>{title}</h3>
                 {items.map(([Icon, label, path]) => (
-                  <button key={label} onClick={() => navigate(path)}>
+                  <button
+                    data-action-id="CREATE-START-ITEM"
+                    key={label}
+                    onClick={() => navigate(path)}
+                  >
                     <Icon />
                     <span>{label}</span>
                     <ArrowRight />
@@ -7800,6 +12046,7 @@ function ActivityDrawer({ data, demo, navigate, onClose }: AnyRecord) {
     <>
       <button
         className="cx-drawer-scrim"
+        data-action-id="ACTIVITY-CLOSE"
         onClick={onClose}
         aria-label="Fechar atividade"
       />
@@ -7814,12 +12061,17 @@ function ActivityDrawer({ data, demo, navigate, onClose }: AnyRecord) {
             <small>WORKSPACE</small>
             <h2>Central de atividades</h2>
           </div>
-          <button onClick={onClose} aria-label="Fechar central de atividades">
+          <button
+            data-action-id="ACTIVITY-CLOSE"
+            onClick={onClose}
+            aria-label="Fechar central de atividades"
+          >
             <X />
           </button>
         </header>
         <div className="cx-activity-tools">
           <button
+            data-action-id="ACTIVITY-MARK-READ"
             onClick={() => setRead(new Set(events.map((e: AnyRecord) => e.id)))}
           >
             Marcar como lidas
@@ -7828,6 +12080,7 @@ function ActivityDrawer({ data, demo, navigate, onClose }: AnyRecord) {
         <div className="cx-activity-filter">
           {["Todas", "Aprovações", "Menções", "Sistema"].map((x) => (
             <button
+              data-action-id="ACTIVITY-SELECT-FILTER"
               key={x}
               className={filter === x ? "is-active" : ""}
               onClick={() => setFilter(x)}
@@ -7854,6 +12107,7 @@ function ActivityDrawer({ data, demo, navigate, onClose }: AnyRecord) {
                   <small>{e.time}</small>
                   {e.action && (
                     <button
+                      data-action-id="ACTIVITY-OPEN-ACTION"
                       onClick={(event) => {
                         event.stopPropagation();
                         onClose();
@@ -7941,7 +12195,11 @@ function WorkspaceDialog({
             <small>WORKSPACES</small>
             <h2>Trocar workspace</h2>
           </div>
-          <button onClick={onClose} aria-label="Fechar seletor de workspace">
+          <button
+            data-action-id="WORKSPACE-CLOSE-SELECTOR"
+            onClick={onClose}
+            aria-label="Fechar seletor de workspace"
+          >
             <X />
           </button>
         </header>
@@ -7957,6 +12215,7 @@ function WorkspaceDialog({
                 </small>
               )}
               <button
+                data-action-id="SHELL-SELECT-WORKSPACE"
                 onClick={() => {
                   if (!demo) {
                     void data.selectWorkspace(w.id);
@@ -7982,6 +12241,7 @@ function WorkspaceDialog({
         </div>
         <footer>
           <button
+            data-action-id="WORKSPACE-CREATE"
             onClick={() => {
               onClose();
               navigate("/settings/workspaces/new");
@@ -7991,6 +12251,7 @@ function WorkspaceDialog({
             Criar workspace
           </button>
           <button
+            data-action-id="WORKSPACE-MANAGE"
             onClick={() => {
               onClose();
               navigate("/settings/workspaces");
@@ -8122,6 +12383,7 @@ function Spotlight({ onClose, navigate }: AnyRecord) {
         <label>
           <Search />
           <input
+            data-action-id="SEARCH-UPDATE-QUERY"
             ref={ref}
             value={query}
             onChange={(e) => setQuery(e.target.value)}
@@ -8137,6 +12399,7 @@ function Spotlight({ onClose, navigate }: AnyRecord) {
                   <small className="cx-result-group">{item.group}</small>
                 )}
                 <button
+                  data-action-id="SEARCH-OPEN-RESULT"
                   onMouseEnter={() => setSelected(i)}
                   onClick={() => open(item)}
                   className={i === selected ? "is-active" : ""}

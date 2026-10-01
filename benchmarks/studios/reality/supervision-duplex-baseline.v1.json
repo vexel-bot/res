@@ -1,0 +1,85 @@
+{
+  "schemaVersion": "clicko.supervision-duplex-baseline.v1",
+  "baselineId": "supervision-duplex-2026-08-27",
+  "capturedAt": "2026-08-27T21:00:00Z",
+  "repository": {
+    "head": "965a9bbbfceb05d479c67db84ac4582e567da841",
+    "worktreeDirty": true,
+    "note": "The Studios implementation is intentionally uncommitted user work; hashes below, not HEAD alone, freeze the protected boundaries."
+  },
+  "upstreamPins": {
+    "supervision": {
+      "version": "0.30.1",
+      "sourceRevision": "5f25aa0ee6dc22891415b6e3d2e1689ce7a32952",
+      "decision": "evaluation"
+    },
+    "personaplexCode": {
+      "sourceRevision": "3428dfd95309a7f3c84fd93259ded0f810d1ff91",
+      "decision": "reference_only"
+    },
+    "personaplexWeights": {
+      "sourceRevision": "fdaf4090a61cb315c138a1faee287ffd6c716309",
+      "decision": "rejected",
+      "bytesPresent": false,
+      "licenseAccepted": false
+    }
+  },
+  "protectedBoundaries": [
+    {
+      "path": "workers/vision-gpu/worker.manifest.json",
+      "sha256": "381f5809a61bceb7f24b446f664666969418efa33b5bfb6138e3d99de114a622",
+      "invariant": "providers must remain empty before an approved promotion review"
+    },
+    {
+      "path": "workers/speech-gpu/worker.manifest.json",
+      "sha256": "a222855c555b6b44ba483364d2128ab60c27c9e0b080e410ec87060f70d9900c",
+      "invariant": "providers must remain empty before an approved promotion review"
+    },
+    {
+      "path": "backend/app/domain/studios/reality.py",
+      "sha256": "6b3217acf8527f6286c163a10fdef91f489083ea797871ebebfda8539a496c52",
+      "invariant": "RealityContributionV1 remains canonical and imports no Supervision types"
+    },
+    {
+      "path": "backend/requirements.txt",
+      "sha256": "5c7a2132a641b00e2f52e60503ae71c738335a00c6a62b6aa3c19763fab8cc0e",
+      "invariant": "the product backend does not activate Supervision or PersonaPlex"
+    }
+  ],
+  "previousAuditedBaseline": {
+    "source": "docs/studios/STUDIOS_IMPLEMENTATION_REPORT.md#11-auditoria-final-da-meta--27082026",
+    "backend": {
+      "collected": 371,
+      "passed": 368,
+      "skippedOptIn": 3,
+      "failed": 0
+    },
+    "e2eChromium": {
+      "passed": 18,
+      "failed": 0
+    },
+    "alembic": "0001 -> 0026 -> 0025 -> 0026"
+  },
+  "currentPhaseEvidence": {
+    "adapterUnitTests": {
+      "command": "cd backend && python -m pytest tests/test_supervision_detection_adapter.py -q",
+      "passed": 8,
+      "failed": 0
+    },
+    "realSupervisionSmoke": {
+      "command": "cd backend && python scripts/run_supervision_spike.py --output ../benchmarks/studios/reality/supervision-spike-run-2026-08-27.v1.json",
+      "report": "benchmarks/studios/reality/supervision-spike-run-2026-08-27.v1.json",
+      "passed": true,
+      "runtimeIsolated": true,
+      "networkDenied": true,
+      "syntheticOnly": true
+    }
+  },
+  "nonGoals": [
+    "No detector quality claim",
+    "No physics understanding claim",
+    "No PersonaPlex runtime or checkpoint",
+    "No provider promotion",
+    "No VPS access"
+  ]
+}

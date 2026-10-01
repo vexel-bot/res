@@ -1,0 +1,1 @@
+{"errorCode": "ValueError", "errorMessage": "local_diffusion_content_rejected", "minimumAvailableSystemRamMiB": 947, "minimumAvailableVramMiB": 822, "observedSystemRamDeltaPeakMiB": 2021, "observedVramDeltaPeakMiB": 3140, "stage": "inference", "status": "failed"}

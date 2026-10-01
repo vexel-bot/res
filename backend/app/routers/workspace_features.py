@@ -1,3 +1,5 @@
+import hashlib
+import json
 from datetime import UTC, datetime, timedelta
 from uuid import uuid4
 
@@ -8,9 +10,11 @@ from sqlalchemy.orm import Session
 
 from ..database import get_db
 from ..dependencies import require_workspace_access
-from ..models import ApprovalEvent, AuditEvent, Membership, User, Workspace, WorkspaceResource
+from ..models import ApprovalEvent, AuditEvent, Membership, Post, User, Workspace, WorkspaceResource
 from ..schemas import (
     CompanySettingsIn,
+    FactoryRoundReservationIn,
+    FactoryRoundReservationOut,
     MemberInviteIn,
     MemberUpdateIn,
     PlanUpdateIn,
@@ -85,6 +89,7 @@ PUBLIC_RESOURCE_KINDS = {
     "video_project",
     "ai_chat",
     "presenter_session",
+    "factory_round",
 }
 
 
@@ -128,6 +133,39 @@ def public_resource_for(db: Session, resource_id: str, workspace_id: str) -> Wor
     return item
 
 
+def factory_round_identity(data: FactoryRoundReservationIn) -> tuple[str, str, list[str]]:
+    derivative_ids = sorted(data.derivative_ids)
+    canonical = json.dumps(
+        {
+            "workspaceId": data.workspace_id,
+            "sourcePostId": data.source_post_id,
+            "derivativeIds": derivative_ids,
+        },
+        ensure_ascii=False,
+        separators=(",", ":"),
+    ).encode("utf-8")
+    digest = hashlib.sha256(canonical).hexdigest()
+    return f"round-{digest[:32]}", digest, derivative_ids
+
+
+def factory_round_payload_matches(
+    item: WorkspaceResource,
+    *,
+    source_post_id: str | None,
+    derivative_ids: list[str],
+    input_digest_sha256: str,
+) -> bool:
+    payload = item.payload or {}
+    reservation = payload.get("reservation") or {}
+    recorded_digest = reservation.get("inputDigestSha256")
+    if recorded_digest:
+        return recorded_digest == input_digest_sha256
+    return (
+        payload.get("sourcePostId") == source_post_id
+        and sorted(payload.get("derivativeIds") or []) == derivative_ids
+    )
+
+
 @router.get("/workspace-resources", response_model=list[WorkspaceResourceOut])
 def list_resources(
     workspace_id: str = Query(),
@@ -144,6 +182,143 @@ def list_resources(
             .where(WorkspaceResource.workspace_id == workspace_id, WorkspaceResource.kind == kind)
             .order_by(WorkspaceResource.updated_at.desc())
         ).all()
+    )
+
+
+@router.post(
+    "/factory/rounds/reservations",
+    response_model=FactoryRoundReservationOut,
+)
+def reserve_factory_round(
+    data: FactoryRoundReservationIn,
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
+) -> FactoryRoundReservationOut:
+    """Atomically elect one client before any document, version or job side effect."""
+
+    require_workspace_access(data.workspace_id, db, user)
+    round_id, digest, derivative_ids = factory_round_identity(data)
+    requested_post_ids = [*derivative_ids]
+    if data.source_post_id:
+        requested_post_ids.append(data.source_post_id)
+    posts = list(
+        db.scalars(
+            select(Post).where(
+                Post.workspace_id == data.workspace_id,
+                Post.id.in_(requested_post_ids),
+            )
+        ).all()
+    )
+    posts_by_id = {post.id: post for post in posts}
+    missing = sorted(set(requested_post_ids) - set(posts_by_id))
+    if missing:
+        raise HTTPException(
+            status_code=422,
+            detail={"code": "factory_round_post_missing", "postIds": missing},
+        )
+    if data.source_post_id:
+        invalid_lineage = []
+        for derivative_id in derivative_ids:
+            derivative = posts_by_id[derivative_id]
+            lineage_matches = any(
+                (version.get("lineage") or {}).get("sourcePostId") == data.source_post_id
+                for version in derivative.versions or []
+            )
+            if not lineage_matches:
+                invalid_lineage.append(derivative_id)
+        if invalid_lineage:
+            raise HTTPException(
+                status_code=422,
+                detail={
+                    "code": "factory_round_derivative_lineage_mismatch",
+                    "postIds": invalid_lineage,
+                },
+            )
+
+    existing = db.scalar(
+        select(WorkspaceResource).where(
+            WorkspaceResource.workspace_id == data.workspace_id,
+            WorkspaceResource.kind == "factory_round",
+            WorkspaceResource.resource_key == round_id,
+        )
+    )
+    if existing:
+        if not factory_round_payload_matches(
+            existing,
+            source_post_id=data.source_post_id,
+            derivative_ids=derivative_ids,
+            input_digest_sha256=digest,
+        ):
+            raise HTTPException(status_code=409, detail="Factory round identity conflict")
+        return FactoryRoundReservationOut(
+            round_id=round_id,
+            input_digest_sha256=digest,
+            ownership="existing",
+            resource=existing,
+        )
+
+    reserved_at = now()
+    item = WorkspaceResource(
+        workspace_id=data.workspace_id,
+        kind="factory_round",
+        resource_key=round_id,
+        payload={
+            "schemaVersion": "clicko.factory-round.v2",
+            "id": round_id,
+            "sourcePostId": data.source_post_id,
+            "derivativeIds": derivative_ids,
+            "status": "preparing",
+            "state": "reserved",
+            "cells": [],
+            "humanGates": ["brand_review", "publication_approval"],
+            "reservation": {
+                "protocol": "server-atomic-v1",
+                "inputDigestSha256": digest,
+                "reservedAt": reserved_at.isoformat(),
+                "reservedBy": user.id,
+            },
+        },
+        created_by=user.id,
+    )
+    db.add(item)
+    audit(
+        db,
+        data.workspace_id,
+        user,
+        "reserved",
+        "factory_round",
+        round_id,
+    )
+    try:
+        db.commit()
+    except IntegrityError as error:
+        db.rollback()
+        existing = db.scalar(
+            select(WorkspaceResource).where(
+                WorkspaceResource.workspace_id == data.workspace_id,
+                WorkspaceResource.kind == "factory_round",
+                WorkspaceResource.resource_key == round_id,
+            )
+        )
+        if existing and factory_round_payload_matches(
+            existing,
+            source_post_id=data.source_post_id,
+            derivative_ids=derivative_ids,
+            input_digest_sha256=digest,
+        ):
+            return FactoryRoundReservationOut(
+                round_id=round_id,
+                input_digest_sha256=digest,
+                ownership="existing",
+                resource=existing,
+            )
+        raise HTTPException(status_code=409, detail="Factory round identity conflict") from error
+    db.refresh(item)
+    return FactoryRoundReservationOut(
+        round_id=round_id,
+        input_digest_sha256=digest,
+        ownership="acquired",
+        resource=item,
     )
 
 

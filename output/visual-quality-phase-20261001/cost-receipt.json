@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "studio.visual-quality-cost-receipt.v1",
+  "recordedAt": "2026-10-01",
+  "budgetGroupId": "visual-quality-2026-10-01",
+  "limitUsd": 10,
+  "paidApiCalls": 0,
+  "measuredCostUsd": 0,
+  "committedOrReservedUsd": 0,
+  "billingEvidence": "No paid provider invoked during this continuation; budget tests use isolated SQLite and synthetic monetary values.",
+  "historicalPilotCostsIncluded": false,
+  "scope": "This quality phase only. Historical Aurora pilot receipts retain their original cost."
+}

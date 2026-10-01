@@ -1,0 +1,40 @@
+{
+  "schemaVersion": "res.local-video-candidate-evaluation.v1",
+  "evaluatedAt": "2026-09-11T10:15:00-03:00",
+  "profileId": "animatediff-lightning-sd15-a-v1",
+  "seed": 20260911,
+  "artifact": {
+    "path": "animatediff-lightning-a-seed-20260911.mp4",
+    "checksumSha256": "b1ee6a36bd85601ae168a331a682a634796e5602bceb6d66e5c78591601bbde2"
+  },
+  "technical": {
+    "status": "passed",
+    "container": "mp4",
+    "codec": "h264",
+    "pixelFormat": "yuv420p",
+    "width": 256,
+    "height": 256,
+    "fps": 8,
+    "frames": 8,
+    "durationSeconds": 1.0,
+    "contentSafetyFramesChecked": 8
+  },
+  "editorial": {
+    "status": "rejected_for_catalog",
+    "observedCoverage": "all_eight_frames_contact_sheet",
+    "strengths": [
+      "The frames form one temporally related visual environment.",
+      "The candidate contains visible motion rather than repeated still frames."
+    ],
+    "blockers": [
+      "The imagery is abstract and does not show an identifiable idea, channel or audience.",
+      "Extreme saturation and dense detail prevent a clear focal hierarchy.",
+      "The 256 by 256 experimental output is unsuitable as final production footage."
+    ]
+  },
+  "admission": {
+    "incorporateIntoCatalog": false,
+    "capabilityState": "experimental",
+    "reason": "technical_generation_succeeded_editorial_relevance_failed"
+  }
+}

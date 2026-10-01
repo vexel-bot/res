@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "res.local-video-environment-qualification.v1",
+  "observedAt": "2026-09-10",
+  "profileId": "animatediff-lightning-sd15-a-v1",
+  "environment": {
+    "status": "qualified",
+    "pythonEnvironment": "workers/media-generation-local/.venv",
+    "torchVersion": "2.7.0+cu118",
+    "cudaRuntime": "11.8",
+    "cudaAvailable": true,
+    "device": "NVIDIA GeForce RTX 2050",
+    "deviceMemoryMiB": 4096,
+    "pipelineImports": "passed",
+    "dependencyLock": "qualified_with_hashes"
+  },
+  "installationPreflight": {
+    "status": "blocked_resources",
+    "reasons": ["insufficient_disk_before_model_download"],
+    "diskFreeBytes": 13833863168,
+    "requiredDiskFreeBytes": 16213918240,
+    "expectedDownloadBytes": 3651000000,
+    "downloadScratchBytes": 1825500000,
+    "minimumFreeBytesAfterInstall": 10737418240
+  },
+  "executionPreflight": {
+    "status": "blocked_resources",
+    "reasons": ["blocked_current_load"],
+    "systemRamTotalMiB": 7916,
+    "systemRamFreeMiB": 649,
+    "gpuMemoryTotalMiB": 4096,
+    "gpuMemoryFreeMiB": 3962
+  },
+  "modelDownloadStarted": false,
+  "inferenceStarted": false,
+  "paidApiCalled": false,
+  "conclusion": "runtime_qualified_model_provisioning_waits_for_storage_and_execution_waits_for_free_ram"
+}

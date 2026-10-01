@@ -1,0 +1,73 @@
+{
+  "schemaVersion": "studio.single-avatar-pilot.v1",
+  "pilotId": "single-avatar-caio-vale-r0-2026-09-02",
+  "avatarId": "avatar-caio-vale",
+  "baseVideoCount": 1,
+  "sourceVideo": {
+    "sourceKind": "synthetic_original_video",
+    "assetId": "caio-base-video-v1",
+    "checksumSha256": "e777ee42a96a44c4f1e56b8ff8273e9f1a12d2d2127a6fe11fa0675234921912",
+    "durationMilliseconds": 12000,
+    "width": 720,
+    "height": 1280,
+    "exactlyOnePerson": true,
+    "faceVisibleAndUnobstructed": true,
+    "neutralCaptureApproved": true,
+    "rightsStatus": "rights_verified",
+    "voiceTrainingAllowed": false
+  },
+  "videoGenerationProvider": "openai-sora-2",
+  "providerFreeTierVerified": false,
+  "externalSpendLimitUsd": 1.5,
+  "productionState": "avatar_rendered_private_review",
+  "visualProvider": "musetalk-v1.5-local",
+  "voiceRoute": "local-only",
+  "trainingVideoReuse": "one-video-only",
+  "blockers": [
+    "Human voice naturalness, lip-sync and identity review remain pending; publication and provider promotion are blocked.",
+    "MuseTalk fixed-camera adapter rendered 44.52 seconds locally. HeyGem remains reference only.",
+    "USD 1.20 is the estimated Sora charge, not a verified invoice; no second Sora generation."
+  ],
+  "sourceVideoSpecification": {
+    "durationMilliseconds": 12000,
+    "resolution": "720x1280",
+    "aspectRatio": "9:16",
+    "shotCount": 1,
+    "camera": "locked medium close-up at eye level, natural 50 mm equivalent perspective",
+    "performance": "neutral attentive baseline, natural blinking and breathing, one small comprehension pause, hands below the chin",
+    "lighting": "stable soft key at 35 degrees, gentle fill, subtle hair separation, no flicker",
+    "environment": "matte warm-gray studio with restrained depth and no text, logos or moving background elements",
+    "audio": "silent or discarded; never used for voice training",
+    "positivePrompt": "One continuous twelve-second vertical studio portrait video of Caio Vale, an original fictional Brazilian adult man in his early thirties with medium tan skin, short dark brown textured hair, subtle trimmed stubble and dark brown eyes. He wears a deep teal matte overshirt over a charcoal crew-neck shirt. Locked eye-level medium close-up, natural 50 mm equivalent perspective, stable soft key light and gentle fill, warm-gray matte studio background with subtle depth. He faces the camera silently with an attentive, approachable expression, natural breathing, two subtle blinks and restrained head and eyebrow micro-movements. Photoreal human skin texture, temporally consistent face, hair, clothing and lighting. Single person, single take, no cut, no camera movement.",
+    "negativeConstraints": [
+      "no identifiable-person resemblance",
+      "no dialogue or generated voice",
+      "no second person",
+      "no cut, transition, zoom or camera movement",
+      "no hand crossing the mouth, face or neck",
+      "no text, logo or watermark",
+      "no beauty filter, plastic skin or exaggerated expression",
+      "no face, hair, wardrobe or background morphing",
+      "no lip motion that implies speech"
+    ]
+  },
+  "councilDecision": {
+    "dominantLens": "david-fincher-performance-calibration-I1",
+    "supportingLens": "steven-spielberg-emotional-legibility-I1",
+    "decision": "Use one controlled behavioral baseline whose micro-movements remain readable before attempting lip-synced performance.",
+    "rejected": [
+      "multiple source videos because they create identity ambiguity in the first benchmark",
+      "dynamic camera and expressive gestures because they conceal temporal face defects",
+      "native generated speech because voice must remain on the local provider route"
+    ]
+  },
+  "verification": {
+    "externalRequestSent": true,
+    "videoGenerated": true,
+    "heygemModelCreated": false,
+    "externalCostIncurredUsd": 1.2,
+    "generationAttemptCount": 1,
+    "providerRequestId": "video_6a9b4a23a3348191ac64616dd4dee7430ce114a31905529b",
+    "failureReason": null
+  }
+}

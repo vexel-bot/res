@@ -1,0 +1,36 @@
+{
+  "schema_version": "studio.collaboration-graph.v1",
+  "anchor": "Duffer Brothers",
+  "status": "credits_pending_per_work_verification",
+  "nodes": [
+    {
+      "name": "Shawn Levy",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Iain Paterson",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "The writers' room",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Tim Ives",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Dean Zimmerman",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Kyle Dixon",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Michael Stein",
+      "role": "verify_per_work"
+    }
+  ],
+  "edges": []
+}

@@ -1,0 +1,34 @@
+diff --git a/kokoro/pipeline.py b/kokoro/pipeline.py
+index 3377069..2a9f684 100644
+--- a/kokoro/pipeline.py
++++ b/kokoro/pipeline.py
+@@ -1,13 +1,18 @@
++from __future__ import annotations
++
+ from .model import KModel
+ from dataclasses import dataclass
+ from huggingface_hub import hf_hub_download
+ from loguru import logger
+-from misaki import en, espeak
+-from typing import Callable, Generator, List, Optional, Tuple, Union
++from misaki import espeak
++from typing import TYPE_CHECKING, Callable, Generator, List, Optional, Tuple, Union
+ import re
+ import torch
+ import os
+ 
++if TYPE_CHECKING:
++    from misaki import en
++
+ ALIASES = {
+     'en-us': 'a',
+     'en-gb': 'b',
+@@ -114,6 +119,8 @@ class KPipeline:
+                 raise
+         self.voices = {}
+         if lang_code in 'ab':
++            # Avoid importing the English frontend and its extras for pt-BR.
++            from misaki import en
+             try:
+                 fallback = espeak.EspeakFallback(british=lang_code=='b')
+             except Exception as e:

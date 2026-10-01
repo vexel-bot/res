@@ -1,0 +1,1236 @@
+{
+  "schemaVersion": "studio.editorial-manifest.v2",
+  "componentVersion": "res.editorial-components.v2.18",
+  "compilerVersion": "res.scene-compiler.v2.12",
+  "componentLibraryVersion": "res.editorial-components.v2.18",
+  "runtimeVersion": "res.editorial-runtime.v2.5",
+  "visualAuditPolicyVersion": "studio.visual-audit-policy.v4",
+  "compositionDecisions": [
+    {
+      "sceneId": "adaptation",
+      "id": "format-change",
+      "family": "format_transformation",
+      "targetIds": [
+        "portrait",
+        "square"
+      ],
+      "purpose": "Reorganizar a mesma peça",
+      "expectedResult": "Peça vertical seguida da mesma peça quadrada",
+      "actionFrames": 100,
+      "previousElementId": null,
+      "axis": "horizontal",
+      "marginRatio": 0.07,
+      "gapRatio": 0.035,
+      "repeatCount": 3,
+      "focusScale": 1.08,
+      "continuityKey": "coffee-piece",
+      "viewportFormats": [
+        "portrait",
+        "square"
+      ],
+      "interfaceEvents": []
+    }
+  ],
+  "fps": 30.0,
+  "durationFrames": 240,
+  "scenes": [
+    {
+      "sceneId": "adaptation",
+      "startFrame": 0,
+      "durationFrames": 240,
+      "purpose": "Demonstrar continuidade e adaptação",
+      "verification": [
+        "Imagem, título e identidade permanecem reconhecíveis",
+        "O layout muda entre vertical e quadrado",
+        "O evento de publicação está audível"
+      ],
+      "sceneDigest": "99e975f39a6c7b41e7e65e45b244718f8145429ffbfcfec142e0c638d745aa12",
+      "visualStates": [],
+      "observationCues": [],
+      "semanticAssertions": [
+        {
+          "id": "same-content-two-formats",
+          "kind": "format_adaptation",
+          "objectId": "coffee-piece",
+          "initialState": "Peça vertical completa",
+          "event": "Layout se reorganiza",
+          "finalState": "Peça quadrada completa",
+          "startFrame": 0,
+          "endFrameExclusive": 240,
+          "targetIds": [
+            "portrait",
+            "square"
+          ],
+          "requiredPartIds": [
+            "photo",
+            "headline",
+            "brand"
+          ],
+          "evidenceRequired": "temporal_sequence",
+          "essential": true,
+          "absoluteStartFrame": 0,
+          "absoluteEndFrameExclusive": 240
+        },
+        {
+          "id": "publish-is-audible",
+          "kind": "audible_event",
+          "objectId": "publish-event",
+          "initialState": "Antes da mudança",
+          "event": "Mudança de formato",
+          "finalState": "Confirmação audível",
+          "startFrame": 98,
+          "endFrameExclusive": 110,
+          "targetIds": [
+            "publish-event"
+          ],
+          "requiredPartIds": [],
+          "evidenceRequired": "mixed_audio",
+          "essential": true,
+          "absoluteStartFrame": 98,
+          "absoluteEndFrameExclusive": 110
+        }
+      ],
+      "shotPlan": []
+    }
+  ],
+  "artDirection": null,
+  "elements": [
+    {
+      "sceneId": "adaptation",
+      "elementId": "portrait",
+      "targetId": "ed2-cb1c8abc73ffa3468348a451",
+      "startFrame": 0,
+      "durationFrames": 101,
+      "kind": "compose_group",
+      "rationale": "Estado portrait da mesma peça",
+      "source": null
+    },
+    {
+      "sceneId": "adaptation",
+      "elementId": "portrait-photo",
+      "targetId": "ed2-1311da60c4f37c6e89b6ab3e",
+      "startFrame": 0,
+      "durationFrames": 101,
+      "kind": "compose_image",
+      "rationale": "Imagem principal persistente",
+      "source": null
+    },
+    {
+      "sceneId": "adaptation",
+      "elementId": "portrait-title",
+      "targetId": "ed2-55062e33ed55fb3c06459ee8",
+      "startFrame": 0,
+      "durationFrames": 101,
+      "kind": "compose_text",
+      "rationale": "Título persistente",
+      "source": null
+    },
+    {
+      "sceneId": "adaptation",
+      "elementId": "portrait-identity",
+      "targetId": "ed2-a54a782a9d309f723dc1ef5a",
+      "startFrame": 0,
+      "durationFrames": 101,
+      "kind": "compose_text",
+      "rationale": "Identidade persistente",
+      "source": null
+    },
+    {
+      "sceneId": "adaptation",
+      "elementId": "square",
+      "targetId": "ed2-c36c791577509df6313f3a0a",
+      "startFrame": 100,
+      "durationFrames": 140,
+      "kind": "compose_group",
+      "rationale": "Estado square da mesma peça",
+      "source": null
+    },
+    {
+      "sceneId": "adaptation",
+      "elementId": "square-photo",
+      "targetId": "ed2-a37b5864628eee1a1e98bc40",
+      "startFrame": 100,
+      "durationFrames": 140,
+      "kind": "compose_image",
+      "rationale": "Imagem principal persistente",
+      "source": null
+    },
+    {
+      "sceneId": "adaptation",
+      "elementId": "square-title",
+      "targetId": "ed2-f3e45fd9a284c86f672e31f0",
+      "startFrame": 100,
+      "durationFrames": 140,
+      "kind": "compose_text",
+      "rationale": "Título persistente",
+      "source": null
+    },
+    {
+      "sceneId": "adaptation",
+      "elementId": "square-identity",
+      "targetId": "ed2-4efef6cb8d7dbd4e5ea09087",
+      "startFrame": 100,
+      "durationFrames": 140,
+      "kind": "compose_text",
+      "rationale": "Identidade persistente",
+      "source": null
+    },
+    {
+      "sceneId": "adaptation",
+      "elementId": "publish-event",
+      "targetId": "ed2-928b28cf24d9c3e042b513bd",
+      "startFrame": 100,
+      "durationFrames": 7,
+      "kind": "audio_mix",
+      "rationale": "Sinal sintético de publicação"
+    }
+  ],
+  "missingMaterials": [],
+  "sourceAssets": {
+    "coffee": "1126539f4bd1385000f12f43840b19e5be216fb44d160c33a7044d027e021a58",
+    "font": "b3658eadae55e682b5f69eb64c439c1ecc8f196c0bb8d4756d145d13bc86476a",
+    "publish-sfx": "95685e6cff26b98c88a8a491383eda4c14b72b6454d377a9a2951768b2d7da94"
+  },
+  "executableDirection": {
+    "executionScope": "audiovisual",
+    "requireMaterialInspection": false,
+    "semanticVerificationPolicy": "canonical_demonstration_v1",
+    "schemaVersion": "studio.contextual-plan-request.v2",
+    "expectedDocumentRevision": 1,
+    "intent": {
+      "objective": "Mostrar a mesma peça reorganizada em dois formatos",
+      "format": "general",
+      "script": "",
+      "lockedFacts": [],
+      "pacing": "balanced",
+      "emphasis": "auto",
+      "reducedMotion": false,
+      "preserveMessage": true
+    },
+    "frameRate": {
+      "numerator": 30,
+      "denominator": 1
+    },
+    "executionVersions": null,
+    "scenes": [
+      {
+        "id": "adaptation",
+        "purpose": "Demonstrar continuidade e adaptação",
+        "durationFrames": 240,
+        "facts": [],
+        "narration": "",
+        "background": "#17120f",
+        "elements": [
+          {
+            "id": "portrait",
+            "kind": "group",
+            "purpose": "Estado portrait da mesma peça",
+            "parentId": null,
+            "alignment": null,
+            "connectorFromId": null,
+            "connectorToId": null,
+            "fitText": false,
+            "startFrame": 0,
+            "durationFrames": 101,
+            "afterElementId": null,
+            "matchPreviousElementId": null,
+            "x": 73.27999999999997,
+            "y": 50.400000000000006,
+            "width": 573.44,
+            "height": 896.0,
+            "zIndex": 0,
+            "visualRole": "hero",
+            "depthTreatment": {
+              "opacity": 1.0,
+              "blurPx": 0.0,
+              "parallax": 0.0
+            },
+            "rotation": 0.0,
+            "originX": 0.5,
+            "originY": 0.5,
+            "text": "",
+            "conciseText": null,
+            "textRole": "support",
+            "fontAssetId": null,
+            "fontSize": 48.0,
+            "fontWeight": 700,
+            "letterSpacing": 0.0,
+            "lineHeight": 1.1,
+            "textAlign": "left",
+            "textSpans": [],
+            "shadow": null,
+            "effects": [],
+            "blendMode": "normal",
+            "borderWidth": 4.32,
+            "borderColor": "#ffffff",
+            "pathMode": "polyline",
+            "color": "#ffffff",
+            "fill": "#183343",
+            "radius": 16.0,
+            "shape": "rectangle",
+            "assetId": null,
+            "contentIdentity": null,
+            "contentReferenceId": "coffee-piece",
+            "contentPartId": null,
+            "maskAssetId": null,
+            "sourceStartSeconds": 0.0,
+            "sourceAudio": "preserve",
+            "objectFit": "cover",
+            "regionOfInterest": null,
+            "cropIntentional": true,
+            "reveal": "none",
+            "revealFrames": 12,
+            "points": [],
+            "strokeWidth": 4.0,
+            "animations": [
+              {
+                "property": "opacity",
+                "keyframes": [
+                  {
+                    "frame": 0,
+                    "value": 0.0,
+                    "easing": "ease_out",
+                    "cubicBezier": null
+                  },
+                  {
+                    "frame": 33,
+                    "value": 1.0,
+                    "easing": "linear",
+                    "cubicBezier": null
+                  },
+                  {
+                    "frame": 99,
+                    "value": 1.0,
+                    "easing": "linear",
+                    "cubicBezier": null
+                  },
+                  {
+                    "frame": 100,
+                    "value": 0.0,
+                    "easing": "linear",
+                    "cubicBezier": null
+                  }
+                ]
+              },
+              {
+                "property": "scale_x",
+                "keyframes": [
+                  {
+                    "frame": 0,
+                    "value": 0.92,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.22,
+                      1.0,
+                      0.36,
+                      1.0
+                    ]
+                  },
+                  {
+                    "frame": 58,
+                    "value": 1.04,
+                    "easing": "ease_out",
+                    "cubicBezier": null
+                  },
+                  {
+                    "frame": 100,
+                    "value": 1.0,
+                    "easing": "linear",
+                    "cubicBezier": null
+                  }
+                ]
+              },
+              {
+                "property": "scale_y",
+                "keyframes": [
+                  {
+                    "frame": 0,
+                    "value": 0.92,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.22,
+                      1.0,
+                      0.36,
+                      1.0
+                    ]
+                  },
+                  {
+                    "frame": 58,
+                    "value": 1.04,
+                    "easing": "ease_out",
+                    "cubicBezier": null
+                  },
+                  {
+                    "frame": 100,
+                    "value": 1.0,
+                    "easing": "linear",
+                    "cubicBezier": null
+                  }
+                ]
+              }
+            ],
+            "motionCues": [],
+            "repeatCount": 1,
+            "repeatDx": 0.0,
+            "repeatDy": 0.0,
+            "staggerFrames": 0
+          },
+          {
+            "id": "portrait-photo",
+            "kind": "image",
+            "purpose": "Imagem principal persistente",
+            "parentId": "portrait",
+            "alignment": null,
+            "connectorFromId": null,
+            "connectorToId": null,
+            "fitText": false,
+            "startFrame": 0,
+            "durationFrames": 101,
+            "afterElementId": null,
+            "matchPreviousElementId": null,
+            "x": 34.406400000000005,
+            "y": 195.6864,
+            "width": 504.6272,
+            "height": 483.84000000000003,
+            "zIndex": 0,
+            "visualRole": "support",
+            "depthTreatment": {
+              "opacity": 1.0,
+              "blurPx": 0.0,
+              "parallax": 0.0
+            },
+            "rotation": 0.0,
+            "originX": 0.5,
+            "originY": 0.5,
+            "text": "",
+            "conciseText": null,
+            "textRole": "support",
+            "fontAssetId": null,
+            "fontSize": 48.0,
+            "fontWeight": 700,
+            "letterSpacing": 0.0,
+            "lineHeight": 1.1,
+            "textAlign": "left",
+            "textSpans": [],
+            "shadow": null,
+            "effects": [],
+            "blendMode": "normal",
+            "borderWidth": 0.0,
+            "borderColor": "#ffffff",
+            "pathMode": "polyline",
+            "color": "#ffffff",
+            "fill": "#183343",
+            "radius": 16.0,
+            "shape": "rectangle",
+            "assetId": "coffee",
+            "contentIdentity": null,
+            "contentReferenceId": "coffee-piece",
+            "contentPartId": "photo",
+            "maskAssetId": null,
+            "sourceStartSeconds": 0.0,
+            "sourceAudio": "preserve",
+            "objectFit": "cover",
+            "regionOfInterest": {
+              "x": 0.25,
+              "y": 0.1,
+              "width": 0.5,
+              "height": 0.72,
+              "purpose": "Manter a xícara reconhecível"
+            },
+            "cropIntentional": true,
+            "reveal": "none",
+            "revealFrames": 12,
+            "points": [],
+            "strokeWidth": 4.0,
+            "animations": [],
+            "motionCues": [],
+            "repeatCount": 1,
+            "repeatDx": 0.0,
+            "repeatDy": 0.0,
+            "staggerFrames": 0
+          },
+          {
+            "id": "portrait-title",
+            "kind": "text",
+            "purpose": "Título persistente",
+            "parentId": "portrait",
+            "alignment": null,
+            "connectorFromId": null,
+            "connectorToId": null,
+            "fitText": true,
+            "startFrame": 0,
+            "durationFrames": 101,
+            "afterElementId": null,
+            "matchPreviousElementId": null,
+            "x": 34.406400000000005,
+            "y": 34.406400000000005,
+            "width": 504.6272,
+            "height": 149.23776,
+            "zIndex": 0,
+            "visualRole": "text",
+            "depthTreatment": {
+              "opacity": 1.0,
+              "blurPx": 0.0,
+              "parallax": 0.0
+            },
+            "rotation": 0.0,
+            "originX": 0.5,
+            "originY": 0.5,
+            "text": "CAFÉ QUE ENCONTRA VOCÊ",
+            "conciseText": null,
+            "textRole": "support",
+            "fontAssetId": "font",
+            "fontSize": 43.008,
+            "fontWeight": 700,
+            "letterSpacing": 0.0,
+            "lineHeight": 1.1,
+            "textAlign": "left",
+            "textSpans": [],
+            "shadow": null,
+            "effects": [],
+            "blendMode": "normal",
+            "borderWidth": 0.0,
+            "borderColor": "#ffffff",
+            "pathMode": "polyline",
+            "color": "#fff7e8",
+            "fill": "#183343",
+            "radius": 16.0,
+            "shape": "rectangle",
+            "assetId": null,
+            "contentIdentity": null,
+            "contentReferenceId": "coffee-piece",
+            "contentPartId": "headline",
+            "maskAssetId": null,
+            "sourceStartSeconds": 0.0,
+            "sourceAudio": "preserve",
+            "objectFit": "contain",
+            "regionOfInterest": null,
+            "cropIntentional": false,
+            "reveal": "words",
+            "revealFrames": 20,
+            "points": [],
+            "strokeWidth": 4.0,
+            "animations": [],
+            "motionCues": [],
+            "repeatCount": 1,
+            "repeatDx": 0.0,
+            "repeatDy": 0.0,
+            "staggerFrames": 0
+          },
+          {
+            "id": "portrait-identity",
+            "kind": "text",
+            "purpose": "Identidade persistente",
+            "parentId": "portrait",
+            "alignment": null,
+            "connectorFromId": null,
+            "connectorToId": null,
+            "fitText": true,
+            "startFrame": 0,
+            "durationFrames": 101,
+            "afterElementId": null,
+            "matchPreviousElementId": null,
+            "x": 34.406400000000005,
+            "y": 798.7936000000001,
+            "width": 315.39200000000005,
+            "height": 62.800000000000004,
+            "zIndex": 0,
+            "visualRole": "text",
+            "depthTreatment": {
+              "opacity": 1.0,
+              "blurPx": 0.0,
+              "parallax": 0.0
+            },
+            "rotation": 0.0,
+            "originX": 0.5,
+            "originY": 0.5,
+            "text": "RES CAFÉ",
+            "conciseText": null,
+            "textRole": "support",
+            "fontAssetId": "font",
+            "fontSize": 38.4,
+            "fontWeight": 700,
+            "letterSpacing": 0.0,
+            "lineHeight": 1.1,
+            "textAlign": "left",
+            "textSpans": [],
+            "shadow": null,
+            "effects": [],
+            "blendMode": "normal",
+            "borderWidth": 0.0,
+            "borderColor": "#ffffff",
+            "pathMode": "polyline",
+            "color": "#f4c987",
+            "fill": "#183343",
+            "radius": 16.0,
+            "shape": "rectangle",
+            "assetId": null,
+            "contentIdentity": null,
+            "contentReferenceId": "coffee-piece",
+            "contentPartId": "brand",
+            "maskAssetId": null,
+            "sourceStartSeconds": 0.0,
+            "sourceAudio": "preserve",
+            "objectFit": "contain",
+            "regionOfInterest": null,
+            "cropIntentional": false,
+            "reveal": "none",
+            "revealFrames": 12,
+            "points": [],
+            "strokeWidth": 4.0,
+            "animations": [],
+            "motionCues": [],
+            "repeatCount": 1,
+            "repeatDx": 0.0,
+            "repeatDy": 0.0,
+            "staggerFrames": 0
+          },
+          {
+            "id": "square",
+            "kind": "group",
+            "purpose": "Estado square da mesma peça",
+            "parentId": null,
+            "alignment": null,
+            "connectorFromId": null,
+            "connectorToId": null,
+            "fitText": false,
+            "startFrame": 100,
+            "durationFrames": 140,
+            "afterElementId": null,
+            "matchPreviousElementId": null,
+            "x": 50.39999999999998,
+            "y": 188.79999999999998,
+            "width": 619.2,
+            "height": 619.2,
+            "zIndex": 0,
+            "visualRole": "support",
+            "depthTreatment": {
+              "opacity": 1.0,
+              "blurPx": 0.0,
+              "parallax": 0.0
+            },
+            "rotation": 0.0,
+            "originX": 0.5,
+            "originY": 0.5,
+            "text": "",
+            "conciseText": null,
+            "textRole": "support",
+            "fontAssetId": null,
+            "fontSize": 48.0,
+            "fontWeight": 700,
+            "letterSpacing": 0.0,
+            "lineHeight": 1.1,
+            "textAlign": "left",
+            "textSpans": [],
+            "shadow": null,
+            "effects": [],
+            "blendMode": "normal",
+            "borderWidth": 4.32,
+            "borderColor": "#ffffff",
+            "pathMode": "polyline",
+            "color": "#ffffff",
+            "fill": "#183343",
+            "radius": 16.0,
+            "shape": "rectangle",
+            "assetId": null,
+            "contentIdentity": null,
+            "contentReferenceId": "coffee-piece",
+            "contentPartId": null,
+            "maskAssetId": null,
+            "sourceStartSeconds": 0.0,
+            "sourceAudio": "preserve",
+            "objectFit": "cover",
+            "regionOfInterest": null,
+            "cropIntentional": true,
+            "reveal": "none",
+            "revealFrames": 12,
+            "points": [],
+            "strokeWidth": 4.0,
+            "animations": [
+              {
+                "property": "opacity",
+                "keyframes": [
+                  {
+                    "frame": 0,
+                    "value": 0.0,
+                    "easing": "ease_out",
+                    "cubicBezier": null
+                  },
+                  {
+                    "frame": 100,
+                    "value": 1.0,
+                    "easing": "linear",
+                    "cubicBezier": null
+                  }
+                ]
+              }
+            ],
+            "motionCues": [],
+            "repeatCount": 1,
+            "repeatDx": 0.0,
+            "repeatDy": 0.0,
+            "staggerFrames": 0
+          },
+          {
+            "id": "square-photo",
+            "kind": "image",
+            "purpose": "Imagem principal persistente",
+            "parentId": "square",
+            "alignment": null,
+            "connectorFromId": null,
+            "connectorToId": null,
+            "fitText": false,
+            "startFrame": 100,
+            "durationFrames": 140,
+            "afterElementId": null,
+            "matchPreviousElementId": null,
+            "x": 37.152,
+            "y": 160.99200000000002,
+            "width": 544.8960000000001,
+            "height": 309.6,
+            "zIndex": 0,
+            "visualRole": "support",
+            "depthTreatment": {
+              "opacity": 1.0,
+              "blurPx": 0.0,
+              "parallax": 0.0
+            },
+            "rotation": 0.0,
+            "originX": 0.5,
+            "originY": 0.5,
+            "text": "",
+            "conciseText": null,
+            "textRole": "support",
+            "fontAssetId": null,
+            "fontSize": 48.0,
+            "fontWeight": 700,
+            "letterSpacing": 0.0,
+            "lineHeight": 1.1,
+            "textAlign": "left",
+            "textSpans": [],
+            "shadow": null,
+            "effects": [],
+            "blendMode": "normal",
+            "borderWidth": 0.0,
+            "borderColor": "#ffffff",
+            "pathMode": "polyline",
+            "color": "#ffffff",
+            "fill": "#183343",
+            "radius": 16.0,
+            "shape": "rectangle",
+            "assetId": "coffee",
+            "contentIdentity": null,
+            "contentReferenceId": "coffee-piece",
+            "contentPartId": "photo",
+            "maskAssetId": null,
+            "sourceStartSeconds": 0.0,
+            "sourceAudio": "preserve",
+            "objectFit": "cover",
+            "regionOfInterest": {
+              "x": 0.25,
+              "y": 0.1,
+              "width": 0.5,
+              "height": 0.72,
+              "purpose": "Manter a xícara reconhecível"
+            },
+            "cropIntentional": true,
+            "reveal": "none",
+            "revealFrames": 12,
+            "points": [],
+            "strokeWidth": 4.0,
+            "animations": [
+              {
+                "property": "position_x",
+                "keyframes": [
+                  {
+                    "frame": 0,
+                    "value": 0.0,
+                    "easing": "ease_out",
+                    "cubicBezier": null
+                  },
+                  {
+                    "frame": 100,
+                    "value": 0.0,
+                    "easing": "linear",
+                    "cubicBezier": null
+                  }
+                ]
+              },
+              {
+                "property": "position_y",
+                "keyframes": [
+                  {
+                    "frame": 0,
+                    "value": -16.585600000000056,
+                    "easing": "ease_out",
+                    "cubicBezier": null
+                  },
+                  {
+                    "frame": 100,
+                    "value": 0.0,
+                    "easing": "linear",
+                    "cubicBezier": null
+                  }
+                ]
+              },
+              {
+                "property": "scale_x",
+                "keyframes": [
+                  {
+                    "frame": 0,
+                    "value": 0.9260981912144702,
+                    "easing": "ease_out",
+                    "cubicBezier": null
+                  },
+                  {
+                    "frame": 100,
+                    "value": 1.0,
+                    "easing": "linear",
+                    "cubicBezier": null
+                  }
+                ]
+              },
+              {
+                "property": "scale_y",
+                "keyframes": [
+                  {
+                    "frame": 0,
+                    "value": 0.9260981912144702,
+                    "easing": "ease_out",
+                    "cubicBezier": null
+                  },
+                  {
+                    "frame": 100,
+                    "value": 1.0,
+                    "easing": "linear",
+                    "cubicBezier": null
+                  }
+                ]
+              }
+            ],
+            "motionCues": [],
+            "repeatCount": 1,
+            "repeatDx": 0.0,
+            "repeatDy": 0.0,
+            "staggerFrames": 0
+          },
+          {
+            "id": "square-title",
+            "kind": "text",
+            "purpose": "Título persistente",
+            "parentId": "square",
+            "alignment": null,
+            "connectorFromId": null,
+            "connectorToId": null,
+            "fitText": true,
+            "startFrame": 100,
+            "durationFrames": 140,
+            "afterElementId": null,
+            "matchPreviousElementId": null,
+            "x": 37.152,
+            "y": 37.152,
+            "width": 544.8960000000001,
+            "height": 113.0,
+            "zIndex": 0,
+            "visualRole": "text",
+            "depthTreatment": {
+              "opacity": 1.0,
+              "blurPx": 0.0,
+              "parallax": 0.0
+            },
+            "rotation": 0.0,
+            "originX": 0.5,
+            "originY": 0.5,
+            "text": "CAFÉ QUE ENCONTRA VOCÊ",
+            "conciseText": null,
+            "textRole": "support",
+            "fontAssetId": "font",
+            "fontSize": 46.440000000000005,
+            "fontWeight": 700,
+            "letterSpacing": 0.0,
+            "lineHeight": 1.1,
+            "textAlign": "left",
+            "textSpans": [],
+            "shadow": null,
+            "effects": [],
+            "blendMode": "normal",
+            "borderWidth": 0.0,
+            "borderColor": "#ffffff",
+            "pathMode": "polyline",
+            "color": "#fff7e8",
+            "fill": "#183343",
+            "radius": 16.0,
+            "shape": "rectangle",
+            "assetId": null,
+            "contentIdentity": null,
+            "contentReferenceId": "coffee-piece",
+            "contentPartId": "headline",
+            "maskAssetId": null,
+            "sourceStartSeconds": 0.0,
+            "sourceAudio": "preserve",
+            "objectFit": "contain",
+            "regionOfInterest": null,
+            "cropIntentional": false,
+            "reveal": "none",
+            "revealFrames": 20,
+            "points": [],
+            "strokeWidth": 4.0,
+            "animations": [
+              {
+                "property": "position_x",
+                "keyframes": [
+                  {
+                    "frame": 0,
+                    "value": 0.0,
+                    "easing": "ease_out",
+                    "cubicBezier": null
+                  },
+                  {
+                    "frame": 100,
+                    "value": 0.0,
+                    "easing": "linear",
+                    "cubicBezier": null
+                  }
+                ]
+              },
+              {
+                "property": "position_y",
+                "keyframes": [
+                  {
+                    "frame": 0,
+                    "value": -121.94512,
+                    "easing": "ease_out",
+                    "cubicBezier": null
+                  },
+                  {
+                    "frame": 100,
+                    "value": 0.0,
+                    "easing": "linear",
+                    "cubicBezier": null
+                  }
+                ]
+              },
+              {
+                "property": "scale_x",
+                "keyframes": [
+                  {
+                    "frame": 0,
+                    "value": 0.9260981912144702,
+                    "easing": "ease_out",
+                    "cubicBezier": null
+                  },
+                  {
+                    "frame": 100,
+                    "value": 1.0,
+                    "easing": "linear",
+                    "cubicBezier": null
+                  }
+                ]
+              },
+              {
+                "property": "scale_y",
+                "keyframes": [
+                  {
+                    "frame": 0,
+                    "value": 0.9260981912144702,
+                    "easing": "ease_out",
+                    "cubicBezier": null
+                  },
+                  {
+                    "frame": 100,
+                    "value": 1.0,
+                    "easing": "linear",
+                    "cubicBezier": null
+                  }
+                ]
+              }
+            ],
+            "motionCues": [],
+            "repeatCount": 1,
+            "repeatDx": 0.0,
+            "repeatDy": 0.0,
+            "staggerFrames": 0
+          },
+          {
+            "id": "square-identity",
+            "kind": "text",
+            "purpose": "Identidade persistente",
+            "parentId": "square",
+            "alignment": null,
+            "connectorFromId": null,
+            "connectorToId": null,
+            "fitText": true,
+            "startFrame": 100,
+            "durationFrames": 140,
+            "afterElementId": null,
+            "matchPreviousElementId": null,
+            "x": 37.152,
+            "y": 519.248,
+            "width": 340.56000000000006,
+            "height": 62.800000000000004,
+            "zIndex": 0,
+            "visualRole": "text",
+            "depthTreatment": {
+              "opacity": 1.0,
+              "blurPx": 0.0,
+              "parallax": 0.0
+            },
+            "rotation": 0.0,
+            "originX": 0.5,
+            "originY": 0.5,
+            "text": "RES CAFÉ",
+            "conciseText": null,
+            "textRole": "support",
+            "fontAssetId": "font",
+            "fontSize": 38.4,
+            "fontWeight": 700,
+            "letterSpacing": 0.0,
+            "lineHeight": 1.1,
+            "textAlign": "left",
+            "textSpans": [],
+            "shadow": null,
+            "effects": [],
+            "blendMode": "normal",
+            "borderWidth": 0.0,
+            "borderColor": "#ffffff",
+            "pathMode": "polyline",
+            "color": "#f4c987",
+            "fill": "#183343",
+            "radius": 16.0,
+            "shape": "rectangle",
+            "assetId": null,
+            "contentIdentity": null,
+            "contentReferenceId": "coffee-piece",
+            "contentPartId": "brand",
+            "maskAssetId": null,
+            "sourceStartSeconds": 0.0,
+            "sourceAudio": "preserve",
+            "objectFit": "contain",
+            "regionOfInterest": null,
+            "cropIntentional": false,
+            "reveal": "none",
+            "revealFrames": 12,
+            "points": [],
+            "strokeWidth": 4.0,
+            "animations": [
+              {
+                "property": "position_x",
+                "keyframes": [
+                  {
+                    "frame": 0,
+                    "value": 7.550400000000025,
+                    "easing": "ease_out",
+                    "cubicBezier": null
+                  },
+                  {
+                    "frame": 100,
+                    "value": 0.0,
+                    "easing": "linear",
+                    "cubicBezier": null
+                  }
+                ]
+              },
+              {
+                "property": "position_y",
+                "keyframes": [
+                  {
+                    "frame": 0,
+                    "value": 141.14560000000006,
+                    "easing": "ease_out",
+                    "cubicBezier": null
+                  },
+                  {
+                    "frame": 100,
+                    "value": 0.0,
+                    "easing": "linear",
+                    "cubicBezier": null
+                  }
+                ]
+              },
+              {
+                "property": "scale_x",
+                "keyframes": [
+                  {
+                    "frame": 0,
+                    "value": 0.9260981912144702,
+                    "easing": "ease_out",
+                    "cubicBezier": null
+                  },
+                  {
+                    "frame": 100,
+                    "value": 1.0,
+                    "easing": "linear",
+                    "cubicBezier": null
+                  }
+                ]
+              },
+              {
+                "property": "scale_y",
+                "keyframes": [
+                  {
+                    "frame": 0,
+                    "value": 0.9260981912144702,
+                    "easing": "ease_out",
+                    "cubicBezier": null
+                  },
+                  {
+                    "frame": 100,
+                    "value": 1.0,
+                    "easing": "linear",
+                    "cubicBezier": null
+                  }
+                ]
+              }
+            ],
+            "motionCues": [],
+            "repeatCount": 1,
+            "repeatDx": 0.0,
+            "repeatDy": 0.0,
+            "staggerFrames": 0
+          }
+        ],
+        "audio": [
+          {
+            "id": "publish-event",
+            "role": "effect",
+            "purpose": "Sinal sintético de publicação",
+            "assetId": "publish-sfx",
+            "startFrame": 100,
+            "durationFrames": 7,
+            "sourceStartSeconds": 0.0,
+            "syncElementId": null,
+            "syncOffsetFrames": 0,
+            "attackOffsetFrames": 0,
+            "gainDb": -4.0,
+            "fadeInFrames": 0,
+            "fadeOutFrames": 0
+          }
+        ],
+        "materialNeeds": [],
+        "verification": [
+          "Imagem, título e identidade permanecem reconhecíveis",
+          "O layout muda entre vertical e quadrado",
+          "O evento de publicação está audível"
+        ],
+        "techniqueIds": [],
+        "entrance": "cut",
+        "transitionFrames": 12,
+        "compositions": [
+          {
+            "id": "format-change",
+            "family": "format_transformation",
+            "targetIds": [
+              "portrait",
+              "square"
+            ],
+            "purpose": "Reorganizar a mesma peça",
+            "expectedResult": "Peça vertical seguida da mesma peça quadrada",
+            "actionFrames": 100,
+            "previousElementId": null,
+            "axis": "horizontal",
+            "marginRatio": 0.07,
+            "gapRatio": 0.035,
+            "repeatCount": 3,
+            "focusScale": 1.08,
+            "continuityKey": "coffee-piece",
+            "viewportFormats": [
+              "portrait",
+              "square"
+            ],
+            "interfaceEvents": []
+          }
+        ],
+        "cameraCues": [],
+        "keywordCues": [],
+        "visualStates": [],
+        "observationCues": [],
+        "contentReferenceIds": [
+          "coffee-piece"
+        ],
+        "semanticAssertions": [
+          {
+            "id": "same-content-two-formats",
+            "kind": "format_adaptation",
+            "objectId": "coffee-piece",
+            "initialState": "Peça vertical completa",
+            "event": "Layout se reorganiza",
+            "finalState": "Peça quadrada completa",
+            "startFrame": 0,
+            "endFrameExclusive": 240,
+            "targetIds": [
+              "portrait",
+              "square"
+            ],
+            "requiredPartIds": [
+              "photo",
+              "headline",
+              "brand"
+            ],
+            "evidenceRequired": "temporal_sequence",
+            "essential": true
+          },
+          {
+            "id": "publish-is-audible",
+            "kind": "audible_event",
+            "objectId": "publish-event",
+            "initialState": "Antes da mudança",
+            "event": "Mudança de formato",
+            "finalState": "Confirmação audível",
+            "startFrame": 98,
+            "endFrameExclusive": 110,
+            "targetIds": [
+              "publish-event"
+            ],
+            "requiredPartIds": [],
+            "evidenceRequired": "mixed_audio",
+            "essential": true
+          }
+        ],
+        "shotPlan": []
+      }
+    ],
+    "artDirection": null,
+    "contentReferences": [
+      {
+        "id": "coffee-piece",
+        "version": 1,
+        "purpose": "Peça de café reconhecível",
+        "parts": [
+          {
+            "id": "photo",
+            "role": "primary_media",
+            "text": null,
+            "assetId": "coffee",
+            "checksumSha256": "1126539f4bd1385000f12f43840b19e5be216fb44d160c33a7044d027e021a58",
+            "required": true
+          },
+          {
+            "id": "headline",
+            "role": "title",
+            "text": "CAFÉ QUE ENCONTRA VOCÊ",
+            "assetId": null,
+            "checksumSha256": null,
+            "required": true
+          },
+          {
+            "id": "brand",
+            "role": "identity",
+            "text": "RES CAFÉ",
+            "assetId": null,
+            "checksumSha256": null,
+            "required": true
+          }
+        ]
+      }
+    ]
+  },
+  "hashes": {
+    "sourceDirection": "650793e7a9823d5e270362d01dccc4e27feca23e07b23e3927dc14401a706407",
+    "executableDirection": "c1f104fe42cd8779985e2a4aaa157fe36adac5b7886a9c7658a5cbc85905aabf",
+    "sourceDocument": "2b7e3d772d0ad835521d4b4ab0b9c4faaa483b7698efe0ea5fb86d9abe211f82",
+    "executableComposition": "8ee6c3b9c79bf633efa8c58cf48426a3edb79b0b90f862a2ef454cf571cdd3f9",
+    "assets": "b24843dee51900f65b312709b7ace3f54981888f5655fbcaeb0d6d9c92bb9b7f",
+    "fonts": "32532479d60ff7f2d31833176a42dfb4e8c4549ce606a4053c746bd00e85fa49"
+  },
+  "humanReview": "pending"
+}

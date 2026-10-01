@@ -1,0 +1,21 @@
+{
+  "schemaVersion": "studio.hybrid-benchmark-policy.v1",
+  "suiteId": "res-hybrid-video-screening-v1",
+  "automaticCorrectionLimit": 2,
+  "humanAcceptanceThreshold": 4,
+  "screeningOnly": true,
+  "avatarReleaseMinimumSubjects": 10,
+  "avatarReleaseMinimumCases": 30,
+  "cases": [
+    {"caseId":"presenter-01","family":"presenter","theme":"Distribuição de conteúdo","identityId":"neutral-a","durationSeconds":15,"revisionInstruction":"Deixe mais calmo e preserve a conclusão","requiredChecks":["identity","lip_sync","pt_br_voice","continuity"]},
+    {"caseId":"presenter-02","family":"presenter","theme":"Demonstração de produto","identityId":"neutral-b","durationSeconds":15,"revisionInstruction":"Reduza o texto sem alterar a promessa","requiredChecks":["identity","lip_sync","pt_br_voice","product_visibility"]},
+    {"caseId":"presenter-03","family":"presenter","theme":"Explicação educativa","identityId":"neutral-a","durationSeconds":20,"revisionInstruction":"Aumente as pausas e mantenha as ressalvas","requiredChecks":["identity","lip_sync","pt_br_voice","qualifier_preservation"]},
+    {"caseId":"presenter-04","family":"presenter","theme":"Oferta com prova","identityId":"neutral-b","durationSeconds":20,"revisionInstruction":"Troque a voz e regenere apenas os dependentes","requiredChecks":["identity","lip_sync","voice_invalidation","evidence"]},
+    {"caseId":"motion-01","family":"motion","theme":"Distribuição de conteúdo","identityId":"neutral-a","durationSeconds":15,"revisionInstruction":"Deixe mais calmo e preserve a conclusão","requiredChecks":["typography","camera","hierarchy","action"]},
+    {"caseId":"motion-02","family":"motion","theme":"Produto e oferta","identityId":"neutral-b","durationSeconds":15,"revisionInstruction":"Mude cor e destaque sem regenerar mídia","requiredChecks":["product_annotation","brand_tokens","local_revision","action"]},
+    {"caseId":"motion-03","family":"motion","theme":"Processo em três etapas","identityId":"neutral-a","durationSeconds":20,"revisionInstruction":"Reduza o texto complementar","requiredChecks":["bound_paths","sequence","legibility","continuity"]},
+    {"caseId":"hybrid-01","family":"hybrid","theme":"Distribuição de conteúdo","identityId":"neutral-b","durationSeconds":15,"revisionInstruction":"Mostre melhor a evidência principal","requiredChecks":["material_relevance","motion","continuity","hierarchy"]},
+    {"caseId":"hybrid-02","family":"hybrid","theme":"Demonstração de aplicativo","identityId":"neutral-a","durationSeconds":20,"revisionInstruction":"Aproxime o produto sem trocar o material","requiredChecks":["product_visibility","camera","asset_reuse","legibility"]},
+    {"caseId":"hybrid-03","family":"hybrid","theme":"Oferta com b-roll","identityId":"neutral-b","durationSeconds":20,"revisionInstruction":"Remova uma geração sem perder a mensagem","requiredChecks":["alternative_editorial","material_relevance","continuity","cost_receipt"]}
+  ]
+}

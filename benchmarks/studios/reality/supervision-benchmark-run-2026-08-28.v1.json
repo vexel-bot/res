@@ -1,0 +1,126 @@
+{
+  "schemaVersion": "clicko.supervision-benchmark-report.v1",
+  "runId": "supervision-sv2-20260828T131603Z",
+  "generatedAt": "2026-08-28T13:16:03.236729Z",
+  "corpus": {
+    "id": "supervision-synthetic-v1",
+    "digestSha256": "8b6155855dc6198d38f0e60cf7df35084ce93f50fdf0cbbe434b23c1111280bb",
+    "caseCount": 8,
+    "syntheticOnly": true,
+    "humanData": false
+  },
+  "candidate": {
+    "name": "supervision",
+    "version": "0.30.1",
+    "sourceRevision": "5f25aa0ee6dc22891415b6e3d2e1689ce7a32952",
+    "status": "evaluation",
+    "advertisedByWorkerManifest": false
+  },
+  "environment": {
+    "python": "3.11.9",
+    "numpy": "2.4.6",
+    "opencv": "4.13.0",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "networkDeniedDuringRun": true,
+    "runtime": "local-windows-isolated-target"
+  },
+  "results": {
+    "adapterFidelity": 1.0,
+    "determinism": 1.0,
+    "zones": {
+      "parity": 1.0,
+      "caseCount": 8,
+      "supervisionLatencyP95Ms": 0.182505,
+      "openCvLatencyP95Ms": 0.8767849999999999,
+      "latencyRatioP95VsOpenCv": 0.20815251173320715
+    },
+    "overlays": {
+      "pixelParity": 1.0,
+      "caseCount": 8,
+      "supervisionLatencyP95Ms": 1.83327,
+      "openCvLatencyP95Ms": 1.34353,
+      "latencyRatioP95VsOpenCv": 1.364517353538812
+    },
+    "metrics": {
+      "observed": {
+        "precision": 0.7142857142857143,
+        "recall": 0.7142857142857143,
+        "f1": 0.7142857142857143
+      },
+      "independentReference": {
+        "truePositive": 5,
+        "falsePositive": 2,
+        "falseNegative": 2,
+        "precision": 0.7142857142857143,
+        "recall": 0.7142857142857143,
+        "f1": 0.7142857142857143
+      },
+      "absoluteErrorMax": 0.0,
+      "perfectCaseMap50": 0.9999998807907104
+    },
+    "invalidInputs": {
+      "caseCount": 4,
+      "rejected": 4,
+      "rejectionRate": 1.0
+    },
+    "performance": {
+      "iterations": 30,
+      "detectionsPerIteration": 8,
+      "latencyMeanMs": 2.06319,
+      "latencyP95Ms": 2.291455,
+      "detectionsPerSecond": 3877.4906819052053,
+      "pythonPeakMemoryMib": 0.07135772705078125
+    }
+  },
+  "thresholds": {
+    "adapterFidelity": 1.0,
+    "determinism": 1.0,
+    "zoneParity": 1.0,
+    "overlayBoxPixelParity": 1.0,
+    "metricAbsoluteErrorMax": 1e-06,
+    "perfectCaseMap50Min": 0.999,
+    "invalidInputRejection": 1.0,
+    "projectionDetectionsPerSecondMin": 500,
+    "projectionPythonPeakMemoryMibMax": 128,
+    "zoneLatencyRatioVsOpenCvP95Max": 10,
+    "overlayLatencyRatioVsOpenCvP95Max": 10
+  },
+  "checks": {
+    "adapter_fidelity": true,
+    "determinism": true,
+    "zone_parity": true,
+    "overlay_box_pixel_parity": true,
+    "metrics_match_independent_reference": true,
+    "perfect_case_map50": true,
+    "invalid_input_rejection": true,
+    "projection_throughput": true,
+    "projection_peak_memory": true,
+    "zone_latency_ratio": true,
+    "overlay_latency_ratio": true,
+    "network_denied": true,
+    "synthetic_only": true,
+    "worker_provider_manifest_empty": true
+  },
+  "technicalDecision": "passed",
+  "activationDecision": "incomplete",
+  "activationBlockers": [
+    "inventory_status:incomplete",
+    "linux_lock_missing",
+    "oci_digest_missing",
+    "sbom_missing",
+    "provenance_missing",
+    "signature_missing",
+    "shadow_mode_not_run"
+  ],
+  "comparisonScope": {
+    "openCvPrimitives": "Polygon-zone bottom-center anchors and box rendering are compared directly with OpenCV 4.13.0 primitives.",
+    "existingRealityBaseline": "benchmarks\\studios\\reality\\opencv-baseline-run-2026-08-25.v1.json",
+    "nonComparable": "The existing OpenCV reality provider estimates horizon, camera motion and sparse tracks; Supervision is a toolkit projection layer, so its 11-case quality score is referenced but not merged into this score."
+  },
+  "limitations": [
+    "The corpus is synthetic and validates plumbing, not detector quality.",
+    "Python tracemalloc excludes native allocator/codec memory.",
+    "Windows evaluation does not satisfy the required Linux OCI supply-chain gate.",
+    "No physical-world conclusion or provider promotion is authorized."
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "schemaVersion": "studio.benchmark-policy.v1",
+  "suiteId": "clicko.reality-product-ugc.v1",
+  "policyVersion": "1.0.0",
+  "capability": "video_physical_qc",
+  "locale": "pt-BR",
+  "status": "frozen",
+  "frozenAt": "2026-08-25T12:00:00Z",
+  "frozenBy": "clicko-product-engineering-baseline",
+  "corpus": {"manifestSchema": "studio.benchmark-corpus-manifest.v1", "minimumSubjects": 10, "minimumCases": 100, "minimumConsentCoverage": 1.0, "requiredLocales": ["pt-BR"], "requiredScenarios": ["real-ugc-static-camera", "real-ugc-handheld", "object-interaction", "person-prop-continuity", "occlusion", "jump-cut-declared", "slow-motion-declared", "speed-ramp-declared", "reverse-declared", "vfx-declared", "stylized-physical", "surreal-approved", "synthetic-realistic-candidate", "hard-negative-no-issue"], "rawBiometricDataAllowedInRepository": false},
+  "candidates": [
+    {
+      "candidateId": "pgv4-clicko-advisory-ensemble",
+      "displayName": "Clicko PGV-4 advisory ensemble",
+      "role": "product_physical_qc",
+      "executionCapability": "vision_gpu",
+      "licenseGate": "review_required",
+      "benchmarkScope": "consented_private",
+      "components": [
+        {"componentId": "pgv1-perception-chain", "kind": "runtime", "sourceUrl": "https://github.com/google-deepmind/tapnet", "sourceRevision": "c2cbab81cc06092b5f05bfe2da7bfec54e2079c9", "license": "mixed-permissive-review-required", "commercialUse": "unknown", "notes": "The license manifest must expand OpenCV, TAPIR, RAFT, Depth Anything V2 Small, Clicko evaluator code and every transitive artifact before this candidate can be approved."}
+      ]
+    }
+  ],
+  "thresholds": [
+    {"metricId": "real_ugc_false_block_rate", "displayName": "False block em UGC real", "unit": "ratio", "aggregation": "rate", "direction": "maximum", "threshold": 0.01, "minimumSamples": 100, "blocking": true, "rationale": "O QC não pode transformar linguagem cinematográfica ou incerteza em bloqueio indevido."},
+    {"metricId": "critical_violation_recall", "displayName": "Recall de violações críticas", "unit": "ratio", "aggregation": "rate", "direction": "minimum", "threshold": 0.9, "minimumSamples": 100, "blocking": true, "rationale": "Problemas críticos injetados no holdout precisam ser encontrados."},
+    {"metricId": "issue_precision", "displayName": "Precisão das ocorrências", "unit": "ratio", "aggregation": "rate", "direction": "minimum", "threshold": 0.8, "minimumSamples": 100, "blocking": true, "rationale": "Editores precisam confiar que uma ocorrência merece inspeção."},
+    {"metricId": "expected_calibration_error", "displayName": "Expected calibration error", "unit": "ratio", "aggregation": "mean", "direction": "maximum", "threshold": 0.1, "minimumSamples": 100, "blocking": true, "rationale": "Confidence precisa orientar abstenção de forma observável."},
+    {"metricId": "correction_effort_seconds", "displayName": "Esforço de correção", "unit": "seconds", "aggregation": "p95", "direction": "maximum", "threshold": 60, "minimumSamples": 100, "blocking": false, "rationale": "Métrica de UX inicial; será endurecida após teste com editores."},
+    {"metricId": "analysis_latency_seconds", "displayName": "Latência de análise", "unit": "seconds", "aggregation": "p95", "direction": "maximum", "threshold": 600, "minimumSamples": 100, "blocking": false, "rationale": "Métrica de capacidade para definir processamento em background."},
+    {"metricId": "direct_cost_usd_per_video_minute", "displayName": "Custo direto por minuto", "unit": "usd_per_video_minute", "aggregation": "p95", "direction": "maximum", "threshold": 1.0, "minimumSamples": 100, "blocking": false, "rationale": "Budget provisório; não é claim de custo observado."}
+  ],
+  "requiredControls": ["active_consent", "isolated_workspace", "no_egress", "pinned_code", "pinned_model_artifacts", "private_holdout", "creative_intent_declared", "frame_exact_annotations", "confidence_calibration", "abstention_enabled", "human_review", "override_audit", "no_automatic_correction", "no_automatic_publish", "physical_cleanup_receipt"],
+  "requiredEvidence": ["corpus_manifest", "consent_evidence", "case_outputs", "frame_annotations", "reality_models", "physical_evaluations", "raw_metric_bundle", "editor_sessions", "override_log", "provider_lineage", "worker_manifest", "license_manifest", "cleanup_receipts"],
+  "notes": ["PGV-4 remains advisory even if every threshold passes.", "Private media, annotations and consent evidence stay outside Git.", "A later policy version and explicit product/security decision are required before any synthetic-video autoapproval gate."]
+}

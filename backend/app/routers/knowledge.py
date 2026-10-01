@@ -69,7 +69,11 @@ def create_document(
 ) -> KnowledgeDocumentOut:
     assert_access(db, user.id, data.workspace_id)
     if data.asset_id and not db.scalar(
-        select(LibraryAsset.id).where(LibraryAsset.id == data.asset_id, LibraryAsset.workspace_id == data.workspace_id)
+        select(LibraryAsset.id).where(
+            LibraryAsset.id == data.asset_id,
+            LibraryAsset.workspace_id == data.workspace_id,
+            LibraryAsset.lifecycle_status == "active",
+        )
     ):
         raise HTTPException(status_code=422, detail="Asset does not belong to workspace")
     content = normalize_content(data.content)

@@ -1,0 +1,28 @@
+{
+  "schema_version": "studio.collaboration-graph.v1",
+  "anchor": "Mike Leigh",
+  "status": "credits_pending_per_work_verification",
+  "nodes": [
+    {
+      "name": "Dick Pope",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Jon Gregory",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Eve Stewart",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Simon Channing Williams",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "ensemble casts",
+      "role": "verify_per_work"
+    }
+  ],
+  "edges": []
+}

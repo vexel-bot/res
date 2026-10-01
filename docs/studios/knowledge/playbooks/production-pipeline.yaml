@@ -1,0 +1,57 @@
+schema_version: studio.canonical-audiovisual-pipeline.v1
+policy:
+  research_gate: ledgers/r1-gate.json
+  expensive_generation_before_storyboard_approval: prohibited
+  external_provider_types_in_domain: prohibited
+  identity_or_environment_without_authorization: prohibited
+states:
+  - id: brief
+    owner: strategy
+    outputs: [copy_brief, objective, audience, constraints]
+    approval: required
+  - id: research_approved
+    owner: research_provenance
+    requires: [knowledge_claims, source_ledger, rights_review]
+    approval: required
+  - id: script_approved
+    owner: copy_and_narrative
+    requires: [copy_contract, narrative_contract, character_bible, beat_map]
+    approval: required
+  - id: storyboard_approved
+    owner: direction
+    requires: [world_bible, scene_blueprints, shot_specs, sound_intent, animatic]
+    approval: required
+    blocks: [video_generation, avatar_generation, final_asset_purchase]
+  - id: assets_approved
+    owner: production
+    requires: [asset_plan, rights, costs, dependencies]
+    approval: required
+  - id: rough_cut
+    owner: editing
+    requires: [versioned_timeline, source_lineage, technical_probe]
+  - id: craft_review
+    owner: creative_council
+    requires: [council_decision, dissent, revision_targets]
+    approval: required
+  - id: final_qc
+    owner: quality
+    requires: [visual_qc, audio_qc, continuity_qc, rights_qc, identity_qc]
+    approval: required
+  - id: publishable
+    owner: human_publisher
+    requires: [final_approval, disclosure, rollback_plan]
+    approval: required
+rejection:
+  behavior: return_to_problem_owner
+  preserve: [prior_version, rejection_reason, reviewer, timestamp, lineage]
+scene_routes:
+  real_context:
+    requires: [environment_authorization, camera_reconstruction, protected_regions]
+    tests: [geometry, perspective, depth, light, occlusion, identity_preservation]
+  fictional_original:
+    requires: [world_bible, master_frames, original_expression_review]
+    tests: [character_continuity, wardrobe, props, physics, light, camera]
+  hybrid_extension:
+    requires: [environment_authorization, reconstruction, extension_plan, protected_regions]
+    tests: [perspective, scale, parallax, matte, occlusion, light, shadows, edges]
+

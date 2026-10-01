@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "studio.shot-reality-constraint-set.v1",
+  "constraintSetId": "constraint-set-supported-cup-001",
+  "documentId": "document-supported-cup-001",
+  "documentRevision": 1,
+  "constraints": [
+    {
+      "schemaVersion": "studio.shot-reality-constraint.v1",
+      "constraintId": "constraint-shot-001",
+      "documentId": "document-supported-cup-001",
+      "documentRevision": 1,
+      "shotId": "shot-001",
+      "frameRange": {"startFrame": 0, "endFrameExclusive": 90},
+      "realityMode": "realistic",
+      "requiredEntityIds": ["table-001", "cup-001"],
+      "preconditions": ["O copo começa apoiado sobre a mesa."],
+      "intendedAction": "O copo permanece imóvel enquanto a câmera observa a composição.",
+      "intendedOutcome": "O copo continua apoiado e visualmente consistente até o fim do shot.",
+      "continuity": [
+        {"constraintType": "entity_persistence", "entityIds": ["cup-001"], "expectedState": "O mesmo copo permanece visível do início ao fim."},
+        {"constraintType": "scene_state", "entityIds": ["table-001", "cup-001"], "expectedState": "A relação de suporte permanece presente."}
+      ],
+      "declaredTechniques": ["none"],
+      "enforcedPrinciples": ["permanence", "continuity", "solidity", "support_gravity", "camera_perspective"],
+      "approvalStatus": "approved",
+      "authoredBy": "fixture-author-001",
+      "authoredAt": "2026-08-25T12:00:00Z"
+    }
+  ],
+  "createdAt": "2026-08-25T12:00:00Z"
+}

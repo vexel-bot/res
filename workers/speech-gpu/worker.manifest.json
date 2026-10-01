@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "studio.worker-runtime-manifest.v1",
+  "runtimeName": "clicko-speech-gpu",
+  "runtimeVersion": "0.1.0-preflight",
+  "capability": "speech_gpu",
+  "queues": ["studio.gpu.speech"],
+  "resourceClasses": ["gpu.speech"],
+  "jobTypes": ["transcription", "voice_clone"],
+  "providers": [],
+  "requiredEnvironment": [
+    "DATABASE_URL",
+    "REDIS_URL",
+    "OBJECT_STORAGE_BACKEND",
+    "STUDIO_ISOLATED_QUEUES_ENABLED",
+    "STUDIO_WORKER_MANIFEST_PATH",
+    "STUDIO_WORKER_CAPABILITY",
+    "FFMPEG_PATH"
+  ],
+  "requiredPaths": [
+    "/usr/bin/ffmpeg",
+    "/opt/clicko/speech-runtime/requirements.lock",
+    "/opt/clicko/speech-runtime/policies/voice-pt-br-policy.v1.json"
+  ],
+  "tools": [
+    {"id": "python", "command": ["python", "--version"], "versionPattern": "Python 3\\.11\\.[0-9]+"},
+    {"id": "celery", "command": ["celery", "--version"], "versionPattern": "5\\.6\\.2"},
+    {"id": "ffmpeg", "command": ["ffmpeg", "-version"], "versionPattern": "ffmpeg version 5\\.1\\.9"},
+    {"id": "nvidia_smi", "command": ["nvidia-smi", "--query-gpu=driver_version", "--format=csv,noheader"], "versionPattern": "5(35|50|60|70|75|80)\\.[0-9.]+"}
+  ],
+  "accelerator": {
+    "vendor": "nvidia",
+    "runtime": "cuda",
+    "minimumDevices": 1,
+    "minimumMemoryMib": 16384,
+    "minimumComputeCapability": 7.5,
+    "driverVersionPattern": "^5(35|50|60|70|75|80)\\.",
+    "inventoryCommand": ["nvidia-smi", "--query-gpu=name,driver_version,memory.total,compute_cap", "--format=csv,noheader,nounits"]
+  },
+  "isolation": {
+    "runAsNonRoot": true,
+    "readOnlyRootFilesystem": true,
+    "allowPrivilegeEscalation": false,
+    "networkEgressPolicy": "private-dependencies-only",
+    "maxConcurrentJobs": 1,
+    "ephemeralTempPath": "/tmp/clicko-speech",
+    "minimumTempBytes": 8589934592
+  }
+}

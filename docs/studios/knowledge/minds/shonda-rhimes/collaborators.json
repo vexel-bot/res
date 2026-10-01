@@ -1,0 +1,28 @@
+{
+  "schema_version": "studio.collaboration-graph.v1",
+  "anchor": "Shonda Rhimes",
+  "status": "credits_pending_per_work_verification",
+  "nodes": [
+    {
+      "name": "Betsy Beers",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Krista Vernoff",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Joan Rater",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Tony Phelan",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "writers' rooms",
+      "role": "verify_per_work"
+    }
+  ],
+  "edges": []
+}

@@ -1,0 +1,196 @@
+{
+  "schemaVersion": "studio.ugc-no-voice-casebook.v1",
+  "suiteId": "clicko.ugc-no-voice-natural-caption.pt-br.v1",
+  "status": "frozen",
+  "frozenAt": "2026-08-30T18:00:00Z",
+  "supersedesAudioProfile": "spoken-ugc-v1",
+  "profile": {
+    "schemaVersion": "studio.ugc-no-voice-profile.v1",
+    "audioMode": "natural-foley-only",
+    "voicePolicy": "prohibited",
+    "capturedSpeechPolicy": "prohibited",
+    "musicPolicy": "prohibited",
+    "captions": "editorial-burned-in",
+    "soundRightsRequired": true,
+    "avatarRightsRequired": true,
+    "humanListeningReviewRequired": true,
+    "publicationEnabled": false
+  },
+  "cases": [
+    {
+      "schemaVersion": "studio.ugc-no-voice-case.v1",
+      "caseId": "ugc-nv-01-cafe",
+      "niche": "café especial por assinatura",
+      "concept": "Escolha do café sem tentativa e erro",
+      "avatar": {"candidateId":"lia","displayName":"Lia","presentation":"woman","direction":"Pessoa adulta em rotina doméstica, gesto natural e sem depoimento fictício.","catalogOnly":true,"productionEligible":false,"identityVersionId":null,"voiceVersionId":null},
+      "scene": {"setting":"cozinha residencial acolhedora pela manhã","backgroundDirection":"Janela lateral, bancada limpa, pacote sem marca e caneca em primeiro plano.","actionDirection":"Abrir o pacote, preparar o café e comparar opções na embalagem.","continuityConstraints":["Manter a mesma caneca e o mesmo pacote em todos os takes.","Vapor, água e posição das mãos devem seguir a ação real."]},
+      "durationSeconds": 15,
+      "approvedFacts": ["A proposta é uma assinatura com seleção rotativa.","Condições do envio precisam ser confirmadas."],
+      "forbiddenClaims": ["melhor café do Brasil","envio gratuito","benefício para a saúde"],
+      "captions": [
+        {"cueId":"c1","order":0,"role":"hook","startSeconds":0.3,"endSeconds":2.8,"lines":["Seu café virou tentativa e erro?"],"safeArea":"upper-third","editorialNotTranscription":true},
+        {"cueId":"c2","order":1,"role":"problem","startSeconds":3.1,"endSeconds":5.6,"lines":["Escolher sem contexto complica."],"editorialNotTranscription":true},
+        {"cueId":"c3","order":2,"role":"demo","startSeconds":6.0,"endSeconds":9.0,"lines":["Compare a seleção rotativa."],"editorialNotTranscription":true},
+        {"cueId":"c4","order":3,"role":"offer","startSeconds":9.4,"endSeconds":11.8,"lines":["Confira as condições do envio."],"editorialNotTranscription":true},
+        {"cueId":"c5","order":4,"role":"cta","startSeconds":12.2,"endSeconds":14.8,"lines":["Conheça as opções do mês."],"editorialNotTranscription":true}
+      ],
+      "naturalSounds": [
+        {"cueId":"s1","soundClass":"object-foley","startSeconds":0,"endSeconds":7,"visibleAction":"Grãos caem no filtro e água é despejada.","soundDirection":"Grãos, filtro e água gravados no mesmo ambiente.","sourceLicenseRequired":true,"capturedSpeechAllowed":false,"musicAllowed":false},
+        {"cueId":"s2","soundClass":"object-foley","startSeconds":7,"endSeconds":15,"visibleAction":"Caneca toca a bancada.","soundDirection":"Cerâmica sobre madeira, sem conversas ao fundo.","sourceLicenseRequired":true,"capturedSpeechAllowed":false,"musicAllowed":false}
+      ]
+    },
+    {
+      "schemaVersion":"studio.ugc-no-voice-case.v1","caseId":"ugc-nv-02-saas","niche":"SaaS de operação de conteúdo","concept":"Do briefing à revisão em um fluxo",
+      "avatar":{"candidateId":"bento","displayName":"Bento","presentation":"man","direction":"Pessoa adulta demonstrando um fluxo real, sem prometer automação total.","catalogOnly":true,"productionEligible":false,"identityVersionId":null,"voiceVersionId":null},
+      "scene":{"setting":"mesa de trabalho em estúdio neutro","backgroundDirection":"Monitor com interface fictícia identificada, teclado e luz neutra.","actionDirection":"Criar um briefing, mover uma peça e abrir a revisão.","continuityConstraints":["Cursor e interface devem corresponder a cada gesto.","Não exibir marcas ou interfaces de concorrentes."]},
+      "durationSeconds":20,"approvedFacts":["O fluxo reúne planejamento, copy, edição e revisão.","Existe um teste guiado."],"forbiddenClaims":["automação total","economiza 90%","pronto em 20 segundos"],
+      "captions":[
+        {"cueId":"c1","order":0,"role":"hook","startSeconds":0.3,"endSeconds":3.3,"lines":["Seu conteúdo se perde entre telas?"],"safeArea":"upper-third","editorialNotTranscription":true},
+        {"cueId":"c2","order":1,"role":"problem","startSeconds":3.7,"endSeconds":7,"lines":["Briefing, copy e revisão separados."],"editorialNotTranscription":true},
+        {"cueId":"c3","order":2,"role":"demo","startSeconds":7.4,"endSeconds":11.5,"lines":["Veja a peça avançar no fluxo."],"editorialNotTranscription":true},
+        {"cueId":"c4","order":3,"role":"benefit","startSeconds":12,"endSeconds":15.5,"lines":["Acompanhe cada etapa."],"editorialNotTranscription":true},
+        {"cueId":"c5","order":4,"role":"cta","startSeconds":16,"endSeconds":19.6,"lines":["Conheça o teste guiado."],"editorialNotTranscription":true}
+      ],
+      "naturalSounds":[
+        {"cueId":"s1","soundClass":"object-foley","startSeconds":0,"endSeconds":10,"visibleAction":"Mãos digitam e selecionam cards.","soundDirection":"Teclas próximas e cliques discretos sincronizados.","sourceLicenseRequired":true,"capturedSpeechAllowed":false,"musicAllowed":false},
+        {"cueId":"s2","soundClass":"room-tone","startSeconds":10,"endSeconds":20,"visibleAction":"Tela de revisão permanece aberta.","soundDirection":"Ambiência baixa do estúdio, sem fala captada.","sourceLicenseRequired":true,"capturedSpeechAllowed":false,"musicAllowed":false}
+      ]
+    },
+    {
+      "schemaVersion":"studio.ugc-no-voice-case.v1","caseId":"ugc-nv-03-protetor","niche":"skincare e protetor solar","concept":"Informação antes da escolha",
+      "avatar":{"candidateId":"nina","displayName":"Nina","presentation":"woman","direction":"Pessoa adulta manuseando a embalagem, sem demonstração clínica.","catalogOnly":true,"productionEligible":false,"identityVersionId":null,"voiceVersionId":null},
+      "scene":{"setting":"banheiro claro com bancada minimalista","backgroundDirection":"Luz difusa, espelho sem reflexos impossíveis e embalagem legível.","actionDirection":"Abrir a tampa, mostrar rótulo e consultar orientações.","continuityConstraints":["Manter tampa e embalagem na mesma mão entre cortes.","Não usar antes e depois nem alterar pele artificialmente."]},
+      "durationSeconds":15,"approvedFacts":["A linha é facial.","Composição e orientações devem ser consultadas."],"forbiddenClaims":["proteção completa","previne câncer","cura manchas"],
+      "captions":[
+        {"cueId":"c1","order":0,"role":"hook","startSeconds":0.3,"endSeconds":2.8,"lines":["Escolhendo um protetor facial?"],"safeArea":"upper-third","editorialNotTranscription":true},
+        {"cueId":"c2","order":1,"role":"problem","startSeconds":3.1,"endSeconds":5.6,"lines":["Comece pelas informações."],"editorialNotTranscription":true},
+        {"cueId":"c3","order":2,"role":"demo","startSeconds":6,"endSeconds":9,"lines":["Veja composição e modo de uso."],"editorialNotTranscription":true},
+        {"cueId":"c4","order":3,"role":"benefit","startSeconds":9.4,"endSeconds":11.8,"lines":["Compare com a sua rotina."],"editorialNotTranscription":true},
+        {"cueId":"c5","order":4,"role":"cta","startSeconds":12.2,"endSeconds":14.8,"lines":["Confira a linha facial."],"editorialNotTranscription":true}
+      ],
+      "naturalSounds":[
+        {"cueId":"s1","soundClass":"object-foley","startSeconds":0,"endSeconds":8,"visibleAction":"Tampa é aberta e fechada.","soundDirection":"Clique real da tampa e manuseio da embalagem.","sourceLicenseRequired":true,"capturedSpeechAllowed":false,"musicAllowed":false},
+        {"cueId":"s2","soundClass":"room-tone","startSeconds":8,"endSeconds":15,"visibleAction":"Pessoa consulta o rótulo.","soundDirection":"Ambiência limpa do banheiro, sem água ou conversa.","sourceLicenseRequired":true,"capturedSpeechAllowed":false,"musicAllowed":false}
+      ]
+    },
+    {
+      "schemaVersion":"studio.ugc-no-voice-case.v1","caseId":"ugc-nv-04-perfume","niche":"perfumaria premium masculina","concept":"Descoberta discreta da fragrância",
+      "avatar":{"candidateId":"theo","displayName":"Theo","presentation":"man","direction":"Pessoa adulta com performance discreta, sem sexualização ou promessa de status.","catalogOnly":true,"productionEligible":false,"identityVersionId":null,"voiceVersionId":null},
+      "scene":{"setting":"prateleira editorial escura","backgroundDirection":"Madeira escura, luz lateral e frasco genérico sem marca.","actionDirection":"Retirar a tampa, borrifar em tira e observar o frasco.","continuityConstraints":["Reflexos do frasco devem acompanhar a luz.","Posição da tampa deve permanecer coerente entre cortes."]},
+      "durationSeconds":15,"approvedFacts":["A proposta visual é discreta.","Descrição e opções precisam ser consultadas."],"forbiddenClaims":["atração garantida","12 horas de fixação","notas de cedro"],
+      "captions":[
+        {"cueId":"c1","order":0,"role":"hook","startSeconds":0.3,"endSeconds":2.8,"lines":["Prefere uma presença discreta?"],"safeArea":"upper-third","editorialNotTranscription":true},
+        {"cueId":"c2","order":1,"role":"problem","startSeconds":3.1,"endSeconds":5.6,"lines":["Escolha sem promessa exagerada."],"editorialNotTranscription":true},
+        {"cueId":"c3","order":2,"role":"demo","startSeconds":6,"endSeconds":9,"lines":["Observe a proposta do produto."],"editorialNotTranscription":true},
+        {"cueId":"c4","order":3,"role":"benefit","startSeconds":9.4,"endSeconds":11.8,"lines":["Compare as descrições."],"editorialNotTranscription":true},
+        {"cueId":"c5","order":4,"role":"cta","startSeconds":12.2,"endSeconds":14.8,"lines":["Veja as opções disponíveis."],"editorialNotTranscription":true}
+      ],
+      "naturalSounds":[
+        {"cueId":"s1","soundClass":"object-foley","startSeconds":0,"endSeconds":7,"visibleAction":"Tampa sai e volta ao frasco.","soundDirection":"Encaixe real da tampa em captação próxima.","sourceLicenseRequired":true,"capturedSpeechAllowed":false,"musicAllowed":false},
+        {"cueId":"s2","soundClass":"object-foley","startSeconds":7,"endSeconds":15,"visibleAction":"Borrifada atinge a tira de papel.","soundDirection":"Borrifada e leve contato com papel, sem música.","sourceLicenseRequired":true,"capturedSpeechAllowed":false,"musicAllowed":false}
+      ]
+    },
+    {
+      "schemaVersion":"studio.ugc-no-voice-case.v1","caseId":"ugc-nv-05-clinica","niche":"clínica de cuidado preventivo","concept":"Preparar uma conversa inicial",
+      "avatar":{"candidateId":"maya","displayName":"Maya","presentation":"woman","direction":"Pessoa adulta como visitante, sem jaleco, título ou autoridade clínica fictícia.","catalogOnly":true,"productionEligible":false,"identityVersionId":null,"voiceVersionId":null},
+      "scene":{"setting":"sala de orientação clínica clara","backgroundDirection":"Sala neutra, mesa, bloco e sinalização genérica sem credenciais.","actionDirection":"Anotar dúvidas, consultar horários e preparar documentos.","continuityConstraints":["Não mostrar prontuários ou dados pessoais.","Nenhuma conversa deve ser captada na ambiência."]},
+      "durationSeconds":30,"approvedFacts":["Existe consulta inicial de orientação.","Responsável, horários e condições precisam ser confirmados."],"forbiddenClaims":["diagnóstico precoce garantido","previne doenças","cura"],
+      "captions":[
+        {"cueId":"c1","order":0,"role":"hook","startSeconds":0.5,"endSeconds":4.5,"lines":["Dúvidas sobre por onde começar?"],"safeArea":"upper-third","editorialNotTranscription":true},
+        {"cueId":"c2","order":1,"role":"problem","startSeconds":5,"endSeconds":10,"lines":["Organize perguntas e informações."],"editorialNotTranscription":true},
+        {"cueId":"c3","order":2,"role":"demo","startSeconds":10.5,"endSeconds":16,"lines":["Veja como funciona a orientação."],"editorialNotTranscription":true},
+        {"cueId":"c4","order":3,"role":"offer","startSeconds":16.5,"endSeconds":22,"lines":["Confirme responsável e condições."],"editorialNotTranscription":true},
+        {"cueId":"c5","order":4,"role":"cta","startSeconds":22.5,"endSeconds":29.5,"lines":["Prepare sua conversa inicial."],"editorialNotTranscription":true}
+      ],
+      "naturalSounds":[
+        {"cueId":"s1","soundClass":"object-foley","startSeconds":0,"endSeconds":15,"visibleAction":"Pessoa escreve perguntas em um bloco.","soundDirection":"Caneta e papel em captação próxima, sem fala ao fundo.","sourceLicenseRequired":true,"capturedSpeechAllowed":false,"musicAllowed":false},
+        {"cueId":"s2","soundClass":"room-tone","startSeconds":15,"endSeconds":30,"visibleAction":"Pessoa consulta agenda genérica.","soundDirection":"Ambiência calma da sala, validada sem conversas.","sourceLicenseRequired":true,"capturedSpeechAllowed":false,"musicAllowed":false}
+      ]
+    },
+    {
+      "schemaVersion":"studio.ugc-no-voice-case.v1","caseId":"ugc-nv-06-orcamento","niche":"aplicativo de organização financeira","concept":"Visualizar categorias do orçamento",
+      "avatar":{"candidateId":"caio","displayName":"Caio","presentation":"man","direction":"Pessoa adulta organizando registros, sem aconselhamento financeiro.","catalogOnly":true,"productionEligible":false,"identityVersionId":null,"voiceVersionId":null},
+      "scene":{"setting":"home office cotidiano","backgroundDirection":"Mesa real, papel e interface fictícia claramente rotulada.","actionDirection":"Registrar despesas, agrupar categorias e consultar um resumo.","continuityConstraints":["Valores exibidos devem ser fictícios e rotulados.","Teclas e mudanças na tela devem estar sincronizadas."]},
+      "durationSeconds":30,"approvedFacts":["O aplicativo categoriza e acompanha registros.","Funções e integrações precisam ser confirmadas."],"forbiddenClaims":["economia garantida","enriquecimento","segurança bancária total"],
+      "captions":[
+        {"cueId":"c1","order":0,"role":"hook","startSeconds":0.5,"endSeconds":4.5,"lines":["Onde seus gastos se concentram?"],"safeArea":"upper-third","editorialNotTranscription":true},
+        {"cueId":"c2","order":1,"role":"problem","startSeconds":5,"endSeconds":10,"lines":["Registros soltos escondem o padrão."],"editorialNotTranscription":true},
+        {"cueId":"c3","order":2,"role":"demo","startSeconds":10.5,"endSeconds":16,"lines":["Organize por categorias."],"editorialNotTranscription":true},
+        {"cueId":"c4","order":3,"role":"benefit","startSeconds":16.5,"endSeconds":22,"lines":["Consulte tudo em um só lugar."],"editorialNotTranscription":true},
+        {"cueId":"c5","order":4,"role":"cta","startSeconds":22.5,"endSeconds":29.5,"lines":["Confira funções e integrações."],"editorialNotTranscription":true}
+      ],
+      "naturalSounds":[
+        {"cueId":"s1","soundClass":"object-foley","startSeconds":0,"endSeconds":15,"visibleAction":"Pessoa digita registros e marca categorias.","soundDirection":"Teclado e cliques sincronizados, sem notificações faladas.","sourceLicenseRequired":true,"capturedSpeechAllowed":false,"musicAllowed":false},
+        {"cueId":"s2","soundClass":"object-foley","startSeconds":15,"endSeconds":30,"visibleAction":"Papel é movido ao lado do notebook.","soundDirection":"Papel e contato leve com a mesa.","sourceLicenseRequired":true,"capturedSpeechAllowed":false,"musicAllowed":false}
+      ]
+    },
+    {
+      "schemaVersion":"studio.ugc-no-voice-case.v1","caseId":"ugc-nv-07-refeicoes","niche":"refeições prontas equilibradas","concept":"Almoço prático sem depoimento inventado",
+      "avatar":{"candidateId":"lia","displayName":"Lia","presentation":"woman","direction":"Pessoa adulta montando o próprio almoço, sem papel de cliente real.","catalogOnly":true,"productionEligible":false,"identityVersionId":null,"voiceVersionId":null},
+      "scene":{"setting":"cozinha de apartamento no horário do almoço","backgroundDirection":"Bancada cotidiana, embalagem genérica, prato e talheres.","actionDirection":"Abrir a embalagem, servir e consultar ingredientes.","continuityConstraints":["Quantidade e posição da comida devem permanecer coerentes.","Não exibir composição nutricional não confirmada."]},
+      "durationSeconds":15,"approvedFacts":["Existem refeições prontas porcionadas.","Cardápio, ingredientes e entrega precisam ser consultados."],"forbiddenClaims":["emagrece","melhor opção","nutrição completa"],
+      "captions":[
+        {"cueId":"c1","order":0,"role":"hook","startSeconds":0.3,"endSeconds":2.8,"lines":["O almoço ficou para depois?"],"safeArea":"upper-third","editorialNotTranscription":true},
+        {"cueId":"c2","order":1,"role":"problem","startSeconds":3.1,"endSeconds":5.6,"lines":["A rotina pede organização."],"editorialNotTranscription":true},
+        {"cueId":"c3","order":2,"role":"demo","startSeconds":6,"endSeconds":9,"lines":["Veja as refeições porcionadas."],"editorialNotTranscription":true},
+        {"cueId":"c4","order":3,"role":"offer","startSeconds":9.4,"endSeconds":11.8,"lines":["Confira cardápio e entrega."],"editorialNotTranscription":true},
+        {"cueId":"c5","order":4,"role":"cta","startSeconds":12.2,"endSeconds":14.8,"lines":["Monte um kit para sua rotina."],"editorialNotTranscription":true}
+      ],
+      "naturalSounds":[
+        {"cueId":"s1","soundClass":"object-foley","startSeconds":0,"endSeconds":8,"visibleAction":"Embalagem é aberta e refeição é servida.","soundDirection":"Abertura da embalagem e contato com o prato.","sourceLicenseRequired":true,"capturedSpeechAllowed":false,"musicAllowed":false},
+        {"cueId":"s2","soundClass":"object-foley","startSeconds":8,"endSeconds":15,"visibleAction":"Talheres são colocados ao lado do prato.","soundDirection":"Talheres e prato gravados no mesmo ambiente.","sourceLicenseRequired":true,"capturedSpeechAllowed":false,"musicAllowed":false}
+      ]
+    },
+    {
+      "schemaVersion":"studio.ugc-no-voice-case.v1","caseId":"ugc-nv-08-cadeira","niche":"mobiliário ergonômico","concept":"Demonstrar ajustes documentados",
+      "avatar":{"candidateId":"bento","displayName":"Bento","presentation":"man","direction":"Pessoa adulta demonstrando mecanismos, sem linguagem médica.","catalogOnly":true,"productionEligible":false,"identityVersionId":null,"voiceVersionId":null},
+      "scene":{"setting":"home office funcional","backgroundDirection":"Mesa funcional, cadeira sem marca e fundo organizado.","actionDirection":"Ajustar altura, braços e inclinação conforme a ficha.","continuityConstraints":["Cada som deve corresponder ao mecanismo mostrado.","Altura e inclinação não podem saltar entre cortes."]},
+      "durationSeconds":20,"approvedFacts":["A cadeira possui ajustes que devem ser confirmados na ficha.","Medidas precisam ser consultadas."],"forbiddenClaims":["elimina dor","corrige postura","certificação garantida"],
+      "captions":[
+        {"cueId":"c1","order":0,"role":"hook","startSeconds":0.3,"endSeconds":3.3,"lines":["Você conhece todos os ajustes?"],"safeArea":"upper-third","editorialNotTranscription":true},
+        {"cueId":"c2","order":1,"role":"problem","startSeconds":3.7,"endSeconds":7,"lines":["Cada espaço pede uma configuração."],"editorialNotTranscription":true},
+        {"cueId":"c3","order":2,"role":"demo","startSeconds":7.4,"endSeconds":11.5,"lines":["Veja altura, braços e inclinação."],"editorialNotTranscription":true},
+        {"cueId":"c4","order":3,"role":"benefit","startSeconds":12,"endSeconds":15.5,"lines":["Compare mecanismos e medidas."],"editorialNotTranscription":true},
+        {"cueId":"c5","order":4,"role":"cta","startSeconds":16,"endSeconds":19.6,"lines":["Confira a ficha do produto."],"editorialNotTranscription":true}
+      ],
+      "naturalSounds":[
+        {"cueId":"s1","soundClass":"object-foley","startSeconds":0,"endSeconds":10,"visibleAction":"Alavanca muda a altura da cadeira.","soundDirection":"Clique e mecanismo gravados na cadeira demonstrada.","sourceLicenseRequired":true,"capturedSpeechAllowed":false,"musicAllowed":false},
+        {"cueId":"s2","soundClass":"movement-foley","startSeconds":10,"endSeconds":20,"visibleAction":"Cadeira gira e rodízios avançam.","soundDirection":"Rodízios no piso e movimento real, sem voz.","sourceLicenseRequired":true,"capturedSpeechAllowed":false,"musicAllowed":false}
+      ]
+    },
+    {
+      "schemaVersion":"studio.ugc-no-voice-case.v1","caseId":"ugc-nv-09-idiomas","niche":"curso online de idiomas","concept":"Prática guiada sem promessa de fluência",
+      "avatar":{"candidateId":"nina","displayName":"Nina","presentation":"woman","direction":"Pessoa adulta estudando, sem simular aula ou fala em outro idioma.","catalogOnly":true,"productionEligible":false,"identityVersionId":null,"voiceVersionId":null},
+      "scene":{"setting":"sala casual com canto de estudo","backgroundDirection":"Notebook, caderno e fone sobre mesa com luz natural.","actionDirection":"Abrir exercício, anotar e consultar horários.","continuityConstraints":["Tela não deve mostrar marcas ou dados reais.","Nenhuma voz de aula pode aparecer no áudio."]},
+      "durationSeconds":15,"approvedFacts":["A proposta envolve prática guiada.","Nível e horários precisam ser consultados."],"forbiddenClaims":["fluente em 30 dias","milhares de alunos","sotaque perfeito"],
+      "captions":[
+        {"cueId":"c1","order":0,"role":"hook","startSeconds":0.3,"endSeconds":2.8,"lines":["Trava na hora de conversar?"],"safeArea":"upper-third","editorialNotTranscription":true},
+        {"cueId":"c2","order":1,"role":"problem","startSeconds":3.1,"endSeconds":5.6,"lines":["Só estudar regras não basta."],"editorialNotTranscription":true},
+        {"cueId":"c3","order":2,"role":"demo","startSeconds":6,"endSeconds":9,"lines":["Conheça a prática guiada."],"editorialNotTranscription":true},
+        {"cueId":"c4","order":3,"role":"benefit","startSeconds":9.4,"endSeconds":11.8,"lines":["Veja nível e horários."],"editorialNotTranscription":true},
+        {"cueId":"c5","order":4,"role":"cta","startSeconds":12.2,"endSeconds":14.8,"lines":["Confira como funciona."],"editorialNotTranscription":true}
+      ],
+      "naturalSounds":[
+        {"cueId":"s1","soundClass":"object-foley","startSeconds":0,"endSeconds":8,"visibleAction":"Pessoa vira páginas e faz uma anotação.","soundDirection":"Páginas, lápis e papel sem voz de aula.","sourceLicenseRequired":true,"capturedSpeechAllowed":false,"musicAllowed":false},
+        {"cueId":"s2","soundClass":"object-foley","startSeconds":8,"endSeconds":15,"visibleAction":"Pessoa digita e coloca o fone na mesa.","soundDirection":"Teclas e contato do fone com a mesa.","sourceLicenseRequired":true,"capturedSpeechAllowed":false,"musicAllowed":false}
+      ]
+    },
+    {
+      "schemaVersion":"studio.ugc-no-voice-case.v1","caseId":"ugc-nv-10-moda","niche":"moda circular e guarda-roupa cápsula","concept":"Combinações com o que já existe",
+      "avatar":{"candidateId":"maya","displayName":"Maya","presentation":"woman","direction":"Pessoa adulta organizando peças, sem alegação ambiental não comprovada.","catalogOnly":true,"productionEligible":false,"identityVersionId":null,"voiceVersionId":null},
+      "scene":{"setting":"guarda-roupa minimalista e claro","backgroundDirection":"Arara clara, paleta coerente e etiquetas genéricas sem selo.","actionDirection":"Separar peças, montar combinações e conferir materiais.","continuityConstraints":["Peças e cabides devem manter posição entre cortes.","Não inserir selos ou origem de material não confirmados."]},
+      "durationSeconds":30,"approvedFacts":["A proposta é uma coleção cápsula com curadoria.","Materiais, medidas e disponibilidade precisam ser conferidos."],"forbiddenClaims":["100% sustentável","impacto zero","materiais reciclados certificados"],
+      "captions":[
+        {"cueId":"c1","order":0,"role":"hook","startSeconds":0.5,"endSeconds":4.5,"lines":["Faltam combinações no armário?"],"safeArea":"upper-third","editorialNotTranscription":true},
+        {"cueId":"c2","order":1,"role":"problem","startSeconds":5,"endSeconds":10,"lines":["Mais peças nem sempre resolvem."],"editorialNotTranscription":true},
+        {"cueId":"c3","order":2,"role":"demo","startSeconds":10.5,"endSeconds":16,"lines":["Veja uma curadoria cápsula."],"editorialNotTranscription":true},
+        {"cueId":"c4","order":3,"role":"benefit","startSeconds":16.5,"endSeconds":22,"lines":["Compare com o que você já usa."],"editorialNotTranscription":true},
+        {"cueId":"c5","order":4,"role":"cta","startSeconds":22.5,"endSeconds":29.5,"lines":["Confira materiais e medidas."],"editorialNotTranscription":true}
+      ],
+      "naturalSounds":[
+        {"cueId":"s1","soundClass":"object-foley","startSeconds":0,"endSeconds":15,"visibleAction":"Cabides deslizam na arara.","soundDirection":"Cabides e tecido gravados na arara usada no take.","sourceLicenseRequired":true,"capturedSpeechAllowed":false,"musicAllowed":false},
+        {"cueId":"s2","soundClass":"movement-foley","startSeconds":15,"endSeconds":30,"visibleAction":"Pessoa leva uma peça ao espelho.","soundDirection":"Tecido e passos leves, sem conversa no ambiente.","sourceLicenseRequired":true,"capturedSpeechAllowed":false,"musicAllowed":false}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,127 @@
+{
+  "schemaVersion": "clicko.speech-gpu-candidate-build-verification.v1",
+  "generatedAt": "2026-08-27T16:22:41.7903354Z",
+  "environment": {
+    "dockerClientVersion": "29.1.3",
+    "dockerServerVersion": "29.1.3",
+    "dockerDesktopVersion": "4.55.0",
+    "serverOs": "linux",
+    "serverArchitecture": "amd64",
+    "baseImage": "python:3.11-slim@sha256:272efc3f94bec901e2bc7a5c9984b3d113c317839edca2714c6a388b9476f8fc",
+    "uvImage": "ghcr.io/astral-sh/uv:0.12.3@sha256:dfd1e6972e100ca2fbf1f391effc3dd4aa57f319bf03c3e321e0a3f3341ed5af"
+  },
+  "dependencyVerificationOutputMode": "cacheonly",
+  "finalImageOutputMode": "docker-load-local-only",
+  "candidates": [
+    {
+      "candidateId": "chatterbox-multilingual-v3-pt-br",
+      "sourceRevision": "5de7a54aa4e5e2baadb0182dde554908b48b85c2",
+      "dependencyLockDigestSha256": "93ff351872971b6cb06071e402852f55b5ad97fe33a829baf8a7f2b2b0600ee5",
+      "dependencyPackageCount": 125,
+      "cudaRuntime": "cu124",
+      "torchVersion": "2.6.0+cu124",
+      "sourceAudit": "passed",
+      "dependencyInstall": "passed",
+      "offlineImportSmoke": "passed",
+      "importTarget": "chatterbox.mtl_tts.ChatterboxMultilingualTTS",
+      "finalImage": {
+        "imageRef": "clicko/chatterbox-voice-clone:0.1.0-evaluation",
+        "ociDigest": "sha256:5702bdc81024ba3c914a089895bcba69ef02fd0e15f0507dbcd7e98fc55a214a",
+        "sizeBytes": 3463190552,
+        "operatingSystem": "linux",
+        "architecture": "amd64",
+        "user": "clicko",
+        "providerLabel": "none",
+        "candidateStatusLabel": "evaluation",
+        "weightsLabel": "external-manifested-mount-only"
+      },
+      "runtimeIsolationSmoke": {
+        "status": "passed",
+        "network": "none",
+        "readOnlyRootFilesystem": true,
+        "capabilitiesDropped": "all",
+        "noNewPrivileges": true,
+        "runtimeUid": 10001,
+        "runtimeGid": 10001,
+        "ephemeralTmpfs": "/tmp/clicko-speech",
+        "ephemeralTmpfsUid": 10001,
+        "ephemeralTmpfsGid": 10001,
+        "offlineImport": "passed"
+      },
+      "externalVoiceCloneModelWeightsPresent": false,
+      "bundledSafetyCheckpoint": "perth_net_250000.pth.tar",
+      "inferenceExecuted": false
+    },
+    {
+      "candidateId": "kokoro-openvoice-v2-pt-br",
+      "sourceRevision": "74a1d147b17a8c3092dd5430504bd83ef6c7eb23",
+      "dependencyLockDigestSha256": "d56c6da1f8ca807460085f7eb982313aeedc5be33b730d0cd2aab601018e28dd",
+      "dependencyPackageCount": 130,
+      "cudaRuntime": "cu124",
+      "torchVersion": "2.6.0+cu124",
+      "sourceAudit": "passed",
+      "dependencyInstall": "passed",
+      "offlineImportSmoke": "passed",
+      "importTargets": [
+        "wavmark",
+        "kokoro.KModel",
+        "kokoro.KPipeline",
+        "openvoice.api.ToneColorConverter"
+      ],
+      "espeakRuntimeReplacement": {
+        "status": "passed",
+        "canonicalManifestDigestSha256": "9af3512043451d19ce36cd3721da52231d6e28931d44b2ffbd07cce6350be373"
+      },
+      "finalImage": {
+        "imageRef": "clicko/kokoro-openvoice-v2:0.1.0-evaluation",
+        "ociDigest": "sha256:bdadbe1e2ba67466fa9ca9447194bd5c990c7012287dec5668bf0deea537d61c",
+        "sizeBytes": 3481510734,
+        "operatingSystem": "linux",
+        "architecture": "amd64",
+        "user": "clicko",
+        "providerLabel": "none",
+        "candidateStatusLabel": "evaluation",
+        "weightsLabel": "external-manifested-mount-only"
+      },
+      "runtimeIsolationSmoke": {
+        "status": "passed",
+        "network": "none",
+        "readOnlyRootFilesystem": true,
+        "capabilitiesDropped": "all",
+        "noNewPrivileges": true,
+        "runtimeUid": 10001,
+        "runtimeGid": 10001,
+        "ephemeralTmpfs": "/tmp/clicko-speech",
+        "ephemeralTmpfsUid": 10001,
+        "ephemeralTmpfsGid": 10001,
+        "offlineImport": "passed"
+      },
+      "externalVoiceCloneModelWeightsPresent": false,
+      "bundledSafetyCheckpoint": null,
+      "inferenceExecuted": false
+    }
+  ],
+  "safetyAssertions": {
+    "finalOciImageProduced": true,
+    "externalVoiceCloneModelWeightsDownloaded": false,
+    "humanBiometricDataUsed": false,
+    "inferenceExecuted": false,
+    "providerPromoted": false,
+    "workerProvidersRemainEmpty": true,
+    "sbomProduced": false,
+    "packageFocusedSpdxProduced": true,
+    "buildkitAttestationManifestProduced": true,
+    "promotionGradeProvenanceReviewed": false,
+    "signatureProduced": false,
+    "vpsAccessedOrChanged": false
+  },
+  "promotionStatus": "evaluation-only-blocked-by-required-gates",
+  "remainingGates": [
+    "assemble exact external model assets after explicit authorization",
+    "produce and review complete file-and-layer SBOM, transitive license notices, promotion-grade provenance and signature",
+    "run GPU inference against a consent-bound private corpus",
+    "complete blind PT-BR quality review and cost/latency benchmark",
+    "pass cleanup, deletion and tenant-isolation verification",
+    "approve and announce the provider through the separate promotion gate"
+  ]
+}

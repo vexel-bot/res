@@ -1,0 +1,95 @@
+{
+  "schema_version": "studio.stock-voice-benchmark-evidence.v1",
+  "run_id": "kokoro-pf-dora-20260826-local-r2",
+  "suite_id": "clicko.voice-stock.pt-br.v1",
+  "candidate_id": "kokoro-82m-stock",
+  "voice_key": "pf_dora",
+  "policy_digest_sha256": "97dcfb0f58775e4a6b779c0158a72746d39eb24425cf027d1decab2bf9ef55e7",
+  "corpus_id": "clicko-voice-stock-pt-br-synthetic-v1",
+  "corpus_digest_sha256": "80c182fe0c43404284b3897c06a3b22d434630ecc67548f1562edb86cb2d4a90",
+  "case_count": 64,
+  "subject_count": 0,
+  "started_at": "2026-08-26T19:33:56.593607Z",
+  "completed_at": "2026-08-26T19:43:31.032075Z",
+  "environment": {
+    "platform": "linux/amd64",
+    "operating_system": "Linux 6.6.87.2 WSL2 with glibc 2.41",
+    "cpu": "12th Gen Intel(R) Core(TM) i5-12450H",
+    "cpu_quota": 4,
+    "memory_limit_gb": 3.0,
+    "accelerator": "none",
+    "network": "none",
+    "read_only_root": true,
+    "uid": 10001,
+    "thread_limits": {
+      "omp": 4,
+      "mkl": 4,
+      "openblas": 4,
+      "numexpr": 4
+    }
+  },
+  "artifacts": {
+    "worker_image_digest": "sha256:043d7a31b692366dd1eab3d0092a9860c2e1744253186ba014531487581d917b",
+    "worker_image_size_bytes": 746102666,
+    "worker_manifest_digest_sha256": "36f45dd041744f671a68c8980711c44088592da1b06a3ce77c725bce074b4837",
+    "dependency_lock_digest_sha256": "a0d7a19ae2b24abe8f8a0a48dce3ea9051fcc43393aa72f3506791ea21de2214",
+    "model_manifest_digest_sha256": "4c738811001691c1640ec65230d9f5dc3008f80c8a7b8af027822c534be09af9",
+    "espeak_runtime_manifest_digest_sha256": "9af3512043451d19ce36cd3721da52231d6e28931d44b2ffbd07cce6350be373",
+    "implementation_digest_sha256": "97628658baab71f1edbfee4f1d1edf299d9085c2b650b7cf54b3cfd24ec9af73",
+    "private_evidence_bundle_digest_sha256": "938340dbc4510249ab299b138d1b49ea0e7fbcd7587b0b5d4f34a4bec892afea",
+    "private_package_manifest_digest_sha256": "3c41139fbb9d7e02d0f2979f94b3b2124e1f03e7d8e2d0c805cb41a24fd896f5",
+    "private_review_plan_digest_sha256": "93d47502e27bedb91bc5ecc9c8f081d31dbbf018065030ce346fce4409eecee1",
+    "private_review_packet_index_digest_sha256": "6feace0bb6b81cce9948ee864bb4ef2a5df106200204497bc30e8f82499c9670"
+  },
+  "automated_metrics": {
+    "job_failure_rate": {
+      "value": 0.0,
+      "threshold_maximum": 0.02,
+      "passed": true
+    },
+    "p95_real_time_factor": {
+      "value": 2.3375690033143783,
+      "threshold_maximum": 1.0,
+      "passed": false
+    },
+    "peak_ram_gb": {
+      "value": 1.384521484375,
+      "threshold_maximum": 4.0,
+      "passed": true
+    },
+    "usd_per_output_minute": {
+      "value": 0.0006132569583030281,
+      "threshold_maximum": 0.03,
+      "passed": true,
+      "assumed_cpu_hourly_cost_usd": 0.04
+    }
+  },
+  "technical_decision": "failed",
+  "activation_decision": "failed",
+  "blocking_reasons": [
+    "metric_failed:p95_real_time_factor"
+  ],
+  "incomplete_evidence": [
+    "blinded_human_review",
+    "pt_br_intelligibility_and_critical_term_metrics",
+    "composite_license_approval",
+    "strictly_local_container_sbom",
+    "oci_provenance_attestation",
+    "cleanup_receipt"
+  ],
+  "controls": {
+    "provider_advertised": false,
+    "synthetic_provenance_emitted": true,
+    "blinded_review_packets_ready": true,
+    "cleanup_mechanism_available": true,
+    "cleanup_execution_verified": false,
+    "valid_for_provider_promotion": false
+  },
+  "notes": [
+    "All 64 synthetic cases produced WAV and provenance sidecars; no biometric subject or cloned identity was used.",
+    "The retained WAVs remain private and outside Git so three blinded reviewers can score the 192 required ratings.",
+    "The run exposed a runner attestation defect: the raw initial environment recorded cleanupVerified=true from a cleanup-mechanism flag before deletion occurred. This summary corrects the semantic state to cleanup_execution_verified=false, and the runner contract was fixed for future runs.",
+    "A legacy docker-sbom plugin produced no valid output, and Docker Scout indexing was interrupted to avoid any possible remote publication. SBOM remains incomplete.",
+    "Kokoro is a stock voice baseline and must never be represented as voice cloning."
+  ]
+}

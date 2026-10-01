@@ -1,0 +1,39 @@
+{
+  "schemaVersion": "studio.benchmark-policy.v1",
+  "suiteId": "clicko.physical-violation-detection.v1",
+  "policyVersion": "1.0.0",
+  "capability": "physical_plausibility",
+  "locale": "pt-BR",
+  "status": "frozen",
+  "frozenAt": "2026-08-25T12:00:00Z",
+  "frozenBy": "clicko-product-engineering-baseline",
+  "corpus": {"manifestSchema": "studio.benchmark-corpus-manifest.v1", "minimumSubjects": 0, "minimumCases": 240, "minimumConsentCoverage": 1.0, "requiredLocales": ["pt-BR"], "requiredScenarios": ["permanence-violation", "continuity-violation", "solidity-violation", "unsupported-object", "gravity-direction-violation", "contact-collision-violation", "causal-order-violation", "biomechanics-violation", "camera-perspective-control", "declared-editing-control", "hard-negative-no-violation", "held-out-generator"], "rawBiometricDataAllowedInRepository": false},
+  "candidates": [
+    {
+      "candidateId": "pgv1-permissive-observation-baseline",
+      "displayName": "PGV-1 permissive geometry and tracking baseline",
+      "role": "hybrid_reality",
+      "executionCapability": "vision_gpu",
+      "licenseGate": "review_required",
+      "benchmarkScope": "synthetic_only",
+      "components": [
+        {"componentId": "opencv-code", "kind": "code", "sourceUrl": "https://github.com/opencv/opencv", "sourceRevision": "8b7dc43c227746366213a65ad1477ed37fb8d365", "license": "Apache-2.0", "commercialUse": "approved"},
+        {"componentId": "tapir-code-and-checkpoint", "kind": "model", "sourceUrl": "https://github.com/google-deepmind/tapnet", "sourceRevision": "c2cbab81cc06092b5f05bfe2da7bfec54e2079c9", "license": "Apache-2.0", "commercialUse": "approved", "notes": "Artifact digest remains required."},
+        {"componentId": "raft-code", "kind": "code", "sourceUrl": "https://github.com/princeton-vl/RAFT", "sourceRevision": "2888e15a51fa41140771d3f498ed8023cff098d1", "license": "BSD-3-Clause", "commercialUse": "approved"},
+        {"componentId": "raft-checkpoint", "kind": "model", "sourceUrl": "https://drive.google.com/drive/folders/1sWDsfuZ3Up38EUQt7-JDTT1HcGHuJgvT", "sourceRevision": "raft-things-pending-artifact-digest", "license": "unknown", "commercialUse": "unknown"},
+        {"componentId": "depth-anything-v2-small", "kind": "model", "sourceUrl": "https://github.com/DepthAnything/Depth-Anything-V2", "sourceRevision": "a561b849ebae10a6f5ef49e26c83cbbcd36c71bf", "license": "Apache-2.0", "commercialUse": "approved", "notes": "Only Small; artifact digest remains required."}
+      ]
+    }
+  ],
+  "thresholds": [
+    {"metricId": "critical_violation_recall", "displayName": "Recall de violações críticas", "unit": "ratio", "aggregation": "rate", "direction": "minimum", "threshold": 0.9, "minimumSamples": 240, "blocking": true, "rationale": "Falhas críticas conhecidas não podem desaparecer no agregado."},
+    {"metricId": "issue_precision", "displayName": "Precisão das ocorrências", "unit": "ratio", "aggregation": "rate", "direction": "minimum", "threshold": 0.8, "minimumSamples": 240, "blocking": true, "rationale": "A Reality Lane precisa evitar ruído que destrua a confiança do editor."},
+    {"metricId": "temporal_iou", "displayName": "IoU temporal da localização", "unit": "ratio", "aggregation": "mean", "direction": "minimum", "threshold": 0.7, "minimumSamples": 240, "blocking": true, "rationale": "Uma explicação sem localização corrigível não é útil no editor."},
+    {"metricId": "entity_grounding_accuracy", "displayName": "Grounding de entidades", "unit": "ratio", "aggregation": "rate", "direction": "minimum", "threshold": 0.8, "minimumSamples": 240, "blocking": true, "rationale": "A ocorrência precisa apontar os objetos corretos."},
+    {"metricId": "expected_calibration_error", "displayName": "Expected calibration error", "unit": "ratio", "aggregation": "mean", "direction": "maximum", "threshold": 0.1, "minimumSamples": 240, "blocking": true, "rationale": "O threshold advisory depende de confidence calibrada."},
+    {"metricId": "peak_vram_gb", "displayName": "VRAM de pico", "unit": "gigabytes", "aggregation": "maximum", "direction": "maximum", "threshold": 24, "minimumSamples": 240, "blocking": false, "rationale": "Métrica operacional inicial, não prova de qualidade."}
+  ],
+  "requiredControls": ["isolated_workspace", "no_egress", "pinned_code", "pinned_model_artifacts", "frame_exact_annotations", "held_out_generator", "hard_negative_controls", "declared_editing_controls", "confidence_calibration", "abstention_enabled", "no_vlm_single_judge", "no_automatic_correction"],
+  "requiredEvidence": ["corpus_manifest", "case_outputs", "frame_annotations", "entity_annotations", "raw_metric_bundle", "provider_lineage", "worker_manifest", "license_manifest", "calibration_report", "blinded_human_error_review"],
+  "notes": ["The suite evaluates detection and localization, not generation aesthetics.", "All candidates remain blocked until every checkpoint has an audited artifact digest."]
+}

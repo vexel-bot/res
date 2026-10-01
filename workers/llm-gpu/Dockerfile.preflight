@@ -1,0 +1,60 @@
+FROM pytorch/pytorch:2.5.1-cuda12.4-cudnn9-runtime@sha256:c8268a92a69bd500f8be0e665b2630ee006dadaf7bfbc24249141b15ff622755
+
+ARG QWEN_INVENTORY_DIGEST=b81d63250d935ca5f6875a57fee0e44051ba706dbf96e8e081bb9c815acd6f67
+ARG KIMI_INVENTORY_DIGEST=2f747a155fa2b5182a82cf5804090feeed5968390bf41bc7174311b76d0a251d
+ARG PLANNING_POLICY_DIGEST=88a37ca064d36a8b0f3c58fe4751f0a721b008359a80fe62212c452b4b17bc54
+ARG REQUIREMENTS_LOCK_DIGEST
+ARG WORKER_MANIFEST_DIGEST
+
+LABEL org.opencontainers.image.title="Clicko LLM GPU preflight" \
+      org.opencontainers.image.version="0.1.0-preflight" \
+      io.clicko.providers="none" \
+      io.clicko.base.digest="sha256:c8268a92a69bd500f8be0e665b2630ee006dadaf7bfbc24249141b15ff622755"
+
+WORKDIR /opt/clicko
+
+COPY workers/llm-gpu/requirements.lock ./llm-runtime/requirements.lock
+RUN test -n "${REQUIREMENTS_LOCK_DIGEST}" \
+    && python -m pip install \
+        --disable-pip-version-check \
+        --no-cache-dir \
+        --no-deps \
+        --only-binary=:all: \
+        --require-hashes \
+        --requirement llm-runtime/requirements.lock
+
+COPY backend ./backend
+COPY workers/llm-gpu/worker.manifest.json ./worker-manifest.json
+COPY workers/llm-gpu/verify_build.py ./llm-runtime/verify_build.py
+COPY benchmarks/studios/intelligence/planning-copy-pt-br-policy.v1.json ./llm-runtime/policy/planning-copy-pt-br-policy.v1.json
+COPY workers/llm-gpu/providers/qwen3-planning-copy.artifacts.json ./llm-runtime/inventory/qwen3-planning-copy.artifacts.json
+COPY workers/llm-gpu/providers/kimi-k2-5-planning-copy.artifacts.json ./llm-runtime/inventory/kimi-k2-5-planning-copy.artifacts.json
+
+RUN test -n "${WORKER_MANIFEST_DIGEST}" \
+    && python ./llm-runtime/verify_build.py \
+        --backend ./backend \
+        --qwen-inventory ./llm-runtime/inventory/qwen3-planning-copy.artifacts.json \
+        --qwen-inventory-digest "${QWEN_INVENTORY_DIGEST}" \
+        --kimi-inventory ./llm-runtime/inventory/kimi-k2-5-planning-copy.artifacts.json \
+        --kimi-inventory-digest "${KIMI_INVENTORY_DIGEST}" \
+        --lock ./llm-runtime/requirements.lock \
+        --lock-digest "${REQUIREMENTS_LOCK_DIGEST}" \
+        --manifest ./worker-manifest.json \
+        --manifest-digest "${WORKER_MANIFEST_DIGEST}" \
+        --policy ./llm-runtime/policy/planning-copy-pt-br-policy.v1.json \
+        --policy-digest "${PLANNING_POLICY_DIGEST}" \
+    && useradd --create-home --uid 10001 clicko \
+    && install -d -o clicko -g clicko /tmp/clicko-llm
+
+ENV PYTHONPATH="/opt/clicko/backend" \
+    HOME="/home/clicko" \
+    TMPDIR="/tmp/clicko-llm" \
+    OBJECT_STORAGE_BACKEND="s3" \
+    STUDIO_ISOLATED_QUEUES_ENABLED="true" \
+    STUDIO_WORKER_MANIFEST_PATH="/opt/clicko/worker-manifest.json" \
+    STUDIO_WORKER_CAPABILITY="llm_gpu"
+
+USER clicko
+WORKDIR /opt/clicko/backend
+
+CMD ["celery", "-A", "app.llm_celery_app:llm_celery_app", "worker", "--loglevel=INFO", "--queues=studio.gpu.llm", "--concurrency=1", "--prefetch-multiplier=1"]

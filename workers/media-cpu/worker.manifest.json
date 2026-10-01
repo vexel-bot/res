@@ -1,0 +1,99 @@
+{
+  "schemaVersion": "studio.worker-runtime-manifest.v1",
+  "runtimeName": "clicko-media-cpu",
+  "runtimeVersion": "0.4.0",
+  "capability": "media_cpu",
+  "queues": [
+    "studio.media.cpu"
+  ],
+  "resourceClasses": [
+    "cpu.media"
+  ],
+  "jobTypes": [
+    "media_probe",
+    "video_proxy",
+    "media_waveform",
+    "video_render",
+    "editing_gemini",
+    "editing_ai"
+  ],
+  "providers": [
+    "builtin.ffprobe",
+    "builtin.ffmpeg-proxy",
+    "builtin.ffmpeg-waveform",
+    "builtin.ffmpeg-ugc-v1",
+    "builtin.ffmpeg-contextual-v1",
+    "google.gemini-editing",
+    "compatible.editing-planner",
+    "runway.editing-video",
+    "builtin.ffmpeg-qc-v1",
+    "hyperframes.cli"
+  ],
+  "requiredEnvironment": [
+    "DATABASE_URL",
+    "REDIS_URL",
+    "OBJECT_STORAGE_BACKEND",
+    "STUDIO_ISOLATED_QUEUES_ENABLED",
+    "STUDIO_WORKER_MANIFEST_PATH",
+    "STUDIO_WORKER_CAPABILITY",
+    "FFMPEG_PATH",
+    "FFPROBE_PATH"
+  ],
+  "requiredPaths": [
+    "/usr/bin/ffmpeg",
+    "/usr/bin/ffprobe",
+    "/usr/bin/chromium",
+    "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf",
+    "/opt/clicko/media-runtime/node_modules/hyperframes/package.json"
+  ],
+  "tools": [
+    {
+      "id": "node",
+      "command": ["node", "--version"],
+      "versionPattern": "v22\\.15\\.0"
+    },
+    {
+      "id": "python",
+      "command": ["python", "--version"],
+      "versionPattern": "Python 3\\.11\\.2"
+    },
+    {
+      "id": "celery",
+      "command": ["celery", "--version"],
+      "versionPattern": "5\\.6\\.2"
+    },
+    {
+      "id": "ffmpeg",
+      "command": ["ffmpeg", "-version"],
+      "versionPattern": "ffmpeg version 5\\.1\\.9"
+    },
+    {
+      "id": "ffprobe",
+      "command": ["ffprobe", "-version"],
+      "versionPattern": "ffprobe version 5\\.1\\.9"
+    },
+    {
+      "id": "chromium",
+      "command": ["chromium", "--version"],
+      "versionPattern": "Chromium 151\\.0\\.7922\\.173"
+    },
+    {
+      "id": "hyperframes",
+      "command": [
+        "node",
+        "-p",
+        "require('/opt/clicko/media-runtime/node_modules/hyperframes/package.json').version"
+      ],
+      "versionPattern": "0\\.8\\.12"
+    }
+  ],
+  "isolation": {
+    "runAsNonRoot": true,
+    "readOnlyRootFilesystem": true,
+    "allowPrivilegeEscalation": false,
+    "networkEgressPolicy": "private-dependencies-only",
+    "maxConcurrentJobs": 1,
+    "ephemeralTempPath": "/tmp/clicko-hyperframes",
+    "minimumTempBytes": 4294967296
+  }
+}

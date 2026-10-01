@@ -1,0 +1,207 @@
+{
+  "schema_version": "studio.artifact-inventory.v1",
+  "inventory_id": "kokoro-82m-stock-artifacts-2026-08-25",
+  "capability": "stock_voice",
+  "policy_digests_sha256": [
+    "97dcfb0f58775e4a6b779c0158a72746d39eb24425cf027d1decab2bf9ef55e7"
+  ],
+  "status": "incomplete",
+  "frozen_at": "2026-08-25T23:30:00Z",
+  "frozen_by": "clicko-product-engineering-baseline",
+  "required_artifact_ids": [
+    "kokoro-code",
+    "kokoro-82m-weights",
+    "misaki-g2p",
+    "espeakng-loader-wheel",
+    "espeak-ng-runtime",
+    "kokoro-upstream-dependency-lock",
+    "speech-cpu-candidate-container"
+  ],
+  "artifacts": [
+    {
+      "artifact_id": "kokoro-code",
+      "component_id": "kokoro-code",
+      "kind": "code",
+      "role": "Kokoro inference library",
+      "required": true,
+      "source_url": "https://github.com/hexgrad/kokoro",
+      "source_revision": "dfb907a02bba8152ca444717ca5d78747ccb4bec",
+      "resolution_status": "resolved",
+      "integrity": {
+        "method": "git_commit",
+        "value": "dfb907a02bba8152ca444717ca5d78747ccb4bec"
+      },
+      "verification_method": "git_remote",
+      "license": {
+        "declared_license": "Apache-2.0",
+        "evidence_url": "https://github.com/hexgrad/kokoro/blob/dfb907a02bba8152ca444717ca5d78747ccb4bec/LICENSE",
+        "evidence_digest_sha256": "1eb85fc97224598dad1852b5d6483bbcf0aa8608790dcc657a5a2a761ae9c8c6",
+        "commercial_saas_use_allowed": true,
+        "decision": "approved",
+        "rationale": "The pinned source revision contains the Apache-2.0 license text whose bytes were hashed from the isolated evaluation clone."
+      },
+      "notes": [
+        "The provider adapter is maintained in Clicko and Kokoro remains an external pinned dependency."
+      ]
+    },
+    {
+      "artifact_id": "kokoro-82m-weights",
+      "component_id": "kokoro-82m-weights",
+      "kind": "model",
+      "role": "Kokoro 82M model weights and pt-BR voice packs",
+      "required": true,
+      "source_url": "https://huggingface.co/hexgrad/Kokoro-82M",
+      "source_revision": "f3ff3571791e39611d31c381e3a41a3af07b4987",
+      "expected_filename": "kokoro-v1_0.pth",
+      "resolution_status": "unresolved",
+      "verification_method": "not_verified",
+      "license": {
+        "declared_license": "Apache-2.0",
+        "evidence_url": "https://huggingface.co/hexgrad/Kokoro-82M/blob/f3ff3571791e39611d31c381e3a41a3af07b4987/README.md",
+        "evidence_digest_sha256": "91dcabced89db6f109b8786642f50402d3ee87450e8189589b6f85520e7f4d78",
+        "commercial_saas_use_allowed": true,
+        "decision": "approved",
+        "rationale": "The pinned model card declares Apache-2.0, but the exact model and voice bytes must still be downloaded externally and hashed before resolution."
+      },
+      "notes": [
+        "Do not replace this unresolved record with a Git revision alone; model activation requires SHA-256 and byte size for every downloaded binary.",
+        "The approved pt-BR allowlist is pf_dora, pm_alex and pm_santa."
+      ]
+    },
+    {
+      "artifact_id": "misaki-g2p",
+      "component_id": "misaki-g2p",
+      "kind": "code",
+      "role": "Grapheme-to-phoneme dependency",
+      "required": true,
+      "source_url": "https://github.com/hexgrad/misaki",
+      "source_revision": "fba1236595f2d2bf21d414ba6e57d25256afada3",
+      "resolution_status": "resolved",
+      "integrity": {
+        "method": "git_commit",
+        "value": "fba1236595f2d2bf21d414ba6e57d25256afada3"
+      },
+      "verification_method": "git_remote",
+      "license": {
+        "declared_license": "Apache-2.0",
+        "evidence_url": "https://github.com/hexgrad/misaki/blob/fba1236595f2d2bf21d414ba6e57d25256afada3/LICENSE",
+        "evidence_digest_sha256": "1eb85fc97224598dad1852b5d6483bbcf0aa8608790dcc657a5a2a761ae9c8c6",
+        "commercial_saas_use_allowed": true,
+        "decision": "approved",
+        "rationale": "The exact source commit and Apache-2.0 license bytes were verified in the isolated evaluation clone."
+      },
+      "notes": []
+    },
+    {
+      "artifact_id": "espeakng-loader-wheel",
+      "component_id": "espeakng-loader-wheel",
+      "kind": "runtime",
+      "role": "Python loader wheel bundled transitively by Misaki",
+      "required": true,
+      "source_url": "https://pypi.org/project/espeakng-loader/0.2.4/",
+      "source_revision": "0.2.4-source-146599e29be31bf17d99f0bcb7dbb2f92aef3d95",
+      "expected_filename": "espeakng_loader-0.2.4-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "resolution_status": "resolved",
+      "integrity": {
+        "method": "sha256",
+        "value": "08721baf27d13d461f6be6eed9a65277e70d68234ff484fd8b9897b222cdcb6d",
+        "size_bytes": 10078484
+      },
+      "verification_method": "vendor_metadata",
+      "license": {
+        "declared_license": "Undeclared in the 0.2.4 wheel; upstream later added MIT",
+        "evidence_url": "https://github.com/thewh1teagle/espeakng-loader/blob/0ddc87adf77e5850d7eeb542ac8a87d421b64daa/LICENSE",
+        "evidence_digest_sha256": "ff975d18ee0cfcaf71a611c908282cd82bf2fcb8ed218ba39a67d8e3437b1ddb",
+        "commercial_saas_use_allowed": null,
+        "decision": "review_required",
+        "rationale": "The exact Linux wheel is hashed, but its METADATA declares no license and the archive contains no LICENSE, COPYING or NOTICE file. A later repository commit adds MIT text, which is not sufficient by itself to approve the released wheel."
+      },
+      "notes": [
+        "The 0.2.4 source commit points its espeak-ng gitlink at 4870adfa25b1a32b4361592f1be8a40337c58d6c and the wheel contains libespeak-ng.so.1.52.0.",
+        "The frozen Clicko policy requires espeak-ng 7d426728fe146f4168fa716e29d8e276c7da33f2, so the bundled library and data must be replaced by a separately built, manifested runtime before a candidate image is valid."
+      ]
+    },
+    {
+      "artifact_id": "espeak-ng-runtime",
+      "component_id": "espeak-ng-runtime",
+      "kind": "code",
+      "role": "Exact source pin for the replacement pt-BR phonemization runtime",
+      "required": true,
+      "source_url": "https://github.com/espeak-ng/espeak-ng",
+      "source_revision": "7d426728fe146f4168fa716e29d8e276c7da33f2",
+      "resolution_status": "resolved",
+      "integrity": {
+        "method": "git_commit",
+        "value": "7d426728fe146f4168fa716e29d8e276c7da33f2"
+      },
+      "verification_method": "git_remote",
+      "license": {
+        "declared_license": "GPL-3.0-or-later",
+        "evidence_url": "https://github.com/espeak-ng/espeak-ng/blob/7d426728fe146f4168fa716e29d8e276c7da33f2/COPYING",
+        "evidence_digest_sha256": "0b383d5a63da644f628d99c33976ea6487ed89aaa59f0b3257992deac1171e6b",
+        "commercial_saas_use_allowed": true,
+        "decision": "review_required",
+        "rationale": "Commercial use is permitted, but distributing a worker image requires a reviewed GPL source, notice and corresponding-source procedure."
+      },
+      "notes": [
+        "This legal review is a promotion gate and cannot be inferred from a successful technical benchmark.",
+        "A candidate image must compile this exact commit and replace the older lib/data bundled by espeakng-loader 0.2.4; a source commit alone is not runtime-byte evidence."
+      ]
+    },
+    {
+      "artifact_id": "kokoro-upstream-dependency-lock",
+      "component_id": "kokoro-upstream-dependency-lock",
+      "kind": "runtime",
+      "role": "Upstream Python dependency resolution reference",
+      "required": true,
+      "source_url": "https://github.com/hexgrad/kokoro/blob/dfb907a02bba8152ca444717ca5d78747ccb4bec/uv.lock",
+      "source_revision": "dfb907a02bba8152ca444717ca5d78747ccb4bec",
+      "expected_filename": "uv.lock",
+      "resolution_status": "resolved",
+      "integrity": {
+        "method": "sha256",
+        "value": "b82ce310da7ffa5a1bf228aa0dc17601fc0dbebe1737ff84c23d68103137c6f4",
+        "size_bytes": 228371
+      },
+      "verification_method": "vendor_metadata",
+      "license": {
+        "declared_license": "Mixed transitive licenses",
+        "evidence_url": "https://github.com/hexgrad/kokoro/blob/dfb907a02bba8152ca444717ca5d78747ccb4bec/uv.lock",
+        "evidence_digest_sha256": "b82ce310da7ffa5a1bf228aa0dc17601fc0dbebe1737ff84c23d68103137c6f4",
+        "commercial_saas_use_allowed": null,
+        "decision": "review_required",
+        "rationale": "The lock is byte-resolved, but its local Kokoro version metadata differs from pyproject and every transitive binary license still requires SBOM review."
+      },
+      "notes": [
+        "Upstream pyproject declares 0.9.4 while this pinned uv.lock identifies the editable package as 0.9.2; do not use it unchanged as Clicko's production lock."
+      ]
+    },
+    {
+      "artifact_id": "speech-cpu-candidate-container",
+      "component_id": "speech-cpu-candidate-container",
+      "kind": "container",
+      "role": "Linux AMD64 candidate worker image",
+      "required": true,
+      "source_url": "https://github.com/vexel-bot/res/blob/main/workers/speech-cpu/Dockerfile.candidate",
+      "source_revision": "not-built-yet",
+      "resolution_status": "unresolved",
+      "verification_method": "not_verified",
+      "license": {
+        "declared_license": "Composite image; SBOM and notices required",
+        "evidence_url": "https://github.com/vexel-bot/res/blob/main/workers/speech-cpu/Dockerfile.candidate",
+        "evidence_digest_sha256": "48f7c33f9e3b258a067c7afd1da02d2323194f93d075bb9ca2e630a44d5917da",
+        "commercial_saas_use_allowed": null,
+        "decision": "review_required",
+        "rationale": "The candidate Dockerfile is now specified and statically verified, but its OCI digest, SBOM, provenance and external build have not been produced."
+      },
+      "notes": [
+        "The preflight image and candidate recipe advertise no providers; the candidate remains non-deployable until the external build and review gates pass."
+      ]
+    }
+  ],
+  "notes": [
+    "The inventory intentionally remains incomplete until the exact weight and voice bytes and the candidate OCI image are externally resolved.",
+    "The espeakng-loader 0.2.4 wheel is a resolved input but is not acceptable as the final phonemization runtime because its bundled eSpeak revision differs from policy and its distribution omits license files.",
+    "No artifact in this inventory authorizes worker advertisement or database promotion."
+  ]
+}

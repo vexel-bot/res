@@ -1,0 +1,903 @@
+{
+  "status": "candidates",
+  "query": "coffee beans falling",
+  "candidates": [
+    {
+      "provider": "pexels",
+      "providerId": "11836114",
+      "kind": "video",
+      "sourceUrl": "https://www.pexels.com/video/a-sugar-cube-falling-into-a-cup-of-coffee-11836114/",
+      "previewUrl": "https://images.pexels.com/videos/11836114/arabic-coffee-arabica-coffee-barista-cezve-11836114.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1200&w=630",
+      "files": [
+        {
+          "id": 5132979,
+          "quality": "sd",
+          "file_type": "video/mp4",
+          "width": 360,
+          "height": 640,
+          "fps": 25.0,
+          "link": "https://videos.pexels.com/video-files/11836114/11836114-sd_360_640_25fps.mp4",
+          "size": 368746
+        },
+        {
+          "id": 5132980,
+          "quality": "hd",
+          "file_type": "video/mp4",
+          "width": 720,
+          "height": 1280,
+          "fps": 25.0,
+          "link": "https://videos.pexels.com/video-files/11836114/11836114-hd_720_1280_25fps.mp4",
+          "size": 1183675
+        },
+        {
+          "id": 5132981,
+          "quality": "sd",
+          "file_type": "video/mp4",
+          "width": 240,
+          "height": 426,
+          "fps": 25.0,
+          "link": "https://videos.pexels.com/video-files/11836114/11836114-sd_240_426_25fps.mp4",
+          "size": 278958
+        },
+        {
+          "id": 5132982,
+          "quality": "sd",
+          "file_type": "video/mp4",
+          "width": 540,
+          "height": 960,
+          "fps": 25.0,
+          "link": "https://videos.pexels.com/video-files/11836114/11836114-sd_540_960_25fps.mp4",
+          "size": 697674
+        },
+        {
+          "id": 5132983,
+          "quality": "hd",
+          "file_type": "video/mp4",
+          "width": 1080,
+          "height": 1920,
+          "fps": 25.0,
+          "link": "https://videos.pexels.com/video-files/11836114/11836114-hd_1080_1920_25fps.mp4",
+          "size": 3345721
+        }
+      ],
+      "width": 1080,
+      "height": 1920,
+      "durationSeconds": 5,
+      "description": "",
+      "author": {
+        "id": 215591350,
+        "name": "Alex Moisieiev",
+        "url": "https://www.pexels.com/@alexmay"
+      },
+      "attribution": {
+        "provider": "Pexels",
+        "url": "https://www.pexels.com"
+      },
+      "licenseUrl": "https://www.pexels.com/license/",
+      "observation": "not_inspected",
+      "renderReady": false,
+      "requiresInspection": true,
+      "acquisitionAllowed": true
+    },
+    {
+      "provider": "pexels",
+      "providerId": "32110927",
+      "kind": "video",
+      "sourceUrl": "https://www.pexels.com/video/pouring-coffee-beans-on-wooden-table-outdoors-32110927/",
+      "previewUrl": "https://images.pexels.com/videos/32110927/aesthetic-coffee-afternoon-coffee-arabica-coffee-aromatic-coffee-32110927.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1200&w=630",
+      "files": [
+        {
+          "id": 13690117,
+          "quality": null,
+          "file_type": "video/mp4",
+          "width": 360,
+          "height": 640,
+          "fps": 30.0,
+          "link": "https://videos.pexels.com/video-files/32110927/13690117_360_640_30fps.mp4",
+          "size": 654347
+        },
+        {
+          "id": 13690118,
+          "quality": null,
+          "file_type": "video/mp4",
+          "width": 540,
+          "height": 960,
+          "fps": 30.0,
+          "link": "https://videos.pexels.com/video-files/32110927/13690118_540_960_30fps.mp4",
+          "size": 1121399
+        },
+        {
+          "id": 13690119,
+          "quality": null,
+          "file_type": "video/mp4",
+          "width": 720,
+          "height": 1280,
+          "fps": 30.0,
+          "link": "https://videos.pexels.com/video-files/32110927/13690119_720_1280_30fps.mp4",
+          "size": 1664373
+        },
+        {
+          "id": 13690120,
+          "quality": null,
+          "file_type": "video/mp4",
+          "width": 1080,
+          "height": 1920,
+          "fps": 30.0,
+          "link": "https://videos.pexels.com/video-files/32110927/13690120_1080_1920_30fps.mp4",
+          "size": 3255808
+        }
+      ],
+      "width": 1080,
+      "height": 1920,
+      "durationSeconds": 5,
+      "description": "",
+      "author": {
+        "id": 3205240,
+        "name": "Atousa Enayati",
+        "url": "https://www.pexels.com/@atousa7495"
+      },
+      "attribution": {
+        "provider": "Pexels",
+        "url": "https://www.pexels.com"
+      },
+      "licenseUrl": "https://www.pexels.com/license/",
+      "observation": "not_inspected",
+      "renderReady": false,
+      "requiresInspection": true,
+      "acquisitionAllowed": true
+    },
+    {
+      "provider": "pexels",
+      "providerId": "7034351",
+      "kind": "video",
+      "sourceUrl": "https://www.pexels.com/video/focus-shot-of-coffee-beans-7034351/",
+      "previewUrl": "https://images.pexels.com/videos/7034351/pexels-photo-7034351.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1200&w=630",
+      "files": [
+        {
+          "id": 10282161,
+          "quality": "sd",
+          "file_type": "video/mp4",
+          "width": 540,
+          "height": 960,
+          "fps": 25.0,
+          "link": "https://videos.pexels.com/video-files/7034351/7034351-sd_540_960_25fps.mp4",
+          "size": 860148
+        },
+        {
+          "id": 10282170,
+          "quality": "sd",
+          "file_type": "video/mp4",
+          "width": 360,
+          "height": 640,
+          "fps": 25.0,
+          "link": "https://videos.pexels.com/video-files/7034351/7034351-sd_360_640_25fps.mp4",
+          "size": 462951
+        },
+        {
+          "id": 10282178,
+          "quality": "hd",
+          "file_type": "video/mp4",
+          "width": 1080,
+          "height": 1920,
+          "fps": 25.0,
+          "link": "https://videos.pexels.com/video-files/7034351/7034351-hd_1080_1920_25fps.mp4",
+          "size": 3506352
+        },
+        {
+          "id": 10282193,
+          "quality": "sd",
+          "file_type": "video/mp4",
+          "width": 240,
+          "height": 426,
+          "fps": 25.0,
+          "link": "https://videos.pexels.com/video-files/7034351/7034351-sd_240_426_25fps.mp4",
+          "size": 236218
+        },
+        {
+          "id": 10282212,
+          "quality": "hd",
+          "file_type": "video/mp4",
+          "width": 720,
+          "height": 1280,
+          "fps": 25.0,
+          "link": "https://videos.pexels.com/video-files/7034351/7034351-hd_720_1280_25fps.mp4",
+          "size": 1360908
+        }
+      ],
+      "width": 1080,
+      "height": 1920,
+      "durationSeconds": 12,
+      "description": "",
+      "author": {
+        "id": 3088726,
+        "name": "Tima Miroshnichenko",
+        "url": "https://www.pexels.com/@tima-miroshnichenko"
+      },
+      "attribution": {
+        "provider": "Pexels",
+        "url": "https://www.pexels.com"
+      },
+      "licenseUrl": "https://www.pexels.com/license/",
+      "observation": "not_inspected",
+      "renderReady": false,
+      "requiresInspection": true,
+      "acquisitionAllowed": true
+    },
+    {
+      "provider": "pexels",
+      "providerId": "4820350",
+      "kind": "video",
+      "sourceUrl": "https://www.pexels.com/video/processed-coffee-beans-ready-for-packing-4820350/",
+      "previewUrl": "https://images.pexels.com/videos/4820350/pexels-photo-4820350.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1200&w=630",
+      "files": [
+        {
+          "id": 9406701,
+          "quality": "uhd",
+          "file_type": "video/mp4",
+          "width": 2160,
+          "height": 4096,
+          "fps": 25.0,
+          "link": "https://videos.pexels.com/video-files/4820350/4820350-uhd_2160_4096_25fps.mp4",
+          "size": 75345706
+        },
+        {
+          "id": 9406745,
+          "quality": "sd",
+          "file_type": "video/mp4",
+          "width": 226,
+          "height": 426,
+          "fps": 25.0,
+          "link": "https://videos.pexels.com/video-files/4820350/4820350-sd_226_426_25fps.mp4",
+          "size": 948292
+        },
+        {
+          "id": 9406788,
+          "quality": "sd",
+          "file_type": "video/mp4",
+          "width": 338,
+          "height": 640,
+          "fps": 25.0,
+          "link": "https://videos.pexels.com/video-files/4820350/4820350-sd_338_640_25fps.mp4",
+          "size": 1611922
+        },
+        {
+          "id": 9406875,
+          "quality": "hd",
+          "file_type": "video/mp4",
+          "width": 1080,
+          "height": 2048,
+          "fps": 25.0,
+          "link": "https://videos.pexels.com/video-files/4820350/4820350-hd_1080_2048_25fps.mp4",
+          "size": 17423721
+        },
+        {
+          "id": 9406929,
+          "quality": "hd",
+          "file_type": "video/mp4",
+          "width": 720,
+          "height": 1366,
+          "fps": 25.0,
+          "link": "https://videos.pexels.com/video-files/4820350/4820350-hd_720_1366_25fps.mp4",
+          "size": 8174970
+        },
+        {
+          "id": 9407004,
+          "quality": "uhd",
+          "file_type": "video/mp4",
+          "width": 1440,
+          "height": 2732,
+          "fps": 25.0,
+          "link": "https://videos.pexels.com/video-files/4820350/4820350-uhd_1440_2732_25fps.mp4",
+          "size": 33413043
+        },
+        {
+          "id": 9407091,
+          "quality": "sd",
+          "file_type": "video/mp4",
+          "width": 506,
+          "height": 960,
+          "fps": 25.0,
+          "link": "https://videos.pexels.com/video-files/4820350/4820350-sd_506_960_25fps.mp4",
+          "size": 3946386
+        }
+      ],
+      "width": 2160,
+      "height": 4096,
+      "durationSeconds": 26,
+      "description": "",
+      "author": {
+        "id": 1437723,
+        "name": "cottonbro studio",
+        "url": "https://www.pexels.com/@cottonbro"
+      },
+      "attribution": {
+        "provider": "Pexels",
+        "url": "https://www.pexels.com"
+      },
+      "licenseUrl": "https://www.pexels.com/license/",
+      "observation": "not_inspected",
+      "renderReady": false,
+      "requiresInspection": true,
+      "acquisitionAllowed": true
+    },
+    {
+      "provider": "pexels",
+      "providerId": "7116425",
+      "kind": "video",
+      "sourceUrl": "https://www.pexels.com/video/close-up-video-of-coffee-berries-7116425/",
+      "previewUrl": "https://images.pexels.com/videos/7116425/pexels-photo-7116425.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1200&w=630",
+      "files": [
+        {
+          "id": 10308105,
+          "quality": "uhd",
+          "file_type": "video/mp4",
+          "width": 1440,
+          "height": 2560,
+          "fps": 25.0,
+          "link": "https://videos.pexels.com/video-files/7116425/7116425-uhd_1440_2560_25fps.mp4",
+          "size": 7065900
+        },
+        {
+          "id": 10308149,
+          "quality": "sd",
+          "file_type": "video/mp4",
+          "width": 360,
+          "height": 640,
+          "fps": 25.0,
+          "link": "https://videos.pexels.com/video-files/7116425/7116425-sd_360_640_25fps.mp4",
+          "size": 254068
+        },
+        {
+          "id": 10308190,
+          "quality": "sd",
+          "file_type": "video/mp4",
+          "width": 240,
+          "height": 426,
+          "fps": 25.0,
+          "link": "https://videos.pexels.com/video-files/7116425/7116425-sd_240_426_25fps.mp4",
+          "size": 168479
+        },
+        {
+          "id": 10308238,
+          "quality": "hd",
+          "file_type": "video/mp4",
+          "width": 720,
+          "height": 1280,
+          "fps": 50.0,
+          "link": "https://videos.pexels.com/video-files/7116425/7116425-hd_720_1280_50fps.mp4",
+          "size": 1496253
+        },
+        {
+          "id": 10308305,
+          "quality": "uhd",
+          "file_type": "video/mp4",
+          "width": 2160,
+          "height": 3840,
+          "fps": 25.0,
+          "link": "https://videos.pexels.com/video-files/7116425/7116425-uhd_2160_3840_25fps.mp4",
+          "size": 12148943
+        },
+        {
+          "id": 10308539,
+          "quality": "sd",
+          "file_type": "video/mp4",
+          "width": 540,
+          "height": 960,
+          "fps": 25.0,
+          "link": "https://videos.pexels.com/video-files/7116425/7116425-sd_540_960_25fps.mp4",
+          "size": 760141
+        },
+        {
+          "id": 10308662,
+          "quality": "hd",
+          "file_type": "video/mp4",
+          "width": 1080,
+          "height": 1920,
+          "fps": 25.0,
+          "link": "https://videos.pexels.com/video-files/7116425/7116425-hd_1080_1920_25fps.mp4",
+          "size": 2804389
+        }
+      ],
+      "width": 2160,
+      "height": 3840,
+      "durationSeconds": 4,
+      "description": "",
+      "author": {
+        "id": 33201649,
+        "name": "Michael Burrows",
+        "url": "https://www.pexels.com/@michael-burrows"
+      },
+      "attribution": {
+        "provider": "Pexels",
+        "url": "https://www.pexels.com"
+      },
+      "licenseUrl": "https://www.pexels.com/license/",
+      "observation": "not_inspected",
+      "renderReady": false,
+      "requiresInspection": true,
+      "acquisitionAllowed": true
+    },
+    {
+      "provider": "pexels",
+      "providerId": "7121089",
+      "kind": "video",
+      "sourceUrl": "https://www.pexels.com/video/pouring-water-on-raw-coffee-beans-7121089/",
+      "previewUrl": "https://images.pexels.com/videos/7121089/pexels-photo-7121089.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1200&w=630",
+      "files": [
+        {
+          "id": 10311229,
+          "quality": "sd",
+          "file_type": "video/mp4",
+          "width": 360,
+          "height": 640,
+          "fps": 25.0,
+          "link": "https://videos.pexels.com/video-files/7121089/7121089-sd_360_640_25fps.mp4",
+          "size": 533301
+        },
+        {
+          "id": 10311253,
+          "quality": "sd",
+          "file_type": "video/mp4",
+          "width": 240,
+          "height": 426,
+          "fps": 25.0,
+          "link": "https://videos.pexels.com/video-files/7121089/7121089-sd_240_426_25fps.mp4",
+          "size": 329062
+        },
+        {
+          "id": 10311306,
+          "quality": "hd",
+          "file_type": "video/mp4",
+          "width": 720,
+          "height": 1280,
+          "fps": 50.0,
+          "link": "https://videos.pexels.com/video-files/7121089/7121089-hd_720_1280_50fps.mp4",
+          "size": 2826536
+        },
+        {
+          "id": 10311391,
+          "quality": "sd",
+          "file_type": "video/mp4",
+          "width": 540,
+          "height": 960,
+          "fps": 25.0,
+          "link": "https://videos.pexels.com/video-files/7121089/7121089-sd_540_960_25fps.mp4",
+          "size": 1592206
+        },
+        {
+          "id": 10311454,
+          "quality": "uhd",
+          "file_type": "video/mp4",
+          "width": 2160,
+          "height": 3840,
+          "fps": 25.0,
+          "link": "https://videos.pexels.com/video-files/7121089/7121089-uhd_2160_3840_25fps.mp4",
+          "size": 25024412
+        },
+        {
+          "id": 10311519,
+          "quality": "hd",
+          "file_type": "video/mp4",
+          "width": 1080,
+          "height": 1920,
+          "fps": 25.0,
+          "link": "https://videos.pexels.com/video-files/7121089/7121089-hd_1080_1920_25fps.mp4",
+          "size": 5624293
+        },
+        {
+          "id": 10311551,
+          "quality": "uhd",
+          "file_type": "video/mp4",
+          "width": 1440,
+          "height": 2560,
+          "fps": 25.0,
+          "link": "https://videos.pexels.com/video-files/7121089/7121089-uhd_1440_2560_25fps.mp4",
+          "size": 13633097
+        }
+      ],
+      "width": 2160,
+      "height": 3840,
+      "durationSeconds": 9,
+      "description": "",
+      "author": {
+        "id": 33201649,
+        "name": "Michael Burrows",
+        "url": "https://www.pexels.com/@michael-burrows"
+      },
+      "attribution": {
+        "provider": "Pexels",
+        "url": "https://www.pexels.com"
+      },
+      "licenseUrl": "https://www.pexels.com/license/",
+      "observation": "not_inspected",
+      "renderReady": false,
+      "requiresInspection": true,
+      "acquisitionAllowed": true
+    },
+    {
+      "provider": "pexels",
+      "providerId": "34907989",
+      "kind": "video",
+      "sourceUrl": "https://www.pexels.com/video/close-up-of-roasted-coffee-beans-pouring-34907989/",
+      "previewUrl": "https://images.pexels.com/videos/34907989/pexels-photo-34907989.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1200&w=630",
+      "files": [
+        {
+          "id": 14788109,
+          "quality": null,
+          "file_type": "video/mp4",
+          "width": 360,
+          "height": 640,
+          "fps": 85.71,
+          "link": "https://videos.pexels.com/video-files/34907989/14788109_360_640_86fps.mp4",
+          "size": 4920803
+        },
+        {
+          "id": 14788113,
+          "quality": null,
+          "file_type": "video/mp4",
+          "width": 540,
+          "height": 960,
+          "fps": 85.71,
+          "link": "https://videos.pexels.com/video-files/34907989/14788113_540_960_86fps.mp4",
+          "size": 8077011
+        },
+        {
+          "id": 14788116,
+          "quality": null,
+          "file_type": "video/mp4",
+          "width": 720,
+          "height": 1280,
+          "fps": 85.71,
+          "link": "https://videos.pexels.com/video-files/34907989/14788116_720_1280_86fps.mp4",
+          "size": 11641461
+        },
+        {
+          "id": 14788118,
+          "quality": null,
+          "file_type": "video/mp4",
+          "width": 1080,
+          "height": 1920,
+          "fps": 85.71,
+          "link": "https://videos.pexels.com/video-files/34907989/14788118_1080_1920_86fps.mp4",
+          "size": 20423839
+        }
+      ],
+      "width": 1080,
+      "height": 1920,
+      "durationSeconds": 5,
+      "description": "",
+      "author": {
+        "id": 531372879,
+        "name": "Diego Castro Calderon",
+        "url": "https://www.pexels.com/@diego-castro-calderon-531372879"
+      },
+      "attribution": {
+        "provider": "Pexels",
+        "url": "https://www.pexels.com"
+      },
+      "licenseUrl": "https://www.pexels.com/license/",
+      "observation": "not_inspected",
+      "renderReady": false,
+      "requiresInspection": true,
+      "acquisitionAllowed": true
+    },
+    {
+      "provider": "pexels",
+      "providerId": "7121115",
+      "kind": "video",
+      "sourceUrl": "https://www.pexels.com/video/man-smelling-coffee-beans-7121115/",
+      "previewUrl": "https://images.pexels.com/videos/7121115/pexels-photo-7121115.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1200&w=630",
+      "files": [
+        {
+          "id": 10312338,
+          "quality": "sd",
+          "file_type": "video/mp4",
+          "width": 240,
+          "height": 426,
+          "fps": 25.0,
+          "link": "https://videos.pexels.com/video-files/7121115/7121115-sd_240_426_25fps.mp4",
+          "size": 593833
+        },
+        {
+          "id": 10312398,
+          "quality": "sd",
+          "file_type": "video/mp4",
+          "width": 540,
+          "height": 960,
+          "fps": 25.0,
+          "link": "https://videos.pexels.com/video-files/7121115/7121115-sd_540_960_25fps.mp4",
+          "size": 2212908
+        },
+        {
+          "id": 10312455,
+          "quality": "sd",
+          "file_type": "video/mp4",
+          "width": 360,
+          "height": 640,
+          "fps": 25.0,
+          "link": "https://videos.pexels.com/video-files/7121115/7121115-sd_360_640_25fps.mp4",
+          "size": 950210
+        },
+        {
+          "id": 10312480,
+          "quality": "hd",
+          "file_type": "video/mp4",
+          "width": 1080,
+          "height": 1920,
+          "fps": 25.0,
+          "link": "https://videos.pexels.com/video-files/7121115/7121115-hd_1080_1920_25fps.mp4",
+          "size": 8695326
+        },
+        {
+          "id": 10312550,
+          "quality": "uhd",
+          "file_type": "video/mp4",
+          "width": 2160,
+          "height": 3840,
+          "fps": 25.0,
+          "link": "https://videos.pexels.com/video-files/7121115/7121115-uhd_2160_3840_25fps.mp4",
+          "size": 35758327
+        },
+        {
+          "id": 10312646,
+          "quality": "hd",
+          "file_type": "video/mp4",
+          "width": 720,
+          "height": 1280,
+          "fps": 50.0,
+          "link": "https://videos.pexels.com/video-files/7121115/7121115-hd_720_1280_50fps.mp4",
+          "size": 4465133
+        },
+        {
+          "id": 10312741,
+          "quality": "uhd",
+          "file_type": "video/mp4",
+          "width": 1440,
+          "height": 2560,
+          "fps": 25.0,
+          "link": "https://videos.pexels.com/video-files/7121115/7121115-uhd_1440_2560_25fps.mp4",
+          "size": 15929110
+        }
+      ],
+      "width": 2160,
+      "height": 3840,
+      "durationSeconds": 15,
+      "description": "",
+      "author": {
+        "id": 33201649,
+        "name": "Michael Burrows",
+        "url": "https://www.pexels.com/@michael-burrows"
+      },
+      "attribution": {
+        "provider": "Pexels",
+        "url": "https://www.pexels.com"
+      },
+      "licenseUrl": "https://www.pexels.com/license/",
+      "observation": "not_inspected",
+      "renderReady": false,
+      "requiresInspection": true,
+      "acquisitionAllowed": true
+    },
+    {
+      "provider": "pexels",
+      "providerId": "7657781",
+      "kind": "video",
+      "sourceUrl": "https://www.pexels.com/video/person-holding-coffee-bean-7657781/",
+      "previewUrl": "https://images.pexels.com/videos/7657781/arabica-coffee-coffe-lover-coffee-coffee-art-7657781.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1200&w=630",
+      "files": [
+        {
+          "id": 10519911,
+          "quality": "sd",
+          "file_type": "video/mp4",
+          "width": 240,
+          "height": 426,
+          "fps": 25.0,
+          "link": "https://videos.pexels.com/video-files/7657781/7657781-sd_240_426_25fps.mp4",
+          "size": 272236
+        },
+        {
+          "id": 10519985,
+          "quality": "hd",
+          "file_type": "video/mp4",
+          "width": 1080,
+          "height": 1920,
+          "fps": 25.0,
+          "link": "https://videos.pexels.com/video-files/7657781/7657781-hd_1080_1920_25fps.mp4",
+          "size": 5078982
+        },
+        {
+          "id": 10520027,
+          "quality": "hd",
+          "file_type": "video/mp4",
+          "width": 720,
+          "height": 1280,
+          "fps": 50.0,
+          "link": "https://videos.pexels.com/video-files/7657781/7657781-hd_720_1280_50fps.mp4",
+          "size": 2690957
+        },
+        {
+          "id": 10520097,
+          "quality": "sd",
+          "file_type": "video/mp4",
+          "width": 540,
+          "height": 960,
+          "fps": 25.0,
+          "link": "https://videos.pexels.com/video-files/7657781/7657781-sd_540_960_25fps.mp4",
+          "size": 1512902
+        },
+        {
+          "id": 10520152,
+          "quality": "sd",
+          "file_type": "video/mp4",
+          "width": 360,
+          "height": 640,
+          "fps": 25.0,
+          "link": "https://videos.pexels.com/video-files/7657781/7657781-sd_360_640_25fps.mp4",
+          "size": 510427
+        }
+      ],
+      "width": 1080,
+      "height": 1920,
+      "durationSeconds": 9,
+      "description": "",
+      "author": {
+        "id": 3716105,
+        "name": "Cup of  Couple",
+        "url": "https://www.pexels.com/@cup-of-couple"
+      },
+      "attribution": {
+        "provider": "Pexels",
+        "url": "https://www.pexels.com"
+      },
+      "licenseUrl": "https://www.pexels.com/license/",
+      "observation": "not_inspected",
+      "renderReady": false,
+      "requiresInspection": true,
+      "acquisitionAllowed": true
+    },
+    {
+      "provider": "pexels",
+      "providerId": "6602224",
+      "kind": "video",
+      "sourceUrl": "https://www.pexels.com/video/pouring-coffee-beans-on-a-grinder-6602224/",
+      "previewUrl": "https://images.pexels.com/videos/6602224/pexels-photo-6602224.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1200&w=630",
+      "files": [
+        {
+          "id": 10095973,
+          "quality": "sd",
+          "file_type": "video/mp4",
+          "width": 360,
+          "height": 640,
+          "fps": 29.97,
+          "link": "https://videos.pexels.com/video-files/6602224/6602224-sd_360_640_30fps.mp4",
+          "size": 799257
+        },
+        {
+          "id": 10095993,
+          "quality": "hd",
+          "file_type": "video/mp4",
+          "width": 1080,
+          "height": 1920,
+          "fps": 29.97,
+          "link": "https://videos.pexels.com/video-files/6602224/6602224-hd_1080_1920_30fps.mp4",
+          "size": 8686917
+        },
+        {
+          "id": 10096015,
+          "quality": "hd",
+          "file_type": "video/mp4",
+          "width": 720,
+          "height": 1280,
+          "fps": 29.97,
+          "link": "https://videos.pexels.com/video-files/6602224/6602224-hd_720_1280_30fps.mp4",
+          "size": 3537838
+        },
+        {
+          "id": 10096033,
+          "quality": "sd",
+          "file_type": "video/mp4",
+          "width": 540,
+          "height": 960,
+          "fps": 29.97,
+          "link": "https://videos.pexels.com/video-files/6602224/6602224-sd_540_960_30fps.mp4",
+          "size": 1884502
+        },
+        {
+          "id": 10096051,
+          "quality": "sd",
+          "file_type": "video/mp4",
+          "width": 240,
+          "height": 426,
+          "fps": 29.97,
+          "link": "https://videos.pexels.com/video-files/6602224/6602224-sd_240_426_30fps.mp4",
+          "size": 525174
+        }
+      ],
+      "width": 1080,
+      "height": 1920,
+      "durationSeconds": 13,
+      "description": "",
+      "author": {
+        "id": 2297095,
+        "name": "Pavel Danilyuk",
+        "url": "https://www.pexels.com/@pavel-danilyuk"
+      },
+      "attribution": {
+        "provider": "Pexels",
+        "url": "https://www.pexels.com"
+      },
+      "licenseUrl": "https://www.pexels.com/license/",
+      "observation": "not_inspected",
+      "renderReady": false,
+      "requiresInspection": true,
+      "acquisitionAllowed": true
+    },
+    {
+      "provider": "pexels",
+      "providerId": "34777979",
+      "kind": "video",
+      "sourceUrl": "https://www.pexels.com/video/coffee-beans-rotating-in-industrial-roaster-34777979/",
+      "previewUrl": "https://images.pexels.com/videos/34777979/coffee-34777979.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1200&w=630",
+      "files": [
+        {
+          "id": 14743945,
+          "quality": null,
+          "file_type": "video/mp4",
+          "width": 360,
+          "height": 640,
+          "fps": 30.0,
+          "link": "https://videos.pexels.com/video-files/34777979/14743945_360_640_30fps.mp4",
+          "size": 2555048
+        },
+        {
+          "id": 14743948,
+          "quality": null,
+          "file_type": "video/mp4",
+          "width": 540,
+          "height": 960,
+          "fps": 30.0,
+          "link": "https://videos.pexels.com/video-files/34777979/14743948_540_960_30fps.mp4",
+          "size": 4207814
+        },
+        {
+          "id": 14743951,
+          "quality": null,
+          "file_type": "video/mp4",
+          "width": 720,
+          "height": 1280,
+          "fps": 30.0,
+          "link": "https://videos.pexels.com/video-files/34777979/14743951_720_1280_30fps.mp4",
+          "size": 6119466
+        },
+        {
+          "id": 14743954,
+          "quality": null,
+          "file_type": "video/mp4",
+          "width": 1080,
+          "height": 1920,
+          "fps": 30.0,
+          "link": "https://videos.pexels.com/video-files/34777979/14743954_1080_1920_30fps.mp4",
+          "size": 10278112
+        }
+      ],
+      "width": 1080,
+      "height": 1920,
+      "durationSeconds": 5,
+      "description": "",
+      "author": {
+        "id": 497056723,
+        "name": "mokmalia",
+        "url": "https://www.pexels.com/@mokmalia-497056723"
+      },
+      "attribution": {
+        "provider": "Pexels",
+        "url": "https://www.pexels.com"
+      },
+      "licenseUrl": "https://www.pexels.com/license/",
+      "observation": "not_inspected",
+      "renderReady": false,
+      "requiresInspection": true,
+      "acquisitionAllowed": true
+    }
+  ]
+}

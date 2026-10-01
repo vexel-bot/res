@@ -1,0 +1,9 @@
+{
+  "schemaVersion": "studio.semantic-demonstration-qualification.v1",
+  "classification": "controlled_engineering_fixture",
+  "autonomousCreativePilot": false,
+  "renderChecksumSha256": "89a48d93ee023115a68df7ec3b02595f463775c57b1452401a20d06381d679dd",
+  "technical": "passed",
+  "semantic": "passed",
+  "humanReview": "pending"
+}

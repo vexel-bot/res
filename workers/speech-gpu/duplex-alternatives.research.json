@@ -1,0 +1,88 @@
+{
+  "schema_version": "studio.duplex-alternatives-research.v1",
+  "research_date": "2026-08-28",
+  "policy": "open-source-only-strict",
+  "runtime_authorized": false,
+  "weights_downloaded": false,
+  "providers_enabled": [],
+  "candidates": [
+    {
+      "id": "qwen3-omni-30b-a3b-instruct",
+      "category": "native-omni-model",
+      "code_license": "Apache-2.0",
+      "code_revision": "e4235853125589c789f06a2dd83e9f4126df5e9d",
+      "model_revision": "26291f793822fb6be9555850f06dfe95f2d7e695",
+      "weights_license": "review_required: model card says license=other and license_name=apache-2.0, but the pinned revision has no LICENSE file",
+      "pt_br": "supported-as-Portuguese-input-and-output-not-dialect-qualified",
+      "full_duplex": "not-proven-by-clicko; official claim is realtime streaming and natural turn-taking",
+      "hardware": "large-external-gpu-required; 15 safetensors shards total 70523299202 bytes",
+      "weights_downloaded": false,
+      "runtime_authorized": false,
+      "artifact_manifest": "workers/speech-gpu/qwen3-omni-30b-a3b.vendor-manifest.v1.json",
+      "artifact_manifest_digest_sha256": "6140facf4dabdf3dbcd9c23c27ba9e1ca096bbc2578163669e4bfd1092bfedc9",
+      "decision": "research-qualified-license-review-required",
+      "next_gate": "legal review of exact weight terms, then external GPU benchmark for barge-in and PT-BR dialect quality",
+      "source": "https://github.com/QwenLM/Qwen3-Omni"
+    },
+    {
+      "id": "moshi-moshika-moshiko",
+      "category": "native-full-duplex-model",
+      "code_license": "MIT-and-Apache-2.0",
+      "weights_license": "CC-BY-4.0",
+      "pt_br": "unsupported; official FAQ says English-only",
+      "full_duplex": "native",
+      "hardware": "24GB-class GPU stated for PyTorch",
+      "decision": "architecture-and-english-control-only",
+      "next_gate": "none for product PT-BR; do not download for the current lane",
+      "source": "https://github.com/kyutai-labs/moshi"
+    },
+    {
+      "id": "pipecat",
+      "category": "orchestration-framework-not-model",
+      "code_license": "BSD-2-Clause",
+      "weights_license": "not-applicable; integrations have independent terms",
+      "pt_br": "provider-dependent",
+      "full_duplex": "pipeline interruption primitives; not a native speech model",
+      "hardware": "provider-dependent",
+      "decision": "reference-and-optional-transport-spike",
+      "next_gate": "compare queue cancellation and interruption semantics behind Clicko port; no direct domain dependency",
+      "source": "https://github.com/pipecat-ai/pipecat"
+    },
+    {
+      "id": "livekit-agents",
+      "category": "orchestration-and-transport-framework",
+      "code_license": "Apache-2.0",
+      "weights_license": "custom LiveKit license for turn-detection models",
+      "pt_br": "provider-dependent",
+      "full_duplex": "interruption support with known edge cases",
+      "hardware": "provider-dependent",
+      "decision": "transport-reference-only; bundled-models-rejected",
+      "next_gate": "none until model-free component boundary is inventoried",
+      "source": "https://github.com/livekit/agents"
+    },
+    {
+      "id": "personaplex-7b-v1",
+      "category": "native-full-duplex-model",
+      "code_license": "MIT",
+      "weights_license": "NVIDIA-Open-Model-License-plus-CC-BY-4.0",
+      "pt_br": "unsupported; English input/output",
+      "full_duplex": "native",
+      "hardware": "A100-H100-class upstream guidance",
+      "decision": "rejected-by-strict-open-source-policy",
+      "next_gate": "no download or activation",
+      "source": "https://huggingface.co/nvidia/personaplex-7b-v1"
+    },
+    {
+      "id": "fish-speech-s2",
+      "category": "tts-not-full-duplex",
+      "code_license": "Fish-Audio-Research-License",
+      "weights_license": "Fish-Audio-Research-License",
+      "pt_br": "multilingual claims do not cure license",
+      "full_duplex": "no",
+      "hardware": "not-evaluated",
+      "decision": "rejected; commercial use requires separate license",
+      "next_gate": "none",
+      "source": "https://github.com/fishaudio/fish-speech/blob/main/LICENSE"
+    }
+  ]
+}

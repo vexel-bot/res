@@ -1,0 +1,21 @@
+diff --git a/openvoice/api.py b/openvoice/api.py
+index 342431e..ab17a23 100644
+--- a/openvoice/api.py
++++ b/openvoice/api.py
+@@ -6,7 +6,6 @@ from openvoice import utils
+ from openvoice import commons
+ import os
+ import librosa
+-from openvoice.text import text_to_sequence
+ from openvoice.mel_processing import spectrogram_torch
+ from openvoice.models import SynthesizerTrn
+ 
+@@ -47,6 +46,8 @@ class BaseSpeakerTTS(OpenVoiceBaseClass):
+ 
+     @staticmethod
+     def get_text(text, hps, is_symbol):
++        # Keep language-specific text frontends out of tone-conversion-only runtimes.
++        from openvoice.text import text_to_sequence
+         text_norm = text_to_sequence(text, hps.symbols, [] if is_symbol else hps.data.text_cleaners)
+         if hps.data.add_blank:
+             text_norm = commons.intersperse(text_norm, 0)

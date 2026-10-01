@@ -1,0 +1,125 @@
+{
+  "schemaVersion": "studio.semantic-reevaluation.v1",
+  "evaluatedAt": "2026-09-21T18:15:06.185235Z",
+  "source": {
+    "pilot": "distribution-v31",
+    "productionId": "3c848103-c8a5-5760-a067-8cd8125ef82a",
+    "snapshotChecksumSha256": "6431a50c21fc24ef5ba2cd402e8df96770574c979080d44eb6680c87c1ad6b34",
+    "renderChecksumSha256": "da51e0cf284e9448b5f19a86f2c63a854352b720e7322815785727922f81228e",
+    "historicalReceiptPreserved": true
+  },
+  "status": "requires_correction",
+  "execution": {
+    "status": "observed",
+    "evidence": [
+      {
+        "sceneId": "beat_1_ideia_origina",
+        "elementId": "el_rastro_inicial",
+        "cue": "emphasis",
+        "profile": "standard",
+        "startFrame": 51,
+        "endFrame": 151,
+        "middleFrame": 109,
+        "normalizedPixelDifference": 0.022536,
+        "middlePixelDifference": 0.015225,
+        "geometryChange": null,
+        "geometryOrigin": "declared_static_bounds",
+        "criterion": "temporal_pixel_or_geometry_change",
+        "status": "observed"
+      },
+      {
+        "sceneId": "beat_2_acao_adapta",
+        "elementId": "el_smartphone_adaptado",
+        "cue": "entrance",
+        "profile": "gentle",
+        "startFrame": 182,
+        "endFrame": 221,
+        "middleFrame": 205,
+        "normalizedPixelDifference": 0.062995,
+        "middlePixelDifference": 0.065942,
+        "geometryChange": null,
+        "geometryOrigin": "declared_static_bounds",
+        "criterion": "temporal_pixel_or_geometry_change",
+        "status": "observed"
+      }
+    ]
+  },
+  "semantic": {
+    "status": "failed",
+    "evidence": [
+      {
+        "code": "historical_semantic_policy_missing",
+        "status": "inconclusive",
+        "reason": "The stored direction predates the canonical demonstration policy."
+      },
+      {
+        "code": "historical_semantic_assertions_missing",
+        "status": "inconclusive",
+        "reason": "No falsifiable action assertions are bound to the stored scenes."
+      },
+      {
+        "code": "historical_format_transformation_has_no_canonical_content",
+        "status": "failed",
+        "sceneId": "beat_2_acao_adapta",
+        "compositionId": "comp_s2_adaptacao_formato",
+        "reason": "The stored targets do not carry one checksum-bound image/title/identity reference through the format change."
+      },
+      {
+        "code": "historical_mix_is_silent",
+        "status": "failed",
+        "reason": "The decoded mix is silent for the full artifact.",
+        "evidence": {
+          "silenceRatio": 1.0,
+          "integratedLoudnessLufs": -120.0,
+          "truePeakDbfs": -120.0
+        }
+      }
+    ]
+  },
+  "human": {
+    "status": "pending",
+    "evidence": []
+  },
+  "historicalObservedResult": {
+    "status": "passed",
+    "evidence": [
+      {
+        "sceneId": "beat_1_ideia_origina",
+        "elementId": "el_rastro_inicial",
+        "cue": "emphasis",
+        "profile": "standard",
+        "startFrame": 51,
+        "endFrame": 151,
+        "middleFrame": 109,
+        "normalizedPixelDifference": 0.022536,
+        "middlePixelDifference": 0.015225,
+        "geometryChange": null,
+        "geometryOrigin": "declared_static_bounds",
+        "criterion": "temporal_pixel_or_geometry_change",
+        "status": "observed"
+      },
+      {
+        "sceneId": "beat_2_acao_adapta",
+        "elementId": "el_smartphone_adaptado",
+        "cue": "entrance",
+        "profile": "gentle",
+        "startFrame": 182,
+        "endFrame": 221,
+        "middleFrame": 205,
+        "normalizedPixelDifference": 0.062995,
+        "middlePixelDifference": 0.065942,
+        "geometryChange": null,
+        "geometryOrigin": "declared_static_bounds",
+        "criterion": "temporal_pixel_or_geometry_change",
+        "status": "observed"
+      }
+    ],
+    "reason": "The bound render shows the required action in the inspected sequence.",
+    "nextAction": null
+  },
+  "limitations": [
+    "This receipt does not retrofit assertions into the historical plan.",
+    "Pixel change proves execution only; absent semantic evidence remains inconclusive.",
+    "The source snapshot and historical gate are not modified."
+  ]
+}

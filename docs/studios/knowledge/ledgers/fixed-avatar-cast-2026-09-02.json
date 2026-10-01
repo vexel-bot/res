@@ -1,0 +1,284 @@
+{
+  "schemaVersion": "studio.fixed-avatar-cast.v1",
+  "castId": "fixed-presenter-cast-2026-09-02",
+  "councilLenses": [
+    "duffer-brothers-ensemble-differentiation-I1",
+    "denis-villeneuve-visual-translation-I1",
+    "david-fincher-performance-calibration-I1",
+    "steven-spielberg-emotional-legibility-I1"
+  ],
+  "sharedContinuityRules": [
+    "Every avatar is an original fictional character and must not imitate an identifiable person.",
+    "Face geometry, hair, apparent age, skin details, body proportions and signature wardrobe are version-locked after source approval.",
+    "Each avatar keeps one primary audience function and cannot become an interchangeable generic presenter.",
+    "Eyeline, gesture range, speaking pace and emotional baseline must be defined per performance plan.",
+    "Only locally generated or rights-cleared audio may drive the avatar; HeyGem voice extraction and training are prohibited.",
+    "Every output requires synthetic-media disclosure, private review and provider lineage."
+  ],
+  "models": [
+    {
+      "schemaVersion": "studio.fixed-avatar-model.v1",
+      "avatarId": "avatar-caio-vale",
+      "genderPresentation": "man",
+      "character": {
+        "schemaVersion": "studio.character-bible.v1",
+        "characterId": "character-caio-vale",
+        "name": "Caio Vale",
+        "identityKind": "fictional_original",
+        "appearance": "Brazilian adult man in his early thirties, medium-brown skin, oval-angular face, short tight dark curls, clean-shaven, expressive brown eyes, athletic-average build; original identity with no resemblance target.",
+        "personality": "Curious, energetic and approachable without exaggerated excitement.",
+        "objective": "Make an unfamiliar mechanism feel immediately understandable and worth testing.",
+        "behavior": "Begins from a concrete object or action, uses compact open-hand gestures, checks comprehension through brief pauses and finishes on a demonstrated consequence.",
+        "voice": "Local PT-BR voice, conversational mid register, quick but articulated; never cloned by HeyGem.",
+        "wardrobe": "Deep teal overshirt, neutral crew-neck shirt, no logos, matte fabrics.",
+        "continuityRules": [
+          "teal overshirt is the signature anchor",
+          "gesture range stays below the chin",
+          "energy never becomes shouting"
+        ]
+      },
+      "systemRoles": [
+        "technology explainer",
+        "product mechanism",
+        "fast educational hook"
+      ],
+      "performanceStrengths": [
+        "curiosity",
+        "demonstration",
+        "direct-to-camera warmth"
+      ],
+      "prohibitedUses": [
+        "legal authority",
+        "medical authority",
+        "fear-based manipulation",
+        "impersonation"
+      ],
+      "visualSource": {
+        "sourceKind": "synthetic_original_video",
+        "assetId": "caio-base-video-v1",
+        "checksumSha256": "e777ee42a96a44c4f1e56b8ff8273e9f1a12d2d2127a6fe11fa0675234921912",
+        "durationMilliseconds": 12000,
+        "width": 720,
+        "height": 1280,
+        "exactlyOnePerson": true,
+        "faceVisibleAndUnobstructed": true,
+        "neutralCaptureApproved": true,
+        "rightsStatus": "rights_verified",
+        "voiceTrainingAllowed": false
+      },
+      "providerCandidate": "musetalk-v1.5-local",
+      "providerStatus": "pending_benchmark",
+      "localVoiceOnly": true
+    },
+    {
+      "schemaVersion": "studio.fixed-avatar-model.v1",
+      "avatarId": "avatar-davi-rocha",
+      "genderPresentation": "man",
+      "character": {
+        "schemaVersion": "studio.character-bible.v1",
+        "characterId": "character-davi-rocha",
+        "name": "Davi Rocha",
+        "identityKind": "fictional_original",
+        "appearance": "Brazilian adult man in his mid-forties, dark-brown skin, broad face, closely shaved hair, short salt-and-pepper beard, steady dark eyes, broad-average build; original identity with no resemblance target.",
+        "personality": "Grounded, decisive and calm under pressure.",
+        "objective": "Turn business complexity into a defensible decision with visible evidence.",
+        "behavior": "Uses stillness as authority, marks contrasts with a single hand, pauses before the decisive fact and avoids filler movement.",
+        "voice": "Local PT-BR voice, low-mid register, measured and intelligible; never cloned by HeyGem.",
+        "wardrobe": "Graphite textured jacket over a warm-gray shirt, no tie, no logos.",
+        "continuityRules": [
+          "salt-and-pepper beard shape is locked",
+          "movement is economical",
+          "authority must come from evidence rather than dominance"
+        ]
+      },
+      "systemRoles": [
+        "business strategy",
+        "case study",
+        "proof and objection handling"
+      ],
+      "performanceStrengths": [
+        "credibility",
+        "controlled emphasis",
+        "measured tension"
+      ],
+      "prohibitedUses": [
+        "financial guarantee",
+        "legal authority",
+        "aggressive sales pressure",
+        "impersonation"
+      ],
+      "visualSource": null,
+      "providerCandidate": "heygem-visual-only",
+      "providerStatus": "pending_source_video",
+      "localVoiceOnly": true
+    },
+    {
+      "schemaVersion": "studio.fixed-avatar-model.v1",
+      "avatarId": "avatar-kenzo-moura",
+      "genderPresentation": "man",
+      "character": {
+        "schemaVersion": "studio.character-bible.v1",
+        "characterId": "character-kenzo-moura",
+        "name": "Kenzo Moura",
+        "identityKind": "fictional_original",
+        "appearance": "Japanese-Brazilian adult man in his late thirties, light-medium skin, softly rectangular face, straight black hair with a neat side part, clean-shaven, dark eyes, lean-average build; original identity with no resemblance target.",
+        "personality": "Precise, observant and quietly humorous.",
+        "objective": "Reveal the hidden system behind data, science or process without oversimplifying it.",
+        "behavior": "Tracks diagrams with deliberate eyelines, uses one small gesture per causal step and lets anomalies register before explaining them.",
+        "voice": "Local PT-BR voice, clear mid register, controlled pace with dry timing; never cloned by HeyGem.",
+        "wardrobe": "Ink-blue chore jacket, off-white shirt, minimal metal-frame glasses only when continuity calls for them.",
+        "continuityRules": [
+          "side-part silhouette is locked",
+          "glasses state is scene-locked",
+          "humor remains observational rather than performative"
+        ]
+      },
+      "systemRoles": [
+        "science and data",
+        "procedural explanation",
+        "comparison and diagnosis"
+      ],
+      "performanceStrengths": [
+        "precision",
+        "visual tracking",
+        "understated reaction"
+      ],
+      "prohibitedUses": [
+        "medical diagnosis",
+        "false certainty",
+        "comic stereotype",
+        "impersonation"
+      ],
+      "visualSource": null,
+      "providerCandidate": "heygem-visual-only",
+      "providerStatus": "pending_source_video",
+      "localVoiceOnly": true
+    },
+    {
+      "schemaVersion": "studio.fixed-avatar-model.v1",
+      "avatarId": "avatar-livia-reis",
+      "genderPresentation": "woman",
+      "character": {
+        "schemaVersion": "studio.character-bible.v1",
+        "characterId": "character-livia-reis",
+        "name": "Lívia Reis",
+        "identityKind": "fictional_original",
+        "appearance": "Brazilian adult woman in her early thirties, warm tan skin, heart-oval face, shoulder-length dark wavy hair, expressive hazel-brown eyes, average build; original identity with no resemblance target.",
+        "personality": "Inventive, fast-thinking and emotionally transparent.",
+        "objective": "Transform a content idea into a vivid visual possibility the audience wants to continue watching.",
+        "behavior": "Opens with a specific surprise, moves between direct address and object interaction, and lets reactions precede reveals.",
+        "voice": "Local PT-BR voice, bright mid register, rhythmic and natural; never cloned by HeyGem.",
+        "wardrobe": "Terracotta cropped jacket over a cream top, subtle texture, no logos.",
+        "continuityRules": [
+          "wavy shoulder-length hair is locked",
+          "terracotta is the signature accent",
+          "expressiveness must preserve natural micro-pauses"
+        ]
+      },
+      "systemRoles": [
+        "content creation",
+        "creative demonstration",
+        "social-first storytelling"
+      ],
+      "performanceStrengths": [
+        "hook energy",
+        "reaction and reveal",
+        "playful clarity"
+      ],
+      "prohibitedUses": [
+        "manufactured urgency",
+        "infantilization",
+        "deceptive testimonial",
+        "impersonation"
+      ],
+      "visualSource": null,
+      "providerCandidate": "heygem-visual-only",
+      "providerStatus": "pending_source_video",
+      "localVoiceOnly": true
+    },
+    {
+      "schemaVersion": "studio.fixed-avatar-model.v1",
+      "avatarId": "avatar-aline-torres",
+      "genderPresentation": "woman",
+      "character": {
+        "schemaVersion": "studio.character-bible.v1",
+        "characterId": "character-aline-torres",
+        "name": "Aline Torres",
+        "identityKind": "fictional_original",
+        "appearance": "Brazilian adult woman in her mid-forties, deep-brown skin, softly square face, natural coiled hair in a defined low-volume shape, dark eyes, strong-average build; original identity with no resemblance target.",
+        "personality": "Warm, discerning and unhurried.",
+        "objective": "Help the audience distinguish substance from hype and leave with a practical next action.",
+        "behavior": "Listens before responding in dialogue formats, separates claim from proof with calm pauses and uses grounded symmetrical posture.",
+        "voice": "Local PT-BR voice, warm low-mid register, deliberate cadence; never cloned by HeyGem.",
+        "wardrobe": "Forest-green structured blouse with matte gold detail, no logos.",
+        "continuityRules": [
+          "natural hair silhouette is locked",
+          "posture remains grounded",
+          "warmth must not dilute critical judgment"
+        ]
+      },
+      "systemRoles": [
+        "trust and critique",
+        "customer education",
+        "myth versus evidence"
+      ],
+      "performanceStrengths": [
+        "reassurance",
+        "critical contrast",
+        "empathetic authority"
+      ],
+      "prohibitedUses": [
+        "medical authority",
+        "maternal stereotype",
+        "fear appeal",
+        "impersonation"
+      ],
+      "visualSource": null,
+      "providerCandidate": "heygem-visual-only",
+      "providerStatus": "pending_source_video",
+      "localVoiceOnly": true
+    },
+    {
+      "schemaVersion": "studio.fixed-avatar-model.v1",
+      "avatarId": "avatar-helena-sato",
+      "genderPresentation": "woman",
+      "character": {
+        "schemaVersion": "studio.character-bible.v1",
+        "characterId": "character-helena-sato",
+        "name": "Helena Sato",
+        "identityKind": "fictional_original",
+        "appearance": "Japanese-Brazilian adult woman in her late thirties, light-medium skin, oval face with defined cheekbones, straight black chin-length bob, dark eyes, lean-average build; original identity with no resemblance target.",
+        "personality": "Composed, analytical and quietly bold.",
+        "objective": "Make design, systems and future-facing concepts feel tangible rather than abstract.",
+        "behavior": "Uses precise eyelines into interface or spatial overlays, shifts scale through restrained movement and holds silence long enough for visual information to land.",
+        "voice": "Local PT-BR voice, clean mid-low register, composed with deliberate emphasis; never cloned by HeyGem.",
+        "wardrobe": "Midnight-violet architectural top, clean lines, no logos or reflective patterns.",
+        "continuityRules": [
+          "chin-length bob geometry is locked",
+          "midnight violet is the signature anchor",
+          "silence and stillness require visual purpose"
+        ]
+      },
+      "systemRoles": [
+        "design and systems",
+        "future concepts",
+        "premium visual explanation"
+      ],
+      "performanceStrengths": [
+        "composure",
+        "spatial explanation",
+        "restrained emphasis"
+      ],
+      "prohibitedUses": [
+        "cold superiority",
+        "technical gatekeeping",
+        "unverifiable futurism",
+        "impersonation"
+      ],
+      "visualSource": null,
+      "providerCandidate": "heygem-visual-only",
+      "providerStatus": "pending_source_video",
+      "localVoiceOnly": true
+    }
+  ]
+}

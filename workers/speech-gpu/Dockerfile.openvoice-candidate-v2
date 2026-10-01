@@ -1,0 +1,125 @@
+# syntax=docker/dockerfile:1.7
+
+FROM python:3.11-slim@sha256:272efc3f94bec901e2bc7a5c9984b3d113c317839edca2714c6a388b9476f8fc AS source-audit
+
+ARG OPENVOICE_REVISION=74a1d147b17a8c3092dd5430504bd83ef6c7eb23
+ARG OPENVOICE_LICENSE_DIGEST=bb3541f421e6273d3a3e3dd5bdba2bd3b79a3c2eadca65cde9c62c2467903ac0
+ARG OPENVOICE_PATCH_DIGEST=392e8c1dd20511bdc5b466a578daa04343a59931572f6ea27680603f1b3da0e0
+ARG KOKORO_REVISION=dfb907a02bba8152ca444717ca5d78747ccb4bec
+ARG KOKORO_LICENSE_DIGEST=c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4
+ARG KOKORO_PATCH_DIGEST=bf31edc3e69ccdd6bad00b55d3d94d7566757244085f9b305716ca51fec707a9
+
+RUN apt-get update \
+    && apt-get install --yes --no-install-recommends ca-certificates git \
+    && rm -rf /var/lib/apt/lists/* \
+    && git init /src/openvoice \
+    && git -C /src/openvoice remote add origin https://github.com/myshell-ai/OpenVoice.git \
+    && git -C /src/openvoice fetch --depth=1 origin "${OPENVOICE_REVISION}" \
+    && git -C /src/openvoice checkout --detach FETCH_HEAD \
+    && test "$(git -C /src/openvoice rev-parse HEAD)" = "${OPENVOICE_REVISION}" \
+    && test "$(sha256sum /src/openvoice/LICENSE | awk '{print $1}')" = "${OPENVOICE_LICENSE_DIGEST}" \
+    && git init /src/kokoro \
+    && git -C /src/kokoro remote add origin https://github.com/hexgrad/kokoro.git \
+    && git -C /src/kokoro fetch --depth=1 origin "${KOKORO_REVISION}" \
+    && git -C /src/kokoro checkout --detach FETCH_HEAD \
+    && test "$(git -C /src/kokoro rev-parse HEAD)" = "${KOKORO_REVISION}" \
+    && test "$(sha256sum /src/kokoro/LICENSE | awk '{print $1}')" = "${KOKORO_LICENSE_DIGEST}"
+
+COPY workers/speech-gpu/candidate-v2/patches/openvoice-tone-color-only.patch /patches/openvoice.patch
+COPY workers/speech-gpu/candidate-v2/patches/kokoro-lazy-language-g2p.patch /patches/kokoro.patch
+RUN test "$(sha256sum /patches/openvoice.patch | awk '{print $1}')" = "${OPENVOICE_PATCH_DIGEST}" \
+    && test "$(sha256sum /patches/kokoro.patch | awk '{print $1}')" = "${KOKORO_PATCH_DIGEST}" \
+    && git -C /src/openvoice apply --check /patches/openvoice.patch \
+    && git -C /src/openvoice apply /patches/openvoice.patch \
+    && git -C /src/kokoro apply --check /patches/kokoro.patch \
+    && git -C /src/kokoro apply /patches/kokoro.patch \
+    && python -m py_compile /src/openvoice/openvoice/api.py /src/kokoro/kokoro/pipeline.py \
+    && python -m pip wheel --disable-pip-version-check --no-cache-dir --no-deps \
+        --wheel-dir /wheels /src/openvoice /src/kokoro
+
+FROM python:3.11-slim@sha256:272efc3f94bec901e2bc7a5c9984b3d113c317839edca2714c6a388b9476f8fc AS dependencies
+
+ARG CANDIDATE_LOCK_DIGEST=de0dfa2271abc283f1a102d01211b1f623f4daf4de0d42e30e9280164aebe6cf
+ARG ESPEAK_RUNTIME_MANIFEST_DIGEST=9af3512043451d19ce36cd3721da52231d6e28931d44b2ffbd07cce6350be373
+
+COPY --from=ghcr.io/astral-sh/uv:0.12.3@sha256:dfd1e6972e100ca2fbf1f391effc3dd4aa57f319bf03c3e321e0a3f3341ed5af /uv /usr/local/bin/uv
+
+RUN apt-get update \
+    && apt-get install --yes --no-install-recommends ca-certificates git libsndfile1 \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /opt/clicko/candidate
+COPY workers/speech-gpu/candidate-v2/openvoice/pyproject.toml ./pyproject.toml
+COPY workers/speech-gpu/candidate-v2/openvoice/uv.lock ./uv.lock
+COPY backend/scripts/verify_speech_gpu_candidate_lock.py ./verify_speech_gpu_candidate_lock.py
+COPY backend/scripts/verify_speech_gpu_candidate_v2_lock.py ./verify_v2_lock.py
+RUN test "$(sha256sum uv.lock | awk '{print $1}')" = "${CANDIDATE_LOCK_DIGEST}" \
+    && python verify_v2_lock.py uv.lock --candidate openvoice \
+    && uv sync --frozen --no-dev --no-install-project
+
+COPY --from=source-audit /wheels /wheels
+RUN uv pip install --python .venv/bin/python --no-deps /wheels/*.whl
+
+COPY backend/scripts/install_espeak_runtime_replacement.py /opt/clicko/backend/scripts/install_espeak_runtime_replacement.py
+COPY .candidate-build/espeak-runtime /opt/clicko/espeak-runtime
+COPY .candidate-build/espeak-runtime.manifest.json /opt/clicko/espeak-runtime.manifest.json
+RUN loader_root="$(.venv/bin/python -c 'from pathlib import Path; import espeakng_loader; print(Path(espeakng_loader.__file__).parent)')" \
+    && .venv/bin/python \
+        /opt/clicko/backend/scripts/install_espeak_runtime_replacement.py \
+        --manifest /opt/clicko/espeak-runtime.manifest.json \
+        --runtime-root /opt/clicko/espeak-runtime \
+        --loader-root "${loader_root}" \
+        --expected-manifest-digest "${ESPEAK_RUNTIME_MANIFEST_DIGEST}" \
+    && HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 .venv/bin/python -c \
+        "import importlib.metadata as m; import wavmark; from kokoro import KModel, KPipeline; from openvoice.api import ToneColorConverter; names={d.metadata.get('Name','').lower() for d in m.distributions()}; forbidden={'unidecode','eng-to-ipa','cn2an','jieba','pypinyin','inflect','num2words','spacy','spacy-curated-transformers'}; assert wavmark and KModel and KPipeline and ToneColorConverter; assert not forbidden.intersection(names)"
+
+FROM python:3.11-slim@sha256:272efc3f94bec901e2bc7a5c9984b3d113c317839edca2714c6a388b9476f8fc
+
+ARG OPENVOICE_REVISION=74a1d147b17a8c3092dd5430504bd83ef6c7eb23
+ARG OPENVOICE_PATCH_DIGEST=392e8c1dd20511bdc5b466a578daa04343a59931572f6ea27680603f1b3da0e0
+ARG KOKORO_REVISION=dfb907a02bba8152ca444717ca5d78747ccb4bec
+ARG KOKORO_PATCH_DIGEST=bf31edc3e69ccdd6bad00b55d3d94d7566757244085f9b305716ca51fec707a9
+ARG CANDIDATE_LOCK_DIGEST=de0dfa2271abc283f1a102d01211b1f623f4daf4de0d42e30e9280164aebe6cf
+ARG ESPEAK_RUNTIME_MANIFEST_DIGEST=9af3512043451d19ce36cd3721da52231d6e28931d44b2ffbd07cce6350be373
+
+LABEL org.opencontainers.image.title="Clicko Kokoro OpenVoice PT-BR minimal v2 benchmark candidate" \
+      org.opencontainers.image.version="0.2.0-evaluation" \
+      org.opencontainers.image.revision="${OPENVOICE_REVISION}" \
+      io.clicko.openvoice.patch.digest="${OPENVOICE_PATCH_DIGEST}" \
+      io.clicko.kokoro.revision="${KOKORO_REVISION}" \
+      io.clicko.kokoro.patch.digest="${KOKORO_PATCH_DIGEST}" \
+      io.clicko.providers="none" \
+      io.clicko.candidate="kokoro-openvoice-v2-minimal-v2" \
+      io.clicko.candidate.status="evaluation" \
+      io.clicko.dependency-lock.digest="${CANDIDATE_LOCK_DIGEST}" \
+      io.clicko.espeak-runtime-manifest.digest="${ESPEAK_RUNTIME_MANIFEST_DIGEST}" \
+      io.clicko.weights="external-manifested-mount-only" \
+      io.clicko.legal-review="complete-sbom-wavmark-espeak-cuda-required"
+
+RUN apt-get update \
+    && apt-get install --yes --no-install-recommends libsndfile1 \
+    && rm -rf /var/lib/apt/lists/* \
+    && useradd --create-home --uid 10001 clicko \
+    && install -d -o clicko -g clicko /tmp/clicko-speech
+
+COPY --from=dependencies /opt/clicko/candidate /opt/clicko/candidate
+COPY --from=dependencies /opt/clicko/espeak-runtime /opt/clicko/espeak-runtime-evidence
+COPY --from=source-audit /src/openvoice/LICENSE /opt/clicko/notices/openvoice-LICENSE
+COPY --from=source-audit /src/kokoro/LICENSE /opt/clicko/notices/kokoro-LICENSE
+COPY workers/speech-gpu/sidecars/kokoro_openvoice_clone.py /opt/clicko/sidecars/kokoro_openvoice_clone.py
+
+ENV PATH="/opt/clicko/candidate/.venv/bin:${PATH}" \
+    HOME="/home/clicko" \
+    TMPDIR="/tmp/clicko-speech" \
+    NUMBA_CACHE_DIR="/tmp/clicko-speech" \
+    HF_HOME="/tmp/clicko-speech/huggingface" \
+    XDG_CACHE_HOME="/tmp/clicko-speech/cache" \
+    TORCH_HOME="/tmp/clicko-speech/torch" \
+    HF_HUB_OFFLINE="1" \
+    TRANSFORMERS_OFFLINE="1"
+
+USER clicko
+WORKDIR /tmp/clicko-speech
+
+ENTRYPOINT ["/opt/clicko/candidate/.venv/bin/python", "/opt/clicko/sidecars/kokoro_openvoice_clone.py"]
+CMD ["--help"]

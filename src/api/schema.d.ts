@@ -660,6 +660,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/assets/{asset_id}/derive": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Derive Image */
+        post: operations["derive_image_api_v1_assets__asset_id__derive_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/assets/{asset_id}": {
         parameters: {
             query?: never;
@@ -918,6 +935,1125 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/radar/shadow-evaluations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Shadow Evaluations */
+        get: operations["list_shadow_evaluations_api_v1_radar_shadow_evaluations_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/studios/v1/creative/casebook": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Creative Casebook
+         * @description Expose the governed, read-only preproduction corpus to Studio surfaces.
+         */
+        get: operations["get_creative_casebook_api_v1_studios_v1_creative_casebook_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/studios/v1/creative/assisted-intelligence": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Assisted Intelligence Suite
+         * @description Expose localized suggestions and their reversible human decisions.
+         */
+        get: operations["get_assisted_intelligence_suite_api_v1_studios_v1_creative_assisted_intelligence_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/studios/v1/creative/factory-program": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Video Factory Program
+         * @description Expose private production receipts without implying human approval.
+         */
+        get: operations["get_video_factory_program_api_v1_studios_v1_creative_factory_program_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/studios/v1/creative/replan-state": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Creative Replan State
+         * @description Expose the fail-closed golden-first restart gate.
+         */
+        get: operations["get_creative_replan_state_api_v1_studios_v1_creative_replan_state_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/studios/v1/creative/advanced-capabilities": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Advanced Capability Audit
+         * @description Expose why voice/avatar providers remain disabled.
+         */
+        get: operations["get_advanced_capability_audit_api_v1_studios_v1_creative_advanced_capabilities_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/studios/v1/creative/autonomy-audit": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Video Autonomy Audit
+         * @description Expose implementation versus operational completion without conflation.
+         */
+        get: operations["get_video_autonomy_audit_api_v1_studios_v1_creative_autonomy_audit_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/studios/v1/creative/cases/{case_id}/animatic": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Creative Case Animatic */
+        get: operations["get_creative_case_animatic_api_v1_studios_v1_creative_cases__case_id__animatic_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/studios/v1/capabilities": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Studio Capabilities
+         * @description Return the explainable, read-only activation projection for one workspace.
+         */
+        get: operations["get_studio_capabilities_api_v1_studios_v1_capabilities_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/studios/v1/providers": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Studio Providers */
+        get: operations["list_studio_providers_api_v1_studios_v1_providers_get"];
+        put?: never;
+        /** Create Studio Provider */
+        post: operations["create_studio_provider_api_v1_studios_v1_providers_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/studios/v1/providers/{provider_id}/approve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Approve Studio Provider */
+        post: operations["approve_studio_provider_api_v1_studios_v1_providers__provider_id__approve_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/studios/v1/models": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Studio Models */
+        get: operations["list_studio_models_api_v1_studios_v1_models_get"];
+        put?: never;
+        /** Create Studio Model */
+        post: operations["create_studio_model_api_v1_studios_v1_models_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/studios/v1/models/{model_id}/approve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Approve Studio Model */
+        post: operations["approve_studio_model_api_v1_studios_v1_models__model_id__approve_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/studios/v1/documents": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Studio Documents */
+        get: operations["list_studio_documents_api_v1_studios_v1_documents_get"];
+        put?: never;
+        /** Create Studio Document */
+        post: operations["create_studio_document_api_v1_studios_v1_documents_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/studios/v1/documents/{document_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Studio Document */
+        get: operations["get_studio_document_api_v1_studios_v1_documents__document_id__get"];
+        /** Replace Studio Document */
+        put: operations["replace_studio_document_api_v1_studios_v1_documents__document_id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/studios/v1/documents/{document_id}/assets/{asset_id}/rights-reviews": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Review Studio Asset Rights */
+        post: operations["review_studio_asset_rights_api_v1_studios_v1_documents__document_id__assets__asset_id__rights_reviews_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/studios/v1/documents/{document_id}/versions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Studio Document Versions */
+        get: operations["list_studio_document_versions_api_v1_studios_v1_documents__document_id__versions_get"];
+        put?: never;
+        /** Version Studio Document */
+        post: operations["version_studio_document_api_v1_studios_v1_documents__document_id__versions_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/studios/v1/documents/{document_id}/versions/{version_number}/restore": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Restore Studio Document Version */
+        post: operations["restore_studio_document_version_api_v1_studios_v1_documents__document_id__versions__version_number__restore_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/studios/v1/motion-graphs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Studio Motion Graphs */
+        get: operations["list_studio_motion_graphs_api_v1_studios_v1_motion_graphs_get"];
+        put?: never;
+        /** Create Studio Motion Graph */
+        post: operations["create_studio_motion_graph_api_v1_studios_v1_motion_graphs_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/studios/v1/motion-graphs/{graph_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Studio Motion Graph */
+        get: operations["get_studio_motion_graph_api_v1_studios_v1_motion_graphs__graph_id__get"];
+        /** Replace Studio Motion Graph */
+        put: operations["replace_studio_motion_graph_api_v1_studios_v1_motion_graphs__graph_id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/studios/v1/motion-graphs/{graph_id}/review": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Review Studio Motion Graph */
+        post: operations["review_studio_motion_graph_api_v1_studios_v1_motion_graphs__graph_id__review_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/studios/v1/motion-graphs/{graph_id}/projection/{target}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Studio Motion Graph Projection */
+        get: operations["get_studio_motion_graph_projection_api_v1_studios_v1_motion_graphs__graph_id__projection__target__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/studios/v1/documents/{document_id}/reviews": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Request Studio Review */
+        post: operations["request_studio_review_api_v1_studios_v1_documents__document_id__reviews_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/studios/v1/reviews/latest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Latest Studio Review */
+        get: operations["latest_studio_review_api_v1_studios_v1_reviews_latest_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/studios/v1/reviews/{review_id}/pages/{page_id}/preview": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Preview Studio Review Page */
+        get: operations["preview_studio_review_page_api_v1_studios_v1_reviews__review_id__pages__page_id__preview_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/studios/v1/reviews/{review_id}/decisions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Decide Studio Review */
+        post: operations["decide_studio_review_api_v1_studios_v1_reviews__review_id__decisions_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/studios/v1/reviews/{review_id}/acoustic-analysis-capability": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Acoustic Analysis Capability */
+        get: operations["get_acoustic_analysis_capability_api_v1_studios_v1_reviews__review_id__acoustic_analysis_capability_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/studios/v1/reviews/{review_id}/acoustic-analyses": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Create Review Acoustic Analysis */
+        post: operations["create_review_acoustic_analysis_api_v1_studios_v1_reviews__review_id__acoustic_analyses_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/studios/v1/reviews/{review_id}/publication-preflight": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Publication Preflight */
+        get: operations["get_publication_preflight_api_v1_studios_v1_reviews__review_id__publication_preflight_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/studios/v1/reviews/{review_id}/internal-schedule": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Create Internal Publication Schedule */
+        post: operations["create_internal_publication_schedule_api_v1_studios_v1_reviews__review_id__internal_schedule_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/studios/v1/reviews/{review_id}/publication-package": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Download Publication Package */
+        get: operations["download_publication_package_api_v1_studios_v1_reviews__review_id__publication_package_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/studios/v1/documents/{document_id}/exports": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Export Studio Document */
+        post: operations["export_studio_document_api_v1_studios_v1_documents__document_id__exports_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/studios/v1/consents": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Studio Consents */
+        get: operations["list_studio_consents_api_v1_studios_v1_consents_get"];
+        put?: never;
+        /** Create Studio Consent */
+        post: operations["create_studio_consent_api_v1_studios_v1_consents_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/studios/v1/consents/{consent_id}/revoke": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Revoke Studio Consent */
+        post: operations["revoke_studio_consent_api_v1_studios_v1_consents__consent_id__revoke_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/studios/v1/identities": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Studio Identities */
+        get: operations["list_studio_identities_api_v1_studios_v1_identities_get"];
+        put?: never;
+        /** Create Studio Identity */
+        post: operations["create_studio_identity_api_v1_studios_v1_identities_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/studios/v1/identities/{profile_id}/versions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Studio Identity Versions */
+        get: operations["list_studio_identity_versions_api_v1_studios_v1_identities__profile_id__versions_get"];
+        put?: never;
+        /** Create Studio Identity Version */
+        post: operations["create_studio_identity_version_api_v1_studios_v1_identities__profile_id__versions_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/studios/v1/identities/{profile_id}/deletion-requests": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Plan Studio Identity Deletion */
+        post: operations["plan_studio_identity_deletion_api_v1_studios_v1_identities__profile_id__deletion_requests_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/studios/v1/identities/{profile_id}/versions/{version_id}/evaluations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Studio Identity Evaluations */
+        get: operations["list_studio_identity_evaluations_api_v1_studios_v1_identities__profile_id__versions__version_id__evaluations_get"];
+        put?: never;
+        /** Evaluate Studio Identity Version */
+        post: operations["evaluate_studio_identity_version_api_v1_studios_v1_identities__profile_id__versions__version_id__evaluations_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/studios/v1/identities/{profile_id}/versions/{version_id}/review": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Review Studio Identity Version */
+        post: operations["review_studio_identity_version_api_v1_studios_v1_identities__profile_id__versions__version_id__review_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/studios/v1/voices": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Studio Voices */
+        get: operations["list_studio_voices_api_v1_studios_v1_voices_get"];
+        put?: never;
+        /** Create Studio Voice */
+        post: operations["create_studio_voice_api_v1_studios_v1_voices_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/studios/v1/voices/{profile_id}/versions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Studio Voice Versions */
+        get: operations["list_studio_voice_versions_api_v1_studios_v1_voices__profile_id__versions_get"];
+        put?: never;
+        /** Create Studio Voice Version */
+        post: operations["create_studio_voice_version_api_v1_studios_v1_voices__profile_id__versions_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/studios/v1/voices/{profile_id}/deletion-requests": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Plan Studio Voice Deletion */
+        post: operations["plan_studio_voice_deletion_api_v1_studios_v1_voices__profile_id__deletion_requests_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/studios/v1/identity-deletion-requests": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Studio Identity Deletions */
+        get: operations["list_studio_identity_deletions_api_v1_studios_v1_identity_deletion_requests_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/studios/v1/voices/{profile_id}/versions/{version_id}/evaluations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Studio Voice Evaluations */
+        get: operations["list_studio_voice_evaluations_api_v1_studios_v1_voices__profile_id__versions__version_id__evaluations_get"];
+        put?: never;
+        /** Evaluate Studio Voice Version */
+        post: operations["evaluate_studio_voice_version_api_v1_studios_v1_voices__profile_id__versions__version_id__evaluations_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/studios/v1/voices/{profile_id}/versions/{version_id}/review": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Review Studio Voice Version */
+        post: operations["review_studio_voice_version_api_v1_studios_v1_voices__profile_id__versions__version_id__review_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/studios/v1/media-ingests": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Media Ingests */
+        get: operations["list_media_ingests_api_v1_studios_v1_media_ingests_get"];
+        put?: never;
+        /** Enqueue Media Ingest */
+        post: operations["enqueue_media_ingest_api_v1_studios_v1_media_ingests_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/studios/v1/media-ingests/{ingest_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Media Ingest */
+        get: operations["get_media_ingest_api_v1_studios_v1_media_ingests__ingest_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/studios/v1/media-ingests/{ingest_id}/proxy": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Enqueue Media Proxy */
+        post: operations["enqueue_media_proxy_api_v1_studios_v1_media_ingests__ingest_id__proxy_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/studios/v1/media-ingests/{ingest_id}/waveform": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Enqueue Media Waveform */
+        post: operations["enqueue_media_waveform_api_v1_studios_v1_media_ingests__ingest_id__waveform_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/studios/v1/transcripts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Studio Transcripts */
+        get: operations["list_studio_transcripts_api_v1_studios_v1_transcripts_get"];
+        put?: never;
+        /** Create Studio Transcript */
+        post: operations["create_studio_transcript_api_v1_studios_v1_transcripts_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/studios/v1/transcripts/{transcript_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Studio Transcript */
+        get: operations["get_studio_transcript_api_v1_studios_v1_transcripts__transcript_id__get"];
+        /** Replace Studio Transcript */
+        put: operations["replace_studio_transcript_api_v1_studios_v1_transcripts__transcript_id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/studios/v1/transcripts/{transcript_id}/apply-captions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Apply Studio Transcript Captions */
+        post: operations["apply_studio_transcript_captions_api_v1_studios_v1_transcripts__transcript_id__apply_captions_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/studios/v1/edit-decision-sets": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Studio Edit Decision Sets */
+        get: operations["list_studio_edit_decision_sets_api_v1_studios_v1_edit_decision_sets_get"];
+        put?: never;
+        /** Create Studio Edit Decision Set */
+        post: operations["create_studio_edit_decision_set_api_v1_studios_v1_edit_decision_sets_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/studios/v1/edit-decision-sets/{decision_set_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Studio Edit Decision Set */
+        get: operations["get_studio_edit_decision_set_api_v1_studios_v1_edit_decision_sets__decision_set_id__get"];
+        /** Replace Studio Edit Decision Set */
+        put: operations["replace_studio_edit_decision_set_api_v1_studios_v1_edit_decision_sets__decision_set_id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/studios/v1/edit-decision-sets/{decision_set_id}/apply": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Apply Studio Edit Decision Set */
+        post: operations["apply_studio_edit_decision_set_api_v1_studios_v1_edit_decision_sets__decision_set_id__apply_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/studios/v1/documents/{document_id}/editorial-readiness": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Editorial Readiness */
+        get: operations["get_editorial_readiness_api_v1_studios_v1_documents__document_id__editorial_readiness_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/studios/v1/documents/{document_id}/editorial-plans": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Create Editorial Plan */
+        post: operations["create_editorial_plan_api_v1_studios_v1_documents__document_id__editorial_plans_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/studios/v1/documents/{document_id}/editorial-reviews": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Create Editorial Review */
+        post: operations["create_editorial_review_api_v1_studios_v1_documents__document_id__editorial_reviews_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/studios/v1/video-renders": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Enqueue Video Render */
+        post: operations["enqueue_video_render_api_v1_studios_v1_video_renders_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/studios/v1/jobs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Studio Jobs
+         * @description Return the newest observable jobs for an owned workspace.
+         *
+         *     This read model lets Studio surfaces recover an in-flight or completed
+         *     operation after a reload without persisting provider details in the
+         *     CreativeDocument.
+         */
+        get: operations["list_studio_jobs_api_v1_studios_v1_jobs_get"];
+        put?: never;
+        /** Enqueue Studio Job */
+        post: operations["enqueue_studio_job_api_v1_studios_v1_jobs_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/studios/v1/jobs/{job_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Studio Job */
+        get: operations["get_studio_job_api_v1_studios_v1_jobs__job_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/studios/v1/jobs/{job_id}/cancel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Cancel Studio Job */
+        post: operations["cancel_studio_job_api_v1_studios_v1_jobs__job_id__cancel_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/studios/v1/jobs/{job_id}/retry": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Retry Studio Job */
+        post: operations["retry_studio_job_api_v1_studios_v1_jobs__job_id__retry_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/workspace-resources": {
         parameters: {
             query?: never;
@@ -930,6 +2066,26 @@ export interface paths {
         put?: never;
         /** Create Resource */
         post: operations["create_resource_api_v1_workspace_resources_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/factory/rounds/reservations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Reserve Factory Round
+         * @description Atomically elect one client before any document, version or job side effect.
+         */
+        post: operations["reserve_factory_round_api_v1_factory_rounds_reservations_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1201,6 +2357,203 @@ export interface components {
             /** Samplesize */
             sampleSize: number;
         };
+        /** AddCaptionOperationV1 */
+        AddCaptionOperationV1: {
+            /** Operationid */
+            operationId: string;
+            /** Evidenceids */
+            evidenceIds: string[];
+            /** Confidence */
+            confidence: number;
+            /** Rationale */
+            rationale: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "add_caption";
+            /** Targettrackid */
+            targetTrackId: string;
+            interval: components["schemas"]["MediaIntervalV1"];
+            /** Text */
+            text: string;
+            /**
+             * Stylepreset
+             * @default brand-bold
+             */
+            stylePreset: string;
+        };
+        /** AddMarkerOperationV1 */
+        AddMarkerOperationV1: {
+            /** Operationid */
+            operationId: string;
+            /** Evidenceids */
+            evidenceIds: string[];
+            /** Confidence */
+            confidence: number;
+            /** Rationale */
+            rationale: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "add_marker";
+            /** Targettrackid */
+            targetTrackId: string;
+            interval: components["schemas"]["MediaIntervalV1"];
+            /** Label */
+            label: string;
+            /**
+             * Markertype
+             * @default ai-suggestion
+             */
+            markerType: string;
+        };
+        /** AdvancedCapabilityAuditV1 */
+        AdvancedCapabilityAuditV1: {
+            /**
+             * Schemaversion
+             * @default studio.advanced-capability-audit.v1
+             * @constant
+             */
+            schemaVersion: "studio.advanced-capability-audit.v1";
+            /** Auditid */
+            auditId: string;
+            /** Candidates */
+            candidates: components["schemas"]["AdvancedCapabilityCandidateV1"][];
+            /** Identityslots */
+            identitySlots: components["schemas"]["AdvancedIdentitySlotV1"][];
+            /**
+             * Requiredauthorizedidentitycount
+             * @default 6
+             * @constant
+             */
+            requiredAuthorizedIdentityCount: 6;
+            /** Authorizedidentitycount */
+            authorizedIdentityCount: number;
+            /**
+             * Requiredbenchmarkcasecount
+             * @default 24
+             * @constant
+             */
+            requiredBenchmarkCaseCount: 24;
+            /** Executedbenchmarkcasecount */
+            executedBenchmarkCaseCount: number;
+            /** Revocationrailimplemented */
+            revocationRailImplemented: boolean;
+            /** Deletionrailimplemented */
+            deletionRailImplemented: boolean;
+            /** Revocationdeletiondrillpassed */
+            revocationDeletionDrillPassed: boolean;
+            /**
+             * Disclosurerequired
+             * @default true
+             * @constant
+             */
+            disclosureRequired: true;
+            /**
+             * Provenancerequired
+             * @default true
+             * @constant
+             */
+            provenanceRequired: true;
+            /** Publishsyntheticgrantcount */
+            publishSyntheticGrantCount: number;
+            /** Enabledproviderids */
+            enabledProviderIds?: string[];
+            /** Fallbackmodes */
+            fallbackModes: ("real_person" | "licensed_stock" | "faceless_motion")[];
+            /** Activationeligible */
+            activationEligible: boolean;
+            /** Blockers */
+            blockers: string[];
+            /**
+             * Auditedat
+             * Format: date-time
+             */
+            auditedAt: string;
+        };
+        /** AdvancedCapabilityCandidateV1 */
+        AdvancedCapabilityCandidateV1: {
+            /** Candidateid */
+            candidateId: string;
+            /**
+             * Capability
+             * @enum {string}
+             */
+            capability: "voice_clone" | "avatar_video" | "lip_sync" | "generative_scene";
+            /** Repositoryname */
+            repositoryName: string;
+            /** Sourcerevision */
+            sourceRevision: string;
+            /** Localsourceavailable */
+            localSourceAvailable: boolean;
+            /** Licensedocumentdigestsha256 */
+            licenseDocumentDigestSha256: string;
+            /** Codelicense */
+            codeLicense: string;
+            /**
+             * Transitivelicensestatus
+             * @enum {string}
+             */
+            transitiveLicenseStatus: "verified" | "review_required" | "rejected";
+            /**
+             * Modelassetstatus
+             * @enum {string}
+             */
+            modelAssetStatus: "complete" | "incomplete" | "not_acquired";
+            /**
+             * Ptbrstatus
+             * @enum {string}
+             */
+            ptBrStatus: "passed" | "failed" | "unmeasured";
+            /**
+             * Hardwarestatus
+             * @enum {string}
+             */
+            hardwareStatus: "eligible" | "ineligible" | "unmeasured";
+            /**
+             * Supplychainstatus
+             * @enum {string}
+             */
+            supplyChainStatus: "promotable" | "incomplete" | "rejected";
+            /**
+             * Providerregistrystatus
+             * @enum {string}
+             */
+            providerRegistryStatus: "not_registered" | "evaluation" | "approved";
+            /**
+             * Biometricinferenceexecuted
+             * @default false
+             * @constant
+             */
+            biometricInferenceExecuted: false;
+            /** Notes */
+            notes?: string[];
+        };
+        /** AdvancedIdentitySlotV1 */
+        AdvancedIdentitySlotV1: {
+            /** Slotid */
+            slotId: string;
+            /**
+             * Authorizationstatus
+             * @enum {string}
+             */
+            authorizationStatus: "not_acquired" | "consented" | "revoked";
+            /** Identityversionid */
+            identityVersionId?: string | null;
+            /** Voiceversionid */
+            voiceVersionId?: string | null;
+            /** Consentgrantid */
+            consentGrantId?: string | null;
+            /** Benchmarkcaseids */
+            benchmarkCaseIds?: string[];
+            /**
+             * Privateartifactcount
+             * @default 0
+             */
+            privateArtifactCount: number;
+        };
         /** AnalyticsSummaryOut */
         AnalyticsSummaryOut: {
             /** Workspaceid */
@@ -1222,6 +2575,150 @@ export interface components {
             rejectionReasons: {
                 [key: string]: unknown;
             }[];
+        };
+        /** AnimaticPlanV1 */
+        AnimaticPlanV1: {
+            /**
+             * Schemaversion
+             * @default studio.animatic-plan.v1
+             * @constant
+             */
+            schemaVersion: "studio.animatic-plan.v1";
+            /** Animaticid */
+            animaticId: string;
+            /** Storyboardid */
+            storyboardId: string;
+            /** Storyboarddigestsha256 */
+            storyboardDigestSha256: string;
+            /** Width */
+            width: number;
+            /** Height */
+            height: number;
+            /** Framerate */
+            frameRate: number;
+            /**
+             * Reducedmotion
+             * @default false
+             */
+            reducedMotion: boolean;
+            /**
+             * Rendertier
+             * @default placeholder_only
+             * @constant
+             */
+            renderTier: "placeholder_only";
+            /**
+             * Expensiveprovidercallsallowed
+             * @default false
+             * @constant
+             */
+            expensiveProviderCallsAllowed: false;
+            /**
+             * Provisionalaudioonly
+             * @default true
+             * @constant
+             */
+            provisionalAudioOnly: true;
+            /**
+             * Status
+             * @default planned
+             * @enum {string}
+             */
+            status: "planned" | "rendered" | "human_approved";
+            /** Shots */
+            shots: components["schemas"]["AnimaticShotV1"][];
+            /** Renderassetpath */
+            renderAssetPath?: string | null;
+            /** Renderdigestsha256 */
+            renderDigestSha256?: string | null;
+            /** Reviewerid */
+            reviewerId?: string | null;
+            /** Approvedat */
+            approvedAt?: string | null;
+            /**
+             * Humanreviewrequired
+             * @default true
+             * @constant
+             */
+            humanReviewRequired: true;
+        };
+        /** AnimaticShotV1 */
+        AnimaticShotV1: {
+            /** Storyboardshotid */
+            storyboardShotId: string;
+            /** Startmilliseconds */
+            startMilliseconds: number;
+            /** Durationmilliseconds */
+            durationMilliseconds: number;
+            /**
+             * Visualplaceholder
+             * @default true
+             * @constant
+             */
+            visualPlaceholder: true;
+            /** Soundcueids */
+            soundCueIds: string[];
+            /** Transitionpreview */
+            transitionPreview: string;
+        };
+        /** ApplyEditDecisionSetRequest */
+        ApplyEditDecisionSetRequest: {
+            /** Documentid */
+            documentId: string;
+            /** Expecteddocumentrevision */
+            expectedDocumentRevision: number;
+            /** Expecteddecisionrevision */
+            expectedDecisionRevision: number;
+            /**
+             * Sourcetrackid
+             * @default video-main
+             */
+            sourceTrackId: string;
+        };
+        /** ApplyMotionPresetOperationV1 */
+        ApplyMotionPresetOperationV1: {
+            /** Operationid */
+            operationId: string;
+            /** Evidenceids */
+            evidenceIds: string[];
+            /** Confidence */
+            confidence: number;
+            /** Rationale */
+            rationale: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "apply_motion_preset";
+            /** Targettrackid */
+            targetTrackId: string;
+            interval: components["schemas"]["MediaIntervalV1"];
+            /** Presetid */
+            presetId: string;
+            /**
+             * Intensity
+             * @default balanced
+             * @enum {string}
+             */
+            intensity: "subtle" | "balanced" | "high";
+        };
+        /** ApplyTranscriptCaptionsRequest */
+        ApplyTranscriptCaptionsRequest: {
+            /** Documentid */
+            documentId: string;
+            /** Expecteddocumentrevision */
+            expectedDocumentRevision: number;
+            /**
+             * Trackid
+             * @default captions-main
+             */
+            trackId: string;
+            /**
+             * Trackname
+             * @default Captions
+             */
+            trackName: string;
+            style?: components["schemas"]["CaptionRenderStyleV1"];
         };
         /** ApprovalActionIn */
         ApprovalActionIn: {
@@ -1274,7 +2771,7 @@ export interface components {
              * Type
              * @enum {string}
              */
-            type: "content" | "upload" | "campaign" | "version" | "prompt" | "image" | "video" | "template" | "document";
+            type: "content" | "upload" | "campaign" | "version" | "prompt" | "image" | "video" | "audio" | "waveform" | "template" | "document" | "archive";
             /** Tags */
             tags?: string[];
             /** Campaignid */
@@ -1294,7 +2791,7 @@ export interface components {
              * Type
              * @enum {string}
              */
-            type: "content" | "upload" | "campaign" | "version" | "prompt" | "image" | "video" | "template" | "document";
+            type: "content" | "upload" | "campaign" | "version" | "prompt" | "image" | "video" | "audio" | "waveform" | "template" | "document" | "archive";
             /** Tags */
             tags?: string[];
             /** Campaignid */
@@ -1305,6 +2802,18 @@ export interface components {
             url?: string | null;
             /** Id */
             id: string;
+            /** Storagebackend */
+            storageBackend?: string | null;
+            /** Mediatype */
+            mediaType?: string | null;
+            /** Sizebytes */
+            sizeBytes?: number | null;
+            /** Checksumsha256 */
+            checksumSha256?: string | null;
+            /** Metadata */
+            metadata?: {
+                [key: string]: unknown;
+            };
             /**
              * Createdat
              * Format: date-time
@@ -1315,6 +2824,283 @@ export interface components {
              * Format: date-time
              */
             updatedAt: string;
+        };
+        /** AssetReferenceV1 */
+        AssetReferenceV1: {
+            /** Id */
+            id: string;
+            /** Version */
+            version?: string | number | null;
+            /**
+             * Mediatype
+             * @default application/octet-stream
+             */
+            mediaType: string;
+            /** Checksum */
+            checksum?: string | null;
+            /**
+             * Origin
+             * @default workspace
+             */
+            origin: string;
+            /**
+             * Rightsstatus
+             * @default unknown
+             * @enum {string}
+             */
+            rightsStatus: "verified" | "restricted" | "unknown";
+            /** Provenance */
+            provenance?: {
+                [key: string]: unknown;
+            };
+        };
+        /** AssistedIntelligenceCaseEvidenceV1 */
+        AssistedIntelligenceCaseEvidenceV1: {
+            /** Caseid */
+            caseId: string;
+            mediaIndex: components["schemas"]["MediaIndexV1"];
+            optionSet: components["schemas"]["StoryboardOptionSetV1"];
+            proposal: components["schemas"]["EditProposalV1"];
+            reviewedPlan: components["schemas"]["ReviewedEditPlanV1"];
+            /** Eligible */
+            eligible: boolean;
+            /** Blockers */
+            blockers?: string[];
+        };
+        /** AssistedIntelligenceSuiteEvidenceV1 */
+        AssistedIntelligenceSuiteEvidenceV1: {
+            /**
+             * Schemaversion
+             * @default studio.assisted-intelligence-suite-evidence.v1
+             * @constant
+             */
+            schemaVersion: "studio.assisted-intelligence-suite-evidence.v1";
+            /** Suiteid */
+            suiteId: string;
+            /** Sourcecasebookdigestsha256 */
+            sourceCasebookDigestSha256: string;
+            /** Cases */
+            cases: components["schemas"]["AssistedIntelligenceCaseEvidenceV1"][];
+            /** Eligible */
+            eligible: boolean;
+            /** Blockers */
+            blockers?: string[];
+            /**
+             * Generatedat
+             * Format: date-time
+             */
+            generatedAt: string;
+        };
+        /** AudioClipV1 */
+        AudioClipV1: {
+            /** Id */
+            id: string;
+            /** Assetid */
+            assetId: string;
+            timeline: components["schemas"]["TimelineFrameRangeV1"];
+            source?: components["schemas"]["SourceTimeRangeV1"] | null;
+            /**
+             * Enabled
+             * @default true
+             */
+            enabled: boolean;
+            /**
+             * Locked
+             * @default false
+             */
+            locked: boolean;
+            /**
+             * Label
+             * @default
+             */
+            label: string;
+            /**
+             * Playbackrate
+             * @default 1
+             */
+            playbackRate: number;
+            /** Transform */
+            transform?: {
+                [key: string]: unknown;
+            };
+            /** Effects */
+            effects?: {
+                [key: string]: unknown;
+            }[];
+            /** Keyframes */
+            keyframes?: {
+                [key: string]: unknown;
+            }[];
+            /**
+             * Gaindb
+             * @default 0
+             */
+            gainDb: number;
+            /**
+             * Pan
+             * @default 0
+             */
+            pan: number;
+            /**
+             * Fadeinframes
+             * @default 0
+             */
+            fadeInFrames: number;
+            /**
+             * Fadeoutframes
+             * @default 0
+             */
+            fadeOutFrames: number;
+        };
+        /** AudioStreamV1 */
+        AudioStreamV1: {
+            /** Index */
+            index: number;
+            /** Codec */
+            codec: string;
+            /** Samplerate */
+            sampleRate?: number | null;
+            /** Channels */
+            channels?: number | null;
+            /** Channellayout */
+            channelLayout?: string | null;
+            timeBase?: components["schemas"]["StreamTimeBaseV1"] | null;
+            /** Startpts */
+            startPts?: number | null;
+            /**
+             * Startmicroseconds
+             * @default 0
+             */
+            startMicroseconds: number;
+            /** Durationticks */
+            durationTicks?: number | null;
+            /** Durationmicroseconds */
+            durationMicroseconds?: number | null;
+            /** Bitrate */
+            bitrate?: number | null;
+        };
+        /** AudioTrackV1 */
+        "AudioTrackV1-Input": {
+            /** Id */
+            id: string;
+            /**
+             * Kind
+             * @default audio
+             * @constant
+             */
+            kind: "audio";
+            /**
+             * Name
+             * @default Audio
+             */
+            name: string;
+            /**
+             * Muted
+             * @default false
+             */
+            muted: boolean;
+            /**
+             * Locked
+             * @default false
+             */
+            locked: boolean;
+            /** Clips */
+            clips?: components["schemas"]["AudioClipV1"][];
+        };
+        /** AudioTrackV1 */
+        "AudioTrackV1-Output": {
+            /** Id */
+            id: string;
+            /**
+             * Kind
+             * @default audio
+             * @constant
+             */
+            kind: "audio";
+            /**
+             * Name
+             * @default Audio
+             */
+            name: string;
+            /**
+             * Muted
+             * @default false
+             */
+            muted: boolean;
+            /**
+             * Locked
+             * @default false
+             */
+            locked: boolean;
+            /** Clips */
+            clips?: components["schemas"]["AudioClipV1"][];
+        };
+        /** AudioWaveformSpecV1 */
+        AudioWaveformSpecV1: {
+            /**
+             * Schemaversion
+             * @default studio.audio-waveform-spec.v1
+             * @constant
+             */
+            schemaVersion: "studio.audio-waveform-spec.v1";
+            /** Audiostreamindex */
+            audioStreamIndex?: number | null;
+            /**
+             * Samplerate
+             * @default 48000
+             */
+            sampleRate: number;
+            /**
+             * Pointspersecond
+             * @default 100
+             */
+            pointsPerSecond: number;
+            /**
+             * Channelmode
+             * @default mono
+             * @constant
+             */
+            channelMode: "mono";
+            /**
+             * Includerms
+             * @default true
+             */
+            includeRms: boolean;
+        };
+        /** AutonomyPhaseStatusV1 */
+        AutonomyPhaseStatusV1: {
+            /**
+             * Phase
+             * @enum {string}
+             */
+            phase: "P0" | "P1" | "P2" | "P3" | "P4" | "P5" | "P6" | "P7";
+            /**
+             * Implementationstatus
+             * @enum {string}
+             */
+            implementationStatus: "complete" | "gated";
+            /**
+             * Operationalstatus
+             * @enum {string}
+             */
+            operationalStatus: "complete" | "pending_human_review" | "rejected_replan_required" | "blocked_by_gate" | "disabled_fail_closed";
+            /** Evidencepaths */
+            evidencePaths: string[];
+            /** Blockers */
+            blockers?: string[];
+        };
+        /** BeatLearningMetricV1 */
+        BeatLearningMetricV1: {
+            /** Beatid */
+            beatId: string;
+            /** Viewersentered */
+            viewersEntered?: number | null;
+            /** Viewersexited */
+            viewersExited?: number | null;
+            /** Rewatches */
+            rewatches?: number | null;
+            /** Qualitativenotes */
+            qualitativeNotes?: string[];
         };
         /** Body_upload_asset_api_v1_assets_upload_post */
         Body_upload_asset_api_v1_assets_upload_post: {
@@ -1344,6 +3130,15 @@ export interface components {
             suggestions: {
                 [key: string]: unknown;
             }[];
+        };
+        /** BrandMemoryReferenceV1 */
+        BrandMemoryReferenceV1: {
+            /** Id */
+            id: string;
+            /** Version */
+            version?: string | number | null;
+            /** Revision */
+            revision: number;
         };
         /** BrandProfileIn */
         BrandProfileIn: {
@@ -1505,6 +3300,27 @@ export interface components {
             profile: {
                 [key: string]: unknown;
             };
+        };
+        /** CameraObservationV1 */
+        CameraObservationV1: {
+            /** Observationid */
+            observationId: string;
+            /** Shotid */
+            shotId: string;
+            frameRange: components["schemas"]["RealityFrameRangeV1"];
+            /**
+             * Motion
+             * @enum {string}
+             */
+            motion: "static" | "pan" | "tilt" | "roll" | "dolly" | "truck" | "pedestal" | "zoom" | "handheld" | "mixed" | "unknown";
+            upVector?: components["schemas"]["NormalizedVectorV1"] | null;
+            gravityDirection?: components["schemas"]["NormalizedVectorV1"] | null;
+            /** Horizony */
+            horizonY?: number | null;
+            /** Confidence */
+            confidence: number;
+            /** Evidenceids */
+            evidenceIds: string[];
         };
         /** CampaignDecisionIn */
         CampaignDecisionIn: {
@@ -1868,6 +3684,141 @@ export interface components {
              */
             label: string;
         };
+        /** CancelGenerationJobRequest */
+        CancelGenerationJobRequest: {
+            /**
+             * Reason
+             * @default Cancelled by user
+             */
+            reason: string;
+        };
+        /** CaptionCueV1 */
+        CaptionCueV1: {
+            /** Id */
+            id: string;
+            timeline: components["schemas"]["TimelineFrameRangeV1"];
+            /** Text */
+            text: string;
+            /** Speaker */
+            speaker?: string | null;
+            /** Sourcesegmentid */
+            sourceSegmentId?: string | null;
+            /** Confidence */
+            confidence?: number | null;
+            style?: components["schemas"]["CaptionRenderStyleV1"];
+        };
+        /** CaptionRenderStyleV1 */
+        CaptionRenderStyleV1: {
+            /**
+             * Schemaversion
+             * @default studio.caption-render-style.v1
+             * @constant
+             */
+            schemaVersion: "studio.caption-render-style.v1";
+            /** Preset */
+            preset?: "brand-bold" | null;
+            /**
+             * Position
+             * @default lower-third
+             * @constant
+             */
+            position: "lower-third";
+            /**
+             * Color
+             * @default #ffffff
+             */
+            color: string;
+            /**
+             * Fontsize
+             * @default 56
+             */
+            fontSize: number;
+            /**
+             * Fontfamily
+             * @default Liberation Sans
+             * @constant
+             */
+            fontFamily: "Liberation Sans";
+            /**
+             * Fontweight
+             * @default bold
+             * @constant
+             */
+            fontWeight: "bold";
+            /**
+             * Outlinecolor
+             * @default #000000
+             */
+            outlineColor: string;
+            /**
+             * Outlinewidth
+             * @default 4
+             */
+            outlineWidth: number;
+            /**
+             * Maxlines
+             * @default 3
+             */
+            maxLines: number;
+            /** Emphasiscolor */
+            emphasisColor?: string | null;
+        };
+        /** CaptionTrackV1 */
+        "CaptionTrackV1-Input": {
+            /** Id */
+            id: string;
+            /**
+             * Kind
+             * @default caption
+             * @constant
+             */
+            kind: "caption";
+            /**
+             * Name
+             * @default Captions
+             */
+            name: string;
+            /**
+             * Locale
+             * @default pt-BR
+             */
+            locale: string;
+            /**
+             * Locked
+             * @default false
+             */
+            locked: boolean;
+            /** Cues */
+            cues?: components["schemas"]["CaptionCueV1"][];
+        };
+        /** CaptionTrackV1 */
+        "CaptionTrackV1-Output": {
+            /** Id */
+            id: string;
+            /**
+             * Kind
+             * @default caption
+             * @constant
+             */
+            kind: "caption";
+            /**
+             * Name
+             * @default Captions
+             */
+            name: string;
+            /**
+             * Locale
+             * @default pt-BR
+             */
+            locale: string;
+            /**
+             * Locked
+             * @default false
+             */
+            locked: boolean;
+            /** Cues */
+            cues?: components["schemas"]["CaptionCueV1"][];
+        };
         /** CompanySettingsIn */
         CompanySettingsIn: {
             /**
@@ -1911,6 +3862,585 @@ export interface components {
              */
             timezone: string;
         };
+        /** ConsentGrantV1 */
+        ConsentGrantV1: {
+            /**
+             * Schemaversion
+             * @default studio.consent-grant.v1
+             * @constant
+             */
+            schemaVersion: "studio.consent-grant.v1";
+            /** Id */
+            id: string;
+            /** Workspaceid */
+            workspaceId: string;
+            /** Subjectkey */
+            subjectKey: string;
+            /** Subjectdisplayname */
+            subjectDisplayName: string;
+            /** Purpose */
+            purpose: string;
+            /** Scopes */
+            scopes: ("identity.enroll" | "avatar.generate" | "voice.enroll" | "voice.clone" | "publish.synthetic")[];
+            /** Brandids */
+            brandIds?: string[];
+            /** Channels */
+            channels?: string[];
+            /** Policyversion */
+            policyVersion: string;
+            /** Evidenceassetid */
+            evidenceAssetId?: string | null;
+            /**
+             * Status
+             * @default active
+             * @enum {string}
+             */
+            status: "active" | "revoked" | "expired";
+            /** Grantedby */
+            grantedBy: string;
+            /**
+             * Grantedat
+             * Format: date-time
+             */
+            grantedAt: string;
+            /**
+             * Expiresat
+             * Format: date-time
+             */
+            expiresAt: string;
+            /** Revokedat */
+            revokedAt?: string | null;
+            /** Revokedby */
+            revokedBy?: string | null;
+            /** Revocationreason */
+            revocationReason?: string | null;
+            /**
+             * Createdat
+             * Format: date-time
+             */
+            createdAt: string;
+            /**
+             * Updatedat
+             * Format: date-time
+             */
+            updatedAt: string;
+        };
+        /** ContentBeatV1 */
+        ContentBeatV1: {
+            /**
+             * Schemaversion
+             * @default studio.content-beat.v1
+             * @constant
+             */
+            schemaVersion: "studio.content-beat.v1";
+            /** Beatid */
+            beatId: string;
+            /** Order */
+            order: number;
+            /**
+             * Narrativerole
+             * @enum {string}
+             */
+            narrativeRole: "hook" | "setup" | "problem" | "tension" | "proof" | "demo" | "contrast" | "transformation" | "benefit" | "offer" | "payoff" | "cta";
+            /** Purpose */
+            purpose: string;
+            /** Message */
+            message: string;
+            /**
+             * Opensexpectation
+             * @default
+             */
+            opensExpectation: string;
+            /**
+             * Closesexpectation
+             * @default
+             */
+            closesExpectation: string;
+            /**
+             * Visualfunction
+             * @enum {string}
+             */
+            visualFunction: "evidence" | "demonstration" | "context" | "metaphor" | "contrast" | "continuity" | "breathing_room" | "rhythm" | "identity" | "call_to_action";
+            /** Modalities */
+            modalities: ("presenter" | "product" | "screen_ui" | "source_video" | "archive" | "typography" | "shape" | "data" | "environment" | "generated_scene" | "avatar")[];
+            /**
+             * Relationtoprevious
+             * @enum {string}
+             */
+            relationToPrevious: "origin" | "continuity" | "contrast" | "cause" | "escalation" | "return" | "conclusion";
+            /** Startmilliseconds */
+            startMilliseconds: number;
+            /** Durationmilliseconds */
+            durationMilliseconds: number;
+            /**
+             * Spokentext
+             * @default
+             */
+            spokenText: string;
+            /**
+             * Onscreentext
+             * @default
+             */
+            onScreenText: string;
+            /**
+             * Soundintent
+             * @default
+             */
+            soundIntent: string;
+            /** Evidenceids */
+            evidenceIds?: string[];
+            /** Prohibitedclaims */
+            prohibitedClaims?: string[];
+            /** Realityconstraints */
+            realityConstraints?: string[];
+            /** Successcriterion */
+            successCriterion: string;
+        };
+        /** CreateAudioWaveformRequest */
+        CreateAudioWaveformRequest: {
+            /** Workspaceid */
+            workspaceId: string;
+            spec?: components["schemas"]["AudioWaveformSpecV1"];
+        };
+        /** CreateConsentGrantRequest */
+        CreateConsentGrantRequest: {
+            /** Workspaceid */
+            workspaceId: string;
+            /** Subjectkey */
+            subjectKey: string;
+            /** Subjectdisplayname */
+            subjectDisplayName: string;
+            /** Purpose */
+            purpose: string;
+            /** Scopes */
+            scopes: ("identity.enroll" | "avatar.generate" | "voice.enroll" | "voice.clone" | "publish.synthetic")[];
+            /** Brandids */
+            brandIds?: string[];
+            /** Channels */
+            channels?: string[];
+            /** Policyversion */
+            policyVersion: string;
+            /** Evidenceassetid */
+            evidenceAssetId?: string | null;
+            /**
+             * Expiresat
+             * Format: date-time
+             */
+            expiresAt: string;
+        };
+        /** CreateEditDecisionSetRequest */
+        CreateEditDecisionSetRequest: {
+            /** Workspaceid */
+            workspaceId: string;
+            /** Mediaingestid */
+            mediaIngestId: string;
+            /** Transcriptid */
+            transcriptId?: string | null;
+            /** Documentid */
+            documentId?: string | null;
+            /** Decisions */
+            decisions?: components["schemas"]["EditDecisionV1"][];
+        };
+        /** CreateGenerationJobRequest */
+        CreateGenerationJobRequest: {
+            /** Workspaceid */
+            workspaceId: string;
+            /** Documentid */
+            documentId?: string | null;
+            /** Consentgrantid */
+            consentGrantId?: string | null;
+            /** Identityversionid */
+            identityVersionId?: string | null;
+            /** Voiceversionid */
+            voiceVersionId?: string | null;
+            /**
+             * Jobtype
+             * @default document_snapshot
+             * @enum {string}
+             */
+            jobType: "document_snapshot" | "media_probe" | "video_proxy" | "media_waveform" | "video_render" | "acoustic_analysis" | "stock_voice" | "transcription" | "voice_clone" | "avatar_video";
+            /**
+             * Provider
+             * @default builtin.snapshot
+             */
+            provider: string;
+            /** Request */
+            request?: {
+                [key: string]: unknown;
+            };
+            /** Correlationid */
+            correlationId?: string | null;
+        };
+        /** CreateIdentityDeletionRequest */
+        CreateIdentityDeletionRequest: {
+            /** Reason */
+            reason: string;
+            /**
+             * Deletesourcesamples
+             * @default false
+             */
+            deleteSourceSamples: boolean;
+        };
+        /** CreateIdentityEvaluationRequest */
+        CreateIdentityEvaluationRequest: {
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "passed" | "failed";
+            /**
+             * Evaluatorkind
+             * @enum {string}
+             */
+            evaluatorKind: "automated" | "human" | "combined";
+            /** Qualitymetrics */
+            qualityMetrics?: {
+                [key: string]: number;
+            };
+            /** Checks */
+            checks?: components["schemas"]["QualityCheckV1"][];
+            /** Previewassetids */
+            previewAssetIds?: string[];
+            /** Providerregistrationid */
+            providerRegistrationId?: string | null;
+            /** Modelregistrationid */
+            modelRegistrationId?: string | null;
+            /** Notes */
+            notes?: string | null;
+        };
+        /** CreateIdentityProfileRequest */
+        CreateIdentityProfileRequest: {
+            /** Workspaceid */
+            workspaceId: string;
+            /** Subjectkey */
+            subjectKey: string;
+            /** Displayname */
+            displayName: string;
+            /**
+             * Identitytype
+             * @default natural_person
+             * @enum {string}
+             */
+            identityType: "natural_person" | "synthetic_character";
+            /** Owneruserid */
+            ownerUserId?: string | null;
+        };
+        /** CreateIdentityVersionRequest */
+        CreateIdentityVersionRequest: {
+            /** Consentgrantid */
+            consentGrantId?: string | null;
+            /** Capabilities */
+            capabilities?: string[];
+            /** Sampleassetids */
+            sampleAssetIds?: string[];
+            /** Derivedartifacts */
+            derivedArtifacts?: components["schemas"]["AssetReferenceV1"][];
+        };
+        /** CreateMediaIngestRequest */
+        CreateMediaIngestRequest: {
+            /** Workspaceid */
+            workspaceId: string;
+            /** Assetid */
+            assetId: string;
+        };
+        /** CreateMediaProxyRequest */
+        CreateMediaProxyRequest: {
+            /** Workspaceid */
+            workspaceId: string;
+            spec?: components["schemas"]["MediaProxySpecV1"];
+        };
+        /** CreateModelRegistrationRequest */
+        CreateModelRegistrationRequest: {
+            /** Workspaceid */
+            workspaceId: string;
+            /** Providerregistrationid */
+            providerRegistrationId: string;
+            /** Name */
+            name: string;
+            /** Version */
+            version: string;
+            /** Digestsha256 */
+            digestSha256: string;
+            /** Modellicense */
+            modelLicense: string;
+            /**
+             * Commercialuse
+             * @default unknown
+             * @enum {string}
+             */
+            commercialUse: "approved" | "restricted" | "unknown";
+            /** Languages */
+            languages?: string[];
+            /** Capabilities */
+            capabilities?: string[];
+            /** Manifest */
+            manifest?: {
+                [key: string]: unknown;
+            };
+        };
+        /** CreateMotionGraphRequestV1 */
+        CreateMotionGraphRequestV1: {
+            /** Workspaceid */
+            workspaceId: string;
+            graph: components["schemas"]["MotionGraphV1-Input"];
+            realityModel?: components["schemas"]["RealityModelV1"] | null;
+            /** Idempotencykey */
+            idempotencyKey: string;
+        };
+        /**
+         * CreateProviderRegistrationRequest
+         * @description Governed candidate registration; it never advertises a worker provider.
+         */
+        CreateProviderRegistrationRequest: {
+            /** Workspaceid */
+            workspaceId: string;
+            /** Capability */
+            capability: string;
+            /** Provider */
+            provider: string;
+            /** Providerversion */
+            providerVersion: string;
+            /** Sourceurl */
+            sourceUrl: string;
+            /** Sourcerevision */
+            sourceRevision: string;
+            /** Codelicense */
+            codeLicense: string;
+            /**
+             * Riskclass
+             * @enum {string}
+             */
+            riskClass: "low" | "medium" | "high" | "biometric";
+            /** Manifest */
+            manifest?: {
+                [key: string]: unknown;
+            };
+        };
+        /** CreateStudioDocumentRequest */
+        CreateStudioDocumentRequest: {
+            /** Workspaceid */
+            workspaceId: string;
+            /** Title */
+            title: string;
+            /**
+             * Contenttype
+             * @default visual
+             * @enum {string}
+             */
+            contentType: "visual" | "carousel" | "video" | "presenter";
+            /** Campaignid */
+            campaignId?: string | null;
+            /** Postid */
+            postId?: string | null;
+            /** Opportunityid */
+            opportunityId?: string | null;
+            /**
+             * Brandrevision
+             * @default 1
+             */
+            brandRevision: number;
+            brief: components["schemas"]["CreativeBriefV1"];
+            composition: components["schemas"]["CreativeCompositionV1-Input"];
+            /** Assets */
+            assets?: components["schemas"]["AssetReferenceV1"][];
+            /** Correlationid */
+            correlationId?: string | null;
+        };
+        /** CreateStudioReviewRequest */
+        CreateStudioReviewRequest: {
+            /** Comment */
+            comment?: string | null;
+            /** Renderjobid */
+            renderJobId?: string | null;
+        };
+        /** CreateTranscriptRequest */
+        CreateTranscriptRequest: {
+            /** Workspaceid */
+            workspaceId: string;
+            /** Mediaingestid */
+            mediaIngestId: string;
+            /**
+             * Locale
+             * @default pt-BR
+             */
+            locale: string;
+            /**
+             * Status
+             * @default draft
+             * @enum {string}
+             */
+            status: "draft" | "ready" | "reviewed";
+            /** Segments */
+            segments?: components["schemas"]["TranscriptSegmentV1"][];
+        };
+        /** CreateVideoRenderJobRequest */
+        CreateVideoRenderJobRequest: {
+            /** Workspaceid */
+            workspaceId: string;
+            /** Documentid */
+            documentId: string;
+            /** Expecteddocumentrevision */
+            expectedDocumentRevision: number;
+            /** Expecteddocumentversion */
+            expectedDocumentVersion: number;
+            /** Pageids */
+            pageIds?: string[];
+            output: components["schemas"]["VideoRenderSpecV1"];
+            /**
+             * Provider
+             * @default builtin.ffmpeg-ugc-v1
+             * @enum {string}
+             */
+            provider: "builtin.ffmpeg-ugc-v1" | "hyperframes.cli";
+            /** Motiongraphid */
+            motionGraphId?: string | null;
+            /** Motiongraphdigestsha256 */
+            motionGraphDigestSha256?: string | null;
+            /**
+             * Reducedmotion
+             * @default false
+             */
+            reducedMotion: boolean;
+            /** Correlationid */
+            correlationId?: string | null;
+        };
+        /** CreateVoiceProfileRequest */
+        CreateVoiceProfileRequest: {
+            /** Workspaceid */
+            workspaceId: string;
+            /** Identityprofileid */
+            identityProfileId?: string | null;
+            /** Displayname */
+            displayName: string;
+            /**
+             * Locale
+             * @default pt-BR
+             */
+            locale: string;
+            /**
+             * Voicetype
+             * @default cloned
+             * @enum {string}
+             */
+            voiceType: "stock" | "cloned";
+        };
+        /** CreateVoiceVersionRequest */
+        CreateVoiceVersionRequest: {
+            /** Consentgrantid */
+            consentGrantId?: string | null;
+            /** Sampleassetids */
+            sampleAssetIds?: string[];
+            /** Derivedartifacts */
+            derivedArtifacts?: components["schemas"]["AssetReferenceV1"][];
+            /** Pronunciationprofile */
+            pronunciationProfile?: {
+                [key: string]: unknown;
+            };
+        };
+        /** CreativeAutonomyCaseV1 */
+        CreativeAutonomyCaseV1: {
+            /**
+             * Schemaversion
+             * @default studio.creative-autonomy-case.v1
+             * @constant
+             */
+            schemaVersion: "studio.creative-autonomy-case.v1";
+            /** Caseid */
+            caseId: string;
+            /** Title */
+            title: string;
+            /**
+             * Family
+             * @enum {string}
+             */
+            family: "presenter_ugc" | "split_screen_proof" | "motion_visual_essay" | "cinematic_hybrid";
+            /**
+             * Golden
+             * @default false
+             */
+            golden: boolean;
+            /** Structuralreferenceurls */
+            structuralReferenceUrls?: string[];
+            /** Evidence */
+            evidence: components["schemas"]["CreativeEvidenceV1"][];
+            message: components["schemas"]["MessageArchitectureV1"];
+            script: components["schemas"]["CreativeScriptV1"];
+            recipe: components["schemas"]["FormatRecipeV1"];
+            formatRoute: components["schemas"]["FormatRouterV1"];
+            visualDirection: components["schemas"]["VisualDirectionV1"];
+            soundDesign: components["schemas"]["SoundDesignPlanV1"];
+            storyboard: components["schemas"]["ExecutableStoryboardV1"];
+            animatic: components["schemas"]["AnimaticPlanV1"];
+            learning: components["schemas"]["LearningRecordV1"];
+            /** Hardgates */
+            hardGates: string[];
+            /**
+             * Identityinferenceauthorized
+             * @default false
+             * @constant
+             */
+            identityInferenceAuthorized: false;
+            /**
+             * Publicationauthorized
+             * @default false
+             * @constant
+             */
+            publicationAuthorized: false;
+        };
+        /** CreativeBriefV1 */
+        CreativeBriefV1: {
+            /**
+             * Schemaversion
+             * @default studio.creative-brief.v1
+             * @constant
+             */
+            schemaVersion: "studio.creative-brief.v1";
+            /** Objective */
+            objective: string;
+            /** Audience */
+            audience: string;
+            /**
+             * Angle
+             * @default
+             */
+            angle: string;
+            /**
+             * Promise
+             * @default
+             */
+            promise: string;
+            /**
+             * Hook
+             * @default
+             */
+            hook: string;
+            /**
+             * Cta
+             * @default
+             */
+            cta: string;
+            /**
+             * Channel
+             * @default instagram
+             */
+            channel: string;
+            /**
+             * Format
+             * @default post
+             */
+            format: string;
+            /**
+             * Tone
+             * @default
+             */
+            tone: string;
+            /** Restrictions */
+            restrictions?: string[];
+            /** Hypotheses */
+            hypotheses?: string[];
+            /** Evidence */
+            evidence?: components["schemas"]["OpportunityEvidenceReferenceV1"][];
+        };
         /** CreativeCanvas */
         CreativeCanvas: {
             /**
@@ -1939,6 +4469,34 @@ export interface components {
             };
             /** Layers */
             layers?: (components["schemas"]["CreativeTextLayer"] | components["schemas"]["CreativeShapeLayer"] | components["schemas"]["CreativeImageLayer"])[];
+        };
+        /** CreativeCompositionV1 */
+        "CreativeCompositionV1-Input": {
+            /** Pages */
+            pages: components["schemas"]["CreativePageV1"][];
+            /** Narrative */
+            narrative?: {
+                [key: string]: unknown;
+            };
+            /** Tracks */
+            tracks?: {
+                [key: string]: unknown;
+            }[];
+            mediaTimeline?: components["schemas"]["MediaTimelineV1-Input"] | null;
+        };
+        /** CreativeCompositionV1 */
+        "CreativeCompositionV1-Output": {
+            /** Pages */
+            pages: components["schemas"]["CreativePageV1"][];
+            /** Narrative */
+            narrative?: {
+                [key: string]: unknown;
+            };
+            /** Tracks */
+            tracks?: {
+                [key: string]: unknown;
+            }[];
+            mediaTimeline?: components["schemas"]["MediaTimelineV1-Output"] | null;
         };
         /** CreativeDocumentIn */
         CreativeDocumentIn: {
@@ -2007,6 +4565,167 @@ export interface components {
             /** Kind */
             kind?: ("document" | "template") | null;
             document?: components["schemas"]["CreativeCanvas"] | null;
+        };
+        /** CreativeDocumentV1 */
+        "CreativeDocumentV1-Input": {
+            /**
+             * Schemaversion
+             * @default studio.creative-document.v1
+             * @constant
+             */
+            schemaVersion: "studio.creative-document.v1";
+            /** Documentid */
+            documentId: string;
+            /** Workspaceid */
+            workspaceId: string;
+            /** Title */
+            title: string;
+            /**
+             * Contenttype
+             * @default visual
+             * @enum {string}
+             */
+            contentType: "visual" | "carousel" | "video" | "presenter";
+            /**
+             * Status
+             * @default draft
+             * @enum {string}
+             */
+            status: "draft" | "in_review" | "approved" | "archived";
+            /**
+             * Revision
+             * @default 1
+             */
+            revision: number;
+            /**
+             * Version
+             * @default 1
+             */
+            version: number;
+            /** Actorid */
+            actorId?: string | null;
+            /** Correlationid */
+            correlationId: string;
+            campaignRef?: components["schemas"]["EntityReferenceV1"] | null;
+            postRef?: components["schemas"]["EntityReferenceV1"] | null;
+            opportunityRef?: components["schemas"]["OpportunityEvidenceReferenceV1"] | null;
+            brandMemoryRef: components["schemas"]["BrandMemoryReferenceV1"];
+            brief: components["schemas"]["CreativeBriefV1"];
+            composition: components["schemas"]["CreativeCompositionV1-Input"];
+            /** Assets */
+            assets?: components["schemas"]["AssetReferenceV1"][];
+            identityRef?: components["schemas"]["IdentityVersionReferenceV1"] | null;
+            voiceRef?: components["schemas"]["VoiceVersionReferenceV1"] | null;
+            sceneRef?: components["schemas"]["EntityReferenceV1"] | null;
+            scriptRef?: components["schemas"]["EntityReferenceV1"] | null;
+            shotPlanRef?: components["schemas"]["EntityReferenceV1"] | null;
+            /** Lineage */
+            lineage?: components["schemas"]["ProviderLineageV1"][];
+            review?: components["schemas"]["ReviewReferenceV1"];
+            /** Exports */
+            exports?: components["schemas"]["ExportReferenceV1"][];
+            /**
+             * Createdat
+             * Format: date-time
+             */
+            createdAt: string;
+            /**
+             * Updatedat
+             * Format: date-time
+             */
+            updatedAt: string;
+        };
+        /** CreativeDocumentV1 */
+        "CreativeDocumentV1-Output": {
+            /**
+             * Schemaversion
+             * @default studio.creative-document.v1
+             * @constant
+             */
+            schemaVersion: "studio.creative-document.v1";
+            /** Documentid */
+            documentId: string;
+            /** Workspaceid */
+            workspaceId: string;
+            /** Title */
+            title: string;
+            /**
+             * Contenttype
+             * @default visual
+             * @enum {string}
+             */
+            contentType: "visual" | "carousel" | "video" | "presenter";
+            /**
+             * Status
+             * @default draft
+             * @enum {string}
+             */
+            status: "draft" | "in_review" | "approved" | "archived";
+            /**
+             * Revision
+             * @default 1
+             */
+            revision: number;
+            /**
+             * Version
+             * @default 1
+             */
+            version: number;
+            /** Actorid */
+            actorId?: string | null;
+            /** Correlationid */
+            correlationId: string;
+            campaignRef?: components["schemas"]["EntityReferenceV1"] | null;
+            postRef?: components["schemas"]["EntityReferenceV1"] | null;
+            opportunityRef?: components["schemas"]["OpportunityEvidenceReferenceV1"] | null;
+            brandMemoryRef: components["schemas"]["BrandMemoryReferenceV1"];
+            brief: components["schemas"]["CreativeBriefV1"];
+            composition: components["schemas"]["CreativeCompositionV1-Output"];
+            /** Assets */
+            assets?: components["schemas"]["AssetReferenceV1"][];
+            identityRef?: components["schemas"]["IdentityVersionReferenceV1"] | null;
+            voiceRef?: components["schemas"]["VoiceVersionReferenceV1"] | null;
+            sceneRef?: components["schemas"]["EntityReferenceV1"] | null;
+            scriptRef?: components["schemas"]["EntityReferenceV1"] | null;
+            shotPlanRef?: components["schemas"]["EntityReferenceV1"] | null;
+            /** Lineage */
+            lineage?: components["schemas"]["ProviderLineageV1"][];
+            review?: components["schemas"]["ReviewReferenceV1"];
+            /** Exports */
+            exports?: components["schemas"]["ExportReferenceV1"][];
+            /**
+             * Createdat
+             * Format: date-time
+             */
+            createdAt: string;
+            /**
+             * Updatedat
+             * Format: date-time
+             */
+            updatedAt: string;
+        };
+        /** CreativeEvidenceV1 */
+        CreativeEvidenceV1: {
+            /** Evidenceid */
+            evidenceId: string;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "verified" | "user_provided" | "hypothesis" | "creative_reference";
+            /** Summary */
+            summary: string;
+            /** Sourceurl */
+            sourceUrl?: string | null;
+            /** Allowedclaims */
+            allowedClaims?: string[];
+            /** Prohibitedclaims */
+            prohibitedClaims?: string[];
+            /**
+             * Humanreviewrequired
+             * @default true
+             */
+            humanReviewRequired: boolean;
         };
         /** CreativeExportIn */
         CreativeExportIn: {
@@ -2077,6 +4796,205 @@ export interface components {
              * @enum {string}
              */
             fit: "cover" | "contain";
+        };
+        /** CreativeLayerV1 */
+        CreativeLayerV1: {
+            /** Id */
+            id: string;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "text" | "shape" | "image" | "video" | "audio" | "group";
+            /**
+             * Name
+             * @default Layer
+             */
+            name: string;
+            /**
+             * X
+             * @default 0
+             */
+            x: number;
+            /**
+             * Y
+             * @default 0
+             */
+            y: number;
+            /** Width */
+            width: number;
+            /** Height */
+            height: number;
+            /**
+             * Rotation
+             * @default 0
+             */
+            rotation: number;
+            /**
+             * Opacity
+             * @default 1
+             */
+            opacity: number;
+            /**
+             * Visible
+             * @default true
+             */
+            visible: boolean;
+            /**
+             * Locked
+             * @default false
+             */
+            locked: boolean;
+            /**
+             * Zindex
+             * @default 0
+             */
+            zIndex: number;
+            /** Properties */
+            properties?: {
+                [key: string]: unknown;
+            };
+        };
+        /** CreativePageV1 */
+        CreativePageV1: {
+            /** Id */
+            id: string;
+            /**
+             * Role
+             * @default content
+             */
+            role: string;
+            /** Width */
+            width: number;
+            /** Height */
+            height: number;
+            /**
+             * Safearea
+             * @default 48
+             */
+            safeArea: number;
+            /**
+             * Background
+             * @default #10181c
+             */
+            background: string;
+            /** Durationms */
+            durationMs?: number | null;
+            /** Layers */
+            layers?: components["schemas"]["CreativeLayerV1"][];
+        };
+        /** CreativePilotCasebookV1 */
+        CreativePilotCasebookV1: {
+            /**
+             * Schemaversion
+             * @default studio.creative-pilot-casebook.v1
+             * @constant
+             */
+            schemaVersion: "studio.creative-pilot-casebook.v1";
+            /** Suiteid */
+            suiteId: string;
+            /** Cases */
+            cases: components["schemas"]["CreativeAutonomyCaseV1"][];
+        };
+        /** CreativeReplanDecisionV1 */
+        CreativeReplanDecisionV1: {
+            /**
+             * Key
+             * @enum {string}
+             */
+            key: "business_objective" | "audience_and_offer" | "channel_and_duration" | "golden_format_family" | "presenter_policy" | "media_sources_and_rights" | "voice_policy" | "reference_matrix" | "quality_rubric_and_owner";
+            /** Prompt */
+            prompt: string;
+            /**
+             * Status
+             * @default pending
+             * @enum {string}
+             */
+            status: "pending" | "approved" | "rejected";
+            /** Selection */
+            selection?: string | null;
+            /** Reviewedby */
+            reviewedBy?: string | null;
+            /** Reviewedat */
+            reviewedAt?: string | null;
+            /** Notes */
+            notes?: string | null;
+        };
+        /** CreativeReplanStateV1 */
+        CreativeReplanStateV1: {
+            /**
+             * Schemaversion
+             * @default studio.creative-replan-state.v1
+             * @constant
+             */
+            schemaVersion: "studio.creative-replan-state.v1";
+            /** Replanid */
+            replanId: string;
+            /** Previousprogramid */
+            previousProgramId: string;
+            /** Previousrejectionid */
+            previousRejectionId: string;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "awaiting_decisions" | "ready_for_one_golden";
+            /** Decisions */
+            decisions: components["schemas"]["CreativeReplanDecisionV1"][];
+            /** Approveddecisioncount */
+            approvedDecisionCount: number;
+            /**
+             * Goldenjoblimit
+             * @default 1
+             * @constant
+             */
+            goldenJobLimit: 1;
+            /** Goldenproductioneligible */
+            goldenProductionEligible: boolean;
+            /**
+             * Batchdispatchauthorized
+             * @default false
+             * @constant
+             */
+            batchDispatchAuthorized: false;
+            /**
+             * Rejectedartifactreuseauthorized
+             * @default false
+             * @constant
+             */
+            rejectedArtifactReuseAuthorized: false;
+            /**
+             * Externalpublicationauthorized
+             * @default false
+             * @constant
+             */
+            externalPublicationAuthorized: false;
+            /** Blockers */
+            blockers: string[];
+            /**
+             * Evaluatedat
+             * Format: date-time
+             */
+            evaluatedAt: string;
+        };
+        /** CreativeScriptV1 */
+        CreativeScriptV1: {
+            /**
+             * Schemaversion
+             * @default studio.creative-script.v1
+             * @constant
+             */
+            schemaVersion: "studio.creative-script.v1";
+            /** Scriptid */
+            scriptId: string;
+            /** Messageid */
+            messageId: string;
+            /** Messagedigestsha256 */
+            messageDigestSha256: string;
+            /** Targetdurationmilliseconds */
+            targetDurationMilliseconds: number;
+            /** Beats */
+            beats: components["schemas"]["ContentBeatV1"][];
         };
         /** CreativeShapeLayer */
         CreativeShapeLayer: {
@@ -2240,6 +5158,426 @@ export interface components {
              */
             label: string;
         };
+        /** EditDecisionSetV1 */
+        EditDecisionSetV1: {
+            /**
+             * Schemaversion
+             * @default studio.edit-decision-set.v1
+             * @constant
+             */
+            schemaVersion: "studio.edit-decision-set.v1";
+            /** Id */
+            id: string;
+            /** Workspaceid */
+            workspaceId: string;
+            /** Mediaingestid */
+            mediaIngestId: string;
+            /** Transcriptid */
+            transcriptId?: string | null;
+            /** Documentid */
+            documentId?: string | null;
+            /**
+             * Status
+             * @default draft
+             * @enum {string}
+             */
+            status: "draft" | "applied" | "archived";
+            /**
+             * Revision
+             * @default 1
+             */
+            revision: number;
+            /**
+             * Version
+             * @default 1
+             */
+            version: number;
+            /** Decisions */
+            decisions?: components["schemas"]["EditDecisionV1"][];
+            /** Createdby */
+            createdBy: string;
+            /** Updatedby */
+            updatedBy: string;
+            /**
+             * Createdat
+             * Format: date-time
+             */
+            createdAt: string;
+            /**
+             * Updatedat
+             * Format: date-time
+             */
+            updatedAt: string;
+        };
+        /** EditDecisionV1 */
+        EditDecisionV1: {
+            /** Id */
+            id: string;
+            /**
+             * Operation
+             * @enum {string}
+             */
+            operation: "keep" | "remove" | "marker";
+            /** Startmicroseconds */
+            startMicroseconds: number;
+            /** Endmicroseconds */
+            endMicroseconds: number;
+            /**
+             * Status
+             * @default suggested
+             * @enum {string}
+             */
+            status: "suggested" | "accepted" | "rejected";
+            /**
+             * Reason
+             * @default
+             */
+            reason: string;
+            /** Confidence */
+            confidence?: number | null;
+            /**
+             * Source
+             * @default manual
+             */
+            source: string;
+        };
+        /** EditOperationDecisionV1 */
+        EditOperationDecisionV1: {
+            /** Operationid */
+            operationId: string;
+            /**
+             * Decision
+             * @enum {string}
+             */
+            decision: "accept" | "reject" | "adjust";
+            /** Reason */
+            reason: string;
+            /** Adjustedoperation */
+            adjustedOperation?: (components["schemas"]["RemoveRangeOperationV1"] | components["schemas"]["AddMarkerOperationV1"] | components["schemas"]["AddCaptionOperationV1"] | components["schemas"]["SetAudioGainOperationV1"] | components["schemas"]["InsertBrollOperationV1"] | components["schemas"]["ApplyMotionPresetOperationV1"]) | null;
+        };
+        /** EditProposalV1 */
+        EditProposalV1: {
+            /**
+             * Schemaversion
+             * @default studio.edit-proposal.v1
+             * @constant
+             */
+            schemaVersion: "studio.edit-proposal.v1";
+            /** Proposalid */
+            proposalId: string;
+            /** Workspaceid */
+            workspaceId: string;
+            /** Documentid */
+            documentId: string;
+            /** Basedocumentrevision */
+            baseDocumentRevision: number;
+            /** Mediaindexid */
+            mediaIndexId: string;
+            /** Mediaindexdigestsha256 */
+            mediaIndexDigestSha256: string;
+            /** Storyboardid */
+            storyboardId: string;
+            /** Storyboarddigestsha256 */
+            storyboardDigestSha256: string;
+            /**
+             * Status
+             * @default suggested
+             * @enum {string}
+             */
+            status: "suggested" | "rejected" | "applied";
+            /** Operations */
+            operations: (components["schemas"]["RemoveRangeOperationV1"] | components["schemas"]["AddMarkerOperationV1"] | components["schemas"]["AddCaptionOperationV1"] | components["schemas"]["SetAudioGainOperationV1"] | components["schemas"]["InsertBrollOperationV1"] | components["schemas"]["ApplyMotionPresetOperationV1"])[];
+            /** Affectedtrackids */
+            affectedTrackIds: string[];
+            /** Estimateddurationbeforemicroseconds */
+            estimatedDurationBeforeMicroseconds: number;
+            /** Estimateddurationaftermicroseconds */
+            estimatedDurationAfterMicroseconds: number;
+            /** Abstentions */
+            abstentions?: string[];
+            lineage: components["schemas"]["IntelligenceLineageV1"];
+            /**
+             * Humanapplyrequired
+             * @default true
+             * @constant
+             */
+            humanApplyRequired: true;
+            /**
+             * Createdat
+             * Format: date-time
+             */
+            createdAt: string;
+        };
+        /** EditorialBeatV1 */
+        EditorialBeatV1: {
+            /** Id */
+            id: string;
+            /** Message */
+            message: string;
+            /** Visualaction */
+            visualAction: string;
+            /** Editreason */
+            editReason: string;
+            /** Evidenceassetids */
+            evidenceAssetIds: string[];
+        };
+        /** EditorialPlanRequestV1 */
+        EditorialPlanRequestV1: {
+            /** Expecteddocumentrevision */
+            expectedDocumentRevision: number;
+            /**
+             * Workflow
+             * @default ugc-avatar
+             * @constant
+             */
+            workflow: "ugc-avatar";
+            /** Objective */
+            objective: string;
+            /** Cta */
+            cta: string;
+            /** Beats */
+            beats: components["schemas"]["EditorialBeatV1"][];
+        };
+        /** EditorialPlanV1 */
+        EditorialPlanV1: {
+            /**
+             * Schemaversion
+             * @default studio.editorial-plan.v1
+             * @constant
+             */
+            schemaVersion: "studio.editorial-plan.v1";
+            /** Id */
+            id: string;
+            /** Workspaceid */
+            workspaceId: string;
+            /** Documentid */
+            documentId: string;
+            /** Documentrevision */
+            documentRevision: number;
+            /** Documentdigestsha256 */
+            documentDigestSha256: string;
+            /** Assetsdigestsha256 */
+            assetsDigestSha256: string;
+            plan: components["schemas"]["EditorialPlanRequestV1"];
+            /** Createdby */
+            createdBy: string;
+            /**
+             * Createdat
+             * Format: date-time
+             */
+            createdAt: string;
+        };
+        /** EditorialReadinessV1 */
+        EditorialReadinessV1: {
+            /**
+             * Schemaversion
+             * @default studio.editorial-readiness.v1
+             * @constant
+             */
+            schemaVersion: "studio.editorial-readiness.v1";
+            /** Managed */
+            managed: boolean;
+            plan?: components["schemas"]["EditorialPlanV1"] | null;
+            /** Reviews */
+            reviews?: components["schemas"]["EditorialReviewV1"][];
+            /** Blockers */
+            blockers?: string[];
+            /**
+             * Fullrendereligible
+             * @default false
+             */
+            fullRenderEligible: boolean;
+            /**
+             * Publicationauthorized
+             * @default false
+             * @constant
+             */
+            publicationAuthorized: false;
+        };
+        /** EditorialReviewRequestV1 */
+        EditorialReviewRequestV1: {
+            /** Planid */
+            planId: string;
+            /**
+             * Axis
+             * @enum {string}
+             */
+            axis: "proof" | "script" | "storyboard" | "animatic" | "voice" | "face" | "scenario";
+            /**
+             * Decision
+             * @enum {string}
+             */
+            decision: "approved" | "rejected";
+            /** Evidenceassetids */
+            evidenceAssetIds: string[];
+            /** Notes */
+            notes: string;
+        };
+        /** EditorialReviewV1 */
+        EditorialReviewV1: {
+            /** Id */
+            id: string;
+            review: components["schemas"]["EditorialReviewRequestV1"];
+            /** Reviewedby */
+            reviewedBy: string;
+            /**
+             * Reviewedat
+             * Format: date-time
+             */
+            reviewedAt: string;
+        };
+        /** EntityReferenceV1 */
+        EntityReferenceV1: {
+            /** Id */
+            id: string;
+            /** Version */
+            version?: string | number | null;
+        };
+        /** ExecutableStoryboardShotV1 */
+        ExecutableStoryboardShotV1: {
+            /** Shotid */
+            shotId: string;
+            /** Order */
+            order: number;
+            /** Beatid */
+            beatId: string;
+            /**
+             * Visualfunction
+             * @enum {string}
+             */
+            visualFunction: "evidence" | "demonstration" | "context" | "metaphor" | "contrast" | "continuity" | "breathing_room" | "rhythm" | "identity" | "call_to_action";
+            /** Startmilliseconds */
+            startMilliseconds: number;
+            /** Durationmilliseconds */
+            durationMilliseconds: number;
+            /**
+             * Placeholderkind
+             * @enum {string}
+             */
+            placeholderKind: "solid_card" | "typography_card" | "source_thumbnail" | "wireframe_ui" | "shape_blocking" | "generated_scene_blocking";
+            /** Framedescription */
+            frameDescription: string;
+            /**
+             * Onscreentext
+             * @default
+             */
+            onScreenText: string;
+            /** Primarycolor */
+            primaryColor: string;
+            /** Accentcolor */
+            accentColor: string;
+            /** Soundcueids */
+            soundCueIds: string[];
+            /** Realityconstraints */
+            realityConstraints: string[];
+            /** Plannedclipids */
+            plannedClipIds?: string[];
+            /**
+             * Assetstate
+             * @default placeholder
+             * @enum {string}
+             */
+            assetState: "placeholder" | "rights_verified";
+            /**
+             * Expensivegenerationrequired
+             * @default false
+             */
+            expensiveGenerationRequired: boolean;
+        };
+        /** ExecutableStoryboardV1 */
+        ExecutableStoryboardV1: {
+            /**
+             * Schemaversion
+             * @default studio.executable-storyboard.v1
+             * @constant
+             */
+            schemaVersion: "studio.executable-storyboard.v1";
+            /** Storyboardid */
+            storyboardId: string;
+            /** Scriptid */
+            scriptId: string;
+            /** Scriptdigestsha256 */
+            scriptDigestSha256: string;
+            /** Directionid */
+            directionId: string;
+            /** Directiondigestsha256 */
+            directionDigestSha256: string;
+            /** Soundplanid */
+            soundPlanId: string;
+            /** Soundplandigestsha256 */
+            soundPlanDigestSha256: string;
+            /** Routeid */
+            routeId: string;
+            /** Routedigestsha256 */
+            routeDigestSha256: string;
+            /** Targetdurationmilliseconds */
+            targetDurationMilliseconds: number;
+            /**
+             * Status
+             * @default draft
+             * @enum {string}
+             */
+            status: "draft" | "ready_for_review" | "human_approved";
+            /** Shots */
+            shots: components["schemas"]["ExecutableStoryboardShotV1"][];
+            /** Reviewerid */
+            reviewerId?: string | null;
+            /** Approvedat */
+            approvedAt?: string | null;
+            /**
+             * Humanreviewrequired
+             * @default true
+             * @constant
+             */
+            humanReviewRequired: true;
+        };
+        /** ExportReferenceV1 */
+        ExportReferenceV1: {
+            /** Assetid */
+            assetId: string;
+            /** Documentversion */
+            documentVersion: number;
+            /**
+             * Target
+             * @default download
+             */
+            target: string;
+            /** Format */
+            format: string;
+            /**
+             * Createdat
+             * Format: date-time
+             */
+            createdAt: string;
+        };
+        /** FactoryRoundReservationIn */
+        FactoryRoundReservationIn: {
+            /** Workspaceid */
+            workspaceId: string;
+            /** Sourcepostid */
+            sourcePostId?: string | null;
+            /** Derivativeids */
+            derivativeIds: string[];
+        };
+        /** FactoryRoundReservationOut */
+        FactoryRoundReservationOut: {
+            /**
+             * Schemaversion
+             * @default clicko.factory-round-reservation.v1
+             * @constant
+             */
+            schemaVersion: "clicko.factory-round-reservation.v1";
+            /** Roundid */
+            roundId: string;
+            /** Inputdigestsha256 */
+            inputDigestSha256: string;
+            /**
+             * Ownership
+             * @enum {string}
+             */
+            ownership: "acquired" | "existing";
+            resource: components["schemas"]["WorkspaceResourceOut"];
+        };
         /** FeedbackIn */
         FeedbackIn: {
             /** Workspaceid */
@@ -2263,6 +5601,206 @@ export interface components {
             payload?: {
                 [key: string]: unknown;
             };
+        };
+        /** FormatRecipeV1 */
+        FormatRecipeV1: {
+            /**
+             * Schemaversion
+             * @default studio.format-recipe.v1
+             * @constant
+             */
+            schemaVersion: "studio.format-recipe.v1";
+            /** Recipeid */
+            recipeId: string;
+            /**
+             * Family
+             * @enum {string}
+             */
+            family: "presenter_ugc" | "split_screen_proof" | "motion_visual_essay" | "cinematic_hybrid";
+            /** Name */
+            name: string;
+            /** Canvaswidth */
+            canvasWidth: number;
+            /** Canvasheight */
+            canvasHeight: number;
+            /** Minimumdurationmilliseconds */
+            minimumDurationMilliseconds: number;
+            /** Maximumdurationmilliseconds */
+            maximumDurationMilliseconds: number;
+            /** Requiredcapabilities */
+            requiredCapabilities: string[];
+            /** Allowedmodalities */
+            allowedModalities: ("presenter" | "product" | "screen_ui" | "source_video" | "archive" | "typography" | "shape" | "data" | "environment" | "generated_scene" | "avatar")[];
+            /** Layoutrules */
+            layoutRules: string[];
+            /** Motionrules */
+            motionRules: string[];
+            /** Audiorules */
+            audioRules: string[];
+            designTokens: components["schemas"]["RecipeDesignTokensV1"];
+            /** Fallbacks */
+            fallbacks: components["schemas"]["RecipeFallbackV1"][];
+            /** Reducedmotionrules */
+            reducedMotionRules: string[];
+            /** Fallbackrecipeid */
+            fallbackRecipeId?: string | null;
+            /**
+             * Reducedmotionsupported
+             * @default true
+             * @constant
+             */
+            reducedMotionSupported: true;
+            /**
+             * Humanreviewrequired
+             * @default true
+             * @constant
+             */
+            humanReviewRequired: true;
+        };
+        /** FormatRouteCandidateV1 */
+        FormatRouteCandidateV1: {
+            /**
+             * Family
+             * @enum {string}
+             */
+            family: "presenter_ugc" | "split_screen_proof" | "motion_visual_essay" | "cinematic_hybrid";
+            /** Score */
+            score: number;
+            /** Rationale */
+            rationale: string;
+            /** Blockers */
+            blockers?: string[];
+        };
+        /** FormatRouterV1 */
+        FormatRouterV1: {
+            /**
+             * Schemaversion
+             * @default studio.format-router.v1
+             * @constant
+             */
+            schemaVersion: "studio.format-router.v1";
+            /** Routeid */
+            routeId: string;
+            /** Scriptid */
+            scriptId: string;
+            /** Scriptdigestsha256 */
+            scriptDigestSha256: string;
+            /** Candidates */
+            candidates: components["schemas"]["FormatRouteCandidateV1"][];
+            /**
+             * Selectedfamily
+             * @enum {string}
+             */
+            selectedFamily: "presenter_ugc" | "split_screen_proof" | "motion_visual_essay" | "cinematic_hybrid";
+            /** Selectedrecipeid */
+            selectedRecipeId: string;
+            /** Selectedrecipedigestsha256 */
+            selectedRecipeDigestSha256: string;
+            /** Selectionrationale */
+            selectionRationale: string;
+            /**
+             * Humanreviewrequired
+             * @default true
+             * @constant
+             */
+            humanReviewRequired: true;
+        };
+        /** FrameRateV1 */
+        FrameRateV1: {
+            /**
+             * Numerator
+             * @default 30
+             */
+            numerator: number;
+            /**
+             * Denominator
+             * @default 1
+             */
+            denominator: number;
+        };
+        /** GenerationJobV1 */
+        GenerationJobV1: {
+            /**
+             * Schemaversion
+             * @default studio.generation-job.v1
+             * @constant
+             */
+            schemaVersion: "studio.generation-job.v1";
+            /** Id */
+            id: string;
+            /** Workspaceid */
+            workspaceId: string;
+            /** Requestedby */
+            requestedBy?: string | null;
+            /** Documentid */
+            documentId?: string | null;
+            /** Consentgrantid */
+            consentGrantId?: string | null;
+            /** Identityversionid */
+            identityVersionId?: string | null;
+            /** Voiceversionid */
+            voiceVersionId?: string | null;
+            /** Jobtype */
+            jobType: string;
+            /** Provider */
+            provider: string;
+            /**
+             * Executioncapability
+             * @enum {string}
+             */
+            executionCapability: "control" | "media_cpu" | "speech_cpu" | "speech_gpu" | "vision_gpu" | "llm_gpu";
+            /** Queuename */
+            queueName: string;
+            /** Resourceclass */
+            resourceClass: string;
+            /** Hardtimelimitseconds */
+            hardTimeLimitSeconds: number;
+            /** Idempotencykey */
+            idempotencyKey: string;
+            /** Payloadhash */
+            payloadHash: string;
+            /** Correlationid */
+            correlationId: string;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "queued" | "running" | "retrying" | "cancel_requested" | "cancelled" | "succeeded" | "failed";
+            /** Progress */
+            progress: number;
+            /** Attempts */
+            attempts: number;
+            /** Maxattempts */
+            maxAttempts: number;
+            /** Request */
+            request?: {
+                [key: string]: unknown;
+            };
+            /** Result */
+            result?: {
+                [key: string]: unknown;
+            } | null;
+            /** Errorcode */
+            errorCode?: string | null;
+            /** Errormessage */
+            errorMessage?: string | null;
+            /** Cancelreason */
+            cancelReason?: string | null;
+            workerExecutionContext?: components["schemas"]["WorkerExecutionContextV1"] | null;
+            /**
+             * Createdat
+             * Format: date-time
+             */
+            createdAt: string;
+            /**
+             * Updatedat
+             * Format: date-time
+             */
+            updatedAt: string;
+            /** Startedat */
+            startedAt?: string | null;
+            /** Finishedat */
+            finishedAt?: string | null;
         };
         /** HTTPValidationError */
         HTTPValidationError: {
@@ -2317,6 +5855,378 @@ export interface components {
         HistoryReuseIn: {
             /** Title */
             title?: string | null;
+            /** Format */
+            format?: string | null;
+            /** Platform */
+            platform?: string | null;
+            /** Objective */
+            objective?: string | null;
+            /** Derivationkey */
+            derivationKey?: string | null;
+            /** Hypothesis */
+            hypothesis?: string | null;
+            /** Preserve */
+            preserve?: string[];
+            /** Adapt */
+            adapt?: string[];
+        };
+        /** HookHypothesisV1 */
+        HookHypothesisV1: {
+            /** Hookid */
+            hookId: string;
+            /** Text */
+            text: string;
+            /**
+             * Mechanism
+             * @enum {string}
+             */
+            mechanism: "curiosity" | "contrarian" | "proof" | "demonstration" | "question" | "tension" | "transformation";
+            /** Evidenceids */
+            evidenceIds?: string[];
+            /** Promisedeliveredbybeatid */
+            promiseDeliveredByBeatId: string;
+        };
+        /** IdentityDeletionRequestV1 */
+        IdentityDeletionRequestV1: {
+            /**
+             * Schemaversion
+             * @default studio.identity-deletion-request.v1
+             * @constant
+             */
+            schemaVersion: "studio.identity-deletion-request.v1";
+            /** Id */
+            id: string;
+            /** Workspaceid */
+            workspaceId: string;
+            /**
+             * Targettype
+             * @enum {string}
+             */
+            targetType: "identity_profile" | "voice_profile";
+            /** Identityprofileid */
+            identityProfileId?: string | null;
+            /** Voiceprofileid */
+            voiceProfileId?: string | null;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "planned" | "queued" | "running" | "completed" | "failed";
+            /** Reason */
+            reason: string;
+            /** Deletesourcesamples */
+            deleteSourceSamples: boolean;
+            /** Deletionplan */
+            deletionPlan: {
+                [key: string]: unknown;
+            };
+            /** Idempotencykey */
+            idempotencyKey: string;
+            /** Requestedby */
+            requestedBy: string;
+            /**
+             * Requestedat
+             * Format: date-time
+             */
+            requestedAt: string;
+            /** Queuedat */
+            queuedAt?: string | null;
+            /** Startedat */
+            startedAt?: string | null;
+            /** Completedat */
+            completedAt?: string | null;
+            /**
+             * Attemptcount
+             * @default 0
+             */
+            attemptCount: number;
+            /** Executionreceipt */
+            executionReceipt?: {
+                [key: string]: unknown;
+            };
+            /** Errormessage */
+            errorMessage?: string | null;
+            /**
+             * Createdat
+             * Format: date-time
+             */
+            createdAt: string;
+            /**
+             * Updatedat
+             * Format: date-time
+             */
+            updatedAt: string;
+        };
+        /** IdentityEvaluationV1 */
+        IdentityEvaluationV1: {
+            /**
+             * Schemaversion
+             * @default studio.identity-evaluation.v1
+             * @constant
+             */
+            schemaVersion: "studio.identity-evaluation.v1";
+            /** Id */
+            id: string;
+            /** Workspaceid */
+            workspaceId: string;
+            /**
+             * Targettype
+             * @enum {string}
+             */
+            targetType: "identity_version" | "voice_version";
+            /** Identityversionid */
+            identityVersionId?: string | null;
+            /** Voiceversionid */
+            voiceVersionId?: string | null;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "passed" | "failed";
+            /**
+             * Evaluatorkind
+             * @enum {string}
+             */
+            evaluatorKind: "automated" | "human" | "combined";
+            /** Qualitymetrics */
+            qualityMetrics?: {
+                [key: string]: number;
+            };
+            /** Checks */
+            checks?: components["schemas"]["QualityCheckV1"][];
+            /** Previewassetids */
+            previewAssetIds?: string[];
+            /** Providerregistrationid */
+            providerRegistrationId?: string | null;
+            /** Modelregistrationid */
+            modelRegistrationId?: string | null;
+            /** Evaluatedby */
+            evaluatedBy: string;
+            /**
+             * Evaluatedat
+             * Format: date-time
+             */
+            evaluatedAt: string;
+            /** Notes */
+            notes?: string | null;
+            /**
+             * Createdat
+             * Format: date-time
+             */
+            createdAt: string;
+            /**
+             * Updatedat
+             * Format: date-time
+             */
+            updatedAt: string;
+        };
+        /** IdentityProfileV1 */
+        IdentityProfileV1: {
+            /**
+             * Schemaversion
+             * @default studio.identity-profile.v1
+             * @constant
+             */
+            schemaVersion: "studio.identity-profile.v1";
+            /** Id */
+            id: string;
+            /** Workspaceid */
+            workspaceId: string;
+            /** Subjectkey */
+            subjectKey: string;
+            /** Displayname */
+            displayName: string;
+            /**
+             * Identitytype
+             * @enum {string}
+             */
+            identityType: "natural_person" | "synthetic_character";
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "draft" | "active" | "revoked" | "deleting" | "deleted";
+            /** Owneruserid */
+            ownerUserId?: string | null;
+            /** Createdby */
+            createdBy: string;
+            /**
+             * Createdat
+             * Format: date-time
+             */
+            createdAt: string;
+            /**
+             * Updatedat
+             * Format: date-time
+             */
+            updatedAt: string;
+        };
+        /** IdentityVersionReferenceV1 */
+        IdentityVersionReferenceV1: {
+            /** Id */
+            id: string;
+            /** Version */
+            version?: string | number | null;
+            /** Consentgrantid */
+            consentGrantId?: string | null;
+        };
+        /** IdentityVersionV1 */
+        IdentityVersionV1: {
+            /**
+             * Schemaversion
+             * @default studio.identity-version.v1
+             * @constant
+             */
+            schemaVersion: "studio.identity-version.v1";
+            /** Id */
+            id: string;
+            /** Workspaceid */
+            workspaceId: string;
+            /** Profileid */
+            profileId: string;
+            /** Version */
+            version: number;
+            /** Consentgrantid */
+            consentGrantId?: string | null;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "draft" | "active" | "rejected" | "superseded" | "revoked" | "deleting" | "deleted";
+            /** Capabilities */
+            capabilities?: string[];
+            /** Sampleassetids */
+            sampleAssetIds?: string[];
+            /** Derivedartifacts */
+            derivedArtifacts?: components["schemas"]["AssetReferenceV1"][];
+            /** Contenthash */
+            contentHash: string;
+            /** Createdby */
+            createdBy: string;
+            /** Reviewedby */
+            reviewedBy?: string | null;
+            /** Reviewedat */
+            reviewedAt?: string | null;
+            /** Reviewcomment */
+            reviewComment?: string | null;
+            /**
+             * Createdat
+             * Format: date-time
+             */
+            createdAt: string;
+            /**
+             * Updatedat
+             * Format: date-time
+             */
+            updatedAt: string;
+        };
+        /** ImageDerivationRequestV1 */
+        ImageDerivationRequestV1: {
+            /** Workspaceid */
+            workspaceId: string;
+            /** Title */
+            title: string;
+            /**
+             * Brightness
+             * @default 1
+             */
+            brightness: number;
+            /**
+             * Contrast
+             * @default 1
+             */
+            contrast: number;
+            editMask?: components["schemas"]["ImageEditMaskV1"] | null;
+            /** Protectedregions */
+            protectedRegions?: components["schemas"]["ImageProtectedRegionV1"][];
+            /** Expectedsourcechecksumsha256 */
+            expectedSourceChecksumSha256: string;
+            /** Idempotencykey */
+            idempotencyKey: string;
+        };
+        /** ImageEditMaskV1 */
+        ImageEditMaskV1: {
+            /** X */
+            x: number;
+            /** Y */
+            y: number;
+            /** Width */
+            width: number;
+            /** Height */
+            height: number;
+            /**
+             * Shape
+             * @default rectangle
+             * @enum {string}
+             */
+            shape: "rectangle" | "ellipse";
+        };
+        /** ImageProtectedRegionV1 */
+        ImageProtectedRegionV1: {
+            /** X */
+            x: number;
+            /** Y */
+            y: number;
+            /** Width */
+            width: number;
+            /** Height */
+            height: number;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "face" | "product" | "logo";
+            /** Label */
+            label: string;
+        };
+        /** InsertBrollOperationV1 */
+        InsertBrollOperationV1: {
+            /** Operationid */
+            operationId: string;
+            /** Evidenceids */
+            evidenceIds: string[];
+            /** Confidence */
+            confidence: number;
+            /** Rationale */
+            rationale: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "insert_broll";
+            /** Targettrackid */
+            targetTrackId: string;
+            interval: components["schemas"]["MediaIntervalV1"];
+            /** Assetid */
+            assetId: string;
+            /**
+             * Rightsstatus
+             * @default verified
+             * @constant
+             */
+            rightsStatus: "verified";
+        };
+        /** IntelligenceLineageV1 */
+        IntelligenceLineageV1: {
+            /** Provider */
+            provider: string;
+            /** Providerversion */
+            providerVersion: string;
+            /** Model */
+            model: string;
+            /** Modelrevision */
+            modelRevision: string;
+            /** Parametersdigestsha256 */
+            parametersDigestSha256: string;
+            /** Promptdigestsha256 */
+            promptDigestSha256?: string | null;
+            /** Workermanifestdigestsha256 */
+            workerManifestDigestSha256?: string | null;
+            /**
+             * Generatedat
+             * Format: date-time
+             */
+            generatedAt: string;
         };
         /** JobOut */
         JobOut: {
@@ -2441,6 +6351,49 @@ export interface components {
                 [key: string]: unknown;
             };
         };
+        /** LStoryboardV1 */
+        LStoryboardV1: {
+            /**
+             * Schemaversion
+             * @default studio.l-storyboard.v1
+             * @constant
+             */
+            schemaVersion: "studio.l-storyboard.v1";
+            /** Storyboardid */
+            storyboardId: string;
+            /** Workspaceid */
+            workspaceId: string;
+            /** Documentid */
+            documentId: string;
+            /** Documentrevision */
+            documentRevision: number;
+            /** Mediaindexid */
+            mediaIndexId: string;
+            /** Mediaindexdigestsha256 */
+            mediaIndexDigestSha256: string;
+            /** Targetdurationmicroseconds */
+            targetDurationMicroseconds: number;
+            /**
+             * Status
+             * @default draft
+             * @enum {string}
+             */
+            status: "draft" | "reviewed";
+            /** Beats */
+            beats: components["schemas"]["StoryboardBeatV1"][];
+            lineage: components["schemas"]["IntelligenceLineageV1"];
+            /**
+             * Humanreviewrequired
+             * @default true
+             * @constant
+             */
+            humanReviewRequired: true;
+            /**
+             * Createdat
+             * Format: date-time
+             */
+            createdAt: string;
+        };
         /** LearningPreferenceOut */
         LearningPreferenceOut: {
             /** Workspaceid */
@@ -2463,6 +6416,43 @@ export interface components {
              */
             status: "no_feedback" | "explicit_feedback" | "feedback_and_performance";
         };
+        /** LearningRecordV1 */
+        LearningRecordV1: {
+            /**
+             * Schemaversion
+             * @default studio.learning-record.v1
+             * @constant
+             */
+            schemaVersion: "studio.learning-record.v1";
+            /** Learningid */
+            learningId: string;
+            /** Caseid */
+            caseId: string;
+            /** Documentid */
+            documentId?: string | null;
+            /** Documentrevision */
+            documentRevision?: number | null;
+            /** Renderdigestsha256 */
+            renderDigestSha256?: string | null;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "planned" | "measured" | "rejected";
+            /** Hypotheses */
+            hypotheses: string[];
+            /** Beatmetrics */
+            beatMetrics?: components["schemas"]["BeatLearningMetricV1"][];
+            /** Blockers */
+            blockers?: string[];
+            /**
+             * Humanreviewed
+             * @default false
+             */
+            humanReviewed: boolean;
+            /** Recordedat */
+            recordedAt?: string | null;
+        };
         /** LoginIn */
         LoginIn: {
             /**
@@ -2472,6 +6462,426 @@ export interface components {
             email: string;
             /** Password */
             password: string;
+        };
+        /** MarkerTrackV1 */
+        MarkerTrackV1: {
+            /** Id */
+            id: string;
+            /**
+             * Kind
+             * @default marker
+             * @constant
+             */
+            kind: "marker";
+            /**
+             * Name
+             * @default Markers
+             */
+            name: string;
+            /** Markers */
+            markers?: components["schemas"]["MarkerV1"][];
+        };
+        /** MarkerV1 */
+        MarkerV1: {
+            /** Id */
+            id: string;
+            /** Frame */
+            frame: number;
+            /** Label */
+            label: string;
+            /**
+             * Markertype
+             * @default note
+             */
+            markerType: string;
+        };
+        /** MaskTrackV1 */
+        MaskTrackV1: {
+            /** Id */
+            id: string;
+            /**
+             * Kind
+             * @default mask
+             * @constant
+             */
+            kind: "mask";
+            /**
+             * Name
+             * @default Masks
+             */
+            name: string;
+            /** Targettrackid */
+            targetTrackId: string;
+            /** Artifactassetid */
+            artifactAssetId: string;
+            /**
+             * Locked
+             * @default false
+             */
+            locked: boolean;
+        };
+        /** MediaClipV1 */
+        MediaClipV1: {
+            /** Id */
+            id: string;
+            /** Assetid */
+            assetId: string;
+            timeline: components["schemas"]["TimelineFrameRangeV1"];
+            source?: components["schemas"]["SourceTimeRangeV1"] | null;
+            /**
+             * Enabled
+             * @default true
+             */
+            enabled: boolean;
+            /**
+             * Locked
+             * @default false
+             */
+            locked: boolean;
+            /**
+             * Label
+             * @default
+             */
+            label: string;
+            /**
+             * Playbackrate
+             * @default 1
+             */
+            playbackRate: number;
+            /** Transform */
+            transform?: {
+                [key: string]: unknown;
+            };
+            /** Effects */
+            effects?: {
+                [key: string]: unknown;
+            }[];
+            /** Keyframes */
+            keyframes?: {
+                [key: string]: unknown;
+            }[];
+        };
+        /** MediaEvidenceV1 */
+        MediaEvidenceV1: {
+            /** Evidenceid */
+            evidenceId: string;
+            /**
+             * Evidencetype
+             * @enum {string}
+             */
+            evidenceType: "frame" | "shot" | "transcript" | "audio" | "motion" | "object" | "reality" | "technical_qc" | "human_annotation";
+            /** Assetid */
+            assetId: string;
+            /** Assetchecksumsha256 */
+            assetChecksumSha256: string;
+            interval?: components["schemas"]["MediaIntervalV1"] | null;
+            /** Sourcecontractid */
+            sourceContractId: string;
+            /** Sourcecontractdigestsha256 */
+            sourceContractDigestSha256: string;
+            /** Summary */
+            summary: string;
+        };
+        /** MediaIndexEntryV1 */
+        MediaIndexEntryV1: {
+            /** Entryid */
+            entryId: string;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "scene" | "cut" | "speech" | "silence" | "person" | "product" | "action" | "motion" | "claim" | "risk" | "emotion";
+            interval: components["schemas"]["MediaIntervalV1"];
+            /** Label */
+            label: string;
+            /** Confidence */
+            confidence: number;
+            /** Evidenceids */
+            evidenceIds: string[];
+            /** Attributes */
+            attributes?: {
+                [key: string]: string | number | boolean;
+            };
+        };
+        /** MediaIndexV1 */
+        MediaIndexV1: {
+            /**
+             * Schemaversion
+             * @default studio.media-index.v1
+             * @constant
+             */
+            schemaVersion: "studio.media-index.v1";
+            /** Indexid */
+            indexId: string;
+            /** Workspaceid */
+            workspaceId: string;
+            /** Mediaingestid */
+            mediaIngestId: string;
+            /** Sourceassetid */
+            sourceAssetId: string;
+            /** Sourcechecksumsha256 */
+            sourceChecksumSha256: string;
+            /** Durationmicroseconds */
+            durationMicroseconds: number;
+            /**
+             * Locale
+             * @default pt-BR
+             */
+            locale: string;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "partial" | "complete";
+            /** Evidence */
+            evidence: components["schemas"]["MediaEvidenceV1"][];
+            /** Entries */
+            entries?: components["schemas"]["MediaIndexEntryV1"][];
+            /** Abstentions */
+            abstentions?: string[];
+            /** Lineage */
+            lineage: components["schemas"]["IntelligenceLineageV1"][];
+            /**
+             * Createdat
+             * Format: date-time
+             */
+            createdAt: string;
+        };
+        /** MediaIngestV1 */
+        MediaIngestV1: {
+            /**
+             * Schemaversion
+             * @default studio.media-ingest.v1
+             * @constant
+             */
+            schemaVersion: "studio.media-ingest.v1";
+            /** Id */
+            id: string;
+            /** Workspaceid */
+            workspaceId: string;
+            /** Assetid */
+            assetId: string;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "pending" | "probing" | "ready" | "rejected" | "failed";
+            /** Probeprovider */
+            probeProvider: string;
+            mediaInfo?: components["schemas"]["MediaProbeResultV1"] | null;
+            /** Validationerrors */
+            validationErrors?: string[];
+            /** Proxyassetid */
+            proxyAssetId?: string | null;
+            /** Waveformassetid */
+            waveformAssetId?: string | null;
+            proxyTimeMap?: components["schemas"]["MediaTimeMapV1"] | null;
+            /** Generationjobid */
+            generationJobId?: string | null;
+            /** Idempotencykey */
+            idempotencyKey: string;
+            /** Requestedby */
+            requestedBy: string;
+            /**
+             * Createdat
+             * Format: date-time
+             */
+            createdAt: string;
+            /**
+             * Updatedat
+             * Format: date-time
+             */
+            updatedAt: string;
+        };
+        /** MediaIntervalV1 */
+        MediaIntervalV1: {
+            /** Startmicroseconds */
+            startMicroseconds: number;
+            /** Endmicroseconds */
+            endMicroseconds: number;
+        };
+        /** MediaProbeResultV1 */
+        MediaProbeResultV1: {
+            /**
+             * Schemaversion
+             * @default studio.media-probe.v1
+             * @constant
+             */
+            schemaVersion: "studio.media-probe.v1";
+            /** Provider */
+            provider: string;
+            /** Providerversion */
+            providerVersion: string;
+            /** Assetid */
+            assetId: string;
+            /** Checksumsha256 */
+            checksumSha256?: string | null;
+            /** Container */
+            container: string;
+            /**
+             * Startmicroseconds
+             * @default 0
+             */
+            startMicroseconds: number;
+            /** Durationmicroseconds */
+            durationMicroseconds: number;
+            /** Sizebytes */
+            sizeBytes: number;
+            /** Bitrate */
+            bitrate?: number | null;
+            /** Videostreams */
+            videoStreams?: components["schemas"]["VideoStreamV1"][];
+            /** Audiostreams */
+            audioStreams?: components["schemas"]["AudioStreamV1"][];
+            /** Providertrace */
+            providerTrace?: {
+                [key: string]: unknown;
+            };
+        };
+        /** MediaProxySpecV1 */
+        MediaProxySpecV1: {
+            /**
+             * Schemaversion
+             * @default studio.media-proxy-spec.v1
+             * @constant
+             */
+            schemaVersion: "studio.media-proxy-spec.v1";
+            /**
+             * Format
+             * @default mp4
+             * @constant
+             */
+            format: "mp4";
+            /**
+             * Maxwidth
+             * @default 1080
+             */
+            maxWidth: number;
+            /**
+             * Maxheight
+             * @default 1920
+             */
+            maxHeight: number;
+            /**
+             * Targetfps
+             * @default 30
+             */
+            targetFps: number;
+            /**
+             * Videocodec
+             * @default h264
+             * @constant
+             */
+            videoCodec: "h264";
+            /**
+             * Audiocodec
+             * @default aac
+             * @constant
+             */
+            audioCodec: "aac";
+            /**
+             * Quality
+             * @default draft
+             * @enum {string}
+             */
+            quality: "draft" | "standard";
+        };
+        /** MediaTimeMapSegmentV1 */
+        MediaTimeMapSegmentV1: {
+            /**
+             * Sourcestartmicroseconds
+             * @default 0
+             */
+            sourceStartMicroseconds: number;
+            /**
+             * Representationstartmicroseconds
+             * @default 0
+             */
+            representationStartMicroseconds: number;
+            /** Durationmicroseconds */
+            durationMicroseconds: number;
+            /**
+             * Ratenumerator
+             * @default 1
+             * @constant
+             */
+            rateNumerator: 1;
+            /**
+             * Ratedenominator
+             * @default 1
+             * @constant
+             */
+            rateDenominator: 1;
+        };
+        /**
+         * MediaTimeMapV1
+         * @description Validated identity mapping from a derivative clock back to its canonical source clock.
+         */
+        MediaTimeMapV1: {
+            /**
+             * Schemaversion
+             * @default studio.media-time-map.v1
+             * @constant
+             */
+            schemaVersion: "studio.media-time-map.v1";
+            /** Sourceassetid */
+            sourceAssetId: string;
+            /** Representationassetid */
+            representationAssetId: string;
+            /** Sourcechecksumsha256 */
+            sourceChecksumSha256: string;
+            /** Representationchecksumsha256 */
+            representationChecksumSha256: string;
+            sourceFrameRate: components["schemas"]["FrameRateV1"];
+            representationFrameRate: components["schemas"]["FrameRateV1"];
+            /** Sourcevideostartmicroseconds */
+            sourceVideoStartMicroseconds: number;
+            /** Representationvideostartmicroseconds */
+            representationVideoStartMicroseconds: number;
+            /** Sourceaudiostartmicroseconds */
+            sourceAudioStartMicroseconds?: number | null;
+            /** Representationaudiostartmicroseconds */
+            representationAudioStartMicroseconds?: number | null;
+            /** Sourcedurationmicroseconds */
+            sourceDurationMicroseconds: number;
+            /** Representationdurationmicroseconds */
+            representationDurationMicroseconds: number;
+            /** Maxdriftmicroseconds */
+            maxDriftMicroseconds: number;
+            /** Maxstreamoffsetdriftmicroseconds */
+            maxStreamOffsetDriftMicroseconds: number;
+            /** Alloweddriftmicroseconds */
+            allowedDriftMicroseconds: number;
+            /** Segments */
+            segments: components["schemas"]["MediaTimeMapSegmentV1"][];
+        };
+        /** MediaTimelineV1 */
+        "MediaTimelineV1-Input": {
+            /**
+             * Schemaversion
+             * @default studio.media-timeline.v1
+             * @constant
+             */
+            schemaVersion: "studio.media-timeline.v1";
+            frameRate?: components["schemas"]["FrameRateV1"];
+            /** Durationframes */
+            durationFrames: number;
+            /** Tracks */
+            tracks?: (components["schemas"]["VideoTrackV1-Input"] | components["schemas"]["AudioTrackV1-Input"] | components["schemas"]["CaptionTrackV1-Input"] | components["schemas"]["OverlayTrackV1-Input"] | components["schemas"]["MaskTrackV1"] | components["schemas"]["MarkerTrackV1"])[];
+        };
+        /** MediaTimelineV1 */
+        "MediaTimelineV1-Output": {
+            /**
+             * Schemaversion
+             * @default studio.media-timeline.v1
+             * @constant
+             */
+            schemaVersion: "studio.media-timeline.v1";
+            frameRate?: components["schemas"]["FrameRateV1"];
+            /** Durationframes */
+            durationFrames: number;
+            /** Tracks */
+            tracks?: (components["schemas"]["VideoTrackV1-Output"] | components["schemas"]["AudioTrackV1-Output"] | components["schemas"]["CaptionTrackV1-Output"] | components["schemas"]["OverlayTrackV1-Output"] | components["schemas"]["MaskTrackV1"] | components["schemas"]["MarkerTrackV1"])[];
         };
         /** MemberInviteIn */
         MemberInviteIn: {
@@ -2493,6 +6903,603 @@ export interface components {
             status?: ("active" | "disabled") | null;
             /** Modules */
             modules?: string[] | null;
+        };
+        /** MessageArchitectureV1 */
+        MessageArchitectureV1: {
+            /**
+             * Schemaversion
+             * @default studio.message-architecture.v1
+             * @constant
+             */
+            schemaVersion: "studio.message-architecture.v1";
+            /** Messageid */
+            messageId: string;
+            /** Objective */
+            objective: string;
+            /** Audience */
+            audience: string;
+            /**
+             * Awarenessstage
+             * @enum {string}
+             */
+            awarenessStage: "unaware" | "problem_aware" | "solution_aware" | "product_aware" | "most_aware";
+            /** Beliefbefore */
+            beliefBefore: string;
+            /** Beliefafter */
+            beliefAfter: string;
+            /** Thesis */
+            thesis: string;
+            /** Promise */
+            promise: string;
+            /** Mechanism */
+            mechanism: string;
+            /** Claims */
+            claims?: components["schemas"]["MessageClaimV1"][];
+            /** Hooks */
+            hooks: components["schemas"]["HookHypothesisV1"][];
+            /** Selectedhookid */
+            selectedHookId: string;
+            /** Cta */
+            cta: string;
+            /** Lockedfacts */
+            lockedFacts?: string[];
+        };
+        /** MessageClaimV1 */
+        MessageClaimV1: {
+            /** Claimid */
+            claimId: string;
+            /** Text */
+            text: string;
+            /** Evidenceids */
+            evidenceIds?: string[];
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "verified" | "human_review_required" | "hypothesis";
+        };
+        /** ModelRegistrationV1 */
+        ModelRegistrationV1: {
+            /**
+             * Schemaversion
+             * @default studio.model-registration.v1
+             * @constant
+             */
+            schemaVersion: "studio.model-registration.v1";
+            /** Id */
+            id: string;
+            /** Providerregistrationid */
+            providerRegistrationId: string;
+            /** Name */
+            name: string;
+            /** Version */
+            version: string;
+            /** Digestsha256 */
+            digestSha256: string;
+            /** Modellicense */
+            modelLicense: string;
+            /**
+             * Commercialuse
+             * @enum {string}
+             */
+            commercialUse: "approved" | "restricted" | "unknown";
+            /** Languages */
+            languages?: string[];
+            /** Capabilities */
+            capabilities?: string[];
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "evaluation" | "approved" | "disabled" | "rejected";
+            /** Manifest */
+            manifest?: {
+                [key: string]: unknown;
+            };
+            /** Approvedby */
+            approvedBy?: string | null;
+            /** Approvedat */
+            approvedAt?: string | null;
+            /**
+             * Createdat
+             * Format: date-time
+             */
+            createdAt: string;
+            /**
+             * Updatedat
+             * Format: date-time
+             */
+            updatedAt: string;
+        };
+        /** MotionAudioEventV1 */
+        MotionAudioEventV1: {
+            /** Eventid */
+            eventId: string;
+            /** Frame */
+            frame: number;
+            /**
+             * Role
+             * @enum {string}
+             */
+            role: "foley" | "interface" | "impact" | "riser" | "dialogue" | "music" | "silence";
+            /** Eventbinding */
+            eventBinding: string;
+            /** Audioclipid */
+            audioClipId?: string | null;
+            /** Assetid */
+            assetId?: string | null;
+            /**
+             * Rightsstatus
+             * @enum {string}
+             */
+            rightsStatus: "verified" | "required_before_render" | "not_applicable";
+        };
+        /** MotionConstraintObservationV1 */
+        MotionConstraintObservationV1: {
+            /** Constraintid */
+            constraintId: string;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "passed" | "failed" | "incomplete";
+            /** Measuredvalue */
+            measuredValue?: number | null;
+            /** Threshold */
+            threshold?: number | null;
+            /** Reason */
+            reason: string;
+            /** Evidenceids */
+            evidenceIds?: string[];
+        };
+        /** MotionDesignConstraintV1 */
+        MotionDesignConstraintV1: {
+            /** Constraintid */
+            constraintId: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "maximum_acceleration" | "maximum_velocity" | "no_overshoot" | "readability" | "safe_area";
+            /** Targettrackids */
+            targetTrackIds: string[];
+            frameRange: components["schemas"]["MotionFrameRangeV1"];
+            /** Threshold */
+            threshold?: number | null;
+            /**
+             * Severity
+             * @default blocking
+             * @enum {string}
+             */
+            severity: "advisory" | "blocking";
+        };
+        /** MotionFrameRangeV1 */
+        MotionFrameRangeV1: {
+            /** Startframe */
+            startFrame: number;
+            /** Endframeexclusive */
+            endFrameExclusive: number;
+        };
+        /** MotionGraphEvaluationV1 */
+        MotionGraphEvaluationV1: {
+            /**
+             * Schemaversion
+             * @default studio.motion-graph-evaluation.v1
+             * @constant
+             */
+            schemaVersion: "studio.motion-graph-evaluation.v1";
+            /** Graphid */
+            graphId: string;
+            /** Graphdigestsha256 */
+            graphDigestSha256: string;
+            /** Eligibleforreviewedprojection */
+            eligibleForReviewedProjection: boolean;
+            /** Observations */
+            observations: components["schemas"]["MotionConstraintObservationV1"][];
+            /** Blockingreasons */
+            blockingReasons?: string[];
+            /** Warnings */
+            warnings?: string[];
+        };
+        /** MotionGraphProjectionV1 */
+        MotionGraphProjectionV1: {
+            /**
+             * Schemaversion
+             * @default studio.motion-graph-projection.v1
+             * @constant
+             */
+            schemaVersion: "studio.motion-graph-projection.v1";
+            /**
+             * Target
+             * @enum {string}
+             */
+            target: "hyperframes" | "motion_canvas";
+            /** Sourcegraphid */
+            sourceGraphId: string;
+            /** Sourcegraphdigestsha256 */
+            sourceGraphDigestSha256: string;
+            frameRate: components["schemas"]["FrameRateV1"];
+            /** Durationframes */
+            durationFrames: number;
+            /** Nodes */
+            nodes?: components["schemas"]["MotionNodeV1"][];
+            /** Tracks */
+            tracks: components["schemas"]["MotionProjectionTrackV1"][];
+            /** Transitions */
+            transitions?: components["schemas"]["MotionTransitionV1"][];
+            /** Audioevents */
+            audioEvents?: components["schemas"]["MotionAudioEventV1"][];
+            /**
+             * Reducedmotion
+             * @default false
+             */
+            reducedMotion: boolean;
+            /** Previewonly */
+            previewOnly: boolean;
+            /** Warnings */
+            warnings?: string[];
+            /**
+             * Humanapplyrequired
+             * @default true
+             * @constant
+             */
+            humanApplyRequired: true;
+        };
+        /** MotionGraphRecordV1 */
+        MotionGraphRecordV1: {
+            /**
+             * Schemaversion
+             * @default studio.motion-graph-record.v1
+             * @constant
+             */
+            schemaVersion: "studio.motion-graph-record.v1";
+            graph: components["schemas"]["MotionGraphV1-Output"];
+            /** Graphdigestsha256 */
+            graphDigestSha256: string;
+            /** Storagerevision */
+            storageRevision: number;
+            evaluation?: components["schemas"]["MotionGraphEvaluationV1"] | null;
+            /** Createdby */
+            createdBy: string;
+            /** Updatedby */
+            updatedBy: string;
+            /**
+             * Createdat
+             * Format: date-time
+             */
+            createdAt: string;
+            /**
+             * Updatedat
+             * Format: date-time
+             */
+            updatedAt: string;
+        };
+        /** MotionGraphV1 */
+        "MotionGraphV1-Input": {
+            /**
+             * Schemaversion
+             * @default studio.motion-graph.v1
+             * @constant
+             */
+            schemaVersion: "studio.motion-graph.v1";
+            /** Graphid */
+            graphId: string;
+            /** Workspaceid */
+            workspaceId: string;
+            /** Documentid */
+            documentId: string;
+            /** Documentrevision */
+            documentRevision: number;
+            frameRate: components["schemas"]["FrameRateV1"];
+            /** Durationframes */
+            durationFrames: number;
+            /** Canvaswidth */
+            canvasWidth: number;
+            /** Canvasheight */
+            canvasHeight: number;
+            /**
+             * Realitymode
+             * @default graphic
+             * @enum {string}
+             */
+            realityMode: "graphic" | "stylized_physical" | "realistic_overlay";
+            /**
+             * Completeness
+             * @default complete
+             * @enum {string}
+             */
+            completeness: "partial" | "complete";
+            /**
+             * Status
+             * @default suggested
+             * @enum {string}
+             */
+            status: "suggested" | "reviewed";
+            /** Nodes */
+            nodes?: components["schemas"]["MotionNodeV1"][];
+            /** Tracks */
+            tracks: components["schemas"]["MotionTrackV1"][];
+            /** Transitions */
+            transitions?: components["schemas"]["MotionTransitionV1"][];
+            /** Audioevents */
+            audioEvents?: components["schemas"]["MotionAudioEventV1"][];
+            /**
+             * Reducedmotionsupported
+             * @default true
+             * @constant
+             */
+            reducedMotionSupported: true;
+            /** Constraints */
+            constraints?: (components["schemas"]["MotionDesignConstraintV1"] | components["schemas"]["MotionPhysicalConstraintV1"])[];
+            /** Sourceevidenceids */
+            sourceEvidenceIds?: string[];
+            realityBinding?: components["schemas"]["MotionRealityBindingV1"] | null;
+            /** Abstentions */
+            abstentions?: string[];
+            /** Createdby */
+            createdBy: string;
+            lineage?: components["schemas"]["IntelligenceLineageV1"] | null;
+            /**
+             * Humanreviewrequired
+             * @default true
+             * @constant
+             */
+            humanReviewRequired: true;
+            /**
+             * Createdat
+             * Format: date-time
+             */
+            createdAt: string;
+        };
+        /** MotionGraphV1 */
+        "MotionGraphV1-Output": {
+            /**
+             * Schemaversion
+             * @default studio.motion-graph.v1
+             * @constant
+             */
+            schemaVersion: "studio.motion-graph.v1";
+            /** Graphid */
+            graphId: string;
+            /** Workspaceid */
+            workspaceId: string;
+            /** Documentid */
+            documentId: string;
+            /** Documentrevision */
+            documentRevision: number;
+            frameRate: components["schemas"]["FrameRateV1"];
+            /** Durationframes */
+            durationFrames: number;
+            /** Canvaswidth */
+            canvasWidth: number;
+            /** Canvasheight */
+            canvasHeight: number;
+            /**
+             * Realitymode
+             * @default graphic
+             * @enum {string}
+             */
+            realityMode: "graphic" | "stylized_physical" | "realistic_overlay";
+            /**
+             * Completeness
+             * @default complete
+             * @enum {string}
+             */
+            completeness: "partial" | "complete";
+            /**
+             * Status
+             * @default suggested
+             * @enum {string}
+             */
+            status: "suggested" | "reviewed";
+            /** Nodes */
+            nodes?: components["schemas"]["MotionNodeV1"][];
+            /** Tracks */
+            tracks: components["schemas"]["MotionTrackV1"][];
+            /** Transitions */
+            transitions?: components["schemas"]["MotionTransitionV1"][];
+            /** Audioevents */
+            audioEvents?: components["schemas"]["MotionAudioEventV1"][];
+            /**
+             * Reducedmotionsupported
+             * @default true
+             * @constant
+             */
+            reducedMotionSupported: true;
+            /** Constraints */
+            constraints?: (components["schemas"]["MotionDesignConstraintV1"] | components["schemas"]["MotionPhysicalConstraintV1"])[];
+            /** Sourceevidenceids */
+            sourceEvidenceIds?: string[];
+            realityBinding?: components["schemas"]["MotionRealityBindingV1"] | null;
+            /** Abstentions */
+            abstentions?: string[];
+            /** Createdby */
+            createdBy: string;
+            lineage?: components["schemas"]["IntelligenceLineageV1"] | null;
+            /**
+             * Humanreviewrequired
+             * @default true
+             * @constant
+             */
+            humanReviewRequired: true;
+            /**
+             * Createdat
+             * Format: date-time
+             */
+            createdAt: string;
+        };
+        /** MotionKeyframeV1 */
+        MotionKeyframeV1: {
+            /** Frame */
+            frame: number;
+            /** Value */
+            value: number;
+            /**
+             * Easing
+             * @default linear
+             * @enum {string}
+             */
+            easing: "hold" | "linear" | "ease_in" | "ease_out" | "ease_in_out" | "cubic_bezier";
+            /** Cubicbezier */
+            cubicBezier?: number[] | null;
+        };
+        /** MotionNodeV1 */
+        MotionNodeV1: {
+            /** Nodeid */
+            nodeId: string;
+            /** Targetlayerid */
+            targetLayerId: string;
+            /** Parentnodeid */
+            parentNodeId?: string | null;
+            /**
+             * Transformoriginx
+             * @default 0.5
+             */
+            transformOriginX: number;
+            /**
+             * Transformoriginy
+             * @default 0.5
+             */
+            transformOriginY: number;
+        };
+        /** MotionPhysicalConstraintV1 */
+        MotionPhysicalConstraintV1: {
+            /** Constraintid */
+            constraintId: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "collision_avoidance" | "contact_lock" | "occlusion_order" | "perspective_consistency" | "support_gravity";
+            /** Targettrackids */
+            targetTrackIds: string[];
+            frameRange: components["schemas"]["MotionFrameRangeV1"];
+            /** Evidenceids */
+            evidenceIds: string[];
+            /**
+             * Severity
+             * @default advisory
+             * @enum {string}
+             */
+            severity: "advisory" | "blocking";
+        };
+        /** MotionProjectionKeyframeV1 */
+        MotionProjectionKeyframeV1: {
+            /** Frame */
+            frame: number;
+            /** Value */
+            value: number;
+            /** Easing */
+            easing: string;
+            /** Cubicbezier */
+            cubicBezier?: number[] | null;
+        };
+        /** MotionProjectionTrackV1 */
+        MotionProjectionTrackV1: {
+            /** Sourcetrackid */
+            sourceTrackId: string;
+            /** Targetlayerid */
+            targetLayerId: string;
+            /** Propertypath */
+            propertyPath: string;
+            /**
+             * Unit
+             * @enum {string}
+             */
+            unit: "pixels" | "ratio" | "degrees" | "number";
+            /** Keyframes */
+            keyframes: components["schemas"]["MotionProjectionKeyframeV1"][];
+        };
+        /** MotionRealityBindingV1 */
+        MotionRealityBindingV1: {
+            /** Realitymodelid */
+            realityModelId: string;
+            /** Realitymodeldigestsha256 */
+            realityModelDigestSha256: string;
+            /** Evidenceids */
+            evidenceIds: string[];
+        };
+        /** MotionTrackV1 */
+        MotionTrackV1: {
+            /** Trackid */
+            trackId: string;
+            /** Targetlayerid */
+            targetLayerId: string;
+            /**
+             * Property
+             * @enum {string}
+             */
+            property: "position_x" | "position_y" | "scale_x" | "scale_y" | "rotation_degrees" | "opacity" | "blur_px" | "font_size_px" | "letter_spacing_px" | "line_height_ratio" | "font_weight";
+            /**
+             * Unit
+             * @enum {string}
+             */
+            unit: "pixels" | "ratio" | "degrees" | "number";
+            /** Keyframes */
+            keyframes: components["schemas"]["MotionKeyframeV1"][];
+        };
+        /** MotionTransitionV1 */
+        MotionTransitionV1: {
+            /** Transitionid */
+            transitionId: string;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "hard_cut" | "dissolve" | "wipe" | "match_transform" | "semantic_morph";
+            /**
+             * Reducedmotionkind
+             * @enum {string}
+             */
+            reducedMotionKind: "hard_cut" | "dissolve";
+            /** Fromlayerid */
+            fromLayerId: string;
+            /** Tolayerid */
+            toLayerId: string;
+            /** Startframe */
+            startFrame: number;
+            /** Endframeexclusive */
+            endFrameExclusive: number;
+            /** Motivation */
+            motivation: string;
+        };
+        /** NormalizedBoxV1 */
+        NormalizedBoxV1: {
+            /** Xmin */
+            xMin: number;
+            /** Ymin */
+            yMin: number;
+            /** Xmax */
+            xMax: number;
+            /** Ymax */
+            yMax: number;
+        };
+        /** NormalizedPointV1 */
+        NormalizedPointV1: {
+            /** X */
+            x: number;
+            /** Y */
+            y: number;
+        };
+        /** NormalizedVectorV1 */
+        NormalizedVectorV1: {
+            /** X */
+            x: number;
+            /** Y */
+            y: number;
+        };
+        /** OpportunityEvidenceReferenceV1 */
+        OpportunityEvidenceReferenceV1: {
+            /** Id */
+            id: string;
+            /** Version */
+            version?: string | number | null;
+            /** Sourceurl */
+            sourceUrl?: string | null;
+            /** Observedat */
+            observedAt?: string | null;
+            /** Confidence */
+            confidence?: number | null;
         };
         /** OpportunityOut */
         OpportunityOut: {
@@ -2582,6 +7589,52 @@ export interface components {
             actions?: {
                 [key: string]: boolean;
             };
+        };
+        /** OverlayTrackV1 */
+        "OverlayTrackV1-Input": {
+            /** Id */
+            id: string;
+            /**
+             * Kind
+             * @default overlay
+             * @constant
+             */
+            kind: "overlay";
+            /**
+             * Name
+             * @default Overlays
+             */
+            name: string;
+            /**
+             * Locked
+             * @default false
+             */
+            locked: boolean;
+            /** Clips */
+            clips?: components["schemas"]["MediaClipV1"][];
+        };
+        /** OverlayTrackV1 */
+        "OverlayTrackV1-Output": {
+            /** Id */
+            id: string;
+            /**
+             * Kind
+             * @default overlay
+             * @constant
+             */
+            kind: "overlay";
+            /**
+             * Name
+             * @default Overlays
+             */
+            name: string;
+            /**
+             * Locked
+             * @default false
+             */
+            locked: boolean;
+            /** Clips */
+            clips?: components["schemas"]["MediaClipV1"][];
         };
         /** PasswordChangeIn */
         PasswordChangeIn: {
@@ -2722,11 +7775,8 @@ export interface components {
             platform: string;
             /** Format */
             format: string;
-            /**
-             * Copy
-             * @default
-             */
-            copy: string;
+            /** Copy */
+            copy?: string;
             /** Hashtags */
             hashtags?: string[];
             /** Imageurl */
@@ -2868,6 +7918,88 @@ export interface components {
              */
             email: string;
         };
+        /** ProviderLineageV1 */
+        ProviderLineageV1: {
+            /** Provider */
+            provider: string;
+            /** Model */
+            model?: string | null;
+            /** Providerversion */
+            providerVersion?: string | null;
+            /** Parameters */
+            parameters?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Generatedat
+             * Format: date-time
+             */
+            generatedAt: string;
+            /** Jobid */
+            jobId?: string | null;
+        };
+        /** ProviderRegistrationV1 */
+        ProviderRegistrationV1: {
+            /**
+             * Schemaversion
+             * @default studio.provider-registration.v1
+             * @constant
+             */
+            schemaVersion: "studio.provider-registration.v1";
+            /** Id */
+            id: string;
+            /** Capability */
+            capability: string;
+            /** Provider */
+            provider: string;
+            /** Providerversion */
+            providerVersion: string;
+            /** Sourceurl */
+            sourceUrl: string;
+            /** Sourcerevision */
+            sourceRevision: string;
+            /** Codelicense */
+            codeLicense: string;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "evaluation" | "approved" | "disabled" | "rejected";
+            /**
+             * Riskclass
+             * @enum {string}
+             */
+            riskClass: "low" | "medium" | "high" | "biometric";
+            /** Manifest */
+            manifest?: {
+                [key: string]: unknown;
+            };
+            /** Approvedby */
+            approvedBy?: string | null;
+            /** Approvedat */
+            approvedAt?: string | null;
+            /**
+             * Createdat
+             * Format: date-time
+             */
+            createdAt: string;
+            /**
+             * Updatedat
+             * Format: date-time
+             */
+            updatedAt: string;
+        };
+        /** QualityCheckV1 */
+        QualityCheckV1: {
+            /** Code */
+            code: string;
+            /** Passed */
+            passed: boolean;
+            /** Score */
+            score?: number | null;
+            /** Detail */
+            detail?: string | null;
+        };
         /** RadarEvergreenSuggestionOut */
         RadarEvergreenSuggestionOut: {
             /** Title */
@@ -2883,6 +8015,44 @@ export interface components {
             objective: "reach" | "authority" | "leads" | "conversion";
             /** Groundedin */
             groundedIn: string[];
+        };
+        /** RadarShadowEvaluationOut */
+        RadarShadowEvaluationOut: {
+            /** Id */
+            id: string;
+            /** Workspaceid */
+            workspaceId: string;
+            /** Signalid */
+            signalId: string;
+            /** Activeopportunityid */
+            activeOpportunityId: string | null;
+            /** Baselineversion */
+            baselineVersion: string;
+            /** Baselinescore */
+            baselineScore: number;
+            /** Candidateversion */
+            candidateVersion: string;
+            /** Candidatescore */
+            candidateScore: number | null;
+            /** Brandrevision */
+            brandRevision: number;
+            /** Candidate */
+            candidate: {
+                [key: string]: unknown;
+            };
+            /** Comparison */
+            comparison: {
+                [key: string]: unknown;
+            };
+            /** Providertrace */
+            providerTrace: {
+                [key: string]: unknown;
+            };
+            /**
+             * Createdat
+             * Format: date-time
+             */
+            createdAt: string;
         };
         /** RadarSourceIn */
         RadarSourceIn: {
@@ -3009,6 +8179,310 @@ export interface components {
             /** Signalids */
             signalIds?: string[] | null;
         };
+        /** RealityEntityTrackV1 */
+        RealityEntityTrackV1: {
+            /** Trackid */
+            trackId: string;
+            /** Entityid */
+            entityId: string;
+            frameRange: components["schemas"]["RealityFrameRangeV1"];
+            /** Samples */
+            samples: components["schemas"]["RealityTrackSampleV1"][];
+            /** Confidence */
+            confidence: number;
+        };
+        /** RealityEntityV1 */
+        RealityEntityV1: {
+            /** Entityid */
+            entityId: string;
+            /** Displayname */
+            displayName: string;
+            /**
+             * Entitytype
+             * @enum {string}
+             */
+            entityType: "person" | "animal" | "rigid_object" | "deformable_object" | "liquid" | "gas" | "surface" | "environment" | "light_shadow" | "unknown";
+            /** Semantictags */
+            semanticTags?: string[];
+            /** Properties */
+            properties?: {
+                [key: string]: string | number | boolean;
+            };
+            /** Confidence */
+            confidence: number;
+        };
+        /** RealityEventV1 */
+        RealityEventV1: {
+            /** Eventid */
+            eventId: string;
+            /**
+             * Eventtype
+             * @enum {string}
+             */
+            eventType: "appears" | "disappears" | "starts_motion" | "stops_motion" | "contact" | "separation" | "collision" | "support_change" | "deformation" | "state_change" | "sound" | "cut" | "unknown";
+            frameRange: components["schemas"]["RealityFrameRangeV1"];
+            /** Entityids */
+            entityIds: string[];
+            /** Causeeventids */
+            causeEventIds?: string[];
+            /** Description */
+            description: string;
+            /** Confidence */
+            confidence: number;
+            /** Evidenceids */
+            evidenceIds: string[];
+        };
+        /** RealityEvidenceReferenceV1 */
+        RealityEvidenceReferenceV1: {
+            /** Evidenceid */
+            evidenceId: string;
+            /** Contributionid */
+            contributionId: string;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "frame_crop" | "mask" | "point_track" | "flow" | "depth" | "camera_geometry" | "latent_prediction" | "rule_trace" | "human_annotation";
+            frameRange: components["schemas"]["RealityFrameRangeV1"];
+            /** Entityids */
+            entityIds?: string[];
+            /** Assetid */
+            assetId?: string | null;
+            /** Description */
+            description: string;
+            /** Confidence */
+            confidence: number;
+        };
+        /** RealityFrameRangeV1 */
+        RealityFrameRangeV1: {
+            /** Startframe */
+            startFrame: number;
+            /** Endframeexclusive */
+            endFrameExclusive: number;
+        };
+        /** RealityHypothesisV1 */
+        RealityHypothesisV1: {
+            /** Hypothesisid */
+            hypothesisId: string;
+            /**
+             * Principle
+             * @enum {string}
+             */
+            principle: "permanence" | "immutability" | "continuity" | "solidity" | "support_gravity" | "contact_collision" | "motion" | "approximate_conservation" | "material_behavior" | "causality" | "biomechanics" | "camera_perspective" | "light_shadow_reflection" | "event_sound" | "editorial_continuity";
+            frameRange: components["schemas"]["RealityFrameRangeV1"];
+            /** Entityids */
+            entityIds: string[];
+            /** Claim */
+            claim: string;
+            /** Expectedobservation */
+            expectedObservation: string;
+            /** Observedevidence */
+            observedEvidence: string;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "supported" | "contradicted" | "uncertain";
+            /** Confidence */
+            confidence: number;
+            /** Supportingevidenceids */
+            supportingEvidenceIds?: string[];
+            /** Contradictingevidenceids */
+            contradictingEvidenceIds?: string[];
+        };
+        /** RealityModelV1 */
+        RealityModelV1: {
+            /**
+             * Schemaversion
+             * @default studio.reality-model.v1
+             * @constant
+             */
+            schemaVersion: "studio.reality-model.v1";
+            /** Realitymodelid */
+            realityModelId: string;
+            /** Analysisid */
+            analysisId: string;
+            /** Workspaceid */
+            workspaceId: string;
+            sourceAsset: components["schemas"]["AssetReferenceV1"];
+            /** Sourcetimemapid */
+            sourceTimeMapId: string;
+            /** Sourcetimemapdigestsha256 */
+            sourceTimeMapDigestSha256: string;
+            /** Analysispolicydigestsha256 */
+            analysisPolicyDigestSha256: string;
+            frameRate: components["schemas"]["FrameRateV1"];
+            /** Totalframes */
+            totalFrames: number;
+            /** Shots */
+            shots: components["schemas"]["RealityShotV1"][];
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "complete" | "partial" | "incomplete";
+            /** Cameraobservations */
+            cameraObservations?: components["schemas"]["CameraObservationV1"][];
+            /** Entities */
+            entities?: components["schemas"]["RealityEntityV1"][];
+            /** Tracks */
+            tracks?: components["schemas"]["RealityEntityTrackV1"][];
+            /** Relations */
+            relations?: components["schemas"]["RealityRelationV1"][];
+            /** Events */
+            events?: components["schemas"]["RealityEventV1"][];
+            /** Hypotheses */
+            hypotheses?: components["schemas"]["RealityHypothesisV1"][];
+            /** Evidence */
+            evidence?: components["schemas"]["RealityEvidenceReferenceV1"][];
+            /** Lineage */
+            lineage: components["schemas"]["RealityProviderLineageV1"][];
+            /** Abstainedprinciples */
+            abstainedPrinciples?: ("permanence" | "immutability" | "continuity" | "solidity" | "support_gravity" | "contact_collision" | "motion" | "approximate_conservation" | "material_behavior" | "causality" | "biomechanics" | "camera_perspective" | "light_shadow_reflection" | "event_sound" | "editorial_continuity")[];
+            /** Limitations */
+            limitations?: string[];
+            /**
+             * Generatedat
+             * Format: date-time
+             */
+            generatedAt: string;
+        };
+        /** RealityProviderLineageV1 */
+        RealityProviderLineageV1: {
+            /** Contributionid */
+            contributionId: string;
+            /**
+             * Contributionkind
+             * @enum {string}
+             */
+            contributionKind: "geometry" | "tracking" | "segmentation" | "scene" | "world_model" | "rules" | "semantic" | "human";
+            /** Provider */
+            provider: string;
+            /** Providerversion */
+            providerVersion: string;
+            /** Codedigestsha256 */
+            codeDigestSha256: string;
+            /** Inputdigestsha256 */
+            inputDigestSha256: string;
+            /** Parametersdigestsha256 */
+            parametersDigestSha256: string;
+            /** Modelid */
+            modelId?: string | null;
+            /** Modelrevision */
+            modelRevision?: string | null;
+            /** Modeldigestsha256 */
+            modelDigestSha256?: string | null;
+            /**
+             * Generatedat
+             * Format: date-time
+             */
+            generatedAt: string;
+        };
+        /** RealityRelationV1 */
+        RealityRelationV1: {
+            /** Relationid */
+            relationId: string;
+            /**
+             * Relationtype
+             * @enum {string}
+             */
+            relationType: "supports" | "contacts" | "contains" | "attached_to" | "occludes" | "in_front_of" | "behind" | "inside" | "near";
+            /** Sourceentityid */
+            sourceEntityId: string;
+            /** Targetentityid */
+            targetEntityId: string;
+            frameRange: components["schemas"]["RealityFrameRangeV1"];
+            /**
+             * State
+             * @enum {string}
+             */
+            state: "present" | "absent" | "uncertain";
+            /** Confidence */
+            confidence: number;
+            /** Evidenceids */
+            evidenceIds: string[];
+        };
+        /** RealityShotV1 */
+        RealityShotV1: {
+            /** Shotid */
+            shotId: string;
+            frameRange: components["schemas"]["RealityFrameRangeV1"];
+            /**
+             * Transitionin
+             * @default cut
+             * @enum {string}
+             */
+            transitionIn: "start" | "cut" | "dissolve" | "wipe" | "generated";
+            /**
+             * Transitionout
+             * @default cut
+             * @enum {string}
+             */
+            transitionOut: "end" | "cut" | "dissolve" | "wipe" | "generated";
+        };
+        /** RealityTrackSampleV1 */
+        RealityTrackSampleV1: {
+            /** Frameindex */
+            frameIndex: number;
+            centroid: components["schemas"]["NormalizedPointV1"];
+            boundingBox?: components["schemas"]["NormalizedBoxV1"] | null;
+            /** Normalizeddepth */
+            normalizedDepth?: number | null;
+            /**
+             * Visibility
+             * @enum {string}
+             */
+            visibility: "visible" | "partially_occluded" | "fully_occluded" | "out_of_frame" | "unknown";
+            /** Confidence */
+            confidence: number;
+            /** Evidenceids */
+            evidenceIds?: string[];
+        };
+        /** RecipeDesignTokensV1 */
+        RecipeDesignTokensV1: {
+            /** Backgroundcolor */
+            backgroundColor: string;
+            /** Foregroundcolor */
+            foregroundColor: string;
+            /** Accentcolor */
+            accentColor: string;
+            /** Mutedcolor */
+            mutedColor: string;
+            /** Displayfontfamily */
+            displayFontFamily: string;
+            /** Bodyfontfamily */
+            bodyFontFamily: string;
+            /** Displayfontsize */
+            displayFontSize: number;
+            /** Captionfontsize */
+            captionFontSize: number;
+            /** Safezonetop */
+            safeZoneTop: number;
+            /** Safezoneright */
+            safeZoneRight: number;
+            /** Safezonebottom */
+            safeZoneBottom: number;
+            /** Safezoneleft */
+            safeZoneLeft: number;
+            /** Basespacing */
+            baseSpacing: number;
+            /** Transitionmilliseconds */
+            transitionMilliseconds: number;
+        };
+        /** RecipeFallbackV1 */
+        RecipeFallbackV1: {
+            /** Fallbackid */
+            fallbackId: string;
+            /**
+             * Trigger
+             * @enum {string}
+             */
+            trigger: "asset_unavailable" | "provider_unavailable" | "rights_unverified" | "reality_risk" | "budget_exceeded" | "reduced_motion";
+            /** Strategy */
+            strategy: string;
+            /** Preservesvisualfunctions */
+            preservesVisualFunctions: ("evidence" | "demonstration" | "context" | "metaphor" | "contrast" | "continuity" | "breathing_room" | "rhythm" | "identity" | "call_to_action")[];
+        };
         /** RegisterIn */
         RegisterIn: {
             /**
@@ -3023,8 +8497,164 @@ export interface components {
             /** Workspacename */
             workspaceName: string;
         };
+        /** RemoveRangeOperationV1 */
+        RemoveRangeOperationV1: {
+            /** Operationid */
+            operationId: string;
+            /** Evidenceids */
+            evidenceIds: string[];
+            /** Confidence */
+            confidence: number;
+            /** Rationale */
+            rationale: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "remove_range";
+            /** Sourcetrackid */
+            sourceTrackId: string;
+            interval: components["schemas"]["MediaIntervalV1"];
+        };
+        /** ReplaceEditDecisionSetRequest */
+        ReplaceEditDecisionSetRequest: {
+            /** Expectedrevision */
+            expectedRevision: number;
+            decisionSet: components["schemas"]["EditDecisionSetV1"];
+        };
+        /** ReplaceMotionGraphRequestV1 */
+        ReplaceMotionGraphRequestV1: {
+            /** Workspaceid */
+            workspaceId: string;
+            /** Expectedrevision */
+            expectedRevision: number;
+            graph: components["schemas"]["MotionGraphV1-Input"];
+            realityModel?: components["schemas"]["RealityModelV1"] | null;
+        };
+        /** ReplaceStudioDocumentRequest */
+        ReplaceStudioDocumentRequest: {
+            /** Expectedrevision */
+            expectedRevision: number;
+            document: components["schemas"]["CreativeDocumentV1-Input"];
+        };
+        /** ReplaceTranscriptRequest */
+        ReplaceTranscriptRequest: {
+            /** Expectedrevision */
+            expectedRevision: number;
+            transcript: components["schemas"]["TranscriptDocumentV1-Input"];
+        };
+        /** RestoreStudioDocumentVersionRequest */
+        RestoreStudioDocumentVersionRequest: {
+            /** Expectedrevision */
+            expectedRevision: number;
+            /** Label */
+            label?: string | null;
+        };
+        /** ReviewIdentityVersionRequest */
+        ReviewIdentityVersionRequest: {
+            /**
+             * Action
+             * @enum {string}
+             */
+            action: "approve" | "reject";
+            /** Comment */
+            comment: string;
+        };
+        /** ReviewMotionGraphRequestV1 */
+        ReviewMotionGraphRequestV1: {
+            /** Workspaceid */
+            workspaceId: string;
+            /** Expectedrevision */
+            expectedRevision: number;
+            realityModel?: components["schemas"]["RealityModelV1"] | null;
+        };
+        /** ReviewReferenceV1 */
+        ReviewReferenceV1: {
+            /**
+             * Status
+             * @default draft
+             * @enum {string}
+             */
+            status: "draft" | "requested" | "approved" | "changes_requested" | "rejected";
+            /** Requestedversion */
+            requestedVersion?: number | null;
+            /** Approvalid */
+            approvalId?: string | null;
+        };
+        /** ReviewedEditPlanV1 */
+        ReviewedEditPlanV1: {
+            /**
+             * Schemaversion
+             * @default studio.reviewed-edit-plan.v1
+             * @constant
+             */
+            schemaVersion: "studio.reviewed-edit-plan.v1";
+            /** Reviewid */
+            reviewId: string;
+            /** Proposalid */
+            proposalId: string;
+            /** Proposaldigestsha256 */
+            proposalDigestSha256: string;
+            /** Expecteddocumentrevision */
+            expectedDocumentRevision: number;
+            /** Decisions */
+            decisions: components["schemas"]["EditOperationDecisionV1"][];
+            /** Acceptedoperations */
+            acceptedOperations?: (components["schemas"]["RemoveRangeOperationV1"] | components["schemas"]["AddMarkerOperationV1"] | components["schemas"]["AddCaptionOperationV1"] | components["schemas"]["SetAudioGainOperationV1"] | components["schemas"]["InsertBrollOperationV1"] | components["schemas"]["ApplyMotionPresetOperationV1"])[];
+            /** Rejectedoperationids */
+            rejectedOperationIds?: string[];
+            /** Beforesnapshotdigestsha256 */
+            beforeSnapshotDigestSha256: string;
+            /** Inversesnapshotdigestsha256 */
+            inverseSnapshotDigestSha256: string;
+            /**
+             * Humanconfirmed
+             * @default true
+             * @constant
+             */
+            humanConfirmed: true;
+            /** Reviewedby */
+            reviewedBy: string;
+            /**
+             * Reviewedat
+             * Format: date-time
+             */
+            reviewedAt: string;
+        };
+        /** RevokeConsentGrantRequest */
+        RevokeConsentGrantRequest: {
+            /** Reason */
+            reason: string;
+        };
+        /** SetAudioGainOperationV1 */
+        SetAudioGainOperationV1: {
+            /** Operationid */
+            operationId: string;
+            /** Evidenceids */
+            evidenceIds: string[];
+            /** Confidence */
+            confidence: number;
+            /** Rationale */
+            rationale: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "set_audio_gain";
+            /** Targettrackid */
+            targetTrackId: string;
+            interval: components["schemas"]["MediaIntervalV1"];
+            /** Gaindb */
+            gainDb: number;
+        };
         /** SignalIn */
         SignalIn: {
+            /**
+             * Schemaversion
+             * @default radar.signal.v2
+             * @enum {string}
+             */
+            schemaVersion: "radar.signal.v1" | "radar.signal.v2";
             /** Workspaceid */
             workspaceId?: string | null;
             /** Source */
@@ -3073,9 +8703,33 @@ export interface components {
             metrics?: {
                 [key: string]: unknown;
             };
+            /**
+             * Sourcetype
+             * @default external
+             * @enum {string}
+             */
+            sourceType: "external" | "rss" | "manual" | "research_provider";
+            /** Confidence */
+            confidence?: number | null;
+            /**
+             * Knowledgetype
+             * @default fact
+             * @enum {string}
+             */
+            knowledgeType: "fact" | "inference" | "suggestion";
+            /** Providertrace */
+            providerTrace?: {
+                [key: string]: unknown;
+            };
         };
         /** SignalOut */
         SignalOut: {
+            /**
+             * Schemaversion
+             * @default radar.signal.v2
+             * @enum {string}
+             */
+            schemaVersion: "radar.signal.v1" | "radar.signal.v2";
             /** Workspaceid */
             workspaceId?: string | null;
             /** Source */
@@ -3127,6 +8781,24 @@ export interface components {
             metrics?: {
                 [key: string]: unknown;
             };
+            /**
+             * Sourcetype
+             * @default external
+             * @enum {string}
+             */
+            sourceType: "external" | "rss" | "manual" | "research_provider";
+            /** Confidence */
+            confidence?: number | null;
+            /**
+             * Knowledgetype
+             * @default fact
+             * @enum {string}
+             */
+            knowledgeType: "fact" | "inference" | "suggestion";
+            /** Providertrace */
+            providerTrace?: {
+                [key: string]: unknown;
+            };
             /** Id */
             id: string;
             /**
@@ -3141,6 +8813,864 @@ export interface components {
             /** Clusterkey */
             clusterKey: string | null;
         };
+        /** SoundCueV1 */
+        SoundCueV1: {
+            /** Cueid */
+            cueId: string;
+            /** Beatid */
+            beatId: string;
+            /**
+             * Role
+             * @enum {string}
+             */
+            role: "dialogue" | "narration" | "location_sound" | "foley" | "interface" | "impact" | "riser" | "music" | "silence";
+            /** Startmilliseconds */
+            startMilliseconds: number;
+            /** Endmilliseconds */
+            endMilliseconds: number;
+            /** Description */
+            description: string;
+            /** Assetid */
+            assetId?: string | null;
+            /**
+             * Rightsstatus
+             * @enum {string}
+             */
+            rightsStatus: "verified" | "required_before_render" | "not_applicable";
+            /** Eventbinding */
+            eventBinding: string;
+        };
+        /** SoundDesignPlanV1 */
+        SoundDesignPlanV1: {
+            /**
+             * Schemaversion
+             * @default studio.sound-design-plan.v1
+             * @constant
+             */
+            schemaVersion: "studio.sound-design-plan.v1";
+            /** Soundplanid */
+            soundPlanId: string;
+            /** Scriptid */
+            scriptId: string;
+            /** Scriptdigestsha256 */
+            scriptDigestSha256: string;
+            /**
+             * Mode
+             * @enum {string}
+             */
+            mode: "natural_foley_only" | "spoken_with_foley" | "narrated_editorial" | "cinematic_mix" | "intentional_silence";
+            /**
+             * Voiceinferenceauthorized
+             * @default false
+             * @constant
+             */
+            voiceInferenceAuthorized: false;
+            /**
+             * Musicauthorized
+             * @default false
+             */
+            musicAuthorized: boolean;
+            /**
+             * Targetloudnesslufs
+             * @default -14
+             */
+            targetLoudnessLufs: number;
+            /** Cues */
+            cues: components["schemas"]["SoundCueV1"][];
+            /** Mixnotes */
+            mixNotes: string[];
+        };
+        /** SourceTimeRangeV1 */
+        SourceTimeRangeV1: {
+            /**
+             * Startmicroseconds
+             * @default 0
+             */
+            startMicroseconds: number;
+            /** Durationmicroseconds */
+            durationMicroseconds: number;
+        };
+        /** StoryboardBeatCritiqueV1 */
+        StoryboardBeatCritiqueV1: {
+            /** Critiqueid */
+            critiqueId: string;
+            /** Beatid */
+            beatId: string;
+            /**
+             * Verdict
+             * @enum {string}
+             */
+            verdict: "pass" | "repair";
+            /** Dimensions */
+            dimensions: {
+                [key: string]: number;
+            };
+            /** Evidenceids */
+            evidenceIds: string[];
+            /** Diagnosis */
+            diagnosis: string;
+            /** Repairinstruction */
+            repairInstruction?: string | null;
+        };
+        /** StoryboardBeatV1 */
+        StoryboardBeatV1: {
+            /** Beatid */
+            beatId: string;
+            /** Order */
+            order: number;
+            /**
+             * Narrativerole
+             * @enum {string}
+             */
+            narrativeRole: "hook" | "setup" | "problem" | "proof" | "demo" | "benefit" | "offer" | "cta";
+            /** Purpose */
+            purpose: string;
+            targetInterval: components["schemas"]["MediaIntervalV1"];
+            /** Sourceevidenceids */
+            sourceEvidenceIds: string[];
+            /** Copytext */
+            copyText?: string | null;
+            /**
+             * Locked
+             * @default false
+             */
+            locked: boolean;
+        };
+        /** StoryboardOptionSetV1 */
+        StoryboardOptionSetV1: {
+            /**
+             * Schemaversion
+             * @default studio.storyboard-option-set.v1
+             * @constant
+             */
+            schemaVersion: "studio.storyboard-option-set.v1";
+            /** Optionsetid */
+            optionSetId: string;
+            /** Workspaceid */
+            workspaceId: string;
+            /** Documentid */
+            documentId: string;
+            /** Documentrevision */
+            documentRevision: number;
+            /** Mediaindexid */
+            mediaIndexId: string;
+            /** Mediaindexdigestsha256 */
+            mediaIndexDigestSha256: string;
+            /** Options */
+            options: components["schemas"]["StoryboardOptionV1"][];
+            /** Selectedoptionid */
+            selectedOptionId: string;
+            /** Selectionrationale */
+            selectionRationale: string;
+            repair?: components["schemas"]["StoryboardRepairV1"] | null;
+            /**
+             * Humanreviewrequired
+             * @default true
+             * @constant
+             */
+            humanReviewRequired: true;
+            /**
+             * Createdat
+             * Format: date-time
+             */
+            createdAt: string;
+        };
+        /** StoryboardOptionV1 */
+        StoryboardOptionV1: {
+            /** Optionid */
+            optionId: string;
+            /**
+             * Strategy
+             * @enum {string}
+             */
+            strategy: "clarity_first" | "proof_first" | "rhythm_first";
+            storyboard: components["schemas"]["LStoryboardV1"];
+            /** Storyboarddigestsha256 */
+            storyboardDigestSha256: string;
+            /** Critiques */
+            critiques: components["schemas"]["StoryboardBeatCritiqueV1"][];
+            /** Score */
+            score: number;
+            /** Blockers */
+            blockers?: string[];
+        };
+        /** StoryboardRepairV1 */
+        StoryboardRepairV1: {
+            /** Repairid */
+            repairId: string;
+            /** Optionid */
+            optionId: string;
+            /** Sourcestoryboarddigestsha256 */
+            sourceStoryboardDigestSha256: string;
+            /** Repairedbeatid */
+            repairedBeatId: string;
+            /** Originalbeatdigestsha256 */
+            originalBeatDigestSha256: string;
+            repairedBeat: components["schemas"]["StoryboardBeatV1"];
+            /** Preservedbeatids */
+            preservedBeatIds?: string[];
+            /** Repairevidenceids */
+            repairEvidenceIds: string[];
+            /**
+             * Repairedat
+             * Format: date-time
+             */
+            repairedAt: string;
+        };
+        /**
+         * StreamTimeBaseV1
+         * @description Seconds represented by one native stream timestamp tick.
+         */
+        StreamTimeBaseV1: {
+            /** Numerator */
+            numerator: number;
+            /** Denominator */
+            denominator: number;
+        };
+        /** StudioAcousticAnalysisCapabilityV1 */
+        StudioAcousticAnalysisCapabilityV1: {
+            /**
+             * Schemaversion
+             * @default studio.acoustic-analysis-capability.v1
+             * @constant
+             */
+            schemaVersion: "studio.acoustic-analysis-capability.v1";
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "ready" | "unavailable";
+            /** Reasoncode */
+            reasonCode: string;
+            /** Detail */
+            detail: string;
+            /** Provider */
+            provider?: string | null;
+            /** Providerversion */
+            providerVersion?: string | null;
+            /** Modelname */
+            modelName?: string | null;
+            /** Modelversion */
+            modelVersion?: string | null;
+        };
+        /** StudioAcousticAnalysisRecordV1 */
+        StudioAcousticAnalysisRecordV1: {
+            /**
+             * Schemaversion
+             * @default studio.acoustic-analysis.v1
+             * @constant
+             */
+            schemaVersion: "studio.acoustic-analysis.v1";
+            /** Analysisid */
+            analysisId: string;
+            /** Jobid */
+            jobId: string;
+            /** Reviewid */
+            reviewId: string;
+            /** Workspaceid */
+            workspaceId: string;
+            /** Documentid */
+            documentId: string;
+            /** Documentversion */
+            documentVersion: number;
+            /** Snapshotchecksumsha256 */
+            snapshotChecksumSha256: string;
+            /** Renderassetid */
+            renderAssetId: string;
+            /** Renderchecksumsha256 */
+            renderChecksumSha256: string;
+            /** Providerregistrationid */
+            providerRegistrationId: string;
+            /** Modelregistrationid */
+            modelRegistrationId: string;
+            /** Modeldigestsha256 */
+            modelDigestSha256: string;
+            /** Benchmarkdigestsha256 */
+            benchmarkDigestSha256: string;
+            result: components["schemas"]["StudioAcousticDetectorResultV1"];
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "pass" | "fail" | "inconclusive";
+            /**
+             * Productionqualified
+             * @default true
+             * @constant
+             */
+            productionQualified: true;
+            /**
+             * Analyzedat
+             * Format: date-time
+             */
+            analyzedAt: string;
+        };
+        /** StudioAcousticDetectionCheckV1 */
+        StudioAcousticDetectionCheckV1: {
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "speech" | "music";
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "pass" | "fail" | "inconclusive";
+            /** Detecteddurationms */
+            detectedDurationMs: number;
+            /** Maximumscore */
+            maximumScore?: number | null;
+            /** Decisionthreshold */
+            decisionThreshold?: number | null;
+            /** Detail */
+            detail: string;
+        };
+        /**
+         * StudioAcousticDetectorResultV1
+         * @description Provider output. Admission metadata is added only by the control plane.
+         */
+        StudioAcousticDetectorResultV1: {
+            /**
+             * Schemaversion
+             * @default studio.acoustic-detector-result.v1
+             * @constant
+             */
+            schemaVersion: "studio.acoustic-detector-result.v1";
+            /** Provider */
+            provider: string;
+            /** Providerversion */
+            providerVersion: string;
+            /** Sourcechecksumsha256 */
+            sourceChecksumSha256: string;
+            /** Analyzeddurationms */
+            analyzedDurationMs: number;
+            /** Checks */
+            checks: components["schemas"]["StudioAcousticDetectionCheckV1"][];
+        };
+        /** StudioAssetRightsReviewRecordV1 */
+        StudioAssetRightsReviewRecordV1: {
+            /**
+             * Schemaversion
+             * @default studio.asset-rights-review.v1
+             * @constant
+             */
+            schemaVersion: "studio.asset-rights-review.v1";
+            /** Reviewid */
+            reviewId: string;
+            /** Workspaceid */
+            workspaceId: string;
+            /** Documentid */
+            documentId: string;
+            /** Documentrevision */
+            documentRevision: number;
+            /** Assetid */
+            assetId: string;
+            /** Assetchecksumsha256 */
+            assetChecksumSha256: string;
+            /**
+             * Decision
+             * @enum {string}
+             */
+            decision: "verified" | "restricted";
+            /**
+             * Basis
+             * @enum {string}
+             */
+            basis: "open-license" | "owned" | "written-permission";
+            /**
+             * Publicationscope
+             * @default commercial-saas
+             * @constant
+             */
+            publicationScope: "commercial-saas";
+            /** Sourcedeclaration */
+            sourceDeclaration: string;
+            /** Licensedeclaration */
+            licenseDeclaration: string;
+            /** Sourcereference */
+            sourceReference: string;
+            /** Rightsreference */
+            rightsReference: string;
+            /** Expiresat */
+            expiresAt?: string | null;
+            /**
+             * Noexpirationconfirmed
+             * @default false
+             */
+            noExpirationConfirmed: boolean;
+            /** Notes */
+            notes?: string | null;
+            /** Reviewerid */
+            reviewerId: string;
+            /**
+             * Reviewedat
+             * Format: date-time
+             */
+            reviewedAt: string;
+        };
+        /** StudioAssetRightsReviewRequestV1 */
+        StudioAssetRightsReviewRequestV1: {
+            /** Expecteddocumentrevision */
+            expectedDocumentRevision: number;
+            /** Assetchecksumsha256 */
+            assetChecksumSha256: string;
+            /**
+             * Decision
+             * @enum {string}
+             */
+            decision: "verified" | "restricted";
+            /**
+             * Basis
+             * @enum {string}
+             */
+            basis: "open-license" | "owned" | "written-permission";
+            /** Sourcereference */
+            sourceReference: string;
+            /** Rightsreference */
+            rightsReference: string;
+            /** Expiresat */
+            expiresAt?: string | null;
+            /**
+             * Noexpirationconfirmed
+             * @default false
+             */
+            noExpirationConfirmed: boolean;
+            /** Notes */
+            notes?: string | null;
+        };
+        /** StudioAssetRightsReviewResponseV1 */
+        StudioAssetRightsReviewResponseV1: {
+            /**
+             * Schemaversion
+             * @default studio.asset-rights-review-response.v1
+             * @constant
+             */
+            schemaVersion: "studio.asset-rights-review-response.v1";
+            review: components["schemas"]["StudioAssetRightsReviewRecordV1"];
+            document: components["schemas"]["CreativeDocumentV1-Output"];
+        };
+        /**
+         * StudioCapabilitiesV1
+         * @description All Studio capability projections for one workspace.
+         */
+        StudioCapabilitiesV1: {
+            /**
+             * Schemaversion
+             * @default studio.capabilities.v1
+             * @constant
+             */
+            schemaVersion: "studio.capabilities.v1";
+            /** Workspaceid */
+            workspaceId: string;
+            /** Capabilities */
+            capabilities: components["schemas"]["StudioCapabilityReadinessV1"][];
+            /**
+             * Evaluatedat
+             * Format: date-time
+             */
+            evaluatedAt: string;
+        };
+        /**
+         * StudioCapabilityReadinessV1
+         * @description Tenant-scoped, provider-neutral projection of the Studio activation gates.
+         *
+         *     This is intentionally a read model. It never activates a provider, creates an
+         *     identity, or authorizes publication; it only explains why a capability is (or
+         *     is not) eligible at the moment it is queried.
+         */
+        StudioCapabilityReadinessV1: {
+            /**
+             * Schemaversion
+             * @default studio.capability-readiness.v1
+             * @constant
+             */
+            schemaVersion: "studio.capability-readiness.v1";
+            /** Workspaceid */
+            workspaceId: string;
+            /**
+             * Capability
+             * @enum {string}
+             */
+            capability: "presenter" | "avatar" | "voice_clone" | "stock_voice" | "transcription";
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "unavailable" | "blocked" | "review" | "ready";
+            /**
+             * Providerready
+             * @default false
+             */
+            providerReady: boolean;
+            /**
+             * Captureready
+             * @default false
+             */
+            captureReady: boolean;
+            /**
+             * Providercandidates
+             * @default 0
+             */
+            providerCandidates: number;
+            /**
+             * Approvedproviders
+             * @default 0
+             */
+            approvedProviders: number;
+            /**
+             * Modelcandidates
+             * @default 0
+             */
+            modelCandidates: number;
+            /**
+             * Approvedmodels
+             * @default 0
+             */
+            approvedModels: number;
+            /**
+             * Activeidentityversions
+             * @default 0
+             */
+            activeIdentityVersions: number;
+            /**
+             * Activevoiceversions
+             * @default 0
+             */
+            activeVoiceVersions: number;
+            /**
+             * Activeconsentgrants
+             * @default 0
+             */
+            activeConsentGrants: number;
+            /**
+             * Benchmarkready
+             * @default false
+             */
+            benchmarkReady: boolean;
+            /**
+             * Licenseready
+             * @default false
+             */
+            licenseReady: boolean;
+            /**
+             * Consentready
+             * @default false
+             */
+            consentReady: boolean;
+            /**
+             * Publicationallowed
+             * @default false
+             */
+            publicationAllowed: boolean;
+            /** Reasons */
+            reasons?: string[];
+            /**
+             * Evaluatedat
+             * Format: date-time
+             */
+            evaluatedAt: string;
+        };
+        /** StudioDocumentVersionV1 */
+        StudioDocumentVersionV1: {
+            /**
+             * Schemaversion
+             * @default studio.document-version.v1
+             * @constant
+             */
+            schemaVersion: "studio.document-version.v1";
+            /** Documentid */
+            documentId: string;
+            /** Workspaceid */
+            workspaceId: string;
+            /** Number */
+            number: number;
+            /** Label */
+            label: string;
+            /**
+             * Createdat
+             * Format: date-time
+             */
+            createdAt: string;
+            /** Actorid */
+            actorId?: string | null;
+            snapshot: components["schemas"]["CreativeDocumentV1-Output"];
+        };
+        /** StudioExportRequest */
+        StudioExportRequest: {
+            /**
+             * Format
+             * @default png
+             * @enum {string}
+             */
+            format: "png" | "png_set";
+        };
+        /** StudioInternalScheduleReceiptV1 */
+        StudioInternalScheduleReceiptV1: {
+            /**
+             * Schemaversion
+             * @default studio.internal-schedule-receipt.v1
+             * @constant
+             */
+            schemaVersion: "studio.internal-schedule-receipt.v1";
+            /** Receiptid */
+            receiptId: string;
+            /** Reviewid */
+            reviewId: string;
+            /** Documentid */
+            documentId: string;
+            /** Documentversion */
+            documentVersion: number;
+            /** Postid */
+            postId: string;
+            /**
+             * Scheduledat
+             * Format: date-time
+             */
+            scheduledAt: string;
+            /**
+             * Externalpublicationconfirmed
+             * @default false
+             * @constant
+             */
+            externalPublicationConfirmed: false;
+        };
+        /** StudioInternalScheduleRequest */
+        StudioInternalScheduleRequest: {
+            /**
+             * Scheduledat
+             * Format: date-time
+             */
+            scheduledAt: string;
+        };
+        /** StudioListeningReviewRecordV1 */
+        StudioListeningReviewRecordV1: {
+            /**
+             * Schemaversion
+             * @default studio.listening-review.v1
+             * @constant
+             */
+            schemaVersion: "studio.listening-review.v1";
+            /** Assessmentid */
+            assessmentId: string;
+            /** Reviewid */
+            reviewId: string;
+            /** Documentid */
+            documentId: string;
+            /** Documentversion */
+            documentVersion: number;
+            /** Snapshotchecksumsha256 */
+            snapshotChecksumSha256: string;
+            /** Reviewerid */
+            reviewerId: string;
+            /**
+             * Reviewedat
+             * Format: date-time
+             */
+            reviewedAt: string;
+            /**
+             * Result
+             * @enum {string}
+             */
+            result: "pass" | "needs_changes";
+            submission: components["schemas"]["StudioListeningReviewSubmissionV1"];
+            /**
+             * Publicationadmitted
+             * @default false
+             * @constant
+             */
+            publicationAdmitted: false;
+        };
+        /**
+         * StudioListeningReviewSubmissionV1
+         * @description A human attestation, never a classifier result or a rights clearance.
+         */
+        StudioListeningReviewSubmissionV1: {
+            /** Renderassetid */
+            renderAssetId: string;
+            /** Renderchecksumsha256 */
+            renderChecksumSha256: string;
+            /**
+             * Listenedentiremix
+             * @constant
+             */
+            listenedEntireMix: true;
+            /**
+             * Speechabsent
+             * @enum {string}
+             */
+            speechAbsent: "pass" | "fail" | "inconclusive";
+            /**
+             * Musicabsent
+             * @enum {string}
+             */
+            musicAbsent: "pass" | "fail" | "inconclusive";
+            /**
+             * Naturalsoundscoherent
+             * @enum {string}
+             */
+            naturalSoundsCoherent: "pass" | "fail" | "inconclusive";
+            /**
+             * Mixbalanced
+             * @enum {string}
+             */
+            mixBalanced: "pass" | "fail" | "inconclusive";
+        };
+        /** StudioNaturalSoundAdmissionRecordV1 */
+        StudioNaturalSoundAdmissionRecordV1: {
+            /**
+             * Schemaversion
+             * @default studio.natural-sound-admission.v1
+             * @constant
+             */
+            schemaVersion: "studio.natural-sound-admission.v1";
+            /** Admissionid */
+            admissionId: string;
+            /** Reviewid */
+            reviewId: string;
+            /** Documentid */
+            documentId: string;
+            /** Documentversion */
+            documentVersion: number;
+            /** Snapshotchecksumsha256 */
+            snapshotChecksumSha256: string;
+            /** Renderassetid */
+            renderAssetId: string;
+            /** Renderchecksumsha256 */
+            renderChecksumSha256: string;
+            /** Acousticanalysisid */
+            acousticAnalysisId: string;
+            /** Listeningassessmentid */
+            listeningAssessmentId: string;
+            /** Rightsreviewids */
+            rightsReviewIds: string[];
+            /**
+             * Admittedat
+             * Format: date-time
+             */
+            admittedAt: string;
+            /**
+             * Publicationadmitted
+             * @default true
+             * @constant
+             */
+            publicationAdmitted: true;
+        };
+        /** StudioPreflightCheckV1 */
+        StudioPreflightCheckV1: {
+            /** Key */
+            key: string;
+            /** Label */
+            label: string;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "passed" | "warning" | "failed";
+            /** Detail */
+            detail: string;
+        };
+        /** StudioPublicationPreflightV1 */
+        StudioPublicationPreflightV1: {
+            /**
+             * Schemaversion
+             * @default studio.publication-preflight.v1
+             * @constant
+             */
+            schemaVersion: "studio.publication-preflight.v1";
+            /** Reviewid */
+            reviewId: string;
+            /** Documentid */
+            documentId: string;
+            /** Documentversion */
+            documentVersion: number;
+            /** Postid */
+            postId: string;
+            /** Title */
+            title: string;
+            /** Platform */
+            platform: string;
+            /** Format */
+            format: string;
+            /** Caption */
+            caption: string;
+            /** Hashtags */
+            hashtags?: string[];
+            /**
+             * Contenttype
+             * @enum {string}
+             */
+            contentType: "visual" | "carousel" | "video" | "presenter";
+            /** Pageids */
+            pageIds?: string[];
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "ready" | "scheduled";
+            /** Scheduledat */
+            scheduledAt?: string | null;
+            /** Checks */
+            checks: components["schemas"]["StudioPreflightCheckV1"][];
+        };
+        /** StudioReviewDecisionRequest */
+        StudioReviewDecisionRequest: {
+            /**
+             * Action
+             * @enum {string}
+             */
+            action: "approve" | "request_changes" | "reject";
+            /** Comment */
+            comment?: string | null;
+            listeningReview?: components["schemas"]["StudioListeningReviewSubmissionV1"] | null;
+        };
+        /** StudioReviewRequestV1 */
+        StudioReviewRequestV1: {
+            /**
+             * Schemaversion
+             * @default studio.review-request.v1
+             * @constant
+             */
+            schemaVersion: "studio.review-request.v1";
+            /** Id */
+            id: string;
+            /** Workspaceid */
+            workspaceId: string;
+            /** Documentid */
+            documentId: string;
+            /** Documentversion */
+            documentVersion: number;
+            /** Postid */
+            postId?: string | null;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "requested" | "approved" | "changes_requested" | "rejected";
+            snapshot: components["schemas"]["CreativeDocumentV1-Output"];
+            /** Renderjobid */
+            renderJobId?: string | null;
+            /** Renderassetid */
+            renderAssetId?: string | null;
+            /** Renderchecksumsha256 */
+            renderChecksumSha256?: string | null;
+            /** Requestedby */
+            requestedBy?: string | null;
+            /** Decidedby */
+            decidedBy?: string | null;
+            /** Decisioncomment */
+            decisionComment?: string | null;
+            /**
+             * Requestedat
+             * Format: date-time
+             */
+            requestedAt: string;
+            /** Decidedat */
+            decidedAt?: string | null;
+            listeningReview?: components["schemas"]["StudioListeningReviewRecordV1"] | null;
+            acousticAnalysis?: components["schemas"]["StudioAcousticAnalysisRecordV1"] | null;
+            naturalSoundAdmission?: components["schemas"]["StudioNaturalSoundAdmissionRecordV1"] | null;
+        };
         /** SupportTicketIn */
         SupportTicketIn: {
             /**
@@ -3153,6 +9683,16 @@ export interface components {
             /** Details */
             details: string;
         };
+        /** TimelineFrameRangeV1 */
+        TimelineFrameRangeV1: {
+            /**
+             * Startframe
+             * @default 0
+             */
+            startFrame: number;
+            /** Durationframes */
+            durationFrames: number;
+        };
         /** TokenOut */
         TokenOut: {
             /** Accesstoken */
@@ -3163,6 +9703,160 @@ export interface components {
              */
             tokenType: string;
             user: components["schemas"]["UserOut"];
+        };
+        /** TranscriptDocumentV1 */
+        "TranscriptDocumentV1-Input": {
+            /**
+             * Schemaversion
+             * @default studio.transcript.v1
+             * @constant
+             */
+            schemaVersion: "studio.transcript.v1";
+            /** Id */
+            id: string;
+            /** Workspaceid */
+            workspaceId: string;
+            /** Mediaingestid */
+            mediaIngestId: string;
+            /** Assetid */
+            assetId: string;
+            /**
+             * Locale
+             * @default pt-BR
+             */
+            locale: string;
+            /**
+             * Status
+             * @default draft
+             * @enum {string}
+             */
+            status: "draft" | "ready" | "reviewed";
+            /**
+             * Revision
+             * @default 1
+             */
+            revision: number;
+            /**
+             * Version
+             * @default 1
+             */
+            version: number;
+            /**
+             * Provider
+             * @default manual
+             */
+            provider: string;
+            /** Providerversion */
+            providerVersion?: string | null;
+            /** Segments */
+            segments?: components["schemas"]["TranscriptSegmentV1"][];
+            /** Createdby */
+            createdBy: string;
+            /** Updatedby */
+            updatedBy: string;
+            /**
+             * Createdat
+             * Format: date-time
+             */
+            createdAt: string;
+            /**
+             * Updatedat
+             * Format: date-time
+             */
+            updatedAt: string;
+        };
+        /** TranscriptDocumentV1 */
+        "TranscriptDocumentV1-Output": {
+            /**
+             * Schemaversion
+             * @default studio.transcript.v1
+             * @constant
+             */
+            schemaVersion: "studio.transcript.v1";
+            /** Id */
+            id: string;
+            /** Workspaceid */
+            workspaceId: string;
+            /** Mediaingestid */
+            mediaIngestId: string;
+            /** Assetid */
+            assetId: string;
+            /**
+             * Locale
+             * @default pt-BR
+             */
+            locale: string;
+            /**
+             * Status
+             * @default draft
+             * @enum {string}
+             */
+            status: "draft" | "ready" | "reviewed";
+            /**
+             * Revision
+             * @default 1
+             */
+            revision: number;
+            /**
+             * Version
+             * @default 1
+             */
+            version: number;
+            /**
+             * Provider
+             * @default manual
+             */
+            provider: string;
+            /** Providerversion */
+            providerVersion?: string | null;
+            /** Segments */
+            segments?: components["schemas"]["TranscriptSegmentV1"][];
+            /** Createdby */
+            createdBy: string;
+            /** Updatedby */
+            updatedBy: string;
+            /**
+             * Createdat
+             * Format: date-time
+             */
+            createdAt: string;
+            /**
+             * Updatedat
+             * Format: date-time
+             */
+            updatedAt: string;
+        };
+        /** TranscriptSegmentV1 */
+        TranscriptSegmentV1: {
+            /** Id */
+            id: string;
+            /** Startmicroseconds */
+            startMicroseconds: number;
+            /** Endmicroseconds */
+            endMicroseconds: number;
+            /** Text */
+            text: string;
+            /** Confidence */
+            confidence?: number | null;
+            /** Speaker */
+            speaker?: string | null;
+            /** Words */
+            words?: components["schemas"]["TranscriptWordV1"][];
+        };
+        /** TranscriptWordV1 */
+        TranscriptWordV1: {
+            /** Id */
+            id: string;
+            /** Startmicroseconds */
+            startMicroseconds: number;
+            /** Endmicroseconds */
+            endMicroseconds: number;
+            /** Text */
+            text: string;
+            /** Confidence */
+            confidence?: number | null;
+            /** Speaker */
+            speaker?: string | null;
         };
         /** UserOut */
         UserOut: {
@@ -3195,10 +9889,670 @@ export interface components {
             msg: string;
             /** Error Type */
             type: string;
-            /** Input */
-            input?: unknown;
-            /** Context */
-            ctx?: Record<string, never>;
+        };
+        /** VideoAutonomyCompletionAuditV1 */
+        VideoAutonomyCompletionAuditV1: {
+            /**
+             * Schemaversion
+             * @default studio.video-autonomy-completion-audit.v1
+             * @constant
+             */
+            schemaVersion: "studio.video-autonomy-completion-audit.v1";
+            /** Auditid */
+            auditId: string;
+            /** Phases */
+            phases: components["schemas"]["AutonomyPhaseStatusV1"][];
+            /**
+             * Casebookcasecount
+             * @default 12
+             * @constant
+             */
+            casebookCaseCount: 12;
+            /**
+             * Animaticcount
+             * @default 12
+             * @constant
+             */
+            animaticCount: 12;
+            /**
+             * Motiongoldencount
+             * @default 4
+             * @constant
+             */
+            motionGoldenCount: 4;
+            /**
+             * Assistedstoryboardoptioncount
+             * @default 36
+             * @constant
+             */
+            assistedStoryboardOptionCount: 36;
+            /** Producedprivateartifactcount */
+            producedPrivateArtifactCount: number;
+            /** Humanapprovedartifactcount */
+            humanApprovedArtifactCount: number;
+            /**
+             * Scalejobcount
+             * @default 64
+             * @constant
+             */
+            scaleJobCount: 64;
+            /** Dispatchedscalejobcount */
+            dispatchedScaleJobCount: number;
+            /** Advancedcandidatecount */
+            advancedCandidateCount: number;
+            /** Authorizedidentitycount */
+            authorizedIdentityCount: number;
+            /** Advancedbenchmarkcasecount */
+            advancedBenchmarkCaseCount: number;
+            /** Enabledadvancedprovidercount */
+            enabledAdvancedProviderCount: number;
+            /**
+             * Externalpublicationcount
+             * @default 0
+             * @constant
+             */
+            externalPublicationCount: 0;
+            /** Implementationcomplete */
+            implementationComplete: boolean;
+            /** Objectivecomplete */
+            objectiveComplete: boolean;
+            /** Blockers */
+            blockers?: string[];
+            /**
+             * Auditedat
+             * Format: date-time
+             */
+            auditedAt: string;
+        };
+        /** VideoFactoryBudgetV1 */
+        VideoFactoryBudgetV1: {
+            /** Maxdirectcostusd */
+            maxDirectCostUsd: number;
+            /**
+             * Maxinfrastructurecostusd
+             * @default 1000
+             */
+            maxInfrastructureCostUsd: number;
+            /** Maxwalltimeseconds */
+            maxWallTimeSeconds: number;
+            /** Maxconcurrentjobs */
+            maxConcurrentJobs: number;
+            /** Ratelimitjobsperminute */
+            rateLimitJobsPerMinute: number;
+            /** Maxattemptsperjob */
+            maxAttemptsPerJob: number;
+            /**
+             * Stoponbudgetexceeded
+             * @default true
+             * @constant
+             */
+            stopOnBudgetExceeded: true;
+        };
+        /** VideoFactoryJobV1 */
+        VideoFactoryJobV1: {
+            /** Jobid */
+            jobId: string;
+            /**
+             * Wave
+             * @enum {string}
+             */
+            wave: "pilot_12" | "calibration_24" | "scale_64";
+            /** Ordinal */
+            ordinal: number;
+            /** Caseid */
+            caseId: string;
+            /**
+             * Family
+             * @enum {string}
+             */
+            family: "presenter_ugc" | "split_screen_proof" | "motion_visual_essay" | "cinematic_hybrid";
+            /** Recipeid */
+            recipeId: string;
+            /** Recipedigestsha256 */
+            recipeDigestSha256: string;
+            /** Idempotencykey */
+            idempotencyKey: string;
+            /**
+             * Capability
+             * @enum {string}
+             */
+            capability: "media_cpu" | "motion_browser";
+            /**
+             * Provider
+             * @enum {string}
+             */
+            provider: "builtin.ffmpeg-calibration-v1" | "hyperframes.cli";
+            /** Providerversion */
+            providerVersion: string;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "queued" | "running" | "retrying" | "succeeded" | "failed" | "cancelled" | "blocked_by_gate";
+            /** Attempts */
+            attempts: number;
+            /** Maxattempts */
+            maxAttempts: number;
+            /** Sourceartifactdigestsha256 */
+            sourceArtifactDigestSha256?: string | null;
+            /** Artifactpath */
+            artifactPath?: string | null;
+            /** Artifactdigestsha256 */
+            artifactDigestSha256?: string | null;
+            /** Renderdurationmilliseconds */
+            renderDurationMilliseconds?: number | null;
+            /** Directcostusd */
+            directCostUsd: number;
+            /**
+             * Technicalqcpassed
+             * @default false
+             */
+            technicalQcPassed: boolean;
+            /**
+             * Humanreviewstatus
+             * @default pending
+             * @enum {string}
+             */
+            humanReviewStatus: "pending" | "approved" | "changes_requested" | "rejected";
+            /** Humanreviewid */
+            humanReviewId?: string | null;
+            /** Humanreviewedby */
+            humanReviewedBy?: string | null;
+            /** Humanreviewedat */
+            humanReviewedAt?: string | null;
+            /** Humanreviewnotes */
+            humanReviewNotes?: string | null;
+            /**
+             * Publicationauthorized
+             * @default false
+             * @constant
+             */
+            publicationAuthorized: false;
+            /**
+             * Identitysynthesisauthorized
+             * @default false
+             * @constant
+             */
+            identitySynthesisAuthorized: false;
+            /**
+             * Voicesynthesisauthorized
+             * @default false
+             * @constant
+             */
+            voiceSynthesisAuthorized: false;
+            /**
+             * Cancelrequested
+             * @default false
+             */
+            cancelRequested: boolean;
+            /** Retryofjobid */
+            retryOfJobId?: string | null;
+            /** Rollbackrecipeid */
+            rollbackRecipeId: string;
+            /**
+             * Rollbackprovider
+             * @enum {string}
+             */
+            rollbackProvider: "builtin.ffmpeg-calibration-v1" | "hyperframes.cli";
+            /** Blockers */
+            blockers?: string[];
+        };
+        /** VideoFactoryProgramEvidenceV1 */
+        VideoFactoryProgramEvidenceV1: {
+            /**
+             * Schemaversion
+             * @default studio.video-factory-program-evidence.v1
+             * @constant
+             */
+            schemaVersion: "studio.video-factory-program-evidence.v1";
+            /** Programid */
+            programId: string;
+            pilot: components["schemas"]["VideoFactoryWaveEvidenceV1"];
+            calibration: components["schemas"]["VideoFactoryWaveEvidenceV1"];
+            scale: components["schemas"]["VideoFactoryWaveEvidenceV1"];
+            /** Producedartifactcount */
+            producedArtifactCount: number;
+            /** Humanapprovedcount */
+            humanApprovedCount: number;
+            /**
+             * Externalpublicationcount
+             * @default 0
+             * @constant
+             */
+            externalPublicationCount: 0;
+            /**
+             * Eligibleforexternalpublication
+             * @default false
+             * @constant
+             */
+            eligibleForExternalPublication: false;
+            /** Completed */
+            completed: boolean;
+            /** Blockers */
+            blockers?: string[];
+            /**
+             * Evaluatedat
+             * Format: date-time
+             */
+            evaluatedAt: string;
+        };
+        /** VideoFactoryWaveEvidenceV1 */
+        VideoFactoryWaveEvidenceV1: {
+            /**
+             * Schemaversion
+             * @default studio.video-factory-wave-evidence.v1
+             * @constant
+             */
+            schemaVersion: "studio.video-factory-wave-evidence.v1";
+            /** Waveid */
+            waveId: string;
+            /**
+             * Wave
+             * @enum {string}
+             */
+            wave: "pilot_12" | "calibration_24" | "scale_64";
+            /** Sourcecasebookdigestsha256 */
+            sourceCasebookDigestSha256: string;
+            /** Prerequisitewaveids */
+            prerequisiteWaveIds?: string[];
+            budget: components["schemas"]["VideoFactoryBudgetV1"];
+            /** Jobs */
+            jobs: components["schemas"]["VideoFactoryJobV1"][];
+            /** Directcostusd */
+            directCostUsd: number;
+            /**
+             * Infrastructurecostusd
+             * @default 0
+             */
+            infrastructureCostUsd: number;
+            /** Costpolicyid */
+            costPolicyId?: string | null;
+            /** Walltimemilliseconds */
+            wallTimeMilliseconds: number;
+            /** Technicaleligible */
+            technicalEligible: boolean;
+            /** Promotioneligible */
+            promotionEligible: boolean;
+            /** Blockers */
+            blockers?: string[];
+            /**
+             * Startedat
+             * Format: date-time
+             */
+            startedAt: string;
+            /**
+             * Completedat
+             * Format: date-time
+             */
+            completedAt: string;
+        };
+        /** VideoRenderSpecV1 */
+        VideoRenderSpecV1: {
+            /**
+             * Schemaversion
+             * @default studio.video-render-spec.v1
+             * @constant
+             */
+            schemaVersion: "studio.video-render-spec.v1";
+            /**
+             * Format
+             * @default mp4
+             * @enum {string}
+             */
+            format: "mp4" | "webm";
+            /** Width */
+            width: number;
+            /** Height */
+            height: number;
+            /**
+             * Fps
+             * @default 30
+             */
+            fps: number;
+            /**
+             * Videocodec
+             * @default h264
+             * @enum {string}
+             */
+            videoCodec: "h264" | "vp9" | "av1";
+            /**
+             * Audiocodec
+             * @default aac
+             * @enum {string}
+             */
+            audioCodec: "aac" | "opus" | "none";
+            /**
+             * Quality
+             * @default standard
+             * @enum {string}
+             */
+            quality: "draft" | "standard" | "high";
+        };
+        /** VideoStreamV1 */
+        VideoStreamV1: {
+            /** Index */
+            index: number;
+            /** Codec */
+            codec: string;
+            /** Width */
+            width: number;
+            /** Height */
+            height: number;
+            /** Pixelformat */
+            pixelFormat?: string | null;
+            frameRate: components["schemas"]["FrameRateV1"];
+            realFrameRate?: components["schemas"]["FrameRateV1"] | null;
+            timeBase?: components["schemas"]["StreamTimeBaseV1"] | null;
+            /** Startpts */
+            startPts?: number | null;
+            /**
+             * Startmicroseconds
+             * @default 0
+             */
+            startMicroseconds: number;
+            /** Durationticks */
+            durationTicks?: number | null;
+            /** Durationmicroseconds */
+            durationMicroseconds?: number | null;
+            /** Bitrate */
+            bitrate?: number | null;
+            /**
+             * Rotationdegrees
+             * @default 0
+             */
+            rotationDegrees: number;
+        };
+        /** VideoTrackV1 */
+        "VideoTrackV1-Input": {
+            /** Id */
+            id: string;
+            /**
+             * Kind
+             * @default video
+             * @constant
+             */
+            kind: "video";
+            /**
+             * Name
+             * @default Video
+             */
+            name: string;
+            /**
+             * Muted
+             * @default false
+             */
+            muted: boolean;
+            /**
+             * Locked
+             * @default false
+             */
+            locked: boolean;
+            /** Clips */
+            clips?: components["schemas"]["MediaClipV1"][];
+        };
+        /** VideoTrackV1 */
+        "VideoTrackV1-Output": {
+            /** Id */
+            id: string;
+            /**
+             * Kind
+             * @default video
+             * @constant
+             */
+            kind: "video";
+            /**
+             * Name
+             * @default Video
+             */
+            name: string;
+            /**
+             * Muted
+             * @default false
+             */
+            muted: boolean;
+            /**
+             * Locked
+             * @default false
+             */
+            locked: boolean;
+            /** Clips */
+            clips?: components["schemas"]["MediaClipV1"][];
+        };
+        /** VisualDirectionV1 */
+        VisualDirectionV1: {
+            /**
+             * Schemaversion
+             * @default studio.visual-direction.v1
+             * @constant
+             */
+            schemaVersion: "studio.visual-direction.v1";
+            /** Directionid */
+            directionId: string;
+            /** Scriptid */
+            scriptId: string;
+            /** Scriptdigestsha256 */
+            scriptDigestSha256: string;
+            /**
+             * Family
+             * @enum {string}
+             */
+            family: "presenter_ugc" | "split_screen_proof" | "motion_visual_essay" | "cinematic_hybrid";
+            /** Recipeid */
+            recipeId: string;
+            /** Recipedigestsha256 */
+            recipeDigestSha256: string;
+            /** Selectionrationale */
+            selectionRationale: string;
+            /** Designprinciples */
+            designPrinciples: string[];
+            /** Palette */
+            palette: string[];
+            /** Typographydirection */
+            typographyDirection: string;
+            /** Metaphors */
+            metaphors?: components["schemas"]["VisualMetaphorV1"][];
+            /** Shots */
+            shots: components["schemas"]["VisualShotV1"][];
+        };
+        /** VisualMetaphorV1 */
+        VisualMetaphorV1: {
+            /** Metaphorid */
+            metaphorId: string;
+            /** Sourceconcept */
+            sourceConcept: string;
+            /** Targetconcept */
+            targetConcept: string;
+            /** Causalrelation */
+            causalRelation: string;
+            /** Interpretationrisk */
+            interpretationRisk: string;
+            /**
+             * Literalness
+             * @enum {string}
+             */
+            literalness: "literal" | "balanced" | "abstract";
+            /** Fallbackdescription */
+            fallbackDescription: string;
+        };
+        /** VisualShotV1 */
+        VisualShotV1: {
+            /** Shotid */
+            shotId: string;
+            /** Order */
+            order: number;
+            /** Beatid */
+            beatId: string;
+            /**
+             * Modality
+             * @enum {string}
+             */
+            modality: "presenter" | "product" | "screen_ui" | "source_video" | "archive" | "typography" | "shape" | "data" | "environment" | "generated_scene" | "avatar";
+            /** Composition */
+            composition: string;
+            /** Camera */
+            camera: string;
+            /** Lighting */
+            lighting: string;
+            /** Entrystate */
+            entryState: string;
+            /** Exitstate */
+            exitState: string;
+            /** Transition */
+            transition: string;
+            /** Assetrequirements */
+            assetRequirements?: string[];
+            /** Realityconstraints */
+            realityConstraints?: string[];
+        };
+        /** VoiceProfileV1 */
+        VoiceProfileV1: {
+            /**
+             * Schemaversion
+             * @default studio.voice-profile.v1
+             * @constant
+             */
+            schemaVersion: "studio.voice-profile.v1";
+            /** Id */
+            id: string;
+            /** Workspaceid */
+            workspaceId: string;
+            /** Identityprofileid */
+            identityProfileId?: string | null;
+            /** Displayname */
+            displayName: string;
+            /** Locale */
+            locale: string;
+            /**
+             * Voicetype
+             * @enum {string}
+             */
+            voiceType: "stock" | "cloned";
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "draft" | "active" | "revoked" | "deleting" | "deleted";
+            /** Createdby */
+            createdBy: string;
+            /**
+             * Createdat
+             * Format: date-time
+             */
+            createdAt: string;
+            /**
+             * Updatedat
+             * Format: date-time
+             */
+            updatedAt: string;
+        };
+        /** VoiceVersionReferenceV1 */
+        VoiceVersionReferenceV1: {
+            /** Id */
+            id: string;
+            /** Version */
+            version?: string | number | null;
+            /** Consentgrantid */
+            consentGrantId?: string | null;
+        };
+        /** VoiceVersionV1 */
+        VoiceVersionV1: {
+            /**
+             * Schemaversion
+             * @default studio.voice-version.v1
+             * @constant
+             */
+            schemaVersion: "studio.voice-version.v1";
+            /** Id */
+            id: string;
+            /** Workspaceid */
+            workspaceId: string;
+            /** Profileid */
+            profileId: string;
+            /** Version */
+            version: number;
+            /** Consentgrantid */
+            consentGrantId?: string | null;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "draft" | "active" | "rejected" | "superseded" | "revoked" | "deleting" | "deleted";
+            /** Sampleassetids */
+            sampleAssetIds?: string[];
+            /** Derivedartifacts */
+            derivedArtifacts?: components["schemas"]["AssetReferenceV1"][];
+            /** Pronunciationprofile */
+            pronunciationProfile?: {
+                [key: string]: unknown;
+            };
+            /** Contenthash */
+            contentHash: string;
+            /** Createdby */
+            createdBy: string;
+            /** Reviewedby */
+            reviewedBy?: string | null;
+            /** Reviewedat */
+            reviewedAt?: string | null;
+            /** Reviewcomment */
+            reviewComment?: string | null;
+            /**
+             * Createdat
+             * Format: date-time
+             */
+            createdAt: string;
+            /**
+             * Updatedat
+             * Format: date-time
+             */
+            updatedAt: string;
+        };
+        /** WorkerExecutionContextV1 */
+        WorkerExecutionContextV1: {
+            /**
+             * Schemaversion
+             * @default studio.worker-execution-context.v1
+             * @constant
+             */
+            schemaVersion: "studio.worker-execution-context.v1";
+            /**
+             * Mode
+             * @enum {string}
+             */
+            mode: "embedded" | "isolated";
+            /** Attested */
+            attested: boolean;
+            /** Jobtype */
+            jobType: string;
+            /**
+             * Capability
+             * @enum {string}
+             */
+            capability: "control" | "media_cpu" | "speech_cpu" | "speech_gpu" | "vision_gpu" | "llm_gpu";
+            /** Queuename */
+            queueName: string;
+            /** Runtimename */
+            runtimeName?: string | null;
+            /** Runtimeversion */
+            runtimeVersion?: string | null;
+            /** Manifestdigestsha256 */
+            manifestDigestSha256?: string | null;
+            /** Imagedigest */
+            imageDigest?: string | null;
+            /** Workerinstanceid */
+            workerInstanceId?: string | null;
+            /** Hostname */
+            hostname?: string | null;
+            /** Processid */
+            processId?: number | null;
+            /** Toolversions */
+            toolVersions?: {
+                [key: string]: string;
+            };
+            /**
+             * Verifiedat
+             * Format: date-time
+             */
+            verifiedAt: string;
         };
         /** WorkspaceCreate */
         WorkspaceCreate: {
@@ -3229,7 +10583,7 @@ export interface components {
              * Kind
              * @enum {string}
              */
-            kind: "template" | "connected_account" | "automation" | "video_project" | "ai_chat" | "presenter_session";
+            kind: "template" | "connected_account" | "automation" | "video_project" | "ai_chat" | "presenter_session" | "factory_round";
             /** Resourcekey */
             resourceKey: string;
             /** Payload */
@@ -4788,7 +12142,44 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    derive_image_api_v1_assets__asset_id__derive_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                asset_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ImageDerivationRequestV1"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AssetOut"];
+                };
             };
             /** @description Validation Error */
             422: {
@@ -5376,6 +12767,2703 @@ export interface operations {
             };
         };
     };
+    list_shadow_evaluations_api_v1_radar_shadow_evaluations_get: {
+        parameters: {
+            query: {
+                workspace_id: string;
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RadarShadowEvaluationOut"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_creative_casebook_api_v1_studios_v1_creative_casebook_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CreativePilotCasebookV1"];
+                };
+            };
+        };
+    };
+    get_assisted_intelligence_suite_api_v1_studios_v1_creative_assisted_intelligence_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AssistedIntelligenceSuiteEvidenceV1"];
+                };
+            };
+        };
+    };
+    get_video_factory_program_api_v1_studios_v1_creative_factory_program_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VideoFactoryProgramEvidenceV1"];
+                };
+            };
+        };
+    };
+    get_creative_replan_state_api_v1_studios_v1_creative_replan_state_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CreativeReplanStateV1"];
+                };
+            };
+        };
+    };
+    get_advanced_capability_audit_api_v1_studios_v1_creative_advanced_capabilities_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AdvancedCapabilityAuditV1"];
+                };
+            };
+        };
+    };
+    get_video_autonomy_audit_api_v1_studios_v1_creative_autonomy_audit_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VideoAutonomyCompletionAuditV1"];
+                };
+            };
+        };
+    };
+    get_creative_case_animatic_api_v1_studios_v1_creative_cases__case_id__animatic_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                case_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_studio_capabilities_api_v1_studios_v1_capabilities_get: {
+        parameters: {
+            query: {
+                workspace_id: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StudioCapabilitiesV1"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_studio_providers_api_v1_studios_v1_providers_get: {
+        parameters: {
+            query: {
+                workspace_id: string;
+                capability?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProviderRegistrationV1"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_studio_provider_api_v1_studios_v1_providers_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateProviderRegistrationRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProviderRegistrationV1"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    approve_studio_provider_api_v1_studios_v1_providers__provider_id__approve_post: {
+        parameters: {
+            query: {
+                workspace_id: string;
+            };
+            header?: never;
+            path: {
+                provider_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProviderRegistrationV1"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_studio_models_api_v1_studios_v1_models_get: {
+        parameters: {
+            query: {
+                workspace_id: string;
+                provider_registration_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ModelRegistrationV1"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_studio_model_api_v1_studios_v1_models_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateModelRegistrationRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ModelRegistrationV1"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    approve_studio_model_api_v1_studios_v1_models__model_id__approve_post: {
+        parameters: {
+            query: {
+                workspace_id: string;
+            };
+            header?: never;
+            path: {
+                model_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ModelRegistrationV1"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_studio_documents_api_v1_studios_v1_documents_get: {
+        parameters: {
+            query: {
+                workspace_id: string;
+                post_id?: string | null;
+                campaign_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CreativeDocumentV1-Output"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_studio_document_api_v1_studios_v1_documents_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateStudioDocumentRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CreativeDocumentV1-Output"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_studio_document_api_v1_studios_v1_documents__document_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                document_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CreativeDocumentV1-Output"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    replace_studio_document_api_v1_studios_v1_documents__document_id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                document_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReplaceStudioDocumentRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CreativeDocumentV1-Output"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    review_studio_asset_rights_api_v1_studios_v1_documents__document_id__assets__asset_id__rights_reviews_post: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+            };
+            path: {
+                document_id: string;
+                asset_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StudioAssetRightsReviewRequestV1"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StudioAssetRightsReviewResponseV1"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_studio_document_versions_api_v1_studios_v1_documents__document_id__versions_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                document_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StudioDocumentVersionV1"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    version_studio_document_api_v1_studios_v1_documents__document_id__versions_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                document_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreativeVersionIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CreativeDocumentV1-Output"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    restore_studio_document_version_api_v1_studios_v1_documents__document_id__versions__version_number__restore_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                document_id: string;
+                version_number: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RestoreStudioDocumentVersionRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CreativeDocumentV1-Output"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_studio_motion_graphs_api_v1_studios_v1_motion_graphs_get: {
+        parameters: {
+            query: {
+                workspace_id: string;
+                document_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MotionGraphRecordV1"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_studio_motion_graph_api_v1_studios_v1_motion_graphs_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateMotionGraphRequestV1"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MotionGraphRecordV1"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_studio_motion_graph_api_v1_studios_v1_motion_graphs__graph_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                graph_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MotionGraphRecordV1"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    replace_studio_motion_graph_api_v1_studios_v1_motion_graphs__graph_id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                graph_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReplaceMotionGraphRequestV1"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MotionGraphRecordV1"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    review_studio_motion_graph_api_v1_studios_v1_motion_graphs__graph_id__review_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                graph_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReviewMotionGraphRequestV1"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MotionGraphRecordV1"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_studio_motion_graph_projection_api_v1_studios_v1_motion_graphs__graph_id__projection__target__get: {
+        parameters: {
+            query?: {
+                reduced_motion?: boolean;
+            };
+            header?: never;
+            path: {
+                graph_id: string;
+                target: "hyperframes" | "motion_canvas";
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MotionGraphProjectionV1"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    request_studio_review_api_v1_studios_v1_documents__document_id__reviews_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                document_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateStudioReviewRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StudioReviewRequestV1"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    latest_studio_review_api_v1_studios_v1_reviews_latest_get: {
+        parameters: {
+            query: {
+                workspace_id: string;
+                document_id?: string | null;
+                post_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StudioReviewRequestV1"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    preview_studio_review_page_api_v1_studios_v1_reviews__review_id__pages__page_id__preview_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                review_id: string;
+                page_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    decide_studio_review_api_v1_studios_v1_reviews__review_id__decisions_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                review_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StudioReviewDecisionRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StudioReviewRequestV1"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_acoustic_analysis_capability_api_v1_studios_v1_reviews__review_id__acoustic_analysis_capability_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                review_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StudioAcousticAnalysisCapabilityV1"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_review_acoustic_analysis_api_v1_studios_v1_reviews__review_id__acoustic_analyses_post: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+            };
+            path: {
+                review_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GenerationJobV1"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_publication_preflight_api_v1_studios_v1_reviews__review_id__publication_preflight_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                review_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StudioPublicationPreflightV1"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_internal_publication_schedule_api_v1_studios_v1_reviews__review_id__internal_schedule_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                review_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StudioInternalScheduleRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StudioInternalScheduleReceiptV1"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    download_publication_package_api_v1_studios_v1_reviews__review_id__publication_package_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                review_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    export_studio_document_api_v1_studios_v1_documents__document_id__exports_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                document_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StudioExportRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AssetOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_studio_consents_api_v1_studios_v1_consents_get: {
+        parameters: {
+            query: {
+                workspace_id: string;
+                subject_key?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ConsentGrantV1"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_studio_consent_api_v1_studios_v1_consents_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateConsentGrantRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ConsentGrantV1"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    revoke_studio_consent_api_v1_studios_v1_consents__consent_id__revoke_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                consent_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RevokeConsentGrantRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ConsentGrantV1"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_studio_identities_api_v1_studios_v1_identities_get: {
+        parameters: {
+            query: {
+                workspace_id: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["IdentityProfileV1"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_studio_identity_api_v1_studios_v1_identities_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateIdentityProfileRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["IdentityProfileV1"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_studio_identity_versions_api_v1_studios_v1_identities__profile_id__versions_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                profile_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["IdentityVersionV1"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_studio_identity_version_api_v1_studios_v1_identities__profile_id__versions_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                profile_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateIdentityVersionRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["IdentityVersionV1"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    plan_studio_identity_deletion_api_v1_studios_v1_identities__profile_id__deletion_requests_post: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+            };
+            path: {
+                profile_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateIdentityDeletionRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["IdentityDeletionRequestV1"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_studio_identity_evaluations_api_v1_studios_v1_identities__profile_id__versions__version_id__evaluations_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                profile_id: string;
+                version_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["IdentityEvaluationV1"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    evaluate_studio_identity_version_api_v1_studios_v1_identities__profile_id__versions__version_id__evaluations_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                profile_id: string;
+                version_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateIdentityEvaluationRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["IdentityEvaluationV1"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    review_studio_identity_version_api_v1_studios_v1_identities__profile_id__versions__version_id__review_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                profile_id: string;
+                version_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReviewIdentityVersionRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["IdentityVersionV1"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_studio_voices_api_v1_studios_v1_voices_get: {
+        parameters: {
+            query: {
+                workspace_id: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceProfileV1"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_studio_voice_api_v1_studios_v1_voices_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateVoiceProfileRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceProfileV1"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_studio_voice_versions_api_v1_studios_v1_voices__profile_id__versions_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                profile_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceVersionV1"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_studio_voice_version_api_v1_studios_v1_voices__profile_id__versions_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                profile_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateVoiceVersionRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceVersionV1"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    plan_studio_voice_deletion_api_v1_studios_v1_voices__profile_id__deletion_requests_post: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+            };
+            path: {
+                profile_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateIdentityDeletionRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["IdentityDeletionRequestV1"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_studio_identity_deletions_api_v1_studios_v1_identity_deletion_requests_get: {
+        parameters: {
+            query: {
+                workspace_id: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["IdentityDeletionRequestV1"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_studio_voice_evaluations_api_v1_studios_v1_voices__profile_id__versions__version_id__evaluations_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                profile_id: string;
+                version_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["IdentityEvaluationV1"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    evaluate_studio_voice_version_api_v1_studios_v1_voices__profile_id__versions__version_id__evaluations_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                profile_id: string;
+                version_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateIdentityEvaluationRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["IdentityEvaluationV1"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    review_studio_voice_version_api_v1_studios_v1_voices__profile_id__versions__version_id__review_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                profile_id: string;
+                version_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReviewIdentityVersionRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceVersionV1"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_media_ingests_api_v1_studios_v1_media_ingests_get: {
+        parameters: {
+            query: {
+                workspace_id: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MediaIngestV1"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    enqueue_media_ingest_api_v1_studios_v1_media_ingests_post: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateMediaIngestRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MediaIngestV1"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_media_ingest_api_v1_studios_v1_media_ingests__ingest_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                ingest_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MediaIngestV1"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    enqueue_media_proxy_api_v1_studios_v1_media_ingests__ingest_id__proxy_post: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+            };
+            path: {
+                ingest_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateMediaProxyRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GenerationJobV1"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    enqueue_media_waveform_api_v1_studios_v1_media_ingests__ingest_id__waveform_post: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+            };
+            path: {
+                ingest_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateAudioWaveformRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GenerationJobV1"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_studio_transcripts_api_v1_studios_v1_transcripts_get: {
+        parameters: {
+            query: {
+                workspace_id: string;
+                media_ingest_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TranscriptDocumentV1-Output"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_studio_transcript_api_v1_studios_v1_transcripts_post: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateTranscriptRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TranscriptDocumentV1-Output"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_studio_transcript_api_v1_studios_v1_transcripts__transcript_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                transcript_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TranscriptDocumentV1-Output"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    replace_studio_transcript_api_v1_studios_v1_transcripts__transcript_id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                transcript_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReplaceTranscriptRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TranscriptDocumentV1-Output"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    apply_studio_transcript_captions_api_v1_studios_v1_transcripts__transcript_id__apply_captions_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                transcript_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ApplyTranscriptCaptionsRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CreativeDocumentV1-Output"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_studio_edit_decision_sets_api_v1_studios_v1_edit_decision_sets_get: {
+        parameters: {
+            query: {
+                workspace_id: string;
+                media_ingest_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EditDecisionSetV1"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_studio_edit_decision_set_api_v1_studios_v1_edit_decision_sets_post: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateEditDecisionSetRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EditDecisionSetV1"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_studio_edit_decision_set_api_v1_studios_v1_edit_decision_sets__decision_set_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                decision_set_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EditDecisionSetV1"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    replace_studio_edit_decision_set_api_v1_studios_v1_edit_decision_sets__decision_set_id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                decision_set_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReplaceEditDecisionSetRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EditDecisionSetV1"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    apply_studio_edit_decision_set_api_v1_studios_v1_edit_decision_sets__decision_set_id__apply_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                decision_set_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ApplyEditDecisionSetRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CreativeDocumentV1-Output"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_editorial_readiness_api_v1_studios_v1_documents__document_id__editorial_readiness_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                document_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EditorialReadinessV1"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_editorial_plan_api_v1_studios_v1_documents__document_id__editorial_plans_post: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+            };
+            path: {
+                document_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EditorialPlanRequestV1"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EditorialPlanV1"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_editorial_review_api_v1_studios_v1_documents__document_id__editorial_reviews_post: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+            };
+            path: {
+                document_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EditorialReviewRequestV1"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EditorialReviewV1"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    enqueue_video_render_api_v1_studios_v1_video_renders_post: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateVideoRenderJobRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GenerationJobV1"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_studio_jobs_api_v1_studios_v1_jobs_get: {
+        parameters: {
+            query: {
+                workspace_id: string;
+                document_id?: string | null;
+                job_type?: string | null;
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GenerationJobV1"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    enqueue_studio_job_api_v1_studios_v1_jobs_post: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateGenerationJobRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GenerationJobV1"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_studio_job_api_v1_studios_v1_jobs__job_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                job_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GenerationJobV1"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    cancel_studio_job_api_v1_studios_v1_jobs__job_id__cancel_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                job_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CancelGenerationJobRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GenerationJobV1"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    retry_studio_job_api_v1_studios_v1_jobs__job_id__retry_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                job_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GenerationJobV1"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     list_resources_api_v1_workspace_resources_get: {
         parameters: {
             query: {
@@ -5428,6 +15516,39 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["WorkspaceResourceOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    reserve_factory_round_api_v1_factory_rounds_reservations_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["FactoryRoundReservationIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FactoryRoundReservationOut"];
                 };
             };
             /** @description Validation Error */

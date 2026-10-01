@@ -196,6 +196,8 @@ export function LabGlobalSurfaces({
             </button>
             <button
               type="button"
+              disabled
+              title="As notificações ainda não estão conectadas nesta rota de compatibilidade."
               className="grid h-9 w-9 place-items-center rounded-xl text-white/45 hover:bg-white/[0.05] hover:text-white"
               aria-label="Notificações"
             >

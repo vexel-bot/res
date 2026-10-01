@@ -1,0 +1,164 @@
+[
+  {
+    "id": "Dct4pAohiup",
+    "profile": "creators + moonsol.design",
+    "url": "https://www.instagram.com/creators/reel/Dct4pAohiup/",
+    "duration_s": 35.176779,
+    "public_metrics": {
+      "likes_display": "45,3 mil"
+    },
+    "published_label": "6 dias",
+    "frames": [
+      {
+        "at_s": 20.44,
+        "observation": "Contorno manual da roupa sobre fotografia."
+      },
+      {
+        "at_s": 26.269836,
+        "observation": "Mídia de paisagem posicionada dentro da região da blusa; timeline e escala visíveis."
+      }
+    ],
+    "observed_on": "2026-09-06",
+    "surface": "Codex in-app browser",
+    "audio_verification": "unknown; player muted",
+    "temporal_coverage": "sampled frames, not frame-complete decoupage",
+    "views_current": null,
+    "causal_performance_claim": false
+  },
+  {
+    "id": "DcdfCb9SW8F",
+    "profile": "moonsol.design",
+    "url": "https://www.instagram.com/moonsol.design/reel/DcdfCb9SW8F/",
+    "duration_s": 49.266667,
+    "public_metrics": {
+      "likes_display": "1,1 mil",
+      "comments": 5,
+      "reposts": 21
+    },
+    "published_label": "25 de agosto",
+    "frames": [
+      {
+        "at_s": 4.52025,
+        "observation": "Contorno verde parcial sobre fotografia no tutorial."
+      },
+      {
+        "at_s": 19.138541,
+        "observation": "Instrução para adicionar um ponto como texto; guia de linha parcial."
+      }
+    ],
+    "observed_on": "2026-09-06",
+    "surface": "Codex in-app browser",
+    "audio_verification": "unknown; player muted",
+    "temporal_coverage": "sampled frames, not frame-complete decoupage",
+    "views_current": null,
+    "causal_performance_claim": false
+  },
+  {
+    "id": "DcxuG6fIxZ-",
+    "profile": "moonsol.design",
+    "url": "https://www.instagram.com/moonsol.design/reel/DcxuG6fIxZ-/",
+    "duration_s": 39.147391,
+    "public_metrics": {
+      "likes_display": "4,2 mil",
+      "comments": 19,
+      "reposts": 123
+    },
+    "published_label": "4 dias",
+    "frames": [
+      {
+        "at_s": 11.327094,
+        "observation": "Estrelas de tamanhos diferentes empilhadas; instrução para duplicar."
+      },
+      {
+        "at_s": 23.737736,
+        "observation": "Conjunto de estrelas sobre fotografia; instrução para rotacionar a imagem no fim da sobreposição."
+      }
+    ],
+    "observed_on": "2026-09-06",
+    "surface": "Codex in-app browser",
+    "audio_verification": "unknown; player muted",
+    "temporal_coverage": "sampled frames, not frame-complete decoupage",
+    "views_current": null,
+    "causal_performance_claim": false
+  },
+  {
+    "id": "Dcl3b2LR6NC",
+    "profile": "creators",
+    "url": "https://www.instagram.com/creators/reel/Dcl3b2LR6NC/",
+    "duration_s": 10.733333,
+    "public_metrics": {
+      "likes_display": "162,2 mil",
+      "comments_display": "4,3 mil",
+      "reposts_display": "12,2 mil"
+    },
+    "published_label": "28 de agosto",
+    "frames": [
+      {
+        "at_s": 6.065214,
+        "observation": "Personagem olha para telefone sob texto de chamada recebida; câmera estável."
+      }
+    ],
+    "observed_on": "2026-09-06",
+    "surface": "Codex in-app browser",
+    "audio_verification": "unknown; player muted",
+    "temporal_coverage": "sampled frames, not frame-complete decoupage",
+    "views_current": null,
+    "causal_performance_claim": false
+  },
+  {
+    "id": "Dc3qMrJxJcp",
+    "profile": "creators + alexcisse",
+    "url": "https://www.instagram.com/creators/reel/Dc3qMrJxJcp/",
+    "duration_s": 41.701586,
+    "public_metrics": {
+      "likes_display": "37,4 mil",
+      "comments": 661,
+      "reposts": 517
+    },
+    "published_label": "2 dias",
+    "frames": [
+      {
+        "at_s": 0.867474,
+        "observation": "Pessoa no sofá vista de cima, pequena unidade de texto."
+      },
+      {
+        "at_s": 19.9185,
+        "observation": "Pessoa reclinada, janela e paisagem; pequena unidade de texto."
+      }
+    ],
+    "observed_on": "2026-09-06",
+    "surface": "Codex in-app browser",
+    "audio_verification": "unknown; player muted",
+    "temporal_coverage": "sampled frames, not frame-complete decoupage",
+    "views_current": null,
+    "causal_performance_claim": false
+  },
+  {
+    "id": "DRjjvOogSZg",
+    "profile": "moonsol.design",
+    "url": "https://www.instagram.com/moonsol.design/reel/DRjjvOogSZg/",
+    "duration_s": 32.020317,
+    "public_metrics": {
+      "likes_display": "580,3 mil",
+      "comments": 221,
+      "reposts_display": "12 mil"
+    },
+    "published_label": "27 de novembro de 2025",
+    "frames": [
+      {
+        "at_s": 4.521839,
+        "observation": "Fotografia e prato em primeiro plano sobre cartão de localização."
+      },
+      {
+        "at_s": 9.95925,
+        "observation": "Cartão isolado na preparação do tutorial."
+      }
+    ],
+    "observed_on": "2026-09-06",
+    "surface": "Codex in-app browser",
+    "audio_verification": "unknown; player muted",
+    "temporal_coverage": "sampled frames, not frame-complete decoupage",
+    "views_current": null,
+    "causal_performance_claim": false
+  }
+]

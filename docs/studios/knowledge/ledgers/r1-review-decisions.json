@@ -1,0 +1,21 @@
+{
+  "schema_version": "studio.r1-human-review-decisions.v1",
+  "reviewer": "workspace-owner",
+  "recorded_at": "2026-09-01",
+  "scope_note": "O usuário aprovou primeiro os Reels e depois confirmou explicitamente as duas sequências de cinema e a taxonomia.",
+  "taxonomy_decision": "approved",
+  "units": {
+    "instagram-DTRBJoOAUl1": "approved",
+    "instagram-DcuHK9ChRrP": "approved",
+    "instagram-DcRjR01BFVM": "approved",
+    "instagram-DciIBRYBHBK": "approved",
+    "instagram-DcsuFSGhnlw": "approved",
+    "instagram-Dcq32xNgO1d": "approved",
+    "instagram-DaJVyavI65T": "approved",
+    "instagram-DZiYEzBvZOc": "approved",
+    "instagram-DbBddW3JNKD": "approved",
+    "instagram-Dbhmn9eOiXN": "approved",
+    "blender-charge-factory-invasion": "approved",
+    "blender-sprite-fright-forest-reveal": "approved"
+  }
+}

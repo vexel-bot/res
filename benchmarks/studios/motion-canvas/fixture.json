@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "res.motion-canvas-composition.v1",
+  "width": 480,
+  "height": 320,
+  "fps": 15,
+  "durationFrames": 15,
+  "background": "#101827",
+  "assetFiles": {},
+  "fonts": [],
+  "nodes": [],
+  "layers": [
+    {"id":"circle","kind":"shape","x":95,"y":85,"width":100,"height":100,"rotation":0,"opacity":1,"zIndex":0,"visible":true,"properties":{"shape":"ellipse","fill":"#2c74e8"}},
+    {"id":"label","kind":"text","x":70,"y":220,"width":350,"height":58,"rotation":0,"opacity":1,"zIndex":1,"visible":true,"properties":{"text":"Distribuição","fontSize":40,"color":"#ffffff"}}
+  ],
+  "tracks": [{"targetLayerId":"circle","propertyPath":"position.x","keyframes":[{"frame":0,"value":0,"easing":"ease_in_out"},{"frame":14,"value":170,"easing":"hold"}]}],
+  "transitions": []
+}

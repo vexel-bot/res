@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "res.local-video-preflight.v1",
+  "observedAt": "2026-09-10",
+  "profileId": "wan21-t2v-local-experimental-v1",
+  "status": "blocked_resources",
+  "reasons": [
+    "insufficient_disk_before_model_download",
+    "insufficient_system_ram",
+    "insufficient_vram"
+  ],
+  "modelDownloadStarted": false,
+  "resources": {
+    "diskFreeBytes": 25889431552,
+    "requiredDiskFreeBytes": 42566430199,
+    "systemRamTotalMiB": 7916,
+    "systemRamFreeMiB": 334,
+    "gpus": [
+      {
+        "name": "NVIDIA GeForce RTX 2050",
+        "totalMiB": 4096,
+        "freeMiB": 3962
+      }
+    ]
+  },
+  "model": {
+    "id": "Wan-AI/Wan2.1-T2V-1.3B-Diffusers",
+    "revision": "0fad780a534b6463e45facd96134c9f345acfa5b",
+    "expectedDownloadBytes": 28935465418
+  },
+  "conclusion": "local_diffusion_not_qualified_on_current_host"
+}

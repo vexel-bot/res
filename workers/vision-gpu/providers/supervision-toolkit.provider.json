@@ -1,0 +1,47 @@
+{
+  "schema_version": "studio.provider-candidate-manifest.v1",
+  "candidate_id": "supervision-toolkit-evaluation",
+  "provider_ids": [
+    "toolkit.supervision-detection-projection"
+  ],
+  "provider_versions": {
+    "toolkit.supervision-detection-projection": "1.0.0+supervision.0.30.1"
+  },
+  "capabilities": [
+    "vision_normalization"
+  ],
+  "status": "evaluation",
+  "implementation_modules": [
+    "app.providers.studios.supervision_detection"
+  ],
+  "artifact_inventory_id": "supervision-toolkit-artifacts-2026-08-27",
+  "artifact_inventory_digest_sha256": "2ad5d4add7314797bcf908b9451409721c3aa783f29885292d882e5cfadbda88",
+  "artifact_inventory_status": "review_required",
+  "required_artifact_ids": [
+    "supervision-code",
+    "supervision-clicko-lock",
+    "supervision-vision-worker-container"
+  ],
+  "code_digests_sha256": {
+    "toolkit.supervision-detection-projection": "e15584f8e25d24f04107f9296e8ca94128f017f7ef030bae0f8ab262535a2229"
+  },
+  "default_parameters_digest_sha256": "0886282cc434f86c6c65dd6982d94b3e15e05fda46e07590febfd16c93c7b8ba",
+  "advertised_by_worker_manifest": false,
+  "benchmark_evidence_digest_sha256": "df2155e926afe933f4bcda47a99a68b4364c1234bb804afade0dd7da75b5c867",
+  "shadow_evidence_digest_sha256": "c20856d08dde178cbfac7df584ecfac0b58f399274445f6c545513339df6984f",
+  "runtime_evidence_digest_sha256": "d94a9b5e4c3e0bc78e23eabc96f8999cc9b956cc0f393df3cde924a97f8701bf",
+  "activation_gates": [
+    "Complete human review of every native wheel and bundled notice.",
+    "Sign the verified Linux AMD64 OCI under an authorized promotion signer policy.",
+    "Run synthetic shadow and then a separately consented human review without operational regression.",
+    "Prove cancellation, cleanup, tenant-scoped storage and rollback to the OpenCV baseline.",
+    "Advertise the provider only in the same reviewed revision that records promotion."
+  ],
+  "limitations": [
+    "Supervision is a normalization toolkit, not a detector, identity system or physics model.",
+    "The adapter consumes tracker IDs from separately governed providers and does not use sv.ByteTrack.",
+    "The current candidate is evaluation-only and absent from the worker manifest.",
+    "The local OCI has BuildKit provenance/SBOM and a hardened runtime probe, but no promotion signature.",
+    "Synthetic benchmark and shadow evidence do not authorize processing human media."
+  ]
+}

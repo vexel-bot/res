@@ -1,0 +1,78 @@
+{
+  "schemaVersion": "studio.musetalk-runtime-preflight.v1",
+  "evaluatedAt": "2026-09-04",
+  "effectiveProvider": "musetalk-v1.5-local",
+  "heygemModelCreated": false,
+  "repository": {
+    "path": "C:\\Users\\edugu\\Downloads\\clicko-oss-evaluation\\MuseTalk",
+    "commit": "0a89dec45a0192b824e3cf4daf96c239440c5ed8",
+    "workingTreeClean": true,
+    "codeLicense": "MIT",
+    "licenseChecksumSha256": "858c5fdc07b8d71e1c88b64337bbc2c32a70a621733ab19809140ec9e19e6904"
+  },
+  "host": {
+    "gpu": "NVIDIA GeForce RTX 2050",
+    "vramMib": 4096,
+    "driver": "591.86",
+    "ffmpegAvailable": true
+  },
+  "executionPolicy": {
+    "version": "v15",
+    "fps": 25,
+    "precision": "fp16",
+    "batchSize": 1,
+    "publicationState": "private_review",
+    "cloudGpuAllowed": false
+  },
+  "inputs": {
+    "sourceVideo": "artifacts/studios/avatar-pilots/caio-vale/base-video-v1.mp4",
+    "sourceVideoStatus": "sampled_visual_admission",
+    "audioPath": "private:caio-full-ad-v3.wav",
+    "audioChecksumSha256": "8f5df5e8efc4bd7d4ab54b3cc1ec9dd50d62b9be1ba01f3faeb983b64b68419b",
+    "audioDurationSeconds": 44.52,
+    "audioProvider": "chatterbox-multilingual-pt-br-reference-conditioned",
+    "audioClone": true,
+    "audioReferenceProvided": true,
+    "audioTechnicalStatus": "duration_loudness_and_automatic_transcript_checked",
+    "audioHumanNaturalnessStatus": "pending_review"
+  },
+  "modelAssets": {
+    "status": "downloaded_checksums_recorded_private_adapter_subset_reviewed",
+    "required": [
+      "models/musetalkV15/musetalk.json",
+      "models/musetalkV15/unet.pth",
+      "models/syncnet/latentsync_syncnet.pt",
+      "models/dwpose/dw-ll_ucoco_384.pth",
+      "models/face-parse-bisent/79999_iter.pth",
+      "models/face-parse-bisent/resnet18-5c106cde.pth",
+      "models/sd-vae/config.json",
+      "models/sd-vae/diffusion_pytorch_model.bin",
+      "models/whisper/config.json",
+      "models/whisper/pytorch_model.bin",
+      "models/whisper/preprocessor_config.json"
+    ],
+    "allLicensesReviewed": false,
+    "allChecksumsRecorded": true,
+    "activeAdapterReview": "musetalk-fixed-camera-private-model-review-2026-09-04.json"
+  },
+  "decision": "rendered_private_review",
+  "blockingReasons": [
+    "human_naturalness_lipsync_and_identity_review_pending"
+  ],
+  "externalCostIncurredUsd": 0,
+  "runtime": {
+    "torch": "2.6.0+cu124",
+    "diffusers": "0.30.2",
+    "transformers": "4.39.2",
+    "adapter": "fixed-camera-roi-v1",
+    "thirdPartyCheckoutModified": false
+  },
+  "output": {
+    "artifactFilename": "clicko-studios-caio-vale-raw-ad-v1.mp4",
+    "checksumSha256": "7a994145054f8c6b192b791c7800e08d06118f5925bb5158e21bd9abd700ee0a",
+    "durationSeconds": 44.52,
+    "frameCount": 1113,
+    "gpuPeakAllocatedBytes": 2055689728,
+    "renderElapsedSeconds": 691.3
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "schemaVersion": "studio.worker-runtime-manifest.v1",
+  "runtimeName": "clicko-speech-cpu",
+  "runtimeVersion": "0.1.0-preflight",
+  "capability": "speech_cpu",
+  "queues": ["studio.speech.cpu"],
+  "resourceClasses": ["cpu.speech"],
+  "jobTypes": ["stock_voice"],
+  "providers": [],
+  "requiredEnvironment": [
+    "DATABASE_URL",
+    "REDIS_URL",
+    "OBJECT_STORAGE_BACKEND",
+    "STUDIO_ISOLATED_QUEUES_ENABLED",
+    "STUDIO_WORKER_MANIFEST_PATH",
+    "STUDIO_WORKER_CAPABILITY"
+  ],
+  "requiredPaths": [
+    "/opt/clicko/speech-runtime/requirements.lock",
+    "/opt/clicko/speech-runtime/policies/voice-stock-pt-br-policy.v1.json"
+  ],
+  "tools": [
+    {"id": "python", "command": ["python", "--version"], "versionPattern": "Python 3\\.11\\.[0-9]+"},
+    {"id": "celery", "command": ["celery", "--version"], "versionPattern": "5\\.6\\.2"}
+  ],
+  "isolation": {
+    "runAsNonRoot": true,
+    "readOnlyRootFilesystem": true,
+    "allowPrivilegeEscalation": false,
+    "networkEgressPolicy": "private-dependencies-only",
+    "maxConcurrentJobs": 1,
+    "ephemeralTempPath": "/tmp/clicko-speech",
+    "minimumTempBytes": 4294967296
+  }
+}

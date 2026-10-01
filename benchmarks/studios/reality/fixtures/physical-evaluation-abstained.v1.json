@@ -1,0 +1,63 @@
+{
+  "schemaVersion": "studio.physical-plausibility-evaluation.v1",
+  "evaluationId": "physical-evaluation-abstained-001",
+  "workspaceId": "workspace-fixture-001",
+  "documentId": "document-supported-cup-001",
+  "documentRevision": 1,
+  "documentSnapshotDigestSha256": "4444444444444444444444444444444444444444444444444444444444444444",
+  "renderJobId": "render-job-supported-cup-001",
+  "renderedAssetId": "rendered-asset-supported-cup-001",
+  "renderedAssetChecksumSha256": "5555555555555555555555555555555555555555555555555555555555555555",
+  "realityModelId": "reality-model-supported-cup-001",
+  "realityModelDigestSha256": "8a1753a13a43bd121ca2e97216068953165d40e8c8e69f4df092c586fc80efba",
+  "constraintSetId": "constraint-set-supported-cup-001",
+  "constraintSetDigestSha256": "f0f4f3e083a36e33a75abd799a4bdec53bdebdc793ef585244450ca72b8cbec1",
+  "policy": {
+    "schemaVersion": "studio.physical-plausibility-policy.v1",
+    "policyId": "clicko.physical-qc.advisory.v1",
+    "policyVersion": "1.0.0",
+    "status": "frozen",
+    "frozenAt": "2026-08-25T12:00:00Z",
+    "frozenBy": "clicko-product-engineering-baseline",
+    "operatingMode": "advisory",
+    "evaluatedPrinciples": ["permanence", "immutability", "continuity", "solidity", "support_gravity", "contact_collision", "motion", "approximate_conservation", "material_behavior", "causality", "biomechanics", "camera_perspective", "light_shadow_reflection", "event_sound", "editorial_continuity"],
+    "abstainBelowConfidence": 0.6,
+    "issueMinConfidence": 0.8,
+    "criticalMinConfidence": 0.9,
+    "minimumIndependentSignalGroups": 2,
+    "benchmarkMinPairedAccuracy": 0.75,
+    "benchmarkMinCriticalRecall": 0.9,
+    "benchmarkMinIssuePrecision": 0.8,
+    "benchmarkMinTemporalIou": 0.7,
+    "benchmarkMaxExpectedCalibrationError": 0.1,
+    "benchmarkMaxRealUgcFalseBlockRate": 0.01,
+    "autoCorrect": false,
+    "autoPublish": false,
+    "humanReviewRequired": true
+  },
+  "policyDigestSha256": "8f4ff3bb19caf1c50dd6a6cd627ad6cd8b58f20bd6340f2efdd9abf01712aad0",
+  "evaluatorLineage": [
+    {"contributionId": "physical-qc-rules-001", "contributionKind": "rules", "provider": "fixture.physical-qc", "providerVersion": "1.0.0", "codeDigestSha256": "6666666666666666666666666666666666666666666666666666666666666666", "inputDigestSha256": "8a1753a13a43bd121ca2e97216068953165d40e8c8e69f4df092c586fc80efba", "parametersDigestSha256": "8f4ff3bb19caf1c50dd6a6cd627ad6cd8b58f20bd6340f2efdd9abf01712aad0", "generatedAt": "2026-08-25T12:00:00Z"}
+  ],
+  "status": "advisory_uncertain",
+  "checks": [
+    {
+      "checkId": "check-material-001",
+      "principle": "material_behavior",
+      "shotId": "shot-001",
+      "frameRange": {"startFrame": 0, "endFrameExclusive": 90},
+      "entityIds": ["cup-001"],
+      "status": "uncertain",
+      "severity": "warning",
+      "confidence": 0.42,
+      "expectedObservation": "O material e a rigidez do copo permanecem coerentes.",
+      "observedEvidence": "A aparência é compatível com um objeto rígido, mas não existe resposta mecânica observável.",
+      "evidenceIds": ["evidence-cup-track-001"],
+      "independentSignalGroups": ["tracking"],
+      "uncertainty": "O shot não contém força ou deformação suficiente para testar comportamento material.",
+      "suggestion": "Manter como não avaliado ou incluir um shot com interação física se isso for relevante.",
+      "humanDecision": "needs_evidence"
+    }
+  ],
+  "evaluatedAt": "2026-08-25T12:00:00Z"
+}

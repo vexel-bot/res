@@ -1,0 +1,5623 @@
+{
+  "rendererChecks": {
+    "graphics": {
+      "ready": true,
+      "textOverflow": [],
+      "textMeasurements": [
+        {
+          "id": "ed2-55062e33ed55fb3c06459ee8",
+          "width": 505,
+          "height": 149,
+          "contentWidth": 505,
+          "contentHeight": 149,
+          "fontSize": 43.008
+        },
+        {
+          "id": "ed2-a54a782a9d309f723dc1ef5a",
+          "width": 315,
+          "height": 63,
+          "contentWidth": 315,
+          "contentHeight": 63,
+          "fontSize": 38.4
+        },
+        {
+          "id": "ed2-f3e45fd9a284c86f672e31f0",
+          "width": 425,
+          "height": 95,
+          "contentWidth": 425,
+          "contentHeight": 95,
+          "fontSize": 38.4
+        },
+        {
+          "id": "ed2-4efef6cb8d7dbd4e5ea09087",
+          "width": 266,
+          "height": 63,
+          "contentWidth": 266,
+          "contentHeight": 63,
+          "fontSize": 38.4
+        },
+        {
+          "id": "ed2-4a69a4f5b5b7ceb11d434c8b",
+          "width": 573,
+          "height": 64,
+          "contentWidth": 573,
+          "contentHeight": 64,
+          "fontSize": 38.4
+        },
+        {
+          "id": "ed2-f3cd9115c3e0b910106a87b1",
+          "width": 483,
+          "height": 64,
+          "contentWidth": 483,
+          "contentHeight": 64,
+          "fontSize": 38.4
+        }
+      ],
+      "errors": [],
+      "textOverflowMeasurements": [],
+      "sampledFrames": [
+        0,
+        1,
+        12,
+        20,
+        33,
+        58,
+        98,
+        99,
+        100,
+        104,
+        109,
+        112,
+        120,
+        133,
+        200,
+        239
+      ],
+      "geometrySchemaVersion": "studio.rendered-geometry.v1",
+      "geometrySamples": [
+        {
+          "frame": 0,
+          "elements": [
+            {
+              "id": "ed2-ccd8de1fb32fda2ca6cb39e9",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 0,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-98ba6b0e25566a07580149a1",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 0,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-c2878bcfcfe2003fa75420a6",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 0,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-dbf9d678567b19849f597846",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 0,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-6b193ab95677b6c0551e2c58",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 0,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-cb1c8abc73ffa3468348a451",
+              "semanticId": "portrait",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": null,
+              "visualRole": "hero",
+              "frame": 0,
+              "present": true,
+              "visible": false,
+              "opacity": 0,
+              "bounds": {
+                "x": 96.203125,
+                "y": 191.02749633789062,
+                "width": 527.5625,
+                "height": 824.320068359375
+              },
+              "cropIntentional": true,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-1311da60c4f37c6e89b6ab3e",
+              "semanticId": "portrait-photo",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "photo",
+              "visualRole": "support",
+              "frame": 0,
+              "present": true,
+              "visible": false,
+              "opacity": 0,
+              "bounds": {
+                "x": 131.53688049316406,
+                "y": 374.72564697265625,
+                "width": 464.2550048828125,
+                "height": 445.12188720703125
+              },
+              "cropIntentional": true,
+              "regionOfInterest": {
+                "x": 0.25,
+                "y": 0.1,
+                "width": 0.5,
+                "height": 0.72,
+                "purpose": "Manter a xícara reconhecível"
+              },
+              "roiMeasurement": {
+                "method": "renderer_axis_aligned_object_fit",
+                "visibleRatio": 1,
+                "sourceWidth": 1200,
+                "sourceHeight": 800,
+                "bounds": {
+                  "x": 196.7436752319336,
+                  "y": 419.2378356933594,
+                  "width": 333.84141540527344,
+                  "height": 320.48775878906247
+                }
+              }
+            },
+            {
+              "id": "ed2-55062e33ed55fb3c06459ee8",
+              "semanticId": "portrait-title",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "headline",
+              "visualRole": "text",
+              "frame": 0,
+              "present": true,
+              "visible": false,
+              "opacity": 0,
+              "bounds": {
+                "x": 131.53688049316406,
+                "y": 241.06686401367188,
+                "width": 464.2550048828125,
+                "height": 137.29562377929688
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-a54a782a9d309f723dc1ef5a",
+              "semanticId": "portrait-identity",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "brand",
+              "visualRole": "text",
+              "frame": 0,
+              "present": true,
+              "visible": false,
+              "opacity": 0,
+              "bounds": {
+                "x": 131.53688049316406,
+                "y": 929.5863037109375,
+                "width": 290.15936279296875,
+                "height": 57.7730712890625
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-c36c791577509df6313f3a0a",
+              "semanticId": "square",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": null,
+              "visualRole": "support",
+              "frame": 0,
+              "present": true,
+              "visible": false,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": true,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-a37b5864628eee1a1e98bc40",
+              "semanticId": "square-photo",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "photo",
+              "visualRole": "support",
+              "frame": 0,
+              "present": true,
+              "visible": false,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": true,
+              "regionOfInterest": {
+                "x": 0.25,
+                "y": 0.1,
+                "width": 0.5,
+                "height": 0.72,
+                "purpose": "Manter a xícara reconhecível"
+              },
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-f3e45fd9a284c86f672e31f0",
+              "semanticId": "square-title",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "headline",
+              "visualRole": "text",
+              "frame": 0,
+              "present": true,
+              "visible": false,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-4efef6cb8d7dbd4e5ea09087",
+              "semanticId": "square-identity",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "brand",
+              "visualRole": "text",
+              "frame": 0,
+              "present": true,
+              "visible": false,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-4a69a4f5b5b7ceb11d434c8b",
+              "semanticId": "format-label-7dad41a11a31823b06e540223ba32dbea60c8f30c7935220c0c3864c4c19bbfc",
+              "contentIdentity": "format-label.portrait",
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": "text",
+              "frame": 0,
+              "present": true,
+              "visible": false,
+              "opacity": 0,
+              "bounds": {
+                "x": 73.265625,
+                "y": 1069.1875,
+                "width": 573.4375,
+                "height": 64
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-f3cd9115c3e0b910106a87b1",
+              "semanticId": "format-label-0923866c6e45b481dc4d1c459773fc955c6ea3fb028ff7feca12aa750aa63436",
+              "contentIdentity": "format-label.square",
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": "text",
+              "frame": 0,
+              "present": true,
+              "visible": false,
+              "opacity": 0,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            }
+          ]
+        },
+        {
+          "frame": 1,
+          "elements": [
+            {
+              "id": "ed2-ccd8de1fb32fda2ca6cb39e9",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 1,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-98ba6b0e25566a07580149a1",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 1,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-c2878bcfcfe2003fa75420a6",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 1,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-dbf9d678567b19849f597846",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 1,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-6b193ab95677b6c0551e2c58",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 1,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-cb1c8abc73ffa3468348a451",
+              "semanticId": "portrait",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": null,
+              "visualRole": "hero",
+              "frame": 1,
+              "present": true,
+              "visible": true,
+              "opacity": 0.0596878,
+              "bounds": {
+                "x": 93.55203247070312,
+                "y": 186.8851318359375,
+                "width": 532.86474609375,
+                "height": 832.604736328125
+              },
+              "cropIntentional": true,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-1311da60c4f37c6e89b6ab3e",
+              "semanticId": "portrait-photo",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "photo",
+              "visualRole": "support",
+              "frame": 1,
+              "present": true,
+              "visible": true,
+              "opacity": 0.0596878,
+              "bounds": {
+                "x": 129.24090576171875,
+                "y": 372.42950439453125,
+                "width": 468.92095947265625,
+                "height": 449.59552001953125
+              },
+              "cropIntentional": true,
+              "regionOfInterest": {
+                "x": 0.25,
+                "y": 0.1,
+                "width": 0.5,
+                "height": 0.72,
+                "purpose": "Manter a xícara reconhecível"
+              },
+              "roiMeasurement": {
+                "method": "renderer_axis_aligned_object_fit",
+                "visibleRatio": 1,
+                "sourceWidth": 1200,
+                "sourceHeight": 800,
+                "bounds": {
+                  "x": 195.10306549072266,
+                  "y": 417.38905639648436,
+                  "width": 337.19664001464844,
+                  "height": 323.7087744140625
+                }
+              }
+            },
+            {
+              "id": "ed2-55062e33ed55fb3c06459ee8",
+              "semanticId": "portrait-title",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "headline",
+              "visualRole": "text",
+              "frame": 1,
+              "present": true,
+              "visible": true,
+              "opacity": 0.0596878,
+              "bounds": {
+                "x": 129.24090576171875,
+                "y": 237.42742919921875,
+                "width": 468.92095947265625,
+                "height": 138.67547607421875
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-a54a782a9d309f723dc1ef5a",
+              "semanticId": "portrait-identity",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "brand",
+              "visualRole": "text",
+              "frame": 1,
+              "present": true,
+              "visible": true,
+              "opacity": 0.0596878,
+              "bounds": {
+                "x": 129.24090576171875,
+                "y": 932.86669921875,
+                "width": 293.0755920410156,
+                "height": 58.353759765625
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-c36c791577509df6313f3a0a",
+              "semanticId": "square",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": null,
+              "visualRole": "support",
+              "frame": 1,
+              "present": true,
+              "visible": false,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": true,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-a37b5864628eee1a1e98bc40",
+              "semanticId": "square-photo",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "photo",
+              "visualRole": "support",
+              "frame": 1,
+              "present": true,
+              "visible": false,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": true,
+              "regionOfInterest": {
+                "x": 0.25,
+                "y": 0.1,
+                "width": 0.5,
+                "height": 0.72,
+                "purpose": "Manter a xícara reconhecível"
+              },
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-f3e45fd9a284c86f672e31f0",
+              "semanticId": "square-title",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "headline",
+              "visualRole": "text",
+              "frame": 1,
+              "present": true,
+              "visible": false,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-4efef6cb8d7dbd4e5ea09087",
+              "semanticId": "square-identity",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "brand",
+              "visualRole": "text",
+              "frame": 1,
+              "present": true,
+              "visible": false,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-4a69a4f5b5b7ceb11d434c8b",
+              "semanticId": "format-label-7dad41a11a31823b06e540223ba32dbea60c8f30c7935220c0c3864c4c19bbfc",
+              "contentIdentity": "format-label.portrait",
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": "text",
+              "frame": 1,
+              "present": true,
+              "visible": true,
+              "opacity": 0.0596878,
+              "bounds": {
+                "x": 73.265625,
+                "y": 1069.1875,
+                "width": 573.4375,
+                "height": 64
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-f3cd9115c3e0b910106a87b1",
+              "semanticId": "format-label-0923866c6e45b481dc4d1c459773fc955c6ea3fb028ff7feca12aa750aa63436",
+              "contentIdentity": "format-label.square",
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": "text",
+              "frame": 1,
+              "present": true,
+              "visible": false,
+              "opacity": 0,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            }
+          ]
+        },
+        {
+          "frame": 12,
+          "elements": [
+            {
+              "id": "ed2-ccd8de1fb32fda2ca6cb39e9",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 12,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-98ba6b0e25566a07580149a1",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 12,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-c2878bcfcfe2003fa75420a6",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 12,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-dbf9d678567b19849f597846",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 12,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-6b193ab95677b6c0551e2c58",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 12,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-cb1c8abc73ffa3468348a451",
+              "semanticId": "portrait",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": null,
+              "visualRole": "hero",
+              "frame": 12,
+              "present": true,
+              "visible": true,
+              "opacity": 0.595041,
+              "bounds": {
+                "x": 72.52719116210938,
+                "y": 154.03366088867188,
+                "width": 574.914306640625,
+                "height": 898.3076171875
+              },
+              "cropIntentional": true,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-1311da60c4f37c6e89b6ab3e",
+              "semanticId": "portrait-photo",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "photo",
+              "visualRole": "support",
+              "frame": 12,
+              "present": true,
+              "visible": true,
+              "opacity": 0.595041,
+              "bounds": {
+                "x": 111.03235626220703,
+                "y": 354.21978759765625,
+                "width": 505.9246826171875,
+                "height": 485.07427978515625
+              },
+              "cropIntentional": true,
+              "regionOfInterest": {
+                "x": 0.25,
+                "y": 0.1,
+                "width": 0.5,
+                "height": 0.72,
+                "purpose": "Manter a xícara reconhecível"
+              },
+              "roiMeasurement": {
+                "method": "renderer_axis_aligned_object_fit",
+                "visibleRatio": 0.9999999999999999,
+                "sourceWidth": 1200,
+                "sourceHeight": 800,
+                "bounds": {
+                  "x": 182.09184265136716,
+                  "y": 402.7272155761719,
+                  "width": 363.80570983886724,
+                  "height": 349.2534814453125
+                }
+              }
+            },
+            {
+              "id": "ed2-55062e33ed55fb3c06459ee8",
+              "semanticId": "portrait-title",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "headline",
+              "visualRole": "text",
+              "frame": 12,
+              "present": true,
+              "visible": true,
+              "opacity": 0.595041,
+              "bounds": {
+                "x": 111.03235626220703,
+                "y": 208.56436157226562,
+                "width": 505.9246826171875,
+                "height": 149.61874389648438
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-a54a782a9d309f723dc1ef5a",
+              "semanticId": "portrait-identity",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "brand",
+              "visualRole": "text",
+              "frame": 12,
+              "present": true,
+              "visible": true,
+              "opacity": 0.595041,
+              "bounds": {
+                "x": 111.03235626220703,
+                "y": 958.8824462890625,
+                "width": 316.20294189453125,
+                "height": 62.9586181640625
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-c36c791577509df6313f3a0a",
+              "semanticId": "square",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": null,
+              "visualRole": "support",
+              "frame": 12,
+              "present": true,
+              "visible": false,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": true,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-a37b5864628eee1a1e98bc40",
+              "semanticId": "square-photo",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "photo",
+              "visualRole": "support",
+              "frame": 12,
+              "present": true,
+              "visible": false,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": true,
+              "regionOfInterest": {
+                "x": 0.25,
+                "y": 0.1,
+                "width": 0.5,
+                "height": 0.72,
+                "purpose": "Manter a xícara reconhecível"
+              },
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-f3e45fd9a284c86f672e31f0",
+              "semanticId": "square-title",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "headline",
+              "visualRole": "text",
+              "frame": 12,
+              "present": true,
+              "visible": false,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-4efef6cb8d7dbd4e5ea09087",
+              "semanticId": "square-identity",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "brand",
+              "visualRole": "text",
+              "frame": 12,
+              "present": true,
+              "visible": false,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-4a69a4f5b5b7ceb11d434c8b",
+              "semanticId": "format-label-7dad41a11a31823b06e540223ba32dbea60c8f30c7935220c0c3864c4c19bbfc",
+              "contentIdentity": "format-label.portrait",
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": "text",
+              "frame": 12,
+              "present": true,
+              "visible": true,
+              "opacity": 0.595041,
+              "bounds": {
+                "x": 73.265625,
+                "y": 1069.1875,
+                "width": 573.4375,
+                "height": 64
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-f3cd9115c3e0b910106a87b1",
+              "semanticId": "format-label-0923866c6e45b481dc4d1c459773fc955c6ea3fb028ff7feca12aa750aa63436",
+              "contentIdentity": "format-label.square",
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": "text",
+              "frame": 12,
+              "present": true,
+              "visible": false,
+              "opacity": 0,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            }
+          ]
+        },
+        {
+          "frame": 20,
+          "elements": [
+            {
+              "id": "ed2-ccd8de1fb32fda2ca6cb39e9",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 20,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-98ba6b0e25566a07580149a1",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 20,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-c2878bcfcfe2003fa75420a6",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 20,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-dbf9d678567b19849f597846",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 20,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-6b193ab95677b6c0551e2c58",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 20,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-cb1c8abc73ffa3468348a451",
+              "semanticId": "portrait",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": null,
+              "visualRole": "hero",
+              "frame": 20,
+              "present": true,
+              "visible": true,
+              "opacity": 0.844812,
+              "bounds": {
+                "x": 66.02804565429688,
+                "y": 143.87872314453125,
+                "width": 587.91259765625,
+                "height": 918.6176147460938
+              },
+              "cropIntentional": true,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-1311da60c4f37c6e89b6ab3e",
+              "semanticId": "portrait-photo",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "photo",
+              "visualRole": "support",
+              "frame": 20,
+              "present": true,
+              "visible": true,
+              "opacity": 0.844812,
+              "bounds": {
+                "x": 105.40377807617188,
+                "y": 348.59088134765625,
+                "width": 517.3631591796875,
+                "height": 496.04132080078125
+              },
+              "cropIntentional": true,
+              "regionOfInterest": {
+                "x": 0.25,
+                "y": 0.1,
+                "width": 0.5,
+                "height": 0.72,
+                "purpose": "Manter a xícara reconhecível"
+              },
+              "roiMeasurement": {
+                "method": "renderer_axis_aligned_object_fit",
+                "visibleRatio": 1,
+                "sourceWidth": 1200,
+                "sourceHeight": 800,
+                "bounds": {
+                  "x": 178.06986236572266,
+                  "y": 398.19501342773435,
+                  "width": 372.03099060058594,
+                  "height": 357.1497509765625
+                }
+              }
+            },
+            {
+              "id": "ed2-55062e33ed55fb3c06459ee8",
+              "semanticId": "portrait-title",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "headline",
+              "visualRole": "text",
+              "frame": 20,
+              "present": true,
+              "visible": true,
+              "opacity": 0.844812,
+              "bounds": {
+                "x": 105.40377807617188,
+                "y": 199.64231872558594,
+                "width": 517.3631591796875,
+                "height": 153.00148010253906
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-a54a782a9d309f723dc1ef5a",
+              "semanticId": "portrait-identity",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "brand",
+              "visualRole": "text",
+              "frame": 20,
+              "present": true,
+              "visible": true,
+              "opacity": 0.844812,
+              "bounds": {
+                "x": 105.40377807617188,
+                "y": 966.9244384765625,
+                "width": 323.3519592285156,
+                "height": 64.3819580078125
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-c36c791577509df6313f3a0a",
+              "semanticId": "square",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": null,
+              "visualRole": "support",
+              "frame": 20,
+              "present": true,
+              "visible": false,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": true,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-a37b5864628eee1a1e98bc40",
+              "semanticId": "square-photo",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "photo",
+              "visualRole": "support",
+              "frame": 20,
+              "present": true,
+              "visible": false,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": true,
+              "regionOfInterest": {
+                "x": 0.25,
+                "y": 0.1,
+                "width": 0.5,
+                "height": 0.72,
+                "purpose": "Manter a xícara reconhecível"
+              },
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-f3e45fd9a284c86f672e31f0",
+              "semanticId": "square-title",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "headline",
+              "visualRole": "text",
+              "frame": 20,
+              "present": true,
+              "visible": false,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-4efef6cb8d7dbd4e5ea09087",
+              "semanticId": "square-identity",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "brand",
+              "visualRole": "text",
+              "frame": 20,
+              "present": true,
+              "visible": false,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-4a69a4f5b5b7ceb11d434c8b",
+              "semanticId": "format-label-7dad41a11a31823b06e540223ba32dbea60c8f30c7935220c0c3864c4c19bbfc",
+              "contentIdentity": "format-label.portrait",
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": "text",
+              "frame": 20,
+              "present": true,
+              "visible": true,
+              "opacity": 0.844812,
+              "bounds": {
+                "x": 73.265625,
+                "y": 1069.1875,
+                "width": 573.4375,
+                "height": 64
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-f3cd9115c3e0b910106a87b1",
+              "semanticId": "format-label-0923866c6e45b481dc4d1c459773fc955c6ea3fb028ff7feca12aa750aa63436",
+              "contentIdentity": "format-label.square",
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": "text",
+              "frame": 20,
+              "present": true,
+              "visible": false,
+              "opacity": 0,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            }
+          ]
+        },
+        {
+          "frame": 33,
+          "elements": [
+            {
+              "id": "ed2-ccd8de1fb32fda2ca6cb39e9",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 33,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-98ba6b0e25566a07580149a1",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 33,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-c2878bcfcfe2003fa75420a6",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 33,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-dbf9d678567b19849f597846",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 33,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-6b193ab95677b6c0551e2c58",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 33,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-cb1c8abc73ffa3468348a451",
+              "semanticId": "portrait",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": null,
+              "visualRole": "hero",
+              "frame": 33,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 62.540985107421875,
+                "y": 138.43017578125,
+                "width": 594.88671875,
+                "height": 929.5146484375
+              },
+              "cropIntentional": true,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-1311da60c4f37c6e89b6ab3e",
+              "semanticId": "portrait-photo",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "photo",
+              "visualRole": "support",
+              "frame": 33,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 102.3838119506836,
+                "y": 345.57073974609375,
+                "width": 523.5003662109375,
+                "height": 501.92559814453125
+              },
+              "cropIntentional": true,
+              "regionOfInterest": {
+                "x": 0.25,
+                "y": 0.1,
+                "width": 0.5,
+                "height": 0.72,
+                "purpose": "Manter a xícara reconhecível"
+              },
+              "roiMeasurement": {
+                "method": "renderer_axis_aligned_object_fit",
+                "visibleRatio": 1,
+                "sourceWidth": 1200,
+                "sourceHeight": 800,
+                "bounds": {
+                  "x": 175.91189575195312,
+                  "y": 395.7632995605469,
+                  "width": 376.44419860839844,
+                  "height": 361.3864306640625
+                }
+              }
+            },
+            {
+              "id": "ed2-55062e33ed55fb3c06459ee8",
+              "semanticId": "portrait-title",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "headline",
+              "visualRole": "text",
+              "frame": 33,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 102.3838119506836,
+                "y": 194.8552703857422,
+                "width": 523.5003662109375,
+                "height": 154.8164520263672
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-a54a782a9d309f723dc1ef5a",
+              "semanticId": "portrait-identity",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "brand",
+              "visualRole": "text",
+              "frame": 33,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 102.3838119506836,
+                "y": 971.2392578125,
+                "width": 327.187744140625,
+                "height": 65.145751953125
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-c36c791577509df6313f3a0a",
+              "semanticId": "square",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": null,
+              "visualRole": "support",
+              "frame": 33,
+              "present": true,
+              "visible": false,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": true,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-a37b5864628eee1a1e98bc40",
+              "semanticId": "square-photo",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "photo",
+              "visualRole": "support",
+              "frame": 33,
+              "present": true,
+              "visible": false,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": true,
+              "regionOfInterest": {
+                "x": 0.25,
+                "y": 0.1,
+                "width": 0.5,
+                "height": 0.72,
+                "purpose": "Manter a xícara reconhecível"
+              },
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-f3e45fd9a284c86f672e31f0",
+              "semanticId": "square-title",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "headline",
+              "visualRole": "text",
+              "frame": 33,
+              "present": true,
+              "visible": false,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-4efef6cb8d7dbd4e5ea09087",
+              "semanticId": "square-identity",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "brand",
+              "visualRole": "text",
+              "frame": 33,
+              "present": true,
+              "visible": false,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-4a69a4f5b5b7ceb11d434c8b",
+              "semanticId": "format-label-7dad41a11a31823b06e540223ba32dbea60c8f30c7935220c0c3864c4c19bbfc",
+              "contentIdentity": "format-label.portrait",
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": "text",
+              "frame": 33,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 73.265625,
+                "y": 1069.1875,
+                "width": 573.4375,
+                "height": 64
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-f3cd9115c3e0b910106a87b1",
+              "semanticId": "format-label-0923866c6e45b481dc4d1c459773fc955c6ea3fb028ff7feca12aa750aa63436",
+              "contentIdentity": "format-label.square",
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": "text",
+              "frame": 33,
+              "present": true,
+              "visible": false,
+              "opacity": 0,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            }
+          ]
+        },
+        {
+          "frame": 58,
+          "elements": [
+            {
+              "id": "ed2-ccd8de1fb32fda2ca6cb39e9",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 58,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-98ba6b0e25566a07580149a1",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 58,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-c2878bcfcfe2003fa75420a6",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 58,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-dbf9d678567b19849f597846",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 58,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-6b193ab95677b6c0551e2c58",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 58,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-cb1c8abc73ffa3468348a451",
+              "semanticId": "portrait",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": null,
+              "visualRole": "hero",
+              "frame": 58,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 61.796875,
+                "y": 137.26751708984375,
+                "width": 596.375,
+                "height": 931.8399047851562
+              },
+              "cropIntentional": true,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-1311da60c4f37c6e89b6ab3e",
+              "semanticId": "portrait-photo",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "photo",
+              "visualRole": "support",
+              "frame": 58,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 101.73937225341797,
+                "y": 344.92626953125,
+                "width": 524.8099975585938,
+                "height": 503.18121337890625
+              },
+              "cropIntentional": true,
+              "regionOfInterest": {
+                "x": 0.25,
+                "y": 0.1,
+                "width": 0.5,
+                "height": 0.72,
+                "purpose": "Manter a xícara reconhecível"
+              },
+              "roiMeasurement": {
+                "method": "renderer_axis_aligned_object_fit",
+                "visibleRatio": 0.9999999999999996,
+                "sourceWidth": 1200,
+                "sourceHeight": 800,
+                "bounds": {
+                  "x": 175.45141601562497,
+                  "y": 395.2443908691406,
+                  "width": 377.38591003417974,
+                  "height": 362.2904736328125
+                }
+              }
+            },
+            {
+              "id": "ed2-55062e33ed55fb3c06459ee8",
+              "semanticId": "portrait-title",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "headline",
+              "visualRole": "text",
+              "frame": 58,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 101.73937225341797,
+                "y": 193.83377075195312,
+                "width": 524.8099975585938,
+                "height": 155.2037353515625
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-a54a782a9d309f723dc1ef5a",
+              "semanticId": "portrait-identity",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "brand",
+              "visualRole": "text",
+              "frame": 58,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 101.73937225341797,
+                "y": 972.1599731445312,
+                "width": 328.0062255859375,
+                "height": 65.30877685546875
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-c36c791577509df6313f3a0a",
+              "semanticId": "square",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": null,
+              "visualRole": "support",
+              "frame": 58,
+              "present": true,
+              "visible": false,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": true,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-a37b5864628eee1a1e98bc40",
+              "semanticId": "square-photo",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "photo",
+              "visualRole": "support",
+              "frame": 58,
+              "present": true,
+              "visible": false,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": true,
+              "regionOfInterest": {
+                "x": 0.25,
+                "y": 0.1,
+                "width": 0.5,
+                "height": 0.72,
+                "purpose": "Manter a xícara reconhecível"
+              },
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-f3e45fd9a284c86f672e31f0",
+              "semanticId": "square-title",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "headline",
+              "visualRole": "text",
+              "frame": 58,
+              "present": true,
+              "visible": false,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-4efef6cb8d7dbd4e5ea09087",
+              "semanticId": "square-identity",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "brand",
+              "visualRole": "text",
+              "frame": 58,
+              "present": true,
+              "visible": false,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-4a69a4f5b5b7ceb11d434c8b",
+              "semanticId": "format-label-7dad41a11a31823b06e540223ba32dbea60c8f30c7935220c0c3864c4c19bbfc",
+              "contentIdentity": "format-label.portrait",
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": "text",
+              "frame": 58,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 73.265625,
+                "y": 1069.1875,
+                "width": 573.4375,
+                "height": 64
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-f3cd9115c3e0b910106a87b1",
+              "semanticId": "format-label-0923866c6e45b481dc4d1c459773fc955c6ea3fb028ff7feca12aa750aa63436",
+              "contentIdentity": "format-label.square",
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": "text",
+              "frame": 58,
+              "present": true,
+              "visible": false,
+              "opacity": 0,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            }
+          ]
+        },
+        {
+          "frame": 98,
+          "elements": [
+            {
+              "id": "ed2-ccd8de1fb32fda2ca6cb39e9",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 98,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-98ba6b0e25566a07580149a1",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 98,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-c2878bcfcfe2003fa75420a6",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 98,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-dbf9d678567b19849f597846",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 98,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-6b193ab95677b6c0551e2c58",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 98,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-cb1c8abc73ffa3468348a451",
+              "semanticId": "portrait",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": null,
+              "visualRole": "hero",
+              "frame": 98,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 73.2396240234375,
+                "y": 155.1468505859375,
+                "width": 573.489501953125,
+                "height": 896.081298828125
+              },
+              "cropIntentional": true,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-1311da60c4f37c6e89b6ab3e",
+              "semanticId": "portrait-photo",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "photo",
+              "visualRole": "support",
+              "frame": 98,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 111.64935302734375,
+                "y": 354.83685302734375,
+                "width": 504.6707763671875,
+                "height": 483.87200927734375
+              },
+              "cropIntentional": true,
+              "regionOfInterest": {
+                "x": 0.25,
+                "y": 0.1,
+                "width": 0.5,
+                "height": 0.72,
+                "purpose": "Manter a xícara reconhecível"
+              },
+              "roiMeasurement": {
+                "method": "renderer_axis_aligned_object_fit",
+                "visibleRatio": 0.9999999999999998,
+                "sourceWidth": 1200,
+                "sourceHeight": 800,
+                "bounds": {
+                  "x": 182.5327377319336,
+                  "y": 403.22405395507815,
+                  "width": 362.9040069580078,
+                  "height": 348.38784667968747
+                }
+              }
+            },
+            {
+              "id": "ed2-55062e33ed55fb3c06459ee8",
+              "semanticId": "portrait-title",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "headline",
+              "visualRole": "text",
+              "frame": 98,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 111.64935302734375,
+                "y": 209.5424041748047,
+                "width": 504.6707763671875,
+                "height": 149.24794006347656
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-a54a782a9d309f723dc1ef5a",
+              "semanticId": "portrait-identity",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "brand",
+              "visualRole": "text",
+              "frame": 98,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 111.64935302734375,
+                "y": 958.0009155273438,
+                "width": 315.41925048828125,
+                "height": 62.8026123046875
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-c36c791577509df6313f3a0a",
+              "semanticId": "square",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": null,
+              "visualRole": "support",
+              "frame": 98,
+              "present": true,
+              "visible": false,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": true,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-a37b5864628eee1a1e98bc40",
+              "semanticId": "square-photo",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "photo",
+              "visualRole": "support",
+              "frame": 98,
+              "present": true,
+              "visible": false,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": true,
+              "regionOfInterest": {
+                "x": 0.25,
+                "y": 0.1,
+                "width": 0.5,
+                "height": 0.72,
+                "purpose": "Manter a xícara reconhecível"
+              },
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-f3e45fd9a284c86f672e31f0",
+              "semanticId": "square-title",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "headline",
+              "visualRole": "text",
+              "frame": 98,
+              "present": true,
+              "visible": false,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-4efef6cb8d7dbd4e5ea09087",
+              "semanticId": "square-identity",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "brand",
+              "visualRole": "text",
+              "frame": 98,
+              "present": true,
+              "visible": false,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-4a69a4f5b5b7ceb11d434c8b",
+              "semanticId": "format-label-7dad41a11a31823b06e540223ba32dbea60c8f30c7935220c0c3864c4c19bbfc",
+              "contentIdentity": "format-label.portrait",
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": "text",
+              "frame": 98,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 73.265625,
+                "y": 1069.1875,
+                "width": 573.4375,
+                "height": 64
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-f3cd9115c3e0b910106a87b1",
+              "semanticId": "format-label-0923866c6e45b481dc4d1c459773fc955c6ea3fb028ff7feca12aa750aa63436",
+              "contentIdentity": "format-label.square",
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": "text",
+              "frame": 98,
+              "present": true,
+              "visible": false,
+              "opacity": 0,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            }
+          ]
+        },
+        {
+          "frame": 99,
+          "elements": [
+            {
+              "id": "ed2-ccd8de1fb32fda2ca6cb39e9",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 99,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-98ba6b0e25566a07580149a1",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 99,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-c2878bcfcfe2003fa75420a6",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 99,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-dbf9d678567b19849f597846",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 99,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-6b193ab95677b6c0551e2c58",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 99,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-cb1c8abc73ffa3468348a451",
+              "semanticId": "portrait",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": null,
+              "visualRole": "hero",
+              "frame": 99,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 73.25912475585938,
+                "y": 155.1773681640625,
+                "width": 573.450439453125,
+                "height": 896.020263671875
+              },
+              "cropIntentional": true,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-1311da60c4f37c6e89b6ab3e",
+              "semanticId": "portrait-photo",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "photo",
+              "visualRole": "support",
+              "frame": 99,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 111.66624450683594,
+                "y": 354.853759765625,
+                "width": 504.636474609375,
+                "height": 483.839111328125
+              },
+              "cropIntentional": true,
+              "regionOfInterest": {
+                "x": 0.25,
+                "y": 0.1,
+                "width": 0.5,
+                "height": 0.72,
+                "purpose": "Manter a xícara reconhecível"
+              },
+              "roiMeasurement": {
+                "method": "renderer_axis_aligned_object_fit",
+                "visibleRatio": 0.9999999999999999,
+                "sourceWidth": 1200,
+                "sourceHeight": 800,
+                "bounds": {
+                  "x": 182.54481506347656,
+                  "y": 403.2376708984375,
+                  "width": 362.87933349609375,
+                  "height": 348.36416015624997
+                }
+              }
+            },
+            {
+              "id": "ed2-55062e33ed55fb3c06459ee8",
+              "semanticId": "portrait-title",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "headline",
+              "visualRole": "text",
+              "frame": 99,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 111.66624450683594,
+                "y": 209.56922912597656,
+                "width": 504.636474609375,
+                "height": 149.2377471923828
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-a54a782a9d309f723dc1ef5a",
+              "semanticId": "portrait-identity",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "brand",
+              "visualRole": "text",
+              "frame": 99,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 111.66624450683594,
+                "y": 957.976806640625,
+                "width": 315.39776611328125,
+                "height": 62.79827880859375
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-c36c791577509df6313f3a0a",
+              "semanticId": "square",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": null,
+              "visualRole": "support",
+              "frame": 99,
+              "present": true,
+              "visible": false,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": true,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-a37b5864628eee1a1e98bc40",
+              "semanticId": "square-photo",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "photo",
+              "visualRole": "support",
+              "frame": 99,
+              "present": true,
+              "visible": false,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": true,
+              "regionOfInterest": {
+                "x": 0.25,
+                "y": 0.1,
+                "width": 0.5,
+                "height": 0.72,
+                "purpose": "Manter a xícara reconhecível"
+              },
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-f3e45fd9a284c86f672e31f0",
+              "semanticId": "square-title",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "headline",
+              "visualRole": "text",
+              "frame": 99,
+              "present": true,
+              "visible": false,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-4efef6cb8d7dbd4e5ea09087",
+              "semanticId": "square-identity",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "brand",
+              "visualRole": "text",
+              "frame": 99,
+              "present": true,
+              "visible": false,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-4a69a4f5b5b7ceb11d434c8b",
+              "semanticId": "format-label-7dad41a11a31823b06e540223ba32dbea60c8f30c7935220c0c3864c4c19bbfc",
+              "contentIdentity": "format-label.portrait",
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": "text",
+              "frame": 99,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 73.265625,
+                "y": 1069.1875,
+                "width": 573.4375,
+                "height": 64
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-f3cd9115c3e0b910106a87b1",
+              "semanticId": "format-label-0923866c6e45b481dc4d1c459773fc955c6ea3fb028ff7feca12aa750aa63436",
+              "contentIdentity": "format-label.square",
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": "text",
+              "frame": 99,
+              "present": true,
+              "visible": false,
+              "opacity": 0,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            }
+          ]
+        },
+        {
+          "frame": 100,
+          "elements": [
+            {
+              "id": "ed2-ccd8de1fb32fda2ca6cb39e9",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 100,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-98ba6b0e25566a07580149a1",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 100,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-c2878bcfcfe2003fa75420a6",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 100,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-dbf9d678567b19849f597846",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 100,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-6b193ab95677b6c0551e2c58",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 100,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-cb1c8abc73ffa3468348a451",
+              "semanticId": "portrait",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": null,
+              "visualRole": "hero",
+              "frame": 100,
+              "present": true,
+              "visible": false,
+              "opacity": 0,
+              "bounds": {
+                "x": 73.265625,
+                "y": 155.1875,
+                "width": 573.4375,
+                "height": 896
+              },
+              "cropIntentional": true,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-1311da60c4f37c6e89b6ab3e",
+              "semanticId": "portrait-photo",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "photo",
+              "visualRole": "support",
+              "frame": 100,
+              "present": true,
+              "visible": false,
+              "opacity": 0,
+              "bounds": {
+                "x": 111.671875,
+                "y": 354.859375,
+                "width": 504.625,
+                "height": 483.828125
+              },
+              "cropIntentional": true,
+              "regionOfInterest": {
+                "x": 0.25,
+                "y": 0.1,
+                "width": 0.5,
+                "height": 0.72,
+                "purpose": "Manter a xícara reconhecível"
+              },
+              "roiMeasurement": {
+                "method": "renderer_axis_aligned_object_fit",
+                "visibleRatio": 1,
+                "sourceWidth": 1200,
+                "sourceHeight": 800,
+                "bounds": {
+                  "x": 182.548828125,
+                  "y": 403.2421875,
+                  "width": 362.87109375,
+                  "height": 348.35624999999993
+                }
+              }
+            },
+            {
+              "id": "ed2-55062e33ed55fb3c06459ee8",
+              "semanticId": "portrait-title",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "headline",
+              "visualRole": "text",
+              "frame": 100,
+              "present": true,
+              "visible": false,
+              "opacity": 0,
+              "bounds": {
+                "x": 111.671875,
+                "y": 209.578125,
+                "width": 504.625,
+                "height": 149.234375
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-a54a782a9d309f723dc1ef5a",
+              "semanticId": "portrait-identity",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "brand",
+              "visualRole": "text",
+              "frame": 100,
+              "present": true,
+              "visible": false,
+              "opacity": 0,
+              "bounds": {
+                "x": 111.671875,
+                "y": 957.96875,
+                "width": 315.390625,
+                "height": 62.796875
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-c36c791577509df6313f3a0a",
+              "semanticId": "square",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": null,
+              "visualRole": "support",
+              "frame": 100,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 73.2811279296875,
+                "y": 155.2060546875,
+                "width": 573.422119140625,
+                "height": 895.9720458984375
+              },
+              "cropIntentional": true,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-a37b5864628eee1a1e98bc40",
+              "semanticId": "square-photo",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "photo",
+              "visualRole": "support",
+              "frame": 100,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 112.42491149902344,
+                "y": 395.5626220703125,
+                "width": 504.618896484375,
+                "height": 447.9715576171875
+              },
+              "cropIntentional": true,
+              "regionOfInterest": {
+                "x": 0.25,
+                "y": 0.1,
+                "width": 0.5,
+                "height": 0.72,
+                "purpose": "Manter a xícara reconhecível"
+              },
+              "roiMeasurement": {
+                "method": "renderer_axis_aligned_object_fit",
+                "visibleRatio": 1,
+                "sourceWidth": 1200,
+                "sourceHeight": 800,
+                "bounds": {
+                  "x": 196.74502563476562,
+                  "y": 440.3597778320312,
+                  "width": 335.9786682128906,
+                  "height": 322.539521484375
+                }
+              }
+            },
+            {
+              "id": "ed2-f3e45fd9a284c86f672e31f0",
+              "semanticId": "square-title",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "headline",
+              "visualRole": "text",
+              "frame": 100,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 112.42491149902344,
+                "y": 256.156982421875,
+                "width": 504.618896484375,
+                "height": 176.3233642578125
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-4efef6cb8d7dbd4e5ea09087",
+              "semanticId": "square-identity",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "brand",
+              "visualRole": "text",
+              "frame": 100,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 112.42491149902344,
+                "y": 888.31103515625,
+                "width": 315.37750244140625,
+                "height": 116.55322265625
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-4a69a4f5b5b7ceb11d434c8b",
+              "semanticId": "format-label-7dad41a11a31823b06e540223ba32dbea60c8f30c7935220c0c3864c4c19bbfc",
+              "contentIdentity": "format-label.portrait",
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": "text",
+              "frame": 100,
+              "present": true,
+              "visible": false,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-f3cd9115c3e0b910106a87b1",
+              "semanticId": "format-label-0923866c6e45b481dc4d1c459773fc955c6ea3fb028ff7feca12aa750aa63436",
+              "contentIdentity": "format-label.square",
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": "text",
+              "frame": 100,
+              "present": true,
+              "visible": false,
+              "opacity": 0,
+              "bounds": {
+                "x": 118.625,
+                "y": 709.578125,
+                "width": 482.734375,
+                "height": 64
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            }
+          ]
+        },
+        {
+          "frame": 104,
+          "elements": [
+            {
+              "id": "ed2-ccd8de1fb32fda2ca6cb39e9",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 104,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-98ba6b0e25566a07580149a1",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 104,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-c2878bcfcfe2003fa75420a6",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 104,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-dbf9d678567b19849f597846",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 104,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-6b193ab95677b6c0551e2c58",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 104,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-cb1c8abc73ffa3468348a451",
+              "semanticId": "portrait",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": null,
+              "visualRole": "hero",
+              "frame": 104,
+              "present": true,
+              "visible": false,
+              "opacity": 0,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": true,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-1311da60c4f37c6e89b6ab3e",
+              "semanticId": "portrait-photo",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "photo",
+              "visualRole": "support",
+              "frame": 104,
+              "present": true,
+              "visible": false,
+              "opacity": 0,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": true,
+              "regionOfInterest": {
+                "x": 0.25,
+                "y": 0.1,
+                "width": 0.5,
+                "height": 0.72,
+                "purpose": "Manter a xícara reconhecível"
+              },
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-55062e33ed55fb3c06459ee8",
+              "semanticId": "portrait-title",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "headline",
+              "visualRole": "text",
+              "frame": 104,
+              "present": true,
+              "visible": false,
+              "opacity": 0,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-a54a782a9d309f723dc1ef5a",
+              "semanticId": "portrait-identity",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "brand",
+              "visualRole": "text",
+              "frame": 104,
+              "present": true,
+              "visible": false,
+              "opacity": 0,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-c36c791577509df6313f3a0a",
+              "semanticId": "square",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": null,
+              "visualRole": "support",
+              "frame": 104,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 76.83609008789062,
+                "y": 159.4112548828125,
+                "width": 566.312255859375,
+                "height": 863.5741577148438
+              },
+              "cropIntentional": true,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-a37b5864628eee1a1e98bc40",
+              "semanticId": "square-photo",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "photo",
+              "visualRole": "support",
+              "frame": 104,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 115.4945297241211,
+                "y": 391.07666015625,
+                "width": 498.3620300292969,
+                "height": 431.77313232421875
+              },
+              "cropIntentional": true,
+              "regionOfInterest": {
+                "x": 0.25,
+                "y": 0.1,
+                "width": 0.5,
+                "height": 0.72,
+                "purpose": "Manter a xícara reconhecível"
+              },
+              "roiMeasurement": {
+                "method": "renderer_axis_aligned_object_fit",
+                "visibleRatio": 0.9999999999999997,
+                "sourceWidth": 1200,
+                "sourceHeight": 800,
+                "bounds": {
+                  "x": 202.76062011718747,
+                  "y": 434.25397338867185,
+                  "width": 323.8298492431641,
+                  "height": 310.8766552734375
+                }
+              }
+            },
+            {
+              "id": "ed2-f3e45fd9a284c86f672e31f0",
+              "semanticId": "square-title",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "headline",
+              "visualRole": "text",
+              "frame": 104,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 115.4945297241211,
+                "y": 256.71185302734375,
+                "width": 498.3620300292969,
+                "height": 169.94760131835938
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-4efef6cb8d7dbd4e5ea09087",
+              "semanticId": "square-identity",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "brand",
+              "visualRole": "text",
+              "frame": 104,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 115.4945297241211,
+                "y": 866.0075073242188,
+                "width": 311.4671325683594,
+                "height": 112.3387451171875
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-4a69a4f5b5b7ceb11d434c8b",
+              "semanticId": "format-label-7dad41a11a31823b06e540223ba32dbea60c8f30c7935220c0c3864c4c19bbfc",
+              "contentIdentity": "format-label.portrait",
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": "text",
+              "frame": 104,
+              "present": true,
+              "visible": false,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-f3cd9115c3e0b910106a87b1",
+              "semanticId": "format-label-0923866c6e45b481dc4d1c459773fc955c6ea3fb028ff7feca12aa750aa63436",
+              "contentIdentity": "format-label.square",
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": "text",
+              "frame": 104,
+              "present": true,
+              "visible": true,
+              "opacity": 0.227732,
+              "bounds": {
+                "x": 118.625,
+                "y": 709.578125,
+                "width": 482.734375,
+                "height": 64
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            }
+          ]
+        },
+        {
+          "frame": 109,
+          "elements": [
+            {
+              "id": "ed2-ccd8de1fb32fda2ca6cb39e9",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 109,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-98ba6b0e25566a07580149a1",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 109,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-c2878bcfcfe2003fa75420a6",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 109,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-dbf9d678567b19849f597846",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 109,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-6b193ab95677b6c0551e2c58",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 109,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-cb1c8abc73ffa3468348a451",
+              "semanticId": "portrait",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": null,
+              "visualRole": "hero",
+              "frame": 109,
+              "present": true,
+              "visible": false,
+              "opacity": 0,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": true,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-1311da60c4f37c6e89b6ab3e",
+              "semanticId": "portrait-photo",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "photo",
+              "visualRole": "support",
+              "frame": 109,
+              "present": true,
+              "visible": false,
+              "opacity": 0,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": true,
+              "regionOfInterest": {
+                "x": 0.25,
+                "y": 0.1,
+                "width": 0.5,
+                "height": 0.72,
+                "purpose": "Manter a xícara reconhecível"
+              },
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-55062e33ed55fb3c06459ee8",
+              "semanticId": "portrait-title",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "headline",
+              "visualRole": "text",
+              "frame": 109,
+              "present": true,
+              "visible": false,
+              "opacity": 0,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-a54a782a9d309f723dc1ef5a",
+              "semanticId": "portrait-identity",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "brand",
+              "visualRole": "text",
+              "frame": 109,
+              "present": true,
+              "visible": false,
+              "opacity": 0,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-c36c791577509df6313f3a0a",
+              "semanticId": "square",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": null,
+              "visualRole": "support",
+              "frame": 109,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 81.07574462890625,
+                "y": 164.42636108398438,
+                "width": 557.8328857421875,
+                "height": 824.9364013671875
+              },
+              "cropIntentional": true,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-a37b5864628eee1a1e98bc40",
+              "semanticId": "square-photo",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "photo",
+              "visualRole": "support",
+              "frame": 109,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 119.15534973144531,
+                "y": 385.7266845703125,
+                "width": 490.900146484375,
+                "height": 412.454833984375
+              },
+              "cropIntentional": true,
+              "regionOfInterest": {
+                "x": 0.25,
+                "y": 0.1,
+                "width": 0.5,
+                "height": 0.72,
+                "purpose": "Manter a xícara reconhecível"
+              },
+              "roiMeasurement": {
+                "method": "renderer_axis_aligned_object_fit",
+                "visibleRatio": 0.9999999999999999,
+                "sourceWidth": 1200,
+                "sourceHeight": 800,
+                "bounds": {
+                  "x": 209.9348602294922,
+                  "y": 426.97216796875,
+                  "width": 309.34112548828125,
+                  "height": 296.96748046875
+                }
+              }
+            },
+            {
+              "id": "ed2-f3e45fd9a284c86f672e31f0",
+              "semanticId": "square-title",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "headline",
+              "visualRole": "text",
+              "frame": 109,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 119.15534973144531,
+                "y": 257.3735656738281,
+                "width": 490.900146484375,
+                "height": 162.3438720703125
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-4efef6cb8d7dbd4e5ea09087",
+              "semanticId": "square-identity",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "brand",
+              "visualRole": "text",
+              "frame": 109,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 119.15534973144531,
+                "y": 839.4083251953125,
+                "width": 306.8035888671875,
+                "height": 107.3125
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-4a69a4f5b5b7ceb11d434c8b",
+              "semanticId": "format-label-7dad41a11a31823b06e540223ba32dbea60c8f30c7935220c0c3864c4c19bbfc",
+              "contentIdentity": "format-label.portrait",
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": "text",
+              "frame": 109,
+              "present": true,
+              "visible": false,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-f3cd9115c3e0b910106a87b1",
+              "semanticId": "format-label-0923866c6e45b481dc4d1c459773fc955c6ea3fb028ff7feca12aa750aa63436",
+              "contentIdentity": "format-label.square",
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": "text",
+              "frame": 109,
+              "present": true,
+              "visible": true,
+              "opacity": 0.471074,
+              "bounds": {
+                "x": 118.625,
+                "y": 709.578125,
+                "width": 482.734375,
+                "height": 64
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            }
+          ]
+        },
+        {
+          "frame": 112,
+          "elements": [
+            {
+              "id": "ed2-ccd8de1fb32fda2ca6cb39e9",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 112,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-98ba6b0e25566a07580149a1",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 112,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-c2878bcfcfe2003fa75420a6",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 112,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-dbf9d678567b19849f597846",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 112,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-6b193ab95677b6c0551e2c58",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 112,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-cb1c8abc73ffa3468348a451",
+              "semanticId": "portrait",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": null,
+              "visualRole": "hero",
+              "frame": 112,
+              "present": true,
+              "visible": false,
+              "opacity": 0,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": true,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-1311da60c4f37c6e89b6ab3e",
+              "semanticId": "portrait-photo",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "photo",
+              "visualRole": "support",
+              "frame": 112,
+              "present": true,
+              "visible": false,
+              "opacity": 0,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": true,
+              "regionOfInterest": {
+                "x": 0.25,
+                "y": 0.1,
+                "width": 0.5,
+                "height": 0.72,
+                "purpose": "Manter a xícara reconhecível"
+              },
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-55062e33ed55fb3c06459ee8",
+              "semanticId": "portrait-title",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "headline",
+              "visualRole": "text",
+              "frame": 112,
+              "present": true,
+              "visible": false,
+              "opacity": 0,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-a54a782a9d309f723dc1ef5a",
+              "semanticId": "portrait-identity",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "brand",
+              "visualRole": "text",
+              "frame": 112,
+              "present": true,
+              "visible": false,
+              "opacity": 0,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-c36c791577509df6313f3a0a",
+              "semanticId": "square",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": null,
+              "visualRole": "support",
+              "frame": 112,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 83.51071166992188,
+                "y": 167.30670166015625,
+                "width": 552.962890625,
+                "height": 802.74560546875
+              },
+              "cropIntentional": true,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-a37b5864628eee1a1e98bc40",
+              "semanticId": "square-photo",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "photo",
+              "visualRole": "support",
+              "frame": 112,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 121.25788116455078,
+                "y": 382.6540222167969,
+                "width": 486.61456298828125,
+                "height": 401.3598327636719
+              },
+              "cropIntentional": true,
+              "regionOfInterest": {
+                "x": 0.25,
+                "y": 0.1,
+                "width": 0.5,
+                "height": 0.72,
+                "purpose": "Manter a xícara reconhecível"
+              },
+              "roiMeasurement": {
+                "method": "renderer_axis_aligned_object_fit",
+                "visibleRatio": 1,
+                "sourceWidth": 1200,
+                "sourceHeight": 800,
+                "bounds": {
+                  "x": 214.05522537231445,
+                  "y": 422.7900054931641,
+                  "width": 301.0198745727539,
+                  "height": 288.97907958984376
+                }
+              }
+            },
+            {
+              "id": "ed2-f3e45fd9a284c86f672e31f0",
+              "semanticId": "square-title",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "headline",
+              "visualRole": "text",
+              "frame": 112,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 121.25788116455078,
+                "y": 257.75360107421875,
+                "width": 486.61456298828125,
+                "height": 157.976806640625
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-4efef6cb8d7dbd4e5ea09087",
+              "semanticId": "square-identity",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "brand",
+              "visualRole": "text",
+              "frame": 112,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 121.25788116455078,
+                "y": 824.131591796875,
+                "width": 304.1251525878906,
+                "height": 104.42584228515625
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-4a69a4f5b5b7ceb11d434c8b",
+              "semanticId": "format-label-7dad41a11a31823b06e540223ba32dbea60c8f30c7935220c0c3864c4c19bbfc",
+              "contentIdentity": "format-label.portrait",
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": "text",
+              "frame": 112,
+              "present": true,
+              "visible": false,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-f3cd9115c3e0b910106a87b1",
+              "semanticId": "format-label-0923866c6e45b481dc4d1c459773fc955c6ea3fb028ff7feca12aa750aa63436",
+              "contentIdentity": "format-label.square",
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": "text",
+              "frame": 112,
+              "present": true,
+              "visible": true,
+              "opacity": 0.595041,
+              "bounds": {
+                "x": 118.625,
+                "y": 709.578125,
+                "width": 482.734375,
+                "height": 64
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            }
+          ]
+        },
+        {
+          "frame": 120,
+          "elements": [
+            {
+              "id": "ed2-ccd8de1fb32fda2ca6cb39e9",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 120,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-98ba6b0e25566a07580149a1",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 120,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-c2878bcfcfe2003fa75420a6",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 120,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-dbf9d678567b19849f597846",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 120,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-6b193ab95677b6c0551e2c58",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 120,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-cb1c8abc73ffa3468348a451",
+              "semanticId": "portrait",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": null,
+              "visualRole": "hero",
+              "frame": 120,
+              "present": true,
+              "visible": false,
+              "opacity": 0,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": true,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-1311da60c4f37c6e89b6ab3e",
+              "semanticId": "portrait-photo",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "photo",
+              "visualRole": "support",
+              "frame": 120,
+              "present": true,
+              "visible": false,
+              "opacity": 0,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": true,
+              "regionOfInterest": {
+                "x": 0.25,
+                "y": 0.1,
+                "width": 0.5,
+                "height": 0.72,
+                "purpose": "Manter a xícara reconhecível"
+              },
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-55062e33ed55fb3c06459ee8",
+              "semanticId": "portrait-title",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "headline",
+              "visualRole": "text",
+              "frame": 120,
+              "present": true,
+              "visible": false,
+              "opacity": 0,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-a54a782a9d309f723dc1ef5a",
+              "semanticId": "portrait-identity",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "brand",
+              "visualRole": "text",
+              "frame": 120,
+              "present": true,
+              "visible": false,
+              "opacity": 0,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-c36c791577509df6313f3a0a",
+              "semanticId": "square",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": null,
+              "visualRole": "support",
+              "frame": 120,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 89.60491943359375,
+                "y": 174.51559448242188,
+                "width": 540.7745361328125,
+                "height": 747.2064208984375
+              },
+              "cropIntentional": true,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-a37b5864628eee1a1e98bc40",
+              "semanticId": "square-photo",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "photo",
+              "visualRole": "support",
+              "frame": 120,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 126.52006530761719,
+                "y": 374.96380615234375,
+                "width": 475.88861083984375,
+                "height": 373.59112548828125
+              },
+              "cropIntentional": true,
+              "regionOfInterest": {
+                "x": 0.25,
+                "y": 0.1,
+                "width": 0.5,
+                "height": 0.72,
+                "purpose": "Manter a xícara reconhecível"
+              },
+              "roiMeasurement": {
+                "method": "renderer_axis_aligned_object_fit",
+                "visibleRatio": 1,
+                "sourceWidth": 1200,
+                "sourceHeight": 800,
+                "bounds": {
+                  "x": 224.3676986694336,
+                  "y": 412.3229187011719,
+                  "width": 280.19334411621094,
+                  "height": 268.9856103515625
+                }
+              }
+            },
+            {
+              "id": "ed2-f3e45fd9a284c86f672e31f0",
+              "semanticId": "square-title",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "headline",
+              "visualRole": "text",
+              "frame": 120,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 126.52006530761719,
+                "y": 258.7048034667969,
+                "width": 475.88861083984375,
+                "height": 147.04696655273438
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-4efef6cb8d7dbd4e5ea09087",
+              "semanticId": "square-identity",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "brand",
+              "visualRole": "text",
+              "frame": 120,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 126.52006530761719,
+                "y": 785.8970947265625,
+                "width": 297.421630859375,
+                "height": 97.2010498046875
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-4a69a4f5b5b7ceb11d434c8b",
+              "semanticId": "format-label-7dad41a11a31823b06e540223ba32dbea60c8f30c7935220c0c3864c4c19bbfc",
+              "contentIdentity": "format-label.portrait",
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": "text",
+              "frame": 120,
+              "present": true,
+              "visible": false,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-f3cd9115c3e0b910106a87b1",
+              "semanticId": "format-label-0923866c6e45b481dc4d1c459773fc955c6ea3fb028ff7feca12aa750aa63436",
+              "contentIdentity": "format-label.square",
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": "text",
+              "frame": 120,
+              "present": true,
+              "visible": true,
+              "opacity": 0.844812,
+              "bounds": {
+                "x": 118.625,
+                "y": 709.578125,
+                "width": 482.734375,
+                "height": 64
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            }
+          ]
+        },
+        {
+          "frame": 133,
+          "elements": [
+            {
+              "id": "ed2-ccd8de1fb32fda2ca6cb39e9",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 133,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-98ba6b0e25566a07580149a1",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 133,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-c2878bcfcfe2003fa75420a6",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 133,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-dbf9d678567b19849f597846",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 133,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-6b193ab95677b6c0551e2c58",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 133,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-cb1c8abc73ffa3468348a451",
+              "semanticId": "portrait",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": null,
+              "visualRole": "hero",
+              "frame": 133,
+              "present": true,
+              "visible": false,
+              "opacity": 0,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": true,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-1311da60c4f37c6e89b6ab3e",
+              "semanticId": "portrait-photo",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "photo",
+              "visualRole": "support",
+              "frame": 133,
+              "present": true,
+              "visible": false,
+              "opacity": 0,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": true,
+              "regionOfInterest": {
+                "x": 0.25,
+                "y": 0.1,
+                "width": 0.5,
+                "height": 0.72,
+                "purpose": "Manter a xícara reconhecível"
+              },
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-55062e33ed55fb3c06459ee8",
+              "semanticId": "portrait-title",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "headline",
+              "visualRole": "text",
+              "frame": 133,
+              "present": true,
+              "visible": false,
+              "opacity": 0,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-a54a782a9d309f723dc1ef5a",
+              "semanticId": "portrait-identity",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "brand",
+              "visualRole": "text",
+              "frame": 133,
+              "present": true,
+              "visible": false,
+              "opacity": 0,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-c36c791577509df6313f3a0a",
+              "semanticId": "square",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": null,
+              "visualRole": "support",
+              "frame": 133,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 98.2701416015625,
+                "y": 184.76577758789062,
+                "width": 523.444091796875,
+                "height": 668.23681640625
+              },
+              "cropIntentional": true,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-a37b5864628eee1a1e98bc40",
+              "semanticId": "square-photo",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "photo",
+              "visualRole": "support",
+              "frame": 133,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 134.00225830078125,
+                "y": 364.029296875,
+                "width": 460.6375732421875,
+                "height": 334.1075439453125
+              },
+              "cropIntentional": true,
+              "regionOfInterest": {
+                "x": 0.25,
+                "y": 0.1,
+                "width": 0.5,
+                "height": 0.72,
+                "purpose": "Manter a xícara reconhecível"
+              },
+              "roiMeasurement": {
+                "method": "renderer_axis_aligned_object_fit",
+                "visibleRatio": 1,
+                "sourceWidth": 1200,
+                "sourceHeight": 800,
+                "bounds": {
+                  "x": 239.0307159423828,
+                  "y": 397.44005126953124,
+                  "width": 250.58065795898438,
+                  "height": 240.557431640625
+                }
+              }
+            },
+            {
+              "id": "ed2-f3e45fd9a284c86f672e31f0",
+              "semanticId": "square-title",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "headline",
+              "visualRole": "text",
+              "frame": 133,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 134.00225830078125,
+                "y": 260.05731201171875,
+                "width": 460.6375732421875,
+                "height": 131.50604248046875
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-4efef6cb8d7dbd4e5ea09087",
+              "semanticId": "square-identity",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "brand",
+              "visualRole": "text",
+              "frame": 133,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 134.00225830078125,
+                "y": 731.532470703125,
+                "width": 287.8900146484375,
+                "height": 86.9281005859375
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-4a69a4f5b5b7ceb11d434c8b",
+              "semanticId": "format-label-7dad41a11a31823b06e540223ba32dbea60c8f30c7935220c0c3864c4c19bbfc",
+              "contentIdentity": "format-label.portrait",
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": "text",
+              "frame": 133,
+              "present": true,
+              "visible": false,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-f3cd9115c3e0b910106a87b1",
+              "semanticId": "format-label-0923866c6e45b481dc4d1c459773fc955c6ea3fb028ff7feca12aa750aa63436",
+              "contentIdentity": "format-label.square",
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": "text",
+              "frame": 133,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 118.625,
+                "y": 709.578125,
+                "width": 482.734375,
+                "height": 64
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            }
+          ]
+        },
+        {
+          "frame": 200,
+          "elements": [
+            {
+              "id": "ed2-ccd8de1fb32fda2ca6cb39e9",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 200,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-98ba6b0e25566a07580149a1",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 200,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-c2878bcfcfe2003fa75420a6",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 200,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-dbf9d678567b19849f597846",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 200,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-6b193ab95677b6c0551e2c58",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 200,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-cb1c8abc73ffa3468348a451",
+              "semanticId": "portrait",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": null,
+              "visualRole": "hero",
+              "frame": 200,
+              "present": true,
+              "visible": false,
+              "opacity": 0,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": true,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-1311da60c4f37c6e89b6ab3e",
+              "semanticId": "portrait-photo",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "photo",
+              "visualRole": "support",
+              "frame": 200,
+              "present": true,
+              "visible": false,
+              "opacity": 0,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": true,
+              "regionOfInterest": {
+                "x": 0.25,
+                "y": 0.1,
+                "width": 0.5,
+                "height": 0.72,
+                "purpose": "Manter a xícara reconhecível"
+              },
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-55062e33ed55fb3c06459ee8",
+              "semanticId": "portrait-title",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "headline",
+              "visualRole": "text",
+              "frame": 200,
+              "present": true,
+              "visible": false,
+              "opacity": 0,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-a54a782a9d309f723dc1ef5a",
+              "semanticId": "portrait-identity",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "brand",
+              "visualRole": "text",
+              "frame": 200,
+              "present": true,
+              "visible": false,
+              "opacity": 0,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-c36c791577509df6313f3a0a",
+              "semanticId": "square",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": null,
+              "visualRole": "support",
+              "frame": 200,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 118.625,
+                "y": 208.84375,
+                "width": 482.734375,
+                "height": 482.734375
+              },
+              "cropIntentional": true,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-a37b5864628eee1a1e98bc40",
+              "semanticId": "square-photo",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "photo",
+              "visualRole": "support",
+              "frame": 200,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 151.578125,
+                "y": 338.34375,
+                "width": 424.8125,
+                "height": 241.359375
+              },
+              "cropIntentional": true,
+              "regionOfInterest": {
+                "x": 0.25,
+                "y": 0.1,
+                "width": 0.5,
+                "height": 0.72,
+                "purpose": "Manter a xícara reconhecível"
+              },
+              "roiMeasurement": {
+                "method": "renderer_axis_aligned_object_fit",
+                "visibleRatio": 1,
+                "sourceWidth": 1200,
+                "sourceHeight": 800,
+                "bounds": {
+                  "x": 257.78125,
+                  "y": 345.7401041666667,
+                  "width": 212.40625,
+                  "height": 203.90999999999997
+                }
+              }
+            },
+            {
+              "id": "ed2-f3e45fd9a284c86f672e31f0",
+              "semanticId": "square-title",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "headline",
+              "visualRole": "text",
+              "frame": 200,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 151.578125,
+                "y": 263.234375,
+                "width": 424.8125,
+                "height": 95
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-4efef6cb8d7dbd4e5ea09087",
+              "semanticId": "square-identity",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "brand",
+              "visualRole": "text",
+              "frame": 200,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 151.578125,
+                "y": 603.828125,
+                "width": 265.5,
+                "height": 62.796875
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-4a69a4f5b5b7ceb11d434c8b",
+              "semanticId": "format-label-7dad41a11a31823b06e540223ba32dbea60c8f30c7935220c0c3864c4c19bbfc",
+              "contentIdentity": "format-label.portrait",
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": "text",
+              "frame": 200,
+              "present": true,
+              "visible": false,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-f3cd9115c3e0b910106a87b1",
+              "semanticId": "format-label-0923866c6e45b481dc4d1c459773fc955c6ea3fb028ff7feca12aa750aa63436",
+              "contentIdentity": "format-label.square",
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": "text",
+              "frame": 200,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 118.625,
+                "y": 709.578125,
+                "width": 482.734375,
+                "height": 64
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            }
+          ]
+        },
+        {
+          "frame": 239,
+          "elements": [
+            {
+              "id": "ed2-ccd8de1fb32fda2ca6cb39e9",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 239,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-98ba6b0e25566a07580149a1",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 239,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-c2878bcfcfe2003fa75420a6",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 239,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-dbf9d678567b19849f597846",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 239,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-6b193ab95677b6c0551e2c58",
+              "semanticId": "Layer",
+              "contentIdentity": null,
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": null,
+              "frame": 239,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 720,
+                "height": 1280
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-cb1c8abc73ffa3468348a451",
+              "semanticId": "portrait",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": null,
+              "visualRole": "hero",
+              "frame": 239,
+              "present": true,
+              "visible": false,
+              "opacity": 0,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": true,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-1311da60c4f37c6e89b6ab3e",
+              "semanticId": "portrait-photo",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "photo",
+              "visualRole": "support",
+              "frame": 239,
+              "present": true,
+              "visible": false,
+              "opacity": 0,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": true,
+              "regionOfInterest": {
+                "x": 0.25,
+                "y": 0.1,
+                "width": 0.5,
+                "height": 0.72,
+                "purpose": "Manter a xícara reconhecível"
+              },
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-55062e33ed55fb3c06459ee8",
+              "semanticId": "portrait-title",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "headline",
+              "visualRole": "text",
+              "frame": 239,
+              "present": true,
+              "visible": false,
+              "opacity": 0,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-a54a782a9d309f723dc1ef5a",
+              "semanticId": "portrait-identity",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "brand",
+              "visualRole": "text",
+              "frame": 239,
+              "present": true,
+              "visible": false,
+              "opacity": 0,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-c36c791577509df6313f3a0a",
+              "semanticId": "square",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": null,
+              "visualRole": "support",
+              "frame": 239,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 118.625,
+                "y": 208.84375,
+                "width": 482.734375,
+                "height": 482.734375
+              },
+              "cropIntentional": true,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-a37b5864628eee1a1e98bc40",
+              "semanticId": "square-photo",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "photo",
+              "visualRole": "support",
+              "frame": 239,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 151.578125,
+                "y": 338.34375,
+                "width": 424.8125,
+                "height": 241.359375
+              },
+              "cropIntentional": true,
+              "regionOfInterest": {
+                "x": 0.25,
+                "y": 0.1,
+                "width": 0.5,
+                "height": 0.72,
+                "purpose": "Manter a xícara reconhecível"
+              },
+              "roiMeasurement": {
+                "method": "renderer_axis_aligned_object_fit",
+                "visibleRatio": 1,
+                "sourceWidth": 1200,
+                "sourceHeight": 800,
+                "bounds": {
+                  "x": 257.78125,
+                  "y": 345.7401041666667,
+                  "width": 212.40625,
+                  "height": 203.90999999999997
+                }
+              }
+            },
+            {
+              "id": "ed2-f3e45fd9a284c86f672e31f0",
+              "semanticId": "square-title",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "headline",
+              "visualRole": "text",
+              "frame": 239,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 151.578125,
+                "y": 263.234375,
+                "width": 424.8125,
+                "height": 95
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-4efef6cb8d7dbd4e5ea09087",
+              "semanticId": "square-identity",
+              "contentIdentity": null,
+              "contentReferenceId": "coffee-piece",
+              "contentPartId": "brand",
+              "visualRole": "text",
+              "frame": 239,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 151.578125,
+                "y": 603.828125,
+                "width": 265.5,
+                "height": 62.796875
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-4a69a4f5b5b7ceb11d434c8b",
+              "semanticId": "format-label-7dad41a11a31823b06e540223ba32dbea60c8f30c7935220c0c3864c4c19bbfc",
+              "contentIdentity": "format-label.portrait",
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": "text",
+              "frame": 239,
+              "present": true,
+              "visible": false,
+              "opacity": 1,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            },
+            {
+              "id": "ed2-f3cd9115c3e0b910106a87b1",
+              "semanticId": "format-label-0923866c6e45b481dc4d1c459773fc955c6ea3fb028ff7feca12aa750aa63436",
+              "contentIdentity": "format-label.square",
+              "contentReferenceId": null,
+              "contentPartId": null,
+              "visualRole": "text",
+              "frame": 239,
+              "present": true,
+              "visible": true,
+              "opacity": 1,
+              "bounds": {
+                "x": 118.625,
+                "y": 709.578125,
+                "width": 482.734375,
+                "height": 64
+              },
+              "cropIntentional": false,
+              "regionOfInterest": null,
+              "roiMeasurement": null
+            }
+          ]
+        }
+      ],
+      "handoffChecks": {
+        "count": 0,
+        "reverseSeek": false,
+        "errors": []
+      }
+    },
+    "audiovisual": {}
+  },
+  "schemaVersion": "studio.video-render-encode-result.v1",
+  "provider": "hyperframes.contextual-v2",
+  "providerVersion": "2.0.0",
+  "width": 720,
+  "height": 1280,
+  "durationMs": 8000,
+  "fps": 30.0,
+  "videoCodec": "h264",
+  "audioCodec": "aac",
+  "renderDurationMs": 30000,
+  "framesRendered": 240,
+  "peakRssMb": null,
+  "renderedLayerIds": [
+    "ed2-ccd8de1fb32fda2ca6cb39e9",
+    "ed2-98ba6b0e25566a07580149a1",
+    "ed2-c2878bcfcfe2003fa75420a6",
+    "ed2-dbf9d678567b19849f597846",
+    "ed2-6b193ab95677b6c0551e2c58",
+    "ed2-cb1c8abc73ffa3468348a451",
+    "ed2-1311da60c4f37c6e89b6ab3e",
+    "ed2-55062e33ed55fb3c06459ee8",
+    "ed2-a54a782a9d309f723dc1ef5a",
+    "ed2-c36c791577509df6313f3a0a",
+    "ed2-a37b5864628eee1a1e98bc40",
+    "ed2-f3e45fd9a284c86f672e31f0",
+    "ed2-4efef6cb8d7dbd4e5ea09087",
+    "ed2-4a69a4f5b5b7ceb11d434c8b",
+    "ed2-f3cd9115c3e0b910106a87b1"
+  ],
+  "renderedCaptionTrackIds": [],
+  "renderedAudioClipIds": [
+    "ed2-928b28cf24d9c3e042b513bd"
+  ],
+  "warnings": [
+    "Editorial quality requires review of the rendered video.",
+    "Automatic draft; human audiovisual review pending."
+  ]
+}

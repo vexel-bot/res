@@ -1,0 +1,16 @@
+schema_version: studio.creative-mind-rubric.v1
+mind: "Akira Kurosawa e Shinobu Hashimoto"
+research_status: seed_evidence_only
+dimensions:
+  causal_clarity: {weight: 0.18, question: "cada beat muda algo verificável?"}
+  character_specificity: {weight: 0.14, question: "objetivo, obstáculo e comportamento são específicos?"}
+  world_function: {weight: 0.14, question: "o cenário participa da ação ou do tema?"}
+  progression_payoff: {weight: 0.18, question: "expectativas abertas recebem desenvolvimento e payoff?"}
+  audiovisual_expression: {weight: 0.14, question: "imagem e som fazem trabalho além de ilustrar a fala?"}
+  originality_context: {weight: 0.10, question: "a solução nasce do brief, sem imitação protegida?"}
+  feasibility_rights: {weight: 0.12, question: "produção, créditos e direitos são defensáveis?"}
+hard_failures:
+  - unsupported_attribution
+  - unmarked_inference
+  - missing_rights_or_consent
+  - style_imitation_as_method

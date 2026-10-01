@@ -5,6 +5,7 @@ from sqlalchemy import func, select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
+from ..config import get_settings
 from ..connectors.rss import RSSConnector
 from ..database import get_db
 from ..models import (
@@ -17,6 +18,7 @@ from ..models import (
     Membership,
     Opportunity,
     Post,
+    RadarShadowEvaluation,
     RadarSource,
     User,
 )
@@ -25,6 +27,7 @@ from ..schemas import (
     JobOut,
     LearningPreferenceOut,
     OpportunityOut,
+    RadarShadowEvaluationOut,
     RadarSourceIn,
     RadarSourceOut,
     RadarSourceUpdate,
@@ -292,9 +295,7 @@ def radar_state(
     readiness = brand_readiness(brand)
     sources = list(
         db.scalars(
-            select(RadarSource)
-            .where(RadarSource.workspace_id == workspace_id)
-            .order_by(RadarSource.created_at)
+            select(RadarSource).where(RadarSource.workspace_id == workspace_id).order_by(RadarSource.created_at)
         ).all()
     )
     active_sources = [source for source in sources if source.is_active]
@@ -309,12 +310,15 @@ def radar_state(
         if active_sources
         else None
     )
-    signal_count = db.scalar(
-        select(func.count(ExternalSignal.id)).where(
-            ExternalSignal.workspace_id == workspace_id,
-            ExternalSignal.expires_at > now,
+    signal_count = (
+        db.scalar(
+            select(func.count(ExternalSignal.id)).where(
+                ExternalSignal.workspace_id == workspace_id,
+                ExternalSignal.expires_at > now,
+            )
         )
-    ) or 0
+        or 0
+    )
     latest_job = db.scalars(
         select(JobAudit)
         .where(JobAudit.workspace_id == workspace_id, JobAudit.job_type == "sync_radar_sources")
@@ -388,7 +392,17 @@ def record_feedback(
             select(model.id).where(model.id == resource_id, model.workspace_id == data.workspace_id)
         ):
             raise HTTPException(status_code=404, detail=f"{label} not found")
-    db.add(FeedbackEvent(**data.model_dump(), user_id=user.id))
+    opportunity = db.get(Opportunity, data.opportunity_id) if data.opportunity_id else None
+    creative = db.get(CreativeDocument, data.creative_document_id) if data.creative_document_id else None
+    db.add(
+        FeedbackEvent(
+            **data.model_dump(),
+            user_id=user.id,
+            schema_version="feedback.v2",
+            opportunity_score_version=opportunity.score_version if opportunity else None,
+            object_version=creative.version if creative else None,
+        )
+    )
     db.commit()
 
 
@@ -400,3 +414,23 @@ def get_preferences(
 ) -> dict:
     assert_access(db, user.id, workspace_id)
     return workspace_preference_profile(db, workspace_id).as_dict()
+
+
+@router.get("/shadow-evaluations", response_model=list[RadarShadowEvaluationOut])
+def list_shadow_evaluations(
+    workspace_id: str = Query(...),
+    limit: int = Query(default=50, ge=1, le=200),
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
+) -> list[RadarShadowEvaluation]:
+    assert_access(db, user.id, workspace_id)
+    if not get_settings().radar_contextual_v2_enabled:
+        raise HTTPException(status_code=404, detail="Radar contextual V2 is not enabled")
+    return list(
+        db.scalars(
+            select(RadarShadowEvaluation)
+            .where(RadarShadowEvaluation.workspace_id == workspace_id)
+            .order_by(RadarShadowEvaluation.created_at.desc())
+            .limit(limit)
+        ).all()
+    )

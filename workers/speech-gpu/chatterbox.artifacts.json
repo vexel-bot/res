@@ -1,0 +1,95 @@
+{
+  "schema_version": "studio.artifact-inventory.v1",
+  "inventory_id": "chatterbox-voice-clone-artifacts-2026-08-26",
+  "capability": "voice_clone",
+  "policy_digests_sha256": ["dc5e58fa37d91dda8d273b4bfa11ab6e34d797c6cf08fc134bcfcb67d1119dc7"],
+  "status": "review_required",
+  "frozen_at": "2026-08-28T16:45:00Z",
+  "frozen_by": "clicko-local-self-hosted-evaluation",
+  "required_artifact_ids": [
+    "chatterbox-code",
+    "chatterbox-v3-t3-weights",
+    "chatterbox-v3-s3gen-weights",
+    "chatterbox-pt-br-t3-weights",
+    "chatterbox-pt-br-s3gen-weights",
+    "chatterbox-shared-voice-encoder",
+    "chatterbox-shared-tokenizer",
+    "perth-watermark-code",
+    "perth-watermark-checkpoint",
+    "chatterbox-worker-container"
+  ],
+  "artifacts": [
+    {
+      "artifact_id": "chatterbox-code", "component_id": "chatterbox-code", "kind": "code", "role": "Chatterbox inference code", "required": true,
+      "source_url": "https://github.com/resemble-ai/chatterbox", "source_revision": "5de7a54aa4e5e2baadb0182dde554908b48b85c2", "resolution_status": "resolved",
+      "integrity": {"method": "git_commit", "value": "5de7a54aa4e5e2baadb0182dde554908b48b85c2"}, "verification_method": "git_remote",
+      "license": {"declared_license": "MIT", "evidence_url": "https://github.com/resemble-ai/chatterbox/blob/5de7a54aa4e5e2baadb0182dde554908b48b85c2/LICENSE", "evidence_digest_sha256": "4248e910a928849fe5815a0f9236e17fa07768d95b9193212752c464b93d6caa", "commercial_saas_use_allowed": true, "decision": "approved", "rationale": "Pinned source and canonical Git MIT license bytes were verified without checkout line-ending conversion."},
+      "notes": ["The upstream pyproject points Perth at master; the Clicko candidate must override it with the audited commit."]
+    },
+    {
+      "artifact_id": "chatterbox-v3-t3-weights", "component_id": "chatterbox-v3-t3-weights", "kind": "model", "role": "Multilingual V3 T3 voice-clone weights", "required": true,
+      "source_url": "https://huggingface.co/ResembleAI/chatterbox/blob/5bb1f6ee58e50c3b8d408bc82a6d3740c2db6e18/t3_mtl23ls_v3.safetensors", "source_revision": "5bb1f6ee58e50c3b8d408bc82a6d3740c2db6e18", "expected_filename": "t3_mtl23ls_v3.safetensors", "resolution_status": "resolved",
+      "integrity": {"method": "sha256", "value": "5abca8321ede76f8e61f1cc0d19aea6c946b28871017ce8726f8a69203f05953", "size_bytes": 2143989928}, "verification_method": "vendor_metadata",
+      "license": {"declared_license": "MIT", "evidence_url": "https://huggingface.co/ResembleAI/chatterbox/blob/5bb1f6ee58e50c3b8d408bc82a6d3740c2db6e18/README.md", "evidence_digest_sha256": "6ac86d5ec7e85a9cf6566a34c6aae60ac1d50a6fceccade4c2aa57cfa6f590b4", "commercial_saas_use_allowed": true, "decision": "approved", "rationale": "The exact public, ungated model revision declares MIT and exposes LFS SHA-256 and byte size."},
+      "notes": ["Metadata is frozen; weight bytes are not stored in this repository and have not yet been assembled into an offline worker image."]
+    },
+    {
+      "artifact_id": "chatterbox-v3-s3gen-weights", "component_id": "chatterbox-v3-s3gen-weights", "kind": "model", "role": "Multilingual V3 S3Gen decoder used by the audited upstream loader", "required": true,
+      "source_url": "https://huggingface.co/ResembleAI/chatterbox/blob/5bb1f6ee58e50c3b8d408bc82a6d3740c2db6e18/s3gen.pt", "source_revision": "5bb1f6ee58e50c3b8d408bc82a6d3740c2db6e18", "expected_filename": "s3gen.pt", "resolution_status": "resolved",
+      "integrity": {"method": "sha256", "value": "9b9ff07e60b20c136e2b1b3d7563a24604e8d2c4c267888d1ee929dd0151d2a3", "size_bytes": 1057165844}, "verification_method": "vendor_metadata",
+      "license": {"declared_license": "MIT", "evidence_url": "https://huggingface.co/ResembleAI/chatterbox/blob/5bb1f6ee58e50c3b8d408bc82a6d3740c2db6e18/README.md", "evidence_digest_sha256": "6ac86d5ec7e85a9cf6566a34c6aae60ac1d50a6fceccade4c2aa57cfa6f590b4", "commercial_saas_use_allowed": true, "decision": "approved", "rationale": "The exact public, ungated model revision declares MIT and exposes LFS SHA-256 and byte size."},
+      "notes": ["The current upstream V3 loader selects s3gen.pt; s3gen_v3.pt is not silently substituted."]
+    },
+    {
+      "artifact_id": "chatterbox-pt-br-t3-weights", "component_id": "chatterbox-pt-br-t3-weights", "kind": "model", "role": "Dedicated Brazilian Portuguese T3 weights", "required": true,
+      "source_url": "https://huggingface.co/ResembleAI/Chatterbox-Multilingual-pt-br/blob/b3952f18bc2eaa72b9bd7c17d2c4653bcad4770d/t3_pt_br.safetensors", "source_revision": "b3952f18bc2eaa72b9bd7c17d2c4653bcad4770d", "expected_filename": "t3_pt_br.safetensors", "resolution_status": "resolved",
+      "integrity": {"method": "sha256", "value": "074aaf65255eb9cb960288f7cc72e09d3b5008f6e0b14868c0d4e5b0bd7cbb6c", "size_bytes": 2143990296}, "verification_method": "downloaded_external", "external_evaluation_ref": "chatterbox-pt-br-local-assets-2026-08-28",
+      "license": {"declared_license": "MIT", "evidence_url": "https://huggingface.co/ResembleAI/Chatterbox-Multilingual-pt-br/blob/b3952f18bc2eaa72b9bd7c17d2c4653bcad4770d/README.md", "evidence_digest_sha256": "f6d683ac8f9c96f660f20c51ac59cca1f72ffb118fd5823b894fb2ed63ec43ad", "commercial_saas_use_allowed": true, "decision": "approved", "rationale": "The exact public, ungated pt-BR model revision declares MIT and exposes LFS SHA-256 and byte size."},
+      "notes": ["The official pt-BR demo uses a separate loader fork; the Clicko adapter contract must use only pinned local files."]
+    },
+    {
+      "artifact_id": "chatterbox-pt-br-s3gen-weights", "component_id": "chatterbox-pt-br-s3gen-weights", "kind": "model", "role": "Dedicated Brazilian Portuguese V3 S3Gen decoder", "required": true,
+      "source_url": "https://huggingface.co/ResembleAI/Chatterbox-Multilingual-pt-br/blob/b3952f18bc2eaa72b9bd7c17d2c4653bcad4770d/s3gen_v3.pt", "source_revision": "b3952f18bc2eaa72b9bd7c17d2c4653bcad4770d", "expected_filename": "s3gen_v3.pt", "resolution_status": "resolved",
+      "integrity": {"method": "sha256", "value": "f7abce4b196dae2d08d9296cbebc6521b046079577643b42a19a03499d08721e", "size_bytes": 1056903694}, "verification_method": "downloaded_external", "external_evaluation_ref": "chatterbox-pt-br-local-assets-2026-08-28",
+      "license": {"declared_license": "MIT", "evidence_url": "https://huggingface.co/ResembleAI/Chatterbox-Multilingual-pt-br/blob/b3952f18bc2eaa72b9bd7c17d2c4653bcad4770d/README.md", "evidence_digest_sha256": "f6d683ac8f9c96f660f20c51ac59cca1f72ffb118fd5823b894fb2ed63ec43ad", "commercial_saas_use_allowed": true, "decision": "approved", "rationale": "The exact public, ungated pt-BR model revision declares MIT and exposes LFS SHA-256 and byte size."},
+      "notes": ["The offline adapter maps the source filename s3gen_v3.pt to runtime filename s3gen.pt explicitly."]
+    },
+    {
+      "artifact_id": "chatterbox-shared-voice-encoder", "component_id": "chatterbox-shared-voice-encoder", "kind": "model", "role": "Shared voice encoder weights for both clone candidates", "required": true,
+      "source_url": "https://huggingface.co/ResembleAI/chatterbox/blob/5bb1f6ee58e50c3b8d408bc82a6d3740c2db6e18/ve.pt", "source_revision": "5bb1f6ee58e50c3b8d408bc82a6d3740c2db6e18", "expected_filename": "ve.pt", "resolution_status": "resolved",
+      "integrity": {"method": "sha256", "value": "4b16d836bc598509860f6fa068165a8bb5e9ac84f05582dfcf278a5a372879f1", "size_bytes": 5698626}, "verification_method": "downloaded_external", "external_evaluation_ref": "chatterbox-pt-br-local-assets-2026-08-28",
+      "license": {"declared_license": "MIT", "evidence_url": "https://huggingface.co/ResembleAI/chatterbox/blob/5bb1f6ee58e50c3b8d408bc82a6d3740c2db6e18/README.md", "evidence_digest_sha256": "6ac86d5ec7e85a9cf6566a34c6aae60ac1d50a6fceccade4c2aa57cfa6f590b4", "commercial_saas_use_allowed": true, "decision": "approved", "rationale": "The exact public, ungated base revision declares MIT and exposes LFS SHA-256 and byte size."}
+    },
+    {
+      "artifact_id": "chatterbox-shared-tokenizer", "component_id": "chatterbox-shared-tokenizer", "kind": "runtime", "role": "Shared multilingual tokenizer configuration", "required": true,
+      "source_url": "https://huggingface.co/ResembleAI/chatterbox/blob/5bb1f6ee58e50c3b8d408bc82a6d3740c2db6e18/grapheme_mtl_merged_expanded_v1.json", "source_revision": "5bb1f6ee58e50c3b8d408bc82a6d3740c2db6e18", "expected_filename": "grapheme_mtl_merged_expanded_v1.json", "resolution_status": "resolved",
+      "integrity": {"method": "sha256", "value": "69632f47220a788a52ce2661d096453c5655e9bf25289d89a8d832c46ee07dbf", "size_bytes": 69989}, "verification_method": "downloaded_external", "external_evaluation_ref": "chatterbox-pt-br-local-assets-2026-08-28",
+      "license": {"declared_license": "MIT", "evidence_url": "https://huggingface.co/ResembleAI/chatterbox/blob/5bb1f6ee58e50c3b8d408bc82a6d3740c2db6e18/README.md", "evidence_digest_sha256": "6ac86d5ec7e85a9cf6566a34c6aae60ac1d50a6fceccade4c2aa57cfa6f590b4", "commercial_saas_use_allowed": true, "decision": "approved", "rationale": "The tokenizer bytes were fetched from the exact public revision and verified by SHA-256."}
+    },
+    {
+      "artifact_id": "perth-watermark-code", "component_id": "perth-watermark-code", "kind": "code", "role": "Neural audio watermark runtime code", "required": true,
+      "source_url": "https://github.com/resemble-ai/Perth", "source_revision": "ce86c49d029f42272c1902eccb675556b9ed2330", "resolution_status": "resolved",
+      "integrity": {"method": "git_commit", "value": "ce86c49d029f42272c1902eccb675556b9ed2330"}, "verification_method": "git_remote",
+      "license": {"declared_license": "MIT", "evidence_url": "https://github.com/resemble-ai/Perth/blob/ce86c49d029f42272c1902eccb675556b9ed2330/LICENSE", "evidence_digest_sha256": "4543f6777abede354f09bc2ba6580bd475c364e7d6f39315bf9d315d033b48f4", "commercial_saas_use_allowed": true, "decision": "approved", "rationale": "The independent Perth clone, exact commit and canonical Git MIT license bytes were verified without checkout line-ending conversion."},
+      "notes": ["The candidate dependency must pin this commit instead of upstream master."]
+    },
+    {
+      "artifact_id": "perth-watermark-checkpoint", "component_id": "perth-watermark-checkpoint", "kind": "model", "role": "Bundled Perth implicit watermark checkpoint", "required": true,
+      "source_url": "https://github.com/resemble-ai/Perth/blob/ce86c49d029f42272c1902eccb675556b9ed2330/src/perth/perth_net/pretrained/implicit/perth_net_250000.pth.tar", "source_revision": "ce86c49d029f42272c1902eccb675556b9ed2330", "expected_filename": "perth_net_250000.pth.tar", "resolution_status": "resolved",
+      "integrity": {"method": "sha256", "value": "a15bce457ebc53ce5e6c9c3f11df78cf7ee2bf9cdab0a798902135b4c4027670", "size_bytes": 37429684}, "verification_method": "downloaded_external", "external_evaluation_ref": "perth-audit-20260826",
+      "license": {"declared_license": "MIT", "evidence_url": "https://github.com/resemble-ai/Perth/blob/ce86c49d029f42272c1902eccb675556b9ed2330/LICENSE", "evidence_digest_sha256": "4543f6777abede354f09bc2ba6580bd475c364e7d6f39315bf9d315d033b48f4", "commercial_saas_use_allowed": true, "decision": "approved", "rationale": "The bundled neural checkpoint was downloaded through the exact audited Git commit and hashed independently; license evidence uses canonical Git bytes."}
+    },
+    {
+      "artifact_id": "chatterbox-worker-container", "component_id": "chatterbox-worker-container", "kind": "container", "role": "Linux AMD64 speech GPU candidate image", "required": true,
+      "source_url": "urn:clicko:local-oci:clicko/chatterbox-voice-clone:0.1.0-evaluation", "source_revision": "sha256:5702bdc81024ba3c914a089895bcba69ef02fd0e15f0507dbcd7e98fc55a214a", "resolution_status": "resolved", "integrity": {"method": "oci_digest", "value": "sha256:5702bdc81024ba3c914a089895bcba69ef02fd0e15f0507dbcd7e98fc55a214a", "size_bytes": 3463190552}, "verification_method": "registry_manifest",
+      "license": {"declared_license": "Composite image; SBOM and notices required", "evidence_url": "https://github.com/resemble-ai/chatterbox/blob/5de7a54aa4e5e2baadb0182dde554908b48b85c2/pyproject.toml", "evidence_digest_sha256": "f896db30b4ec89e0550ddb37814b791d8485045bbbe54f8be9ae256e387c3047", "commercial_saas_use_allowed": null, "decision": "review_required", "rationale": "A local OCI digest, exact CUDA lock and isolated offline smoke exist, but no reviewed SBOM, transitive notices, promotion-grade provenance or signature exists."},
+      "notes": ["Local evaluation image only; it was not pushed or deployed.", "The image contains the audited bundled Perth watermark checkpoint but no external Chatterbox voice-clone weights.", "The worker manifest continues to advertise zero speech GPU providers.", "GPU inference remains blocked on a consented private corpus and an external accelerator."]
+    }
+  ],
+  "notes": [
+    "Code, model metadata and Perth bytes are pinned; the dedicated pt-BR T3/S3Gen/shared assets are now cached in a gitignored local evaluation directory with exact SHA-256.",
+    "Downloaded weights do not authorize biometric processing, inference, publication or provider activation; the local 4 GiB GPU fails the 16 GiB speech_gpu worker floor.",
+    "The offline asset contract digest is 0b3757e10317b5ace3a594ca58bbb6dc184af4a81bfbae0d473398aa543e5b7f.",
+    "The official pt-BR demo is reference evidence only and is not a production dependency because its downloads track moving branches."
+  ]
+}

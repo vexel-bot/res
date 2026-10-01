@@ -1,0 +1,138 @@
+name: Studios Supervision evaluation
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-linux-amd64-evaluation:
+    name: Build Supervision evaluation (linux/amd64)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Set up BuildKit
+        uses: docker/setup-buildx-action@v3
+
+      - name: Materialize hash-locked wheelhouse
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p workers/vision-gpu/supervision/wheelhouse
+          python -m pip download \
+            --disable-pip-version-check \
+            --only-binary=:all: \
+            --require-hashes \
+            --dest workers/vision-gpu/supervision/wheelhouse \
+            --requirement workers/vision-gpu/supervision/requirements.lock
+
+      - name: Recompute SBOM and license evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp workers/vision-gpu/supervision/sbom.spdx.json /tmp/expected-sbom.json
+          cp workers/vision-gpu/supervision/license-review.v1.json /tmp/expected-review.json
+          python backend/scripts/generate_supervision_supply_chain.py \
+            --wheelhouse workers/vision-gpu/supervision/wheelhouse \
+            --sbom /tmp/actual-sbom.json \
+            --review /tmp/actual-review.json
+          cmp /tmp/expected-sbom.json /tmp/actual-sbom.json
+          cmp /tmp/expected-review.json /tmp/actual-review.json
+
+      - name: Verify frozen boundaries before BuildKit
+        shell: bash
+        run: |
+          set -euo pipefail
+          python workers/vision-gpu/supervision/verify_build.py \
+            --adapter backend/app/providers/studios/supervision_detection.py \
+            --domain backend/app/domain/studios \
+            --lock workers/vision-gpu/supervision/requirements.lock \
+            --lock-digest 9cc82bd9dd4e7b291d5a85ad3f8718009da30bf4f372edc0d8a8503d85b41284 \
+            --sbom workers/vision-gpu/supervision/sbom.spdx.json \
+            --sbom-digest 22d543bc3c7e734454e252fcf60846af2d9f2e81ebf301d1cd876616d0a544c5 \
+            --review workers/vision-gpu/supervision/license-review.v1.json \
+            --review-digest f8c7412117aaa046dec90ee3e18781a74b3f591772bfb60eadcae4f9b4521f41 \
+            --benchmark benchmarks/studios/reality/supervision-benchmark-run-2026-08-28.v1.json \
+            --benchmark-digest df2155e926afe933f4bcda47a99a68b4364c1234bb804afade0dd7da75b5c867 \
+            --manifest workers/vision-gpu/worker.manifest.json \
+            --manifest-digest 381f5809a61bceb7f24b446f664666969418efa33b5bfb6138e3d99de114a622
+
+      - name: Build immutable no-egress evaluation OCI
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: workers/vision-gpu/supervision/Dockerfile.evaluation
+          platforms: linux/amd64
+          network: none
+          push: false
+          outputs: type=oci,dest=/tmp/clicko-supervision-evaluation.oci.tar
+          provenance: mode=max
+          sbom: true
+
+      - name: Verify OCI attestations and provider boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          python backend/scripts/verify_preflight_oci.py \
+            /tmp/clicko-supervision-evaluation.oci.tar \
+            --title "Clicko Supervision evaluation" \
+            --provider-label none
+
+      - name: Load evaluation image for runtime hardening checks
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: workers/vision-gpu/supervision/Dockerfile.evaluation
+          platforms: linux/amd64
+          network: none
+          load: true
+          push: false
+          tags: clicko-supervision-evaluation:ci
+
+      - name: Verify non-root read-only no-egress runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          output="$({
+            docker run --rm \
+              --pull never \
+              --network none \
+              --read-only \
+              --cap-drop ALL \
+              --security-opt no-new-privileges \
+              --pids-limit 128 \
+              --memory 1g \
+              --cpus 1 \
+              --tmpfs /tmp/clicko-supervision:rw,noexec,nosuid,nodev,size=67108864,uid=10001,gid=10001 \
+              --entrypoint sh \
+              clicko-supervision-evaluation:ci \
+              -ec '
+                test "$(id -u)" = 10001
+                ! touch "$HOME"/rootfs-must-be-read-only
+                grep -Eq "^CapEff:[[:space:]]+0+$" /proc/self/status
+                grep -Eq "^NoNewPrivs:[[:space:]]+1$" /proc/self/status
+                test "$(find /sys/class/net -mindepth 1 -maxdepth 1 | wc -l)" = 1
+                python /opt/clicko/supervision-runtime/probe.py
+              '
+          } 2>&1)"
+          printf '%s\n' "$output"
+          grep -q '"status":"ready"' <<<"$output"
+          test -z "$(docker ps -aq --filter ancestor=clicko-supervision-evaluation:ci)"
+
+      - name: Upload ephemeral evaluation artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: clicko-supervision-evaluation-linux-amd64
+          path: /tmp/clicko-supervision-evaluation.oci.tar
+          if-no-files-found: error
+          retention-days: 7

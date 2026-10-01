@@ -1,0 +1,53 @@
+{
+  "schemaVersion": "res.local-video-model-profile.v2",
+  "profileId": "animatediff-lightning-sd15-a-v1",
+  "status": "experimental",
+  "adapter": "animatediff_lightning",
+  "operation": "text_to_video",
+  "license": "CreativeML-OpenRAIL-M",
+  "repositories": [
+    {
+      "id": "ByteDance/AnimateDiff-Lightning",
+      "revision": "027c893eec01df7330f5d4b733bc9485ee02e8b2",
+      "allowPatterns": ["animatediff_lightning_4step_diffusers.safetensors"],
+      "artifacts": [
+        {"path": "animatediff_lightning_4step_diffusers.safetensors", "sizeBytes": 907702248, "sha256": "8f3330914edd8fc2ee5659e6944323858feb0ec21cc913789202d043f69b5e17"}
+      ]
+    },
+    {
+      "id": "stable-diffusion-v1-5/stable-diffusion-v1-5",
+      "revision": "451f4fe16113bff5a5d2269ed5ad43b0592e9a14",
+      "allowPatterns": ["model_index.json", "feature_extractor/*", "scheduler/*", "tokenizer/*", "text_encoder/config.json", "text_encoder/model.fp16.safetensors", "unet/config.json", "unet/diffusion_pytorch_model.fp16.safetensors", "vae/config.json", "vae/diffusion_pytorch_model.fp16.safetensors", "safety_checker/config.json", "safety_checker/model.fp16.safetensors"],
+      "artifacts": [
+        {"path": "text_encoder/model.fp16.safetensors", "sizeBytes": 246144864, "sha256": "77795e2023adcf39bc29a884661950380bd093cf0750a966d473d1718dc9ef4e"},
+        {"path": "unet/diffusion_pytorch_model.fp16.safetensors", "sizeBytes": 1719125304, "sha256": "c83908253f9a64d08c25fc90874c9c8aef9a329ce1ca5fb909d73b0c83d1ea21"},
+        {"path": "vae/diffusion_pytorch_model.fp16.safetensors", "sizeBytes": 167335342, "sha256": "4fbcf0ebe55a0984f5a5e00d8c4521d52359af7229bb4d81890039d2aa16dd7c"},
+        {"path": "safety_checker/model.fp16.safetensors", "sizeBytes": 608018440, "sha256": "08902f19b1cfebd7c989f152fc0507bef6898c706a91d666509383122324b511"}
+      ]
+    }
+  ],
+  "expectedDownloadBytes": 3651000000,
+  "downloadScratchMultiplier": 0.5,
+  "minimumFreeBytesAfterInstall": 10737418240,
+  "minimumSystemRamTotalMiB": 6144,
+  "minimumSystemRamFreeMiB": 3072,
+  "minimumCommitFreeMiB": 3072,
+  "minimumExecutionDiskFreeBytes": 1073741824,
+  "admissionCalibration": "streamed-unet-a-3072mib-admission-2026-09-11",
+  "minimumVramTotalMiB": 4096,
+  "minimumVramFreeMiB": 3072,
+  "watchdogSystemRamFreeMiB": 384,
+  "watchdogEmergencySystemRamFreeMiB": 32,
+  "watchdogConsecutiveRamBreaches": 5,
+  "watchdogVramFreeMiB": 128,
+  "width": 256,
+  "height": 256,
+  "frames": 8,
+  "fps": 8,
+  "inferenceSteps": 4,
+  "guidanceScale": 1.0,
+  "scheduler": "EulerDiscreteScheduler.trailing.linear",
+  "maximumDurationSeconds": 1.0,
+  "maximumRuntimeSeconds": 1800,
+  "features": {"textToVideo": true, "imageToVideo": false, "audio": false, "upscale": false, "frameInterpolation": false, "cameraControl": "prompt_guidance"}
+}

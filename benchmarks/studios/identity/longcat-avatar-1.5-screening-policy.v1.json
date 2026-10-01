@@ -1,0 +1,88 @@
+{
+  "schemaVersion": "studio.avatar-generative-screening-policy.v1",
+  "policyId": "clicko.longcat-avatar-1.5.pt-br.v1",
+  "status": "blocked_resources",
+  "profileId": "longcat-avatar-1.5-ai2v-480p-int8-experimental-v1",
+  "operation": "image_audio_to_avatar",
+  "scope": {
+    "presenters": 1,
+    "input": ["authorized_reference_image", "final_speech_audio"],
+    "locale": "pt-BR",
+    "framing": "medium",
+    "resolution": "480p",
+    "fps": 25,
+    "cleanAudioOnly": true
+  },
+  "candidate": {
+    "provider": "local.longcat-avatar-1.5",
+    "runtimeRevision": "6b3f4b8582a8bc3f20f795735f5383716c4ba794",
+    "modelRepository": "meituan-longcat/LongCat-Video-Avatar-1.5",
+    "modelRevision": "92016c71d5d318d0f5d84e4db30015a571484ab6",
+    "baseRepository": "meituan-longcat/LongCat-Video",
+    "baseRevision": "03b55529b1d1d4045f5fbe14d65c8c6e8116b278",
+    "codeLicense": "MIT",
+    "weightsLicense": "MIT",
+    "dependencyLicenseGate": "review_required",
+    "commercialStatus": "not_approved"
+  },
+  "stages": [
+    {
+      "id": "native-segment-smoke",
+      "durationSeconds": 3.72,
+      "purpose": "Validate loading, finite tensors, audio muxing and decoding."
+    },
+    {
+      "id": "single-presenter-10s",
+      "durationSeconds": 10,
+      "seeds": [42, 314, 2718],
+      "purpose": "Measure Portuguese lip sync, identity and action adherence."
+    },
+    {
+      "id": "continuation-30-60s",
+      "durationSeconds": [30, 60],
+      "purpose": "Measure overlap seams, identity drift and temporal continuity."
+    },
+    {
+      "id": "resolution-720p",
+      "durationSeconds": 10,
+      "purpose": "Independent capability qualification; it does not inherit 480p approval."
+    }
+  ],
+  "commercialPromotion": {
+    "minimumSubjects": 10,
+    "minimumCases": 30,
+    "humanReviewRequired": true,
+    "fixedEvaluatorsRequired": true,
+    "requiredDimensions": [
+      "identity",
+      "mouth_teeth",
+      "hands",
+      "performance_naturalness",
+      "direction_adherence",
+      "temporal_continuity",
+      "flicker",
+      "pt_br_lip_sync"
+    ],
+    "operationalMetrics": [
+      "wall_seconds",
+      "peak_ram_gb",
+      "peak_vram_per_gpu_gb",
+      "attempts_per_accepted_candidate",
+      "cost_per_accepted_output_minute",
+      "candidate_acceptance_rate"
+    ]
+  },
+  "blockers": [
+    "compatible_multi_gpu_hardware_required",
+    "worker_not_installed",
+    "worker_image_not_built",
+    "dependency_license_chain_pending",
+    "pt_br_visual_qualification_pending"
+  ],
+  "prohibitions": [
+    "Do not store biometric source media in the repository.",
+    "Do not treat integration simulations as model quality evidence.",
+    "Do not promote 720p, full-body or multi-person from 480p single-presenter results.",
+    "Do not send voice enrollment samples as final driving speech."
+  ]
+}

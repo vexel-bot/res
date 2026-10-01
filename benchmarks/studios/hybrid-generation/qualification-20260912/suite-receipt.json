@@ -1,0 +1,170 @@
+{
+  "schemaVersion": "res.local-video-qualification-suite.v1",
+  "profileId": "animatediff-lightning-sd15-a-v1",
+  "status": "failed",
+  "matrix": [
+    {
+      "promptId": "single-object-motion",
+      "prompt": "One small blue toy car moves steadily from left to right across a plain light floor, locked camera, centered medium shot, one recognizable object, one observable action, clean background, no text, no logo, no watermark",
+      "seed": 20260911,
+      "receipt": {
+        "errorCode": "ValueError",
+        "errorMessage": "local_diffusion_content_rejected:frames=4",
+        "executionId": "77b8f607-0caa-5130-b3f1-f93ae37247f8",
+        "minimumAvailableSystemRamMiB": 1043,
+        "minimumAvailableVramMiB": 822,
+        "observedSystemRamDeltaPeakMiB": 2257,
+        "observedVramDeltaPeakMiB": 3140,
+        "profileDigestSha256": "60f09a8b2b815cf4adc0187452828c50acc9f2ccb7a09ef94ae041e087071bec",
+        "profileId": "animatediff-lightning-sd15-a-v1",
+        "requestDigestSha256": "9ef0accc52b4ffa5143ab0bd2bf5160bd943d507062dc6d772145fa3a1485758",
+        "runtimeDigests": {
+          "adapter": "d90944d38cdae48e5577937ac2cbe370290c4b8023edb7730ba077ac83120e97",
+          "api": "e1f605891a38702630ad035db991ce3a4f62ee1249b51a7c8524ae6bc9510706",
+          "lock": "693ffbc0fefc0d77abd81b4336b8de837ec07318e0f5083bcec66f93aaa24d31",
+          "runner": "b242408ee75745b0c7c02188246159ec2967763f990e76259e2458334a2e2fb6",
+          "supervisor": "6084dca6d72b77026dca18237c50d02512b1b7eefcdb7933e61493a35b146881"
+        },
+        "schemaVersion": "studio.scene-generation-receipt.v2",
+        "stage": "inference",
+        "status": "failed"
+      }
+    },
+    {
+      "promptId": "single-object-motion",
+      "prompt": "One small blue toy car moves steadily from left to right across a plain light floor, locked camera, centered medium shot, one recognizable object, one observable action, clean background, no text, no logo, no watermark",
+      "seed": 20260912,
+      "receipt": {
+        "errorCode": "ValueError",
+        "errorMessage": "local_diffusion_content_rejected:frames=1,2,3,6",
+        "executionId": "195c8667-cd46-52eb-add4-f62107495aae",
+        "minimumAvailableSystemRamMiB": 1258,
+        "minimumAvailableVramMiB": 810,
+        "observedSystemRamDeltaPeakMiB": 2121,
+        "observedVramDeltaPeakMiB": 3152,
+        "profileDigestSha256": "60f09a8b2b815cf4adc0187452828c50acc9f2ccb7a09ef94ae041e087071bec",
+        "profileId": "animatediff-lightning-sd15-a-v1",
+        "requestDigestSha256": "73631fc76d32b29feec27e9c52dc7af521d2b71e3aa2507d39873ce565411509",
+        "runtimeDigests": {
+          "adapter": "d90944d38cdae48e5577937ac2cbe370290c4b8023edb7730ba077ac83120e97",
+          "api": "e1f605891a38702630ad035db991ce3a4f62ee1249b51a7c8524ae6bc9510706",
+          "lock": "693ffbc0fefc0d77abd81b4336b8de837ec07318e0f5083bcec66f93aaa24d31",
+          "runner": "b242408ee75745b0c7c02188246159ec2967763f990e76259e2458334a2e2fb6",
+          "supervisor": "6084dca6d72b77026dca18237c50d02512b1b7eefcdb7933e61493a35b146881"
+        },
+        "schemaVersion": "studio.scene-generation-receipt.v2",
+        "stage": "inference",
+        "status": "failed"
+      }
+    },
+    {
+      "promptId": "single-object-motion",
+      "prompt": "One small blue toy car moves steadily from left to right across a plain light floor, locked camera, centered medium shot, one recognizable object, one observable action, clean background, no text, no logo, no watermark",
+      "seed": 20260913,
+      "receipt": {
+        "errorCode": "ValueError",
+        "errorMessage": "local_diffusion_content_rejected:frames=3",
+        "executionId": "67e0596b-ca34-5a00-a751-75ca9ec76f33",
+        "minimumAvailableSystemRamMiB": 1175,
+        "minimumAvailableVramMiB": 822,
+        "observedSystemRamDeltaPeakMiB": 2232,
+        "observedVramDeltaPeakMiB": 3140,
+        "profileDigestSha256": "60f09a8b2b815cf4adc0187452828c50acc9f2ccb7a09ef94ae041e087071bec",
+        "profileId": "animatediff-lightning-sd15-a-v1",
+        "requestDigestSha256": "1bece63cf456988f44e708f8787b55f6ea8956ea436e9001f5228bae0913dfbc",
+        "runtimeDigests": {
+          "adapter": "d90944d38cdae48e5577937ac2cbe370290c4b8023edb7730ba077ac83120e97",
+          "api": "e1f605891a38702630ad035db991ce3a4f62ee1249b51a7c8524ae6bc9510706",
+          "lock": "693ffbc0fefc0d77abd81b4336b8de837ec07318e0f5083bcec66f93aaa24d31",
+          "runner": "b242408ee75745b0c7c02188246159ec2967763f990e76259e2458334a2e2fb6",
+          "supervisor": "6084dca6d72b77026dca18237c50d02512b1b7eefcdb7933e61493a35b146881"
+        },
+        "schemaVersion": "studio.scene-generation-receipt.v2",
+        "stage": "inference",
+        "status": "failed"
+      }
+    },
+    {
+      "promptId": "destination-motion",
+      "prompt": "One red paper airplane glides toward one open cardboard mailbox and stops at the destination, locked camera, centered medium shot, simple neutral background, coherent temporal motion, no text, no logo, no watermark",
+      "seed": 20260911,
+      "receipt": {
+        "errorCode": "ValueError",
+        "errorMessage": "local_diffusion_content_rejected:frames=1,4,7",
+        "executionId": "f80bd45f-d632-57f8-98ac-8353e125d6fa",
+        "minimumAvailableSystemRamMiB": 1114,
+        "minimumAvailableVramMiB": 810,
+        "observedSystemRamDeltaPeakMiB": 2295,
+        "observedVramDeltaPeakMiB": 3152,
+        "profileDigestSha256": "60f09a8b2b815cf4adc0187452828c50acc9f2ccb7a09ef94ae041e087071bec",
+        "profileId": "animatediff-lightning-sd15-a-v1",
+        "requestDigestSha256": "583b9456da5db2bfc8152240e60bff1f889144f886af5f787d4e2c4e4d8c0899",
+        "runtimeDigests": {
+          "adapter": "d90944d38cdae48e5577937ac2cbe370290c4b8023edb7730ba077ac83120e97",
+          "api": "e1f605891a38702630ad035db991ce3a4f62ee1249b51a7c8524ae6bc9510706",
+          "lock": "693ffbc0fefc0d77abd81b4336b8de837ec07318e0f5083bcec66f93aaa24d31",
+          "runner": "b242408ee75745b0c7c02188246159ec2967763f990e76259e2458334a2e2fb6",
+          "supervisor": "6084dca6d72b77026dca18237c50d02512b1b7eefcdb7933e61493a35b146881"
+        },
+        "schemaVersion": "studio.scene-generation-receipt.v2",
+        "stage": "inference",
+        "status": "failed"
+      }
+    },
+    {
+      "promptId": "destination-motion",
+      "prompt": "One red paper airplane glides toward one open cardboard mailbox and stops at the destination, locked camera, centered medium shot, simple neutral background, coherent temporal motion, no text, no logo, no watermark",
+      "seed": 20260912,
+      "receipt": {
+        "errorCode": "ValueError",
+        "errorMessage": "local_diffusion_content_rejected:frames=2",
+        "executionId": "c184d1d2-d6fa-5db1-8275-ff9b272edb70",
+        "minimumAvailableSystemRamMiB": 1279,
+        "minimumAvailableVramMiB": 810,
+        "observedSystemRamDeltaPeakMiB": 2125,
+        "observedVramDeltaPeakMiB": 3152,
+        "profileDigestSha256": "60f09a8b2b815cf4adc0187452828c50acc9f2ccb7a09ef94ae041e087071bec",
+        "profileId": "animatediff-lightning-sd15-a-v1",
+        "requestDigestSha256": "cc1db18055710898ec2127a3089957b7189112ab5021bb10e28b8e6ac4e5ccda",
+        "runtimeDigests": {
+          "adapter": "d90944d38cdae48e5577937ac2cbe370290c4b8023edb7730ba077ac83120e97",
+          "api": "e1f605891a38702630ad035db991ce3a4f62ee1249b51a7c8524ae6bc9510706",
+          "lock": "693ffbc0fefc0d77abd81b4336b8de837ec07318e0f5083bcec66f93aaa24d31",
+          "runner": "b242408ee75745b0c7c02188246159ec2967763f990e76259e2458334a2e2fb6",
+          "supervisor": "6084dca6d72b77026dca18237c50d02512b1b7eefcdb7933e61493a35b146881"
+        },
+        "schemaVersion": "studio.scene-generation-receipt.v2",
+        "stage": "inference",
+        "status": "failed"
+      }
+    },
+    {
+      "promptId": "destination-motion",
+      "prompt": "One red paper airplane glides toward one open cardboard mailbox and stops at the destination, locked camera, centered medium shot, simple neutral background, coherent temporal motion, no text, no logo, no watermark",
+      "seed": 20260913,
+      "receipt": {
+        "errorCode": "ValueError",
+        "errorMessage": "local_diffusion_content_rejected:frames=1,2",
+        "executionId": "324586d8-cd65-5709-9ddf-18b7f0100e6a",
+        "minimumAvailableSystemRamMiB": 1253,
+        "minimumAvailableVramMiB": 822,
+        "observedSystemRamDeltaPeakMiB": 2090,
+        "observedVramDeltaPeakMiB": 3140,
+        "profileDigestSha256": "60f09a8b2b815cf4adc0187452828c50acc9f2ccb7a09ef94ae041e087071bec",
+        "profileId": "animatediff-lightning-sd15-a-v1",
+        "requestDigestSha256": "02aa46db1d0c9e44f7436cdceaffb7d80a2411a98b04a2259364b80177308b97",
+        "runtimeDigests": {
+          "adapter": "d90944d38cdae48e5577937ac2cbe370290c4b8023edb7730ba077ac83120e97",
+          "api": "e1f605891a38702630ad035db991ce3a4f62ee1249b51a7c8524ae6bc9510706",
+          "lock": "693ffbc0fefc0d77abd81b4336b8de837ec07318e0f5083bcec66f93aaa24d31",
+          "runner": "b242408ee75745b0c7c02188246159ec2967763f990e76259e2458334a2e2fb6",
+          "supervisor": "6084dca6d72b77026dca18237c50d02512b1b7eefcdb7933e61493a35b146881"
+        },
+        "schemaVersion": "studio.scene-generation-receipt.v2",
+        "stage": "inference",
+        "status": "failed"
+      }
+    }
+  ],
+  "automaticQualification": false
+}

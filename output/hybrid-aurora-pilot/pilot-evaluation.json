@@ -1,0 +1,197 @@
+{
+  "schemaVersion": "res.native-hybrid-pilot-evaluation.v1",
+  "technical": "passed",
+  "visualQuality": "pending_human_review",
+  "autonomy": "partial",
+  "comparison": {
+    "baseline": "C:\\Users\\edugu\\Downloads\\res\\output\\remotion-native-scene-pilot\\product-story.mp4",
+    "observedChange": "The 9s baseline uses still product photographs with zoom and overlaid text. Both new 15s variants show 8s of moving preparation and pouring footage, followed by a product composite over continuous serving footage.",
+    "reviewStatus": "qualitative_operator_observation;human_scoring_pending"
+  },
+  "selectedAnimatic": null,
+  "humanScores": null,
+  "variants": [
+    {
+      "variant": "g",
+      "status": "technical_pass",
+      "video": "C:\\Users\\edugu\\Downloads\\res\\output\\hybrid-aurora-pilot\\animatic-g.mp4",
+      "durationSeconds": 15,
+      "decodedFrames": 450,
+      "rendererObservedFrames": 450,
+      "resolution": [
+        720,
+        1280
+      ],
+      "visibleActionFootageSeconds": 8.0,
+      "actionPairMedianPixelDifference": 1.669,
+      "productPositionContinuous": true,
+      "soundEvents": [
+        {
+          "role": "music",
+          "startSeconds": 0.0,
+          "durationSeconds": 2.0,
+          "gainDb": -12.0
+        },
+        {
+          "role": "effect",
+          "startSeconds": 0.0,
+          "durationSeconds": 1.5,
+          "gainDb": -13.0
+        },
+        {
+          "role": "music",
+          "startSeconds": 2.0,
+          "durationSeconds": 1.5,
+          "gainDb": -12.0
+        },
+        {
+          "role": "effect",
+          "startSeconds": 2.0,
+          "durationSeconds": 1.5,
+          "gainDb": 6.0
+        },
+        {
+          "role": "music",
+          "startSeconds": 3.5,
+          "durationSeconds": 1.5,
+          "gainDb": -12.0
+        },
+        {
+          "role": "effect",
+          "startSeconds": 3.5,
+          "durationSeconds": 1.5,
+          "gainDb": 6.0
+        },
+        {
+          "role": "music",
+          "startSeconds": 5.0,
+          "durationSeconds": 3.0,
+          "gainDb": -12.0
+        },
+        {
+          "role": "effect",
+          "startSeconds": 5.0,
+          "durationSeconds": 1.6666666666666667,
+          "gainDb": 6.0
+        },
+        {
+          "role": "music",
+          "startSeconds": 8.0,
+          "durationSeconds": 3.0,
+          "gainDb": -12.0
+        },
+        {
+          "role": "music",
+          "startSeconds": 11.0,
+          "durationSeconds": 4.0,
+          "gainDb": -12.0
+        }
+      ],
+      "audioObservation": "partial",
+      "visualAudit": "unreviewed",
+      "humanReview": "pending",
+      "assetId": "2f4b06fc-a296-4a25-8c60-e7e77f91aa3f",
+      "checksumSha256": "a4ed4e2691d17ad1236f5fd7d6e72dc51b5198a3e81a272b3698d2a3a7f78482"
+    },
+    {
+      "variant": "h",
+      "status": "technical_pass",
+      "video": "C:\\Users\\edugu\\Downloads\\res\\output\\hybrid-aurora-pilot\\animatic-h.mp4",
+      "durationSeconds": 15,
+      "decodedFrames": 450,
+      "rendererObservedFrames": 450,
+      "resolution": [
+        720,
+        1280
+      ],
+      "visibleActionFootageSeconds": 8.0,
+      "actionPairMedianPixelDifference": 1.716,
+      "productPositionContinuous": true,
+      "soundEvents": [
+        {
+          "role": "music",
+          "startSeconds": 0.0,
+          "durationSeconds": 1.2,
+          "gainDb": -12.0
+        },
+        {
+          "role": "effect",
+          "startSeconds": 0.0,
+          "durationSeconds": 1.2,
+          "gainDb": -13.0
+        },
+        {
+          "role": "music",
+          "startSeconds": 1.2,
+          "durationSeconds": 1.8,
+          "gainDb": -12.0
+        },
+        {
+          "role": "effect",
+          "startSeconds": 1.2,
+          "durationSeconds": 1.6666666666666667,
+          "gainDb": 6.0
+        },
+        {
+          "role": "music",
+          "startSeconds": 3.0,
+          "durationSeconds": 1.0,
+          "gainDb": -12.0
+        },
+        {
+          "role": "effect",
+          "startSeconds": 3.0,
+          "durationSeconds": 1.0,
+          "gainDb": 6.0
+        },
+        {
+          "role": "music",
+          "startSeconds": 4.0,
+          "durationSeconds": 2.0,
+          "gainDb": -12.0
+        },
+        {
+          "role": "effect",
+          "startSeconds": 4.0,
+          "durationSeconds": 1.6666666666666667,
+          "gainDb": 6.0
+        },
+        {
+          "role": "music",
+          "startSeconds": 6.0,
+          "durationSeconds": 2.0,
+          "gainDb": -12.0
+        },
+        {
+          "role": "effect",
+          "startSeconds": 6.0,
+          "durationSeconds": 1.6666666666666667,
+          "gainDb": 6.0
+        },
+        {
+          "role": "music",
+          "startSeconds": 8.0,
+          "durationSeconds": 3.0,
+          "gainDb": -12.0
+        },
+        {
+          "role": "music",
+          "startSeconds": 11.0,
+          "durationSeconds": 4.0,
+          "gainDb": -12.0
+        }
+      ],
+      "audioObservation": "partial",
+      "visualAudit": "unreviewed",
+      "humanReview": "pending",
+      "assetId": "d8375947-985d-4a4d-8e82-51957d884de3",
+      "checksumSha256": "8a0354cbebfbd231cbdcd315572530c06b3663061fefcecaabf17722265d3555"
+    }
+  ],
+  "limitations": [
+    "Planner response failed contextual plan validation; the animatics were agent directed.",
+    "Gemini video generation and Lyria music returned HTTP 429; the animatics use licensed stock and CC0 audio.",
+    "The genuine product reference is low resolution; commercial clearance and higher-resolution packaging remain pending.",
+    "Pixel difference and recorded geometry do not substitute for normal-speed human viewing."
+  ]
+}

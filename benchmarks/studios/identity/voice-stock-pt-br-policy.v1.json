@@ -1,0 +1,203 @@
+{
+  "schemaVersion": "studio.benchmark-policy.v1",
+  "suiteId": "clicko.voice-stock.pt-br.v1",
+  "policyVersion": "1.0.0",
+  "capability": "stock_voice",
+  "locale": "pt-BR",
+  "status": "frozen",
+  "frozenAt": "2026-08-25T12:00:00Z",
+  "frozenBy": "clicko-product-engineering-baseline",
+  "corpus": {
+    "manifestSchema": "studio.benchmark-corpus-manifest.v1",
+    "minimumSubjects": 0,
+    "minimumCases": 60,
+    "minimumConsentCoverage": 1.0,
+    "requiredLocales": ["pt-BR"],
+    "requiredScenarios": [
+      "short-copy",
+      "medium-copy",
+      "long-copy",
+      "brand-and-proper-names",
+      "acronyms",
+      "currency-dates-and-numbers",
+      "controlled-emotion",
+      "repeat-and-off-script-adversarial"
+    ],
+    "rawBiometricDataAllowedInRepository": false
+  },
+  "candidates": [
+    {
+      "candidateId": "kokoro-82m-stock",
+      "displayName": "Kokoro 82M stock pt-BR",
+      "role": "stock_voice",
+      "executionCapability": "speech_cpu",
+      "licenseGate": "review_required",
+      "benchmarkScope": "synthetic_only",
+      "components": [
+        {
+          "componentId": "kokoro-code",
+          "kind": "code",
+          "sourceUrl": "https://github.com/hexgrad/kokoro",
+          "sourceRevision": "dfb907a02bba8152ca444717ca5d78747ccb4bec",
+          "license": "Apache-2.0",
+          "commercialUse": "approved"
+        },
+        {
+          "componentId": "kokoro-82m-weights",
+          "kind": "model",
+          "sourceUrl": "https://huggingface.co/hexgrad/Kokoro-82M",
+          "sourceRevision": "f3ff3571791e39611d31c381e3a41a3af07b4987",
+          "license": "Apache-2.0",
+          "commercialUse": "approved"
+        },
+        {
+          "componentId": "misaki-g2p",
+          "kind": "runtime",
+          "sourceUrl": "https://github.com/hexgrad/misaki",
+          "sourceRevision": "fba1236595f2d2bf21d414ba6e57d25256afada3",
+          "license": "Apache-2.0",
+          "commercialUse": "approved"
+        },
+        {
+          "componentId": "espeak-ng-runtime",
+          "kind": "runtime",
+          "sourceUrl": "https://github.com/espeak-ng/espeak-ng",
+          "sourceRevision": "7d426728fe146f4168fa716e29d8e276c7da33f2",
+          "license": "GPL-3.0-or-later",
+          "commercialUse": "approved",
+          "notes": "Commercial use is allowed; a distributed worker image must satisfy GPL source and notice obligations before the license gate can be approved."
+        }
+      ]
+    }
+  ],
+  "thresholds": [
+    {
+      "metricId": "human_naturalness_mos",
+      "displayName": "Naturalidade humana MOS",
+      "unit": "mos_1_5",
+      "aggregation": "mean",
+      "direction": "minimum",
+      "threshold": 4.0,
+      "minimumSamples": 180,
+      "minimumUniqueReviewers": 3,
+      "minimumRatingsPerCase": 3,
+      "rationale": "Three blinded ratings per case are required before stock voice activation."
+    },
+    {
+      "metricId": "pt_br_intelligibility_word_accuracy",
+      "displayName": "Acurácia de palavras compreensíveis em pt-BR",
+      "unit": "ratio",
+      "aggregation": "rate",
+      "direction": "minimum",
+      "threshold": 0.97,
+      "minimumSamples": 60,
+      "rationale": "Preview speed cannot trade away intelligibility."
+    },
+    {
+      "metricId": "critical_term_accuracy",
+      "displayName": "Acurácia de termos comerciais críticos",
+      "unit": "ratio",
+      "aggregation": "rate",
+      "direction": "minimum",
+      "threshold": 0.98,
+      "minimumSamples": 60,
+      "rationale": "Brand names, acronyms, prices, currencies and dates must be correct or explicitly fixable."
+    },
+    {
+      "metricId": "critical_off_script_rate",
+      "displayName": "Taxa de conteúdo crítico fora do roteiro",
+      "unit": "ratio",
+      "aggregation": "rate",
+      "direction": "exact",
+      "threshold": 0.0,
+      "minimumSamples": 60,
+      "rationale": "A stock voice may not invent claims, prices or CTAs."
+    },
+    {
+      "metricId": "repeat_or_truncation_rate",
+      "displayName": "Taxa de repetição ou truncamento",
+      "unit": "ratio",
+      "aggregation": "rate",
+      "direction": "maximum",
+      "threshold": 0.005,
+      "minimumSamples": 60,
+      "rationale": "Generated previews must remain usable without hidden manual repair."
+    },
+    {
+      "metricId": "p95_real_time_factor",
+      "displayName": "RTF p95 em CPU",
+      "unit": "ratio",
+      "aggregation": "p95",
+      "direction": "maximum",
+      "threshold": 1.0,
+      "minimumSamples": 60,
+      "rationale": "The stock provider is the fast preview rail and must generate at least in real time on the pinned CPU worker."
+    },
+    {
+      "metricId": "peak_ram_gb",
+      "displayName": "Pico de RAM",
+      "unit": "gb",
+      "aggregation": "maximum",
+      "direction": "maximum",
+      "threshold": 4.0,
+      "minimumSamples": 60,
+      "rationale": "The first stock speech worker budget is a small isolated CPU runtime."
+    },
+    {
+      "metricId": "usd_per_output_minute",
+      "displayName": "Custo direto por minuto gerado",
+      "unit": "usd_per_output_minute",
+      "aggregation": "mean",
+      "direction": "maximum",
+      "threshold": 0.03,
+      "minimumSamples": 60,
+      "rationale": "Stock voice should be materially cheaper than identity cloning."
+    },
+    {
+      "metricId": "job_failure_rate",
+      "displayName": "Taxa de falha de job",
+      "unit": "ratio",
+      "aggregation": "rate",
+      "direction": "maximum",
+      "threshold": 0.02,
+      "minimumSamples": 60,
+      "rationale": "Retries cannot hide systematic provider instability."
+    },
+    {
+      "metricId": "derived_cleanup_success_rate",
+      "displayName": "Exclusão de derivados do benchmark",
+      "unit": "ratio",
+      "aggregation": "rate",
+      "direction": "exact",
+      "threshold": 1.0,
+      "minimumSamples": 60,
+      "rationale": "Every private generated artifact must be removed and evidenced after the retention window."
+    }
+  ],
+  "requiredControls": [
+    "commercial_license_chain_approved",
+    "source_assets_private",
+    "tenant_isolation_verified",
+    "no_egress_verified",
+    "human_review_completed",
+    "abuse_safety_review_passed",
+    "synthetic_provenance_emitted",
+    "deletion_cleanup_verified"
+  ],
+  "requiredEvidence": [
+    "private_corpus_manifest",
+    "license_manifest",
+    "model_weight_manifest",
+    "container_sbom",
+    "raw_metric_bundle",
+    "metric_evaluator_manifest",
+    "blinded_human_review",
+    "watermark_or_provenance_probe",
+    "cleanup_receipt"
+  ],
+  "notes": [
+    "This suite is intentionally separate from consent-bound voice cloning.",
+    "Thresholds are pre-run product policy, not empirical claims about Kokoro.",
+    "The policy is frozen and the eSpeak distribution obligations remain under review."
+  ]
+}

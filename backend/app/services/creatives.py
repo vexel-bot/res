@@ -11,20 +11,26 @@ FONT_PATHS = {
     "normal": "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
     "bold": "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
 }
+WINDOWS_FONT_PATHS = {
+    "normal": "C:/Windows/Fonts/arial.ttf",
+    "bold": "C:/Windows/Fonts/arialbd.ttf",
+}
 MAX_SOURCE_PIXELS = 16_000_000
 
 
 def _font(size: int, weight: str = "normal") -> ImageFont.FreeTypeFont | ImageFont.ImageFont:
     candidates = [
         FONT_PATHS.get(weight, FONT_PATHS["normal"]),
+        WINDOWS_FONT_PATHS.get(weight, WINDOWS_FONT_PATHS["normal"]),
         "DejaVuSans-Bold.ttf" if weight == "bold" else "DejaVuSans.ttf",
+        "arialbd.ttf" if weight == "bold" else "arial.ttf",
     ]
     for candidate in candidates:
         try:
             return ImageFont.truetype(candidate, size=size)
         except OSError:
             continue
-    return ImageFont.load_default()
+    return ImageFont.load_default(size=size)
 
 
 def _wrapped_lines(text: str, font: ImageFont.FreeTypeFont | ImageFont.ImageFont, max_width: float) -> list[str]:

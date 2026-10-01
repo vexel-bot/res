@@ -1,60 +1,14 @@
 import React from "react";
 import type { NavigationTab } from "../../types";
+import {
+  NAVIGATION_TAB_PATHS,
+  routeNavigationTabForPath,
+} from "./routeRegistry";
 
-export const TAB_PATHS: Record<NavigationTab, string> = {
-  dashboard: "/dashboard",
-  workspace: "/discover",
-  brain: "/brand-memory",
-  strategy: "/projects",
-  studio: "/campaigns/active/studio",
-  library: "/library/assets",
-  "create-image": "/content/draft/edit?mode=visual",
-  "create-video": "/content/draft/edit?mode=video",
-  "create-copy": "/content/new?type=post",
-  "ai-chat": "/copilot?context=campaign",
-  templates: "/templates",
-  "connected-accounts": "/settings/channels",
-  calendar: "/calendar",
-  publisher: "/publish/active",
-  analytics: "/analytics/learning",
-  automations: "/automations/active",
-  approvals: "/approvals/post-1",
-  team: "/settings/team",
-  subscription: "/settings/billing",
-  "audit-logs": "/settings/audit",
-  settings: "/settings/ai-governance",
-};
-
-const PATH_TABS = (
-  Object.entries(TAB_PATHS) as Array<[NavigationTab, string]>
-).sort((left, right) => right[1].length - left[1].length);
+export const TAB_PATHS = NAVIGATION_TAB_PATHS;
 
 export function tabForPath(pathname: string): NavigationTab | undefined {
-  const cleanPath = pathname.replace(/\/+$/, "") || "/";
-  if (cleanPath === "/") return "dashboard";
-  const explicit = PATH_TABS.find(
-    ([, path]) => cleanPath === path || cleanPath.startsWith(`${path}/`),
-  )?.[0];
-  if (explicit) return explicit;
-
-  if (cleanPath === "/discover" || cleanPath === "/radar") return "workspace";
-  if (cleanPath === "/copilot") return "ai-chat";
-  if (cleanPath.startsWith("/content"))
-    return cleanPath === "/content/new" ? "create-copy" : "library";
-  if (cleanPath === "/projects" || cleanPath.startsWith("/projects/"))
-    return "strategy";
-  if (cleanPath.startsWith("/campaigns")) return "strategy";
-  if (cleanPath.startsWith("/library")) return "library";
-  if (cleanPath.startsWith("/approvals")) return "approvals";
-  if (cleanPath.startsWith("/publish")) return "publisher";
-  if (cleanPath.startsWith("/analytics")) return "analytics";
-  if (cleanPath.startsWith("/automations")) return "automations";
-  if (cleanPath.startsWith("/settings/team")) return "team";
-  if (cleanPath.startsWith("/settings/billing")) return "subscription";
-  if (cleanPath.startsWith("/settings/audit")) return "audit-logs";
-  if (cleanPath.startsWith("/settings/channels")) return "connected-accounts";
-  if (cleanPath.startsWith("/settings")) return "settings";
-  return undefined;
+  return routeNavigationTabForPath(pathname);
 }
 
 export function useTabRouter(defaultTab: NavigationTab) {

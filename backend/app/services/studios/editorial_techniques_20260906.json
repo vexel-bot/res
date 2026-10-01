@@ -1,0 +1,602 @@
+[
+  {
+    "id": "editorial_corte_por_mudanca_de_informacao",
+    "group": "montage",
+    "title": "Corte por mudança de informação",
+    "purpose": "Avançar quando surge ação, dado ou reação; evitar cortar uma ressalva",
+    "suitableWhen": [
+      "Avançar quando surge ação, dado ou reação"
+    ],
+    "avoidWhen": [
+      " evitar cortar uma ressalva"
+    ],
+    "prerequisites": [
+      "Intervalos de origem, unidades de sentido, dependências entre frases"
+    ],
+    "parameters": {
+      "verification": "Base de cortes existe; selecionar limites semanticamente, comparar transcrição e contexto antes/depois"
+    },
+    "requiredCapabilities": [],
+    "evidenceType": "principle",
+    "sources": [
+      "https://www.silmanjamespress.com/shop/filmmaking-directing/in-the-blink-of-an-eye2nd-edition/"
+    ],
+    "examples": []
+  },
+  {
+    "id": "editorial_continuidade_de_acao_e_olhar",
+    "group": "montage",
+    "title": "Continuidade de ação e olhar",
+    "purpose": "Conectar planos da mesma ação; evitar falsa continuidade entre momentos incompatíveis",
+    "suitableWhen": [
+      "Conectar planos da mesma ação"
+    ],
+    "avoidWhen": [
+      " evitar falsa continuidade entre momentos incompatíveis"
+    ],
+    "prerequisites": [
+      "Posição, direção, fase do gesto, planos disponíveis"
+    ],
+    "parameters": {
+      "verification": "Acrescentar seleção visual e relações entre planos; conferir gesto, eixo e objeto persistente"
+    },
+    "requiredCapabilities": [],
+    "evidenceType": "principle",
+    "sources": [
+      "https://www.silmanjamespress.com/shop/filmmaking-directing/in-the-blink-of-an-eye2nd-edition/"
+    ],
+    "examples": []
+  },
+  {
+    "id": "editorial_j_l_cut",
+    "group": "montage",
+    "title": "J/L cut",
+    "purpose": "Antecipar ou prolongar áudio para conectar cenas; não atribuir fala à pessoa errada",
+    "suitableWhen": [
+      "Antecipar ou prolongar áudio para conectar cenas"
+    ],
+    "avoidWhen": [
+      " não atribuir fala à pessoa errada"
+    ],
+    "prerequisites": [
+      "Áudio separado, pontos de entrada/saída e caudas"
+    ],
+    "parameters": {
+      "verification": "Trilhas independentes são base; qualificar alinhamento e contexto, não apenas sobreposição"
+    },
+    "requiredCapabilities": [],
+    "evidenceType": "principle",
+    "sources": [
+      "https://www.silmanjamespress.com/shop/filmmaking-directing/in-the-blink-of-an-eye2nd-edition/"
+    ],
+    "examples": []
+  },
+  {
+    "id": "editorial_demonstracao_com_apoio",
+    "group": "montage",
+    "title": "Demonstração com apoio",
+    "purpose": "Mostrar o que a fala explica; evitar uma imagem apenas decorativa",
+    "suitableWhen": [
+      "Mostrar o que a fala explica"
+    ],
+    "avoidWhen": [
+      " evitar uma imagem apenas decorativa"
+    ],
+    "prerequisites": [
+      "Entidade correta, momento relevante, trecho da demonstração"
+    ],
+    "parameters": {
+      "verification": "Ampliar apoio para seleção temporal e enquadramento por entidade; conferir se a evidência realmente aparece"
+    },
+    "requiredCapabilities": [],
+    "evidenceType": "principle",
+    "sources": [
+      "https://www.silmanjamespress.com/shop/filmmaking-directing/in-the-blink-of-an-eye2nd-edition/"
+    ],
+    "examples": []
+  },
+  {
+    "id": "editorial_preparacao_pausa_e_reacao",
+    "group": "montage",
+    "title": "Preparação, pausa e reação",
+    "purpose": "Permitir expectativa e compreensão; evitar compressão automática de toda pausa",
+    "suitableWhen": [
+      "Permitir expectativa e compreensão"
+    ],
+    "avoidWhen": [
+      " evitar compressão automática de toda pausa"
+    ],
+    "prerequisites": [
+      "Ação e reação completas, intenção de humor/tensão/clareza"
+    ],
+    "parameters": {
+      "verification": "Usar decisão de manter; avaliar o efeito da pausa em comparação com o original"
+    },
+    "requiredCapabilities": [],
+    "evidenceType": "principle",
+    "sources": [
+      "https://www.silmanjamespress.com/shop/filmmaking-directing/in-the-blink-of-an-eye2nd-edition/"
+    ],
+    "examples": []
+  },
+  {
+    "id": "editorial_match_cut_visual_ou_conceitual",
+    "group": "montage",
+    "title": "Match cut visual ou conceitual",
+    "purpose": "Conectar duas ideias por forma, posição ou movimento",
+    "suitableWhen": [
+      "Conectar duas ideias por forma, posição ou movimento"
+    ],
+    "avoidWhen": [
+      "Quando não contribuir para o objetivo da cena"
+    ],
+    "prerequisites": [
+      "Âncoras comparáveis, enquadramentos e significado compatível"
+    ],
+    "parameters": {
+      "verification": "Precisa correspondência entre planos; verificar alinhamento e se a conexão não inventa causalidade"
+    },
+    "requiredCapabilities": [],
+    "evidenceType": "principle",
+    "sources": [
+      "https://www.silmanjamespress.com/shop/filmmaking-directing/in-the-blink-of-an-eye2nd-edition/"
+    ],
+    "examples": []
+  },
+  {
+    "id": "editorial_montagem_de_arquivo",
+    "group": "montage",
+    "title": "Montagem de arquivo",
+    "purpose": "Construir progressão com materiais de tempos/lugares diferentes",
+    "suitableWhen": [
+      "Construir progressão com materiais de tempos/lugares diferentes"
+    ],
+    "avoidWhen": [
+      "Quando não contribuir para o objetivo da cena"
+    ],
+    "prerequisites": [
+      "Proveniência, ordem, legendas contextuais, conteúdo comprovado"
+    ],
+    "parameters": {
+      "verification": "Selecionar por função narrativa; manter contexto factual e identificar imagens ilustrativas quando necessário"
+    },
+    "requiredCapabilities": [],
+    "evidenceType": "principle",
+    "sources": [
+      "https://www.silmanjamespress.com/shop/filmmaking-directing/in-the-blink-of-an-eye2nd-edition/"
+    ],
+    "examples": []
+  },
+  {
+    "id": "editorial_hierarquia_tipografica",
+    "group": "composition",
+    "title": "Hierarquia tipográfica",
+    "purpose": "Separar título, explicação e dado; evitar vários focos simultâneos",
+    "suitableWhen": [
+      "Separar título, explicação e dado"
+    ],
+    "avoidWhen": [
+      " evitar vários focos simultâneos"
+    ],
+    "prerequisites": [
+      "Família/variante, largura, entrelinha, contraste, área disponível"
+    ],
+    "parameters": {
+      "verification": "Fonte real mais medição de texto; verificar quebra, acentos, colisões e tempo de leitura"
+    },
+    "requiredCapabilities": [],
+    "evidenceType": "principle",
+    "sources": [
+      "https://www.ordinaryfolk.co/process"
+    ],
+    "examples": []
+  },
+  {
+    "id": "editorial_tipografia_cinetica_por_unidades",
+    "group": "composition",
+    "title": "Tipografia cinética por unidades",
+    "purpose": "Dar ênfase a palavras ou construir uma frase; evitar fragmentar negações",
+    "suitableWhen": [
+      "Dar ênfase a palavras ou construir uma frase"
+    ],
+    "avoidWhen": [
+      " evitar fragmentar negações"
+    ],
+    "prerequisites": [
+      "Palavras/caracteres, grupos semânticos, atraso e curva"
+    ],
+    "parameters": {
+      "verification": "Implementar seletores/grupos; conferir ordem, frase completa e equivalência no render"
+    },
+    "requiredCapabilities": [],
+    "evidenceType": "principle",
+    "sources": [
+      "https://www.ordinaryfolk.co/process"
+    ],
+    "examples": []
+  },
+  {
+    "id": "editorial_revelacao_por_mascara",
+    "group": "composition",
+    "title": "Revelação por máscara",
+    "purpose": "Apresentar um elemento gradualmente",
+    "suitableWhen": [
+      "Apresentar um elemento gradualmente"
+    ],
+    "avoidWhen": [
+      "Quando não contribuir para o objetivo da cena"
+    ],
+    "prerequisites": [
+      "Máscara, elemento, direção, suavidade e duração"
+    ],
+    "parameters": {
+      "verification": "Máscara estática é base parcial; qualificar máscara animada/clip de revelação e bordas"
+    },
+    "requiredCapabilities": [],
+    "evidenceType": "principle",
+    "sources": [
+      "https://www.ordinaryfolk.co/process"
+    ],
+    "examples": []
+  },
+  {
+    "id": "editorial_repeticao_e_distribuicao",
+    "group": "composition",
+    "title": "Repetição e distribuição",
+    "purpose": "Formar conjuntos, padrões ou hierarquias",
+    "suitableWhen": [
+      "Formar conjuntos, padrões ou hierarquias"
+    ],
+    "avoidWhen": [
+      "Quando não contribuir para o objetivo da cena"
+    ],
+    "prerequisites": [
+      "Forma mestre, contagem, distribuição, escala e grupo"
+    ],
+    "parameters": {
+      "verification": "Gerar instâncias determinísticas; verificar número, espaçamento, ordem e adaptação ao conteúdo"
+    },
+    "requiredCapabilities": [],
+    "evidenceType": "principle",
+    "sources": [
+      "https://www.ordinaryfolk.co/process"
+    ],
+    "examples": []
+  },
+  {
+    "id": "editorial_stagger_e_sobreposicao_temporal",
+    "group": "composition",
+    "title": "Stagger e sobreposição temporal",
+    "purpose": "Criar progressão dentro de um conjunto",
+    "suitableWhen": [
+      "Criar progressão dentro de um conjunto"
+    ],
+    "avoidWhen": [
+      "Quando não contribuir para o objetivo da cena"
+    ],
+    "prerequisites": [
+      "Ordem, atraso por instância, duração e curva"
+    ],
+    "parameters": {
+      "verification": "Compilar eventos relacionados; conferir se a sequência orienta o olhar sem prolongar demais"
+    },
+    "requiredCapabilities": [],
+    "evidenceType": "principle",
+    "sources": [
+      "https://www.ordinaryfolk.co/process"
+    ],
+    "examples": []
+  },
+  {
+    "id": "editorial_desenho_de_tracado",
+    "group": "composition",
+    "title": "Desenho de traçado",
+    "purpose": "Mostrar ligação, percurso ou construção",
+    "suitableWhen": [
+      "Mostrar ligação, percurso ou construção"
+    ],
+    "avoidWhen": [
+      "Quando não contribuir para o objetivo da cena"
+    ],
+    "prerequisites": [
+      "Caminho vetorial, progressão, espessura e pontos"
+    ],
+    "parameters": {
+      "verification": "Novo componente de caminho; verificar início/fim, direção e progressão no MP4"
+    },
+    "requiredCapabilities": [],
+    "evidenceType": "principle",
+    "sources": [
+      "https://www.ordinaryfolk.co/process"
+    ],
+    "examples": []
+  },
+  {
+    "id": "editorial_profundidade_por_oclusao",
+    "group": "composition",
+    "title": "Profundidade por oclusão",
+    "purpose": "Integrar informação ao espaço da imagem",
+    "suitableWhen": [
+      "Integrar informação ao espaço da imagem"
+    ],
+    "avoidWhen": [
+      "Quando não contribuir para o objetivo da cena"
+    ],
+    "prerequisites": [
+      "Fundo, recorte frontal, cartão/objeto e relações de frente/atrás"
+    ],
+    "parameters": {
+      "verification": "Multicamadas e máscaras são base; conferir bordas, visibilidade da informação e ordem espacial"
+    },
+    "requiredCapabilities": [],
+    "evidenceType": "principle",
+    "sources": [
+      "https://www.ordinaryfolk.co/process"
+    ],
+    "examples": []
+  },
+  {
+    "id": "editorial_parallax_2_5d",
+    "group": "composition",
+    "title": "Parallax 2,5D",
+    "purpose": "Sugerir profundidade em fotografia; evitar revelar áreas inexistentes",
+    "suitableWhen": [
+      "Sugerir profundidade em fotografia"
+    ],
+    "avoidWhen": [
+      " evitar revelar áreas inexistentes"
+    ],
+    "prerequisites": [
+      "Camadas separadas, regiões ocultas reconstruídas, deslocamentos"
+    ],
+    "parameters": {
+      "verification": "Base de transforms parcial; avaliar buracos, bordas e coerência do movimento relativo"
+    },
+    "requiredCapabilities": [],
+    "evidenceType": "principle",
+    "sources": [
+      "https://www.ordinaryfolk.co/process"
+    ],
+    "examples": []
+  },
+  {
+    "id": "editorial_antecipacao_e_acomodacao",
+    "group": "composition",
+    "title": "Antecipação e acomodação",
+    "purpose": "Dar preparação e peso ao movimento",
+    "suitableWhen": [
+      "Dar preparação e peso ao movimento"
+    ],
+    "avoidWhen": [
+      "Quando não contribuir para o objetivo da cena"
+    ],
+    "prerequisites": [
+      "Estados, curva, intensidade, tempo de pausa"
+    ],
+    "parameters": {
+      "verification": "MotionGraph tem curvas/restrições; escolher pelo papel do objeto, limitar overshoot quando legibilidade exigir"
+    },
+    "requiredCapabilities": [],
+    "evidenceType": "principle",
+    "sources": [
+      "https://www.ordinaryfolk.co/process"
+    ],
+    "examples": []
+  },
+  {
+    "id": "editorial_transicao_por_continuidade",
+    "group": "composition",
+    "title": "Transição por continuidade",
+    "purpose": "Transportar um elemento de uma cena a outra",
+    "suitableWhen": [
+      "Transportar um elemento de uma cena a outra"
+    ],
+    "avoidWhen": [
+      "Quando não contribuir para o objetivo da cena"
+    ],
+    "prerequisites": [
+      "Identidade persistente, posição inicial/final e contexto"
+    ],
+    "parameters": {
+      "verification": "Construir ligação entre cenas; conferir que a transformação não apaga informação necessária"
+    },
+    "requiredCapabilities": [],
+    "evidenceType": "principle",
+    "sources": [
+      "https://www.ordinaryfolk.co/process"
+    ],
+    "examples": []
+  },
+  {
+    "id": "editorial_colagem_em_estados",
+    "group": "composition",
+    "title": "Colagem em estados",
+    "purpose": "Revelar objetos ou etapas por recortes sucessivos",
+    "suitableWhen": [
+      "Revelar objetos ou etapas por recortes sucessivos"
+    ],
+    "avoidWhen": [
+      "Quando não contribuir para o objetivo da cena"
+    ],
+    "prerequisites": [
+      "Recortes individuais, fundo, ordem e duração por estado"
+    ],
+    "parameters": {
+      "verification": "Planejar estados e material por elemento; evitar imitar duração fixa de um tutorial"
+    },
+    "requiredCapabilities": [],
+    "evidenceType": "principle",
+    "sources": [
+      "https://www.ordinaryfolk.co/process"
+    ],
+    "examples": []
+  },
+  {
+    "id": "editorial_integracao_em_superficie_filmada",
+    "group": "composition",
+    "title": "Integração em superfície filmada",
+    "purpose": "Colocar gráfico ou marca acompanhando uma superfície",
+    "suitableWhen": [
+      "Colocar gráfico ou marca acompanhando uma superfície"
+    ],
+    "avoidWhen": [
+      "Quando não contribuir para o objetivo da cena"
+    ],
+    "prerequisites": [
+      "Track, plano/perspectiva, oclusores, luz e referência"
+    ],
+    "parameters": {
+      "verification": "Extensão ainda não certificada no caminho contextual; medir deriva e revisar oclusão quadro a quadro em trechos críticos"
+    },
+    "requiredCapabilities": [],
+    "evidenceType": "principle",
+    "sources": [
+      "https://www.ordinaryfolk.co/process"
+    ],
+    "examples": []
+  },
+  {
+    "id": "editorial_hierarquia_de_fala",
+    "group": "sound",
+    "title": "Hierarquia de fala",
+    "purpose": "Manter a mensagem compreensível sem achatar toda dinâmica",
+    "suitableWhen": [
+      "Manter a mensagem compreensível sem achatar toda dinâmica"
+    ],
+    "avoidWhen": [
+      "Quando não contribuir para o objetivo da cena"
+    ],
+    "prerequisites": [
+      "Diálogo, ruído de fundo, ganho, compressão e pausas"
+    ],
+    "parameters": {
+      "verification": "Mixagem/ducking são base; medir pico/loudness e ouvir palavras críticas no conjunto"
+    },
+    "requiredCapabilities": [],
+    "evidenceType": "principle",
+    "sources": [
+      "https://www.filmsound.org/articles/designing_for_sound.htm"
+    ],
+    "examples": []
+  },
+  {
+    "id": "editorial_ambiente_e_ponte_sonora",
+    "group": "sound",
+    "title": "Ambiente e ponte sonora",
+    "purpose": "Dar continuidade espacial entre planos",
+    "suitableWhen": [
+      "Dar continuidade espacial entre planos"
+    ],
+    "avoidWhen": [
+      "Quando não contribuir para o objetivo da cena"
+    ],
+    "prerequisites": [
+      "Room tone/ambiente, ponto de vista, entrada/cauda"
+    ],
+    "parameters": {
+      "verification": "Eventos de áudio por cena; verificar cortes abruptos, mudanças artificiais de espaço e mascaramento"
+    },
+    "requiredCapabilities": [],
+    "evidenceType": "principle",
+    "sources": [
+      "https://www.filmsound.org/articles/designing_for_sound.htm"
+    ],
+    "examples": []
+  },
+  {
+    "id": "editorial_acento_sincronizado",
+    "group": "sound",
+    "title": "Acento sincronizado",
+    "purpose": "Destacar uma ação ou informação específica",
+    "suitableWhen": [
+      "Destacar uma ação ou informação específica"
+    ],
+    "avoidWhen": [
+      "Quando não contribuir para o objetivo da cena"
+    ],
+    "prerequisites": [
+      "Ataque/transiente, momento visual e intensidade"
+    ],
+    "parameters": {
+      "verification": "Alinhar pelo evento audível, não somente pelo começo do arquivo; verificar poucos quadros antes/depois"
+    },
+    "requiredCapabilities": [],
+    "evidenceType": "principle",
+    "sources": [
+      "https://www.filmsound.org/articles/designing_for_sound.htm"
+    ],
+    "examples": []
+  },
+  {
+    "id": "editorial_ritmo_por_frase_musical",
+    "group": "sound",
+    "title": "Ritmo por frase musical",
+    "purpose": "Relacionar progressão da peça a frases, mudanças e pausas",
+    "suitableWhen": [
+      "Relacionar progressão da peça a frases, mudanças e pausas"
+    ],
+    "avoidWhen": [
+      "Quando não contribuir para o objetivo da cena"
+    ],
+    "prerequisites": [
+      "Música, marcações estruturais, ação e restrições da fala"
+    ],
+    "parameters": {
+      "verification": "Seleção temporal orientada pela estrutura; evitar cortar todo plano em cada batida"
+    },
+    "requiredCapabilities": [],
+    "evidenceType": "principle",
+    "sources": [
+      "https://www.filmsound.org/articles/designing_for_sound.htm"
+    ],
+    "examples": []
+  },
+  {
+    "id": "editorial_silencio_e_contraste",
+    "group": "sound",
+    "title": "Silêncio e contraste",
+    "purpose": "Abrir espaço para reação, suspense ou compreensão",
+    "suitableWhen": [
+      "Abrir espaço para reação, suspense ou compreensão"
+    ],
+    "avoidWhen": [
+      "Quando não contribuir para o objetivo da cena"
+    ],
+    "prerequisites": [
+      "Intenção, ambiente residual e limites de fala"
+    ],
+    "parameters": {
+      "verification": "Permitir ausência de trilha; conferir se a pausa tem função e não é uma falha de render"
+    },
+    "requiredCapabilities": [],
+    "evidenceType": "principle",
+    "sources": [
+      "https://www.filmsound.org/articles/designing_for_sound.htm"
+    ],
+    "examples": []
+  },
+  {
+    "id": "editorial_perspectiva_e_timbre",
+    "group": "sound",
+    "title": "Perspectiva e timbre",
+    "purpose": "Fazer o som pertencer ao material e ao espaço",
+    "suitableWhen": [
+      "Fazer o som pertencer ao material e ao espaço"
+    ],
+    "avoidWhen": [
+      "Quando não contribuir para o objetivo da cena"
+    ],
+    "prerequisites": [
+      "Categoria, textura, proximidade, reverberação e variantes"
+    ],
+    "parameters": {
+      "verification": "Evoluir taxonomia e busca; audição comparativa de candidatos, sem escolher apenas pela palavra “impacto”"
+    },
+    "requiredCapabilities": [],
+    "evidenceType": "principle",
+    "sources": [
+      "https://www.filmsound.org/articles/designing_for_sound.htm"
+    ],
+    "examples": []
+  }
+]

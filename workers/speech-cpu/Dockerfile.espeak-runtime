@@ -1,0 +1,55 @@
+# syntax=docker/dockerfile:1.7
+
+FROM python:3.11-slim@sha256:272efc3f94bec901e2bc7a5c9984b3d113c317839edca2714c6a388b9476f8fc AS build
+
+ARG ESPEAK_SOURCE_REVISION=7d426728fe146f4168fa716e29d8e276c7da33f2
+ARG BUILDER_BASE_DIGEST=sha256:272efc3f94bec901e2bc7a5c9984b3d113c317839edca2714c6a388b9476f8fc
+
+RUN apt-get update \
+    && apt-get install --yes --no-install-recommends cmake gcc g++ make \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY .candidate-build/espeak-ng /src/espeak-ng
+COPY .candidate-build/espeak-ng.tar.gz /source/espeak-ng.tar.gz
+
+RUN set -eux; \
+    cmake -S /src/espeak-ng -B /build/espeak-ng \
+      -DCMAKE_BUILD_TYPE=Release \
+      -DCMAKE_INSTALL_PREFIX=/opt/espeak \
+      -DBUILD_SHARED_LIBS=ON \
+      -DUSE_LIBSONIC=OFF \
+      -DUSE_MBROLA=OFF \
+      -DUSE_SPEECHPLAYER=OFF; \
+    cmake --build /build/espeak-ng --parallel 2; \
+    cmake --build /build/espeak-ng --target data --parallel 2; \
+    DESTDIR=/stage cmake --install /build/espeak-ng; \
+    install -d \
+      /runtime/build \
+      /runtime/lib \
+      /runtime/licenses \
+      /runtime/share \
+      /runtime/source; \
+    library="$(find /stage/opt/espeak/lib -type f -name 'libespeak-ng.so*' | sort | tail -n 1)"; \
+    test -n "${library}"; \
+    cp "${library}" /runtime/lib/libespeak-ng.so; \
+    cp -R /stage/opt/espeak/share/espeak-ng-data /runtime/share/espeak-ng-data; \
+    cp /src/espeak-ng/COPYING /runtime/licenses/espeak-ng-COPYING; \
+    cp /source/espeak-ng.tar.gz /runtime/source/espeak-ng.tar.gz; \
+    printf '%s\n' "${ESPEAK_SOURCE_REVISION}" > /runtime/build/source-revision.txt; \
+    printf '%s\n' "${BUILDER_BASE_DIGEST}" > /runtime/build/base-image-digest.txt; \
+    printf 'gcc %s\n' "$(gcc -dumpfullversion -dumpversion)" > /runtime/build/compiler.txt; \
+    cmake --version | sed -n '1p' > /runtime/build/cmake.txt; \
+    printf '%s\n' \
+      'BUILD_SHARED_LIBS=ON' \
+      'CMAKE_BUILD_TYPE=Release' \
+      'USE_LIBSONIC=OFF' \
+      'USE_MBROLA=OFF' \
+      'USE_SPEECHPLAYER=OFF' \
+      > /runtime/build/flags.txt; \
+    test -s /runtime/share/espeak-ng-data/pt_dict; \
+    test -s /runtime/share/espeak-ng-data/phondata; \
+    test -s /runtime/share/espeak-ng-data/phonindex; \
+    test -s /runtime/share/espeak-ng-data/phontab
+
+FROM scratch
+COPY --from=build /runtime /

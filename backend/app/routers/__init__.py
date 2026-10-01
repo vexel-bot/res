@@ -11,6 +11,7 @@ from . import (
     knowledge,
     posts,
     radar,
+    studios,
     workspaces,
 )
 
@@ -27,5 +28,6 @@ __all__ = [
     "knowledge",
     "posts",
     "radar",
+    "studios",
     "workspaces",
 ]

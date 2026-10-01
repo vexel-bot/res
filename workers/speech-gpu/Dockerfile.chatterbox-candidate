@@ -1,0 +1,81 @@
+# syntax=docker/dockerfile:1.7
+
+FROM python:3.11-slim@sha256:272efc3f94bec901e2bc7a5c9984b3d113c317839edca2714c6a388b9476f8fc AS source-audit
+
+ARG CHATTERBOX_REVISION=5de7a54aa4e5e2baadb0182dde554908b48b85c2
+ARG CHATTERBOX_LICENSE_DIGEST=4248e910a928849fe5815a0f9236e17fa07768d95b9193212752c464b93d6caa
+
+RUN apt-get update \
+    && apt-get install --yes --no-install-recommends ca-certificates git \
+    && rm -rf /var/lib/apt/lists/* \
+    && git init /src/chatterbox \
+    && git -C /src/chatterbox remote add origin https://github.com/resemble-ai/chatterbox.git \
+    && git -C /src/chatterbox fetch --depth=1 origin "${CHATTERBOX_REVISION}" \
+    && git -C /src/chatterbox checkout --detach FETCH_HEAD \
+    && test "$(git -C /src/chatterbox rev-parse HEAD)" = "${CHATTERBOX_REVISION}" \
+    && test "$(sha256sum /src/chatterbox/LICENSE | awk '{print $1}')" = "${CHATTERBOX_LICENSE_DIGEST}" \
+    && python -m pip wheel --disable-pip-version-check --no-cache-dir --no-deps \
+        --wheel-dir /wheels /src/chatterbox
+
+FROM python:3.11-slim@sha256:272efc3f94bec901e2bc7a5c9984b3d113c317839edca2714c6a388b9476f8fc AS dependencies
+
+ARG CANDIDATE_LOCK_DIGEST=93ff351872971b6cb06071e402852f55b5ad97fe33a829baf8a7f2b2b0600ee5
+
+COPY --from=ghcr.io/astral-sh/uv:0.12.3@sha256:dfd1e6972e100ca2fbf1f391effc3dd4aa57f319bf03c3e321e0a3f3341ed5af /uv /usr/local/bin/uv
+
+RUN apt-get update \
+    && apt-get install --yes --no-install-recommends ca-certificates git libsndfile1 \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /opt/clicko/candidate
+COPY workers/speech-gpu/candidate/chatterbox/pyproject.toml ./pyproject.toml
+COPY workers/speech-gpu/candidate/chatterbox/uv.lock ./uv.lock
+COPY backend/scripts/verify_speech_gpu_candidate_lock.py ./verify_lock.py
+RUN test "$(sha256sum uv.lock | awk '{print $1}')" = "${CANDIDATE_LOCK_DIGEST}" \
+    && python verify_lock.py uv.lock --candidate chatterbox \
+    && uv sync --frozen --no-dev --no-install-project
+
+COPY --from=source-audit /wheels /wheels
+RUN uv pip install --python .venv/bin/python --no-deps /wheels/*.whl \
+    && HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 .venv/bin/python -c \
+        "from chatterbox.mtl_tts import ChatterboxMultilingualTTS; assert ChatterboxMultilingualTTS"
+
+FROM python:3.11-slim@sha256:272efc3f94bec901e2bc7a5c9984b3d113c317839edca2714c6a388b9476f8fc
+
+ARG CHATTERBOX_REVISION=5de7a54aa4e5e2baadb0182dde554908b48b85c2
+ARG CANDIDATE_LOCK_DIGEST=93ff351872971b6cb06071e402852f55b5ad97fe33a829baf8a7f2b2b0600ee5
+
+LABEL org.opencontainers.image.title="Clicko Chatterbox clone benchmark candidate" \
+      org.opencontainers.image.version="0.1.0-evaluation" \
+      org.opencontainers.image.revision="${CHATTERBOX_REVISION}" \
+      io.clicko.providers="none" \
+      io.clicko.candidate="chatterbox-voice-clone" \
+      io.clicko.candidate.status="evaluation" \
+      io.clicko.dependency-lock.digest="${CANDIDATE_LOCK_DIGEST}" \
+      io.clicko.weights="external-manifested-mount-only"
+
+RUN apt-get update \
+    && apt-get install --yes --no-install-recommends libsndfile1 \
+    && rm -rf /var/lib/apt/lists/* \
+    && useradd --create-home --uid 10001 clicko \
+    && install -d -o clicko -g clicko /tmp/clicko-speech
+
+COPY --from=dependencies /opt/clicko/candidate /opt/clicko/candidate
+COPY --from=source-audit /src/chatterbox/LICENSE /opt/clicko/notices/chatterbox-LICENSE
+COPY workers/speech-gpu/sidecars/chatterbox_clone.py /opt/clicko/sidecars/chatterbox_clone.py
+
+ENV PATH="/opt/clicko/candidate/.venv/bin:${PATH}" \
+    HOME="/home/clicko" \
+    TMPDIR="/tmp/clicko-speech" \
+    NUMBA_CACHE_DIR="/tmp/clicko-speech" \
+    HF_HOME="/tmp/clicko-speech/huggingface" \
+    XDG_CACHE_HOME="/tmp/clicko-speech/cache" \
+    TORCH_HOME="/tmp/clicko-speech/torch" \
+    HF_HUB_OFFLINE="1" \
+    TRANSFORMERS_OFFLINE="1"
+
+USER clicko
+WORKDIR /tmp/clicko-speech
+
+ENTRYPOINT ["/opt/clicko/candidate/.venv/bin/python", "/opt/clicko/sidecars/chatterbox_clone.py"]
+CMD ["--help"]

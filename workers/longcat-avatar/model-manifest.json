@@ -1,0 +1,73 @@
+{
+  "schemaVersion": "studio.longcat-model-manifest.v1",
+  "profileId": "longcat-avatar-1.5-ai2v-480p-int8-experimental-v1",
+  "status": "not_installed",
+  "source": {
+    "repository": "https://github.com/meituan-longcat/LongCat-Video",
+    "revision": "6b3f4b8582a8bc3f20f795735f5383716c4ba794",
+    "license": "MIT"
+  },
+  "models": [
+    {
+      "repository": "meituan-longcat/LongCat-Video-Avatar-1.5",
+      "revision": "92016c71d5d318d0f5d84e4db30015a571484ab6",
+      "license": "MIT",
+      "files": [
+        {"path": "base_model_int8/quantized_model-00001-of-00004.safetensors", "sizeBytes": 4264635792, "sha256": "ccf575d8cdf8e762272e2d4e52ae1a7c0b5d1fa81e26dfa4592867de4dd9a4fd"},
+        {"path": "base_model_int8/quantized_model-00002-of-00004.safetensors", "sizeBytes": 4275232472, "sha256": "af6ddb737ad66d12fd5892adee568c14314143ebd4388d3ab9cc6065754b3688"},
+        {"path": "base_model_int8/quantized_model-00003-of-00004.safetensors", "sizeBytes": 4275232472, "sha256": "6a349b76592b4752c2967235af457824d8938e3514bad8e78cfa86009e8a9bf5"},
+        {"path": "base_model_int8/quantized_model-00004-of-00004.safetensors", "sizeBytes": 3065282200, "sha256": "ab54b648a3f6a53946f07dd0a21441e2a8cb1aa8da17996b5f3f7f2e1370705b"},
+        {"path": "lora/dmd_lora.safetensors", "sizeBytes": 2523077984, "sha256": "d969115a7f3fbc212a277ed4399f77a1a065d170148c6d4bc272e980cd3e907a"},
+        {"path": "whisper-large-v3/model.safetensors", "sizeBytes": 3087130976, "sha256": "a8e94b85976e5864ba3e9525c7e6c83b2a1eca42d4b797a0c7c24d778e40fd95"}
+      ]
+    },
+    {
+      "repository": "meituan-longcat/LongCat-Video",
+      "revision": "03b55529b1d1d4045f5fbe14d65c8c6e8116b278",
+      "license": "MIT",
+      "files": [
+        {"path": "text_encoder/model-00001-of-00005.safetensors", "sizeBytes": 4972389712, "sha256": "c0ef3a140898e228a3520c9adec60743d2e8e5b3d229651bb37f1a3921919f99"},
+        {"path": "text_encoder/model-00002-of-00005.safetensors", "sizeBytes": 4899225672, "sha256": "481c7b2b39771c44df6dd8d13ee12ed072d731b4a650bd092885d4d52db229ad"},
+        {"path": "text_encoder/model-00003-of-00005.safetensors", "sizeBytes": 4966309504, "sha256": "f93148bcc04052a169e1e49bfcf6125df6cf9bf243cb9c627da75266cf8e35c3"},
+        {"path": "text_encoder/model-00004-of-00005.safetensors", "sizeBytes": 4999880704, "sha256": "a451792c739c05bca4606190cc2dd16731411bac03b4cf6aacc5767321f857c9"},
+        {"path": "text_encoder/model-00005-of-00005.safetensors", "sizeBytes": 2885866152, "sha256": "7e76e18d224531b8197a46231cb53daf7f2f6ca707130252becf933026ac4eea"},
+        {"path": "tokenizer/spiece.model", "sizeBytes": 4548313, "sha256": "e3909a67b780650b35cf529ac782ad2b6b26e6d1f849d3fbb6a872905f452458"},
+        {"path": "tokenizer/tokenizer.json", "sizeBytes": 16837459, "sha256": "20a46ac256746594ed7e1e3ef733b83fbc5a6f0922aa7480eda961743de080ef"},
+        {"path": "vae/diffusion_pytorch_model.safetensors", "sizeBytes": 507591892, "sha256": "d6e524b3fffede1787a74e81b30976dce5400c4439ba64222168e607ed19e793"}
+      ]
+    }
+  ],
+  "runtime": {
+    "platform": "linux",
+    "cudaRequired": true,
+    "minimumGpuCount": 2,
+    "workerImageDigest": null,
+    "dependencyLockState": "pending_linux_resolution",
+    "cleanAudioOnly": true,
+    "vocalSeparatorEnabled": false
+  },
+  "effectiveParameters": {
+    "modelType": "avatar-v1.5",
+    "stage1": "ai2v",
+    "resolution": "480p",
+    "width": 832,
+    "height": 480,
+    "fps": 25,
+    "inferenceSteps": 8,
+    "useDistill": true,
+    "useInt8": true,
+    "textGuidanceScale": 1.0,
+    "audioGuidanceScale": 1.0,
+    "segmentFrames": 93,
+    "overlapFrames": 13,
+    "presenters": 1
+  },
+  "blockers": [
+    "compatible_multi_gpu_hardware_required",
+    "weights_not_installed",
+    "worker_image_not_built",
+    "dependency_license_chain_pending",
+    "clean_audio_runner_patch_pending",
+    "pt_br_visual_qualification_pending"
+  ]
+}

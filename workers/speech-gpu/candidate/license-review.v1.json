@@ -1,0 +1,192 @@
+{
+  "schemaVersion": "clicko.speech-gpu-candidate-license-review.v1",
+  "generatedAt": "2026-08-27T20:07:57Z",
+  "reviewStatus": "review_required",
+  "legalConclusion": false,
+  "providerPromotionAllowed": false,
+  "scope": {
+    "kind": "package-focused-spdx",
+    "includes": [
+      "installed Python distributions",
+      "installed Debian packages",
+      "local OCI image digest binding"
+    ],
+    "excludes": [
+      "file-by-file inventory",
+      "OCI layer inventory",
+      "embedded license text verification",
+      "external model weights",
+      "promotion-grade provenance",
+      "legal approval"
+    ]
+  },
+  "scannerEvidence": {
+    "dockerScout": {
+      "version": "1.18.3",
+      "result": "aborted_non_terminal_after_local_image_indexing",
+      "completeSbomProduced": false
+    },
+    "syft": {
+      "version": "1.51.0",
+      "releaseRevision": "2293641e3bd628a01bb37639318d62c0ebe89b39",
+      "releaseArchiveSha256": "fc5ffaeffb993576ece9c791da5a688fb2c8969a1479bbfe58583672c64da336",
+      "fullFilesystemResult": "aborted_to_preserve_host_disk_reserve",
+      "temporaryDataRemoved": true,
+      "completeSbomProduced": false
+    },
+    "focusedGenerator": {
+      "localPath": ".candidate-build/generate_focused_spdx.py",
+      "sha256": "811e6b0bce87e1ce05472ddb43fefe52dc96676c488ba123d9eaa54d6575bfe4",
+      "network": "none",
+      "readOnlyRootFilesystem": true,
+      "capabilitiesDropped": "all",
+      "noNewPrivileges": true
+    }
+  },
+  "images": [
+    {
+      "candidateId": "chatterbox-multilingual-v3-pt-br",
+      "imageRef": "clicko/chatterbox-voice-clone:0.1.0-evaluation",
+      "ociDigest": "sha256:5702bdc81024ba3c914a089895bcba69ef02fd0e15f0507dbcd7e98fc55a214a",
+      "spdxLocalPath": ".candidate-build/sbom/chatterbox-voice-clone.focused.spdx.json",
+      "spdxSha256": "700f422960d2ec9ea92d2638fa2a22c5c3b40e9aed2f5243cf1716003268f5cb",
+      "spdxSizeBytes": 410076,
+      "pythonPackageCount": 125,
+      "debianPackageCount": 95,
+      "packageCountExcludingImage": 220,
+      "pythonPackagesWithSpdxExpression": 44,
+      "pythonPackagesRequiringMetadataOrLicenseTextReview": 81,
+      "findings": [
+        {
+          "package": "pykakasi",
+          "version": "2.3.0",
+          "licenseSignal": "GPL-3.0-or-later",
+          "runtimeFinding": "lazy Japanese-only branch in chatterbox/models/tokenizers/tokenizer.py",
+          "disposition": "remove_from_pt_br_candidate"
+        },
+        {
+          "package": "praat-parselmouth",
+          "version": "0.4.7",
+          "licenseSignal": "GPL-3.0-or-later",
+          "runtimeFinding": "introduced by broad resemble-perth dependency metadata; not imported by the selected Perth implicit-watermarker path",
+          "disposition": "install_pinned_perth_without_upstream_dependencies_and_lock_only_audited_runtime_imports"
+        },
+        {
+          "package": "soxr",
+          "version": "1.1.0",
+          "licenseSignal": "LGPL-2.1-or-later",
+          "runtimeFinding": "transitive audio resampling component",
+          "disposition": "retain_only_if_reachable_then_materialize_notice_and_dynamic_linking_review"
+        },
+        {
+          "package": "nvidia-cuda-python-wheels",
+          "version": "cu12-set",
+          "licenseSignal": "NVIDIA Proprietary Software",
+          "runtimeFinding": "13 installed CUDA runtime distributions",
+          "disposition": "commercial_distribution_terms_and_notices_required"
+        }
+      ]
+    },
+    {
+      "candidateId": "kokoro-openvoice-v2-pt-br",
+      "imageRef": "clicko/kokoro-openvoice-v2:0.1.0-evaluation",
+      "ociDigest": "sha256:bdadbe1e2ba67466fa9ca9447194bd5c990c7012287dec5668bf0deea537d61c",
+      "spdxLocalPath": ".candidate-build/sbom/kokoro-openvoice-v2.focused.spdx.json",
+      "spdxSha256": "3483466f5e2d14137e6361cfea58c8b8280d8887d821423b5dbe16c8c7e9fb35",
+      "spdxSizeBytes": 344208,
+      "pythonPackageCount": 130,
+      "debianPackageCount": 95,
+      "packageCountExcludingImage": 225,
+      "pythonPackagesWithSpdxExpression": 43,
+      "pythonPackagesRequiringMetadataOrLicenseTextReview": 87,
+      "findings": [
+        {
+          "package": "phonemizer-fork",
+          "version": "3.3.2",
+          "licenseSignal": "GPL-3.0-or-later",
+          "runtimeFinding": "required by the selected misaki.espeak.EspeakG2P pt-BR path",
+          "disposition": "retain_only_if_gpl_distribution_obligations_are_accepted_or_replace_the_pt_br_g2p_boundary"
+        },
+        {
+          "package": "Unidecode",
+          "version": "1.3.7",
+          "licenseSignal": "GPL-2.0-or-later",
+          "runtimeFinding": "loaded by OpenVoice English cleaners because openvoice.api imports text modules eagerly; ToneColorConverter does not call the cleaner",
+          "disposition": "patch_and_audit_tone_color_only_import_then_remove"
+        },
+        {
+          "package": "eng_to_ipa",
+          "version": "0.0.2",
+          "licenseSignal": "NOASSERTION",
+          "runtimeFinding": "English-only cleaner loaded eagerly by OpenVoice; unused by the selected converter path",
+          "disposition": "patch_and_audit_tone_color_only_import_then_remove"
+        },
+        {
+          "package": "cn2an/jieba/pypinyin/inflect",
+          "version": "locked-set",
+          "licenseSignal": "mixed",
+          "runtimeFinding": "English or Mandarin text-cleaner surface loaded by OpenVoice but unused by direct tone conversion",
+          "disposition": "remove_after_tone_color_only_import_patch"
+        },
+        {
+          "package": "misaki-en-extra/num2words",
+          "version": "locked-set",
+          "licenseSignal": "mixed-including-LGPL",
+          "runtimeFinding": "Kokoro pipeline imports misaki.en eagerly even for lang_code p",
+          "disposition": "patch_kokoro_to_lazy_load_language_specific_g2p_then_remove_en_extra"
+        },
+        {
+          "package": "espeakng-loader",
+          "version": "0.2.4",
+          "licenseSignal": "NOASSERTION",
+          "runtimeFinding": "Python boundary is used; bundled runtime bytes are replaced by the separately manifested eSpeak build",
+          "disposition": "keep_blocked_until_wheel_metadata_source_and_replacement_notices_are_reviewed"
+        },
+        {
+          "package": "soxr",
+          "version": "1.1.0",
+          "licenseSignal": "LGPL-2.1-or-later",
+          "runtimeFinding": "transitive audio resampling component",
+          "disposition": "retain_only_if_reachable_then_materialize_notice_and_dynamic_linking_review"
+        },
+        {
+          "package": "nvidia-cuda-python-wheels",
+          "version": "cu12-set",
+          "licenseSignal": "NVIDIA Proprietary Software",
+          "runtimeFinding": "13 installed CUDA runtime distributions",
+          "disposition": "commercial_distribution_terms_and_notices_required"
+        }
+      ]
+    }
+  ],
+  "dependencyMinimizationRevision": {
+    "name": "speech-gpu-pt-br-minimal-v2",
+    "status": "planned_not_locked_or_built",
+    "rules": [
+      "preserve the currently attested locks and images as immutable v1 evidence",
+      "create source-audited patches with exact upstream revision and patch digest",
+      "install pinned Chatterbox and Perth wheels with no upstream dependency expansion",
+      "remove the Japanese tokenizer dependency from the PT-BR Chatterbox environment",
+      "isolate OpenVoice ToneColorConverter from eager TTS text-cleaner imports",
+      "lazy-load Kokoro language-specific G2P so pt-BR does not import the English extra",
+      "regenerate both uv locks and repeat source audit, offline import, isolation smoke and package-focused SPDX",
+      "do not replace the v1 image evidence until a v2 image is built and independently verified"
+    ]
+  },
+  "externalArtifactsStillUnreviewed": [
+    "external Chatterbox multilingual and pt-BR model weights",
+    "external Kokoro and OpenVoice model weights",
+    "WavMark wheel license text and model checkpoint terms",
+    "bundled Perth safety checkpoint terms",
+    "complete Debian package notices and corresponding source obligations",
+    "complete NVIDIA CUDA redistribution terms"
+  ],
+  "requiredGates": [
+    "produce a complete file-and-layer SBOM in a runner with sufficient ephemeral storage",
+    "review all NOASSERTION and proprietary license metadata against shipped bytes",
+    "materialize third-party notices and corresponding source where required",
+    "build and rescan the dependency-minimized v2 candidates",
+    "obtain explicit commercial-distribution approval for code, weights and CUDA runtime",
+    "keep providers unannounced until the separate benchmark and promotion gates pass"
+  ]
+}

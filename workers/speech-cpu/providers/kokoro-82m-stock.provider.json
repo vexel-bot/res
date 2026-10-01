@@ -1,0 +1,52 @@
+{
+  "schema_version": "studio.provider-candidate-manifest.v1",
+  "candidate_id": "kokoro-82m-stock",
+  "provider_ids": [
+    "kokoro-82m-stock"
+  ],
+  "provider_versions": {
+    "kokoro-82m-stock": "kokoro-dfb907a02bba+model-f3ff3571791e"
+  },
+  "capabilities": [
+    "stock_voice"
+  ],
+  "status": "evaluation",
+  "implementation_modules": [
+    "app.providers.studios.kokoro_stock"
+  ],
+  "artifact_inventory_id": "kokoro-82m-stock-artifacts-2026-08-25",
+  "artifact_inventory_digest_sha256": "e0c411906bd621a1bd21c8c5d4365c7f35f574aa0fb14a49e2a017cfc658a8ac",
+  "artifact_inventory_status": "incomplete",
+  "required_artifact_ids": [
+    "kokoro-code",
+    "kokoro-82m-weights",
+    "misaki-g2p",
+    "espeakng-loader-wheel",
+    "espeak-ng-runtime",
+    "kokoro-upstream-dependency-lock",
+    "speech-cpu-candidate-container"
+  ],
+  "code_digests_sha256": {
+    "kokoro-82m-stock": "97628658baab71f1edbfee4f1d1edf299d9085c2b650b7cf54b3cfd24ec9af73"
+  },
+  "default_parameters_digest_sha256": "f74f5c43c3aaf318a66ad70b8b7670565c9667b1cf9f989dd6f85f7251b3c086",
+  "advertised_by_worker_manifest": false,
+  "activation_gates": [
+    "Generate a Clicko-owned dependency lock because the pinned upstream pyproject and uv.lock disagree on the local Kokoro version.",
+    "Replace the espeakng-loader 0.2.4 bundled eSpeak 1.52.0 runtime with a build from policy commit 7d426728fe146f4168fa716e29d8e276c7da33f2 and attach byte/source/license manifests.",
+    "Download the exact model and three pt-BR voice assets at the frozen Hugging Face revision and record SHA-256 plus byte sizes.",
+    "Build the Linux AMD64 candidate image with offline model cache, OCI digest, SBOM and provenance attestations.",
+    "Run all 64 frozen synthetic cases and attach recomputable automated evidence.",
+    "Complete blinded human naturalness and intelligibility review without exposing candidate identity.",
+    "Approve the composite license chain and the GPL corresponding-source and notices procedure.",
+    "Prove no-egress execution, tenant-scoped private storage, cancellation and deletion cleanup.",
+    "Advertise the provider and promote its database registration only in the final reviewed release."
+  ],
+  "limitations": [
+    "This is a stock pt-BR TTS provider, never a voice identity clone.",
+    "Only pf_dora, pm_alex and pm_santa are allowlisted.",
+    "The upstream model card warns that non-English support may be thin and that very short or very long utterances can degrade.",
+    "The upstream generic eSpeak path does not provide its own robust long-text chunking; the Clicko adapter therefore chunks deterministically before inference.",
+    "The candidate is not imported into SPEECH_PROVIDERS and is absent from the worker manifest."
+  ]
+}

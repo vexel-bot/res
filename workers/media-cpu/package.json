@@ -1,0 +1,13 @@
+{
+  "name": "@clicko/media-cpu-runtime",
+  "version": "0.1.0",
+  "private": true,
+  "license": "UNLICENSED",
+  "description": "Pinned runtime dependencies for the isolated Clicko media worker.",
+  "dependencies": {
+    "hyperframes": "0.8.12"
+  },
+  "engines": {
+    "node": "22.15.0"
+  }
+}

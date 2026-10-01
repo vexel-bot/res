@@ -1,0 +1,53 @@
+{
+  "schema_version": "studio.creator-selection-wave.v1",
+  "captured_at": "2026-09-01",
+  "platform_metrics_warning": "Contagens são voláteis, arredondadas e servem somente como contexto de seleção relativa.",
+  "status": "candidate_pool_in_progress",
+  "profiles": [
+    {
+      "profile": "paulo.ia",
+      "followers_visible": 416255,
+      "posts_visible": 1830,
+      "candidate_pool_minimum_required": 30,
+      "candidate_pool_observed": 12,
+      "selection_locked": false,
+      "candidates": [
+        {"code": "Da-sXkcRpSS", "likes_visible": "1,5 mi", "comments_visible": "2,4 mil", "role_hypothesis": "relative_highlight"},
+        {"code": "DTRBJoOAUl1", "likes_visible": "1,5 mi", "comments_visible": "12,3 mil", "role_hypothesis": "relative_highlight", "r1_analysis": true},
+        {"code": "DAD81xdOC8j", "likes_visible": "541,2 mil", "comments_visible": "3,2 mil", "role_hypothesis": "canonical_vfx_tutorial"},
+        {"code": "DcuHK9ChRrP", "likes_visible": "756", "comments_visible": "929", "role_hypothesis": "language_variant_depth_workflow", "r1_analysis": true},
+        {"code": "DcrbHyPhuHo", "likes_visible": "838", "comments_visible": "133", "role_hypothesis": "depth_map_teaser"},
+        {"code": "Dcj6QiPp_ZT", "likes_visible": null, "comments_visible": null, "role_hypothesis": "single_take_generation_experiment"},
+        {"code": "DchVJveJdWS", "likes_visible": null, "comments_visible": null, "role_hypothesis": "metadata_review_required"},
+        {"code": "Db_dm1Up7Ce", "likes_visible": "3,1 mil", "comments_visible": "530", "role_hypothesis": "cinematic_generation_experiment"},
+        {"code": "DcbhOkzMzrG", "likes_visible": "432", "comments_visible": "105", "role_hypothesis": "branded_content_contrast"},
+        {"code": "DcRjR01BFVM", "likes_visible": "895", "comments_visible": "859", "role_hypothesis": "product_launch_cinematic_hybrid", "r1_analysis": true},
+        {"code": "DcWZ9RVMs9a", "likes_visible": "1,6 mil", "comments_visible": "86", "role_hypothesis": "world_transition_experiment"},
+        {"code": "Dceq2FUJ-uz", "likes_visible": "818", "comments_visible": "60", "role_hypothesis": "album_cover_world_extension"}
+      ],
+      "blocker": "Expandir para 30–100 candidatos e verificar métricas/linguagem antes de fechar os dez."
+    },
+    {
+      "profile": "mep.io_",
+      "followers_visible": 4752,
+      "posts_visible": 80,
+      "candidate_pool_minimum_required": 30,
+      "candidate_pool_observed": 11,
+      "selection_locked": false,
+      "candidates": [
+        {"code": "DciIBRYBHBK", "likes_visible": null, "comments_visible": null, "role_hypothesis": "canonical_distribution_essay", "r1_analysis": true},
+        {"code": "DZK-MpMh2nU", "likes_visible": "80", "comments_visible": "7", "role_hypothesis": "agency_offer_case"},
+        {"code": "DTuyJ0VAc1k", "likes_visible": "2,1 mil", "comments_visible": "12", "role_hypothesis": "relative_highlight_story"},
+        {"code": "DcsuFSGhnlw", "likes_visible": "60", "comments_visible": "11", "role_hypothesis": "metalinguistic_anatomy", "r1_analysis": true},
+        {"code": "Dcq32xNgO1d", "likes_visible": "43", "comments_visible": "24", "role_hypothesis": "after_effects_project_offer", "r1_analysis": true},
+        {"code": "Dcnj1nyP-h1", "likes_visible": "82", "comments_visible": "4", "role_hypothesis": "audience_filtering_positioning"},
+        {"code": "DcdU22uBMO3", "likes_visible": "91", "comments_visible": "15", "role_hypothesis": "post_production_partnership"},
+        {"code": "DcQbasHBJKV", "likes_visible": "138", "comments_visible": "6", "role_hypothesis": "motion_documentary_cars"},
+        {"code": "DcIjF2pBkvk", "likes_visible": "75", "comments_visible": "9", "role_hypothesis": "creator_philosophy_essay"},
+        {"code": "DcDFUVvh9Yw", "likes_visible": "149", "comments_visible": "1", "role_hypothesis": "motion_documentary_wealth"},
+        {"code": "Db-MoB6hOGz", "likes_visible": "95", "comments_visible": "7", "role_hypothesis": "showreel_craft_reference"}
+      ],
+      "blocker": "Expandir o pool; perfil possui 80 posts e a amostra visível não basta para alegar os dez melhores."
+    }
+  ]
+}

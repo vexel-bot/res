@@ -1,0 +1,32 @@
+{
+  "schema_version": "studio.collaboration-graph.v1",
+  "anchor": "Vince Gilligan e Peter Gould",
+  "status": "credits_pending_per_work_verification",
+  "nodes": [
+    {
+      "name": "Thomas Schnauz",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Gennifer Hutchison",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Michelle MacLaren",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Michael Slovis",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Skip Macdonald",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Dave Porter",
+      "role": "verify_per_work"
+    }
+  ],
+  "edges": []
+}

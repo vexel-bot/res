@@ -1,0 +1,46 @@
+FROM python:3.11-slim@sha256:272efc3f94bec901e2bc7a5c9984b3d113c317839edca2714c6a388b9476f8fc
+
+ARG BACKEND_REQUIREMENTS_DIGEST=5c7a2132a641b00e2f52e60503ae71c738335a00c6a62b6aa3c19763fab8cc0e
+ARG WORKER_MANIFEST_DIGEST=36f45dd041744f671a68c8980711c44088592da1b06a3ce77c725bce074b4837
+ARG STOCK_POLICY_DIGEST=97dcfb0f58775e4a6b779c0158a72746d39eb24425cf027d1decab2bf9ef55e7
+
+LABEL org.opencontainers.image.title="Clicko speech CPU preflight" \
+      org.opencontainers.image.version="0.1.0-preflight" \
+      io.clicko.providers="none" \
+      io.clicko.base.digest="sha256:272efc3f94bec901e2bc7a5c9984b3d113c317839edca2714c6a388b9476f8fc"
+
+WORKDIR /opt/clicko
+
+COPY backend/requirements.txt ./speech-runtime/requirements.lock
+RUN test -n "${BACKEND_REQUIREMENTS_DIGEST}" \
+    && python -m pip install --disable-pip-version-check --no-cache-dir --requirement speech-runtime/requirements.lock
+
+COPY backend ./backend
+COPY workers/speech-cpu/worker.manifest.json ./worker-manifest.json
+COPY workers/speech-cpu/verify_build.py ./speech-runtime/verify_build.py
+COPY benchmarks/studios/identity/voice-stock-pt-br-policy.v1.json ./speech-runtime/policies/voice-stock-pt-br-policy.v1.json
+
+RUN test -n "${WORKER_MANIFEST_DIGEST}" \
+    && python ./speech-runtime/verify_build.py \
+        --backend ./backend \
+        --requirements ./speech-runtime/requirements.lock \
+        --requirements-digest "${BACKEND_REQUIREMENTS_DIGEST}" \
+        --manifest ./worker-manifest.json \
+        --manifest-digest "${WORKER_MANIFEST_DIGEST}" \
+        --policy ./speech-runtime/policies/voice-stock-pt-br-policy.v1.json \
+        --policy-digest "${STOCK_POLICY_DIGEST}" \
+    && useradd --create-home --uid 10001 clicko \
+    && install -d -o clicko -g clicko /tmp/clicko-speech
+
+ENV PYTHONPATH="/opt/clicko/backend" \
+    HOME="/home/clicko" \
+    TMPDIR="/tmp/clicko-speech" \
+    OBJECT_STORAGE_BACKEND="s3" \
+    STUDIO_ISOLATED_QUEUES_ENABLED="true" \
+    STUDIO_WORKER_MANIFEST_PATH="/opt/clicko/worker-manifest.json" \
+    STUDIO_WORKER_CAPABILITY="speech_cpu"
+
+USER clicko
+WORKDIR /opt/clicko/backend
+
+CMD ["celery", "-A", "app.celery_app:celery_app", "worker", "--loglevel=INFO", "--queues=studio.speech.cpu", "--concurrency=1", "--prefetch-multiplier=1"]

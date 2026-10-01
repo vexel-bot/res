@@ -354,7 +354,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
               </h2>
             </div>
             <div className="flex items-center gap-2">
-              <button className="clicko-home-action-text h-8 rounded-md border border-white/[0.07] px-3 text-[10px] text-[#8a959b]">
+              <button disabled title="A alternância de período está disponível no calendário canônico." className="clicko-home-action-text h-8 rounded-md border border-white/[0.07] px-3 text-[10px] text-[#8a959b]">
                 Semana <ChevronDown className="ml-2 inline h-3 w-3" />
               </button>
               <button

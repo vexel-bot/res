@@ -1,0 +1,20 @@
+{
+  "schema_version": "studio.collaboration-graph.v1",
+  "anchor": "Hayao Miyazaki",
+  "status": "credits_pending_per_work_verification",
+  "nodes": [
+    {
+      "name": "Toshio Suzuki",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Joe Hisaishi",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Studio Ghibli animation departments",
+      "role": "verify_per_work"
+    }
+  ],
+  "edges": []
+}

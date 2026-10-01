@@ -6,9 +6,11 @@ from typing import Any
 from sqlalchemy import or_, select
 from sqlalchemy.orm import Session
 
+from ..config import get_settings
 from ..domain.radar import SCORE_VERSION, rank_signal
 from ..models import BrandProfile, ExternalSignal, FeedbackEvent, Opportunity
 from .learning import preference_adjustment, workspace_preference_profile
+from .radar_contextual_v2 import record_shadow_evaluation
 
 
 def _brain(brand: BrandProfile) -> dict[str, Any]:
@@ -214,6 +216,7 @@ def upsert_workspace_opportunities(
         query = query.where(ExternalSignal.id.in_(signal_ids))
     signals = db.scalars(query.order_by(ExternalSignal.published_at.desc()).limit(200)).all()
     preference_profile = workspace_preference_profile(db, workspace_id)
+    settings = get_settings()
     opportunities: list[Opportunity] = []
     created = 0
     updated = 0
@@ -265,6 +268,9 @@ def upsert_workspace_opportunities(
             for field, value in fields.items():
                 setattr(opportunity, field, value)
             updated += 1
+        db.flush()
+        if settings.radar_contextual_v2_shadow_mode:
+            record_shadow_evaluation(db, opportunity, signal, brand, now=now)
         opportunities.append(opportunity)
     db.flush()
     return opportunities, created, updated

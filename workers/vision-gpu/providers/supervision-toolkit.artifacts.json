@@ -1,0 +1,112 @@
+{
+  "schema_version": "studio.artifact-inventory.v1",
+  "inventory_id": "supervision-toolkit-artifacts-2026-08-27",
+  "capability": "provider-neutral vision normalization, annotation and evaluation support",
+  "policy_digests_sha256": [
+    "16ae8a5985c19ba5a620bb6097baccdc0bb7329ead0cc9bcaec7b0b21a927301"
+  ],
+  "status": "review_required",
+  "frozen_at": "2026-08-28T13:30:00Z",
+  "frozen_by": "clicko-supervision-sv3-supply-chain",
+  "required_artifact_ids": [
+    "supervision-code",
+    "supervision-clicko-lock",
+    "supervision-vision-worker-container"
+  ],
+  "artifacts": [
+    {
+      "artifact_id": "supervision-code",
+      "component_id": "supervision-toolkit-code",
+      "kind": "code",
+      "role": "Normalize detector outputs, annotate evidence, operate zones and compute reproducible CV metrics",
+      "required": true,
+      "source_url": "https://github.com/roboflow/supervision",
+      "source_revision": "5f25aa0ee6dc22891415b6e3d2e1689ce7a32952",
+      "resolution_status": "resolved",
+      "integrity": {
+        "method": "git_commit",
+        "value": "5f25aa0ee6dc22891415b6e3d2e1689ce7a32952"
+      },
+      "verification_method": "git_remote",
+      "license": {
+        "declared_license": "MIT",
+        "evidence_url": "https://github.com/roboflow/supervision/blob/5f25aa0ee6dc22891415b6e3d2e1689ce7a32952/LICENSE.md",
+        "evidence_digest_sha256": "d21d596ebe6e3325868b1254eab6c74bfd59a1855792ecb9abaab01a77850afd",
+        "commercial_saas_use_allowed": true,
+        "decision": "approved",
+        "rationale": "The exact 0.30.1 source revision carries the MIT license. This approval covers source code only, not inference models, wheels or containers used beside it."
+      },
+      "notes": [
+        "Supervision is a toolkit, not a detector, physics model or canonical Clicko contract.",
+        "The bundled ByteTrack API is deprecated; a future spike must not create a new dependency on it."
+      ]
+    },
+    {
+      "artifact_id": "supervision-clicko-lock",
+      "component_id": "supervision-toolkit-runtime",
+      "kind": "runtime",
+      "role": "Minimized hash-locked Linux dependency set for only the selected Supervision modules",
+      "required": true,
+      "source_url": "urn:clicko:workers:vision-gpu:supervision:requirements.lock",
+      "source_revision": "clicko-linux-amd64-lock-v1",
+      "resolution_status": "resolved",
+      "integrity": {
+        "method": "sha256",
+        "value": "9cc82bd9dd4e7b291d5a85ad3f8718009da30bf4f372edc0d8a8503d85b41284",
+        "size_bytes": 3030
+      },
+      "verification_method": "downloaded_external",
+      "external_evaluation_ref": "supervision-linux-wheelhouse-2026-08-28",
+      "license": {
+        "declared_license": "Mixed transitive licenses",
+        "evidence_url": "urn:clicko:workers:vision-gpu:supervision:license-review.v1.json",
+        "evidence_digest_sha256": "f8c7412117aaa046dec90ee3e18781a74b3f591772bfb60eadcae4f9b4521f41",
+        "commercial_saas_use_allowed": null,
+        "decision": "review_required",
+        "rationale": "The 29-package Linux AMD64 wheel set is hash-locked and bound to a focused SPDX 2.3 SBOM. Ten native/binary packages have hashed notice/object evidence and still require human bundled-library review before commercial approval."
+      },
+      "notes": [
+        "The lock was resolved offline from exact Linux wheels and independently verified with pip --require-hashes.",
+        "OpenCV is excluded from this lock and remains a separately governed comparison/provider artifact.",
+        "The focused SBOM raw digest is 22d543bc3c7e734454e252fcf60846af2d9f2e81ebf301d1cd876616d0a544c5.",
+        "Native bundle evidence raw digest is 3d58dadcd755f7f45e228da0308664d3dc3e2d1798aeb8a674707afb3d5d2465; it is evidence, not legal approval."
+      ]
+    },
+    {
+      "artifact_id": "supervision-vision-worker-container",
+      "component_id": "supervision-toolkit-container",
+      "kind": "container",
+      "role": "Attested vision worker image containing the approved Supervision subset",
+      "required": true,
+      "source_url": "urn:clicko:local-oci:clicko-supervision-evaluation:final",
+      "source_revision": "sha256:92dbfe133f63ce899637d9bad3fc24a53448eee32043d0773f1f8a2fb875d6a6",
+      "resolution_status": "resolved",
+      "integrity": {
+        "method": "oci_digest",
+        "value": "sha256:92dbfe133f63ce899637d9bad3fc24a53448eee32043d0773f1f8a2fb875d6a6",
+        "size_bytes": 323846144
+      },
+      "verification_method": "local_oci_layout",
+      "license": {
+        "declared_license": "Composite image; SBOM and notices required",
+        "evidence_url": "https://github.com/roboflow/supervision/blob/5f25aa0ee6dc22891415b6e3d2e1689ce7a32952/LICENSE.md",
+        "evidence_digest_sha256": "d21d596ebe6e3325868b1254eab6c74bfd59a1855792ecb9abaab01a77850afd",
+        "commercial_saas_use_allowed": null,
+        "decision": "review_required",
+        "rationale": "A local Linux/AMD64 OCI layout is bound to an immutable image manifest and BuildKit provenance/SBOM attestation, and passed a hardened no-network runtime probe. Human notice review and a promotion-grade signature are still absent."
+      },
+      "notes": [
+        "The current vision worker manifest must continue to advertise no Supervision provider.",
+        "Dockerfile.evaluation installs only from a pre-materialized wheelhouse with --no-index and is wired to a manual non-deploying workflow.",
+        "The OCI archive SHA-256 is 6507d1ebad6602c378c3dd63bd1762d9cc7ab64b612e28633affb546f33c6b2c; its BuildKit attestation binds by statement subject.",
+        "The runtime passed as uid 10001 with network none, read-only rootfs, all capabilities dropped, no-new-privileges, pids/memory/CPU limits and providers empty.",
+        "No signature exists; provenance and SBOM attestations are not treated as a signature."
+      ]
+    }
+  ],
+  "notes": [
+    "This inventory freezes a candidate library boundary; it does not authorize an inference model or provider.",
+    "Supervision objects are ephemeral adapter types. RealityContributionV1 and RealityModelV1 remain canonical.",
+    "SV-2 passed its frozen synthetic benchmark. The OCI and runtime gates are material, while signature and human legal/native-bundle gates remain open."
+  ]
+}

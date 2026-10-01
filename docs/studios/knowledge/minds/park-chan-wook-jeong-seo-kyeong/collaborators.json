@@ -1,0 +1,28 @@
+{
+  "schema_version": "studio.collaboration-graph.v1",
+  "anchor": "Park Chan-wook e Jeong Seo-kyeong",
+  "status": "credits_pending_per_work_verification",
+  "nodes": [
+    {
+      "name": "Jeong Seo-kyeong",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Chung Chung-hoon",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Kim Sang-bum",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Ryu Seong-hie",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Jo Yeong-wook",
+      "role": "verify_per_work"
+    }
+  ],
+  "edges": []
+}

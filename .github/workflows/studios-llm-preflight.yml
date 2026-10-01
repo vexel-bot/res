@@ -1,0 +1,91 @@
+name: Studios LLM preflight
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-linux-amd64-preflight:
+    name: Build llm_gpu preflight (linux/amd64)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - name: Checkout pinned source
+        uses: actions/checkout@v4
+
+      - name: Set up BuildKit
+        uses: docker/setup-buildx-action@v3
+
+      - name: Set up Python for source-pin verification
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install contract verifier dependencies
+        shell: bash
+        run: python -m pip install --disable-pip-version-check --requirement backend/requirements.txt
+
+      - name: Resolve immutable digests
+        id: digests
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "lock=$(sha256sum workers/llm-gpu/requirements.lock | awk '{print $1}')" >> "$GITHUB_OUTPUT"
+          echo "qwen=e45869e21620b141ce5338630c908a8ca3811862d07346e3b9f322622817e353" >> "$GITHUB_OUTPUT"
+          echo "kimi=2f747a155fa2b5182a82cf5804090feeed5968390bf41bc7174311b76d0a251d" >> "$GITHUB_OUTPUT"
+          echo "manifest=102c8edaabec362d64be1c1b70955fbb8de4f7124d09d3d298a97265575cc6c1" >> "$GITHUB_OUTPUT"
+          echo "policy=88a37ca064d36a8b0f3c58fe4751f0a721b008359a80fe62212c452b4b17bc54" >> "$GITHUB_OUTPUT"
+
+      - name: Verify source pins before BuildKit
+        shell: bash
+        run: |
+          set -euo pipefail
+          python workers/llm-gpu/verify_build.py \
+            --backend backend \
+            --qwen-inventory workers/llm-gpu/providers/qwen3-planning-copy.artifacts.json \
+            --qwen-inventory-digest "${{ steps.digests.outputs.qwen }}" \
+            --kimi-inventory workers/llm-gpu/providers/kimi-k2-5-planning-copy.artifacts.json \
+            --kimi-inventory-digest "${{ steps.digests.outputs.kimi }}" \
+            --lock workers/llm-gpu/requirements.lock \
+            --lock-digest "${{ steps.digests.outputs.lock }}" \
+            --manifest workers/llm-gpu/worker.manifest.json \
+            --manifest-digest "${{ steps.digests.outputs.manifest }}" \
+            --policy benchmarks/studios/intelligence/planning-copy-pt-br-policy.v1.json \
+            --policy-digest "${{ steps.digests.outputs.policy }}"
+
+      - name: Build immutable preflight OCI artifact
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: workers/llm-gpu/Dockerfile.preflight
+          platforms: linux/amd64
+          push: false
+          outputs: type=oci,dest=/tmp/clicko-llm-gpu-preflight.oci.tar
+          provenance: mode=max
+          sbom: true
+          build-args: |
+            QWEN_INVENTORY_DIGEST=${{ steps.digests.outputs.qwen }}
+            KIMI_INVENTORY_DIGEST=${{ steps.digests.outputs.kimi }}
+            REQUIREMENTS_LOCK_DIGEST=${{ steps.digests.outputs.lock }}
+            WORKER_MANIFEST_DIGEST=${{ steps.digests.outputs.manifest }}
+            PLANNING_POLICY_DIGEST=${{ steps.digests.outputs.policy }}
+
+      - name: Verify OCI attestations and provider boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          python backend/scripts/verify_preflight_oci.py \
+            /tmp/clicko-llm-gpu-preflight.oci.tar \
+            --title "Clicko LLM GPU preflight" \
+            --provider-label none
+
+      - name: Upload preflight OCI artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: clicko-llm-gpu-preflight-linux-amd64
+          path: /tmp/clicko-llm-gpu-preflight.oci.tar
+          if-no-files-found: error
+          retention-days: 7

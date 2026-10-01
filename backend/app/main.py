@@ -18,12 +18,14 @@ from .routers import (
     bootstrap,
     campaigns,
     creatives,
+    editing_resources,
     health,
     history,
     jobs,
     knowledge,
     posts,
     radar,
+    studios,
     workspace_features,
     workspaces,
 )
@@ -65,7 +67,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.cors_origins,
     allow_credentials=False,
-    allow_methods=["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
+    allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allow_headers=["Authorization", "Content-Type", "X-Correlation-ID", "Idempotency-Key"],
 )
 
@@ -148,5 +150,7 @@ app.include_router(assets.router, prefix="/api/v1")
 app.include_router(jobs.router, prefix="/api/v1")
 app.include_router(knowledge.router, prefix="/api/v1")
 app.include_router(radar.router, prefix="/api/v1")
+app.include_router(studios.router, prefix="/api/v1")
+app.include_router(editing_resources.router, prefix="/api/v1")
 app.include_router(workspace_features.router, prefix="/api/v1")
 app.include_router(ai.router, prefix="/api")

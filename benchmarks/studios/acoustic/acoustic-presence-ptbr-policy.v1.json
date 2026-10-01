@@ -1,0 +1,38 @@
+{
+  "schemaVersion": "studio.acoustic-qualification-policy.v1",
+  "suiteId": "acoustic-presence-ptbr-v1",
+  "policyVersion": "1.0.0-draft",
+  "status": "draft",
+  "minimumCaseCount": 200,
+  "minimumCasesPerEnvironment": 40,
+  "minimumPositiveCasesPerTarget": 80,
+  "minimumNegativeCasesPerTarget": 80,
+  "requiredEnvironments": [
+    "natural_only",
+    "speech",
+    "music",
+    "speech_music",
+    "silence"
+  ],
+  "requiredLocales": [
+    "pt-BR"
+  ],
+  "limits": {
+    "speechFalseNegativeRateMax": 0.02,
+    "speechFalsePositiveRateMax": 0.01,
+    "musicFalseNegativeRateMax": 0.02,
+    "musicFalsePositiveRateMax": 0.01,
+    "inconclusiveRateMax": 0.01
+  },
+  "requireVerifiedRights": true,
+  "requireExactAssetBytes": true,
+  "requireNoEgress": true,
+  "requireIsolatedTenant": true,
+  "requireEphemeralWorkspace": true,
+  "rationale": [
+    "Estes limites são uma política de risco do produto em rascunho, não uma alegação acadêmica de desempenho.",
+    "Falsos negativos permitem fala ou música proibida; falsos positivos bloqueiam sons naturais legítimos.",
+    "A política só pode ser aprovada depois de revisão do corpus autorizado, dos custos de erro e da representatividade PT-BR.",
+    "Nenhum resultado de YAMNet, VAD ou fixture técnica promove um provider por si só."
+  ]
+}

@@ -1,0 +1,81 @@
+{
+  "schemaVersion": "studio.single-avatar-generation-request-ledger.v1",
+  "pilotId": "single-avatar-caio-vale-r0-2026-09-02",
+  "targetBaseVideoCount": 1,
+  "requests": [
+    {
+      "provider": "ltx-video-0.9.8-zero-gpu",
+      "credentialSlot": null,
+      "result": "accepted_then_failed",
+      "operationCreated": true,
+      "providerRequestId": "6fc2aed7f3c842a1a85983553769d70a",
+      "videoProduced": false,
+      "costUsd": 0
+    },
+    {
+      "provider": "veo-3.1-lite-generate-preview",
+      "credentialSlot": "API_1",
+      "result": "invalid_request_http_400",
+      "operationCreated": false,
+      "providerRequestId": null,
+      "videoProduced": false,
+      "costUsd": 0
+    },
+    {
+      "provider": "veo-3.1-lite-generate-preview",
+      "credentialSlot": "API_1",
+      "result": "resource_exhausted_http_429",
+      "operationCreated": false,
+      "providerRequestId": null,
+      "videoProduced": false,
+      "costUsd": 0
+    },
+    {
+      "provider": "veo-3.1-lite-generate-preview",
+      "credentialSlot": "API_2",
+      "result": "resource_exhausted_http_429",
+      "operationCreated": false,
+      "providerRequestId": null,
+      "videoProduced": false,
+      "costUsd": 0
+    },
+    {
+      "provider": "veo-3.1-lite-generate-preview",
+      "credentialSlot": "API_1",
+      "credentialState": "updated_key_authenticated_http_200",
+      "result": "resource_exhausted_http_429",
+      "operationCreated": false,
+      "providerRequestId": null,
+      "videoProduced": false,
+      "costUsd": 0
+    },
+    {
+      "provider": "veo-3.1-lite-generate-preview",
+      "credentialSlot": "API_1",
+      "credentialState": "second_replacement_key_authenticated_http_200",
+      "result": "resource_exhausted_http_429",
+      "operationCreated": false,
+      "providerRequestId": null,
+      "videoProduced": false,
+      "costUsd": 0
+    },
+    {
+      "provider": "openai.sora-2",
+      "credentialSlot": "OPENAI_API_KEY",
+      "credentialState": "invalid_api_key_http_401",
+      "result": "preflight_rejected_before_post",
+      "operationCreated": false,
+      "providerRequestId": null,
+      "videoProduced": false,
+      "costUsd": 0,
+      "observedAt": "2026-09-04T16:50:00-03:00",
+      "secretRecorded": false
+    }
+  ],
+  "summary": {
+    "successfulVideoCount": 0,
+    "billableVeoOperationCount": 0,
+    "totalExternalCostUsd": 0,
+    "nextAction": "Replace OPENAI_API_KEY with a valid project key, then rerun only the non-billable Sora model preflight. The one-shot runner must not POST until that preflight passes."
+  }
+}

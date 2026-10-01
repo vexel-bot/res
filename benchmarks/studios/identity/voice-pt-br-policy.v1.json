@@ -1,0 +1,316 @@
+{
+  "schemaVersion": "studio.benchmark-policy.v1",
+  "suiteId": "clicko.voice-clone.pt-br.v1",
+  "policyVersion": "1.1.0",
+  "capability": "voice_clone",
+  "locale": "pt-BR",
+  "status": "frozen",
+  "frozenAt": "2026-08-24T12:00:00Z",
+  "frozenBy": "clicko-product-engineering-baseline",
+  "corpus": {
+    "manifestSchema": "studio.benchmark-corpus-manifest.v1",
+    "minimumSubjects": 10,
+    "minimumCases": 60,
+    "minimumConsentCoverage": 1.0,
+    "requiredLocales": ["pt-BR"],
+    "requiredScenarios": [
+      "clean-reference",
+      "moderate-noise-reference",
+      "short-copy",
+      "medium-copy",
+      "long-copy",
+      "brand-and-proper-names",
+      "acronyms",
+      "currency-dates-and-numbers",
+      "controlled-emotion",
+      "repeat-and-off-script-adversarial"
+    ],
+    "rawBiometricDataAllowedInRepository": false
+  },
+  "candidates": [
+    {
+      "candidateId": "chatterbox-multilingual-v3",
+      "displayName": "Chatterbox Multilingual V3",
+      "role": "voice_clone",
+      "executionCapability": "speech_gpu",
+      "licenseGate": "approved",
+      "benchmarkScope": "consented_private",
+      "components": [
+        {
+          "componentId": "chatterbox-code",
+          "kind": "code",
+          "sourceUrl": "https://github.com/resemble-ai/chatterbox",
+          "sourceRevision": "5de7a54aa4e5e2baadb0182dde554908b48b85c2",
+          "license": "MIT",
+          "commercialUse": "approved"
+        },
+        {
+          "componentId": "chatterbox-v3-weights",
+          "kind": "model",
+          "sourceUrl": "https://huggingface.co/ResembleAI/chatterbox",
+          "sourceRevision": "5bb1f6ee58e50c3b8d408bc82a6d3740c2db6e18",
+          "license": "MIT",
+          "commercialUse": "approved"
+        },
+        {
+          "componentId": "perth-watermark-runtime",
+          "kind": "runtime",
+          "sourceUrl": "https://github.com/resemble-ai/Perth",
+          "sourceRevision": "ce86c49d029f42272c1902eccb675556b9ed2330",
+          "license": "MIT",
+          "commercialUse": "approved",
+          "notes": "The upstream package points at master; the Clicko benchmark image must pin this exact revision."
+        }
+      ]
+    },
+    {
+      "candidateId": "chatterbox-pt-br",
+      "displayName": "Chatterbox Single Language Pack pt-BR",
+      "role": "voice_clone",
+      "executionCapability": "speech_gpu",
+      "licenseGate": "approved",
+      "benchmarkScope": "consented_private",
+      "components": [
+        {
+          "componentId": "chatterbox-code",
+          "kind": "code",
+          "sourceUrl": "https://github.com/resemble-ai/chatterbox",
+          "sourceRevision": "5de7a54aa4e5e2baadb0182dde554908b48b85c2",
+          "license": "MIT",
+          "commercialUse": "approved"
+        },
+        {
+          "componentId": "chatterbox-pt-br-weights",
+          "kind": "model",
+          "sourceUrl": "https://huggingface.co/ResembleAI/Chatterbox-Multilingual-pt-br",
+          "sourceRevision": "b3952f18bc2eaa72b9bd7c17d2c4653bcad4770d",
+          "license": "MIT",
+          "commercialUse": "approved"
+        },
+        {
+          "componentId": "perth-watermark-runtime",
+          "kind": "runtime",
+          "sourceUrl": "https://github.com/resemble-ai/Perth",
+          "sourceRevision": "ce86c49d029f42272c1902eccb675556b9ed2330",
+          "license": "MIT",
+          "commercialUse": "approved"
+        }
+      ]
+    },
+    {
+      "candidateId": "kokoro-openvoice-v2",
+      "displayName": "Kokoro 82M plus OpenVoice V2",
+      "role": "voice_clone",
+      "executionCapability": "speech_gpu",
+      "licenseGate": "review_required",
+      "benchmarkScope": "consented_private",
+      "components": [
+        {
+          "componentId": "kokoro-code",
+          "kind": "code",
+          "sourceUrl": "https://github.com/hexgrad/kokoro",
+          "sourceRevision": "dfb907a02bba8152ca444717ca5d78747ccb4bec",
+          "license": "Apache-2.0",
+          "commercialUse": "approved"
+        },
+        {
+          "componentId": "kokoro-82m-weights",
+          "kind": "model",
+          "sourceUrl": "https://huggingface.co/hexgrad/Kokoro-82M",
+          "sourceRevision": "f3ff3571791e39611d31c381e3a41a3af07b4987",
+          "license": "Apache-2.0",
+          "commercialUse": "approved"
+        },
+        {
+          "componentId": "misaki-g2p",
+          "kind": "runtime",
+          "sourceUrl": "https://github.com/hexgrad/misaki",
+          "sourceRevision": "fba1236595f2d2bf21d414ba6e57d25256afada3",
+          "license": "Apache-2.0",
+          "commercialUse": "approved"
+        },
+        {
+          "componentId": "espeak-ng-runtime",
+          "kind": "runtime",
+          "sourceUrl": "https://github.com/espeak-ng/espeak-ng",
+          "sourceRevision": "7d426728fe146f4168fa716e29d8e276c7da33f2",
+          "license": "GPL-3.0-or-later",
+          "commercialUse": "approved",
+          "notes": "Commercial use is allowed; distribution of a worker image must satisfy GPL source/notice obligations and legal review."
+        },
+        {
+          "componentId": "openvoice-code",
+          "kind": "code",
+          "sourceUrl": "https://github.com/myshell-ai/OpenVoice",
+          "sourceRevision": "74a1d147b17a8c3092dd5430504bd83ef6c7eb23",
+          "license": "MIT",
+          "commercialUse": "approved"
+        },
+        {
+          "componentId": "openvoice-v2-weights",
+          "kind": "model",
+          "sourceUrl": "https://huggingface.co/myshell-ai/OpenVoiceV2",
+          "sourceRevision": "f36e7edfe1684461a8343844af60babc2efbb727",
+          "license": "MIT",
+          "commercialUse": "approved"
+        }
+      ]
+    }
+  ],
+  "thresholds": [
+    {
+      "metricId": "human_naturalness_mos",
+      "displayName": "Naturalidade humana MOS",
+      "unit": "mos_1_5",
+      "aggregation": "mean",
+      "direction": "minimum",
+      "threshold": 4.0,
+      "minimumSamples": 180,
+      "minimumUniqueReviewers": 3,
+      "minimumRatingsPerCase": 3,
+      "rationale": "Three blinded ratings per 60-case corpus; a production voice must sound consistently natural."
+    },
+    {
+      "metricId": "pt_br_intelligibility_word_accuracy",
+      "displayName": "Acurácia de palavras compreensíveis em pt-BR",
+      "unit": "ratio",
+      "aggregation": "rate",
+      "direction": "minimum",
+      "threshold": 0.97,
+      "minimumSamples": 60,
+      "rationale": "Copy may vary stylistically, but intelligibility cannot compromise the ad message."
+    },
+    {
+      "metricId": "critical_term_accuracy",
+      "displayName": "Acurácia de marca, siglas, moedas, datas e nomes",
+      "unit": "ratio",
+      "aggregation": "rate",
+      "direction": "minimum",
+      "threshold": 0.98,
+      "minimumSamples": 60,
+      "rationale": "Critical commercial terms must be correct or explicitly fixable by the pronunciation dictionary."
+    },
+    {
+      "metricId": "critical_off_script_rate",
+      "displayName": "Taxa de conteúdo crítico fora do roteiro",
+      "unit": "ratio",
+      "aggregation": "rate",
+      "direction": "exact",
+      "threshold": 0.0,
+      "minimumSamples": 60,
+      "rationale": "An ad voice may not invent claims, CTAs, prices or unsafe content."
+    },
+    {
+      "metricId": "speaker_similarity_cosine",
+      "displayName": "Similaridade de speaker embedding",
+      "unit": "cosine_similarity",
+      "aggregation": "mean",
+      "direction": "minimum",
+      "threshold": 0.8,
+      "minimumSamples": 60,
+      "appliesToRoles": ["voice_clone"],
+      "rationale": "A clone must preserve the enrolled identity; the evaluator and embedding model are pinned in the run."
+    },
+    {
+      "metricId": "accent_preservation_mos",
+      "displayName": "Preservação de sotaque declarada pelos revisores",
+      "unit": "mos_1_5",
+      "aggregation": "mean",
+      "direction": "minimum",
+      "threshold": 4.0,
+      "minimumSamples": 180,
+      "minimumUniqueReviewers": 3,
+      "minimumRatingsPerCase": 3,
+      "appliesToRoles": ["voice_clone"],
+      "rationale": "Identity quality includes regional accent and must not collapse into generic Portuguese."
+    },
+    {
+      "metricId": "repeat_or_truncation_rate",
+      "displayName": "Taxa de repetição ou truncamento",
+      "unit": "ratio",
+      "aggregation": "rate",
+      "direction": "maximum",
+      "threshold": 0.005,
+      "minimumSamples": 60,
+      "rationale": "Repeated or missing words create unusable ad variants and hidden review cost."
+    },
+    {
+      "metricId": "p95_real_time_factor",
+      "displayName": "RTF p95",
+      "unit": "ratio",
+      "aggregation": "p95",
+      "direction": "maximum",
+      "threshold": 1.5,
+      "minimumSamples": 60,
+      "rationale": "Async generation may be slower than real time in outliers, but the p95 must fit an interactive production loop."
+    },
+    {
+      "metricId": "peak_vram_gb",
+      "displayName": "Pico de VRAM",
+      "unit": "gb",
+      "aggregation": "maximum",
+      "direction": "maximum",
+      "threshold": 24.0,
+      "minimumSamples": 60,
+      "rationale": "The first dedicated speech worker budget is one 24 GB accelerator."
+    },
+    {
+      "metricId": "usd_per_output_minute",
+      "displayName": "Custo direto por minuto gerado",
+      "unit": "usd_per_output_minute",
+      "aggregation": "mean",
+      "direction": "maximum",
+      "threshold": 0.12,
+      "minimumSamples": 60,
+      "rationale": "Provisional unit-economics ceiling, including active compute time but excluding product margin."
+    },
+    {
+      "metricId": "job_failure_rate",
+      "displayName": "Taxa de falha de job",
+      "unit": "ratio",
+      "aggregation": "rate",
+      "direction": "maximum",
+      "threshold": 0.02,
+      "minimumSamples": 60,
+      "rationale": "Retries cannot hide systematic provider instability."
+    },
+    {
+      "metricId": "derived_cleanup_success_rate",
+      "displayName": "Exclusão de derivados do benchmark",
+      "unit": "ratio",
+      "aggregation": "rate",
+      "direction": "exact",
+      "threshold": 1.0,
+      "minimumSamples": 60,
+      "rationale": "Every consent-bound derivative must be physically removed and evidenced after the retention window."
+    }
+  ],
+  "requiredControls": [
+    "commercial_license_chain_approved",
+    "consent_verified",
+    "source_assets_private",
+    "tenant_isolation_verified",
+    "no_egress_verified",
+    "revocation_rechecked_at_enqueue",
+    "human_review_completed",
+    "abuse_safety_review_passed",
+    "synthetic_provenance_emitted",
+    "deletion_cleanup_verified"
+  ],
+  "requiredEvidence": [
+    "private_corpus_manifest",
+    "license_manifest",
+    "model_weight_manifest",
+    "container_sbom",
+    "raw_metric_bundle",
+    "metric_evaluator_manifest",
+    "blinded_human_review",
+    "watermark_or_provenance_probe",
+    "cleanup_receipt"
+  ],
+  "notes": [
+    "Thresholds are pre-run product policy, not empirical claims about any candidate.",
+    "The policy is frozen but not approved for commercial activation.",
+    "No real voice, consent record, asset path or biometric embedding belongs in this repository."
+  ]
+}

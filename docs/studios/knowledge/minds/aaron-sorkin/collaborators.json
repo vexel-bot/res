@@ -1,0 +1,24 @@
+{
+  "schema_version": "studio.collaboration-graph.v1",
+  "anchor": "Aaron Sorkin",
+  "status": "credits_pending_per_work_verification",
+  "nodes": [
+    {
+      "name": "Thomas Schlamme",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "David Fincher",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Alan Poul",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "The writers' rooms",
+      "role": "verify_per_work"
+    }
+  ],
+  "edges": []
+}

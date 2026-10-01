@@ -1,0 +1,10 @@
+{
+  "schemaVersion": "res.remotion-native-scene-receipt.v1",
+  "component": "product-story-v1",
+  "manifestSha256": "f6c685c4bd069520786131b3f14374d35dc2dacb960644214fe64b541e8fa7b8",
+  "videoSha256": "139093589f3ee7d56641d768df328f8832bb8424cd5a9e6e89fb196834006c92",
+  "durationMs": 38175,
+  "bytes": 2516343,
+  "frameCount": 270,
+  "humanVisualReview": "pending"
+}

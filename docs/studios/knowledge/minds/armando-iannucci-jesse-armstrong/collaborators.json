@@ -1,0 +1,28 @@
+{
+  "schema_version": "studio.collaboration-graph.v1",
+  "anchor": "Armando Iannucci e Jesse Armstrong",
+  "status": "credits_pending_per_work_verification",
+  "nodes": [
+    {
+      "name": "Simon Blackwell",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Tony Roche",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Georgia Pritchett",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Lucy Prebble",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "writers' rooms",
+      "role": "verify_per_work"
+    }
+  ],
+  "edges": []
+}

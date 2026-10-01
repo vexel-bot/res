@@ -1,0 +1,24 @@
+{
+  "schema_version": "studio.collaboration-graph.v1",
+  "anchor": "Guillermo del Toro",
+  "status": "credits_pending_per_work_verification",
+  "nodes": [
+    {
+      "name": "Guillermo Navarro",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Eugenio Caballero",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Bernat Vilaplana",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Alexandre Desplat",
+      "role": "verify_per_work"
+    }
+  ],
+  "edges": []
+}

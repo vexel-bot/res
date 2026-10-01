@@ -1,0 +1,28 @@
+{
+  "schema_version": "studio.collaboration-graph.v1",
+  "anchor": "Greta Gerwig",
+  "status": "credits_pending_per_work_verification",
+  "nodes": [
+    {
+      "name": "Noah Baumbach",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Sam Levy",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Nick Houy",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Sarah Greenwood",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Alexandre Desplat",
+      "role": "verify_per_work"
+    }
+  ],
+  "edges": []
+}

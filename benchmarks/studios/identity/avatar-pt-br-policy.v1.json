@@ -1,0 +1,387 @@
+{
+  "schemaVersion": "studio.benchmark-policy.v1",
+  "suiteId": "clicko.avatar.pt-br.v1",
+  "policyVersion": "1.0.0",
+  "capability": "avatar",
+  "locale": "pt-BR",
+  "status": "frozen",
+  "frozenAt": "2026-08-24T12:00:00Z",
+  "frozenBy": "clicko-product-engineering-baseline",
+  "corpus": {
+    "manifestSchema": "studio.avatar-benchmark-corpus.v1",
+    "minimumSubjects": 10,
+    "minimumCases": 30,
+    "minimumConsentCoverage": 1.0,
+    "requiredLocales": ["pt-BR"],
+    "requiredScenarios": [
+      "duration-5s",
+      "duration-15s",
+      "duration-60s",
+      "format-9x16",
+      "format-1x1",
+      "format-16x9",
+      "frontal-and-three-quarter",
+      "glasses-and-facial-hair",
+      "skin-tone-and-lighting-diversity",
+      "moderate-head-motion",
+      "occlusion-and-mouth-extremes",
+      "pt-br-plosives-and-dental-phonemes"
+    ],
+    "rawBiometricDataAllowedInRepository": false
+  },
+  "candidates": [
+    {
+      "candidateId": "musetalk-1-5",
+      "displayName": "MuseTalk 1.5",
+      "role": "lip_sync",
+      "executionCapability": "vision_gpu",
+      "licenseGate": "rejected",
+      "benchmarkScope": "evidence_only",
+      "components": [
+        {
+          "componentId": "musetalk-code",
+          "kind": "code",
+          "sourceUrl": "https://github.com/TMElyralab/MuseTalk",
+          "sourceRevision": "0a89dec45a0192b824e3cf4daf96c239440c5ed8",
+          "license": "MIT",
+          "commercialUse": "approved"
+        },
+        {
+          "componentId": "musetalk-1-5-weights",
+          "kind": "model",
+          "sourceUrl": "https://huggingface.co/TMElyralab/MuseTalk",
+          "sourceRevision": "3ef28bc5cff08c90ad8178a25f1b570cd800170f",
+          "license": "CreativeML-OpenRAIL-M",
+          "commercialUse": "restricted",
+          "notes": "The model card license is not OSI-approved even though the repository README says commercial use is allowed."
+        },
+        {
+          "componentId": "sd-vae-ft-mse",
+          "kind": "model",
+          "sourceUrl": "https://huggingface.co/stabilityai/sd-vae-ft-mse",
+          "sourceRevision": "31f26fdeee1355a5c34592e401dd41e45d25a493",
+          "license": "MIT",
+          "commercialUse": "approved"
+        },
+        {
+          "componentId": "whisper-tiny",
+          "kind": "model",
+          "sourceUrl": "https://huggingface.co/openai/whisper-tiny",
+          "sourceRevision": "169d4a4341b33bc18d8881c4b69c2e104e1cc0af",
+          "license": "Apache-2.0",
+          "commercialUse": "approved"
+        },
+        {
+          "componentId": "dwpose-weights",
+          "kind": "model",
+          "sourceUrl": "https://huggingface.co/yzd-v/DWPose",
+          "sourceRevision": "1a7144101628d69ee7a3768d1ee3a094070dc388",
+          "license": "Apache-2.0",
+          "commercialUse": "approved"
+        },
+        {
+          "componentId": "latentsync-syncnet-weights",
+          "kind": "model",
+          "sourceUrl": "https://huggingface.co/ByteDance/LatentSync",
+          "sourceRevision": "405eda8eab9f65c1a6e0c292a5dee5a08089e2ae",
+          "license": "OpenRAIL++",
+          "commercialUse": "restricted",
+          "notes": "MuseTalk's official download script imports latentsync_syncnet.pt from this model repository."
+        },
+        {
+          "componentId": "face-parse-bisent-weights",
+          "kind": "model",
+          "sourceUrl": "https://huggingface.co/ManyOtherFunctions/face-parse-bisent",
+          "sourceRevision": "0073b233a5a3c4b1377d4dbf49245017938a72b5",
+          "license": "WTFPL",
+          "commercialUse": "approved",
+          "notes": "The Hugging Face card declares WTFPL; a production notice review would still be required."
+        }
+      ]
+    },
+    {
+      "candidateId": "latentsync-1-6",
+      "displayName": "LatentSync 1.6",
+      "role": "lip_sync",
+      "executionCapability": "vision_gpu",
+      "licenseGate": "rejected",
+      "benchmarkScope": "evidence_only",
+      "components": [
+        {
+          "componentId": "latentsync-code",
+          "kind": "code",
+          "sourceUrl": "https://github.com/bytedance/LatentSync",
+          "sourceRevision": "a229c3948406bc2cf6eaf4873e662e70c6a04746",
+          "license": "Apache-2.0",
+          "commercialUse": "approved"
+        },
+        {
+          "componentId": "latentsync-1-6-weights",
+          "kind": "model",
+          "sourceUrl": "https://huggingface.co/ByteDance/LatentSync-1.6",
+          "sourceRevision": "c42c7e6c8e9c213626389fa7d9a3c444b8536353",
+          "license": "OpenRAIL++",
+          "commercialUse": "restricted",
+          "notes": "Source-available model license with use restrictions; excluded by the Clicko open-source-only policy."
+        },
+        {
+          "componentId": "insightface-buffalo-l",
+          "kind": "model",
+          "sourceUrl": "https://github.com/deepinsight/insightface",
+          "sourceRevision": "buffalo_l",
+          "license": "InsightFace non-commercial model terms",
+          "commercialUse": "restricted",
+          "notes": "The inference pipeline directly depends on InsightFace landmarks."
+        }
+      ]
+    },
+    {
+      "candidateId": "liveportrait-permissive-detector",
+      "displayName": "LivePortrait with permissive detector replacement",
+      "role": "motion",
+      "executionCapability": "vision_gpu",
+      "licenseGate": "rejected",
+      "benchmarkScope": "evidence_only",
+      "components": [
+        {
+          "componentId": "liveportrait-code",
+          "kind": "code",
+          "sourceUrl": "https://github.com/KwaiVGI/LivePortrait",
+          "sourceRevision": "9b294b3d0536135442ea73cb01e6cb3ca7029dd3",
+          "license": "MIT",
+          "commercialUse": "approved"
+        },
+        {
+          "componentId": "liveportrait-weights",
+          "kind": "model",
+          "sourceUrl": "https://huggingface.co/KlingTeam/LivePortrait",
+          "sourceRevision": "82a4fa6735ca58432b6ce39301b4b9ee066dea47",
+          "license": "MIT",
+          "commercialUse": "approved"
+        },
+        {
+          "componentId": "permissive-face-detector",
+          "kind": "model",
+          "sourceUrl": "urn:clicko:pending:permissive-face-detector",
+          "sourceRevision": "unselected",
+          "license": "UNKNOWN",
+          "commercialUse": "unknown",
+          "notes": "Must replace the bundled InsightFace detection models before any real-data benchmark."
+        }
+      ]
+    },
+    {
+      "candidateId": "liveportrait-musetalk-photo-avatar",
+      "displayName": "LivePortrait plus MuseTalk photo avatar",
+      "role": "photo_avatar",
+      "executionCapability": "vision_gpu",
+      "licenseGate": "review_required",
+      "benchmarkScope": "synthetic_only",
+      "components": [
+        {
+          "componentId": "liveportrait-code",
+          "kind": "code",
+          "sourceUrl": "https://github.com/KwaiVGI/LivePortrait",
+          "sourceRevision": "9b294b3d0536135442ea73cb01e6cb3ca7029dd3",
+          "license": "MIT",
+          "commercialUse": "approved"
+        },
+        {
+          "componentId": "liveportrait-weights",
+          "kind": "model",
+          "sourceUrl": "https://huggingface.co/KlingTeam/LivePortrait",
+          "sourceRevision": "82a4fa6735ca58432b6ce39301b4b9ee066dea47",
+          "license": "MIT",
+          "commercialUse": "approved"
+        },
+        {
+          "componentId": "musetalk-code",
+          "kind": "code",
+          "sourceUrl": "https://github.com/TMElyralab/MuseTalk",
+          "sourceRevision": "0a89dec45a0192b824e3cf4daf96c239440c5ed8",
+          "license": "MIT",
+          "commercialUse": "approved"
+        },
+        {
+          "componentId": "musetalk-1-5-weights",
+          "kind": "model",
+          "sourceUrl": "https://huggingface.co/TMElyralab/MuseTalk",
+          "sourceRevision": "3ef28bc5cff08c90ad8178a25f1b570cd800170f",
+          "license": "CreativeML-OpenRAIL-M",
+          "commercialUse": "restricted"
+        },
+        {
+          "componentId": "latentsync-syncnet-weights",
+          "kind": "model",
+          "sourceUrl": "https://huggingface.co/ByteDance/LatentSync",
+          "sourceRevision": "405eda8eab9f65c1a6e0c292a5dee5a08089e2ae",
+          "license": "OpenRAIL++",
+          "commercialUse": "restricted"
+        },
+        {
+          "componentId": "permissive-face-detector",
+          "kind": "model",
+          "sourceUrl": "urn:clicko:pending:permissive-face-detector",
+          "sourceRevision": "unselected",
+          "license": "UNKNOWN",
+          "commercialUse": "unknown"
+        }
+      ]
+    }
+  ],
+  "thresholds": [
+    {
+      "metricId": "human_visual_realism_mos",
+      "displayName": "Realismo visual humano MOS",
+      "unit": "mos_1_5",
+      "aggregation": "mean",
+      "direction": "minimum",
+      "threshold": 4.0,
+      "minimumSamples": 90,
+      "rationale": "Three blinded reviews per 30-case corpus."
+    },
+    {
+      "metricId": "identity_similarity_cosine",
+      "displayName": "Similaridade de identidade facial",
+      "unit": "cosine_similarity",
+      "aggregation": "mean",
+      "direction": "minimum",
+      "threshold": 0.8,
+      "minimumSamples": 30,
+      "rationale": "Identity preservation is a blocking property, with the evaluator model pinned in evidence."
+    },
+    {
+      "metricId": "critical_face_artifact_rate",
+      "displayName": "Artefatos críticos em boca, dentes, olhos ou bordas",
+      "unit": "ratio",
+      "aggregation": "rate",
+      "direction": "maximum",
+      "threshold": 0.01,
+      "minimumSamples": 30,
+      "rationale": "A visible critical defect makes an ad unusable even when average quality is high."
+    },
+    {
+      "metricId": "temporal_jitter_failure_rate",
+      "displayName": "Falha perceptível de consistência temporal",
+      "unit": "ratio",
+      "aggregation": "rate",
+      "direction": "maximum",
+      "threshold": 0.02,
+      "minimumSamples": 30,
+      "rationale": "Single-frame and diffusion pipelines must remain stable across cuts and head motion."
+    },
+    {
+      "metricId": "lip_sync_acceptance_rate",
+      "displayName": "Aceitação humana de lip-sync",
+      "unit": "ratio",
+      "aggregation": "rate",
+      "direction": "minimum",
+      "threshold": 0.95,
+      "minimumSamples": 30,
+      "appliesToRoles": ["lip_sync", "photo_avatar"],
+      "rationale": "Lip-sync must read correctly to native pt-BR reviewers across plosives and dental phonemes."
+    },
+    {
+      "metricId": "p95_av_sync_offset_ms",
+      "displayName": "Offset audiovisual absoluto p95",
+      "unit": "milliseconds",
+      "aggregation": "p95",
+      "direction": "maximum",
+      "threshold": 80.0,
+      "minimumSamples": 30,
+      "appliesToRoles": ["lip_sync", "photo_avatar"],
+      "rationale": "Eighty milliseconds is approximately two frames at 25 fps and is the pre-run tolerance ceiling."
+    },
+    {
+      "metricId": "pose_transfer_acceptance_rate",
+      "displayName": "Aceitação de pose e expressão",
+      "unit": "ratio",
+      "aggregation": "rate",
+      "direction": "minimum",
+      "threshold": 0.95,
+      "minimumSamples": 30,
+      "appliesToRoles": ["motion", "photo_avatar"],
+      "rationale": "Motion must follow the approved template without identity drift or implausible deformation."
+    },
+    {
+      "metricId": "p95_real_time_factor",
+      "displayName": "RTF p95",
+      "unit": "ratio",
+      "aggregation": "p95",
+      "direction": "maximum",
+      "threshold": 6.0,
+      "minimumSamples": 30,
+      "rationale": "Avatar generation is asynchronous, but six times real time is the ceiling for the first production loop."
+    },
+    {
+      "metricId": "peak_vram_gb",
+      "displayName": "Pico de VRAM",
+      "unit": "gb",
+      "aggregation": "maximum",
+      "direction": "maximum",
+      "threshold": 24.0,
+      "minimumSamples": 30,
+      "rationale": "The first dedicated identity worker budget is one 24 GB accelerator."
+    },
+    {
+      "metricId": "usd_per_output_minute",
+      "displayName": "Custo direto por minuto gerado",
+      "unit": "usd_per_output_minute",
+      "aggregation": "mean",
+      "direction": "maximum",
+      "threshold": 0.8,
+      "minimumSamples": 30,
+      "rationale": "Provisional ceiling for async avatar compute before product margin."
+    },
+    {
+      "metricId": "job_failure_rate",
+      "displayName": "Taxa de falha de job",
+      "unit": "ratio",
+      "aggregation": "rate",
+      "direction": "maximum",
+      "threshold": 0.02,
+      "minimumSamples": 30,
+      "rationale": "Retries cannot hide systematic failures on pose, occlusion or long duration."
+    },
+    {
+      "metricId": "derived_cleanup_success_rate",
+      "displayName": "Exclusão de derivados do benchmark",
+      "unit": "ratio",
+      "aggregation": "rate",
+      "direction": "exact",
+      "threshold": 1.0,
+      "minimumSamples": 30,
+      "rationale": "All identity-bound frames, crops, embeddings and outputs must be physically deleted and evidenced."
+    }
+  ],
+  "requiredControls": [
+    "commercial_license_chain_approved",
+    "consent_verified",
+    "source_assets_private",
+    "tenant_isolation_verified",
+    "no_egress_verified",
+    "revocation_rechecked_at_enqueue",
+    "human_review_completed",
+    "abuse_safety_review_passed",
+    "synthetic_disclosure_present",
+    "synthetic_provenance_emitted",
+    "deletion_cleanup_verified"
+  ],
+  "requiredEvidence": [
+    "private_corpus_manifest",
+    "license_manifest",
+    "model_weight_manifest",
+    "container_sbom",
+    "raw_metric_bundle",
+    "metric_evaluator_manifest",
+    "blinded_human_review",
+    "frame_level_qc_bundle",
+    "cleanup_receipt"
+  ],
+  "notes": [
+    "Thresholds are pre-run product policy, not empirical claims about any candidate.",
+    "MuseTalk and LatentSync code licenses do not resolve their model-weight and auxiliary-model licenses.",
+    "LivePortrait remains blocked until the bundled non-commercial InsightFace detector is replaced and pinned.",
+    "No real face, video, consent record, asset path or biometric embedding belongs in this repository."
+  ]
+}

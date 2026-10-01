@@ -1,0 +1,2589 @@
+{
+  "schemaVersion": "studio.creative-document.v1",
+  "documentId": "4bdce874-5485-40bc-9eb3-1dac58bcc3ca",
+  "workspaceId": "2e32cec9-7426-4d76-9e95-3bc233e0717e",
+  "title": "Aurora · animatic B",
+  "contentType": "video",
+  "status": "draft",
+  "revision": 2,
+  "version": 1,
+  "actorId": null,
+  "correlationId": "hybrid-aurora-pilot-20260930",
+  "campaignRef": null,
+  "postRef": null,
+  "opportunityRef": null,
+  "brandMemoryRef": {
+    "id": "aurora-reference",
+    "version": null,
+    "revision": 1
+  },
+  "brief": {
+    "schemaVersion": "studio.creative-brief.v1",
+    "objective": "Anúncio Café Aurora, 15 segundos, sem locução; filmagem, motion e som",
+    "audience": "Pessoas que apreciam café",
+    "angle": "",
+    "promise": "",
+    "hook": "",
+    "cta": "",
+    "channel": "instagram",
+    "format": "post",
+    "tone": "",
+    "restrictions": [],
+    "hypotheses": [],
+    "evidence": []
+  },
+  "composition": {
+    "pages": [
+      {
+        "id": "canvas",
+        "role": "content",
+        "width": 720,
+        "height": 1280,
+        "safeArea": 36,
+        "background": "#10181c",
+        "durationMs": 15000,
+        "layers": [
+          {
+            "id": "ed2-f0cf89468d46b5f83cfb5438",
+            "kind": "group",
+            "name": "Layer",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 720.0,
+            "height": 1280.0,
+            "rotation": 0.0,
+            "opacity": 1.0,
+            "visible": true,
+            "locked": false,
+            "zIndex": 1,
+            "properties": {
+              "editorialTiming": {
+                "startFrame": 0,
+                "durationFrames": 36,
+                "fps": 30.0,
+                "reveal": "none"
+              },
+              "editorialAuditFrames": []
+            }
+          },
+          {
+            "id": "ed2-9562bb022096290a469ddc9b",
+            "kind": "group",
+            "name": "Layer",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 720.0,
+            "height": 1280.0,
+            "rotation": 0.0,
+            "opacity": 1.0,
+            "visible": true,
+            "locked": false,
+            "zIndex": 0,
+            "properties": {
+              "editorialRole": "background",
+              "editorialTiming": {
+                "startFrame": 0,
+                "durationFrames": 36,
+                "fps": 30.0,
+                "reveal": "none"
+              }
+            }
+          },
+          {
+            "id": "ed2-49b62240093c59dc16d1ace0",
+            "kind": "group",
+            "name": "Layer",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 720.0,
+            "height": 1280.0,
+            "rotation": 0.0,
+            "opacity": 1.0,
+            "visible": true,
+            "locked": false,
+            "zIndex": 1,
+            "properties": {
+              "editorialRole": "content",
+              "editorialTiming": {
+                "startFrame": 0,
+                "durationFrames": 36,
+                "fps": 30.0,
+                "reveal": "none"
+              }
+            }
+          },
+          {
+            "id": "ed2-b14010b5b82874d0c992bf61",
+            "kind": "group",
+            "name": "Layer",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 720.0,
+            "height": 1280.0,
+            "rotation": 0.0,
+            "opacity": 1.0,
+            "visible": true,
+            "locked": false,
+            "zIndex": 2,
+            "properties": {
+              "editorialRole": "text",
+              "editorialTiming": {
+                "startFrame": 0,
+                "durationFrames": 36,
+                "fps": 30.0,
+                "reveal": "none"
+              }
+            }
+          },
+          {
+            "id": "ed2-dbc1316c4c4ee057bb1f713c",
+            "kind": "shape",
+            "name": "Layer",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 720.0,
+            "height": 1280.0,
+            "rotation": 0.0,
+            "opacity": 1.0,
+            "visible": true,
+            "locked": false,
+            "zIndex": 0,
+            "properties": {
+              "fill": "#17130e",
+              "editorialTiming": {
+                "startFrame": 0,
+                "durationFrames": 36,
+                "fps": 30.0,
+                "reveal": "none"
+              }
+            }
+          },
+          {
+            "id": "ed2-5f4f3872cd8ea78576c33883",
+            "kind": "video",
+            "name": "action",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 720.0,
+            "height": 1280.0,
+            "rotation": 0.0,
+            "opacity": 1.0,
+            "visible": true,
+            "locked": false,
+            "zIndex": 1,
+            "properties": {
+              "nativeComponent": {
+                "component": "action_montage",
+                "version": 1,
+                "targetIds": [
+                  "action"
+                ],
+                "entranceFrames": 12,
+                "travelRatio": 0.04,
+                "revealAxis": "horizontal",
+                "staggerFrames": 3,
+                "continuityKey": null
+              },
+              "editorialTiming": {
+                "startFrame": 0,
+                "durationFrames": 36,
+                "fps": 30.0,
+                "reveal": "none",
+                "revealFrames": 12
+              },
+              "fill": "#183343",
+              "color": "#ffffff",
+              "text": "",
+              "fontSize": 48.0,
+              "editorialTextFit": false,
+              "editorialConnector": null,
+              "fontWeight": 700,
+              "letterSpacing": 0.0,
+              "lineHeight": 1.1,
+              "textAlign": "left",
+              "editorialTextSpans": [],
+              "editorialShadow": null,
+              "editorialEffects": [],
+              "editorialBlendMode": "normal",
+              "editorialBorder": {
+                "width": 0.0,
+                "color": "#ffffff"
+              },
+              "fontAssetId": null,
+              "borderRadius": 16.0,
+              "shape": "rectangle",
+              "assetId": "48669823-e76d-4100-b246-ae26100ad32d",
+              "editorialContentIdentity": null,
+              "editorialContentReferenceId": null,
+              "editorialContentPartId": null,
+              "maskAssetId": null,
+              "objectFit": "cover",
+              "editorialRegionOfInterest": null,
+              "editorialCropIntentional": true,
+              "sourceStartSeconds": 0.3,
+              "playbackRate": 1.0,
+              "editorialVisualRole": "hero",
+              "editorialDepth": {
+                "opacity": 1.0,
+                "blurPx": 0.0,
+                "parallax": 0.0
+              }
+            }
+          },
+          {
+            "id": "ed2-64b6c6773a9363b4667f06ba",
+            "kind": "group",
+            "name": "Layer",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 720.0,
+            "height": 1280.0,
+            "rotation": 0.0,
+            "opacity": 1.0,
+            "visible": true,
+            "locked": false,
+            "zIndex": 2,
+            "properties": {
+              "editorialTiming": {
+                "startFrame": 36,
+                "durationFrames": 54,
+                "fps": 30.0,
+                "reveal": "none"
+              },
+              "editorialAuditFrames": []
+            }
+          },
+          {
+            "id": "ed2-2be6ecb8bf1a1ac2f45f6acf",
+            "kind": "group",
+            "name": "Layer",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 720.0,
+            "height": 1280.0,
+            "rotation": 0.0,
+            "opacity": 1.0,
+            "visible": true,
+            "locked": false,
+            "zIndex": 0,
+            "properties": {
+              "editorialRole": "background",
+              "editorialTiming": {
+                "startFrame": 36,
+                "durationFrames": 54,
+                "fps": 30.0,
+                "reveal": "none"
+              }
+            }
+          },
+          {
+            "id": "ed2-e5ed30a01add53970950cbad",
+            "kind": "group",
+            "name": "Layer",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 720.0,
+            "height": 1280.0,
+            "rotation": 0.0,
+            "opacity": 1.0,
+            "visible": true,
+            "locked": false,
+            "zIndex": 1,
+            "properties": {
+              "editorialRole": "content",
+              "editorialTiming": {
+                "startFrame": 36,
+                "durationFrames": 54,
+                "fps": 30.0,
+                "reveal": "none"
+              }
+            }
+          },
+          {
+            "id": "ed2-be4c96618d3a1bb986a28b22",
+            "kind": "group",
+            "name": "Layer",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 720.0,
+            "height": 1280.0,
+            "rotation": 0.0,
+            "opacity": 1.0,
+            "visible": true,
+            "locked": false,
+            "zIndex": 2,
+            "properties": {
+              "editorialRole": "text",
+              "editorialTiming": {
+                "startFrame": 36,
+                "durationFrames": 54,
+                "fps": 30.0,
+                "reveal": "none"
+              }
+            }
+          },
+          {
+            "id": "ed2-2fc94530022a1262112272a8",
+            "kind": "shape",
+            "name": "Layer",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 720.0,
+            "height": 1280.0,
+            "rotation": 0.0,
+            "opacity": 1.0,
+            "visible": true,
+            "locked": false,
+            "zIndex": 0,
+            "properties": {
+              "fill": "#17130e",
+              "editorialTiming": {
+                "startFrame": 36,
+                "durationFrames": 54,
+                "fps": 30.0,
+                "reveal": "none"
+              }
+            }
+          },
+          {
+            "id": "ed2-d61a07c79a7ca1a5c9c8588f",
+            "kind": "video",
+            "name": "action",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 720.0,
+            "height": 1280.0,
+            "rotation": 0.0,
+            "opacity": 1.0,
+            "visible": true,
+            "locked": false,
+            "zIndex": 1,
+            "properties": {
+              "nativeComponent": {
+                "component": "action_montage",
+                "version": 1,
+                "targetIds": [
+                  "action"
+                ],
+                "entranceFrames": 12,
+                "travelRatio": 0.04,
+                "revealAxis": "horizontal",
+                "staggerFrames": 3,
+                "continuityKey": null
+              },
+              "editorialTiming": {
+                "startFrame": 36,
+                "durationFrames": 54,
+                "fps": 30.0,
+                "reveal": "none",
+                "revealFrames": 12
+              },
+              "fill": "#183343",
+              "color": "#ffffff",
+              "text": "",
+              "fontSize": 48.0,
+              "editorialTextFit": false,
+              "editorialConnector": null,
+              "fontWeight": 700,
+              "letterSpacing": 0.0,
+              "lineHeight": 1.1,
+              "textAlign": "left",
+              "editorialTextSpans": [],
+              "editorialShadow": null,
+              "editorialEffects": [],
+              "editorialBlendMode": "normal",
+              "editorialBorder": {
+                "width": 0.0,
+                "color": "#ffffff"
+              },
+              "fontAssetId": null,
+              "borderRadius": 16.0,
+              "shape": "rectangle",
+              "assetId": "3135a6ac-363c-4218-9caf-1ebcbee4e86d",
+              "editorialContentIdentity": null,
+              "editorialContentReferenceId": null,
+              "editorialContentPartId": null,
+              "maskAssetId": null,
+              "objectFit": "cover",
+              "editorialRegionOfInterest": null,
+              "editorialCropIntentional": true,
+              "sourceStartSeconds": 1.0,
+              "playbackRate": 1.0,
+              "editorialVisualRole": "hero",
+              "editorialDepth": {
+                "opacity": 1.0,
+                "blurPx": 0.0,
+                "parallax": 0.0
+              }
+            }
+          },
+          {
+            "id": "ed2-2287b7d8282caf260ea786da",
+            "kind": "group",
+            "name": "Layer",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 720.0,
+            "height": 1280.0,
+            "rotation": 0.0,
+            "opacity": 1.0,
+            "visible": true,
+            "locked": false,
+            "zIndex": 3,
+            "properties": {
+              "editorialTiming": {
+                "startFrame": 90,
+                "durationFrames": 30,
+                "fps": 30.0,
+                "reveal": "none"
+              },
+              "editorialAuditFrames": []
+            }
+          },
+          {
+            "id": "ed2-cc9a1a0edd39568e17a7cf4a",
+            "kind": "group",
+            "name": "Layer",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 720.0,
+            "height": 1280.0,
+            "rotation": 0.0,
+            "opacity": 1.0,
+            "visible": true,
+            "locked": false,
+            "zIndex": 0,
+            "properties": {
+              "editorialRole": "background",
+              "editorialTiming": {
+                "startFrame": 90,
+                "durationFrames": 30,
+                "fps": 30.0,
+                "reveal": "none"
+              }
+            }
+          },
+          {
+            "id": "ed2-ae7e8e2e1ece51996da14fe1",
+            "kind": "group",
+            "name": "Layer",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 720.0,
+            "height": 1280.0,
+            "rotation": 0.0,
+            "opacity": 1.0,
+            "visible": true,
+            "locked": false,
+            "zIndex": 1,
+            "properties": {
+              "editorialRole": "content",
+              "editorialTiming": {
+                "startFrame": 90,
+                "durationFrames": 30,
+                "fps": 30.0,
+                "reveal": "none"
+              }
+            }
+          },
+          {
+            "id": "ed2-827310570407afc5761659d0",
+            "kind": "group",
+            "name": "Layer",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 720.0,
+            "height": 1280.0,
+            "rotation": 0.0,
+            "opacity": 1.0,
+            "visible": true,
+            "locked": false,
+            "zIndex": 2,
+            "properties": {
+              "editorialRole": "text",
+              "editorialTiming": {
+                "startFrame": 90,
+                "durationFrames": 30,
+                "fps": 30.0,
+                "reveal": "none"
+              }
+            }
+          },
+          {
+            "id": "ed2-ed44e7908abfaad025548b1a",
+            "kind": "shape",
+            "name": "Layer",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 720.0,
+            "height": 1280.0,
+            "rotation": 0.0,
+            "opacity": 1.0,
+            "visible": true,
+            "locked": false,
+            "zIndex": 0,
+            "properties": {
+              "fill": "#17130e",
+              "editorialTiming": {
+                "startFrame": 90,
+                "durationFrames": 30,
+                "fps": 30.0,
+                "reveal": "none"
+              }
+            }
+          },
+          {
+            "id": "ed2-e3e45a43d8810a900f9aaac5",
+            "kind": "video",
+            "name": "action",
+            "x": -50.400000000000006,
+            "y": -89.60000000000001,
+            "width": 820.8,
+            "height": 1459.1999999999998,
+            "rotation": 0.0,
+            "opacity": 1.0,
+            "visible": true,
+            "locked": false,
+            "zIndex": 1,
+            "properties": {
+              "nativeComponent": {
+                "component": "action_montage",
+                "version": 1,
+                "targetIds": [
+                  "action"
+                ],
+                "entranceFrames": 12,
+                "travelRatio": 0.04,
+                "revealAxis": "horizontal",
+                "staggerFrames": 3,
+                "continuityKey": null
+              },
+              "editorialTiming": {
+                "startFrame": 90,
+                "durationFrames": 30,
+                "fps": 30.0,
+                "reveal": "none",
+                "revealFrames": 12
+              },
+              "fill": "#183343",
+              "color": "#ffffff",
+              "text": "",
+              "fontSize": 48.0,
+              "editorialTextFit": false,
+              "editorialConnector": null,
+              "fontWeight": 700,
+              "letterSpacing": 0.0,
+              "lineHeight": 1.1,
+              "textAlign": "left",
+              "editorialTextSpans": [],
+              "editorialShadow": null,
+              "editorialEffects": [],
+              "editorialBlendMode": "normal",
+              "editorialBorder": {
+                "width": 0.0,
+                "color": "#ffffff"
+              },
+              "fontAssetId": null,
+              "borderRadius": 16.0,
+              "shape": "rectangle",
+              "assetId": "3135a6ac-363c-4218-9caf-1ebcbee4e86d",
+              "editorialContentIdentity": null,
+              "editorialContentReferenceId": null,
+              "editorialContentPartId": null,
+              "maskAssetId": null,
+              "objectFit": "cover",
+              "editorialRegionOfInterest": null,
+              "editorialCropIntentional": true,
+              "sourceStartSeconds": 2.8,
+              "playbackRate": 1.2,
+              "editorialVisualRole": "hero",
+              "editorialDepth": {
+                "opacity": 1.0,
+                "blurPx": 0.0,
+                "parallax": 0.0
+              }
+            }
+          },
+          {
+            "id": "ed2-f45cfd650d77d12260914d24",
+            "kind": "group",
+            "name": "Layer",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 720.0,
+            "height": 1280.0,
+            "rotation": 0.0,
+            "opacity": 1.0,
+            "visible": true,
+            "locked": false,
+            "zIndex": 4,
+            "properties": {
+              "editorialTiming": {
+                "startFrame": 120,
+                "durationFrames": 60,
+                "fps": 30.0,
+                "reveal": "none"
+              },
+              "editorialAuditFrames": []
+            }
+          },
+          {
+            "id": "ed2-4da048bec5e30da0757fc06d",
+            "kind": "group",
+            "name": "Layer",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 720.0,
+            "height": 1280.0,
+            "rotation": 0.0,
+            "opacity": 1.0,
+            "visible": true,
+            "locked": false,
+            "zIndex": 0,
+            "properties": {
+              "editorialRole": "background",
+              "editorialTiming": {
+                "startFrame": 120,
+                "durationFrames": 60,
+                "fps": 30.0,
+                "reveal": "none"
+              }
+            }
+          },
+          {
+            "id": "ed2-17b5e4efa327f6a6f6ddab8b",
+            "kind": "group",
+            "name": "Layer",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 720.0,
+            "height": 1280.0,
+            "rotation": 0.0,
+            "opacity": 1.0,
+            "visible": true,
+            "locked": false,
+            "zIndex": 1,
+            "properties": {
+              "editorialRole": "content",
+              "editorialTiming": {
+                "startFrame": 120,
+                "durationFrames": 60,
+                "fps": 30.0,
+                "reveal": "none"
+              }
+            }
+          },
+          {
+            "id": "ed2-29c8736b5ce88840d08e060b",
+            "kind": "group",
+            "name": "Layer",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 720.0,
+            "height": 1280.0,
+            "rotation": 0.0,
+            "opacity": 1.0,
+            "visible": true,
+            "locked": false,
+            "zIndex": 2,
+            "properties": {
+              "editorialRole": "text",
+              "editorialTiming": {
+                "startFrame": 120,
+                "durationFrames": 60,
+                "fps": 30.0,
+                "reveal": "none"
+              }
+            }
+          },
+          {
+            "id": "ed2-22f43a840aa9d642b95bacc9",
+            "kind": "shape",
+            "name": "Layer",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 720.0,
+            "height": 1280.0,
+            "rotation": 0.0,
+            "opacity": 1.0,
+            "visible": true,
+            "locked": false,
+            "zIndex": 0,
+            "properties": {
+              "fill": "#17130e",
+              "editorialTiming": {
+                "startFrame": 120,
+                "durationFrames": 60,
+                "fps": 30.0,
+                "reveal": "none"
+              }
+            }
+          },
+          {
+            "id": "ed2-2b930351b3fc29a592aacabe",
+            "kind": "video",
+            "name": "action",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 720.0,
+            "height": 1280.0,
+            "rotation": 0.0,
+            "opacity": 1.0,
+            "visible": true,
+            "locked": false,
+            "zIndex": 1,
+            "properties": {
+              "nativeComponent": {
+                "component": "action_montage",
+                "version": 1,
+                "targetIds": [
+                  "action"
+                ],
+                "entranceFrames": 12,
+                "travelRatio": 0.04,
+                "revealAxis": "horizontal",
+                "staggerFrames": 3,
+                "continuityKey": null
+              },
+              "editorialTiming": {
+                "startFrame": 120,
+                "durationFrames": 60,
+                "fps": 30.0,
+                "reveal": "none",
+                "revealFrames": 12
+              },
+              "fill": "#183343",
+              "color": "#ffffff",
+              "text": "",
+              "fontSize": 48.0,
+              "editorialTextFit": false,
+              "editorialConnector": null,
+              "fontWeight": 700,
+              "letterSpacing": 0.0,
+              "lineHeight": 1.1,
+              "textAlign": "left",
+              "editorialTextSpans": [],
+              "editorialShadow": null,
+              "editorialEffects": [],
+              "editorialBlendMode": "normal",
+              "editorialBorder": {
+                "width": 0.0,
+                "color": "#ffffff"
+              },
+              "fontAssetId": null,
+              "borderRadius": 16.0,
+              "shape": "rectangle",
+              "assetId": "ee371554-79a9-4cdd-8748-a98d85b47a0a",
+              "editorialContentIdentity": null,
+              "editorialContentReferenceId": null,
+              "editorialContentPartId": null,
+              "maskAssetId": null,
+              "objectFit": "cover",
+              "editorialRegionOfInterest": null,
+              "editorialCropIntentional": true,
+              "sourceStartSeconds": 0.7,
+              "playbackRate": 1.0,
+              "editorialVisualRole": "hero",
+              "editorialDepth": {
+                "opacity": 1.0,
+                "blurPx": 0.0,
+                "parallax": 0.0
+              }
+            }
+          },
+          {
+            "id": "ed2-3aff33ad044fe2a853c1aa4e",
+            "kind": "group",
+            "name": "Layer",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 720.0,
+            "height": 1280.0,
+            "rotation": 0.0,
+            "opacity": 1.0,
+            "visible": true,
+            "locked": false,
+            "zIndex": 5,
+            "properties": {
+              "editorialTiming": {
+                "startFrame": 180,
+                "durationFrames": 60,
+                "fps": 30.0,
+                "reveal": "none"
+              },
+              "editorialAuditFrames": []
+            }
+          },
+          {
+            "id": "ed2-ac4eccacbbaa3fcfee0836e9",
+            "kind": "group",
+            "name": "Layer",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 720.0,
+            "height": 1280.0,
+            "rotation": 0.0,
+            "opacity": 1.0,
+            "visible": true,
+            "locked": false,
+            "zIndex": 0,
+            "properties": {
+              "editorialRole": "background",
+              "editorialTiming": {
+                "startFrame": 180,
+                "durationFrames": 60,
+                "fps": 30.0,
+                "reveal": "none"
+              }
+            }
+          },
+          {
+            "id": "ed2-0dd30e14a2d5b56ddc117373",
+            "kind": "group",
+            "name": "Layer",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 720.0,
+            "height": 1280.0,
+            "rotation": 0.0,
+            "opacity": 1.0,
+            "visible": true,
+            "locked": false,
+            "zIndex": 1,
+            "properties": {
+              "editorialRole": "content",
+              "editorialTiming": {
+                "startFrame": 180,
+                "durationFrames": 60,
+                "fps": 30.0,
+                "reveal": "none"
+              }
+            }
+          },
+          {
+            "id": "ed2-830788cdf42f9cba93a1f57c",
+            "kind": "group",
+            "name": "Layer",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 720.0,
+            "height": 1280.0,
+            "rotation": 0.0,
+            "opacity": 1.0,
+            "visible": true,
+            "locked": false,
+            "zIndex": 2,
+            "properties": {
+              "editorialRole": "text",
+              "editorialTiming": {
+                "startFrame": 180,
+                "durationFrames": 60,
+                "fps": 30.0,
+                "reveal": "none"
+              }
+            }
+          },
+          {
+            "id": "ed2-3c18a4b814183f61c4e6de3d",
+            "kind": "shape",
+            "name": "Layer",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 720.0,
+            "height": 1280.0,
+            "rotation": 0.0,
+            "opacity": 1.0,
+            "visible": true,
+            "locked": false,
+            "zIndex": 0,
+            "properties": {
+              "fill": "#17130e",
+              "editorialTiming": {
+                "startFrame": 180,
+                "durationFrames": 60,
+                "fps": 30.0,
+                "reveal": "none"
+              }
+            }
+          },
+          {
+            "id": "ed2-b9818da2b0ede2bfd32ce60d",
+            "kind": "video",
+            "name": "action",
+            "x": -50.400000000000006,
+            "y": -89.60000000000001,
+            "width": 820.8,
+            "height": 1459.1999999999998,
+            "rotation": 0.0,
+            "opacity": 1.0,
+            "visible": true,
+            "locked": false,
+            "zIndex": 1,
+            "properties": {
+              "nativeComponent": {
+                "component": "action_montage",
+                "version": 1,
+                "targetIds": [
+                  "action"
+                ],
+                "entranceFrames": 12,
+                "travelRatio": 0.04,
+                "revealAxis": "horizontal",
+                "staggerFrames": 3,
+                "continuityKey": null
+              },
+              "editorialTiming": {
+                "startFrame": 180,
+                "durationFrames": 60,
+                "fps": 30.0,
+                "reveal": "none",
+                "revealFrames": 12
+              },
+              "fill": "#183343",
+              "color": "#ffffff",
+              "text": "",
+              "fontSize": 48.0,
+              "editorialTextFit": false,
+              "editorialConnector": null,
+              "fontWeight": 700,
+              "letterSpacing": 0.0,
+              "lineHeight": 1.1,
+              "textAlign": "left",
+              "editorialTextSpans": [],
+              "editorialShadow": null,
+              "editorialEffects": [],
+              "editorialBlendMode": "normal",
+              "editorialBorder": {
+                "width": 0.0,
+                "color": "#ffffff"
+              },
+              "fontAssetId": null,
+              "borderRadius": 16.0,
+              "shape": "rectangle",
+              "assetId": "ee371554-79a9-4cdd-8748-a98d85b47a0a",
+              "editorialContentIdentity": null,
+              "editorialContentReferenceId": null,
+              "editorialContentPartId": null,
+              "maskAssetId": null,
+              "objectFit": "cover",
+              "editorialRegionOfInterest": null,
+              "editorialCropIntentional": true,
+              "sourceStartSeconds": 2.7,
+              "playbackRate": 1.0,
+              "editorialVisualRole": "hero",
+              "editorialDepth": {
+                "opacity": 1.0,
+                "blurPx": 0.0,
+                "parallax": 0.0
+              }
+            }
+          },
+          {
+            "id": "ed2-d70b9e908dba4d5b0dc9ca03",
+            "kind": "group",
+            "name": "Layer",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 720.0,
+            "height": 1280.0,
+            "rotation": 0.0,
+            "opacity": 1.0,
+            "visible": true,
+            "locked": false,
+            "zIndex": 6,
+            "properties": {
+              "editorialTiming": {
+                "startFrame": 240,
+                "durationFrames": 90,
+                "fps": 30.0,
+                "reveal": "none"
+              },
+              "editorialAuditFrames": []
+            }
+          },
+          {
+            "id": "ed2-6897d25ef9b27ae663a99159",
+            "kind": "group",
+            "name": "Layer",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 720.0,
+            "height": 1280.0,
+            "rotation": 0.0,
+            "opacity": 1.0,
+            "visible": true,
+            "locked": false,
+            "zIndex": 0,
+            "properties": {
+              "editorialRole": "background",
+              "editorialTiming": {
+                "startFrame": 240,
+                "durationFrames": 90,
+                "fps": 30.0,
+                "reveal": "none"
+              }
+            }
+          },
+          {
+            "id": "ed2-c44b1c942189d4e0c76d9060",
+            "kind": "group",
+            "name": "Layer",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 720.0,
+            "height": 1280.0,
+            "rotation": 0.0,
+            "opacity": 1.0,
+            "visible": true,
+            "locked": false,
+            "zIndex": 1,
+            "properties": {
+              "editorialRole": "content",
+              "editorialTiming": {
+                "startFrame": 240,
+                "durationFrames": 90,
+                "fps": 30.0,
+                "reveal": "none"
+              }
+            }
+          },
+          {
+            "id": "ed2-ac77eb5d2a5d44db8444a5db",
+            "kind": "group",
+            "name": "Layer",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 720.0,
+            "height": 1280.0,
+            "rotation": 0.0,
+            "opacity": 1.0,
+            "visible": true,
+            "locked": false,
+            "zIndex": 2,
+            "properties": {
+              "editorialRole": "text",
+              "editorialTiming": {
+                "startFrame": 240,
+                "durationFrames": 90,
+                "fps": 30.0,
+                "reveal": "none"
+              }
+            }
+          },
+          {
+            "id": "ed2-c359c192ea37d6ca00c371e9",
+            "kind": "shape",
+            "name": "Layer",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 720.0,
+            "height": 1280.0,
+            "rotation": 0.0,
+            "opacity": 1.0,
+            "visible": true,
+            "locked": false,
+            "zIndex": 0,
+            "properties": {
+              "fill": "#17130e",
+              "editorialTiming": {
+                "startFrame": 240,
+                "durationFrames": 90,
+                "fps": 30.0,
+                "reveal": "none"
+              }
+            }
+          },
+          {
+            "id": "ed2-b15128db49390fc7968685a6",
+            "kind": "video",
+            "name": "atmosphere",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 720.0,
+            "height": 1280.0,
+            "rotation": 0.0,
+            "opacity": 1.0,
+            "visible": true,
+            "locked": false,
+            "zIndex": 1,
+            "properties": {
+              "nativeComponent": {
+                "component": "action_montage",
+                "version": 1,
+                "targetIds": [
+                  "atmosphere"
+                ],
+                "entranceFrames": 12,
+                "travelRatio": 0.04,
+                "revealAxis": "horizontal",
+                "staggerFrames": 3,
+                "continuityKey": null
+              },
+              "editorialTiming": {
+                "startFrame": 240,
+                "durationFrames": 90,
+                "fps": 30.0,
+                "reveal": "none",
+                "revealFrames": 12
+              },
+              "fill": "#183343",
+              "color": "#ffffff",
+              "text": "",
+              "fontSize": 48.0,
+              "editorialTextFit": false,
+              "editorialConnector": null,
+              "fontWeight": 700,
+              "letterSpacing": 0.0,
+              "lineHeight": 1.1,
+              "textAlign": "left",
+              "editorialTextSpans": [],
+              "editorialShadow": null,
+              "editorialEffects": [],
+              "editorialBlendMode": "normal",
+              "editorialBorder": {
+                "width": 0.0,
+                "color": "#ffffff"
+              },
+              "fontAssetId": null,
+              "borderRadius": 16.0,
+              "shape": "rectangle",
+              "assetId": "aa29ca5e-28cd-49d4-856a-9aefebd27313",
+              "editorialContentIdentity": null,
+              "editorialContentReferenceId": null,
+              "editorialContentPartId": null,
+              "maskAssetId": null,
+              "objectFit": "cover",
+              "editorialRegionOfInterest": null,
+              "editorialCropIntentional": true,
+              "sourceStartSeconds": 3.0,
+              "playbackRate": 1.0,
+              "editorialVisualRole": "background",
+              "editorialDepth": {
+                "opacity": 1.0,
+                "blurPx": 0.0,
+                "parallax": 0.0
+              }
+            }
+          },
+          {
+            "id": "ed2-b69512050c44332165ca25e3",
+            "kind": "shape",
+            "name": "panel",
+            "x": 36.0,
+            "y": 371.2,
+            "width": 648.0,
+            "height": 550.4,
+            "rotation": 0.0,
+            "opacity": 1.0,
+            "visible": true,
+            "locked": false,
+            "zIndex": 1,
+            "properties": {
+              "editorialTiming": {
+                "startFrame": 240,
+                "durationFrames": 90,
+                "fps": 30.0,
+                "reveal": "none",
+                "revealFrames": 12
+              },
+              "fill": "#17130e",
+              "color": "#ffffff",
+              "text": "",
+              "fontSize": 48.0,
+              "editorialTextFit": false,
+              "editorialConnector": null,
+              "fontWeight": 700,
+              "letterSpacing": 0.0,
+              "lineHeight": 1.1,
+              "textAlign": "left",
+              "editorialTextSpans": [],
+              "editorialShadow": null,
+              "editorialEffects": [],
+              "editorialBlendMode": "normal",
+              "editorialBorder": {
+                "width": 0.0,
+                "color": "#ffffff"
+              },
+              "fontAssetId": null,
+              "borderRadius": 0.0,
+              "shape": "rectangle",
+              "assetId": null,
+              "editorialContentIdentity": null,
+              "editorialContentReferenceId": null,
+              "editorialContentPartId": null,
+              "maskAssetId": null,
+              "objectFit": "contain",
+              "editorialRegionOfInterest": null,
+              "editorialCropIntentional": false,
+              "sourceStartSeconds": 0.0,
+              "playbackRate": 1.0,
+              "editorialVisualRole": "support",
+              "editorialDepth": {
+                "opacity": 1.0,
+                "blurPx": 0.0,
+                "parallax": 0.0
+              }
+            }
+          },
+          {
+            "id": "ed2-5e409a01f167f88644bc53f8",
+            "kind": "image",
+            "name": "package",
+            "x": 72.0,
+            "y": 460.79999999999995,
+            "width": 576.0,
+            "height": 320.0,
+            "rotation": 0.0,
+            "opacity": 1.0,
+            "visible": true,
+            "locked": false,
+            "zIndex": 3,
+            "properties": {
+              "nativeComponent": {
+                "component": "product_demonstration",
+                "version": 1,
+                "targetIds": [
+                  "package"
+                ],
+                "entranceFrames": 20,
+                "travelRatio": 0.04,
+                "revealAxis": "horizontal",
+                "staggerFrames": 3,
+                "continuityKey": "aurora-package"
+              },
+              "editorialTiming": {
+                "startFrame": 240,
+                "durationFrames": 90,
+                "fps": 30.0,
+                "reveal": "none",
+                "revealFrames": 12
+              },
+              "fill": "#183343",
+              "color": "#ffffff",
+              "text": "",
+              "fontSize": 48.0,
+              "editorialTextFit": false,
+              "editorialConnector": null,
+              "fontWeight": 700,
+              "letterSpacing": 0.0,
+              "lineHeight": 1.1,
+              "textAlign": "left",
+              "editorialTextSpans": [],
+              "editorialShadow": null,
+              "editorialEffects": [],
+              "editorialBlendMode": "normal",
+              "editorialBorder": {
+                "width": 0.0,
+                "color": "#ffffff"
+              },
+              "fontAssetId": null,
+              "borderRadius": 16.0,
+              "shape": "rectangle",
+              "assetId": "4c8ba2b0-c9a9-4b98-96ba-ba9d9ecd08a6",
+              "editorialContentIdentity": null,
+              "editorialContentReferenceId": null,
+              "editorialContentPartId": null,
+              "maskAssetId": null,
+              "objectFit": "contain",
+              "editorialRegionOfInterest": null,
+              "editorialCropIntentional": false,
+              "sourceStartSeconds": 0.0,
+              "playbackRate": 1.0,
+              "editorialVisualRole": "hero",
+              "editorialDepth": {
+                "opacity": 1.0,
+                "blurPx": 0.0,
+                "parallax": 0.0
+              }
+            }
+          },
+          {
+            "id": "ed2-3ffc212d05e7792f31e67ac3",
+            "kind": "text",
+            "name": "name",
+            "x": 93.60000000000001,
+            "y": 384.0,
+            "width": 532.8,
+            "height": 70.4,
+            "rotation": 0.0,
+            "opacity": 1.0,
+            "visible": true,
+            "locked": false,
+            "zIndex": 1,
+            "properties": {
+              "nativeComponent": {
+                "component": "integrated_typography",
+                "version": 1,
+                "targetIds": [
+                  "name",
+                  "claim"
+                ],
+                "entranceFrames": 12,
+                "travelRatio": 0.04,
+                "revealAxis": "horizontal",
+                "staggerFrames": 2,
+                "continuityKey": null
+              },
+              "editorialTiming": {
+                "startFrame": 240,
+                "durationFrames": 90,
+                "fps": 30.0,
+                "reveal": "none",
+                "revealFrames": 12
+              },
+              "fill": "#183343",
+              "color": "#e8c48c",
+              "text": "CAFÉ AURORA",
+              "fontSize": 38.4,
+              "editorialTextFit": true,
+              "editorialConnector": null,
+              "fontWeight": 700,
+              "letterSpacing": 4.0,
+              "lineHeight": 1.1,
+              "textAlign": "center",
+              "editorialTextSpans": [],
+              "editorialShadow": null,
+              "editorialEffects": [],
+              "editorialBlendMode": "normal",
+              "editorialBorder": {
+                "width": 0.0,
+                "color": "#ffffff"
+              },
+              "fontAssetId": null,
+              "borderRadius": 16.0,
+              "shape": "rectangle",
+              "assetId": null,
+              "editorialContentIdentity": null,
+              "editorialContentReferenceId": null,
+              "editorialContentPartId": null,
+              "maskAssetId": null,
+              "objectFit": "contain",
+              "editorialRegionOfInterest": null,
+              "editorialCropIntentional": false,
+              "sourceStartSeconds": 0.0,
+              "playbackRate": 1.0,
+              "editorialVisualRole": "text",
+              "editorialDepth": {
+                "opacity": 1.0,
+                "blurPx": 0.0,
+                "parallax": 0.0
+              }
+            }
+          },
+          {
+            "id": "ed2-3594e91a32bf3b5531d089dd",
+            "kind": "text",
+            "name": "claim",
+            "x": 86.39999999999999,
+            "y": 806.4,
+            "width": 547.2,
+            "height": 66.56,
+            "rotation": 0.0,
+            "opacity": 1.0,
+            "visible": true,
+            "locked": false,
+            "zIndex": 1,
+            "properties": {
+              "nativeComponent": {
+                "component": "integrated_typography",
+                "version": 1,
+                "targetIds": [
+                  "name",
+                  "claim"
+                ],
+                "entranceFrames": 12,
+                "travelRatio": 0.04,
+                "revealAxis": "horizontal",
+                "staggerFrames": 2,
+                "continuityKey": null
+              },
+              "editorialTiming": {
+                "startFrame": 240,
+                "durationFrames": 90,
+                "fps": 30.0,
+                "reveal": "none",
+                "revealFrames": 12
+              },
+              "fill": "#183343",
+              "color": "#fff3da",
+              "text": "O tempo de um bom café.",
+              "fontSize": 38.4,
+              "editorialTextFit": true,
+              "editorialConnector": null,
+              "fontWeight": 700,
+              "letterSpacing": 0.0,
+              "lineHeight": 1.1,
+              "textAlign": "center",
+              "editorialTextSpans": [],
+              "editorialShadow": null,
+              "editorialEffects": [],
+              "editorialBlendMode": "normal",
+              "editorialBorder": {
+                "width": 0.0,
+                "color": "#ffffff"
+              },
+              "fontAssetId": null,
+              "borderRadius": 16.0,
+              "shape": "rectangle",
+              "assetId": null,
+              "editorialContentIdentity": null,
+              "editorialContentReferenceId": null,
+              "editorialContentPartId": null,
+              "maskAssetId": null,
+              "objectFit": "contain",
+              "editorialRegionOfInterest": null,
+              "editorialCropIntentional": false,
+              "sourceStartSeconds": 0.0,
+              "playbackRate": 1.0,
+              "editorialVisualRole": "text",
+              "editorialDepth": {
+                "opacity": 1.0,
+                "blurPx": 0.0,
+                "parallax": 0.0
+              }
+            }
+          },
+          {
+            "id": "ed2-9eed12ca841de73e7be52e04",
+            "kind": "group",
+            "name": "Layer",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 720.0,
+            "height": 1280.0,
+            "rotation": 0.0,
+            "opacity": 1.0,
+            "visible": true,
+            "locked": false,
+            "zIndex": 11,
+            "properties": {
+              "editorialTiming": {
+                "startFrame": 330,
+                "durationFrames": 120,
+                "fps": 30.0,
+                "reveal": "none"
+              },
+              "editorialAuditFrames": []
+            }
+          },
+          {
+            "id": "ed2-062cc3940177b7c0fdbbc36a",
+            "kind": "group",
+            "name": "Layer",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 720.0,
+            "height": 1280.0,
+            "rotation": 0.0,
+            "opacity": 1.0,
+            "visible": true,
+            "locked": false,
+            "zIndex": 0,
+            "properties": {
+              "editorialRole": "background",
+              "editorialTiming": {
+                "startFrame": 330,
+                "durationFrames": 120,
+                "fps": 30.0,
+                "reveal": "none"
+              }
+            }
+          },
+          {
+            "id": "ed2-215b122c85298699187741f9",
+            "kind": "group",
+            "name": "Layer",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 720.0,
+            "height": 1280.0,
+            "rotation": 0.0,
+            "opacity": 1.0,
+            "visible": true,
+            "locked": false,
+            "zIndex": 1,
+            "properties": {
+              "editorialRole": "content",
+              "editorialTiming": {
+                "startFrame": 330,
+                "durationFrames": 120,
+                "fps": 30.0,
+                "reveal": "none"
+              }
+            }
+          },
+          {
+            "id": "ed2-2b192dcfb49481909686a557",
+            "kind": "group",
+            "name": "Layer",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 720.0,
+            "height": 1280.0,
+            "rotation": 0.0,
+            "opacity": 1.0,
+            "visible": true,
+            "locked": false,
+            "zIndex": 2,
+            "properties": {
+              "editorialRole": "text",
+              "editorialTiming": {
+                "startFrame": 330,
+                "durationFrames": 120,
+                "fps": 30.0,
+                "reveal": "none"
+              }
+            }
+          },
+          {
+            "id": "ed2-df7c5d6e70f3ec880fdcba82",
+            "kind": "shape",
+            "name": "Layer",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 720.0,
+            "height": 1280.0,
+            "rotation": 0.0,
+            "opacity": 1.0,
+            "visible": true,
+            "locked": false,
+            "zIndex": 0,
+            "properties": {
+              "fill": "#17130e",
+              "editorialTiming": {
+                "startFrame": 330,
+                "durationFrames": 120,
+                "fps": 30.0,
+                "reveal": "none"
+              }
+            }
+          },
+          {
+            "id": "ed2-ba40b7656beee4775c9e3f94",
+            "kind": "video",
+            "name": "atmosphere",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 720.0,
+            "height": 1280.0,
+            "rotation": 0.0,
+            "opacity": 1.0,
+            "visible": true,
+            "locked": false,
+            "zIndex": 1,
+            "properties": {
+              "nativeComponent": {
+                "component": "action_montage",
+                "version": 1,
+                "targetIds": [
+                  "atmosphere"
+                ],
+                "entranceFrames": 12,
+                "travelRatio": 0.04,
+                "revealAxis": "horizontal",
+                "staggerFrames": 3,
+                "continuityKey": null
+              },
+              "editorialTiming": {
+                "startFrame": 330,
+                "durationFrames": 120,
+                "fps": 30.0,
+                "reveal": "none",
+                "revealFrames": 12
+              },
+              "fill": "#183343",
+              "color": "#ffffff",
+              "text": "",
+              "fontSize": 48.0,
+              "editorialTextFit": false,
+              "editorialConnector": null,
+              "fontWeight": 700,
+              "letterSpacing": 0.0,
+              "lineHeight": 1.1,
+              "textAlign": "left",
+              "editorialTextSpans": [],
+              "editorialShadow": null,
+              "editorialEffects": [],
+              "editorialBlendMode": "normal",
+              "editorialBorder": {
+                "width": 0.0,
+                "color": "#ffffff"
+              },
+              "fontAssetId": null,
+              "borderRadius": 16.0,
+              "shape": "rectangle",
+              "assetId": "aa29ca5e-28cd-49d4-856a-9aefebd27313",
+              "editorialContentIdentity": null,
+              "editorialContentReferenceId": null,
+              "editorialContentPartId": null,
+              "maskAssetId": null,
+              "objectFit": "cover",
+              "editorialRegionOfInterest": null,
+              "editorialCropIntentional": true,
+              "sourceStartSeconds": 6.0,
+              "playbackRate": 1.0,
+              "editorialVisualRole": "background",
+              "editorialDepth": {
+                "opacity": 1.0,
+                "blurPx": 0.0,
+                "parallax": 0.0
+              }
+            }
+          },
+          {
+            "id": "ed2-83761a24a60afa34dce40ace",
+            "kind": "shape",
+            "name": "panel",
+            "x": 36.0,
+            "y": 371.2,
+            "width": 648.0,
+            "height": 550.4,
+            "rotation": 0.0,
+            "opacity": 1.0,
+            "visible": true,
+            "locked": false,
+            "zIndex": 1,
+            "properties": {
+              "editorialTiming": {
+                "startFrame": 330,
+                "durationFrames": 120,
+                "fps": 30.0,
+                "reveal": "none",
+                "revealFrames": 12
+              },
+              "fill": "#17130e",
+              "color": "#ffffff",
+              "text": "",
+              "fontSize": 48.0,
+              "editorialTextFit": false,
+              "editorialConnector": null,
+              "fontWeight": 700,
+              "letterSpacing": 0.0,
+              "lineHeight": 1.1,
+              "textAlign": "left",
+              "editorialTextSpans": [],
+              "editorialShadow": null,
+              "editorialEffects": [],
+              "editorialBlendMode": "normal",
+              "editorialBorder": {
+                "width": 0.0,
+                "color": "#ffffff"
+              },
+              "fontAssetId": null,
+              "borderRadius": 0.0,
+              "shape": "rectangle",
+              "assetId": null,
+              "editorialContentIdentity": null,
+              "editorialContentReferenceId": null,
+              "editorialContentPartId": null,
+              "maskAssetId": null,
+              "objectFit": "contain",
+              "editorialRegionOfInterest": null,
+              "editorialCropIntentional": false,
+              "sourceStartSeconds": 0.0,
+              "playbackRate": 1.0,
+              "editorialVisualRole": "support",
+              "editorialDepth": {
+                "opacity": 1.0,
+                "blurPx": 0.0,
+                "parallax": 0.0
+              }
+            }
+          },
+          {
+            "id": "ed2-57778c97719bd0cf58433279",
+            "kind": "image",
+            "name": "package",
+            "x": 72.0,
+            "y": 460.79999999999995,
+            "width": 576.0,
+            "height": 320.0,
+            "rotation": 0.0,
+            "opacity": 1.0,
+            "visible": true,
+            "locked": false,
+            "zIndex": 3,
+            "properties": {
+              "nativeComponent": {
+                "component": "product_demonstration",
+                "version": 1,
+                "targetIds": [
+                  "package"
+                ],
+                "entranceFrames": 1,
+                "travelRatio": 0.04,
+                "revealAxis": "horizontal",
+                "staggerFrames": 3,
+                "continuityKey": "aurora-package"
+              },
+              "editorialTiming": {
+                "startFrame": 330,
+                "durationFrames": 120,
+                "fps": 30.0,
+                "reveal": "none",
+                "revealFrames": 12
+              },
+              "fill": "#183343",
+              "color": "#ffffff",
+              "text": "",
+              "fontSize": 48.0,
+              "editorialTextFit": false,
+              "editorialConnector": null,
+              "fontWeight": 700,
+              "letterSpacing": 0.0,
+              "lineHeight": 1.1,
+              "textAlign": "left",
+              "editorialTextSpans": [],
+              "editorialShadow": null,
+              "editorialEffects": [],
+              "editorialBlendMode": "normal",
+              "editorialBorder": {
+                "width": 0.0,
+                "color": "#ffffff"
+              },
+              "fontAssetId": null,
+              "borderRadius": 16.0,
+              "shape": "rectangle",
+              "assetId": "4c8ba2b0-c9a9-4b98-96ba-ba9d9ecd08a6",
+              "editorialContentIdentity": null,
+              "editorialContentReferenceId": null,
+              "editorialContentPartId": null,
+              "maskAssetId": null,
+              "objectFit": "contain",
+              "editorialRegionOfInterest": null,
+              "editorialCropIntentional": false,
+              "sourceStartSeconds": 0.0,
+              "playbackRate": 1.0,
+              "editorialVisualRole": "hero",
+              "editorialDepth": {
+                "opacity": 1.0,
+                "blurPx": 0.0,
+                "parallax": 0.0
+              }
+            }
+          },
+          {
+            "id": "ed2-3f2f1ca36417dd609bc4e5dc",
+            "kind": "text",
+            "name": "name",
+            "x": 93.60000000000001,
+            "y": 384.0,
+            "width": 532.8,
+            "height": 70.4,
+            "rotation": 0.0,
+            "opacity": 1.0,
+            "visible": true,
+            "locked": false,
+            "zIndex": 1,
+            "properties": {
+              "nativeComponent": {
+                "component": "integrated_typography",
+                "version": 1,
+                "targetIds": [
+                  "name",
+                  "claim"
+                ],
+                "entranceFrames": 1,
+                "travelRatio": 0.04,
+                "revealAxis": "horizontal",
+                "staggerFrames": 0,
+                "continuityKey": null
+              },
+              "editorialTiming": {
+                "startFrame": 330,
+                "durationFrames": 120,
+                "fps": 30.0,
+                "reveal": "none",
+                "revealFrames": 12
+              },
+              "fill": "#183343",
+              "color": "#e8c48c",
+              "text": "CAFÉ AURORA",
+              "fontSize": 38.4,
+              "editorialTextFit": true,
+              "editorialConnector": null,
+              "fontWeight": 700,
+              "letterSpacing": 4.0,
+              "lineHeight": 1.1,
+              "textAlign": "center",
+              "editorialTextSpans": [],
+              "editorialShadow": null,
+              "editorialEffects": [],
+              "editorialBlendMode": "normal",
+              "editorialBorder": {
+                "width": 0.0,
+                "color": "#ffffff"
+              },
+              "fontAssetId": null,
+              "borderRadius": 16.0,
+              "shape": "rectangle",
+              "assetId": null,
+              "editorialContentIdentity": null,
+              "editorialContentReferenceId": null,
+              "editorialContentPartId": null,
+              "maskAssetId": null,
+              "objectFit": "contain",
+              "editorialRegionOfInterest": null,
+              "editorialCropIntentional": false,
+              "sourceStartSeconds": 0.0,
+              "playbackRate": 1.0,
+              "editorialVisualRole": "text",
+              "editorialDepth": {
+                "opacity": 1.0,
+                "blurPx": 0.0,
+                "parallax": 0.0
+              }
+            }
+          },
+          {
+            "id": "ed2-64108fd6c1c40195509354ec",
+            "kind": "text",
+            "name": "claim",
+            "x": 86.39999999999999,
+            "y": 806.4,
+            "width": 547.2,
+            "height": 66.56,
+            "rotation": 0.0,
+            "opacity": 1.0,
+            "visible": true,
+            "locked": false,
+            "zIndex": 1,
+            "properties": {
+              "nativeComponent": {
+                "component": "integrated_typography",
+                "version": 1,
+                "targetIds": [
+                  "name",
+                  "claim"
+                ],
+                "entranceFrames": 1,
+                "travelRatio": 0.04,
+                "revealAxis": "horizontal",
+                "staggerFrames": 0,
+                "continuityKey": null
+              },
+              "editorialTiming": {
+                "startFrame": 330,
+                "durationFrames": 120,
+                "fps": 30.0,
+                "reveal": "none",
+                "revealFrames": 12
+              },
+              "fill": "#183343",
+              "color": "#fff3da",
+              "text": "Seu próximo ritual.",
+              "fontSize": 38.4,
+              "editorialTextFit": true,
+              "editorialConnector": null,
+              "fontWeight": 700,
+              "letterSpacing": 0.0,
+              "lineHeight": 1.1,
+              "textAlign": "center",
+              "editorialTextSpans": [],
+              "editorialShadow": null,
+              "editorialEffects": [],
+              "editorialBlendMode": "normal",
+              "editorialBorder": {
+                "width": 0.0,
+                "color": "#ffffff"
+              },
+              "fontAssetId": null,
+              "borderRadius": 16.0,
+              "shape": "rectangle",
+              "assetId": null,
+              "editorialContentIdentity": null,
+              "editorialContentReferenceId": null,
+              "editorialContentPartId": null,
+              "maskAssetId": null,
+              "objectFit": "contain",
+              "editorialRegionOfInterest": null,
+              "editorialCropIntentional": false,
+              "sourceStartSeconds": 0.0,
+              "playbackRate": 1.0,
+              "editorialVisualRole": "text",
+              "editorialDepth": {
+                "opacity": 1.0,
+                "blurPx": 0.0,
+                "parallax": 0.0
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "narrative": {
+      "editorialV2": {
+        "planId": "7d75f691-5e0c-4b30-9707-ada12d05426a",
+        "renderPolicy": "automatic_draft",
+        "renderer": "remotion.contextual-v2",
+        "nativeComponentVersion": 1,
+        "motionGraph": {
+          "schemaVersion": "studio.motion-graph.v1",
+          "graphId": "motion-2782b0b54768c8ded32174f0",
+          "workspaceId": "2e32cec9-7426-4d76-9e95-3bc233e0717e",
+          "documentId": "4bdce874-5485-40bc-9eb3-1dac58bcc3ca",
+          "documentRevision": 2,
+          "frameRate": {
+            "numerator": 30,
+            "denominator": 1
+          },
+          "durationFrames": 450,
+          "canvasWidth": 720,
+          "canvasHeight": 1280,
+          "realityMode": "graphic",
+          "completeness": "complete",
+          "status": "suggested",
+          "nodes": [
+            {
+              "nodeId": "node-ed2-f0cf89468d46b5f83cfb5438",
+              "targetLayerId": "ed2-f0cf89468d46b5f83cfb5438",
+              "parentNodeId": null,
+              "transformOriginX": 0.5,
+              "transformOriginY": 0.5
+            },
+            {
+              "nodeId": "node-ed2-9562bb022096290a469ddc9b",
+              "targetLayerId": "ed2-9562bb022096290a469ddc9b",
+              "parentNodeId": "node-ed2-f0cf89468d46b5f83cfb5438",
+              "transformOriginX": 0.5,
+              "transformOriginY": 0.5
+            },
+            {
+              "nodeId": "node-ed2-49b62240093c59dc16d1ace0",
+              "targetLayerId": "ed2-49b62240093c59dc16d1ace0",
+              "parentNodeId": "node-ed2-f0cf89468d46b5f83cfb5438",
+              "transformOriginX": 0.5,
+              "transformOriginY": 0.5
+            },
+            {
+              "nodeId": "node-ed2-b14010b5b82874d0c992bf61",
+              "targetLayerId": "ed2-b14010b5b82874d0c992bf61",
+              "parentNodeId": "node-ed2-f0cf89468d46b5f83cfb5438",
+              "transformOriginX": 0.5,
+              "transformOriginY": 0.5
+            },
+            {
+              "nodeId": "node-ed2-dbc1316c4c4ee057bb1f713c",
+              "targetLayerId": "ed2-dbc1316c4c4ee057bb1f713c",
+              "parentNodeId": "node-ed2-9562bb022096290a469ddc9b",
+              "transformOriginX": 0.5,
+              "transformOriginY": 0.5
+            },
+            {
+              "nodeId": "node-ed2-5f4f3872cd8ea78576c33883",
+              "targetLayerId": "ed2-5f4f3872cd8ea78576c33883",
+              "parentNodeId": "node-ed2-49b62240093c59dc16d1ace0",
+              "transformOriginX": 0.5,
+              "transformOriginY": 0.5
+            },
+            {
+              "nodeId": "node-ed2-64b6c6773a9363b4667f06ba",
+              "targetLayerId": "ed2-64b6c6773a9363b4667f06ba",
+              "parentNodeId": null,
+              "transformOriginX": 0.5,
+              "transformOriginY": 0.5
+            },
+            {
+              "nodeId": "node-ed2-2be6ecb8bf1a1ac2f45f6acf",
+              "targetLayerId": "ed2-2be6ecb8bf1a1ac2f45f6acf",
+              "parentNodeId": "node-ed2-64b6c6773a9363b4667f06ba",
+              "transformOriginX": 0.5,
+              "transformOriginY": 0.5
+            },
+            {
+              "nodeId": "node-ed2-e5ed30a01add53970950cbad",
+              "targetLayerId": "ed2-e5ed30a01add53970950cbad",
+              "parentNodeId": "node-ed2-64b6c6773a9363b4667f06ba",
+              "transformOriginX": 0.5,
+              "transformOriginY": 0.5
+            },
+            {
+              "nodeId": "node-ed2-be4c96618d3a1bb986a28b22",
+              "targetLayerId": "ed2-be4c96618d3a1bb986a28b22",
+              "parentNodeId": "node-ed2-64b6c6773a9363b4667f06ba",
+              "transformOriginX": 0.5,
+              "transformOriginY": 0.5
+            },
+            {
+              "nodeId": "node-ed2-2fc94530022a1262112272a8",
+              "targetLayerId": "ed2-2fc94530022a1262112272a8",
+              "parentNodeId": "node-ed2-2be6ecb8bf1a1ac2f45f6acf",
+              "transformOriginX": 0.5,
+              "transformOriginY": 0.5
+            },
+            {
+              "nodeId": "node-ed2-d61a07c79a7ca1a5c9c8588f",
+              "targetLayerId": "ed2-d61a07c79a7ca1a5c9c8588f",
+              "parentNodeId": "node-ed2-e5ed30a01add53970950cbad",
+              "transformOriginX": 0.5,
+              "transformOriginY": 0.5
+            },
+            {
+              "nodeId": "node-ed2-2287b7d8282caf260ea786da",
+              "targetLayerId": "ed2-2287b7d8282caf260ea786da",
+              "parentNodeId": null,
+              "transformOriginX": 0.5,
+              "transformOriginY": 0.5
+            },
+            {
+              "nodeId": "node-ed2-cc9a1a0edd39568e17a7cf4a",
+              "targetLayerId": "ed2-cc9a1a0edd39568e17a7cf4a",
+              "parentNodeId": "node-ed2-2287b7d8282caf260ea786da",
+              "transformOriginX": 0.5,
+              "transformOriginY": 0.5
+            },
+            {
+              "nodeId": "node-ed2-ae7e8e2e1ece51996da14fe1",
+              "targetLayerId": "ed2-ae7e8e2e1ece51996da14fe1",
+              "parentNodeId": "node-ed2-2287b7d8282caf260ea786da",
+              "transformOriginX": 0.5,
+              "transformOriginY": 0.5
+            },
+            {
+              "nodeId": "node-ed2-827310570407afc5761659d0",
+              "targetLayerId": "ed2-827310570407afc5761659d0",
+              "parentNodeId": "node-ed2-2287b7d8282caf260ea786da",
+              "transformOriginX": 0.5,
+              "transformOriginY": 0.5
+            },
+            {
+              "nodeId": "node-ed2-ed44e7908abfaad025548b1a",
+              "targetLayerId": "ed2-ed44e7908abfaad025548b1a",
+              "parentNodeId": "node-ed2-cc9a1a0edd39568e17a7cf4a",
+              "transformOriginX": 0.5,
+              "transformOriginY": 0.5
+            },
+            {
+              "nodeId": "node-ed2-e3e45a43d8810a900f9aaac5",
+              "targetLayerId": "ed2-e3e45a43d8810a900f9aaac5",
+              "parentNodeId": "node-ed2-ae7e8e2e1ece51996da14fe1",
+              "transformOriginX": 0.5,
+              "transformOriginY": 0.5
+            },
+            {
+              "nodeId": "node-ed2-f45cfd650d77d12260914d24",
+              "targetLayerId": "ed2-f45cfd650d77d12260914d24",
+              "parentNodeId": null,
+              "transformOriginX": 0.5,
+              "transformOriginY": 0.5
+            },
+            {
+              "nodeId": "node-ed2-4da048bec5e30da0757fc06d",
+              "targetLayerId": "ed2-4da048bec5e30da0757fc06d",
+              "parentNodeId": "node-ed2-f45cfd650d77d12260914d24",
+              "transformOriginX": 0.5,
+              "transformOriginY": 0.5
+            },
+            {
+              "nodeId": "node-ed2-17b5e4efa327f6a6f6ddab8b",
+              "targetLayerId": "ed2-17b5e4efa327f6a6f6ddab8b",
+              "parentNodeId": "node-ed2-f45cfd650d77d12260914d24",
+              "transformOriginX": 0.5,
+              "transformOriginY": 0.5
+            },
+            {
+              "nodeId": "node-ed2-29c8736b5ce88840d08e060b",
+              "targetLayerId": "ed2-29c8736b5ce88840d08e060b",
+              "parentNodeId": "node-ed2-f45cfd650d77d12260914d24",
+              "transformOriginX": 0.5,
+              "transformOriginY": 0.5
+            },
+            {
+              "nodeId": "node-ed2-22f43a840aa9d642b95bacc9",
+              "targetLayerId": "ed2-22f43a840aa9d642b95bacc9",
+              "parentNodeId": "node-ed2-4da048bec5e30da0757fc06d",
+              "transformOriginX": 0.5,
+              "transformOriginY": 0.5
+            },
+            {
+              "nodeId": "node-ed2-2b930351b3fc29a592aacabe",
+              "targetLayerId": "ed2-2b930351b3fc29a592aacabe",
+              "parentNodeId": "node-ed2-17b5e4efa327f6a6f6ddab8b",
+              "transformOriginX": 0.5,
+              "transformOriginY": 0.5
+            },
+            {
+              "nodeId": "node-ed2-3aff33ad044fe2a853c1aa4e",
+              "targetLayerId": "ed2-3aff33ad044fe2a853c1aa4e",
+              "parentNodeId": null,
+              "transformOriginX": 0.5,
+              "transformOriginY": 0.5
+            },
+            {
+              "nodeId": "node-ed2-ac4eccacbbaa3fcfee0836e9",
+              "targetLayerId": "ed2-ac4eccacbbaa3fcfee0836e9",
+              "parentNodeId": "node-ed2-3aff33ad044fe2a853c1aa4e",
+              "transformOriginX": 0.5,
+              "transformOriginY": 0.5
+            },
+            {
+              "nodeId": "node-ed2-0dd30e14a2d5b56ddc117373",
+              "targetLayerId": "ed2-0dd30e14a2d5b56ddc117373",
+              "parentNodeId": "node-ed2-3aff33ad044fe2a853c1aa4e",
+              "transformOriginX": 0.5,
+              "transformOriginY": 0.5
+            },
+            {
+              "nodeId": "node-ed2-830788cdf42f9cba93a1f57c",
+              "targetLayerId": "ed2-830788cdf42f9cba93a1f57c",
+              "parentNodeId": "node-ed2-3aff33ad044fe2a853c1aa4e",
+              "transformOriginX": 0.5,
+              "transformOriginY": 0.5
+            },
+            {
+              "nodeId": "node-ed2-3c18a4b814183f61c4e6de3d",
+              "targetLayerId": "ed2-3c18a4b814183f61c4e6de3d",
+              "parentNodeId": "node-ed2-ac4eccacbbaa3fcfee0836e9",
+              "transformOriginX": 0.5,
+              "transformOriginY": 0.5
+            },
+            {
+              "nodeId": "node-ed2-b9818da2b0ede2bfd32ce60d",
+              "targetLayerId": "ed2-b9818da2b0ede2bfd32ce60d",
+              "parentNodeId": "node-ed2-0dd30e14a2d5b56ddc117373",
+              "transformOriginX": 0.5,
+              "transformOriginY": 0.5
+            },
+            {
+              "nodeId": "node-ed2-d70b9e908dba4d5b0dc9ca03",
+              "targetLayerId": "ed2-d70b9e908dba4d5b0dc9ca03",
+              "parentNodeId": null,
+              "transformOriginX": 0.5,
+              "transformOriginY": 0.5
+            },
+            {
+              "nodeId": "node-ed2-6897d25ef9b27ae663a99159",
+              "targetLayerId": "ed2-6897d25ef9b27ae663a99159",
+              "parentNodeId": "node-ed2-d70b9e908dba4d5b0dc9ca03",
+              "transformOriginX": 0.5,
+              "transformOriginY": 0.5
+            },
+            {
+              "nodeId": "node-ed2-c44b1c942189d4e0c76d9060",
+              "targetLayerId": "ed2-c44b1c942189d4e0c76d9060",
+              "parentNodeId": "node-ed2-d70b9e908dba4d5b0dc9ca03",
+              "transformOriginX": 0.5,
+              "transformOriginY": 0.5
+            },
+            {
+              "nodeId": "node-ed2-ac77eb5d2a5d44db8444a5db",
+              "targetLayerId": "ed2-ac77eb5d2a5d44db8444a5db",
+              "parentNodeId": "node-ed2-d70b9e908dba4d5b0dc9ca03",
+              "transformOriginX": 0.5,
+              "transformOriginY": 0.5
+            },
+            {
+              "nodeId": "node-ed2-c359c192ea37d6ca00c371e9",
+              "targetLayerId": "ed2-c359c192ea37d6ca00c371e9",
+              "parentNodeId": "node-ed2-6897d25ef9b27ae663a99159",
+              "transformOriginX": 0.5,
+              "transformOriginY": 0.5
+            },
+            {
+              "nodeId": "node-ed2-b15128db49390fc7968685a6",
+              "targetLayerId": "ed2-b15128db49390fc7968685a6",
+              "parentNodeId": "node-ed2-6897d25ef9b27ae663a99159",
+              "transformOriginX": 0.5,
+              "transformOriginY": 0.5
+            },
+            {
+              "nodeId": "node-ed2-b69512050c44332165ca25e3",
+              "targetLayerId": "ed2-b69512050c44332165ca25e3",
+              "parentNodeId": "node-ed2-c44b1c942189d4e0c76d9060",
+              "transformOriginX": 0.5,
+              "transformOriginY": 0.5
+            },
+            {
+              "nodeId": "node-ed2-5e409a01f167f88644bc53f8",
+              "targetLayerId": "ed2-5e409a01f167f88644bc53f8",
+              "parentNodeId": "node-ed2-c44b1c942189d4e0c76d9060",
+              "transformOriginX": 0.5,
+              "transformOriginY": 0.5
+            },
+            {
+              "nodeId": "node-ed2-3ffc212d05e7792f31e67ac3",
+              "targetLayerId": "ed2-3ffc212d05e7792f31e67ac3",
+              "parentNodeId": "node-ed2-ac77eb5d2a5d44db8444a5db",
+              "transformOriginX": 0.5,
+              "transformOriginY": 0.5
+            },
+            {
+              "nodeId": "node-ed2-3594e91a32bf3b5531d089dd",
+              "targetLayerId": "ed2-3594e91a32bf3b5531d089dd",
+              "parentNodeId": "node-ed2-ac77eb5d2a5d44db8444a5db",
+              "transformOriginX": 0.5,
+              "transformOriginY": 0.5
+            },
+            {
+              "nodeId": "node-ed2-9eed12ca841de73e7be52e04",
+              "targetLayerId": "ed2-9eed12ca841de73e7be52e04",
+              "parentNodeId": null,
+              "transformOriginX": 0.5,
+              "transformOriginY": 0.5
+            },
+            {
+              "nodeId": "node-ed2-062cc3940177b7c0fdbbc36a",
+              "targetLayerId": "ed2-062cc3940177b7c0fdbbc36a",
+              "parentNodeId": "node-ed2-9eed12ca841de73e7be52e04",
+              "transformOriginX": 0.5,
+              "transformOriginY": 0.5
+            },
+            {
+              "nodeId": "node-ed2-215b122c85298699187741f9",
+              "targetLayerId": "ed2-215b122c85298699187741f9",
+              "parentNodeId": "node-ed2-9eed12ca841de73e7be52e04",
+              "transformOriginX": 0.5,
+              "transformOriginY": 0.5
+            },
+            {
+              "nodeId": "node-ed2-2b192dcfb49481909686a557",
+              "targetLayerId": "ed2-2b192dcfb49481909686a557",
+              "parentNodeId": "node-ed2-9eed12ca841de73e7be52e04",
+              "transformOriginX": 0.5,
+              "transformOriginY": 0.5
+            },
+            {
+              "nodeId": "node-ed2-df7c5d6e70f3ec880fdcba82",
+              "targetLayerId": "ed2-df7c5d6e70f3ec880fdcba82",
+              "parentNodeId": "node-ed2-062cc3940177b7c0fdbbc36a",
+              "transformOriginX": 0.5,
+              "transformOriginY": 0.5
+            },
+            {
+              "nodeId": "node-ed2-ba40b7656beee4775c9e3f94",
+              "targetLayerId": "ed2-ba40b7656beee4775c9e3f94",
+              "parentNodeId": "node-ed2-062cc3940177b7c0fdbbc36a",
+              "transformOriginX": 0.5,
+              "transformOriginY": 0.5
+            },
+            {
+              "nodeId": "node-ed2-83761a24a60afa34dce40ace",
+              "targetLayerId": "ed2-83761a24a60afa34dce40ace",
+              "parentNodeId": "node-ed2-215b122c85298699187741f9",
+              "transformOriginX": 0.5,
+              "transformOriginY": 0.5
+            },
+            {
+              "nodeId": "node-ed2-57778c97719bd0cf58433279",
+              "targetLayerId": "ed2-57778c97719bd0cf58433279",
+              "parentNodeId": "node-ed2-215b122c85298699187741f9",
+              "transformOriginX": 0.5,
+              "transformOriginY": 0.5
+            },
+            {
+              "nodeId": "node-ed2-3f2f1ca36417dd609bc4e5dc",
+              "targetLayerId": "ed2-3f2f1ca36417dd609bc4e5dc",
+              "parentNodeId": "node-ed2-2b192dcfb49481909686a557",
+              "transformOriginX": 0.5,
+              "transformOriginY": 0.5
+            },
+            {
+              "nodeId": "node-ed2-64108fd6c1c40195509354ec",
+              "targetLayerId": "ed2-64108fd6c1c40195509354ec",
+              "parentNodeId": "node-ed2-2b192dcfb49481909686a557",
+              "transformOriginX": 0.5,
+              "transformOriginY": 0.5
+            }
+          ],
+          "tracks": [
+            {
+              "trackId": "ed2-5f4f3872cd8ea78576c33883-static",
+              "targetLayerId": "ed2-5f4f3872cd8ea78576c33883",
+              "property": "opacity",
+              "unit": "ratio",
+              "keyframes": [
+                {
+                  "frame": 0,
+                  "value": 1.0,
+                  "easing": "linear",
+                  "cubicBezier": null
+                }
+              ]
+            },
+            {
+              "trackId": "ed2-d61a07c79a7ca1a5c9c8588f-static",
+              "targetLayerId": "ed2-d61a07c79a7ca1a5c9c8588f",
+              "property": "opacity",
+              "unit": "ratio",
+              "keyframes": [
+                {
+                  "frame": 36,
+                  "value": 1.0,
+                  "easing": "linear",
+                  "cubicBezier": null
+                }
+              ]
+            },
+            {
+              "trackId": "ed2-e3e45a43d8810a900f9aaac5-static",
+              "targetLayerId": "ed2-e3e45a43d8810a900f9aaac5",
+              "property": "opacity",
+              "unit": "ratio",
+              "keyframes": [
+                {
+                  "frame": 90,
+                  "value": 1.0,
+                  "easing": "linear",
+                  "cubicBezier": null
+                }
+              ]
+            },
+            {
+              "trackId": "ed2-2b930351b3fc29a592aacabe-static",
+              "targetLayerId": "ed2-2b930351b3fc29a592aacabe",
+              "property": "opacity",
+              "unit": "ratio",
+              "keyframes": [
+                {
+                  "frame": 120,
+                  "value": 1.0,
+                  "easing": "linear",
+                  "cubicBezier": null
+                }
+              ]
+            },
+            {
+              "trackId": "ed2-b9818da2b0ede2bfd32ce60d-static",
+              "targetLayerId": "ed2-b9818da2b0ede2bfd32ce60d",
+              "property": "opacity",
+              "unit": "ratio",
+              "keyframes": [
+                {
+                  "frame": 180,
+                  "value": 1.0,
+                  "easing": "linear",
+                  "cubicBezier": null
+                }
+              ]
+            },
+            {
+              "trackId": "ed2-b15128db49390fc7968685a6-static",
+              "targetLayerId": "ed2-b15128db49390fc7968685a6",
+              "property": "opacity",
+              "unit": "ratio",
+              "keyframes": [
+                {
+                  "frame": 240,
+                  "value": 1.0,
+                  "easing": "linear",
+                  "cubicBezier": null
+                }
+              ]
+            },
+            {
+              "trackId": "ed2-b69512050c44332165ca25e3-static",
+              "targetLayerId": "ed2-b69512050c44332165ca25e3",
+              "property": "opacity",
+              "unit": "ratio",
+              "keyframes": [
+                {
+                  "frame": 240,
+                  "value": 1.0,
+                  "easing": "linear",
+                  "cubicBezier": null
+                }
+              ]
+            },
+            {
+              "trackId": "ed2-5e409a01f167f88644bc53f8-static",
+              "targetLayerId": "ed2-5e409a01f167f88644bc53f8",
+              "property": "opacity",
+              "unit": "ratio",
+              "keyframes": [
+                {
+                  "frame": 240,
+                  "value": 1.0,
+                  "easing": "linear",
+                  "cubicBezier": null
+                }
+              ]
+            },
+            {
+              "trackId": "ed2-3ffc212d05e7792f31e67ac3-static",
+              "targetLayerId": "ed2-3ffc212d05e7792f31e67ac3",
+              "property": "opacity",
+              "unit": "ratio",
+              "keyframes": [
+                {
+                  "frame": 240,
+                  "value": 1.0,
+                  "easing": "linear",
+                  "cubicBezier": null
+                }
+              ]
+            },
+            {
+              "trackId": "ed2-3594e91a32bf3b5531d089dd-static",
+              "targetLayerId": "ed2-3594e91a32bf3b5531d089dd",
+              "property": "opacity",
+              "unit": "ratio",
+              "keyframes": [
+                {
+                  "frame": 240,
+                  "value": 1.0,
+                  "easing": "linear",
+                  "cubicBezier": null
+                }
+              ]
+            },
+            {
+              "trackId": "ed2-ba40b7656beee4775c9e3f94-static",
+              "targetLayerId": "ed2-ba40b7656beee4775c9e3f94",
+              "property": "opacity",
+              "unit": "ratio",
+              "keyframes": [
+                {
+                  "frame": 330,
+                  "value": 1.0,
+                  "easing": "linear",
+                  "cubicBezier": null
+                }
+              ]
+            },
+            {
+              "trackId": "ed2-83761a24a60afa34dce40ace-static",
+              "targetLayerId": "ed2-83761a24a60afa34dce40ace",
+              "property": "opacity",
+              "unit": "ratio",
+              "keyframes": [
+                {
+                  "frame": 330,
+                  "value": 1.0,
+                  "easing": "linear",
+                  "cubicBezier": null
+                }
+              ]
+            },
+            {
+              "trackId": "ed2-57778c97719bd0cf58433279-static",
+              "targetLayerId": "ed2-57778c97719bd0cf58433279",
+              "property": "opacity",
+              "unit": "ratio",
+              "keyframes": [
+                {
+                  "frame": 330,
+                  "value": 1.0,
+                  "easing": "linear",
+                  "cubicBezier": null
+                }
+              ]
+            },
+            {
+              "trackId": "ed2-3f2f1ca36417dd609bc4e5dc-static",
+              "targetLayerId": "ed2-3f2f1ca36417dd609bc4e5dc",
+              "property": "opacity",
+              "unit": "ratio",
+              "keyframes": [
+                {
+                  "frame": 330,
+                  "value": 1.0,
+                  "easing": "linear",
+                  "cubicBezier": null
+                }
+              ]
+            },
+            {
+              "trackId": "ed2-64108fd6c1c40195509354ec-static",
+              "targetLayerId": "ed2-64108fd6c1c40195509354ec",
+              "property": "opacity",
+              "unit": "ratio",
+              "keyframes": [
+                {
+                  "frame": 330,
+                  "value": 1.0,
+                  "easing": "linear",
+                  "cubicBezier": null
+                }
+              ]
+            }
+          ],
+          "transitions": [],
+          "audioEvents": [],
+          "reducedMotionSupported": true,
+          "constraints": [],
+          "sourceEvidenceIds": [],
+          "realityBinding": null,
+          "abstentions": [],
+          "createdBy": "3185fe88-2283-412e-97b7-d4e11a1b78ca",
+          "lineage": null,
+          "humanReviewRequired": true,
+          "createdAt": "2026-09-30T19:53:12.009904Z"
+        }
+      },
+      "contextualPlanId": "7d75f691-5e0c-4b30-9707-ada12d05426a",
+      "editingPolicy": "draft-first-preserve-message"
+    },
+    "tracks": [],
+    "mediaTimeline": {
+      "schemaVersion": "studio.media-timeline.v1",
+      "frameRate": {
+        "numerator": 30,
+        "denominator": 1
+      },
+      "durationFrames": 450,
+      "tracks": []
+    }
+  },
+  "contentReferences": [],
+  "assets": [
+    {
+      "id": "48669823-e76d-4100-b246-ae26100ad32d",
+      "version": null,
+      "mediaType": "video/mp4",
+      "checksum": "d129043ab6c5bf3b1034f8950431be9f3f910ee836015f99b4d38d575c179e09",
+      "origin": "uploaded",
+      "rightsStatus": "verified",
+      "provenance": {}
+    },
+    {
+      "id": "3135a6ac-363c-4218-9caf-1ebcbee4e86d",
+      "version": null,
+      "mediaType": "video/mp4",
+      "checksum": "7a70b047d3d6c33077e406becde92ce1291c38dc22aefc5916488268a92f6831",
+      "origin": "uploaded",
+      "rightsStatus": "verified",
+      "provenance": {}
+    },
+    {
+      "id": "ee371554-79a9-4cdd-8748-a98d85b47a0a",
+      "version": null,
+      "mediaType": "video/mp4",
+      "checksum": "da7e3a73ca1919578e8b5538e38cd94b811bb99c3da90dff183b15f5321585f6",
+      "origin": "uploaded",
+      "rightsStatus": "verified",
+      "provenance": {}
+    },
+    {
+      "id": "aa29ca5e-28cd-49d4-856a-9aefebd27313",
+      "version": null,
+      "mediaType": "video/mp4",
+      "checksum": "e2f11f805e2f3958a18adc0edc9c606fc588061e431a88cc2a616b08021199ab",
+      "origin": "uploaded",
+      "rightsStatus": "verified",
+      "provenance": {}
+    },
+    {
+      "id": "4c8ba2b0-c9a9-4b98-96ba-ba9d9ecd08a6",
+      "version": null,
+      "mediaType": "image/png",
+      "checksum": "bf839028b214655253897fd23240cfef0fed835ef0e1626aa039e10a7887d1bb",
+      "origin": "uploaded",
+      "rightsStatus": "verified",
+      "provenance": {}
+    }
+  ],
+  "identityRef": null,
+  "voiceRef": null,
+  "sceneRef": null,
+  "scriptRef": null,
+  "shotPlanRef": null,
+  "lineage": [],
+  "review": {
+    "status": "draft",
+    "requestedVersion": null,
+    "approvalId": null
+  },
+  "exports": [],
+  "createdAt": "2026-09-30T19:53:10.722409Z",
+  "updatedAt": "2026-09-30T19:53:12.510507Z"
+}

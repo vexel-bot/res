@@ -1,0 +1,85 @@
+name: Studios Kokoro model asset manifest
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  resolve-model-assets:
+    name: Hash frozen Kokoro model assets
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      HF_HOME: /tmp/clicko-kokoro-hf
+      HF_HUB_DISABLE_TELEMETRY: "1"
+      KOKORO_MODEL_REVISION: f3ff3571791e39611d31c381e3a41a3af07b4987
+    steps:
+      - name: Checkout pinned Clicko source
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install pinned model downloader and contracts
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check \
+            "huggingface-hub==0.28.1" \
+            --requirement backend/requirements.txt
+
+      - name: Download only the approved revision and runtime files
+        id: snapshot
+        shell: bash
+        run: |
+          set -euo pipefail
+          snapshot=$(python - <<'PY'
+          import os
+          from pathlib import Path
+          from huggingface_hub import snapshot_download
+          revision = os.environ["KOKORO_MODEL_REVISION"]
+          snapshot = Path(snapshot_download(
+              repo_id="hexgrad/Kokoro-82M",
+              revision=revision,
+              allow_patterns=[
+                  "README.md",
+                  "config.json",
+                  "kokoro-v1_0.pth",
+                  "voices/pf_dora.pt",
+                  "voices/pm_alex.pt",
+                  "voices/pm_santa.pt",
+              ],
+          ))
+          if snapshot.name != revision:
+              raise SystemExit("downloaded_snapshot_revision_mismatch")
+          reference = snapshot.parent.parent / "refs" / "main"
+          reference.parent.mkdir(parents=True, exist_ok=True)
+          reference.write_text(revision, encoding="utf-8")
+          print(snapshot)
+          PY
+          )
+          echo "path=$snapshot" >> "$GITHUB_OUTPUT"
+
+      - name: Generate and re-verify byte manifest
+        shell: bash
+        run: |
+          set -euo pipefail
+          python backend/scripts/generate_kokoro_model_manifest.py \
+            --snapshot "${{ steps.snapshot.outputs.path }}" \
+            --revision "$KOKORO_MODEL_REVISION" \
+            --output /tmp/kokoro-82m-stock.model-assets.json \
+            | tee /tmp/kokoro-82m-stock.model-assets.verification.json
+
+      - name: Upload manifests only
+        uses: actions/upload-artifact@v4
+        with:
+          name: clicko-kokoro-model-assets-f3ff357
+          path: |
+            /tmp/kokoro-82m-stock.model-assets.json
+            /tmp/kokoro-82m-stock.model-assets.verification.json
+          if-no-files-found: error
+          retention-days: 14

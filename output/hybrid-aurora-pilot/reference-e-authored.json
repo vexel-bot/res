@@ -1,0 +1,506 @@
+{
+  "authorship": "directed_reference",
+  "manualInterventions": [
+    "Seleção de material, cortes, enquadramentos e textos pelo agente; não é execução autônoma do planejador."
+  ],
+  "direction": {
+    "schemaVersion": "studio.contextual-plan-request.v2",
+    "expectedDocumentRevision": 1,
+    "intent": {
+      "objective": "Anúncio Café Aurora, 15 segundos, sem locução",
+      "pacing": "balanced"
+    },
+    "scenes": [
+      {
+        "id": "opening",
+        "purpose": "Ação observável: beans",
+        "durationFrames": 60,
+        "background": "#17130e",
+        "verification": [
+          "A ação avança dentro da imagem; avaliar corte em reprodução."
+        ],
+        "elements": [
+          {
+            "id": "action",
+            "kind": "video",
+            "purpose": "Preparo real em movimento",
+            "assetId": "48669823-e76d-4100-b246-ae26100ad32d",
+            "sourceStartSeconds": 0.3,
+            "playbackRate": 1,
+            "sourceAudio": "mute",
+            "durationFrames": 60,
+            "width": 720,
+            "height": 1280,
+            "x": 0,
+            "y": 0,
+            "objectFit": "cover",
+            "cropIntentional": true,
+            "visualRole": "hero"
+          }
+        ],
+        "nativeComponents": [
+          {
+            "component": "action_montage",
+            "version": 1,
+            "targetIds": [
+              "action"
+            ]
+          }
+        ],
+        "audio": [
+          {
+            "id": "music",
+            "role": "music",
+            "purpose": "Trilha instrumental CC0",
+            "assetId": "fa00b46a-0139-4303-8f49-41d97ca0c66d",
+            "durationFrames": 60,
+            "sourceStartSeconds": 0.0,
+            "gainDb": -12,
+            "fadeInFrames": 8,
+            "fadeOutFrames": 0
+          },
+          {
+            "id": "cup",
+            "role": "effect",
+            "purpose": "Xícara pousada no plano de abertura",
+            "assetId": "30a6b285-0ed2-4979-a0fb-d881f477ed92",
+            "startFrame": 0,
+            "durationFrames": 45,
+            "syncElementId": "action",
+            "gainDb": -13,
+            "fadeOutFrames": 6
+          }
+        ]
+      },
+      {
+        "id": "preparation",
+        "purpose": "Ação observável: brew",
+        "durationFrames": 45,
+        "background": "#17130e",
+        "verification": [
+          "A ação avança dentro da imagem; avaliar corte em reprodução."
+        ],
+        "elements": [
+          {
+            "id": "action",
+            "kind": "video",
+            "purpose": "Preparo real em movimento",
+            "assetId": "3135a6ac-363c-4218-9caf-1ebcbee4e86d",
+            "sourceStartSeconds": 1,
+            "playbackRate": 1,
+            "sourceAudio": "mute",
+            "durationFrames": 45,
+            "width": 720,
+            "height": 1280,
+            "x": 0,
+            "y": 0,
+            "objectFit": "cover",
+            "cropIntentional": true,
+            "visualRole": "hero"
+          }
+        ],
+        "nativeComponents": [
+          {
+            "component": "action_montage",
+            "version": 1,
+            "targetIds": [
+              "action"
+            ]
+          }
+        ],
+        "audio": [
+          {
+            "id": "music",
+            "role": "music",
+            "purpose": "Trilha instrumental CC0",
+            "assetId": "fa00b46a-0139-4303-8f49-41d97ca0c66d",
+            "durationFrames": 45,
+            "sourceStartSeconds": 2.0,
+            "gainDb": -12,
+            "fadeInFrames": 0,
+            "fadeOutFrames": 0
+          },
+          {
+            "id": "pour",
+            "role": "effect",
+            "purpose": "Água ou café vertido em sincronia com a ação",
+            "assetId": "56b66f52-9f67-49d6-a968-7824993e4673",
+            "startFrame": 0,
+            "durationFrames": 45,
+            "syncElementId": "action",
+            "gainDb": 6,
+            "fadeOutFrames": 8
+          }
+        ]
+      },
+      {
+        "id": "preparation-detail",
+        "purpose": "Ação observável: brew",
+        "durationFrames": 45,
+        "background": "#17130e",
+        "verification": [
+          "A ação avança dentro da imagem; avaliar corte em reprodução."
+        ],
+        "elements": [
+          {
+            "id": "action",
+            "kind": "video",
+            "purpose": "Preparo real em movimento",
+            "assetId": "3135a6ac-363c-4218-9caf-1ebcbee4e86d",
+            "sourceStartSeconds": 2.5,
+            "playbackRate": 1,
+            "sourceAudio": "mute",
+            "durationFrames": 45,
+            "width": 820.8,
+            "height": 1459.1999999999998,
+            "x": -50.400000000000006,
+            "y": -89.60000000000001,
+            "objectFit": "cover",
+            "cropIntentional": true,
+            "visualRole": "hero"
+          }
+        ],
+        "nativeComponents": [
+          {
+            "component": "action_montage",
+            "version": 1,
+            "targetIds": [
+              "action"
+            ]
+          }
+        ],
+        "audio": [
+          {
+            "id": "music",
+            "role": "music",
+            "purpose": "Trilha instrumental CC0",
+            "assetId": "fa00b46a-0139-4303-8f49-41d97ca0c66d",
+            "durationFrames": 45,
+            "sourceStartSeconds": 3.5,
+            "gainDb": -12,
+            "fadeInFrames": 0,
+            "fadeOutFrames": 0
+          },
+          {
+            "id": "pour",
+            "role": "effect",
+            "purpose": "Água ou café vertido em sincronia com a ação",
+            "assetId": "56b66f52-9f67-49d6-a968-7824993e4673",
+            "startFrame": 0,
+            "durationFrames": 45,
+            "syncElementId": "action",
+            "gainDb": 6,
+            "fadeOutFrames": 8
+          }
+        ]
+      },
+      {
+        "id": "serving",
+        "purpose": "Ação observável: pour",
+        "durationFrames": 90,
+        "background": "#17130e",
+        "verification": [
+          "A ação avança dentro da imagem; avaliar corte em reprodução."
+        ],
+        "elements": [
+          {
+            "id": "action",
+            "kind": "video",
+            "purpose": "Preparo real em movimento",
+            "assetId": "ee371554-79a9-4cdd-8748-a98d85b47a0a",
+            "sourceStartSeconds": 0.7,
+            "playbackRate": 1,
+            "sourceAudio": "mute",
+            "durationFrames": 90,
+            "width": 720,
+            "height": 1280,
+            "x": 0,
+            "y": 0,
+            "objectFit": "cover",
+            "cropIntentional": true,
+            "visualRole": "hero"
+          }
+        ],
+        "nativeComponents": [
+          {
+            "component": "action_montage",
+            "version": 1,
+            "targetIds": [
+              "action"
+            ]
+          }
+        ],
+        "audio": [
+          {
+            "id": "music",
+            "role": "music",
+            "purpose": "Trilha instrumental CC0",
+            "assetId": "fa00b46a-0139-4303-8f49-41d97ca0c66d",
+            "durationFrames": 90,
+            "sourceStartSeconds": 5.0,
+            "gainDb": -12,
+            "fadeInFrames": 0,
+            "fadeOutFrames": 0
+          },
+          {
+            "id": "pour",
+            "role": "effect",
+            "purpose": "Água ou café vertido em sincronia com a ação",
+            "assetId": "56b66f52-9f67-49d6-a968-7824993e4673",
+            "startFrame": 0,
+            "durationFrames": 50,
+            "syncElementId": "action",
+            "gainDb": 6,
+            "fadeOutFrames": 8
+          }
+        ]
+      },
+      {
+        "id": "reveal",
+        "purpose": "Produto e chamada",
+        "durationFrames": 90,
+        "background": "#17130e",
+        "elements": [
+          {
+            "id": "atmosphere",
+            "kind": "video",
+            "purpose": "Continuar o ritual ao fundo",
+            "assetId": "aa29ca5e-28cd-49d4-856a-9aefebd27313",
+            "sourceStartSeconds": 3,
+            "sourceAudio": "mute",
+            "durationFrames": 90,
+            "width": 720,
+            "height": 1280,
+            "objectFit": "cover",
+            "cropIntentional": true,
+            "visualRole": "background"
+          },
+          {
+            "id": "panel",
+            "kind": "shape",
+            "purpose": "Área de leitura contrastante",
+            "durationFrames": 90,
+            "x": 36.0,
+            "y": 371.2,
+            "width": 648.0,
+            "height": 550.4,
+            "fill": "#17130e",
+            "radius": 0
+          },
+          {
+            "id": "package",
+            "kind": "image",
+            "purpose": "Produto do acervo, referência de baixa resolução",
+            "assetId": "4c8ba2b0-c9a9-4b98-96ba-ba9d9ecd08a6",
+            "durationFrames": 90,
+            "x": 72.0,
+            "y": 460.79999999999995,
+            "width": 576.0,
+            "height": 320.0,
+            "objectFit": "contain",
+            "visualRole": "hero",
+            "zIndex": 2
+          },
+          {
+            "id": "name",
+            "kind": "text",
+            "purpose": "Identificar a marca",
+            "text": "CAFÉ AURORA",
+            "durationFrames": 90,
+            "x": 93.60000000000001,
+            "y": 384.0,
+            "width": 532.8,
+            "height": 70.4,
+            "fontSize": 33.12,
+            "letterSpacing": 4,
+            "color": "#e8c48c",
+            "textAlign": "center",
+            "visualRole": "text"
+          },
+          {
+            "id": "claim",
+            "kind": "text",
+            "purpose": "Mensagem final",
+            "text": "O tempo de um bom café.",
+            "durationFrames": 90,
+            "x": 86.39999999999999,
+            "y": 806.4,
+            "width": 547.2,
+            "height": 66.56,
+            "fontSize": 28.08,
+            "color": "#fff3da",
+            "textAlign": "center",
+            "visualRole": "text"
+          }
+        ],
+        "nativeComponents": [
+          {
+            "component": "action_montage",
+            "targetIds": [
+              "atmosphere"
+            ],
+            "version": 1
+          },
+          {
+            "component": "product_demonstration",
+            "targetIds": [
+              "package"
+            ],
+            "version": 1,
+            "entranceFrames": 20,
+            "continuityKey": "aurora-package"
+          },
+          {
+            "component": "integrated_typography",
+            "targetIds": [
+              "name",
+              "claim"
+            ],
+            "version": 1,
+            "entranceFrames": 12,
+            "staggerFrames": 2
+          }
+        ],
+        "verification": [
+          "Preservar posição da embalagem no corte; leitura confortável."
+        ],
+        "audio": [
+          {
+            "id": "music",
+            "role": "music",
+            "purpose": "Trilha instrumental CC0",
+            "assetId": "fa00b46a-0139-4303-8f49-41d97ca0c66d",
+            "durationFrames": 90,
+            "sourceStartSeconds": 8.0,
+            "gainDb": -12,
+            "fadeInFrames": 0,
+            "fadeOutFrames": 0
+          }
+        ]
+      },
+      {
+        "id": "closing",
+        "purpose": "Produto e chamada",
+        "durationFrames": 120,
+        "background": "#17130e",
+        "elements": [
+          {
+            "id": "atmosphere",
+            "kind": "video",
+            "purpose": "Continuar o ritual ao fundo",
+            "assetId": "aa29ca5e-28cd-49d4-856a-9aefebd27313",
+            "sourceStartSeconds": 6,
+            "sourceAudio": "mute",
+            "durationFrames": 120,
+            "width": 720,
+            "height": 1280,
+            "objectFit": "cover",
+            "cropIntentional": true,
+            "visualRole": "background"
+          },
+          {
+            "id": "panel",
+            "kind": "shape",
+            "purpose": "Área de leitura contrastante",
+            "durationFrames": 120,
+            "x": 36.0,
+            "y": 371.2,
+            "width": 648.0,
+            "height": 550.4,
+            "fill": "#17130e",
+            "radius": 0
+          },
+          {
+            "id": "package",
+            "kind": "image",
+            "purpose": "Produto do acervo, referência de baixa resolução",
+            "assetId": "4c8ba2b0-c9a9-4b98-96ba-ba9d9ecd08a6",
+            "durationFrames": 120,
+            "x": 72.0,
+            "y": 460.79999999999995,
+            "width": 576.0,
+            "height": 320.0,
+            "objectFit": "contain",
+            "visualRole": "hero",
+            "zIndex": 2
+          },
+          {
+            "id": "name",
+            "kind": "text",
+            "purpose": "Identificar a marca",
+            "text": "CAFÉ AURORA",
+            "durationFrames": 120,
+            "x": 93.60000000000001,
+            "y": 384.0,
+            "width": 532.8,
+            "height": 70.4,
+            "fontSize": 33.12,
+            "letterSpacing": 4,
+            "color": "#e8c48c",
+            "textAlign": "center",
+            "visualRole": "text"
+          },
+          {
+            "id": "claim",
+            "kind": "text",
+            "purpose": "Mensagem final",
+            "text": "Seu próximo ritual.",
+            "durationFrames": 120,
+            "x": 86.39999999999999,
+            "y": 806.4,
+            "width": 547.2,
+            "height": 66.56,
+            "fontSize": 28.08,
+            "color": "#fff3da",
+            "textAlign": "center",
+            "visualRole": "text"
+          }
+        ],
+        "nativeComponents": [
+          {
+            "component": "action_montage",
+            "targetIds": [
+              "atmosphere"
+            ],
+            "version": 1
+          },
+          {
+            "component": "product_demonstration",
+            "targetIds": [
+              "package"
+            ],
+            "version": 1,
+            "entranceFrames": 1,
+            "continuityKey": "aurora-package"
+          },
+          {
+            "component": "integrated_typography",
+            "targetIds": [
+              "name",
+              "claim"
+            ],
+            "version": 1,
+            "entranceFrames": 1,
+            "staggerFrames": 0
+          }
+        ],
+        "verification": [
+          "Preservar posição da embalagem no corte; leitura confortável."
+        ],
+        "audio": [
+          {
+            "id": "music",
+            "role": "music",
+            "purpose": "Trilha instrumental CC0",
+            "assetId": "fa00b46a-0139-4303-8f49-41d97ca0c66d",
+            "durationFrames": 120,
+            "sourceStartSeconds": 11.0,
+            "gainDb": -12,
+            "fadeInFrames": 0,
+            "fadeOutFrames": 20
+          }
+        ]
+      }
+    ]
+  }
+}

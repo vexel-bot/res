@@ -1,0 +1,27 @@
+{
+  "promptId": "single-object-motion",
+  "prompt": "One small blue toy car moves steadily from left to right across a plain light floor, locked camera, centered medium shot, one recognizable object, one observable action, clean background, no text, no logo, no watermark",
+  "seed": 20260913,
+  "receipt": {
+    "errorCode": "NameError",
+    "errorMessage": "local_inference_failed",
+    "executionId": "a76eed3f-627b-510d-89f9-427ad210f085",
+    "minimumAvailableSystemRamMiB": 3482,
+    "minimumAvailableVramMiB": 3962,
+    "observedSystemRamDeltaPeakMiB": 37,
+    "observedVramDeltaPeakMiB": 0,
+    "profileDigestSha256": "60f09a8b2b815cf4adc0187452828c50acc9f2ccb7a09ef94ae041e087071bec",
+    "profileId": "animatediff-lightning-sd15-a-v1",
+    "requestDigestSha256": "1bece63cf456988f44e708f8787b55f6ea8956ea436e9001f5228bae0913dfbc",
+    "runtimeDigests": {
+      "adapter": "7e8140d5bfab832638023e6d87cd1bae9c210124ad123ccdd2d47073f914f2fd",
+      "api": "e1f605891a38702630ad035db991ce3a4f62ee1249b51a7c8524ae6bc9510706",
+      "lock": "693ffbc0fefc0d77abd81b4336b8de837ec07318e0f5083bcec66f93aaa24d31",
+      "runner": "6cd0ce9ace772a38a4e16a960d2a71db4ee04856c3f3515ab3461ed9ccc948b7",
+      "supervisor": "6084dca6d72b77026dca18237c50d02512b1b7eefcdb7933e61493a35b146881"
+    },
+    "schemaVersion": "studio.scene-generation-receipt.v2",
+    "stage": "inference",
+    "status": "failed"
+  }
+}

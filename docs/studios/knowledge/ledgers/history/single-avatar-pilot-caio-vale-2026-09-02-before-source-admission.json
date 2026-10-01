@@ -1,0 +1,72 @@
+{
+  "schemaVersion": "studio.single-avatar-pilot.v1",
+  "pilotId": "single-avatar-caio-vale-r0-2026-09-02",
+  "avatarId": "avatar-caio-vale",
+  "baseVideoCount": 1,
+  "sourceVideo": null,
+  "videoGenerationProvider": "openai-sora-2",
+  "providerFreeTierVerified": false,
+  "externalSpendLimitUsd": 1.5,
+  "productionState": "awaiting_voice_casting",
+  "visualProvider": "musetalk-v1.5-local",
+  "voiceRoute": "local-only",
+  "trainingVideoReuse": "one-video-only",
+  "blockers": [
+    "Google AI Studio marks Gemini Omni and Veo video generation as Paid.",
+    "The signed-in AI Studio account reports No Cloud Projects Available on the spend page.",
+    "The pilot spend ceiling is USD 1, but no Veo operation was admitted by the provider.",
+    "The local RTX 2050 has 4 GB VRAM; the audited Wan2.2 route requires at least 24 GB.",
+    "The local HeyGem Docker daemon is unavailable and its recommended hardware envelope is not met.",
+    "The single LTX Video ZeroGPU request was accepted but ended with an empty error event and produced no file.",
+    "The first Veo REST submission was rejected as an invalid request before an operation was created.",
+    "The corrected Veo request returned RESOURCE_EXHAUSTED for API_1 before an operation was created.",
+    "The same corrected Veo request returned RESOURCE_EXHAUSTED for API_2 before an operation was created.",
+    "The updated API_1 authenticated successfully against the Veo model metadata endpoint, but the generation endpoint still returned RESOURCE_EXHAUSTED before creating an operation.",
+    "A second replacement value for API_1 also authenticated successfully, but its generation request returned RESOURCE_EXHAUSTED before creating an operation.",
+    "No Veo long-running operation exists and no billable video was produced.",
+    "The previous OpenAI authentication blocker was cleared: the current key passed the non-billable Sora model preflight on 2026-09-04. Video generation remains pending voice casting.",
+    "MuseTalk 1.5 is the effective local evaluation renderer; HeyGem remains an architectural reference and heygemModelCreated must remain false."
+  ],
+  "sourceVideoSpecification": {
+    "durationMilliseconds": 12000,
+    "resolution": "720x1280",
+    "aspectRatio": "9:16",
+    "shotCount": 1,
+    "camera": "locked medium close-up at eye level, natural 50 mm equivalent perspective",
+    "performance": "neutral attentive baseline, natural blinking and breathing, one small comprehension pause, hands below the chin",
+    "lighting": "stable soft key at 35 degrees, gentle fill, subtle hair separation, no flicker",
+    "environment": "matte warm-gray studio with restrained depth and no text, logos or moving background elements",
+    "audio": "silent or discarded; never used for voice training",
+    "positivePrompt": "One continuous twelve-second vertical studio portrait video of Caio Vale, an original fictional Brazilian adult man in his early thirties with medium tan skin, short dark brown textured hair, subtle trimmed stubble and dark brown eyes. He wears a deep teal matte overshirt over a charcoal crew-neck shirt. Locked eye-level medium close-up, natural 50 mm equivalent perspective, stable soft key light and gentle fill, warm-gray matte studio background with subtle depth. He faces the camera silently with an attentive, approachable expression, natural breathing, two subtle blinks and restrained head and eyebrow micro-movements. Photoreal human skin texture, temporally consistent face, hair, clothing and lighting. Single person, single take, no cut, no camera movement.",
+    "negativeConstraints": [
+      "no identifiable-person resemblance",
+      "no dialogue or generated voice",
+      "no second person",
+      "no cut, transition, zoom or camera movement",
+      "no hand crossing the mouth, face or neck",
+      "no text, logo or watermark",
+      "no beauty filter, plastic skin or exaggerated expression",
+      "no face, hair, wardrobe or background morphing",
+      "no lip motion that implies speech"
+    ]
+  },
+  "councilDecision": {
+    "dominantLens": "david-fincher-performance-calibration-I1",
+    "supportingLens": "steven-spielberg-emotional-legibility-I1",
+    "decision": "Use one controlled behavioral baseline whose micro-movements remain readable before attempting lip-synced performance.",
+    "rejected": [
+      "multiple source videos because they create identity ambiguity in the first benchmark",
+      "dynamic camera and expressive gestures because they conceal temporal face defects",
+      "native generated speech because voice must remain on the local provider route"
+    ]
+  },
+  "verification": {
+    "externalRequestSent": true,
+    "videoGenerated": false,
+    "heygemModelCreated": false,
+    "externalCostIncurredUsd": 0,
+    "generationAttemptCount": 1,
+    "providerRequestId": "6fc2aed7f3c842a1a85983553769d70a",
+    "failureReason": "Historical attempts produced no source video. ZeroGPU returned an error, Veo quotas were unavailable and an earlier OpenAI key failed authentication. The replacement OpenAI key passed preflight on 2026-09-04; generation is intentionally waiting for voice casting."
+  }
+}

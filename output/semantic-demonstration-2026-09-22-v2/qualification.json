@@ -1,0 +1,229 @@
+{
+  "schemaVersion": "studio.semantic-demonstration-qualification.v2",
+  "classification": "controlled_engineering_fixture",
+  "autonomousCreativePilot": false,
+  "renderChecksumSha256": "47b931042d6e57239882ee886395154315e28c289c35d1612f8642ef2cb508c2",
+  "status": "awaiting_human_review",
+  "technical": "passed",
+  "execution": "observed",
+  "semantic": "passed",
+  "visualEditorial": "unreviewed",
+  "observedResult": {
+    "status": "passed",
+    "evidence": [
+      {
+        "sceneId": "adaptation",
+        "assertionId": "same-content-two-formats",
+        "criterion": "checksum_bound_semantic_sequence",
+        "startFrame": 0,
+        "endFrame": 239,
+        "status": "observed"
+      },
+      {
+        "sceneId": "adaptation",
+        "assertionId": "publish-is-audible",
+        "criterion": "checksum_bound_semantic_sequence",
+        "startFrame": 98,
+        "endFrame": 109,
+        "status": "observed"
+      },
+      {
+        "assertionId": "same-content-two-formats",
+        "sceneId": "adaptation",
+        "kind": "format_adaptation",
+        "essential": true,
+        "status": "passed",
+        "checkpoints": [
+          0,
+          58,
+          120,
+          200,
+          239
+        ],
+        "visibility": {
+          "portrait": [
+            false,
+            true,
+            false,
+            false,
+            false
+          ],
+          "square": [
+            false,
+            false,
+            true,
+            true,
+            true
+          ]
+        },
+        "partVisibility": {
+          "portrait:photo": [
+            false,
+            true,
+            false,
+            false,
+            false
+          ],
+          "portrait:headline": [
+            false,
+            true,
+            false,
+            false,
+            false
+          ],
+          "portrait:brand": [
+            false,
+            true,
+            false,
+            false,
+            false
+          ],
+          "square:photo": [
+            false,
+            false,
+            true,
+            true,
+            true
+          ],
+          "square:headline": [
+            false,
+            false,
+            true,
+            true,
+            true
+          ],
+          "square:brand": [
+            false,
+            false,
+            true,
+            true,
+            true
+          ]
+        },
+        "completeContentVisibility": {
+          "portrait": [
+            false,
+            true,
+            false,
+            false,
+            false
+          ],
+          "square": [
+            false,
+            false,
+            true,
+            true,
+            true
+          ]
+        },
+        "pixelEvidence": {
+          "portrait:photo": {
+            "status": "observed",
+            "frame": 58,
+            "lumaStdDev": 78.059,
+            "signature": "1111111111111111111111111111111111111111111111110000011111100000000001000010000000001000000111000000100000010110000010000001001000001000000101100000100000011100000001000010000000000011110000000000000000000000000000000000000011111111111111111111111111111111"
+          },
+          "portrait:headline": {
+            "status": "observed",
+            "frame": 58,
+            "lumaStdDev": 66.879,
+            "signature": "1111111111111100111111111111111011111111111111101111111111111110000001000000000001110000000000001111000000000000111100000000000011110000000000000111000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+          },
+          "portrait:brand": {
+            "status": "observed",
+            "frame": 58,
+            "lumaStdDev": 57.078,
+            "signature": "0000000000000000000000001100000011111111110000001111111111000000111111111000000011111011110000001111111111000000111111111000000011111111110000001111011111000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+          },
+          "square:photo": {
+            "status": "observed",
+            "frame": 200,
+            "lumaStdDev": 75.883,
+            "signature": "1111111111111111111111111111111111111011110111111100001111000011110001000010001111000100001110111100010000101011110001000010101111000100001010111100010000111011110001000010001111000010010000111100000110000011110000000000001111000000000000111111111111111111"
+          },
+          "square:headline": {
+            "status": "observed",
+            "frame": 200,
+            "lumaStdDev": 77.681,
+            "signature": "0001000000000000111111111111111011111111111111101111111111111110111011111111111011111111111111100000000000000000000100000000000011110000000000001111000000000000111100000000000011110000000000001111000000000000000000000000000000000000000000000000000000000000"
+          },
+          "square:brand": {
+            "status": "observed",
+            "frame": 200,
+            "lumaStdDev": 53.815,
+            "signature": "0000000000000000000000001000000011111111100000001111111110000000111111111000000011111111100000001111111110000000111111111000000011111111100000000110000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+          }
+        },
+        "observedStateFrames": {
+          "portrait": 58,
+          "square": 200
+        },
+        "observedViewportAspects": {
+          "portrait": 0.639997,
+          "square": 1.0
+        },
+        "sequenceOrdered": true,
+        "primaryMediaSimilarity": 0.664062,
+        "interfaceEvent": null,
+        "interfaceGeometry": [],
+        "audioMeasurement": null,
+        "reason": "Canonical parts have rendered pixel evidence in ordered, visibly distinct states.",
+        "evidenceRequired": "temporal_sequence",
+        "evidenceBasis": "rendered_pixels_geometry_and_contract",
+        "provesHumanComprehension": false
+      },
+      {
+        "assertionId": "publish-is-audible",
+        "sceneId": "adaptation",
+        "kind": "audible_event",
+        "essential": true,
+        "status": "passed",
+        "checkpoints": [
+          98,
+          104,
+          109
+        ],
+        "visibility": {},
+        "partVisibility": {},
+        "completeContentVisibility": {},
+        "pixelEvidence": {},
+        "observedStateFrames": {},
+        "observedViewportAspects": {},
+        "sequenceOrdered": null,
+        "primaryMediaSimilarity": null,
+        "interfaceEvent": null,
+        "interfaceGeometry": [],
+        "audioMeasurement": {
+          "status": "passed",
+          "sampleCount": 3200,
+          "rms": 2876.171,
+          "peak": 8517
+        },
+        "reason": "A bound effect event and decoded mixed audio are both present in the asserted interval.",
+        "evidenceRequired": "mixed_audio",
+        "evidenceBasis": "bound_effect_and_decoded_mix",
+        "provesHumanComprehension": false
+      }
+    ],
+    "reason": "The bound render executes the operations and proves every essential semantic assertion.",
+    "nextAction": null
+  },
+  "coverage": {
+    "schemaVersion": "studio.visual-coverage.v2",
+    "requestedFrames": 9,
+    "observedFrames": 9,
+    "complete": true,
+    "frameSampleComplete": true,
+    "wholeVideoInspected": false,
+    "rendererGeometryFrames": 15
+  },
+  "humanReview": "pending",
+  "commerciallyQualified": false,
+  "limitations": [
+    "This fixture is authored by an engineering script and does not prove autonomous creative direction.",
+    "Checkpoints do not prove continuous motion, material relevance or action completion.",
+    "Declared contrast findings require review against the decoded images.",
+    "Human scores are never inferred from successful decoding.",
+    "Whole-video coverage is false until every required interval is inspected at its declared density."
+  ]
+}

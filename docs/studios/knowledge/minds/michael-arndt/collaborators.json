@@ -1,0 +1,24 @@
+{
+  "schema_version": "studio.collaboration-graph.v1",
+  "anchor": "Michael Arndt",
+  "status": "credits_pending_per_work_verification",
+  "nodes": [
+    {
+      "name": "Pixar story teams",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Jonathan Dayton",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Valerie Faris",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Lee Unkrich",
+      "role": "verify_per_work"
+    }
+  ],
+  "edges": []
+}

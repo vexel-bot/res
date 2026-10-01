@@ -1,0 +1,28 @@
+{
+  "schema_version": "studio.collaboration-graph.v1",
+  "anchor": "Tony Gilroy",
+  "status": "credits_pending_per_work_verification",
+  "nodes": [
+    {
+      "name": "Dan Gilroy",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "John Gilroy",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Beau Willimon",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Stephen Schiff",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Diego Luna",
+      "role": "verify_per_work"
+    }
+  ],
+  "edges": []
+}

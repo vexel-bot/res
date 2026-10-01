@@ -1,0 +1,55 @@
+{
+  "schema_version": "studio.reality-perception-benchmark-evidence.v1",
+  "run_id": "opencv-baseline-20260825T214906Z",
+  "corpus_id": "opencv-baseline-corpus-v1",
+  "corpus_digest_sha256": "c4ed7f2ff783be28e541353c47f73dd076749bb702a7bbeb72bc84b1a0f8a0ed",
+  "candidate_id": "opencv-reality-baseline",
+  "candidate_manifest_digest_sha256": "4be8fc9c8f66d56279543324c1c5bb74a0a42e62ba33b7ed21b96bd5a0417fcd",
+  "report_digest_sha256": "b7ef2f9387decd6ebfde0c27633e69a904e9678b5d70b2dc172ea89566df0779",
+  "evaluator_digest_sha256": "ee3bd51dd159323dcdc9e27f5dbc193485ce590bc8aab669a2b06b48409ffb85",
+  "generated_at": "2026-08-25T21:49:06Z",
+  "environment": {
+    "python_version": "3.11.9",
+    "opencv_version": "4.13.0",
+    "numpy_version": "2.2.6",
+    "dependency_lock_digest_sha256": "ff9128c901530e0285efe0e258f6bef7314a72782d7650e25a315b41e7011e76",
+    "isolated_environment": true,
+    "synthetic_only": true,
+    "provider_registered": false,
+    "worker_manifest_advertised": false
+  },
+  "corpus": {
+    "case_count": 11,
+    "scenarios": [
+      "static",
+      "pan",
+      "tilt",
+      "roll",
+      "zoom",
+      "no_horizon",
+      "low_texture",
+      "cut",
+      "blur",
+      "foreground",
+      "distractors"
+    ],
+    "failed_cases": [],
+    "failed_metrics": []
+  },
+  "metrics": {
+    "motion_label_accuracy": 1.0,
+    "horizon_presence_accuracy": 1.0,
+    "gravity_presence_accuracy": 1.0,
+    "track_requirement_accuracy": 1.0,
+    "status_accuracy": 1.0,
+    "abstention_compliance": 1.0
+  },
+  "technical_decision": "passed",
+  "activation_decision": "incomplete",
+  "incomplete_reasons": ["candidate_status:evaluation"],
+  "external_report_ref": "clicko-oss-evaluation/reports/opencv-baseline-2026-08-25-r4-lock-guard.json",
+  "notes": [
+    "The first procedural run was rejected and is retained in ADR-016 as a fixture diagnostic: four cases failed before the generator was corrected.",
+    "This evidence does not promote the provider. Artifact/legal review, Linux image provenance, worker attestation and production registration remain blocked."
+  ]
+}

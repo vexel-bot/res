@@ -1,0 +1,571 @@
+{
+  "schemaVersion": "studio.compiler-replay-evidence.v1",
+  "source": "stored_provider_response",
+  "manualSceneOrAssetSelection": false,
+  "sourceResponseKey": "06614dc7-c532-40c7-b9ca-8653c6ad7686/temporary/6d5a653260824ee89ee6f0d56a707d0f.json",
+  "sourcePlanId": "77feb4be-ded6-4d52-b8a6-c19b640a309d",
+  "planId": "e49ddf97-938d-4107-aa44-0e5941d8e6b6",
+  "planRevision": 1,
+  "documentRevision": 4,
+  "renderJobId": "ed64a794-ffa4-4fa9-812d-97296af85a0c",
+  "renderStatus": "succeeded",
+  "outcome": "succeeded",
+  "artifact": {
+    "schemaVersion": "studio.rendered-video-artifact.v1",
+    "assetId": "cb1d05d8-ac24-4162-bff4-d4a70b8e2e96",
+    "storageUri": "/api/v1/assets/cb1d05d8-ac24-4162-bff4-d4a70b8e2e96/content",
+    "mediaType": "video/mp4",
+    "checksumSha256": "e285d4bb84d8de677b47e966fbc9e412e19d7a3b10fbc4634a40c76a97ceb94a",
+    "sizeBytes": 1598235,
+    "width": 720,
+    "height": 1280,
+    "durationMs": 18000,
+    "fps": 30.0,
+    "videoCodec": "h264",
+    "audioCodec": "aac"
+  },
+  "repairs": [
+    {
+      "sceneId": "beat_1",
+      "keywordCueId": "keyword_1_circulacao",
+      "reason": "keyword_source_bound_to_script",
+      "before": "Uma ideia só encontra pessoas quando circula.",
+      "after": "circula",
+      "classification": "bounded_normalization",
+      "requiresAlternative": false
+    },
+    {
+      "sceneId": "beat_1",
+      "elementId": "element_1_idea_icon_procedural",
+      "reason": "absolute_position_track_rebased_to_delta",
+      "property": "position_x",
+      "before": [
+        312,
+        328,
+        312,
+        296,
+        312
+      ],
+      "after": [
+        0.0,
+        16.0,
+        0.0,
+        -16.0,
+        0.0
+      ],
+      "classification": "bounded_normalization",
+      "requiresAlternative": false
+    },
+    {
+      "sceneId": "beat_1",
+      "elementId": "element_1_idea_icon_procedural",
+      "reason": "absolute_position_track_rebased_to_delta",
+      "property": "position_y",
+      "before": [
+        572,
+        584,
+        596,
+        584,
+        572
+      ],
+      "after": [
+        0.0,
+        12.0,
+        24.0,
+        12.0,
+        0.0
+      ],
+      "classification": "bounded_normalization",
+      "requiresAlternative": false
+    },
+    {
+      "sceneId": "beat_1",
+      "compositionId": "composition_annotated_material_1",
+      "reason": "annotated_material_targets_ordered",
+      "before": [
+        "element_1_idea_icon_procedural",
+        "element_1_hands_video",
+        "element_1_text"
+      ],
+      "after": [
+        "element_1_hands_video",
+        "element_1_idea_icon_procedural",
+        "element_1_text"
+      ],
+      "classification": "bounded_normalization",
+      "requiresAlternative": false
+    },
+    {
+      "sceneId": "beat_1",
+      "compositionId": "composition_annotated_material_1",
+      "reason": "foreign_semantic_parameters_removed",
+      "field": "viewportFormats",
+      "family": "annotated_material",
+      "before": [
+        "portrait"
+      ],
+      "after": [],
+      "classification": "bounded_normalization",
+      "requiresAlternative": false
+    },
+    {
+      "sceneId": "beat_2",
+      "keywordCueId": "keyword_2_adaptar",
+      "reason": "keyword_source_bound_to_script",
+      "before": "Distribuir é adaptar a mensagem a cada formato e colocá-la nos caminhos do público.",
+      "after": "adaptar a mensagem",
+      "classification": "bounded_normalization",
+      "requiresAlternative": false
+    },
+    {
+      "sceneId": "beat_2",
+      "needId": "material_need_2",
+      "reason": "inapplicable_background_removal_removed",
+      "kind": "video",
+      "classification": "bounded_normalization",
+      "requiresAlternative": false
+    },
+    {
+      "sceneId": "beat_2",
+      "compositionId": "composition_format_transformation",
+      "reason": "format_transformation_media_states_instanced",
+      "sourceElementId": "element_2_devices_video_hero",
+      "stateElementIds": [
+        "element_2_devices_video_hero",
+        "element_2_devices_video_hero-format-2"
+      ],
+      "preservedOverlayTargetIds": [
+        "element_2_text",
+        "element_2_devices_lines"
+      ],
+      "classification": "bounded_normalization",
+      "requiresAlternative": false
+    },
+    {
+      "sceneId": "beat_2",
+      "elementId": "element_2_devices_lines",
+      "reason": "normalized_path_points_scaled_to_element",
+      "before": [
+        {
+          "x": 0.1,
+          "y": 0.5
+        },
+        {
+          "x": 0.3,
+          "y": 0.2
+        },
+        {
+          "x": 0.5,
+          "y": 0.6
+        },
+        {
+          "x": 0.7,
+          "y": 0.4
+        },
+        {
+          "x": 0.9,
+          "y": 0.5
+        }
+      ],
+      "after": [
+        {
+          "x": 63.0,
+          "y": 75.0
+        },
+        {
+          "x": 189.0,
+          "y": 30.0
+        },
+        {
+          "x": 315.0,
+          "y": 90.0
+        },
+        {
+          "x": 441.0,
+          "y": 60.0
+        },
+        {
+          "x": 567.0,
+          "y": 75.0
+        }
+      ],
+      "classification": "bounded_normalization",
+      "requiresAlternative": false
+    },
+    {
+      "sceneId": "beat_2",
+      "elementId": "element_2_devices_video_hero-format-2",
+      "reason": "secondary_hero_role_demoted",
+      "primaryElementId": "element_2_devices_video_hero",
+      "before": "hero",
+      "after": "support",
+      "classification": "bounded_normalization",
+      "requiresAlternative": false
+    },
+    {
+      "sceneId": "beat_3",
+      "keywordCueId": "keyword_3_alcance",
+      "reason": "unbound_keyword_cue_removed",
+      "text": "alcançe não garante atenção",
+      "classification": "bounded_normalization",
+      "requiresAlternative": false
+    },
+    {
+      "sceneId": "beat_3",
+      "needId": "material_need_3",
+      "reason": "inapplicable_background_removal_removed",
+      "kind": "video",
+      "classification": "bounded_normalization",
+      "requiresAlternative": false
+    },
+    {
+      "sceneId": "beat_3",
+      "elementId": "element_3_attention_highlights",
+      "reason": "legacy_blur_moved_to_effect_stack",
+      "before": 3,
+      "after": 0,
+      "classification": "bounded_normalization",
+      "requiresAlternative": false
+    },
+    {
+      "sceneId": "beat_3",
+      "elementId": "element_3_attention_highlights",
+      "reason": "motion_cue_global_frame_rebased",
+      "before": 90,
+      "after": 0,
+      "classification": "bounded_normalization",
+      "requiresAlternative": false
+    },
+    {
+      "sceneId": "beat_3",
+      "elementId": "element_3_attention_deemphasis",
+      "reason": "motion_cue_global_frame_rebased",
+      "before": 90,
+      "after": 0,
+      "classification": "bounded_normalization",
+      "requiresAlternative": false
+    },
+    {
+      "sceneId": "beat_3",
+      "compositionId": "composition_contrast_attention",
+      "reason": "annotated_material_targets_ordered",
+      "before": [
+        "element_3_people_video_hero",
+        "element_3_attention_highlights",
+        "element_3_attention_deemphasis",
+        "element_3_text"
+      ],
+      "after": [
+        "element_3_people_video_hero",
+        "element_3_attention_highlights",
+        "element_3_attention_deemphasis",
+        "element_3_text"
+      ],
+      "classification": "bounded_normalization",
+      "requiresAlternative": false
+    },
+    {
+      "sceneId": "beat_3",
+      "compositionId": "composition_contrast_attention",
+      "reason": "foreign_semantic_parameters_removed",
+      "field": "viewportFormats",
+      "family": "annotated_material",
+      "before": [
+        "portrait"
+      ],
+      "after": [],
+      "classification": "bounded_normalization",
+      "requiresAlternative": false
+    },
+    {
+      "reason": "execution_versions_pinned_by_server",
+      "before": {
+        "compiler": "res.scene-compiler.v2.7",
+        "components": "res.editorial-components.v2.7",
+        "runtime": "res.editorial-runtime.v2.3",
+        "visualAuditPolicy": "studio.visual-audit-policy.v2"
+      },
+      "after": {
+        "compiler": "res.scene-compiler.v2.8",
+        "components": "res.editorial-components.v2.8",
+        "runtime": "res.editorial-runtime.v2.3",
+        "visualAuditPolicy": "studio.visual-audit-policy.v2"
+      },
+      "classification": "bounded_normalization",
+      "requiresAlternative": false
+    },
+    {
+      "sceneId": "beat_1",
+      "elementId": "element_1_idea_icon_procedural",
+      "reason": "explicit_animation_owns_motion_property",
+      "motionCue": {
+        "kind": "entrance",
+        "profile": "emphasis",
+        "startFrame": 0,
+        "durationFrames": 20,
+        "intensity": 0.5,
+        "rationale": "Entrada suave do ícone procedural."
+      },
+      "properties": [
+        "position_y"
+      ],
+      "classification": "bounded_normalization",
+      "requiresAlternative": false
+    },
+    {
+      "sceneId": "beat_1",
+      "elementId": "element_1_idea_icon_procedural",
+      "reason": "explicit_animation_owns_motion_property",
+      "motionCue": {
+        "kind": "emphasis",
+        "profile": "gentle",
+        "startFrame": 40,
+        "durationFrames": 140,
+        "intensity": 0.2,
+        "rationale": "Sutil oscilação de movimento circular para circulação visual."
+      },
+      "properties": [
+        "scale_x",
+        "scale_y"
+      ],
+      "classification": "bounded_normalization",
+      "requiresAlternative": false
+    },
+    {
+      "sceneId": "beat_1",
+      "compositionId": "composition_annotated_material_1",
+      "elementId": "element_1_text",
+      "reason": "semantic_component_owns_motion_property",
+      "motionCue": {
+        "kind": "entrance",
+        "profile": "emphasis",
+        "startFrame": 0,
+        "durationFrames": 40,
+        "intensity": 0.4,
+        "rationale": "Revelação suave do texto."
+      },
+      "properties": [
+        "opacity"
+      ],
+      "classification": "bounded_normalization",
+      "requiresAlternative": false
+    },
+    {
+      "sceneId": "beat_2",
+      "elementId": "element_2_devices_lines",
+      "reason": "explicit_animation_owns_motion_property",
+      "motionCue": {
+        "kind": "entrance",
+        "profile": "gentle",
+        "startFrame": 20,
+        "durationFrames": 30,
+        "intensity": 0.5,
+        "rationale": "Revelação gradual das linhas como caminhos visuais."
+      },
+      "properties": [
+        "opacity"
+      ],
+      "classification": "bounded_normalization",
+      "requiresAlternative": false
+    },
+    {
+      "sceneId": "beat_2",
+      "compositionId": "composition_format_transformation",
+      "reason": "action_exceeds_available_interval",
+      "before": {
+        "actionFrames": 179
+      },
+      "after": {
+        "actionFrames": 89
+      },
+      "classification": "bounded_normalization",
+      "requiresAlternative": false
+    },
+    {
+      "sceneId": "beat_3",
+      "elementId": "element_3_attention_highlights",
+      "reason": "explicit_animation_owns_motion_property",
+      "motionCue": {
+        "kind": "entrance",
+        "profile": "gentle",
+        "startFrame": 0,
+        "durationFrames": 10,
+        "intensity": 0.5,
+        "rationale": "Evidenciar grupos com atenção destacada."
+      },
+      "properties": [
+        "opacity"
+      ],
+      "classification": "bounded_normalization",
+      "requiresAlternative": false
+    },
+    {
+      "sceneId": "beat_3",
+      "elementId": "element_3_attention_deemphasis",
+      "reason": "explicit_animation_owns_motion_property",
+      "motionCue": {
+        "kind": "entrance",
+        "profile": "gentle",
+        "startFrame": 0,
+        "durationFrames": 10,
+        "intensity": 0.4,
+        "rationale": "Reduzir foco em áreas múltiplas de público."
+      },
+      "properties": [
+        "opacity"
+      ],
+      "classification": "bounded_normalization",
+      "requiresAlternative": false
+    },
+    {
+      "sceneId": "beat_3",
+      "compositionId": "composition_contrast_attention",
+      "elementId": "element_3_text",
+      "reason": "semantic_component_owns_motion_property",
+      "motionCue": {
+        "kind": "entrance",
+        "profile": "emphasis",
+        "startFrame": 0,
+        "durationFrames": 40,
+        "intensity": 0.4,
+        "rationale": "Revelação do texto com ênfase suave."
+      },
+      "properties": [
+        "opacity"
+      ],
+      "classification": "bounded_normalization",
+      "requiresAlternative": false
+    },
+    {
+      "sceneId": "beat_3",
+      "compositionId": "composition_contrast_attention",
+      "reason": "action_exceeds_available_interval",
+      "before": {
+        "actionFrames": 179
+      },
+      "after": {
+        "actionFrames": 89
+      },
+      "classification": "bounded_normalization",
+      "requiresAlternative": false
+    },
+    {
+      "sceneId": "beat_1",
+      "shotId": "shot_1_1",
+      "reason": "shot_target_augmented_for_material_requirement",
+      "materialRequirementIds": [
+        "material_video_hands_idea"
+      ],
+      "addedTargetElementIds": [
+        "element_1_hands_video"
+      ]
+    },
+    {
+      "sceneId": "beat_1",
+      "shotId": "shot_1_1",
+      "reason": "shot_semantics_rebound_to_storyboard",
+      "before": {
+        "materialRequirementIds": [],
+        "executionComponentIds": []
+      },
+      "after": {
+        "materialRequirementIds": [
+          "material_video_hands_idea"
+        ],
+        "executionComponentIds": []
+      }
+    },
+    {
+      "sceneId": "beat_1",
+      "shotId": "shot_1_2",
+      "reason": "shot_target_augmented_for_material_requirement",
+      "materialRequirementIds": [
+        "material_video_hands_idea"
+      ],
+      "addedTargetElementIds": [
+        "element_1_hands_video"
+      ]
+    },
+    {
+      "sceneId": "beat_1",
+      "shotId": "shot_1_2",
+      "reason": "shot_semantics_rebound_to_storyboard",
+      "before": {
+        "materialRequirementIds": [],
+        "executionComponentIds": [
+          "res-composition-annotated_material"
+        ]
+      },
+      "after": {
+        "materialRequirementIds": [
+          "material_video_hands_idea"
+        ],
+        "executionComponentIds": [
+          "res-composition-annotated_material"
+        ]
+      }
+    },
+    {
+      "sceneId": "beat_2",
+      "shotId": "shot_2_1",
+      "reason": "shot_target_augmented_for_material_requirement",
+      "materialRequirementIds": [
+        "material_video_devices_message"
+      ],
+      "addedTargetElementIds": [
+        "element_2_devices_video_hero-format-2"
+      ]
+    },
+    {
+      "sceneId": "beat_2",
+      "shotId": "shot_2_1",
+      "reason": "shot_semantics_rebound_to_storyboard",
+      "before": {
+        "materialRequirementIds": [
+          "material_video_devices_message"
+        ],
+        "executionComponentIds": []
+      },
+      "after": {
+        "materialRequirementIds": [
+          "material_video_devices_message"
+        ],
+        "executionComponentIds": []
+      }
+    },
+    {
+      "sceneId": "beat_2",
+      "shotId": "shot_2_2",
+      "reason": "shot_target_augmented_for_material_requirement",
+      "materialRequirementIds": [
+        "material_video_devices_message"
+      ],
+      "addedTargetElementIds": [
+        "element_2_devices_video_hero-format-2"
+      ]
+    },
+    {
+      "sceneId": "beat_2",
+      "shotId": "shot_2_2",
+      "reason": "shot_semantics_rebound_to_storyboard",
+      "before": {
+        "materialRequirementIds": [
+          "material_video_devices_message"
+        ],
+        "executionComponentIds": [
+          "res-composition-format_transformation",
+          "editorial_desenho_de_tracado"
+        ]
+      },
+      "after": {
+        "materialRequirementIds": [
+          "material_video_devices_message"
+        ],
+        "executionComponentIds": [
+          "res-composition-format_transformation",
+          "editorial_desenho_de_tracado"
+        ]
+      }
+    }
+  ]
+}

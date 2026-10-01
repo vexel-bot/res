@@ -12,8 +12,30 @@ __pycache__/
 .coverage
 *.db
 backend/data/uploads/
+data/uploads/
 .DS_Store
 *.log
 .env*
 !.env.example
 .aios-state/
+.candidate-build/
+workers/vision-gpu/supervision/wheelhouse/
+# Local diffusion worker runtime artifacts are never source or model inputs.
+workers/media-generation-local/.model-cache/
+workers/media-generation-local/.runs/
+workers/media-generation-local/__pycache__/
+workers/media-generation-local/.offload/
+workers/media-generation-local/.lock-tools/
+workers/media-generation-local/.venv/
+output/hybrid-aurora-pilot/.local-session.json
+output/hybrid-aurora-pilot/pilot.sqlite*
+output/hybrid-aurora-pilot/storage/
+# Local environments, downloaded weights and scratch data are not repository source.
+.venv/
+venv/
+tmp/
+*.db.*
+*.sqlite
+*.sqlite-*
+.local-session.json
+workers/media-assets-local/models/

@@ -1,0 +1,12 @@
+{
+  "schema_version": "studio.video-knowledge-validation.v1",
+  "valid": true,
+  "errors": [],
+  "r1_analysis_count": 12,
+  "r1_human_approved_count": 12,
+  "mind_scaffold_count": 30,
+  "repository_audit_count": 42,
+  "corpus_planned_count": 900,
+  "corpus_annotated_count": 0,
+  "validated_at": "2026-09-02T15:14:44.810739+00:00"
+}

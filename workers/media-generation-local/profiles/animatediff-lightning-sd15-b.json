@@ -1,0 +1,15 @@
+{
+  "schemaVersion": "res.local-video-model-profile.v2",
+  "profileId": "animatediff-lightning-sd15-b-v1",
+  "status": "experimental",
+  "adapter": "animatediff_lightning",
+  "operation": "text_to_video",
+  "license": "CreativeML-OpenRAIL-M",
+  "inherits": "animatediff-lightning-sd15-a-v1",
+  "width": 384,
+  "height": 256,
+  "frames": 16,
+  "fps": 8,
+  "minimumSystemRamFreeMiB": 4096,
+  "maximumDurationSeconds": 2.0
+}

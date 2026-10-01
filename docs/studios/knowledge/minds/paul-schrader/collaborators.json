@@ -1,0 +1,24 @@
+{
+  "schema_version": "studio.collaboration-graph.v1",
+  "anchor": "Paul Schrader",
+  "status": "credits_pending_per_work_verification",
+  "nodes": [
+    {
+      "name": "Martin Scorsese",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Brian De Palma",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Michael Chapman",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Thelma Schoonmaker",
+      "role": "verify_per_work"
+    }
+  ],
+  "edges": []
+}

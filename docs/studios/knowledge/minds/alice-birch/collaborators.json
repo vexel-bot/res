@@ -1,0 +1,24 @@
+{
+  "schema_version": "studio.collaboration-graph.v1",
+  "anchor": "Alice Birch",
+  "status": "credits_pending_per_work_verification",
+  "nodes": [
+    {
+      "name": "William Oldroyd",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Lenny Abrahamson",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Sebastian Leio",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "writers' rooms",
+      "role": "verify_per_work"
+    }
+  ],
+  "edges": []
+}

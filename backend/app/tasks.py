@@ -238,3 +238,128 @@ def rank_workspace(self, workspace_id: str, idempotency_key: str) -> dict:
     except Exception as error:
         record_failure(idempotency_key, error, retrying=False)
         raise
+
+
+@celery_app.task(bind=True, max_retries=3)
+def probe_studio_worker(
+    self,
+    expected_capability: str,
+    expected_queue: str,
+    expected_manifest_digest: str,
+) -> dict:
+    from .services.studios.worker_runtime import probe_current_worker
+
+    delivery = self.request.delivery_info or {}
+    routing_key = delivery.get("routing_key")
+    if routing_key and routing_key != expected_queue:
+        raise ValueError("worker_probe_delivery_queue_mismatch")
+    return probe_current_worker(
+        expected_capability=expected_capability,
+        expected_queue=expected_queue,
+        expected_manifest_digest=expected_manifest_digest,
+    )
+
+
+@celery_app.task(bind=True, max_retries=3)
+def execute_studio_generation(self, job_id: str) -> dict:
+    from .services.studios.jobs import execute_job_once
+
+    with SessionLocal() as db:
+        job = db.get(JobAudit, job_id)
+        if job is not None:
+            raise ValueError("Legacy Radar jobs cannot be executed as Studio jobs")
+        from .models import StudioGenerationJob
+
+        studio_job = db.get(StudioGenerationJob, job_id)
+        if not studio_job:
+            return {"status": "not-found"}
+        status = execute_job_once(db, studio_job)
+        if status == "retrying":
+            raise self.retry(countdown=min(30 * (2**self.request.retries), 240))
+        if status == "succeeded" and studio_job.idempotency_key.startswith("production:"):
+            from .models import CreativeDocument, User
+            from .services.studios.editorial_production import advance_run, get_run
+
+            run_id = studio_job.idempotency_key.split(":")[1]
+            record = db.get(CreativeDocument, studio_job.document_id)
+            actor = db.get(User, studio_job.requested_by)
+            if record and actor:
+                try:
+                    state = get_run(db, record, run_id)
+                except ValueError:
+                    state = None
+                if state and studio_job.id in state["jobs"].values():
+                    state = advance_run(db, record, run_id, actor)
+                    if state["status"] == "pending":
+                        advance_run(db, record, run_id, actor)
+        return {"status": status, "jobId": job_id}
+
+
+@celery_app.task(max_retries=0)
+def advance_editorial_production(document_id: str, run_id: str, user_id: str, task_id: str) -> dict:
+    from .models import CreativeDocument, User
+    from .services.studios.contextual_editing import lock_editing_budget
+    from .services.studios.editorial_production import advance_run, get_run, save
+
+    with SessionLocal() as db:
+        record, user = db.get(CreativeDocument, document_id), db.get(User, user_id)
+        if not record or not user:
+            return {"status": "unavailable"}
+        lock_editing_budget(db, record.workspace_id)
+        state = get_run(db, record, run_id)
+        if state.get("continuationTaskId") != task_id:
+            return {"status": "superseded"}
+        try:
+            for _ in range(3):
+                state = advance_run(db, record, run_id, user)
+                if state["status"] != "pending":
+                    break
+        except Exception:
+            db.rollback()
+            state = get_run(db, record, run_id)
+            state.update(status="blocked", blockers=["production_continuation_failed"])
+        state.pop("continuationTaskId", None)
+        state = save(db, record, user, state)
+        return {"status": state["status"], "runId": run_id}
+
+
+@celery_app.task(bind=True, max_retries=20)
+def execute_identity_deletion_task(self, deletion_id: str) -> dict:
+    from .services.studios.identity_deletion import (
+        IdentityDeletionDeferred,
+        IdentityDeletionStorageError,
+        execute_identity_deletion,
+    )
+
+    try:
+        with SessionLocal() as db:
+            receipt = execute_identity_deletion(db, deletion_id)
+            return {"status": "completed", "deletionRequestId": deletion_id, "receipt": receipt}
+    except IdentityDeletionDeferred as error:
+        if self.request.retries >= self.max_retries:
+            with SessionLocal() as db:
+                from .models import StudioIdentityDeletionRequest
+
+                deletion = db.get(StudioIdentityDeletionRequest, deletion_id)
+                if deletion:
+                    deletion.status = "failed"
+                    deletion.error_message = "identity_deletion_job_cancellation_timeout"
+                    db.commit()
+            raise
+        raise self.retry(exc=error, countdown=min(30 * (2**self.request.retries), 300)) from error
+    except (IdentityDeletionStorageError, OperationalError) as error:
+        if self.request.retries >= self.max_retries:
+            raise
+        raise self.retry(exc=error, countdown=min(30 * (2**self.request.retries), 300)) from error
+    except ValueError as error:
+        if str(error) in {
+            "identity_deletion_cross_workspace_asset",
+            "identity_deletion_execution_disabled",
+            "identity_deletion_legal_hold",
+            "identity_deletion_request_not_found",
+            "identity_deletion_shared_reference",
+            "identity_deletion_target_mismatch",
+            "identity_deletion_target_not_found",
+        }:
+            return {"status": "failed", "deletionRequestId": deletion_id, "code": str(error)}
+        raise

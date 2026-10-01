@@ -1,0 +1,139 @@
+{
+  "reference": {
+    "url": "https://www.instagram.com/mep.io_/reel/DciIBRYBHBK/",
+    "durationSeconds": 87,
+    "observationDate": "2026-09-07",
+    "method": "Quadros observados durante reprodução no navegador local do Codex; tempos lidos do player imediatamente antes/depois da captura, aproximados. Não é decupagem de todos os frames.",
+    "frames": [
+      {
+        "seconds": 0.72,
+        "observation": "Retrato em primeiro plano; palavra Distribution atravessa a região dos olhos."
+      },
+      {
+        "seconds": 9.43,
+        "observation": "Filmagem de ciclismo combinada com tipografia ampla e cartões de bicicletas/interface."
+      },
+      {
+        "seconds": 20.46,
+        "observation": "Silhueta de cabeça e cérebro acima; interface com contagem e ícones abaixo; contraste entre ideia e distribuição."
+      },
+      {
+        "seconds": 24.2,
+        "observation": "Figura sentada, fundo azul e hierarquia tipográfica para a contraposição de uma ideia ruim."
+      },
+      {
+        "seconds": 27.35,
+        "observation": "Palavra success ocupa o centro e domina o quadro, com complemento menor acima."
+      },
+      {
+        "seconds": 30.58,
+        "observation": "Demonstração de veículo em palco inserida junto à frase sobre rede de distribuição."
+      },
+      {
+        "seconds": 44.8,
+        "observation": "Trecho de filmagem de rua/carros com palavra sobreposta; mudança de material visual."
+      },
+      {
+        "seconds": 48.06,
+        "observation": "Logos de organizações em blocos com aparência de profundidade, distribuídos pelo quadro."
+      },
+      {
+        "seconds": 67.83,
+        "observation": "Painéis paralelos com dinheiro e retratos/filmagem, organizando comparação visual."
+      },
+      {
+        "seconds": 69.46,
+        "observation": "Mosaico de seis peças audiovisuais diferentes em molduras."
+      },
+      {
+        "seconds": 78.19,
+        "observation": "Perfil da própria produtora em destaque, com elementos azuis recorrentes."
+      }
+    ],
+    "audio": "Não ouvido; player mudo. Nenhuma classificação de música, voz, efeitos ou sincronismo sonoro da referência foi validada.",
+    "assetExport": "Tentativa pelo bundle do navegador falhou; sem cópia local utilizável da referência.",
+    "performance": "Não inferida; contagens públicas não demonstram causalidade editorial."
+  },
+  "outputs": {
+    "distribution-motion-diagnostic": {
+      "sha256": "48009a73e419c3dc588c492d2938cec6a134edd02d71a2565b24603a9c2184de",
+      "durationSeconds": 51.0,
+      "nearStaticFraction": 0.825147347740668,
+      "nearStaticIntervalsSeconds": [
+        [
+          1.4,
+          7.4
+        ],
+        [
+          9.1,
+          15.3
+        ],
+        [
+          17.3,
+          24.2
+        ],
+        [
+          25.7,
+          32.6
+        ],
+        [
+          34.1,
+          41.0
+        ],
+        [
+          42.4,
+          50.9
+        ]
+      ],
+      "measurement": "10 amostras/s, 160x90, cinza; diferença média absoluta de pixels consecutivos inferior a 0,5 em escala 0–255. Mede pouca mudança visual; não mede qualidade, atenção nem ausência absoluta de movimento.",
+      "sceneCount": 6,
+      "narrationPresentInPlan": false,
+      "techniqueIdsUsed": [],
+      "materialNeedCount": 0,
+      "authoring": "Plano e materiais de diagnóstico escritos pelo Codex; compilação e render por serviços do res invocados pelo runner local, não pelo fluxo completo de direção do produto."
+    },
+    "distribution-motion-revised-diagnostic": {
+      "sha256": "2c8d0a934bfa87ac358928b8448ad2259f4f6897b96680d84000129db59d8f9b",
+      "durationSeconds": 51.0,
+      "nearStaticFraction": 0.8133595284872298,
+      "nearStaticIntervalsSeconds": [
+        [
+          1.9,
+          7.3
+        ],
+        [
+          9.3,
+          15.3
+        ],
+        [
+          17.7,
+          24.2
+        ],
+        [
+          26.2,
+          32.6
+        ],
+        [
+          34.5,
+          41.0
+        ],
+        [
+          42.4,
+          50.9
+        ]
+      ],
+      "measurement": "10 amostras/s, 160x90, cinza; diferença média absoluta de pixels consecutivos inferior a 0,5 em escala 0–255. Mede pouca mudança visual; não mede qualidade, atenção nem ausência absoluta de movimento.",
+      "sceneCount": 6,
+      "narrationPresentInPlan": false,
+      "techniqueIdsUsed": [],
+      "materialNeedCount": 0,
+      "authoring": "Plano e materiais de diagnóstico escritos pelo Codex; compilação e render por serviços do res invocados pelo runner local, não pelo fluxo completo de direção do produto."
+    }
+  },
+  "userFeedback": {
+    "scope": "Qualidade de produção do diagnóstico apresentado",
+    "verdict": "rejected",
+    "source": "Mensagem do usuário nesta tarefa em 2026-09-07",
+    "technicalPassDoesNotOverrideRejection": true
+  }
+}

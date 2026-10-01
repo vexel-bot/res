@@ -1,0 +1,91 @@
+name: Studios vision preflight
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-linux-amd64-preflight:
+    name: Build vision_gpu preflight (linux/amd64)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - name: Checkout pinned source
+        uses: actions/checkout@v4
+
+      - name: Set up BuildKit
+        uses: docker/setup-buildx-action@v3
+
+      - name: Set up Python for source-pin verification
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install contract verifier dependencies
+        shell: bash
+        run: python -m pip install --disable-pip-version-check --requirement backend/requirements.txt
+
+      - name: Resolve immutable digests
+        id: digests
+        shell: bash
+        run: |
+          set -euo pipefail
+          lock_digest="$(sha256sum workers/vision-gpu/requirements.lock | awk '{print $1}')"
+          echo "lock=${lock_digest}" >> "$GITHUB_OUTPUT"
+          # These are canonical contract digests, not raw-file hashes. A change
+          # to any canonical artifact must update the Dockerfile/workflow pin
+          # and will fail closed until reviewed.
+          echo "inventory=d1935d35ed3af59d792a5b0c9607d477ea661a862170f4e8574c7a94015dea0c" >> "$GITHUB_OUTPUT"
+          echo "manifest=fbe3c7a55ba2d98a7a12a4ae37e8b97b46d2282bcb89cfe5a657d6b60ac0efb1" >> "$GITHUB_OUTPUT"
+          echo "policy=8f4ff3bb19caf1c50dd6a6cd627ad6cd8b58f20bd6340f2efdd9abf01712aad0" >> "$GITHUB_OUTPUT"
+
+      - name: Verify source pins before BuildKit
+        shell: bash
+        run: |
+          set -euo pipefail
+          python workers/vision-gpu/verify_build.py \
+            --backend backend \
+            --inventory benchmarks/studios/reality/pgv1-artifact-inventory.v1.json \
+            --inventory-digest "${{ steps.digests.outputs.inventory }}" \
+            --lock workers/vision-gpu/requirements.lock \
+            --lock-digest "${{ steps.digests.outputs.lock }}" \
+            --manifest workers/vision-gpu/worker.manifest.json \
+            --manifest-digest "${{ steps.digests.outputs.manifest }}" \
+            --policy benchmarks/studios/reality/physical-plausibility-policy.v1.json \
+            --policy-digest "${{ steps.digests.outputs.policy }}"
+
+      - name: Build immutable preflight OCI artifact
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: workers/vision-gpu/Dockerfile.preflight
+          platforms: linux/amd64
+          push: false
+          outputs: type=oci,dest=/tmp/clicko-vision-gpu-preflight.oci.tar
+          provenance: mode=max
+          sbom: true
+          build-args: |
+            ARTIFACT_INVENTORY_DIGEST=${{ steps.digests.outputs.inventory }}
+            REQUIREMENTS_LOCK_DIGEST=${{ steps.digests.outputs.lock }}
+            WORKER_MANIFEST_DIGEST=${{ steps.digests.outputs.manifest }}
+            PHYSICAL_POLICY_DIGEST=${{ steps.digests.outputs.policy }}
+
+      - name: Verify OCI attestations and provider boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          python backend/scripts/verify_preflight_oci.py \
+            /tmp/clicko-vision-gpu-preflight.oci.tar \
+            --title "Clicko vision GPU preflight" \
+            --provider-label none
+
+      - name: Upload preflight OCI artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: clicko-vision-gpu-preflight-linux-amd64
+          path: /tmp/clicko-vision-gpu-preflight.oci.tar
+          if-no-files-found: error
+          retention-days: 7

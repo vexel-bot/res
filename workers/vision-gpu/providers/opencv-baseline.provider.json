@@ -1,0 +1,52 @@
+{
+  "schema_version": "studio.provider-candidate-manifest.v1",
+  "candidate_id": "opencv-reality-baseline",
+  "provider_ids": [
+    "opensource.opencv-geometry",
+    "opensource.opencv-point-tracking",
+    "builtin.canonical-reality-scene"
+  ],
+  "provider_versions": {
+    "opensource.opencv-geometry": "1.0.0+opencv.4.13.0",
+    "opensource.opencv-point-tracking": "1.0.0+opencv.4.13.0",
+    "builtin.canonical-reality-scene": "1.0.0"
+  },
+  "capabilities": [
+    "visual_geometry",
+    "object_tracking",
+    "physical_scene_understanding"
+  ],
+  "status": "evaluation",
+  "implementation_modules": [
+    "app.providers.studios.opencv_reality",
+    "app.providers.studios.reality_scene"
+  ],
+  "artifact_inventory_id": "pgv1-reality-analysis-artifacts-2026-08-25",
+  "artifact_inventory_digest_sha256": "d1935d35ed3af59d792a5b0c9607d477ea661a862170f4e8574c7a94015dea0c",
+  "artifact_inventory_status": "review_required",
+  "required_artifact_ids": [
+    "opencv-code",
+    "opencv-python-headless-linux-wheel",
+    "numpy-linux-wheel"
+  ],
+  "code_digests_sha256": {
+    "opensource.opencv-geometry": "c2a756ad0ef3fe3cb291f73386655bd61aa6b0c7cf68d83ef602d499eeeb2156",
+    "opensource.opencv-point-tracking": "c2a756ad0ef3fe3cb291f73386655bd61aa6b0c7cf68d83ef602d499eeeb2156",
+    "builtin.canonical-reality-scene": "219bab1b3ea0a1435db3972aecd567a06721a546beeb96527b79911b07073aa1"
+  },
+  "default_parameters_digest_sha256": "9ca0afbf7e44cc47a337d336d5e4a914833f25facf45418b8c87c556a5f345c8",
+  "advertised_by_worker_manifest": false,
+  "activation_gates": [
+    "Review every binary notice in the OpenCV and NumPy Linux wheels.",
+    "Build the provider layer in Linux and attach SBOM, provenance and image digest.",
+    "Run the frozen PGV-1 corpus and attach recomputable benchmark evidence.",
+    "Prove tenant-scoped object storage, cancellation, cleanup and GPU worker attestation.",
+    "Obtain explicit legal approval and update worker providers only in the same reviewed promotion."
+  ],
+  "limitations": [
+    "Camera and horizon estimates are classical image-plane cues, not metric calibration.",
+    "Sparse tracks are deliberately non-semantic and cannot establish object identity.",
+    "The baseline abstains from support, contact, collision, causality and material behavior.",
+    "The evaluation wheel is not installed by Dockerfile.preflight and is not deployable."
+  ]
+}

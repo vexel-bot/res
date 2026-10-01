@@ -39,7 +39,7 @@ export const PublisherView: React.FC = () => {
           </p>
         </div>
 
-        <button className="flex items-center gap-1.5 rounded-lg bg-[#ff5c5c] px-4 py-2 text-xs font-semibold text-[#14200e] transition-colors hover:bg-[#9be24d]">
+        <button disabled title="Conecte canais pela superfície canônica de configurações." className="flex items-center gap-1.5 rounded-lg bg-[#ff5c5c] px-4 py-2 text-xs font-semibold text-[#14200e] transition-colors hover:bg-[#9be24d]">
           <Plus className="w-4 h-4" /> Conectar Nova Conta
         </button>
       </div>
@@ -109,7 +109,7 @@ export const PublisherView: React.FC = () => {
           </p>
         </div>
 
-        <button className="px-4 py-2.5 rounded-lg bg-[#ff5c5c] hover:bg-[#9be24d] text-[#14200e] font-bold text-xs shrink-0 transition-colors">
+        <button disabled title="A reciclagem automática ainda não está disponível neste ambiente." className="px-4 py-2.5 rounded-lg bg-[#ff5c5c] hover:bg-[#9be24d] text-[#14200e] font-bold text-xs shrink-0 transition-colors">
           Ativar Reciclagem Automática
         </button>
       </div>

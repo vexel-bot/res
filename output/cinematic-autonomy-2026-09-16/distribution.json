@@ -1,0 +1,625 @@
+{
+  "recordedAt": "2026-09-16T19:30:49.107598+00:00",
+  "pilot": "distribution",
+  "run": {
+    "schemaVersion": "studio.editorial-production.v1",
+    "id": "c9321550-abad-557c-af2d-e4b5d8ccd3e3",
+    "documentId": "d2a15ee8-626a-4d96-98a6-dacd2cdf9676",
+    "documentRevision": 1,
+    "sourceChecksums": {},
+    "request": {
+      "schemaVersion": "studio.editorial-production-request.v1",
+      "direction": {
+        "materialNeeds": [],
+        "fontAssetId": null,
+        "expectedDocumentRevision": 1,
+        "intent": {
+          "objective": "Explicar visualmente como distribuição conecta uma ideia às pessoas, mostrando adaptação de formato e caminho. Preservar a ressalva de que alcance não garante atenção.",
+          "format": "general",
+          "script": "Uma ideia só encontra pessoas quando circula. Distribuir é adaptar a mensagem a cada formato e colocá-la nos caminhos do público. Isso amplia o alcance, mas não garante atenção.",
+          "lockedFacts": [
+            "Isso amplia o alcance, mas não garante atenção."
+          ],
+          "pacing": "balanced",
+          "emphasis": "demonstration",
+          "reducedMotion": false,
+          "preserveMessage": true
+        },
+        "beats": [],
+        "requiredTechniques": [],
+        "clipOrder": [],
+        "referenceTechniqueIds": []
+      },
+      "durationSeconds": 18,
+      "mode": "mixed_montage",
+      "evaluationScope": "visual_only",
+      "requireVisualBlueprint": true,
+      "useSemanticCompositions": true,
+      "demonstrationPolicy": "required",
+      "materialSemanticsPolicy": "contextual_video_v1",
+      "cinematicDirectionPolicy": "mixed_motion_v1",
+      "generatedVideoPolicy": "disabled",
+      "generatedVideo": null,
+      "hybridPolicy": null,
+      "narrationAssetId": null,
+      "stockVoiceProvider": "kokoro-82m-stock",
+      "stockVoiceKey": "pf_dora"
+    },
+    "requestDigest": "1d0f9070f7c4f402b18e9fddcf782f09ce01d69fd2f71a4945076d67cce01d47",
+    "stage": "direction",
+    "status": "blocked",
+    "jobs": {
+      "direction": "6d79f87a-fa3e-4bec-b766-fd8509f75b70"
+    },
+    "artifacts": {},
+    "blockers": [
+      "production_provider_job_failed"
+    ],
+    "technicalEvaluation": "pending",
+    "audiovisualEvaluation": "pending",
+    "humanReview": "pending",
+    "autonomousProductionQualified": false,
+    "productionGates": {
+      "schemaVersion": "studio.production-gates.v1",
+      "fidelity": {
+        "status": "inconclusive",
+        "evidence": [],
+        "reason": "Direction pending.",
+        "nextAction": "replan_scene"
+      },
+      "demonstrability": {
+        "status": "inconclusive",
+        "evidence": [],
+        "reason": "Direction pending.",
+        "nextAction": "replan_scene"
+      },
+      "techniqueSuitability": {
+        "status": "inconclusive",
+        "evidence": [],
+        "reason": "Composition pending.",
+        "nextAction": "select_route"
+      },
+      "observedResult": {
+        "status": "inconclusive",
+        "evidence": [],
+        "reason": "Render pending.",
+        "nextAction": "inspect_interval"
+      }
+    },
+    "providerReadiness": [
+      {
+        "id": "pexels",
+        "kinds": [
+          "image",
+          "video"
+        ],
+        "capabilities": [
+          "discover",
+          "acquire",
+          "license_receipt"
+        ],
+        "acquisition": "download_then_inspect",
+        "cost_policy": "api_free_tier_request",
+        "configured": true
+      },
+      {
+        "id": "brandfetch",
+        "kinds": [
+          "logo"
+        ],
+        "capabilities": [
+          "discover",
+          "preview",
+          "brand_metadata"
+        ],
+        "acquisition": "preview_only_without_verified_brand_asset",
+        "cost_policy": "provider_contract",
+        "configured": false
+      },
+      {
+        "id": "procedural-icon",
+        "kinds": [
+          "image"
+        ],
+        "capabilities": [
+          "discover",
+          "acquire",
+          "deterministic"
+        ],
+        "acquisition": "local_registered_component",
+        "cost_policy": "local",
+        "configured": true
+      },
+      {
+        "id": "gemini-image",
+        "kinds": [
+          "image",
+          "wardrobe"
+        ],
+        "capabilities": [
+          "generate",
+          "acquire",
+          "original_only"
+        ],
+        "acquisition": "generate_then_inspect",
+        "cost_policy": "reserved_before_submission",
+        "configured": true
+      },
+      {
+        "id": "local-diffusion",
+        "kinds": [
+          "video"
+        ],
+        "capabilities": [
+          "generate",
+          "acquire",
+          "original_only",
+          "quarantine",
+          "experimental"
+        ],
+        "acquisition": "generate_then_inspect_and_review",
+        "cost_policy": "local_compute_measured",
+        "configured": true
+      },
+      {
+        "id": "gemini-video",
+        "kinds": [
+          "video"
+        ],
+        "capabilities": [
+          "generate",
+          "acquire",
+          "original_only",
+          "experimental"
+        ],
+        "acquisition": "generate_then_inspect",
+        "cost_policy": "reserved_before_submission",
+        "configured": false
+      },
+      {
+        "id": "sora-video",
+        "kinds": [
+          "video"
+        ],
+        "capabilities": [
+          "generate",
+          "acquire",
+          "original_only"
+        ],
+        "acquisition": "single_four_second_clip_then_inspect",
+        "cost_policy": "usd_0.10_per_second_until_retirement",
+        "configured": false
+      }
+    ],
+    "hybridCapabilities": {
+      "schemaVersion": "studio.hybrid-capability-manifest.v1",
+      "profiles": [
+        {
+          "profileId": "hyperframes-motion-v1",
+          "providerId": "builtin.hyperframes-motion-v1",
+          "capability": "motion",
+          "operations": [
+            "compose_motion_graph"
+          ],
+          "environment": "local",
+          "qualificationState": "experimental",
+          "commercialUse": "approved",
+          "readiness": {
+            "serviceConfigured": true,
+            "serviceAccessible": true,
+            "modelInstalled": true,
+            "resourcesAvailable": true,
+            "inferenceValidated": false,
+            "qualifiedUseCases": [],
+            "blockingReasons": []
+          },
+          "inputRequirements": [
+            "motion_graph"
+          ],
+          "maximumNativeSeconds": null,
+          "cost": {
+            "currency": "LOCAL",
+            "unit": "local_execution",
+            "amount": null,
+            "priceVersion": "local-unpriced-v1",
+            "includesColdStart": false,
+            "includesStorage": false
+          },
+          "modelId": null,
+          "modelRevision": null,
+          "runtimeRevision": null,
+          "defaultParameters": {},
+          "useCaseEvidence": [],
+          "evidenceRefs": [
+            "docs/studios/OPEN_SOURCE_INTEGRATION_ROADMAP.md"
+          ]
+        },
+        {
+          "profileId": "motion-canvas-experimental-v1",
+          "providerId": "motion-canvas",
+          "capability": "motion",
+          "operations": [
+            "compose_motion_graph"
+          ],
+          "environment": "local",
+          "qualificationState": "unavailable",
+          "commercialUse": "approved",
+          "readiness": {
+            "serviceConfigured": false,
+            "serviceAccessible": false,
+            "modelInstalled": false,
+            "resourcesAvailable": false,
+            "inferenceValidated": false,
+            "qualifiedUseCases": [],
+            "blockingReasons": [
+              "motion_canvas_adapter_not_qualified"
+            ]
+          },
+          "inputRequirements": [
+            "motion_graph"
+          ],
+          "maximumNativeSeconds": null,
+          "cost": {
+            "currency": "LOCAL",
+            "unit": "local_execution",
+            "amount": null,
+            "priceVersion": "local-unpriced-v1",
+            "includesColdStart": false,
+            "includesStorage": false
+          },
+          "modelId": null,
+          "modelRevision": null,
+          "runtimeRevision": null,
+          "defaultParameters": {},
+          "useCaseEvidence": [],
+          "evidenceRefs": [
+            "https://motion-canvas.io/docs/rendering/video/"
+          ]
+        },
+        {
+          "profileId": "musetalk-1.5-evidence-v1",
+          "providerId": "musetalk",
+          "capability": "lip_sync",
+          "operations": [
+            "dub_existing_presenter"
+          ],
+          "environment": "local",
+          "qualificationState": "unavailable",
+          "commercialUse": "conditional",
+          "readiness": {
+            "serviceConfigured": false,
+            "serviceAccessible": false,
+            "modelInstalled": false,
+            "resourcesAvailable": false,
+            "inferenceValidated": false,
+            "qualifiedUseCases": [],
+            "blockingReasons": [
+              "license_review_required",
+              "benchmark_evidence_pending"
+            ]
+          },
+          "inputRequirements": [
+            "authorized_presenter_video",
+            "speech_audio",
+            "identity_consent"
+          ],
+          "maximumNativeSeconds": null,
+          "cost": {
+            "currency": "LOCAL",
+            "unit": "local_execution",
+            "amount": null,
+            "priceVersion": "local-unpriced-v1",
+            "includesColdStart": false,
+            "includesStorage": false
+          },
+          "modelId": null,
+          "modelRevision": null,
+          "runtimeRevision": null,
+          "defaultParameters": {},
+          "useCaseEvidence": [],
+          "evidenceRefs": [
+            "benchmarks/studios/identity/avatar-pt-br-policy.v1.json"
+          ]
+        },
+        {
+          "profileId": "latentsync-1.6-evidence-v1",
+          "providerId": "latentsync",
+          "capability": "lip_sync",
+          "operations": [
+            "dub_existing_presenter"
+          ],
+          "environment": "serverless",
+          "qualificationState": "unavailable",
+          "commercialUse": "rejected",
+          "readiness": {
+            "serviceConfigured": false,
+            "serviceAccessible": false,
+            "modelInstalled": false,
+            "resourcesAvailable": false,
+            "inferenceValidated": false,
+            "qualifiedUseCases": [],
+            "blockingReasons": [
+              "model_license_rejected",
+              "local_vram_insufficient"
+            ]
+          },
+          "inputRequirements": [
+            "authorized_presenter_video",
+            "speech_audio",
+            "identity_consent"
+          ],
+          "maximumNativeSeconds": null,
+          "cost": {
+            "currency": "USD",
+            "unit": "gpu_second",
+            "amount": null,
+            "priceVersion": "unpriced",
+            "includesColdStart": false,
+            "includesStorage": false
+          },
+          "modelId": null,
+          "modelRevision": null,
+          "runtimeRevision": null,
+          "defaultParameters": {},
+          "useCaseEvidence": [],
+          "evidenceRefs": [
+            "benchmarks/studios/identity/avatar-pt-br-policy.v1.json"
+          ]
+        },
+        {
+          "profileId": "longcat-avatar-1.5-ai2v-480p-int8-experimental-v1",
+          "providerId": "local.longcat-avatar-1.5",
+          "capability": "avatar_video",
+          "operations": [
+            "image_audio_to_avatar"
+          ],
+          "environment": "local",
+          "qualificationState": "unavailable",
+          "commercialUse": "conditional",
+          "readiness": {
+            "serviceConfigured": false,
+            "serviceAccessible": false,
+            "modelInstalled": false,
+            "resourcesAvailable": false,
+            "inferenceValidated": false,
+            "qualifiedUseCases": [],
+            "blockingReasons": [
+              "longcat_avatar_disabled",
+              "compatible_multi_gpu_hardware_required",
+              "dependency_license_chain_pending",
+              "pt_br_visual_qualification_pending"
+            ]
+          },
+          "inputRequirements": [
+            "authorized_reference_image",
+            "final_speech_audio",
+            "identity_consent"
+          ],
+          "maximumNativeSeconds": 3.72,
+          "cost": {
+            "currency": "LOCAL",
+            "unit": "local_execution",
+            "amount": null,
+            "priceVersion": "local-unmeasured-v1",
+            "includesColdStart": false,
+            "includesStorage": false
+          },
+          "modelId": "meituan-longcat/LongCat-Video-Avatar-1.5",
+          "modelRevision": "92016c71d5d318d0f5d84e4db30015a571484ab6",
+          "runtimeRevision": "6b3f4b8582a8bc3f20f795735f5383716c4ba794",
+          "defaultParameters": {
+            "resolution": "832x480",
+            "fps": 25,
+            "inferenceSteps": 8,
+            "quantization": "int8",
+            "textGuidanceScale": 1.0,
+            "audioGuidanceScale": 1.0,
+            "segmentFrames": 93,
+            "overlapFrames": 13,
+            "presenters": 1,
+            "framing": "medium"
+          },
+          "useCaseEvidence": [],
+          "evidenceRefs": [
+            "benchmarks/studios/identity/longcat-avatar-1.5-screening-policy.v1.json",
+            "workers/longcat-avatar/model-manifest.json",
+            "https://github.com/meituan-longcat/LongCat-Video"
+          ]
+        },
+        {
+          "profileId": "animatediff-lightning-sd15-a-v1",
+          "providerId": "local-diffusion",
+          "capability": "generative_video",
+          "operations": [
+            "text_to_video"
+          ],
+          "environment": "local",
+          "qualificationState": "experimental",
+          "commercialUse": "conditional",
+          "readiness": {
+            "serviceConfigured": true,
+            "serviceAccessible": false,
+            "modelInstalled": true,
+            "resourcesAvailable": false,
+            "inferenceValidated": false,
+            "qualifiedUseCases": [],
+            "blockingReasons": [
+              "numerical_equivalence_pending",
+              "visual_qualification_pending"
+            ]
+          },
+          "inputRequirements": [],
+          "maximumNativeSeconds": 1.0,
+          "cost": {
+            "currency": "LOCAL",
+            "unit": "local_execution",
+            "amount": null,
+            "priceVersion": "local-measured-v1",
+            "includesColdStart": false,
+            "includesStorage": false
+          },
+          "modelId": null,
+          "modelRevision": null,
+          "runtimeRevision": null,
+          "defaultParameters": {},
+          "useCaseEvidence": [],
+          "evidenceRefs": [
+            "docs/studios/LOCAL_DIFFUSION_REVISED_PLAN_2026-09-10.md"
+          ]
+        },
+        {
+          "profileId": "veo-3.1-lite-720p-experimental-v1",
+          "providerId": "google-veo",
+          "capability": "generative_video",
+          "operations": [
+            "text_to_video",
+            "image_to_video"
+          ],
+          "environment": "remote_api",
+          "qualificationState": "unavailable",
+          "commercialUse": "approved",
+          "readiness": {
+            "serviceConfigured": false,
+            "serviceAccessible": false,
+            "modelInstalled": true,
+            "resourcesAvailable": true,
+            "inferenceValidated": false,
+            "qualifiedUseCases": [],
+            "blockingReasons": [
+              "gemini_video_disabled"
+            ]
+          },
+          "inputRequirements": [],
+          "maximumNativeSeconds": 10.0,
+          "cost": {
+            "currency": "USD",
+            "unit": "second",
+            "amount": 0.05,
+            "priceVersion": "google-2026-09-14",
+            "includesColdStart": false,
+            "includesStorage": false
+          },
+          "modelId": "gemini-omni-1.1-flash",
+          "modelRevision": "google-api-price-and-model-binding-2026-09-14",
+          "runtimeRevision": "res-gemini-editing-adapter-v1",
+          "defaultParameters": {},
+          "useCaseEvidence": [],
+          "evidenceRefs": [
+            "https://ai.google.dev/gemini-api/docs/pricing"
+          ]
+        },
+        {
+          "profileId": "wan2.2-ti2v-5b-serverless-experimental-v1",
+          "providerId": "wan2.2",
+          "capability": "generative_video",
+          "operations": [
+            "text_to_video",
+            "image_to_video"
+          ],
+          "environment": "serverless",
+          "qualificationState": "unavailable",
+          "commercialUse": "conditional",
+          "readiness": {
+            "serviceConfigured": false,
+            "serviceAccessible": false,
+            "modelInstalled": false,
+            "resourcesAvailable": false,
+            "inferenceValidated": false,
+            "qualifiedUseCases": [],
+            "blockingReasons": [
+              "serverless_gpu_not_authorized",
+              "worker_not_deployed"
+            ]
+          },
+          "inputRequirements": [],
+          "maximumNativeSeconds": 5.0,
+          "cost": {
+            "currency": "USD",
+            "unit": "gpu_second",
+            "amount": null,
+            "priceVersion": "unpriced",
+            "includesColdStart": false,
+            "includesStorage": false
+          },
+          "modelId": null,
+          "modelRevision": null,
+          "runtimeRevision": null,
+          "defaultParameters": {},
+          "useCaseEvidence": [],
+          "evidenceRefs": [
+            "https://github.com/Wan-Video/Wan2.2"
+          ]
+        }
+      ],
+      "paidFallbackEnabled": false,
+      "remoteGpuAuthorized": false
+    },
+    "budgetEnvelope": {
+      "policy": "res.motion-pilot.v1",
+      "limitUsd": 0.5,
+      "allocations": {
+        "planning": 0.4,
+        "image": 0.2,
+        "critique": 0.2,
+        "video": 0.0,
+        "reserve": 0.2,
+        "preRenderLimitUsd": 0.4,
+        "allowReserveSpillover": true
+      },
+      "videoGenerationEnabled": false,
+      "generatedVideoPolicy": {
+        "schemaVersion": "studio.generated-video-policy.v2",
+        "mode": "disabled",
+        "allowedProfileIds": [
+          "animatediff-lightning-sd15-a-v1"
+        ],
+        "maxCandidates": 1,
+        "allowExperimental": false,
+        "maximumGeneratedSeconds": 1.0
+      },
+      "hybridPolicy": {
+        "schemaVersion": "studio.hybrid-production-policy.v1",
+        "mode": "disabled",
+        "allowedProfileIds": [],
+        "allowExperimental": false,
+        "allowConditionalCommercialUse": false,
+        "allowRemoteApi": false,
+        "allowServerlessGpu": false,
+        "paidFallbackEnabled": false,
+        "maxCandidatesPerNeed": 1,
+        "maximumGeneratedSecondsTotal": 0.0,
+        "budgetEnvelopeId": null,
+        "maximumApiSpendUsd": 0.0
+      }
+    },
+    "revision": 187,
+    "dispatchedJobs": [
+      "6d79f87a-fa3e-4bec-b766-fd8509f75b70"
+    ]
+  },
+  "executedJobs": [
+    {
+      "jobId": "6d79f87a-fa3e-4bec-b766-fd8509f75b70",
+      "kind": "editing_gemini",
+      "provider": "google.gemini-editing",
+      "outcome": "retrying",
+      "error": "ValueError"
+    },
+    {
+      "jobId": "6d79f87a-fa3e-4bec-b766-fd8509f75b70",
+      "kind": "editing_gemini",
+      "provider": "google.gemini-editing",
+      "outcome": "retrying",
+      "error": "ValueError"
+    },
+    {
+      "jobId": "6d79f87a-fa3e-4bec-b766-fd8509f75b70",
+      "kind": "editing_gemini",
+      "provider": "google.gemini-editing",
+      "outcome": "failed",
+      "error": "ValueError"
+    }
+  ],
+  "manualSceneOrAssetSelection": false,
+  "apiLimitUsd": 0.5
+}

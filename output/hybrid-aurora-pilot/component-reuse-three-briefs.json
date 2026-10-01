@@ -1,0 +1,59 @@
+[
+  {
+    "brief": "Kit Degustação Aurora",
+    "documentId": "e3ebe3aa-881a-4d37-845d-48b8d3a41a5f",
+    "planId": "5eb1b726-e875-433f-97e8-f2ef3b338549",
+    "status": "ready",
+    "materialIds": {
+      "beans": "48669823-e76d-4100-b246-ae26100ad32d",
+      "brew": "3135a6ac-363c-4218-9caf-1ebcbee4e86d",
+      "pour": "ee371554-79a9-4cdd-8748-a98d85b47a0a",
+      "wide": "aa29ca5e-28cd-49d4-856a-9aefebd27313",
+      "product": "4c8ba2b0-c9a9-4b98-96ba-ba9d9ecd08a6"
+    },
+    "nativeComponents": [
+      "action_montage",
+      "integrated_typography",
+      "product_demonstration"
+    ],
+    "blockers": []
+  },
+  {
+    "brief": "Ritual de Foco Aurora",
+    "documentId": "33f24227-ee01-4e96-8ca0-d141e223eb1e",
+    "planId": "075494ad-dd8b-4ca5-a57b-5710622fe0b3",
+    "status": "ready",
+    "materialIds": {
+      "beans": "f1d595b3-f9da-4a89-a0f9-a1eb393c31a0",
+      "brew": "2021dd61-d2f9-4631-a9da-3a14d779fd6e",
+      "pour": "aa29ca5e-28cd-49d4-856a-9aefebd27313",
+      "wide": "ee371554-79a9-4cdd-8748-a98d85b47a0a",
+      "product": "9319504b-6805-4c8b-a53f-b128d14b716c"
+    },
+    "nativeComponents": [
+      "action_montage",
+      "integrated_typography",
+      "product_demonstration"
+    ],
+    "blockers": []
+  },
+  {
+    "brief": "Café Aurora em Grãos",
+    "documentId": "f72953b3-9af0-4e0b-bfe1-b9ef08fb2657",
+    "planId": "499be743-e20c-44a0-a379-850244403f6e",
+    "status": "ready",
+    "materialIds": {
+      "beans": "48669823-e76d-4100-b246-ae26100ad32d",
+      "brew": "2021dd61-d2f9-4631-a9da-3a14d779fd6e",
+      "pour": "ee371554-79a9-4cdd-8748-a98d85b47a0a",
+      "wide": "aa29ca5e-28cd-49d4-856a-9aefebd27313",
+      "product": "e93bfc83-80a4-4e37-b26e-a6abba48fc66"
+    },
+    "nativeComponents": [
+      "action_montage",
+      "integrated_typography",
+      "product_demonstration"
+    ],
+    "blockers": []
+  }
+]

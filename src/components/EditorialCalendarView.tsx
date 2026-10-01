@@ -145,11 +145,11 @@ export const EditorialCalendarView: React.FC<EditorialCalendarViewProps> = ({
       {/* Month Navigator Header */}
       <div className="flex items-center justify-between rounded-xl border border-white/[0.06] bg-[#101316] p-4">
         <div className="flex items-center gap-3">
-          <button className="p-2 rounded-xl bg-white/[0.03] hover:bg-white/10 text-white">
+          <button disabled title="Use o calendário canônico para navegar entre períodos." className="p-2 rounded-xl bg-white/[0.03] hover:bg-white/10 text-white">
             <ChevronLeft className="w-4 h-4" />
           </button>
           <h3 className="text-sm font-bold text-[#ededed]">Julho / Agosto 2026</h3>
-          <button className="p-2 rounded-xl bg-white/[0.03] hover:bg-white/10 text-white">
+          <button disabled title="Use o calendário canônico para navegar entre períodos." className="p-2 rounded-xl bg-white/[0.03] hover:bg-white/10 text-white">
             <ChevronRight className="w-4 h-4" />
           </button>
         </div>

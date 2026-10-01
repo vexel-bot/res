@@ -1,0 +1,13 @@
+{
+  "schemaVersion": "studio.video-api-eager-smoke.v1",
+  "status": "passed",
+  "authenticated": true,
+  "workspaceCount": 1,
+  "jobStatus": "succeeded",
+  "ingestStatus": "ready",
+  "fixtureSha256": "02b3dfb77a03bc3660cdeb2526074e3b3dfdf47bc20b04355739431c50a280e7",
+  "durationMs": 2000,
+  "videoStreams": 1,
+  "audioStreams": 1,
+  "executionMode": "embedded"
+}

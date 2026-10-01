@@ -1,0 +1,24 @@
+{
+  "schema_version": "studio.collaboration-graph.v1",
+  "anchor": "Asghar Farhadi",
+  "status": "credits_pending_per_work_verification",
+  "nodes": [
+    {
+      "name": "Mahmoud Kalari",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Hayedeh Safiyari",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Keyvan Moghaddam",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "ensemble casts",
+      "role": "verify_per_work"
+    }
+  ],
+  "edges": []
+}

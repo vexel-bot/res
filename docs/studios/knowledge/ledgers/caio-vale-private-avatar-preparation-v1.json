@@ -1,0 +1,58 @@
+{
+  "schemaVersion": "studio.private-avatar-preparation.v1",
+  "avatarId": "avatar-caio-vale",
+  "identityKind": "fictional_original",
+  "provider": "musetalk-v1.5-local",
+  "adapter": "fixed-camera-roi-v1",
+  "status": "pending_benchmark",
+  "publicationState": "private_review",
+  "heygemModelCreated": false,
+  "sourceVideoCount": 1,
+  "sourceChecksumSha256": "e777ee42a96a44c4f1e56b8ff8273e9f1a12d2d2127a6fe11fa0675234921912",
+  "sourceDimensions": [
+    720,
+    1280
+  ],
+  "sourceDurationSeconds": 12,
+  "preparedFrames": 300,
+  "fps": 25,
+  "roi": [
+    100,
+    174,
+    565,
+    650
+  ],
+  "seed": 240904,
+  "privatePreparationDirectory": "C:\\Users\\edugu\\Downloads\\clicko-private-evaluation\\avatar-renders\\caio-vale\\fixed-camera-cache-v1",
+  "files": [
+    {
+      "filename": "base-25fps.mp4",
+      "bytes": 3209449,
+      "checksumSha256": "74e5dbc6ca03cc304cc1fcd3895282045121e4c33739b259dcd3f3a869fbd6fd"
+    },
+    {
+      "filename": "latents.pt",
+      "bytes": 4916380,
+      "checksumSha256": "657455ba2d356a97d6bdcffc0ade36624ed9b3e92e72e7c914d8a25248b0e45a"
+    },
+    {
+      "filename": "masks.npz",
+      "bytes": 7184099,
+      "checksumSha256": "62db3e987acca9946ef729274600438d713f1d1d0c14f5f42a2721e5fdf73dd7"
+    }
+  ],
+  "weightsReviewLedger": "musetalk-fixed-camera-private-model-review-2026-09-04.json",
+  "sourceCommit": "0a89dec45a0192b824e3cf4daf96c239440c5ed8",
+  "voiceTrainingPerformed": false,
+  "audioFeaturesBelongToIndividualAd": true,
+  "observedAppearance": "Adult fictional man, short dark textured hair, short trimmed beard, teal overshirt over charcoal shirt; stable gray studio.",
+  "designDeviation": "Original roster described clean-shaven tight curls. Generated base has short beard and different hair texture; this distinction is retained for human identity review.",
+  "limitations": [
+    "Static ROI only valid for this source checksum.",
+    "12-second source repeats bidirectionally.",
+    "Face region generated at 256x256; visible softening of beard and mouth.",
+    "Naturalness and lip-sync require human review.",
+    "Not a trained or promoted HeyGem model."
+  ],
+  "reuseRule": "Reuse the same verified source preparation with separately authorized, locally synthesized audio. Do not substitute another identity or promote provider."
+}

@@ -1,0 +1,70 @@
+{
+  "schema_version": "studio.artifact-inventory.v1",
+  "inventory_id": "kokoro-openvoice-v2-artifacts-2026-08-26",
+  "capability": "voice_clone",
+  "policy_digests_sha256": ["dc5e58fa37d91dda8d273b4bfa11ab6e34d797c6cf08fc134bcfcb67d1119dc7"],
+  "status": "incomplete",
+  "frozen_at": "2026-08-26T21:00:00Z",
+  "frozen_by": "clicko-product-engineering-baseline",
+  "required_artifact_ids": [
+    "openvoice-code",
+    "openvoice-v2-converter-checkpoint",
+    "openvoice-v2-converter-config",
+    "wavmark-wheel",
+    "wavmark-checkpoint",
+    "kokoro-base-chain",
+    "openvoice-worker-container"
+  ],
+  "artifacts": [
+    {
+      "artifact_id": "openvoice-code", "component_id": "openvoice-code", "kind": "code", "role": "OpenVoice V2 tone-color conversion code", "required": true,
+      "source_url": "https://github.com/myshell-ai/OpenVoice", "source_revision": "74a1d147b17a8c3092dd5430504bd83ef6c7eb23", "resolution_status": "resolved",
+      "integrity": {"method": "git_commit", "value": "74a1d147b17a8c3092dd5430504bd83ef6c7eb23"}, "verification_method": "git_remote",
+      "license": {"declared_license": "MIT", "evidence_url": "https://github.com/myshell-ai/OpenVoice/blob/74a1d147b17a8c3092dd5430504bd83ef6c7eb23/LICENSE", "evidence_digest_sha256": "bb3541f421e6273d3a3e3dd5bdba2bd3b79a3c2eadca65cde9c62c2467903ac0", "commercial_saas_use_allowed": true, "decision": "approved", "rationale": "The exact source commit and canonical Git MIT license bytes were verified without checkout line-ending conversion."},
+      "notes": ["Clicko will call ToneColorConverter directly and will not import the demo, MeloTTS or se_extractor dynamic Whisper/Silero path.", "The checkpoint is a trusted-source torch pickle and must only be loaded after SHA-256 verification in the isolated worker."]
+    },
+    {
+      "artifact_id": "openvoice-v2-converter-checkpoint", "component_id": "openvoice-v2-weights", "kind": "model", "role": "OpenVoice V2 tone-color converter checkpoint", "required": true,
+      "source_url": "https://huggingface.co/myshell-ai/OpenVoiceV2/blob/f36e7edfe1684461a8343844af60babc2efbb727/converter/checkpoint.pth", "source_revision": "f36e7edfe1684461a8343844af60babc2efbb727", "expected_filename": "converter/checkpoint.pth", "resolution_status": "resolved",
+      "integrity": {"method": "sha256", "value": "9652c27e92b6b2a91632590ac9962ef7ae2b712e5c5b7f4c34ec55ee2b37ab9e", "size_bytes": 131320490}, "verification_method": "vendor_metadata",
+      "license": {"declared_license": "MIT", "evidence_url": "https://huggingface.co/myshell-ai/OpenVoiceV2/blob/f36e7edfe1684461a8343844af60babc2efbb727/README.md", "evidence_digest_sha256": "9f7d4211260d6105d0106705ae250c947bf3fb28e8e40a196de36a0e70d49394", "commercial_saas_use_allowed": true, "decision": "approved", "rationale": "The exact public, ungated model revision declares MIT and exposes LFS SHA-256 and byte size."},
+      "notes": ["PT-BR is supplied by the pinned Kokoro base waveform; this checkpoint performs timbre conversion rather than text generation."]
+    },
+    {
+      "artifact_id": "openvoice-v2-converter-config", "component_id": "openvoice-v2-converter-config", "kind": "runtime", "role": "OpenVoice V2 converter architecture configuration", "required": true,
+      "source_url": "https://huggingface.co/myshell-ai/OpenVoiceV2/blob/f36e7edfe1684461a8343844af60babc2efbb727/converter/config.json", "source_revision": "f36e7edfe1684461a8343844af60babc2efbb727", "expected_filename": "converter/config.json", "resolution_status": "resolved",
+      "integrity": {"method": "sha256", "value": "9dfff60350b8c63f2c664efd92a61b2516efb22671466960f0e5dfebd881fa47", "size_bytes": 838}, "verification_method": "vendor_metadata",
+      "license": {"declared_license": "MIT", "evidence_url": "https://huggingface.co/myshell-ai/OpenVoiceV2/blob/f36e7edfe1684461a8343844af60babc2efbb727/README.md", "evidence_digest_sha256": "9f7d4211260d6105d0106705ae250c947bf3fb28e8e40a196de36a0e70d49394", "commercial_saas_use_allowed": true, "decision": "approved", "rationale": "The exact config bytes and MIT model card are pinned at the same public revision."}
+    },
+    {
+      "artifact_id": "wavmark-wheel", "component_id": "wavmark-wheel", "kind": "runtime", "role": "OpenVoice audio watermark Python runtime", "required": true,
+      "source_url": "https://pypi.org/project/wavmark/0.0.3/", "source_revision": "wavmark-0.0.3", "expected_filename": "wavmark-0.0.3-py3-none-any.whl", "resolution_status": "resolved",
+      "integrity": {"method": "sha256", "value": "f77c7234e66b6983273fa7bd7509acaa9195cd936fd1c178b46c8e996d7e8f02", "size_bytes": 13921}, "verification_method": "vendor_metadata",
+      "license": {"declared_license": "MIT classifier with placeholder copyright notice", "evidence_url": "https://pypi.org/project/wavmark/0.0.3/", "evidence_digest_sha256": "002c2696d92b5c8cf956c11072baa58eaf9f6ade995c031ea635c6a1ee342ad1", "commercial_saas_use_allowed": null, "decision": "review_required", "rationale": "The wheel includes MIT text and classifier, but its copyright line remains an unfilled template; legal review is required before redistribution."},
+      "notes": ["Its default load_model performs a Hugging Face download. The Clicko adapter must pass the pinned local checkpoint path and run with no egress."]
+    },
+    {
+      "artifact_id": "wavmark-checkpoint", "component_id": "wavmark-checkpoint", "kind": "model", "role": "WavMark neural watermark checkpoint", "required": true,
+      "source_url": "https://huggingface.co/M4869/WavMark/blob/0ad3c7b74f641bddb61f6b85cdf2de0d93a5bfef/step59000_snr39.99_pesq4.35_BERP_none0.30_mean1.81_std1.81.model.pkl", "source_revision": "0ad3c7b74f641bddb61f6b85cdf2de0d93a5bfef", "expected_filename": "watermark/wavmark.model.pkl", "resolution_status": "resolved",
+      "integrity": {"method": "sha256", "value": "7a3d873d115c2c644685fb4cf109bdb299718296b88c871d3cf1c8e4cbc13144", "size_bytes": 10019039}, "verification_method": "vendor_metadata",
+      "license": {"declared_license": "MIT", "evidence_url": "https://huggingface.co/M4869/WavMark/blob/0ad3c7b74f641bddb61f6b85cdf2de0d93a5bfef/README.md", "evidence_digest_sha256": "aae50800eb48bb0311bbf9e33d9b83cbd8f6833ccd67183cdf72e14d603e53fc", "commercial_saas_use_allowed": true, "decision": "approved", "rationale": "The exact public, ungated model revision declares MIT and exposes LFS SHA-256 and byte size."}
+    },
+    {
+      "artifact_id": "kokoro-base-chain", "component_id": "kokoro-base-chain", "kind": "runtime", "role": "Pinned pt-BR base TTS and phonemization chain used before conversion", "required": true,
+      "source_url": "urn:clicko:artifact-inventory:kokoro-82m-stock-artifacts-2026-08-25", "source_revision": "36b681e2ad7ea33b197cd728a942b98444f4b5f96cc0f315d6660bc82494ba24", "expected_filename": "kokoro-82m-stock.artifacts.json", "resolution_status": "unresolved", "verification_method": "not_verified",
+      "license": {"declared_license": "Composite Apache-2.0, GPL-3.0-or-later and unresolved image notices", "evidence_url": "urn:clicko:license-evidence:kokoro-82m-stock-artifacts-2026-08-25", "evidence_digest_sha256": "36b681e2ad7ea33b197cd728a942b98444f4b5f96cc0f315d6660bc82494ba24", "commercial_saas_use_allowed": null, "decision": "review_required", "rationale": "The stock pipeline is technically executable, but its composite inventory remains incomplete and its local p95 preview SLA failed; it cannot be inherited as approved by the clone candidate."},
+      "notes": ["The clone benchmark has its own p95 RTF threshold and must measure the two-stage pipeline on GPU rather than reuse the CPU stock verdict."]
+    },
+    {
+      "artifact_id": "openvoice-worker-container", "component_id": "openvoice-worker-container", "kind": "container", "role": "Linux AMD64 speech GPU candidate image", "required": true,
+      "source_url": "urn:clicko:local-oci:clicko/kokoro-openvoice-v2:0.1.0-evaluation", "source_revision": "sha256:bdadbe1e2ba67466fa9ca9447194bd5c990c7012287dec5668bf0deea537d61c", "resolution_status": "resolved", "integrity": {"method": "oci_digest", "value": "sha256:bdadbe1e2ba67466fa9ca9447194bd5c990c7012287dec5668bf0deea537d61c", "size_bytes": 3481510734}, "verification_method": "registry_manifest",
+      "license": {"declared_license": "Composite image; lock, SBOM and notices required", "evidence_url": "https://github.com/myshell-ai/OpenVoice/blob/74a1d147b17a8c3092dd5430504bd83ef6c7eb23/setup.py", "evidence_digest_sha256": "bdc21e07e8636827f48eda91518467efdda93e3dd1a43d3f4331080d24de4d8c", "commercial_saas_use_allowed": null, "decision": "review_required", "rationale": "A local OCI digest, exact CUDA lock, eSpeak replacement and isolated offline smoke exist, but no reviewed SBOM, transitive notices, promotion-grade provenance, signature or GPU attestation exists."},
+      "notes": ["Local evaluation image only; it was not pushed or deployed.", "No Kokoro, OpenVoice or WavMark model checkpoint is baked into the image.", "The worker manifest continues to advertise zero speech GPU providers.", "The image excludes OpenAI, Gradio, MeloTTS, faster-whisper and dynamic Silero because they are not required by the selected converter path."]
+    }
+  ],
+  "notes": [
+    "The minimal pipeline is Kokoro pt-BR base WAV, direct source/target speaker embedding extraction, OpenVoice conversion and pinned local WavMark.",
+    "No model bytes, voice references or embeddings are stored in Git. No provider is activated.",
+    "The OpenVoice asset contract digest is 035360cd1f63378a6bd0f8b951b6de859f2fb961a61a2f5d7dcf627a90459d7c."
+  ]
+}

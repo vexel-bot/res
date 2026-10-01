@@ -1,0 +1,54 @@
+{
+  "limitUsd": 10,
+  "jobs": [
+    {
+      "jobId": "eaea27a9-cf72-455f-b00d-502027b9086c",
+      "provider": "google.gemini-editing",
+      "status": "retrying",
+      "model": "veo-3.1-fast-generate-preview",
+      "error": "gemini_http_429",
+      "reservedUsd": 0.4,
+      "measuredUsd": null,
+      "usage": null,
+      "submissionOutcome": "pending"
+    },
+    {
+      "jobId": "5345da53-5a97-4b4f-8dd7-6bf376994038",
+      "provider": "compatible.editing-planner",
+      "status": "failed",
+      "model": "gpt-4.1-2025-04-14",
+      "error": "1 validation error for ContextualPlanRequestV2\nscenes.0\n  Value error, editing_v2_shot_material_requirement_missing [type=value_error, input_value={'id': 'scene-aurora-hybr...dFrameExclusive': 450}]}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.11/v/value_error",
+      "reservedUsd": 0.163,
+      "measuredUsd": 0.092602,
+      "usage": {
+        "prompt_tokens": 15577,
+        "completion_tokens": 7681,
+        "total_tokens": 23258,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "submissionOutcome": "accepted"
+    }
+  ],
+  "externalReservations": [
+    {
+      "provider": "google.gemini-editing",
+      "model": "lyria-3-clip-preview",
+      "priceVersion": "google-lyria-2026-09-30",
+      "reservedUsd": 0.04,
+      "status": "submission_uncertain",
+      "prompt": "Instrumental only: warm intimate bossa jazz for a premium Brazilian coffee ritual ad. Soft brushed drums, upright bass, mellow piano, subtle rhythmic pulse, gentle lift near the final four seconds. No voice, no lyrics, no sound effects. Seamless 30 second cue.",
+      "error": "gemini_http_429"
+    }
+  ],
+  "conservativeCommittedUsd": 0.532602,
+  "billingReconciliation": "Reservations are retained when provider omits measured cost."
+}

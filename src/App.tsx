@@ -35,13 +35,11 @@ import { useGovernance } from "./context/GovernanceContext";
 import { useOperations } from "./context/OperationsContext";
 import type { ApprovalStage } from "./types";
 import { useTabRouter } from "./app/router/navigation";
+import { effectiveRouteOwnerForPath } from "./app/router/routeRegistry";
 import { LabGlobalSurfaces } from "./product/LabGlobalSurfaces";
-import {
-  isProductSurfacePath,
-  ProductSurfaceView,
-} from "./product/ProductSurfaceView";
+import { ProductSurfaceView } from "./product/ProductSurfaceView";
 import { screenForLocation } from "./product/screenManifest";
-import { CanonicalProduct, isCanonicalPath } from "./canonical/CanonicalProduct";
+import { CanonicalProduct } from "./canonical/CanonicalProduct";
 
 import { NavigationTab, Post, AIActionSuggestion } from "./types";
 import { AI_SUGGESTIONS } from "./data/mockData";
@@ -135,7 +133,8 @@ export default function App() {
 
   const hasAccessToCurrentTab =
     governanceLoading || !currentUser || canAccess(currentTab);
-  const productSurface = isProductSurfacePath(pathname);
+  const routeOwner = effectiveRouteOwnerForPath(pathname);
+  const productSurface = routeOwner === "product-surface";
   const focusMode = pathname.startsWith("/content/") && pathname.includes("/edit");
   const stitchScreen = screenForLocation(pathname, search);
 
@@ -143,7 +142,7 @@ export default function App() {
     return <LoginView />;
   }
 
-  if (isCanonicalPath(pathname)) {
+  if (routeOwner === "canonical") {
     return (
       <CanonicalProduct
         pathname={pathname}

@@ -1,0 +1,76 @@
+{
+  "schema_version": "studio.video-api-provider-decision.v1",
+  "decided_at": "2026-09-01",
+  "status": "evaluation_blocked_on_credentials_and_quota",
+  "primary_trial_candidate": {
+    "provider": "google-vertex-ai",
+    "model": "veo-3.1-lite-generate-001",
+    "reason": "Best verified path to a meaningful no-out-of-pocket evaluation when a new-account Google Cloud credit and fixed model quota are both available.",
+    "free_trial": {
+      "kind": "new_customer_promotional_credit",
+      "advertised_amount_usd": 300,
+      "duration_days": 90,
+      "guaranteed_for_this_workspace": false
+    },
+    "activation_requirements": [
+      "eligible_google_cloud_account",
+      "trial_credit_confirmed",
+      "veo_fixed_quota_confirmed",
+      "project_and_region_configured",
+      "application_default_credentials",
+      "storyboard_and_animatic_approved",
+      "non_biometric_assets_only"
+    ]
+  },
+  "preferred_conversational_candidate": {
+    "provider": "google-gemini-api",
+    "model": "gemini-omni-1.1-flash",
+    "free_api_tier": false,
+    "status": "blocked_until_spend_authorized"
+  },
+  "transport_smoke_candidate": {
+    "provider": "hugging-face-inference-providers",
+    "free_monthly_credit_usd": 0.1,
+    "status": "eligible_only_for_minimal_transport_smoke",
+    "quality_benchmark_eligible": false
+  },
+  "rejected_as_primary_free_api_trial": [
+    {
+      "provider": "fal",
+      "reason": "Free Sandbox and Playground credits are not usable through the API or Workflows."
+    },
+    {
+      "provider": "replicate",
+      "reason": "Only select models have a small undocumented free limit; prepaid billing is otherwise required."
+    },
+    {
+      "provider": "runway",
+      "reason": "No official API trial credit was verified in the reviewed API billing documentation."
+    }
+  ],
+  "local_preflight": {
+    "gemini_api_keys_present": true,
+    "gemini_api_key_count": 2,
+    "gemini_outbound_enabled": false,
+    "gemini_video_generation_enabled": false,
+    "gemini_max_external_spend_usd": 0,
+    "google_credentials_present": false,
+    "google_cloud_project_present": false,
+    "gcloud_cli_present": false,
+    "hugging_face_token_present": false,
+    "generation_attempted": false,
+    "external_cost_incurred": false
+  },
+  "automatic_paid_fallback": false,
+  "sources": [
+    "https://ai.google.dev/gemini-api/docs/video",
+    "https://ai.google.dev/gemini-api/docs/omni",
+    "https://ai.google.dev/gemini-api/docs/pricing",
+    "https://docs.cloud.google.com/free/docs/free-cloud-features",
+    "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/veo/3-1-generate",
+    "https://huggingface.co/docs/inference-providers/pricing",
+    "https://huggingface.co/docs/inference-providers/en/tasks/text-to-video",
+    "https://fal.ai/docs/documentation/model-apis/sandbox",
+    "https://replicate.com/docs/topics/billing/"
+  ]
+}

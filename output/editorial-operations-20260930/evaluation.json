@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "studio.editorial-operations-evaluation.v1",
+  "briefs": [
+    "bebida",
+    "mochila",
+    "tarefas"
+  ],
+  "animatics": 6,
+  "technicalFunctioning": "passed_for_local_synthetic_fixtures",
+  "visualQuality": "pending_human_review_with_real_materials",
+  "audioQuality": "not_evaluated_silent_fixtures",
+  "autonomy": "partial_fixture_assets_and_plans_authored_by_test_script",
+  "apiCostUsd": 0,
+  "promotionToRenderVerified": false,
+  "concatenationBaselines": 3,
+  "blindComparison": "pending"
+}

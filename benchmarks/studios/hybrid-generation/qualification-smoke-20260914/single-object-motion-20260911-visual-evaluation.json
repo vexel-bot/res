@@ -1,0 +1,39 @@
+{
+  "schemaVersion": "res.local-video-candidate-evaluation.v1",
+  "artifactChecksumSha256": "919b82158407df29ae83bf6766a4c3c5b816fda6ee765ef469692af30286760b",
+  "executionId": "a2372e16-84ac-5344-8ebf-4bbdee6c682a",
+  "profileId": "animatediff-lightning-sd15-a-v1",
+  "reviewScope": "all-8-frames-and-complete-1-second-sequence",
+  "decision": "rejected",
+  "scores": {
+    "requestRelevance": 1,
+    "subjectIdentity": 1,
+    "temporalContinuity": 2,
+    "actionClarity": 1
+  },
+  "findings": [
+    {
+      "code": "subject_not_recognizable",
+      "severity": "blocker",
+      "observation": "No stable, recognizable blue toy car is visible across the sequence."
+    },
+    {
+      "code": "requested_action_not_observed",
+      "severity": "blocker",
+      "observation": "A coherent left-to-right movement of one object cannot be followed."
+    },
+    {
+      "code": "severe_visual_deformation",
+      "severity": "blocker",
+      "observation": "The sequence contains saturated grid-like structures and unstable object shapes."
+    }
+  ],
+  "contentSafety": {
+    "status": "flagged",
+    "flaggedFrames": [4],
+    "maximumObservedConceptMargin": 0.0060623884201049805,
+    "disposition": "quarantine",
+    "note": "The pinned checker remains active. A separate benign-fixture test demonstrated that this checker can flag a solid blue image, so this signal is retained but is not used as evidence of visual quality."
+  },
+  "qualificationImpact": "profile-remains-experimental-and-unqualified-for-autonomous-material-admission"
+}

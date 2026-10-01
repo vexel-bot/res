@@ -1,0 +1,14 @@
+{
+  "name": "res-remotion-evaluation-only",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {"render": "node render.mjs", "render:plan": "node render-plan.mjs", "test:native-scene": "node create-native-sample.mjs"},
+  "dependencies": {
+    "@remotion/bundler": "4.0.527",
+    "@remotion/renderer": "4.0.527",
+    "remotion": "4.0.527",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
+  },
+  "devDependencies": {"typescript": "5.8.2", "@types/react": "19.2.14", "@types/react-dom": "19.2.3"}
+}

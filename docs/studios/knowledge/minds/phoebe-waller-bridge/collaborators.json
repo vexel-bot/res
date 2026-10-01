@@ -1,0 +1,24 @@
+{
+  "schema_version": "studio.collaboration-graph.v1",
+  "anchor": "Phoebe Waller-Bridge",
+  "status": "credits_pending_per_work_verification",
+  "nodes": [
+    {
+      "name": "Vicky Jones",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Harry Bradbeer",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Tony Grech-Smith",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Isobel Waller-Bridge",
+      "role": "verify_per_work"
+    }
+  ],
+  "edges": []
+}

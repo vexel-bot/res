@@ -1,6 +1,7 @@
+import tempfile
+from contextlib import ExitStack
 from datetime import UTC, datetime
 from pathlib import Path
-from uuid import uuid4
 
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy import select
@@ -19,6 +20,7 @@ from ..schemas import (
 )
 from ..security import get_current_user
 from ..services.creatives import render_creative
+from ..services.object_storage import get_object_storage, object_key
 from .assets import asset_out
 
 router = APIRouter(prefix="/creatives", tags=["creatives"])
@@ -132,6 +134,10 @@ def update_creative(
 ):
     item = owned_document(db, user.id, document_id)
     changes = data.model_dump(exclude_unset=True)
+    if data.document is not None and (
+        (item.canonical_document or {}).get("composition", {}).get("narrative", {}).get("editorialV2")
+    ):
+        raise HTTPException(status_code=409, detail={"code": "editorial_v2_requires_video_studio"})
     expected_updated_at = changes.pop("expected_updated_at", None)
     if expected_updated_at is not None and normalized_timestamp(
         item.updated_at
@@ -228,28 +234,50 @@ def export_creative(
     image_ids = {layer.asset_id for layer in data_canvas(item).layers if layer.type == "image"}
     assets = (
         db.scalars(
-            select(LibraryAsset).where(LibraryAsset.id.in_(image_ids), LibraryAsset.workspace_id == item.workspace_id)
+            select(LibraryAsset).where(
+                LibraryAsset.id.in_(image_ids),
+                LibraryAsset.workspace_id == item.workspace_id,
+                LibraryAsset.lifecycle_status == "active",
+            )
         ).all()
         if image_ids
         else []
     )
     if len(assets) != len(image_ids) or any(not asset.storage_key for asset in assets):
         raise HTTPException(status_code=422, detail="One or more image layers are unavailable")
-    storage_root = Path(settings.storage_path).resolve()
-    paths = {asset.id: storage_root / str(asset.storage_key) for asset in assets}
     try:
-        rendered = render_creative(data_canvas(item), paths)
+        with ExitStack() as stack:
+            paths = {
+                asset.id: stack.enter_context(
+                    get_object_storage(asset.storage_backend or "local").materialize(str(asset.storage_key))
+                )
+                for asset in assets
+            }
+            rendered = render_creative(data_canvas(item), paths)
     except (OSError, ValueError) as exc:
         raise HTTPException(status_code=422, detail=str(exc)) from exc
     extension = ".png" if data.format == "png" else ".jpg"
-    storage_key = f"{uuid4().hex}{extension}"
-    storage_root.mkdir(parents=True, exist_ok=True)
-    destination = storage_root / storage_key
-    try:
+    media_type = "image/png" if data.format == "png" else "image/jpeg"
+    storage_key = object_key(item.workspace_id, "exports", extension)
+    storage = get_object_storage()
+    with tempfile.TemporaryDirectory(prefix="clicko-creative-export-") as temporary_directory:
+        destination = Path(temporary_directory) / f"export{extension}"
         if data.format == "png":
             rendered.save(destination, format="PNG", optimize=True)
         else:
             rendered.convert("RGB").save(destination, format="JPEG", quality=data.quality, optimize=True)
+        stored = storage.put_file(
+            destination,
+            key=storage_key,
+            media_type=media_type,
+            metadata={
+                "workspace-id": item.workspace_id,
+                "document-id": item.id,
+                "document-version": str(item.version),
+                "source": "legacy-creative-export",
+            },
+        )
+    try:
         asset = LibraryAsset(
             workspace_id=item.workspace_id,
             title=f"{item.title} v{item.version}",
@@ -258,6 +286,11 @@ def export_creative(
             campaign_id=item.campaign_id,
             content_id=item.post_id,
             storage_key=storage_key,
+            storage_backend=stored.backend,
+            media_type=stored.media_type,
+            size_bytes=stored.size_bytes,
+            checksum_sha256=stored.checksum_sha256,
+            object_metadata=stored.metadata,
         )
         db.add(asset)
         db.flush()
@@ -276,7 +309,7 @@ def export_creative(
         db.refresh(asset)
     except Exception:
         db.rollback()
-        destination.unlink(missing_ok=True)
+        storage.delete(storage_key)
         raise
     return asset_out(asset)
 

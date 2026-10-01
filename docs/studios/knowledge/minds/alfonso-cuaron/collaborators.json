@@ -1,0 +1,28 @@
+{
+  "schema_version": "studio.collaboration-graph.v1",
+  "anchor": "Alfonso Cuarón",
+  "status": "credits_pending_per_work_verification",
+  "nodes": [
+    {
+      "name": "Carlos Cuarón",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Emmanuel Lubezki",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Mark Sanger",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Jonás Cuarón",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Andy Nicholson",
+      "role": "verify_per_work"
+    }
+  ],
+  "edges": []
+}

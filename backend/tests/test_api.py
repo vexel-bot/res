@@ -287,6 +287,24 @@ def test_private_upload_enforces_access_type_and_size(client, tmp_path, monkeypa
     video_id = video.json()["id"]
     assert client.get(f"/api/v1/assets/{video_id}/content", headers=auth(token)).content == video_bytes
 
+    wav_bytes = b"RIFF\x24\x00\x00\x00WAVEfmt " + b"\x00" * 32
+    audio = client.post(
+        "/api/v1/assets/upload",
+        headers=auth(token),
+        data={"workspace_id": workspace, "title": "Voz privada"},
+        files={"file": ("voice.wav", wav_bytes, "audio/wav")},
+    )
+    assert audio.status_code == 201, audio.text
+    assert audio.json()["type"] == "audio"
+    audio_id = audio.json()["id"]
+    spoofed_audio = client.post(
+        "/api/v1/assets/upload",
+        headers=auth(token),
+        data={"workspace_id": workspace, "title": "Voz falsa"},
+        files={"file": ("voice.wav", b"not-a-wave", "audio/wav")},
+    )
+    assert spoofed_audio.status_code == 422
+
     monkeypatch.setattr(assets_router, "MAX_UPLOAD_BYTES", 4)
     oversized = client.post(
         "/api/v1/assets/upload",
@@ -297,6 +315,7 @@ def test_private_upload_enforces_access_type_and_size(client, tmp_path, monkeypa
     assert oversized.status_code == 413
     assert client.delete(f"/api/v1/assets/{asset_id}", headers=auth(token)).status_code == 204
     assert client.delete(f"/api/v1/assets/{video_id}", headers=auth(token)).status_code == 204
+    assert client.delete(f"/api/v1/assets/{audio_id}", headers=auth(token)).status_code == 204
     assert list(tmp_path.iterdir()) == []
 
 

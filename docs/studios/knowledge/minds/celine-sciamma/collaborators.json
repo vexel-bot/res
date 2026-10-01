@@ -1,0 +1,24 @@
+{
+  "schema_version": "studio.collaboration-graph.v1",
+  "anchor": "Céline Sciamma",
+  "status": "credits_pending_per_work_verification",
+  "nodes": [
+    {
+      "name": "Claire Mathon",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Julien Lacheray",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Bénédicte Couvreur",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Jean-Baptiste de Laubier",
+      "role": "verify_per_work"
+    }
+  ],
+  "edges": []
+}

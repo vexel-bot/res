@@ -258,7 +258,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             {/* Days Header */}
             <div className="grid grid-cols-[48px_repeat(7,minmax(0,1fr))] border-b border-white/[0.05]">
               <div className="flex items-center justify-center">
-                <button type="button" className="grid h-8 w-8 place-items-center rounded-xl bg-white/[0.03] text-[#717d85] hover:text-white transition-colors">
+                <button type="button" disabled title="A navegação entre semanas está disponível no calendário canônico." className="grid h-8 w-8 place-items-center rounded-xl bg-white/[0.03] text-[#717d85] hover:text-white transition-colors">
                   <ChevronLeft className="h-4 w-4" />
                 </button>
               </div>
@@ -300,6 +300,8 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                 <button
                   key={`${item.day}-${item.row}-${index}`}
                   type="button"
+                  disabled
+                  title="Abra o calendário canônico para editar esta publicação."
                   style={{ gridColumn: item.day + 1, gridRow: item.row, borderColor: `${item.accent}60` }}
                   className="z-10 m-[3px] flex min-w-0 items-center gap-2 rounded-xl border bg-[#0d1217] p-2 text-left shadow-lg shadow-black/50 transition-all hover:-translate-y-0.5 hover:border-white/30 hover:bg-[#121820]"
                 >

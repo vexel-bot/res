@@ -1,0 +1,83 @@
+[
+  {
+    "id": "G1",
+    "question": "Repertório influencia uma composição nova?",
+    "evidence": [
+      "planner",
+      "repertoire",
+      "plan_contract",
+      "motion"
+    ],
+    "status": "partial integration",
+    "next_validation": "Intenção gera cena/grafo com vários elementos e justificativas sem montar a peça manualmente fora do res."
+  },
+  {
+    "id": "G2",
+    "question": "Percepção cobre ações relevantes?",
+    "evidence": [
+      "planner"
+    ],
+    "status": "limited fixed sampling",
+    "next_validation": "Trecho com evento fora de início/meio/fim exige inspeção adicional ou abstenção."
+  },
+  {
+    "id": "G3",
+    "question": "Fontes e elementos têm equivalência de render?",
+    "evidence": [
+      "hyperframes",
+      "resources"
+    ],
+    "status": "known compatibility gap",
+    "next_validation": "Fonte do projeto e composição de múltiplos elementos no preview e MP4."
+  },
+  {
+    "id": "G4",
+    "question": "Biblioteca grande continua recuperável?",
+    "evidence": [
+      "repertoire",
+      "planner"
+    ],
+    "status": "context truncation risk identified in code",
+    "next_validation": "Técnica relevante criada depois da centésima é recuperada para o contexto."
+  },
+  {
+    "id": "G5",
+    "question": "Som das referências foi analisado?",
+    "evidence": [
+      "Instagram sampled observations",
+      "S06",
+      "S16"
+    ],
+    "status": "not verified by listening",
+    "next_validation": "Audição integral de arquivos disponíveis e anotação de eventos, silêncio e mixagem."
+  },
+  {
+    "id": "G6",
+    "question": "Métricas comprovam tendência ou causalidade?",
+    "evidence": [
+      "historical Instagram CSV",
+      "current public counts"
+    ],
+    "status": "descriptive evidence only",
+    "next_validation": "Série temporal com idade/contexto; retenção e experimentos quando houver acesso."
+  },
+  {
+    "id": "G7",
+    "question": "Transformação em movimento está qualificada?",
+    "evidence": [
+      "ai_adapters",
+      "renderer"
+    ],
+    "status": "pending real media qualification",
+    "next_validation": "Clip real, elementos preservados, avaliação de continuidade e incorporação na montagem."
+  },
+  {
+    "id": "G8",
+    "question": "Qual vídeo/tema usar no teste editorial?",
+    "evidence": [
+      "report section 9"
+    ],
+    "status": "planning decision",
+    "next_validation": "Selecionar vídeo próprio/autorizado, registrar intenção e problemas do original."
+  }
+]

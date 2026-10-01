@@ -1,0 +1,26 @@
+[
+  {
+    "id": "music",
+    "sourceUrl": "https://raw.githubusercontent.com/0lhi/FreePD/stream/Scoring/Slice%20of%20Life.mp3",
+    "file": "output\\hybrid-aurora-pilot\\materials\\aurora-music.mp3",
+    "sha256": "39e0543fbeb06ced8a5f023daf7375385235238ea9063677f3ff71ab15bc04dc",
+    "bytes": 2817471,
+    "license": "CC0-1.0"
+  },
+  {
+    "id": "water",
+    "sourceUrl": "https://sfxmint.com/dl/water-pour-10.mp3",
+    "file": "output\\hybrid-aurora-pilot\\materials\\water-pour.mp3",
+    "sha256": "1e48c2265c53c1e063a767375a1a133b1a860b744b30c257098ad23a8625c07c",
+    "bytes": 33061,
+    "license": "CC0-1.0"
+  },
+  {
+    "id": "cup",
+    "sourceUrl": "https://sfxmint.com/dl/glass-ceramic-47.mp3",
+    "file": "output\\hybrid-aurora-pilot\\materials\\cup-set-down.mp3",
+    "sha256": "672db813d1cb183c50247862c297ad0be3139f26ba4800529f929fbde456817f",
+    "bytes": 33061,
+    "license": "CC0-1.0"
+  }
+]

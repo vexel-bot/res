@@ -1,0 +1,24 @@
+{
+  "schema_version": "studio.collaboration-graph.v1",
+  "anchor": "Nora Ephron",
+  "status": "credits_pending_per_work_verification",
+  "nodes": [
+    {
+      "name": "Delia Ephron",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Rob Reiner",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Julie Kavner",
+      "role": "verify_per_work"
+    },
+    {
+      "name": "Richard Marks",
+      "role": "verify_per_work"
+    }
+  ],
+  "edges": []
+}

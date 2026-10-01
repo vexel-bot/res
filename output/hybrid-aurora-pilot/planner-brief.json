@@ -1,0 +1,42 @@
+{
+  "materialInspection": null,
+  "revisionPlan": null,
+  "revisionSceneIds": [],
+  "revisionInstruction": "",
+  "narrationBeats": {},
+  "productionStage": null,
+  "critiqueRenderJobId": null,
+  "productionRequest": null,
+  "editorialDirection": null,
+  "preliminaryMaterialInventory": [],
+  "inspectionIntervals": [],
+  "planVersion": 2,
+  "schemaVersion": "studio.editing-ai-request.v1",
+  "expectedDocumentRevision": 1,
+  "operation": "plan",
+  "prompt": "Create a 15s vertical Café Aurora product ad without voiceover. Return nativeComponents version 1: action_montage targets video, product_demonstration targets image/video/group, integrated_typography targets text. Provide >=8s of action inside footage; no slide counters or fixed title block. Text optional. Use sourceAudio mute: current licensed footage has no sound. Declare missing sound and a high resolution real package asset as material needs; supplied product is only a low resolution reference. Use at most two candidates per need, at most two corrections and US$10 total. Do not use effects, textSpans or matchPreviousElementId. Available materials, inspected by the operator: {\"beans\": {\"id\": \"48669823-e76d-4100-b246-ae26100ad32d\", \"action\": \"hand moves black cup above scattered beans\", \"seconds\": 5.8}, \"brew\": {\"id\": \"3135a6ac-363c-4218-9caf-1ebcbee4e86d\", \"action\": \"kettle pours water into white coffee dripper\", \"seconds\": 10}, \"pour\": {\"id\": \"ee371554-79a9-4cdd-8748-a98d85b47a0a\", \"action\": \"black carafe pours coffee into blue ceramic cup\", \"seconds\": 13.79}, \"wide\": {\"id\": \"aa29ca5e-28cd-49d4-856a-9aefebd27313\", \"action\": \"hand brings glass carafe to ivory cup\", \"seconds\": 14.72}, \"product\": {\"id\": \"4c8ba2b0-c9a9-4b98-96ba-ba9d9ecd08a6\", \"resolution\": \"474x236\", \"referenceOnly\": true}}",
+  "sourceAssetId": null,
+  "referenceAssetIds": [],
+  "sourceStartSeconds": 0.0,
+  "durationSeconds": 8,
+  "preserve": [],
+  "direction": {
+    "materialNeeds": [],
+    "fontAssetId": null,
+    "expectedDocumentRevision": 1,
+    "intent": {
+      "objective": "Criar anúncio híbrido Café Aurora, 15 segundos; ritmo, continuidade, clareza e acabamento.",
+      "format": "general",
+      "script": "Do preparo à primeira xícara. Café Aurora. Seu próximo ritual.",
+      "lockedFacts": [],
+      "pacing": "balanced",
+      "emphasis": "auto",
+      "reducedMotion": false,
+      "preserveMessage": true
+    },
+    "beats": [],
+    "requiredTechniques": [],
+    "clipOrder": [],
+    "referenceTechniqueIds": []
+  }
+}

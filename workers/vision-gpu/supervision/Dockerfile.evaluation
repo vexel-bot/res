@@ -1,0 +1,75 @@
+FROM python:3.11.9-slim-bookworm@sha256:2856e6af199e8128161abd320575eb9b341f3b76f017b5d0c9cd364f60d8a050
+
+ARG LOCK_DIGEST=9cc82bd9dd4e7b291d5a85ad3f8718009da30bf4f372edc0d8a8503d85b41284
+ARG SBOM_DIGEST=22d543bc3c7e734454e252fcf60846af2d9f2e81ebf301d1cd876616d0a544c5
+ARG REVIEW_DIGEST=f8c7412117aaa046dec90ee3e18781a74b3f591772bfb60eadcae4f9b4521f41
+ARG BENCHMARK_DIGEST=df2155e926afe933f4bcda47a99a68b4364c1234bb804afade0dd7da75b5c867
+ARG MANIFEST_DIGEST=381f5809a61bceb7f24b446f664666969418efa33b5bfb6138e3d99de114a622
+
+LABEL org.opencontainers.image.title="Clicko Supervision evaluation" \
+      org.opencontainers.image.version="0.1.0-evaluation" \
+      org.opencontainers.image.source="https://github.com/roboflow/supervision/tree/5f25aa0ee6dc22891415b6e3d2e1689ce7a32952" \
+      io.clicko.capability="vision_toolkit" \
+      io.clicko.providers="none" \
+      io.clicko.network-egress="denied-required" \
+      io.clicko.supervision.version="0.30.1" \
+      io.clicko.supervision.source-revision="5f25aa0ee6dc22891415b6e3d2e1689ce7a32952" \
+      io.clicko.base.digest="sha256:2856e6af199e8128161abd320575eb9b341f3b76f017b5d0c9cd364f60d8a050"
+
+WORKDIR /opt/clicko
+
+COPY workers/vision-gpu/supervision/requirements.lock ./supervision-runtime/requirements.lock
+COPY workers/vision-gpu/supervision/wheelhouse ./supervision-runtime/wheelhouse
+
+RUN python -m pip install \
+        --disable-pip-version-check \
+        --no-cache-dir \
+        --no-index \
+        --find-links=/opt/clicko/supervision-runtime/wheelhouse \
+        --only-binary=:all: \
+        --require-hashes \
+        --requirement /opt/clicko/supervision-runtime/requirements.lock \
+    && rm -rf /opt/clicko/supervision-runtime/wheelhouse
+
+COPY backend/app/__init__.py ./backend/app/__init__.py
+COPY backend/app/domain/__init__.py ./backend/app/domain/__init__.py
+COPY backend/app/domain/studios ./backend/app/domain/studios
+COPY backend/app/providers/__init__.py ./backend/app/providers/__init__.py
+COPY backend/app/providers/studios/__init__.py ./backend/app/providers/studios/__init__.py
+COPY backend/app/providers/studios/supervision_detection.py ./backend/app/providers/studios/supervision_detection.py
+COPY workers/vision-gpu/worker.manifest.json ./worker-manifest.json
+COPY workers/vision-gpu/supervision/sbom.spdx.json ./supervision-runtime/sbom.spdx.json
+COPY workers/vision-gpu/supervision/license-review.v1.json ./supervision-runtime/license-review.v1.json
+COPY workers/vision-gpu/supervision/verify_build.py ./supervision-runtime/verify_build.py
+COPY workers/vision-gpu/supervision/probe.py ./supervision-runtime/probe.py
+COPY benchmarks/studios/reality/supervision-benchmark-run-2026-08-28.v1.json ./supervision-runtime/benchmark.v1.json
+
+RUN python ./supervision-runtime/verify_build.py \
+        --adapter ./backend/app/providers/studios/supervision_detection.py \
+        --domain ./backend/app/domain/studios \
+        --lock ./supervision-runtime/requirements.lock \
+        --lock-digest "${LOCK_DIGEST}" \
+        --sbom ./supervision-runtime/sbom.spdx.json \
+        --sbom-digest "${SBOM_DIGEST}" \
+        --review ./supervision-runtime/license-review.v1.json \
+        --review-digest "${REVIEW_DIGEST}" \
+        --benchmark ./supervision-runtime/benchmark.v1.json \
+        --benchmark-digest "${BENCHMARK_DIGEST}" \
+        --manifest ./worker-manifest.json \
+        --manifest-digest "${MANIFEST_DIGEST}" \
+    && useradd --create-home --uid 10001 clicko \
+    && install -d -o clicko -g clicko /tmp/clicko-supervision
+
+ENV PYTHONPATH="/opt/clicko/backend" \
+    HOME="/home/clicko" \
+    MPLCONFIGDIR="/tmp/clicko-supervision/matplotlib" \
+    TMPDIR="/tmp/clicko-supervision" \
+    STUDIO_WORKER_MANIFEST_PATH="/opt/clicko/worker-manifest.json"
+
+USER clicko
+WORKDIR /opt/clicko/backend
+
+HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
+  CMD ["python", "/opt/clicko/supervision-runtime/probe.py"]
+
+CMD ["python", "/opt/clicko/supervision-runtime/probe.py"]

@@ -1,0 +1,139 @@
+{
+  "schemaVersion": "clicko.speech-gpu-minimal-v2-verification.v1",
+  "generatedAt": "2026-08-27T21:12:36Z",
+  "uv": {
+    "version": "0.12.3",
+    "imageDigest": "sha256:dfd1e6972e100ca2fbf1f391effc3dd4aa57f319bf03c3e321e0a3f3341ed5af",
+    "pythonBaseDigest": "sha256:272efc3f94bec901e2bc7a5c9984b3d113c317839edca2714c6a388b9476f8fc"
+  },
+  "candidates": [
+    {
+      "candidateId": "chatterbox-multilingual-v3-pt-br-minimal-v2",
+      "sourceWheels": [
+        {
+          "name": "chatterbox-tts",
+          "revision": "5de7a54aa4e5e2baadb0182dde554908b48b85c2",
+          "installMode": "wheel-no-deps",
+          "patch": null
+        },
+        {
+          "name": "resemble-perth",
+          "revision": "ce86c49d029f42272c1902eccb675556b9ed2330",
+          "installMode": "wheel-no-deps",
+          "patch": null
+        }
+      ],
+      "lockPath": "workers/speech-gpu/candidate-v2/chatterbox/uv.lock",
+      "lockDigestSha256": "da41ec1f91c666ae37ca663108fe8c3f1e43175e0ea001ed45aba73c83501ad2",
+      "packageCount": 95,
+      "v1PackageCount": 125,
+      "removedPackageCount": 30,
+      "requiredPackagesOutsideLock": [
+        "chatterbox-tts",
+        "resemble-perth"
+      ],
+      "forbiddenPackagesAbsent": [
+        "pykakasi",
+        "praat-parselmouth",
+        "resemble-perth"
+      ],
+      "remainingLicenseReview": [
+        "soxr",
+        "nvidia-cuda-python-wheels",
+        "chatterbox-and-perth-code-and-checkpoint-notices"
+      ],
+      "linuxBuildEvidence": {
+        "dockerfile": "workers/speech-gpu/Dockerfile.chatterbox-candidate-v2",
+        "target": "dependencies",
+        "sourceAudit": "passed",
+        "sourceWheelsBuiltNoDeps": "passed",
+        "frozenDependencyInstall": "passed",
+        "offlineImportSmoke": "passed",
+        "weightsDownloaded": false,
+        "inferenceExecuted": false
+      }
+    },
+    {
+      "candidateId": "kokoro-openvoice-v2-pt-br-minimal-v2",
+      "sourceWheels": [
+        {
+          "name": "openvoice",
+          "revision": "74a1d147b17a8c3092dd5430504bd83ef6c7eb23",
+          "installMode": "patched-wheel-no-deps",
+          "patch": {
+            "path": "workers/speech-gpu/candidate-v2/patches/openvoice-tone-color-only.patch",
+            "sha256": "392e8c1dd20511bdc5b466a578daa04343a59931572f6ea27680603f1b3da0e0"
+          }
+        },
+        {
+          "name": "kokoro",
+          "revision": "dfb907a02bba8152ca444717ca5d78747ccb4bec",
+          "licenseCanonicalGitBlobSha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+          "licenseNormalizedTextSha256": "1eb85fc97224598dad1852b5d6483bbcf0aa8608790dcc657a5a2a761ae9c8c6",
+          "installMode": "patched-wheel-no-deps",
+          "patch": {
+            "path": "workers/speech-gpu/candidate-v2/patches/kokoro-lazy-language-g2p.patch",
+            "sha256": "bf31edc3e69ccdd6bad00b55d3d94d7566757244085f9b305716ca51fec707a9"
+          }
+        }
+      ],
+      "lockPath": "workers/speech-gpu/candidate-v2/openvoice/uv.lock",
+      "lockDigestSha256": "de0dfa2271abc283f1a102d01211b1f623f4daf4de0d42e30e9280164aebe6cf",
+      "packageCount": 96,
+      "v1PackageCount": 130,
+      "removedPackageCount": 34,
+      "requiredPackagesOutsideLock": [
+        "openvoice",
+        "kokoro"
+      ],
+      "forbiddenPackagesAbsent": [
+        "Unidecode",
+        "eng-to-ipa",
+        "cn2an",
+        "jieba",
+        "pypinyin",
+        "inflect",
+        "num2words",
+        "spacy",
+        "spacy-curated-transformers",
+        "kokoro"
+      ],
+      "remainingLicenseReview": [
+        "phonemizer-fork",
+        "espeakng-loader-and-replacement-runtime",
+        "soxr",
+        "nvidia-cuda-python-wheels",
+        "wavmark-wheel-and-checkpoint"
+      ],
+      "linuxBuildEvidence": {
+        "dockerfile": "workers/speech-gpu/Dockerfile.openvoice-candidate-v2",
+        "target": "dependencies",
+        "sourceAudit": "passed",
+        "sourceWheelsBuiltNoDeps": "passed",
+        "frozenDependencyInstall": "passed",
+        "manifestedEspeakReplacement": "passed",
+        "offlineImportSmoke": "passed",
+        "weightsDownloaded": false,
+        "inferenceExecuted": false
+      }
+    }
+  ],
+  "verification": {
+    "patchesApplyToPinnedRevisions": true,
+    "patchedPythonSyntax": "passed",
+    "staticImportProof": "passed",
+    "locksGenerated": true,
+    "locksVerified": true,
+    "sourceAuditsPassed": true,
+    "sourceWheelsBuiltNoDeps": true,
+    "dependencyStagesPassed": true,
+    "offlineImportSmokesPassed": true,
+    "weightsDownloaded": false,
+    "inferenceExecuted": false,
+    "imageBuilt": false,
+    "providerPromoted": false,
+    "workerProvidersRemainEmpty": true,
+    "vpsAccessedOrChanged": false
+  },
+  "status": "dependency-stages-passed-final-image-build-pending"
+}

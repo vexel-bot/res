@@ -1,0 +1,66 @@
+{
+  "schemaVersion": "res.remotion-native-scene.v1",
+  "component": "product-story-v1",
+  "width": 720,
+  "height": 1280,
+  "fps": 30,
+  "durationFrames": 270,
+  "brand": "CAFÉ AURORA",
+  "accent": "#e7b966",
+  "background": "#100e0b",
+  "beats": [
+    {
+      "startFrame": 0,
+      "durationFrames": 74,
+      "imageId": "beans",
+      "eyebrow": "O começo",
+      "headline": "Tudo começa no grão.",
+      "subline": "Uma pausa para sentir mais.",
+      "focusX": 50,
+      "focusY": 48
+    },
+    {
+      "startFrame": 74,
+      "durationFrames": 92,
+      "imageId": "ritual",
+      "eyebrow": "O ritual",
+      "headline": "Quatro origens.",
+      "subline": "Uma experiência em cada detalhe.",
+      "focusX": 54,
+      "focusY": 50
+    },
+    {
+      "startFrame": 166,
+      "durationFrames": 104,
+      "imageId": "product",
+      "eyebrow": "Café Aurora",
+      "headline": "Encontre o seu momento.",
+      "subline": "Conheça o kit degustação.",
+      "focusX": 50,
+      "focusY": 40
+    }
+  ],
+  "audioId": "sound",
+  "assetFiles": {
+    "beans": {
+      "path": "..\\..\\public\\canonical\\figma\\s01\\hero-coffee-atmosphere.png",
+      "mime": "image/png",
+      "sha256": "d5a00f557b6574ccb8b76c57e8ec73839e0eb7c0bbc8544fb810e98dad404511"
+    },
+    "ritual": {
+      "path": "..\\..\\public\\canonical\\figma\\phase2\\s16-texture.png",
+      "mime": "image/png",
+      "sha256": "bf839028b214655253897fd23240cfef0fed835ef0e1626aa039e10a7887d1bb"
+    },
+    "product": {
+      "path": "..\\..\\public\\canonical\\figma\\phase2\\s16-product.png",
+      "mime": "image/png",
+      "sha256": "b7d7681d959bfb0a002cfc9bc615b5c11525656428f92feaa185935efb6b77f9"
+    },
+    "sound": {
+      "path": "sample-sound.wav",
+      "mime": "audio/wav",
+      "sha256": "91f3a98982d0c6b7d73409cc463c9032b40201fbb52a4de82dd9434c83f05067"
+    }
+  }
+}
