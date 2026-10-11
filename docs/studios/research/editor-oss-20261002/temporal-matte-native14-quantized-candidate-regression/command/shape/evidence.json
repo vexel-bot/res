@@ -1,0 +1,5067 @@
+{
+  "scope": "API-command-job-real-local-render",
+  "humanReview": "pending",
+  "commandReceipt": {
+    "schemaVersion": "studio.editor-command-receipt.v1",
+    "commandId": "change-1",
+    "documentId": "a22b53c3-25da-47c5-a6a8-aab988a5352f",
+    "planId": "f0391dfd-87f6-4fc5-ae8f-29cd64f5435f",
+    "actorId": "76265970-4756-44ab-9e8e-20122aa43c49",
+    "previousDocumentRevision": 2,
+    "documentRevision": 3,
+    "planRevision": 3,
+    "documentDigest": "f5d08593d4254818613875bb7891bdefa2175f5836f7fdd921f0b73a56c97bf1",
+    "executableCompositionDigest": "ef355d07854ac3403e2cc4b47700d697b4c729894df52ffcfaa401cbb424c7e4",
+    "appliedChanges": [
+      {
+        "kind": "set_recipe_keyframe",
+        "sceneId": "action",
+        "recipeId": "entry",
+        "targetId": "hero",
+        "property": "y",
+        "keyframe": {
+          "frame": 0,
+          "value": 80.0,
+          "curve": [
+            0.22,
+            0.75,
+            0.25,
+            1.0
+          ]
+        }
+      }
+    ],
+    "warnings": [],
+    "pending": [
+      "render_evidence_required",
+      "human_visual_review_required"
+    ]
+  },
+  "inspection": {
+    "schemaVersion": "studio.editor-inspection.v1",
+    "document": {
+      "schemaVersion": "studio.creative-document.v1",
+      "documentId": "a22b53c3-25da-47c5-a6a8-aab988a5352f",
+      "workspaceId": "a29befa6-7c44-4ab4-8989-d072c09444d8",
+      "title": "Edição contextual",
+      "contentType": "video",
+      "status": "draft",
+      "revision": 3,
+      "version": 1,
+      "actorId": "76265970-4756-44ab-9e8e-20122aa43c49",
+      "correlationId": "contextual-test",
+      "campaignRef": null,
+      "postRef": null,
+      "opportunityRef": null,
+      "brandMemoryRef": {
+        "id": "brand",
+        "version": null,
+        "revision": 1
+      },
+      "brief": {
+        "schemaVersion": "studio.creative-brief.v1",
+        "objective": "Explicar com precisão",
+        "audience": "Pessoas interessadas",
+        "angle": "",
+        "promise": "",
+        "hook": "",
+        "cta": "",
+        "channel": "instagram",
+        "format": "post",
+        "tone": "",
+        "restrictions": [],
+        "hypotheses": [],
+        "evidence": []
+      },
+      "composition": {
+        "pages": [
+          {
+            "id": "page",
+            "role": "content",
+            "width": 320,
+            "height": 320,
+            "safeArea": 16,
+            "background": "#10181c",
+            "durationMs": 500,
+            "layers": [
+              {
+                "id": "ed2-71e35aa88296f01a28320dfd",
+                "kind": "group",
+                "name": "Layer",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 320.0,
+                "height": 320.0,
+                "rotation": 0.0,
+                "opacity": 1.0,
+                "visible": true,
+                "locked": false,
+                "zIndex": 1,
+                "properties": {
+                  "editorialTiming": {
+                    "startFrame": 0,
+                    "durationFrames": 15,
+                    "fps": 30.0,
+                    "reveal": "none"
+                  },
+                  "editorialAuditFrames": []
+                }
+              },
+              {
+                "id": "ed2-71458a6a87beb6282676415f",
+                "kind": "group",
+                "name": "Layer",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 320.0,
+                "height": 320.0,
+                "rotation": 0.0,
+                "opacity": 1.0,
+                "visible": true,
+                "locked": false,
+                "zIndex": 0,
+                "properties": {
+                  "editorialRole": "background",
+                  "editorialTiming": {
+                    "startFrame": 0,
+                    "durationFrames": 15,
+                    "fps": 30.0,
+                    "reveal": "none"
+                  }
+                }
+              },
+              {
+                "id": "ed2-9244620fd8e5cecdf8791232",
+                "kind": "group",
+                "name": "Layer",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 320.0,
+                "height": 320.0,
+                "rotation": 0.0,
+                "opacity": 1.0,
+                "visible": true,
+                "locked": false,
+                "zIndex": 1,
+                "properties": {
+                  "editorialRole": "content",
+                  "editorialTiming": {
+                    "startFrame": 0,
+                    "durationFrames": 15,
+                    "fps": 30.0,
+                    "reveal": "none"
+                  }
+                }
+              },
+              {
+                "id": "ed2-931c01cc11886fe5194e8ac9",
+                "kind": "group",
+                "name": "Layer",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 320.0,
+                "height": 320.0,
+                "rotation": 0.0,
+                "opacity": 1.0,
+                "visible": true,
+                "locked": false,
+                "zIndex": 2,
+                "properties": {
+                  "editorialRole": "text",
+                  "editorialTiming": {
+                    "startFrame": 0,
+                    "durationFrames": 15,
+                    "fps": 30.0,
+                    "reveal": "none"
+                  }
+                }
+              },
+              {
+                "id": "ed2-ecda5251ec13adfcc27c9df5",
+                "kind": "shape",
+                "name": "Layer",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 320.0,
+                "height": 320.0,
+                "rotation": 0.0,
+                "opacity": 1.0,
+                "visible": true,
+                "locked": false,
+                "zIndex": 0,
+                "properties": {
+                  "fill": "#10181c",
+                  "editorialTiming": {
+                    "startFrame": 0,
+                    "durationFrames": 15,
+                    "fps": 30.0,
+                    "reveal": "none"
+                  }
+                }
+              },
+              {
+                "id": "ed2-7d4b81d3a7f71676bb8ab643",
+                "kind": "shape",
+                "name": "hero",
+                "x": 80.0,
+                "y": 80.0,
+                "width": 80.0,
+                "height": 80.0,
+                "rotation": 0.0,
+                "opacity": 1.0,
+                "visible": true,
+                "locked": false,
+                "zIndex": 1,
+                "properties": {
+                  "editorialSceneId": "action",
+                  "editorialOperationIds": [],
+                  "editorialTiming": {
+                    "startFrame": 0,
+                    "durationFrames": 15,
+                    "fps": 30.0,
+                    "reveal": "none",
+                    "revealFrames": 12
+                  },
+                  "fill": "#ffffff",
+                  "color": "#ffffff",
+                  "text": "",
+                  "fontSize": 48.0,
+                  "editorialTextFit": false,
+                  "editorialConnector": null,
+                  "fontWeight": 700,
+                  "letterSpacing": 0.0,
+                  "lineHeight": 1.1,
+                  "textAlign": "left",
+                  "editorialTextSpans": [],
+                  "editorialShadow": null,
+                  "editorialEffects": [],
+                  "editorialBlendMode": "normal",
+                  "editorialBorder": {
+                    "width": 0.0,
+                    "color": "#ffffff"
+                  },
+                  "fontAssetId": null,
+                  "borderRadius": 16.0,
+                  "shape": "rectangle",
+                  "assetId": null,
+                  "editorialContentIdentity": null,
+                  "editorialContentReferenceId": null,
+                  "editorialContentPartId": null,
+                  "maskAssetId": null,
+                  "objectFit": "contain",
+                  "editorialRegionOfInterest": null,
+                  "editorialCropIntentional": false,
+                  "sourceStartSeconds": 0.0,
+                  "playbackRate": 1.0,
+                  "editorialVisualRole": "hero",
+                  "editorialDepth": {
+                    "opacity": 1.0,
+                    "blurPx": 0.0,
+                    "parallax": 0.0
+                  }
+                }
+              }
+            ]
+          }
+        ],
+        "narrative": {
+          "editorialV2": {
+            "planId": "f0391dfd-87f6-4fc5-ae8f-29cd64f5435f",
+            "renderPolicy": "automatic_draft",
+            "operationBindings": [],
+            "motionRecipes": [
+              {
+                "sceneId": "action",
+                "schemaVersion": "studio.motion-recipe.v1",
+                "id": "entry",
+                "version": 1,
+                "technique": "motion_choreography",
+                "targetIds": [
+                  "hero"
+                ],
+                "startFrame": 0,
+                "endFrameExclusive": 15,
+                "intent": "Arrive and settle",
+                "continuityAnchor": "Same title",
+                "parameters": {
+                  "tracks": [
+                    {
+                      "targetId": "hero",
+                      "property": "y",
+                      "keyframes": [
+                        {
+                          "frame": 0,
+                          "value": 80.0,
+                          "curve": [
+                            0.22,
+                            0.75,
+                            0.25,
+                            1.0
+                          ]
+                        },
+                        {
+                          "frame": 8,
+                          "value": 0.0,
+                          "curve": [
+                            0.2,
+                            0.0,
+                            0.2,
+                            1.0
+                          ]
+                        },
+                        {
+                          "frame": 14,
+                          "value": 0.0,
+                          "curve": [
+                            0.2,
+                            0.0,
+                            0.2,
+                            1.0
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "pivot": [
+                    0.0,
+                    1.0
+                  ],
+                  "parentTargetId": null,
+                  "maskAssetId": null,
+                  "occluderTargetId": null,
+                  "textUnit": "word",
+                  "staggerFrames": 3,
+                  "readingHoldFrames": 30,
+                  "shutterDegrees": 180.0,
+                  "temporalSamples": 8,
+                  "focusDistance": 1000.0,
+                  "depthOfField": 100.0,
+                  "displacementRatio": 0.01
+                },
+                "soundEvents": [],
+                "verification": [
+                  "Stable title at the end"
+                ]
+              }
+            ],
+            "motionRecipesDigest": "02e00dc02a0cce8cd6af372a3d4e0d6bef916af29cfa6dd2c84975bc81bea572",
+            "nativeRecipeOperations": [
+              {
+                "id": "entry",
+                "sceneId": "action",
+                "technique": "motion_choreography",
+                "version": 1,
+                "compilerVersion": "res.native-recipes.v4",
+                "startFrame": 0,
+                "endFrameExclusive": 15,
+                "targetLayerIds": [
+                  "ed2-7d4b81d3a7f71676bb8ab643"
+                ],
+                "parameters": {
+                  "tracks": [
+                    {
+                      "targetId": "hero",
+                      "property": "y",
+                      "keyframes": [
+                        {
+                          "frame": 0,
+                          "value": 80.0,
+                          "curve": [
+                            0.22,
+                            0.75,
+                            0.25,
+                            1.0
+                          ]
+                        },
+                        {
+                          "frame": 8,
+                          "value": 0.0,
+                          "curve": [
+                            0.2,
+                            0.0,
+                            0.2,
+                            1.0
+                          ]
+                        },
+                        {
+                          "frame": 14,
+                          "value": 0.0,
+                          "curve": [
+                            0.2,
+                            0.0,
+                            0.2,
+                            1.0
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "pivot": [
+                    0.0,
+                    1.0
+                  ],
+                  "parentTargetId": null,
+                  "maskAssetId": null,
+                  "occluderTargetId": null,
+                  "textUnit": "word",
+                  "staggerFrames": 3,
+                  "readingHoldFrames": 30,
+                  "shutterDegrees": 180.0,
+                  "temporalSamples": 8,
+                  "focusDistance": 1000.0,
+                  "depthOfField": 100.0,
+                  "displacementRatio": 0.01
+                },
+                "qualification": "implemented",
+                "knowledgeTechniqueId": "alight.motion_choreography",
+                "evidenceClassification": "documentation_and_editorial_inference"
+              }
+            ],
+            "renderer": "remotion.contextual-v2",
+            "nativeComponentVersion": 1,
+            "motionGraph": {
+              "schemaVersion": "studio.motion-graph.v1",
+              "graphId": "motion-a4e45a56ddc60089b76cf179",
+              "workspaceId": "a29befa6-7c44-4ab4-8989-d072c09444d8",
+              "documentId": "a22b53c3-25da-47c5-a6a8-aab988a5352f",
+              "documentRevision": 3,
+              "frameRate": {
+                "numerator": 30,
+                "denominator": 1
+              },
+              "durationFrames": 15,
+              "canvasWidth": 320,
+              "canvasHeight": 320,
+              "realityMode": "graphic",
+              "completeness": "complete",
+              "status": "suggested",
+              "nodes": [
+                {
+                  "nodeId": "node-ed2-71e35aa88296f01a28320dfd",
+                  "targetLayerId": "ed2-71e35aa88296f01a28320dfd",
+                  "parentNodeId": null,
+                  "transformOriginX": 0.5,
+                  "transformOriginY": 0.5
+                },
+                {
+                  "nodeId": "node-ed2-71458a6a87beb6282676415f",
+                  "targetLayerId": "ed2-71458a6a87beb6282676415f",
+                  "parentNodeId": "node-ed2-71e35aa88296f01a28320dfd",
+                  "transformOriginX": 0.5,
+                  "transformOriginY": 0.5
+                },
+                {
+                  "nodeId": "node-ed2-9244620fd8e5cecdf8791232",
+                  "targetLayerId": "ed2-9244620fd8e5cecdf8791232",
+                  "parentNodeId": "node-ed2-71e35aa88296f01a28320dfd",
+                  "transformOriginX": 0.5,
+                  "transformOriginY": 0.5
+                },
+                {
+                  "nodeId": "node-ed2-931c01cc11886fe5194e8ac9",
+                  "targetLayerId": "ed2-931c01cc11886fe5194e8ac9",
+                  "parentNodeId": "node-ed2-71e35aa88296f01a28320dfd",
+                  "transformOriginX": 0.5,
+                  "transformOriginY": 0.5
+                },
+                {
+                  "nodeId": "node-ed2-ecda5251ec13adfcc27c9df5",
+                  "targetLayerId": "ed2-ecda5251ec13adfcc27c9df5",
+                  "parentNodeId": "node-ed2-71458a6a87beb6282676415f",
+                  "transformOriginX": 0.5,
+                  "transformOriginY": 0.5
+                },
+                {
+                  "nodeId": "node-ed2-7d4b81d3a7f71676bb8ab643",
+                  "targetLayerId": "ed2-7d4b81d3a7f71676bb8ab643",
+                  "parentNodeId": "node-ed2-9244620fd8e5cecdf8791232",
+                  "transformOriginX": 0.0,
+                  "transformOriginY": 1.0
+                }
+              ],
+              "tracks": [
+                {
+                  "trackId": "ed2-7d4b81d3a7f71676bb8ab643-recipe-y",
+                  "targetLayerId": "ed2-7d4b81d3a7f71676bb8ab643",
+                  "property": "position_y",
+                  "unit": "pixels",
+                  "keyframes": [
+                    {
+                      "frame": 0,
+                      "value": 80.0,
+                      "easing": "cubic_bezier",
+                      "cubicBezier": [
+                        0.22,
+                        0.75,
+                        0.25,
+                        1.0
+                      ]
+                    },
+                    {
+                      "frame": 8,
+                      "value": 0.0,
+                      "easing": "cubic_bezier",
+                      "cubicBezier": [
+                        0.2,
+                        0.0,
+                        0.2,
+                        1.0
+                      ]
+                    },
+                    {
+                      "frame": 14,
+                      "value": 0.0,
+                      "easing": "cubic_bezier",
+                      "cubicBezier": [
+                        0.2,
+                        0.0,
+                        0.2,
+                        1.0
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "transitions": [],
+              "audioEvents": [],
+              "reducedMotionSupported": true,
+              "constraints": [],
+              "sourceEvidenceIds": [],
+              "realityBinding": null,
+              "abstentions": [],
+              "createdBy": "76265970-4756-44ab-9e8e-20122aa43c49",
+              "lineage": null,
+              "humanReviewRequired": true,
+              "createdAt": "2026-10-04T00:03:36.971541Z"
+            }
+          },
+          "contextualPlanId": "f0391dfd-87f6-4fc5-ae8f-29cd64f5435f",
+          "editingPolicy": "draft-first-preserve-message"
+        },
+        "tracks": [],
+        "mediaTimeline": {
+          "schemaVersion": "studio.media-timeline.v1",
+          "frameRate": {
+            "numerator": 30,
+            "denominator": 1
+          },
+          "durationFrames": 15,
+          "tracks": []
+        }
+      },
+      "contentReferences": [],
+      "assets": [
+        {
+          "id": "dd3e1c7a-f22a-402a-9ec8-800be834705d",
+          "version": null,
+          "mediaType": "video/mp4",
+          "checksum": "a85fc79c68ec58b936cef6ab8875d40c41c2580b559782357f3cf41f812e4cbb",
+          "origin": "workspace",
+          "rightsStatus": "verified",
+          "provenance": {}
+        }
+      ],
+      "identityRef": null,
+      "voiceRef": null,
+      "sceneRef": null,
+      "scriptRef": null,
+      "shotPlanRef": null,
+      "lineage": [],
+      "review": {
+        "status": "draft",
+        "requestedVersion": null,
+        "approvalId": null
+      },
+      "exports": [],
+      "createdAt": "2026-10-04T00:03:36.771442Z",
+      "updatedAt": "2026-10-04T00:03:36.971541"
+    },
+    "renderer": "remotion.contextual-v2",
+    "planId": "f0391dfd-87f6-4fc5-ae8f-29cd64f5435f",
+    "planRevision": 3,
+    "documentDigest": "f5d08593d4254818613875bb7891bdefa2175f5836f7fdd921f0b73a56c97bf1",
+    "graphDigest": "840ce27c075a9f6904aadddc5c37842bae4e6c50edea41d0d8395e436516fcde",
+    "frame": 0,
+    "durationFrames": 15,
+    "frameRate": {
+      "numerator": 30,
+      "denominator": 1
+    },
+    "nodes": [
+      {
+        "nodeId": "node-ed2-71e35aa88296f01a28320dfd",
+        "targetLayerId": "ed2-71e35aa88296f01a28320dfd",
+        "parentNodeId": null,
+        "transformOriginX": 0.5,
+        "transformOriginY": 0.5
+      },
+      {
+        "nodeId": "node-ed2-71458a6a87beb6282676415f",
+        "targetLayerId": "ed2-71458a6a87beb6282676415f",
+        "parentNodeId": "node-ed2-71e35aa88296f01a28320dfd",
+        "transformOriginX": 0.5,
+        "transformOriginY": 0.5
+      },
+      {
+        "nodeId": "node-ed2-9244620fd8e5cecdf8791232",
+        "targetLayerId": "ed2-9244620fd8e5cecdf8791232",
+        "parentNodeId": "node-ed2-71e35aa88296f01a28320dfd",
+        "transformOriginX": 0.5,
+        "transformOriginY": 0.5
+      },
+      {
+        "nodeId": "node-ed2-931c01cc11886fe5194e8ac9",
+        "targetLayerId": "ed2-931c01cc11886fe5194e8ac9",
+        "parentNodeId": "node-ed2-71e35aa88296f01a28320dfd",
+        "transformOriginX": 0.5,
+        "transformOriginY": 0.5
+      },
+      {
+        "nodeId": "node-ed2-ecda5251ec13adfcc27c9df5",
+        "targetLayerId": "ed2-ecda5251ec13adfcc27c9df5",
+        "parentNodeId": "node-ed2-71458a6a87beb6282676415f",
+        "transformOriginX": 0.5,
+        "transformOriginY": 0.5
+      },
+      {
+        "nodeId": "node-ed2-7d4b81d3a7f71676bb8ab643",
+        "targetLayerId": "ed2-7d4b81d3a7f71676bb8ab643",
+        "parentNodeId": "node-ed2-9244620fd8e5cecdf8791232",
+        "transformOriginX": 0.0,
+        "transformOriginY": 1.0
+      }
+    ],
+    "tracks": [
+      {
+        "trackId": "ed2-7d4b81d3a7f71676bb8ab643-recipe-y",
+        "targetLayerId": "ed2-7d4b81d3a7f71676bb8ab643",
+        "property": "position_y",
+        "unit": "pixels",
+        "keyframes": [
+          {
+            "frame": 0,
+            "value": 80.0,
+            "easing": "cubic_bezier",
+            "cubicBezier": [
+              0.22,
+              0.75,
+              0.25,
+              1.0
+            ]
+          },
+          {
+            "frame": 8,
+            "value": 0.0,
+            "easing": "cubic_bezier",
+            "cubicBezier": [
+              0.2,
+              0.0,
+              0.2,
+              1.0
+            ]
+          },
+          {
+            "frame": 14,
+            "value": 0.0,
+            "easing": "cubic_bezier",
+            "cubicBezier": [
+              0.2,
+              0.0,
+              0.2,
+              1.0
+            ]
+          }
+        ],
+        "evaluatedLocalValue": 80.0
+      }
+    ],
+    "scenes": [
+      {
+        "sceneId": "action",
+        "startFrame": 0,
+        "durationFrames": 15,
+        "purpose": "Demonstrate",
+        "verification": [
+          "Action stays visible"
+        ],
+        "sceneDigest": "98bc409488902239d0c9c23fe78d6ece99047105c2a44b6191f1e14d18aaf31c",
+        "visualStates": [],
+        "observationCues": [],
+        "semanticAssertions": [],
+        "shotPlan": []
+      }
+    ],
+    "layerScenes": {
+      "ed2-71e35aa88296f01a28320dfd": "action",
+      "ed2-71458a6a87beb6282676415f": "action",
+      "ed2-9244620fd8e5cecdf8791232": "action",
+      "ed2-931c01cc11886fe5194e8ac9": "action",
+      "ed2-ecda5251ec13adfcc27c9df5": "action",
+      "ed2-7d4b81d3a7f71676bb8ab643": "action"
+    },
+    "recipes": [
+      {
+        "sceneId": "action",
+        "schemaVersion": "studio.motion-recipe.v1",
+        "id": "entry",
+        "version": 1,
+        "technique": "motion_choreography",
+        "targetIds": [
+          "hero"
+        ],
+        "startFrame": 0,
+        "endFrameExclusive": 15,
+        "intent": "Arrive and settle",
+        "continuityAnchor": "Same title",
+        "parameters": {
+          "tracks": [
+            {
+              "targetId": "hero",
+              "property": "y",
+              "keyframes": [
+                {
+                  "frame": 0,
+                  "value": 80.0,
+                  "curve": [
+                    0.22,
+                    0.75,
+                    0.25,
+                    1.0
+                  ]
+                },
+                {
+                  "frame": 8,
+                  "value": 0.0,
+                  "curve": [
+                    0.2,
+                    0.0,
+                    0.2,
+                    1.0
+                  ]
+                },
+                {
+                  "frame": 14,
+                  "value": 0.0,
+                  "curve": [
+                    0.2,
+                    0.0,
+                    0.2,
+                    1.0
+                  ]
+                }
+              ]
+            }
+          ],
+          "pivot": [
+            0.0,
+            1.0
+          ],
+          "parentTargetId": null,
+          "maskAssetId": null,
+          "occluderTargetId": null,
+          "textUnit": "word",
+          "staggerFrames": 3,
+          "readingHoldFrames": 30,
+          "shutterDegrees": 180.0,
+          "temporalSamples": 8,
+          "focusDistance": 1000.0,
+          "depthOfField": 100.0,
+          "displacementRatio": 0.01
+        },
+        "soundEvents": [],
+        "verification": [
+          "Stable title at the end"
+        ]
+      }
+    ],
+    "parentCandidates": [],
+    "versions": {
+      "compilerVersion": "res.scene-compiler.v2.16",
+      "runtimeVersion": "res.editorial-runtime.v2.5",
+      "componentLibraryVersion": "res.editorial-components.v2.20"
+    },
+    "hashes": {
+      "sourceDirection": "80eb9ca7da03c3b31e33cfb00a2dc48a7f95971f41c472dbda06aed59f21ef59",
+      "executableDirection": "80eb9ca7da03c3b31e33cfb00a2dc48a7f95971f41c472dbda06aed59f21ef59",
+      "sourceDocument": "4907d422c063b805d468f61545436826cc7c4eb496cab574017dff99675f0a59",
+      "executableComposition": "ef355d07854ac3403e2cc4b47700d697b4c729894df52ffcfaa401cbb424c7e4",
+      "assets": "9bdc9727a9f638047df3ac233a5d3a9309b26e648d768a66f17361131d2ba15d",
+      "fonts": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    "evaluation": {
+      "technical": "pending",
+      "audiovisual": "pending",
+      "human": "pending"
+    },
+    "pending": [
+      "evaluated_values_are_local_scalars",
+      "render_geometry_not_measured",
+      "human_visual_review_required"
+    ],
+    "history": [
+      {
+        "schemaVersion": "studio.editor-command-receipt.v1",
+        "commandId": "change-1",
+        "documentId": "a22b53c3-25da-47c5-a6a8-aab988a5352f",
+        "planId": "f0391dfd-87f6-4fc5-ae8f-29cd64f5435f",
+        "actorId": "76265970-4756-44ab-9e8e-20122aa43c49",
+        "previousDocumentRevision": 2,
+        "documentRevision": 3,
+        "planRevision": 3,
+        "documentDigest": "f5d08593d4254818613875bb7891bdefa2175f5836f7fdd921f0b73a56c97bf1",
+        "executableCompositionDigest": "ef355d07854ac3403e2cc4b47700d697b4c729894df52ffcfaa401cbb424c7e4",
+        "appliedChanges": [
+          {
+            "kind": "set_recipe_keyframe",
+            "sceneId": "action",
+            "recipeId": "entry",
+            "targetId": "hero",
+            "property": "y",
+            "keyframe": {
+              "frame": 0,
+              "value": 80.0,
+              "curve": [
+                0.22,
+                0.75,
+                0.25,
+                1.0
+              ]
+            }
+          }
+        ],
+        "warnings": [],
+        "pending": [
+          "render_evidence_required",
+          "human_visual_review_required"
+        ]
+      }
+    ]
+  },
+  "renderResult": {
+    "schemaVersion": "studio.video-render-result.v1",
+    "jobId": "4d087653-42d5-4ef9-bff5-8c5d7deb5038",
+    "workspaceId": "a29befa6-7c44-4ab4-8989-d072c09444d8",
+    "documentId": "a22b53c3-25da-47c5-a6a8-aab988a5352f",
+    "documentRevision": 3,
+    "documentVersion": 1,
+    "provider": "remotion.contextual-v2",
+    "providerVersion": "4.0.527-native.14",
+    "artifact": {
+      "schemaVersion": "studio.rendered-video-artifact.v1",
+      "assetId": "dcc07d0b-f7ee-421e-a2f0-6320c071f90e",
+      "storageUri": "/api/v1/assets/dcc07d0b-f7ee-421e-a2f0-6320c071f90e/content",
+      "mediaType": "video/mp4",
+      "checksumSha256": "09d4f427862714acb391deee20f2489b1d1ccbeb79aa360b7c463feecff03d3b",
+      "sizeBytes": 3909,
+      "width": 320,
+      "height": 320,
+      "durationMs": 500,
+      "fps": 30.0,
+      "videoCodec": "h264",
+      "audioCodec": "aac"
+    },
+    "renderDurationMs": 8672,
+    "framesRendered": 15,
+    "peakRssMb": null,
+    "renderedLayerIds": [
+      "ed2-71e35aa88296f01a28320dfd",
+      "ed2-71458a6a87beb6282676415f",
+      "ed2-9244620fd8e5cecdf8791232",
+      "ed2-931c01cc11886fe5194e8ac9",
+      "ed2-ecda5251ec13adfcc27c9df5",
+      "ed2-7d4b81d3a7f71676bb8ab643"
+    ],
+    "renderedCaptionTrackIds": [],
+    "qualityEvaluation": {
+      "schemaVersion": "studio.video-technical-quality-evaluation.v1",
+      "provider": "builtin.ffmpeg-qc-v1",
+      "providerVersion": "ffprobe=ffprobe version 8.1.1-full_build-www.gyan.dev Copyright (c) 2007-2026 the FFmpeg developers; ffmpeg=ffmpeg version 8.1.1-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers",
+      "policy": {
+        "schemaVersion": "studio.video-technical-quality-policy.v1",
+        "policyId": "ugc-review-v1",
+        "maxDurationDeltaMs": 80,
+        "maxAvStartDeltaMs": 80,
+        "maxAvDurationDeltaMs": 80,
+        "maxBlackFrameRatio": 0.05,
+        "minIntegratedLoudnessLufs": -30.0,
+        "maxIntegratedLoudnessLufs": -10.0,
+        "maxTruePeakDbfs": -1.0,
+        "maxSilenceRatio": 0.2,
+        "blackMinDurationMs": 100,
+        "silenceMinDurationMs": 250
+      },
+      "status": "passed",
+      "metrics": {
+        "schemaVersion": "studio.video-technical-quality-metrics.v1",
+        "videoDurationMs": 500.0,
+        "audioDurationMs": 500.0,
+        "durationDeltaMs": 0.0,
+        "avStartDeltaMs": 0.0,
+        "avDurationDeltaMs": 0.0,
+        "blackDurationMs": 0.0,
+        "blackFrameRatio": 0.0,
+        "integratedLoudnessLufs": -120.0,
+        "truePeakDbfs": -120.0,
+        "silenceDurationMs": 500.0,
+        "silenceRatio": 1.0
+      },
+      "checks": [
+        {
+          "schemaVersion": "studio.video-technical-quality-check.v1",
+          "id": "video_stream_count",
+          "severity": "blocker",
+          "status": "passed",
+          "actual": 1.0,
+          "minimum": null,
+          "maximum": null,
+          "expected": "1",
+          "unit": null,
+          "message": "O artefato deve conter exatamente um stream de vídeo."
+        },
+        {
+          "schemaVersion": "studio.video-technical-quality-check.v1",
+          "id": "audio_stream_count",
+          "severity": "blocker",
+          "status": "passed",
+          "actual": 1.0,
+          "minimum": null,
+          "maximum": null,
+          "expected": "1",
+          "unit": null,
+          "message": "O artefato deve conter exatamente um stream de áudio."
+        },
+        {
+          "schemaVersion": "studio.video-technical-quality-check.v1",
+          "id": "video_codec",
+          "severity": "blocker",
+          "status": "passed",
+          "actual": "h264",
+          "minimum": null,
+          "maximum": null,
+          "expected": "h264",
+          "unit": null,
+          "message": "O codec de vídeo deve corresponder ao contrato de saída."
+        },
+        {
+          "schemaVersion": "studio.video-technical-quality-check.v1",
+          "id": "audio_codec",
+          "severity": "blocker",
+          "status": "passed",
+          "actual": "aac",
+          "minimum": null,
+          "maximum": null,
+          "expected": "aac",
+          "unit": null,
+          "message": "O codec de áudio deve corresponder ao contrato de saída."
+        },
+        {
+          "schemaVersion": "studio.video-technical-quality-check.v1",
+          "id": "dimensions",
+          "severity": "blocker",
+          "status": "passed",
+          "actual": "320x320",
+          "minimum": null,
+          "maximum": null,
+          "expected": "320x320",
+          "unit": null,
+          "message": "O canvas codificado deve corresponder ao render solicitado."
+        },
+        {
+          "schemaVersion": "studio.video-technical-quality-check.v1",
+          "id": "frame_rate",
+          "severity": "blocker",
+          "status": "passed",
+          "actual": 0.0,
+          "minimum": null,
+          "maximum": 0.001,
+          "expected": null,
+          "unit": "fps-delta",
+          "message": "O frame rate deve corresponder ao timebase solicitado."
+        },
+        {
+          "schemaVersion": "studio.video-technical-quality-check.v1",
+          "id": "duration_delta",
+          "severity": "blocker",
+          "status": "passed",
+          "actual": 0.0,
+          "minimum": null,
+          "maximum": 80.0,
+          "expected": null,
+          "unit": "ms",
+          "message": "A duração final deve permanecer dentro da tolerância frame-exact."
+        },
+        {
+          "schemaVersion": "studio.video-technical-quality-check.v1",
+          "id": "av_start_delta",
+          "severity": "blocker",
+          "status": "passed",
+          "actual": 0.0,
+          "minimum": null,
+          "maximum": 80.0,
+          "expected": null,
+          "unit": "ms",
+          "message": "Áudio e vídeo devem iniciar sincronizados."
+        },
+        {
+          "schemaVersion": "studio.video-technical-quality-check.v1",
+          "id": "av_duration_delta",
+          "severity": "blocker",
+          "status": "passed",
+          "actual": 0.0,
+          "minimum": null,
+          "maximum": 80.0,
+          "expected": null,
+          "unit": "ms",
+          "message": "Áudio e vídeo devem terminar dentro da tolerância de sync."
+        },
+        {
+          "schemaVersion": "studio.video-technical-quality-check.v1",
+          "id": "black_frame_ratio",
+          "severity": "blocker",
+          "status": "passed",
+          "actual": 0.0,
+          "minimum": null,
+          "maximum": 0.05,
+          "expected": null,
+          "unit": "ratio",
+          "message": "Frames pretos acima do limite bloqueiam revisão."
+        },
+        {
+          "schemaVersion": "studio.video-technical-quality-check.v1",
+          "id": "integrated_loudness",
+          "severity": "warning",
+          "status": "warning",
+          "actual": -120.0,
+          "minimum": -30.0,
+          "maximum": -10.0,
+          "expected": null,
+          "unit": "LUFS",
+          "message": "Loudness fora da janela exige decisão humana antes da publicação."
+        },
+        {
+          "schemaVersion": "studio.video-technical-quality-check.v1",
+          "id": "true_peak",
+          "severity": "warning",
+          "status": "passed",
+          "actual": -120.0,
+          "minimum": null,
+          "maximum": -1.0,
+          "expected": null,
+          "unit": "dBFS",
+          "message": "True peak acima do limite pode introduzir clipping na distribuição."
+        },
+        {
+          "schemaVersion": "studio.video-technical-quality-check.v1",
+          "id": "silence_ratio",
+          "severity": "warning",
+          "status": "warning",
+          "actual": 1.0,
+          "minimum": null,
+          "maximum": 0.2,
+          "expected": null,
+          "unit": "ratio",
+          "message": "Silêncio excessivo exige revisão editorial."
+        }
+      ],
+      "evaluatedAt": "2026-10-04T00:03:46.159204Z"
+    },
+    "workerExecutionContext": {
+      "schemaVersion": "studio.worker-execution-context.v1",
+      "mode": "embedded",
+      "attested": false,
+      "jobType": "video_render",
+      "capability": "media_cpu",
+      "queueName": "studio.media.cpu",
+      "runtimeName": null,
+      "runtimeVersion": null,
+      "manifestDigestSha256": null,
+      "imageDigest": null,
+      "workerInstanceId": null,
+      "hostname": null,
+      "processId": null,
+      "toolVersions": {},
+      "verifiedAt": "2026-10-04T00:03:37.128059Z"
+    },
+    "warnings": [
+      "Editorial quality requires review of the rendered video.",
+      "Automatic draft; human audiovisual review pending."
+    ],
+    "completedAt": "2026-10-04T00:03:46.512161Z"
+  },
+  "renderMetadata": {
+    "workspace-id": "a29befa6-7c44-4ab4-8989-d072c09444d8",
+    "role": "video-render",
+    "document-id": "a22b53c3-25da-47c5-a6a8-aab988a5352f",
+    "generation-job-id": "4d087653-42d5-4ef9-bff5-8c5d7deb5038",
+    "provider": "remotion.contextual-v2",
+    "schemaVersion": "studio.asset-lineage.v1",
+    "derivation": "video_render",
+    "generationJobId": "4d087653-42d5-4ef9-bff5-8c5d7deb5038",
+    "documentId": "a22b53c3-25da-47c5-a6a8-aab988a5352f",
+    "documentRevision": 3,
+    "documentVersion": 1,
+    "providerVersion": "4.0.527-native.14",
+    "renderedFromOriginal": false,
+    "sourceAssetBindings": [
+      {
+        "assetId": "dd3e1c7a-f22a-402a-9ec8-800be834705d",
+        "checksumSha256": "a85fc79c68ec58b936cef6ab8875d40c41c2580b559782357f3cf41f812e4cbb",
+        "role": "canonical-source"
+      }
+    ],
+    "documentSnapshotSha256": "303162e9e04caa4cf02fb4899f83cc4aa12d3b047ef71a5f2c5ff9c138fd817f",
+    "compositionProjection": {
+      "schemaVersion": "studio.ugc-composition-projection.v1",
+      "renderedLayerIds": [
+        "ed2-71e35aa88296f01a28320dfd",
+        "ed2-71458a6a87beb6282676415f",
+        "ed2-9244620fd8e5cecdf8791232",
+        "ed2-931c01cc11886fe5194e8ac9",
+        "ed2-ecda5251ec13adfcc27c9df5",
+        "ed2-7d4b81d3a7f71676bb8ab643"
+      ],
+      "renderedCaptionTrackIds": [],
+      "warnings": [
+        "Editorial quality requires review of the rendered video.",
+        "Automatic draft; human audiovisual review pending."
+      ]
+    },
+    "contextualEditing": {
+      "planId": "f0391dfd-87f6-4fc5-ae8f-29cd64f5435f",
+      "planRevision": 3,
+      "operations": [
+        {
+          "operationId": "op-f0d74bb22ee2e203416cea32",
+          "evidenceIds": [
+            "scene:action"
+          ],
+          "confidence": 1.0,
+          "rationale": "Pixel motion proof",
+          "kind": "compose_shape",
+          "beatId": "action",
+          "targetId": "ed2-7d4b81d3a7f71676bb8ab643",
+          "expectedResult": "Action stays visible",
+          "techniqueIds": []
+        }
+      ],
+      "verification": "encoded-and-probed",
+      "operationChecks": [
+        {
+          "operationId": "op-f0d74bb22ee2e203416cea32",
+          "targetId": "ed2-7d4b81d3a7f71676bb8ab643",
+          "status": "compiled-and-encoded"
+        }
+      ],
+      "editorialReview": "pending",
+      "rendererChecks": {
+        "graphics": {
+          "remotionReceipt": {
+            "schemaVersion": "res.remotion-hybrid-receipt.v2",
+            "manifestSha256": "9c41403fca22794b2d25e3e610780af7cc342a58cf22bb9dae0f076d2235f9d2",
+            "videoSha256": "a7bb588c58d9bd3ccf4243d892aec51a5df249af936cef907718925c20ddc56c",
+            "geometrySha256": "e527c51f899e93676687e2705e80461ce6e36b3c638cbca85f856a3eabe3a6d3",
+            "frameCount": 15,
+            "observedFrames": 15,
+            "durationMs": 7261,
+            "nativeCompositionDigest": "0f2132570acdbb40dffae7657455f947f53282a6bd0caaffa64f9306aac3539d",
+            "rasterCapture": "png_lossless_intermediate",
+            "graphicsBackend": "chromium_swangle",
+            "encodeRole": "visual_intermediate",
+            "encodeQuality": "standard",
+            "videoCrf": 23,
+            "pixelFormat": "yuv420p",
+            "timingsMs": {
+              "assetPreparation": 0,
+              "bundle": 2331,
+              "selectComposition": 2361,
+              "renderAndEncode": 2556
+            },
+            "decodeProfile": {
+              "concurrency": 2,
+              "freeMemoryAtStart": 709410816,
+              "videoCacheBytes": null,
+              "matteAssetCount": 0,
+              "matteSourcePixels": 0
+            },
+            "humanVisualReview": "pending"
+          },
+          "nativeCompositionDigest": "0f2132570acdbb40dffae7657455f947f53282a6bd0caaffa64f9306aac3539d",
+          "editorialOperations": [],
+          "geometrySchemaVersion": "studio.rendered-geometry.v1",
+          "geometrySamples": [
+            {
+              "frame": 0,
+              "elements": [
+                {
+                  "layerId": "ed2-71e35aa88296f01a28320dfd",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                },
+                {
+                  "layerId": "ed2-71458a6a87beb6282676415f",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                },
+                {
+                  "layerId": "ed2-ecda5251ec13adfcc27c9df5",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                },
+                {
+                  "layerId": "ed2-9244620fd8e5cecdf8791232",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                },
+                {
+                  "layerId": "ed2-7d4b81d3a7f71676bb8ab643",
+                  "semanticId": "hero",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 80,
+                    "y": 160,
+                    "width": 80,
+                    "height": 80
+                  }
+                },
+                {
+                  "layerId": "ed2-931c01cc11886fe5194e8ac9",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                }
+              ]
+            },
+            {
+              "frame": 1,
+              "elements": [
+                {
+                  "layerId": "ed2-71e35aa88296f01a28320dfd",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                },
+                {
+                  "layerId": "ed2-71458a6a87beb6282676415f",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                },
+                {
+                  "layerId": "ed2-ecda5251ec13adfcc27c9df5",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                },
+                {
+                  "layerId": "ed2-9244620fd8e5cecdf8791232",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                },
+                {
+                  "layerId": "ed2-7d4b81d3a7f71676bb8ab643",
+                  "semanticId": "hero",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 80,
+                    "y": 126.55044555664062,
+                    "width": 80,
+                    "height": 80
+                  }
+                },
+                {
+                  "layerId": "ed2-931c01cc11886fe5194e8ac9",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                }
+              ]
+            },
+            {
+              "frame": 2,
+              "elements": [
+                {
+                  "layerId": "ed2-71e35aa88296f01a28320dfd",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                },
+                {
+                  "layerId": "ed2-71458a6a87beb6282676415f",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                },
+                {
+                  "layerId": "ed2-ecda5251ec13adfcc27c9df5",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                },
+                {
+                  "layerId": "ed2-9244620fd8e5cecdf8791232",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                },
+                {
+                  "layerId": "ed2-7d4b81d3a7f71676bb8ab643",
+                  "semanticId": "hero",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 80,
+                    "y": 103.29702758789062,
+                    "width": 80,
+                    "height": 80
+                  }
+                },
+                {
+                  "layerId": "ed2-931c01cc11886fe5194e8ac9",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                }
+              ]
+            },
+            {
+              "frame": 3,
+              "elements": [
+                {
+                  "layerId": "ed2-71e35aa88296f01a28320dfd",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                },
+                {
+                  "layerId": "ed2-71458a6a87beb6282676415f",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                },
+                {
+                  "layerId": "ed2-ecda5251ec13adfcc27c9df5",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                },
+                {
+                  "layerId": "ed2-9244620fd8e5cecdf8791232",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                },
+                {
+                  "layerId": "ed2-7d4b81d3a7f71676bb8ab643",
+                  "semanticId": "hero",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 80,
+                    "y": 91.64783477783203,
+                    "width": 80,
+                    "height": 79.99999237060547
+                  }
+                },
+                {
+                  "layerId": "ed2-931c01cc11886fe5194e8ac9",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                }
+              ]
+            },
+            {
+              "frame": 4,
+              "elements": [
+                {
+                  "layerId": "ed2-71e35aa88296f01a28320dfd",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                },
+                {
+                  "layerId": "ed2-71458a6a87beb6282676415f",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                },
+                {
+                  "layerId": "ed2-ecda5251ec13adfcc27c9df5",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                },
+                {
+                  "layerId": "ed2-9244620fd8e5cecdf8791232",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                },
+                {
+                  "layerId": "ed2-7d4b81d3a7f71676bb8ab643",
+                  "semanticId": "hero",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 80,
+                    "y": 85.76380920410156,
+                    "width": 80,
+                    "height": 80
+                  }
+                },
+                {
+                  "layerId": "ed2-931c01cc11886fe5194e8ac9",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                }
+              ]
+            },
+            {
+              "frame": 5,
+              "elements": [
+                {
+                  "layerId": "ed2-71e35aa88296f01a28320dfd",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                },
+                {
+                  "layerId": "ed2-71458a6a87beb6282676415f",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                },
+                {
+                  "layerId": "ed2-ecda5251ec13adfcc27c9df5",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                },
+                {
+                  "layerId": "ed2-9244620fd8e5cecdf8791232",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                },
+                {
+                  "layerId": "ed2-7d4b81d3a7f71676bb8ab643",
+                  "semanticId": "hero",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 80,
+                    "y": 82.63353729248047,
+                    "width": 80,
+                    "height": 80.00000762939453
+                  }
+                },
+                {
+                  "layerId": "ed2-931c01cc11886fe5194e8ac9",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                }
+              ]
+            },
+            {
+              "frame": 6,
+              "elements": [
+                {
+                  "layerId": "ed2-71e35aa88296f01a28320dfd",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                },
+                {
+                  "layerId": "ed2-71458a6a87beb6282676415f",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                },
+                {
+                  "layerId": "ed2-ecda5251ec13adfcc27c9df5",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                },
+                {
+                  "layerId": "ed2-9244620fd8e5cecdf8791232",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                },
+                {
+                  "layerId": "ed2-7d4b81d3a7f71676bb8ab643",
+                  "semanticId": "hero",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 80,
+                    "y": 80.98316955566406,
+                    "width": 80,
+                    "height": 80
+                  }
+                },
+                {
+                  "layerId": "ed2-931c01cc11886fe5194e8ac9",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                }
+              ]
+            },
+            {
+              "frame": 7,
+              "elements": [
+                {
+                  "layerId": "ed2-71e35aa88296f01a28320dfd",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                },
+                {
+                  "layerId": "ed2-71458a6a87beb6282676415f",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                },
+                {
+                  "layerId": "ed2-ecda5251ec13adfcc27c9df5",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                },
+                {
+                  "layerId": "ed2-9244620fd8e5cecdf8791232",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                },
+                {
+                  "layerId": "ed2-7d4b81d3a7f71676bb8ab643",
+                  "semanticId": "hero",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 80,
+                    "y": 80.21144104003906,
+                    "width": 80,
+                    "height": 80
+                  }
+                },
+                {
+                  "layerId": "ed2-931c01cc11886fe5194e8ac9",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                }
+              ]
+            },
+            {
+              "frame": 8,
+              "elements": [
+                {
+                  "layerId": "ed2-71e35aa88296f01a28320dfd",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                },
+                {
+                  "layerId": "ed2-71458a6a87beb6282676415f",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                },
+                {
+                  "layerId": "ed2-ecda5251ec13adfcc27c9df5",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                },
+                {
+                  "layerId": "ed2-9244620fd8e5cecdf8791232",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                },
+                {
+                  "layerId": "ed2-7d4b81d3a7f71676bb8ab643",
+                  "semanticId": "hero",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 80,
+                    "y": 80,
+                    "width": 80,
+                    "height": 80
+                  }
+                },
+                {
+                  "layerId": "ed2-931c01cc11886fe5194e8ac9",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                }
+              ]
+            },
+            {
+              "frame": 9,
+              "elements": [
+                {
+                  "layerId": "ed2-71e35aa88296f01a28320dfd",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                },
+                {
+                  "layerId": "ed2-71458a6a87beb6282676415f",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                },
+                {
+                  "layerId": "ed2-ecda5251ec13adfcc27c9df5",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                },
+                {
+                  "layerId": "ed2-9244620fd8e5cecdf8791232",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                },
+                {
+                  "layerId": "ed2-7d4b81d3a7f71676bb8ab643",
+                  "semanticId": "hero",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 80,
+                    "y": 80,
+                    "width": 80,
+                    "height": 80
+                  }
+                },
+                {
+                  "layerId": "ed2-931c01cc11886fe5194e8ac9",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                }
+              ]
+            },
+            {
+              "frame": 10,
+              "elements": [
+                {
+                  "layerId": "ed2-71e35aa88296f01a28320dfd",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                },
+                {
+                  "layerId": "ed2-71458a6a87beb6282676415f",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                },
+                {
+                  "layerId": "ed2-ecda5251ec13adfcc27c9df5",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                },
+                {
+                  "layerId": "ed2-9244620fd8e5cecdf8791232",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                },
+                {
+                  "layerId": "ed2-7d4b81d3a7f71676bb8ab643",
+                  "semanticId": "hero",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 80,
+                    "y": 80,
+                    "width": 80,
+                    "height": 80
+                  }
+                },
+                {
+                  "layerId": "ed2-931c01cc11886fe5194e8ac9",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                }
+              ]
+            },
+            {
+              "frame": 11,
+              "elements": [
+                {
+                  "layerId": "ed2-71e35aa88296f01a28320dfd",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                },
+                {
+                  "layerId": "ed2-71458a6a87beb6282676415f",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                },
+                {
+                  "layerId": "ed2-ecda5251ec13adfcc27c9df5",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                },
+                {
+                  "layerId": "ed2-9244620fd8e5cecdf8791232",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                },
+                {
+                  "layerId": "ed2-7d4b81d3a7f71676bb8ab643",
+                  "semanticId": "hero",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 80,
+                    "y": 80,
+                    "width": 80,
+                    "height": 80
+                  }
+                },
+                {
+                  "layerId": "ed2-931c01cc11886fe5194e8ac9",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                }
+              ]
+            },
+            {
+              "frame": 12,
+              "elements": [
+                {
+                  "layerId": "ed2-71e35aa88296f01a28320dfd",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                },
+                {
+                  "layerId": "ed2-71458a6a87beb6282676415f",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                },
+                {
+                  "layerId": "ed2-ecda5251ec13adfcc27c9df5",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                },
+                {
+                  "layerId": "ed2-9244620fd8e5cecdf8791232",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                },
+                {
+                  "layerId": "ed2-7d4b81d3a7f71676bb8ab643",
+                  "semanticId": "hero",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 80,
+                    "y": 80,
+                    "width": 80,
+                    "height": 80
+                  }
+                },
+                {
+                  "layerId": "ed2-931c01cc11886fe5194e8ac9",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                }
+              ]
+            },
+            {
+              "frame": 13,
+              "elements": [
+                {
+                  "layerId": "ed2-71e35aa88296f01a28320dfd",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                },
+                {
+                  "layerId": "ed2-71458a6a87beb6282676415f",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                },
+                {
+                  "layerId": "ed2-ecda5251ec13adfcc27c9df5",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                },
+                {
+                  "layerId": "ed2-9244620fd8e5cecdf8791232",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                },
+                {
+                  "layerId": "ed2-7d4b81d3a7f71676bb8ab643",
+                  "semanticId": "hero",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 80,
+                    "y": 80,
+                    "width": 80,
+                    "height": 80
+                  }
+                },
+                {
+                  "layerId": "ed2-931c01cc11886fe5194e8ac9",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                }
+              ]
+            },
+            {
+              "frame": 14,
+              "elements": [
+                {
+                  "layerId": "ed2-71e35aa88296f01a28320dfd",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                },
+                {
+                  "layerId": "ed2-71458a6a87beb6282676415f",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                },
+                {
+                  "layerId": "ed2-ecda5251ec13adfcc27c9df5",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                },
+                {
+                  "layerId": "ed2-9244620fd8e5cecdf8791232",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                },
+                {
+                  "layerId": "ed2-7d4b81d3a7f71676bb8ab643",
+                  "semanticId": "hero",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 80,
+                    "y": 80,
+                    "width": 80,
+                    "height": 80
+                  }
+                },
+                {
+                  "layerId": "ed2-931c01cc11886fe5194e8ac9",
+                  "semanticId": "Layer",
+                  "present": true,
+                  "visible": true,
+                  "opacity": 1,
+                  "geometryBasis": "dom_bounding_box",
+                  "maskCoverageObserved": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 320,
+                    "height": 320
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "audiovisual": {
+          "encodeQuality": "standard",
+          "videoCrf": 23
+        },
+        "geometrySchemaVersion": "studio.rendered-geometry.v1",
+        "geometrySamples": [
+          {
+            "frame": 0,
+            "elements": [
+              {
+                "layerId": "ed2-71e35aa88296f01a28320dfd",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              },
+              {
+                "layerId": "ed2-71458a6a87beb6282676415f",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              },
+              {
+                "layerId": "ed2-ecda5251ec13adfcc27c9df5",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              },
+              {
+                "layerId": "ed2-9244620fd8e5cecdf8791232",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              },
+              {
+                "layerId": "ed2-7d4b81d3a7f71676bb8ab643",
+                "semanticId": "hero",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 80,
+                  "y": 160,
+                  "width": 80,
+                  "height": 80
+                }
+              },
+              {
+                "layerId": "ed2-931c01cc11886fe5194e8ac9",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              }
+            ]
+          },
+          {
+            "frame": 1,
+            "elements": [
+              {
+                "layerId": "ed2-71e35aa88296f01a28320dfd",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              },
+              {
+                "layerId": "ed2-71458a6a87beb6282676415f",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              },
+              {
+                "layerId": "ed2-ecda5251ec13adfcc27c9df5",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              },
+              {
+                "layerId": "ed2-9244620fd8e5cecdf8791232",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              },
+              {
+                "layerId": "ed2-7d4b81d3a7f71676bb8ab643",
+                "semanticId": "hero",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 80,
+                  "y": 126.55044555664062,
+                  "width": 80,
+                  "height": 80
+                }
+              },
+              {
+                "layerId": "ed2-931c01cc11886fe5194e8ac9",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              }
+            ]
+          },
+          {
+            "frame": 2,
+            "elements": [
+              {
+                "layerId": "ed2-71e35aa88296f01a28320dfd",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              },
+              {
+                "layerId": "ed2-71458a6a87beb6282676415f",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              },
+              {
+                "layerId": "ed2-ecda5251ec13adfcc27c9df5",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              },
+              {
+                "layerId": "ed2-9244620fd8e5cecdf8791232",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              },
+              {
+                "layerId": "ed2-7d4b81d3a7f71676bb8ab643",
+                "semanticId": "hero",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 80,
+                  "y": 103.29702758789062,
+                  "width": 80,
+                  "height": 80
+                }
+              },
+              {
+                "layerId": "ed2-931c01cc11886fe5194e8ac9",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              }
+            ]
+          },
+          {
+            "frame": 3,
+            "elements": [
+              {
+                "layerId": "ed2-71e35aa88296f01a28320dfd",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              },
+              {
+                "layerId": "ed2-71458a6a87beb6282676415f",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              },
+              {
+                "layerId": "ed2-ecda5251ec13adfcc27c9df5",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              },
+              {
+                "layerId": "ed2-9244620fd8e5cecdf8791232",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              },
+              {
+                "layerId": "ed2-7d4b81d3a7f71676bb8ab643",
+                "semanticId": "hero",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 80,
+                  "y": 91.64783477783203,
+                  "width": 80,
+                  "height": 79.99999237060547
+                }
+              },
+              {
+                "layerId": "ed2-931c01cc11886fe5194e8ac9",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              }
+            ]
+          },
+          {
+            "frame": 4,
+            "elements": [
+              {
+                "layerId": "ed2-71e35aa88296f01a28320dfd",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              },
+              {
+                "layerId": "ed2-71458a6a87beb6282676415f",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              },
+              {
+                "layerId": "ed2-ecda5251ec13adfcc27c9df5",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              },
+              {
+                "layerId": "ed2-9244620fd8e5cecdf8791232",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              },
+              {
+                "layerId": "ed2-7d4b81d3a7f71676bb8ab643",
+                "semanticId": "hero",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 80,
+                  "y": 85.76380920410156,
+                  "width": 80,
+                  "height": 80
+                }
+              },
+              {
+                "layerId": "ed2-931c01cc11886fe5194e8ac9",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              }
+            ]
+          },
+          {
+            "frame": 5,
+            "elements": [
+              {
+                "layerId": "ed2-71e35aa88296f01a28320dfd",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              },
+              {
+                "layerId": "ed2-71458a6a87beb6282676415f",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              },
+              {
+                "layerId": "ed2-ecda5251ec13adfcc27c9df5",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              },
+              {
+                "layerId": "ed2-9244620fd8e5cecdf8791232",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              },
+              {
+                "layerId": "ed2-7d4b81d3a7f71676bb8ab643",
+                "semanticId": "hero",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 80,
+                  "y": 82.63353729248047,
+                  "width": 80,
+                  "height": 80.00000762939453
+                }
+              },
+              {
+                "layerId": "ed2-931c01cc11886fe5194e8ac9",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              }
+            ]
+          },
+          {
+            "frame": 6,
+            "elements": [
+              {
+                "layerId": "ed2-71e35aa88296f01a28320dfd",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              },
+              {
+                "layerId": "ed2-71458a6a87beb6282676415f",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              },
+              {
+                "layerId": "ed2-ecda5251ec13adfcc27c9df5",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              },
+              {
+                "layerId": "ed2-9244620fd8e5cecdf8791232",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              },
+              {
+                "layerId": "ed2-7d4b81d3a7f71676bb8ab643",
+                "semanticId": "hero",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 80,
+                  "y": 80.98316955566406,
+                  "width": 80,
+                  "height": 80
+                }
+              },
+              {
+                "layerId": "ed2-931c01cc11886fe5194e8ac9",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              }
+            ]
+          },
+          {
+            "frame": 7,
+            "elements": [
+              {
+                "layerId": "ed2-71e35aa88296f01a28320dfd",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              },
+              {
+                "layerId": "ed2-71458a6a87beb6282676415f",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              },
+              {
+                "layerId": "ed2-ecda5251ec13adfcc27c9df5",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              },
+              {
+                "layerId": "ed2-9244620fd8e5cecdf8791232",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              },
+              {
+                "layerId": "ed2-7d4b81d3a7f71676bb8ab643",
+                "semanticId": "hero",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 80,
+                  "y": 80.21144104003906,
+                  "width": 80,
+                  "height": 80
+                }
+              },
+              {
+                "layerId": "ed2-931c01cc11886fe5194e8ac9",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              }
+            ]
+          },
+          {
+            "frame": 8,
+            "elements": [
+              {
+                "layerId": "ed2-71e35aa88296f01a28320dfd",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              },
+              {
+                "layerId": "ed2-71458a6a87beb6282676415f",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              },
+              {
+                "layerId": "ed2-ecda5251ec13adfcc27c9df5",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              },
+              {
+                "layerId": "ed2-9244620fd8e5cecdf8791232",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              },
+              {
+                "layerId": "ed2-7d4b81d3a7f71676bb8ab643",
+                "semanticId": "hero",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 80,
+                  "y": 80,
+                  "width": 80,
+                  "height": 80
+                }
+              },
+              {
+                "layerId": "ed2-931c01cc11886fe5194e8ac9",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              }
+            ]
+          },
+          {
+            "frame": 9,
+            "elements": [
+              {
+                "layerId": "ed2-71e35aa88296f01a28320dfd",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              },
+              {
+                "layerId": "ed2-71458a6a87beb6282676415f",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              },
+              {
+                "layerId": "ed2-ecda5251ec13adfcc27c9df5",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              },
+              {
+                "layerId": "ed2-9244620fd8e5cecdf8791232",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              },
+              {
+                "layerId": "ed2-7d4b81d3a7f71676bb8ab643",
+                "semanticId": "hero",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 80,
+                  "y": 80,
+                  "width": 80,
+                  "height": 80
+                }
+              },
+              {
+                "layerId": "ed2-931c01cc11886fe5194e8ac9",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              }
+            ]
+          },
+          {
+            "frame": 10,
+            "elements": [
+              {
+                "layerId": "ed2-71e35aa88296f01a28320dfd",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              },
+              {
+                "layerId": "ed2-71458a6a87beb6282676415f",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              },
+              {
+                "layerId": "ed2-ecda5251ec13adfcc27c9df5",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              },
+              {
+                "layerId": "ed2-9244620fd8e5cecdf8791232",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              },
+              {
+                "layerId": "ed2-7d4b81d3a7f71676bb8ab643",
+                "semanticId": "hero",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 80,
+                  "y": 80,
+                  "width": 80,
+                  "height": 80
+                }
+              },
+              {
+                "layerId": "ed2-931c01cc11886fe5194e8ac9",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              }
+            ]
+          },
+          {
+            "frame": 11,
+            "elements": [
+              {
+                "layerId": "ed2-71e35aa88296f01a28320dfd",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              },
+              {
+                "layerId": "ed2-71458a6a87beb6282676415f",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              },
+              {
+                "layerId": "ed2-ecda5251ec13adfcc27c9df5",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              },
+              {
+                "layerId": "ed2-9244620fd8e5cecdf8791232",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              },
+              {
+                "layerId": "ed2-7d4b81d3a7f71676bb8ab643",
+                "semanticId": "hero",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 80,
+                  "y": 80,
+                  "width": 80,
+                  "height": 80
+                }
+              },
+              {
+                "layerId": "ed2-931c01cc11886fe5194e8ac9",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              }
+            ]
+          },
+          {
+            "frame": 12,
+            "elements": [
+              {
+                "layerId": "ed2-71e35aa88296f01a28320dfd",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              },
+              {
+                "layerId": "ed2-71458a6a87beb6282676415f",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              },
+              {
+                "layerId": "ed2-ecda5251ec13adfcc27c9df5",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              },
+              {
+                "layerId": "ed2-9244620fd8e5cecdf8791232",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              },
+              {
+                "layerId": "ed2-7d4b81d3a7f71676bb8ab643",
+                "semanticId": "hero",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 80,
+                  "y": 80,
+                  "width": 80,
+                  "height": 80
+                }
+              },
+              {
+                "layerId": "ed2-931c01cc11886fe5194e8ac9",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              }
+            ]
+          },
+          {
+            "frame": 13,
+            "elements": [
+              {
+                "layerId": "ed2-71e35aa88296f01a28320dfd",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              },
+              {
+                "layerId": "ed2-71458a6a87beb6282676415f",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              },
+              {
+                "layerId": "ed2-ecda5251ec13adfcc27c9df5",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              },
+              {
+                "layerId": "ed2-9244620fd8e5cecdf8791232",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              },
+              {
+                "layerId": "ed2-7d4b81d3a7f71676bb8ab643",
+                "semanticId": "hero",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 80,
+                  "y": 80,
+                  "width": 80,
+                  "height": 80
+                }
+              },
+              {
+                "layerId": "ed2-931c01cc11886fe5194e8ac9",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              }
+            ]
+          },
+          {
+            "frame": 14,
+            "elements": [
+              {
+                "layerId": "ed2-71e35aa88296f01a28320dfd",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              },
+              {
+                "layerId": "ed2-71458a6a87beb6282676415f",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              },
+              {
+                "layerId": "ed2-ecda5251ec13adfcc27c9df5",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              },
+              {
+                "layerId": "ed2-9244620fd8e5cecdf8791232",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              },
+              {
+                "layerId": "ed2-7d4b81d3a7f71676bb8ab643",
+                "semanticId": "hero",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 80,
+                  "y": 80,
+                  "width": 80,
+                  "height": 80
+                }
+              },
+              {
+                "layerId": "ed2-931c01cc11886fe5194e8ac9",
+                "semanticId": "Layer",
+                "present": true,
+                "visible": true,
+                "opacity": 1,
+                "geometryBasis": "dom_bounding_box",
+                "maskCoverageObserved": false,
+                "bounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 320
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "manifest": {
+        "schemaVersion": "studio.editorial-manifest.v2",
+        "componentVersion": "res.editorial-components.v2.20",
+        "compilerVersion": "res.scene-compiler.v2.16",
+        "componentLibraryVersion": "res.editorial-components.v2.20",
+        "runtimeVersion": "res.editorial-runtime.v2.5",
+        "visualAuditPolicyVersion": "studio.visual-audit-policy.v4",
+        "compositionDecisions": [],
+        "fps": 30.0,
+        "durationFrames": 15,
+        "scenes": [
+          {
+            "sceneId": "action",
+            "startFrame": 0,
+            "durationFrames": 15,
+            "purpose": "Demonstrate",
+            "verification": [
+              "Action stays visible"
+            ],
+            "sceneDigest": "98bc409488902239d0c9c23fe78d6ece99047105c2a44b6191f1e14d18aaf31c",
+            "visualStates": [],
+            "observationCues": [],
+            "semanticAssertions": [],
+            "shotPlan": []
+          }
+        ],
+        "artDirection": null,
+        "elements": [
+          {
+            "sceneId": "action",
+            "elementId": "hero",
+            "targetId": "ed2-7d4b81d3a7f71676bb8ab643",
+            "startFrame": 0,
+            "durationFrames": 15,
+            "kind": "compose_shape",
+            "rationale": "Pixel motion proof",
+            "source": null
+          }
+        ],
+        "missingMaterials": [],
+        "sourceAssets": {
+          "dd3e1c7a-f22a-402a-9ec8-800be834705d": "a85fc79c68ec58b936cef6ab8875d40c41c2580b559782357f3cf41f812e4cbb"
+        },
+        "executableDirection": {
+          "executionScope": "audiovisual",
+          "requireMaterialInspection": false,
+          "semanticVerificationPolicy": "legacy_execution_v1",
+          "schemaVersion": "studio.contextual-plan-request.v2",
+          "expectedDocumentRevision": 2,
+          "intent": {
+            "objective": "Demonstrate native composition",
+            "format": "general",
+            "script": "",
+            "lockedFacts": [],
+            "pacing": "balanced",
+            "emphasis": "auto",
+            "reducedMotion": false,
+            "preserveMessage": true
+          },
+          "frameRate": {
+            "numerator": 30,
+            "denominator": 1
+          },
+          "executionVersions": {
+            "compiler": "res.scene-compiler.v2.16",
+            "components": "res.editorial-components.v2.20",
+            "runtime": "res.editorial-runtime.v2.5",
+            "visualAuditPolicy": "studio.visual-audit-policy.v4"
+          },
+          "scenes": [
+            {
+              "id": "action",
+              "purpose": "Demonstrate",
+              "durationFrames": 15,
+              "nativeComponents": [],
+              "motionRecipes": [
+                {
+                  "schemaVersion": "studio.motion-recipe.v1",
+                  "id": "entry",
+                  "version": 1,
+                  "technique": "motion_choreography",
+                  "targetIds": [
+                    "hero"
+                  ],
+                  "startFrame": 0,
+                  "endFrameExclusive": 15,
+                  "intent": "Arrive and settle",
+                  "continuityAnchor": "Same title",
+                  "parameters": {
+                    "tracks": [
+                      {
+                        "targetId": "hero",
+                        "property": "y",
+                        "keyframes": [
+                          {
+                            "frame": 0,
+                            "value": 80.0,
+                            "curve": [
+                              0.22,
+                              0.75,
+                              0.25,
+                              1.0
+                            ]
+                          },
+                          {
+                            "frame": 8,
+                            "value": 0.0,
+                            "curve": [
+                              0.2,
+                              0.0,
+                              0.2,
+                              1.0
+                            ]
+                          },
+                          {
+                            "frame": 14,
+                            "value": 0.0,
+                            "curve": [
+                              0.2,
+                              0.0,
+                              0.2,
+                              1.0
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "pivot": [
+                      0.0,
+                      1.0
+                    ],
+                    "parentTargetId": null,
+                    "maskAssetId": null,
+                    "occluderTargetId": null,
+                    "textUnit": "word",
+                    "staggerFrames": 3,
+                    "readingHoldFrames": 30,
+                    "shutterDegrees": 180.0,
+                    "temporalSamples": 8,
+                    "focusDistance": 1000.0,
+                    "depthOfField": 100.0,
+                    "displacementRatio": 0.01
+                  },
+                  "soundEvents": [],
+                  "verification": [
+                    "Stable title at the end"
+                  ]
+                }
+              ],
+              "facts": [],
+              "narration": "",
+              "background": "#10181c",
+              "elements": [
+                {
+                  "id": "hero",
+                  "kind": "shape",
+                  "purpose": "Pixel motion proof",
+                  "parentId": null,
+                  "alignment": null,
+                  "connectorFromId": null,
+                  "connectorToId": null,
+                  "fitText": false,
+                  "startFrame": 0,
+                  "durationFrames": 15,
+                  "afterElementId": null,
+                  "matchPreviousElementId": null,
+                  "x": 80.0,
+                  "y": 80.0,
+                  "width": 80.0,
+                  "height": 80.0,
+                  "zIndex": 0,
+                  "visualRole": "hero",
+                  "depthTreatment": {
+                    "opacity": 1.0,
+                    "blurPx": 0.0,
+                    "parallax": 0.0
+                  },
+                  "rotation": 0.0,
+                  "originX": 0.5,
+                  "originY": 0.5,
+                  "text": "",
+                  "conciseText": null,
+                  "textRole": "support",
+                  "fontAssetId": null,
+                  "fontSize": 48.0,
+                  "fontWeight": 700,
+                  "letterSpacing": 0.0,
+                  "lineHeight": 1.1,
+                  "textAlign": "left",
+                  "textSpans": [],
+                  "shadow": null,
+                  "effects": [],
+                  "blendMode": "normal",
+                  "borderWidth": 0.0,
+                  "borderColor": "#ffffff",
+                  "pathMode": "polyline",
+                  "color": "#ffffff",
+                  "fill": "#ffffff",
+                  "radius": 16.0,
+                  "shape": "rectangle",
+                  "assetId": null,
+                  "contentIdentity": null,
+                  "contentReferenceId": null,
+                  "contentPartId": null,
+                  "maskAssetId": null,
+                  "sourceStartSeconds": 0.0,
+                  "playbackRate": 1.0,
+                  "sourceAudio": "preserve",
+                  "objectFit": "contain",
+                  "regionOfInterest": null,
+                  "cropIntentional": false,
+                  "reveal": "none",
+                  "revealFrames": 12,
+                  "points": [
+                    {
+                      "x": 0.0,
+                      "y": 0.0
+                    },
+                    {
+                      "x": 0.0,
+                      "y": 0.0
+                    }
+                  ],
+                  "strokeWidth": 4.0,
+                  "animations": [],
+                  "motionCues": [],
+                  "repeatCount": 1,
+                  "repeatDx": 0.0,
+                  "repeatDy": 0.0,
+                  "staggerFrames": 0
+                }
+              ],
+              "audio": [],
+              "materialNeeds": [],
+              "verification": [
+                "Action stays visible"
+              ],
+              "techniqueIds": [],
+              "operationBindings": [],
+              "entrance": "cut",
+              "transitionFrames": 12,
+              "compositions": [],
+              "cameraCues": [],
+              "keywordCues": [],
+              "visualStates": [],
+              "observationCues": [],
+              "contentReferenceIds": [],
+              "semanticAssertions": [],
+              "shotPlan": []
+            }
+          ],
+          "artDirection": null,
+          "contentReferences": []
+        },
+        "hashes": {
+          "sourceDirection": "80eb9ca7da03c3b31e33cfb00a2dc48a7f95971f41c472dbda06aed59f21ef59",
+          "executableDirection": "80eb9ca7da03c3b31e33cfb00a2dc48a7f95971f41c472dbda06aed59f21ef59",
+          "sourceDocument": "4907d422c063b805d468f61545436826cc7c4eb496cab574017dff99675f0a59",
+          "executableComposition": "ef355d07854ac3403e2cc4b47700d697b4c729894df52ffcfaa401cbb424c7e4",
+          "assets": "9bdc9727a9f638047df3ac233a5d3a9309b26e648d768a66f17361131d2ba15d",
+          "fonts": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+        },
+        "humanReview": "pending",
+        "visualAudit": {
+          "schemaVersion": "studio.visual-audit.v2",
+          "policy": {
+            "schemaVersion": "studio.visual-audit-policy.v2",
+            "previewWidth": 300,
+            "textContrastMinimum": 4.5,
+            "essentialGraphicContrastMinimum": 3.0,
+            "maxCorrectionsPerStage": 2,
+            "minimumHumanScore": 4,
+            "maxSimultaneousSalientElements": 5,
+            "minimumHeroAreaRatio": 0.025,
+            "maximumSupportAreaRatio": 0.55,
+            "maximumTextOverlapRatio": 0.1,
+            "maximumComparisonAreaRatio": 6.0,
+            "humanScale": {
+              "1": "incompreensível",
+              "2": "deficiente",
+              "3": "compreensível com problemas",
+              "4": "claro e coerente",
+              "5": "excelente"
+            },
+            "limitations": [
+              "Contrast thresholds are internal readability heuristics, not a complete accessibility certification.",
+              "No universal cut-count, movement ratio or maximum hold duration certifies quality.",
+              "Model judgments and scene declarations do not constitute human review."
+            ]
+          },
+          "technical": "pending",
+          "visualEditorial": "unreviewed",
+          "human": "pending",
+          "findings": [],
+          "states": [
+            {
+              "sceneId": "action",
+              "frames": {
+                "start": 0,
+                "demonstration": 0,
+                "consequence": 0,
+                "exit": 14
+              },
+              "declaredStates": [],
+              "observationCues": [],
+              "status": "awaiting_rendered_evidence"
+            }
+          ],
+          "renderedEvidence": [],
+          "motion": {
+            "componentVersion": "res.editorial-components.v2.20",
+            "propertyCounts": {
+              "position_y": 1
+            },
+            "easingCounts": {
+              "cubic_bezier": 2
+            },
+            "cameraTrackIds": [],
+            "linearCameraTrackIds": [],
+            "overshootTrackIds": [],
+            "motionCueCount": 0,
+            "deliberateHoldCount": 0,
+            "keywordCueCount": 0,
+            "peakSimultaneousSalientElements": 1
+          }
+        },
+        "operationDecisions": [],
+        "omittedOptionalMaterials": [],
+        "editorCommand": {
+          "commandId": "change-1",
+          "previousPlanRevision": 2,
+          "previousSourceDirectionDigest": "f5dd7d5f18b6efb8316380f0f6f85c0ade9048a2a5dc0fef61dd421c89db29ea"
+        }
+      }
+    },
+    "qualityEvaluation": {
+      "schemaVersion": "studio.video-technical-quality-evaluation.v1",
+      "provider": "builtin.ffmpeg-qc-v1",
+      "providerVersion": "ffprobe=ffprobe version 8.1.1-full_build-www.gyan.dev Copyright (c) 2007-2026 the FFmpeg developers; ffmpeg=ffmpeg version 8.1.1-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers",
+      "policy": {
+        "schemaVersion": "studio.video-technical-quality-policy.v1",
+        "policyId": "ugc-review-v1",
+        "maxDurationDeltaMs": 80,
+        "maxAvStartDeltaMs": 80,
+        "maxAvDurationDeltaMs": 80,
+        "maxBlackFrameRatio": 0.05,
+        "minIntegratedLoudnessLufs": -30.0,
+        "maxIntegratedLoudnessLufs": -10.0,
+        "maxTruePeakDbfs": -1.0,
+        "maxSilenceRatio": 0.2,
+        "blackMinDurationMs": 100,
+        "silenceMinDurationMs": 250
+      },
+      "status": "passed",
+      "metrics": {
+        "schemaVersion": "studio.video-technical-quality-metrics.v1",
+        "videoDurationMs": 500.0,
+        "audioDurationMs": 500.0,
+        "durationDeltaMs": 0.0,
+        "avStartDeltaMs": 0.0,
+        "avDurationDeltaMs": 0.0,
+        "blackDurationMs": 0.0,
+        "blackFrameRatio": 0.0,
+        "integratedLoudnessLufs": -120.0,
+        "truePeakDbfs": -120.0,
+        "silenceDurationMs": 500.0,
+        "silenceRatio": 1.0
+      },
+      "checks": [
+        {
+          "schemaVersion": "studio.video-technical-quality-check.v1",
+          "id": "video_stream_count",
+          "severity": "blocker",
+          "status": "passed",
+          "actual": 1.0,
+          "minimum": null,
+          "maximum": null,
+          "expected": "1",
+          "unit": null,
+          "message": "O artefato deve conter exatamente um stream de vídeo."
+        },
+        {
+          "schemaVersion": "studio.video-technical-quality-check.v1",
+          "id": "audio_stream_count",
+          "severity": "blocker",
+          "status": "passed",
+          "actual": 1.0,
+          "minimum": null,
+          "maximum": null,
+          "expected": "1",
+          "unit": null,
+          "message": "O artefato deve conter exatamente um stream de áudio."
+        },
+        {
+          "schemaVersion": "studio.video-technical-quality-check.v1",
+          "id": "video_codec",
+          "severity": "blocker",
+          "status": "passed",
+          "actual": "h264",
+          "minimum": null,
+          "maximum": null,
+          "expected": "h264",
+          "unit": null,
+          "message": "O codec de vídeo deve corresponder ao contrato de saída."
+        },
+        {
+          "schemaVersion": "studio.video-technical-quality-check.v1",
+          "id": "audio_codec",
+          "severity": "blocker",
+          "status": "passed",
+          "actual": "aac",
+          "minimum": null,
+          "maximum": null,
+          "expected": "aac",
+          "unit": null,
+          "message": "O codec de áudio deve corresponder ao contrato de saída."
+        },
+        {
+          "schemaVersion": "studio.video-technical-quality-check.v1",
+          "id": "dimensions",
+          "severity": "blocker",
+          "status": "passed",
+          "actual": "320x320",
+          "minimum": null,
+          "maximum": null,
+          "expected": "320x320",
+          "unit": null,
+          "message": "O canvas codificado deve corresponder ao render solicitado."
+        },
+        {
+          "schemaVersion": "studio.video-technical-quality-check.v1",
+          "id": "frame_rate",
+          "severity": "blocker",
+          "status": "passed",
+          "actual": 0.0,
+          "minimum": null,
+          "maximum": 0.001,
+          "expected": null,
+          "unit": "fps-delta",
+          "message": "O frame rate deve corresponder ao timebase solicitado."
+        },
+        {
+          "schemaVersion": "studio.video-technical-quality-check.v1",
+          "id": "duration_delta",
+          "severity": "blocker",
+          "status": "passed",
+          "actual": 0.0,
+          "minimum": null,
+          "maximum": 80.0,
+          "expected": null,
+          "unit": "ms",
+          "message": "A duração final deve permanecer dentro da tolerância frame-exact."
+        },
+        {
+          "schemaVersion": "studio.video-technical-quality-check.v1",
+          "id": "av_start_delta",
+          "severity": "blocker",
+          "status": "passed",
+          "actual": 0.0,
+          "minimum": null,
+          "maximum": 80.0,
+          "expected": null,
+          "unit": "ms",
+          "message": "Áudio e vídeo devem iniciar sincronizados."
+        },
+        {
+          "schemaVersion": "studio.video-technical-quality-check.v1",
+          "id": "av_duration_delta",
+          "severity": "blocker",
+          "status": "passed",
+          "actual": 0.0,
+          "minimum": null,
+          "maximum": 80.0,
+          "expected": null,
+          "unit": "ms",
+          "message": "Áudio e vídeo devem terminar dentro da tolerância de sync."
+        },
+        {
+          "schemaVersion": "studio.video-technical-quality-check.v1",
+          "id": "black_frame_ratio",
+          "severity": "blocker",
+          "status": "passed",
+          "actual": 0.0,
+          "minimum": null,
+          "maximum": 0.05,
+          "expected": null,
+          "unit": "ratio",
+          "message": "Frames pretos acima do limite bloqueiam revisão."
+        },
+        {
+          "schemaVersion": "studio.video-technical-quality-check.v1",
+          "id": "integrated_loudness",
+          "severity": "warning",
+          "status": "warning",
+          "actual": -120.0,
+          "minimum": -30.0,
+          "maximum": -10.0,
+          "expected": null,
+          "unit": "LUFS",
+          "message": "Loudness fora da janela exige decisão humana antes da publicação."
+        },
+        {
+          "schemaVersion": "studio.video-technical-quality-check.v1",
+          "id": "true_peak",
+          "severity": "warning",
+          "status": "passed",
+          "actual": -120.0,
+          "minimum": null,
+          "maximum": -1.0,
+          "expected": null,
+          "unit": "dBFS",
+          "message": "True peak acima do limite pode introduzir clipping na distribuição."
+        },
+        {
+          "schemaVersion": "studio.video-technical-quality-check.v1",
+          "id": "silence_ratio",
+          "severity": "warning",
+          "status": "warning",
+          "actual": 1.0,
+          "minimum": null,
+          "maximum": 0.2,
+          "expected": null,
+          "unit": "ratio",
+          "message": "Silêncio excessivo exige revisão editorial."
+        }
+      ],
+      "evaluatedAt": "2026-10-04T00:03:46.159204Z"
+    },
+    "audiovisualObservations": {
+      "schemaVersion": "studio.editorial-observation.v1",
+      "status": "partial",
+      "checksum": "09d4f427862714acb391deee20f2489b1d1ccbeb79aa360b7c463feecff03d3b",
+      "durationSeconds": 0.5,
+      "coverageSeconds": 0.5,
+      "sampleRate": 2,
+      "sampleCount": 1,
+      "nearStaticSampleRatio": null,
+      "audioStreamPresent": true,
+      "speechIntelligibility": "unknown",
+      "soundEventAccuracy": "unknown",
+      "editorialQuality": "unreviewed",
+      "humanReview": "pending",
+      "findings": []
+    },
+    "visualAudit": {
+      "schemaVersion": "studio.visual-audit.v2",
+      "policy": {
+        "schemaVersion": "studio.visual-audit-policy.v2",
+        "previewWidth": 300,
+        "textContrastMinimum": 4.5,
+        "essentialGraphicContrastMinimum": 3.0,
+        "maxCorrectionsPerStage": 2,
+        "minimumHumanScore": 4,
+        "maxSimultaneousSalientElements": 5,
+        "minimumHeroAreaRatio": 0.025,
+        "maximumSupportAreaRatio": 0.55,
+        "maximumTextOverlapRatio": 0.1,
+        "maximumComparisonAreaRatio": 6.0,
+        "humanScale": {
+          "1": "incompreensível",
+          "2": "deficiente",
+          "3": "compreensível com problemas",
+          "4": "claro e coerente",
+          "5": "excelente"
+        },
+        "limitations": [
+          "Contrast thresholds are internal readability heuristics, not a complete accessibility certification.",
+          "No universal cut-count, movement ratio or maximum hold duration certifies quality.",
+          "Model judgments and scene declarations do not constitute human review."
+        ]
+      },
+      "technical": "pending",
+      "visualEditorial": "unreviewed",
+      "human": "pending",
+      "findings": [],
+      "states": [
+        {
+          "sceneId": "action",
+          "frames": {
+            "start": 0,
+            "demonstration": 0,
+            "consequence": 0,
+            "exit": 14
+          },
+          "declaredStates": [],
+          "observationCues": [],
+          "status": "awaiting_visual_review",
+          "observedFrames": {
+            "start": 0,
+            "demonstration": 0,
+            "consequence": 0,
+            "exit": 14
+          }
+        }
+      ],
+      "renderedEvidence": [
+        {
+          "frame": 0,
+          "encodedFrame": 0,
+          "timestampSeconds": 0.0,
+          "checksumSha256": "716d5176167b855841bf854740e5bb2a4d06089d16ae866bb75efc3a5670aa14",
+          "previewWidth": 300,
+          "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD//gAQTGF2YzYyLjI4LjEwMQD/2wBDAAgICAkICQsLCwsLCw0MDQ0NDQ0NDQ0NDQ0ODg4REREODg4NDQ4OEBARERITEhERERETExQUFBgYFxccHB0iIin/xAB+AAEBAAMBAQAAAAAAAAAAAAAACAUGBwQDAQEBAQEAAAAAAAAAAAAAAAAAAgEDEAEAAQMBAwYNBAEFAQAAAAAAAgEDBAURBgdVNrQSUUEWF9RxlKTTgXUhMYQiE5EyUpJhgmJDUyMRAQADAQEAAAAAAAAAAAAAAAABAjEREv/AABEIASwBLAMBIgACEQADEQD/2gAMAwEAAhEDEQA/AOKALcgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAG8bibq+FGp9W7tpiYtKXMmtPrKla/hajXurOtK/PujSo2Gu6ZoWrazKtMHDv5Oz5VlCP/AM417JXJbLdK+eTZPFrvfyZ61heUKlwsPGwbELGPZhZtW6bIW4U2Rj7u3tr9avWnreJQ8Wm+HJnrWF5SeLTfDkz1rC8pVeHW+UoeLTfDkz1rC8pPFpvhyZ61heUqvDp5Sh4tN7+TPWsLyhgdV3Z1vRYdfOwL9iH/AKdWk7fm/Ut1lDb71mvnctQvQlbuRjOMqbJRnGkoypX60rGvyrSvZU6eUMjp/EndC3oGVbzcOHUw8uVaVt91i/s29SP/AAnTbKPZsrRzBsJmOADWAAAAAAAAAAAAAAAAAAAAAAAACjeDtmFNDzbtKfnPPlCVe2NuxZrGnurOX7pyUlwd5u5XxG90fGZLa66wAl0AAAAAAc/4n2IXd0s2Uqba2Z4tyH+kq5Fu3t/xnKnvSqrDiXzP1P7XplhJ6oRbQBqQAAAAAAAAAAAAAAAAAAAAAAABSXB3m7lfEb3RsZNqkuDvN3K+I3uj4zJbXXWAEugAAAAADReJfM/U/temWEnqw4l8z9T+16ZYSeqEW0AakAAAAAAAAAAAAAAAAAAAAAAAAUlwd5u5XxG90bGTapLg7zdyviN7o2MyVV11gBKwAAAAAGi8S+Z+p/a9MsJPVhxL5n6n9r0ywk9UItoA1IAAAAAAAAAAAAAAAAAAAAAAAAong3kwnpGfjUrTr28z9atO/q3bMI0r5ttqqdm07o7yX92NUhlR2zszp+nkWaf9luvfTslGv5R/bvZLa6sEYnSNb07W8aORhZNu/CuzbSNfzhX+tyH8oS8/uZZLoAAAAA8edqGJpmPLIy79vHtQpWtZ3JUjT5U27KbfnWvZSm2tQaPxSyYWN1Mq3KtNuTdxrUKdtY3o3a7P9tuqWW/b+74V3ozYQsdaOFjbaWaSpslclX+V6VO7b9I07qeerQVQi2gDUgAAAAAAAAAAAAAAAAAAAAAAAAAPvYycjFnS5Yu3LM6fSducoSp5pRrSrLeFG8PLGqem5PtWCAZ3wp3i5Y1T03J9qeFO8XLGqem5PtWCAZ3wp3i5Y1T03J9qeFO8XLGqem5PtWCAZ3wo3i5Y1T03J9qxmTnZebLr5ORfyJf2u3J3JfvOVavKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//Z",
+          "origin": "decoded_export_frame"
+        },
+        {
+          "frame": 14,
+          "encodedFrame": 14,
+          "timestampSeconds": 0.4666666666666667,
+          "checksumSha256": "28612f83d6357f7d46be9b7aa7321299cc5946e92ecd7a73ff49a5837ca1ee97",
+          "previewWidth": 300,
+          "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD//gAQTGF2YzYyLjI4LjEwMQD/2wBDAAgICAkICQsLCwsLCw0MDQ0NDQ0NDQ0NDQ0ODg4REREODg4NDQ4OEBARERITEhERERETExQUFBgYFxccHB0iIin/xACAAAEBAQEBAQEBAAAAAAAAAAAACAcGBAUCAQEBAQEBAAAAAAAAAAAAAAAAAAECAxABAAEDAQMGDAQHAQEAAAAAAAECAwQFBxG0NgbUFyFhMYSkQRJ1VZNUInFRFMGxUkIjcsSRYjJTNREBAQADAQAAAAAAAAAAAAAAAAERMRIC/8AAEQgBLAEsAwEiAAIRAAMRAP/aAAwDAQACEQMRAD8AxQBtyAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAfu1brvXKLdFNVddcxTTTTG+qqqeyIiI8MyD8DZ9C2Q5OTbi9quV+FiqImMezTFd2nf8A+ldXyUz3RTPe6qnY7zf3duXqkz3XcaI/x+Fn9UyuKm4Ul1O83fitU99jdEOp3m78Vqnvsbohleam0Ul1O83fitU99jdEOp3m78VqnvsbohlOam0UlOx3m9u7MrVN/m/m40/2kOf1bY76FmqvTM6u5cpiZi1k0UxFfdF2jdET9ad3eZOaw0erNwsnTsi5jZNqqzetVejXRVHbE/nE+aY8LyqgAAAAAAAAAAAAAAAAAAAAAAAAAA2jZDoVrJyMrVbtMVfhpps4++N8Rcrj0q6/rTT6MR/VvYupLY9yeyvWN3h8dKs21eOx/QZbABQAAAGM7XdCtXcGzq1unddsV02b0x/HZuT8s1feaK90RP2qT2q/aXyQ1PxXjLKUGox62AKyAAAAAAAAAAAAAAAAAAAAAAAAKS2O8nsr1jd4fHTapLY7ydyvWN7hsZKvnbWAGXQAAAAABwm0vkhqfivGWEoKv2l8kNT8V4ywlBqMetgCsgAAAAAAAAAAAAAAAAAAAAAAACktjvJ3K9Y3uHxk2qS2O8ncr1je4fGSr521gBl0AAAAAAcLtL5H6n4rxlhJ6sNpfI/U/FeMsJPajHrYArIAAAAAAAAAAAAAAAAAAAAAAAApLY7ydyvWN3h8ZNrc9jusWqYztLrmIrrqjKsxM/8AfyxRdiO+Iiid0ebf9kq+dt3AZdAAAAAAHCbS+SGp+K8ZYSgo7a5rNrH0i3ptNUTey7lNyunf202bNUTvmP8Aa56MR9JTi1GPWwBWQAAAAAAAAAAAAAAAAAAAAAAAB6sLNyNPybWTjXJtXrNUV266fDEx+sT4JjwTDygsUHoO1zBvUU29WsV4tyIjffsxNyxXPnqmiN92j6RFcOsjaXzQ3f8A0vJcz8sdKAmF6Vh1l8z/AGn5Lm9GOsvmf7T8lzejJPDB1VYdZfM/2n5Lm9GOsvmf7T8lzejJPDB1VXztL5oe0vJc3o7ntZ2t6RjWZp023czb0x8tVVFVmxT31enEXKt37Ypjf+6E4hg6r6Orapl61m3MzLuTdu3PDPmiI7IppjzUxHZEPnAqW5ABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH/2Q==",
+          "origin": "decoded_export_frame"
+        }
+      ],
+      "motion": {
+        "componentVersion": "res.editorial-components.v2.20",
+        "propertyCounts": {
+          "position_y": 1
+        },
+        "easingCounts": {
+          "cubic_bezier": 2
+        },
+        "cameraTrackIds": [],
+        "linearCameraTrackIds": [],
+        "overshootTrackIds": [],
+        "motionCueCount": 0,
+        "deliberateHoldCount": 0,
+        "keywordCueCount": 0,
+        "peakSimultaneousSalientElements": 1
+      },
+      "renderChecksum": "09d4f427862714acb391deee20f2489b1d1ccbeb79aa360b7c463feecff03d3b",
+      "executableDirectionDigest": "80eb9ca7da03c3b31e33cfb00a2dc48a7f95971f41c472dbda06aed59f21ef59",
+      "executableCompositionDigest": "ef355d07854ac3403e2cc4b47700d697b4c729894df52ffcfaa401cbb424c7e4",
+      "coverage": {
+        "schemaVersion": "studio.visual-coverage.v2",
+        "requestedFrames": 2,
+        "observedFrames": 2,
+        "complete": true,
+        "frameSampleComplete": true,
+        "wholeVideoInspected": false,
+        "rendererGeometryFrames": 15
+      },
+      "executionVerification": {
+        "status": "pending",
+        "evidence": []
+      },
+      "actionVerification": {
+        "status": "pending",
+        "evidence": []
+      },
+      "semanticVerification": {
+        "policy": "legacy_execution_v1",
+        "required": false,
+        "status": "not_applicable",
+        "evidence": []
+      },
+      "humanVerification": {
+        "status": "pending",
+        "evidence": []
+      },
+      "regionMotion": [
+        {
+          "sceneId": "action",
+          "elementId": "hero",
+          "visualRole": "hero",
+          "samplePairs": 1,
+          "meanNormalizedPixelDifference": 0.003065,
+          "maximumNormalizedPixelDifference": 0.003065
+        }
+      ],
+      "materialRegionOfInterest": [],
+      "limitations": [
+        "Checkpoints do not prove continuous motion, material relevance or action completion.",
+        "Declared contrast findings require review against the decoded images.",
+        "Human scores are never inferred from successful decoding.",
+        "Whole-video coverage is false until every required interval is inspected at its declared density."
+      ]
+    },
+    "workerExecutionContext": {
+      "schemaVersion": "studio.worker-execution-context.v1",
+      "mode": "embedded",
+      "attested": false,
+      "jobType": "video_render",
+      "capability": "media_cpu",
+      "queueName": "studio.media.cpu",
+      "runtimeName": null,
+      "runtimeVersion": null,
+      "manifestDigestSha256": null,
+      "imageDigest": null,
+      "workerInstanceId": null,
+      "hostname": null,
+      "processId": null,
+      "toolVersions": {},
+      "verifiedAt": "2026-10-04T00:03:37.128059Z"
+    },
+    "renderRequest": {
+      "schemaVersion": "studio.video-render-request.v1",
+      "workspaceId": "a29befa6-7c44-4ab4-8989-d072c09444d8",
+      "documentId": "a22b53c3-25da-47c5-a6a8-aab988a5352f",
+      "documentRevision": 3,
+      "documentVersion": 1,
+      "pageIds": [
+        "page"
+      ],
+      "assetIds": [
+        "dd3e1c7a-f22a-402a-9ec8-800be834705d"
+      ],
+      "output": {
+        "schemaVersion": "studio.video-render-spec.v1",
+        "format": "mp4",
+        "width": 320,
+        "height": 320,
+        "fps": 30.0,
+        "videoCodec": "h264",
+        "audioCodec": "aac",
+        "quality": "standard"
+      },
+      "correlationId": "video-render:a22b53c3-25da-47c5-a6a8-aab988a5352f:1"
+    },
+    "videoRenderResult": {
+      "schemaVersion": "studio.video-render-result.v1",
+      "jobId": "4d087653-42d5-4ef9-bff5-8c5d7deb5038",
+      "workspaceId": "a29befa6-7c44-4ab4-8989-d072c09444d8",
+      "documentId": "a22b53c3-25da-47c5-a6a8-aab988a5352f",
+      "documentRevision": 3,
+      "documentVersion": 1,
+      "provider": "remotion.contextual-v2",
+      "providerVersion": "4.0.527-native.14",
+      "artifact": {
+        "schemaVersion": "studio.rendered-video-artifact.v1",
+        "assetId": "dcc07d0b-f7ee-421e-a2f0-6320c071f90e",
+        "storageUri": "/api/v1/assets/dcc07d0b-f7ee-421e-a2f0-6320c071f90e/content",
+        "mediaType": "video/mp4",
+        "checksumSha256": "09d4f427862714acb391deee20f2489b1d1ccbeb79aa360b7c463feecff03d3b",
+        "sizeBytes": 3909,
+        "width": 320,
+        "height": 320,
+        "durationMs": 500,
+        "fps": 30.0,
+        "videoCodec": "h264",
+        "audioCodec": "aac"
+      },
+      "renderDurationMs": 8672,
+      "framesRendered": 15,
+      "peakRssMb": null,
+      "renderedLayerIds": [
+        "ed2-71e35aa88296f01a28320dfd",
+        "ed2-71458a6a87beb6282676415f",
+        "ed2-9244620fd8e5cecdf8791232",
+        "ed2-931c01cc11886fe5194e8ac9",
+        "ed2-ecda5251ec13adfcc27c9df5",
+        "ed2-7d4b81d3a7f71676bb8ab643"
+      ],
+      "renderedCaptionTrackIds": [],
+      "qualityEvaluation": {
+        "schemaVersion": "studio.video-technical-quality-evaluation.v1",
+        "provider": "builtin.ffmpeg-qc-v1",
+        "providerVersion": "ffprobe=ffprobe version 8.1.1-full_build-www.gyan.dev Copyright (c) 2007-2026 the FFmpeg developers; ffmpeg=ffmpeg version 8.1.1-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers",
+        "policy": {
+          "schemaVersion": "studio.video-technical-quality-policy.v1",
+          "policyId": "ugc-review-v1",
+          "maxDurationDeltaMs": 80,
+          "maxAvStartDeltaMs": 80,
+          "maxAvDurationDeltaMs": 80,
+          "maxBlackFrameRatio": 0.05,
+          "minIntegratedLoudnessLufs": -30.0,
+          "maxIntegratedLoudnessLufs": -10.0,
+          "maxTruePeakDbfs": -1.0,
+          "maxSilenceRatio": 0.2,
+          "blackMinDurationMs": 100,
+          "silenceMinDurationMs": 250
+        },
+        "status": "passed",
+        "metrics": {
+          "schemaVersion": "studio.video-technical-quality-metrics.v1",
+          "videoDurationMs": 500.0,
+          "audioDurationMs": 500.0,
+          "durationDeltaMs": 0.0,
+          "avStartDeltaMs": 0.0,
+          "avDurationDeltaMs": 0.0,
+          "blackDurationMs": 0.0,
+          "blackFrameRatio": 0.0,
+          "integratedLoudnessLufs": -120.0,
+          "truePeakDbfs": -120.0,
+          "silenceDurationMs": 500.0,
+          "silenceRatio": 1.0
+        },
+        "checks": [
+          {
+            "schemaVersion": "studio.video-technical-quality-check.v1",
+            "id": "video_stream_count",
+            "severity": "blocker",
+            "status": "passed",
+            "actual": 1.0,
+            "minimum": null,
+            "maximum": null,
+            "expected": "1",
+            "unit": null,
+            "message": "O artefato deve conter exatamente um stream de vídeo."
+          },
+          {
+            "schemaVersion": "studio.video-technical-quality-check.v1",
+            "id": "audio_stream_count",
+            "severity": "blocker",
+            "status": "passed",
+            "actual": 1.0,
+            "minimum": null,
+            "maximum": null,
+            "expected": "1",
+            "unit": null,
+            "message": "O artefato deve conter exatamente um stream de áudio."
+          },
+          {
+            "schemaVersion": "studio.video-technical-quality-check.v1",
+            "id": "video_codec",
+            "severity": "blocker",
+            "status": "passed",
+            "actual": "h264",
+            "minimum": null,
+            "maximum": null,
+            "expected": "h264",
+            "unit": null,
+            "message": "O codec de vídeo deve corresponder ao contrato de saída."
+          },
+          {
+            "schemaVersion": "studio.video-technical-quality-check.v1",
+            "id": "audio_codec",
+            "severity": "blocker",
+            "status": "passed",
+            "actual": "aac",
+            "minimum": null,
+            "maximum": null,
+            "expected": "aac",
+            "unit": null,
+            "message": "O codec de áudio deve corresponder ao contrato de saída."
+          },
+          {
+            "schemaVersion": "studio.video-technical-quality-check.v1",
+            "id": "dimensions",
+            "severity": "blocker",
+            "status": "passed",
+            "actual": "320x320",
+            "minimum": null,
+            "maximum": null,
+            "expected": "320x320",
+            "unit": null,
+            "message": "O canvas codificado deve corresponder ao render solicitado."
+          },
+          {
+            "schemaVersion": "studio.video-technical-quality-check.v1",
+            "id": "frame_rate",
+            "severity": "blocker",
+            "status": "passed",
+            "actual": 0.0,
+            "minimum": null,
+            "maximum": 0.001,
+            "expected": null,
+            "unit": "fps-delta",
+            "message": "O frame rate deve corresponder ao timebase solicitado."
+          },
+          {
+            "schemaVersion": "studio.video-technical-quality-check.v1",
+            "id": "duration_delta",
+            "severity": "blocker",
+            "status": "passed",
+            "actual": 0.0,
+            "minimum": null,
+            "maximum": 80.0,
+            "expected": null,
+            "unit": "ms",
+            "message": "A duração final deve permanecer dentro da tolerância frame-exact."
+          },
+          {
+            "schemaVersion": "studio.video-technical-quality-check.v1",
+            "id": "av_start_delta",
+            "severity": "blocker",
+            "status": "passed",
+            "actual": 0.0,
+            "minimum": null,
+            "maximum": 80.0,
+            "expected": null,
+            "unit": "ms",
+            "message": "Áudio e vídeo devem iniciar sincronizados."
+          },
+          {
+            "schemaVersion": "studio.video-technical-quality-check.v1",
+            "id": "av_duration_delta",
+            "severity": "blocker",
+            "status": "passed",
+            "actual": 0.0,
+            "minimum": null,
+            "maximum": 80.0,
+            "expected": null,
+            "unit": "ms",
+            "message": "Áudio e vídeo devem terminar dentro da tolerância de sync."
+          },
+          {
+            "schemaVersion": "studio.video-technical-quality-check.v1",
+            "id": "black_frame_ratio",
+            "severity": "blocker",
+            "status": "passed",
+            "actual": 0.0,
+            "minimum": null,
+            "maximum": 0.05,
+            "expected": null,
+            "unit": "ratio",
+            "message": "Frames pretos acima do limite bloqueiam revisão."
+          },
+          {
+            "schemaVersion": "studio.video-technical-quality-check.v1",
+            "id": "integrated_loudness",
+            "severity": "warning",
+            "status": "warning",
+            "actual": -120.0,
+            "minimum": -30.0,
+            "maximum": -10.0,
+            "expected": null,
+            "unit": "LUFS",
+            "message": "Loudness fora da janela exige decisão humana antes da publicação."
+          },
+          {
+            "schemaVersion": "studio.video-technical-quality-check.v1",
+            "id": "true_peak",
+            "severity": "warning",
+            "status": "passed",
+            "actual": -120.0,
+            "minimum": null,
+            "maximum": -1.0,
+            "expected": null,
+            "unit": "dBFS",
+            "message": "True peak acima do limite pode introduzir clipping na distribuição."
+          },
+          {
+            "schemaVersion": "studio.video-technical-quality-check.v1",
+            "id": "silence_ratio",
+            "severity": "warning",
+            "status": "warning",
+            "actual": 1.0,
+            "minimum": null,
+            "maximum": 0.2,
+            "expected": null,
+            "unit": "ratio",
+            "message": "Silêncio excessivo exige revisão editorial."
+          }
+        ],
+        "evaluatedAt": "2026-10-04T00:03:46.159204Z"
+      },
+      "workerExecutionContext": {
+        "schemaVersion": "studio.worker-execution-context.v1",
+        "mode": "embedded",
+        "attested": false,
+        "jobType": "video_render",
+        "capability": "media_cpu",
+        "queueName": "studio.media.cpu",
+        "runtimeName": null,
+        "runtimeVersion": null,
+        "manifestDigestSha256": null,
+        "imageDigest": null,
+        "workerInstanceId": null,
+        "hostname": null,
+        "processId": null,
+        "toolVersions": {},
+        "verifiedAt": "2026-10-04T00:03:37.128059Z"
+      },
+      "warnings": [
+        "Editorial quality requires review of the rendered video.",
+        "Automatic draft; human audiovisual review pending."
+      ],
+      "completedAt": "2026-10-04T00:03:46.512161Z"
+    }
+  },
+  "decodedPixelChecks": {
+    "frames": [
+      0,
+      4,
+      14
+    ],
+    "middleExpectedTopY": 86,
+    "baseTranslation": [
+      80,
+      80
+    ],
+    "parentTransformsAppliedOnce": false,
+    "beginLower": [
+      255,
+      255,
+      255
+    ],
+    "beginUpper": [
+      13,
+      21,
+      26
+    ],
+    "endLower": [
+      13,
+      21,
+      26
+    ],
+    "endUpper": [
+      255,
+      255,
+      255
+    ],
+    "middleInside": [
+      254,
+      255,
+      255
+    ],
+    "middleOutside": [
+      15,
+      20,
+      26
+    ]
+  }
+}

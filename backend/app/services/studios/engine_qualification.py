@@ -1,0 +1,714 @@
+"""Immutable workspace experiments with live artifact checks and no fake success."""
+
+from __future__ import annotations
+
+import math
+import secrets
+from datetime import UTC, datetime
+from uuid import uuid4
+
+from sqlalchemy import select
+
+from ...config import get_settings
+from ...domain.studios.contextual_editing import digest
+from ...domain.studios.engine_qualification import CASE_LANGUAGES, EngineRenderReferenceV1
+from ...models import CreativeDocument, LibraryAsset, Membership, StudioDomainEvent, StudioGenerationJob
+from ...providers.studios.alight_motion import refresh_registration
+from ...providers.studios.alight_worker import NAME
+from ...providers.studios.video_render import VIDEO_RENDER_PROVIDERS
+from .asset_read_projection import project_asset
+from .compatibility import record_to_contract
+from .contextual_editing import lock_editing_budget
+from .kernel import emit_event
+
+PREFIX = "studio.engine_qualification."
+
+
+def engine_capabilities():
+    status = refresh_registration(get_settings(), VIDEO_RENDER_PROVIDERS)
+    return {
+        "schemaVersion": "studio.engine-capabilities.v1",
+        "experimental": True,
+        "engines": [
+            {"provider": name, "available": True, "capabilities": [], "qualification": "existing"}
+            for name in sorted(VIDEO_RENDER_PROVIDERS)
+            if name != NAME
+        ]
+        + [{**status, "qualification": "candidate"}],
+        "silentFallback": False,
+        "apiBudget": {"groupId": "visual-quality-2026-10-01", "limitUsd": 10},
+    }
+
+
+def _shared_budget(db):
+    from .gemini_editing import committed_test_amount
+
+    jobs = db.scalars(
+        select(StudioGenerationJob).where(
+            StudioGenerationJob.request_payload["budgetGroupId"].as_string() == "visual-quality-2026-10-01"
+        )
+    ).all()
+    committed = sum(
+        committed_test_amount(job) for job in jobs if job.request_payload.get("environment") != "production"
+    )
+    return {
+        "groupId": "visual-quality-2026-10-01",
+        "limitUsd": 10,
+        "committedOrReservedUsd": round(committed, 6),
+        "remainingUsd": round(max(0, 10 - committed), 6),
+        "attempts": len(jobs),
+    }
+
+
+def _events(db, workspace_id, campaign_id):
+    return db.scalars(
+        select(StudioDomainEvent)
+        .where(
+            StudioDomainEvent.workspace_id == workspace_id,
+            StudioDomainEvent.aggregate_type == "engine_qualification",
+            StudioDomainEvent.aggregate_id == campaign_id,
+        )
+        .order_by(StudioDomainEvent.occurred_at, StudioDomainEvent.id)
+    ).all()
+
+
+def _campaign(db, workspace_id, campaign_id):
+    events = _events(db, workspace_id, campaign_id)
+    created = next((e for e in events if e.event_type == PREFIX + "created"), None)
+    if not created:
+        raise ValueError("engine_campaign_not_found")
+    result = {**created.payload, "cases": {}, "sessions": {}, "trials": {}}
+    for event in events:
+        payload = event.payload
+        if event.event_type == PREFIX + "case_bound":
+            result["cases"][payload["language"]] = payload
+            result["revision"] = payload["revision"]
+        elif event.event_type == PREFIX + "comparison_created":
+            result["sessions"][payload["id"]] = payload
+        elif event.event_type == PREFIX + "comparison_reviewed":
+            if payload["sessionId"] in result["sessions"]:
+                result["sessions"][payload["sessionId"]]["review"] = payload
+        elif event.event_type == PREFIX + "trial_registered":
+            result["trials"][payload["jobId"]] = payload
+        elif event.event_type == PREFIX + "promoted":
+            result["promotion"] = payload
+    return result
+
+
+def _record(db, workspace_id, campaign_id, user, kind, payload):
+    emit_event(
+        db,
+        workspace_id=workspace_id,
+        event_type=PREFIX + kind,
+        aggregate_type="engine_qualification",
+        aggregate_id=campaign_id,
+        correlation_id=campaign_id,
+        actor_id=user.id,
+        payload=payload,
+    )
+    db.commit()
+    return payload
+
+
+def create_campaign(db, workspace_id, request, user):
+    campaign_id = str(uuid4())
+    return _record(
+        db,
+        workspace_id,
+        campaign_id,
+        user,
+        "created",
+        {
+            "id": campaign_id,
+            "schemaVersion": "studio.engine-qualification.v1",
+            "revision": 1,
+            "title": request.title,
+            "workspaceId": workspace_id,
+            "provider": NAME,
+            "targetJobs": 30,
+            "targetPerLanguage": 10,
+            "minimumSuccesses": 29,
+            "p95LimitMs": 600000,
+            "output": {"width": 1080, "height": 1920, "fps": 30, "durationSeconds": 15},
+            "commercialQualification": False,
+            "budgetGroupId": "visual-quality-2026-10-01",
+        },
+    )
+
+
+def _document(db, workspace_id, document_id, revision):
+    record = db.get(CreativeDocument, document_id)
+    if not record or record.workspace_id != workspace_id:
+        raise ValueError("engine_document_not_found")
+    if record.revision != revision:
+        raise ValueError("engine_document_revision_stale")
+    contract = record_to_contract(record)
+    if contract.content_type != "video":
+        raise ValueError("engine_video_document_required")
+    return record, contract
+
+
+def _brief(contract):
+    return digest(contract.brief.model_dump(mode="json", by_alias=True))
+
+
+def _sources(contract):
+    return {a.id: a.checksum for a in contract.assets if a.checksum}
+
+
+def bind_case(db, workspace_id, campaign_id, request, user):
+    lock_editing_budget(db, workspace_id)
+    campaign = _campaign(db, workspace_id, campaign_id)
+    if campaign["revision"] != request.expected_campaign_revision:
+        raise ValueError("engine_campaign_revision_conflict")
+    previous = campaign["cases"].get(request.language)
+    if any(trial["language"] == request.language for trial in campaign["trials"].values()):
+        if (
+            previous
+            and previous["documentId"] == request.document_id
+            and previous["expectedDocumentRevision"] == request.expected_document_revision
+        ):
+            return campaign_projection(db, workspace_id, campaign_id)
+        raise ValueError("engine_case_locked_after_trials_create_new_campaign")
+    _, contract = _document(db, workspace_id, request.document_id, request.expected_document_revision)
+    if any(
+        case["documentId"] == request.document_id and lang != request.language
+        for lang, case in campaign["cases"].items()
+    ):
+        raise ValueError("engine_distinct_case_documents_required")
+    sources = _sources(contract)
+    _record(
+        db,
+        workspace_id,
+        campaign_id,
+        user,
+        "case_bound",
+        {
+            **request.model_dump(mode="json", by_alias=True),
+            "revision": campaign["revision"] + 1,
+            "briefDigest": _brief(contract),
+            "sourceManifest": sources,
+            "sourceDigest": digest(sources),
+        },
+    )
+    return campaign_projection(db, workspace_id, campaign_id)
+
+
+def _reference(db, workspace_id, reference):
+    record, contract = _document(db, workspace_id, reference.document_id, reference.document_revision)
+    asset = project_asset(db, reference.asset_id, [
+        ("generationJobId",), ("derivation",), ("documentId",), ("documentRevision",),
+        ("documentSnapshotSha256",), ("sourceAssetBindings",), ("qualityEvaluation",), ("visualHumanReview",),
+        ("contextualEditing", "manifest", "executableDirection"),
+        ("contextualEditing", "rendererChecks", "graphics", "alightReceipt"),
+    ])
+    if (
+        not asset
+        or asset.workspace_id != workspace_id
+        or asset.lifecycle_status != "active"
+        or asset.checksum_sha256 != reference.checksum
+        or asset.media_type != "video/mp4"
+    ):
+        raise ValueError("engine_render_checksum_or_scope_conflict")
+    metadata = asset.object_metadata or {}
+    job = db.get(StudioGenerationJob, metadata.get("generationJobId"))
+    if (
+        metadata.get("derivation") != "video_render"
+        or metadata.get("documentId") != record.id
+        or metadata.get("documentRevision") != record.revision
+        or not job
+        or job.workspace_id != workspace_id
+        or job.document_id != record.id
+        or job.status != "succeeded"
+    ):
+        raise ValueError("engine_render_binding_invalid")
+    snapshot = job.request_payload.get("documentSnapshot") or {}
+    if metadata.get("documentSnapshotSha256") != digest(snapshot):
+        raise ValueError("engine_render_snapshot_conflict")
+    sources = {v["assetId"]: v["checksumSha256"] for v in metadata.get("sourceAssetBindings", [])}
+    if not sources:
+        raise ValueError("engine_render_sources_missing")
+    refs = {a.id: a for a in contract.assets}
+    for identifier, checksum in sources.items():
+        source = db.get(LibraryAsset, identifier)
+        if (
+            identifier not in refs
+            or refs[identifier].checksum != checksum
+            or refs[identifier].rights_status != "verified"
+            or not source
+            or source.workspace_id != workspace_id
+            or source.lifecycle_status != "active"
+            or source.checksum_sha256 != checksum
+        ):
+            raise ValueError("engine_render_source_stale_or_unverified")
+    result = job.result_payload or {}
+    artifact = result.get("artifact") or {}
+    if artifact.get("assetId") != asset.id or artifact.get("checksumSha256") != reference.checksum:
+        raise ValueError("engine_job_artifact_conflict")
+    if (artifact.get("width"), artifact.get("height"), artifact.get("fps")) != (1080, 1920, 30):
+        raise ValueError("engine_render_format_invalid")
+    if abs((artifact.get("durationMs") or 0) - 15000) > 67 or artifact.get("audioCodec") in {None, "none"}:
+        raise ValueError("engine_render_duration_or_audio_invalid")
+    if metadata.get("qualityEvaluation", {}).get("status") != "passed":
+        raise ValueError("engine_technical_qc_not_passed")
+    direction = dict(((metadata.get("contextualEditing") or {}).get("manifest") or {}).get("executableDirection") or {})
+    for key in ("expectedDocumentRevision", "renderEngine", "executionVersions"):
+        direction.pop(key, None)
+    receipt = (metadata.get("contextualEditing") or {}).get("rendererChecks", {}).get("graphics", {}).get(
+        "alightReceipt"
+    ) or {}
+    return {
+        "reference": reference.model_dump(mode="json", by_alias=True),
+        "provider": job.provider,
+        "sourceManifest": sources,
+        "sourceDigest": digest(sources),
+        "briefDigest": _brief(contract),
+        "recipeDigest": digest(
+            {
+                "direction": direction,
+                "recipes": (snapshot.get("composition", {}).get("narrative", {}).get("editorialV2") or {}).get(
+                    "motionRecipes", []
+                ),
+            }
+        ),
+        "review": metadata.get("visualHumanReview") or {},
+        "receipt": receipt,
+        "recipeEvidencePresent": bool(
+            direction
+            or (snapshot.get("composition", {}).get("narrative", {}).get("editorialV2") or {}).get("motionRecipes")
+        ),
+    }
+
+
+def create_comparison(db, workspace_id, campaign_id, request, user):
+    lock_editing_budget(db, workspace_id)
+    campaign = _campaign(db, workspace_id, campaign_id)
+    case = campaign["cases"].get(request.language)
+    if not case:
+        raise ValueError("engine_case_required")
+    variants = [_reference(db, workspace_id, ref) for ref in request.variants]
+    if any(v["briefDigest"] != case["briefDigest"] or v["sourceDigest"] != case["sourceDigest"] for v in variants):
+        raise ValueError("engine_comparison_common_brief_and_materials_required")
+    providers = {v["provider"] for v in variants}
+    if NAME not in providers or "remotion.contextual-v2" not in providers:
+        raise ValueError("engine_comparison_two_engines_required")
+    if request.mode == "technical_fidelity" and len({v["recipeDigest"] for v in variants}) != 1:
+        raise ValueError("engine_comparison_same_recipe_required")
+    if request.mode == "technical_fidelity" and not all(v["recipeEvidencePresent"] for v in variants):
+        raise ValueError("engine_comparison_recipe_evidence_required")
+    if request.mode == "editorial_result" and sum(v["provider"] == NAME for v in variants) != 1:
+        raise ValueError("engine_comparison_single_alight_edit_required")
+    if request.mode == "editorial_result" and providers != {
+        NAME,
+        "remotion.contextual-v2",
+        "builtin.ffmpeg-contextual-v1",
+    }:
+        raise ValueError("engine_comparison_simple_control_required")
+    secrets.SystemRandom().shuffle(variants)
+    session_id = str(uuid4())
+    _record(
+        db,
+        workspace_id,
+        campaign_id,
+        user,
+        "comparison_created",
+        {
+            "id": session_id,
+            "language": request.language,
+            "mode": request.mode,
+            "caseDigest": digest(case),
+            "variants": {chr(65 + index): variant for index, variant in enumerate(variants)},
+            "status": "not_assessed",
+        },
+    )
+    return comparison_projection(db, workspace_id, campaign_id, session_id)
+
+
+def _fresh_session(db, workspace_id, campaign, session):
+    if session["caseDigest"] != digest(campaign["cases"].get(session["language"])):
+        raise ValueError("engine_comparison_case_changed")
+    for label, variant in session["variants"].items():
+        current = _reference(db, workspace_id, EngineRenderReferenceV1.model_validate(variant["reference"]))
+        if any(current[key] != variant[key] for key in ("provider", "sourceDigest", "briefDigest", "recipeDigest")):
+            raise ValueError("engine_comparison_snapshot_changed")
+        review = session.get("review", {})
+        if (
+            session["mode"] == "editorial_result"
+            and review.get("status") == "passed"
+            and review.get("preferredLabel") == label
+            and not _visual_approved(current)
+        ):
+            raise ValueError("engine_comparison_human_review_changed")
+
+
+def comparison_projection(db, workspace_id, campaign_id, session_id):
+    campaign = _campaign(db, workspace_id, campaign_id)
+    session = campaign["sessions"].get(session_id)
+    if not session:
+        raise ValueError("engine_comparison_not_found")
+    blockers = []
+    try:
+        _fresh_session(db, workspace_id, campaign, session)
+    except ValueError as exc:
+        blockers.append(str(exc))
+    return {
+        "id": session_id,
+        "language": session["language"],
+        "mode": session["mode"],
+        "status": "stale" if blockers else session.get("review", {}).get("status", "not_assessed"),
+        "blockers": blockers,
+        "labels": [
+            {"label": label, "assetId": variant["reference"]["assetId"], "checksum": variant["reference"]["checksum"]}
+            for label, variant in session["variants"].items()
+        ],
+        "review": session.get("review"),
+    }
+
+
+def _visual_approved(variant):
+    review, ref = variant["review"], variant["reference"]
+    return bool(
+        review.get("assetId") == ref["assetId"]
+        and review.get("renderChecksum") == ref["checksum"]
+        and review.get("expectedDocumentRevision") == ref["documentRevision"]
+        and review.get("fullVideoInspected") is True
+        and review.get("mobileInspected") is True
+        and review.get("status") == "meets_human_criteria"
+        and all(
+            isinstance(review.get(key), int) and 4 <= review[key] <= 5
+            for key in ("clarity", "rhythm", "continuity", "finish")
+        )
+    )
+
+
+def review_comparison(db, workspace_id, campaign_id, session_id, request, user):
+    lock_editing_budget(db, workspace_id)
+    campaign = _campaign(db, workspace_id, campaign_id)
+    session = campaign["sessions"].get(session_id)
+    if not session:
+        raise ValueError("engine_comparison_not_found")
+    _fresh_session(db, workspace_id, campaign, session)
+    if request.preferred_label not in session["variants"]:
+        raise ValueError("engine_comparison_label_invalid")
+    selected = _reference(
+        db,
+        workspace_id,
+        EngineRenderReferenceV1.model_validate(session["variants"][request.preferred_label]["reference"]),
+    )
+    inspected = request.full_video_inspected and request.mobile_inspected and request.blind_review_completed
+    inspected = inspected and not request.unrecorded_manual_corrections
+    if not inspected:
+        status = "pending"
+    elif session["mode"] == "technical_fidelity":
+        status = "passed" if request.technical_fidelity_confirmed else "reviewed"
+    elif selected["provider"] != NAME:
+        status = "rejected"
+    elif not _visual_approved(selected) or not request.control_simplicity_confirmed:
+        status = "pending"
+    elif session["language"] == "action_product" and (request.action_seconds is None or request.action_seconds < 8):
+        status = "pending"
+    else:
+        status = "passed"
+    return _record(
+        db,
+        workspace_id,
+        campaign_id,
+        user,
+        "comparison_reviewed",
+        {
+            **request.model_dump(mode="json", by_alias=True),
+            "sessionId": session_id,
+            "status": status,
+            "reviewedBy": user.id,
+            "evidenceLevel": "human_attested_full_playback_and_blind_preference",
+        },
+    )
+
+
+def register_trial(db, workspace_id, campaign_id, request, user):
+    lock_editing_budget(db, workspace_id)
+    campaign = _campaign(db, workspace_id, campaign_id)
+    case = campaign["cases"].get(request.language)
+    job = db.get(StudioGenerationJob, request.job_id)
+    if not case or not job or job.workspace_id != workspace_id or job.provider != NAME:
+        raise ValueError("engine_trial_scope_invalid")
+    snapshot = job.request_payload.get("documentSnapshot") or {}
+    if digest(snapshot.get("brief", {})) != case["briefDigest"]:
+        raise ValueError("engine_trial_brief_mismatch")
+    sources = {a["id"]: a.get("checksum") for a in snapshot.get("assets", []) if a.get("checksum")}
+    if digest(sources) != case["sourceDigest"]:
+        raise ValueError("engine_trial_materials_mismatch")
+    if job.id in campaign["trials"]:
+        return campaign_projection(db, workspace_id, campaign_id)
+    if job.status != "queued" or job.attempts != 0:
+        raise ValueError("engine_trial_must_be_registered_before_execution")
+    validate_trial_intent(db, workspace_id, campaign_id, request.language, snapshot)
+    _record(
+        db,
+        workspace_id,
+        campaign_id,
+        user,
+        "trial_registered",
+        {
+            **request.model_dump(mode="json", by_alias=True),
+            "caseDigest": digest(case),
+        },
+    )
+    return campaign_projection(db, workspace_id, campaign_id)
+
+
+def validate_trial_intent(db, workspace_id, campaign_id, language, document):
+    campaign = _campaign(db, workspace_id, campaign_id)
+    case = campaign["cases"].get(language)
+    if not case:
+        raise ValueError("engine_case_required")
+    snapshot = document.model_dump(mode="json", by_alias=True) if hasattr(document, "model_dump") else document
+    if digest(snapshot.get("brief", {})) != case["briefDigest"]:
+        raise ValueError("engine_trial_brief_mismatch")
+    sources = {a["id"]: a.get("checksum") for a in snapshot.get("assets", []) if a.get("checksum")}
+    if digest(sources) != case["sourceDigest"]:
+        raise ValueError("engine_trial_materials_mismatch")
+    count = sum(
+        trial["language"] == language and trial["caseDigest"] == digest(case) for trial in campaign["trials"].values()
+    )
+    if count >= 10:
+        raise ValueError("engine_language_trial_limit_reached")
+
+
+def campaign_projection(db, workspace_id, campaign_id):
+    campaign = _campaign(db, workspace_id, campaign_id)
+    availability = engine_capabilities()["engines"][-1]
+    cases = []
+    for language in CASE_LANGUAGES:
+        case = campaign["cases"].get(language)
+        blockers = []
+        if not case:
+            blockers.append("case_document_missing")
+        else:
+            try:
+                _, contract = _document(db, workspace_id, case["documentId"], case["expectedDocumentRevision"])
+                if _brief(contract) != case["briefDigest"] or digest(_sources(contract)) != case["sourceDigest"]:
+                    blockers.append("case_snapshot_changed")
+                if not case["sourceManifest"]:
+                    blockers.append("case_materials_missing")
+                for ref in contract.assets:
+                    source = db.get(LibraryAsset, ref.id)
+                    if (
+                        not source
+                        or source.workspace_id != workspace_id
+                        or source.lifecycle_status != "active"
+                        or ref.rights_status != "verified"
+                        or not ref.checksum
+                        or source.checksum_sha256 != ref.checksum
+                    ):
+                        blockers.append("case_materials_unverified_or_changed")
+                        break
+            except ValueError as exc:
+                blockers.append(str(exc))
+        sessions = [
+            comparison_projection(db, workspace_id, campaign_id, sid)
+            for sid, session in campaign["sessions"].items()
+            if session["language"] == language
+        ]
+        preferred = any(session["mode"] == "editorial_result" and session["status"] == "passed" for session in sessions)
+        faithful = any(
+            session["mode"] == "technical_fidelity" and session["status"] == "passed" for session in sessions
+        )
+        cases.append(
+            {
+                "language": language,
+                "documentId": case.get("documentId") if case else None,
+                "status": "pending" if blockers else "bound",
+                "blockers": blockers,
+                "visualStatus": "approved" if preferred else "not_assessed",
+                "fidelityStatus": "passed" if faithful else "pending",
+                "sessions": sessions,
+            }
+        )
+    successes, durations, counts, profiles = [], [], {language: 0 for language in CASE_LANGUAGES}, set()
+    failed = 0
+    for job_id, trial in campaign["trials"].items():
+        job = db.get(StudioGenerationJob, job_id)
+        case = campaign["cases"].get(trial["language"])
+        if not job or job.workspace_id != workspace_id or trial["caseDigest"] != digest(case):
+            continue
+        counts[trial["language"]] += 1
+        if job.status == "succeeded":
+            artifact = (job.result_payload or {}).get("artifact") or {}
+            try:
+                variant = _reference(
+                    db,
+                    workspace_id,
+                    EngineRenderReferenceV1(
+                        document_id=job.document_id,
+                        document_revision=job.request_payload["documentSnapshot"]["revision"],
+                        asset_id=artifact["assetId"],
+                        checksum=artifact["checksumSha256"],
+                    ),
+                )
+                receipt = variant["receipt"]
+                if (
+                    variant["provider"] != NAME
+                    or receipt.get("jobId") != job.id
+                    or (receipt.get("evidenceKind"), receipt.get("executionMode", "physical_android_ui")) not in {
+                        ("real_device", "physical_android_ui"), ("real_emulator", "android_emulator_ui"),
+                    }
+                    or receipt.get("manualInterventions") != []
+                    or receipt.get("watermarkVerifiedAbsent") is not True
+                    or not receipt.get("profileSha256")
+                    or not receipt.get("packageDigest")
+                    or receipt.get("finalVideoSha256") != variant["reference"]["checksum"]
+                ):
+                    continue
+                successes.append(job.id)
+                if job.started_at and job.finished_at and job.finished_at >= job.started_at:
+                    durations.append(round((job.finished_at - job.started_at).total_seconds() * 1000))
+                profiles.add(receipt["profileSha256"])
+            except (ValueError, KeyError, TypeError):
+                continue
+        elif job.status == "failed":
+            failed += 1
+    p95 = sorted(durations)[math.ceil(len(durations) * 0.95) - 1] if durations else None
+    autonomous = len(successes) >= 29 and sum(counts.values()) >= 30 and all(v >= 10 for v in counts.values())
+    autonomous = (
+        autonomous
+        and profiles == {availability.get("profileSha256")}
+        and len(durations) == len(successes)
+        and p95 is not None
+        and p95 <= 600000
+    )
+    # Failure recovery and cross-job integrity need real evidence, not a success count.
+    real_receipts = []
+    for job_id in successes:
+        job = db.get(StudioGenerationJob, job_id)
+        asset = db.get(LibraryAsset, job.result_payload["artifact"]["assetId"])
+        real_receipts.append(asset.object_metadata["contextualEditing"]["rendererChecks"]["graphics"]["alightReceipt"])
+    recovered = any(receipt.get("transientRecoveryVerified") is True for receipt in real_receipts)
+    integrity = bool(real_receipts) and all(
+        receipt.get("crossJobIntegrityVerified") is True for receipt in real_receipts
+    )
+    autonomous = autonomous and recovered and integrity
+    visual = all(case["visualStatus"] == "approved" and not case["blockers"] for case in cases)
+    technical = len(successes) >= 29 and all(
+        case["fidelityStatus"] == "passed" and not case["blockers"] for case in cases
+    )
+    return {key: value for key, value in campaign.items() if key not in {"cases", "sessions", "trials"}} | {
+        "cases": cases,
+        "availability": availability,
+        "apiBudget": _shared_budget(db),
+        "technicalStatus": "passed" if technical else "pending",
+        "visualStatus": "approved" if visual else "not_assessed",
+        "autonomyStatus": "demonstrated" if autonomous else "pending",
+        "promotionStatus": "eligible"
+        if technical and autonomous and visual and availability["available"]
+        else "pending",
+        "defaultEngineChanged": bool(
+            campaign.get("promotion")
+            and technical
+            and autonomous
+            and visual
+            and campaign["promotion"]["profileSha256"] == availability.get("profileSha256")
+        ),
+        "trials": {
+            "registered": sum(counts.values()),
+            "completedAutomatically": len(successes),
+            "failed": failed,
+            "perLanguage": counts,
+            "p95Ms": p95,
+            "recoveryVerified": recovered,
+            "integrityVerified": integrity,
+        },
+    }
+
+
+def list_campaigns(db, workspace_id):
+    ids = db.scalars(
+        select(StudioDomainEvent.aggregate_id)
+        .where(StudioDomainEvent.workspace_id == workspace_id, StudioDomainEvent.event_type == PREFIX + "created")
+        .order_by(StudioDomainEvent.occurred_at.desc())
+        .limit(30)
+    ).all()
+    return [campaign_projection(db, workspace_id, identifier) for identifier in ids]
+
+
+def promote_campaign(db, workspace_id, campaign_id, user):
+    lock_editing_budget(db, workspace_id)
+    state = campaign_projection(db, workspace_id, campaign_id)
+    if state["promotionStatus"] != "eligible":
+        raise ValueError("engine_promotion_evidence_pending")
+    _record(
+        db,
+        workspace_id,
+        campaign_id,
+        user,
+        "promoted",
+        {
+            "at": datetime.now(UTC).isoformat(),
+            "provider": NAME,
+            "profileSha256": state["availability"]["profileSha256"],
+            "languages": list(CASE_LANGUAGES),
+            "existingDocumentsChanged": False,
+        },
+    )
+    return campaign_projection(db, workspace_id, campaign_id)
+
+
+def default_engine_for_new_document(db, record, language, user):
+    if not language or not get_settings().studio_alight_motion_enabled:
+        return None
+    member = db.scalar(
+        select(Membership).where(Membership.workspace_id == record.workspace_id, Membership.user_id == user.id)
+    )
+    if not member or member.role.lower() not in {"owner", "admin"}:
+        return None
+    if record_to_contract(record).composition.narrative.get("editorialV2"):
+        return None
+    for state in list_campaigns(db, record.workspace_id):
+        promotion = state.get("promotion")
+        if not promotion or not state["defaultEngineChanged"] or language not in promotion["languages"]:
+            continue
+        created = record.created_at.replace(tzinfo=UTC) if record.created_at.tzinfo is None else record.created_at
+        if created > datetime.fromisoformat(promotion["at"]):
+            return NAME
+    return None
+
+
+def comparison_candidates(db, workspace_id, campaign_id, language):
+    campaign = _campaign(db, workspace_id, campaign_id)
+    case = campaign["cases"].get(language)
+    if not case:
+        return []
+    records = db.scalars(
+        select(LibraryAsset)
+        .where(
+            LibraryAsset.workspace_id == workspace_id,
+            LibraryAsset.lifecycle_status == "active",
+            LibraryAsset.media_type == "video/mp4",
+        )
+        .order_by(LibraryAsset.created_at.desc())
+        .limit(100)
+    ).all()
+    result = []
+    for asset in records:
+        meta = asset.object_metadata or {}
+        try:
+            reference = EngineRenderReferenceV1(
+                document_id=meta["documentId"],
+                document_revision=meta["documentRevision"],
+                asset_id=asset.id,
+                checksum=asset.checksum_sha256,
+            )
+            variant = _reference(db, workspace_id, reference)
+            if variant["briefDigest"] == case["briefDigest"] and variant["sourceDigest"] == case["sourceDigest"]:
+                document = db.get(CreativeDocument, reference.document_id)
+                result.append(
+                    {
+                        "reference": reference.model_dump(mode="json", by_alias=True),
+                        "provider": variant["provider"],
+                        "title": document.title,
+                        "visualApproved": _visual_approved(variant),
+                    }
+                )
+        except (ValueError, KeyError):
+            continue
+    return result

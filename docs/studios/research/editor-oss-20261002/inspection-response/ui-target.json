@@ -1,0 +1,13 @@
+{
+  "documentId": "0ae12fe1-c3aa-4f42-a764-33d076ade8cd",
+  "revision": 2,
+  "layerId": "ed2-895c9ff7a0a9ce1cb92ec080",
+  "name": "title",
+  "interval": {
+    "startFrame": 0,
+    "durationFrames": 450,
+    "fps": 30.0,
+    "reveal": "none",
+    "revealFrames": 12
+  }
+}

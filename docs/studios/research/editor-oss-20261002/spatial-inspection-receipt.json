@@ -1,0 +1,225 @@
+{
+  "schemaVersion": "res.spatial-inspection-receipt.v1",
+  "generatedAt": "2026-10-03T19:51:07.333418+00:00",
+  "sources": {
+    "src/studios/EditorInspectionPanel.tsx": "4affbab9cc3db57c7eed800bbbae378a20ec97c65f698c7d29554986f7c217b3",
+    "scripts/validation/editor-spatial-inspection-fixture.py": "2f32ec2d77b9536995a9a809038757c936f2d2aff5c6a0f07bd6568c849e75ea",
+    "scripts/validation/editor-spatial-inspection-receipt.py": "6ae5f439eaea70e6cbcf73859ce4c002dd28adb7d5ed8bbd1347366d13bf7999"
+  },
+  "sourceDrift": false,
+  "nativeRendererDrift": false,
+  "runtimeOrigin": {
+    "scope": "same_application_source_isolated_frontend_same_existing_API",
+    "frontend": "http://127.0.0.1:3317",
+    "api": "http://127.0.0.1:8000",
+    "frontendPID": 28536,
+    "sharedProcessesStopped": false,
+    "uiAPIMocked": false,
+    "reason": "shared development HMR repeatedly reloaded page while evidence was written",
+    "sources": {
+      "src/studios/EditorInspectionPanel.tsx": "4affbab9cc3db57c7eed800bbbae378a20ec97c65f698c7d29554986f7c217b3",
+      "src/studios/editor-inspection.css": "71cf702800fcb35a9af8d1d13ea45385c320cf4b7f0013d42ff9a51b3bfb9e0f",
+      "server.ts": "ec9a62fe142a349bb7fb623fa85ab5efc337677f8e5a2ad03d03a6671b6e7721",
+      "vite.config.ts": "7bb8fd3ccd982a1421369e4c7a6a9bae9e25df9ae4d0add6eebff0f79a2fc500",
+      "src/studios/useVideoStudio.ts": "bcd4dbbadc3990fef94498cef83a4a87ce0d17d001e6188e565d1b5447a6d857",
+      "backend/app/services/studios/editor_commands.py": "66942b682f2ddd7534d78c9274d885b1ba410a6b5eecff90191464f68c56bf60"
+    }
+  },
+  "typescript": {
+    "command": "npm run lint (tsc --noEmit)",
+    "exitCode": 0,
+    "evidenceBasis": "Actual completed tool session 73508 in this goal increment; recorded after completion",
+    "uiSourceSha256": "4affbab9cc3db57c7eed800bbbae378a20ec97c65f698c7d29554986f7c217b3"
+  },
+  "documentId": "34db527a-5b46-48a2-87e6-5e187bb5706f",
+  "revisions": [
+    2,
+    3
+  ],
+  "commandId": "9dcb5e69-cae1-417c-a7a4-c21fc3da204f",
+  "uiObservations": 12,
+  "requiredObservations": [
+    "animated-center-0",
+    "animated-center-1",
+    "animated-center-4",
+    "combo-static",
+    "edited-revision3-stale-render",
+    "isolated-render-revision2",
+    "transparent-shadow",
+    "visible-animated-revision3-frame4",
+    "visible-render-revision3-combo"
+  ],
+  "renders": [
+    {
+      "revision": 2,
+      "jobId": "d52e8e0d-55b0-4bd1-8aa6-8b47c1437ce5",
+      "checksum": "7aa65337b026adb24884f9e19178a59004f6924de44b800f2579239947bdf6a8",
+      "quality": "draft",
+      "qc": "passed",
+      "renderDurationMs": 14266,
+      "geometryXAtFrame0": 32
+    },
+    {
+      "revision": 3,
+      "jobId": "29ee062f-c760-4357-acaa-6c642013d3b9",
+      "checksum": "c3434e6e9e938ac9246fd9cbf22372a4f83026a21862421be59d3df83956a9a4",
+      "quality": "draft",
+      "qc": "passed",
+      "renderDurationMs": 12984,
+      "geometryXAtFrame0": 36
+    }
+  ],
+  "pixelProbes": [
+    {
+      "revision": 2,
+      "frame": 0,
+      "x": 34,
+      "y": 54,
+      "rgb": [
+        255,
+        255,
+        255
+      ],
+      "expected": "white"
+    },
+    {
+      "revision": 2,
+      "frame": 0,
+      "x": 38,
+      "y": 54,
+      "rgb": [
+        255,
+        255,
+        255
+      ],
+      "expected": "white"
+    },
+    {
+      "revision": 2,
+      "frame": 0,
+      "x": 90,
+      "y": 54,
+      "rgb": [
+        0,
+        0,
+        0
+      ],
+      "expected": "black"
+    },
+    {
+      "revision": 2,
+      "frame": 29,
+      "x": 34,
+      "y": 54,
+      "rgb": [
+        255,
+        255,
+        255
+      ],
+      "expected": "white"
+    },
+    {
+      "revision": 2,
+      "frame": 29,
+      "x": 38,
+      "y": 54,
+      "rgb": [
+        255,
+        255,
+        255
+      ],
+      "expected": "white"
+    },
+    {
+      "revision": 2,
+      "frame": 29,
+      "x": 90,
+      "y": 54,
+      "rgb": [
+        0,
+        0,
+        0
+      ],
+      "expected": "black"
+    },
+    {
+      "revision": 3,
+      "frame": 0,
+      "x": 34,
+      "y": 54,
+      "rgb": [
+        2,
+        2,
+        2
+      ],
+      "expected": "black"
+    },
+    {
+      "revision": 3,
+      "frame": 0,
+      "x": 38,
+      "y": 54,
+      "rgb": [
+        253,
+        253,
+        253
+      ],
+      "expected": "white"
+    },
+    {
+      "revision": 3,
+      "frame": 0,
+      "x": 90,
+      "y": 54,
+      "rgb": [
+        255,
+        255,
+        255
+      ],
+      "expected": "white"
+    },
+    {
+      "revision": 3,
+      "frame": 29,
+      "x": 34,
+      "y": 54,
+      "rgb": [
+        255,
+        255,
+        255
+      ],
+      "expected": "white"
+    },
+    {
+      "revision": 3,
+      "frame": 29,
+      "x": 38,
+      "y": 54,
+      "rgb": [
+        255,
+        255,
+        255
+      ],
+      "expected": "white"
+    },
+    {
+      "revision": 3,
+      "frame": 29,
+      "x": 90,
+      "y": 54,
+      "rgb": [
+        9,
+        9,
+        9
+      ],
+      "expected": "black"
+    }
+  ],
+  "humanReview": "pending",
+  "scope": "Actual UI normal login and command, existing API pipeline, two draft MP4s; no mocks",
+  "limitations": [
+    "Pixel probes verify revision movement; not a new Gaussian qualification",
+    "Material preview/canvas in VideoStudio is not the rendered composition preview",
+    "Commercial human comparison and three fresh autonomy briefs remain pending"
+  ]
+}

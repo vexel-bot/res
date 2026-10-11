@@ -1,0 +1,10 @@
+{
+  "providerVersion": "4.0.527-native.12",
+  "sources": {
+    "workers/remotion-benchmark/src/asset-matte.tsx": "cd677bcd2ac449c7572b4d6328bc11f968e4df2997bb9bc72d6fddb8ed622517",
+    "workers/remotion-benchmark/src/hybrid.tsx": "3e158b300bacc4a1ce5859ce2e8c3b5ab53f561096dda3e7fd5a76a430a3c06c",
+    "backend/app/domain/studios/temporal_exposure.py": "d9b28d5f3f71c72e05e77e4de3a3659c98b756c4f99f2cfbf64d26a445caeb69",
+    "backend/app/providers/studios/remotion_render.py": "7a0674b32328ba307d8878d87ee1ae806265b18de517d91455d57488c549e3b2",
+    "backend/tests/test_temporal_matte_render.py": "33d6c7d49cd3d153baecb2a78900c464343b2939697b3a479e8269349d59a57c"
+  }
+}

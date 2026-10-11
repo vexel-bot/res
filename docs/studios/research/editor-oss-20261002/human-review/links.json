@@ -1,0 +1,93 @@
+{
+  "scope": "Label-only aliases of nine original rendered studies; NTFS hard links, no media copies or new renders",
+  "comparisons": {
+    "organization": {
+      "A": {
+        "path": "C:\\Users\\edugu\\Downloads\\res\\docs\\studios\\research\\editor-oss-20261002\\human-review\\organization\\A.mp4",
+        "source": "C:\\Users\\edugu\\Downloads\\res\\output\\visual-directed-native14-20261004\\organization-b.mp4",
+        "documentId": "7b8b9df1-7bd5-4f71-b2e3-3c9a8f0629f5",
+        "sha256": "7f3a7c3a7fac037dcde962c98e5dc4279efeb5fa81d27dfd5cce2fd699933cf8",
+        "bytes": 596336,
+        "sameFileIdentity": true,
+        "linkCount": 3
+      },
+      "B": {
+        "path": "C:\\Users\\edugu\\Downloads\\res\\docs\\studios\\research\\editor-oss-20261002\\human-review\\organization\\B.mp4",
+        "source": "C:\\Users\\edugu\\Downloads\\res\\output\\visual-directed-native14-20261004\\organization-a.mp4",
+        "documentId": "79f5a459-8278-4331-af17-60f41e042480",
+        "sha256": "f2eae2907b62bebd648a5142e851de6253f367594b7f68e5a06a224be8687d63",
+        "bytes": 591346,
+        "sameFileIdentity": true,
+        "linkCount": 3
+      },
+      "C": {
+        "path": "C:\\Users\\edugu\\Downloads\\res\\docs\\studios\\research\\editor-oss-20261002\\human-review\\organization\\C.mp4",
+        "source": "C:\\Users\\edugu\\Downloads\\res\\output\\visual-directed-native14-20261004\\organization-control.mp4",
+        "documentId": "d4685b9d-f0d1-459c-91c8-8535ce2e588e",
+        "sha256": "8934f4a1274d422c98e9c9d9d4f776110f25ac31ce246bdec1a660b830d29d44",
+        "bytes": 276976,
+        "sameFileIdentity": true,
+        "linkCount": 3
+      }
+    },
+    "comparison": {
+      "A": {
+        "path": "C:\\Users\\edugu\\Downloads\\res\\docs\\studios\\research\\editor-oss-20261002\\human-review\\comparison\\A.mp4",
+        "source": "C:\\Users\\edugu\\Downloads\\res\\output\\visual-directed-native14-20261004\\comparison-a.mp4",
+        "documentId": "377a8aa0-598c-44ca-aa71-a675133b5df6",
+        "sha256": "409f0916ab33a58241b1deed17848e09e87e544399261978cdf141e6527d2a4a",
+        "bytes": 624796,
+        "sameFileIdentity": true,
+        "linkCount": 3
+      },
+      "B": {
+        "path": "C:\\Users\\edugu\\Downloads\\res\\docs\\studios\\research\\editor-oss-20261002\\human-review\\comparison\\B.mp4",
+        "source": "C:\\Users\\edugu\\Downloads\\res\\output\\visual-directed-native14-20261004\\comparison-control.mp4",
+        "documentId": "7bb3cf87-c2c3-4a56-bd3d-d2d79447c457",
+        "sha256": "25010327326a4245468b1c996122615db7b3ac60b4a906611ae554d4f01614c1",
+        "bytes": 295904,
+        "sameFileIdentity": true,
+        "linkCount": 3
+      },
+      "C": {
+        "path": "C:\\Users\\edugu\\Downloads\\res\\docs\\studios\\research\\editor-oss-20261002\\human-review\\comparison\\C.mp4",
+        "source": "C:\\Users\\edugu\\Downloads\\res\\output\\visual-directed-native14-20261004\\comparison-b.mp4",
+        "documentId": "dceb53fc-7f7c-481e-b073-999ec21ee94d",
+        "sha256": "b7eca6bcf9188ef05c5bd1e92c8c63fd74b259db5c43e5c7140772a8817ee04d",
+        "bytes": 630038,
+        "sameFileIdentity": true,
+        "linkCount": 3
+      }
+    },
+    "interface": {
+      "A": {
+        "path": "C:\\Users\\edugu\\Downloads\\res\\docs\\studios\\research\\editor-oss-20261002\\human-review\\interface\\A.mp4",
+        "source": "C:\\Users\\edugu\\Downloads\\res\\output\\visual-directed-native14-20261004\\interface-control.mp4",
+        "documentId": "30a9b1dc-f0a8-4431-af03-569319298246",
+        "sha256": "f64a30a01174c0eb05200fe8a4e66dc8632097050278b662f688ecb6933f0ced",
+        "bytes": 1987066,
+        "sameFileIdentity": true,
+        "linkCount": 3
+      },
+      "B": {
+        "path": "C:\\Users\\edugu\\Downloads\\res\\docs\\studios\\research\\editor-oss-20261002\\human-review\\interface\\B.mp4",
+        "source": "C:\\Users\\edugu\\Downloads\\res\\output\\visual-directed-native14-20261004\\interface-a.mp4",
+        "documentId": "0ae12fe1-c3aa-4f42-a764-33d076ade8cd",
+        "sha256": "1b856b62acb23b07d488c1c6f9582af75fa5cf074f49c465cdab0a40d6943925",
+        "bytes": 2635718,
+        "sameFileIdentity": true,
+        "linkCount": 3
+      },
+      "C": {
+        "path": "C:\\Users\\edugu\\Downloads\\res\\docs\\studios\\research\\editor-oss-20261002\\human-review\\interface\\C.mp4",
+        "source": "C:\\Users\\edugu\\Downloads\\res\\output\\visual-directed-native14-20261004\\interface-b.mp4",
+        "documentId": "7fb69e28-6649-4f82-b533-01ac293ae544",
+        "sha256": "7002cbf41c552c2f30aabfa2ee7bfa160e373404e6495fc9f1b9449fa185173f",
+        "bytes": 2544413,
+        "sameFileIdentity": true,
+        "linkCount": 3
+      }
+    }
+  },
+  "humanReview": "not_assessed"
+}

@@ -1,0 +1,33 @@
+{
+  "schemaVersion": "res.editor-oss-render-diagnostic.v1",
+  "date": "2026-10-02",
+  "worker": "workers/remotion-benchmark/render-hybrid.mjs",
+  "workerSha256": "755dd1cb4272923d8e6a3087be018b8b2d92c37e95a33df9e4c811cec7c6cad5",
+  "runtimeSha256": "09416f6c85bb060a0a65d2171ad56c0ad63420f3315d4389130fff98674b4bf7",
+  "hashSnapshotMeaning": "Worker/runtime hashes collected after the failed run; another session was editing shared files, so these alone do not attest every byte executed in that run.",
+  "originalManifestSha256": "f1977e6e7e7e26363d89854af0fa9fa820f9ebd1abafe2366ac168928dc72d08",
+  "retainedSyntheticMedia": {
+    "path": "diagnostic/source24.mp4",
+    "sha256": "b178da1db5208e78130adcff187b6513dfb1a5005f9c7a8575218bea5263a65d",
+    "bytes": 6374
+  },
+  "retainedLog": {
+    "path": "diagnostic/worker.log",
+    "sha256": "6db975b5a6477cb38d613fced151de5d391a7026b8d21ab01b68ffc5784c6ec1"
+  },
+  "workerExitCode": 1,
+  "error": "Compositor error: No frame found at position 23757",
+  "compositionFrame": 14,
+  "observedSourceTimeSeconds": 1.9333333333333333,
+  "underlyingCause": "unconfirmed",
+  "approvedOutput": false,
+  "apiRegression": "heavy_media_execution_in_progress; job retrying",
+  "observedLease": {
+    "operation": "video_render",
+    "pid": 9420,
+    "processExistsViaWin32Process": true,
+    "removedOrInterrupted": false
+  },
+  "rerunRequirement": "Wait for the current heavy-media owner to finish; use the existing lease boundary. Do not bypass the lease or terminate its owner.",
+  "manifestPortability": "The original manifest deliberately retains its original pytest media path; for a rerun rebind assetFiles.footage.path to diagnostic/source24.mp4, verify its checksum and save the new manifest hash."
+}

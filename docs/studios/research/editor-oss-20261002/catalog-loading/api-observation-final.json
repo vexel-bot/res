@@ -1,0 +1,36 @@
+{
+  "observedAt": "2026-10-05T21:41:01.937504+00:00",
+  "scope": "Three sequential real API requests; resource/quality full response equality, 46 catalog rows, full font detail",
+  "timings": {
+    "catalog": {
+      "elapsedMs": 4261.237300001085,
+      "bytes": 34200,
+      "status": 200,
+      "canonicalDigest": "127b494271e34279ef28b37da485fb3bf374d909f77029794df784c74c0b406e"
+    },
+    "resources": {
+      "elapsedMs": 3454.418400011491,
+      "bytes": 16700,
+      "status": 200,
+      "canonicalDigest": "787fa106427322c8d9281d09f44614623b029dc72a76e05afa1a3365126d1141",
+      "equalsPreviousFullApiProjection": true
+    },
+    "quality": {
+      "elapsedMs": 3592.0965999830514,
+      "bytes": 24195,
+      "status": 200,
+      "canonicalDigest": "b6fd6b83b6cc2dd4e0db3d2507fbaf8adc90233f8603d742473db8f2dc675cf2",
+      "equalsPreviousFullApiProjection": true
+    }
+  },
+  "catalogRows": 46,
+  "nonMetadataFieldsAndSourceIdEqual": true,
+  "fullFontDetailEqual": true,
+  "noNewGenerationOrPaidCalls": true,
+  "limits": [
+    "One sample per endpoint, sequential, not p95 or controlled speedup experiment",
+    "Full old asset bulk response not downloaded again; source/tests preserve that route",
+    "Catalog shape checked against scalar view plus unchanged original serializer",
+    "Sparse metadata optimization is SQLite-specific; other dialects use original ORM reads"
+  ]
+}

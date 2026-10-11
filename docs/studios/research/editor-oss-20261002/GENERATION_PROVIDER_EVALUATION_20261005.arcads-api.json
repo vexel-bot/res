@@ -1,0 +1,315 @@
+{
+  "url": "https://external-api.arcads.ai/docs",
+  "status": 200,
+  "sha256": "de97dfe50a7efba43701d1687f83494851e9df54bdc4b008963e7410c8532c92",
+  "bytes": 276212,
+  "scope": "Public docs only; no credentials or API operation",
+  "info": {
+    "title": "Arcads' external API",
+    "description": "",
+    "version": "1.0",
+    "contact": {}
+  },
+  "operations": [
+    {
+      "path": "/v2/images/generate",
+      "method": "post",
+      "summary": "Trigger image generation",
+      "security": [
+        {
+          "basic": []
+        }
+      ]
+    },
+    {
+      "path": "/v2/videos/generate",
+      "method": "post",
+      "summary": "Trigger video generation",
+      "security": [
+        {
+          "basic": []
+        }
+      ]
+    },
+    {
+      "path": "/v1/presets/camera-movement/generate",
+      "method": "post",
+      "summary": "Trigger Camera Movement preset generation",
+      "security": [
+        {
+          "basic": []
+        }
+      ]
+    },
+    {
+      "path": "/v1/presets/gestures/generate",
+      "method": "post",
+      "summary": "Trigger Gestures preset generation",
+      "security": [
+        {
+          "basic": []
+        }
+      ]
+    },
+    {
+      "path": "/v1/presets/showyourapp/generate",
+      "method": "post",
+      "summary": "Trigger Showyourapp preset generation",
+      "security": [
+        {
+          "basic": []
+        }
+      ]
+    },
+    {
+      "path": "/v1/presets/unboxing-pov/generate",
+      "method": "post",
+      "summary": "Trigger Unboxing POV preset generation",
+      "security": [
+        {
+          "basic": []
+        }
+      ]
+    },
+    {
+      "path": "/v1/presets/gameplay-ad/generate",
+      "method": "post",
+      "summary": "Trigger Gameplay Ad preset generation",
+      "security": [
+        {
+          "basic": []
+        }
+      ]
+    },
+    {
+      "path": "/v1/actors",
+      "method": "get",
+      "summary": "Get paginated actors w/ filters",
+      "security": [
+        {
+          "basic": []
+        }
+      ]
+    },
+    {
+      "path": "/v1/actors/{actorId}/situations",
+      "method": "get",
+      "summary": "Get all situations for given actor",
+      "security": [
+        {
+          "basic": []
+        }
+      ]
+    },
+    {
+      "path": "/v1/scripts/{scriptId}/videos",
+      "method": "get",
+      "summary": "Get videos for given script",
+      "security": [
+        {
+          "basic": []
+        }
+      ]
+    },
+    {
+      "path": "/v1/scripts/{scriptId}/generate",
+      "method": "post",
+      "summary": "Trigger videos generation for the given script",
+      "security": [
+        {
+          "basic": []
+        }
+      ]
+    },
+    {
+      "path": "/v1/scripts/{scriptId}/generate-omnihuman",
+      "method": "post",
+      "summary": "Trigger omnihuman generation for the given script",
+      "security": [
+        {
+          "basic": []
+        }
+      ]
+    },
+    {
+      "path": "/v1/videos",
+      "method": "get",
+      "summary": "List videos for your workspace",
+      "security": [
+        {
+          "basic": []
+        }
+      ]
+    },
+    {
+      "path": "/v1/videos",
+      "method": "post",
+      "summary": "Create new video for given script",
+      "security": [
+        {
+          "basic": []
+        }
+      ]
+    },
+    {
+      "path": "/v1/videos/{videoId}",
+      "method": "get",
+      "summary": "Get video by ID",
+      "security": [
+        {
+          "basic": []
+        }
+      ]
+    },
+    {
+      "path": "/v1/videos/{videoId}",
+      "method": "put",
+      "summary": "Update video with given ID",
+      "security": [
+        {
+          "basic": []
+        }
+      ]
+    },
+    {
+      "path": "/v1/videos/{videoId}",
+      "method": "delete",
+      "summary": "Delete video by ID",
+      "security": [
+        {
+          "basic": []
+        }
+      ]
+    },
+    {
+      "path": "/v1/videos/{videoId}/watch",
+      "method": "get",
+      "summary": "Get video watch link",
+      "security": [
+        {
+          "basic": []
+        }
+      ]
+    },
+    {
+      "path": "/v1/assets/{id}",
+      "method": "get",
+      "summary": "Get a video asset by ID",
+      "security": [
+        {
+          "basic": []
+        }
+      ]
+    },
+    {
+      "path": "/v1/audio-driven",
+      "method": "post",
+      "summary": "Trigger Audio driven generation",
+      "security": [
+        {
+          "basic": []
+        }
+      ]
+    },
+    {
+      "path": "/v1/b-roll",
+      "method": "post",
+      "summary": "Create a B-roll video asset",
+      "security": [
+        {
+          "basic": []
+        }
+      ]
+    },
+    {
+      "path": "/v1/omnihuman",
+      "method": "post",
+      "summary": "Trigger Omnihuman generation",
+      "security": [
+        {
+          "basic": []
+        }
+      ]
+    },
+    {
+      "path": "/v1/scene",
+      "method": "post",
+      "summary": "Create a scene video asset",
+      "security": [
+        {
+          "basic": []
+        }
+      ]
+    },
+    {
+      "path": "/v1/workflows/notion/generate-video-from-script-template",
+      "method": "post",
+      "summary": null,
+      "security": [
+        {
+          "basic": []
+        }
+      ]
+    },
+    {
+      "path": "/v1/omni-flash/generate/video",
+      "method": "post",
+      "summary": "Trigger Gemini Omni Flash video generation or editing",
+      "security": [
+        {
+          "basic": []
+        }
+      ]
+    },
+    {
+      "path": "/v2/talking-actors/generate",
+      "method": "post",
+      "summary": "Generate talking actor videos",
+      "security": [
+        {
+          "basic": []
+        }
+      ]
+    },
+    {
+      "path": "/v2/talking-actors/{id}",
+      "method": "get",
+      "summary": "Get talking actor generation status",
+      "security": [
+        {
+          "basic": []
+        }
+      ]
+    },
+    {
+      "path": "/v2/talking-actors/{id}/watch",
+      "method": "get",
+      "summary": "Get talking actor watch URL",
+      "security": [
+        {
+          "basic": []
+        }
+      ]
+    },
+    {
+      "path": "/v1/veo31/generate/video",
+      "method": "post",
+      "summary": "Trigger Veo31 text-to-video generation",
+      "security": [
+        {
+          "basic": []
+        }
+      ]
+    },
+    {
+      "path": "/v1/credits",
+      "method": "get",
+      "summary": "Get the workspace's credit balance and what MCP spent this period",
+      "security": [
+        {
+          "basic": []
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "schemaVersion": "res.editor-oss-cleanup.v1",
+  "date": "2026-10-02",
+  "rootsValidated": [
+    "C:\\Users\\edugu\\Downloads\\res\\tmp\\editor-oss-study-20261002",
+    "C:\\Users\\edugu\\Downloads\\res\\tmp\\editor-oss-render-diagnostic-20261002"
+  ],
+  "repositories": [
+    {
+      "name": "motion-canvas",
+      "path": "C:\\Users\\edugu\\Downloads\\res\\tmp\\editor-oss-study-20261002\\motion-canvas",
+      "commit": "7b91435c301d530351dcf5ebb91dd139c002e405",
+      "logicalFileBytes": 336073.0,
+      "files": 44
+    },
+    {
+      "name": "glaxnimate",
+      "path": "C:\\Users\\edugu\\Downloads\\res\\tmp\\editor-oss-study-20261002\\glaxnimate",
+      "commit": "643e99cd81161de4f1b235c7817f0b4e9b08a9f4",
+      "logicalFileBytes": 281777.0,
+      "files": 50
+    },
+    {
+      "name": "opentimelineio",
+      "path": "C:\\Users\\edugu\\Downloads\\res\\tmp\\editor-oss-study-20261002\\opentimelineio",
+      "commit": "fc5c58e16f6832972cdb5c656dd8a6d87a4e5b02",
+      "logicalFileBytes": 214287.0,
+      "files": 50
+    },
+    {
+      "name": "kdenlive",
+      "path": "C:\\Users\\edugu\\Downloads\\res\\tmp\\editor-oss-study-20261002\\kdenlive",
+      "commit": "b3806e4bde3280d2176dbef3d8c3556546068c86",
+      "logicalFileBytes": 631558.0,
+      "files": 43
+    },
+    {
+      "name": "shotcut",
+      "path": "C:\\Users\\edugu\\Downloads\\res\\tmp\\editor-oss-study-20261002\\shotcut",
+      "commit": "1ccb8db3bc6f573e9e849e4bd4e088ae912bac1c",
+      "logicalFileBytes": 720784.0,
+      "files": 41
+    },
+    {
+      "name": "olive",
+      "path": "C:\\Users\\edugu\\Downloads\\res\\tmp\\editor-oss-study-20261002\\olive",
+      "commit": "7e0e94abf6610026aebb9ddce8564c39522fac6e",
+      "logicalFileBytes": 518862.0,
+      "files": 49
+    },
+    {
+      "name": "natron",
+      "path": "C:\\Users\\edugu\\Downloads\\res\\tmp\\editor-oss-study-20261002\\natron",
+      "commit": "3763d805d7d277d10af10025ae41af677682b3e6",
+      "logicalFileBytes": 1128396.0,
+      "files": 50
+    }
+  ],
+  "logicalCloneBytes": 3831737,
+  "probeTemporaryBytes": 32175.0,
+  "measurement": "Logical regular-file sizes excluding symlinks, not allocated disk blocks or free-space delta.",
+  "retained": "Original analysis, immutable source URLs/hashes, tests, original fixtures and small synthetic render diagnostic evidence.",
+  "existingRepositoriesRemoved": false,
+  "removed": false,
+  "status": "blocked_by_automatic_approval_review",
+  "reviewReason": "blocked by policy; no more specific reason supplied",
+  "rejectedActions": [
+    "Recursive removal of the two verified temporary roots",
+    "Recursive removal of the exact literal editor-oss-study root"
+  ]
+}

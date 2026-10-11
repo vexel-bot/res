@@ -110,7 +110,7 @@ def graph_payload() -> dict[str, object]:
                 "kind": "maximum_velocity",
                 "targetTrackIds": ["track-hook-x"],
                 "frameRange": {"startFrame": 0, "endFrameExclusive": 13},
-                "threshold": 400,
+                "threshold": 700,
                 "severity": "blocking",
             }
         ],
@@ -229,7 +229,7 @@ def test_reviewed_motion_projection_is_not_preview_only() -> None:
     projection = project_motion_graph(item, "hyperframes", evaluation)
 
     assert evaluation.eligible_for_reviewed_projection is True
-    assert evaluation.observations[0].measured_value == pytest.approx(300)
+    assert evaluation.observations[0].measured_value == pytest.approx(600)
     assert projection.preview_only is False
     assert projection.warnings == []
 
@@ -353,7 +353,7 @@ def test_motion_digest_changes_when_keyframe_changes() -> None:
     assert motion_graph_digest(original) != motion_graph_digest(changed)
 
 
-def test_acceleration_constraint_abstains_when_track_has_too_few_keyframes() -> None:
+def test_acceleration_constraint_evaluates_easing_with_two_keyframes() -> None:
     payload = graph_payload()
     payload["constraints"] = [
         {
@@ -369,8 +369,9 @@ def test_acceleration_constraint_abstains_when_track_has_too_few_keyframes() -> 
     evaluation = evaluate_motion_graph(document(), item)
 
     assert evaluation.eligible_for_reviewed_projection is False
-    assert evaluation.observations[0].status == "incomplete"
-    assert "acceleration-needs-three-keyframes" in evaluation.blocking_reasons[0]
+    assert evaluation.observations[0].status == "failed"
+    assert evaluation.observations[0].measured_value == pytest.approx(1500)
+    assert "maximum-acceleration-curve-evaluated" in evaluation.blocking_reasons[0]
 
 
 def test_safe_area_constraint_evaluates_layer_geometry_at_keyframes() -> None:

@@ -2,6 +2,7 @@ import React from "react";
 import { apiFetch } from "../api";
 import type { StudioDocumentRecord } from "../api/productApi";
 import { VisualComparisonPanel } from "./VisualComparisonPanel";
+import { VisualStudyComparisonPanel, type StudySession } from "./VisualStudyComparisonPanel";
 import "./visual-quality-indicator.css";
 
 type QualityRender = {
@@ -20,6 +21,7 @@ type QualityProgram = {
   cases: { documentId: string; title: string; materials: { status: string; blockers: string[] }; renderStatus: string;
     visualStatus: string; comparisonStatus: string }[];
   renders: QualityRender[];
+  studyComparisons?: StudySession[];
 };
 
 const visualLabels: Record<string, string> = {
@@ -37,6 +39,9 @@ const blockerLabels: Record<string, string> = {
   render_checksum_mismatch: "checksum do render divergente",
   render_document_binding_mismatch: "render vinculado a outro documento ou revisão",
   render_missing: "render pendente", technical_qc_not_passed: "QC técnico pendente ou reprovado",
+  visual_study_art_direction_missing: "direção de arte do estudo pendente",
+  visual_study_asset_rights_or_checksum_pending: "direitos ou checksum dos materiais pendentes",
+  real_test_interface_capture_required: "captura real da tarefa no ambiente de teste pendente",
 };
 
 export function VisualQualityIndicator({ document, runId, enabled, refreshKey }: {
@@ -63,7 +68,8 @@ export function VisualQualityIndicator({ document, runId, enabled, refreshKey }:
     return () => controller.abort();
   }, [workspaceId, scope, enabled, refreshKey, comparisonRevision]);
   if (!enabled || loadedScope !== scope || (!program && !error)) return null;
-  const current = program?.renders.find(item => item.runId === runId);
+  const current = program?.renders.find(item => item.runId === runId) ?? program?.renders.find(
+    item => item.documentId === document?.documentId && item.documentRevision === document?.revision);
   return <section className="vs-visual-quality" aria-label="Indicador interno de qualidade visual">
     <h3>Qualidade visual · fase experimental</h3>
     <p>QC técnico, avaliação visual e autonomia são evidências diferentes. Nenhuma nota é preenchida automaticamente.</p>
@@ -95,8 +101,14 @@ export function VisualQualityIndicator({ document, runId, enabled, refreshKey }:
           {item.materials.blockers.map(code => <p key={code}>{blockerLabels[code] ?? code}.</p>)}
         </article>) : <p>Nenhum projeto de vídeo elegível neste workspace.</p>}
       </details>
-      {document && <VisualComparisonPanel document={document} renders={program.renders}
+      {document && !(document.composition.narrative?.editorialV2 as {visualStudy?: unknown} | undefined)?.visualStudy &&
+        <VisualComparisonPanel document={document} renders={program.renders}
         onRecorded={() => setComparisonRevision(value => value + 1)} />}
+      {workspaceId && program.studyComparisons?.filter(session => session.labels.some(
+        item => item.documentId === document?.documentId)).map(session => <React.Fragment key={session.id}>
+          <VisualStudyComparisonPanel workspaceId={workspaceId} session={session}
+            onRecorded={() => setComparisonRevision(value => value + 1)} />
+        </React.Fragment>)}
     </>}
   </section>;
 }

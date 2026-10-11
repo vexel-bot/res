@@ -1,0 +1,6640 @@
+{
+  "schemaVersion": "studio.editor-inspection.v1",
+  "document": {
+    "schemaVersion": "studio.creative-document.v1",
+    "documentId": "f2a5b15c-f815-428d-88ca-ae3e90378aab",
+    "workspaceId": "485e4ffd-9778-4b30-b54a-5616c10a8011",
+    "title": "Matte temporal — inspeção real",
+    "contentType": "video",
+    "status": "draft",
+    "revision": 4,
+    "version": 1,
+    "actorId": "fba16ca9-832e-4768-becb-ac752642208f",
+    "correlationId": "8337659c-54e0-4365-90f5-f83f31b7f725",
+    "campaignRef": null,
+    "postRef": null,
+    "opportunityRef": null,
+    "brandMemoryRef": {
+      "id": "7f8ecccf-146f-45de-a288-041ae1d34277",
+      "version": null,
+      "revision": 1
+    },
+    "brief": {
+      "schemaVersion": "studio.creative-brief.v1",
+      "objective": "Conferir fonte da máscara, exposição e revisão",
+      "audience": "Equipe do editor",
+      "angle": "",
+      "promise": "",
+      "hook": "",
+      "cta": "",
+      "channel": "instagram",
+      "format": "post",
+      "tone": "",
+      "restrictions": [],
+      "hypotheses": [],
+      "evidence": []
+    },
+    "composition": {
+      "pages": [
+        {
+          "id": "matte-inspection-page",
+          "role": "content",
+          "width": 320,
+          "height": 320,
+          "safeArea": 0,
+          "background": "#10181c",
+          "durationMs": 533,
+          "layers": [
+            {
+              "id": "ed2-8c4385698e5a34a24c5412c9",
+              "kind": "group",
+              "name": "Layer",
+              "x": 0.0,
+              "y": 0.0,
+              "width": 320.0,
+              "height": 320.0,
+              "rotation": 0.0,
+              "opacity": 1.0,
+              "visible": true,
+              "locked": false,
+              "zIndex": 1,
+              "properties": {
+                "editorialTiming": {
+                  "startFrame": 0,
+                  "durationFrames": 16,
+                  "fps": 30.0,
+                  "reveal": "none"
+                },
+                "editorialAuditFrames": []
+              }
+            },
+            {
+              "id": "ed2-a56b31d15e3f86c09704cffa",
+              "kind": "group",
+              "name": "Layer",
+              "x": 0.0,
+              "y": 0.0,
+              "width": 320.0,
+              "height": 320.0,
+              "rotation": 0.0,
+              "opacity": 1.0,
+              "visible": true,
+              "locked": false,
+              "zIndex": 0,
+              "properties": {
+                "editorialRole": "background",
+                "editorialTiming": {
+                  "startFrame": 0,
+                  "durationFrames": 16,
+                  "fps": 30.0,
+                  "reveal": "none"
+                }
+              }
+            },
+            {
+              "id": "ed2-faf7a45f078f6363429fed4b",
+              "kind": "group",
+              "name": "Layer",
+              "x": 0.0,
+              "y": 0.0,
+              "width": 320.0,
+              "height": 320.0,
+              "rotation": 0.0,
+              "opacity": 1.0,
+              "visible": true,
+              "locked": false,
+              "zIndex": 1,
+              "properties": {
+                "editorialRole": "content",
+                "editorialTiming": {
+                  "startFrame": 0,
+                  "durationFrames": 16,
+                  "fps": 30.0,
+                  "reveal": "none"
+                }
+              }
+            },
+            {
+              "id": "ed2-9815a342358049197811a1c1",
+              "kind": "group",
+              "name": "Layer",
+              "x": 0.0,
+              "y": 0.0,
+              "width": 320.0,
+              "height": 320.0,
+              "rotation": 0.0,
+              "opacity": 1.0,
+              "visible": true,
+              "locked": false,
+              "zIndex": 2,
+              "properties": {
+                "editorialRole": "text",
+                "editorialTiming": {
+                  "startFrame": 0,
+                  "durationFrames": 16,
+                  "fps": 30.0,
+                  "reveal": "none"
+                }
+              }
+            },
+            {
+              "id": "ed2-da5ae831bc23ee2557493612",
+              "kind": "shape",
+              "name": "Layer",
+              "x": 0.0,
+              "y": 0.0,
+              "width": 320.0,
+              "height": 320.0,
+              "rotation": 0.0,
+              "opacity": 1.0,
+              "visible": true,
+              "locked": false,
+              "zIndex": 0,
+              "properties": {
+                "fill": "#000000",
+                "editorialTiming": {
+                  "startFrame": 0,
+                  "durationFrames": 16,
+                  "fps": 30.0,
+                  "reveal": "none"
+                }
+              }
+            },
+            {
+              "id": "ed2-813bf6e6c45ac8c58cd22be8",
+              "kind": "group",
+              "name": "outer",
+              "x": 18.0,
+              "y": 16.0,
+              "width": 240.0,
+              "height": 260.0,
+              "rotation": 0.0,
+              "opacity": 0.9,
+              "visible": true,
+              "locked": false,
+              "zIndex": 1,
+              "properties": {
+                "editorialSceneId": "temporal-matte",
+                "editorialOperationIds": [],
+                "editorialTiming": {
+                  "startFrame": 0,
+                  "durationFrames": 16,
+                  "fps": 30.0,
+                  "reveal": "none",
+                  "revealFrames": 12
+                },
+                "fill": "#183343",
+                "color": "#ffffff",
+                "text": "",
+                "fontSize": 48.0,
+                "editorialTextFit": false,
+                "editorialConnector": null,
+                "fontWeight": 700,
+                "letterSpacing": 0.0,
+                "lineHeight": 1.1,
+                "textAlign": "left",
+                "editorialTextSpans": [],
+                "editorialShadow": null,
+                "editorialEffects": [],
+                "editorialBlendMode": "normal",
+                "editorialBorder": {
+                  "width": 0.0,
+                  "color": "#ffffff"
+                },
+                "fontAssetId": null,
+                "borderRadius": 16.0,
+                "shape": "rectangle",
+                "assetId": null,
+                "editorialContentIdentity": null,
+                "editorialContentReferenceId": null,
+                "editorialContentPartId": null,
+                "maskAssetId": null,
+                "objectFit": "contain",
+                "editorialRegionOfInterest": null,
+                "editorialCropIntentional": false,
+                "sourceStartSeconds": 0.0,
+                "playbackRate": 1.0,
+                "editorialVisualRole": "support",
+                "editorialDepth": {
+                  "opacity": 0.9,
+                  "blurPx": 0.0,
+                  "parallax": 0.0
+                }
+              }
+            },
+            {
+              "id": "ed2-cede67250799ff0e90550c70",
+              "kind": "group",
+              "name": "rig",
+              "x": 15.0,
+              "y": 18.0,
+              "width": 210.0,
+              "height": 200.0,
+              "rotation": 0.0,
+              "opacity": 0.9,
+              "visible": true,
+              "locked": false,
+              "zIndex": 1,
+              "properties": {
+                "editorialSceneId": "temporal-matte",
+                "editorialOperationIds": [],
+                "editorialTiming": {
+                  "startFrame": 0,
+                  "durationFrames": 16,
+                  "fps": 30.0,
+                  "reveal": "none",
+                  "revealFrames": 12
+                },
+                "fill": "#183343",
+                "color": "#ffffff",
+                "text": "",
+                "fontSize": 48.0,
+                "editorialTextFit": false,
+                "editorialConnector": null,
+                "fontWeight": 700,
+                "letterSpacing": 0.0,
+                "lineHeight": 1.1,
+                "textAlign": "left",
+                "editorialTextSpans": [],
+                "editorialShadow": null,
+                "editorialEffects": [],
+                "editorialBlendMode": "normal",
+                "editorialBorder": {
+                  "width": 2.0,
+                  "color": "#000000"
+                },
+                "fontAssetId": null,
+                "borderRadius": 16.0,
+                "shape": "rectangle",
+                "assetId": null,
+                "editorialContentIdentity": null,
+                "editorialContentReferenceId": null,
+                "editorialContentPartId": null,
+                "maskAssetId": null,
+                "objectFit": "contain",
+                "editorialRegionOfInterest": null,
+                "editorialCropIntentional": false,
+                "sourceStartSeconds": 0.0,
+                "playbackRate": 1.0,
+                "editorialVisualRole": "support",
+                "editorialDepth": {
+                  "opacity": 0.9,
+                  "blurPx": 0.0,
+                  "parallax": 0.0
+                },
+                "recipeTemporalBlur": {
+                  "startFrame": 0,
+                  "endFrameExclusive": 16,
+                  "samples": 8,
+                  "shutterAngle": 180.0,
+                  "exposurePolicy": {
+                    "schemaVersion": "studio.temporal-exposure.v1",
+                    "sampling": "centered_clipped",
+                    "coordinateSpace": "local_subtree",
+                    "ancestorTime": "center_frame",
+                    "compositing": "premultiplied_srgb_plus_lighter",
+                    "staticReduction": "identical_registered_draw_inputs"
+                  }
+                }
+              }
+            },
+            {
+              "id": "ed2-dc4fb9af60c130fbb12fd888",
+              "kind": "shape",
+              "name": "hero",
+              "x": 10.0,
+              "y": 10.0,
+              "width": 170.0,
+              "height": 150.0,
+              "rotation": 0.0,
+              "opacity": 0.85,
+              "visible": true,
+              "locked": false,
+              "zIndex": 1,
+              "properties": {
+                "editorialSceneId": "temporal-matte",
+                "editorialOperationIds": [],
+                "editorialTiming": {
+                  "startFrame": 0,
+                  "durationFrames": 16,
+                  "fps": 30.0,
+                  "reveal": "none",
+                  "revealFrames": 12
+                },
+                "fill": "#ffffff",
+                "color": "#ffffff",
+                "text": "",
+                "fontSize": 48.0,
+                "editorialTextFit": false,
+                "editorialConnector": null,
+                "fontWeight": 700,
+                "letterSpacing": 0.0,
+                "lineHeight": 1.1,
+                "textAlign": "left",
+                "editorialTextSpans": [],
+                "editorialShadow": null,
+                "editorialEffects": [],
+                "editorialBlendMode": "normal",
+                "editorialBorder": {
+                  "width": 0.0,
+                  "color": "#ffffff"
+                },
+                "fontAssetId": null,
+                "borderRadius": 0.0,
+                "shape": "rectangle",
+                "assetId": null,
+                "editorialContentIdentity": null,
+                "editorialContentReferenceId": null,
+                "editorialContentPartId": null,
+                "maskAssetId": null,
+                "objectFit": "contain",
+                "editorialRegionOfInterest": null,
+                "editorialCropIntentional": false,
+                "sourceStartSeconds": 0.0,
+                "playbackRate": 1.0,
+                "editorialVisualRole": "hero",
+                "editorialDepth": {
+                  "opacity": 0.85,
+                  "blurPx": 0.0,
+                  "parallax": 0.0
+                },
+                "recipeAssetMatte": {
+                  "schemaVersion": "studio.asset-matte.v1",
+                  "sourceTargetId": "matte",
+                  "mode": "alpha",
+                  "invert": true,
+                  "coordinateSpace": "composition_world",
+                  "opacitySpace": "source_layer_only",
+                  "sourceLayerId": "ed2-e59dfae8dda971673bcc05cf",
+                  "assetId": "199001ec-1fb1-4356-80a3-28c60ea7e109",
+                  "objectFit": "contain",
+                  "startFrame": 0,
+                  "endFrameExclusive": 16
+                }
+              }
+            },
+            {
+              "id": "ed2-51ffbf33502bd6873e59a4e0",
+              "kind": "group",
+              "name": "mask-rig",
+              "x": 100.0,
+              "y": 74.0,
+              "width": 80.0,
+              "height": 96.0,
+              "rotation": 0.0,
+              "opacity": 0.2,
+              "visible": true,
+              "locked": false,
+              "zIndex": 1,
+              "properties": {
+                "editorialSceneId": "temporal-matte",
+                "editorialOperationIds": [],
+                "editorialTiming": {
+                  "startFrame": 0,
+                  "durationFrames": 16,
+                  "fps": 30.0,
+                  "reveal": "none",
+                  "revealFrames": 12
+                },
+                "fill": "#183343",
+                "color": "#ffffff",
+                "text": "",
+                "fontSize": 48.0,
+                "editorialTextFit": false,
+                "editorialConnector": null,
+                "fontWeight": 700,
+                "letterSpacing": 0.0,
+                "lineHeight": 1.1,
+                "textAlign": "left",
+                "editorialTextSpans": [],
+                "editorialShadow": null,
+                "editorialEffects": [],
+                "editorialBlendMode": "normal",
+                "editorialBorder": {
+                  "width": 0.0,
+                  "color": "#ffffff"
+                },
+                "fontAssetId": null,
+                "borderRadius": 16.0,
+                "shape": "rectangle",
+                "assetId": null,
+                "editorialContentIdentity": null,
+                "editorialContentReferenceId": null,
+                "editorialContentPartId": null,
+                "maskAssetId": null,
+                "objectFit": "contain",
+                "editorialRegionOfInterest": null,
+                "editorialCropIntentional": false,
+                "sourceStartSeconds": 0.0,
+                "playbackRate": 1.0,
+                "editorialVisualRole": "support",
+                "editorialDepth": {
+                  "opacity": 0.2,
+                  "blurPx": 0.0,
+                  "parallax": 0.0
+                }
+              }
+            },
+            {
+              "id": "ed2-e59dfae8dda971673bcc05cf",
+              "kind": "image",
+              "name": "matte",
+              "x": 0.0,
+              "y": 0.0,
+              "width": 80.0,
+              "height": 96.0,
+              "rotation": 0.0,
+              "opacity": 0.6,
+              "visible": true,
+              "locked": false,
+              "zIndex": 1,
+              "properties": {
+                "editorialSceneId": "temporal-matte",
+                "editorialOperationIds": [],
+                "editorialTiming": {
+                  "startFrame": 0,
+                  "durationFrames": 16,
+                  "fps": 30.0,
+                  "reveal": "none",
+                  "revealFrames": 12
+                },
+                "fill": "#183343",
+                "color": "#ffffff",
+                "text": "",
+                "fontSize": 48.0,
+                "editorialTextFit": false,
+                "editorialConnector": null,
+                "fontWeight": 700,
+                "letterSpacing": 0.0,
+                "lineHeight": 1.1,
+                "textAlign": "left",
+                "editorialTextSpans": [],
+                "editorialShadow": null,
+                "editorialEffects": [],
+                "editorialBlendMode": "normal",
+                "editorialBorder": {
+                  "width": 0.0,
+                  "color": "#ffffff"
+                },
+                "fontAssetId": null,
+                "borderRadius": 16.0,
+                "shape": "rectangle",
+                "assetId": "199001ec-1fb1-4356-80a3-28c60ea7e109",
+                "editorialContentIdentity": null,
+                "editorialContentReferenceId": null,
+                "editorialContentPartId": null,
+                "maskAssetId": null,
+                "objectFit": "contain",
+                "editorialRegionOfInterest": null,
+                "editorialCropIntentional": false,
+                "sourceStartSeconds": 0.0,
+                "playbackRate": 1.0,
+                "editorialVisualRole": "support",
+                "editorialDepth": {
+                  "opacity": 0.6,
+                  "blurPx": 0.0,
+                  "parallax": 0.0
+                },
+                "matteSourceOnly": true
+              }
+            }
+          ]
+        }
+      ],
+      "narrative": {
+        "editorialV2": {
+          "planId": "83ee1ce0-f7f4-486d-a9f9-845816fe8689",
+          "renderPolicy": "automatic_draft",
+          "operationBindings": [],
+          "motionRecipes": [
+            {
+              "sceneId": "temporal-matte",
+              "schemaVersion": "studio.motion-recipe.v1",
+              "id": "outer-move",
+              "version": 1,
+              "technique": "motion_choreography",
+              "targetIds": [
+                "outer"
+              ],
+              "startFrame": 0,
+              "endFrameExclusive": 16,
+              "intent": "Affine motion and hold",
+              "continuityAnchor": "Same target and original pixels",
+              "parameters": {
+                "tracks": [
+                  {
+                    "targetId": "outer",
+                    "property": "x",
+                    "keyframes": [
+                      {
+                        "frame": 0,
+                        "value": 0.0,
+                        "curve": [
+                          0.0,
+                          0.0,
+                          1.0,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 8,
+                        "value": 70.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 15,
+                        "value": 70.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "targetId": "outer",
+                    "property": "y",
+                    "keyframes": [
+                      {
+                        "frame": 0,
+                        "value": 0.0,
+                        "curve": [
+                          0.0,
+                          0.0,
+                          1.0,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 8,
+                        "value": 8.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 15,
+                        "value": 8.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "targetId": "outer",
+                    "property": "rotation",
+                    "keyframes": [
+                      {
+                        "frame": 0,
+                        "value": 0.0,
+                        "curve": [
+                          0.0,
+                          0.0,
+                          1.0,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 8,
+                        "value": 12.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 15,
+                        "value": 12.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "targetId": "outer",
+                    "property": "scale_x",
+                    "keyframes": [
+                      {
+                        "frame": 0,
+                        "value": 1.0,
+                        "curve": [
+                          0.0,
+                          0.0,
+                          1.0,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 8,
+                        "value": 0.95,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 15,
+                        "value": 0.95,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "targetId": "outer",
+                    "property": "scale_y",
+                    "keyframes": [
+                      {
+                        "frame": 0,
+                        "value": 1.0,
+                        "curve": [
+                          0.0,
+                          0.0,
+                          1.0,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 8,
+                        "value": 1.1,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 15,
+                        "value": 1.1,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "pivot": [
+                  0.5,
+                  0.5
+                ],
+                "parentTargetId": null,
+                "maskAssetId": null,
+                "occluderTargetId": null,
+                "textUnit": "word",
+                "staggerFrames": 3,
+                "readingHoldFrames": 30,
+                "shutterDegrees": 180.0,
+                "temporalSamples": 8,
+                "focusDistance": 1000.0,
+                "depthOfField": 100.0,
+                "displacementRatio": 0.01
+              },
+              "soundEvents": [],
+              "verification": [
+                "Pixels retain matte identity"
+              ]
+            },
+            {
+              "sceneId": "temporal-matte",
+              "schemaVersion": "studio.motion-recipe.v1",
+              "id": "rig-move",
+              "version": 1,
+              "technique": "motion_choreography",
+              "targetIds": [
+                "rig"
+              ],
+              "startFrame": 0,
+              "endFrameExclusive": 16,
+              "intent": "Affine motion and hold",
+              "continuityAnchor": "Same target and original pixels",
+              "parameters": {
+                "tracks": [
+                  {
+                    "targetId": "rig",
+                    "property": "x",
+                    "keyframes": [
+                      {
+                        "frame": 0,
+                        "value": 0.0,
+                        "curve": [
+                          0.0,
+                          0.0,
+                          1.0,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 8,
+                        "value": 20.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 15,
+                        "value": 20.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "targetId": "rig",
+                    "property": "y",
+                    "keyframes": [
+                      {
+                        "frame": 0,
+                        "value": 0.0,
+                        "curve": [
+                          0.0,
+                          0.0,
+                          1.0,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 8,
+                        "value": -4.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 15,
+                        "value": -4.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "targetId": "rig",
+                    "property": "rotation",
+                    "keyframes": [
+                      {
+                        "frame": 0,
+                        "value": 0.0,
+                        "curve": [
+                          0.0,
+                          0.0,
+                          1.0,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 8,
+                        "value": -10.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 15,
+                        "value": -10.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "targetId": "rig",
+                    "property": "scale_x",
+                    "keyframes": [
+                      {
+                        "frame": 0,
+                        "value": 1.0,
+                        "curve": [
+                          0.0,
+                          0.0,
+                          1.0,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 8,
+                        "value": 1.08,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 15,
+                        "value": 1.08,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "targetId": "rig",
+                    "property": "scale_y",
+                    "keyframes": [
+                      {
+                        "frame": 0,
+                        "value": 1.0,
+                        "curve": [
+                          0.0,
+                          0.0,
+                          1.0,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 8,
+                        "value": 0.96,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 15,
+                        "value": 0.96,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "pivot": [
+                  0.5,
+                  0.5
+                ],
+                "parentTargetId": null,
+                "maskAssetId": null,
+                "occluderTargetId": null,
+                "textUnit": "word",
+                "staggerFrames": 3,
+                "readingHoldFrames": 30,
+                "shutterDegrees": 180.0,
+                "temporalSamples": 8,
+                "focusDistance": 1000.0,
+                "depthOfField": 100.0,
+                "displacementRatio": 0.01
+              },
+              "soundEvents": [],
+              "verification": [
+                "Pixels retain matte identity"
+              ]
+            },
+            {
+              "sceneId": "temporal-matte",
+              "schemaVersion": "studio.motion-recipe.v1",
+              "id": "hero-move",
+              "version": 1,
+              "technique": "motion_choreography",
+              "targetIds": [
+                "hero"
+              ],
+              "startFrame": 0,
+              "endFrameExclusive": 16,
+              "intent": "Affine motion and hold",
+              "continuityAnchor": "Same target and original pixels",
+              "parameters": {
+                "tracks": [
+                  {
+                    "targetId": "hero",
+                    "property": "x",
+                    "keyframes": [
+                      {
+                        "frame": 0,
+                        "value": 12.0,
+                        "curve": [
+                          0.0,
+                          0.0,
+                          1.0,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 8,
+                        "value": 24.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 15,
+                        "value": 24.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "targetId": "hero",
+                    "property": "y",
+                    "keyframes": [
+                      {
+                        "frame": 0,
+                        "value": 0.0,
+                        "curve": [
+                          0.0,
+                          0.0,
+                          1.0,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 8,
+                        "value": 8.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 15,
+                        "value": 8.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "targetId": "hero",
+                    "property": "rotation",
+                    "keyframes": [
+                      {
+                        "frame": 0,
+                        "value": 0.0,
+                        "curve": [
+                          0.0,
+                          0.0,
+                          1.0,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 8,
+                        "value": 10.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 15,
+                        "value": 10.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "targetId": "hero",
+                    "property": "scale_x",
+                    "keyframes": [
+                      {
+                        "frame": 0,
+                        "value": 1.0,
+                        "curve": [
+                          0.0,
+                          0.0,
+                          1.0,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 8,
+                        "value": 1.05,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 15,
+                        "value": 1.05,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "targetId": "hero",
+                    "property": "scale_y",
+                    "keyframes": [
+                      {
+                        "frame": 0,
+                        "value": 1.0,
+                        "curve": [
+                          0.0,
+                          0.0,
+                          1.0,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 8,
+                        "value": 1.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 15,
+                        "value": 1.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "pivot": [
+                  0.5,
+                  0.5
+                ],
+                "parentTargetId": null,
+                "maskAssetId": null,
+                "occluderTargetId": null,
+                "textUnit": "word",
+                "staggerFrames": 3,
+                "readingHoldFrames": 30,
+                "shutterDegrees": 180.0,
+                "temporalSamples": 8,
+                "focusDistance": 1000.0,
+                "depthOfField": 100.0,
+                "displacementRatio": 0.01
+              },
+              "soundEvents": [],
+              "verification": [
+                "Pixels retain matte identity"
+              ]
+            },
+            {
+              "sceneId": "temporal-matte",
+              "schemaVersion": "studio.motion-recipe.v1",
+              "id": "mask-rig-move",
+              "version": 1,
+              "technique": "motion_choreography",
+              "targetIds": [
+                "mask-rig"
+              ],
+              "startFrame": 0,
+              "endFrameExclusive": 16,
+              "intent": "Affine motion and hold",
+              "continuityAnchor": "Same target and original pixels",
+              "parameters": {
+                "tracks": [
+                  {
+                    "targetId": "mask-rig",
+                    "property": "x",
+                    "keyframes": [
+                      {
+                        "frame": 0,
+                        "value": 0.0,
+                        "curve": [
+                          0.0,
+                          0.0,
+                          1.0,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 8,
+                        "value": 20.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 15,
+                        "value": 20.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "targetId": "mask-rig",
+                    "property": "y",
+                    "keyframes": [
+                      {
+                        "frame": 0,
+                        "value": 0.0,
+                        "curve": [
+                          0.0,
+                          0.0,
+                          1.0,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 8,
+                        "value": 12.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 15,
+                        "value": 12.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "targetId": "mask-rig",
+                    "property": "rotation",
+                    "keyframes": [
+                      {
+                        "frame": 0,
+                        "value": 0.0,
+                        "curve": [
+                          0.0,
+                          0.0,
+                          1.0,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 8,
+                        "value": -8.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 15,
+                        "value": -8.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "targetId": "mask-rig",
+                    "property": "scale_x",
+                    "keyframes": [
+                      {
+                        "frame": 0,
+                        "value": 1.0,
+                        "curve": [
+                          0.0,
+                          0.0,
+                          1.0,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 8,
+                        "value": 1.1,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 15,
+                        "value": 1.1,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "targetId": "mask-rig",
+                    "property": "scale_y",
+                    "keyframes": [
+                      {
+                        "frame": 0,
+                        "value": 1.0,
+                        "curve": [
+                          0.0,
+                          0.0,
+                          1.0,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 8,
+                        "value": 1.1,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 15,
+                        "value": 1.1,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "pivot": [
+                  0.5,
+                  0.5
+                ],
+                "parentTargetId": null,
+                "maskAssetId": null,
+                "occluderTargetId": null,
+                "textUnit": "word",
+                "staggerFrames": 3,
+                "readingHoldFrames": 30,
+                "shutterDegrees": 180.0,
+                "temporalSamples": 8,
+                "focusDistance": 1000.0,
+                "depthOfField": 100.0,
+                "displacementRatio": 0.01
+              },
+              "soundEvents": [],
+              "verification": [
+                "Pixels retain matte identity"
+              ]
+            },
+            {
+              "sceneId": "temporal-matte",
+              "schemaVersion": "studio.motion-recipe.v1",
+              "id": "matte-move",
+              "version": 1,
+              "technique": "motion_choreography",
+              "targetIds": [
+                "matte"
+              ],
+              "startFrame": 0,
+              "endFrameExclusive": 16,
+              "intent": "Affine motion and hold",
+              "continuityAnchor": "Same target and original pixels",
+              "parameters": {
+                "tracks": [
+                  {
+                    "targetId": "matte",
+                    "property": "x",
+                    "keyframes": [
+                      {
+                        "frame": 0,
+                        "value": 0.0,
+                        "curve": [
+                          0.0,
+                          0.0,
+                          1.0,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 8,
+                        "value": 10.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 15,
+                        "value": 10.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "targetId": "matte",
+                    "property": "y",
+                    "keyframes": [
+                      {
+                        "frame": 0,
+                        "value": 0.0,
+                        "curve": [
+                          0.0,
+                          0.0,
+                          1.0,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 8,
+                        "value": 0.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 15,
+                        "value": 0.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "targetId": "matte",
+                    "property": "rotation",
+                    "keyframes": [
+                      {
+                        "frame": 0,
+                        "value": 0.0,
+                        "curve": [
+                          0.0,
+                          0.0,
+                          1.0,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 8,
+                        "value": 0.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 15,
+                        "value": 0.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "targetId": "matte",
+                    "property": "scale_x",
+                    "keyframes": [
+                      {
+                        "frame": 0,
+                        "value": 1.0,
+                        "curve": [
+                          0.0,
+                          0.0,
+                          1.0,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 8,
+                        "value": 1.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 15,
+                        "value": 1.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "targetId": "matte",
+                    "property": "scale_y",
+                    "keyframes": [
+                      {
+                        "frame": 0,
+                        "value": 1.0,
+                        "curve": [
+                          0.0,
+                          0.0,
+                          1.0,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 8,
+                        "value": 1.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 15,
+                        "value": 1.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "targetId": "matte",
+                    "property": "opacity",
+                    "keyframes": [
+                      {
+                        "frame": 0,
+                        "value": 0.6,
+                        "curve": [
+                          0.0,
+                          0.0,
+                          1.0,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 8,
+                        "value": 0.9,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 15,
+                        "value": 0.9,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "pivot": [
+                  0.5,
+                  0.5
+                ],
+                "parentTargetId": null,
+                "maskAssetId": null,
+                "occluderTargetId": null,
+                "textUnit": "word",
+                "staggerFrames": 3,
+                "readingHoldFrames": 30,
+                "shutterDegrees": 180.0,
+                "temporalSamples": 8,
+                "focusDistance": 1000.0,
+                "depthOfField": 100.0,
+                "displacementRatio": 0.01
+              },
+              "soundEvents": [],
+              "verification": [
+                "Pixels retain matte identity"
+              ]
+            },
+            {
+              "sceneId": "temporal-matte",
+              "schemaVersion": "studio.motion-recipe.v1",
+              "id": "world-matte",
+              "version": 1,
+              "technique": "asset_matte",
+              "targetIds": [
+                "hero"
+              ],
+              "startFrame": 0,
+              "endFrameExclusive": 16,
+              "intent": "World-space original matte",
+              "continuityAnchor": "Same bitmap",
+              "parameters": {
+                "tracks": [],
+                "pivot": [
+                  0.5,
+                  0.5
+                ],
+                "parentTargetId": null,
+                "maskAssetId": null,
+                "occluderTargetId": null,
+                "assetMatte": {
+                  "schemaVersion": "studio.asset-matte.v1",
+                  "sourceTargetId": "matte",
+                  "mode": "alpha",
+                  "invert": true,
+                  "coordinateSpace": "composition_world",
+                  "opacitySpace": "source_layer_only"
+                },
+                "textUnit": "word",
+                "staggerFrames": 3,
+                "readingHoldFrames": 30,
+                "shutterDegrees": 180.0,
+                "temporalSamples": 8,
+                "focusDistance": 1000.0,
+                "depthOfField": 100.0,
+                "displacementRatio": 0.01
+              },
+              "soundEvents": [],
+              "verification": [
+                "Mask does not drift"
+              ]
+            },
+            {
+              "sceneId": "temporal-matte",
+              "schemaVersion": "studio.motion-recipe.v1",
+              "id": "local-exposure",
+              "version": 1,
+              "technique": "velocity_blur",
+              "targetIds": [
+                "rig"
+              ],
+              "startFrame": 0,
+              "endFrameExclusive": 16,
+              "intent": "Expose local subtree while external world stays at center",
+              "continuityAnchor": "Same matte",
+              "parameters": {
+                "tracks": [],
+                "pivot": [
+                  0.5,
+                  0.5
+                ],
+                "parentTargetId": null,
+                "maskAssetId": null,
+                "occluderTargetId": null,
+                "temporalExposure": {
+                  "schemaVersion": "studio.temporal-exposure.v1",
+                  "sampling": "centered_clipped",
+                  "coordinateSpace": "local_subtree",
+                  "ancestorTime": "center_frame",
+                  "compositing": "premultiplied_srgb_plus_lighter",
+                  "staticReduction": "identical_registered_draw_inputs"
+                },
+                "textUnit": "word",
+                "staggerFrames": 3,
+                "readingHoldFrames": 30,
+                "shutterDegrees": 180.0,
+                "temporalSamples": 8,
+                "focusDistance": 1000.0,
+                "depthOfField": 100.0,
+                "displacementRatio": 0.01
+              },
+              "soundEvents": [],
+              "verification": [
+                "World matte and sampled target agree"
+              ]
+            }
+          ],
+          "motionRecipesDigest": "3c089ce97d27ddc68a5b980916e7eeeaafd3d1599f99b4f9b4ad7819e32e79dd",
+          "nativeRecipeOperations": [
+            {
+              "id": "outer-move",
+              "sceneId": "temporal-matte",
+              "technique": "motion_choreography",
+              "version": 1,
+              "compilerVersion": "res.native-recipes.v4",
+              "startFrame": 0,
+              "endFrameExclusive": 16,
+              "targetLayerIds": [
+                "ed2-813bf6e6c45ac8c58cd22be8"
+              ],
+              "parameters": {
+                "tracks": [
+                  {
+                    "targetId": "outer",
+                    "property": "x",
+                    "keyframes": [
+                      {
+                        "frame": 0,
+                        "value": 0.0,
+                        "curve": [
+                          0.0,
+                          0.0,
+                          1.0,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 8,
+                        "value": 70.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 15,
+                        "value": 70.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "targetId": "outer",
+                    "property": "y",
+                    "keyframes": [
+                      {
+                        "frame": 0,
+                        "value": 0.0,
+                        "curve": [
+                          0.0,
+                          0.0,
+                          1.0,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 8,
+                        "value": 8.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 15,
+                        "value": 8.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "targetId": "outer",
+                    "property": "rotation",
+                    "keyframes": [
+                      {
+                        "frame": 0,
+                        "value": 0.0,
+                        "curve": [
+                          0.0,
+                          0.0,
+                          1.0,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 8,
+                        "value": 12.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 15,
+                        "value": 12.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "targetId": "outer",
+                    "property": "scale_x",
+                    "keyframes": [
+                      {
+                        "frame": 0,
+                        "value": 1.0,
+                        "curve": [
+                          0.0,
+                          0.0,
+                          1.0,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 8,
+                        "value": 0.95,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 15,
+                        "value": 0.95,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "targetId": "outer",
+                    "property": "scale_y",
+                    "keyframes": [
+                      {
+                        "frame": 0,
+                        "value": 1.0,
+                        "curve": [
+                          0.0,
+                          0.0,
+                          1.0,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 8,
+                        "value": 1.1,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 15,
+                        "value": 1.1,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "pivot": [
+                  0.5,
+                  0.5
+                ],
+                "parentTargetId": null,
+                "maskAssetId": null,
+                "occluderTargetId": null,
+                "textUnit": "word",
+                "staggerFrames": 3,
+                "readingHoldFrames": 30,
+                "shutterDegrees": 180.0,
+                "temporalSamples": 8,
+                "focusDistance": 1000.0,
+                "depthOfField": 100.0,
+                "displacementRatio": 0.01
+              },
+              "qualification": "implemented",
+              "knowledgeTechniqueId": "alight.motion_choreography",
+              "evidenceClassification": "documentation_and_editorial_inference"
+            },
+            {
+              "id": "rig-move",
+              "sceneId": "temporal-matte",
+              "technique": "motion_choreography",
+              "version": 1,
+              "compilerVersion": "res.native-recipes.v4",
+              "startFrame": 0,
+              "endFrameExclusive": 16,
+              "targetLayerIds": [
+                "ed2-cede67250799ff0e90550c70"
+              ],
+              "parameters": {
+                "tracks": [
+                  {
+                    "targetId": "rig",
+                    "property": "x",
+                    "keyframes": [
+                      {
+                        "frame": 0,
+                        "value": 0.0,
+                        "curve": [
+                          0.0,
+                          0.0,
+                          1.0,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 8,
+                        "value": 20.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 15,
+                        "value": 20.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "targetId": "rig",
+                    "property": "y",
+                    "keyframes": [
+                      {
+                        "frame": 0,
+                        "value": 0.0,
+                        "curve": [
+                          0.0,
+                          0.0,
+                          1.0,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 8,
+                        "value": -4.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 15,
+                        "value": -4.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "targetId": "rig",
+                    "property": "rotation",
+                    "keyframes": [
+                      {
+                        "frame": 0,
+                        "value": 0.0,
+                        "curve": [
+                          0.0,
+                          0.0,
+                          1.0,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 8,
+                        "value": -10.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 15,
+                        "value": -10.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "targetId": "rig",
+                    "property": "scale_x",
+                    "keyframes": [
+                      {
+                        "frame": 0,
+                        "value": 1.0,
+                        "curve": [
+                          0.0,
+                          0.0,
+                          1.0,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 8,
+                        "value": 1.08,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 15,
+                        "value": 1.08,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "targetId": "rig",
+                    "property": "scale_y",
+                    "keyframes": [
+                      {
+                        "frame": 0,
+                        "value": 1.0,
+                        "curve": [
+                          0.0,
+                          0.0,
+                          1.0,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 8,
+                        "value": 0.96,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 15,
+                        "value": 0.96,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "pivot": [
+                  0.5,
+                  0.5
+                ],
+                "parentTargetId": null,
+                "maskAssetId": null,
+                "occluderTargetId": null,
+                "textUnit": "word",
+                "staggerFrames": 3,
+                "readingHoldFrames": 30,
+                "shutterDegrees": 180.0,
+                "temporalSamples": 8,
+                "focusDistance": 1000.0,
+                "depthOfField": 100.0,
+                "displacementRatio": 0.01
+              },
+              "qualification": "implemented",
+              "knowledgeTechniqueId": "alight.motion_choreography",
+              "evidenceClassification": "documentation_and_editorial_inference"
+            },
+            {
+              "id": "hero-move",
+              "sceneId": "temporal-matte",
+              "technique": "motion_choreography",
+              "version": 1,
+              "compilerVersion": "res.native-recipes.v4",
+              "startFrame": 0,
+              "endFrameExclusive": 16,
+              "targetLayerIds": [
+                "ed2-dc4fb9af60c130fbb12fd888"
+              ],
+              "parameters": {
+                "tracks": [
+                  {
+                    "targetId": "hero",
+                    "property": "x",
+                    "keyframes": [
+                      {
+                        "frame": 0,
+                        "value": 12.0,
+                        "curve": [
+                          0.0,
+                          0.0,
+                          1.0,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 8,
+                        "value": 24.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 15,
+                        "value": 24.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "targetId": "hero",
+                    "property": "y",
+                    "keyframes": [
+                      {
+                        "frame": 0,
+                        "value": 0.0,
+                        "curve": [
+                          0.0,
+                          0.0,
+                          1.0,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 8,
+                        "value": 8.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 15,
+                        "value": 8.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "targetId": "hero",
+                    "property": "rotation",
+                    "keyframes": [
+                      {
+                        "frame": 0,
+                        "value": 0.0,
+                        "curve": [
+                          0.0,
+                          0.0,
+                          1.0,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 8,
+                        "value": 10.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 15,
+                        "value": 10.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "targetId": "hero",
+                    "property": "scale_x",
+                    "keyframes": [
+                      {
+                        "frame": 0,
+                        "value": 1.0,
+                        "curve": [
+                          0.0,
+                          0.0,
+                          1.0,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 8,
+                        "value": 1.05,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 15,
+                        "value": 1.05,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "targetId": "hero",
+                    "property": "scale_y",
+                    "keyframes": [
+                      {
+                        "frame": 0,
+                        "value": 1.0,
+                        "curve": [
+                          0.0,
+                          0.0,
+                          1.0,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 8,
+                        "value": 1.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 15,
+                        "value": 1.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "pivot": [
+                  0.5,
+                  0.5
+                ],
+                "parentTargetId": null,
+                "maskAssetId": null,
+                "occluderTargetId": null,
+                "textUnit": "word",
+                "staggerFrames": 3,
+                "readingHoldFrames": 30,
+                "shutterDegrees": 180.0,
+                "temporalSamples": 8,
+                "focusDistance": 1000.0,
+                "depthOfField": 100.0,
+                "displacementRatio": 0.01
+              },
+              "qualification": "implemented",
+              "knowledgeTechniqueId": "alight.motion_choreography",
+              "evidenceClassification": "documentation_and_editorial_inference"
+            },
+            {
+              "id": "mask-rig-move",
+              "sceneId": "temporal-matte",
+              "technique": "motion_choreography",
+              "version": 1,
+              "compilerVersion": "res.native-recipes.v4",
+              "startFrame": 0,
+              "endFrameExclusive": 16,
+              "targetLayerIds": [
+                "ed2-51ffbf33502bd6873e59a4e0"
+              ],
+              "parameters": {
+                "tracks": [
+                  {
+                    "targetId": "mask-rig",
+                    "property": "x",
+                    "keyframes": [
+                      {
+                        "frame": 0,
+                        "value": 0.0,
+                        "curve": [
+                          0.0,
+                          0.0,
+                          1.0,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 8,
+                        "value": 20.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 15,
+                        "value": 20.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "targetId": "mask-rig",
+                    "property": "y",
+                    "keyframes": [
+                      {
+                        "frame": 0,
+                        "value": 0.0,
+                        "curve": [
+                          0.0,
+                          0.0,
+                          1.0,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 8,
+                        "value": 12.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 15,
+                        "value": 12.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "targetId": "mask-rig",
+                    "property": "rotation",
+                    "keyframes": [
+                      {
+                        "frame": 0,
+                        "value": 0.0,
+                        "curve": [
+                          0.0,
+                          0.0,
+                          1.0,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 8,
+                        "value": -8.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 15,
+                        "value": -8.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "targetId": "mask-rig",
+                    "property": "scale_x",
+                    "keyframes": [
+                      {
+                        "frame": 0,
+                        "value": 1.0,
+                        "curve": [
+                          0.0,
+                          0.0,
+                          1.0,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 8,
+                        "value": 1.1,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 15,
+                        "value": 1.1,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "targetId": "mask-rig",
+                    "property": "scale_y",
+                    "keyframes": [
+                      {
+                        "frame": 0,
+                        "value": 1.0,
+                        "curve": [
+                          0.0,
+                          0.0,
+                          1.0,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 8,
+                        "value": 1.1,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 15,
+                        "value": 1.1,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "pivot": [
+                  0.5,
+                  0.5
+                ],
+                "parentTargetId": null,
+                "maskAssetId": null,
+                "occluderTargetId": null,
+                "textUnit": "word",
+                "staggerFrames": 3,
+                "readingHoldFrames": 30,
+                "shutterDegrees": 180.0,
+                "temporalSamples": 8,
+                "focusDistance": 1000.0,
+                "depthOfField": 100.0,
+                "displacementRatio": 0.01
+              },
+              "qualification": "implemented",
+              "knowledgeTechniqueId": "alight.motion_choreography",
+              "evidenceClassification": "documentation_and_editorial_inference"
+            },
+            {
+              "id": "matte-move",
+              "sceneId": "temporal-matte",
+              "technique": "motion_choreography",
+              "version": 1,
+              "compilerVersion": "res.native-recipes.v4",
+              "startFrame": 0,
+              "endFrameExclusive": 16,
+              "targetLayerIds": [
+                "ed2-e59dfae8dda971673bcc05cf"
+              ],
+              "parameters": {
+                "tracks": [
+                  {
+                    "targetId": "matte",
+                    "property": "x",
+                    "keyframes": [
+                      {
+                        "frame": 0,
+                        "value": 0.0,
+                        "curve": [
+                          0.0,
+                          0.0,
+                          1.0,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 8,
+                        "value": 10.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 15,
+                        "value": 10.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "targetId": "matte",
+                    "property": "y",
+                    "keyframes": [
+                      {
+                        "frame": 0,
+                        "value": 0.0,
+                        "curve": [
+                          0.0,
+                          0.0,
+                          1.0,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 8,
+                        "value": 0.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 15,
+                        "value": 0.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "targetId": "matte",
+                    "property": "rotation",
+                    "keyframes": [
+                      {
+                        "frame": 0,
+                        "value": 0.0,
+                        "curve": [
+                          0.0,
+                          0.0,
+                          1.0,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 8,
+                        "value": 0.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 15,
+                        "value": 0.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "targetId": "matte",
+                    "property": "scale_x",
+                    "keyframes": [
+                      {
+                        "frame": 0,
+                        "value": 1.0,
+                        "curve": [
+                          0.0,
+                          0.0,
+                          1.0,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 8,
+                        "value": 1.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 15,
+                        "value": 1.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "targetId": "matte",
+                    "property": "scale_y",
+                    "keyframes": [
+                      {
+                        "frame": 0,
+                        "value": 1.0,
+                        "curve": [
+                          0.0,
+                          0.0,
+                          1.0,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 8,
+                        "value": 1.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 15,
+                        "value": 1.0,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "targetId": "matte",
+                    "property": "opacity",
+                    "keyframes": [
+                      {
+                        "frame": 0,
+                        "value": 0.6,
+                        "curve": [
+                          0.0,
+                          0.0,
+                          1.0,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 8,
+                        "value": 0.9,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      },
+                      {
+                        "frame": 15,
+                        "value": 0.9,
+                        "curve": [
+                          0.2,
+                          0.0,
+                          0.2,
+                          1.0
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "pivot": [
+                  0.5,
+                  0.5
+                ],
+                "parentTargetId": null,
+                "maskAssetId": null,
+                "occluderTargetId": null,
+                "textUnit": "word",
+                "staggerFrames": 3,
+                "readingHoldFrames": 30,
+                "shutterDegrees": 180.0,
+                "temporalSamples": 8,
+                "focusDistance": 1000.0,
+                "depthOfField": 100.0,
+                "displacementRatio": 0.01
+              },
+              "qualification": "implemented",
+              "knowledgeTechniqueId": "alight.motion_choreography",
+              "evidenceClassification": "documentation_and_editorial_inference"
+            },
+            {
+              "id": "world-matte",
+              "sceneId": "temporal-matte",
+              "technique": "asset_matte",
+              "version": 1,
+              "compilerVersion": "res.native-recipes.v4",
+              "startFrame": 0,
+              "endFrameExclusive": 16,
+              "targetLayerIds": [
+                "ed2-dc4fb9af60c130fbb12fd888"
+              ],
+              "parameters": {
+                "tracks": [],
+                "pivot": [
+                  0.5,
+                  0.5
+                ],
+                "parentTargetId": null,
+                "maskAssetId": null,
+                "occluderTargetId": null,
+                "assetMatte": {
+                  "schemaVersion": "studio.asset-matte.v1",
+                  "sourceTargetId": "matte",
+                  "mode": "alpha",
+                  "invert": true,
+                  "coordinateSpace": "composition_world",
+                  "opacitySpace": "source_layer_only"
+                },
+                "textUnit": "word",
+                "staggerFrames": 3,
+                "readingHoldFrames": 30,
+                "shutterDegrees": 180.0,
+                "temporalSamples": 8,
+                "focusDistance": 1000.0,
+                "depthOfField": 100.0,
+                "displacementRatio": 0.01
+              },
+              "qualification": "implemented",
+              "knowledgeTechniqueId": "res.asset_matte",
+              "evidenceClassification": "documentation_and_editorial_inference",
+              "matteSourceLayerId": "ed2-e59dfae8dda971673bcc05cf"
+            },
+            {
+              "id": "local-exposure",
+              "sceneId": "temporal-matte",
+              "technique": "velocity_blur",
+              "version": 1,
+              "compilerVersion": "res.native-recipes.v4",
+              "startFrame": 0,
+              "endFrameExclusive": 16,
+              "targetLayerIds": [
+                "ed2-cede67250799ff0e90550c70"
+              ],
+              "parameters": {
+                "tracks": [],
+                "pivot": [
+                  0.5,
+                  0.5
+                ],
+                "parentTargetId": null,
+                "maskAssetId": null,
+                "occluderTargetId": null,
+                "temporalExposure": {
+                  "schemaVersion": "studio.temporal-exposure.v1",
+                  "sampling": "centered_clipped",
+                  "coordinateSpace": "local_subtree",
+                  "ancestorTime": "center_frame",
+                  "compositing": "premultiplied_srgb_plus_lighter",
+                  "staticReduction": "identical_registered_draw_inputs"
+                },
+                "textUnit": "word",
+                "staggerFrames": 3,
+                "readingHoldFrames": 30,
+                "shutterDegrees": 180.0,
+                "temporalSamples": 8,
+                "focusDistance": 1000.0,
+                "depthOfField": 100.0,
+                "displacementRatio": 0.01
+              },
+              "qualification": "implemented",
+              "knowledgeTechniqueId": "alight.velocity_blur",
+              "evidenceClassification": "documentation_and_editorial_inference"
+            }
+          ],
+          "renderer": "remotion.contextual-v2",
+          "nativeComponentVersion": 1,
+          "motionGraph": {
+            "schemaVersion": "studio.motion-graph.v1",
+            "graphId": "motion-52efb5fd77424670351569c6",
+            "workspaceId": "485e4ffd-9778-4b30-b54a-5616c10a8011",
+            "documentId": "f2a5b15c-f815-428d-88ca-ae3e90378aab",
+            "documentRevision": 4,
+            "frameRate": {
+              "numerator": 30,
+              "denominator": 1
+            },
+            "durationFrames": 16,
+            "canvasWidth": 320,
+            "canvasHeight": 320,
+            "realityMode": "graphic",
+            "completeness": "complete",
+            "status": "suggested",
+            "nodes": [
+              {
+                "nodeId": "node-ed2-8c4385698e5a34a24c5412c9",
+                "targetLayerId": "ed2-8c4385698e5a34a24c5412c9",
+                "parentNodeId": null,
+                "transformOriginX": 0.5,
+                "transformOriginY": 0.5
+              },
+              {
+                "nodeId": "node-ed2-a56b31d15e3f86c09704cffa",
+                "targetLayerId": "ed2-a56b31d15e3f86c09704cffa",
+                "parentNodeId": "node-ed2-8c4385698e5a34a24c5412c9",
+                "transformOriginX": 0.5,
+                "transformOriginY": 0.5
+              },
+              {
+                "nodeId": "node-ed2-faf7a45f078f6363429fed4b",
+                "targetLayerId": "ed2-faf7a45f078f6363429fed4b",
+                "parentNodeId": "node-ed2-8c4385698e5a34a24c5412c9",
+                "transformOriginX": 0.5,
+                "transformOriginY": 0.5
+              },
+              {
+                "nodeId": "node-ed2-9815a342358049197811a1c1",
+                "targetLayerId": "ed2-9815a342358049197811a1c1",
+                "parentNodeId": "node-ed2-8c4385698e5a34a24c5412c9",
+                "transformOriginX": 0.5,
+                "transformOriginY": 0.5
+              },
+              {
+                "nodeId": "node-ed2-da5ae831bc23ee2557493612",
+                "targetLayerId": "ed2-da5ae831bc23ee2557493612",
+                "parentNodeId": "node-ed2-a56b31d15e3f86c09704cffa",
+                "transformOriginX": 0.5,
+                "transformOriginY": 0.5
+              },
+              {
+                "nodeId": "node-ed2-813bf6e6c45ac8c58cd22be8",
+                "targetLayerId": "ed2-813bf6e6c45ac8c58cd22be8",
+                "parentNodeId": "node-ed2-faf7a45f078f6363429fed4b",
+                "transformOriginX": 0.5,
+                "transformOriginY": 0.5
+              },
+              {
+                "nodeId": "node-ed2-cede67250799ff0e90550c70",
+                "targetLayerId": "ed2-cede67250799ff0e90550c70",
+                "parentNodeId": "node-ed2-813bf6e6c45ac8c58cd22be8",
+                "transformOriginX": 0.5,
+                "transformOriginY": 0.5
+              },
+              {
+                "nodeId": "node-ed2-dc4fb9af60c130fbb12fd888",
+                "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+                "parentNodeId": "node-ed2-cede67250799ff0e90550c70",
+                "transformOriginX": 0.5,
+                "transformOriginY": 0.5
+              },
+              {
+                "nodeId": "node-ed2-51ffbf33502bd6873e59a4e0",
+                "targetLayerId": "ed2-51ffbf33502bd6873e59a4e0",
+                "parentNodeId": "node-ed2-faf7a45f078f6363429fed4b",
+                "transformOriginX": 0.5,
+                "transformOriginY": 0.5
+              },
+              {
+                "nodeId": "node-ed2-e59dfae8dda971673bcc05cf",
+                "targetLayerId": "ed2-e59dfae8dda971673bcc05cf",
+                "parentNodeId": "node-ed2-51ffbf33502bd6873e59a4e0",
+                "transformOriginX": 0.5,
+                "transformOriginY": 0.5
+              }
+            ],
+            "tracks": [
+              {
+                "trackId": "ed2-813bf6e6c45ac8c58cd22be8-recipe-x",
+                "targetLayerId": "ed2-813bf6e6c45ac8c58cd22be8",
+                "property": "position_x",
+                "unit": "pixels",
+                "keyframes": [
+                  {
+                    "frame": 0,
+                    "value": 0.0,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.0,
+                      0.0,
+                      1.0,
+                      1.0
+                    ]
+                  },
+                  {
+                    "frame": 8,
+                    "value": 70.0,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.2,
+                      0.0,
+                      0.2,
+                      1.0
+                    ]
+                  },
+                  {
+                    "frame": 15,
+                    "value": 70.0,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.2,
+                      0.0,
+                      0.2,
+                      1.0
+                    ]
+                  }
+                ]
+              },
+              {
+                "trackId": "ed2-813bf6e6c45ac8c58cd22be8-recipe-y",
+                "targetLayerId": "ed2-813bf6e6c45ac8c58cd22be8",
+                "property": "position_y",
+                "unit": "pixels",
+                "keyframes": [
+                  {
+                    "frame": 0,
+                    "value": 0.0,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.0,
+                      0.0,
+                      1.0,
+                      1.0
+                    ]
+                  },
+                  {
+                    "frame": 8,
+                    "value": 8.0,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.2,
+                      0.0,
+                      0.2,
+                      1.0
+                    ]
+                  },
+                  {
+                    "frame": 15,
+                    "value": 8.0,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.2,
+                      0.0,
+                      0.2,
+                      1.0
+                    ]
+                  }
+                ]
+              },
+              {
+                "trackId": "ed2-813bf6e6c45ac8c58cd22be8-recipe-rotation",
+                "targetLayerId": "ed2-813bf6e6c45ac8c58cd22be8",
+                "property": "rotation_degrees",
+                "unit": "degrees",
+                "keyframes": [
+                  {
+                    "frame": 0,
+                    "value": 0.0,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.0,
+                      0.0,
+                      1.0,
+                      1.0
+                    ]
+                  },
+                  {
+                    "frame": 8,
+                    "value": 12.0,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.2,
+                      0.0,
+                      0.2,
+                      1.0
+                    ]
+                  },
+                  {
+                    "frame": 15,
+                    "value": 12.0,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.2,
+                      0.0,
+                      0.2,
+                      1.0
+                    ]
+                  }
+                ]
+              },
+              {
+                "trackId": "ed2-813bf6e6c45ac8c58cd22be8-recipe-scale_x",
+                "targetLayerId": "ed2-813bf6e6c45ac8c58cd22be8",
+                "property": "scale_x",
+                "unit": "ratio",
+                "keyframes": [
+                  {
+                    "frame": 0,
+                    "value": 1.0,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.0,
+                      0.0,
+                      1.0,
+                      1.0
+                    ]
+                  },
+                  {
+                    "frame": 8,
+                    "value": 0.95,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.2,
+                      0.0,
+                      0.2,
+                      1.0
+                    ]
+                  },
+                  {
+                    "frame": 15,
+                    "value": 0.95,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.2,
+                      0.0,
+                      0.2,
+                      1.0
+                    ]
+                  }
+                ]
+              },
+              {
+                "trackId": "ed2-813bf6e6c45ac8c58cd22be8-recipe-scale_y",
+                "targetLayerId": "ed2-813bf6e6c45ac8c58cd22be8",
+                "property": "scale_y",
+                "unit": "ratio",
+                "keyframes": [
+                  {
+                    "frame": 0,
+                    "value": 1.0,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.0,
+                      0.0,
+                      1.0,
+                      1.0
+                    ]
+                  },
+                  {
+                    "frame": 8,
+                    "value": 1.1,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.2,
+                      0.0,
+                      0.2,
+                      1.0
+                    ]
+                  },
+                  {
+                    "frame": 15,
+                    "value": 1.1,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.2,
+                      0.0,
+                      0.2,
+                      1.0
+                    ]
+                  }
+                ]
+              },
+              {
+                "trackId": "ed2-cede67250799ff0e90550c70-recipe-x",
+                "targetLayerId": "ed2-cede67250799ff0e90550c70",
+                "property": "position_x",
+                "unit": "pixels",
+                "keyframes": [
+                  {
+                    "frame": 0,
+                    "value": 0.0,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.0,
+                      0.0,
+                      1.0,
+                      1.0
+                    ]
+                  },
+                  {
+                    "frame": 8,
+                    "value": 20.0,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.2,
+                      0.0,
+                      0.2,
+                      1.0
+                    ]
+                  },
+                  {
+                    "frame": 15,
+                    "value": 20.0,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.2,
+                      0.0,
+                      0.2,
+                      1.0
+                    ]
+                  }
+                ]
+              },
+              {
+                "trackId": "ed2-cede67250799ff0e90550c70-recipe-y",
+                "targetLayerId": "ed2-cede67250799ff0e90550c70",
+                "property": "position_y",
+                "unit": "pixels",
+                "keyframes": [
+                  {
+                    "frame": 0,
+                    "value": 0.0,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.0,
+                      0.0,
+                      1.0,
+                      1.0
+                    ]
+                  },
+                  {
+                    "frame": 8,
+                    "value": -4.0,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.2,
+                      0.0,
+                      0.2,
+                      1.0
+                    ]
+                  },
+                  {
+                    "frame": 15,
+                    "value": -4.0,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.2,
+                      0.0,
+                      0.2,
+                      1.0
+                    ]
+                  }
+                ]
+              },
+              {
+                "trackId": "ed2-cede67250799ff0e90550c70-recipe-rotation",
+                "targetLayerId": "ed2-cede67250799ff0e90550c70",
+                "property": "rotation_degrees",
+                "unit": "degrees",
+                "keyframes": [
+                  {
+                    "frame": 0,
+                    "value": 0.0,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.0,
+                      0.0,
+                      1.0,
+                      1.0
+                    ]
+                  },
+                  {
+                    "frame": 8,
+                    "value": -10.0,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.2,
+                      0.0,
+                      0.2,
+                      1.0
+                    ]
+                  },
+                  {
+                    "frame": 15,
+                    "value": -10.0,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.2,
+                      0.0,
+                      0.2,
+                      1.0
+                    ]
+                  }
+                ]
+              },
+              {
+                "trackId": "ed2-cede67250799ff0e90550c70-recipe-scale_x",
+                "targetLayerId": "ed2-cede67250799ff0e90550c70",
+                "property": "scale_x",
+                "unit": "ratio",
+                "keyframes": [
+                  {
+                    "frame": 0,
+                    "value": 1.0,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.0,
+                      0.0,
+                      1.0,
+                      1.0
+                    ]
+                  },
+                  {
+                    "frame": 8,
+                    "value": 1.08,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.2,
+                      0.0,
+                      0.2,
+                      1.0
+                    ]
+                  },
+                  {
+                    "frame": 15,
+                    "value": 1.08,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.2,
+                      0.0,
+                      0.2,
+                      1.0
+                    ]
+                  }
+                ]
+              },
+              {
+                "trackId": "ed2-cede67250799ff0e90550c70-recipe-scale_y",
+                "targetLayerId": "ed2-cede67250799ff0e90550c70",
+                "property": "scale_y",
+                "unit": "ratio",
+                "keyframes": [
+                  {
+                    "frame": 0,
+                    "value": 1.0,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.0,
+                      0.0,
+                      1.0,
+                      1.0
+                    ]
+                  },
+                  {
+                    "frame": 8,
+                    "value": 0.96,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.2,
+                      0.0,
+                      0.2,
+                      1.0
+                    ]
+                  },
+                  {
+                    "frame": 15,
+                    "value": 0.96,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.2,
+                      0.0,
+                      0.2,
+                      1.0
+                    ]
+                  }
+                ]
+              },
+              {
+                "trackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-x",
+                "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+                "property": "position_x",
+                "unit": "pixels",
+                "keyframes": [
+                  {
+                    "frame": 0,
+                    "value": 12.0,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.0,
+                      0.0,
+                      1.0,
+                      1.0
+                    ]
+                  },
+                  {
+                    "frame": 8,
+                    "value": 24.0,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.2,
+                      0.0,
+                      0.2,
+                      1.0
+                    ]
+                  },
+                  {
+                    "frame": 15,
+                    "value": 24.0,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.2,
+                      0.0,
+                      0.2,
+                      1.0
+                    ]
+                  }
+                ]
+              },
+              {
+                "trackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-y",
+                "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+                "property": "position_y",
+                "unit": "pixels",
+                "keyframes": [
+                  {
+                    "frame": 0,
+                    "value": 0.0,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.0,
+                      0.0,
+                      1.0,
+                      1.0
+                    ]
+                  },
+                  {
+                    "frame": 8,
+                    "value": 8.0,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.2,
+                      0.0,
+                      0.2,
+                      1.0
+                    ]
+                  },
+                  {
+                    "frame": 15,
+                    "value": 8.0,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.2,
+                      0.0,
+                      0.2,
+                      1.0
+                    ]
+                  }
+                ]
+              },
+              {
+                "trackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-rotation",
+                "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+                "property": "rotation_degrees",
+                "unit": "degrees",
+                "keyframes": [
+                  {
+                    "frame": 0,
+                    "value": 0.0,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.0,
+                      0.0,
+                      1.0,
+                      1.0
+                    ]
+                  },
+                  {
+                    "frame": 8,
+                    "value": 10.0,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.2,
+                      0.0,
+                      0.2,
+                      1.0
+                    ]
+                  },
+                  {
+                    "frame": 15,
+                    "value": 10.0,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.2,
+                      0.0,
+                      0.2,
+                      1.0
+                    ]
+                  }
+                ]
+              },
+              {
+                "trackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-scale_x",
+                "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+                "property": "scale_x",
+                "unit": "ratio",
+                "keyframes": [
+                  {
+                    "frame": 0,
+                    "value": 1.0,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.0,
+                      0.0,
+                      1.0,
+                      1.0
+                    ]
+                  },
+                  {
+                    "frame": 8,
+                    "value": 1.05,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.2,
+                      0.0,
+                      0.2,
+                      1.0
+                    ]
+                  },
+                  {
+                    "frame": 15,
+                    "value": 1.05,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.2,
+                      0.0,
+                      0.2,
+                      1.0
+                    ]
+                  }
+                ]
+              },
+              {
+                "trackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-scale_y",
+                "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+                "property": "scale_y",
+                "unit": "ratio",
+                "keyframes": [
+                  {
+                    "frame": 0,
+                    "value": 1.0,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.0,
+                      0.0,
+                      1.0,
+                      1.0
+                    ]
+                  },
+                  {
+                    "frame": 8,
+                    "value": 1.0,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.2,
+                      0.0,
+                      0.2,
+                      1.0
+                    ]
+                  },
+                  {
+                    "frame": 15,
+                    "value": 1.0,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.2,
+                      0.0,
+                      0.2,
+                      1.0
+                    ]
+                  }
+                ]
+              },
+              {
+                "trackId": "ed2-51ffbf33502bd6873e59a4e0-recipe-x",
+                "targetLayerId": "ed2-51ffbf33502bd6873e59a4e0",
+                "property": "position_x",
+                "unit": "pixels",
+                "keyframes": [
+                  {
+                    "frame": 0,
+                    "value": 0.0,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.0,
+                      0.0,
+                      1.0,
+                      1.0
+                    ]
+                  },
+                  {
+                    "frame": 8,
+                    "value": 20.0,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.2,
+                      0.0,
+                      0.2,
+                      1.0
+                    ]
+                  },
+                  {
+                    "frame": 15,
+                    "value": 20.0,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.2,
+                      0.0,
+                      0.2,
+                      1.0
+                    ]
+                  }
+                ]
+              },
+              {
+                "trackId": "ed2-51ffbf33502bd6873e59a4e0-recipe-y",
+                "targetLayerId": "ed2-51ffbf33502bd6873e59a4e0",
+                "property": "position_y",
+                "unit": "pixels",
+                "keyframes": [
+                  {
+                    "frame": 0,
+                    "value": 0.0,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.0,
+                      0.0,
+                      1.0,
+                      1.0
+                    ]
+                  },
+                  {
+                    "frame": 8,
+                    "value": 12.0,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.2,
+                      0.0,
+                      0.2,
+                      1.0
+                    ]
+                  },
+                  {
+                    "frame": 15,
+                    "value": 12.0,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.2,
+                      0.0,
+                      0.2,
+                      1.0
+                    ]
+                  }
+                ]
+              },
+              {
+                "trackId": "ed2-51ffbf33502bd6873e59a4e0-recipe-rotation",
+                "targetLayerId": "ed2-51ffbf33502bd6873e59a4e0",
+                "property": "rotation_degrees",
+                "unit": "degrees",
+                "keyframes": [
+                  {
+                    "frame": 0,
+                    "value": 0.0,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.0,
+                      0.0,
+                      1.0,
+                      1.0
+                    ]
+                  },
+                  {
+                    "frame": 8,
+                    "value": -8.0,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.2,
+                      0.0,
+                      0.2,
+                      1.0
+                    ]
+                  },
+                  {
+                    "frame": 15,
+                    "value": -8.0,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.2,
+                      0.0,
+                      0.2,
+                      1.0
+                    ]
+                  }
+                ]
+              },
+              {
+                "trackId": "ed2-51ffbf33502bd6873e59a4e0-recipe-scale_x",
+                "targetLayerId": "ed2-51ffbf33502bd6873e59a4e0",
+                "property": "scale_x",
+                "unit": "ratio",
+                "keyframes": [
+                  {
+                    "frame": 0,
+                    "value": 1.0,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.0,
+                      0.0,
+                      1.0,
+                      1.0
+                    ]
+                  },
+                  {
+                    "frame": 8,
+                    "value": 1.1,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.2,
+                      0.0,
+                      0.2,
+                      1.0
+                    ]
+                  },
+                  {
+                    "frame": 15,
+                    "value": 1.1,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.2,
+                      0.0,
+                      0.2,
+                      1.0
+                    ]
+                  }
+                ]
+              },
+              {
+                "trackId": "ed2-51ffbf33502bd6873e59a4e0-recipe-scale_y",
+                "targetLayerId": "ed2-51ffbf33502bd6873e59a4e0",
+                "property": "scale_y",
+                "unit": "ratio",
+                "keyframes": [
+                  {
+                    "frame": 0,
+                    "value": 1.0,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.0,
+                      0.0,
+                      1.0,
+                      1.0
+                    ]
+                  },
+                  {
+                    "frame": 8,
+                    "value": 1.1,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.2,
+                      0.0,
+                      0.2,
+                      1.0
+                    ]
+                  },
+                  {
+                    "frame": 15,
+                    "value": 1.1,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.2,
+                      0.0,
+                      0.2,
+                      1.0
+                    ]
+                  }
+                ]
+              },
+              {
+                "trackId": "ed2-e59dfae8dda971673bcc05cf-recipe-x",
+                "targetLayerId": "ed2-e59dfae8dda971673bcc05cf",
+                "property": "position_x",
+                "unit": "pixels",
+                "keyframes": [
+                  {
+                    "frame": 0,
+                    "value": 0.0,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.0,
+                      0.0,
+                      1.0,
+                      1.0
+                    ]
+                  },
+                  {
+                    "frame": 8,
+                    "value": 10.0,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.2,
+                      0.0,
+                      0.2,
+                      1.0
+                    ]
+                  },
+                  {
+                    "frame": 15,
+                    "value": 10.0,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.2,
+                      0.0,
+                      0.2,
+                      1.0
+                    ]
+                  }
+                ]
+              },
+              {
+                "trackId": "ed2-e59dfae8dda971673bcc05cf-recipe-y",
+                "targetLayerId": "ed2-e59dfae8dda971673bcc05cf",
+                "property": "position_y",
+                "unit": "pixels",
+                "keyframes": [
+                  {
+                    "frame": 0,
+                    "value": 0.0,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.0,
+                      0.0,
+                      1.0,
+                      1.0
+                    ]
+                  },
+                  {
+                    "frame": 8,
+                    "value": 0.0,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.2,
+                      0.0,
+                      0.2,
+                      1.0
+                    ]
+                  },
+                  {
+                    "frame": 15,
+                    "value": 0.0,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.2,
+                      0.0,
+                      0.2,
+                      1.0
+                    ]
+                  }
+                ]
+              },
+              {
+                "trackId": "ed2-e59dfae8dda971673bcc05cf-recipe-rotation",
+                "targetLayerId": "ed2-e59dfae8dda971673bcc05cf",
+                "property": "rotation_degrees",
+                "unit": "degrees",
+                "keyframes": [
+                  {
+                    "frame": 0,
+                    "value": 0.0,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.0,
+                      0.0,
+                      1.0,
+                      1.0
+                    ]
+                  },
+                  {
+                    "frame": 8,
+                    "value": 0.0,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.2,
+                      0.0,
+                      0.2,
+                      1.0
+                    ]
+                  },
+                  {
+                    "frame": 15,
+                    "value": 0.0,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.2,
+                      0.0,
+                      0.2,
+                      1.0
+                    ]
+                  }
+                ]
+              },
+              {
+                "trackId": "ed2-e59dfae8dda971673bcc05cf-recipe-scale_x",
+                "targetLayerId": "ed2-e59dfae8dda971673bcc05cf",
+                "property": "scale_x",
+                "unit": "ratio",
+                "keyframes": [
+                  {
+                    "frame": 0,
+                    "value": 1.0,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.0,
+                      0.0,
+                      1.0,
+                      1.0
+                    ]
+                  },
+                  {
+                    "frame": 8,
+                    "value": 1.0,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.2,
+                      0.0,
+                      0.2,
+                      1.0
+                    ]
+                  },
+                  {
+                    "frame": 15,
+                    "value": 1.0,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.2,
+                      0.0,
+                      0.2,
+                      1.0
+                    ]
+                  }
+                ]
+              },
+              {
+                "trackId": "ed2-e59dfae8dda971673bcc05cf-recipe-scale_y",
+                "targetLayerId": "ed2-e59dfae8dda971673bcc05cf",
+                "property": "scale_y",
+                "unit": "ratio",
+                "keyframes": [
+                  {
+                    "frame": 0,
+                    "value": 1.0,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.0,
+                      0.0,
+                      1.0,
+                      1.0
+                    ]
+                  },
+                  {
+                    "frame": 8,
+                    "value": 1.0,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.2,
+                      0.0,
+                      0.2,
+                      1.0
+                    ]
+                  },
+                  {
+                    "frame": 15,
+                    "value": 1.0,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.2,
+                      0.0,
+                      0.2,
+                      1.0
+                    ]
+                  }
+                ]
+              },
+              {
+                "trackId": "ed2-e59dfae8dda971673bcc05cf-recipe-opacity",
+                "targetLayerId": "ed2-e59dfae8dda971673bcc05cf",
+                "property": "opacity",
+                "unit": "ratio",
+                "keyframes": [
+                  {
+                    "frame": 0,
+                    "value": 0.6,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.0,
+                      0.0,
+                      1.0,
+                      1.0
+                    ]
+                  },
+                  {
+                    "frame": 8,
+                    "value": 0.9,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.2,
+                      0.0,
+                      0.2,
+                      1.0
+                    ]
+                  },
+                  {
+                    "frame": 15,
+                    "value": 0.9,
+                    "easing": "cubic_bezier",
+                    "cubicBezier": [
+                      0.2,
+                      0.0,
+                      0.2,
+                      1.0
+                    ]
+                  }
+                ]
+              }
+            ],
+            "transitions": [],
+            "audioEvents": [],
+            "reducedMotionSupported": true,
+            "constraints": [],
+            "sourceEvidenceIds": [],
+            "realityBinding": null,
+            "abstentions": [],
+            "createdBy": "fba16ca9-832e-4768-becb-ac752642208f",
+            "lineage": null,
+            "humanReviewRequired": true,
+            "createdAt": "2026-10-04T11:12:31.798375Z"
+          }
+        },
+        "contextualPlanId": "83ee1ce0-f7f4-486d-a9f9-845816fe8689",
+        "editingPolicy": "draft-first-preserve-message"
+      },
+      "tracks": [],
+      "mediaTimeline": {
+        "schemaVersion": "studio.media-timeline.v1",
+        "frameRate": {
+          "numerator": 30,
+          "denominator": 1
+        },
+        "durationFrames": 16,
+        "tracks": []
+      }
+    },
+    "contentReferences": [],
+    "assets": [
+      {
+        "id": "199001ec-1fb1-4356-80a3-28c60ea7e109",
+        "version": "ee10f031a17421859e3af5f725273644b8534709cb23173c6e1bf0ac8787e2c2",
+        "mediaType": "image/png",
+        "checksum": "ee10f031a17421859e3af5f725273644b8534709cb23173c6e1bf0ac8787e2c2",
+        "origin": "workspace",
+        "rightsStatus": "verified",
+        "provenance": {
+          "editingResource": {
+            "kind": "image",
+            "assetRole": null,
+            "description": "",
+            "tags": [],
+            "sourceUrl": null,
+            "usageEvidence": "Original synthetic fixture",
+            "family": null,
+            "variant": null,
+            "version": "1",
+            "official": false,
+            "framing": "",
+            "focalPoint": "",
+            "negativeSpace": "",
+            "motionDescription": "",
+            "editorialFunction": "",
+            "energy": null,
+            "technical": {
+              "width": 80,
+              "height": 96
+            },
+            "importedBy": "fba16ca9-832e-4768-becb-ac752642208f",
+            "importedAt": "2026-10-04T00:26:05.752926+00:00"
+          }
+        }
+      }
+    ],
+    "identityRef": null,
+    "voiceRef": null,
+    "sceneRef": null,
+    "scriptRef": null,
+    "shotPlanRef": null,
+    "lineage": [],
+    "review": {
+      "status": "draft",
+      "requestedVersion": null,
+      "approvalId": null
+    },
+    "exports": [],
+    "createdAt": "2026-10-04T00:26:05.575510Z",
+    "updatedAt": "2026-10-04T11:12:32.123106"
+  },
+  "renderer": "remotion.contextual-v2",
+  "planId": "83ee1ce0-f7f4-486d-a9f9-845816fe8689",
+  "planRevision": 2,
+  "documentDigest": "09855b516fa601abe16de3e1abc2598a31551be94ea8aa181558a2cc296d5419",
+  "graphDigest": "03c0911da8b97cc94f6d0e133d30f47bb85c9588112efb1a99144c037f49ebf6",
+  "frame": 15,
+  "durationFrames": 16,
+  "frameRate": {
+    "numerator": 30,
+    "denominator": 1
+  },
+  "nodes": [
+    {
+      "nodeId": "node-ed2-8c4385698e5a34a24c5412c9",
+      "targetLayerId": "ed2-8c4385698e5a34a24c5412c9",
+      "parentNodeId": null,
+      "transformOriginX": 0.5,
+      "transformOriginY": 0.5
+    },
+    {
+      "nodeId": "node-ed2-a56b31d15e3f86c09704cffa",
+      "targetLayerId": "ed2-a56b31d15e3f86c09704cffa",
+      "parentNodeId": "node-ed2-8c4385698e5a34a24c5412c9",
+      "transformOriginX": 0.5,
+      "transformOriginY": 0.5
+    },
+    {
+      "nodeId": "node-ed2-faf7a45f078f6363429fed4b",
+      "targetLayerId": "ed2-faf7a45f078f6363429fed4b",
+      "parentNodeId": "node-ed2-8c4385698e5a34a24c5412c9",
+      "transformOriginX": 0.5,
+      "transformOriginY": 0.5
+    },
+    {
+      "nodeId": "node-ed2-9815a342358049197811a1c1",
+      "targetLayerId": "ed2-9815a342358049197811a1c1",
+      "parentNodeId": "node-ed2-8c4385698e5a34a24c5412c9",
+      "transformOriginX": 0.5,
+      "transformOriginY": 0.5
+    },
+    {
+      "nodeId": "node-ed2-da5ae831bc23ee2557493612",
+      "targetLayerId": "ed2-da5ae831bc23ee2557493612",
+      "parentNodeId": "node-ed2-a56b31d15e3f86c09704cffa",
+      "transformOriginX": 0.5,
+      "transformOriginY": 0.5
+    },
+    {
+      "nodeId": "node-ed2-813bf6e6c45ac8c58cd22be8",
+      "targetLayerId": "ed2-813bf6e6c45ac8c58cd22be8",
+      "parentNodeId": "node-ed2-faf7a45f078f6363429fed4b",
+      "transformOriginX": 0.5,
+      "transformOriginY": 0.5
+    },
+    {
+      "nodeId": "node-ed2-cede67250799ff0e90550c70",
+      "targetLayerId": "ed2-cede67250799ff0e90550c70",
+      "parentNodeId": "node-ed2-813bf6e6c45ac8c58cd22be8",
+      "transformOriginX": 0.5,
+      "transformOriginY": 0.5
+    },
+    {
+      "nodeId": "node-ed2-dc4fb9af60c130fbb12fd888",
+      "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+      "parentNodeId": "node-ed2-cede67250799ff0e90550c70",
+      "transformOriginX": 0.5,
+      "transformOriginY": 0.5
+    },
+    {
+      "nodeId": "node-ed2-51ffbf33502bd6873e59a4e0",
+      "targetLayerId": "ed2-51ffbf33502bd6873e59a4e0",
+      "parentNodeId": "node-ed2-faf7a45f078f6363429fed4b",
+      "transformOriginX": 0.5,
+      "transformOriginY": 0.5
+    },
+    {
+      "nodeId": "node-ed2-e59dfae8dda971673bcc05cf",
+      "targetLayerId": "ed2-e59dfae8dda971673bcc05cf",
+      "parentNodeId": "node-ed2-51ffbf33502bd6873e59a4e0",
+      "transformOriginX": 0.5,
+      "transformOriginY": 0.5
+    }
+  ],
+  "tracks": [
+    {
+      "trackId": "ed2-813bf6e6c45ac8c58cd22be8-recipe-x",
+      "targetLayerId": "ed2-813bf6e6c45ac8c58cd22be8",
+      "property": "position_x",
+      "unit": "pixels",
+      "keyframes": [
+        {
+          "frame": 0,
+          "value": 0.0,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "frame": 8,
+          "value": 70.0,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.2,
+            0.0,
+            0.2,
+            1.0
+          ]
+        },
+        {
+          "frame": 15,
+          "value": 70.0,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.2,
+            0.0,
+            0.2,
+            1.0
+          ]
+        }
+      ],
+      "evaluatedLocalValue": 70.0
+    },
+    {
+      "trackId": "ed2-813bf6e6c45ac8c58cd22be8-recipe-y",
+      "targetLayerId": "ed2-813bf6e6c45ac8c58cd22be8",
+      "property": "position_y",
+      "unit": "pixels",
+      "keyframes": [
+        {
+          "frame": 0,
+          "value": 0.0,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "frame": 8,
+          "value": 8.0,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.2,
+            0.0,
+            0.2,
+            1.0
+          ]
+        },
+        {
+          "frame": 15,
+          "value": 8.0,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.2,
+            0.0,
+            0.2,
+            1.0
+          ]
+        }
+      ],
+      "evaluatedLocalValue": 8.0
+    },
+    {
+      "trackId": "ed2-813bf6e6c45ac8c58cd22be8-recipe-rotation",
+      "targetLayerId": "ed2-813bf6e6c45ac8c58cd22be8",
+      "property": "rotation_degrees",
+      "unit": "degrees",
+      "keyframes": [
+        {
+          "frame": 0,
+          "value": 0.0,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "frame": 8,
+          "value": 12.0,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.2,
+            0.0,
+            0.2,
+            1.0
+          ]
+        },
+        {
+          "frame": 15,
+          "value": 12.0,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.2,
+            0.0,
+            0.2,
+            1.0
+          ]
+        }
+      ],
+      "evaluatedLocalValue": 12.0
+    },
+    {
+      "trackId": "ed2-813bf6e6c45ac8c58cd22be8-recipe-scale_x",
+      "targetLayerId": "ed2-813bf6e6c45ac8c58cd22be8",
+      "property": "scale_x",
+      "unit": "ratio",
+      "keyframes": [
+        {
+          "frame": 0,
+          "value": 1.0,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "frame": 8,
+          "value": 0.95,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.2,
+            0.0,
+            0.2,
+            1.0
+          ]
+        },
+        {
+          "frame": 15,
+          "value": 0.95,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.2,
+            0.0,
+            0.2,
+            1.0
+          ]
+        }
+      ],
+      "evaluatedLocalValue": 0.95
+    },
+    {
+      "trackId": "ed2-813bf6e6c45ac8c58cd22be8-recipe-scale_y",
+      "targetLayerId": "ed2-813bf6e6c45ac8c58cd22be8",
+      "property": "scale_y",
+      "unit": "ratio",
+      "keyframes": [
+        {
+          "frame": 0,
+          "value": 1.0,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "frame": 8,
+          "value": 1.1,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.2,
+            0.0,
+            0.2,
+            1.0
+          ]
+        },
+        {
+          "frame": 15,
+          "value": 1.1,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.2,
+            0.0,
+            0.2,
+            1.0
+          ]
+        }
+      ],
+      "evaluatedLocalValue": 1.1
+    },
+    {
+      "trackId": "ed2-cede67250799ff0e90550c70-recipe-x",
+      "targetLayerId": "ed2-cede67250799ff0e90550c70",
+      "property": "position_x",
+      "unit": "pixels",
+      "keyframes": [
+        {
+          "frame": 0,
+          "value": 0.0,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "frame": 8,
+          "value": 20.0,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.2,
+            0.0,
+            0.2,
+            1.0
+          ]
+        },
+        {
+          "frame": 15,
+          "value": 20.0,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.2,
+            0.0,
+            0.2,
+            1.0
+          ]
+        }
+      ],
+      "evaluatedLocalValue": 20.0
+    },
+    {
+      "trackId": "ed2-cede67250799ff0e90550c70-recipe-y",
+      "targetLayerId": "ed2-cede67250799ff0e90550c70",
+      "property": "position_y",
+      "unit": "pixels",
+      "keyframes": [
+        {
+          "frame": 0,
+          "value": 0.0,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "frame": 8,
+          "value": -4.0,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.2,
+            0.0,
+            0.2,
+            1.0
+          ]
+        },
+        {
+          "frame": 15,
+          "value": -4.0,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.2,
+            0.0,
+            0.2,
+            1.0
+          ]
+        }
+      ],
+      "evaluatedLocalValue": -4.0
+    },
+    {
+      "trackId": "ed2-cede67250799ff0e90550c70-recipe-rotation",
+      "targetLayerId": "ed2-cede67250799ff0e90550c70",
+      "property": "rotation_degrees",
+      "unit": "degrees",
+      "keyframes": [
+        {
+          "frame": 0,
+          "value": 0.0,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "frame": 8,
+          "value": -10.0,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.2,
+            0.0,
+            0.2,
+            1.0
+          ]
+        },
+        {
+          "frame": 15,
+          "value": -10.0,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.2,
+            0.0,
+            0.2,
+            1.0
+          ]
+        }
+      ],
+      "evaluatedLocalValue": -10.0
+    },
+    {
+      "trackId": "ed2-cede67250799ff0e90550c70-recipe-scale_x",
+      "targetLayerId": "ed2-cede67250799ff0e90550c70",
+      "property": "scale_x",
+      "unit": "ratio",
+      "keyframes": [
+        {
+          "frame": 0,
+          "value": 1.0,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "frame": 8,
+          "value": 1.08,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.2,
+            0.0,
+            0.2,
+            1.0
+          ]
+        },
+        {
+          "frame": 15,
+          "value": 1.08,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.2,
+            0.0,
+            0.2,
+            1.0
+          ]
+        }
+      ],
+      "evaluatedLocalValue": 1.08
+    },
+    {
+      "trackId": "ed2-cede67250799ff0e90550c70-recipe-scale_y",
+      "targetLayerId": "ed2-cede67250799ff0e90550c70",
+      "property": "scale_y",
+      "unit": "ratio",
+      "keyframes": [
+        {
+          "frame": 0,
+          "value": 1.0,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "frame": 8,
+          "value": 0.96,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.2,
+            0.0,
+            0.2,
+            1.0
+          ]
+        },
+        {
+          "frame": 15,
+          "value": 0.96,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.2,
+            0.0,
+            0.2,
+            1.0
+          ]
+        }
+      ],
+      "evaluatedLocalValue": 0.96
+    },
+    {
+      "trackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-x",
+      "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+      "property": "position_x",
+      "unit": "pixels",
+      "keyframes": [
+        {
+          "frame": 0,
+          "value": 12.0,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "frame": 8,
+          "value": 24.0,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.2,
+            0.0,
+            0.2,
+            1.0
+          ]
+        },
+        {
+          "frame": 15,
+          "value": 24.0,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.2,
+            0.0,
+            0.2,
+            1.0
+          ]
+        }
+      ],
+      "evaluatedLocalValue": 24.0
+    },
+    {
+      "trackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-y",
+      "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+      "property": "position_y",
+      "unit": "pixels",
+      "keyframes": [
+        {
+          "frame": 0,
+          "value": 0.0,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "frame": 8,
+          "value": 8.0,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.2,
+            0.0,
+            0.2,
+            1.0
+          ]
+        },
+        {
+          "frame": 15,
+          "value": 8.0,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.2,
+            0.0,
+            0.2,
+            1.0
+          ]
+        }
+      ],
+      "evaluatedLocalValue": 8.0
+    },
+    {
+      "trackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-rotation",
+      "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+      "property": "rotation_degrees",
+      "unit": "degrees",
+      "keyframes": [
+        {
+          "frame": 0,
+          "value": 0.0,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "frame": 8,
+          "value": 10.0,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.2,
+            0.0,
+            0.2,
+            1.0
+          ]
+        },
+        {
+          "frame": 15,
+          "value": 10.0,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.2,
+            0.0,
+            0.2,
+            1.0
+          ]
+        }
+      ],
+      "evaluatedLocalValue": 10.0
+    },
+    {
+      "trackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-scale_x",
+      "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+      "property": "scale_x",
+      "unit": "ratio",
+      "keyframes": [
+        {
+          "frame": 0,
+          "value": 1.0,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "frame": 8,
+          "value": 1.05,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.2,
+            0.0,
+            0.2,
+            1.0
+          ]
+        },
+        {
+          "frame": 15,
+          "value": 1.05,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.2,
+            0.0,
+            0.2,
+            1.0
+          ]
+        }
+      ],
+      "evaluatedLocalValue": 1.05
+    },
+    {
+      "trackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-scale_y",
+      "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+      "property": "scale_y",
+      "unit": "ratio",
+      "keyframes": [
+        {
+          "frame": 0,
+          "value": 1.0,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "frame": 8,
+          "value": 1.0,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.2,
+            0.0,
+            0.2,
+            1.0
+          ]
+        },
+        {
+          "frame": 15,
+          "value": 1.0,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.2,
+            0.0,
+            0.2,
+            1.0
+          ]
+        }
+      ],
+      "evaluatedLocalValue": 1.0
+    },
+    {
+      "trackId": "ed2-51ffbf33502bd6873e59a4e0-recipe-x",
+      "targetLayerId": "ed2-51ffbf33502bd6873e59a4e0",
+      "property": "position_x",
+      "unit": "pixels",
+      "keyframes": [
+        {
+          "frame": 0,
+          "value": 0.0,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "frame": 8,
+          "value": 20.0,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.2,
+            0.0,
+            0.2,
+            1.0
+          ]
+        },
+        {
+          "frame": 15,
+          "value": 20.0,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.2,
+            0.0,
+            0.2,
+            1.0
+          ]
+        }
+      ],
+      "evaluatedLocalValue": 20.0
+    },
+    {
+      "trackId": "ed2-51ffbf33502bd6873e59a4e0-recipe-y",
+      "targetLayerId": "ed2-51ffbf33502bd6873e59a4e0",
+      "property": "position_y",
+      "unit": "pixels",
+      "keyframes": [
+        {
+          "frame": 0,
+          "value": 0.0,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "frame": 8,
+          "value": 12.0,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.2,
+            0.0,
+            0.2,
+            1.0
+          ]
+        },
+        {
+          "frame": 15,
+          "value": 12.0,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.2,
+            0.0,
+            0.2,
+            1.0
+          ]
+        }
+      ],
+      "evaluatedLocalValue": 12.0
+    },
+    {
+      "trackId": "ed2-51ffbf33502bd6873e59a4e0-recipe-rotation",
+      "targetLayerId": "ed2-51ffbf33502bd6873e59a4e0",
+      "property": "rotation_degrees",
+      "unit": "degrees",
+      "keyframes": [
+        {
+          "frame": 0,
+          "value": 0.0,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "frame": 8,
+          "value": -8.0,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.2,
+            0.0,
+            0.2,
+            1.0
+          ]
+        },
+        {
+          "frame": 15,
+          "value": -8.0,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.2,
+            0.0,
+            0.2,
+            1.0
+          ]
+        }
+      ],
+      "evaluatedLocalValue": -8.0
+    },
+    {
+      "trackId": "ed2-51ffbf33502bd6873e59a4e0-recipe-scale_x",
+      "targetLayerId": "ed2-51ffbf33502bd6873e59a4e0",
+      "property": "scale_x",
+      "unit": "ratio",
+      "keyframes": [
+        {
+          "frame": 0,
+          "value": 1.0,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "frame": 8,
+          "value": 1.1,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.2,
+            0.0,
+            0.2,
+            1.0
+          ]
+        },
+        {
+          "frame": 15,
+          "value": 1.1,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.2,
+            0.0,
+            0.2,
+            1.0
+          ]
+        }
+      ],
+      "evaluatedLocalValue": 1.1
+    },
+    {
+      "trackId": "ed2-51ffbf33502bd6873e59a4e0-recipe-scale_y",
+      "targetLayerId": "ed2-51ffbf33502bd6873e59a4e0",
+      "property": "scale_y",
+      "unit": "ratio",
+      "keyframes": [
+        {
+          "frame": 0,
+          "value": 1.0,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "frame": 8,
+          "value": 1.1,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.2,
+            0.0,
+            0.2,
+            1.0
+          ]
+        },
+        {
+          "frame": 15,
+          "value": 1.1,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.2,
+            0.0,
+            0.2,
+            1.0
+          ]
+        }
+      ],
+      "evaluatedLocalValue": 1.1
+    },
+    {
+      "trackId": "ed2-e59dfae8dda971673bcc05cf-recipe-x",
+      "targetLayerId": "ed2-e59dfae8dda971673bcc05cf",
+      "property": "position_x",
+      "unit": "pixels",
+      "keyframes": [
+        {
+          "frame": 0,
+          "value": 0.0,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "frame": 8,
+          "value": 10.0,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.2,
+            0.0,
+            0.2,
+            1.0
+          ]
+        },
+        {
+          "frame": 15,
+          "value": 10.0,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.2,
+            0.0,
+            0.2,
+            1.0
+          ]
+        }
+      ],
+      "evaluatedLocalValue": 10.0
+    },
+    {
+      "trackId": "ed2-e59dfae8dda971673bcc05cf-recipe-y",
+      "targetLayerId": "ed2-e59dfae8dda971673bcc05cf",
+      "property": "position_y",
+      "unit": "pixels",
+      "keyframes": [
+        {
+          "frame": 0,
+          "value": 0.0,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "frame": 8,
+          "value": 0.0,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.2,
+            0.0,
+            0.2,
+            1.0
+          ]
+        },
+        {
+          "frame": 15,
+          "value": 0.0,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.2,
+            0.0,
+            0.2,
+            1.0
+          ]
+        }
+      ],
+      "evaluatedLocalValue": 0.0
+    },
+    {
+      "trackId": "ed2-e59dfae8dda971673bcc05cf-recipe-rotation",
+      "targetLayerId": "ed2-e59dfae8dda971673bcc05cf",
+      "property": "rotation_degrees",
+      "unit": "degrees",
+      "keyframes": [
+        {
+          "frame": 0,
+          "value": 0.0,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "frame": 8,
+          "value": 0.0,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.2,
+            0.0,
+            0.2,
+            1.0
+          ]
+        },
+        {
+          "frame": 15,
+          "value": 0.0,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.2,
+            0.0,
+            0.2,
+            1.0
+          ]
+        }
+      ],
+      "evaluatedLocalValue": 0.0
+    },
+    {
+      "trackId": "ed2-e59dfae8dda971673bcc05cf-recipe-scale_x",
+      "targetLayerId": "ed2-e59dfae8dda971673bcc05cf",
+      "property": "scale_x",
+      "unit": "ratio",
+      "keyframes": [
+        {
+          "frame": 0,
+          "value": 1.0,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "frame": 8,
+          "value": 1.0,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.2,
+            0.0,
+            0.2,
+            1.0
+          ]
+        },
+        {
+          "frame": 15,
+          "value": 1.0,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.2,
+            0.0,
+            0.2,
+            1.0
+          ]
+        }
+      ],
+      "evaluatedLocalValue": 1.0
+    },
+    {
+      "trackId": "ed2-e59dfae8dda971673bcc05cf-recipe-scale_y",
+      "targetLayerId": "ed2-e59dfae8dda971673bcc05cf",
+      "property": "scale_y",
+      "unit": "ratio",
+      "keyframes": [
+        {
+          "frame": 0,
+          "value": 1.0,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "frame": 8,
+          "value": 1.0,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.2,
+            0.0,
+            0.2,
+            1.0
+          ]
+        },
+        {
+          "frame": 15,
+          "value": 1.0,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.2,
+            0.0,
+            0.2,
+            1.0
+          ]
+        }
+      ],
+      "evaluatedLocalValue": 1.0
+    },
+    {
+      "trackId": "ed2-e59dfae8dda971673bcc05cf-recipe-opacity",
+      "targetLayerId": "ed2-e59dfae8dda971673bcc05cf",
+      "property": "opacity",
+      "unit": "ratio",
+      "keyframes": [
+        {
+          "frame": 0,
+          "value": 0.6,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "frame": 8,
+          "value": 0.9,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.2,
+            0.0,
+            0.2,
+            1.0
+          ]
+        },
+        {
+          "frame": 15,
+          "value": 0.9,
+          "easing": "cubic_bezier",
+          "cubicBezier": [
+            0.2,
+            0.0,
+            0.2,
+            1.0
+          ]
+        }
+      ],
+      "evaluatedLocalValue": 0.9
+    }
+  ],
+  "scenes": [
+    {
+      "sceneId": "temporal-matte",
+      "startFrame": 0,
+      "durationFrames": 16,
+      "purpose": "Demonstrate",
+      "verification": [
+        "Action stays visible"
+      ],
+      "sceneDigest": "7cca9cc892a7aca24169fd7de0965f4e28925fa77001fd3f2c1281d8d3c2b44a",
+      "visualStates": [],
+      "observationCues": [],
+      "semanticAssertions": [],
+      "shotPlan": []
+    }
+  ],
+  "layerScenes": {
+    "ed2-8c4385698e5a34a24c5412c9": "temporal-matte",
+    "ed2-a56b31d15e3f86c09704cffa": "temporal-matte",
+    "ed2-faf7a45f078f6363429fed4b": "temporal-matte",
+    "ed2-9815a342358049197811a1c1": "temporal-matte",
+    "ed2-da5ae831bc23ee2557493612": "temporal-matte",
+    "ed2-813bf6e6c45ac8c58cd22be8": "temporal-matte",
+    "ed2-cede67250799ff0e90550c70": "temporal-matte",
+    "ed2-dc4fb9af60c130fbb12fd888": "temporal-matte",
+    "ed2-51ffbf33502bd6873e59a4e0": "temporal-matte",
+    "ed2-e59dfae8dda971673bcc05cf": "temporal-matte"
+  },
+  "recipes": [
+    {
+      "sceneId": "temporal-matte",
+      "schemaVersion": "studio.motion-recipe.v1",
+      "id": "outer-move",
+      "version": 1,
+      "technique": "motion_choreography",
+      "targetIds": [
+        "outer"
+      ],
+      "startFrame": 0,
+      "endFrameExclusive": 16,
+      "intent": "Affine motion and hold",
+      "continuityAnchor": "Same target and original pixels",
+      "parameters": {
+        "tracks": [
+          {
+            "targetId": "outer",
+            "property": "x",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0.0,
+                "curve": [
+                  0.0,
+                  0.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              {
+                "frame": 8,
+                "value": 70.0,
+                "curve": [
+                  0.2,
+                  0.0,
+                  0.2,
+                  1.0
+                ]
+              },
+              {
+                "frame": 15,
+                "value": 70.0,
+                "curve": [
+                  0.2,
+                  0.0,
+                  0.2,
+                  1.0
+                ]
+              }
+            ]
+          },
+          {
+            "targetId": "outer",
+            "property": "y",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0.0,
+                "curve": [
+                  0.0,
+                  0.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              {
+                "frame": 8,
+                "value": 8.0,
+                "curve": [
+                  0.2,
+                  0.0,
+                  0.2,
+                  1.0
+                ]
+              },
+              {
+                "frame": 15,
+                "value": 8.0,
+                "curve": [
+                  0.2,
+                  0.0,
+                  0.2,
+                  1.0
+                ]
+              }
+            ]
+          },
+          {
+            "targetId": "outer",
+            "property": "rotation",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0.0,
+                "curve": [
+                  0.0,
+                  0.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              {
+                "frame": 8,
+                "value": 12.0,
+                "curve": [
+                  0.2,
+                  0.0,
+                  0.2,
+                  1.0
+                ]
+              },
+              {
+                "frame": 15,
+                "value": 12.0,
+                "curve": [
+                  0.2,
+                  0.0,
+                  0.2,
+                  1.0
+                ]
+              }
+            ]
+          },
+          {
+            "targetId": "outer",
+            "property": "scale_x",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 1.0,
+                "curve": [
+                  0.0,
+                  0.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              {
+                "frame": 8,
+                "value": 0.95,
+                "curve": [
+                  0.2,
+                  0.0,
+                  0.2,
+                  1.0
+                ]
+              },
+              {
+                "frame": 15,
+                "value": 0.95,
+                "curve": [
+                  0.2,
+                  0.0,
+                  0.2,
+                  1.0
+                ]
+              }
+            ]
+          },
+          {
+            "targetId": "outer",
+            "property": "scale_y",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 1.0,
+                "curve": [
+                  0.0,
+                  0.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              {
+                "frame": 8,
+                "value": 1.1,
+                "curve": [
+                  0.2,
+                  0.0,
+                  0.2,
+                  1.0
+                ]
+              },
+              {
+                "frame": 15,
+                "value": 1.1,
+                "curve": [
+                  0.2,
+                  0.0,
+                  0.2,
+                  1.0
+                ]
+              }
+            ]
+          }
+        ],
+        "pivot": [
+          0.5,
+          0.5
+        ],
+        "parentTargetId": null,
+        "maskAssetId": null,
+        "occluderTargetId": null,
+        "textUnit": "word",
+        "staggerFrames": 3,
+        "readingHoldFrames": 30,
+        "shutterDegrees": 180.0,
+        "temporalSamples": 8,
+        "focusDistance": 1000.0,
+        "depthOfField": 100.0,
+        "displacementRatio": 0.01
+      },
+      "soundEvents": [],
+      "verification": [
+        "Pixels retain matte identity"
+      ]
+    },
+    {
+      "sceneId": "temporal-matte",
+      "schemaVersion": "studio.motion-recipe.v1",
+      "id": "rig-move",
+      "version": 1,
+      "technique": "motion_choreography",
+      "targetIds": [
+        "rig"
+      ],
+      "startFrame": 0,
+      "endFrameExclusive": 16,
+      "intent": "Affine motion and hold",
+      "continuityAnchor": "Same target and original pixels",
+      "parameters": {
+        "tracks": [
+          {
+            "targetId": "rig",
+            "property": "x",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0.0,
+                "curve": [
+                  0.0,
+                  0.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              {
+                "frame": 8,
+                "value": 20.0,
+                "curve": [
+                  0.2,
+                  0.0,
+                  0.2,
+                  1.0
+                ]
+              },
+              {
+                "frame": 15,
+                "value": 20.0,
+                "curve": [
+                  0.2,
+                  0.0,
+                  0.2,
+                  1.0
+                ]
+              }
+            ]
+          },
+          {
+            "targetId": "rig",
+            "property": "y",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0.0,
+                "curve": [
+                  0.0,
+                  0.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              {
+                "frame": 8,
+                "value": -4.0,
+                "curve": [
+                  0.2,
+                  0.0,
+                  0.2,
+                  1.0
+                ]
+              },
+              {
+                "frame": 15,
+                "value": -4.0,
+                "curve": [
+                  0.2,
+                  0.0,
+                  0.2,
+                  1.0
+                ]
+              }
+            ]
+          },
+          {
+            "targetId": "rig",
+            "property": "rotation",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0.0,
+                "curve": [
+                  0.0,
+                  0.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              {
+                "frame": 8,
+                "value": -10.0,
+                "curve": [
+                  0.2,
+                  0.0,
+                  0.2,
+                  1.0
+                ]
+              },
+              {
+                "frame": 15,
+                "value": -10.0,
+                "curve": [
+                  0.2,
+                  0.0,
+                  0.2,
+                  1.0
+                ]
+              }
+            ]
+          },
+          {
+            "targetId": "rig",
+            "property": "scale_x",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 1.0,
+                "curve": [
+                  0.0,
+                  0.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              {
+                "frame": 8,
+                "value": 1.08,
+                "curve": [
+                  0.2,
+                  0.0,
+                  0.2,
+                  1.0
+                ]
+              },
+              {
+                "frame": 15,
+                "value": 1.08,
+                "curve": [
+                  0.2,
+                  0.0,
+                  0.2,
+                  1.0
+                ]
+              }
+            ]
+          },
+          {
+            "targetId": "rig",
+            "property": "scale_y",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 1.0,
+                "curve": [
+                  0.0,
+                  0.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              {
+                "frame": 8,
+                "value": 0.96,
+                "curve": [
+                  0.2,
+                  0.0,
+                  0.2,
+                  1.0
+                ]
+              },
+              {
+                "frame": 15,
+                "value": 0.96,
+                "curve": [
+                  0.2,
+                  0.0,
+                  0.2,
+                  1.0
+                ]
+              }
+            ]
+          }
+        ],
+        "pivot": [
+          0.5,
+          0.5
+        ],
+        "parentTargetId": null,
+        "maskAssetId": null,
+        "occluderTargetId": null,
+        "textUnit": "word",
+        "staggerFrames": 3,
+        "readingHoldFrames": 30,
+        "shutterDegrees": 180.0,
+        "temporalSamples": 8,
+        "focusDistance": 1000.0,
+        "depthOfField": 100.0,
+        "displacementRatio": 0.01
+      },
+      "soundEvents": [],
+      "verification": [
+        "Pixels retain matte identity"
+      ]
+    },
+    {
+      "sceneId": "temporal-matte",
+      "schemaVersion": "studio.motion-recipe.v1",
+      "id": "hero-move",
+      "version": 1,
+      "technique": "motion_choreography",
+      "targetIds": [
+        "hero"
+      ],
+      "startFrame": 0,
+      "endFrameExclusive": 16,
+      "intent": "Affine motion and hold",
+      "continuityAnchor": "Same target and original pixels",
+      "parameters": {
+        "tracks": [
+          {
+            "targetId": "hero",
+            "property": "x",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 12.0,
+                "curve": [
+                  0.0,
+                  0.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              {
+                "frame": 8,
+                "value": 24.0,
+                "curve": [
+                  0.2,
+                  0.0,
+                  0.2,
+                  1.0
+                ]
+              },
+              {
+                "frame": 15,
+                "value": 24.0,
+                "curve": [
+                  0.2,
+                  0.0,
+                  0.2,
+                  1.0
+                ]
+              }
+            ]
+          },
+          {
+            "targetId": "hero",
+            "property": "y",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0.0,
+                "curve": [
+                  0.0,
+                  0.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              {
+                "frame": 8,
+                "value": 8.0,
+                "curve": [
+                  0.2,
+                  0.0,
+                  0.2,
+                  1.0
+                ]
+              },
+              {
+                "frame": 15,
+                "value": 8.0,
+                "curve": [
+                  0.2,
+                  0.0,
+                  0.2,
+                  1.0
+                ]
+              }
+            ]
+          },
+          {
+            "targetId": "hero",
+            "property": "rotation",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0.0,
+                "curve": [
+                  0.0,
+                  0.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              {
+                "frame": 8,
+                "value": 10.0,
+                "curve": [
+                  0.2,
+                  0.0,
+                  0.2,
+                  1.0
+                ]
+              },
+              {
+                "frame": 15,
+                "value": 10.0,
+                "curve": [
+                  0.2,
+                  0.0,
+                  0.2,
+                  1.0
+                ]
+              }
+            ]
+          },
+          {
+            "targetId": "hero",
+            "property": "scale_x",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 1.0,
+                "curve": [
+                  0.0,
+                  0.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              {
+                "frame": 8,
+                "value": 1.05,
+                "curve": [
+                  0.2,
+                  0.0,
+                  0.2,
+                  1.0
+                ]
+              },
+              {
+                "frame": 15,
+                "value": 1.05,
+                "curve": [
+                  0.2,
+                  0.0,
+                  0.2,
+                  1.0
+                ]
+              }
+            ]
+          },
+          {
+            "targetId": "hero",
+            "property": "scale_y",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 1.0,
+                "curve": [
+                  0.0,
+                  0.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              {
+                "frame": 8,
+                "value": 1.0,
+                "curve": [
+                  0.2,
+                  0.0,
+                  0.2,
+                  1.0
+                ]
+              },
+              {
+                "frame": 15,
+                "value": 1.0,
+                "curve": [
+                  0.2,
+                  0.0,
+                  0.2,
+                  1.0
+                ]
+              }
+            ]
+          }
+        ],
+        "pivot": [
+          0.5,
+          0.5
+        ],
+        "parentTargetId": null,
+        "maskAssetId": null,
+        "occluderTargetId": null,
+        "textUnit": "word",
+        "staggerFrames": 3,
+        "readingHoldFrames": 30,
+        "shutterDegrees": 180.0,
+        "temporalSamples": 8,
+        "focusDistance": 1000.0,
+        "depthOfField": 100.0,
+        "displacementRatio": 0.01
+      },
+      "soundEvents": [],
+      "verification": [
+        "Pixels retain matte identity"
+      ]
+    },
+    {
+      "sceneId": "temporal-matte",
+      "schemaVersion": "studio.motion-recipe.v1",
+      "id": "mask-rig-move",
+      "version": 1,
+      "technique": "motion_choreography",
+      "targetIds": [
+        "mask-rig"
+      ],
+      "startFrame": 0,
+      "endFrameExclusive": 16,
+      "intent": "Affine motion and hold",
+      "continuityAnchor": "Same target and original pixels",
+      "parameters": {
+        "tracks": [
+          {
+            "targetId": "mask-rig",
+            "property": "x",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0.0,
+                "curve": [
+                  0.0,
+                  0.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              {
+                "frame": 8,
+                "value": 20.0,
+                "curve": [
+                  0.2,
+                  0.0,
+                  0.2,
+                  1.0
+                ]
+              },
+              {
+                "frame": 15,
+                "value": 20.0,
+                "curve": [
+                  0.2,
+                  0.0,
+                  0.2,
+                  1.0
+                ]
+              }
+            ]
+          },
+          {
+            "targetId": "mask-rig",
+            "property": "y",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0.0,
+                "curve": [
+                  0.0,
+                  0.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              {
+                "frame": 8,
+                "value": 12.0,
+                "curve": [
+                  0.2,
+                  0.0,
+                  0.2,
+                  1.0
+                ]
+              },
+              {
+                "frame": 15,
+                "value": 12.0,
+                "curve": [
+                  0.2,
+                  0.0,
+                  0.2,
+                  1.0
+                ]
+              }
+            ]
+          },
+          {
+            "targetId": "mask-rig",
+            "property": "rotation",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0.0,
+                "curve": [
+                  0.0,
+                  0.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              {
+                "frame": 8,
+                "value": -8.0,
+                "curve": [
+                  0.2,
+                  0.0,
+                  0.2,
+                  1.0
+                ]
+              },
+              {
+                "frame": 15,
+                "value": -8.0,
+                "curve": [
+                  0.2,
+                  0.0,
+                  0.2,
+                  1.0
+                ]
+              }
+            ]
+          },
+          {
+            "targetId": "mask-rig",
+            "property": "scale_x",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 1.0,
+                "curve": [
+                  0.0,
+                  0.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              {
+                "frame": 8,
+                "value": 1.1,
+                "curve": [
+                  0.2,
+                  0.0,
+                  0.2,
+                  1.0
+                ]
+              },
+              {
+                "frame": 15,
+                "value": 1.1,
+                "curve": [
+                  0.2,
+                  0.0,
+                  0.2,
+                  1.0
+                ]
+              }
+            ]
+          },
+          {
+            "targetId": "mask-rig",
+            "property": "scale_y",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 1.0,
+                "curve": [
+                  0.0,
+                  0.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              {
+                "frame": 8,
+                "value": 1.1,
+                "curve": [
+                  0.2,
+                  0.0,
+                  0.2,
+                  1.0
+                ]
+              },
+              {
+                "frame": 15,
+                "value": 1.1,
+                "curve": [
+                  0.2,
+                  0.0,
+                  0.2,
+                  1.0
+                ]
+              }
+            ]
+          }
+        ],
+        "pivot": [
+          0.5,
+          0.5
+        ],
+        "parentTargetId": null,
+        "maskAssetId": null,
+        "occluderTargetId": null,
+        "textUnit": "word",
+        "staggerFrames": 3,
+        "readingHoldFrames": 30,
+        "shutterDegrees": 180.0,
+        "temporalSamples": 8,
+        "focusDistance": 1000.0,
+        "depthOfField": 100.0,
+        "displacementRatio": 0.01
+      },
+      "soundEvents": [],
+      "verification": [
+        "Pixels retain matte identity"
+      ]
+    },
+    {
+      "sceneId": "temporal-matte",
+      "schemaVersion": "studio.motion-recipe.v1",
+      "id": "matte-move",
+      "version": 1,
+      "technique": "motion_choreography",
+      "targetIds": [
+        "matte"
+      ],
+      "startFrame": 0,
+      "endFrameExclusive": 16,
+      "intent": "Affine motion and hold",
+      "continuityAnchor": "Same target and original pixels",
+      "parameters": {
+        "tracks": [
+          {
+            "targetId": "matte",
+            "property": "x",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0.0,
+                "curve": [
+                  0.0,
+                  0.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              {
+                "frame": 8,
+                "value": 10.0,
+                "curve": [
+                  0.2,
+                  0.0,
+                  0.2,
+                  1.0
+                ]
+              },
+              {
+                "frame": 15,
+                "value": 10.0,
+                "curve": [
+                  0.2,
+                  0.0,
+                  0.2,
+                  1.0
+                ]
+              }
+            ]
+          },
+          {
+            "targetId": "matte",
+            "property": "y",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0.0,
+                "curve": [
+                  0.0,
+                  0.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              {
+                "frame": 8,
+                "value": 0.0,
+                "curve": [
+                  0.2,
+                  0.0,
+                  0.2,
+                  1.0
+                ]
+              },
+              {
+                "frame": 15,
+                "value": 0.0,
+                "curve": [
+                  0.2,
+                  0.0,
+                  0.2,
+                  1.0
+                ]
+              }
+            ]
+          },
+          {
+            "targetId": "matte",
+            "property": "rotation",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0.0,
+                "curve": [
+                  0.0,
+                  0.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              {
+                "frame": 8,
+                "value": 0.0,
+                "curve": [
+                  0.2,
+                  0.0,
+                  0.2,
+                  1.0
+                ]
+              },
+              {
+                "frame": 15,
+                "value": 0.0,
+                "curve": [
+                  0.2,
+                  0.0,
+                  0.2,
+                  1.0
+                ]
+              }
+            ]
+          },
+          {
+            "targetId": "matte",
+            "property": "scale_x",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 1.0,
+                "curve": [
+                  0.0,
+                  0.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              {
+                "frame": 8,
+                "value": 1.0,
+                "curve": [
+                  0.2,
+                  0.0,
+                  0.2,
+                  1.0
+                ]
+              },
+              {
+                "frame": 15,
+                "value": 1.0,
+                "curve": [
+                  0.2,
+                  0.0,
+                  0.2,
+                  1.0
+                ]
+              }
+            ]
+          },
+          {
+            "targetId": "matte",
+            "property": "scale_y",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 1.0,
+                "curve": [
+                  0.0,
+                  0.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              {
+                "frame": 8,
+                "value": 1.0,
+                "curve": [
+                  0.2,
+                  0.0,
+                  0.2,
+                  1.0
+                ]
+              },
+              {
+                "frame": 15,
+                "value": 1.0,
+                "curve": [
+                  0.2,
+                  0.0,
+                  0.2,
+                  1.0
+                ]
+              }
+            ]
+          },
+          {
+            "targetId": "matte",
+            "property": "opacity",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0.6,
+                "curve": [
+                  0.0,
+                  0.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              {
+                "frame": 8,
+                "value": 0.9,
+                "curve": [
+                  0.2,
+                  0.0,
+                  0.2,
+                  1.0
+                ]
+              },
+              {
+                "frame": 15,
+                "value": 0.9,
+                "curve": [
+                  0.2,
+                  0.0,
+                  0.2,
+                  1.0
+                ]
+              }
+            ]
+          }
+        ],
+        "pivot": [
+          0.5,
+          0.5
+        ],
+        "parentTargetId": null,
+        "maskAssetId": null,
+        "occluderTargetId": null,
+        "textUnit": "word",
+        "staggerFrames": 3,
+        "readingHoldFrames": 30,
+        "shutterDegrees": 180.0,
+        "temporalSamples": 8,
+        "focusDistance": 1000.0,
+        "depthOfField": 100.0,
+        "displacementRatio": 0.01
+      },
+      "soundEvents": [],
+      "verification": [
+        "Pixels retain matte identity"
+      ]
+    },
+    {
+      "sceneId": "temporal-matte",
+      "schemaVersion": "studio.motion-recipe.v1",
+      "id": "world-matte",
+      "version": 1,
+      "technique": "asset_matte",
+      "targetIds": [
+        "hero"
+      ],
+      "startFrame": 0,
+      "endFrameExclusive": 16,
+      "intent": "World-space original matte",
+      "continuityAnchor": "Same bitmap",
+      "parameters": {
+        "tracks": [],
+        "pivot": [
+          0.5,
+          0.5
+        ],
+        "parentTargetId": null,
+        "maskAssetId": null,
+        "occluderTargetId": null,
+        "assetMatte": {
+          "schemaVersion": "studio.asset-matte.v1",
+          "sourceTargetId": "matte",
+          "mode": "alpha",
+          "invert": true,
+          "coordinateSpace": "composition_world",
+          "opacitySpace": "source_layer_only"
+        },
+        "textUnit": "word",
+        "staggerFrames": 3,
+        "readingHoldFrames": 30,
+        "shutterDegrees": 180.0,
+        "temporalSamples": 8,
+        "focusDistance": 1000.0,
+        "depthOfField": 100.0,
+        "displacementRatio": 0.01
+      },
+      "soundEvents": [],
+      "verification": [
+        "Mask does not drift"
+      ]
+    },
+    {
+      "sceneId": "temporal-matte",
+      "schemaVersion": "studio.motion-recipe.v1",
+      "id": "local-exposure",
+      "version": 1,
+      "technique": "velocity_blur",
+      "targetIds": [
+        "rig"
+      ],
+      "startFrame": 0,
+      "endFrameExclusive": 16,
+      "intent": "Expose local subtree while external world stays at center",
+      "continuityAnchor": "Same matte",
+      "parameters": {
+        "tracks": [],
+        "pivot": [
+          0.5,
+          0.5
+        ],
+        "parentTargetId": null,
+        "maskAssetId": null,
+        "occluderTargetId": null,
+        "temporalExposure": {
+          "schemaVersion": "studio.temporal-exposure.v1",
+          "sampling": "centered_clipped",
+          "coordinateSpace": "local_subtree",
+          "ancestorTime": "center_frame",
+          "compositing": "premultiplied_srgb_plus_lighter",
+          "staticReduction": "identical_registered_draw_inputs"
+        },
+        "textUnit": "word",
+        "staggerFrames": 3,
+        "readingHoldFrames": 30,
+        "shutterDegrees": 180.0,
+        "temporalSamples": 8,
+        "focusDistance": 1000.0,
+        "depthOfField": 100.0,
+        "displacementRatio": 0.01
+      },
+      "soundEvents": [],
+      "verification": [
+        "World matte and sampled target agree"
+      ]
+    }
+  ],
+  "parentCandidates": [
+    {
+      "sceneId": "temporal-matte",
+      "targetId": "outer"
+    },
+    {
+      "sceneId": "temporal-matte",
+      "targetId": "rig"
+    },
+    {
+      "sceneId": "temporal-matte",
+      "targetId": "mask-rig"
+    }
+  ],
+  "versions": {
+    "compilerVersion": "res.scene-compiler.v2.16",
+    "runtimeVersion": "res.editorial-runtime.v2.5",
+    "componentLibraryVersion": "res.editorial-components.v2.20"
+  },
+  "hashes": {
+    "sourceDirection": "f79d9eeda168ccb19e735016b991b19ff6f910d34be7c6fc0d85e4ce4be1c708",
+    "executableDirection": "39a83d1be2a546b0e2fde62db0d2af93118851b3abda674d71f2bd50dbb18bf4",
+    "sourceDocument": "36b20edbc77d86d69975211ac973aa384bc2eb435217f419f4aaa3c534d3e401",
+    "executableComposition": "15b7e6586c95e65c4199af05df92e033f0cc569a181566e8ea6d06c7b52ac16a",
+    "assets": "0e9d9a0c5d03505654462812b0e6336790d216422e1e51d63aa2c879b59003c2",
+    "fonts": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+  },
+  "evaluation": {
+    "technical": "pending",
+    "audiovisual": "pending",
+    "human": "pending"
+  },
+  "pending": [
+    "evaluated_values_are_local_scalars",
+    "render_geometry_not_measured",
+    "human_visual_review_required"
+  ],
+  "history": [
+    {
+      "schemaVersion": "studio.editor-command-receipt.v1",
+      "commandId": "e73e4ded-d1e0-45c5-9525-faa93d752dec",
+      "documentId": "f2a5b15c-f815-428d-88ca-ae3e90378aab",
+      "planId": "5fcf2e7d-8186-4876-acbc-7e8cf1808836",
+      "actorId": "fba16ca9-832e-4768-becb-ac752642208f",
+      "previousDocumentRevision": 2,
+      "documentRevision": 3,
+      "planRevision": 3,
+      "documentDigest": "aedede0362addecf812569992393d9b28150f6d12ea1a356ed65fd625eed5d12",
+      "executableCompositionDigest": "593530fed05e0f3c1cab07b206ff3fafe5660adc539936c83d29f67ce31d2f7f",
+      "appliedChanges": [
+        {
+          "kind": "set_recipe_keyframe",
+          "sceneId": "temporal-matte",
+          "recipeId": "hero-move",
+          "targetId": "hero",
+          "property": "x",
+          "keyframe": {
+            "frame": 0,
+            "value": 12.0,
+            "curve": [
+              0.0,
+              0.0,
+              1.0,
+              1.0
+            ]
+          }
+        }
+      ],
+      "warnings": [],
+      "pending": [
+        "render_evidence_required",
+        "human_visual_review_required"
+      ]
+    }
+  ]
+}

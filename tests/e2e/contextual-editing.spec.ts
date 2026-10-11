@@ -1,13 +1,32 @@
 import { expect, test, type Page } from "@playwright/test";
 import path from "node:path";
+import { execFileSync } from "node:child_process";
+import { mkdtempSync, unlinkSync, rmdirSync, existsSync } from "node:fs";
+import { tmpdir } from "node:os";
+
+let playbackDirectory: string;
+let playbackFixture: string;
+test.beforeAll(() => {
+  playbackDirectory = mkdtempSync(path.join(tmpdir(), "res-engine-playback-"));
+  playbackFixture = path.join(playbackDirectory, "fixture.mp4");
+  // A generated player fixture; it is never a render or visual qualification.
+  execFileSync("ffmpeg", ["-hide_banner", "-loglevel", "error", "-f", "lavfi", "-i",
+    "color=blue:s=160x284:r=30:d=2", "-c:v", "libx264", "-pix_fmt", "yuv420p", playbackFixture],
+    { windowsHide: true, timeout: 20000 });
+});
+test.afterAll(() => {
+  if (playbackFixture && existsSync(playbackFixture)) unlinkSync(playbackFixture);
+  if (playbackDirectory) rmdirSync(playbackDirectory);
+});
 
 async function openQualityHarness(page: Page, record: unknown) {
+  const bundled = process.env.CONTEXTUAL_COMPONENT_TEST === "1";
   await page.route("**/__quality-test-host", route => route.fulfill({ contentType: "text/html", body: `
     <!doctype html><html><head><script type="module">
-    import RefreshRuntime from '/@react-refresh';
+    ${bundled ? '' : `import RefreshRuntime from '/@react-refresh';
     RefreshRuntime.injectIntoGlobalHook(window);
     window.$RefreshReg$ = () => {};
-    window.$RefreshSig$ = () => type => type;
+    window.$RefreshSig$ = () => type => type;`}
     window.__vite_plugin_react_preamble_installed__ = true;
     </script></head><body></body></html>` }));
   await page.goto("/__quality-test-host", { waitUntil: "domcontentloaded" });
@@ -18,6 +37,147 @@ async function openQualityHarness(page: Page, record: unknown) {
     (window as any).__contextualHarness = mountContextualHarness(value);
   }, record);
 }
+
+const engineStudyDocument = { documentId: "engine-study", workspaceId: "workspace", revision: 1, version: 1,
+  brief: { objective: "Estudo de motion" }, assets: [],
+  composition: { pages: [{ id: "page", width: 1080, height: 1920 }], narrative: {} } };
+const engineCampaign = { id: "campaign", title: "Estudo Alight", revision: 1, technicalStatus: "pending",
+  visualStatus: "not_assessed", autonomyStatus: "pending", promotionStatus: "pending",
+  trials: { registered: 0, completedAutomatically: 0, p95Ms: null, perLanguage: {} },
+  apiBudget: { committedOrReservedUsd: 0, remainingUsd: 10, attempts: 0 },
+  cases: ["action_product", "kinetic_type", "interface_service"].map(language => ({ language,
+    documentId: null, status: "pending", blockers: ["case_document_missing"], visualStatus: "not_assessed", sessions: [] })) };
+
+async function mockEngineStudy(page: Page) {
+  await page.route("**/api/v1/studios/v1/**", route => {
+    const url = new URL(route.request().url());
+    if (url.pathname.endsWith("/render-engines")) return route.fulfill({ json: { engines: [{
+      provider: "alight-motion.contextual-v1", available: false, capabilities: [],
+      blockers: ["physical_device_missing", "validated_import_missing"],
+    }] } });
+    if (url.pathname.endsWith("/engine-campaigns")) return route.fulfill({ json: [engineCampaign] });
+    if (url.pathname.endsWith("/candidates")) return route.fulfill({ json: ["alight-motion.contextual-v1", "remotion.contextual-v2", "builtin.ffmpeg-contextual-v1"].map((provider, i) => ({
+      provider, title: `Fixture ${i}`, visualApproved: false,
+      reference: { documentId: `variant-${i}`, documentRevision: 1, assetId: `render-${i}`, checksum: `${i}`.repeat(64) },
+    })) });
+    if (url.pathname.endsWith("/editing/ai")) return route.fulfill({ json: { operations: [], label: "" } });
+    if (url.pathname.endsWith("/editing/repertoire")) return route.fulfill({ json: { techniques: [] } });
+    return route.fulfill({ json: url.pathname.endsWith("/latest") ? null : [] });
+  });
+}
+
+test("Alight candidate displays pending evidence without fabricated scores or promotion", async ({ page }) => {
+  await mockEngineStudy(page);
+  await openQualityHarness(page, engineStudyDocument);
+  const panel = page.getByRole("region", { name: "Qualificação experimental de motores" });
+  await expect(panel.getByText("Dispositivo Android real pendente.")).toBeVisible();
+  await expect(panel.getByText("0/30", { exact: true })).toBeVisible();
+  await expect(panel.getByText("Projeto de estudo pendente.")).toHaveCount(3);
+  await expect(panel.getByText("US$ 0.00", { exact: false })).toBeVisible();
+  await expect(panel.getByRole("button", { name: "Promover", exact: false })).toHaveCount(0);
+  await expect(panel.getByRole("spinbutton")).toHaveCount(0);
+});
+
+test("new Alight direction blocks production when the worker is missing", async ({ page }) => {
+  await mockEngineStudy(page);
+  let submitted = 0;
+  await page.route("**/production-runs", route => {
+    submitted++;
+    return route.fulfill({ status: 409, json: { detail: { code: "alight_worker_not_ready" } } });
+  });
+  await openQualityHarness(page, engineStudyDocument);
+  const selector = page.getByRole("combobox", { name: "Motor da nova edição" });
+  await expect(selector).toHaveValue("alight_motion");
+  await page.getByLabel("Roteiro e informações de origem").fill("Uma ideia ganha forma.");
+  await expect(page.getByRole("button", { name: "Desenvolver motion editorial", exact: true })).toBeDisabled();
+  await expect(page.getByRole("button", { name: "Criar vídeo com esta direção", exact: true })).toBeDisabled();
+  expect(submitted).toBe(0);
+  await selector.selectOption("current");
+  await expect(page.getByRole("button", { name: "Desenvolver motion editorial", exact: true })).toBeEnabled();
+});
+
+test("installed Alight stays unqualified and connection refresh updates the editing selector", async ({ page }) => {
+  await mockEngineStudy(page);
+  let installed = true;
+  await page.route("**/render-engines", route => route.fulfill({ json: { engines: [{
+    provider: "alight-motion.contextual-v1", available: false, capabilities: [],
+    blockers: ["validated_import_missing", "validated_compiler_missing", "device_profile_missing"],
+    applicationProbe: { package: "com.alightcreative.motion", installed,
+      version: installed ? "SOFTWARE-FIXTURE-VERSION" : null, installer: "com.android.vending",
+      connectedDevices: 1, observationKind: "adb_package_probe", observedAtUnix: 1 },
+  }] } }));
+  await openQualityHarness(page, engineStudyDocument);
+  const connection = page.getByLabel("Conexão real com Alight Motion");
+  await expect(connection.getByText("Alight instalado · versão SOFTWARE-FIXTURE-VERSION.")).toBeVisible();
+  const selector = page.getByRole("group", { name: "Motor da nova edição" });
+  await expect(selector.getByRole("status")).toContainText("SOFTWARE-FIXTURE-VERSION instalado");
+  await expect(page.getByRole("button", { name: "Criar vídeo com esta direção", exact: true })).toBeDisabled();
+  installed = false;
+  await page.getByRole("button", { name: "Atualizar conexão com Alight", exact: true }).click();
+  await expect(connection.getByText("Instalação do Alight não encontrada.")).toBeVisible();
+  await expect(selector.getByRole("status")).not.toContainText("SOFTWARE-FIXTURE-VERSION");
+  await expect(page.getByRole("button", { name: "Criar vídeo com esta direção", exact: true })).toBeDisabled();
+});
+
+test("Alight blind review cannot count seeking to the end as full playback", async ({ page }) => {
+  await mockEngineStudy(page);
+  await page.route("**/comparisons", route => route.fulfill({ json: { id: "session", language: "kinetic_type",
+    mode: "editorial_result", status: "not_assessed", blockers: [],
+    labels: ["A", "B", "C"].map((label, i) => ({ label, assetId: `render-${i}`, checksum: `${i}`.repeat(64) })) } }));
+  await page.route("**/api/v1/assets/*/content", route => route.fulfill({
+    path: playbackFixture, contentType: "video/mp4",
+  }));
+  await openQualityHarness(page, engineStudyDocument);
+  const panel = page.getByRole("region", { name: "Qualificação experimental de motores" });
+  await panel.getByText("Comparar renders dos motores").click();
+  await panel.getByRole("combobox", { name: "Linguagem", exact: true }).selectOption("kinetic_type");
+  for (let i = 0; i < 3; i++) await panel.getByLabel(`Fixture ${i}`, { exact: false }).check();
+  await panel.getByRole("button", { name: "Preparar comparação cega" }).click();
+  const review = panel.getByRole("article", { name: "Comparação cega entre motores" });
+  await expect(review.getByLabel("Versão A", { exact: true })).toBeVisible();
+  await review.getByRole("combobox", { name: "Preferência", exact: true }).selectOption("A");
+  await review.getByLabel("Conferi a leitura em tamanho de celular").check();
+  await review.getByLabel("Fiz a comparação sem consultar a identidade dos motores").check();
+  await expect(review.getByLabel("Confirmei que não houve correções manuais sem registro")).not.toBeChecked();
+  await review.getByLabel("Confirmei que não houve correções manuais sem registro").check();
+  await review.getByLabel("Confirmei o controle simples com os mesmos materiais").check();
+  await review.getByLabel("Achados e correções executáveis").fill("Encurtar a entrada do título.");
+  await review.locator("video").evaluateAll(nodes => nodes.forEach(node => {
+    const video = node as HTMLVideoElement;
+    video.currentTime = 2;
+    video.dispatchEvent(new Event("seeking"));
+    video.dispatchEvent(new Event("ended"));
+  }));
+  await expect(review.getByRole("button", { name: "Registrar comparação" })).toBeDisabled();
+  // Engine identities are not visible during playback.
+  await expect(panel.getByText("Fixture 0", { exact: false })).toHaveCount(0);
+  await page.evaluate(record => (window as any).__contextualHarness.update(record), { ...engineStudyDocument, revision: 2 });
+  await expect(panel.getByLabel("Versão A", { exact: true })).toHaveCount(0);
+});
+
+test("Alight comparison response from an old document cannot reopen its review", async ({ page }) => {
+  await mockEngineStudy(page);
+  let release!: () => void;
+  const pending = new Promise<void>(resolve => { release = resolve; });
+  let requested = false;
+  await page.route("**/comparisons", async route => {
+    requested = true;
+    await pending;
+    await route.fulfill({ json: { id: "old-session", language: "kinetic_type", mode: "editorial_result",
+      status: "not_assessed", blockers: [], labels: [{ label: "A", assetId: "old-render", checksum: "a".repeat(64) }] } });
+  });
+  await openQualityHarness(page, engineStudyDocument);
+  const panel = page.getByRole("region", { name: "Qualificação experimental de motores" });
+  await panel.getByText("Comparar renders dos motores").click();
+  for (let i = 0; i < 3; i++) await panel.getByLabel(`Fixture ${i}`, { exact: false }).check();
+  await panel.getByRole("button", { name: "Preparar comparação cega" }).click();
+  await expect.poll(() => requested).toBe(true);
+  await page.evaluate(record => (window as any).__contextualHarness.update(record), { ...engineStudyDocument, revision: 2 });
+  release();
+  await panel.getByText("Comparar renders dos motores").click();
+  await expect(panel.getByRole("button", { name: "Preparar comparação cega" })).toBeVisible();
+  await expect(panel.getByRole("article", { name: "Comparação cega entre motores" })).toHaveCount(0);
+});
 
 test("experimental Studio indicator stays pending and phase request is audiovisual", async ({ page }) => {
   const doc = { documentId: "quality-doc", workspaceId: "workspace", revision: 1, version: 1,
@@ -81,7 +241,7 @@ test("comparison in Studio hides roles during playback and records bound prefere
   await page.route("**/api/v1/studios/v1/transcripts?*", r => r.fulfill({ json: [] }));
   await page.route("**/api/v1/studios/v1/editing/repertoire?*", r => r.fulfill({ json: { techniques: [] } }));
   await page.route("**/editing-plans/latest", r => r.fulfill({ json: null }));
-  const fixture = path.resolve("output/editorial-operations-20260930/bebida/animatic-A.mp4");
+  const fixture = playbackFixture;
   await page.route("**/api/v1/assets/*/content", r => r.fulfill({ path: fixture, contentType: "video/mp4" }));
   await page.route("**/visual-quality-comparison", r => {
     submitted = r.request().postDataJSON();

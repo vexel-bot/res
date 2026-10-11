@@ -413,6 +413,54 @@ def preflight_v2(db, document):
     from .contextual_editing import asset_blockers
 
     problems = asset_blockers(db, document)
+    from ...domain.studios.motion_recipes import RECIPE_CAPABILITIES
+    from .engine_qualification import engine_capabilities
+
+    narrative = document.composition.narrative.get("editorialV2", {})
+    capabilities = set()
+    if narrative.get("renderer") == "remotion.contextual-v2":
+        from .native_motion_recipes import supported_recipe_operation
+
+        compiled = narrative.get("nativeRecipeOperations", [])
+        capabilities = {
+            RECIPE_CAPABILITIES[operation["technique"]]
+            for operation in compiled
+            if supported_recipe_operation(operation)
+        }
+    if narrative.get("renderer") == "alight-motion.contextual-v1":
+        engine = engine_capabilities()["engines"][-1]
+        capabilities = set(engine["capabilities"])
+        if not engine["available"]:
+            from .contextual_editing import _block
+
+            problems.append(_block("alight", "alight_worker_not_ready", "Alight pendente: " + ", ".join(engine["blockers"])))
+        from ...providers.studios.alight_motion import required_capabilities
+        from .contextual_editing import _block
+
+        for capability in sorted(required_capabilities(document) - capabilities):
+            problems.append(_block("alight", "alight_capability_not_qualified", "Recurso sem homologação no Alight: " + capability))
+    for recipe in narrative.get("motionRecipes", []):
+        from .contextual_editing import _block
+
+        if RECIPE_CAPABILITIES[recipe["technique"]] not in capabilities:
+            problems.append(_block(
+                recipe["id"], "motion_recipe_engine_not_qualified",
+                "A receita de movimento exige um adaptador validado; nenhum efeito será substituído silenciosamente.",
+            ))
+        mask = recipe.get("parameters", {}).get("maskAssetId")
+        if mask and mask not in {asset.id for asset in document.assets}:
+            problems.append(_block(recipe["id"], "motion_recipe_mask_missing", "Adicione o mapa ou máscara da receita."))
+        if recipe["technique"] == "asset_matte":
+            source_name = recipe["parameters"]["assetMatte"]["sourceTargetId"]
+            source = next((
+                layer for page in document.composition.pages for layer in page.layers
+                if layer.name == source_name and layer.properties.get("editorialSceneId") == recipe["sceneId"]
+            ), None)
+            ref = next((asset for asset in document.assets
+                        if source and asset.id == source.properties.get("assetId")), None)
+            if ref and ref.media_type != "image/png":
+                problems.append(_block(recipe["id"], "motion_recipe_asset_matte_png_required",
+                                       "Forneça uma máscara PNG para a camada fonte desta receita."))
     # Unlike V1, V2 graphical layers are validated by their typed source scene and HyperFrames.
     return problems, 0
 
@@ -545,6 +593,22 @@ def create_plan(db, record, direction, user, key):
 
     source = record_to_contract(record)
     direction = direction.model_copy(deep=True)
+    if direction.render_engine == "current" and direction.engine_profile:
+        from .engine_qualification import default_engine_for_new_document
+
+        if default_engine_for_new_document(db, record, direction.engine_profile, user):
+            direction.render_engine = "alight_motion"
+    if direction.render_engine == "alight_motion":
+        from sqlalchemy import select
+
+        from ...config import get_settings
+        from ...models import Membership
+
+        member = db.scalar(select(Membership).where(
+            Membership.workspace_id == record.workspace_id, Membership.user_id == user.id,
+        ))
+        if not get_settings().studio_alight_motion_enabled or not member or member.role.lower() not in {"owner", "admin"}:
+            raise ValueError("alight_experiment_access_denied")
     input_request_digest = digest(direction)
     versions_were_explicit = direction.execution_versions is not None
     if direction.execution_versions is None:
@@ -615,16 +679,25 @@ def create_plan(db, record, direction, user, key):
         )
         for identifier in {t for s in direction.scenes for t in s.technique_ids} & non_executable
     )
+    from ...domain.studios.motion_recipes import RECIPE_CAPABILITIES
+    from .native_motion_recipes import supported_recipe_operation
+
+    native_reference_capabilities = {
+        RECIPE_CAPABILITIES[operation["technique"]]
+        for operation in draft.composition.narrative["editorialV2"].get("nativeRecipeOperations", [])
+        if supported_recipe_operation(operation)
+    }
     techniques = planning_repertoire(
         db,
         record.workspace_id,
         direction.intent.objective + " " + direction.intent.script,
-        [*COMPONENTS, *(op for spec in COMPONENTS.values() for op in spec["operations"])],
+        [*COMPONENTS, *(op for spec in COMPONENTS.values() for op in spec["operations"]), *native_reference_capabilities],
         [t for s in direction.scenes for t in s.technique_ids],
         material_kinds={a.media_type.split("/")[0] for a in draft.assets},
     )
     requested_ids = {t for s in direction.scenes for t in s.technique_ids}
     capabilities = {
+        *native_reference_capabilities,
         *COMPONENTS,
         *COMPOSITION_FAMILIES,
         *(op for spec in COMPONENTS.values() for op in spec["operations"]),

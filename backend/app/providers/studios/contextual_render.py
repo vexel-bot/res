@@ -342,7 +342,7 @@ def motion_expression(clip, prop: str, fps: float, default: float, *, local_time
 
 class ContextualFFmpegProvider:
     name = CONTEXTUAL_PROVIDER
-    version = "1.2.0"
+    version = "1.4.1"
 
     def __init__(self, executable: str, timeout_seconds: int, font_path: str | None = None):
         self.executable = executable
@@ -810,7 +810,7 @@ class ContextualFFmpegProvider:
                     "-preset",
                     "veryfast",
                     "-crf",
-                    "23",
+                    {"draft": "28", "standard": "23", "high": "10"}[request.output.quality],
                     "-c:a",
                     "aac",
                     "-b:a",
@@ -845,6 +845,8 @@ class ContextualFFmpegProvider:
             rendered_layer_ids=layers[:100],
             rendered_caption_track_ids=captions,
             rendered_audio_clip_ids=audio_clips,
+            renderer_checks={"encodeQuality": request.output.quality,
+                             "videoCrf": {"draft": 28, "standard": 23, "high": 10}[request.output.quality]},
             warnings=[
                 "Editorial quality requires review of the rendered video.",
             ]

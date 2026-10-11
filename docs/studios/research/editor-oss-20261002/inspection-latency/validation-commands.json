@@ -1,0 +1,21 @@
+{
+  "tests": [
+    {
+      "command": "python -m pytest tests/test_editing_plan_projection.py -q",
+      "sessionId": 37728,
+      "exitCode": 0,
+      "passed": 6
+    },
+    {
+      "command": "python -m pytest tests/test_editor_commands.py::test_atomic_recipe_graph_projection_replay_and_undo tests/test_editor_commands.py::test_failed_batch_preserves_document_plan_and_history tests/test_editor_commands.py::test_revision_identity_and_author_cannot_be_supplied tests/test_editor_commands.py::test_other_workspace_cannot_inspect_or_replay -q",
+      "sessionId": 40417,
+      "exitCode": 0,
+      "passed": 4
+    }
+  ],
+  "ruff": {
+    "command": "python -m ruff check app/services/studios/contextual_editing.py tests/test_editing_plan_projection.py",
+    "exitCode": 0
+  },
+  "scope": "Terminal results observed this turn; no repeated tests after final service bytes"
+}

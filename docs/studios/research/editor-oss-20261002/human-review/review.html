@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="pt-BR"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Revisão dos três estudos</title>
+<style>
+body{margin:0;background:#101316;color:#e8ecef;font:16px/1.5 system-ui,sans-serif}main{max-width:1200px;margin:auto;padding:28px}
+h1{font-size:26px}h2{font-size:21px;margin-top:36px}p{max-width:850px;color:#b8c3ca}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+figure{margin:0;background:#1b2227;padding:14px;border-radius:12px}figcaption{font-weight:700;margin-bottom:10px}video{display:block;width:100%;max-height:490px;background:#000}
+a{color:#a8d9ff}ul{padding-left:22px}@media(max-width:650px){.grid{grid-template-columns:1fr}main{padding:16px}}
+</style>
+<main><h1>Revisão dos três estudos</h1>
+<p>Assista a A, B e C de cada estudo, com som. Os rótulos correspondem às comparações registradas; cada vídeo tem 15 segundos. A reprodução de um vídeo pausa os demais.</p>
+<p>Para registrar sua avaliação, informe o rótulo preferido e quatro notas de 1 a 5: clareza da mensagem, ritmo, continuidade e acabamento. Descreva o trecho que precisa mudar. Informe também se assistiu aos vídeos completos e se conferiu no celular.</p>
+<p>Esta página é um suporte para sua revisão. Abrir ou reproduzir os vídeos não altera notas, documentos ou estado de aprovação no sistema.</p>
+<h2>Organização</h2><div class="grid">
+<figure><figcaption>A</figcaption><video controls preload="metadata" src="organization/A.mp4"></video></figure>
+<figure><figcaption>B</figcaption><video controls preload="metadata" src="organization/B.mp4"></video></figure>
+<figure><figcaption>C</figcaption><video controls preload="metadata" src="organization/C.mp4"></video></figure>
+</div>
+<h2>Comparação</h2><div class="grid">
+<figure><figcaption>A</figcaption><video controls preload="metadata" src="comparison/A.mp4"></video></figure>
+<figure><figcaption>B</figcaption><video controls preload="metadata" src="comparison/B.mp4"></video></figure>
+<figure><figcaption>C</figcaption><video controls preload="metadata" src="comparison/C.mp4"></video></figure>
+</div>
+<h2>Interface</h2><div class="grid">
+<figure><figcaption>A</figcaption><video controls preload="metadata" src="interface/A.mp4"></video></figure>
+<figure><figcaption>B</figcaption><video controls preload="metadata" src="interface/B.mp4"></video></figure>
+<figure><figcaption>C</figcaption><video controls preload="metadata" src="interface/C.mp4"></video></figure>
+</div>
+</main><script>document.querySelectorAll('video').forEach(video=>video.addEventListener('play',()=>document.querySelectorAll('video').forEach(other=>{if(other!==video)other.pause()})));</script></html>

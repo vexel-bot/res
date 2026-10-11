@@ -1,0 +1,133 @@
+{
+  "scope": "selected_primary_sources_read_in_memory_no_clone_no_implementation_copied",
+  "browserVersion": "Google Chrome for Testing 149.0.7790.0",
+  "browserSha256": "ec76dc3e69ffab9daddf0bbe7bf0a9e0a034b2d086741a0ae2ef6358a597537b",
+  "swiftshaderRevision": "89556131bf9d48af3c5c9fbb9a3322e706da89a3",
+  "gnBuildSubpixelBits": 4,
+  "gnBuildSubpixelGrid": "1/16 pixel",
+  "license": "SwiftShader Apache-2.0; no implementation copied",
+  "sources": [
+    {
+      "url": "https://chromium.googlesource.com/chromium/src/+/149.0.7790.0/DEPS",
+      "sha256": "b3ba6e672b4f78eab2dfebd2739a601e2f6ddb958ea1e20bcfabe80c1de240dd",
+      "bytes": 186396,
+      "lines": 4892,
+      "selectedSymbolLines": {
+        "'swiftshader_revision'": [
+          330,
+          2927
+        ]
+      }
+    },
+    {
+      "url": "https://swiftshader.googlesource.com/SwiftShader/+/89556131bf9d48af3c5c9fbb9a3322e706da89a3/src/Device/BUILD.gn",
+      "sha256": "104e2e8fed85a410f6cc6c35ce151be7c79a7bb8acb01d5685300d6caf3fbd55",
+      "bytes": 3008,
+      "lines": 103,
+      "selectedSymbolLines": {
+        "SWIFTSHADER_LEGACY_PRECISION=true": [
+          77
+        ]
+      }
+    },
+    {
+      "url": "https://swiftshader.googlesource.com/SwiftShader/+/89556131bf9d48af3c5c9fbb9a3322e706da89a3/src/Pipeline/BUILD.gn",
+      "sha256": "f6996f68fd5a6c106b96542891eae8ebb5107d9c048b727dd2e5349a0811dac4",
+      "bytes": 2175,
+      "lines": 83,
+      "selectedSymbolLines": {
+        "SWIFTSHADER_LEGACY_PRECISION=true": [
+          69
+        ]
+      }
+    },
+    {
+      "url": "https://swiftshader.googlesource.com/SwiftShader/+/89556131bf9d48af3c5c9fbb9a3322e706da89a3/src/Vulkan/BUILD.gn",
+      "sha256": "038d43ff3fcbdb9a78486266d8654fb1d694faa2be70bcf24f7cfb013ad09cfe",
+      "bytes": 7159,
+      "lines": 269,
+      "selectedSymbolLines": {
+        "SWIFTSHADER_LEGACY_PRECISION=true": [
+          62
+        ]
+      }
+    },
+    {
+      "url": "https://swiftshader.googlesource.com/SwiftShader/+/89556131bf9d48af3c5c9fbb9a3322e706da89a3/src/Vulkan/VkConfig.hpp",
+      "sha256": "65fe05565489f4208e102d8be151b833d4eb98b91bf6f233ef6e2cddf0226a44",
+      "bytes": 5575,
+      "lines": 127,
+      "selectedSymbolLines": {
+        "SUBPIXEL_PRECISION_BITS = SWIFTSHADER_LEGACY_PRECISION ? 4 : 8": [
+          101
+        ]
+      }
+    },
+    {
+      "url": "https://swiftshader.googlesource.com/SwiftShader/+/89556131bf9d48af3c5c9fbb9a3322e706da89a3/src/Pipeline/SetupRoutine.cpp",
+      "sha256": "40c6f2e173e127ee129803263439f805c001b31869f0eb768c66dd408453c2b7",
+      "bytes": 18974,
+      "lines": 668,
+      "selectedSymbolLines": {
+        "vk::SUBPIXEL_PRECISION_BITS": [
+          162,
+          561
+        ],
+        "vk::SUBPIXEL_PRECISION_FACTOR": [
+          164
+        ]
+      }
+    },
+    {
+      "url": "https://swiftshader.googlesource.com/SwiftShader/+/89556131bf9d48af3c5c9fbb9a3322e706da89a3/src/Pipeline/VertexRoutine.cpp",
+      "sha256": "8e45f546bb75fcd1e95d2e9c6cdba37180823c589319ac66446428341c9312dc",
+      "bytes": 27997,
+      "lines": 735,
+      "selectedSymbolLines": {
+        "RoundIntClamped": [
+          608,
+          609
+        ],
+        "X0xF": [
+          608
+        ],
+        "WxF": [
+          608
+        ]
+      }
+    },
+    {
+      "url": "https://swiftshader.googlesource.com/SwiftShader/+/89556131bf9d48af3c5c9fbb9a3322e706da89a3/src/Device/Renderer.cpp",
+      "sha256": "4a9cef99d283ad4763b4bf1bbf530b57d8d2b39609098d2ddcf32b2276ab8183",
+      "bytes": 32992,
+      "lines": 1226,
+      "selectedSymbolLines": {
+        "SUBPIXEL_PRECISION_FACTOR": [
+          305,
+          939
+        ],
+        "X0xF": [
+          309
+        ],
+        "WxF": [
+          307,
+          941
+        ]
+      }
+    },
+    {
+      "url": "https://swiftshader.googlesource.com/SwiftShader/+/89556131bf9d48af3c5c9fbb9a3322e706da89a3/src/Vulkan/VkPhysicalDevice.cpp",
+      "sha256": "d20c946edef3c9779147e5df601e9cd370f0d1b6ac6d7d7d9d3cc18f8adccc3f",
+      "bytes": 112063,
+      "lines": 2680,
+      "selectedSymbolLines": {
+        "subPixelPrecisionBits": [
+          775
+        ]
+      }
+    }
+  ],
+  "scriptSha256": "cffe1c292b2af4d004aa7e7812f5b19cd9f717fa778c43a2df39a21113023af1",
+  "limitation": "Source GN defaults require confirmation of installed runtime and paint path; this is not a fitted pixel oracle.",
+  "productionAdmission": "pending"
+}

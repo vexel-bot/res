@@ -9,6 +9,7 @@ from pathlib import Path
 from sqlalchemy import select
 
 from ...models import CreativeDocument, LibraryAsset, StudioDomainEvent, StudioGenerationJob
+from .asset_read_projection import project_assets
 from .gemini_editing import committed_test_amount
 
 BASELINE_PATH = (
@@ -28,6 +29,9 @@ def _brief_key(payload):
 
 
 def material_readiness(payload):
+    study = (((payload.get("composition") or {}).get("narrative") or {}).get("editorialV2") or {}).get("visualStudy")
+    if study:
+        return study_material_readiness(payload, study)
     assets = payload.get("assets") or []
     verified = [asset for asset in assets if asset.get("rightsStatus") == "verified" and asset.get("checksum")]
     motion_sources = {asset["checksum"] for asset in verified if str(asset.get("mediaType", "")).startswith("video/")}
@@ -65,6 +69,36 @@ def material_readiness(payload):
         "blockers": blockers,
         "distinctMotionSources": len(motion_sources),
         "actionSourcesWithEvidence": len(action_sources),
+    }
+
+
+def study_material_readiness(payload, study):
+    """Explicit graphic/interface studies; filmed-product requirements stay intact."""
+    blockers = []
+    language = study.get("language")
+    editorial = ((payload.get("composition") or {}).get("narrative") or {}).get("editorialV2") or {}
+    assets = payload.get("assets") or []
+    if language not in {"motion_graphics", "interface_capture"}:
+        blockers.append("visual_study_language_unknown")
+    if not (payload.get("brief") or {}).get("objective"):
+        blockers.append("brief_missing")
+    if not editorial.get("artDirection"):
+        blockers.append("visual_study_art_direction_missing")
+    if any(asset.get("rightsStatus") != "verified" or not asset.get("checksum") for asset in assets):
+        blockers.append("visual_study_asset_rights_or_checksum_pending")
+    if language == "interface_capture" and not any(
+        str(a.get("mediaType", "")).startswith("video/")
+        and (a.get("provenance") or {}).get("testEnvironmentCapture") is True
+        and (a.get("provenance") or {}).get("observableAction")
+        for a in assets
+    ):
+        blockers.append("real_test_interface_capture_required")
+    return {
+        "status": "pending" if blockers else "ready",
+        "blockers": blockers,
+        "language": language,
+        "distinctMotionSources": 0,
+        "actionSourcesWithEvidence": 0,
     }
 
 
@@ -167,16 +201,16 @@ def project_quality_program(db, workspace_id):
         )
     ).all()
     comparisons = {}
-    for event in sorted(comparison_events, key=lambda item: item.created_at):
+    for event in sorted(comparison_events, key=lambda item: (item.occurred_at, item.id)):
         comparisons[event.aggregate_id] = event.payload or {}
-    assets = {
-        asset.id: asset
-        for asset in db.scalars(
-            select(LibraryAsset).where(
-                LibraryAsset.workspace_id == workspace_id,
-            )
-        ).all()
-    }
+    asset_statement = select(LibraryAsset).where(LibraryAsset.workspace_id == workspace_id)
+    asset_rows = project_assets(db, asset_statement, [
+        ("documentId",), ("documentRevision",), ("visualHumanReview",), ("generationJobId",),
+        ("derivation",), ("qualityEvaluation",), ("videoRenderResult",),
+    ])
+    if asset_rows is None:
+        asset_rows = db.scalars(asset_statement).all()
+    assets = {asset.id: asset for asset in asset_rows}
     docs = {record.id: record for record in documents}
     runs = []
     for state in latest.values():
@@ -187,9 +221,36 @@ def project_quality_program(db, workspace_id):
             (state.get("artifacts") or {}).get("video") or (state.get("artifacts") or {}).get("animatic") or {}
         ).get("artifact") or {}
         runs.append(render_quality(state, assets.get(artifact.get("assetId")), document))
+    study_documents = {
+        record.id: record
+        for record in documents
+        if ((_document_payload(record).get("composition") or {}).get("narrative") or {})
+        .get("editorialV2", {})
+        .get("visualStudy")
+    }
+    # Direct native study jobs are real renders even without an AI production run.
+    for asset in assets.values():
+        metadata = getattr(asset, "object_metadata", None) or {}
+        record = study_documents.get(metadata.get("documentId"))
+        if not record or metadata.get("derivation") != "video_render":
+            continue
+        result = metadata.get("videoRenderResult") or {}
+        artifact = result.get("artifact") or {}
+        study = _document_payload(record)["composition"]["narrative"]["editorialV2"]["visualStudy"]
+        state = {
+            "id": metadata.get("generationJobId"),
+            "documentRevision": metadata.get("documentRevision"),
+            "request": {"qualityPhaseId": study.get("phaseId")},
+            "technicalEvaluation": metadata.get("qualityEvaluation"),
+            "artifacts": {"video": {"artifact": artifact}},
+            "history": [{"kind": "directed_study", "author": "recorded_plan_creator"}],
+        }
+        quality = render_quality(state, asset, record)
+        quality.update({"studyLanguage": study.get("language"), "studyVariant": study.get("variant")})
+        runs.append(quality)
     runs.sort(key=lambda item: (item["documentId"], item["runId"] or ""))
     candidates = {}
-    for record in documents:
+    for record in (study_documents.values() if study_documents else documents):
         payload = _document_payload(record)
         key = _brief_key(payload)
         material = material_readiness(payload)
@@ -205,7 +266,15 @@ def project_quality_program(db, workspace_id):
         matching = [
             row
             for row in runs
-            if row["documentId"] == case["documentId"] and row["qualityPhaseId"] == "visual-quality-2026-10-01"
+            if (
+                row["documentId"] == case["documentId"]
+                or (
+                    case["documentId"] in study_documents
+                    and row["documentId"] in study_documents
+                    and _brief_key(_document_payload(study_documents[row["documentId"]])) == case["briefKey"]
+                )
+            )
+            and row["qualityPhaseId"] == "visual-quality-2026-10-01"
         ]
         current = [
             row
@@ -238,7 +307,8 @@ def project_quality_program(db, workspace_id):
         )
         both_edits_current = all(
             any(
-                row["runId"] == receipt.get(run_key) and row["renderChecksum"] == receipt.get(checksum_key)
+                row["runId"] == receipt.get(run_key)
+                and row["renderChecksum"] == receipt.get(checksum_key)
                 and row["technicalStatus"] == "passed"
                 for row in current
             )
@@ -281,6 +351,27 @@ def project_quality_program(db, workspace_id):
         committed_test_amount(job) for job in phase_jobs if job.request_payload.get("environment") != "production"
     )
     baseline = json.loads(BASELINE_PATH.read_text(encoding="utf-8"))
+    study_comparisons = []
+    if study_documents:
+        from .visual_study import project, sessions
+
+        study_comparisons = [project(db, workspace_id, key) for key in sessions(db, workspace_id)]
+        for case in cases:
+            if case["documentId"] not in study_documents:
+                continue
+            comparisons_for_case = [
+                comparison
+                for comparison in study_comparisons
+                if any(
+                    item["documentId"] in study_documents
+                    and _brief_key(_document_payload(study_documents[item["documentId"]])) == case["briefKey"]
+                    for item in comparison["labels"]
+                )
+            ]
+            case["comparisonStatus"] = (
+                "passed" if any(item["status"] == "passed" for item in comparisons_for_case) else "pending"
+            )
+            case["language"] = case["materials"].get("language")
     return {
         "schemaVersion": "studio.visual-quality-program.v1",
         "workspaceId": workspace_id,
@@ -288,6 +379,7 @@ def project_quality_program(db, workspace_id):
         "baseline": baseline,
         "cases": cases,
         "renders": runs,
+        **({"studyComparisons": study_comparisons} if study_documents else {}),
         "budget": {
             "limitUsd": 10,
             "committedOrReservedUsd": round(reserved, 6),

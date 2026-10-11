@@ -1,0 +1,24 @@
+{
+  "scope": "pinned_open_source_mechanism_comparison",
+  "package": "@remotion/motion-blur",
+  "version": "4.0.527",
+  "license": "MIT",
+  "source": "workers/remotion-benchmark/node_modules/@remotion/motion-blur/dist/cjs/CameraMotionBlur.js",
+  "sourceSha256": "45ffad6218436e369e06c5e1d3f3d0ea7ff9b8d77a10ac2c34ffac6ba178f164",
+  "nativeAdapter": "workers/remotion-benchmark/src/temporal-exposure.tsx",
+  "nativeAdapterSha256": "48a609ab733ee2e5c4e6be07f8073a483ff986b235dcb1c34d365f1b4fcc2fc1",
+  "sharedMechanisms": {
+    "isolated_parent": "isolation: 'isolate'",
+    "plus_lighter": "mixBlendMode: 'plus-lighter'",
+    "weighted_filter": "filter: `opacity(${1 / actualSamples})`",
+    "frozen_sample": "Freeze"
+  },
+  "nativeAdditionalPolicy": [
+    "TemporalExposureV1",
+    "center_frame external ancestors",
+    "local_subtree effective draw times",
+    "static reduction only for identical registered draw inputs"
+  ],
+  "qualification": "native temporal matte with moving external ancestor remains pending",
+  "humanReview": "pending"
+}

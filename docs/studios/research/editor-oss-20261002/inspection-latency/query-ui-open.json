@@ -1,0 +1,826 @@
+{
+  "success": true,
+  "data": {
+    "origin": "http://127.0.0.1:3000/content/7b95a586-c571-403a-a930-5ac7cb11819a/edit?mode=video",
+    "result": {
+      "cards": [
+        {
+          "assetId": "83be05f7-bc4c-4531-8962-5a7085f730cf",
+          "imageElements": 0,
+          "mediaType": "font/woff2",
+          "rights": "Fonte tipográfica · direitos verificados",
+          "thumbnailText": "Aa\nFONTE TIPOGRÁFICA",
+          "title": "Fonte tipográfica 1",
+          "videoElements": 0
+        },
+        {
+          "assetId": "a9264483-2f2c-4abb-8843-93c8a43e4177",
+          "imageElements": 0,
+          "mediaType": "audio/wav",
+          "rights": "Áudio · direitos verificados",
+          "thumbnailText": "Áudio\nÁUDIO",
+          "title": "Áudio 2",
+          "videoElements": 0
+        },
+        {
+          "assetId": "78221c57-92c0-4587-b061-e2044d6b0584",
+          "imageElements": 0,
+          "mediaType": "video/mp4",
+          "rights": "Vídeo · direitos verificados",
+          "thumbnailText": "VÍDEO",
+          "title": "Vídeo 3",
+          "videoElements": 1
+        },
+        {
+          "assetId": "b103665b-6507-4b60-ad63-0efe5ca40d2a",
+          "imageElements": 0,
+          "mediaType": "video/mp4",
+          "rights": "Vídeo · direitos verificados",
+          "thumbnailText": "VÍDEO",
+          "title": "Vídeo 4",
+          "videoElements": 1
+        },
+        {
+          "assetId": "55c8c866-2531-4a05-a6e3-09a2c2d14ac2",
+          "imageElements": 0,
+          "mediaType": "video/mp4",
+          "rights": "Vídeo · direitos verificados",
+          "thumbnailText": "VÍDEO",
+          "title": "Vídeo 5",
+          "videoElements": 1
+        }
+      ],
+      "directionDraft": "",
+      "directionMounted": true,
+      "directionVisible": true,
+      "inspectorFrame": "0",
+      "inspectorText": "Composição e movimento\n\nRevisão 2 · plano 2\n\nAtualizar inspeção\nFrame da composição\n\nPropriedades calculadas no frame 0. Valores locais ao nó; posição final e limites do texto dependem do render.\n\nCena\nstudy · [0, 450)\nCamada\nLayer · group · 728a08\nLayer · group · 07e34c\nLayer · group · 570188\nLayer · group · 3ca427\nLayer · shape · 440816\nsignature · text · 63616b\ntitle · text · 2ec080\nending · text · abff3b\ndisclosure · text · 0bf73c\ncapture · video · cc9f63\ncapture-result · video · 073ade\naction-label · text · 8d5d27\n\nTarget: ed2-c0b192b1157bfa33da728a08\nPai: raiz\nIntervalo: [0, 450)\nBase: x 0, y 0, 1080 × 1920, rotação 0°, opacidade 1\nPivô: 0.5, 0.5\n\nEfeitos espaciais\n\nDesfoque estático authored: 0 px.\nDesfoque no instante central do frame 0: 0 px · valor estático.\n\nSem sombra authored.\n\nTracks do target no frame 0\nPropriedade\tAvaliada\tKeyframes authored\n\nEsta camada não tem receita editável. Os tracks acima pertencem à composição atual.\n\nRenderizar esta revisão\n\nRender associado à revisão 2 · 1b856b62acb23b07d488c1c6f9582af75fa5cf074f49c465cdab0a40d6943925\n\nRenderer do MP4: remotion.contextual-v2 · versão 4.0.527-native.14.\n\nVersões, digests e materiais",
+      "localProbe": {
+        "alerts": [],
+        "capability": null,
+        "disabled": false,
+        "optionDisabled": true,
+        "selected": false,
+        "text": "Verificar gerador local"
+      },
+      "observedAt": "2026-10-05T20:26:12.359Z",
+      "overlays": 0,
+      "ready": true,
+      "resources": [
+        {
+          "durationMs": 173.40000000596046,
+          "endMs": 1861.4000000059605,
+          "fetchStartMs": 1688,
+          "path": "/api/v1/bootstrap",
+          "requestStartMs": 1691.0999999940395,
+          "responseStartMs": 1860.2999999821184,
+          "startMs": 1688,
+          "status": 200
+        },
+        {
+          "durationMs": 45.60000002384186,
+          "endMs": 1734.9000000059605,
+          "fetchStartMs": 1689.2999999821186,
+          "path": "/api/governance/session",
+          "requestStartMs": 1694.5999999940395,
+          "responseStartMs": 1733.5,
+          "startMs": 1689.2999999821186,
+          "status": 200
+        },
+        {
+          "durationMs": 188.0999999940395,
+          "endMs": 1882.0999999940395,
+          "fetchStartMs": 1694,
+          "path": "/api/v1/bootstrap",
+          "requestStartMs": 1861.199999988079,
+          "responseStartMs": 1881.0999999940395,
+          "startMs": 1694,
+          "status": 200
+        },
+        {
+          "durationMs": 49.900000005960464,
+          "endMs": 1744.5999999940395,
+          "fetchStartMs": 1694.699999988079,
+          "path": "/api/governance/session",
+          "requestStartMs": 1734.4000000059605,
+          "responseStartMs": 1743.2999999821186,
+          "startMs": 1694.699999988079,
+          "status": 200
+        },
+        {
+          "durationMs": 204.5,
+          "endMs": 1900.199999988079,
+          "fetchStartMs": 1695.699999988079,
+          "path": "/api/v1/bootstrap",
+          "requestStartMs": 1881.9000000059605,
+          "responseStartMs": 1898.7999999821184,
+          "startMs": 1695.699999988079,
+          "status": 200
+        },
+        {
+          "durationMs": 257.89999997615814,
+          "endMs": 1953.7999999821184,
+          "fetchStartMs": 1695.9000000059605,
+          "path": "/api/v1/bootstrap",
+          "requestStartMs": 1899.5999999940395,
+          "responseStartMs": 1952.4000000059605,
+          "startMs": 1695.9000000059605,
+          "status": 200
+        },
+        {
+          "durationMs": 4.600000023841858,
+          "endMs": 1750.4000000059605,
+          "fetchStartMs": 1745.7999999821186,
+          "path": "/api/governance/workspace",
+          "requestStartMs": 1746.7999999821186,
+          "responseStartMs": 1748.7999999821186,
+          "startMs": 1745.7999999821186,
+          "status": 200
+        },
+        {
+          "durationMs": 3.800000011920929,
+          "endMs": 1753.9000000059605,
+          "fetchStartMs": 1750.0999999940395,
+          "path": "/api/governance/workspace",
+          "requestStartMs": 1751.5999999940395,
+          "responseStartMs": 1752.7999999821186,
+          "startMs": 1750.0999999940395,
+          "status": 200
+        },
+        {
+          "durationMs": 9.900000005960464,
+          "endMs": 1762,
+          "fetchStartMs": 1752.0999999940395,
+          "path": "/api/governance/users",
+          "requestStartMs": 1754.2999999821186,
+          "responseStartMs": 1757.2999999821186,
+          "startMs": 1752.0999999940395,
+          "status": 200
+        },
+        {
+          "durationMs": 9.799999982118608,
+          "endMs": 1762.2999999821186,
+          "fetchStartMs": 1752.5,
+          "path": "/api/governance/plans",
+          "requestStartMs": 1754.5999999940395,
+          "responseStartMs": 1758.4000000059605,
+          "startMs": 1752.5,
+          "status": 200
+        },
+        {
+          "durationMs": 18.200000017881393,
+          "endMs": 1771,
+          "fetchStartMs": 1752.7999999821186,
+          "path": "/api/governance/subscription",
+          "requestStartMs": 1763.9000000059605,
+          "responseStartMs": 1769.9000000059605,
+          "startMs": 1752.7999999821186,
+          "status": 200
+        },
+        {
+          "durationMs": 22.099999994039536,
+          "endMs": 1775.199999988079,
+          "fetchStartMs": 1753.0999999940395,
+          "path": "/api/governance/approvals",
+          "requestStartMs": 1764.199999988079,
+          "responseStartMs": 1774.2999999821186,
+          "startMs": 1753.0999999940395,
+          "status": 200
+        },
+        {
+          "durationMs": 24.69999998807907,
+          "endMs": 1778.0999999940395,
+          "fetchStartMs": 1753.4000000059605,
+          "path": "/api/governance/audit-logs",
+          "requestStartMs": 1764.4000000059605,
+          "responseStartMs": 1776.5999999940395,
+          "startMs": 1753.4000000059605,
+          "status": 200
+        },
+        {
+          "durationMs": 12.900000005960464,
+          "endMs": 1781.199999988079,
+          "fetchStartMs": 1768.2999999821186,
+          "path": "/api/governance/users",
+          "requestStartMs": 1769.4000000059605,
+          "responseStartMs": 1780.5999999940395,
+          "startMs": 1768.2999999821186,
+          "status": 200
+        },
+        {
+          "durationMs": 17.69999998807907,
+          "endMs": 1786.5999999940395,
+          "fetchStartMs": 1768.9000000059605,
+          "path": "/api/governance/plans",
+          "requestStartMs": 1773.699999988079,
+          "responseStartMs": 1785.699999988079,
+          "startMs": 1768.9000000059605,
+          "status": 200
+        },
+        {
+          "durationMs": 19.80000001192093,
+          "endMs": 1789,
+          "fetchStartMs": 1769.199999988079,
+          "path": "/api/governance/subscription",
+          "requestStartMs": 1774.0999999940395,
+          "responseStartMs": 1788.199999988079,
+          "startMs": 1769.199999988079,
+          "status": 200
+        },
+        {
+          "durationMs": 11.5,
+          "endMs": 1781.0999999940395,
+          "fetchStartMs": 1769.5999999940395,
+          "path": "/api/governance/approvals",
+          "requestStartMs": 1777.5,
+          "responseStartMs": 1779.699999988079,
+          "startMs": 1769.5999999940395,
+          "status": 200
+        },
+        {
+          "durationMs": 20.900000005960464,
+          "endMs": 1790.699999988079,
+          "fetchStartMs": 1769.7999999821186,
+          "path": "/api/governance/audit-logs",
+          "requestStartMs": 1782.7999999821186,
+          "responseStartMs": 1790,
+          "startMs": 1769.7999999821186,
+          "status": 200
+        },
+        {
+          "durationMs": 151.09999999403954,
+          "endMs": 2055.199999988079,
+          "fetchStartMs": 1904.0999999940395,
+          "path": "/api/v1/studios/v1/capabilities",
+          "requestStartMs": 1907.5999999940395,
+          "responseStartMs": 2054.0999999940395,
+          "startMs": 1904.0999999940395,
+          "status": 200
+        },
+        {
+          "durationMs": 120.09999999403954,
+          "endMs": 2024.5999999940395,
+          "fetchStartMs": 1904.5,
+          "path": "/api/v1/campaigns",
+          "requestStartMs": 1911.7999999821184,
+          "responseStartMs": 2023.699999988079,
+          "startMs": 1904.5,
+          "status": 200
+        },
+        {
+          "durationMs": 173.09999999403954,
+          "endMs": 2078,
+          "fetchStartMs": 1904.9000000059605,
+          "path": "/api/v1/posts",
+          "requestStartMs": 1912.0999999940395,
+          "responseStartMs": 2077,
+          "startMs": 1904.9000000059605,
+          "status": 200
+        },
+        {
+          "durationMs": 589.9000000059605,
+          "endMs": 2495.0999999940395,
+          "fetchStartMs": 1905.199999988079,
+          "path": "/api/v1/creatives",
+          "requestStartMs": 1913.4000000059605,
+          "responseStartMs": 2492.9000000059605,
+          "startMs": 1905.199999988079,
+          "status": 200
+        },
+        {
+          "durationMs": 30159.69999998808,
+          "endMs": 32065.19999998808,
+          "fetchStartMs": 1905.5,
+          "path": "/api/v1/assets",
+          "requestStartMs": 1914.199999988079,
+          "responseStartMs": 29956,
+          "startMs": 1905.5,
+          "status": 200
+        },
+        {
+          "durationMs": 124.69999998807909,
+          "endMs": 2030.699999988079,
+          "fetchStartMs": 1906,
+          "path": "/api/v1/posts/approval-events",
+          "requestStartMs": 1953,
+          "responseStartMs": 2029.7999999821184,
+          "startMs": 1906,
+          "status": 200
+        },
+        {
+          "durationMs": 596.2999999821186,
+          "endMs": 2502.699999988079,
+          "fetchStartMs": 1906.4000000059605,
+          "path": "/api/v1/analytics/summary",
+          "requestStartMs": 2024.5,
+          "responseStartMs": 2501.9000000059605,
+          "startMs": 1906.4000000059605,
+          "status": 200
+        },
+        {
+          "durationMs": 598.0999999940395,
+          "endMs": 2504.7999999821186,
+          "fetchStartMs": 1906.699999988079,
+          "path": "/api/v1/radar/state",
+          "requestStartMs": 2030.5,
+          "responseStartMs": 2503.199999988079,
+          "startMs": 1906.699999988079,
+          "status": 200
+        },
+        {
+          "durationMs": 566.6999999880791,
+          "endMs": 2473.7999999821186,
+          "fetchStartMs": 1907.0999999940395,
+          "path": "/api/v1/workspace-resources",
+          "requestStartMs": 2055.5999999940395,
+          "responseStartMs": 2472.4000000059605,
+          "startMs": 1907.0999999940395,
+          "status": 200
+        },
+        {
+          "durationMs": 582,
+          "endMs": 2489.4000000059605,
+          "fetchStartMs": 1907.4000000059605,
+          "path": "/api/v1/workspace-resources",
+          "requestStartMs": 2077.9000000059605,
+          "responseStartMs": 2488.4000000059605,
+          "startMs": 1907.4000000059605,
+          "status": 200
+        },
+        {
+          "durationMs": 620.0999999940395,
+          "endMs": 2527.699999988079,
+          "fetchStartMs": 1907.5999999940395,
+          "path": "/api/v1/workspace-resources",
+          "requestStartMs": 2473.4000000059605,
+          "responseStartMs": 2526,
+          "startMs": 1907.5999999940395,
+          "status": 200
+        },
+        {
+          "durationMs": 697.7999999821186,
+          "endMs": 2654.199999988079,
+          "fetchStartMs": 1956.4000000059605,
+          "path": "/api/v1/studios/v1/capabilities",
+          "requestStartMs": 2503,
+          "responseStartMs": 2653.5999999940395,
+          "startMs": 1956.4000000059605,
+          "status": 200
+        },
+        {
+          "durationMs": 570,
+          "endMs": 2526.7999999821186,
+          "fetchStartMs": 1956.7999999821184,
+          "path": "/api/v1/campaigns",
+          "requestStartMs": 2489.199999988079,
+          "responseStartMs": 2524.699999988079,
+          "startMs": 1956.7999999821184,
+          "status": 200
+        },
+        {
+          "durationMs": 593.2999999821186,
+          "endMs": 2550.2999999821186,
+          "fetchStartMs": 1957,
+          "path": "/api/v1/posts",
+          "requestStartMs": 2503.699999988079,
+          "responseStartMs": 2548.4000000059605,
+          "startMs": 1957,
+          "status": 200
+        },
+        {
+          "durationMs": 672.2000000178814,
+          "endMs": 2629.9000000059605,
+          "fetchStartMs": 1957.699999988079,
+          "path": "/api/v1/creatives",
+          "requestStartMs": 2539.199999988079,
+          "responseStartMs": 2629,
+          "startMs": 1957.699999988079,
+          "status": 200
+        },
+        {
+          "durationMs": 51618,
+          "endMs": 53576,
+          "fetchStartMs": 1958,
+          "path": "/api/v1/assets",
+          "requestStartMs": 21984.19999998808,
+          "responseStartMs": 52474.40000000596,
+          "startMs": 1958,
+          "status": 200
+        },
+        {
+          "durationMs": 582.2999999821186,
+          "endMs": 2540.699999988079,
+          "fetchStartMs": 1958.4000000059605,
+          "path": "/api/v1/posts/approval-events",
+          "requestStartMs": 2493.5999999940395,
+          "responseStartMs": 2538.5999999940395,
+          "startMs": 1958.4000000059605,
+          "status": 200
+        },
+        {
+          "durationMs": 686.5999999940395,
+          "endMs": 2645.2999999821186,
+          "fetchStartMs": 1958.699999988079,
+          "path": "/api/v1/analytics/summary",
+          "requestStartMs": 2549.2999999821186,
+          "responseStartMs": 2644.5999999940395,
+          "startMs": 1958.699999988079,
+          "status": 200
+        },
+        {
+          "durationMs": 699.2999999821186,
+          "endMs": 2658.199999988079,
+          "fetchStartMs": 1958.9000000059605,
+          "path": "/api/v1/radar/state",
+          "requestStartMs": 2569.5,
+          "responseStartMs": 2657.4000000059605,
+          "startMs": 1958.9000000059605,
+          "status": 200
+        },
+        {
+          "durationMs": 622.4000000059605,
+          "endMs": 2581.5,
+          "fetchStartMs": 1959.0999999940395,
+          "path": "/api/v1/workspace-resources",
+          "requestStartMs": 2525.4000000059605,
+          "responseStartMs": 2580.2999999821186,
+          "startMs": 1959.0999999940395,
+          "status": 200
+        },
+        {
+          "durationMs": 610.5,
+          "endMs": 2569.9000000059605,
+          "fetchStartMs": 1959.4000000059605,
+          "path": "/api/v1/workspace-resources",
+          "requestStartMs": 2526.5999999940395,
+          "responseStartMs": 2568.7999999821186,
+          "startMs": 1959.4000000059605,
+          "status": 200
+        },
+        {
+          "durationMs": 686.6999999880791,
+          "endMs": 2646.2999999821186,
+          "fetchStartMs": 1959.5999999940395,
+          "path": "/api/v1/workspace-resources",
+          "requestStartMs": 2580.9000000059605,
+          "responseStartMs": 2645.5999999940395,
+          "startMs": 1959.5999999940395,
+          "status": 200
+        },
+        {
+          "durationMs": 4940.199999988079,
+          "endMs": 49690.09999999404,
+          "fetchStartMs": 44749.90000000596,
+          "path": "/api/v1/studios/v1/documents",
+          "requestStartMs": 44772.59999999404,
+          "responseStartMs": 49685,
+          "startMs": 44749.90000000596,
+          "status": 200
+        },
+        {
+          "durationMs": 4933.4000000059605,
+          "endMs": 49684.09999999404,
+          "fetchStartMs": 44750.69999998808,
+          "path": "/api/v1/studios/v1/media-ingests",
+          "requestStartMs": 44775.79999998212,
+          "responseStartMs": 49672.79999998212,
+          "startMs": 44750.69999998808,
+          "status": 200
+        },
+        {
+          "durationMs": 5668,
+          "endMs": 50419.29999998212,
+          "fetchStartMs": 44751.29999998212,
+          "path": "/api/v1/studios/v1/documents",
+          "requestStartMs": 49686.29999998212,
+          "responseStartMs": 50418.09999999404,
+          "startMs": 44751.29999998212,
+          "status": 200
+        },
+        {
+          "durationMs": 5676.300000011921,
+          "endMs": 50427.90000000596,
+          "fetchStartMs": 44751.59999999404,
+          "path": "/api/v1/studios/v1/media-ingests",
+          "requestStartMs": 49675.29999998212,
+          "responseStartMs": 50427,
+          "startMs": 44751.59999999404,
+          "status": 200
+        },
+        {
+          "durationMs": 767.5,
+          "endMs": 51197.59999999404,
+          "fetchStartMs": 50430.09999999404,
+          "path": "/api/v1/studios/v1/jobs",
+          "requestStartMs": 50432.79999998212,
+          "responseStartMs": 51192,
+          "startMs": 50430.09999999404,
+          "status": 200
+        },
+        {
+          "durationMs": 129,
+          "endMs": 51330.59999999404,
+          "fetchStartMs": 51201.59999999404,
+          "path": "/api/v1/assets/83e06255-2a93-43db-b3d6-63c5b978642c/content",
+          "requestStartMs": 51202.19999998808,
+          "responseStartMs": 51202.5,
+          "startMs": 51201.59999999404,
+          "status": 200
+        },
+        {
+          "durationMs": 108.5,
+          "endMs": 51446,
+          "fetchStartMs": 51337.5,
+          "path": "/api/v1/assets/55c8c866-2531-4a05-a6e3-09a2c2d14ac2/content",
+          "requestStartMs": 51338.29999998212,
+          "responseStartMs": 51349,
+          "startMs": 51337.5,
+          "status": 200
+        },
+        {
+          "durationMs": 4.699999988079071,
+          "endMs": 51343.09999999404,
+          "fetchStartMs": 51338.40000000596,
+          "path": "/api/v1/assets/78221c57-92c0-4587-b061-e2044d6b0584/content",
+          "requestStartMs": 51339.09999999404,
+          "responseStartMs": 51339.29999998212,
+          "startMs": 51338.40000000596,
+          "status": 200
+        },
+        {
+          "durationMs": 50.80000001192093,
+          "endMs": 51390.5,
+          "fetchStartMs": 51339.69999998808,
+          "path": "/api/v1/assets/b103665b-6507-4b60-ad63-0efe5ca40d2a/content",
+          "requestStartMs": 51340.69999998808,
+          "responseStartMs": 51341.69999998808,
+          "startMs": 51339.69999998808,
+          "status": 200
+        },
+        {
+          "durationMs": 1162.4000000059605,
+          "endMs": 52512.90000000596,
+          "fetchStartMs": 51350.5,
+          "path": "/api/v1/studios/v1/documents/0ae12fe1-c3aa-4f42-a764-33d076ade8cd/editorial-readiness",
+          "requestStartMs": 51368.09999999404,
+          "responseStartMs": 52511.79999998212,
+          "startMs": 51350.5,
+          "status": 200
+        },
+        {
+          "durationMs": 1116.899999976158,
+          "endMs": 52530.79999998212,
+          "fetchStartMs": 51413.90000000596,
+          "path": "/api/v1/studios/v1/creative/casebook",
+          "requestStartMs": 51415.09999999404,
+          "responseStartMs": 52502.5,
+          "startMs": 51413.90000000596,
+          "status": 200
+        },
+        {
+          "durationMs": 1136,
+          "endMs": 52550.19999998808,
+          "fetchStartMs": 51414.19999998808,
+          "path": "/api/v1/studios/v1/creative/assisted-intelligence",
+          "requestStartMs": 51416.59999999404,
+          "responseStartMs": 52546.69999998808,
+          "startMs": 51414.19999998808,
+          "status": 200
+        },
+        {
+          "durationMs": 1117.699999988079,
+          "endMs": 52532.29999998212,
+          "fetchStartMs": 51414.59999999404,
+          "path": "/api/v1/studios/v1/creative/factory-program",
+          "requestStartMs": 51417.79999998212,
+          "responseStartMs": 52527.5,
+          "startMs": 51414.59999999404,
+          "status": 200
+        },
+        {
+          "durationMs": 1103.699999988079,
+          "endMs": 52518.59999999404,
+          "fetchStartMs": 51414.90000000596,
+          "path": "/api/v1/studios/v1/creative/replan-state",
+          "requestStartMs": 51447.5,
+          "responseStartMs": 52517.29999998212,
+          "startMs": 51414.90000000596,
+          "status": 200
+        },
+        {
+          "durationMs": 1284.0999999940395,
+          "endMs": 52699.19999998808,
+          "fetchStartMs": 51415.09999999404,
+          "path": "/api/v1/studios/v1/creative/advanced-capabilities",
+          "requestStartMs": 52503.40000000596,
+          "responseStartMs": 52696.69999998808,
+          "startMs": 51415.09999999404,
+          "status": 200
+        },
+        {
+          "durationMs": 1285.699999988079,
+          "endMs": 52701.09999999404,
+          "fetchStartMs": 51415.40000000596,
+          "path": "/api/v1/studios/v1/creative/autonomy-audit",
+          "requestStartMs": 52512.5,
+          "responseStartMs": 52700.5,
+          "startMs": 51415.40000000596,
+          "status": 200
+        },
+        {
+          "durationMs": 215.4000000059605,
+          "endMs": 72797.5,
+          "fetchStartMs": 72582.09999999404,
+          "path": "/api/v1/studios/v1/workspaces/4812f2c0-1a2a-4f6d-967d-17b370c8d849/render-engines",
+          "requestStartMs": 0,
+          "responseStartMs": 0,
+          "startMs": 72582.09999999404,
+          "status": 0
+        },
+        {
+          "durationMs": 214.9000000059605,
+          "endMs": 72797.59999999404,
+          "fetchStartMs": 72582.69999998808,
+          "path": "/api/v1/studios/v1/workspaces/4812f2c0-1a2a-4f6d-967d-17b370c8d849/engine-campaigns",
+          "requestStartMs": 0,
+          "responseStartMs": 0,
+          "startMs": 72582.69999998808,
+          "status": 0
+        },
+        {
+          "durationMs": 212.69999998807907,
+          "endMs": 72797.69999998808,
+          "fetchStartMs": 72585,
+          "path": "/api/v1/studios/v1/editing/ai",
+          "requestStartMs": 0,
+          "responseStartMs": 0,
+          "startMs": 72585,
+          "status": 0
+        },
+        {
+          "durationMs": 20299.90000000596,
+          "endMs": 92886,
+          "fetchStartMs": 72586.09999999404,
+          "path": "/api/v1/studios/v1/editing/resources",
+          "requestStartMs": 72593.19999998808,
+          "responseStartMs": 92880.69999998808,
+          "startMs": 72586.09999999404,
+          "status": 200
+        },
+        {
+          "durationMs": 207.5999999940395,
+          "endMs": 72797.09999999404,
+          "fetchStartMs": 72589.5,
+          "path": "/api/v1/studios/v1/workspaces/4812f2c0-1a2a-4f6d-967d-17b370c8d849/render-engines",
+          "requestStartMs": 0,
+          "responseStartMs": 0,
+          "startMs": 72589.5,
+          "status": 0
+        },
+        {
+          "durationMs": 203.5,
+          "endMs": 72797.19999998808,
+          "fetchStartMs": 72593.69999998808,
+          "path": "/api/v1/studios/v1/editing/ai",
+          "requestStartMs": 0,
+          "responseStartMs": 0,
+          "startMs": 72593.69999998808,
+          "status": 0
+        },
+        {
+          "durationMs": 201.39999997615817,
+          "endMs": 72797.29999998212,
+          "fetchStartMs": 72595.90000000596,
+          "path": "/api/v1/studios/v1/transcripts",
+          "requestStartMs": 0,
+          "responseStartMs": 0,
+          "startMs": 72595.90000000596,
+          "status": 0
+        },
+        {
+          "durationMs": 199.4000000059605,
+          "endMs": 72797.40000000596,
+          "fetchStartMs": 72598,
+          "path": "/api/v1/studios/v1/editing/repertoire",
+          "requestStartMs": 0,
+          "responseStartMs": 0,
+          "startMs": 72598,
+          "status": 0
+        },
+        {
+          "durationMs": 197.7000000178814,
+          "endMs": 72797.40000000596,
+          "fetchStartMs": 72599.69999998808,
+          "path": "/api/v1/studios/v1/documents/0ae12fe1-c3aa-4f42-a764-33d076ade8cd/editing-plans/latest",
+          "requestStartMs": 0,
+          "responseStartMs": 0,
+          "startMs": 72599.69999998808,
+          "status": 0
+        },
+        {
+          "durationMs": 507.699999988079,
+          "endMs": 73112.79999998212,
+          "fetchStartMs": 72605.09999999404,
+          "path": "/api/v1/studios/v1/workspaces/4812f2c0-1a2a-4f6d-967d-17b370c8d849/render-engines",
+          "requestStartMs": 72807.90000000596,
+          "responseStartMs": 73112.09999999404,
+          "startMs": 72605.09999999404,
+          "status": 200
+        },
+        {
+          "durationMs": 172.7999999821186,
+          "endMs": 72779.79999998212,
+          "fetchStartMs": 72607,
+          "path": "/api/v1/studios/v1/workspaces/4812f2c0-1a2a-4f6d-967d-17b370c8d849/engine-campaigns",
+          "requestStartMs": 72699.09999999404,
+          "responseStartMs": 72778.79999998212,
+          "startMs": 72607,
+          "status": 200
+        },
+        {
+          "durationMs": 439.60000002384186,
+          "endMs": 73049.40000000596,
+          "fetchStartMs": 72609.79999998212,
+          "path": "/api/v1/studios/v1/editing/ai",
+          "requestStartMs": 72807.69999998808,
+          "responseStartMs": 73048.40000000596,
+          "startMs": 72609.79999998212,
+          "status": 200
+        },
+        {
+          "durationMs": 554.0999999940395,
+          "endMs": 73166.69999998808,
+          "fetchStartMs": 72612.59999999404,
+          "path": "/api/v1/studios/v1/workspaces/4812f2c0-1a2a-4f6d-967d-17b370c8d849/render-engines",
+          "requestStartMs": 73113,
+          "responseStartMs": 73166,
+          "startMs": 72612.59999999404,
+          "status": 200
+        },
+        {
+          "durationMs": 988.5999999940396,
+          "endMs": 73602.19999998808,
+          "fetchStartMs": 72613.59999999404,
+          "path": "/api/v1/studios/v1/editing/ai",
+          "requestStartMs": 73049.29999998212,
+          "responseStartMs": 73071.79999998212,
+          "startMs": 72613.59999999404,
+          "status": 200
+        },
+        {
+          "durationMs": 362.7999999821186,
+          "endMs": 72977.79999998212,
+          "fetchStartMs": 72615,
+          "path": "/api/v1/studios/v1/transcripts",
+          "requestStartMs": 72779.5,
+          "responseStartMs": 72976.59999999404,
+          "startMs": 72615,
+          "status": 200
+        },
+        {
+          "durationMs": 482.7000000178814,
+          "endMs": 73099.5,
+          "fetchStartMs": 72616.79999998212,
+          "path": "/api/v1/studios/v1/editing/repertoire",
+          "requestStartMs": 72808,
+          "responseStartMs": 73098.59999999404,
+          "startMs": 72616.79999998212,
+          "status": 200
+        },
+        {
+          "durationMs": 20271.20000001788,
+          "endMs": 92889.40000000596,
+          "fetchStartMs": 72618.19999998808,
+          "path": "/api/v1/studios/v1/documents/0ae12fe1-c3aa-4f42-a764-33d076ade8cd/editing-plans/latest",
+          "requestStartMs": 72807.40000000596,
+          "responseStartMs": 92846.29999998212,
+          "startMs": 72618.19999998808,
+          "status": 200
+        },
+        {
+          "durationMs": 20350.5,
+          "endMs": 93168.59999999404,
+          "fetchStartMs": 72818.09999999404,
+          "path": "/api/v1/studios/v1/documents/0ae12fe1-c3aa-4f42-a764-33d076ade8cd/editor/inspection",
+          "requestStartMs": 73600.19999998808,
+          "responseStartMs": 92916.5,
+          "startMs": 72818.09999999404,
+          "status": 200
+        }
+      ],
+      "reviewGateMounted": true,
+      "scope": "Public DOM and performance timings; no document edits",
+      "url": "http://127.0.0.1:3000/content/7b95a586-c571-403a-a930-5ac7cb11819a/edit?mode=video",
+      "video": {
+        "currentTime": 0,
+        "duration": 15,
+        "height": 1920,
+        "paused": true,
+        "readyState": 4,
+        "seeking": false,
+        "width": 1080
+      }
+    }
+  },
+  "error": null
+}

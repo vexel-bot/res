@@ -1,0 +1,380 @@
+{
+  "schemaVersion": "res.editor-oss-source-study.v1",
+  "date": "2026-10-02",
+  "repositories": [
+    {
+      "name": "motion-canvas",
+      "remote": "https://github.com/motion-canvas/motion-canvas",
+      "commit": "7b91435c301d530351dcf5ebb91dd139c002e405",
+      "commitDate": "2026-07-02T22:01:32+02:00",
+      "files": [
+        {
+          "path": "LICENSE",
+          "bytes": 1070,
+          "lines": 21,
+          "sha256": "b3f12201916c5d478263cd210cf17f3d0c007d03bd574e0b77cac6307953068e",
+          "url": "https://github.com/motion-canvas/motion-canvas/blob/7b91435c301d530351dcf5ebb91dd139c002e405/LICENSE"
+        },
+        {
+          "path": "packages/2d/src/lib/components/Txt.ts",
+          "bytes": 4670,
+          "lines": 204,
+          "sha256": "dba29aefd5fa1d63168e8cdf22ab2e50719060e7783691d32aec0e0298b7ef48",
+          "url": "https://github.com/motion-canvas/motion-canvas/blob/7b91435c301d530351dcf5ebb91dd139c002e405/packages/2d/src/lib/components/Txt.ts"
+        },
+        {
+          "path": "packages/2d/src/lib/components/TxtLeaf.ts",
+          "bytes": 5449,
+          "lines": 210,
+          "sha256": "0c3fe466cc6f664c93d8ce4f204254277290e6cbf0af1bb8496e75dfbb3a1f39",
+          "url": "https://github.com/motion-canvas/motion-canvas/blob/7b91435c301d530351dcf5ebb91dd139c002e405/packages/2d/src/lib/components/TxtLeaf.ts"
+        },
+        {
+          "path": "packages/2d/src/lib/components/Txt.test.tsx",
+          "bytes": 2301,
+          "lines": 81,
+          "sha256": "df2f8e7463b08776267c43a25706f58d2e7385bc0939ee601d2a303659894cfb",
+          "url": "https://github.com/motion-canvas/motion-canvas/blob/7b91435c301d530351dcf5ebb91dd139c002e405/packages/2d/src/lib/components/Txt.test.tsx"
+        },
+        {
+          "path": "packages/2d/src/lib/components/Layout.ts",
+          "bytes": 30901,
+          "lines": 1071,
+          "sha256": "2810208afc868f5349c897cc40ad35f4a5c8b96ea7952e69b29f6f83a91dbe77",
+          "url": "https://github.com/motion-canvas/motion-canvas/blob/7b91435c301d530351dcf5ebb91dd139c002e405/packages/2d/src/lib/components/Layout.ts"
+        },
+        {
+          "path": "packages/2d/src/lib/components/Node.ts",
+          "bytes": 52816,
+          "lines": 1949,
+          "sha256": "3bd8524472c637d7a53e473b06253526a60dbb70bd8fbf0b0dc18874ea8415c8",
+          "url": "https://github.com/motion-canvas/motion-canvas/blob/7b91435c301d530351dcf5ebb91dd139c002e405/packages/2d/src/lib/components/Node.ts"
+        },
+        {
+          "path": "packages/core/src/tweening/timingFunctions.ts",
+          "bytes": 7964,
+          "lines": 302,
+          "sha256": "375e30d2bbac8c989938a5f969f3695b629572c337009c4b4783be099b692bf7",
+          "url": "https://github.com/motion-canvas/motion-canvas/blob/7b91435c301d530351dcf5ebb91dd139c002e405/packages/core/src/tweening/timingFunctions.ts"
+        },
+        {
+          "path": "packages/ui/src/components/timeline/Playhead.tsx",
+          "bytes": 828,
+          "lines": 35,
+          "sha256": "7b0bde781d644c2c7c8c97ac7aabe58cc8729b9cd7049271e5b94b858b64862a",
+          "url": "https://github.com/motion-canvas/motion-canvas/blob/7b91435c301d530351dcf5ebb91dd139c002e405/packages/ui/src/components/timeline/Playhead.tsx"
+        }
+      ],
+      "temporaryBytesAfterCheckout": 336073
+    },
+    {
+      "name": "glaxnimate",
+      "remote": "https://github.com/KDE/glaxnimate",
+      "commit": "643e99cd81161de4f1b235c7817f0b4e9b08a9f4",
+      "commitDate": "2026-09-25T01:46:42Z",
+      "files": [
+        {
+          "path": "COPYING",
+          "bytes": 29,
+          "lines": 1,
+          "sha256": "e68fb628b41c120aaedf75634250899b7a829b860eb44b7d92eb5ad4d7392bf3",
+          "url": "https://github.com/KDE/glaxnimate/blob/643e99cd81161de4f1b235c7817f0b4e9b08a9f4/COPYING"
+        },
+        {
+          "path": "LICENSES/GPL-3.0-or-later.txt",
+          "bytes": 35147,
+          "lines": 674,
+          "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+          "url": "https://github.com/KDE/glaxnimate/blob/643e99cd81161de4f1b235c7817f0b4e9b08a9f4/LICENSES/GPL-3.0-or-later.txt"
+        },
+        {
+          "path": "src/core/glaxnimate/model/animation/keyframe_transition.cpp",
+          "bytes": 7172,
+          "lines": 249,
+          "sha256": "4b5130a8ce0f1932a23041958798e5db7197b9e13030eb3926a0e5a690d9b408",
+          "url": "https://github.com/KDE/glaxnimate/blob/643e99cd81161de4f1b235c7817f0b4e9b08a9f4/src/core/glaxnimate/model/animation/keyframe_transition.cpp"
+        },
+        {
+          "path": "src/core/glaxnimate/model/animation/keyframe_transition.hpp",
+          "bytes": 2939,
+          "lines": 103,
+          "sha256": "2c3d4143b72c90227d9c86d3c4ead75d23d6499110fa8835c93857c85845e355",
+          "url": "https://github.com/KDE/glaxnimate/blob/643e99cd81161de4f1b235c7817f0b4e9b08a9f4/src/core/glaxnimate/model/animation/keyframe_transition.hpp"
+        },
+        {
+          "path": "src/core/glaxnimate/math/bezier/bezier_length.cpp",
+          "bytes": 3927,
+          "lines": 144,
+          "sha256": "300ff9e7002a5e9dede4b47550908e2d976ee8c52c78100ecc562ab18cdf7d28",
+          "url": "https://github.com/KDE/glaxnimate/blob/643e99cd81161de4f1b235c7817f0b4e9b08a9f4/src/core/glaxnimate/math/bezier/bezier_length.cpp"
+        },
+        {
+          "path": "src/core/glaxnimate/model/shapes/modifiers/trim.cpp",
+          "bytes": 8925,
+          "lines": 291,
+          "sha256": "7e6eb93db23bc2a4a8e17249af007bb60c070339a6ce9aad5fd199206364315a",
+          "url": "https://github.com/KDE/glaxnimate/blob/643e99cd81161de4f1b235c7817f0b4e9b08a9f4/src/core/glaxnimate/model/shapes/modifiers/trim.cpp"
+        },
+        {
+          "path": "test/test_keyframe_transition.cpp",
+          "bytes": 5692,
+          "lines": 178,
+          "sha256": "2477260a49c47212b627ae62fd0638d8027f1a4e7444d676e53cce7b099e4f6f",
+          "url": "https://github.com/KDE/glaxnimate/blob/643e99cd81161de4f1b235c7817f0b4e9b08a9f4/test/test_keyframe_transition.cpp"
+        }
+      ],
+      "temporaryBytesAfterCheckout": 317598
+    },
+    {
+      "name": "opentimelineio",
+      "remote": "https://github.com/AcademySoftwareFoundation/OpenTimelineIO",
+      "commit": "fc5c58e16f6832972cdb5c656dd8a6d87a4e5b02",
+      "commitDate": "2026-10-01T13:06:50-07:00",
+      "files": [
+        {
+          "path": "LICENSE.txt",
+          "bytes": 11357,
+          "lines": 201,
+          "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+          "url": "https://github.com/AcademySoftwareFoundation/OpenTimelineIO/blob/fc5c58e16f6832972cdb5c656dd8a6d87a4e5b02/LICENSE.txt"
+        },
+        {
+          "path": "NOTICE.txt",
+          "bytes": 178,
+          "lines": 7,
+          "sha256": "e5ca061ef053cb9fd1b7146da3b10d4e4f2ec218445c3ba7f7edb32ae9452543",
+          "url": "https://github.com/AcademySoftwareFoundation/OpenTimelineIO/blob/fc5c58e16f6832972cdb5c656dd8a6d87a4e5b02/NOTICE.txt"
+        },
+        {
+          "path": "src/opentime/rationalTime.h",
+          "bytes": 14854,
+          "lines": 428,
+          "sha256": "1ee199836bd25acc56ec8c3fabe0a8dc76920d86e3bd76f3258bfec591e2249d",
+          "url": "https://github.com/AcademySoftwareFoundation/OpenTimelineIO/blob/fc5c58e16f6832972cdb5c656dd8a6d87a4e5b02/src/opentime/rationalTime.h"
+        },
+        {
+          "path": "src/opentime/timeRange.h",
+          "bytes": 17635,
+          "lines": 463,
+          "sha256": "89b300b4483e91b424152ffcb491bbaca80d65091c5421f33e996ed682158099",
+          "url": "https://github.com/AcademySoftwareFoundation/OpenTimelineIO/blob/fc5c58e16f6832972cdb5c656dd8a6d87a4e5b02/src/opentime/timeRange.h"
+        },
+        {
+          "path": "src/opentimelineio/marker.h",
+          "bytes": 2485,
+          "lines": 77,
+          "sha256": "89fa1afc7c4adeaca5d5ddecb9043d596402dae1b6ee71bc98ab2490050b01e2",
+          "url": "https://github.com/AcademySoftwareFoundation/OpenTimelineIO/blob/fc5c58e16f6832972cdb5c656dd8a6d87a4e5b02/src/opentimelineio/marker.h"
+        },
+        {
+          "path": "tests/test_opentime.py",
+          "bytes": 52037,
+          "lines": 1399,
+          "sha256": "548704e5332a08d5fbb735e2edc69884e3d5e845ec4bffec49830b929e22ca62",
+          "url": "https://github.com/AcademySoftwareFoundation/OpenTimelineIO/blob/fc5c58e16f6832972cdb5c656dd8a6d87a4e5b02/tests/test_opentime.py"
+        }
+      ],
+      "temporaryBytesAfterCheckout": 214287
+    },
+    {
+      "name": "kdenlive",
+      "remote": "https://github.com/KDE/kdenlive",
+      "commit": "b3806e4bde3280d2176dbef3d8c3556546068c86",
+      "commitDate": "2026-10-02T11:11:38+02:00",
+      "files": [
+        {
+          "path": "COPYING",
+          "bytes": 34670,
+          "lines": 232,
+          "sha256": "b6a8bf63ae2c95b0aa256ee774680d7bd18f21f457da75466f7610b3b16acc4e",
+          "url": "https://github.com/KDE/kdenlive/blob/b3806e4bde3280d2176dbef3d8c3556546068c86/COPYING"
+        },
+        {
+          "path": "LICENSES/GPL-3.0-only.txt",
+          "bytes": 34670,
+          "lines": 232,
+          "sha256": "b6a8bf63ae2c95b0aa256ee774680d7bd18f21f457da75466f7610b3b16acc4e",
+          "url": "https://github.com/KDE/kdenlive/blob/b3806e4bde3280d2176dbef3d8c3556546068c86/LICENSES/GPL-3.0-only.txt"
+        },
+        {
+          "path": "LICENSES/GPL-3.0-or-later.txt",
+          "bytes": 34670,
+          "lines": 232,
+          "sha256": "b6a8bf63ae2c95b0aa256ee774680d7bd18f21f457da75466f7610b3b16acc4e",
+          "url": "https://github.com/KDE/kdenlive/blob/b3806e4bde3280d2176dbef3d8c3556546068c86/LICENSES/GPL-3.0-or-later.txt"
+        },
+        {
+          "path": "src/assets/keyframes/model/keyframemodel.cpp",
+          "bytes": 67570,
+          "lines": 1801,
+          "sha256": "b8f54c570d9c44bd0f9f00beaee6fbff92b0d15d166a02a8aaf15901d4294630",
+          "url": "https://github.com/KDE/kdenlive/blob/b3806e4bde3280d2176dbef3d8c3556546068c86/src/assets/keyframes/model/keyframemodel.cpp"
+        },
+        {
+          "path": "src/assets/keyframes/model/keyframemodellist.cpp",
+          "bytes": 37666,
+          "lines": 959,
+          "sha256": "88a52961857c386c086cac92b0eb96712f4f6e3266dcf3faaf95297b755ab21e",
+          "url": "https://github.com/KDE/kdenlive/blob/b3806e4bde3280d2176dbef3d8c3556546068c86/src/assets/keyframes/model/keyframemodellist.cpp"
+        },
+        {
+          "path": "src/bin/model/markerlistmodel.cpp",
+          "bytes": 43042,
+          "lines": 1226,
+          "sha256": "116c2c30c1a34494126b6b7937b2caba68ea1c163158fa0930ef38cd38b5db2b",
+          "url": "https://github.com/KDE/kdenlive/blob/b3806e4bde3280d2176dbef3d8c3556546068c86/src/bin/model/markerlistmodel.cpp"
+        },
+        {
+          "path": "tests/markertest.cpp",
+          "bytes": 22144,
+          "lines": 502,
+          "sha256": "0eaa3fb41cd672746f3fa7c91ab7bea8b2a421a517fbdf86916dfb14f7b86d2e",
+          "url": "https://github.com/KDE/kdenlive/blob/b3806e4bde3280d2176dbef3d8c3556546068c86/tests/markertest.cpp"
+        }
+      ],
+      "temporaryBytesAfterCheckout": 631558
+    },
+    {
+      "name": "shotcut",
+      "remote": "https://github.com/mltframework/shotcut",
+      "commit": "1ccb8db3bc6f573e9e849e4bd4e088ae912bac1c",
+      "commitDate": "2026-09-30T10:34:23-07:00",
+      "files": [
+        {
+          "path": "COPYING",
+          "bytes": 35147,
+          "lines": 674,
+          "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+          "url": "https://github.com/mltframework/shotcut/blob/1ccb8db3bc6f573e9e849e4bd4e088ae912bac1c/COPYING"
+        },
+        {
+          "path": "src/models/keyframesmodel.cpp",
+          "bytes": 49115,
+          "lines": 1164,
+          "sha256": "bd12b9860486ee7d55078a4fe4171a14b8fead753add704475f4335cdc3ab5f9",
+          "url": "https://github.com/mltframework/shotcut/blob/1ccb8db3bc6f573e9e849e4bd4e088ae912bac1c/src/models/keyframesmodel.cpp"
+        },
+        {
+          "path": "src/qmltypes/qmlfilter.cpp",
+          "bytes": 55798,
+          "lines": 1588,
+          "sha256": "9eef1d1652a34d623fab2bd118dd0a30843a6b5439644e29bfee2e6ddf659dad",
+          "url": "https://github.com/mltframework/shotcut/blob/1ccb8db3bc6f573e9e849e4bd4e088ae912bac1c/src/qmltypes/qmlfilter.cpp"
+        },
+        {
+          "path": "src/commands/undohelper.cpp",
+          "bytes": 25836,
+          "lines": 600,
+          "sha256": "38719f910b1f0b937605d861617967a2623ddb5c199c043f0a8c3575a56d1247",
+          "url": "https://github.com/mltframework/shotcut/blob/1ccb8db3bc6f573e9e849e4bd4e088ae912bac1c/src/commands/undohelper.cpp"
+        },
+        {
+          "path": "src/qml/views/keyframes/KeyframeParameter.qml",
+          "bytes": 23328,
+          "lines": 541,
+          "sha256": "18bb27f9d7bdfad7b6af1efca12050cbc7938d908a7ecc109e0c7a6e5e6017f9",
+          "url": "https://github.com/mltframework/shotcut/blob/1ccb8db3bc6f573e9e849e4bd4e088ae912bac1c/src/qml/views/keyframes/KeyframeParameter.qml"
+        }
+      ],
+      "temporaryBytesAfterCheckout": 720784
+    },
+    {
+      "name": "olive",
+      "remote": "https://github.com/olive-editor/olive",
+      "commit": "7e0e94abf6610026aebb9ddce8564c39522fac6e",
+      "commitDate": "2024-12-05T11:34:16+01:00",
+      "files": [
+        {
+          "path": "LICENSE",
+          "bytes": 35149,
+          "lines": 674,
+          "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+          "url": "https://github.com/olive-editor/olive/blob/7e0e94abf6610026aebb9ddce8564c39522fac6e/LICENSE"
+        },
+        {
+          "path": "app/node/keyframe.cpp",
+          "bytes": 7162,
+          "lines": 258,
+          "sha256": "b3b8678a509c86091541af101f116c2a04193b3f0e0bfbed1a4a3006d413ccd5",
+          "url": "https://github.com/olive-editor/olive/blob/7e0e94abf6610026aebb9ddce8564c39522fac6e/app/node/keyframe.cpp"
+        },
+        {
+          "path": "app/node/traverser.cpp",
+          "bytes": 14688,
+          "lines": 479,
+          "sha256": "dfbb6a8c0be8144859e8b7964c32e6d2df1982b0176b0be6244236ad875b8352",
+          "url": "https://github.com/olive-editor/olive/blob/7e0e94abf6610026aebb9ddce8564c39522fac6e/app/node/traverser.cpp"
+        },
+        {
+          "path": "app/render/framehashcache.cpp",
+          "bytes": 13069,
+          "lines": 427,
+          "sha256": "6aab7e2402f661997f166b9bc4268ea287423c8a8ded6f8b0bc17fbf4b492ec3",
+          "url": "https://github.com/olive-editor/olive/blob/7e0e94abf6610026aebb9ddce8564c39522fac6e/app/render/framehashcache.cpp"
+        },
+        {
+          "path": "app/panel/curve/curve.cpp",
+          "bytes": 1812,
+          "lines": 74,
+          "sha256": "2bb677c1275016cf139d054a8715336b4b35db4cf5515f1aa156e1771e6ce436",
+          "url": "https://github.com/olive-editor/olive/blob/7e0e94abf6610026aebb9ddce8564c39522fac6e/app/panel/curve/curve.cpp"
+        }
+      ],
+      "temporaryBytesAfterCheckout": 518862
+    },
+    {
+      "name": "natron",
+      "remote": "https://github.com/NatronGitHub/Natron",
+      "commit": "3763d805d7d277d10af10025ae41af677682b3e6",
+      "commitDate": "2026-07-24T11:48:49+02:00",
+      "files": [
+        {
+          "path": "LICENSE.txt",
+          "bytes": 18092,
+          "lines": 339,
+          "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
+          "url": "https://github.com/NatronGitHub/Natron/blob/3763d805d7d277d10af10025ae41af677682b3e6/LICENSE.txt"
+        },
+        {
+          "path": "LICENSE_SHORT.txt",
+          "bytes": 812,
+          "lines": 17,
+          "sha256": "2a91027307410797b226e00b3bc4ca6160d8114898fb70ef779629c262591a88",
+          "url": "https://github.com/NatronGitHub/Natron/blob/3763d805d7d277d10af10025ae41af677682b3e6/LICENSE_SHORT.txt"
+        },
+        {
+          "path": "Engine/Curve.cpp",
+          "bytes": 57078,
+          "lines": 1917,
+          "sha256": "c884dc727e228f6206598e6ca07a3831c6b50ac9d49e4d49f44abd00c3be689e",
+          "url": "https://github.com/NatronGitHub/Natron/blob/3763d805d7d277d10af10025ae41af677682b3e6/Engine/Curve.cpp"
+        },
+        {
+          "path": "Engine/Bezier.cpp",
+          "bytes": 125585,
+          "lines": 3707,
+          "sha256": "b930fda0e74b9045be57baf5110feed606c5dd648df9ba34d90487ac63bafbcd",
+          "url": "https://github.com/NatronGitHub/Natron/blob/3763d805d7d277d10af10025ae41af677682b3e6/Engine/Bezier.cpp"
+        },
+        {
+          "path": "Engine/RotoDrawableItem.cpp",
+          "bytes": 50869,
+          "lines": 1521,
+          "sha256": "110eccbaf2cc95569a57f612b096dbdefc13b98d3b442e05ceeffb5b53add6b6",
+          "url": "https://github.com/NatronGitHub/Natron/blob/3763d805d7d277d10af10025ae41af677682b3e6/Engine/RotoDrawableItem.cpp"
+        },
+        {
+          "path": "Engine/KnobSerialization.cpp",
+          "bytes": 33651,
+          "lines": 901,
+          "sha256": "54b53108b68f0b6136e3e7325196a5ca0c386622e87ea12a72a8ef3e8b8fac78",
+          "url": "https://github.com/NatronGitHub/Natron/blob/3763d805d7d277d10af10025ae41af677682b3e6/Engine/KnobSerialization.cpp"
+        }
+      ],
+      "temporaryBytesAfterCheckout": 1128396
+    }
+  ],
+  "externalSourceCopiedIntoApplication": false,
+  "retention": "Original analysis, hashes and immutable links retained; temporary-clone removal is pending because automatic approval review rejected deletion.",
+  "cleanupReceipt": "cleanup.json"
+}

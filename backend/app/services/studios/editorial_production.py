@@ -220,11 +220,31 @@ def save(db, record, user, state):
     return state
 
 
+def require_production_engine(db, record, request, user):
+    if request.render_engine != "alight_motion":
+        return
+    from sqlalchemy import select
+
+    from ...models import Membership
+    from .engine_qualification import engine_capabilities
+
+    member = db.scalar(select(Membership).where(
+        Membership.workspace_id == record.workspace_id, Membership.user_id == user.id,
+    ))
+    if not get_settings().studio_alight_motion_enabled or not member or member.role.lower() not in {"owner", "admin"}:
+        raise ValueError("alight_experiment_access_denied")
+    engine = next(item for item in engine_capabilities()["engines"] if item["provider"] == "alight-motion.contextual-v1")
+    if not engine["available"]:
+        raise ValueError("alight_worker_not_ready:" + ",".join(engine.get("blockers", [])))
+
+
 def create_run(db, record, request: ProductionRequestV1, user, key):
     from ...providers.studios.material_providers import provider_manifest
     from .hybrid_video import hybrid_capability_manifest
 
     settings = get_settings()
+    # Check the selected motor before planning/acquisition can spend money.
+    require_production_engine(db, record, request, user)
     if request.quality_phase_id and (
         not settings.studio_visual_quality_indicator_enabled or settings.environment == "production"
     ):
@@ -241,7 +261,7 @@ def create_run(db, record, request: ProductionRequestV1, user, key):
             raise ValueError("visual_quality_vertical_canvas_required")
         if not request.native_scene_editing:
             raise ValueError("visual_quality_native_editing_required")
-    if request.native_scene_editing and not settings.remotion_native_enabled:
+    if request.native_scene_editing and request.render_engine == "current" and not settings.remotion_native_enabled:
         raise ValueError("remotion_native_experiment_disabled")
     lock_editing_budget(db, record.workspace_id)
     run_id = str(uuid5(NAMESPACE_URL, f"res:production:{record.workspace_id}:{key}"))
@@ -429,6 +449,11 @@ def advance_run(db, record, run_id, user, *, cancel=False):
         state.update(status="blocked", blockers=["studio_document_conflict"])
         return save(db, record, user, state)
     request = ProductionRequestV1.model_validate(state["request"])
+    try:
+        require_production_engine(db, record, request, user)
+    except ValueError as error:
+        state.update(status="blocked", blockers=[str(error)])
+        return save(db, record, user, state)
     if state.get("artifacts", {}).get("plan") and state["stage"] not in {"direction", "animatic"}:
         from .contextual_editing import get_plan
 
@@ -871,6 +896,7 @@ def render_run(db, record, state, user):
         if plan.document_id != record.id:
             raise ValueError("production_plan_document_conflict")
         request = ProductionRequestV1.model_validate(state["request"])
+        require_production_engine(db, record, request, user)
         if request.cinematic_direction_policy == "editorial_motion_v2":
             from ...domain.studios.contextual_editing_v2 import ContextualPlanRecompileRequestV1
             from .contextual_editing_v2 import (
@@ -1036,7 +1062,11 @@ def render_run(db, record, state, user):
 
         native_renderer = (plan.draft_document.composition.narrative.get("editorialV2") or {}).get("renderer")
         renderer_id = native_renderer or get_settings().studio_editorial_motion_provider
-        if request.native_scene_editing and renderer_id != "remotion.contextual-v2":
+        if request.render_engine == "alight_motion" and renderer_id != "alight-motion.contextual-v1":
+            raise ValueError("production_render_engine_conflict")
+        if request.render_engine == "current" and renderer_id == "alight-motion.contextual-v1":
+            raise ValueError("production_render_engine_conflict")
+        if request.native_scene_editing and request.render_engine == "current" and renderer_id != "remotion.contextual-v2":
             raise ValueError("production_native_components_missing")
         if renderer_id not in VIDEO_RENDER_PROVIDERS:
             raise ValueError("video_render_provider_unavailable")

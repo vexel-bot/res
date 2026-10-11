@@ -14,6 +14,7 @@ os.environ.pop("AI_API_KEY", None)
 os.environ["STUDIO_EDITING_AI_PLANNING_PROVIDER"] = "none"
 os.environ["STUDIO_PRODUCTION_TEST_BUDGET_USD"] = "0"
 os.environ["STUDIO_VISUAL_QUALITY_INDICATOR_ENABLED"] = "false"
+os.environ["STUDIO_ALIGHT_MOTION_ENABLED"] = "false"
 os.environ["OPENAI_OUTBOUND_ENABLED"] = "false"
 os.environ["OPENAI_VIDEO_GENERATION_ENABLED"] = "false"
 os.environ["HYPERFRAMES_ENABLED"] = "false"

@@ -1,0 +1,79 @@
+{
+  "observedAt": "2026-10-05T21:45:23.672343+00:00",
+  "variants": {
+    "organization-a": {
+      "documentId": "79f5a459-8278-4331-af17-60f41e042480",
+      "revision": 2,
+      "compositionAndAssetsEqualOriginalRenderSnapshot": true,
+      "originalMp4Sha256": "f2eae2907b62bebd648a5142e851de6253f367594b7f68e5a06a224be8687d63"
+    },
+    "organization-b": {
+      "documentId": "7b8b9df1-7bd5-4f71-b2e3-3c9a8f0629f5",
+      "revision": 2,
+      "compositionAndAssetsEqualOriginalRenderSnapshot": true,
+      "originalMp4Sha256": "7f3a7c3a7fac037dcde962c98e5dc4279efeb5fa81d27dfd5cce2fd699933cf8"
+    },
+    "organization-control": {
+      "documentId": "d4685b9d-f0d1-459c-91c8-8535ce2e588e",
+      "revision": 2,
+      "compositionAndAssetsEqualOriginalRenderSnapshot": true,
+      "originalMp4Sha256": "8934f4a1274d422c98e9c9d9d4f776110f25ac31ce246bdec1a660b830d29d44"
+    },
+    "comparison-a": {
+      "documentId": "377a8aa0-598c-44ca-aa71-a675133b5df6",
+      "revision": 2,
+      "compositionAndAssetsEqualOriginalRenderSnapshot": true,
+      "originalMp4Sha256": "409f0916ab33a58241b1deed17848e09e87e544399261978cdf141e6527d2a4a"
+    },
+    "comparison-b": {
+      "documentId": "dceb53fc-7f7c-481e-b073-999ec21ee94d",
+      "revision": 2,
+      "compositionAndAssetsEqualOriginalRenderSnapshot": true,
+      "originalMp4Sha256": "b7eca6bcf9188ef05c5bd1e92c8c63fd74b259db5c43e5c7140772a8817ee04d"
+    },
+    "comparison-control": {
+      "documentId": "7bb3cf87-c2c3-4a56-bd3d-d2d79447c457",
+      "revision": 2,
+      "compositionAndAssetsEqualOriginalRenderSnapshot": true,
+      "originalMp4Sha256": "25010327326a4245468b1c996122615db7b3ac60b4a906611ae554d4f01614c1"
+    },
+    "interface-a": {
+      "documentId": "0ae12fe1-c3aa-4f42-a764-33d076ade8cd",
+      "revision": 2,
+      "compositionAndAssetsEqualOriginalRenderSnapshot": true,
+      "originalMp4Sha256": "1b856b62acb23b07d488c1c6f9582af75fa5cf074f49c465cdab0a40d6943925"
+    },
+    "interface-b": {
+      "documentId": "7fb69e28-6649-4f82-b533-01ac293ae544",
+      "revision": 2,
+      "compositionAndAssetsEqualOriginalRenderSnapshot": true,
+      "originalMp4Sha256": "7002cbf41c552c2f30aabfa2ee7bfa160e373404e6495fc9f1b9449fa185173f"
+    },
+    "interface-control": {
+      "documentId": "30a9b1dc-f0a8-4431-af03-569319298246",
+      "revision": 2,
+      "compositionAndAssetsEqualOriginalRenderSnapshot": true,
+      "originalMp4Sha256": "f64a30a01174c0eb05200fe8a4e66dc8632097050278b662f688ecb6933f0ced"
+    }
+  },
+  "comparisons": {
+    "organization": {
+      "id": "d2412e84-c643-4c3d-b697-583c31562a47",
+      "status": "not_assessed",
+      "review": null,
+      "labelsUnchanged": true
+    },
+    "comparison": {
+      "id": "c7d85c2d-2dad-4e7f-8fca-b45736544732",
+      "status": "not_assessed",
+      "review": null,
+      "labelsUnchanged": true
+    },
+    "interface": {
+      "id": "e2182ac8-2824-4888-b385-a14ffb81c8ef",
+      "status": "not_assessed",
+      "review": null,
+      "labelsUnchanged": true
+    }
+  }
+}

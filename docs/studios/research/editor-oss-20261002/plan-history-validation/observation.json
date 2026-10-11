@@ -1,0 +1,126 @@
+{
+  "observedAt": "2026-10-05T20:53:49.987139+00:00",
+  "scope": "Three real plan histories, legacy/cold/warm in a separate process, three direct summary API responses",
+  "samples": [
+    {
+      "study": "organization-a",
+      "planId": "b12c7232-6849-4d8c-a52e-7220c1ed316c",
+      "documentId": "79f5a459-8278-4331-af17-60f41e042480",
+      "allModesEqual": true,
+      "modes": [
+        {
+          "mode": "legacy",
+          "getPlanMs": 522.0705999818165,
+          "parserCalls": 3,
+          "canonicalPlanDigest": "974d232e54454dd0f5bdb729906a84d5e63f0ed1f14ec418dabfde4fbc94dd0e",
+          "validationFactCount": 0
+        },
+        {
+          "mode": "cold",
+          "getPlanMs": 538.73990001739,
+          "parserCalls": 4,
+          "canonicalPlanDigest": "974d232e54454dd0f5bdb729906a84d5e63f0ed1f14ec418dabfde4fbc94dd0e",
+          "validationFactCount": 3
+        },
+        {
+          "mode": "warm",
+          "getPlanMs": 351.22189999674447,
+          "parserCalls": 1,
+          "canonicalPlanDigest": "974d232e54454dd0f5bdb729906a84d5e63f0ed1f14ec418dabfde4fbc94dd0e",
+          "validationFactCount": 3
+        }
+      ]
+    },
+    {
+      "study": "comparison-a",
+      "planId": "62a4720d-6fbd-49c6-8785-35602a2c6159",
+      "documentId": "377a8aa0-598c-44ca-aa71-a675133b5df6",
+      "allModesEqual": true,
+      "modes": [
+        {
+          "mode": "legacy",
+          "getPlanMs": 567.9789000132587,
+          "parserCalls": 3,
+          "canonicalPlanDigest": "64365aa469a0ccf0896c5450a8bf62bbb81058bfefdae9a9e4d323e2bba438ae",
+          "validationFactCount": 0
+        },
+        {
+          "mode": "cold",
+          "getPlanMs": 601.8791999958921,
+          "parserCalls": 4,
+          "canonicalPlanDigest": "64365aa469a0ccf0896c5450a8bf62bbb81058bfefdae9a9e4d323e2bba438ae",
+          "validationFactCount": 3
+        },
+        {
+          "mode": "warm",
+          "getPlanMs": 241.50960001861677,
+          "parserCalls": 1,
+          "canonicalPlanDigest": "64365aa469a0ccf0896c5450a8bf62bbb81058bfefdae9a9e4d323e2bba438ae",
+          "validationFactCount": 3
+        }
+      ]
+    },
+    {
+      "study": "interface-a",
+      "planId": "364e858f-4334-4cb7-b384-38ef0207547a",
+      "documentId": "0ae12fe1-c3aa-4f42-a764-33d076ade8cd",
+      "allModesEqual": true,
+      "modes": [
+        {
+          "mode": "legacy",
+          "getPlanMs": 1284.4418000022415,
+          "parserCalls": 5,
+          "canonicalPlanDigest": "70dada594b7136d272b31aa730715d9d2403fdc9c10a4d4a34856ca05d551758",
+          "validationFactCount": 0
+        },
+        {
+          "mode": "cold",
+          "getPlanMs": 938.6865999840666,
+          "parserCalls": 6,
+          "canonicalPlanDigest": "70dada594b7136d272b31aa730715d9d2403fdc9c10a4d4a34856ca05d551758",
+          "validationFactCount": 5
+        },
+        {
+          "mode": "warm",
+          "getPlanMs": 345.73770000133663,
+          "parserCalls": 1,
+          "canonicalPlanDigest": "70dada594b7136d272b31aa730715d9d2403fdc9c10a4d4a34856ca05d551758",
+          "validationFactCount": 5
+        }
+      ]
+    }
+  ],
+  "http": [
+    {
+      "frame": 0,
+      "status": 200,
+      "completeBodyMs": 1083.0779999960214,
+      "bytes": 41758,
+      "canonicalJsonDigest": "ae2d2bbf92b5a28ce716dfb36c4c7123c12997cb5ef1b8473f7c21d39c29bc50",
+      "matchesPreviousSummary": true
+    },
+    {
+      "frame": 244,
+      "status": 200,
+      "completeBodyMs": 408.7915999989491,
+      "bytes": 41790,
+      "canonicalJsonDigest": "1c0eab8272273aecc1c81f52df14ebf9c0bc9c684565249c24201fd8e5740b0a",
+      "matchesPreviousSummary": true
+    },
+    {
+      "frame": 449,
+      "status": 200,
+      "completeBodyMs": 310.85529999108985,
+      "bytes": 41764,
+      "canonicalJsonDigest": "50d9eba9c9d4affeaa311dcab124c8fdc37c818314f3a428462694957de23aa5",
+      "matchesPreviousSummary": true
+    }
+  ],
+  "limits": [
+    "One ordered legacy/cold/warm comparison per study; not randomized or p95",
+    "Cache facts are cleared per study in the separate diagnostic process, not in the API process",
+    "Timings exclude model serialization and digest; HTTP includes response transfer",
+    "No historical event mutations, renders or paid calls; no realtime claim",
+    "Cast-to-string tested on local SQLite; PostgreSQL execution not demonstrated"
+  ]
+}

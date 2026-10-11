@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="4" time="3098.576" timestamp="2026-10-02T22:02:05.886239-03:00" hostname="Computador"><testcase classname="tests.test_temporal_exposure_render" name="test_temporal_exposure_actual_api_measurement[2-180]" time="3010.189"><failure message="AssertionError: remotion_render_timeout&#10;assert 'retrying' == 'succeeded'&#10;  &#10;  - succeeded&#10;  + retrying">client = &lt;starlette.testclient.TestClient object at 0x000002697F9E1190&gt;
+project = {'asset': '471196a5-2b7e-4bbd-bb52-80a71dac9b9f', 'document': '029eacd1-a2ce-441c-b3eb-7916b5f42cb4', 'token': 'eyJhbG...dHlwZSI6ImFjY2VzcyJ9.McKnisXacb5NuyS0CVWSLtYsRK81IjKhNAondsnwL2g', 'workspace': '892f3d59-b2e1-437b-9d9c-db517962b49b'}
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x0000026903F9C790&gt;
+tmp_path = WindowsPath('C:/Users/edugu/AppData/Local/Temp/pytest-of-edugu/pytest-131/test_temporal_exposure_actual_0')
+samples = 2, shutter = 180
+
+    @pytest.mark.parametrize("samples,shutter", [(0, 180), (2, 180), (8, 180), (16, 180), (8, 0)])
+    def test_temporal_exposure_actual_api_measurement(client, project, monkeypatch, tmp_path, samples, shutter):
+        with SessionLocal() as db:
+            record = db.get(CreativeDocument, project["document"])
+            doc = record_to_contract(record)
+            doc.composition.media_timeline.tracks = []
+            persist_contract(record, doc)
+            db.commit()
+        headers = {"Authorization": "Bearer " + project["token"]}
+        base = f"/api/v1/studios/v1/documents/{project['document']}"
+        response = client.post(
+            base + "/editing-plans",
+            headers={**headers, "Idempotency-Key": "exposure-plan"},
+            json=exposure_direction(samples, shutter),
+        )
+        assert response.status_code == 200, response.text
+        plan = response.json()
+        assert plan["status"] == "ready", plan["blockers"]
+        applied = client.post(
+            base + f"/editing-plans/{plan['id']}/apply", headers=headers, json={"expectedPlanRevision": plan["revision"]}
+        )
+        assert applied.status_code == 200, applied.text
+        inspection = client.get(base + "/editor/inspection?frame=30", headers=headers).json()
+        monkeypatch.setitem(
+            VIDEO_RENDER_PROVIDERS,
+            "remotion.contextual-v2",
+            RemotionNativeContextualRenderProvider(
+                RemotionNativeGraphicsProvider("node", "ffmpeg", 180),
+                VIDEO_RENDER_PROVIDERS["builtin.ffmpeg-contextual-v1"],
+            ),
+        )
+        monkeypatch.setattr("app.tasks.execute_studio_generation.delay", lambda *_: None)
+        response = client.post(
+            "/api/v1/studios/v1/video-renders",
+            headers={**headers, "Idempotency-Key": "exposure-render"},
+            json={
+                "workspaceId": project["workspace"],
+                "documentId": project["document"],
+                "expectedDocumentRevision": applied.json()["revision"],
+                "expectedDocumentVersion": 1,
+                "contextualPlanId": plan["id"],
+                "provider": "remotion.contextual-v2",
+                "output": {"width": 320, "height": 320, "fps": 30},
+            },
+        )
+        assert response.status_code == 202, response.text
+        deadline = time.monotonic() + 120
+        while _active(_read(lease_path())):
+            if time.monotonic() &gt;= deadline:
+                pytest.skip("Live local operation occupies heavy-media capacity")
+            time.sleep(1)
+        with SessionLocal() as db:
+            job = db.get(StudioGenerationJob, response.json()["id"])
+            execute_job_once(db, job)
+&gt;           assert job.status == "succeeded", job.error_message
+E           AssertionError: remotion_render_timeout
+E           assert 'retrying' == 'succeeded'
+E             
+E             - succeeded
+E             + retrying
+
+tests\test_temporal_exposure_render.py:177: AssertionError</failure></testcase><testcase classname="tests.test_temporal_exposure_render" name="test_temporal_exposure_actual_api_measurement[8-180]" time="44.000" /><testcase classname="tests.test_temporal_exposure_render" name="test_temporal_exposure_actual_api_measurement[16-180]" time="19.927" /><testcase classname="tests.test_temporal_exposure_render" name="test_temporal_exposure_actual_api_measurement[8-0]" time="15.944"><failure message="AssertionError: remotion_render_failed:node:internal/modules/run_main:122&#10;      triggerUncaughtException(&#10;      ^&#10;  &#10;  SymbolicateableError [RangeError]: Invalid array length&#10;      at CameraMotionBlur (http://localhost:3001/bundle.js:65:15)&#10;      at renderWithHooks (http://localhost:3001/bundle.js:5460:21)&#10;      at updateFunctionComponent (http://localhost:3001/bundle.js:7606:15)&#10;      at beginWork (http://localhost:3001/bundle.js:8582:14)&#10;      at performUnitOfWork (http://localhost:3001/bundle.js:12414:14)&#10;      at workLoopSync (http://localhost:3001/bundle.js:12291:37)&#10;      at renderRootSync (http://localhost:3001/bundle.js:12272:7)&#10;      at performWorkOnRoot (http://localhost:3001/bundle.js:11837:40)&#10;      at performWorkOnRootViaSchedulerTask (http://localhost:3001/bundle.js:13187:3)&#10;      at MessagePort.performWorkUntilDeadline (http://localhost:3001/bundle.js:18255:44) {&#10;    stackFrame: [&#10;      {&#10;        columnNumber: 14,&#10;        fileName: 'http://localhost:3001/bundle.js',&#10;        functionName: 'CameraMotionBlur',&#10;        lineNumber: 64&#10;      },&#10;      {&#10;        columnNumber: 20,&#10;        fileName: 'http://localhost:3001/bundle.js',&#10;        functionName: 'renderWithHooks',&#10;        lineNumber: 5459&#10;      },&#10;      {&#10;        columnNumber: 14,&#10;        fileName: 'http://localhost:3001/bundle.js',&#10;        functionName: 'updateFunctionComponent',&#10;        lineNumber: 7605&#10;      },&#10;      {&#10;        columnNumber: 13,&#10;        fileName: 'http://localhost:3001/bundle.js',&#10;        functionName: 'beginWork',&#10;        lineNumber: 8581&#10;      },&#10;      {&#10;        columnNumber: 13,&#10;        fileName: 'http://localhost:3001/bundle.js',&#10;        functionName: 'performUnitOfWork',&#10;        lineNumber: 12413&#10;      },&#10;      {&#10;        columnNumber: 36,&#10;        fileName: 'http://localhost:3001/bundle.js',&#10;        functionName: 'workLoopSync',&#10;        lineNumber: 12290&#10;      },&#10;      {&#10;        columnNumber: 6,&#10;        fileName: 'http://localhost:3001/bundle.js',&#10;        functionName: 'renderRootSync',&#10;        lineNumber: 12271&#10;      },&#10;      {&#10;        columnNumber: 39,&#10;        fileName: 'http://localhost:3001/bundle.js',&#10;       &#10;assert 'retrying' == 'succeeded'&#10;  &#10;  - succeeded&#10;  + retrying">client = &lt;starlette.testclient.TestClient object at 0x0000026905964390&gt;
+project = {'asset': '9de19c45-ea72-4168-bdf1-aa79a93ca0d8', 'document': '020837b2-df6e-4441-af08-2dda9f649184', 'token': 'eyJhbG...dHlwZSI6ImFjY2VzcyJ9.p8sb14jNUhpCUubMVEusOfpDZQpPfqd2wX0tAWqVZRA', 'workspace': '28e7967b-c286-48a9-bcc5-2ac585f25ac5'}
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x0000026906EE0DD0&gt;
+tmp_path = WindowsPath('C:/Users/edugu/AppData/Local/Temp/pytest-of-edugu/pytest-131/test_temporal_exposure_actual_3')
+samples = 8, shutter = 0
+
+    @pytest.mark.parametrize("samples,shutter", [(0, 180), (2, 180), (8, 180), (16, 180), (8, 0)])
+    def test_temporal_exposure_actual_api_measurement(client, project, monkeypatch, tmp_path, samples, shutter):
+        with SessionLocal() as db:
+            record = db.get(CreativeDocument, project["document"])
+            doc = record_to_contract(record)
+            doc.composition.media_timeline.tracks = []
+            persist_contract(record, doc)
+            db.commit()
+        headers = {"Authorization": "Bearer " + project["token"]}
+        base = f"/api/v1/studios/v1/documents/{project['document']}"
+        response = client.post(
+            base + "/editing-plans",
+            headers={**headers, "Idempotency-Key": "exposure-plan"},
+            json=exposure_direction(samples, shutter),
+        )
+        assert response.status_code == 200, response.text
+        plan = response.json()
+        assert plan["status"] == "ready", plan["blockers"]
+        applied = client.post(
+            base + f"/editing-plans/{plan['id']}/apply", headers=headers, json={"expectedPlanRevision": plan["revision"]}
+        )
+        assert applied.status_code == 200, applied.text
+        inspection = client.get(base + "/editor/inspection?frame=30", headers=headers).json()
+        monkeypatch.setitem(
+            VIDEO_RENDER_PROVIDERS,
+            "remotion.contextual-v2",
+            RemotionNativeContextualRenderProvider(
+                RemotionNativeGraphicsProvider("node", "ffmpeg", 180),
+                VIDEO_RENDER_PROVIDERS["builtin.ffmpeg-contextual-v1"],
+            ),
+        )
+        monkeypatch.setattr("app.tasks.execute_studio_generation.delay", lambda *_: None)
+        response = client.post(
+            "/api/v1/studios/v1/video-renders",
+            headers={**headers, "Idempotency-Key": "exposure-render"},
+            json={
+                "workspaceId": project["workspace"],
+                "documentId": project["document"],
+                "expectedDocumentRevision": applied.json()["revision"],
+                "expectedDocumentVersion": 1,
+                "contextualPlanId": plan["id"],
+                "provider": "remotion.contextual-v2",
+                "output": {"width": 320, "height": 320, "fps": 30},
+            },
+        )
+        assert response.status_code == 202, response.text
+        deadline = time.monotonic() + 120
+        while _active(_read(lease_path())):
+            if time.monotonic() &gt;= deadline:
+                pytest.skip("Live local operation occupies heavy-media capacity")
+            time.sleep(1)
+        with SessionLocal() as db:
+            job = db.get(StudioGenerationJob, response.json()["id"])
+            execute_job_once(db, job)
+&gt;           assert job.status == "succeeded", job.error_message
+E           AssertionError: remotion_render_failed:node:internal/modules/run_main:122
+E                 triggerUncaughtException(
+E                 ^
+E             
+E             SymbolicateableError [RangeError]: Invalid array length
+E                 at CameraMotionBlur (http://localhost:3001/bundle.js:65:15)
+E                 at renderWithHooks (http://localhost:3001/bundle.js:5460:21)
+E                 at updateFunctionComponent (http://localhost:3001/bundle.js:7606:15)
+E                 at beginWork (http://localhost:3001/bundle.js:8582:14)
+E                 at performUnitOfWork (http://localhost:3001/bundle.js:12414:14)
+E                 at workLoopSync (http://localhost:3001/bundle.js:12291:37)
+E                 at renderRootSync (http://localhost:3001/bundle.js:12272:7)
+E                 at performWorkOnRoot (http://localhost:3001/bundle.js:11837:40)
+E                 at performWorkOnRootViaSchedulerTask (http://localhost:3001/bundle.js:13187:3)
+E                 at MessagePort.performWorkUntilDeadline (http://localhost:3001/bundle.js:18255:44) {
+E               stackFrame: [
+E                 {
+E                   columnNumber: 14,
+E                   fileName: 'http://localhost:3001/bundle.js',
+E                   functionName: 'CameraMotionBlur',
+E                   lineNumber: 64
+E                 },
+E                 {
+E                   columnNumber: 20,
+E                   fileName: 'http://localhost:3001/bundle.js',
+E                   functionName: 'renderWithHooks',
+E                   lineNumber: 5459
+E                 },
+E                 {
+E                   columnNumber: 14,
+E                   fileName: 'http://localhost:3001/bundle.js',
+E                   functionName: 'updateFunctionComponent',
+E                   lineNumber: 7605
+E                 },
+E                 {
+E                   columnNumber: 13,
+E                   fileName: 'http://localhost:3001/bundle.js',
+E                   functionName: 'beginWork',
+E                   lineNumber: 8581
+E                 },
+E                 {
+E                   columnNumber: 13,
+E                   fileName: 'http://localhost:3001/bundle.js',
+E                   functionName: 'performUnitOfWork',
+E                   lineNumber: 12413
+E                 },
+E                 {
+E                   columnNumber: 36,
+E                   fileName: 'http://localhost:3001/bundle.js',
+E                   functionName: 'workLoopSync',
+E                   lineNumber: 12290
+E                 },
+E                 {
+E                   columnNumber: 6,
+E                   fileName: 'http://localhost:3001/bundle.js',
+E                   functionName: 'renderRootSync',
+E                   lineNumber: 12271
+E                 },
+E                 {
+E                   columnNumber: 39,
+E                   fileName: 'http://localhost:3001/bundle.js',
+E                  
+E           assert 'retrying' == 'succeeded'
+E             
+E             - succeeded
+E             + retrying
+
+tests\test_temporal_exposure_render.py:177: AssertionError</failure></testcase></testsuite></testsuites>

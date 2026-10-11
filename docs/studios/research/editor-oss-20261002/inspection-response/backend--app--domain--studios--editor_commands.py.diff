@@ -1,0 +1,17 @@
+--- before/backend/app/domain/studios/editor_commands.py
++++ after/backend/app/domain/studios/editor_commands.py
+@@ -80,3 +80,14 @@
+     applied_changes: list[EditorActionV1]
+     warnings: list[str] = Field(default_factory=list)
+     pending: list[str] = Field(default_factory=lambda: ["render_evidence_required", "human_visual_review_required"])
++
++
++class EditorEvaluationSummaryV1(StudioContract):
++    """Explicit per-axis states; detailed evidence stays in the full inspection."""
++
++    schema_version: Literal["studio.editor-evaluation-summary.v1"] = "studio.editor-evaluation-summary.v1"
++    detail: Literal["summary"] = "summary"
++    technical: str | None = None
++    audiovisual: str | None = None
++    human: str | None = None
++    full_inspection_path: str

@@ -1,0 +1,17 @@
+{
+  "scope": "same_application_source_isolated_frontend_same_existing_API",
+  "frontend": "http://127.0.0.1:3317",
+  "api": "http://127.0.0.1:8000",
+  "frontendPID": 28536,
+  "sharedProcessesStopped": false,
+  "uiAPIMocked": false,
+  "reason": "shared development HMR repeatedly reloaded page while evidence was written",
+  "sources": {
+    "src/studios/EditorInspectionPanel.tsx": "4affbab9cc3db57c7eed800bbbae378a20ec97c65f698c7d29554986f7c217b3",
+    "src/studios/editor-inspection.css": "71cf702800fcb35a9af8d1d13ea45385c320cf4b7f0013d42ff9a51b3bfb9e0f",
+    "server.ts": "ec9a62fe142a349bb7fb623fa85ab5efc337677f8e5a2ad03d03a6671b6e7721",
+    "vite.config.ts": "7bb8fd3ccd982a1421369e4c7a6a9bae9e25df9ae4d0add6eebff0f79a2fc500",
+    "src/studios/useVideoStudio.ts": "bcd4dbbadc3990fef94498cef83a4a87ce0d17d001e6188e565d1b5447a6d857",
+    "backend/app/services/studios/editor_commands.py": "66942b682f2ddd7534d78c9274d885b1ba410a6b5eecff90191464f68c56bf60"
+  }
+}

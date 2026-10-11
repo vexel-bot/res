@@ -1,0 +1,912 @@
+{
+  "scope": "research_only_derived_residual_lossless_analysis",
+  "productionAdmission": "pending",
+  "originalOracleChanged": false,
+  "centerTextureReferenceScope": "Research only; affine AA is not independently qualified.",
+  "invalidEarlierControlsExcluded": "temporal-matte-svg-subtract-residual-controls/classification.json",
+  "analysisScriptSha256": "84ef61a4ac0230ba43400e8e3363bf52656f8c61003e4d56d22b3fc6a18bd280",
+  "polygonHelperSha256": "eac9b096c2db60422eddf3d1d4d394c6f72eb4ebad038a013bcc3f803f253f01",
+  "captureReceiptSha256": "e78e71694a4ca52cc1cb956b6d06f15f4640289c387d5a90bd34084e51b72446",
+  "comparisons": [
+    {
+      "variant": "child-external-alpha-inverted",
+      "frame": 4,
+      "apiEvidenceSha256": "5dd82650e6da8b6ce71d6c7b930556f0b207832b020845995f00a8c8c3795a4b",
+      "derivedGeometryChecks": [
+        {
+          "sample": "center",
+          "maximumWorldPointError": 0.0003859794299216901
+        },
+        {
+          "sample": "sample-1",
+          "maximumWorldPointError": 0.00022694678733614637
+        },
+        {
+          "sample": "sample-2",
+          "maximumWorldPointError": 0.0003634414709381417
+        },
+        {
+          "sample": "sample-3",
+          "maximumWorldPointError": 0.0003504537771448213
+        },
+        {
+          "sample": "sample-4",
+          "maximumWorldPointError": 0.00024273142284414462
+        },
+        {
+          "sample": "sample-5",
+          "maximumWorldPointError": 0.00031633482950610414
+        },
+        {
+          "sample": "sample-6",
+          "maximumWorldPointError": 0.00022207140750651888
+        },
+        {
+          "sample": "sample-7",
+          "maximumWorldPointError": 0.0002157817975501075
+        },
+        {
+          "sample": "sample-8",
+          "maximumWorldPointError": 0.00034054459644039525
+        }
+      ],
+      "checks": [
+        {
+          "x": 110,
+          "y": 100,
+          "originalOracleChannel": 127.73221435546874,
+          "originalApiFailed": true,
+          "centerTextureResearchChannel": 127.73221435546874,
+          "centerPngRgb": [
+            129.75,
+            129.75,
+            129.75
+          ],
+          "temporalPngRgb": [
+            130.25,
+            130.25,
+            130.25
+          ],
+          "averageIsolatedRgb": [
+            129.75,
+            129.75,
+            129.75
+          ],
+          "apiMp4Rgb": [
+            135.75,
+            135.75,
+            135.75
+          ],
+          "temporalMinusIsolated": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "apiMp4MinusTemporalPng": [
+            5.5,
+            5.5,
+            5.5
+          ],
+          "samples": [
+            {
+              "sample": "sample-1",
+              "time": 3.78125,
+              "observedRgb": [
+                129.75,
+                129.75,
+                129.75
+              ],
+              "originalOracleChannel": 127.73221435546874,
+              "centerTextureResearchChannel": 127.73221435546874,
+              "maximumOriginalError": 2.0177856445312585
+            },
+            {
+              "sample": "sample-2",
+              "time": 3.84375,
+              "observedRgb": [
+                129.75,
+                129.75,
+                129.75
+              ],
+              "originalOracleChannel": 127.73221435546874,
+              "centerTextureResearchChannel": 127.73221435546874,
+              "maximumOriginalError": 2.0177856445312585
+            },
+            {
+              "sample": "sample-3",
+              "time": 3.90625,
+              "observedRgb": [
+                129.75,
+                129.75,
+                129.75
+              ],
+              "originalOracleChannel": 127.73221435546874,
+              "centerTextureResearchChannel": 127.73221435546874,
+              "maximumOriginalError": 2.0177856445312585
+            },
+            {
+              "sample": "sample-4",
+              "time": 3.96875,
+              "observedRgb": [
+                129.75,
+                129.75,
+                129.75
+              ],
+              "originalOracleChannel": 127.73221435546874,
+              "centerTextureResearchChannel": 127.73221435546874,
+              "maximumOriginalError": 2.0177856445312585
+            },
+            {
+              "sample": "sample-5",
+              "time": 4.03125,
+              "observedRgb": [
+                129.75,
+                129.75,
+                129.75
+              ],
+              "originalOracleChannel": 127.73221435546874,
+              "centerTextureResearchChannel": 127.73221435546874,
+              "maximumOriginalError": 2.0177856445312585
+            },
+            {
+              "sample": "sample-6",
+              "time": 4.09375,
+              "observedRgb": [
+                129.75,
+                129.75,
+                129.75
+              ],
+              "originalOracleChannel": 127.73221435546874,
+              "centerTextureResearchChannel": 127.73221435546874,
+              "maximumOriginalError": 2.0177856445312585
+            },
+            {
+              "sample": "sample-7",
+              "time": 4.15625,
+              "observedRgb": [
+                129.75,
+                129.75,
+                129.75
+              ],
+              "originalOracleChannel": 127.73221435546874,
+              "centerTextureResearchChannel": 127.73221435546874,
+              "maximumOriginalError": 2.0177856445312585
+            },
+            {
+              "sample": "sample-8",
+              "time": 4.21875,
+              "observedRgb": [
+                129.75,
+                129.75,
+                129.75
+              ],
+              "originalOracleChannel": 127.73221435546874,
+              "centerTextureResearchChannel": 127.73221435546874,
+              "maximumOriginalError": 2.0177856445312585
+            }
+          ]
+        },
+        {
+          "x": 278,
+          "y": 110,
+          "originalOracleChannel": 84.51811305999755,
+          "originalApiFailed": false,
+          "centerTextureResearchChannel": 84.51811305999755,
+          "centerPngRgb": [
+            90.0,
+            90.0,
+            90.0
+          ],
+          "temporalPngRgb": [
+            87.0,
+            87.0,
+            87.0
+          ],
+          "averageIsolatedRgb": [
+            85.6875,
+            85.6875,
+            85.6875
+          ],
+          "apiMp4Rgb": [
+            90.75,
+            90.75,
+            90.75
+          ],
+          "temporalMinusIsolated": [
+            1.3125,
+            1.3125,
+            1.3125
+          ],
+          "apiMp4MinusTemporalPng": [
+            3.75,
+            3.75,
+            3.75
+          ],
+          "samples": [
+            {
+              "sample": "sample-1",
+              "time": 3.78125,
+              "observedRgb": [
+                4.5,
+                4.5,
+                4.5
+              ],
+              "originalOracleChannel": 3.8148211669921874,
+              "centerTextureResearchChannel": 3.8148211669921874,
+              "maximumOriginalError": 0.6851788330078126
+            },
+            {
+              "sample": "sample-2",
+              "time": 3.84375,
+              "observedRgb": [
+                20.5,
+                20.5,
+                20.5
+              ],
+              "originalOracleChannel": 18.913368988037107,
+              "centerTextureResearchChannel": 18.913368988037107,
+              "maximumOriginalError": 1.5866310119628935
+            },
+            {
+              "sample": "sample-3",
+              "time": 3.90625,
+              "observedRgb": [
+                47.5,
+                47.5,
+                47.5
+              ],
+              "originalOracleChannel": 46.602969818115234,
+              "centerTextureResearchChannel": 46.602969818115234,
+              "maximumOriginalError": 0.8970301818847659
+            },
+            {
+              "sample": "sample-4",
+              "time": 3.96875,
+              "observedRgb": [
+                83.5,
+                83.5,
+                83.5
+              ],
+              "originalOracleChannel": 82.56516036987304,
+              "centerTextureResearchChannel": 82.56516036987304,
+              "maximumOriginalError": 0.9348396301269588
+            },
+            {
+              "sample": "sample-5",
+              "time": 4.03125,
+              "observedRgb": [
+                95.5,
+                95.5,
+                95.5
+              ],
+              "originalOracleChannel": 93.88103439331054,
+              "centerTextureResearchChannel": 93.88103439331054,
+              "maximumOriginalError": 1.618965606689457
+            },
+            {
+              "sample": "sample-6",
+              "time": 4.09375,
+              "observedRgb": [
+                113.5,
+                113.5,
+                113.5
+              ],
+              "originalOracleChannel": 112.09787704467773,
+              "centerTextureResearchChannel": 112.09787704467773,
+              "maximumOriginalError": 1.4021229553222696
+            },
+            {
+              "sample": "sample-7",
+              "time": 4.15625,
+              "observedRgb": [
+                144.0,
+                144.0,
+                144.0
+              ],
+              "originalOracleChannel": 142.7021726989746,
+              "centerTextureResearchChannel": 142.7021726989746,
+              "maximumOriginalError": 1.297827301025393
+            },
+            {
+              "sample": "sample-8",
+              "time": 4.21875,
+              "observedRgb": [
+                176.5,
+                176.5,
+                176.5
+              ],
+              "originalOracleChannel": 175.5675,
+              "centerTextureResearchChannel": 175.5675,
+              "maximumOriginalError": 0.9325000000000045
+            }
+          ]
+        },
+        {
+          "x": 108,
+          "y": 100,
+          "originalOracleChannel": 175.5675,
+          "originalApiFailed": false,
+          "centerTextureResearchChannel": 175.5675,
+          "centerPngRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "temporalPngRgb": [
+            178.0,
+            178.0,
+            178.0
+          ],
+          "averageIsolatedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "apiMp4Rgb": [
+            179.75,
+            179.75,
+            179.75
+          ],
+          "temporalMinusIsolated": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "apiMp4MinusTemporalPng": [
+            1.75,
+            1.75,
+            1.75
+          ],
+          "samples": [
+            {
+              "sample": "sample-1",
+              "time": 3.78125,
+              "observedRgb": [
+                177.0,
+                177.0,
+                177.0
+              ],
+              "originalOracleChannel": 175.5675,
+              "centerTextureResearchChannel": 175.5675,
+              "maximumOriginalError": 1.4325000000000045
+            },
+            {
+              "sample": "sample-2",
+              "time": 3.84375,
+              "observedRgb": [
+                177.0,
+                177.0,
+                177.0
+              ],
+              "originalOracleChannel": 175.5675,
+              "centerTextureResearchChannel": 175.5675,
+              "maximumOriginalError": 1.4325000000000045
+            },
+            {
+              "sample": "sample-3",
+              "time": 3.90625,
+              "observedRgb": [
+                177.0,
+                177.0,
+                177.0
+              ],
+              "originalOracleChannel": 175.5675,
+              "centerTextureResearchChannel": 175.5675,
+              "maximumOriginalError": 1.4325000000000045
+            },
+            {
+              "sample": "sample-4",
+              "time": 3.96875,
+              "observedRgb": [
+                177.0,
+                177.0,
+                177.0
+              ],
+              "originalOracleChannel": 175.5675,
+              "centerTextureResearchChannel": 175.5675,
+              "maximumOriginalError": 1.4325000000000045
+            },
+            {
+              "sample": "sample-5",
+              "time": 4.03125,
+              "observedRgb": [
+                177.0,
+                177.0,
+                177.0
+              ],
+              "originalOracleChannel": 175.5675,
+              "centerTextureResearchChannel": 175.5675,
+              "maximumOriginalError": 1.4325000000000045
+            },
+            {
+              "sample": "sample-6",
+              "time": 4.09375,
+              "observedRgb": [
+                177.0,
+                177.0,
+                177.0
+              ],
+              "originalOracleChannel": 175.5675,
+              "centerTextureResearchChannel": 175.5675,
+              "maximumOriginalError": 1.4325000000000045
+            },
+            {
+              "sample": "sample-7",
+              "time": 4.15625,
+              "observedRgb": [
+                177.0,
+                177.0,
+                177.0
+              ],
+              "originalOracleChannel": 175.5675,
+              "centerTextureResearchChannel": 175.5675,
+              "maximumOriginalError": 1.4325000000000045
+            },
+            {
+              "sample": "sample-8",
+              "time": 4.21875,
+              "observedRgb": [
+                177.0,
+                177.0,
+                177.0
+              ],
+              "originalOracleChannel": 175.5675,
+              "centerTextureResearchChannel": 175.5675,
+              "maximumOriginalError": 1.4325000000000045
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "variant": "rig-common-luminance-normal",
+      "frame": 7,
+      "apiEvidenceSha256": "e58d0841b7f89ec35af6becf66b4ab06aeb3819f394afbb1bc66a960bd673035",
+      "derivedGeometryChecks": [
+        {
+          "sample": "center",
+          "maximumWorldPointError": 0.00013566111178420215
+        },
+        {
+          "sample": "sample-1",
+          "maximumWorldPointError": 0.00010642981595765377
+        },
+        {
+          "sample": "sample-2",
+          "maximumWorldPointError": 0.00010642981595765377
+        },
+        {
+          "sample": "sample-3",
+          "maximumWorldPointError": 0.00010642981595765377
+        },
+        {
+          "sample": "sample-4",
+          "maximumWorldPointError": 0.0001107628295358154
+        },
+        {
+          "sample": "sample-5",
+          "maximumWorldPointError": 0.00010642981595765377
+        },
+        {
+          "sample": "sample-6",
+          "maximumWorldPointError": 0.00012429472585040457
+        },
+        {
+          "sample": "sample-7",
+          "maximumWorldPointError": 0.00010642981595765377
+        },
+        {
+          "sample": "sample-8",
+          "maximumWorldPointError": 0.00011620207899909474
+        }
+      ],
+      "checks": [
+        {
+          "x": 208,
+          "y": 100,
+          "originalOracleChannel": 142.88836930070855,
+          "originalApiFailed": true,
+          "centerTextureResearchChannel": 147.48803407385049,
+          "centerPngRgb": [
+            148.25,
+            148.25,
+            148.25
+          ],
+          "temporalPngRgb": [
+            149.0,
+            149.0,
+            149.0
+          ],
+          "averageIsolatedRgb": [
+            148.25,
+            148.25,
+            148.25
+          ],
+          "apiMp4Rgb": [
+            151.0,
+            151.0,
+            151.0
+          ],
+          "temporalMinusIsolated": [
+            0.75,
+            0.75,
+            0.75
+          ],
+          "apiMp4MinusTemporalPng": [
+            2.0,
+            2.0,
+            2.0
+          ],
+          "samples": [
+            {
+              "sample": "sample-1",
+              "time": 6.78125,
+              "observedRgb": [
+                148.25,
+                148.25,
+                148.25
+              ],
+              "originalOracleChannel": 142.88836930070858,
+              "centerTextureResearchChannel": 147.48803407385049,
+              "maximumOriginalError": 5.361630699291425
+            },
+            {
+              "sample": "sample-2",
+              "time": 6.84375,
+              "observedRgb": [
+                148.25,
+                148.25,
+                148.25
+              ],
+              "originalOracleChannel": 142.88836930070858,
+              "centerTextureResearchChannel": 147.48803407385049,
+              "maximumOriginalError": 5.361630699291425
+            },
+            {
+              "sample": "sample-3",
+              "time": 6.90625,
+              "observedRgb": [
+                148.25,
+                148.25,
+                148.25
+              ],
+              "originalOracleChannel": 142.88836930070858,
+              "centerTextureResearchChannel": 147.48803407385049,
+              "maximumOriginalError": 5.361630699291425
+            },
+            {
+              "sample": "sample-4",
+              "time": 6.96875,
+              "observedRgb": [
+                148.25,
+                148.25,
+                148.25
+              ],
+              "originalOracleChannel": 142.88836930070858,
+              "centerTextureResearchChannel": 147.48803407385049,
+              "maximumOriginalError": 5.361630699291425
+            },
+            {
+              "sample": "sample-5",
+              "time": 7.03125,
+              "observedRgb": [
+                148.25,
+                148.25,
+                148.25
+              ],
+              "originalOracleChannel": 142.88836930070858,
+              "centerTextureResearchChannel": 147.48803407385049,
+              "maximumOriginalError": 5.361630699291425
+            },
+            {
+              "sample": "sample-6",
+              "time": 7.09375,
+              "observedRgb": [
+                148.25,
+                148.25,
+                148.25
+              ],
+              "originalOracleChannel": 142.88836930070858,
+              "centerTextureResearchChannel": 147.48803407385049,
+              "maximumOriginalError": 5.361630699291425
+            },
+            {
+              "sample": "sample-7",
+              "time": 7.15625,
+              "observedRgb": [
+                148.25,
+                148.25,
+                148.25
+              ],
+              "originalOracleChannel": 142.88836930070858,
+              "centerTextureResearchChannel": 147.48803407385049,
+              "maximumOriginalError": 5.361630699291425
+            },
+            {
+              "sample": "sample-8",
+              "time": 7.21875,
+              "observedRgb": [
+                148.25,
+                148.25,
+                148.25
+              ],
+              "originalOracleChannel": 142.88836930070858,
+              "centerTextureResearchChannel": 147.48803407385049,
+              "maximumOriginalError": 5.361630699291425
+            }
+          ]
+        },
+        {
+          "x": 186,
+          "y": 108,
+          "originalOracleChannel": 2.36604638671875,
+          "originalApiFailed": false,
+          "centerTextureResearchChannel": 2.36604638671875,
+          "centerPngRgb": [
+            3.75,
+            3.75,
+            3.75
+          ],
+          "temporalPngRgb": [
+            3.75,
+            3.75,
+            3.75
+          ],
+          "averageIsolatedRgb": [
+            3.75,
+            3.75,
+            3.75
+          ],
+          "apiMp4Rgb": [
+            5.0,
+            5.0,
+            5.0
+          ],
+          "temporalMinusIsolated": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "apiMp4MinusTemporalPng": [
+            1.25,
+            1.25,
+            1.25
+          ],
+          "samples": [
+            {
+              "sample": "sample-1",
+              "time": 6.78125,
+              "observedRgb": [
+                3.75,
+                3.75,
+                3.75
+              ],
+              "originalOracleChannel": 2.36604638671875,
+              "centerTextureResearchChannel": 2.36604638671875,
+              "maximumOriginalError": 1.3839536132812502
+            },
+            {
+              "sample": "sample-2",
+              "time": 6.84375,
+              "observedRgb": [
+                3.75,
+                3.75,
+                3.75
+              ],
+              "originalOracleChannel": 2.36604638671875,
+              "centerTextureResearchChannel": 2.36604638671875,
+              "maximumOriginalError": 1.3839536132812502
+            },
+            {
+              "sample": "sample-3",
+              "time": 6.90625,
+              "observedRgb": [
+                3.75,
+                3.75,
+                3.75
+              ],
+              "originalOracleChannel": 2.36604638671875,
+              "centerTextureResearchChannel": 2.36604638671875,
+              "maximumOriginalError": 1.3839536132812502
+            },
+            {
+              "sample": "sample-4",
+              "time": 6.96875,
+              "observedRgb": [
+                3.75,
+                3.75,
+                3.75
+              ],
+              "originalOracleChannel": 2.36604638671875,
+              "centerTextureResearchChannel": 2.36604638671875,
+              "maximumOriginalError": 1.3839536132812502
+            },
+            {
+              "sample": "sample-5",
+              "time": 7.03125,
+              "observedRgb": [
+                3.75,
+                3.75,
+                3.75
+              ],
+              "originalOracleChannel": 2.36604638671875,
+              "centerTextureResearchChannel": 2.36604638671875,
+              "maximumOriginalError": 1.3839536132812502
+            },
+            {
+              "sample": "sample-6",
+              "time": 7.09375,
+              "observedRgb": [
+                3.75,
+                3.75,
+                3.75
+              ],
+              "originalOracleChannel": 2.36604638671875,
+              "centerTextureResearchChannel": 2.36604638671875,
+              "maximumOriginalError": 1.3839536132812502
+            },
+            {
+              "sample": "sample-7",
+              "time": 7.15625,
+              "observedRgb": [
+                3.75,
+                3.75,
+                3.75
+              ],
+              "originalOracleChannel": 2.36604638671875,
+              "centerTextureResearchChannel": 2.36604638671875,
+              "maximumOriginalError": 1.3839536132812502
+            },
+            {
+              "sample": "sample-8",
+              "time": 7.21875,
+              "observedRgb": [
+                3.75,
+                3.75,
+                3.75
+              ],
+              "originalOracleChannel": 2.36604638671875,
+              "centerTextureResearchChannel": 2.36604638671875,
+              "maximumOriginalError": 1.3839536132812502
+            }
+          ]
+        },
+        {
+          "x": 210,
+          "y": 86,
+          "originalOracleChannel": 94.64185546874991,
+          "originalApiFailed": false,
+          "centerTextureResearchChannel": 94.64185546874991,
+          "centerPngRgb": [
+            97.25,
+            97.25,
+            97.25
+          ],
+          "temporalPngRgb": [
+            98.25,
+            98.25,
+            98.25
+          ],
+          "averageIsolatedRgb": [
+            97.25,
+            97.25,
+            97.25
+          ],
+          "apiMp4Rgb": [
+            96.5,
+            96.5,
+            96.5
+          ],
+          "temporalMinusIsolated": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "apiMp4MinusTemporalPng": [
+            -1.75,
+            -1.75,
+            -1.75
+          ],
+          "samples": [
+            {
+              "sample": "sample-1",
+              "time": 6.78125,
+              "observedRgb": [
+                97.25,
+                97.25,
+                97.25
+              ],
+              "originalOracleChannel": 94.64185546874992,
+              "centerTextureResearchChannel": 94.64185546874992,
+              "maximumOriginalError": 2.608144531250076
+            },
+            {
+              "sample": "sample-2",
+              "time": 6.84375,
+              "observedRgb": [
+                97.25,
+                97.25,
+                97.25
+              ],
+              "originalOracleChannel": 94.64185546874992,
+              "centerTextureResearchChannel": 94.64185546874992,
+              "maximumOriginalError": 2.608144531250076
+            },
+            {
+              "sample": "sample-3",
+              "time": 6.90625,
+              "observedRgb": [
+                97.25,
+                97.25,
+                97.25
+              ],
+              "originalOracleChannel": 94.64185546874992,
+              "centerTextureResearchChannel": 94.64185546874992,
+              "maximumOriginalError": 2.608144531250076
+            },
+            {
+              "sample": "sample-4",
+              "time": 6.96875,
+              "observedRgb": [
+                97.25,
+                97.25,
+                97.25
+              ],
+              "originalOracleChannel": 94.64185546874992,
+              "centerTextureResearchChannel": 94.64185546874992,
+              "maximumOriginalError": 2.608144531250076
+            },
+            {
+              "sample": "sample-5",
+              "time": 7.03125,
+              "observedRgb": [
+                97.25,
+                97.25,
+                97.25
+              ],
+              "originalOracleChannel": 94.64185546874992,
+              "centerTextureResearchChannel": 94.64185546874992,
+              "maximumOriginalError": 2.608144531250076
+            },
+            {
+              "sample": "sample-6",
+              "time": 7.09375,
+              "observedRgb": [
+                97.25,
+                97.25,
+                97.25
+              ],
+              "originalOracleChannel": 94.64185546874992,
+              "centerTextureResearchChannel": 94.64185546874992,
+              "maximumOriginalError": 2.608144531250076
+            },
+            {
+              "sample": "sample-7",
+              "time": 7.15625,
+              "observedRgb": [
+                97.25,
+                97.25,
+                97.25
+              ],
+              "originalOracleChannel": 94.64185546874992,
+              "centerTextureResearchChannel": 94.64185546874992,
+              "maximumOriginalError": 2.608144531250076
+            },
+            {
+              "sample": "sample-8",
+              "time": 7.21875,
+              "observedRgb": [
+                97.25,
+                97.25,
+                97.25
+              ],
+              "originalOracleChannel": 94.64185546874992,
+              "centerTextureResearchChannel": 94.64185546874992,
+              "maximumOriginalError": 2.608144531250076
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

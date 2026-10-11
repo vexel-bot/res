@@ -1,0 +1,168 @@
+{
+  "scope": "fixture_specific_real_composition_preview_and_inherited_exposure",
+  "status": "passed",
+  "verifiedAt": "2026-10-04T11:20:16.580475+00:00",
+  "sourceFreezeSha256": "3a30ea3ea180062ff40b6a14bf3e08c5f6b17b80e107883e03e2b1c17efcfe3f",
+  "frozenSources": 62,
+  "pixelComparisons": [
+    {
+      "revision": 3,
+      "frame": 0,
+      "x": 50,
+      "y": 60,
+      "maxChannelError": 0
+    },
+    {
+      "revision": 3,
+      "frame": 0,
+      "x": 64,
+      "y": 60,
+      "maxChannelError": 0
+    },
+    {
+      "revision": 3,
+      "frame": 0,
+      "x": 150,
+      "y": 150,
+      "maxChannelError": 0
+    },
+    {
+      "revision": 3,
+      "frame": 4,
+      "x": 50,
+      "y": 60,
+      "maxChannelError": 0
+    },
+    {
+      "revision": 3,
+      "frame": 4,
+      "x": 64,
+      "y": 60,
+      "maxChannelError": 0
+    },
+    {
+      "revision": 3,
+      "frame": 4,
+      "x": 150,
+      "y": 150,
+      "maxChannelError": 0
+    },
+    {
+      "revision": 3,
+      "frame": 15,
+      "x": 50,
+      "y": 60,
+      "maxChannelError": 0
+    },
+    {
+      "revision": 3,
+      "frame": 15,
+      "x": 64,
+      "y": 60,
+      "maxChannelError": 0
+    },
+    {
+      "revision": 3,
+      "frame": 15,
+      "x": 150,
+      "y": 150,
+      "maxChannelError": 1
+    },
+    {
+      "revision": 4,
+      "frame": 0,
+      "x": 50,
+      "y": 60,
+      "maxChannelError": 0
+    },
+    {
+      "revision": 4,
+      "frame": 0,
+      "x": 64,
+      "y": 60,
+      "maxChannelError": 0
+    },
+    {
+      "revision": 4,
+      "frame": 0,
+      "x": 150,
+      "y": 150,
+      "maxChannelError": 1
+    },
+    {
+      "revision": 4,
+      "frame": 4,
+      "x": 50,
+      "y": 60,
+      "maxChannelError": 0
+    },
+    {
+      "revision": 4,
+      "frame": 4,
+      "x": 64,
+      "y": 60,
+      "maxChannelError": 0
+    },
+    {
+      "revision": 4,
+      "frame": 4,
+      "x": 150,
+      "y": 150,
+      "maxChannelError": 0
+    },
+    {
+      "revision": 4,
+      "frame": 15,
+      "x": 50,
+      "y": 60,
+      "maxChannelError": 0
+    },
+    {
+      "revision": 4,
+      "frame": 15,
+      "x": 64,
+      "y": 60,
+      "maxChannelError": 0
+    },
+    {
+      "revision": 4,
+      "frame": 15,
+      "x": 150,
+      "y": 150,
+      "maxChannelError": 0
+    }
+  ],
+  "maxBrowserDecodeChannelError": 1,
+  "jobId": "0f1e8c78-ae19-48d2-abc6-a3577d1d0b38",
+  "mp4Sha256": "a24a62b3309b8d55dd52403741b6c61267f34c7a803beb4579a2cbd451c0d316",
+  "evidence": {
+    "current-sources.json": "3a30ea3ea180062ff40b6a14bf3e08c5f6b17b80e107883e03e2b1c17efcfe3f",
+    "existing-revision3-frame0.png": "c1760d7362b899bfbd7d7bc5948b3487956f04961de2cac68544f4a2559b09c5",
+    "inspection-revision-4-frame-0.json": "68cfd777e2195c3265b800e9b64b8fd8a408800b79476ce9c388ac6abb165cf6",
+    "inspection-revision-4-frame-10.json": "c5742bfa860c64d8751defd21219cb3828f04e2402476e670e861176ce20a944",
+    "inspection-revision-4-frame-15.json": "30b72634a08dc15b6c09e9ff8bef050e68b57debb92e6cea21fc49de20b229ae",
+    "inspection-revision-4-frame-4.json": "a3856a94b8b8cbd3a5c56a22a2cb86922ea3b6c84fa8ccaabbacee40a4b5072a",
+    "pending-revision4.png": "664cf4d45e05b1f7bd2570a6f5eda5ae34b67e9e38938f81e926c13ce89fe300",
+    "preview-revision-4.mp4": "a24a62b3309b8d55dd52403741b6c61267f34c7a803beb4579a2cbd451c0d316",
+    "prior-sources.json": "7985bc92312b5e15222fd5c23a30c6872976ecaf2da65ec0b58cb43c46225107",
+    "render-revision-4.json": "ed1b0cd51c8b78be19dc242a1e5a84d9905cdd74f92f36ac769e7c6fd1d9fd9a",
+    "rendered-revision4-frame4.png": "a71bef388f1f43bcfd7f172fb4da473aa23f30012686b696895e1de7a97959e4",
+    "rig-plan.json": "48552cbe8a29738afaf4b45cc6ff1de25dcac04aebab2989cbdb3ecedd493b51",
+    "ui-existing-revision3-frame0.json": "b8a87b8182f3dd3d023099a7ede75e9c49a75341425bde17bf79e3922d31d410",
+    "ui-existing-revision3-frame15.json": "76fc6f20668cb2b12dece76939ab72ab8d6b500b553ce2325650ff5ef67af253",
+    "ui-existing-revision3-frame4.json": "91b68fd062eadc2201cf15f296430a6d108e8cdf270a617914182ab7f2e283ad",
+    "ui-inherited-rig-frame4-pending.json": "2a3f8fb71c766c30e9e0c77ada1c556c837322e5420667713fac5ee81ff16950",
+    "ui-pending-revision4.json": "9bfc2ed3138f7b80bfd94bebbed22a846f07a144503dac9423f014b78c9d495a",
+    "ui-playback-observation.json": "421d8043f2225ba7dcfd38d3e21256d2b5608c4e66cadfc682eea14285ae32e4",
+    "ui-rendered-revision4-frame0.json": "77deed6b76a2c3b3137c63f86b731f223403d579ffe80105d02b2ef5c1fa8777",
+    "ui-rendered-revision4-frame15.json": "9c922f757b1dc2ed36405809e471f19864ddbd839120b3753d2641981c15523a",
+    "ui-rendered-revision4-frame4.json": "4b2ff68fcffbaa6a3be632d5678cad1bdbed1bf45d9f2f40080dd878269a46e8"
+  },
+  "limitations": [
+    "Square synthetic 320x320 fixture; other aspect ratios and long source cuts not browser-qualified here.",
+    "Player arbitration observed on a silent fixture; no new audio listening qualification.",
+    "Revision-4 plan applied through the real API; only the render request was submitted by the UI.",
+    "Displayed pixels compared to independent FFmpeg decode; this is not aesthetic or raster-oracle approval.",
+    "Human four-axis review, blind preference and new-brief autonomy remain pending."
+  ]
+}

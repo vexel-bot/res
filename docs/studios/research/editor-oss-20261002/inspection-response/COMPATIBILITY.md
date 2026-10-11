@@ -1,0 +1,12 @@
+# Registro prévio à alteração — projeção de avaliação na inspeção
+
+05/10/2026. Fonte de projeto, planos, histórico, operação, renderer e persistência permanecem os contratos existentes. Esta alteração é uma projeção de leitura da mesma inspeção, não outro projeto.
+
+| Arquivo/leitor | Versão e significado | Migração/compatibilidade | Prova requerida |
+| --- | --- | --- | --- |
+| `backend/app/domain/studios/editor_commands.py` | Novo `EditorEvaluationSummaryV1`, schema `studio.editor-evaluation-summary.v1`: estados technical/audiovisual/human extraídos somente do respectivo eixo; ausente ou sem status explícito retorna null; detalhe completo continua disponível no caminho autenticado da mesma inspeção/frame | Não altera contratos de comando, recibo, plano, documento ou armazenamento | Status explícitos preservados, desconhecido não aprovado, eixos independentes |
+| `backend/app/services/studios/editor_commands.py` | `inspect_editor(..., evaluation_detail="full")` mantém resposta `studio.editor-inspection.v1`. Opt-in summary devolve `studio.editor-inspection.v2`, com avaliação resumida; restantes campos são idênticos para o mesmo estado/frame | Chamadas antigas permanecem full, nenhum evento/documento migrado; `get_plan` e `_bound_plan` intactos | Paridade de todos os campos exceto schema/evaluation; full mantém evidência inteira; histórico inválido continua rejeitado |
+| `backend/app/routers/studio_editor.py` | Query nova `evaluationDetail=full|summary`, default full | Clientes anteriores recebem resposta anterior; valor desconhecido HTTP 422, autenticação/ownership inalterados | Compatibilidade default/full, erros de frame/revisão/autorização |
+| `src/studios/EditorInspectionPanel.tsx` | Único leitor promovido a opt-in summary. Continua usando documento integral, grafo, valores avaliados, receitas, materiais e hashes da resposta | Tipo local de Inspection não usa o payload evaluation; onRender continua recebendo documento integral; atualizar após comando mantém revisão real | TypeScript e abertura real, seleção/seek e estados de revisão preservados |
+
+Não remover ou regravar evidências históricas de avaliação. Não transformar QC técnico em aprovação humana. Não inferir qualquer eixo a partir de outro. Não alegar que esta redução resolve o custo de carregar/validar `get_plan` nem que prova interação em tempo real. Registrar tamanho e latência reais antes de qualquer conclusão.

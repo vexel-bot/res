@@ -1113,6 +1113,8 @@ class VideoRenderRequestV1(StudioContract):
     asset_ids: list[str] = Field(default_factory=list, max_length=1000)
     output: VideoRenderSpecV1
     correlation_id: str = Field(min_length=1, max_length=128)
+    execution_job_id: str | None = Field(default=None, max_length=120, exclude=True)
+    execution_plan_snapshot: dict[str, Any] | None = Field(default=None, exclude=True)
 
     @model_validator(mode="after")
     def references_are_unique(self) -> VideoRenderRequestV1:
@@ -1124,6 +1126,8 @@ class VideoRenderRequestV1(StudioContract):
 
 
 class CreateVideoRenderJobRequest(StudioContract):
+    engine_campaign_id: str | None = Field(default=None, max_length=120)
+    engine_language: Literal["action_product", "kinetic_type", "interface_service"] | None = None
     workspace_id: str
     document_id: str
     expected_document_revision: int = Field(ge=1)
@@ -1132,7 +1136,7 @@ class CreateVideoRenderJobRequest(StudioContract):
     output: VideoRenderSpecV1
     provider: Literal[
         "builtin.ffmpeg-ugc-v1", "hyperframes.cli", "builtin.ffmpeg-contextual-v1", "hyperframes.contextual-v2",
-        "motion-canvas.contextual-v1", "remotion.contextual-v1", "remotion.contextual-v2",
+        "motion-canvas.contextual-v1", "remotion.contextual-v1", "remotion.contextual-v2", "alight-motion.contextual-v1",
     ] = "builtin.ffmpeg-ugc-v1"
     contextual_plan_id: str | None = Field(default=None, max_length=120)
     motion_graph_id: str | None = Field(default=None, max_length=120)
@@ -1145,7 +1149,11 @@ class CreateVideoRenderJobRequest(StudioContract):
 
     @model_validator(mode="after")
     def validate_motion_graph_binding(self) -> CreateVideoRenderJobRequest:
-        if (self.provider in {"builtin.ffmpeg-contextual-v1", "hyperframes.contextual-v2", "motion-canvas.contextual-v1", "remotion.contextual-v1", "remotion.contextual-v2"}) != bool(
+        if bool(self.engine_campaign_id) != bool(self.engine_language):
+            raise ValueError("Engine campaign and language must be supplied together")
+        if self.engine_campaign_id and self.provider != "alight-motion.contextual-v1":
+            raise ValueError("Engine trials require the Alight provider")
+        if (self.provider in {"builtin.ffmpeg-contextual-v1", "hyperframes.contextual-v2", "motion-canvas.contextual-v1", "remotion.contextual-v1", "remotion.contextual-v2", "alight-motion.contextual-v1"}) != bool(
             self.contextual_plan_id
         ):
             raise ValueError("Contextual renders require a bound contextual plan")
@@ -1569,6 +1577,7 @@ class CreateGenerationJobRequest(StudioContract):
                 "motion-canvas.contextual-v1",
                 "remotion.contextual-v1",
                 "remotion.contextual-v2",
+                "alight-motion.contextual-v1",
             },
             "scene_generation": {
                 "local.wan21-diffusers",

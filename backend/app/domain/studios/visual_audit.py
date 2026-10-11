@@ -44,7 +44,19 @@ class VisualReviewFindingV1(StudioContract):
     scene_id: str | None = Field(default=None, max_length=120)
     start_seconds: float = Field(ge=0)
     end_seconds: float = Field(gt=0)
-    cause: Literal["material", "cut", "framing", "continuity", "motion", "mask", "sound", "direction", "readability"]
+    cause: Literal[
+        "material",
+        "cut",
+        "framing",
+        "continuity",
+        "motion",
+        "mask",
+        "sound",
+        "direction",
+        "readability",
+        "translation",
+        "render",
+    ]
     observation: str = Field(min_length=1, max_length=1000)
     correction: str = Field(min_length=1, max_length=1000)
 

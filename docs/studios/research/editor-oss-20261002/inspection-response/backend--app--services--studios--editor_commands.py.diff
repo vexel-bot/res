@@ -1,0 +1,66 @@
+--- before/backend/app/services/studios/editor_commands.py
++++ after/backend/app/services/studios/editor_commands.py
+@@ -1,6 +1,7 @@
+ """Atomic recipe authoring on the canonical contextual document and event ledger."""
+ 
+ from datetime import UTC, datetime
++from urllib.parse import quote
+ from uuid import NAMESPACE_URL, uuid5
+ 
+ from sqlalchemy import select, update
+@@ -11,6 +12,7 @@
+ from ...domain.studios.contracts import ReviewReferenceV1
+ from ...domain.studios.editor_commands import (
+     EditorCommandReceiptV1,
++    EditorEvaluationSummaryV1,
+     SetRecipeKeyframeV1,
+     SetRecipeParentV1,
+     UndoEditorCommandV1,
+@@ -244,7 +246,24 @@
+     return keys[-1].value
+ 
+ 
+-def inspect_editor(db, record, frame):
++def _evaluation_summary(evaluation, document_id, frame):
++    def state(axis):
++        value = evaluation.get(axis)
++        if isinstance(value, dict):
++            value = value.get("status")
++        return value if isinstance(value, str) else None
++
++    return EditorEvaluationSummaryV1(
++        technical=state("technical"), audiovisual=state("audiovisual"), human=state("human"),
++        full_inspection_path=(
++            f"/api/v1/studios/v1/documents/{quote(document_id, safe='')}/editor/inspection?frame={frame}"
++        ),
++    ).model_dump(mode="json", by_alias=True)
++
++
++def inspect_editor(db, record, frame, *, evaluation_detail="full"):
++    if evaluation_detail not in {"full", "summary"}:
++        raise ValueError("editor_evaluation_detail_invalid")
+     document = record_to_contract(record)
+     plan_id = document.composition.narrative.get("contextualPlanId")
+     if not plan_id:
+@@ -270,7 +289,9 @@
+         StudioDomainEvent.event_type == COMMAND_EVENT,
+     ).order_by(StudioDomainEvent.occurred_at.desc(), StudioDomainEvent.id.desc()).limit(20)).all())
+     return {
+-        "schemaVersion": "studio.editor-inspection.v1", "document": document.model_dump(mode="json", by_alias=True),
++        "schemaVersion": ("studio.editor-inspection.v1" if evaluation_detail == "full"
++                          else "studio.editor-inspection.v2"),
++        "document": document.model_dump(mode="json", by_alias=True),
+         "renderer": document.composition.narrative["editorialV2"].get("renderer", "hyperframes.contextual-v2"),
+         "planId": plan.id, "planRevision": plan.revision, "documentDigest": plan.source_digest,
+         "graphDigest": motion_graph_digest(graph), "frame": frame, "durationFrames": graph.duration_frames,
+@@ -283,7 +304,9 @@
+                              for scene in plan.direction.scenes for element in scene.elements
+                              if element.kind == "group"],
+         "versions": {k: plan.manifest.get(k) for k in ("compilerVersion", "runtimeVersion", "componentLibraryVersion")},
+-        "hashes": plan.manifest.get("hashes", {}), "evaluation": plan.evaluation,
++        "hashes": plan.manifest.get("hashes", {}),
++        "evaluation": (plan.evaluation if evaluation_detail == "full"
++                       else _evaluation_summary(plan.evaluation, document.document_id, frame)),
+         "pending": ["evaluated_values_are_local_scalars", "render_geometry_not_measured",
+                     "human_visual_review_required"],
+         "history": [e.payload["receipt"] for e in events],

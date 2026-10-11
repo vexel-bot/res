@@ -1,0 +1,64 @@
+{
+  "date": "2026-10-05",
+  "currency": "USD",
+  "method": "Decimal arithmetic on advertised rates, not authenticated estimates or paid calls",
+  "generation_requests_sent": 0,
+  "cost_external_incurred_usd": "0",
+  "exclusions": [
+    "inputs",
+    "text/thinking output",
+    "other generation parameters",
+    "taxes",
+    "assembly/render/storage",
+    "rejected successful generations",
+    "human work"
+  ],
+  "rates_per_second": {
+    "kling3_standard_ttv_promo": "0.042",
+    "kling3_standard_ttv_normal": "0.084",
+    "gemini_omni_720p_video_output_only": "0.10136",
+    "seedance25_720p_no_input_video_before_discount": "0.4622"
+  },
+  "single_attempt_output_seconds": {
+    "5": {
+      "kling3_standard_ttv_promo": "0.210",
+      "kling3_standard_ttv_normal": "0.420",
+      "gemini_omni_720p_video_output_only": "0.50680",
+      "seedance25_720p_no_input_video_before_discount": "2.3110"
+    },
+    "15": {
+      "kling3_standard_ttv_promo": "0.630",
+      "kling3_standard_ttv_normal": "1.260",
+      "gemini_omni_720p_video_output_only": "1.52040",
+      "seedance25_720p_no_input_video_before_discount": "6.9330"
+    },
+    "60": {
+      "kling3_standard_ttv_promo": "2.520",
+      "kling3_standard_ttv_normal": "5.040",
+      "gemini_omni_720p_video_output_only": "6.08160",
+      "seedance25_720p_no_input_video_before_discount": "27.7320"
+    }
+  },
+  "60_second_kling_standard_normal_attempts": {
+    "1": "5.040",
+    "2": "10.080",
+    "3": "15.120"
+  },
+  "proposed_15_second_ad_asset_mix": {
+    "video_generated_seconds": 5,
+    "image_model": "ideogram4.0 not4.5",
+    "images": 2,
+    "image_rate_usd": "0.03",
+    "one_attempt_promo": "0.27",
+    "one_attempt_normal": "0.48",
+    "two_attempts_each_asset_promo": "0.54",
+    "two_attempts_each_asset_normal": "0.96",
+    "six_ads_two_attempts_each_normal": "5.76"
+  },
+  "sources": {
+    "kling": "https://open.higgsfield.ai/models/kling-video/v3.0/std/text-to-video/playground",
+    "google": "https://ai.google.dev/gemini-api/docs/pricing",
+    "seedance": "https://open.higgsfield.ai/models/bytedance/seedance-2.5/text-to-video/playground",
+    "ideogram40": "https://open.higgsfield.ai/models/ideogram/v4.0/playground"
+  }
+}

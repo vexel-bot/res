@@ -1,0 +1,603 @@
+{
+  "scope": "research_only_frame7_residual_lossless_diagnostic",
+  "productionAdmission": "pending",
+  "originalOracleChanged": false,
+  "scriptSha256": "b687d451cdface98abfb5fd53a37305feb62f3ac25335783402926ae0865e40f",
+  "captureReceiptSha256": "c554d4db4831b022cf6fbac18a68ef1673744f55a9330f72e6b92f6b56a0db3c",
+  "comparisons": [
+    {
+      "x": 150,
+      "y": 184,
+      "expectedChannel": 103.71391874999998,
+      "temporalPngRgb": [
+        112.75,
+        112.75,
+        112.75
+      ],
+      "averageIsolatedRgb": [
+        112.0,
+        112.0,
+        112.0
+      ],
+      "retainedApiMp4Rgb": [
+        112.75,
+        112.75,
+        112.75
+      ],
+      "temporalMinusIsolated": [
+        0.75,
+        0.75,
+        0.75
+      ],
+      "isolated": [
+        {
+          "name": "center",
+          "time": 7,
+          "expectedChannel": 103.71391875,
+          "observedRgb": [
+            112.0,
+            112.0,
+            112.0
+          ],
+          "maximumChannelError": 8.286081249999995,
+          "targetLocalPixelCenter": [
+            19.563593888669544,
+            136.27406069491943
+          ],
+          "sourceLocalPixelCenter": [
+            19.434192630401085,
+            95.18760664738942
+          ]
+        },
+        {
+          "name": "sample-1",
+          "time": 6.78125,
+          "expectedChannel": 103.71391875,
+          "observedRgb": [
+            112.0,
+            112.0,
+            112.0
+          ],
+          "maximumChannelError": 8.286081249999995,
+          "targetLocalPixelCenter": [
+            19.851604926483674,
+            136.06703987488825
+          ],
+          "sourceLocalPixelCenter": [
+            19.434192630401085,
+            95.18760664738942
+          ]
+        },
+        {
+          "name": "sample-2",
+          "time": 6.84375,
+          "expectedChannel": 103.71391875,
+          "observedRgb": [
+            112.0,
+            112.0,
+            112.0
+          ],
+          "maximumChannelError": 8.286081249999995,
+          "targetLocalPixelCenter": [
+            19.76919770061511,
+            136.12566699000462
+          ],
+          "sourceLocalPixelCenter": [
+            19.434192630401085,
+            95.18760664738942
+          ]
+        },
+        {
+          "name": "sample-3",
+          "time": 6.90625,
+          "expectedChannel": 103.71391875,
+          "observedRgb": [
+            112.0,
+            112.0,
+            112.0
+          ],
+          "maximumChannelError": 8.286081249999995,
+          "targetLocalPixelCenter": [
+            19.686884767959697,
+            136.18471144979932
+          ],
+          "sourceLocalPixelCenter": [
+            19.434192630401085,
+            95.18760664738942
+          ]
+        },
+        {
+          "name": "sample-4",
+          "time": 6.96875,
+          "expectedChannel": 103.71391875,
+          "observedRgb": [
+            112.0,
+            112.0,
+            112.0
+          ],
+          "maximumChannelError": 8.286081249999995,
+          "targetLocalPixelCenter": [
+            19.604666914900264,
+            136.24417327010704
+          ],
+          "sourceLocalPixelCenter": [
+            19.434192630401085,
+            95.18760664738942
+          ]
+        },
+        {
+          "name": "sample-5",
+          "time": 7.03125,
+          "expectedChannel": 103.71391875,
+          "observedRgb": [
+            112.0,
+            112.0,
+            112.0
+          ],
+          "maximumChannelError": 8.286081249999995,
+          "targetLocalPixelCenter": [
+            19.522544926743848,
+            136.3040524649991
+          ],
+          "sourceLocalPixelCenter": [
+            19.434192630401085,
+            95.18760664738942
+          ]
+        },
+        {
+          "name": "sample-6",
+          "time": 7.09375,
+          "expectedChannel": 103.71391875,
+          "observedRgb": [
+            112.0,
+            112.0,
+            112.0
+          ],
+          "maximumChannelError": 8.286081249999995,
+          "targetLocalPixelCenter": [
+            19.440519587720786,
+            136.36434904678305
+          ],
+          "sourceLocalPixelCenter": [
+            19.434192630401085,
+            95.18760664738942
+          ]
+        },
+        {
+          "name": "sample-7",
+          "time": 7.15625,
+          "expectedChannel": 103.71391875,
+          "observedRgb": [
+            112.0,
+            112.0,
+            112.0
+          ],
+          "maximumChannelError": 8.286081249999995,
+          "targetLocalPixelCenter": [
+            19.358591680983807,
+            136.42506302600256
+          ],
+          "sourceLocalPixelCenter": [
+            19.434192630401085,
+            95.18760664738942
+          ]
+        },
+        {
+          "name": "sample-8",
+          "time": 7.21875,
+          "expectedChannel": 103.71391875,
+          "observedRgb": [
+            112.0,
+            112.0,
+            112.0
+          ],
+          "maximumChannelError": 8.286081249999995,
+          "targetLocalPixelCenter": [
+            19.276761988607035,
+            136.4861944114372
+          ],
+          "sourceLocalPixelCenter": [
+            19.434192630401085,
+            95.18760664738942
+          ]
+        }
+      ]
+    },
+    {
+      "x": 180,
+      "y": 204,
+      "expectedChannel": 40.94905122756958,
+      "temporalPngRgb": [
+        41.25,
+        41.25,
+        41.25
+      ],
+      "averageIsolatedRgb": [
+        40.625,
+        40.625,
+        40.625
+      ],
+      "retainedApiMp4Rgb": [
+        40.75,
+        40.75,
+        40.75
+      ],
+      "temporalMinusIsolated": [
+        0.625,
+        0.625,
+        0.625
+      ],
+      "isolated": [
+        {
+          "name": "center",
+          "time": 7,
+          "expectedChannel": 41.45939071655273,
+          "observedRgb": [
+            41.0,
+            41.0,
+            41.0
+          ],
+          "maximumChannelError": 0.45939071655273267,
+          "targetLocalPixelCenter": [
+            50.86654841274077,
+            150.3024305139348
+          ],
+          "sourceLocalPixelCenter": [
+            44.57350084294059,
+            116.80324189794653
+          ]
+        },
+        {
+          "name": "sample-1",
+          "time": 6.78125,
+          "expectedChannel": 47.87814880371093,
+          "observedRgb": [
+            46.0,
+            46.0,
+            46.0
+          ],
+          "maximumChannelError": 1.8781488037109284,
+          "targetLocalPixelCenter": [
+            51.13103298582655,
+            150.25117489121035
+          ],
+          "sourceLocalPixelCenter": [
+            44.57350084294059,
+            116.80324189794653
+          ]
+        },
+        {
+          "name": "sample-2",
+          "time": 6.84375,
+          "expectedChannel": 45.885011901855464,
+          "observedRgb": [
+            45.5,
+            45.5,
+            45.5
+          ],
+          "maximumChannelError": 0.38501190185546363,
+          "targetLocalPixelCenter": [
+            51.05542663414778,
+            150.2653304737578
+          ],
+          "sourceLocalPixelCenter": [
+            44.57350084294059,
+            116.80324189794653
+          ]
+        },
+        {
+          "name": "sample-3",
+          "time": 6.90625,
+          "expectedChannel": 45.01703292846679,
+          "observedRgb": [
+            44.5,
+            44.5,
+            44.5
+          ],
+          "maximumChannelError": 0.51703292846679,
+          "targetLocalPixelCenter": [
+            50.979851335618974,
+            150.27987711199955
+          ],
+          "sourceLocalPixelCenter": [
+            44.57350084294059,
+            116.80324189794653
+          ]
+        },
+        {
+          "name": "sample-4",
+          "time": 6.96875,
+          "expectedChannel": 42.26307495117187,
+          "observedRgb": [
+            40.5,
+            40.5,
+            40.5
+          ],
+          "maximumChannelError": 1.7630749511718733,
+          "targetLocalPixelCenter": [
+            50.90430791334339,
+            150.29481490450235
+          ],
+          "sourceLocalPixelCenter": [
+            44.57350084294059,
+            116.80324189794653
+          ]
+        },
+        {
+          "name": "sample-5",
+          "time": 7.03125,
+          "expectedChannel": 39.359095916748046,
+          "observedRgb": [
+            39.5,
+            39.5,
+            39.5
+          ],
+          "maximumChannelError": 0.1409040832519537,
+          "targetLocalPixelCenter": [
+            50.82879718940174,
+            150.31014394811814
+          ],
+          "sourceLocalPixelCenter": [
+            44.57350084294059,
+            116.80324189794653
+          ]
+        },
+        {
+          "name": "sample-6",
+          "time": 7.09375,
+          "expectedChannel": 36.56227478027344,
+          "observedRgb": [
+            38.5,
+            38.5,
+            38.5
+          ],
+          "maximumChannelError": 1.937725219726559,
+          "targetLocalPixelCenter": [
+            50.753319984850975,
+            150.32586433798383
+          ],
+          "sourceLocalPixelCenter": [
+            44.57350084294059,
+            116.80324189794653
+          ]
+        },
+        {
+          "name": "sample-7",
+          "time": 7.15625,
+          "expectedChannel": 35.80145370483399,
+          "observedRgb": [
+            37.75,
+            37.75,
+            37.75
+          ],
+          "maximumChannelError": 1.948546295166011,
+          "targetLocalPixelCenter": [
+            50.677877119723604,
+            150.34197616752073
+          ],
+          "sourceLocalPixelCenter": [
+            44.57350084294059,
+            116.80324189794653
+          ]
+        },
+        {
+          "name": "sample-8",
+          "time": 7.21875,
+          "expectedChannel": 34.826316833496094,
+          "observedRgb": [
+            32.75,
+            32.75,
+            32.75
+          ],
+          "maximumChannelError": 2.0763168334960938,
+          "targetLocalPixelCenter": [
+            50.60246941302651,
+            150.35847952843443
+          ],
+          "sourceLocalPixelCenter": [
+            44.57350084294059,
+            116.80324189794653
+          ]
+        }
+      ]
+    },
+    {
+      "x": 162,
+      "y": 92,
+      "expectedChannel": 45.5559889788343,
+      "temporalPngRgb": [
+        53.0,
+        53.0,
+        53.0
+      ],
+      "averageIsolatedRgb": [
+        52.5,
+        52.5,
+        52.5
+      ],
+      "retainedApiMp4Rgb": [
+        52.5,
+        52.5,
+        52.5
+      ],
+      "temporalMinusIsolated": [
+        0.5,
+        0.5,
+        0.5
+      ],
+      "isolated": [
+        {
+          "name": "center",
+          "time": 7,
+          "expectedChannel": 45.5559889788343,
+          "observedRgb": [
+            52.5,
+            52.5,
+            52.5
+          ],
+          "maximumChannelError": 6.9440110211657,
+          "targetLocalPixelCenter": [
+            13.653355356730827,
+            48.11328494320139
+          ],
+          "sourceLocalPixelCenter": [
+            40.69629232048793,
+            12.565249102433185
+          ]
+        },
+        {
+          "name": "sample-1",
+          "time": 6.78125,
+          "expectedChannel": 45.5559889788343,
+          "observedRgb": [
+            52.5,
+            52.5,
+            52.5
+          ],
+          "maximumChannelError": 6.9440110211657,
+          "targetLocalPixelCenter": [
+            14.337310550510637,
+            47.877828251442466
+          ],
+          "sourceLocalPixelCenter": [
+            40.69629232048793,
+            12.565249102433185
+          ]
+        },
+        {
+          "name": "sample-2",
+          "time": 6.84375,
+          "expectedChannel": 45.5559889788343,
+          "observedRgb": [
+            52.5,
+            52.5,
+            52.5
+          ],
+          "maximumChannelError": 6.9440110211657,
+          "targetLocalPixelCenter": [
+            14.141657266387966,
+            47.944374973366045
+          ],
+          "sourceLocalPixelCenter": [
+            40.69629232048793,
+            12.565249102433185
+          ]
+        },
+        {
+          "name": "sample-3",
+          "time": 6.90625,
+          "expectedChannel": 45.5559889788343,
+          "observedRgb": [
+            52.5,
+            52.5,
+            52.5
+          ],
+          "maximumChannelError": 6.9440110211657,
+          "targetLocalPixelCenter": [
+            13.946193547116849,
+            48.01150298987933
+          ],
+          "sourceLocalPixelCenter": [
+            40.69629232048793,
+            12.565249102433185
+          ]
+        },
+        {
+          "name": "sample-4",
+          "time": 6.96875,
+          "expectedChannel": 45.5559889788343,
+          "observedRgb": [
+            52.5,
+            52.5,
+            52.5
+          ],
+          "maximumChannelError": 6.9440110211657,
+          "targetLocalPixelCenter": [
+            13.750920286305217,
+            48.0792123017878
+          ],
+          "sourceLocalPixelCenter": [
+            40.69629232048793,
+            12.565249102433185
+          ]
+        },
+        {
+          "name": "sample-5",
+          "time": 7.03125,
+          "expectedChannel": 45.5559889788343,
+          "observedRgb": [
+            52.5,
+            52.5,
+            52.5
+          ],
+          "maximumChannelError": 6.9440110211657,
+          "targetLocalPixelCenter": [
+            13.555838376305076,
+            48.14750290782871
+          ],
+          "sourceLocalPixelCenter": [
+            40.69629232048793,
+            12.565249102433185
+          ]
+        },
+        {
+          "name": "sample-6",
+          "time": 7.09375,
+          "expectedChannel": 45.5559889788343,
+          "observedRgb": [
+            52.5,
+            52.5,
+            52.5
+          ],
+          "maximumChannelError": 6.9440110211657,
+          "targetLocalPixelCenter": [
+            13.360948708211225,
+            48.21637480467087
+          ],
+          "sourceLocalPixelCenter": [
+            40.69629232048793,
+            12.565249102433185
+          ]
+        },
+        {
+          "name": "sample-7",
+          "time": 7.15625,
+          "expectedChannel": 45.5559889788343,
+          "observedRgb": [
+            52.5,
+            52.5,
+            52.5
+          ],
+          "maximumChannelError": 6.9440110211657,
+          "targetLocalPixelCenter": [
+            13.166252171860435,
+            48.2858279869144
+          ],
+          "sourceLocalPixelCenter": [
+            40.69629232048793,
+            12.565249102433185
+          ]
+        },
+        {
+          "name": "sample-8",
+          "time": 7.21875,
+          "expectedChannel": 45.5559889788343,
+          "observedRgb": [
+            52.5,
+            52.5,
+            52.5
+          ],
+          "maximumChannelError": 6.9440110211657,
+          "targetLocalPixelCenter": [
+            12.971749655830394,
+            48.3558624470905
+          ],
+          "sourceLocalPixelCenter": [
+            40.69629232048793,
+            12.565249102433185
+          ]
+        }
+      ]
+    }
+  ]
+}

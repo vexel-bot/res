@@ -1,0 +1,74 @@
+{
+  "schemaVersion": "res.motion-derivative-receipt.v1",
+  "generatedAt": "2026-10-02T22:43:25.556900+00:00",
+  "evidenceLevel": "contract_math_and_actual_api_gates; renderer_interpolation_unchanged",
+  "tests": [
+    {
+      "path": "docs/studios/research/editor-oss-20261002/motion-derivative-final-tests.xml",
+      "tests": 22,
+      "sha256": "4aace6f5946112dd29c2d7ec48d7f1abb2e83a6a86cb42ae64d0f3cb56e8403c",
+      "failure": 0,
+      "error": 0,
+      "skipped": 0
+    },
+    {
+      "path": "docs/studios/research/editor-oss-20261002/motion-derivative-regression-tests.xml",
+      "tests": 66,
+      "sha256": "2c06054cdf9f5bc3f083c4fa9b1ea77f1470c1685d89b6ed00f360aabb445962",
+      "failure": 0,
+      "error": 0,
+      "skipped": 0
+    }
+  ],
+  "testCountsOverlap": true,
+  "sources": [
+    {
+      "path": "backend/app/domain/studios/motion.py",
+      "sha256": "a57c8cdfb8900d649fbb3486647e6cbdd47494d9815bf6e9695aaf160184bde3"
+    },
+    {
+      "path": "backend/app/domain/studios/motion_derivatives.py",
+      "sha256": "41cf163d3a10ab59664470b99cb1f701dab3949d7dc66b6469345a6027a53f38"
+    },
+    {
+      "path": "backend/tests/test_motion_derivatives.py",
+      "sha256": "9e9498362a7bdd517d87c5746c6c6cda64c59a5b4684484d5c92312af93e6e5c"
+    },
+    {
+      "path": "backend/tests/test_studio_motion_graph.py",
+      "sha256": "65d78c203ce9876e793dbc59e713aa566f86ee3a9b340f9be007a114a6c94d5b"
+    },
+    {
+      "path": "backend/tests/test_studio_motion_graph_api.py",
+      "sha256": "224640a4c72c59617b5ad32770773a4c5be705a0757f7b1b9eef192d61619dd8"
+    },
+    {
+      "path": "scripts/validation/editor-motion-derivative-receipt.py",
+      "sha256": "568d9986bfba7530c826cf8157a5199866fca10578474fbb389500bf858f7505"
+    }
+  ],
+  "localTiming": {
+    "platform": "Windows-10-10.0.26200-SP0",
+    "python": "3.11.9",
+    "segments": 1000,
+    "ordersPerSegment": 2,
+    "elapsedSeconds": 0.26218900000003487,
+    "peakVelocity": 344.6876055581294,
+    "peakAcceleration": 1201.0659446493632,
+    "limitations": "Single warmed-process run, identical segment repeated; no p95, render, memory or realtime claim."
+  },
+  "method": "quadratic analytic bounds; cubic dy/dx and (y''x'-y'x'')/(x')^3; polynomial critical roots",
+  "numerics": {
+    "bisectionIterations": 60,
+    "rootResidualRelativeTolerance": 1e-12,
+    "singularTimeDerivativeCutoff": 1e-10,
+    "joinVelocityRelativeAndAbsoluteTolerance": 1e-09
+  },
+  "limitations": [
+    "Singular/near-singular nonidentity Bezier curves abstain, even if a removable limit might exist.",
+    "Bounds describe intended continuous interpolation, not sub-iteration derivative of runtime's 18-step inversion.",
+    "No new MP4 or aesthetic/human qualification in this increment; earlier render receipts remain historical.",
+    "First broad run had one legacy fixture loaded before its expected peak/threshold update; preserved in motion-derivative-tests.xml."
+  ],
+  "externalCodeCopied": false
+}

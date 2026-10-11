@@ -15,6 +15,7 @@ from ...models import LibraryAsset
 from ...providers.studios.media_probe import MEDIA_PROBE_PROVIDERS
 from ...providers.studios.resource_download import download_resource
 from ..object_storage import get_object_storage, object_key, sha256_file
+from .asset_read_projection import project_assets
 from .compatibility import persist_contract, record_to_contract
 from .review_binding import invalidate_linked_post_review
 
@@ -35,7 +36,9 @@ def catalog(db, workspace_id, query="", kind=None, *, asset_id=None):
     )
     if asset_id:
         statement = statement.where(LibraryAsset.id == asset_id)
-    items = db.scalars(statement).yield_per(100)
+    items = project_assets(db, statement, [("editingResource",), ("visualReview",), ("generationJobId",)])
+    if items is None:
+        items = db.scalars(statement).yield_per(100)
     result = []
     for asset in items:
         metadata = (asset.object_metadata or {}).get("editingResource", {})

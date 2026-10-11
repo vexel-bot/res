@@ -1,0 +1,23 @@
+{
+  "kind": "alight.shared_xml_transfer.v1",
+  "transferId": "d2b661a9-079e-43e1-a2b6-83283ae0ebd2",
+  "receivedAtUnixMs": 1790971604596,
+  "sourceAuthority": "com.alightcreative.app.motion.fileprovider",
+  "sourceName": "res Alight - prova 01.xml",
+  "sha256": "730152f4f7188a1656b5121b675e0fe223bd5accfd6f8c94ac3d4935c833aadf",
+  "bytes": 1019,
+  "appVersion": "5.0.273.1028425",
+  "renderQualification": false,
+  "workerJob": null,
+  "qualification": "discovery_only",
+  "source": "Real Alight export after reimport and native keyframe editing",
+  "importVerified": false,
+  "renderVerified": true,
+  "renderVerificationScope": "Agent-directed native export corresponding to two X keyframes; motion observed in sampled decoded frames; not worker qualification",
+  "manualInterventions": [
+    "Agent-directed original XML import",
+    "Native UI keyframe editing",
+    "Native UI export and selection of local receiver"
+  ],
+  "renderReceipt": "output/alight-discovery-20261002/studio/alight-keyframe-export-receipt.json"
+}

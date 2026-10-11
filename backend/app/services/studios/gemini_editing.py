@@ -2187,6 +2187,8 @@ def execute_editing_gemini(db, job, progress, is_cancelled):
                             request.revision_plan, candidate, request.revision_scene_ids
                         )
                 candidate.intent = request.direction.intent.model_copy(deep=True)
+                if request.production_request is not None:
+                    candidate = request.production_request.bind_render_engine(candidate)
                 candidate.expected_document_revision = record.revision
                 if request.direction.font_asset_id:
                     for scene in candidate.scenes:

@@ -109,6 +109,9 @@ export type StudioAdvancedCapabilityAuditRecord = BackendSchema<"AdvancedCapabil
 export type StudioVideoAutonomyAuditRecord = BackendSchema<"VideoAutonomyCompletionAuditV1">;
 export type StudioImageDerivationCreate = BackendSchema<"ImageDerivationRequestV1">;
 export type AssetRecord = BackendSchema<"AssetOut">;
+export type AssetCatalogRecord = AssetRecord & {
+  schemaVersion: "studio.asset-catalog-item.v1"; metadataDetail: "summary"; fullMetadataPath: string;
+};
 export type AssetInput = BackendSchema<"AssetIn">;
 export type AnalyticsRecord = BackendSchema<"AnalyticsSummaryOut">;
 export type RadarRecord = BackendSchema<"RadarStateOut">;
@@ -466,7 +469,7 @@ export const productApi = {
       backendClient.GET("/api/v1/campaigns", { params }),
       backendClient.GET("/api/v1/posts", { params }),
       backendClient.GET("/api/v1/creatives", { params }),
-      backendClient.GET("/api/v1/assets", { params }),
+      apiFetch<AssetCatalogRecord[]>(`/api/v1/assets/catalog?workspace_id=${encodeURIComponent(workspaceId)}`),
       backendClient.GET("/api/v1/posts/approval-events", { params }),
       backendClient.GET("/api/v1/analytics/summary", { params }),
       backendClient.GET("/api/v1/radar/state", { params }),
@@ -497,7 +500,7 @@ export const productApi = {
       campaigns: requireBackendData(campaigns, "Campanhas"),
       posts: requireBackendData(posts, "Conteúdos"),
       creatives: requireBackendData(creatives, "Documentos criativos"),
-      assets: requireBackendData(assets, "Assets"),
+      assets,
       approvalEvents: requireBackendData(
         approvalEvents,
         "Eventos de aprovação",

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="org.res.alightbridge" android:versionCode="1" android:versionName="0.1.0-discovery">
+    <uses-sdk android:minSdkVersion="24" android:targetSdkVersion="28" />
+    <!-- No network, storage, debugging or account permissions. -->
+    <application android:label="res · receber XML" android:allowBackup="false"
+        android:theme="@android:style/Theme.Material.Light.NoActionBar">
+        <activity android:name=".ReceiveProjectActivity" android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/xml" />
+                <data android:mimeType="application/xml" />
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>

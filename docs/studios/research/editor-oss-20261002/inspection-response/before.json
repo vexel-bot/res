@@ -1,0 +1,22 @@
+{
+  "backend/app/domain/studios/editor_commands.py": {
+    "sha256": "235bf15065d00ab535d8c79d6cdaafe39c75f32855086cd1731e03d931aa1538",
+    "bytes": 2828,
+    "backup": "backend--app--domain--studios--editor_commands.py.before"
+  },
+  "backend/app/services/studios/editor_commands.py": {
+    "sha256": "66942b682f2ddd7534d78c9274d885b1ba410a6b5eecff90191464f68c56bf60",
+    "bytes": 15298,
+    "backup": "backend--app--services--studios--editor_commands.py.before"
+  },
+  "backend/app/routers/studio_editor.py": {
+    "sha256": "be05f005a66b4c183dd9a181d8bcc49abf862eef0306146f0b5226575f1cc4f0",
+    "bytes": 1429,
+    "backup": "backend--app--routers--studio_editor.py.before"
+  },
+  "src/studios/EditorInspectionPanel.tsx": {
+    "sha256": "084c9c8bbb859fb8ff5ea2fde5b5cc285ba2e105f655f4400339edda8523e67d",
+    "bytes": 22040,
+    "backup": "src--studios--EditorInspectionPanel.tsx.before"
+  }
+}

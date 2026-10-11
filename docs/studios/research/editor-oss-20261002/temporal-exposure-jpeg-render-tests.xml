@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="5" time="95.385" timestamp="2026-10-02T23:15:20.080118-03:00" hostname="Computador"><testcase classname="tests.test_temporal_exposure_render" name="test_temporal_exposure_actual_api_measurement[0-180]" time="18.314" /><testcase classname="tests.test_temporal_exposure_render" name="test_temporal_exposure_actual_api_measurement[2-180]" time="17.876" /><testcase classname="tests.test_temporal_exposure_render" name="test_temporal_exposure_actual_api_measurement[8-180]" time="17.706" /><testcase classname="tests.test_temporal_exposure_render" name="test_temporal_exposure_actual_api_measurement[16-180]" time="19.388"><failure message="AssertionError: (34, 154, [63, 96, 121], [60.4931640625, 107.78076171875, 127.78076171875])&#10;assert 8.382218457031257 &lt; 8&#10; +  where 8.382218457031257 = abs((90.7892 - 99.17141845703125))">client = &lt;starlette.testclient.TestClient object at 0x00000272B2EDA650&gt;
+project = {'asset': '7475d83f-a4a1-4a79-b0c7-d9ee5c15a03d', 'document': '9509b244-8f10-490f-aa2c-3b3853a47d0d', 'token': 'eyJhbG...dHlwZSI6ImFjY2VzcyJ9.wYe2FSNaQn9Jm0clbDJb-tLPBSPfWwbnw4dvvbqxCPI', 'workspace': 'f90181c6-53ff-41f0-be33-3f26b8198827'}
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x00000272B2F70ED0&gt;
+tmp_path = WindowsPath('C:/Users/edugu/AppData/Local/Temp/pytest-of-edugu/pytest-133/test_temporal_exposure_actual_3')
+samples = 16, shutter = 180
+
+    @pytest.mark.parametrize("samples,shutter", [(0, 180), (2, 180), (8, 180), (16, 180), (8, 0)])
+    def test_temporal_exposure_actual_api_measurement(client, project, monkeypatch, tmp_path, samples, shutter):
+        policy = (
+            TemporalExposureV1().model_dump(mode="json", by_alias=True)
+            if (os.environ.get("TEMPORAL_EXPOSURE_POLICY") == "centered")
+            else None
+        )
+        with SessionLocal() as db:
+            record = db.get(CreativeDocument, project["document"])
+            doc = record_to_contract(record)
+            doc.composition.media_timeline.tracks = []
+            persist_contract(record, doc)
+            db.commit()
+        headers = {"Authorization": "Bearer " + project["token"]}
+        base = f"/api/v1/studios/v1/documents/{project['document']}"
+        response = client.post(
+            base + "/editing-plans",
+            headers={**headers, "Idempotency-Key": "exposure-plan"},
+            json=exposure_direction(samples, shutter, policy),
+        )
+        assert response.status_code == 200, response.text
+        plan = response.json()
+        assert plan["status"] == "ready", plan["blockers"]
+        applied = client.post(
+            base + f"/editing-plans/{plan['id']}/apply", headers=headers, json={"expectedPlanRevision": plan["revision"]}
+        )
+        assert applied.status_code == 200, applied.text
+        inspection = client.get(base + "/editor/inspection?frame=30", headers=headers).json()
+        monkeypatch.setitem(
+            VIDEO_RENDER_PROVIDERS,
+            "remotion.contextual-v2",
+            RemotionNativeContextualRenderProvider(
+                RemotionNativeGraphicsProvider("node", "ffmpeg", 180),
+                VIDEO_RENDER_PROVIDERS["builtin.ffmpeg-contextual-v1"],
+            ),
+        )
+        monkeypatch.setattr("app.tasks.execute_studio_generation.delay", lambda *_: None)
+        response = client.post(
+            "/api/v1/studios/v1/video-renders",
+            headers={**headers, "Idempotency-Key": "exposure-render"},
+            json={
+                "workspaceId": project["workspace"],
+                "documentId": project["document"],
+                "expectedDocumentRevision": applied.json()["revision"],
+                "expectedDocumentVersion": 1,
+                "contextualPlanId": plan["id"],
+                "provider": "remotion.contextual-v2",
+                "output": {"width": 320, "height": 320, "fps": 30},
+            },
+        )
+        assert response.status_code == 202, response.text
+        deadline = time.monotonic() + 120
+        while _active(_read(lease_path())):
+            if time.monotonic() &gt;= deadline:
+                pytest.skip("Live local operation occupies heavy-media capacity")
+            time.sleep(1)
+        with SessionLocal() as db:
+            job = db.get(StudioGenerationJob, response.json()["id"])
+            execute_job_once(db, job)
+            assert job.status == "succeeded", job.error_message
+            result = job.result_payload
+            asset = db.get(LibraryAsset, result["artifact"]["assetId"])
+            metadata = asset.object_metadata
+            assert result["qualityEvaluation"]["status"] == "passed"
+            assert result["documentRevision"] == applied.json()["revision"]
+            geometry = metadata["contextualEditing"]["rendererChecks"]["geometrySamples"]
+            assert len(geometry) == 60
+            with get_object_storage(asset.storage_backend).materialize(asset.storage_key) as output:
+                assert hashlib.sha256(output.read_bytes()).hexdigest() == result["artifact"]["checksumSha256"]
+                pixels = subprocess.run(
+                    ["ffmpeg", "-v", "error", "-i", str(output), "-f", "rawvideo", "-pix_fmt", "rgb24", "-"],
+                    capture_output=True,
+                    check=True,
+                    timeout=30,
+                    creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0),
+                ).stdout
+                assert len(pixels) == 60 * 320 * 320 * 3
+    
+                def pixel(frame, x, y):
+                    offset = (frame * 320 * 320 + y * 320 + x) * 3
+                    return list(pixels[offset : offset + 3])
+    
+                observations = []
+                for frame in [0, 4, 10, 29, 30, 34, 40, 59]:
+                    scene = int(frame &gt;= 30)
+                    local = frame - scene * 30
+                    observations.append(
+                        {
+                            "frame": frame,
+                            "stationaryRgb": pixel(frame, 60, 220),
+                            "movingCenterRgb": pixel(frame, round(52 + 150 * min(local / 8, 1)), 52 + scene * 60),
+                            "initialPositionRgb": pixel(frame, 27, 52 + scene * 60),
+                            "settledPositionRgb": pixel(frame, 182, 52 + scene * 60),
+                            "cutPreviousShapeRgb": pixel(frame, 182, 52),
+                            "desiredColorAlphaRgb": [120, 110, 75] if not scene else [60, 110, 130],
+                        }
+                    )
+                edge_checks = []
+                if policy and samples:
+                    for frame in [4, 34]:
+                        part = int(frame &gt;= 30)
+                        background = [20, 40, 80] if not part else [80, 20, 40]
+                        foreground = [220, 180, 70] if not part else [40, 200, 220]
+                        # Independent uniform midpoint quadrature of a translated
+                        # rectangle; no worker matrices, phase or DOM bounds used.
+                        times = (
+                            [frame]
+                            if shutter == 0
+                            else [
+                                frame - shutter / 720 + (index + 0.5) * shutter / 360 / samples for index in range(samples)
+                            ]
+                        )
+                        for x in [86, 93, 96, 102, 154, 159, 162, 167]:
+                            coverage = sum(
+                                max(
+                                    0,
+                                    min(x + 1, 20 + 18.75 * (time - part * 30) + 64)
+                                    - max(x, 20 + 18.75 * (time - part * 30)),
+                                )
+                                for time in times
+                            ) / len(times)
+                            expected = [b + 0.5 * coverage * (f - b) for b, f in zip(background, foreground, strict=True)]
+                            observed = pixel(frame, x, 52 + part * 60)
+                            # Colored edges undergo chroma subsampling in H.264.
+                            # Phase/coverage uses luminance; hold colors below
+                            # retain independent checks of all RGB channels.
+                            weights = [0.2126, 0.7152, 0.0722]
+                            observed_luma = sum(a * w for a, w in zip(observed, weights, strict=True))
+                            expected_luma = sum(a * w for a, w in zip(expected, weights, strict=True))
+&gt;                           assert abs(observed_luma - expected_luma) &lt; 8, (frame, x, observed, expected)
+E                           AssertionError: (34, 154, [63, 96, 121], [60.4931640625, 107.78076171875, 127.78076171875])
+E                           assert 8.382218457031257 &lt; 8
+E                            +  where 8.382218457031257 = abs((90.7892 - 99.17141845703125))
+
+tests\test_temporal_exposure_render.py:253: AssertionError</failure></testcase><testcase classname="tests.test_temporal_exposure_render" name="test_temporal_exposure_actual_api_measurement[8-0]" time="18.864"><failure message="AssertionError: (34, 159, [55, 44, 62], [80.0, 20.0, 40.0])&#10;assert 13.438199999999995 &lt; 8&#10; +  where 13.438199999999995 = abs((47.6382 - 34.2))">client = &lt;starlette.testclient.TestClient object at 0x00000272B2D361D0&gt;
+project = {'asset': '9339b019-befd-4dc4-95c2-8489f9c932d2', 'document': 'c4fec983-4271-4c85-a3d7-ac04e291a761', 'token': 'eyJhbG...dHlwZSI6ImFjY2VzcyJ9.4Ggv5k1K-5DtKCrXf84ASQL4tVphsjl0yxNMv-YsU0U', 'workspace': '142d1d25-74fa-4196-b2ec-774fadc6ec21'}
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x00000272B2EC1E50&gt;
+tmp_path = WindowsPath('C:/Users/edugu/AppData/Local/Temp/pytest-of-edugu/pytest-133/test_temporal_exposure_actual_4')
+samples = 8, shutter = 0
+
+    @pytest.mark.parametrize("samples,shutter", [(0, 180), (2, 180), (8, 180), (16, 180), (8, 0)])
+    def test_temporal_exposure_actual_api_measurement(client, project, monkeypatch, tmp_path, samples, shutter):
+        policy = (
+            TemporalExposureV1().model_dump(mode="json", by_alias=True)
+            if (os.environ.get("TEMPORAL_EXPOSURE_POLICY") == "centered")
+            else None
+        )
+        with SessionLocal() as db:
+            record = db.get(CreativeDocument, project["document"])
+            doc = record_to_contract(record)
+            doc.composition.media_timeline.tracks = []
+            persist_contract(record, doc)
+            db.commit()
+        headers = {"Authorization": "Bearer " + project["token"]}
+        base = f"/api/v1/studios/v1/documents/{project['document']}"
+        response = client.post(
+            base + "/editing-plans",
+            headers={**headers, "Idempotency-Key": "exposure-plan"},
+            json=exposure_direction(samples, shutter, policy),
+        )
+        assert response.status_code == 200, response.text
+        plan = response.json()
+        assert plan["status"] == "ready", plan["blockers"]
+        applied = client.post(
+            base + f"/editing-plans/{plan['id']}/apply", headers=headers, json={"expectedPlanRevision": plan["revision"]}
+        )
+        assert applied.status_code == 200, applied.text
+        inspection = client.get(base + "/editor/inspection?frame=30", headers=headers).json()
+        monkeypatch.setitem(
+            VIDEO_RENDER_PROVIDERS,
+            "remotion.contextual-v2",
+            RemotionNativeContextualRenderProvider(
+                RemotionNativeGraphicsProvider("node", "ffmpeg", 180),
+                VIDEO_RENDER_PROVIDERS["builtin.ffmpeg-contextual-v1"],
+            ),
+        )
+        monkeypatch.setattr("app.tasks.execute_studio_generation.delay", lambda *_: None)
+        response = client.post(
+            "/api/v1/studios/v1/video-renders",
+            headers={**headers, "Idempotency-Key": "exposure-render"},
+            json={
+                "workspaceId": project["workspace"],
+                "documentId": project["document"],
+                "expectedDocumentRevision": applied.json()["revision"],
+                "expectedDocumentVersion": 1,
+                "contextualPlanId": plan["id"],
+                "provider": "remotion.contextual-v2",
+                "output": {"width": 320, "height": 320, "fps": 30},
+            },
+        )
+        assert response.status_code == 202, response.text
+        deadline = time.monotonic() + 120
+        while _active(_read(lease_path())):
+            if time.monotonic() &gt;= deadline:
+                pytest.skip("Live local operation occupies heavy-media capacity")
+            time.sleep(1)
+        with SessionLocal() as db:
+            job = db.get(StudioGenerationJob, response.json()["id"])
+            execute_job_once(db, job)
+            assert job.status == "succeeded", job.error_message
+            result = job.result_payload
+            asset = db.get(LibraryAsset, result["artifact"]["assetId"])
+            metadata = asset.object_metadata
+            assert result["qualityEvaluation"]["status"] == "passed"
+            assert result["documentRevision"] == applied.json()["revision"]
+            geometry = metadata["contextualEditing"]["rendererChecks"]["geometrySamples"]
+            assert len(geometry) == 60
+            with get_object_storage(asset.storage_backend).materialize(asset.storage_key) as output:
+                assert hashlib.sha256(output.read_bytes()).hexdigest() == result["artifact"]["checksumSha256"]
+                pixels = subprocess.run(
+                    ["ffmpeg", "-v", "error", "-i", str(output), "-f", "rawvideo", "-pix_fmt", "rgb24", "-"],
+                    capture_output=True,
+                    check=True,
+                    timeout=30,
+                    creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0),
+                ).stdout
+                assert len(pixels) == 60 * 320 * 320 * 3
+    
+                def pixel(frame, x, y):
+                    offset = (frame * 320 * 320 + y * 320 + x) * 3
+                    return list(pixels[offset : offset + 3])
+    
+                observations = []
+                for frame in [0, 4, 10, 29, 30, 34, 40, 59]:
+                    scene = int(frame &gt;= 30)
+                    local = frame - scene * 30
+                    observations.append(
+                        {
+                            "frame": frame,
+                            "stationaryRgb": pixel(frame, 60, 220),
+                            "movingCenterRgb": pixel(frame, round(52 + 150 * min(local / 8, 1)), 52 + scene * 60),
+                            "initialPositionRgb": pixel(frame, 27, 52 + scene * 60),
+                            "settledPositionRgb": pixel(frame, 182, 52 + scene * 60),
+                            "cutPreviousShapeRgb": pixel(frame, 182, 52),
+                            "desiredColorAlphaRgb": [120, 110, 75] if not scene else [60, 110, 130],
+                        }
+                    )
+                edge_checks = []
+                if policy and samples:
+                    for frame in [4, 34]:
+                        part = int(frame &gt;= 30)
+                        background = [20, 40, 80] if not part else [80, 20, 40]
+                        foreground = [220, 180, 70] if not part else [40, 200, 220]
+                        # Independent uniform midpoint quadrature of a translated
+                        # rectangle; no worker matrices, phase or DOM bounds used.
+                        times = (
+                            [frame]
+                            if shutter == 0
+                            else [
+                                frame - shutter / 720 + (index + 0.5) * shutter / 360 / samples for index in range(samples)
+                            ]
+                        )
+                        for x in [86, 93, 96, 102, 154, 159, 162, 167]:
+                            coverage = sum(
+                                max(
+                                    0,
+                                    min(x + 1, 20 + 18.75 * (time - part * 30) + 64)
+                                    - max(x, 20 + 18.75 * (time - part * 30)),
+                                )
+                                for time in times
+                            ) / len(times)
+                            expected = [b + 0.5 * coverage * (f - b) for b, f in zip(background, foreground, strict=True)]
+                            observed = pixel(frame, x, 52 + part * 60)
+                            # Colored edges undergo chroma subsampling in H.264.
+                            # Phase/coverage uses luminance; hold colors below
+                            # retain independent checks of all RGB channels.
+                            weights = [0.2126, 0.7152, 0.0722]
+                            observed_luma = sum(a * w for a, w in zip(observed, weights, strict=True))
+                            expected_luma = sum(a * w for a, w in zip(expected, weights, strict=True))
+&gt;                           assert abs(observed_luma - expected_luma) &lt; 8, (frame, x, observed, expected)
+E                           AssertionError: (34, 159, [55, 44, 62], [80.0, 20.0, 40.0])
+E                           assert 13.438199999999995 &lt; 8
+E                            +  where 13.438199999999995 = abs((47.6382 - 34.2))
+
+tests\test_temporal_exposure_render.py:253: AssertionError</failure></testcase></testsuite></testsuites>

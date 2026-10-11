@@ -62,6 +62,8 @@ class RemotionGraphicsProvider:
                 raise ValueError("remotion_asset_checksum_conflict:" + asset_id)
             bindings[asset_id] = {"path": str(source.resolve()), "sha256": digest, "mime": refs[asset_id].media_type}
         manifest = self.compile_composition(document, motion_projection, bindings)
+        if self.runner == "render-hybrid.mjs":
+            manifest["encodeQuality"] = request.output.quality
         if (
             request.output.width != manifest["width"]
             or request.output.height != manifest["height"]
@@ -104,7 +106,15 @@ class RemotionGraphicsProvider:
                 log.seek(0)
                 output = log.read().decode("utf-8", errors="replace")
             if process.returncode:
-                diagnostic = output[:700] if len(output) <= 700 else output[:700] + "\n...\n" + output[-1300:]
+                import hashlib
+
+                diagnostics = self.worker_dir / "output" / "diagnostics"
+                diagnostics.mkdir(parents=True, exist_ok=True)
+                log_path = diagnostics / (hashlib.sha256(output.encode()).hexdigest() + ".log")
+                log_path.write_text(output, encoding="utf-8")
+                useful = "\n".join(line for line in output.splitlines() if "RES_GEOMETRY:" not in line)
+                diagnostic = useful[:2200] if len(useful) <= 3000 else useful[:2200] + "\n...\n" + useful[-800:]
+                diagnostic += "\nfull_log:" + str(log_path)
                 raise ValueError("remotion_render_failed:" + diagnostic)
             try:
                 receipt = json.loads(output.strip().splitlines()[-1])
@@ -164,12 +174,12 @@ class RemotionNativeGraphicsProvider(RemotionGraphicsProvider):
     from .remotion_projection import compile_remotion_composition
 
     name = "remotion.native-graphics-v2"
-    version = "4.0.527-native.3"
+    version = "4.0.527-native.14"
     runner = "render-hybrid.mjs"
     compile_composition = staticmethod(compile_remotion_composition)
 
 
 class RemotionNativeContextualRenderProvider(ContextualMotionRenderProvider):
     name = "remotion.contextual-v2"
-    version = "4.0.527-native.3"
+    version = "4.0.527-native.14"
     projection_target = "remotion"

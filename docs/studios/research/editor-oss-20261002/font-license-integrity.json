@@ -1,0 +1,49 @@
+{
+  "scope": "supplied_pack_exact_license_bytes",
+  "repairRequested": false,
+  "licenses": [
+    {
+      "license": "OFL-ArchivoNarrow.txt",
+      "expectedSha256": "b2087ef3fb91248e346600d19021249152a9688efea72905aa1996bb16a4c8de",
+      "beforeSha256": "b2087ef3fb91248e346600d19021249152a9688efea72905aa1996bb16a4c8de",
+      "afterSha256": "b2087ef3fb91248e346600d19021249152a9688efea72905aa1996bb16a4c8de",
+      "repaired": false,
+      "textContentChanged": false
+    },
+    {
+      "license": "OFL-Inter.txt",
+      "expectedSha256": "5b9321a4298cfeb6b34354164a1c3afc3db114569984c502b9b35d988fd58c57",
+      "beforeSha256": "5b9321a4298cfeb6b34354164a1c3afc3db114569984c502b9b35d988fd58c57",
+      "afterSha256": "5b9321a4298cfeb6b34354164a1c3afc3db114569984c502b9b35d988fd58c57",
+      "repaired": false,
+      "textContentChanged": false
+    },
+    {
+      "license": "OFL-Fraunces.txt",
+      "expectedSha256": "bdf4c22802eaf804f998195871c6b8938aac2ac14b2d78a8bd66a6f1eced833b",
+      "beforeSha256": "bdf4c22802eaf804f998195871c6b8938aac2ac14b2d78a8bd66a6f1eced833b",
+      "afterSha256": "bdf4c22802eaf804f998195871c6b8938aac2ac14b2d78a8bd66a6f1eced833b",
+      "repaired": false,
+      "textContentChanged": false
+    },
+    {
+      "license": "OFL-IBMPlexMono.txt",
+      "expectedSha256": "7e6b2818edbd8f6a01ae80641cc8f16a51080d08fb4e532be3a0b6f74adb07da",
+      "beforeSha256": "7e6b2818edbd8f6a01ae80641cc8f16a51080d08fb4e532be3a0b6f74adb07da",
+      "afterSha256": "7e6b2818edbd8f6a01ae80641cc8f16a51080d08fb4e532be3a0b6f74adb07da",
+      "repaired": false,
+      "textContentChanged": false
+    },
+    {
+      "license": "LICENSE-PermanentMarker.txt",
+      "expectedSha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "beforeSha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "afterSha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "repaired": false,
+      "textContentChanged": false
+    }
+  ],
+  "manifestChanged": false,
+  "fontFilesChanged": false,
+  "checksumGateDisabled": false
+}

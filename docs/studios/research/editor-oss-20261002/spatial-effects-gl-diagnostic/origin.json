@@ -1,0 +1,7 @@
+{
+  "scope": "reconstruction_and_alternate_GL_diagnostic_not_new_API_qualification",
+  "evidenceSha256": "791ef05ca975210debeafa7d79238ae2bdbfd31e43fbc4478a5b4b92e85271e8",
+  "productionRunnerSha256": "5194f3880620c57e8aee1186ef0df3d3850b8ea9685426480f485c46f5de4f98",
+  "diagnosticRunnerSha256": "53c972c57135cb5da88d69b013bd13af2be5de8dc936479f69b346bc827819e1",
+  "difference": "explicit swangle in selection and rendering; no production edits"
+}

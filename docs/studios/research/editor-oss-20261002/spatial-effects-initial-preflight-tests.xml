@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="2" time="10.895" timestamp="2026-10-03T15:18:16.518910-03:00" hostname="Computador"><testcase classname="tests.test_spatial_effects_render" name="test_spatial_effects_actual_api_and_gaussian_pixels[control]" time="3.417"><failure message="AssertionError: {&quot;detail&quot;:{&quot;code&quot;:&quot;editing_visual_preflight_required&quot;}}&#10;assert 422 == 200&#10; +  where 422 = &lt;Response [422 Unprocessable Entity]&gt;.status_code">client = &lt;starlette.testclient.TestClient object at 0x000001744FA295D0&gt;
+project = {'asset': '398d1aa5-7088-4493-a59e-db2788b474eb', 'document': 'eac5c415-9e53-4c94-bf6c-ce46a810699d', 'token': 'eyJhbG...dHlwZSI6ImFjY2VzcyJ9.3STeqGZSO2OJqPn2p7sFPBWsxMHcXtP6sAofGNDyG2o', 'workspace': '3e862b93-dde0-45c5-9c4e-af66787200a0'}
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000001744FBEC4D0&gt;
+tmp_path = WindowsPath('C:/Users/edugu/AppData/Local/Temp/pytest-of-edugu/pytest-151/test_spatial_effects_actual_ap0')
+variant = 'control'
+
+    @pytest.mark.parametrize("variant", ["control", "spatial", "exposure"])
+    def test_spatial_effects_actual_api_and_gaussian_pixels(client, project, monkeypatch, tmp_path, variant):
+        with SessionLocal() as db:
+            record = db.get(CreativeDocument, project["document"])
+            doc = record_to_contract(record)
+            doc.composition.media_timeline.tracks = []
+            persist_contract(record, doc)
+            db.commit()
+        headers = {"Authorization": "Bearer " + project["token"]}
+        base = f"/api/v1/studios/v1/documents/{project['document']}"
+        response = client.post(base + "/editing-plans", headers={**headers, "Idempotency-Key": "spatial-plan"},
+                               json=spatial_direction(variant))
+        assert response.status_code == 200, response.text
+        plan = response.json()
+        assert plan["status"] == "ready", plan["blockers"]
+        applied = client.post(base + f"/editing-plans/{plan['id']}/apply", headers=headers,
+                              json={"expectedPlanRevision": plan["revision"]})
+&gt;       assert applied.status_code == 200, applied.text
+E       AssertionError: {"detail":{"code":"editing_visual_preflight_required"}}
+E       assert 422 == 200
+E        +  where 422 = &lt;Response [422 Unprocessable Entity]&gt;.status_code
+
+tests\test_spatial_effects_render.py:137: AssertionError</failure></testcase><testcase classname="tests.test_spatial_effects_render" name="test_spatial_effects_actual_api_and_gaussian_pixels[spatial]" time="6.625"><failure message="AssertionError: {&quot;detail&quot;:{&quot;code&quot;:&quot;editing_visual_preflight_required&quot;}}&#10;assert 422 == 200&#10; +  where 422 = &lt;Response [422 Unprocessable Entity]&gt;.status_code">client = &lt;starlette.testclient.TestClient object at 0x000001744D64D250&gt;
+project = {'asset': '0cdeee39-dc46-4f09-8aef-79c96b44c6d4', 'document': '1ed49fde-98d5-4969-8505-85710aef205e', 'token': 'eyJhbG...dHlwZSI6ImFjY2VzcyJ9.IqF4d1JZZ39i6NH5G4v3sRs2VeD68eyjPyuKBkinjjE', 'workspace': '74f7b820-57ed-48c5-8753-a32157dd79ba'}
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x00000174500435D0&gt;
+tmp_path = WindowsPath('C:/Users/edugu/AppData/Local/Temp/pytest-of-edugu/pytest-151/test_spatial_effects_actual_ap1')
+variant = 'spatial'
+
+    @pytest.mark.parametrize("variant", ["control", "spatial", "exposure"])
+    def test_spatial_effects_actual_api_and_gaussian_pixels(client, project, monkeypatch, tmp_path, variant):
+        with SessionLocal() as db:
+            record = db.get(CreativeDocument, project["document"])
+            doc = record_to_contract(record)
+            doc.composition.media_timeline.tracks = []
+            persist_contract(record, doc)
+            db.commit()
+        headers = {"Authorization": "Bearer " + project["token"]}
+        base = f"/api/v1/studios/v1/documents/{project['document']}"
+        response = client.post(base + "/editing-plans", headers={**headers, "Idempotency-Key": "spatial-plan"},
+                               json=spatial_direction(variant))
+        assert response.status_code == 200, response.text
+        plan = response.json()
+        assert plan["status"] == "ready", plan["blockers"]
+        applied = client.post(base + f"/editing-plans/{plan['id']}/apply", headers=headers,
+                              json={"expectedPlanRevision": plan["revision"]})
+&gt;       assert applied.status_code == 200, applied.text
+E       AssertionError: {"detail":{"code":"editing_visual_preflight_required"}}
+E       assert 422 == 200
+E        +  where 422 = &lt;Response [422 Unprocessable Entity]&gt;.status_code
+
+tests\test_spatial_effects_render.py:137: AssertionError</failure></testcase></testsuite></testsuites>

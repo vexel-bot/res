@@ -51,6 +51,11 @@ class Settings(BaseSettings):
     studio_editing_ai_test_budget_usd: float = Field(default=0, ge=0)
     studio_production_test_budget_usd: float = Field(default=0, ge=0, le=10)
     studio_visual_quality_indicator_enabled: bool = False
+    studio_alight_motion_enabled: bool = False
+    studio_alight_execution_mode: Literal["physical_android_ui", "android_emulator_ui"] = "physical_android_ui"
+    studio_alight_adb_path: str = "adb"
+    studio_alight_profile_path: str | None = None
+    studio_alight_worker_timeout_seconds: int = Field(default=900, ge=60, le=900)
     studio_editing_ai_price_version: str = "unpriced"
     studio_editing_ai_input_usd_per_million: float = Field(default=0, ge=0)
     studio_editing_ai_output_usd_per_million: float = Field(default=0, ge=0)

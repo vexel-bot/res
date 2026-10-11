@@ -1,0 +1,33 @@
+--- before/backend/app/services/studios/visual_quality_program.py
++++ after/backend/app/services/studios/visual_quality_program.py
+@@ -9,6 +9,7 @@
+ from sqlalchemy import select
+ 
+ from ...models import CreativeDocument, LibraryAsset, StudioDomainEvent, StudioGenerationJob
++from .asset_read_projection import project_assets
+ from .gemini_editing import committed_test_amount
+ 
+ BASELINE_PATH = (
+@@ -202,14 +203,14 @@
+     comparisons = {}
+     for event in sorted(comparison_events, key=lambda item: (item.occurred_at, item.id)):
+         comparisons[event.aggregate_id] = event.payload or {}
+-    assets = {
+-        asset.id: asset
+-        for asset in db.scalars(
+-            select(LibraryAsset).where(
+-                LibraryAsset.workspace_id == workspace_id,
+-            )
+-        ).all()
+-    }
++    asset_statement = select(LibraryAsset).where(LibraryAsset.workspace_id == workspace_id)
++    asset_rows = project_assets(db, asset_statement, [
++        ("documentId",), ("documentRevision",), ("visualHumanReview",), ("generationJobId",),
++        ("derivation",), ("qualityEvaluation",), ("videoRenderResult",),
++    ])
++    if asset_rows is None:
++        asset_rows = db.scalars(asset_statement).all()
++    assets = {asset.id: asset for asset in asset_rows}
+     docs = {record.id: record for record in documents}
+     runs = []
+     for state in latest.values():

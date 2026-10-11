@@ -1,0 +1,38 @@
+{
+  "schemaVersion": "studio.implementation-evidence.v1",
+  "date": "2026-10-01",
+  "provider": "alight-motion.contextual-v1",
+  "incrementalApiSpendUsd": 0,
+  "paidApiCalls": 0,
+  "devicePurchases": 0,
+  "subscriptionPurchases": 0,
+  "emulatorsUsed": 0,
+  "realAlightJobsExecuted": 0,
+  "apiBudget": {"groupId": "visual-quality-2026-10-01", "sharedLimitUsd": 10, "remainingBasis": "Studio shared reservation ledger"},
+  "probe": {
+    "command": "python workers/alight-motion/worker.py probe",
+    "available": false,
+    "capabilities": [],
+    "blockers": ["adb_unavailable", "device_profile_missing", "physical_device_missing", "validated_compiler_missing", "validated_import_missing"]
+  },
+  "qualification": {"technicalAppExecution": "pending", "visualQuality": "not_assessed", "autonomy": "pending", "promotion": "pending"},
+  "newTechniqueQualification": "knowledge_only",
+  "tests": {
+    "browser": {"passed": 10, "kind": "isolated Studio components with mocked API"},
+    "backend": {
+      "status": "passed",
+      "focusedPassed": 46,
+      "additionalCapabilityTestPassed": 1,
+      "focusedCommand": "python -m pytest tests/test_alight_motion.py tests/test_alight_worker_boundary.py tests/test_video_render_job.py tests/test_editorial_motion_v2.py -q --override-ini addopts=",
+      "additionalCommand": "python -m pytest tests/test_alight_motion.py::test_alight_refuses_native_components_without_their_exact_capability -q --override-ini addopts=",
+      "broaderRun": {"passed": 143, "fixtureFailures": 1, "fixtureFailure": "Required output specification omitted in test request", "resolution": "corrected and passed in focused rerun"},
+      "kind": "software boundary tests and existing renderer integration; zero real Alight jobs"
+    },
+    "typecheck": "passed",
+    "build": "passed",
+    "lintNewModules": "passed",
+    "lintModifiedExistingFilesScope": "F,I",
+    "lintModifiedExistingFiles": "passed"
+  },
+  "limitations": ["No physical Android admitted", "No editable import format validated", "No real compiler or calibrated UI driver bundled", "No human visual scores collected", "Mocks never count as real application qualification"]
+}

@@ -61,7 +61,7 @@ COMPONENTS = {
     },
     "sound_events": {"renderer": "ffmpeg", "operations": ["mix", "fade", "ducking", "silence"]},
 }
-COMPILER_VERSION = "res.scene-compiler.v2.15"
+COMPILER_VERSION = "res.scene-compiler.v2.16"
 COMPONENTS_VERSION = "res.editorial-components.v2.20"
 RUNTIME_VERSION = "res.editorial-runtime.v2.5"
 VISUAL_AUDIT_POLICY_VERSION = "studio.visual-audit-policy.v4"
@@ -84,9 +84,7 @@ def pin_current_execution_versions(direction):
     if direction.execution_versions == current:
         return []
     before = (
-        direction.execution_versions.model_dump(mode="json", by_alias=True)
-        if direction.execution_versions
-        else None
+        direction.execution_versions.model_dump(mode="json", by_alias=True) if direction.execution_versions else None
     )
     direction.execution_versions = current
     return [
@@ -185,10 +183,7 @@ def require_supported_execution_versions(direction):
         versions.visual_audit_policy,
     )
     if selected not in supported:
-        raise ValueError(
-            "editing_v2_execution_version_unavailable:"
-            + versions.model_dump_json(by_alias=True)
-        )
+        raise ValueError("editing_v2_execution_version_unavailable:" + versions.model_dump_json(by_alias=True))
 
 
 def _materialize_keyword_cues(direction, width, height):
@@ -307,19 +302,13 @@ def _place_generated_keyword_layers(direction, width, height):
             0,
             min(candidate_y + left.height, right.y + right.height) - max(candidate_y, right.y),
         )
-        return (intersection_x * intersection_y) / max(
-            1, min(left.width * left.height, right.width * right.height)
-        )
+        return (intersection_x * intersection_y) / max(1, min(left.width * left.height, right.width * right.height))
 
     bands = (height * 0.08, height * 0.42, height * 0.78)
     for scene in result.scenes:
         text = [element for element in scene.elements if element.kind in {"text", "card"}]
         for element in [item for item in text if item.id.startswith("keyword-")]:
-            peers = [
-                other
-                for other in text
-                if other.id != element.id and active_together(element, other)
-            ]
+            peers = [other for other in text if other.id != element.id and active_together(element, other)]
             if not peers:
                 continue
             candidates = [min(max(0.0, y), max(0.0, height - element.height)) for y in bands]
@@ -424,8 +413,7 @@ def _infer_unambiguous_focus(direction):
         candidates = [
             element
             for element in scene.elements
-            if element.visual_role not in {"background", "accent"}
-            and element.kind not in {"path"}
+            if element.visual_role not in {"background", "accent"} and element.kind not in {"path"}
         ]
         if len(candidates) == 1:
             candidates[0].visual_role = "hero"
@@ -443,7 +431,7 @@ def target_id(scene, element, instance=0):
     return "ed2-" + digest([scene, element, instance])[:24]
 
 
-def executable_composition_digest(page, timeline, graph):
+def executable_composition_digest(page, timeline, graph, recipes=None):
     return digest(
         {
             "page": page.model_dump(mode="json", by_alias=True),
@@ -454,6 +442,7 @@ def executable_composition_digest(page, timeline, graph):
                 "transitions": [item.model_dump(mode="json", by_alias=True) for item in graph.transitions],
                 "audioEvents": [item.model_dump(mode="json", by_alias=True) for item in graph.audio_events],
             },
+            **({"motionRecipes": recipes} if recipes else {}),
         }
     )
 
@@ -614,9 +603,7 @@ def compile_scenes(document, direction: ContextualPlanRequestV2, user_id, plan_i
                         "fps": fps,
                         "reveal": "none",
                     },
-                    "editorialAuditFrames": [
-                        cursor + state.frame for state in scene.visual_states
-                    ]
+                    "editorialAuditFrames": [cursor + state.frame for state in scene.visual_states]
                     + [
                         cursor + frame
                         for cue in scene.observation_cues
@@ -764,10 +751,11 @@ def compile_scenes(document, direction: ContextualPlanRequestV2, user_id, plan_i
                 absolute_start = cursor + local_start
                 props = {
                     "editorialSceneId": scene.id,
-                    **({"nativeComponent": component.model_dump(mode="json", by_alias=True)}
-                       if (component := next(
-                           (c for c in scene.native_components if element.id in c.target_ids), None
-                       )) else {}),
+                    **(
+                        {"nativeComponent": component.model_dump(mode="json", by_alias=True)}
+                        if (component := next((c for c in scene.native_components if element.id in c.target_ids), None))
+                        else {}
+                    ),
                     "editorialOperationIds": [
                         binding.technique_id for binding in scene.operation_bindings if element.id in binding.target_ids
                     ],
@@ -793,13 +781,9 @@ def compile_scenes(document, direction: ContextualPlanRequestV2, user_id, plan_i
                     "letterSpacing": element.letter_spacing,
                     "lineHeight": element.line_height,
                     "textAlign": element.text_align,
-                    "editorialTextSpans": [
-                        span.model_dump(mode="json", by_alias=True) for span in element.text_spans
-                    ],
+                    "editorialTextSpans": [span.model_dump(mode="json", by_alias=True) for span in element.text_spans],
                     "editorialShadow": element.shadow.model_dump() if element.shadow else None,
-                    "editorialEffects": [
-                        effect.model_dump(mode="json", by_alias=True) for effect in element.effects
-                    ],
+                    "editorialEffects": [effect.model_dump(mode="json", by_alias=True) for effect in element.effects],
                     "editorialBlendMode": element.blend_mode,
                     "editorialBorder": {"width": element.border_width, "color": element.border_color},
                     "fontAssetId": element.font_asset_id,
@@ -1029,7 +1013,9 @@ def compile_scenes(document, direction: ContextualPlanRequestV2, user_id, plan_i
                                     timeline={"startFrame": absolute_start, "durationFrames": element.duration_frames},
                                     source={
                                         "startMicroseconds": round(element.source_start_seconds * 1e6),
-                                        "durationMicroseconds": round(element.duration_frames / fps * element.playback_rate * 1e6),
+                                        "durationMicroseconds": round(
+                                            element.duration_frames / fps * element.playback_rate * 1e6
+                                        ),
                                     },
                                 )
                             ],
@@ -1186,6 +1172,11 @@ def compile_scenes(document, direction: ContextualPlanRequestV2, user_id, plan_i
                     rights_status="verified" if audio.role != "silence" else "not_applicable",
                 )
             )
+        for recipe in scene.motion_recipes:
+            for event in recipe.sound_events:
+                linked = next(audio for audio in scene.audio if audio.id == event.audio_id)
+                if event.frame != audio_start(linked) + linked.attack_offset_frames:
+                    raise ValueError("motion_recipe_sound_attack_mismatch")
         cursor += scene.duration_frames
         previous_root, previous_duration = root_id, scene.duration_frames
         previous_elements = indexed
@@ -1199,6 +1190,11 @@ def compile_scenes(document, direction: ContextualPlanRequestV2, user_id, plan_i
         if c.enabled
     ):
         raise ValueError("editing_v2_silence_overlaps_audio")
+    native_recipe_operations = []
+    if direction.render_engine == "current" and any(scene.motion_recipes for scene in direction.scenes):
+        from .native_motion_recipes import lower_native_recipes
+
+        native_recipe_operations = lower_native_recipes(page, nodes, tracks, direction.scenes, target_id)
     graph = MotionGraphV1(
         graph_id="motion-" + digest(plan_id)[:24],
         workspace_id=draft.workspace_id,
@@ -1218,13 +1214,38 @@ def compile_scenes(document, direction: ContextualPlanRequestV2, user_id, plan_i
     draft.composition.pages = [page]
     draft.composition.media_timeline = timeline
     draft.composition.narrative["editorialV2"] = {"planId": plan_id, "renderPolicy": "automatic_draft"}
+    if direction.visual_study_language:
+        draft.composition.narrative["editorialV2"]["artDirection"] = direction.art_direction.model_dump(
+            mode="json", by_alias=True
+        )
+        draft.composition.narrative["editorialV2"]["visualStudy"] = {
+            "phaseId": "visual-quality-2026-10-01",
+            "language": direction.visual_study_language,
+            "variant": direction.visual_study_variant,
+            "directionStatus": "authored",
+            "humanVisualApproval": "pending",
+            "autonomy": "not_demonstrated",
+        }
     draft.composition.narrative["editorialV2"]["operationBindings"] = [
         {"sceneId": scene.id, **binding.model_dump(mode="json", by_alias=True)}
-        for scene in direction.scenes for binding in scene.operation_bindings
+        for scene in direction.scenes
+        for binding in scene.operation_bindings
     ]
-    if any(scene.native_components for scene in direction.scenes):
+    recipes = [
+        {"sceneId": scene.id, **recipe.model_dump(mode="json", by_alias=True)}
+        for scene in direction.scenes
+        for recipe in scene.motion_recipes
+    ]
+    if recipes:
+        draft.composition.narrative["editorialV2"]["motionRecipes"] = recipes
+        draft.composition.narrative["editorialV2"]["motionRecipesDigest"] = digest(recipes)
+        if native_recipe_operations:
+            draft.composition.narrative["editorialV2"]["nativeRecipeOperations"] = native_recipe_operations
+    if native_recipe_operations or any(scene.native_components for scene in direction.scenes):
         draft.composition.narrative["editorialV2"]["renderer"] = "remotion.contextual-v2"
         draft.composition.narrative["editorialV2"]["nativeComponentVersion"] = 1
+    if direction.render_engine == "alight_motion":
+        draft.composition.narrative["editorialV2"]["renderer"] = "alight-motion.contextual-v1"
     executable_direction = direction.model_dump(mode="json", by_alias=True)
     return (
         draft,
@@ -1242,9 +1263,7 @@ def compile_scenes(document, direction: ContextualPlanRequestV2, user_id, plan_i
             "durationFrames": total,
             "scenes": scene_manifest,
             "artDirection": (
-                direction.art_direction.model_dump(mode="json", by_alias=True)
-                if direction.art_direction
-                else None
+                direction.art_direction.model_dump(mode="json", by_alias=True) if direction.art_direction else None
             ),
             "elements": manifest,
             "missingMaterials": missing,
@@ -1254,7 +1273,7 @@ def compile_scenes(document, direction: ContextualPlanRequestV2, user_id, plan_i
                 "sourceDirection": digest(source_direction),
                 "executableDirection": digest(executable_direction),
                 "sourceDocument": digest(document),
-                "executableComposition": executable_composition_digest(page, timeline, graph),
+                "executableComposition": executable_composition_digest(page, timeline, graph, recipes),
                 "assets": digest({a.id: a.checksum for a in document.assets}),
                 "fonts": digest(
                     {

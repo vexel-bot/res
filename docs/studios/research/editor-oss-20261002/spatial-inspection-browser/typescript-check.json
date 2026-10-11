@@ -1,0 +1,6 @@
+{
+  "command": "npm run lint (tsc --noEmit)",
+  "exitCode": 0,
+  "evidenceBasis": "Actual completed tool session 73508 in this goal increment; recorded after completion",
+  "uiSourceSha256": "4affbab9cc3db57c7eed800bbbae378a20ec97c65f698c7d29554986f7c217b3"
+}

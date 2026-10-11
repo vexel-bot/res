@@ -1,0 +1,7 @@
+{
+  "scope": "non_equivalent_direct_reencode_control",
+  "admissionEvidence": false,
+  "reason": "Direct format=yuv420p re-encode omitted the contextual finalizer RGBA/scale/pad/overlay graph. CRF14 did not reproduce the retained API probe pixels; assertion rejected the study.",
+  "replacement": "temporal-matte-svg-subtract-final-encode-study-v2",
+  "oldCapturedBytesPreserved": true
+}

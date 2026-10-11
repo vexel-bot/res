@@ -19,6 +19,7 @@ from ..domain.studios.editing_resources import (
 )
 from ..domain.studios.editorial_production import ExternalProductionReviewV1, ProductionRequestV1, ProductionRevisionV1
 from ..domain.studios.visual_audit import VisualComparisonReviewV1, VisualHumanReviewV1
+from ..domain.studios.visual_study import CreateVisualStudyComparisonV1, VisualStudyComparisonReviewV1
 from ..models import LibraryAsset, User
 from ..security import get_current_user
 from ..services.studios import editing_resources as resources
@@ -26,6 +27,58 @@ from .assets import assert_access, asset_out
 from .studios import assert_governance_access, owned_document
 
 router = APIRouter(prefix="/studios/v1", tags=["editing-resources"])
+
+
+def _study_guard(db, user, workspace_id):
+    if not get_settings().studio_visual_quality_indicator_enabled:
+        raise HTTPException(status_code=404, detail={"code": "visual_quality_indicator_disabled"})
+    assert_governance_access(db, user.id, workspace_id)
+
+
+@router.post("/workspaces/{workspace_id}/visual-study-comparisons", status_code=201)
+def create_visual_study_comparison(
+    workspace_id: str,
+    request: CreateVisualStudyComparisonV1,
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
+):
+    _study_guard(db, user, workspace_id)
+    from ..services.studios.visual_study import create
+
+    try:
+        return create(db, workspace_id, request, user)
+    except ValueError as error:
+        raise failure(db, error) from error
+
+
+@router.get("/workspaces/{workspace_id}/visual-study-comparisons/{session_id}")
+def get_visual_study_comparison(
+    workspace_id: str, session_id: str, db: Session = Depends(get_db), user: User = Depends(get_current_user)
+):
+    _study_guard(db, user, workspace_id)
+    from ..services.studios.visual_study import project
+
+    try:
+        return project(db, workspace_id, session_id)
+    except ValueError as error:
+        raise failure(db, error) from error
+
+
+@router.post("/workspaces/{workspace_id}/visual-study-comparisons/{session_id}/review")
+def review_visual_study_comparison(
+    workspace_id: str,
+    session_id: str,
+    request: VisualStudyComparisonReviewV1,
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
+):
+    _study_guard(db, user, workspace_id)
+    from ..services.studios.visual_study import review
+
+    try:
+        return review(db, workspace_id, session_id, request, user)
+    except ValueError as error:
+        raise failure(db, error) from error
 
 
 @router.get("/workspaces/{workspace_id}/visual-quality")
@@ -42,8 +95,10 @@ def get_visual_quality_program(
 
 @router.post("/documents/{document_id}/visual-quality-comparison")
 def review_visual_quality_comparison(
-    document_id: str, request: VisualComparisonReviewV1,
-    db: Session = Depends(get_db), user: User = Depends(get_current_user),
+    document_id: str,
+    request: VisualComparisonReviewV1,
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
 ):
     if not get_settings().studio_visual_quality_indicator_enabled:
         raise HTTPException(status_code=404, detail={"code": "visual_quality_indicator_disabled"})

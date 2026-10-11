@@ -30,6 +30,8 @@ import {
 import { useVideoStudio } from "./useVideoStudio";
 import { NaturalSoundPanel } from "./NaturalSoundPanel";
 import { ContextualEditingPanel } from "./ContextualEditingPanel";
+import { EditorInspectionPanel } from "./EditorInspectionPanel";
+import { CanonicalLayerTimeline, type LayerSelection } from "./CanonicalLayerTimeline";
 import { EditorialReviewPanel, type EditorialGateState } from "./EditorialReviewPanel";
 import { useNaturalSoundPreview } from "./useNaturalSoundPreview";
 import {
@@ -109,6 +111,7 @@ export function VideoStudio({
   const [playing, setPlaying] = React.useState(false);
   const [playheadFrame, setPlayheadFrame] = React.useState(0);
   const [selectedClipId, setSelectedClipId] = React.useState<string>();
+  const [layerSelection, setLayerSelection] = React.useState<LayerSelection>();
   const [selectedCreativeCaseId, setSelectedCreativeCaseId] = React.useState<string>();
   const [assistantDecisions, setAssistantDecisions] = React.useState<Record<string, "accept" | "reject" | "adjust">>({});
   const [assistantAdjustment, setAssistantAdjustment] = React.useState("");
@@ -123,6 +126,12 @@ export function VideoStudio({
   const [inspector, setInspector] = React.useState<
     "preproduction" | "editorial" | "assistant" | "factory" | "captions" | "cuts" | "brand" | "sound" | "render"
   >("captions");
+  const directionScope = `${data.activeWorkspace?.id ?? "demo"}/${postId}/${studio.document?.documentId ?? "draft"}`;
+  const [openedDirectionScope, setOpenedDirectionScope] = React.useState<string>();
+  React.useEffect(() => {
+    if (inspector === "editorial") setOpenedDirectionScope(directionScope);
+  }, [inspector, directionScope]);
+  const directionPanelMounted = inspector === "editorial" || openedDirectionScope === directionScope;
   const [editorialGate, setEditorialGate] = React.useState<EditorialGateState>();
   const editorialRenderBlocked = Boolean(!demo && studio.document && (
     editorialGate?.documentId !== studio.document.documentId ||
@@ -248,8 +257,10 @@ export function VideoStudio({
   }, [studio.waveform]);
   const renderResult = studio.renderJob?.result as
     | {
+        documentId?: string;
         documentRevision?: number;
         documentVersion?: number;
+        providerVersion?: string;
         artifact?: { assetId?: string; checksumSha256?: string };
         renderedLayerIds?: string[];
         renderedCaptionTrackIds?: string[];
@@ -270,9 +281,15 @@ export function VideoStudio({
     | undefined;
   const renderReady =
     studio.renderJob?.status === "succeeded" &&
+    renderResult?.documentId === studio.document?.documentId &&
     renderResult?.documentRevision === studio.document?.revision &&
     renderResult?.documentVersion === studio.document?.version &&
+    !!renderResult?.artifact?.checksumSha256 &&
     renderResult?.qualityEvaluation?.status === "passed";
+  const compositionPreview = !demo && !!(studio.document?.composition.narrative?.contextualPlanId || studio.renderJob);
+  const canonicalLayerTimeline = !demo && !!studio.document?.composition.narrative?.contextualPlanId;
+  const compositionPreviewUrl = renderReady && !draftTimeline ? studio.renderPreviewUrl : undefined;
+  const inspectedPlayerRef = React.useRef<HTMLVideoElement>(null);
   const boundCreativeCaseId = studio.document?.composition.narrative?.creativeCaseId as
     | string
     | undefined;
@@ -365,6 +382,12 @@ export function VideoStudio({
       ? studio.previewUrlsByAssetId[activeSourceClip.assetId]
       : undefined) ||
     studio.previewUrl;
+  const stagePreviewUrl = compositionPreview ? compositionPreviewUrl : previewUrl;
+
+  React.useEffect(() => {
+    setPlaying(false);
+    soundPreview.stop();
+  }, [stagePreviewUrl]);
   const selectedSourceClip = sourceClips.find((clip) => clip.id === selectedClipId);
   const selectedAudioClip = originalAudioTracks
     .flatMap((track) => track.clips ?? [])
@@ -393,9 +416,13 @@ export function VideoStudio({
   const seekFrame = React.useCallback(
     (frame: number) => {
       soundPreview.stop();
-      const bounded = Math.max(0, Math.min(durationFrames, Math.round(frame)));
+      const bounded = Math.max(0, Math.min(compositionPreview ? durationFrames - 1 : durationFrames, Math.round(frame)));
       setPlayheadFrame(bounded);
       if (!playerRef.current) return;
+      if (compositionPreview) {
+        playerRef.current.currentTime = bounded * timelineRate.denominator / timelineRate.numerator;
+        return;
+      }
       if (displayTimeline && sourceClips.length) {
         try {
           const sourceMicroseconds = timelineFrameToSourceMicroseconds(
@@ -424,6 +451,7 @@ export function VideoStudio({
     },
     [
       displayTimeline,
+      compositionPreview,
       durationFrames,
       representationSeconds,
       sourceClips,
@@ -439,9 +467,11 @@ export function VideoStudio({
     if (soundPreview.state === "loading") { soundPreview.cancel(); return; }
     if (player.paused) {
       renderedPlayerRef.current?.pause();
-      if (playheadFrame >= durationFrames) seekFrame(0);
-      else seekFrame(playheadFrame);
-      if (!await soundPreview.prepare()) return;
+      inspectedPlayerRef.current?.pause();
+      if (player.ended || playheadFrame >= durationFrames) seekFrame(0);
+      else if (!compositionPreview || Math.abs(player.currentTime - playheadFrame * timelineRate.denominator / timelineRate.numerator) > 0.000001)
+        seekFrame(playheadFrame);
+      if (!compositionPreview && !await soundPreview.prepare()) return;
       try { await player.play(); }
       catch { soundPreview.cancel(); announce("O navegador não reproduziu o preview. Tente novamente."); }
     }
@@ -461,17 +491,17 @@ export function VideoStudio({
       if (player.paused || player.seeking || player.ended || player.readyState < 3) soundPreview.stop();
       else soundPreview.sync(seconds);
     };
-    if (!displayTimeline || !sourceClips.length) {
+    if (compositionPreview || !displayTimeline || !sourceClips.length) {
       setPlayheadFrame(
         Math.min(
-          durationFrames,
+          compositionPreview ? durationFrames - 1 : durationFrames,
           timelineMicrosecondsToFrame(
             Math.round(player.currentTime * 1_000_000),
             timelineRate,
           ),
         ),
       );
-      syncSound(player.currentTime);
+      if (!compositionPreview) syncSound(player.currentTime);
       return;
     }
     const activeIndex = Math.max(
@@ -849,7 +879,7 @@ export function VideoStudio({
         waveform: "Extraindo forma de onda; fala e música não são avaliadas aqui",
         "natural-sound": "Analisando e salvando som candidato",
         "natural-sound-undo": "Desfazendo o último ajuste de som",
-        render: "Enfileirando render",
+        render: "Processando pedido de render",
         version: "Criando checkpoint",
         review: "Fixando versão para revisão",
       }[studio.operation] || studio.operation
@@ -858,7 +888,7 @@ export function VideoStudio({
   return (
     <section
       className="vs-shell"
-      aria-label="Video Studio UGC"
+      aria-label={canonicalLayerTimeline ? "Video Studio de composição" : "Video Studio UGC"}
       onClickCapture={captureExperienceAction}
     >
       <header className="vs-topbar">
@@ -873,14 +903,16 @@ export function VideoStudio({
           <span className="vs-lab-mark"><Film size={16} /></span>
           <div>
             <h1>{title}</h1>
-            <p>Video Studio · UGC assistido · 9:16</p>
+            <p>{canonicalLayerTimeline ? `Video Studio · Composição · ${pageWidth} × ${pageHeight}` : "Video Studio · UGC assistido · 9:16"}</p>
           </div>
         </div>
         <div className="vs-health" data-state={studio.error ? "error" : "ok"}>
           <span />
           {demo
             ? "Modo demonstração · sem persistência"
-            : operationLabel || studio.error || statusLabel(studio.ingest?.status)}
+            : operationLabel || studio.error || (studio.status === "loading" ? "Carregando projeto" : canonicalLayerTimeline
+              ? renderReady ? "MP4 pronto para revisão" : studio.renderJob ? statusLabel(studio.renderJob.status) : "Composição pronta para render"
+              : statusLabel(studio.ingest?.status))}
         </div>
         <button
           className="vs-quiet"
@@ -942,32 +974,43 @@ export function VideoStudio({
           {(studio.document?.assets?.length ? studio.document.assets : [undefined]).map((reference: AnyRecord | undefined, index: number) => {
             const mediaUrl = reference?.id ? studio.previewUrlsByAssetId[reference.id] : previewUrl;
             const usedByActiveClip = reference?.id && activeSourceClip?.assetId === reference.id;
+            const mediaType = String(reference?.mediaType ?? "").split(";", 1)[0].trim().toLowerCase();
+            const isVideo = !reference || mediaType.startsWith("video/");
+            const isImage = mediaType.startsWith("image/");
+            const isFont = mediaType.startsWith("font/") || /^application\/(?:x-)?font/.test(mediaType)
+              || mediaType === "application/vnd.ms-opentype";
+            const mediaLabel = isVideo ? "Vídeo" : isImage ? "Imagem" : isFont ? "Fonte tipográfica"
+              : mediaType.startsWith("audio/") ? "Áudio" : "Arquivo";
             return (
-              <article key={reference?.id ?? "empty"} className={`vs-media-card ${usedByActiveClip || (!reference && previewUrl) ? "is-active" : ""}`}>
+              <article key={reference?.id ?? "empty"} data-asset-id={reference?.id} data-media-type={reference?.mediaType}
+                className={`vs-media-card ${usedByActiveClip || (!reference && previewUrl) ? "is-active" : ""}`}>
                 <div className="vs-media-thumb">
-                  {mediaUrl ? (
+                  {mediaUrl && isVideo ? (
                     <video src={mediaUrl} muted preload="metadata" />
-                  ) : (
+                  ) : mediaUrl && isImage ? (
+                    <img src={mediaUrl} alt={reference?.provenance?.originalFilename || `Imagem ${index + 1}`} />
+                  ) : demo && isVideo ? (
                     <img src="/canonical/figma/phase2/s06-ugc.png" alt={reference ? "Take aguardando preview" : "Exemplo de take UGC"} />
-                  )}
-                  <span>{reference ? `FONTE ${index + 1}` : "EXEMPLO"}</span>
+                  ) : <span>{!reference ? "Adicione um material" : isFont ? "Aa"
+                    : isVideo ? "Prévia pendente" : isImage ? "Imagem sem prévia" : mediaLabel}</span>}
+                  <span>{reference ? mediaLabel.toUpperCase() : "EXEMPLO"}</span>
                 </div>
                 <div>
-                  <b>{reference?.provenance?.originalFilename || (reference ? `Take ${index + 1}` : "Seu primeiro take")}</b>
-                  <small>{reference?.rightsStatus === "verified" ? "direitos verificados" : "direitos pendentes"}</small>
+                  <b>{reference?.provenance?.originalFilename || (reference ? `${mediaLabel} ${index + 1}` : "Seu primeiro take")}</b>
+                  <small>{reference ? `${mediaLabel} · ` : ""}{reference?.rightsStatus === "verified" ? "direitos verificados" : "direitos pendentes"}</small>
                 </div>
               </article>
             );
           })}
 
-          <div className="vs-pipeline-card">
+          {!canonicalLayerTimeline && <div className="vs-pipeline-card">
             <p><span>1</span> Original privado <CheckCircle2 size={14} /></p>
             <p className={studio.ingest ? "is-current" : ""}><span>2</span> Probe técnico <i>{statusLabel(studio.ingest?.status)}</i></p>
             <p className={studio.ingest?.proxyAssetId ? "is-done" : ""}><span>3</span> Proxy + time-map <i>{studio.ingest?.proxyAssetId ? "validado" : "pendente"}</i></p>
             <p className={studio.ingest?.waveformAssetId ? "is-done" : ""}><span>4</span> Forma de onda <i>{studio.ingest?.waveformAssetId ? "extraída" : "pendente"}</i></p>
             <p className={studio.document ? "is-done" : ""}><span>5</span> CreativeDocument <i>{studio.document ? `r${studio.document.revision}` : "aguardando"}</i></p>
-          </div>
-          {!previewUrl && (
+          </div>}
+          {!previewUrl && !canonicalLayerTimeline && (
             <p className="vs-empty-guidance" role="status">
               Comece adicionando um take. O original ficará privado e todas as edições serão reversíveis.
             </p>
@@ -1006,11 +1049,11 @@ export function VideoStudio({
         <main className="vs-stage">
           <div className="vs-stage-toolbar">
             <div>
-              <button className="is-active" data-action-id="VIDEO-TOGGLE-PLAYBACK" disabled={!previewUrl} title={!previewUrl ? "Adicione um take para reproduzir" : "Ouvir a montagem salva"} onClick={() => void playOrPause()} aria-label={playbackLabel("Reproduzir preview", "Pausar preview")}><Video size={15} /> Preview</button>
+              <button className="is-active" data-action-id="VIDEO-TOGGLE-PLAYBACK" disabled={!stagePreviewUrl} title={!stagePreviewUrl ? (compositionPreview ? "Renderize a revisão atual para reproduzir" : "Adicione um take para reproduzir") : "Reproduzir a prévia"} onClick={() => void playOrPause()} aria-label={playbackLabel("Reproduzir preview", "Pausar preview")}><Video size={15} /> Preview</button>
               <button data-action-id="VIDEO-SELECT-INSPECTOR" onClick={() => setInspector("brand")}><Layers3 size={15} /> Composição</button>
             </div>
             <span>
-              1080 × 1920 · {(timelineRate.numerator / timelineRate.denominator).toFixed(
+              {pageWidth} × {pageHeight} · {(timelineRate.numerator / timelineRate.denominator).toFixed(
                 timelineRate.denominator === 1 ? 0 : 3,
               )} fps
             </span>
@@ -1018,12 +1061,15 @@ export function VideoStudio({
           </div>
           <div className="vs-canvas-wrap">
             <div className="vs-canvas-grid" />
-            <div className="vs-phone-frame">
-              {previewUrl ? (
+            <div className={`vs-phone-frame${compositionPreview ? " vs-composition-frame" : ""}`}
+              style={compositionPreview ? { "--composition-aspect": pageWidth / pageHeight } as React.CSSProperties : undefined}>
+              {stagePreviewUrl ? (
                 <video
                   ref={playerRef}
-                  src={previewUrl}
-                  muted={originalAudioMuted}
+                  key={stagePreviewUrl}
+                  src={stagePreviewUrl}
+                  aria-label={compositionPreview ? "MP4 da composição atual" : "Prévia do material"}
+                  muted={compositionPreview ? false : originalAudioMuted}
                   playsInline
                   onPlay={() => setPlaying(true)}
                   onPause={() => { setPlaying(false); soundPreview.stop(); }}
@@ -1033,15 +1079,16 @@ export function VideoStudio({
                   onEnded={() => { setPlaying(false); soundPreview.stop(); }}
                   onTimeUpdate={(event) => syncPlayerToTimeline(event.currentTarget)}
                   onLoadedMetadata={(event) => {
-                    if (!duration && Number.isFinite(event.currentTarget.duration))
+                    if (compositionPreview) seekFrame(playheadFrame);
+                    else if (!duration && Number.isFinite(event.currentTarget.duration))
                       setPlayheadFrame(0);
                   }}
                 />
-              ) : (
+              ) : demo ? (
                 <img src="/canonical/figma/phase2/s06-ugc.png" alt="Preview do anúncio UGC" />
-              )}
-              <div className="vs-safe-area" />
-              {!!previewCaption && (
+              ) : <p role="status">{compositionPreview ? `Prévia da revisão ${studio.document?.revision} pendente. Renderize esta revisão no painel Revisão.` : studio.document ? "Prévia do material pendente" : "Adicione um material para visualizar"}</p>}
+              {!compositionPreview && <div className="vs-safe-area" />}
+              {!compositionPreview && !!previewCaption && (
                 <div
                   className="vs-caption-preview"
                   style={{
@@ -1056,7 +1103,7 @@ export function VideoStudio({
                   {previewCaption}
                 </div>
               )}
-              {!!brandShapeLayer && (
+              {!compositionPreview && !!brandShapeLayer && (
                 <div
                   className="vs-brand-overlay"
                   style={{
@@ -1066,7 +1113,7 @@ export function VideoStudio({
                   }}
                 />
               )}
-              {!!brandTextLayer && (
+              {!compositionPreview && !!brandTextLayer && (
                 <div
                   className="vs-brand-text-overlay"
                   style={{
@@ -1079,20 +1126,20 @@ export function VideoStudio({
                   {brandTextLayer.properties?.text || "Conheça a marca"}
                 </div>
               )}
-              <button className="vs-play-center" data-action-id="VIDEO-TOGGLE-PLAYBACK" disabled={!previewUrl} title={!previewUrl ? "Adicione um take para reproduzir" : "Ouvir a montagem salva"} onClick={() => void playOrPause()} aria-label={playbackLabel("Reproduzir", "Pausar")}>
+              <button className="vs-play-center" data-action-id="VIDEO-TOGGLE-PLAYBACK" disabled={!stagePreviewUrl} title={!stagePreviewUrl ? "Prévia pendente" : "Reproduzir a prévia"} onClick={() => void playOrPause()} aria-label={playbackLabel("Reproduzir", "Pausar")}>
                 {playing ? <Pause /> : <Play />}
               </button>
             </div>
           </div>
           <div className="vs-player-controls">
-            <button data-action-id="VIDEO-TOGGLE-PLAYBACK" disabled={!previewUrl} title={!previewUrl ? "Adicione um take para reproduzir" : "Ouvir a montagem salva"} onClick={() => void playOrPause()} aria-label={playbackLabel("Reproduzir vídeo", "Pausar vídeo")}>{playing ? <Pause size={16} /> : <Play size={16} />}</button>
+            <button data-action-id="VIDEO-TOGGLE-PLAYBACK" disabled={!stagePreviewUrl} title={!stagePreviewUrl ? "Prévia pendente" : "Reproduzir a prévia"} onClick={() => void playOrPause()} aria-label={playbackLabel("Reproduzir vídeo", "Pausar vídeo")}>{playing ? <Pause size={16} /> : <Play size={16} />}</button>
             <span>{formatTime(currentTime)}</span>
             <input
               data-action-id="VIDEO-SEEK"
               aria-label="Posição do vídeo"
               type="range"
               min="0"
-              max={Math.max(duration, 0.1)}
+              max={compositionPreview ? Math.max(0, (durationFrames - 1) * timelineRate.denominator / timelineRate.numerator) : Math.max(duration, 0.1)}
               step={timelineRate.denominator / timelineRate.numerator}
               value={Math.min(currentTime, Math.max(duration, 0.1))}
               onChange={(event) => seek(Number(event.target.value))}
@@ -1100,11 +1147,14 @@ export function VideoStudio({
             <span>{formatTime(duration)}</span>
           </div>
           <p className="vs-audio-preview-status" role={soundPreview.error ? "alert" : "status"}>
-            {soundPreview.error ? `${soundPreview.error} Tente reproduzir novamente ou confira o MP4 em Saída.`
+            {compositionPreview ? compositionPreviewUrl
+              ? `MP4 da revisão ${renderResult?.documentRevision} · ${pageWidth} × ${pageHeight} · renderer ${renderResult?.providerVersion ?? "não informado"} · SHA-256 ${renderResult?.artifact?.checksumSha256}. Áudio já materializado; avaliação humana pendente.`
+              : `A revisão ${studio.document?.revision} ainda precisa de render. A prévia anterior não representa esta edição.`
+              : soundPreview.error ? `${soundPreview.error} Tente reproduzir novamente ou confira o MP4 em Saída.`
               : soundPreview.state === "loading" ? "Carregando e verificando os sons privados. Clique em cancelar para interromper."
               : naturalSoundClips.some((clip) => clip.enabled !== false)
-                ? "Preview com sons da edição salva. Escuta e direitos pendentes; confira o MP4 final em Saída."
-                : "Preview da montagem. Adicione sons naturais na aba Sons; sem geração de voz."}
+                ? "Prévia de material e sons da edição salva, com aproximação de legendas e marca. Escuta e direitos pendentes; confira o MP4 final em Saída."
+                : "Prévia de material com aproximação de legendas e marca. A composição final depende do render."}
           </p>
         </main>
 
@@ -1134,12 +1184,27 @@ export function VideoStudio({
           </div>
 
           <div className="vs-inspector-body" hidden={inspector !== "editorial"}
-            key={`${studio.document?.documentId}:${studio.document?.revision}`}>
-            <ContextualEditingPanel document={studio.document} disabled={demo || studio.status === "working"}
+            key={studio.document?.documentId}>
+            {studio.document?.composition.narrative?.contextualPlanId && <EditorInspectionPanel
+              document={studio.document} frame={playheadFrame} active={inspector === "editorial"}
+              selectionRequest={layerSelection}
+              playbackRef={inspectedPlayerRef} onPreviewPlay={() => { playerRef.current?.pause(); renderedPlayerRef.current?.pause(); soundPreview.cancel(); }}
+              disabled={demo || studio.status === "working"} onSeek={seekFrame} onChanged={studio.refresh}
+              render={{ documentId: renderResult?.documentId, documentRevision: renderResult?.documentRevision,
+                documentVersion: renderResult?.documentVersion, providerVersion: renderResult?.providerVersion,
+                checksum: renderResult?.artifact?.checksumSha256, url: studio.renderPreviewUrl }}
               onRender={async (document, planId) => {
                 await studio.renderContextual(document, planId);
                 setInspector("render");
-              }} />
+              }} />}
+          </div>
+          <div className="vs-inspector-body" hidden={inspector !== "editorial"}
+            key={`${studio.document?.documentId}:${studio.document?.revision}`}>
+            {directionPanelMounted && <ContextualEditingPanel document={studio.document} disabled={demo || studio.status === "working"}
+              onRender={async (document, planId) => {
+                await studio.renderContextual(document, planId);
+                setInspector("render");
+              }} />}
             <EditorialReviewPanel
               document={studio.document} disabled={demo || studio.status === "working"}
               active={inspector === "editorial"} onGateChange={setEditorialGate} />
@@ -1450,9 +1515,11 @@ export function VideoStudio({
           {inspector === "render" && (
             <div className="vs-inspector-body">
               <small className="vs-step">ETAPA 06 · WORKER ISOLADO</small>
-              <h2>Render vertical</h2>
-              <p>O renderer FFmpeg recompõe os source ranges e materializa as legendas e camadas versionadas. O áudio do take continua não verificado: encode e waveform não comprovam ausência de voz ou música.</p>
-              <div className="vs-audit-note">
+              <h2>{canonicalLayerTimeline ? "Render da composição" : "Render vertical"}</h2>
+              <p>{canonicalLayerTimeline
+                ? "Renderize as camadas, movimentos e áudio do plano associado. A saída usa a revisão atual e precisa de avaliação visual."
+                : "O renderer FFmpeg recompõe os source ranges e materializa as legendas e camadas versionadas. O áudio do take continua não verificado: encode e waveform não comprovam ausência de voz ou música."}</p>
+              {!canonicalLayerTimeline && <><div className="vs-audit-note">
                 <b>Perfil vigente: foley natural + legenda</b>
                 <span>{originalAudioMuted
                   ? "Som original removido. Confira o som natural no MP4 renderizado; o mix continua pendente de revisão."
@@ -1471,12 +1538,13 @@ export function VideoStudio({
                 )}
               >
                 <AudioLines size={15} /> {originalAudioMuted ? "Restaurar som original" : "Remover som original"}
-              </button>
+              </button></>}
               <dl className="vs-render-spec">
                 <div><dt>Formato</dt><dd>MP4 · H.264/AAC</dd></div>
-                <div><dt>Canvas</dt><dd>1080 × 1920</dd></div>
+                <div><dt>Canvas</dt><dd>{pageWidth} × {pageHeight}</dd></div>
+                <div><dt>Qualidade da próxima saída</dt><dd>{canonicalLayerTimeline ? "Alta" : "Rascunho"}</dd></div>
                 <div><dt>Fila</dt><dd>media_cpu</dd></div>
-                <div><dt>Provider</dt><dd>builtin.ffmpeg-ugc-v1</dd></div>
+                <div><dt>Provider do último job</dt><dd>{studio.renderJob?.provider ?? "pendente"}</dd></div>
                 <div><dt>Custo</dt><dd>Não medido neste worker</dd></div>
               </dl>
               <button
@@ -1491,10 +1559,16 @@ export function VideoStudio({
                   )
                 }
               >
-                <Film size={16} /> Renderizar prova privada
+                <Film size={16} /> {studio.operation === "render" ? "Processando render" : "Renderizar prova privada"}
               </button>
               {editorialRenderBlocked && <p role="status">Consulte a aba Revisão: a prontidão editorial está pendente ou bloqueada.</p>}
-              {studio.job && (
+              {studio.operation === "render" && (
+                <article className="vs-job-card" aria-live="polite">
+                  <header><LoaderCircle size={16} /><b>Pedido de render em andamento</b></header>
+                  <p>Aguardando a resposta do servidor. A saída anterior permanece disponível abaixo.</p>
+                </article>
+              )}
+              {studio.operation !== "render" && studio.job && (
                 <article className="vs-job-card" aria-live="polite">
                   <header><span className={`is-${studio.job.status}`} /> <b>{statusLabel(studio.job.status)}</b><small>{studio.job.progress}%</small></header>
                   <div><i style={{ width: `${studio.job.progress}%` }} /></div>
@@ -1509,8 +1583,8 @@ export function VideoStudio({
               )}
               {studio.renderPreviewUrl && renderResult?.artifact && (
                 <article className="vs-render-artifact">
-                  <b>{renderReady ? "Prova privada vinculável" : "Prova de uma revisão anterior ou com QC pendente"}</b>
-                  <video ref={renderedPlayerRef} className="vs-rendered-player" controls preload="metadata" src={studio.renderPreviewUrl} aria-label="MP4 renderizado com o mix de áudio" onPlay={() => soundPreview.cancel()} />
+                  <b>{studio.operation === "render" ? "Último MP4 concluído · novo render em andamento" : renderReady ? "Prova privada vinculável" : "Prova de uma revisão anterior ou com QC pendente"}</b>
+                  <video ref={renderedPlayerRef} className="vs-rendered-player" controls preload="metadata" src={studio.renderPreviewUrl} aria-label="MP4 renderizado com o mix de áudio" onPlay={() => { playerRef.current?.pause(); inspectedPlayerRef.current?.pause(); soundPreview.cancel(); }} />
                   {renderResult.warnings?.includes("ffmpeg_ugc_natural_sound_review_pending") && <span>Som externo materializado · origem e escuta pendentes</span>}
                   {renderResult.warnings?.includes("ffmpeg_ugc_original_audio_muted") && (
                     <span>Prova sem som original · não é mix natural aprovado</span>
@@ -1550,6 +1624,14 @@ export function VideoStudio({
               <span>{studio.error}</span>
             </div>
           )}
+          {!demo && studio.supportLoading && <p role="status">Carregando repertório e auditorias de apoio…</p>}
+          {!demo && studio.supportWarnings.length > 0 && (
+            <div className="vs-error-box" role="status">
+              <b>Dados de apoio indisponíveis</b>
+              <span>O projeto permanece disponível. Use Atualizar mídias para tentar as consultas novamente.</span>
+              <ul>{studio.supportWarnings.map(message => <li key={message}>{message}</li>)}</ul>
+            </div>
+          )}
         </aside>
       </div>
 
@@ -1557,17 +1639,22 @@ export function VideoStudio({
         <div className="vs-timeline-head">
           <div><b>Timeline</b><span>OpenCut como referência de UX · CreativeDocument como fonte de verdade</span></div>
           <div>
+            {!canonicalLayerTimeline && <>
             <button aria-label="Desfazer edição da timeline" disabled={!studio.canUndoTimeline || studio.status === "working"} onClick={() => void studio.undoTimeline()}><Undo2 size={14} /></button>
             <button aria-label="Refazer edição da timeline" disabled={!studio.canRedoTimeline || studio.status === "working"} onClick={() => void studio.redoTimeline()}><Redo2 size={14} /></button>
             <button aria-label="Dividir take no playhead" disabled={!selectedClipId || studio.status === "working"} onClick={splitSelectedClip}><Scissors size={14} /></button>
             <button aria-label="Diminuir zoom da timeline" disabled={timelineZoom <= 1} onClick={() => setTimelineZoom((value) => Math.max(1, value - 0.5))}><ZoomOut size={14} /></button>
             <button aria-label="Aumentar zoom da timeline" disabled={timelineZoom >= 4} onClick={() => setTimelineZoom((value) => Math.min(4, value + 0.5))}><ZoomIn size={14} /></button>
             <button aria-label="Abrir ajustes de corte" data-action-id="VIDEO-SELECT-INSPECTOR" onClick={() => setInspector("cuts")}><SlidersHorizontal size={14} /></button>
+            </>}
             <button aria-label="Importar outro arquivo" data-action-id="VIDEO-UPLOAD-SOURCE" onClick={() => inputRef.current?.click()}><Upload size={14} /></button>
             <span>{timelineZoom.toFixed(1)}× · {formatTime(currentTime)} / {formatTime(duration)}</span>
           </div>
         </div>
-        <div className={`vs-timeline-grid ${naturalSoundClips.length ? "has-natural-sound" : ""}`}>
+        {canonicalLayerTimeline && studio.document ? <CanonicalLayerTimeline
+          document={studio.document} frame={playheadFrame} onSeek={seekFrame}
+          onSelect={(layerId, sceneId) => { setInspector("editorial"); setLayerSelection({ layerId, sceneId, nonce: Date.now() }); }}
+        /> : <div className={`vs-timeline-grid ${naturalSoundClips.length ? "has-natural-sound" : ""}`}>
           <div className="vs-track-labels">
             <span>Régua</span><span><Video size={13} /> Vídeo</span><span><AudioLines size={13} /> {originalAudioMuted ? "Original mudo" : "Original"}</span>
             {!!naturalSoundClips.length && <span><AudioLines size={13} /> Som natural</span>}
@@ -1592,7 +1679,7 @@ export function VideoStudio({
               {Array.from({ length: 8 }, (_, index) => <i key={index}>{formatTime((duration / 7) * index)}</i>)}
             </div>
             <div className="vs-track vs-video-track">
-              {(videoTracks[0]?.clips?.length ? videoTracks[0].clips : [{ id: "demo", timeline: { startFrame: 0, durationFrames: 100 } }]).map((clip: AnyRecord, index: number) => (
+              {(videoTracks[0]?.clips?.length ? videoTracks[0].clips : demo ? [{ id: "demo", timeline: { startFrame: 0, durationFrames: 100 } }] : []).map((clip: AnyRecord, index: number) => (
                 <div
                   key={clip.id}
                   className={`vs-video-clip ${selectedClipId === clip.id ? "is-selected" : ""}`}
@@ -1705,7 +1792,7 @@ export function VideoStudio({
             ><i /></button>
           </div>
           </div>
-        </div>
+        </div>}
       </footer>
 
       {studio.status === "working" && (

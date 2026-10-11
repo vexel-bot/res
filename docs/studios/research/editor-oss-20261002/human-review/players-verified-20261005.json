@@ -1,0 +1,77 @@
+{
+  "scope": "Public file page metadata only; no full audiovisual or human quality approval",
+  "players": [
+    {
+      "duration": 15,
+      "error": null,
+      "height": 1920,
+      "readyState": 4,
+      "src": "file:///C:/Users/edugu/Downloads/res/docs/studios/research/editor-oss-20261002/human-review/organization/A.mp4",
+      "width": 1080
+    },
+    {
+      "duration": 15,
+      "error": null,
+      "height": 1920,
+      "readyState": 4,
+      "src": "file:///C:/Users/edugu/Downloads/res/docs/studios/research/editor-oss-20261002/human-review/organization/B.mp4",
+      "width": 1080
+    },
+    {
+      "duration": 15,
+      "error": null,
+      "height": 1920,
+      "readyState": 4,
+      "src": "file:///C:/Users/edugu/Downloads/res/docs/studios/research/editor-oss-20261002/human-review/organization/C.mp4",
+      "width": 1080
+    },
+    {
+      "duration": 15,
+      "error": null,
+      "height": 1920,
+      "readyState": 4,
+      "src": "file:///C:/Users/edugu/Downloads/res/docs/studios/research/editor-oss-20261002/human-review/comparison/A.mp4",
+      "width": 1080
+    },
+    {
+      "duration": 15,
+      "error": null,
+      "height": 1920,
+      "readyState": 4,
+      "src": "file:///C:/Users/edugu/Downloads/res/docs/studios/research/editor-oss-20261002/human-review/comparison/B.mp4",
+      "width": 1080
+    },
+    {
+      "duration": 15,
+      "error": null,
+      "height": 1920,
+      "readyState": 4,
+      "src": "file:///C:/Users/edugu/Downloads/res/docs/studios/research/editor-oss-20261002/human-review/comparison/C.mp4",
+      "width": 1080
+    },
+    {
+      "duration": 15,
+      "error": null,
+      "height": 1920,
+      "readyState": 4,
+      "src": "file:///C:/Users/edugu/Downloads/res/docs/studios/research/editor-oss-20261002/human-review/interface/A.mp4",
+      "width": 1080
+    },
+    {
+      "duration": 15,
+      "error": null,
+      "height": 1920,
+      "readyState": 4,
+      "src": "file:///C:/Users/edugu/Downloads/res/docs/studios/research/editor-oss-20261002/human-review/interface/B.mp4",
+      "width": 1080
+    },
+    {
+      "duration": 15,
+      "error": null,
+      "height": 1920,
+      "readyState": 4,
+      "src": "file:///C:/Users/edugu/Downloads/res/docs/studios/research/editor-oss-20261002/human-review/interface/C.mp4",
+      "width": 1080
+    }
+  ]
+}

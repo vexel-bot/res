@@ -4,12 +4,13 @@ from __future__ import annotations
 
 from typing import Literal
 
-from pydantic import Field, model_validator
+from pydantic import Field, model_serializer, model_validator
 
 from .cinematic_direction import CinematicArtDirectionV1, CinematicShotIntentV1
 from .contextual_editing import ContextualEditPlanV1, EditingIntentV1
 from .contracts import FrameRateV1, StudioContract
 from .motion import PROPERTY_UNITS, MotionGraphV1, MotionKeyframeV1, MotionProperty
+from .motion_recipes import MotionRecipeV1
 from .native_scenes import NATIVE_COMPONENTS, NativeSceneComponentV1
 
 ID = r"^[A-Za-z0-9][A-Za-z0-9._-]{0,79}$"
@@ -440,9 +441,7 @@ class EditorialMaterialV2(StudioContract):
     purpose: str = Field(min_length=1, max_length=1000)
     required: bool = True
     official_required: bool = False
-    source_class: Literal[
-        "auto", "project", "catalog", "licensed_stock", "brand_asset", "generated_original"
-    ] = "auto"
+    source_class: Literal["auto", "project", "catalog", "licensed_stock", "brand_asset", "generated_original"] = "auto"
     visual_description: str = Field(default="", max_length=2000)
     entity: str = Field(default="", max_length=500)
     action: str = Field(default="", max_length=500)
@@ -508,9 +507,7 @@ class EditorialCompositionV1(StudioContract):
     repeat_count: int = Field(default=3, ge=2, le=8)
     focus_scale: float = Field(default=1.08, ge=1, le=1.2)
     continuity_key: str | None = Field(default=None, pattern=ID)
-    viewport_formats: list[Literal["portrait", "square", "landscape"]] = Field(
-        default_factory=list, max_length=8
-    )
+    viewport_formats: list[Literal["portrait", "square", "landscape"]] = Field(default_factory=list, max_length=8)
     interface_events: list[Literal["insert", "pass", "select", "scroll", "open", "reorganize"]] = Field(
         default_factory=list, max_length=8
     )
@@ -552,6 +549,7 @@ class EditorialSceneV2(StudioContract):
     purpose: str = Field(min_length=1, max_length=2000)
     duration_frames: int = Field(ge=2, le=108000)
     native_components: list[NativeSceneComponentV1] = Field(default_factory=list, max_length=20)
+    motion_recipes: list[MotionRecipeV1] = Field(default_factory=list, max_length=30)
     facts: list[str] = Field(default_factory=list, max_length=100)
     narration: str = Field(default="", max_length=10000)
     background: str = Field(default="#10181c", pattern=COLOR)
@@ -572,14 +570,56 @@ class EditorialSceneV2(StudioContract):
     semantic_assertions: list[EditorialSemanticAssertionV1] = Field(default_factory=list, max_length=30)
     shot_plan: list[CinematicShotIntentV1] = Field(default_factory=list, max_length=12)
 
+    @model_serializer(mode="wrap")
+    def preserve_legacy_shape(self, handler):
+        value = handler(self)
+        if not self.motion_recipes:
+            value.pop("motionRecipes", None)
+            value.pop("motion_recipes", None)
+        return value
+
     @model_validator(mode="after")
     def references(self):
+        indexed_targets = {element.id: element for element in self.elements}
+        audio_targets = {audio.id for audio in self.audio}
+        if len({recipe.id for recipe in self.motion_recipes}) != len(self.motion_recipes):
+            raise ValueError("motion_recipe_duplicate")
+        for recipe in self.motion_recipes:
+            if recipe.end_frame_exclusive > self.duration_frames:
+                raise ValueError("motion_recipe_scene_interval_invalid")
+            targets = [*recipe.target_ids, *(track.target_id for track in recipe.parameters.tracks)]
+            targets += [
+                value for value in (recipe.parameters.parent_target_id, recipe.parameters.occluder_target_id) if value
+            ]
+            if recipe.parameters.asset_matte:
+                targets.append(recipe.parameters.asset_matte.source_target_id)
+            if any(target not in indexed_targets for target in targets):
+                raise ValueError("motion_recipe_scene_target_missing")
+            for target_id in [*recipe.target_ids, *([recipe.parameters.asset_matte.source_target_id]
+                              if recipe.parameters.asset_matte else [])]:
+                target = indexed_targets[target_id]
+                if (
+                    recipe.start_frame < target.start_frame
+                    or recipe.end_frame_exclusive > target.start_frame + target.duration_frames
+                ):
+                    raise ValueError("motion_recipe_target_interval_invalid")
+            if any(
+                event.audio_id not in audio_targets or event.target_id not in indexed_targets
+                for event in recipe.sound_events
+            ):
+                raise ValueError("motion_recipe_sound_target_missing")
+            if recipe.technique == "action_sound_cut" and not self.shot_plan:
+                raise ValueError("motion_recipe_action_shot_plan_required")
         native_targets = set()
         native_index = {element.id: element for element in self.elements}
         for component in self.native_components:
             for target in component.target_ids:
                 element = native_index.get(target)
-                if target in native_targets or element is None or element.kind not in NATIVE_COMPONENTS[component.component]["kinds"]:
+                if (
+                    target in native_targets
+                    or element is None
+                    or element.kind not in NATIVE_COMPONENTS[component.component]["kinds"]
+                ):
                     raise ValueError("editing_native_component_target_invalid")
                 if component.entrance_frames > element.duration_frames:
                     raise ValueError("editing_native_component_timing_invalid")
@@ -598,20 +638,29 @@ class EditorialSceneV2(StudioContract):
                 if (base.start_frame, base.duration_frames) != (variant.start_frame, variant.duration_frames):
                     raise ValueError("editing_native_variant_timing_mismatch")
                 if (base.object_fit, base.region_of_interest, base.crop_intentional) != (
-                    variant.object_fit, variant.region_of_interest, variant.crop_intentional
-                ) or (base.kind == "video" and (
-                    base.source_start_seconds, base.playback_rate
-                ) != (variant.source_start_seconds, variant.playback_rate)):
+                    variant.object_fit,
+                    variant.region_of_interest,
+                    variant.crop_intentional,
+                ) or (
+                    base.kind == "video"
+                    and (base.source_start_seconds, base.playback_rate)
+                    != (variant.source_start_seconds, variant.playback_rate)
+                ):
                     raise ValueError("editing_native_variant_registration_mismatch")
                 if component.switch_frame >= variant.duration_frames:
                     raise ValueError("editing_native_variant_switch_out_of_range")
                 if component.component == "gesture_occlusion_reveal":
                     occluder = native_index.get(component.occluder_target_id)
-                    if (not occluder or occluder.kind not in {"image", "video"}
-                            or occluder.z_index <= variant.z_index or not occluder.mask_asset_id):
+                    if (
+                        not occluder
+                        or occluder.kind not in {"image", "video"}
+                        or occluder.z_index <= variant.z_index
+                        or not occluder.mask_asset_id
+                    ):
                         raise ValueError("editing_native_occluder_layer_invalid")
                     if occluder.visual_role != variant.visual_role or not (
-                        occluder.start_frame <= variant.start_frame + component.switch_frame
+                        occluder.start_frame
+                        <= variant.start_frame + component.switch_frame
                         < occluder.start_frame + occluder.duration_frames
                     ):
                         raise ValueError("editing_native_occluder_timing_invalid")
@@ -624,7 +673,10 @@ class EditorialSceneV2(StudioContract):
                 target not in native_index for target in binding.target_ids
             ):
                 raise ValueError("editing_operation_binding_target_invalid")
-        if any(element.playback_rate != 1 and (element.kind != "video" or element.id not in native_targets) for element in self.elements):
+        if any(
+            element.playback_rate != 1 and (element.kind != "video" or element.id not in native_targets)
+            for element in self.elements
+        ):
             raise ValueError("editing_native_speed_requires_video_component")
         if self.entrance != "cut" and self.transition_frames >= self.duration_frames:
             raise ValueError("editing_v2_transition_out_of_scene")
@@ -673,12 +725,19 @@ class EditorialSceneV2(StudioContract):
             raise ValueError("editing_v2_camera_out_of_range")
         if any(c.target_id and c.target_id not in indexed for c in self.camera_cues):
             raise ValueError("editing_v2_camera_target_missing")
-        if sum(element.visual_role == "hero" for element in self.elements) > 1:
-            raise ValueError("editing_v2_multiple_heroes")
-        if any(
-            c.target_id and indexed[c.target_id].visual_role not in {"hero", "support"}
-            for c in self.camera_cues
-        ):
+        heroes = [element for element in self.elements if element.visual_role == "hero"]
+        for i, left in enumerate(heroes):
+            for right in heroes[i + 1 :]:
+                if (
+                    left.parent_id
+                    or right.parent_id
+                    or left.after_element_id
+                    or right.after_element_id
+                    or max(left.start_frame, right.start_frame)
+                    < min(left.start_frame + left.duration_frames, right.start_frame + right.duration_frames)
+                ):
+                    raise ValueError("editing_v2_multiple_heroes")
+        if any(c.target_id and indexed[c.target_id].visual_role not in {"hero", "support"} for c in self.camera_cues):
             raise ValueError("editing_v2_camera_target_role_invalid")
         if any(c.start_frame + c.duration_frames > self.duration_frames for c in self.keyword_cues):
             raise ValueError("editing_v2_keyword_out_of_range")
@@ -691,11 +750,7 @@ class EditorialSceneV2(StudioContract):
             self.visual_states, key=lambda state: (state.frame, phase_order[state.phase], state.id)
         ):
             raise ValueError("editing_v2_visual_states_must_be_ordered")
-        if any(
-            target not in indexed
-            for state in self.visual_states
-            for target in state.essential_element_ids
-        ):
+        if any(target not in indexed for state in self.visual_states for target in state.essential_element_ids):
             raise ValueError("editing_v2_visual_state_target_missing")
         if len({cue.id for cue in self.observation_cues}) != len(self.observation_cues):
             raise ValueError("editing_v2_observation_ids_duplicate")
@@ -719,9 +774,7 @@ class EditorialSceneV2(StudioContract):
                 for left, right in zip(ordered_shots, ordered_shots[1:], strict=False)
             ):
                 raise ValueError("editing_v2_shot_intervals_must_be_contiguous")
-            requirement_ids = {
-                need.blueprint_requirement_id or need.id for need in self.material_needs
-            }
+            requirement_ids = {need.blueprint_requirement_id or need.id for need in self.material_needs}
             component_ids = {
                 *self.technique_ids,
                 *(composition.family for composition in self.compositions),
@@ -733,9 +786,7 @@ class EditorialSceneV2(StudioContract):
             ):
                 raise ValueError("editing_v2_shot_material_requirement_missing")
             if any(
-                component not in component_ids
-                for shot in self.shot_plan
-                for component in shot.execution_component_ids
+                component not in component_ids for shot in self.shot_plan for component in shot.execution_component_ids
             ):
                 raise ValueError("editing_v2_shot_component_missing")
         if any(target not in indexed for cue in self.observation_cues for target in cue.target_ids):
@@ -761,11 +812,13 @@ class EditorialSceneV2(StudioContract):
 
 
 class ContextualPlanRequestV2(StudioContract):
+    visual_study_language: Literal["motion_graphics", "interface_capture"] | None = None
+    visual_study_variant: Literal["a", "b", "control"] | None = None
+    render_engine: Literal["current", "alight_motion"] = "current"
+    engine_profile: Literal["action_product", "kinetic_type", "interface_service"] | None = None
     execution_scope: Literal["audiovisual", "visual_only"] = "audiovisual"
     require_material_inspection: bool = False
-    semantic_verification_policy: Literal[
-        "legacy_execution_v1", "canonical_demonstration_v1"
-    ] = "legacy_execution_v1"
+    semantic_verification_policy: Literal["legacy_execution_v1", "canonical_demonstration_v1"] = "legacy_execution_v1"
     schema_version: Literal["studio.contextual-plan-request.v2"] = "studio.contextual-plan-request.v2"
     expected_document_revision: int = Field(ge=1)
     intent: EditingIntentV1
@@ -775,8 +828,53 @@ class ContextualPlanRequestV2(StudioContract):
     art_direction: CinematicArtDirectionV1 | None = None
     content_references: list[EditorialContentReferenceV1] = Field(default_factory=list, max_length=50)
 
+    @model_serializer(mode="wrap")
+    def preserve_legacy_shape(self, handler):
+        value = handler(self)
+        for field, empty in (
+            ("renderEngine", self.render_engine == "current"),
+            ("engineProfile", self.engine_profile is None),
+            ("visualStudyLanguage", self.visual_study_language is None),
+            ("visualStudyVariant", self.visual_study_variant is None),
+        ):
+            if empty:
+                value.pop(field, None)
+                value.pop(
+                    {
+                        "renderEngine": "render_engine",
+                        "engineProfile": "engine_profile",
+                        "visualStudyLanguage": "visual_study_language",
+                        "visualStudyVariant": "visual_study_variant",
+                    }[field],
+                    None,
+                )
+        return value
+
     @model_validator(mode="after")
     def unique_scenes(self):
+        if self.visual_study_variant and not self.visual_study_language:
+            raise ValueError("visual_study_variant_requires_language")
+        if self.visual_study_variant == "control" and any(s.motion_recipes for s in self.scenes):
+            raise ValueError("visual_study_simple_control_recipes_forbidden")
+        if self.visual_study_language:
+            if self.render_engine != "current" or not self.art_direction:
+                raise ValueError("visual_study_art_direction_and_current_engine_required")
+            if not self.content_references or any(not s.shot_plan or not s.semantic_assertions for s in self.scenes):
+                raise ValueError("visual_study_content_shots_assertions_required")
+            if (
+                sum(
+                    s.duration_frames - (s.transition_frames if i and s.entrance != "cut" else 0)
+                    for i, s in enumerate(self.scenes)
+                )
+                != 450
+                or self.frame_rate.numerator != 30
+                or self.frame_rate.denominator != 1
+            ):
+                raise ValueError("visual_study_15s_30fps_required")
+            if self.visual_study_language == "interface_capture" and not any(
+                e.kind == "video" and e.asset_id for s in self.scenes for e in s.elements
+            ):
+                raise ValueError("visual_study_real_interface_capture_required")
         if self.execution_scope == "visual_only" and any(s.audio for s in self.scenes):
             raise ValueError("editing_v2_visual_only_audio_not_requested")
         if len({s.id for s in self.scenes}) != len(self.scenes):
@@ -818,9 +916,13 @@ class ContextualPlanRequestV2(StudioContract):
             for assertion in scene.semantic_assertions:
                 if (
                     self.semantic_verification_policy == "canonical_demonstration_v1"
-                    and assertion.kind in {
-                        "content_present", "content_continuity", "format_adaptation",
-                        "feed_insertion", "feed_passage",
+                    and assertion.kind
+                    in {
+                        "content_present",
+                        "content_continuity",
+                        "format_adaptation",
+                        "feed_insertion",
+                        "feed_passage",
                     }
                     and assertion.object_id not in scene.content_reference_ids
                 ):

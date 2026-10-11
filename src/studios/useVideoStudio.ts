@@ -25,6 +25,8 @@ import {
   type VideoTimelineCommand,
 } from "./videoTimeline";
 import { NATURAL_SOUND_TRACK_ID, placeNaturalSound, setNaturalSoundEnabled, type NaturalSoundPlacement } from "./naturalSoundTimeline";
+import { videoRenderRequest } from "./videoRenderRequest";
+import { loadVideoStudioResources, videoStudioSupportResource } from "./videoStudioLoading";
 
 type VideoStudioStatus =
   | "idle"
@@ -399,6 +401,9 @@ export function useVideoStudio(options: VideoStudioOptions) {
   const [creativeReplanState, setCreativeReplanState] = React.useState<StudioCreativeReplanStateRecord>();
   const [advancedCapabilityAudit, setAdvancedCapabilityAudit] = React.useState<StudioAdvancedCapabilityAuditRecord>();
   const [videoAutonomyAudit, setVideoAutonomyAudit] = React.useState<StudioVideoAutonomyAuditRecord>();
+  const [supportLoading, setSupportLoading] = React.useState(false);
+  const [supportWarnings, setSupportWarnings] = React.useState<string[]>([]);
+  const refreshSequenceRef = React.useRef(0);
   const [waveform, setWaveform] = React.useState<AudioWaveformManifest>();
   const [previewUrl, setPreviewUrl] = React.useState<string>();
   const [previewUrlsByAssetId, setPreviewUrlsByAssetId] = React.useState<Record<string, string>>({});
@@ -443,7 +448,8 @@ export function useVideoStudio(options: VideoStudioOptions) {
     jobRef.current = job;
   }, [job]);
 
-  const replacePreview = React.useCallback(async (assetId: string) => {
+  const replacePreview = React.useCallback(async (assetId: string, isCurrent = () => true) => {
+    if (!isCurrent()) return;
     const existing = previewUrlsRef.current[assetId];
     if (existing) {
       previewUrlRef.current = existing;
@@ -451,6 +457,7 @@ export function useVideoStudio(options: VideoStudioOptions) {
       return;
     }
     const blob = await productApi.studioAssetBlob(assetId);
+    if (!isCurrent()) return;
     const nextUrl = URL.createObjectURL(blob);
     previewUrlsRef.current = { ...previewUrlsRef.current, [assetId]: nextUrl };
     previewUrlRef.current = nextUrl;
@@ -495,18 +502,19 @@ export function useVideoStudio(options: VideoStudioOptions) {
     [],
   );
 
-  const loadWaveform = React.useCallback(async (assetId?: string | null) => {
+  const loadWaveform = React.useCallback(async (assetId?: string | null, isCurrent = () => true) => {
+    if (!isCurrent()) return;
     if (!assetId) {
       setWaveform(undefined);
       return;
     }
-    setWaveform(
-      await productApi.studioAssetJson<AudioWaveformManifest>(assetId),
-    );
+    const nextWaveform = await productApi.studioAssetJson<AudioWaveformManifest>(assetId);
+    if (isCurrent()) setWaveform(nextWaveform);
   }, []);
 
-  const replaceRenderPreview = React.useCallback(async (assetId: string) => {
+  const replaceRenderPreview = React.useCallback(async (assetId: string, isCurrent = () => true) => {
     const blob = await productApi.studioAssetBlob(assetId);
+    if (!isCurrent()) return;
     const nextUrl = URL.createObjectURL(blob);
     if (renderUrlRef.current) URL.revokeObjectURL(renderUrlRef.current);
     renderUrlRef.current = nextUrl;
@@ -529,7 +537,8 @@ export function useVideoStudio(options: VideoStudioOptions) {
   }, []);
 
   const loadRelated = React.useCallback(
-    async (nextIngest?: StudioMediaIngestRecord) => {
+    async (nextIngest?: StudioMediaIngestRecord, isCurrent = () => true) => {
+      if (!isCurrent()) return;
       if (!workspaceId || !nextIngest) {
         setTranscript(undefined);
         setDecisionSet(undefined);
@@ -539,6 +548,7 @@ export function useVideoStudio(options: VideoStudioOptions) {
         productApi.studioTranscripts(workspaceId, nextIngest.id),
         productApi.studioEditDecisionSets(workspaceId, nextIngest.id),
       ]);
+      if (!isCurrent()) return;
       setTranscript(transcripts[0]);
       setDecisionSet(decisions[0]);
     },
@@ -547,72 +557,89 @@ export function useVideoStudio(options: VideoStudioOptions) {
 
   const refresh = React.useCallback(async () => {
     if (!enabled || !workspaceId) return;
+    const sequence = ++refreshSequenceRef.current;
+    const isCurrent = () => sequence === refreshSequenceRef.current;
     setStatus("loading");
     setError(undefined);
+    setSupportLoading(false);
+    setSupportWarnings([]);
+    setCreativeCasebook(undefined);
+    setAssistedIntelligence(undefined);
+    setVideoFactoryProgram(undefined);
+    setCreativeReplanState(undefined);
+    setAdvancedCapabilityAudit(undefined);
+    setVideoAutonomyAudit(undefined);
+    const warn = (message: string) => setSupportWarnings(current => [...current, message]);
+    const support = [
+      videoStudioSupportResource({ label: "Repertório criativo", load: () => productApi.studioCreativeCasebook(), commit: setCreativeCasebook }, isCurrent, warn),
+      videoStudioSupportResource({ label: "Propostas assistidas", load: () => productApi.studioAssistedIntelligence(), commit: setAssistedIntelligence }, isCurrent, warn),
+      videoStudioSupportResource({ label: "Programa de produção", load: () => productApi.studioVideoFactoryProgram(), commit: setVideoFactoryProgram }, isCurrent, warn),
+      videoStudioSupportResource({ label: "Replanejamento", load: () => productApi.studioCreativeReplanState(), commit: setCreativeReplanState }, isCurrent, warn),
+      videoStudioSupportResource({ label: "Auditoria de capacidades", load: () => productApi.studioAdvancedCapabilityAudit(), commit: setAdvancedCapabilityAudit }, isCurrent, warn),
+      videoStudioSupportResource({ label: "Auditoria de autonomia", load: () => productApi.studioVideoAutonomyAudit(), commit: setVideoAutonomyAudit }, isCurrent, warn),
+    ];
     try {
-      const [documents, ingests, nextCasebook, nextAssistedIntelligence, nextFactoryProgram, nextReplanState, nextAdvancedAudit, nextAutonomyAudit] = await Promise.all([
-        productApi.studioDocuments(workspaceId, {
-          postId,
-          campaignId,
-        }),
-        productApi.studioMediaIngests(workspaceId),
-        productApi.studioCreativeCasebook(),
-        productApi.studioAssistedIntelligence(),
-        productApi.studioVideoFactoryProgram(),
-        productApi.studioCreativeReplanState(),
-        productApi.studioAdvancedCapabilityAudit(),
-        productApi.studioVideoAutonomyAudit(),
-      ]);
-      const nextDocument = documents.find(
-        (candidate) => candidate.contentType === "video",
-      );
-      const recoveredRenderJobs = nextDocument
-        ? await productApi.studioGenerationJobs(workspaceId, {
-            documentId: nextDocument.documentId,
-            jobType: "video_render",
-            limit: 1,
-          })
-        : [];
-      const recoveredRenderJob = recoveredRenderJobs[0];
-      const sourceAssetId = nextDocument?.composition.narrative?.sourceAssetId as string | undefined
-        ?? nextDocument?.assets?.[0]?.id;
-      const nextIngest = sourceAssetId
-        ? ingests.find((candidate) => candidate.assetId === sourceAssetId)
-        : ingests.find((candidate) => candidate.mediaInfo?.videoStreams?.length);
-      setDocument(nextDocument);
-      setIngest(nextIngest);
-      setRenderJob(recoveredRenderJob);
-      setCreativeCasebook(nextCasebook);
-      setAssistedIntelligence(nextAssistedIntelligence);
-      setVideoFactoryProgram(nextFactoryProgram);
-      setCreativeReplanState(nextReplanState);
-      setAdvancedCapabilityAudit(nextAdvancedAudit);
-      setVideoAutonomyAudit(nextAutonomyAudit);
-      if (
-        recoveredRenderJob &&
-        (!jobRef.current ||
-          !["queued", "running", "retrying", "cancel_requested"].includes(
-            jobRef.current.status,
-          ))
-      ) {
-        setJob(recoveredRenderJob);
-      }
-      await loadRelated(nextIngest);
-      if (nextIngest) {
-        await replacePreview(nextIngest.proxyAssetId ?? nextIngest.assetId);
-        await loadWaveform(nextIngest.waveformAssetId);
-      }
-      const recoveredResult = recoveredRenderJob?.result as
-        | { artifact?: { assetId?: string } }
-        | null
-        | undefined;
-      if (recoveredRenderJob?.status === "succeeded" && recoveredResult?.artifact?.assetId) {
-        await replaceRenderPreview(recoveredResult.artifact.assetId);
-      } else {
-        clearRenderPreview();
-      }
-      setStatus("ready");
+      await loadVideoStudioResources({
+        support, isCurrent, onSupportLoading: setSupportLoading,
+        loadProject: async () => {
+          const [documents, ingests] = await Promise.all([
+            productApi.studioDocuments(workspaceId, {
+              postId,
+              campaignId,
+            }),
+            productApi.studioMediaIngests(workspaceId),
+          ]);
+          if (!isCurrent()) return;
+          const nextDocument = documents.find(
+            (candidate) => candidate.contentType === "video",
+          );
+          const recoveredRenderJobs = nextDocument
+            ? await productApi.studioGenerationJobs(workspaceId, {
+                documentId: nextDocument.documentId,
+                jobType: "video_render",
+                limit: 1,
+              })
+            : [];
+          if (!isCurrent()) return;
+          const recoveredRenderJob = recoveredRenderJobs[0];
+          const sourceAssetId = nextDocument?.composition.narrative?.sourceAssetId as string | undefined
+            ?? nextDocument?.assets?.[0]?.id;
+          const nextIngest = sourceAssetId
+            ? ingests.find((candidate) => candidate.assetId === sourceAssetId)
+            : ingests.find((candidate) => candidate.mediaInfo?.videoStreams?.length);
+          setDocument(nextDocument);
+          setIngest(nextIngest);
+          setRenderJob(recoveredRenderJob);
+          if (
+            recoveredRenderJob &&
+            (!jobRef.current ||
+              !["queued", "running", "retrying", "cancel_requested"].includes(
+                jobRef.current.status,
+              ))
+          ) {
+            setJob(recoveredRenderJob);
+          }
+          await loadRelated(nextIngest, isCurrent);
+          if (!isCurrent()) return;
+          if (nextIngest) {
+            await replacePreview(nextIngest.proxyAssetId ?? nextIngest.assetId, isCurrent);
+            await loadWaveform(nextIngest.waveformAssetId, isCurrent);
+          }
+          if (!isCurrent()) return;
+          const recoveredResult = recoveredRenderJob?.result as
+            | { artifact?: { assetId?: string } }
+            | null
+            | undefined;
+          if (recoveredRenderJob?.status === "succeeded" && recoveredResult?.artifact?.assetId) {
+            await replaceRenderPreview(recoveredResult.artifact.assetId, isCurrent);
+          } else {
+            clearRenderPreview();
+          }
+          if (isCurrent()) setStatus("ready");
+        },
+      });
     } catch (requestError) {
+      if (!isCurrent()) return;
       setError(messageFrom(requestError));
       setStatus("error");
     }
@@ -634,6 +661,7 @@ export function useVideoStudio(options: VideoStudioOptions) {
       return;
     }
     void refresh();
+    return () => { refreshSequenceRef.current += 1; };
   }, [enabled, refresh, workspaceId]);
 
   const run = React.useCallback(
@@ -1322,33 +1350,12 @@ export function useVideoStudio(options: VideoStudioOptions) {
       run("render", async () => {
         if (!options.workspaceId || !document)
           throw new Error("Crie o documento de vídeo antes de renderizar.");
-        const timelineRate = document.composition.mediaTimeline?.frameRate ?? {
-          numerator: 30,
-          denominator: 1,
-        };
-        const nextJob = await productApi.enqueueStudioVideoRender(
-          {
-            workspaceId: options.workspaceId,
-            documentId: document.documentId,
-            expectedDocumentRevision: document.revision,
-            expectedDocumentVersion: document.version,
-            pageIds: document.composition.pages.map((page) => page.id),
-            output: {
-              schemaVersion: "studio.video-render-spec.v1",
-              format: "mp4",
-              width: 1080,
-              height: 1920,
-              fps: timelineRate.numerator / timelineRate.denominator,
-              videoCodec: "h264",
-              audioCodec: "aac",
-              quality: "draft",
-            },
-            provider: "builtin.ffmpeg-ugc-v1",
-            reducedMotion: false,
-            correlationId: crypto.randomUUID(),
-          },
-          `video-render-${crypto.randomUUID()}`,
-        );
+        if (document.workspaceId !== options.workspaceId)
+          throw new Error("O documento não pertence ao workspace atual.");
+        const nextJob = await apiFetch<StudioGenerationJobRecord>("/api/v1/studios/v1/video-renders", {
+          method: "POST", headers: { "Idempotency-Key": `video-render-${crypto.randomUUID()}` },
+          body: JSON.stringify({ ...videoRenderRequest(document), correlationId: crypto.randomUUID() }),
+        });
         setJob(nextJob);
         setRenderJob(nextJob);
         const currentJob = await productApi.studioGenerationJob(nextJob.id);
@@ -1371,17 +1378,9 @@ export function useVideoStudio(options: VideoStudioOptions) {
     run("render", async () => {
       documentRef.current = saved;
       setDocument(saved);
-      const rate = saved.composition.mediaTimeline?.frameRate ?? { numerator: 30, denominator: 1 };
-      const page = saved.composition.pages[0];
       const nextJob = await apiFetch<StudioGenerationJobRecord>("/api/v1/studios/v1/video-renders", {
         method: "POST", headers: { "Idempotency-Key": `contextual-render-${planId}-${saved.revision}` },
-        body: JSON.stringify({ workspaceId: saved.workspaceId, documentId: saved.documentId,
-          expectedDocumentRevision: saved.revision, expectedDocumentVersion: saved.version,
-          provider: (saved.composition.narrative?.editorialV2 as { renderer?: string } | undefined)?.renderer
-            ?? (saved.composition.narrative?.editorialV2 ? "hyperframes.contextual-v2" : "builtin.ffmpeg-contextual-v1"),
-          contextualPlanId: planId, pageIds: [page.id],
-          output: { format: "mp4", width: page.width, height: page.height, fps: rate.numerator / rate.denominator,
-            videoCodec: "h264", audioCodec: "aac", quality: "draft" } }),
+        body: JSON.stringify(videoRenderRequest(saved, planId)),
       });
       setJob(nextJob); setRenderJob(nextJob);
       const result = nextJob.result as { artifact?: { assetId?: string } } | undefined;
@@ -1495,6 +1494,8 @@ export function useVideoStudio(options: VideoStudioOptions) {
     creativeReplanState,
     advancedCapabilityAudit,
     videoAutonomyAudit,
+    supportLoading,
+    supportWarnings,
     animaticPreviewUrl,
     status,
     operation,

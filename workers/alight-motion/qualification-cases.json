@@ -1,0 +1,39 @@
+{
+  "schemaVersion": "studio.engine-study-briefs.v1",
+  "status": "planning_only",
+  "commercialApproved": false,
+  "output": {"width": 1080, "height": 1920, "fps": 30, "durationSeconds": 15},
+  "apiBudgetGroupId": "visual-quality-2026-10-01",
+  "sharedApiBudgetUsd": 10,
+  "cases": [
+    {
+      "language": "action_product",
+      "brief": "Mostrar um objeto neutro sendo manipulado e revelar sua utilidade por ações coerentes.",
+      "visualWorld": "Um objeto e uma superfície, luz e direção de gesto consistentes; identidade de estudo própria.",
+      "requiredMaterials": ["filmagem própria ou licenciada com detalhe e plano médio da mesma ação", "recorte autorizado do objeto", "efeitos de contato e ambiente autorizados"],
+      "direction": ["abertura de ação reconhecível", "corte durante gesto preservando direção e posição", "oclusão motivada revela o objeto", "encerramento com objeto e leitura confortável"],
+      "control": "concatenação direta dos mesmos intervalos filmados, sem direção gráfica adicional",
+      "acceptance": ["ao menos 8 segundos de ação dentro da imagem", "continuidade de gesto", "identidade preservada", "som ligado a contato visível"],
+      "missingMaterialBehavior": "pending; never substitute a generic icon"
+    },
+    {
+      "language": "kinetic_type",
+      "brief": "Uma mensagem curta ganha hierarquia por palavras que chegam, se conectam e se acomodam.",
+      "visualWorld": "Identidade gráfica própria de estudo; duas escalas tipográficas e vetores simples com função.",
+      "requiredMaterials": ["texto próprio", "fonte autorizada com caracteres portugueses", "vetores próprios", "áudio autorizado"],
+      "direction": ["antecipação e aceleração", "grupo preserva alinhamento", "revelação vetorial chega à palavra relevante", "pausa de leitura antes da saída"],
+      "control": "sequência simples dos mesmos estados gráficos; não exige vídeos de banco",
+      "acceptance": ["hierarquia clara em celular", "pausa sem blur", "texto não perde legibilidade", "receita reutilizada com outra mensagem sem editar código"]
+    },
+    {
+      "language": "interface_service",
+      "brief": "Mostrar uma tarefa acontecendo no res: decisão, gesto e consequência, com dados fictícios.",
+      "visualWorld": "Gravação do ambiente de teste do res; área de atenção e escala planejadas; texto complementa o resultado.",
+      "requiredMaterials": ["gravação autorizada da interface de teste", "dados fictícios", "fonte e gráficos autorizados", "efeitos de gesto autorizados"],
+      "direction": ["estado inicial visível", "gesto conduz foco à operação", "resultado aparece em continuidade", "encerramento permite entender a consequência"],
+      "control": "sequência simples dos mesmos estados da tarefa",
+      "acceptance": ["tarefa compreensível sem locução", "texto e gesto sincronizados", "nenhum dado real exposto", "resultado não simula um job executado se só houver storyboard"]
+    }
+  ],
+  "pending": ["physical Android", "validated editable import and compiler", "real app exports", "human reviews", "30 real jobs"]
+}

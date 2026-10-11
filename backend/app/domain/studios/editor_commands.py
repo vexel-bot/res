@@ -1,0 +1,93 @@
+"""Additive commands over existing recipe contracts; never a second project format."""
+
+from typing import Annotated, Literal
+
+from pydantic import Field, model_validator
+
+from .contracts import StudioContract
+from .motion_recipes import RecipeKeyframeV1, RecipeTrackV1
+
+ID = r"^[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+
+
+class SetRecipeKeyframeV1(StudioContract):
+    kind: Literal["set_recipe_keyframe"] = "set_recipe_keyframe"
+    scene_id: str = Field(pattern=ID)
+    recipe_id: str = Field(pattern=ID)
+    target_id: str = Field(pattern=ID)
+    property: RecipeTrackV1.model_fields["property"].annotation
+    keyframe: RecipeKeyframeV1
+
+
+class SetRecipePivotV1(StudioContract):
+    kind: Literal["set_recipe_pivot"] = "set_recipe_pivot"
+    scene_id: str = Field(pattern=ID)
+    recipe_id: str = Field(pattern=ID)
+    pivot: tuple[float, float]
+
+    @model_validator(mode="after")
+    def bounded(self):
+        if any(not 0 <= v <= 1 for v in self.pivot):
+            raise ValueError("editor_pivot_out_of_range")
+        return self
+
+
+class UndoEditorCommandV1(StudioContract):
+    kind: Literal["undo_command"] = "undo_command"
+    command_id: str = Field(pattern=ID)
+
+
+class SetRecipeParentV1(StudioContract):
+    kind: Literal["set_recipe_parent"] = "set_recipe_parent"
+    scene_id: str = Field(pattern=ID)
+    recipe_id: str = Field(pattern=ID)
+    parent_target_id: str = Field(pattern=ID)
+    coordinate_space: Literal["local"]
+
+
+EditorActionV1 = Annotated[
+    SetRecipeKeyframeV1 | SetRecipePivotV1 | SetRecipeParentV1 | UndoEditorCommandV1, Field(discriminator="kind")
+]
+
+
+class EditorCommandV1(StudioContract):
+    schema_version: Literal["studio.editor-command.v1"] = "studio.editor-command.v1"
+    command_id: str = Field(pattern=ID)
+    document_id: str = Field(pattern=ID)
+    plan_id: str = Field(pattern=ID)
+    expected_document_revision: int = Field(ge=1)
+    expected_plan_revision: int = Field(ge=1)
+    actions: list[EditorActionV1] = Field(min_length=1, max_length=50)
+
+    @model_validator(mode="after")
+    def isolated_undo(self):
+        if len(self.actions) != 1 and any(isinstance(a, UndoEditorCommandV1) for a in self.actions):
+            raise ValueError("editor_undo_must_be_isolated")
+        return self
+
+
+class EditorCommandReceiptV1(StudioContract):
+    schema_version: Literal["studio.editor-command-receipt.v1"] = "studio.editor-command-receipt.v1"
+    command_id: str
+    document_id: str
+    plan_id: str
+    actor_id: str
+    previous_document_revision: int
+    document_revision: int
+    plan_revision: int
+    document_digest: str
+    executable_composition_digest: str
+    applied_changes: list[EditorActionV1]
+    warnings: list[str] = Field(default_factory=list)
+    pending: list[str] = Field(default_factory=lambda: ["render_evidence_required", "human_visual_review_required"])
+
+
+class EditorEvaluationSummaryV1(StudioContract):
+    """Explicit per-axis states; detailed evidence stays in the full inspection."""
+
+    schema_version: Literal["studio.editor-evaluation-summary.v1"] = "studio.editor-evaluation-summary.v1"
+    detail: Literal["summary"] = "summary"
+    technical: str | None = None
+    audiovisual: str | None = None
+    human: str | None = None
+    full_inspection_path: str

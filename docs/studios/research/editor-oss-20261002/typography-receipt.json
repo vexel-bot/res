@@ -1,0 +1,153 @@
+{
+  "schemaVersion": "res.typography-receipt.v1",
+  "generatedAt": "2026-10-02T23:08:34.811151+00:00",
+  "policy": "unicode17.regex2026.1.15.whitespace-v1",
+  "dependency": {
+    "name": "regex",
+    "version": "2026.1.15",
+    "licenseExpression": "Apache-2.0 AND CNRI-Python",
+    "source": "https://pypi.org/project/regex/2026.1.15/"
+  },
+  "tests": [
+    {
+      "path": "docs/studios/research/editor-oss-20261002/typography-contract-tests.xml",
+      "tests": 24,
+      "failure": 0,
+      "error": 0,
+      "skipped": 0,
+      "sha256": "009fbf310a6e5c1ff84e8f4111b7d1b5cd2f1a5ddfda67dde5679a15f5cf5d7f"
+    },
+    {
+      "path": "docs/studios/research/editor-oss-20261002/typography-regression-tests.xml",
+      "tests": 84,
+      "failure": 0,
+      "error": 0,
+      "skipped": 0,
+      "sha256": "2ce3e4da85c956cb0d28c51423541878f71a13a58cf329c175ac1805132aed42"
+    },
+    {
+      "path": "docs/studios/research/editor-oss-20261002/typography-real-regression-tests.xml",
+      "tests": 3,
+      "failure": 0,
+      "error": 0,
+      "skipped": 0,
+      "sha256": "84ac713e68f47073d817d9573168103d6a7a427cbf8e23b338c017806714c7c4"
+    },
+    {
+      "path": "docs/studios/research/editor-oss-20261002/typography-native-pixel-regression-tests.xml",
+      "tests": 1,
+      "failure": 0,
+      "error": 0,
+      "skipped": 0,
+      "sha256": "92af264f48eab109b2e4e0b823892c8cc1dd37a4cb79134e4f51d51beb34a9f4"
+    }
+  ],
+  "uniqueTestCases": 91,
+  "receiptsOverlap": true,
+  "officialVectors": {
+    "count": 766,
+    "sha256": "e2d134d2c52919bace503ebb6a551c1855fe1a1faec18478c78fff254a1793ec",
+    "path": "backend/tests/fixtures/unicode17/GraphemeBreakTest.txt",
+    "source": "https://www.unicode.org/Public/17.0.0/ucd/auxiliary/GraphemeBreakTest.txt",
+    "license": "Unicode License V3",
+    "licensePath": "backend/tests/fixtures/unicode17/LICENSE.txt"
+  },
+  "runtimeStudy": {
+    "cases": 12,
+    "negativeCases": 6,
+    "sha256": "f9b5e84123f0e0aaabaef07b85a2292043f5621d0e24819e659f70e7d853c0ee"
+  },
+  "render": {
+    "path": "docs/studios/research/editor-oss-20261002/typography-render/typography.mp4",
+    "sha256": "814285f2c3495dc8d69850ca0ea2345b592d9c16f578ca25946ab6529f139aef",
+    "bytes": 12843,
+    "width": 320,
+    "height": 320,
+    "fps": 30,
+    "frames": 60,
+    "durationSeconds": 2,
+    "providerVersion": "4.0.527-native.6",
+    "font": {
+      "assetId": "8ffac8f9-be90-4537-b642-fed46c6848fa",
+      "source": "local licensed test font; binary not retained",
+      "sha256": "b3658eadae55e682b5f69eb64c439c1ecc8f196c0bb8d4756d145d13bc86476a"
+    },
+    "pixels": {
+      "holdBeginVsEndMeanAbsoluteChannelError": 0.009078776041666667,
+      "settledVsZeroStaggerControlMeanAbsoluteChannelError": 0.26958984375,
+      "firstFrameBrightChannels": 0,
+      "settledBrightChannels": 3670,
+      "scope": "whole decoded frame"
+    },
+    "technicalQC": "passed",
+    "humanReview": "pending",
+    "sound": "FFmpeg silent AAC; no speech/music sync qualification"
+  },
+  "sources": [
+    {
+      "path": "backend/app/domain/studios/typography.py",
+      "sha256": "aecfd23f65c8d2b05cb3d5a0f729c2cba5dd69100da46fb536fc9c0b1f8aa049"
+    },
+    {
+      "path": "backend/app/services/studios/native_motion_recipes.py",
+      "sha256": "5d524c75661b2cec7b6fcddf70f5ceab79c1013450a48e2bc2c15e13cd659312"
+    },
+    {
+      "path": "backend/app/providers/studios/remotion_projection.py",
+      "sha256": "334f5b30545be0077fe424a5baee0dd0cb8e36f3a309c74f7b6f86e222c281cd"
+    },
+    {
+      "path": "backend/app/providers/studios/remotion_render.py",
+      "sha256": "ae508e601df870ca89451390c551203c2fd7469119778602a6dd7456c737d94d"
+    },
+    {
+      "path": "backend/app/services/studios/contextual_editing_v2.py",
+      "sha256": "cd2565d6c77878892b0c6aaa810840fe5307643f16d928be017d27adfa2ba4ad"
+    },
+    {
+      "path": "backend/requirements.txt",
+      "sha256": "944025cf601758fa9588ba6ea16f89e337903046d543782bdfad80ccc433f32f"
+    },
+    {
+      "path": "workers/remotion-benchmark/src/hybrid.tsx",
+      "sha256": "a48d4de56240a1911b4e254c71013d494f0c88f9291f1bb69ae1b95ed98c8f1b"
+    },
+    {
+      "path": "workers/remotion-benchmark/render-hybrid.mjs",
+      "sha256": "c66df797740986717f762c69af1b0622d44bce0e9450975f456ff712a7890b7c"
+    },
+    {
+      "path": "backend/tests/test_typography_units.py",
+      "sha256": "6a28caf6afbf601c85edf9e944bd63306fb62f9fc70b322b0d86feb85093eb1e"
+    },
+    {
+      "path": "backend/tests/test_typography_font_binding.py",
+      "sha256": "c4b2f4c0659d25eca1e3f400e69cd649fbeeb755d7013b0c776e088dd4f3ad42"
+    },
+    {
+      "path": "backend/tests/test_typography_render.py",
+      "sha256": "d947858b8fbf9bcdc0a95352b563389260cc87383291f1a1311c1f90c3cdf6c4"
+    },
+    {
+      "path": "scripts/validation/editor-typography-vectors.py",
+      "sha256": "faba119b6b9ad0b52b50899861e94330b2e41288ad4283b68a77c1782fe3b3e3"
+    },
+    {
+      "path": "scripts/validation/editor-typography-runtime-study.mjs",
+      "sha256": "d5c890cd1ff03eb6f4a3d06debbf84342a37c673561089aace3770859262430a"
+    },
+    {
+      "path": "scripts/validation/editor-typography-receipt.py",
+      "sha256": "81d051ab65b74b89cc89aa74972402b278206e71dd10825538a977972e9fa51e"
+    }
+  ],
+  "limitations": [
+    "Native integrated_typography V1 and historical v1 recipe snapshots retain legacy segmentation.",
+    "DOM span bounds are layout/transform diagnostics, not measured ink/pixel coverage or reading quality.",
+    "Real font proof covers decomposed Latin accents, not every emoji, Indic shaping or line-wrap extreme.",
+    "A font binary is not retained; reproduce with the same licensed local font checksum or qualify another font separately.",
+    "No 15s/1080p performance, p95, commercial approval, blind preference or autonomous brief qualification."
+  ],
+  "editorSourceCodeCopied": false,
+  "officialTestDataRetained": true
+}

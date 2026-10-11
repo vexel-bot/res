@@ -1,0 +1,151 @@
+{
+  "scope": "actual_browser_normal_login_actual_API_no_mock",
+  "humanReview": "pending",
+  "checks": [
+    {
+      "name": "combo-static",
+      "expected": [
+        "Revisão 2 · plano 2",
+        "Target: ed2-e2ccbd04e110fd9c15f59c6c",
+        "Desfoque estático authored: 4 px.",
+        "x 32 px, y 12 px; desfoque 4 px; cor #0000ff; opacidade 0.5."
+      ],
+      "text": "Composição e movimento\n\nRevisão 2 · plano 2\n\nAtualizar inspeção\nFrame da composição\n\nPropriedades calculadas no frame 0. Valores locais ao nó; posição final e limites do texto dependem do render.\n\nCena\nspatial-effects · [0, 30)\nCamada\nLayer · group · c2a507\nLayer · group · 130865\nLayer · group · 1b54c2\nLayer · group · 04eb39\nLayer · shape · 3d3385\nsharp · shape · 3b00a5\nhard · shape · 2875b2\nzero · shape · 1f9838\nsoft · shape · ae43f8\nblur · shape · bfd02f\ncombo · shape · f59c6c\nanimated · shape · 8354eb\n\nTarget: ed2-e2ccbd04e110fd9c15f59c6c\nPai: Layer\nIntervalo: [0, 30)\nBase: x 200, y 220, 32 × 48, rotação 0°, opacidade 1\nPivô: 0.5, 0.5\n\nEfeitos espaciais\n\nDesfoque estático authored: 4 px.\nDesfoque no instante central do frame 0: 4 px · valor estático.\n\nSombra authored: deslocamento local x 32 px, y 12 px; desfoque 4 px; cor #0000ff; opacidade 0.5.\n\nProfundidade authored: opacidade 1; parallax 0. A consequência composta é observada no render.\n\nTracks do target no frame 0\nPropriedade\tAvaliada\tKeyframes authored\nopacity\t1 ratio\t0: 1 (linear)\n\nEsta camada não tem receita editável. Os tracks acima pertencem à composição atual.\n\nRenderizar esta revisão\n\nA revisão inspecionada ainda não tem MP4 associado neste painel.\n\nVersões, digests e materiais",
+      "status": "passed",
+      "origin": "http://127.0.0.1:3000",
+      "observationBasis": "visible_panel_DOM"
+    },
+    {
+      "name": "transparent-shadow",
+      "expected": [
+        "Sombra authored: deslocamento local x 32 px, y 12 px; desfoque 0 px; cor #0000ff; opacidade 0.",
+        "A sombra é transparente."
+      ],
+      "text": "Composição e movimento\n\nRevisão 2 · plano 2\n\nAtualizar inspeção\nFrame da composição\n\nPropriedades calculadas no frame 0. Valores locais ao nó; posição final e limites do texto dependem do render.\n\nCena\nspatial-effects · [0, 30)\nCamada\nLayer · group · c2a507\nLayer · group · 130865\nLayer · group · 1b54c2\nLayer · group · 04eb39\nLayer · shape · 3d3385\nsharp · shape · 3b00a5\nhard · shape · 2875b2\nzero · shape · 1f9838\nsoft · shape · ae43f8\nblur · shape · bfd02f\ncombo · shape · f59c6c\nanimated · shape · 8354eb\n\nTarget: ed2-e6b38673b8767a9e9c1f9838\nPai: Layer\nIntervalo: [0, 30)\nBase: x 200, y 112, 48 × 48, rotação 0°, opacidade 1\nPivô: 0.5, 0.5\n\nEfeitos espaciais\n\nDesfoque estático authored: 0 px.\nDesfoque no instante central do frame 0: 0 px · valor estático.\n\nSombra authored: deslocamento local x 32 px, y 12 px; desfoque 0 px; cor #0000ff; opacidade 0. A sombra é transparente.\n\nProfundidade authored: opacidade 1; parallax 0. A consequência composta é observada no render.\n\nTracks do target no frame 0\nPropriedade\tAvaliada\tKeyframes authored\nopacity\t1 ratio\t0: 1 (linear)\n\nEsta camada não tem receita editável. Os tracks acima pertencem à composição atual.\n\nRenderizar esta revisão\n\nA revisão inspecionada ainda não tem MP4 associado neste painel.\n\nVersões, digests e materiais",
+      "status": "passed",
+      "origin": "http://127.0.0.1:3000",
+      "observationBasis": "visible_panel_DOM"
+    },
+    {
+      "name": "animated-center-0",
+      "expected": [
+        "Desfoque no instante central do frame 0: 0 px · track blur_px calculada pela API.",
+        "8 amostras solicitadas; obturador 180°",
+        "A exposição usa subframes"
+      ],
+      "text": "Composição e movimento\n\nRevisão 2 · plano 2\n\nAtualizar inspeção\nFrame da composição\n\nPropriedades calculadas no frame 0. Valores locais ao nó; posição final e limites do texto dependem do render.\n\nCena\nspatial-effects · [0, 30)\nCamada\nLayer · group · c2a507\nLayer · group · 130865\nLayer · group · 1b54c2\nLayer · group · 04eb39\nLayer · shape · 3d3385\nsharp · shape · 3b00a5\nhard · shape · 2875b2\nzero · shape · 1f9838\nsoft · shape · ae43f8\nblur · shape · bfd02f\ncombo · shape · f59c6c\nanimated · shape · 8354eb\n\nTarget: ed2-d613da99f997f74b2f8354eb\nPai: Layer\nIntervalo: [0, 30)\nBase: x 128, y 112, 32 × 48, rotação 0°, opacidade 1\nPivô: 0.5, 0.5\n\nEfeitos espaciais\n\nDesfoque estático authored: 0 px.\nDesfoque no instante central do frame 0: 0 px · track blur_px calculada pela API.\n\nSem sombra authored.\n\nProfundidade authored: opacidade 1; parallax 0. A consequência composta é observada no render.\n\nExposição temporal: 8 amostras solicitadas; obturador 180°; intervalo [0, 30). A exposição usa subframes; o valor central acima não representa a média do MP4. Amostras efetivamente usadas e redução no repouso constam do recibo do render.\n\nTracks do target no frame 0\nPropriedade\tAvaliada\tKeyframes authored\nblur_px\t0 pixels\t0: 0 (linear) · 1: 16 (linear) · 29: 16 (linear)\nAjustar receita existente\nReceita\nexpose-blur · velocity_blur\n\nFrames locais à receita [0, 30).\n\nRenderizar esta revisão\n\nA revisão inspecionada ainda não tem MP4 associado neste painel.\n\nVersões, digests e materiais",
+      "status": "passed",
+      "origin": "http://127.0.0.1:3000",
+      "observationBasis": "visible_panel_DOM"
+    },
+    {
+      "name": "animated-center-1",
+      "expected": [
+        "Desfoque no instante central do frame 1: 16 px · track blur_px calculada pela API.",
+        "0: 0 (linear) · 1: 16 (linear) · 29: 16 (linear)"
+      ],
+      "text": "Composição e movimento\n\nRevisão 2 · plano 2\n\nAtualizar inspeção\nFrame da composição\n\nPropriedades calculadas no frame 1. Valores locais ao nó; posição final e limites do texto dependem do render.\n\nCena\nspatial-effects · [0, 30)\nCamada\nLayer · group · c2a507\nLayer · group · 130865\nLayer · group · 1b54c2\nLayer · group · 04eb39\nLayer · shape · 3d3385\nsharp · shape · 3b00a5\nhard · shape · 2875b2\nzero · shape · 1f9838\nsoft · shape · ae43f8\nblur · shape · bfd02f\ncombo · shape · f59c6c\nanimated · shape · 8354eb\n\nTarget: ed2-d613da99f997f74b2f8354eb\nPai: Layer\nIntervalo: [0, 30)\nBase: x 128, y 112, 32 × 48, rotação 0°, opacidade 1\nPivô: 0.5, 0.5\n\nEfeitos espaciais\n\nDesfoque estático authored: 0 px.\nDesfoque no instante central do frame 1: 16 px · track blur_px calculada pela API.\n\nSem sombra authored.\n\nProfundidade authored: opacidade 1; parallax 0. A consequência composta é observada no render.\n\nExposição temporal: 8 amostras solicitadas; obturador 180°; intervalo [0, 30). A exposição usa subframes; o valor central acima não representa a média do MP4. Amostras efetivamente usadas e redução no repouso constam do recibo do render.\n\nTracks do target no frame 1\nPropriedade\tAvaliada\tKeyframes authored\nblur_px\t16 pixels\t0: 0 (linear) · 1: 16 (linear) · 29: 16 (linear)\nAjustar receita existente\nReceita\nexpose-blur · velocity_blur\n\nFrames locais à receita [0, 30).\n\nRenderizar esta revisão\n\nA revisão inspecionada ainda não tem MP4 associado neste painel.\n\nVersões, digests e materiais",
+      "status": "passed",
+      "origin": "http://127.0.0.1:3000",
+      "observationBasis": "visible_panel_DOM"
+    },
+    {
+      "name": "animated-center-4",
+      "expected": [
+        "Desfoque no instante central do frame 4: 16 px · track blur_px calculada pela API.",
+        "Amostras efetivamente usadas e redução no repouso constam do recibo"
+      ],
+      "text": "Composição e movimento\n\nRevisão 2 · plano 2\n\nAtualizar inspeção\nFrame da composição\n\nPropriedades calculadas no frame 4. Valores locais ao nó; posição final e limites do texto dependem do render.\n\nCena\nspatial-effects · [0, 30)\nCamada\nLayer · group · c2a507\nLayer · group · 130865\nLayer · group · 1b54c2\nLayer · group · 04eb39\nLayer · shape · 3d3385\nsharp · shape · 3b00a5\nhard · shape · 2875b2\nzero · shape · 1f9838\nsoft · shape · ae43f8\nblur · shape · bfd02f\ncombo · shape · f59c6c\nanimated · shape · 8354eb\n\nTarget: ed2-d613da99f997f74b2f8354eb\nPai: Layer\nIntervalo: [0, 30)\nBase: x 128, y 112, 32 × 48, rotação 0°, opacidade 1\nPivô: 0.5, 0.5\n\nEfeitos espaciais\n\nDesfoque estático authored: 0 px.\nDesfoque no instante central do frame 4: 16 px · track blur_px calculada pela API.\n\nSem sombra authored.\n\nProfundidade authored: opacidade 1; parallax 0. A consequência composta é observada no render.\n\nExposição temporal: 8 amostras solicitadas; obturador 180°; intervalo [0, 30). A exposição usa subframes; o valor central acima não representa a média do MP4. Amostras efetivamente usadas e redução no repouso constam do recibo do render.\n\nTracks do target no frame 4\nPropriedade\tAvaliada\tKeyframes authored\nblur_px\t16 pixels\t0: 0 (linear) · 1: 16 (linear) · 29: 16 (linear)\nAjustar receita existente\nReceita\nexpose-blur · velocity_blur\n\nFrames locais à receita [0, 30).\n\nRenderizar esta revisão\n\nA revisão inspecionada ainda não tem MP4 associado neste painel.\n\nVersões, digests e materiais",
+      "status": "passed",
+      "origin": "http://127.0.0.1:3000",
+      "observationBasis": "visible_panel_DOM"
+    },
+    {
+      "name": "render-revision-2",
+      "expected": [
+        "Revisão 2 · plano 2",
+        "Render associado à revisão 2 · 7aa65337b026adb24884f9e19178a59004f6924de44b800f2579239947bdf6a8"
+      ],
+      "text": "Composição e movimento\n\nRevisão 2 · plano 2\n\nAtualizar inspeção\nFrame da composição\n\nPropriedades calculadas no frame 0. Valores locais ao nó; posição final e limites do texto dependem do render.\n\nCena\nspatial-effects · [0, 30)\nCamada\nLayer · group · c2a507\nLayer · group · 130865\nLayer · group · 1b54c2\nLayer · group · 04eb39\nLayer · shape · 3d3385\nsharp · shape · 3b00a5\nhard · shape · 2875b2\nzero · shape · 1f9838\nsoft · shape · ae43f8\nblur · shape · bfd02f\ncombo · shape · f59c6c\nanimated · shape · 8354eb\n\nTarget: ed2-fdb58d871f44e7eca1c2a507\nPai: raiz\nIntervalo: [0, 30)\nBase: x 0, y 0, 320 × 320, rotação 0°, opacidade 1\nPivô: 0.5, 0.5\n\nEfeitos espaciais\n\nDesfoque estático authored: 0 px.\nDesfoque no instante central do frame 0: 0 px · valor estático.\n\nSem sombra authored.\n\nTracks do target no frame 0\nPropriedade\tAvaliada\tKeyframes authored\n\nEsta camada não tem receita editável. Os tracks acima pertencem à composição atual.\n\nRenderizar esta revisão\n\nRender associado à revisão 2 · 7aa65337b026adb24884f9e19178a59004f6924de44b800f2579239947bdf6a8\n\nVersões, digests e materiais",
+      "status": "passed",
+      "origin": "http://127.0.0.1:3000",
+      "observationBasis": "visible_panel_DOM"
+    },
+    {
+      "name": "isolated-render-revision2",
+      "expected": [
+        "Revisão 2 · plano 2",
+        "Render associado à revisão 2 · 7aa65337b026adb24884f9e19178a59004f6924de44b800f2579239947bdf6a8"
+      ],
+      "text": "Composição e movimento\n\nRevisão 2 · plano 2\n\nAtualizar inspeção\nFrame da composição\n\nPropriedades calculadas no frame 0. Valores locais ao nó; posição final e limites do texto dependem do render.\n\nCena\nspatial-effects · [0, 30)\nCamada\nLayer · group · c2a507\nLayer · group · 130865\nLayer · group · 1b54c2\nLayer · group · 04eb39\nLayer · shape · 3d3385\nsharp · shape · 3b00a5\nhard · shape · 2875b2\nzero · shape · 1f9838\nsoft · shape · ae43f8\nblur · shape · bfd02f\ncombo · shape · f59c6c\nanimated · shape · 8354eb\n\nTarget: ed2-b636d64d2f56aef8b73b00a5\nPai: Layer\nIntervalo: [0, 30)\nBase: x 32, y 32, 56 × 48, rotação 0°, opacidade 1\nPivô: 0.5, 0.5\n\nEfeitos espaciais\n\nDesfoque estático authored: 0 px.\nDesfoque no instante central do frame 0: 0 px · valor estático.\n\nSem sombra authored.\n\nProfundidade authored: opacidade 1; parallax 0. A consequência composta é observada no render.\n\nTracks do target no frame 0\nPropriedade\tAvaliada\tKeyframes authored\nposition_x\t0 pixels\t0: 0 (cubic_bezier; 0.2, 0, 0.2, 1) · 29: 0 (cubic_bezier; 0.2, 0, 0.2, 1)\nAjustar receita existente\nReceita\ninspect-sharp · motion_choreography\n\nFrames locais à receita [0, 30).\n\nSalvar substitui o keyframe nesse frame local. Um frame diferente insere outro keyframe.\n\nTrack\nsharp · x\nKeyframe\nFrame 0 · 0\nFrame 29 · 0\nFrame local\nValor\nCurva x1\nCurva y1\nCurva x2\nCurva y2\nSalvar keyframe\nPivô x\nPivô y\nSalvar pivô\nRenderizar esta revisão\n\nRender associado à revisão 2 · 7aa65337b026adb24884f9e19178a59004f6924de44b800f2579239947bdf6a8\n\nVersões, digests e materiais",
+      "status": "passed",
+      "origin": "http://127.0.0.1:3317",
+      "observationBasis": "visible_panel_DOM"
+    },
+    {
+      "name": "edited-revision3-stale-render",
+      "expected": [
+        "Revisão 3 · plano 3",
+        "Ajuste salvo na revisão 3",
+        "4 pixels",
+        "0: 4 (cubic_bezier",
+        "A revisão inspecionada ainda não tem MP4 associado neste painel."
+      ],
+      "text": "Composição e movimento\n\nRevisão 3 · plano 3\n\nAtualizar inspeção\n\nAjuste salvo na revisão 3. Render e avaliação visual pendentes.\n\nFrame da composição\n\nPropriedades calculadas no frame 0. Valores locais ao nó; posição final e limites do texto dependem do render.\n\nCena\nspatial-effects · [0, 30)\nCamada\nLayer · group · c2a507\nLayer · group · 130865\nLayer · group · 1b54c2\nLayer · group · 04eb39\nLayer · shape · 3d3385\nsharp · shape · 3b00a5\nhard · shape · 2875b2\nzero · shape · 1f9838\nsoft · shape · ae43f8\nblur · shape · bfd02f\ncombo · shape · f59c6c\nanimated · shape · 8354eb\n\nTarget: ed2-b636d64d2f56aef8b73b00a5\nPai: Layer\nIntervalo: [0, 30)\nBase: x 32, y 32, 56 × 48, rotação 0°, opacidade 1\nPivô: 0.5, 0.5\n\nEfeitos espaciais\n\nDesfoque estático authored: 0 px.\nDesfoque no instante central do frame 0: 0 px · valor estático.\n\nSem sombra authored.\n\nProfundidade authored: opacidade 1; parallax 0. A consequência composta é observada no render.\n\nTracks do target no frame 0\nPropriedade\tAvaliada\tKeyframes authored\nposition_x\t4 pixels\t0: 4 (cubic_bezier; 0.2, 0, 0.2, 1) · 29: 0 (cubic_bezier; 0.2, 0, 0.2, 1)\nAjustar receita existente\nReceita\ninspect-sharp · motion_choreography\n\nFrames locais à receita [0, 30).\n\nSalvar substitui o keyframe nesse frame local. Um frame diferente insere outro keyframe.\n\nTrack\nsharp · x\nKeyframe\nFrame 0 · 4\nFrame 29 · 0\nFrame local\nValor\nCurva x1\nCurva y1\nCurva x2\nCurva y2\nSalvar keyframe\nPivô x\nPivô y\nSalvar pivô\nDesfazer comando da revisão atual\nRenderizar esta revisão\n\nA revisão inspecionada ainda não tem MP4 associado neste painel.\n\nVersões, digests e materiais",
+      "status": "passed",
+      "origin": "http://127.0.0.1:3317",
+      "observationBasis": "visible_panel_DOM"
+    },
+    {
+      "name": "render-revision3",
+      "expected": [
+        "Revisão 3 · plano 3",
+        "Render associado à revisão 3 · c3434e6e9e938ac9246fd9cbf22372a4f83026a21862421be59d3df83956a9a4"
+      ],
+      "text": "Composição e movimentoRevisão 3 · plano 3Atualizar inspeçãoAjuste salvo na revisão 3. Render e avaliação visual pendentes.Frame da composiçãoPropriedades calculadas no frame 0. Valores locais ao nó; posição final e limites do texto dependem do render.Cenaspatial-effects · [0, 30)CamadaLayer · group · c2a507Layer · group · 130865Layer · group · 1b54c2Layer · group · 04eb39Layer · shape · 3d3385sharp · shape · 3b00a5hard · shape · 2875b2zero · shape · 1f9838soft · shape · ae43f8blur · shape · bfd02fcombo · shape · f59c6canimated · shape · 8354ebTarget: ed2-b636d64d2f56aef8b73b00a5Pai: LayerIntervalo: [0, 30)Base: x 32, y 32, 56 × 48, rotação 0°, opacidade 1Pivô: 0.5, 0.5Efeitos espaciaisDesfoque estático authored: 0 px.Desfoque no instante central do frame 0: 0 px · valor estático.Sem sombra authored.Profundidade authored: opacidade 1; parallax 0. A consequência composta é observada no render.Tracks do target no frame 0PropriedadeAvaliadaKeyframes authoredposition_x4 pixels0: 4 (cubic_bezier; 0.2, 0, 0.2, 1) · 29: 0 (cubic_bezier; 0.2, 0, 0.2, 1)Ajustar receita existenteReceitainspect-sharp · motion_choreographyFrames locais à receita [0, 30).Salvar substitui o keyframe nesse frame local. Um frame diferente insere outro keyframe.Tracksharp · xKeyframeFrame 0 · 4Frame 29 · 0Frame localValorCurva x1Curva y1Curva x2Curva y2Salvar keyframePivô xPivô ySalvar pivôDesfazer comando da revisão atualRenderizar esta revisãoRender associado à revisão 3 · c3434e6e9e938ac9246fd9cbf22372a4f83026a21862421be59d3df83956a9a4Versões, digests e materiaisRenderer: remotion.contextual-v2Documento: 24b47dcd51d9d96f37e7f892872fc3907250e092223d7b9c139b9123d19f379bGrafo: a64d1cd4c38b02508d1cb1c53f24c2aed4256d8b0526dee951f7821e73524ebdComposição: f6745c070163dc1eb0c8f9edfd8a0ee44338b48a2813f18a60a82bbe213c37cfcompilerVersion: res.scene-compiler.v2.16 · runtimeVersion: res.editorial-runtime.v2.5 · componentLibraryVersion: res.editorial-components.v2.20QC técnico e avaliação visual permanecem separados. Alterar a revisão exige novo render e nova avaliação.",
+      "status": "passed",
+      "origin": "http://127.0.0.1:3317",
+      "observationBasis": "mounted_DOM_after_render_auto_selected_output_tab"
+    },
+    {
+      "name": "isolated-combo-revision3",
+      "expected": [
+        "Revisão 3 · plano 3",
+        "Desfoque estático authored: 4 px.",
+        "deslocamento local x 32 px, y 12 px",
+        "cor #0000ff; opacidade 0.5.",
+        "Render associado à revisão 3"
+      ],
+      "text": "Composição e movimentoRevisão 3 · plano 3Atualizar inspeçãoAjuste salvo na revisão 3. Render e avaliação visual pendentes.Frame da composiçãoPropriedades calculadas no frame 0. Valores locais ao nó; posição final e limites do texto dependem do render.Cenaspatial-effects · [0, 30)CamadaLayer · group · c2a507Layer · group · 130865Layer · group · 1b54c2Layer · group · 04eb39Layer · shape · 3d3385sharp · shape · 3b00a5hard · shape · 2875b2zero · shape · 1f9838soft · shape · ae43f8blur · shape · bfd02fcombo · shape · f59c6canimated · shape · 8354ebTarget: ed2-e2ccbd04e110fd9c15f59c6cPai: LayerIntervalo: [0, 30)Base: x 200, y 220, 32 × 48, rotação 0°, opacidade 1Pivô: 0.5, 0.5Efeitos espaciaisDesfoque estático authored: 4 px.Desfoque no instante central do frame 0: 4 px · valor estático.Sombra authored: deslocamento local x 32 px, y 12 px; desfoque 4 px; cor #0000ff; opacidade 0.5.Profundidade authored: opacidade 1; parallax 0. A consequência composta é observada no render.Tracks do target no frame 0PropriedadeAvaliadaKeyframes authoredopacity1 ratio0: 1 (linear)Esta camada não tem receita editável. Os tracks acima pertencem à composição atual.Desfazer comando da revisão atualRenderizar esta revisãoRender associado à revisão 3 · c3434e6e9e938ac9246fd9cbf22372a4f83026a21862421be59d3df83956a9a4Versões, digests e materiaisRenderer: remotion.contextual-v2Documento: 24b47dcd51d9d96f37e7f892872fc3907250e092223d7b9c139b9123d19f379bGrafo: a64d1cd4c38b02508d1cb1c53f24c2aed4256d8b0526dee951f7821e73524ebdComposição: f6745c070163dc1eb0c8f9edfd8a0ee44338b48a2813f18a60a82bbe213c37cfcompilerVersion: res.scene-compiler.v2.16 · runtimeVersion: res.editorial-runtime.v2.5 · componentLibraryVersion: res.editorial-components.v2.20QC técnico e avaliação visual permanecem separados. Alterar a revisão exige novo render e nova avaliação.",
+      "status": "passed",
+      "origin": "http://127.0.0.1:3317",
+      "observationBasis": "mounted_DOM_after_render_auto_selected_output_tab"
+    },
+    {
+      "name": "visible-render-revision3-combo",
+      "expected": [
+        "Revisão 3 · plano 3",
+        "Desfoque estático authored: 4 px.",
+        "Render associado à revisão 3 · c3434e6e9e938ac9246fd9cbf22372a4f83026a21862421be59d3df83956a9a4"
+      ],
+      "text": "Composição e movimento\n\nRevisão 3 · plano 3\n\nAtualizar inspeção\n\nAjuste salvo na revisão 3. Render e avaliação visual pendentes.\n\nFrame da composição\n\nPropriedades calculadas no frame 0. Valores locais ao nó; posição final e limites do texto dependem do render.\n\nCena\nspatial-effects · [0, 30)\nCamada\nLayer · group · c2a507\nLayer · group · 130865\nLayer · group · 1b54c2\nLayer · group · 04eb39\nLayer · shape · 3d3385\nsharp · shape · 3b00a5\nhard · shape · 2875b2\nzero · shape · 1f9838\nsoft · shape · ae43f8\nblur · shape · bfd02f\ncombo · shape · f59c6c\nanimated · shape · 8354eb\n\nTarget: ed2-e2ccbd04e110fd9c15f59c6c\nPai: Layer\nIntervalo: [0, 30)\nBase: x 200, y 220, 32 × 48, rotação 0°, opacidade 1\nPivô: 0.5, 0.5\n\nEfeitos espaciais\n\nDesfoque estático authored: 4 px.\nDesfoque no instante central do frame 0: 4 px · valor estático.\n\nSombra authored: deslocamento local x 32 px, y 12 px; desfoque 4 px; cor #0000ff; opacidade 0.5.\n\nProfundidade authored: opacidade 1; parallax 0. A consequência composta é observada no render.\n\nTracks do target no frame 0\nPropriedade\tAvaliada\tKeyframes authored\nopacity\t1 ratio\t0: 1 (linear)\n\nEsta camada não tem receita editável. Os tracks acima pertencem à composição atual.\n\nDesfazer comando da revisão atual\nRenderizar esta revisão\n\nRender associado à revisão 3 · c3434e6e9e938ac9246fd9cbf22372a4f83026a21862421be59d3df83956a9a4\n\nVersões, digests e materiais",
+      "status": "passed",
+      "origin": "http://127.0.0.1:3317",
+      "observationBasis": "visible_panel_DOM"
+    },
+    {
+      "name": "visible-animated-revision3-frame4",
+      "expected": [
+        "Revisão 3 · plano 3",
+        "Desfoque no instante central do frame 4: 16 px · track blur_px calculada pela API.",
+        "8 amostras solicitadas",
+        "obturador 180°",
+        "valor central acima não representa a média do MP4"
+      ],
+      "text": "Composição e movimento\n\nRevisão 3 · plano 3\n\nAtualizar inspeção\n\nAjuste salvo na revisão 3. Render e avaliação visual pendentes.\n\nFrame da composição\n\nPropriedades calculadas no frame 4. Valores locais ao nó; posição final e limites do texto dependem do render.\n\nCena\nspatial-effects · [0, 30)\nCamada\nLayer · group · c2a507\nLayer · group · 130865\nLayer · group · 1b54c2\nLayer · group · 04eb39\nLayer · shape · 3d3385\nsharp · shape · 3b00a5\nhard · shape · 2875b2\nzero · shape · 1f9838\nsoft · shape · ae43f8\nblur · shape · bfd02f\ncombo · shape · f59c6c\nanimated · shape · 8354eb\n\nTarget: ed2-d613da99f997f74b2f8354eb\nPai: Layer\nIntervalo: [0, 30)\nBase: x 128, y 112, 32 × 48, rotação 0°, opacidade 1\nPivô: 0.5, 0.5\n\nEfeitos espaciais\n\nDesfoque estático authored: 0 px.\nDesfoque no instante central do frame 4: 16 px · track blur_px calculada pela API.\n\nSem sombra authored.\n\nProfundidade authored: opacidade 1; parallax 0. A consequência composta é observada no render.\n\nExposição temporal: 8 amostras solicitadas; obturador 180°; intervalo [0, 30). A exposição usa subframes; o valor central acima não representa a média do MP4. Amostras efetivamente usadas e redução no repouso constam do recibo do render.\n\nTracks do target no frame 4\nPropriedade\tAvaliada\tKeyframes authored\nblur_px\t16 pixels\t0: 0 (linear) · 1: 16 (linear) · 29: 16 (linear)\nAjustar receita existente\nReceita\nexpose-blur · velocity_blur\n\nFrames locais à receita [0, 30).\n\nDesfazer comando da revisão atual\nRenderizar esta revisão\n\nRender associado à revisão 3 · c3434e6e9e938ac9246fd9cbf22372a4f83026a21862421be59d3df83956a9a4\n\nVersões, digests e materiais",
+      "status": "passed",
+      "origin": "http://127.0.0.1:3317",
+      "observationBasis": "visible_panel_DOM"
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "observedAt": "2026-10-05T19:40:44.106304+00:00",
+  "path": "src/studios/VideoStudio.tsx",
+  "sha256": "0070cbff0002e969195df42159d80b0bccf24f63046c0fa0abff562811c6f38f",
+  "additionalSources": {
+    "src/studios/ContextualEditingPanel.tsx": "9400cea799e6f084ce12a7a42423d99b37babfdfbb8862ad0fd63a669c37f836"
+  }
+}

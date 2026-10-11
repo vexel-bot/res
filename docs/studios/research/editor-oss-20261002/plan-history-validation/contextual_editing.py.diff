@@ -1,0 +1,20 @@
+--- before/contextual_editing.py
++++ after/contextual_editing.py
+@@ -48,6 +48,7 @@
+     transcript_captions,
+     validate_transcript_bindings,
+ )
++from .editing_plan_validation import load_validated_plan
+ from .editing_repertoire import contextual_references, ensure_repertoire, search_repertoire
+ from .kernel import emit_event
+ from .review_binding import invalidate_linked_post_review
+@@ -65,6 +66,9 @@
+ 
+ 
+ def get_plan(db, workspace_id, plan_id):
++    # Preserve identity-map semantics, including unflushed nested JSON changes.
++    if plan_id and not any(isinstance(item, StudioDomainEvent) for item in db.identity_map.values()):
++        return load_validated_plan(db, workspace_id, plan_id, parse_editing_plan)
+     events = _events(db, workspace_id, PLAN_EVENT, plan_id)
+     if not events:
+         raise ValueError("editing_plan_not_found")

@@ -1,0 +1,72 @@
+{
+  "scope": "fixture_specific_actual_UI_API_MP4_revision_roundtrip",
+  "verifiedAt": "2026-10-04T10:57:10.303173+00:00",
+  "status": "passed",
+  "frozenSources": 57,
+  "sourceFreezeSha256": "ace42fd243b7c05560361c10b805913b29f5e9f55fb4994394b40203a61e9734",
+  "verifierSha256": "73bdf9851f4f40d1361c7816f308db1f10d820fdd809a5214e1fe28d02d77910",
+  "commandId": "e73e4ded-d1e0-45c5-9525-faa93d752dec",
+  "renders": [
+    {
+      "revision": 2,
+      "jobId": "6ad83921-9a2d-4d09-bea2-daad166c8f1b",
+      "mp4Sha256": "956c9bf0f8d09e7270dd0e4192c02c6ac32f2e31b72a70c3965e6fa7cec04bf8",
+      "snapshotSha256": "53311d0eab5071a97eb20cd4ed204f2c5d78c23ad2666c62df8199ab0fb800f8"
+    },
+    {
+      "revision": 3,
+      "jobId": "c6aa93be-773a-4895-839e-2cdb16b8139f",
+      "mp4Sha256": "8b2d2c3a958d2260f0c2321ba64c3fff0190f6d7961a989e8889cf91076b57a8",
+      "snapshotSha256": "36b20edbc77d86d69975211ac973aa384bc2eb435217f419f4aaa3c534d3e401"
+    }
+  ],
+  "originalAssetSha256": "ee10f031a17421859e3af5f725273644b8534709cb23173c6e1bf0ac8787e2c2",
+  "frame0LeavingBlockMean": [
+    179.0,
+    0.0
+  ],
+  "frame0InteriorBlockMean": [
+    178.0,
+    179.5
+  ],
+  "evidence": {
+    "fixture.json": "c434cb6e4b75305b759e92aac5237338a018f48b36e9b18fc8615131d8e70ecb",
+    "inspection-revision-2-frame-0.json": "3d6033ea9520483fd45b9aa9ecb517e028d2b3d33537be45401c50718735e4e5",
+    "inspection-revision-2-frame-10.json": "157a5cbae7334efb3ddec8da6a759407bd390a440c6455b5a528e2af6b39c4c3",
+    "inspection-revision-2-frame-15.json": "6cae7c2a7dc320086577379b6523e22e4651b1ded05a6ce7bfdb8db9605b3323",
+    "inspection-revision-2-frame-4.json": "a04deba28dc7d1d74e7d8e784097be3c8ca4c843e79bee699a42b6df2b314190",
+    "inspection-revision-2-frame-7.json": "9e536145270fac2fe397502f2ae67ebb1a23df260c43056cf510e091050781a1",
+    "inspection-revision-3-frame-0.json": "835c9d7df8cfc2d9d6634d1f54be9dee5befe0a5a0a0ea3b63a7214ad74b2019",
+    "inspection-revision-3-frame-10.json": "1c78016fd9f60ca51d884b79c6eb49432586049fa5942963fecc15da34c2c8bd",
+    "inspection-revision-3-frame-15.json": "bf639106833df40327e12f7b37b5ac1ee9f081dfa56fd0bd6fb2f30684b2c39c",
+    "inspection-revision-3-frame-4.json": "f98ba7f43b7963c8fdac6da5b3ca1c004915f7d07f730922b323218c99c43d28",
+    "inspection-revision-3-frame-7.json": "8ce5abcc80a9f747aab3f855c8572cc19e92034451461c92ecc2ff7c8861f1bb",
+    "matte-revision2-frame4.png": "e7743bfd17f79f5acb68aa6b77207adda7f27db33ce67cf006e017903cc90e23",
+    "original-matte.png": "ee10f031a17421859e3af5f725273644b8534709cb23173c6e1bf0ac8787e2c2",
+    "preview-revision-2.mp4": "956c9bf0f8d09e7270dd0e4192c02c6ac32f2e31b72a70c3965e6fa7cec04bf8",
+    "preview-revision-3.mp4": "8b2d2c3a958d2260f0c2321ba64c3fff0190f6d7961a989e8889cf91076b57a8",
+    "qualified-sources.json": "ace42fd243b7c05560361c10b805913b29f5e9f55fb4994394b40203a61e9734",
+    "render-revision-2.json": "242b95ea97612f95e4cc4e177e369acfd19849f9829b963c16cc3bfd46ca7681",
+    "render-revision-3.json": "2d2f15d13376f1e41f1f75ec9b73358aa47179ddbc903b0023236d86e1512625",
+    "rendered-revision3-frame4.png": "919c893f976fef168e44f2f2fc42a55227a6adb0b5872a89990025f9cc921ecd",
+    "ui-before-frame0.json": "2b5352e2d36c41afe1703a1f14601330153bc0402cecfb407ec8dcc7e64f520e",
+    "ui-before-frame4.json": "1bc632d83709fa0f3332d0255221aa2d202be1d10dbe6da7efcf10746b5ab300",
+    "ui-before-frame7.json": "0da56fe73b18bc452110149c2fc42c70e3c3e98e9c8c98eaeee02bb3373a1ace",
+    "ui-before-hold10.json": "a2c1f161ade85214537557c57b64aabc001ca2c63184380cf26d6296ad802b78",
+    "ui-changed-hero-revision3-frame0.json": "5e96d066a4a472191399d24a67774ee154bcf80fb753120e4235e3f29e25dc57",
+    "ui-changed-revision3-frame0.json": "92274452e7ea58eb66dd09f64bf11976e69a90fe4dbb8d413d6395e598ae1861",
+    "ui-rendered-revision2-frame4.json": "2792c2020d23e4305a577b0391075da826494113934e6026d4c6c672a4b74eac",
+    "ui-rendered-revision3-frame4.json": "80ab5551ca1f21d9657f83017701d6c1a45e46474f3a513663c04d0dc3bd813f",
+    "ui-source-frame4.json": "fdfa78d0673a72275866b6278df56826e4d6eb8d57660fd95d4ec4a2490530f0",
+    "ui-source-parent-frame4.json": "87a49c6c960d7af1494b0c162dc73f7d6077c490041956a10c8230d504189ba9"
+  },
+  "limitations": [
+    "Draft CRF 28; large authored displacement only, no high-quality oracle claim.",
+    "The center material preview is not the canonical renderer; inspected MP4 is in the review panel.",
+    "Source parent opacity is observed, not changed in this browser fixture.",
+    "HMR reloaded the page; stale MP4 absence was observed after recovery, not continuously across the command.",
+    "Revision 2 DOM capture has metadata and requested seek at readyState 1; only revision 3 has a retained loaded frame screenshot.",
+    "Inherited rig exposure display has not been browser-qualified in this child-scope fixture.",
+    "Human audiovisual review, blind preference and new-brief autonomy remain pending."
+  ]
+}

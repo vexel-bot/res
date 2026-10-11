@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="3" skipped="0" tests="4" time="91.245" timestamp="2026-10-03T14:28:17.625416-03:00" hostname="Computador"><testcase classname="tests.test_temporal_rig_render" name="test_temporal_rig_actual_api_affine_pixels[control]" time="24.034" /><testcase classname="tests.test_temporal_rig_render" name="test_temporal_rig_actual_api_affine_pixels[rig]" time="23.114"><failure message="AssertionError: [('pixels', 0, 168, 152, 13.018190828647953)]&#10;assert not [('pixels', 0, 168, 152, 13.018190828647953)]">client = &lt;starlette.testclient.TestClient object at 0x0000013F38EEFC50&gt;
+project = {'asset': 'ec74b6c7-9053-4748-a21a-0945e037da48', 'document': '4d4bb62c-7e98-49d2-be48-39c2fc6cd7a4', 'token': 'eyJhbG...dHlwZSI6ImFjY2VzcyJ9.ugXRW-SPhcDlnS1XdTmgW6i-S5BHRnFiab-B7fuGoQc', 'workspace': 'f4846992-69fd-4c5a-b143-c1537eac9433'}
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x0000013F397796D0&gt;
+tmp_path = WindowsPath('C:/Users/edugu/AppData/Local/Temp/pytest-of-edugu/pytest-144/test_temporal_rig_actual_api_a1')
+scope = 'rig'
+
+    @pytest.mark.parametrize("scope", ["control", "rig", "child", "disjoint"])
+    def test_temporal_rig_actual_api_affine_pixels(client, project, monkeypatch, tmp_path, scope):
+        with SessionLocal() as db:
+            record = db.get(CreativeDocument, project["document"])
+            doc = record_to_contract(record)
+            doc.composition.media_timeline.tracks = []
+            persist_contract(record, doc)
+            db.commit()
+        headers = {"Authorization": "Bearer " + project["token"]}
+        base = f"/api/v1/studios/v1/documents/{project['document']}"
+        response = client.post(base + "/editing-plans", headers={**headers, "Idempotency-Key": "rig-plan"},
+                               json=rig_direction(scope))
+        assert response.status_code == 200, response.text
+        plan = response.json()
+        assert plan["status"] == "ready", plan["blockers"]
+        applied = client.post(base + f"/editing-plans/{plan['id']}/apply", headers=headers,
+                              json={"expectedPlanRevision": plan["revision"]})
+        assert applied.status_code == 200, applied.text
+        inspection = client.get(base + "/editor/inspection?frame=4", headers=headers).json()
+        graphics = RemotionNativeGraphicsProvider("node", "ffmpeg", 180)
+        original_render = graphics.render
+        intermediate = tmp_path / "graphics-intermediate.mp4"
+    
+        def retaining_render(*args, **kwargs):
+            encoded = original_render(*args, **kwargs)
+            shutil.copy2(args[3], intermediate)
+            return encoded
+    
+        monkeypatch.setattr(graphics, "render", retaining_render)
+        monkeypatch.setitem(VIDEO_RENDER_PROVIDERS, "remotion.contextual-v2", RemotionNativeContextualRenderProvider(
+            graphics, VIDEO_RENDER_PROVIDERS["builtin.ffmpeg-contextual-v1"]))
+        monkeypatch.setattr("app.tasks.execute_studio_generation.delay", lambda *_: None)
+        submitted = client.post("/api/v1/studios/v1/video-renders", headers={**headers, "Idempotency-Key": "rig-render"},
+                                json={"workspaceId": project["workspace"], "documentId": project["document"],
+                                      "expectedDocumentRevision": applied.json()["revision"], "expectedDocumentVersion": 1,
+                                      "contextualPlanId": plan["id"], "provider": "remotion.contextual-v2",
+                                      "output": {"width": 320, "height": 320, "fps": 30, "quality": "high"}})
+        assert submitted.status_code == 202, submitted.text
+        deadline = time.monotonic() + 120
+        while _active(_read(lease_path())):
+            if time.monotonic() &gt;= deadline:
+                pytest.skip("Live local operation occupies heavy-media capacity")
+            time.sleep(1)
+        with SessionLocal() as db:
+            job = db.get(StudioGenerationJob, submitted.json()["id"])
+            execute_job_once(db, job)
+            assert job.status == "succeeded", job.error_message
+            result = job.result_payload
+            assert result["qualityEvaluation"]["status"] == "passed"
+            assert result["documentRevision"] == applied.json()["revision"] == inspection["document"]["revision"]
+            asset = db.get(LibraryAsset, result["artifact"]["assetId"])
+            metadata = asset.object_metadata
+            video = tmp_path / "rig.mp4"
+            with get_object_storage(asset.storage_backend).materialize(asset.storage_key) as source:
+                shutil.copy2(source, video)
+            assert hashlib.sha256(video.read_bytes()).hexdigest() == result["artifact"]["checksumSha256"]
+        evidence = {"scope": "actual_API_plan_apply_inspection_job_MP4_QC_independent_affine_polygon_pixels",
+                    "variant": scope, "measurementStatus": "in_progress", "humanReview": "pending",
+                    "inspection": inspection,
+                    "renderResult": result, "renderMetadata": metadata, "pixelChecks": [], "geometryChecks": []}
+        output = None
+        if directory := os.environ.get("TEMPORAL_RIG_EVIDENCE_DIR"):
+            output = Path(directory) / scope
+            output.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(video, output / "rig.mp4")
+            (output / "evidence.json").write_text(json.dumps(evidence, ensure_ascii=False, indent=2), encoding="utf-8")
+            shutil.copy2(intermediate, output / "graphics-intermediate.mp4")
+        receipt = metadata["contextualEditing"]["rendererChecks"]["graphics"]["remotionReceipt"]
+        assert hashlib.sha256(intermediate.read_bytes()).hexdigest() == receipt["videoSha256"]
+        rgb = subprocess.run(["ffmpeg", "-v", "error", "-i", str(video), "-f", "rawvideo", "-pix_fmt", "rgb24", "-"],
+                             capture_output=True, check=True, timeout=30,
+                             creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0)).stdout
+        assert len(rgb) == 30 * 320 * 320 * 3
+        geometry = metadata["contextualEditing"]["rendererChecks"]["geometrySamples"]
+        assert len(geometry) == 30
+        failures = []
+        for frame in [0, 4, 6, 7, 10, 29]:
+            active, times, probes = probes_for(frame, scope)
+            hero = next(item for item in geometry[frame]["elements"] if item["semanticId"] == "hero" and item["present"])
+            first = frame
+            if active != "control":
+                exposure = hero["temporalExposure"]
+                assert exposure["sampleFrames"] == pytest.approx(times)
+                assert not exposure["pixelCoverageObserved"]
+                first = times[0]
+                assert exposure["actualSamples"] == len(times)
+            polygon, _ = quadrilateral(frame, first, active)
+            bounds = {"x": min(p[0] for p in polygon), "y": min(p[1] for p in polygon),
+                      "width": max(p[0] for p in polygon) - min(p[0] for p in polygon),
+                      "height": max(p[1] for p in polygon) - min(p[1] for p in polygon)}
+            error = max(abs(hero["bounds"][key] - value) for key, value in bounds.items())
+            evidence["geometryChecks"].append({"frame": frame, "expectedBounds": bounds,
+                                               "observedBounds": hero["bounds"], "maximumErrorPx": error})
+            if error &gt;= .15:
+                failures.append(("geometry", frame, error))
+            for x, y, expected, coverage in probes:
+                observed = [sum(rgb[(frame * 320 * 320 + (y + dy) * 320 + x + dx) * 3 + channel]
+                                for dx in range(2) for dy in range(2)) / 4 for channel in range(3)]
+                error = abs(sum((a - b) * w for a, b, w in zip(observed, expected, [.2126, .7152, .0722], strict=True)))
+                evidence["pixelChecks"].append({"frame": frame, "x": x, "y": y, "expectedRgb": expected,
+                                                "observedRgb": observed, "coverage": coverage, "luminanceError": error,
+                                                "footprint": "aligned_2x2_yuv420p_block"})
+                if error &gt;= 8:
+                    failures.append(("pixels", frame, x, y, error))
+        evidence["measurementStatus"] = "failed" if failures else "passed"
+        evidence["failures"] = failures
+        if output:
+            (output / "evidence.json").write_text(json.dumps(evidence, ensure_ascii=False, indent=2), encoding="utf-8")
+&gt;       assert not failures, failures
+E       AssertionError: [('pixels', 0, 168, 152, 13.018190828647953)]
+E       assert not [('pixels', 0, 168, 152, 13.018190828647953)]
+
+tests\test_temporal_rig_render.py:274: AssertionError</failure></testcase><testcase classname="tests.test_temporal_rig_render" name="test_temporal_rig_actual_api_affine_pixels[child]" time="20.805"><failure message="AssertionError: [('pixels', 0, 168, 152, 8.063157610853288)]&#10;assert not [('pixels', 0, 168, 152, 8.063157610853288)]">client = &lt;starlette.testclient.TestClient object at 0x0000013F394977D0&gt;
+project = {'asset': 'a96effd5-dc0b-4989-bfab-571a6768af78', 'document': 'b953576c-732e-4a25-a9ed-4b7e94f32dca', 'token': 'eyJhbG...dHlwZSI6ImFjY2VzcyJ9.qLW7A0L1DjOtUCJh0FncnYX0ahU3bqbuu7_6IqYk4Nc', 'workspace': '28004c45-d509-4b1a-80b4-9d11f07f9ca2'}
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x0000013F3977B250&gt;
+tmp_path = WindowsPath('C:/Users/edugu/AppData/Local/Temp/pytest-of-edugu/pytest-144/test_temporal_rig_actual_api_a2')
+scope = 'child'
+
+    @pytest.mark.parametrize("scope", ["control", "rig", "child", "disjoint"])
+    def test_temporal_rig_actual_api_affine_pixels(client, project, monkeypatch, tmp_path, scope):
+        with SessionLocal() as db:
+            record = db.get(CreativeDocument, project["document"])
+            doc = record_to_contract(record)
+            doc.composition.media_timeline.tracks = []
+            persist_contract(record, doc)
+            db.commit()
+        headers = {"Authorization": "Bearer " + project["token"]}
+        base = f"/api/v1/studios/v1/documents/{project['document']}"
+        response = client.post(base + "/editing-plans", headers={**headers, "Idempotency-Key": "rig-plan"},
+                               json=rig_direction(scope))
+        assert response.status_code == 200, response.text
+        plan = response.json()
+        assert plan["status"] == "ready", plan["blockers"]
+        applied = client.post(base + f"/editing-plans/{plan['id']}/apply", headers=headers,
+                              json={"expectedPlanRevision": plan["revision"]})
+        assert applied.status_code == 200, applied.text
+        inspection = client.get(base + "/editor/inspection?frame=4", headers=headers).json()
+        graphics = RemotionNativeGraphicsProvider("node", "ffmpeg", 180)
+        original_render = graphics.render
+        intermediate = tmp_path / "graphics-intermediate.mp4"
+    
+        def retaining_render(*args, **kwargs):
+            encoded = original_render(*args, **kwargs)
+            shutil.copy2(args[3], intermediate)
+            return encoded
+    
+        monkeypatch.setattr(graphics, "render", retaining_render)
+        monkeypatch.setitem(VIDEO_RENDER_PROVIDERS, "remotion.contextual-v2", RemotionNativeContextualRenderProvider(
+            graphics, VIDEO_RENDER_PROVIDERS["builtin.ffmpeg-contextual-v1"]))
+        monkeypatch.setattr("app.tasks.execute_studio_generation.delay", lambda *_: None)
+        submitted = client.post("/api/v1/studios/v1/video-renders", headers={**headers, "Idempotency-Key": "rig-render"},
+                                json={"workspaceId": project["workspace"], "documentId": project["document"],
+                                      "expectedDocumentRevision": applied.json()["revision"], "expectedDocumentVersion": 1,
+                                      "contextualPlanId": plan["id"], "provider": "remotion.contextual-v2",
+                                      "output": {"width": 320, "height": 320, "fps": 30, "quality": "high"}})
+        assert submitted.status_code == 202, submitted.text
+        deadline = time.monotonic() + 120
+        while _active(_read(lease_path())):
+            if time.monotonic() &gt;= deadline:
+                pytest.skip("Live local operation occupies heavy-media capacity")
+            time.sleep(1)
+        with SessionLocal() as db:
+            job = db.get(StudioGenerationJob, submitted.json()["id"])
+            execute_job_once(db, job)
+            assert job.status == "succeeded", job.error_message
+            result = job.result_payload
+            assert result["qualityEvaluation"]["status"] == "passed"
+            assert result["documentRevision"] == applied.json()["revision"] == inspection["document"]["revision"]
+            asset = db.get(LibraryAsset, result["artifact"]["assetId"])
+            metadata = asset.object_metadata
+            video = tmp_path / "rig.mp4"
+            with get_object_storage(asset.storage_backend).materialize(asset.storage_key) as source:
+                shutil.copy2(source, video)
+            assert hashlib.sha256(video.read_bytes()).hexdigest() == result["artifact"]["checksumSha256"]
+        evidence = {"scope": "actual_API_plan_apply_inspection_job_MP4_QC_independent_affine_polygon_pixels",
+                    "variant": scope, "measurementStatus": "in_progress", "humanReview": "pending",
+                    "inspection": inspection,
+                    "renderResult": result, "renderMetadata": metadata, "pixelChecks": [], "geometryChecks": []}
+        output = None
+        if directory := os.environ.get("TEMPORAL_RIG_EVIDENCE_DIR"):
+            output = Path(directory) / scope
+            output.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(video, output / "rig.mp4")
+            (output / "evidence.json").write_text(json.dumps(evidence, ensure_ascii=False, indent=2), encoding="utf-8")
+            shutil.copy2(intermediate, output / "graphics-intermediate.mp4")
+        receipt = metadata["contextualEditing"]["rendererChecks"]["graphics"]["remotionReceipt"]
+        assert hashlib.sha256(intermediate.read_bytes()).hexdigest() == receipt["videoSha256"]
+        rgb = subprocess.run(["ffmpeg", "-v", "error", "-i", str(video), "-f", "rawvideo", "-pix_fmt", "rgb24", "-"],
+                             capture_output=True, check=True, timeout=30,
+                             creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0)).stdout
+        assert len(rgb) == 30 * 320 * 320 * 3
+        geometry = metadata["contextualEditing"]["rendererChecks"]["geometrySamples"]
+        assert len(geometry) == 30
+        failures = []
+        for frame in [0, 4, 6, 7, 10, 29]:
+            active, times, probes = probes_for(frame, scope)
+            hero = next(item for item in geometry[frame]["elements"] if item["semanticId"] == "hero" and item["present"])
+            first = frame
+            if active != "control":
+                exposure = hero["temporalExposure"]
+                assert exposure["sampleFrames"] == pytest.approx(times)
+                assert not exposure["pixelCoverageObserved"]
+                first = times[0]
+                assert exposure["actualSamples"] == len(times)
+            polygon, _ = quadrilateral(frame, first, active)
+            bounds = {"x": min(p[0] for p in polygon), "y": min(p[1] for p in polygon),
+                      "width": max(p[0] for p in polygon) - min(p[0] for p in polygon),
+                      "height": max(p[1] for p in polygon) - min(p[1] for p in polygon)}
+            error = max(abs(hero["bounds"][key] - value) for key, value in bounds.items())
+            evidence["geometryChecks"].append({"frame": frame, "expectedBounds": bounds,
+                                               "observedBounds": hero["bounds"], "maximumErrorPx": error})
+            if error &gt;= .15:
+                failures.append(("geometry", frame, error))
+            for x, y, expected, coverage in probes:
+                observed = [sum(rgb[(frame * 320 * 320 + (y + dy) * 320 + x + dx) * 3 + channel]
+                                for dx in range(2) for dy in range(2)) / 4 for channel in range(3)]
+                error = abs(sum((a - b) * w for a, b, w in zip(observed, expected, [.2126, .7152, .0722], strict=True)))
+                evidence["pixelChecks"].append({"frame": frame, "x": x, "y": y, "expectedRgb": expected,
+                                                "observedRgb": observed, "coverage": coverage, "luminanceError": error,
+                                                "footprint": "aligned_2x2_yuv420p_block"})
+                if error &gt;= 8:
+                    failures.append(("pixels", frame, x, y, error))
+        evidence["measurementStatus"] = "failed" if failures else "passed"
+        evidence["failures"] = failures
+        if output:
+            (output / "evidence.json").write_text(json.dumps(evidence, ensure_ascii=False, indent=2), encoding="utf-8")
+&gt;       assert not failures, failures
+E       AssertionError: [('pixels', 0, 168, 152, 8.063157610853288)]
+E       assert not [('pixels', 0, 168, 152, 8.063157610853288)]
+
+tests\test_temporal_rig_render.py:274: AssertionError</failure></testcase><testcase classname="tests.test_temporal_rig_render" name="test_temporal_rig_actual_api_affine_pixels[disjoint]" time="21.671"><failure message="AssertionError: [('pixels', 0, 168, 152, 13.018190828647953)]&#10;assert not [('pixels', 0, 168, 152, 13.018190828647953)]">client = &lt;starlette.testclient.TestClient object at 0x0000013F39185F50&gt;
+project = {'asset': 'e91dcc6b-f767-4aee-a747-06bcdd6d91a7', 'document': 'efeffdd7-5687-4aea-92b0-3fa5f251e4a3', 'token': 'eyJhbG...dHlwZSI6ImFjY2VzcyJ9.aAlfvI9mna6OWdRXw1zJOAsCK12qeBe8rw7PJYe7Cww', 'workspace': 'f5ddd909-607c-4998-befe-fba7ba9912a8'}
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x0000013F39779FD0&gt;
+tmp_path = WindowsPath('C:/Users/edugu/AppData/Local/Temp/pytest-of-edugu/pytest-144/test_temporal_rig_actual_api_a3')
+scope = 'disjoint'
+
+    @pytest.mark.parametrize("scope", ["control", "rig", "child", "disjoint"])
+    def test_temporal_rig_actual_api_affine_pixels(client, project, monkeypatch, tmp_path, scope):
+        with SessionLocal() as db:
+            record = db.get(CreativeDocument, project["document"])
+            doc = record_to_contract(record)
+            doc.composition.media_timeline.tracks = []
+            persist_contract(record, doc)
+            db.commit()
+        headers = {"Authorization": "Bearer " + project["token"]}
+        base = f"/api/v1/studios/v1/documents/{project['document']}"
+        response = client.post(base + "/editing-plans", headers={**headers, "Idempotency-Key": "rig-plan"},
+                               json=rig_direction(scope))
+        assert response.status_code == 200, response.text
+        plan = response.json()
+        assert plan["status"] == "ready", plan["blockers"]
+        applied = client.post(base + f"/editing-plans/{plan['id']}/apply", headers=headers,
+                              json={"expectedPlanRevision": plan["revision"]})
+        assert applied.status_code == 200, applied.text
+        inspection = client.get(base + "/editor/inspection?frame=4", headers=headers).json()
+        graphics = RemotionNativeGraphicsProvider("node", "ffmpeg", 180)
+        original_render = graphics.render
+        intermediate = tmp_path / "graphics-intermediate.mp4"
+    
+        def retaining_render(*args, **kwargs):
+            encoded = original_render(*args, **kwargs)
+            shutil.copy2(args[3], intermediate)
+            return encoded
+    
+        monkeypatch.setattr(graphics, "render", retaining_render)
+        monkeypatch.setitem(VIDEO_RENDER_PROVIDERS, "remotion.contextual-v2", RemotionNativeContextualRenderProvider(
+            graphics, VIDEO_RENDER_PROVIDERS["builtin.ffmpeg-contextual-v1"]))
+        monkeypatch.setattr("app.tasks.execute_studio_generation.delay", lambda *_: None)
+        submitted = client.post("/api/v1/studios/v1/video-renders", headers={**headers, "Idempotency-Key": "rig-render"},
+                                json={"workspaceId": project["workspace"], "documentId": project["document"],
+                                      "expectedDocumentRevision": applied.json()["revision"], "expectedDocumentVersion": 1,
+                                      "contextualPlanId": plan["id"], "provider": "remotion.contextual-v2",
+                                      "output": {"width": 320, "height": 320, "fps": 30, "quality": "high"}})
+        assert submitted.status_code == 202, submitted.text
+        deadline = time.monotonic() + 120
+        while _active(_read(lease_path())):
+            if time.monotonic() &gt;= deadline:
+                pytest.skip("Live local operation occupies heavy-media capacity")
+            time.sleep(1)
+        with SessionLocal() as db:
+            job = db.get(StudioGenerationJob, submitted.json()["id"])
+            execute_job_once(db, job)
+            assert job.status == "succeeded", job.error_message
+            result = job.result_payload
+            assert result["qualityEvaluation"]["status"] == "passed"
+            assert result["documentRevision"] == applied.json()["revision"] == inspection["document"]["revision"]
+            asset = db.get(LibraryAsset, result["artifact"]["assetId"])
+            metadata = asset.object_metadata
+            video = tmp_path / "rig.mp4"
+            with get_object_storage(asset.storage_backend).materialize(asset.storage_key) as source:
+                shutil.copy2(source, video)
+            assert hashlib.sha256(video.read_bytes()).hexdigest() == result["artifact"]["checksumSha256"]
+        evidence = {"scope": "actual_API_plan_apply_inspection_job_MP4_QC_independent_affine_polygon_pixels",
+                    "variant": scope, "measurementStatus": "in_progress", "humanReview": "pending",
+                    "inspection": inspection,
+                    "renderResult": result, "renderMetadata": metadata, "pixelChecks": [], "geometryChecks": []}
+        output = None
+        if directory := os.environ.get("TEMPORAL_RIG_EVIDENCE_DIR"):
+            output = Path(directory) / scope
+            output.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(video, output / "rig.mp4")
+            (output / "evidence.json").write_text(json.dumps(evidence, ensure_ascii=False, indent=2), encoding="utf-8")
+            shutil.copy2(intermediate, output / "graphics-intermediate.mp4")
+        receipt = metadata["contextualEditing"]["rendererChecks"]["graphics"]["remotionReceipt"]
+        assert hashlib.sha256(intermediate.read_bytes()).hexdigest() == receipt["videoSha256"]
+        rgb = subprocess.run(["ffmpeg", "-v", "error", "-i", str(video), "-f", "rawvideo", "-pix_fmt", "rgb24", "-"],
+                             capture_output=True, check=True, timeout=30,
+                             creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0)).stdout
+        assert len(rgb) == 30 * 320 * 320 * 3
+        geometry = metadata["contextualEditing"]["rendererChecks"]["geometrySamples"]
+        assert len(geometry) == 30
+        failures = []
+        for frame in [0, 4, 6, 7, 10, 29]:
+            active, times, probes = probes_for(frame, scope)
+            hero = next(item for item in geometry[frame]["elements"] if item["semanticId"] == "hero" and item["present"])
+            first = frame
+            if active != "control":
+                exposure = hero["temporalExposure"]
+                assert exposure["sampleFrames"] == pytest.approx(times)
+                assert not exposure["pixelCoverageObserved"]
+                first = times[0]
+                assert exposure["actualSamples"] == len(times)
+            polygon, _ = quadrilateral(frame, first, active)
+            bounds = {"x": min(p[0] for p in polygon), "y": min(p[1] for p in polygon),
+                      "width": max(p[0] for p in polygon) - min(p[0] for p in polygon),
+                      "height": max(p[1] for p in polygon) - min(p[1] for p in polygon)}
+            error = max(abs(hero["bounds"][key] - value) for key, value in bounds.items())
+            evidence["geometryChecks"].append({"frame": frame, "expectedBounds": bounds,
+                                               "observedBounds": hero["bounds"], "maximumErrorPx": error})
+            if error &gt;= .15:
+                failures.append(("geometry", frame, error))
+            for x, y, expected, coverage in probes:
+                observed = [sum(rgb[(frame * 320 * 320 + (y + dy) * 320 + x + dx) * 3 + channel]
+                                for dx in range(2) for dy in range(2)) / 4 for channel in range(3)]
+                error = abs(sum((a - b) * w for a, b, w in zip(observed, expected, [.2126, .7152, .0722], strict=True)))
+                evidence["pixelChecks"].append({"frame": frame, "x": x, "y": y, "expectedRgb": expected,
+                                                "observedRgb": observed, "coverage": coverage, "luminanceError": error,
+                                                "footprint": "aligned_2x2_yuv420p_block"})
+                if error &gt;= 8:
+                    failures.append(("pixels", frame, x, y, error))
+        evidence["measurementStatus"] = "failed" if failures else "passed"
+        evidence["failures"] = failures
+        if output:
+            (output / "evidence.json").write_text(json.dumps(evidence, ensure_ascii=False, indent=2), encoding="utf-8")
+&gt;       assert not failures, failures
+E       AssertionError: [('pixels', 0, 168, 152, 13.018190828647953)]
+E       assert not [('pixels', 0, 168, 152, 13.018190828647953)]
+
+tests\test_temporal_rig_render.py:274: AssertionError</failure></testcase></testsuite></testsuites>

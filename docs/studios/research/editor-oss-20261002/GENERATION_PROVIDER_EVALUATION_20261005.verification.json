@@ -1,0 +1,29 @@
+{
+  "paidGenerationCalls": 0,
+  "newRenders": 0,
+  "informalUserRating": 1,
+  "selectedDelivery": "product_service_ad_with_scenes_and_narration",
+  "integrationImplemented": false,
+  "files": {
+    "GENERATION_PROVIDER_EVALUATION_20261005.md": {
+      "sha256": "0efbc3fc03bbb0edd73b1b4a9a5aff144c89e4c4b35d8c356bf3da5d5a64b0a6",
+      "bytes": 12087
+    },
+    "GENERATION_PROVIDER_EVALUATION_20261005.arcads-api.json": {
+      "sha256": "8daa09ad71db120454962239fab2c637b9b6f91e278ae3fe5cff4eaa82ec348f",
+      "bytes": 6714
+    },
+    "human-review/feedback-20261005.json": {
+      "sha256": "3c5bffdcd06dc765291559cf82d3c152cdec961700ccc5bd354393a00eb5e0b5",
+      "bytes": 507
+    },
+    "human-review/players-verified-20261005.json": {
+      "sha256": "04ec3f891e837b8fb2f1f8cd27f49540687963af2067e6b458dd664a3b3f2f73",
+      "bytes": 2408
+    },
+    "resource-search/verification.json": {
+      "sha256": "5eaade6e8ea2a79d4d39bccaf04c3de82f24f32d7b4fe231a9247556119a34ea",
+      "bytes": 3263
+    }
+  }
+}

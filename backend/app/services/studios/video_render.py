@@ -43,8 +43,8 @@ from .editorial_review import require_editorial_render_readiness
 from .jobs import create_job
 from .kernel import emit_event
 
-CONTEXTUAL_RENDERERS = {"builtin.ffmpeg-contextual-v1", "hyperframes.contextual-v2", "motion-canvas.contextual-v1", "remotion.contextual-v1", "remotion.contextual-v2"}
-CONTEXTUAL_V2_RENDERERS = {"hyperframes.contextual-v2", "motion-canvas.contextual-v1", "remotion.contextual-v1", "remotion.contextual-v2"}
+CONTEXTUAL_RENDERERS = {"alight-motion.contextual-v1", "builtin.ffmpeg-contextual-v1", "hyperframes.contextual-v2", "motion-canvas.contextual-v1", "remotion.contextual-v1", "remotion.contextual-v2"}
+CONTEXTUAL_V2_RENDERERS = {"alight-motion.contextual-v1", "hyperframes.contextual-v2", "motion-canvas.contextual-v1", "remotion.contextual-v1", "remotion.contextual-v2"}
 
 
 def create_video_render_job(
@@ -54,6 +54,13 @@ def create_video_render_job(
     idempotency_key: str,
     user: User,
 ) -> tuple[StudioGenerationJob, bool]:
+    if request.provider == "alight-motion.contextual-v1":
+        from ...config import get_settings
+        from ...providers.studios.alight_motion import refresh_registration
+
+        admission = refresh_registration(get_settings(), VIDEO_RENDER_PROVIDERS)
+        if not admission["available"]:
+            raise ValueError("alight_worker_not_ready:" + ",".join(admission["blockers"]))
     if request.provider in CONTEXTUAL_RENDERERS:
         from .contextual_editing import lock_editing_budget
 
@@ -198,7 +205,21 @@ def create_video_render_job(
         },
         correlation_id=render_request.correlation_id,
     )
-    return create_job(db, job_request, idempotency_key, user)
+    if request.engine_campaign_id:
+        job_request.request["engineQualification"] = {
+            "campaignId": request.engine_campaign_id, "language": request.engine_language,
+        }
+    job, created = create_job(db, job_request, idempotency_key, user, commit=not bool(request.engine_campaign_id))
+    if request.engine_campaign_id:
+        from ...domain.studios.engine_qualification import RegisterEngineTrialV1
+        from .engine_qualification import register_trial
+
+        # Enrollment and job creation commit together while the workspace lock
+        # remains held. Failed admission cannot leave an unregistered job.
+        register_trial(db, document.workspace_id, request.engine_campaign_id, RegisterEngineTrialV1(
+            language=request.engine_language, job_id=job.id,
+        ), user)
+    return job, created
 
 
 def _existing_result(db: Session, job: StudioGenerationJob) -> dict | None:
@@ -228,6 +249,14 @@ def execute_video_render(
     if existing:
         return existing
     render_request = VideoRenderRequestV1.model_validate(job.request_payload.get("renderRequest"))
+    if job.provider == "alight-motion.contextual-v1":
+        from ...config import get_settings
+        from ...providers.studios.alight_motion import refresh_registration
+
+        status = refresh_registration(get_settings(), VIDEO_RENDER_PROVIDERS)
+        if not status["available"]:
+            raise ValueError("alight_worker_not_ready:" + ",".join(status["blockers"]))
+        render_request.execution_job_id = job.id
     document = CreativeDocumentV1.model_validate(job.request_payload.get("documentSnapshot"))
     motion_projection = (
         MotionGraphProjectionV1.model_validate(job.request_payload.get("motionProjection"))
@@ -259,6 +288,11 @@ def execute_video_render(
         )
         if contextual_plan.revision != job.request_payload.get("contextualPlanRevision"):
             raise ValueError("editing_plan_revision_conflict")
+        if job.provider == "alight-motion.contextual-v1":
+            render_request.execution_plan_snapshot = {
+                "id": contextual_plan.id, "revision": contextual_plan.revision,
+                "manifest": contextual_plan.manifest, "motionGraph": contextual_plan.motion_graph,
+            }
         if job.provider in CONTEXTUAL_V2_RENDERERS:
             from .scene_compiler import executable_composition_digest
 
@@ -271,7 +305,8 @@ def execute_video_render(
                 raise ValueError("editing_executable_composition_digest_required")
             if expected_digest and timeline is not None:
                 actual_digest = executable_composition_digest(
-                    document.composition.pages[0], timeline, contextual_plan.motion_graph
+                    document.composition.pages[0], timeline, contextual_plan.motion_graph,
+                    (document.composition.narrative.get("editorialV2") or {}).get("motionRecipes", []),
                 )
                 if actual_digest != expected_digest:
                     raise ValueError("editing_executable_composition_conflict")
@@ -428,6 +463,13 @@ def execute_video_render(
         storage.delete(stored.key)
         return {"cancelled": True}
     progress(92)
+    if job.provider == "alight-motion.contextual-v1":
+        receipt = encoded.renderer_checks.get("graphics", {}).get("alightReceipt")
+        if not receipt or receipt.get("jobId") != job.id:
+            storage.delete(stored.key)
+            raise ValueError("alight_final_receipt_job_mismatch")
+        receipt["finalVideoSha256"] = stored.checksum_sha256
+        receipt["audioPolicy"] = "silent_visual_ffmpeg_mix"
     try:
         asset = LibraryAsset(
             workspace_id=job.workspace_id,

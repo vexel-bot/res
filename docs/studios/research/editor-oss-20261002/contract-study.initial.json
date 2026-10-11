@@ -1,0 +1,75 @@
+{
+  "schemaVersion": "res.editor-oss-contract-study.v1",
+  "date": "2026-10-02",
+  "source": {
+    "path": "backend/app/domain/studios/motion.py",
+    "sha256": "63d489b6feb4d1ca53b7f73a292a6663ff458ca2f4ae7467cdc4cd67485d5b69"
+  },
+  "velocityProbe": {
+    "fps": 30,
+    "durationFrames": 30,
+    "displacementPx": 100,
+    "easing": "ease_in",
+    "thresholdPxPerSecond": 150,
+    "currentCheckerPxPerSecond": 100.0,
+    "curvePeakLimitPxPerSecond": 200,
+    "sampledPeakPxPerSecond": 199.98999999998546,
+    "currentCheckerWouldPass": true,
+    "curvePeakWouldPass": false,
+    "currentAccelerationEstimate": null,
+    "analyticAccelerationPxPerSecondSquared": 200,
+    "finding": "The current checks measure segment secants and need three keys for acceleration; they do not certify eased peak speed/acceleration."
+  },
+  "timeConversionOracleVectors": [
+    {
+      "sourceFrame": 24,
+      "sourceRate": "24",
+      "outputRate": "60",
+      "exactOutputFrame": "60",
+      "needsExplicitRoundingPolicy": false
+    },
+    {
+      "sourceFrame": 1,
+      "sourceRate": "24",
+      "outputRate": "60",
+      "exactOutputFrame": "5/2",
+      "needsExplicitRoundingPolicy": true
+    },
+    {
+      "sourceFrame": 60,
+      "sourceRate": "60",
+      "outputRate": "24",
+      "exactOutputFrame": "24",
+      "needsExplicitRoundingPolicy": false
+    },
+    {
+      "sourceFrame": 1,
+      "sourceRate": "60",
+      "outputRate": "24",
+      "exactOutputFrame": "2/5",
+      "needsExplicitRoundingPolicy": true
+    },
+    {
+      "sourceFrame": 24000,
+      "sourceRate": "24000/1001",
+      "outputRate": "30",
+      "exactOutputFrame": "30030",
+      "needsExplicitRoundingPolicy": false
+    }
+  ],
+  "recipeFixtures": {
+    "path": "docs/studios/research/editor-oss-20261002/recipes.v1.json",
+    "sha256": "786f8b328a827d149c42835eccd1f8aba1701ff1c93df44b3a425631dead8c25",
+    "validatedAgainst": "app.domain.studios.motion_recipes.MotionRecipeV1",
+    "count": 4,
+    "ids": [
+      "study-title-settle",
+      "study-whole-words",
+      "study-motivated-matte",
+      "study-temporal-exposure"
+    ],
+    "qualification": "contract_validated_only"
+  },
+  "evidenceLevel": "Existing Python contract/helper execution and original rational arithmetic oracle; no new renderer capability or aesthetic qualification.",
+  "externalCodeCopied": false
+}

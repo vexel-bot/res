@@ -1,0 +1,10 @@
+.editor-inspection { display: grid; gap: 10px; padding: 12px 0; border-block: 1px solid var(--border-subtle, #3c4449); }
+.editor-inspection p { margin: 0; font-size: 12px; line-height: 1.5; overflow-wrap: anywhere; }
+.editor-inspection label { display: grid; gap: 4px; font-size: 12px; }
+.editor-inspection select, .editor-inspection input { min-width: 0; width: 100%; min-height: 36px; }
+.editor-inspection code { font-size: 10px; overflow-wrap: anywhere; }
+.editor-inspection table { width: 100%; table-layout: fixed; border-collapse: collapse; font-size: 11px; }
+.editor-inspection td, .editor-inspection th { text-align: left; padding: 6px 4px; overflow-wrap: anywhere; border-bottom: 1px solid #3c4449; }
+.editor-inspection fieldset { display: grid; gap: 8px; min-width: 0; padding: 10px; }
+.editor-inspection video { width: 100%; max-height: 260px; }
+.editor-control-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }

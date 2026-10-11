@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="3" skipped="0" tests="6" time="59.489" timestamp="2026-10-02T18:16:21.900681-03:00" hostname="Computador"><testcase classname="tests.test_remotion_native" name="test_native_parameters_are_persisted_and_invalidate_digest" time="3.224" /><testcase classname="tests.test_remotion_native" name="test_unknown_component_and_unbound_speed_rejected" time="5.245" /><testcase classname="tests.test_remotion_native" name="test_native_video_trim_speed_and_observed_geometry[24]" time="18.454"><failure message="ValueError: remotion_render_failed:[Tab 1, src/hybrid.tsx:123] RES_GEOMETRY:{&quot;frame&quot;:1,&quot;elements&quot;:[{&quot;layerId&quot;:&quot;ed2-71e35aa88296f01a28320dfd&quot;,&quot;semanticId&quot;:&quot;Layer&quot;,&quot;present&quot;:true,&quot;visible&quot;:true,&quot;opacity&quot;:1,&quot;geometryBasis&quot;:&quot;dom_bounding_box&quot;,&quot;maskCoverageObserved&quot;:false,&quot;bounds&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:320,&quot;height&quot;:320}},{&quot;layerId&quot;:&quot;ed2-71458a6a87beb6282676415f&quot;,&quot;semanticId&quot;:&quot;Layer&quot;,&quot;present&quot;:true,&quot;visible&quot;:true,&quot;opacity&quot;:1,&quot;geometryBasis&quot;:&quot;dom_bounding_box&quot;,&quot;maskCoverageObserved&quot;:false,&quot;bounds&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:320,&quot;height&quot;:320}},{&quot;layerId&quot;:&quot;ed2-ecda5251ec13adfcc27c9df5&quot;,&quot;semanticId&quot;:&quot;Layer&quot;,&quot;present&quot;:true,&quot;visible&quot;:true,&quot;opacity&quot;:1,&quot;geometryBasis&quot;:&quot;dom_bounding_box&quot;,&quot;maskCoverageObserved&quot;:false,&quot;bounds&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:3&#10;...&#10;e:internal/streams/readable:392:5)&#13;&#10;    at Pipe.onStreamRead (node:internal/stream_base_commons:189:23)&#13;&#10;    at onMessage (file:///C:/Users/edugu/Downloads/res/workers/remotion-benchmark/node_modules/@remotion/renderer/dist/esm/index.mjs:16783:37)&#13;&#10;    at processInput (file:///C:/Users/edugu/Downloads/res/workers/remotion-benchmark/node_modules/@remotion/streaming/dist/esm/index.mjs:137:5)&#13;&#10;    at onDataInner (file:///C:/Users/edugu/Downloads/res/workers/remotion-benchmark/node_modules/@remotion/streaming/dist/esm/index.mjs:183:12)&#13;&#10;    at Socket.onData (file:///C:/Users/edugu/Downloads/res/workers/remotion-benchmark/node_modules/@remotion/streaming/dist/esm/index.mjs:188:14)&#13;&#10;    at Socket.emit (node:events:518:28)&#13;&#10;    at addChunk (node:internal/streams/readable:561:12)&#13;&#10;    at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)&#13;&#10;    at Readable.push (node:internal/streams/readable:392:5)&#13;&#10;    at Pipe.onStreamRead (node:internal/stream_base_commons:189:23)&#13;&#10;    at execute (http://localhost:3001/bundle.js:31768:21) {&#13;&#10;  stackFrame: [&#13;&#10;    {&#13;&#10;      columnNumber: 20,&#13;&#10;      fileName: 'http://localhost:3001/bundle.js',&#13;&#10;      functionName: 'execute',&#13;&#10;      lineNumber: 31767&#13;&#10;    }&#13;&#10;  ],&#13;&#10;  delayRenderCall: null,&#13;&#10;  frame: 11,&#13;&#10;  chunk: null&#13;&#10;}&#13;&#10;&#13;&#10;Node.js v22.15.0">tmp_path = WindowsPath('C:/Users/edugu/AppData/Local/Temp/pytest-of-edugu/pytest-70/test_native_video_trim_speed_a0')
+source_fps = 24
+
+    @pytest.mark.parametrize("source_fps", [24, 60])
+    def test_native_video_trim_speed_and_observed_geometry(tmp_path, source_fps):
+        # A 1s red / 1s green / 1s blue source. Trim at 1s, play 2x for 0.5s: green only.
+        source = tmp_path / "source.mp4"
+        subprocess.run(
+            [
+                "ffmpeg",
+                "-v",
+                "error",
+                "-y",
+                "-f",
+                "lavfi",
+                "-i",
+                f"color=red:s=320x320:r={source_fps}:d=1",
+                "-f",
+                "lavfi",
+                "-i",
+                f"color=green:s=320x320:r={source_fps}:d=1",
+                "-f",
+                "lavfi",
+                "-i",
+                f"color=blue:s=320x320:r={source_fps}:d=1",
+                "-filter_complex",
+                "[0:v][1:v][2:v]concat=n=3:v=1:a=0[v]",
+                "-map",
+                "[v]",
+                "-c:v",
+                "libx264",
+                "-pix_fmt",
+                "yuv420p",
+                str(source),
+            ],
+            check=True,
+        )
+        checksum = hashlib.sha256(source.read_bytes()).hexdigest()
+        doc, projection = native_document(
+            native_direction("footage", 2),
+            [{"id": "footage", "mediaType": "video/mp4", "checksum": checksum, "rightsStatus": "verified"}],
+        )
+        request = VideoRenderRequestV1(
+            workspace_id=doc.workspace_id,
+            document_id=doc.document_id,
+            document_revision=doc.revision,
+            document_version=doc.version,
+            page_ids=["page"],
+            asset_ids=["footage"],
+            correlation_id="native-test",
+            output={"width": 320, "height": 320, "fps": 30, "audioCodec": "none"},
+        )
+        output = tmp_path / "native.mp4"
+&gt;       result = RemotionNativeGraphicsProvider("node", "ffmpeg", 180).render(
+            doc,
+            request,
+            {"footage": source},
+            output,
+            lambda _: None,
+            lambda: False,
+            motion_projection=projection,
+            automatic_draft=True,
+        )
+
+tests\test_remotion_native.py:154: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;app.providers.studios.remotion_render.RemotionNativeGraphicsProvider object at 0x00000121DBF11F10&gt;
+document = CreativeDocumentV1(schema_version='studio.creative-document.v1', document_id='native-test', workspace_id='workspace', ...nfo=datetime.timezone.utc), updated_at=datetime.datetime(2026, 10, 2, 21, 16, 34, 66291, tzinfo=datetime.timezone.utc))
+request = VideoRenderRequestV1(schema_version='studio.video-render-request.v1', workspace_id='workspace', document_id='native-te...o_codec='none', quality='standard'), correlation_id='native-test', execution_job_id=None, execution_plan_snapshot=None)
+assets = {'footage': WindowsPath('C:/Users/edugu/AppData/Local/Temp/pytest-of-edugu/pytest-70/test_native_video_trim_speed_a0/source.mp4')}
+destination = WindowsPath('C:/Users/edugu/AppData/Local/Temp/pytest-of-edugu/pytest-70/test_native_video_trim_speed_a0/native.mp4')
+progress = &lt;function test_native_video_trim_speed_and_observed_geometry.&lt;locals&gt;.&lt;lambda&gt; at 0x00000121DC0FD760&gt;
+is_cancelled = &lt;function test_native_video_trim_speed_and_observed_geometry.&lt;locals&gt;.&lt;lambda&gt; at 0x00000121DC14F9C0&gt;
+
+    def render(
+        self,
+        document,
+        request,
+        assets,
+        destination,
+        progress,
+        is_cancelled,
+        *,
+        motion_projection=None,
+        automatic_draft=False,
+    ):
+        if not automatic_draft or not isinstance(motion_projection, MotionGraphProjectionV1):
+            raise ValueError("remotion_bound_automatic_draft_required")
+        if (
+            request.output.format != "mp4"
+            or request.output.video_codec != "h264"
+            or request.output.audio_codec != "none"
+        ):
+            raise ValueError("remotion_graphics_output_unsupported")
+        if not (self.worker_dir / "node_modules" / "@remotion" / "renderer").is_dir():
+            raise ValueError("remotion_worker_not_installed")
+        from ...services.object_storage import sha256_file
+    
+        refs = {ref.id: ref for ref in document.assets}
+        bindings = {}
+        for asset_id, source in assets.items():
+            if asset_id not in refs or not refs[asset_id].checksum:
+                raise ValueError("remotion_asset_checksum_required:" + asset_id)
+            digest = sha256_file(source)
+            if digest.lower() != refs[asset_id].checksum.lower():
+                raise ValueError("remotion_asset_checksum_conflict:" + asset_id)
+            bindings[asset_id] = {"path": str(source.resolve()), "sha256": digest, "mime": refs[asset_id].media_type}
+        manifest = self.compile_composition(document, motion_projection, bindings)
+        if (
+            request.output.width != manifest["width"]
+            or request.output.height != manifest["height"]
+            or abs(request.output.fps - manifest["fps"]) &gt; 1e-6
+        ):
+            raise ValueError("remotion_output_spec_conflict")
+        if is_cancelled():
+            raise InterruptedError("remotion_render_cancelled")
+        started = time.monotonic()
+        with tempfile.TemporaryDirectory(prefix="res-remotion-") as temporary:
+            root = Path(temporary)
+            manifest_path = root / "manifest.json"
+            visual = root / "visual.mp4"
+            manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, sort_keys=True), encoding="utf-8")
+            command = [self.node_path, str(self.worker_dir / self.runner), str(manifest_path), str(visual)]
+            with tempfile.TemporaryFile(mode="w+b") as log:
+                process = subprocess.Popen(
+                    command,
+                    cwd=self.worker_dir,
+                    stdin=subprocess.DEVNULL,
+                    stdout=log,
+                    stderr=subprocess.STDOUT,
+                    shell=False,
+                    creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0),
+                )
+                while process.poll() is None:
+                    cancelled = is_cancelled()
+                    if cancelled or time.monotonic() - started &gt; self.timeout_seconds:
+                        if __import__("os").name == "nt":
+                            subprocess.run(
+                                ["taskkill", "/PID", str(process.pid), "/T", "/F"], capture_output=True, check=False
+                            )
+                        else:
+                            process.kill()
+                        process.wait(timeout=10)
+                        if cancelled:
+                            raise InterruptedError("remotion_render_cancelled")
+                        raise TimeoutError("remotion_render_timeout")
+                    time.sleep(0.25)
+                log.seek(0)
+                output = log.read().decode("utf-8", errors="replace")
+            if process.returncode:
+                diagnostic = output[:700] if len(output) &lt;= 700 else output[:700] + "\n...\n" + output[-1300:]
+&gt;               raise ValueError("remotion_render_failed:" + diagnostic)
+E               ValueError: remotion_render_failed:[Tab 1, src/hybrid.tsx:123] RES_GEOMETRY:{"frame":1,"elements":[{"layerId":"ed2-71e35aa88296f01a28320dfd","semanticId":"Layer","present":true,"visible":true,"opacity":1,"geometryBasis":"dom_bounding_box","maskCoverageObserved":false,"bounds":{"x":0,"y":0,"width":320,"height":320}},{"layerId":"ed2-71458a6a87beb6282676415f","semanticId":"Layer","present":true,"visible":true,"opacity":1,"geometryBasis":"dom_bounding_box","maskCoverageObserved":false,"bounds":{"x":0,"y":0,"width":320,"height":320}},{"layerId":"ed2-ecda5251ec13adfcc27c9df5","semanticId":"Layer","present":true,"visible":true,"opacity":1,"geometryBasis":"dom_bounding_box","maskCoverageObserved":false,"bounds":{"x":0,"y":0,"width":3
+E               ...
+E               e:internal/streams/readable:392:5)
+E                   at Pipe.onStreamRead (node:internal/stream_base_commons:189:23)
+E                   at onMessage (file:///C:/Users/edugu/Downloads/res/workers/remotion-benchmark/node_modules/@remotion/renderer/dist/esm/index.mjs:16783:37)
+E                   at processInput (file:///C:/Users/edugu/Downloads/res/workers/remotion-benchmark/node_modules/@remotion/streaming/dist/esm/index.mjs:137:5)
+E                   at onDataInner (file:///C:/Users/edugu/Downloads/res/workers/remotion-benchmark/node_modules/@remotion/streaming/dist/esm/index.mjs:183:12)
+E                   at Socket.onData (file:///C:/Users/edugu/Downloads/res/workers/remotion-benchmark/node_modules/@remotion/streaming/dist/esm/index.mjs:188:14)
+E                   at Socket.emit (node:events:518:28)
+E                   at addChunk (node:internal/streams/readable:561:12)
+E                   at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+E                   at Readable.push (node:internal/streams/readable:392:5)
+E                   at Pipe.onStreamRead (node:internal/stream_base_commons:189:23)
+E                   at execute (http://localhost:3001/bundle.js:31768:21) {
+E                 stackFrame: [
+E                   {
+E                     columnNumber: 20,
+E                     fileName: 'http://localhost:3001/bundle.js',
+E                     functionName: 'execute',
+E                     lineNumber: 31767
+E                   }
+E                 ],
+E                 delayRenderCall: null,
+E                 frame: 11,
+E                 chunk: null
+E               }
+E               
+E               Node.js v22.15.0
+
+app\providers\studios\remotion_render.py:108: ValueError</failure></testcase><testcase classname="tests.test_remotion_native" name="test_native_video_trim_speed_and_observed_geometry[60]" time="21.486"><failure message="ValueError: remotion_render_failed:[Tab 0, src/hybrid.tsx:123] RES_GEOMETRY:{&quot;frame&quot;:0,&quot;elements&quot;:[{&quot;layerId&quot;:&quot;ed2-71e35aa88296f01a28320dfd&quot;,&quot;semanticId&quot;:&quot;Layer&quot;,&quot;present&quot;:true,&quot;visible&quot;:true,&quot;opacity&quot;:1,&quot;geometryBasis&quot;:&quot;dom_bounding_box&quot;,&quot;maskCoverageObserved&quot;:false,&quot;bounds&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:320,&quot;height&quot;:320}},{&quot;layerId&quot;:&quot;ed2-71458a6a87beb6282676415f&quot;,&quot;semanticId&quot;:&quot;Layer&quot;,&quot;present&quot;:true,&quot;visible&quot;:true,&quot;opacity&quot;:1,&quot;geometryBasis&quot;:&quot;dom_bounding_box&quot;,&quot;maskCoverageObserved&quot;:false,&quot;bounds&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:320,&quot;height&quot;:320}},{&quot;layerId&quot;:&quot;ed2-ecda5251ec13adfcc27c9df5&quot;,&quot;semanticId&quot;:&quot;Layer&quot;,&quot;present&quot;:true,&quot;visible&quot;:true,&quot;opacity&quot;:1,&quot;geometryBasis&quot;:&quot;dom_bounding_box&quot;,&quot;maskCoverageObserved&quot;:false,&quot;bounds&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:3&#10;...&#10;e:internal/streams/readable:392:5)&#13;&#10;    at Pipe.onStreamRead (node:internal/stream_base_commons:189:23)&#13;&#10;    at onMessage (file:///C:/Users/edugu/Downloads/res/workers/remotion-benchmark/node_modules/@remotion/renderer/dist/esm/index.mjs:16783:37)&#13;&#10;    at processInput (file:///C:/Users/edugu/Downloads/res/workers/remotion-benchmark/node_modules/@remotion/streaming/dist/esm/index.mjs:137:5)&#13;&#10;    at onDataInner (file:///C:/Users/edugu/Downloads/res/workers/remotion-benchmark/node_modules/@remotion/streaming/dist/esm/index.mjs:183:12)&#13;&#10;    at Socket.onData (file:///C:/Users/edugu/Downloads/res/workers/remotion-benchmark/node_modules/@remotion/streaming/dist/esm/index.mjs:188:14)&#13;&#10;    at Socket.emit (node:events:518:28)&#13;&#10;    at addChunk (node:internal/streams/readable:561:12)&#13;&#10;    at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)&#13;&#10;    at Readable.push (node:internal/streams/readable:392:5)&#13;&#10;    at Pipe.onStreamRead (node:internal/stream_base_commons:189:23)&#13;&#10;    at execute (http://localhost:3001/bundle.js:31768:21) {&#13;&#10;  stackFrame: [&#13;&#10;    {&#13;&#10;      columnNumber: 20,&#13;&#10;      fileName: 'http://localhost:3001/bundle.js',&#13;&#10;      functionName: 'execute',&#13;&#10;      lineNumber: 31767&#13;&#10;    }&#13;&#10;  ],&#13;&#10;  delayRenderCall: null,&#13;&#10;  frame: 14,&#13;&#10;  chunk: null&#13;&#10;}&#13;&#10;&#13;&#10;Node.js v22.15.0">tmp_path = WindowsPath('C:/Users/edugu/AppData/Local/Temp/pytest-of-edugu/pytest-70/test_native_video_trim_speed_a1')
+source_fps = 60
+
+    @pytest.mark.parametrize("source_fps", [24, 60])
+    def test_native_video_trim_speed_and_observed_geometry(tmp_path, source_fps):
+        # A 1s red / 1s green / 1s blue source. Trim at 1s, play 2x for 0.5s: green only.
+        source = tmp_path / "source.mp4"
+        subprocess.run(
+            [
+                "ffmpeg",
+                "-v",
+                "error",
+                "-y",
+                "-f",
+                "lavfi",
+                "-i",
+                f"color=red:s=320x320:r={source_fps}:d=1",
+                "-f",
+                "lavfi",
+                "-i",
+                f"color=green:s=320x320:r={source_fps}:d=1",
+                "-f",
+                "lavfi",
+                "-i",
+                f"color=blue:s=320x320:r={source_fps}:d=1",
+                "-filter_complex",
+                "[0:v][1:v][2:v]concat=n=3:v=1:a=0[v]",
+                "-map",
+                "[v]",
+                "-c:v",
+                "libx264",
+                "-pix_fmt",
+                "yuv420p",
+                str(source),
+            ],
+            check=True,
+        )
+        checksum = hashlib.sha256(source.read_bytes()).hexdigest()
+        doc, projection = native_document(
+            native_direction("footage", 2),
+            [{"id": "footage", "mediaType": "video/mp4", "checksum": checksum, "rightsStatus": "verified"}],
+        )
+        request = VideoRenderRequestV1(
+            workspace_id=doc.workspace_id,
+            document_id=doc.document_id,
+            document_revision=doc.revision,
+            document_version=doc.version,
+            page_ids=["page"],
+            asset_ids=["footage"],
+            correlation_id="native-test",
+            output={"width": 320, "height": 320, "fps": 30, "audioCodec": "none"},
+        )
+        output = tmp_path / "native.mp4"
+&gt;       result = RemotionNativeGraphicsProvider("node", "ffmpeg", 180).render(
+            doc,
+            request,
+            {"footage": source},
+            output,
+            lambda _: None,
+            lambda: False,
+            motion_projection=projection,
+            automatic_draft=True,
+        )
+
+tests\test_remotion_native.py:154: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;app.providers.studios.remotion_render.RemotionNativeGraphicsProvider object at 0x00000121DBFBC110&gt;
+document = CreativeDocumentV1(schema_version='studio.creative-document.v1', document_id='native-test', workspace_id='workspace', ...fo=datetime.timezone.utc), updated_at=datetime.datetime(2026, 10, 2, 21, 16, 53, 374672, tzinfo=datetime.timezone.utc))
+request = VideoRenderRequestV1(schema_version='studio.video-render-request.v1', workspace_id='workspace', document_id='native-te...o_codec='none', quality='standard'), correlation_id='native-test', execution_job_id=None, execution_plan_snapshot=None)
+assets = {'footage': WindowsPath('C:/Users/edugu/AppData/Local/Temp/pytest-of-edugu/pytest-70/test_native_video_trim_speed_a1/source.mp4')}
+destination = WindowsPath('C:/Users/edugu/AppData/Local/Temp/pytest-of-edugu/pytest-70/test_native_video_trim_speed_a1/native.mp4')
+progress = &lt;function test_native_video_trim_speed_and_observed_geometry.&lt;locals&gt;.&lt;lambda&gt; at 0x00000121DC0FCE00&gt;
+is_cancelled = &lt;function test_native_video_trim_speed_and_observed_geometry.&lt;locals&gt;.&lt;lambda&gt; at 0x00000121DC24C680&gt;
+
+    def render(
+        self,
+        document,
+        request,
+        assets,
+        destination,
+        progress,
+        is_cancelled,
+        *,
+        motion_projection=None,
+        automatic_draft=False,
+    ):
+        if not automatic_draft or not isinstance(motion_projection, MotionGraphProjectionV1):
+            raise ValueError("remotion_bound_automatic_draft_required")
+        if (
+            request.output.format != "mp4"
+            or request.output.video_codec != "h264"
+            or request.output.audio_codec != "none"
+        ):
+            raise ValueError("remotion_graphics_output_unsupported")
+        if not (self.worker_dir / "node_modules" / "@remotion" / "renderer").is_dir():
+            raise ValueError("remotion_worker_not_installed")
+        from ...services.object_storage import sha256_file
+    
+        refs = {ref.id: ref for ref in document.assets}
+        bindings = {}
+        for asset_id, source in assets.items():
+            if asset_id not in refs or not refs[asset_id].checksum:
+                raise ValueError("remotion_asset_checksum_required:" + asset_id)
+            digest = sha256_file(source)
+            if digest.lower() != refs[asset_id].checksum.lower():
+                raise ValueError("remotion_asset_checksum_conflict:" + asset_id)
+            bindings[asset_id] = {"path": str(source.resolve()), "sha256": digest, "mime": refs[asset_id].media_type}
+        manifest = self.compile_composition(document, motion_projection, bindings)
+        if (
+            request.output.width != manifest["width"]
+            or request.output.height != manifest["height"]
+            or abs(request.output.fps - manifest["fps"]) &gt; 1e-6
+        ):
+            raise ValueError("remotion_output_spec_conflict")
+        if is_cancelled():
+            raise InterruptedError("remotion_render_cancelled")
+        started = time.monotonic()
+        with tempfile.TemporaryDirectory(prefix="res-remotion-") as temporary:
+            root = Path(temporary)
+            manifest_path = root / "manifest.json"
+            visual = root / "visual.mp4"
+            manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, sort_keys=True), encoding="utf-8")
+            command = [self.node_path, str(self.worker_dir / self.runner), str(manifest_path), str(visual)]
+            with tempfile.TemporaryFile(mode="w+b") as log:
+                process = subprocess.Popen(
+                    command,
+                    cwd=self.worker_dir,
+                    stdin=subprocess.DEVNULL,
+                    stdout=log,
+                    stderr=subprocess.STDOUT,
+                    shell=False,
+                    creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0),
+                )
+                while process.poll() is None:
+                    cancelled = is_cancelled()
+                    if cancelled or time.monotonic() - started &gt; self.timeout_seconds:
+                        if __import__("os").name == "nt":
+                            subprocess.run(
+                                ["taskkill", "/PID", str(process.pid), "/T", "/F"], capture_output=True, check=False
+                            )
+                        else:
+                            process.kill()
+                        process.wait(timeout=10)
+                        if cancelled:
+                            raise InterruptedError("remotion_render_cancelled")
+                        raise TimeoutError("remotion_render_timeout")
+                    time.sleep(0.25)
+                log.seek(0)
+                output = log.read().decode("utf-8", errors="replace")
+            if process.returncode:
+                diagnostic = output[:700] if len(output) &lt;= 700 else output[:700] + "\n...\n" + output[-1300:]
+&gt;               raise ValueError("remotion_render_failed:" + diagnostic)
+E               ValueError: remotion_render_failed:[Tab 0, src/hybrid.tsx:123] RES_GEOMETRY:{"frame":0,"elements":[{"layerId":"ed2-71e35aa88296f01a28320dfd","semanticId":"Layer","present":true,"visible":true,"opacity":1,"geometryBasis":"dom_bounding_box","maskCoverageObserved":false,"bounds":{"x":0,"y":0,"width":320,"height":320}},{"layerId":"ed2-71458a6a87beb6282676415f","semanticId":"Layer","present":true,"visible":true,"opacity":1,"geometryBasis":"dom_bounding_box","maskCoverageObserved":false,"bounds":{"x":0,"y":0,"width":320,"height":320}},{"layerId":"ed2-ecda5251ec13adfcc27c9df5","semanticId":"Layer","present":true,"visible":true,"opacity":1,"geometryBasis":"dom_bounding_box","maskCoverageObserved":false,"bounds":{"x":0,"y":0,"width":3
+E               ...
+E               e:internal/streams/readable:392:5)
+E                   at Pipe.onStreamRead (node:internal/stream_base_commons:189:23)
+E                   at onMessage (file:///C:/Users/edugu/Downloads/res/workers/remotion-benchmark/node_modules/@remotion/renderer/dist/esm/index.mjs:16783:37)
+E                   at processInput (file:///C:/Users/edugu/Downloads/res/workers/remotion-benchmark/node_modules/@remotion/streaming/dist/esm/index.mjs:137:5)
+E                   at onDataInner (file:///C:/Users/edugu/Downloads/res/workers/remotion-benchmark/node_modules/@remotion/streaming/dist/esm/index.mjs:183:12)
+E                   at Socket.onData (file:///C:/Users/edugu/Downloads/res/workers/remotion-benchmark/node_modules/@remotion/streaming/dist/esm/index.mjs:188:14)
+E                   at Socket.emit (node:events:518:28)
+E                   at addChunk (node:internal/streams/readable:561:12)
+E                   at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+E                   at Readable.push (node:internal/streams/readable:392:5)
+E                   at Pipe.onStreamRead (node:internal/stream_base_commons:189:23)
+E                   at execute (http://localhost:3001/bundle.js:31768:21) {
+E                 stackFrame: [
+E                   {
+E                     columnNumber: 20,
+E                     fileName: 'http://localhost:3001/bundle.js',
+E                     functionName: 'execute',
+E                     lineNumber: 31767
+E                   }
+E                 ],
+E                 delayRenderCall: null,
+E                 frame: 14,
+E                 chunk: null
+E               }
+E               
+E               Node.js v22.15.0
+
+app\providers\studios\remotion_render.py:108: ValueError</failure></testcase><testcase classname="tests.test_remotion_native" name="test_native_missing_checksum_and_cancellation" time="4.334" /><testcase classname="tests.test_remotion_native_api" name="test_native_plan_apply_render_api_and_provider_binding" time="4.512"><failure message="AssertionError: heavy_media_execution_in_progress&#10;assert 'retrying' == 'succeeded'&#10;  &#10;  - succeeded&#10;  + retrying">client = &lt;starlette.testclient.TestClient object at 0x00000121D9BB7190&gt;
+project = {'asset': 'd0e01d76-c972-4ebf-800f-e24fa2e24179', 'document': 'c1281aa2-e337-4688-9d4f-b93402cc38a3', 'token': 'eyJhbG...dHlwZSI6ImFjY2VzcyJ9.inUOcieGKU3lMKBcoJDOxfEkCnCuEHuwdndmD_f_3kA', 'workspace': '7b6ab123-20b1-46ba-b9d7-921eaf8412fb'}
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x00000121DC2CF3D0&gt;
+
+    def test_native_plan_apply_render_api_and_provider_binding(client, project, monkeypatch):
+        from app.database import SessionLocal
+        from app.models import CreativeDocument, StudioGenerationJob
+        from app.providers.studios.remotion_render import (
+            RemotionNativeContextualRenderProvider,
+            RemotionNativeGraphicsProvider,
+        )
+        from app.providers.studios.video_render import VIDEO_RENDER_PROVIDERS
+        from app.services.studios.compatibility import persist_contract, record_to_contract
+        from app.services.studios.jobs import execute_job_once
+    
+        monkeypatch.setitem(
+            VIDEO_RENDER_PROVIDERS,
+            "remotion.contextual-v2",
+            RemotionNativeContextualRenderProvider(
+                RemotionNativeGraphicsProvider("node", "ffmpeg", 180),
+                VIDEO_RENDER_PROVIDERS["builtin.ffmpeg-contextual-v1"],
+            ),
+        )
+        monkeypatch.setattr("app.tasks.execute_studio_generation.delay", lambda *_: None)
+        # This is a new B-roll composition, not a semantic edit of the fixture's interview.
+        with SessionLocal() as db:
+            record = db.get(CreativeDocument, project["document"])
+            document = record_to_contract(record)
+            document.composition.media_timeline.tracks = []
+            persist_contract(record, document)
+            db.commit()
+        headers = {"Authorization": "Bearer " + project["token"], "Idempotency-Key": "native-api-plan"}
+        base = f"/api/v1/studios/v1/documents/{project['document']}/editing-plans"
+        response = client.post(
+            base, headers=headers, json=native_direction(project["asset"]).model_dump(mode="json", by_alias=True)
+        )
+        assert response.status_code == 200, response.text
+        plan = response.json()
+        assert plan["status"] == "ready", plan["blockers"]
+        response = client.post(
+            base + "/" + plan["id"] + "/apply", headers=headers, json={"expectedPlanRevision": plan["revision"]}
+        )
+        assert response.status_code == 200, response.text
+        body = {
+            "workspaceId": project["workspace"],
+            "documentId": project["document"],
+            "expectedDocumentRevision": response.json()["revision"],
+            "expectedDocumentVersion": 1,
+            "contextualPlanId": plan["id"],
+            "provider": "hyperframes.contextual-v2",
+            "output": {"width": 320, "height": 320, "fps": 30},
+        }
+        response = client.post("/api/v1/studios/v1/video-renders", headers=headers, json=body)
+        assert response.status_code in {409, 422}, response.text
+        assert "native_renderer_binding_conflict" in response.text
+        body["provider"] = "remotion.contextual-v2"
+        headers["Idempotency-Key"] = "native-api-render"
+        response = client.post("/api/v1/studios/v1/video-renders", headers=headers, json=body)
+        assert response.status_code == 202, response.text
+        replay = client.post("/api/v1/studios/v1/video-renders", headers=headers, json=body)
+        assert replay.json()["id"] == response.json()["id"]
+        with SessionLocal() as db:
+            job = db.get(StudioGenerationJob, response.json()["id"])
+            execute_job_once(db, job)
+&gt;           assert job.status == "succeeded", job.error_message
+E           AssertionError: heavy_media_execution_in_progress
+E           assert 'retrying' == 'succeeded'
+E             
+E             - succeeded
+E             + retrying
+
+tests\test_remotion_native_api.py:68: AssertionError</failure></testcase></testsuite></testsuites>

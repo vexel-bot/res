@@ -1,6 +1,7 @@
 import React from "react";
 import { apiFetch, apiFetchBlob } from "../api";
 import type { StudioDocumentRecord } from "../api/productApi";
+import { createLatestResourceRead } from "./latestResourceRead";
 
 type Resource = { id: string; title: string; mediaType: string; checksum: string; reviewStatus?: string;
   resource: { kind?: string; description?: string }; url: string };
@@ -10,7 +11,8 @@ type Job = { id: string; status: string; errorMessage?: string; result?: {
 export function EditingResourcesPanel({ document, onDocument, disabled }: {
   document: StudioDocumentRecord; onDocument: (value: StudioDocumentRecord) => void; disabled: boolean;
 }) {
-  const [items, setItems] = React.useState<Resource[]>([]);
+  const [catalog, setCatalog] = React.useState<{ context: string; status: "loading" | "ready" | "failed";
+    items: Resource[] }>({ context: "", status: "loading", items: [] });
   const [query, setQuery] = React.useState("");
   const [kind, setKind] = React.useState("image");
   const [assetRole, setAssetRole] = React.useState("");
@@ -37,6 +39,14 @@ export function EditingResourcesPanel({ document, onDocument, disabled }: {
   const scope = `workspace_id=${encodeURIComponent(document.workspaceId)}`;
   const root = "/api/v1/studios/v1";
   const generation = React.useRef(0);
+  const catalogContext = JSON.stringify([document.workspaceId, document.documentId, query]);
+  const currentCatalogContext = React.useRef(catalogContext);
+  currentCatalogContext.current = catalogContext;
+  const catalogReader = React.useMemo(() => createLatestResourceRead<Resource[]>(), []);
+  const catalogTimer = React.useRef<ReturnType<typeof setTimeout>>();
+  const items = catalog.context === catalogContext ? catalog.items : [];
+  const catalogLoading = catalog.context !== catalogContext || catalog.status === "loading";
+  const catalogFailed = catalog.context === catalogContext && catalog.status === "failed";
   const clips = (document.composition.mediaTimeline?.tracks ?? []).flatMap(track =>
     track.kind === "video" || track.kind === "overlay" ? track.clips : []);
   React.useEffect(() => () => { if (fontPreview) globalThis.document.fonts.delete(fontPreview); }, [fontPreview]);
@@ -52,11 +62,25 @@ export function EditingResourcesPanel({ document, onDocument, disabled }: {
     return () => controller.abort();
   }, []);
   const refresh = React.useCallback(async () => {
-    const current = generation.current;
-    const value = await apiFetch<Resource[]>(`${root}/editing/resources?${scope}&query=${encodeURIComponent(query)}`);
-    if (current === generation.current) setItems(value);
-  }, [scope, query]);
-  React.useEffect(() => { void refresh().catch(() => setMessage("Não foi possível carregar o acervo.")); }, [refresh]);
+    if (currentCatalogContext.current !== catalogContext) return;
+    clearTimeout(catalogTimer.current); catalogTimer.current = undefined;
+    await catalogReader.load({
+      isCurrent: () => currentCatalogContext.current === catalogContext,
+      read: signal => apiFetch<Resource[]>(`${root}/editing/resources?${scope}&query=${encodeURIComponent(query)}`, { signal }),
+      onStart: () => setCatalog({ context: catalogContext, status: "loading", items: [] }),
+      onValue: value => setCatalog({ context: catalogContext, status: "ready", items: value }),
+      onError: () => setCatalog({ context: catalogContext, status: "failed", items: [] }),
+    });
+  }, [catalogReader, catalogContext, scope, query]);
+  React.useEffect(() => {
+    const timer = setTimeout(() => { catalogTimer.current = undefined; void refresh(); }, 250);
+    catalogTimer.current = timer;
+    return () => {
+      clearTimeout(timer);
+      if (catalogTimer.current === timer) catalogTimer.current = undefined;
+      catalogReader.cancel();
+    };
+  }, [refresh, catalogReader]);
   React.useEffect(() => {
     if (!job || ["succeeded", "failed", "cancelled"].includes(job.status)) return;
     const controller = new AbortController();
@@ -149,7 +173,12 @@ export function EditingResourcesPanel({ document, onDocument, disabled }: {
           assetRole: assetRole || (kind === "logo" ? "logo" : null), motionDescription });
         setMessage("Fonte de material cadastrada para as próximas edições deste cliente.");
       })}>Cadastrar fonte de material</button>
-    <ul>{items.map(item => <li key={item.id}>{item.title} · {item.resource.kind ?? item.mediaType}
+    <button type="button" disabled={busy} onClick={() => void refresh()}>Atualizar acervo</button>
+    {catalogLoading && <p role="status">Buscando recursos…</p>}
+    {catalogFailed && <p role="alert">Não foi possível carregar o acervo. Tente atualizar.</p>}
+    <ul aria-label="Resultados do acervo" aria-busy={catalogLoading} data-catalog-query={query}
+      data-catalog-status={catalogLoading ? "loading" : catalogFailed ? "failed" : "ready"}>
+      {items.map(item => <li key={item.id} data-resource-id={item.id}>{item.title} · {item.resource.kind ?? item.mediaType}
       {item.resource.kind === "font" && <button type="button" disabled={busy}
         onClick={() => void run(() => showFont(item.id))}>Ver tipografia</button>}
       {/^(image|video|audio)\//.test(item.mediaType) && <button type="button" disabled={busy}

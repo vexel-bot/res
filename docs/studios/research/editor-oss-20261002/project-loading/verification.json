@@ -1,0 +1,133 @@
+{
+  "observedAt": "2026-10-05T19:26:23.661260+00:00",
+  "scope": "Project loading and optional resource failure/recovery, not generation quality",
+  "sourceHashesMatch": 76,
+  "rounds": {
+    "fault": {
+      "supportStatuses": {
+        "casebook": 200,
+        "assisted-intelligence": 200,
+        "factory-program": 200,
+        "replan-state": 200,
+        "advanced-capabilities": 0,
+        "autonomy-audit": 0
+      },
+      "optionalStartedAfterMp4Transfer": true,
+      "projectControlsAvailableWhileSupportLoading": true,
+      "decodedVideoObservedWhileSupportLoading": false,
+      "firstProjectReadySampleMs": 1978,
+      "firstDecodedVideoAfterProjectReadyMs": 2419.7999999821186,
+      "finalDecodedVideo": true,
+      "video": {
+        "bytes": 2635718,
+        "duration": 15,
+        "height": 1920,
+        "sha256": "1b856b62acb23b07d488c1c6f9582af75fa5cf074f49c465cdab0a40d6943925",
+        "width": 1080
+      }
+    },
+    "recovered": {
+      "supportStatuses": {
+        "casebook": 200,
+        "assisted-intelligence": 200,
+        "factory-program": 200,
+        "replan-state": 200,
+        "advanced-capabilities": 200,
+        "autonomy-audit": 200
+      },
+      "optionalStartedAfterMp4Transfer": true,
+      "projectControlsAvailableWhileSupportLoading": true,
+      "decodedVideoObservedWhileSupportLoading": true,
+      "firstProjectReadySampleMs": 641.0999999940395,
+      "firstDecodedVideoAfterProjectReadyMs": 780.8999999761581,
+      "finalDecodedVideo": true,
+      "video": {
+        "bytes": 2635718,
+        "duration": 15,
+        "height": 1920,
+        "sha256": "1b856b62acb23b07d488c1c6f9582af75fa5cf074f49c465cdab0a40d6943925",
+        "width": 1080
+      }
+    }
+  },
+  "limits": [
+    "No new render or paid call",
+    "Decoded frame before all support responses not proven in fault round",
+    "No aesthetic approval or autonomy demonstration",
+    "Historical API audit retained; current source hash verification only"
+  ],
+  "files": {
+    "api-after.json": {
+      "sha256": "b8aa1d292bcbaf20cf4dc7579f411bb624f97e4aaa00f97afb7b1d8539ed9ad8",
+      "bytes": 4165
+    },
+    "before.json": {
+      "sha256": "17aec24aee095a373ca847d2fe95b671271d2751bff54d36b193d1b0a1cfe64c",
+      "bytes": 323
+    },
+    "fault-arm.json": {
+      "sha256": "67eaf9f5ef5a241c69460b065fa85972a0fa851b0a1e0c3332680744e421d694",
+      "bytes": 529
+    },
+    "fault-tool-negative.json": {
+      "sha256": "f50b93268b8fd1b7e144d6a6c916cc6822b61908b975c1c6dc17bfe794d8ae6f",
+      "bytes": 54271
+    },
+    "fault-ui.png": {
+      "sha256": "b7da0bdb0ba7bcfde73a059cf9ebb0a33c2f6342caf913add35b8d98c01d016f",
+      "bytes": 147834
+    },
+    "fault-verified-arm.json": {
+      "sha256": "b31a76fa6b8bc3db8bc020d9b7c029754fb30ce591102c25b4d8f9d70e3892ae",
+      "bytes": 530
+    },
+    "fault-verified-collect.json": {
+      "sha256": "de150191dbed7ab4e1cfab369ba577fbff57933612786573750b58a1dd28eace",
+      "bytes": 7384
+    },
+    "interception-actions-source.json": {
+      "sha256": "173f0560bb2427bee2734d3e2c1cf3fe51415333a3732d3129f96a3207c1a476",
+      "bytes": 11924
+    },
+    "interception-source.json": {
+      "sha256": "b22be7c7cb0e75349b54af3c4f5ca7e52329c296c367b69bd3566f8fea86e2e0",
+      "bytes": 302
+    },
+    "README.md": {
+      "sha256": "880dfd59451a79621993987c0a37853c9d17a9a533bdca5108dce5529ff60a34",
+      "bytes": 6552
+    },
+    "recovered-ui.png": {
+      "sha256": "2daf9a18dc40b5689e1a8ceb9af8c979c8f263b5d224f577e9b748ec26628f9c",
+      "bytes": 147830
+    },
+    "recovered-verified-arm.json": {
+      "sha256": "025f4c8785f5ce4c1f3c22e5e398dd0477d1badfc33fa0d181f79837e1683004",
+      "bytes": 737
+    },
+    "recovered-verified-collect.json": {
+      "sha256": "f94cf03d860f9cc168e6d25e5f5e60cbaee8998c45b05bd9c92f197d4137eaef",
+      "bytes": 4895
+    },
+    "sources.json": {
+      "sha256": "327d155e82b6c13fec1ff9753625086e4341add7c4fe530235e73410252e73b4",
+      "bytes": 9808
+    },
+    "tests.txt": {
+      "sha256": "525509b23b41467ae1c06a4b578e18fd658b7dcbbc1e496aa6a03d47ac10cfd3",
+      "bytes": 1880
+    },
+    "typecheck.txt": {
+      "sha256": "8e5130ab8fef910d8f862f70abe11bdcf77057ae0096d42c22540aa5f3e7c2f3",
+      "bytes": 52
+    },
+    "useVideoStudio.ts": {
+      "sha256": "7f5cf8a639ff7ef884aa4b5a4c61d89252068425e4b33a34b2f3b4bda20946bd",
+      "bytes": 57734
+    },
+    "VideoStudio.tsx": {
+      "sha256": "d77c0acf1f7e2689814e1be27de8bcf9690c0d72538b974b5c7268cc3c723514",
+      "bytes": 87863
+    }
+  }
+}

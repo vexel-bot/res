@@ -1,0 +1,83 @@
+{
+  "repository": "C:\\Users\\edugu\\Downloads\\res",
+  "head": "9399f88cfe45d2bde39a34451581611b3d634d31",
+  "remoteHeads": [
+    "f73d660731c0748da6be1fdc337804620089ef99\trefs/heads/codex/klic-atualizacao-20260823",
+    "b91f7172feaef6b007736d44869ecb423f7d2ef1\trefs/heads/codex/studio-evolution-20261001",
+    "9399f88cfe45d2bde39a34451581611b3d634d31\trefs/heads/main"
+  ],
+  "branches": [
+    {
+      "branch": "codex/stitch-implementation",
+      "commit": "965a9bbbfceb05d479c67db84ac4582e567da841",
+      "date": "2026-08-22 12:37:55 -0300",
+      "uniqueCommitsVsMain": 0,
+      "missingCommitsFromMain": 3,
+      "treeEqualsMain": false
+    },
+    {
+      "branch": "codex/studio-evolution-20261001",
+      "commit": "9399f88cfe45d2bde39a34451581611b3d634d31",
+      "date": "2026-10-01 16:51:20 -0300",
+      "uniqueCommitsVsMain": 0,
+      "missingCommitsFromMain": 0,
+      "treeEqualsMain": true
+    },
+    {
+      "branch": "codex/vps-production-foundation",
+      "commit": "df40bf47800d6b78f576a880b8f1cace0ace0fbb",
+      "date": "2026-08-10 11:06:34 -0300",
+      "uniqueCommitsVsMain": 20,
+      "missingCommitsFromMain": 4,
+      "treeEqualsMain": false
+    },
+    {
+      "branch": "main",
+      "commit": "9399f88cfe45d2bde39a34451581611b3d634d31",
+      "date": "2026-10-01 16:51:20 -0300",
+      "uniqueCommitsVsMain": 0,
+      "missingCommitsFromMain": 0,
+      "treeEqualsMain": true
+    },
+    {
+      "branch": "origin/codex/klic-atualizacao-20260823",
+      "commit": "f73d660731c0748da6be1fdc337804620089ef99",
+      "date": "2026-08-23 03:56:42 -0300",
+      "uniqueCommitsVsMain": 0,
+      "missingCommitsFromMain": 4,
+      "treeEqualsMain": false
+    },
+    {
+      "branch": "origin/codex/studio-evolution-20261001",
+      "commit": "b91f7172feaef6b007736d44869ecb423f7d2ef1",
+      "date": "2026-10-01 16:44:09 -0300",
+      "uniqueCommitsVsMain": 0,
+      "missingCommitsFromMain": 2,
+      "treeEqualsMain": true
+    }
+  ],
+  "uniqueVpsCommitLog": [
+    "df40bf4 2026-08-10 11:06:34 -0300 Merge branch 'main' of https://github.com/vexel-bot/res into codex/vps-production-foundation",
+    "2e8b467 2026-08-04 16:20:21 -0300 fix: route containerized frontend to local API",
+    "2e034a5 2026-08-04 16:17:03 -0300 dev: allow alternate local data ports",
+    "b227c56 2026-08-04 16:07:59 -0300 ops: add repeatable production audit",
+    "19a387b 2026-08-04 16:02:46 -0300 ops: enable trusted HTTPS for production IP",
+    "a6deb16 2026-08-04 15:41:51 -0300 ops: harden production runtime and automate backups",
+    "622e774 2026-08-04 12:09:54 -0300 feat: add searchable history and workspace learning",
+    "1640fab 2026-08-04 11:18:08 -0300 feat: add versioned layered creative editor",
+    "b8653ba 2026-08-04 10:36:29 -0300 feat: schedule contextual radar sources",
+    "660265f 2026-08-04 10:12:25 -0300 ops: validate migrations and rotate production secrets",
+    "b78bada 2026-08-04 10:07:30 -0300 feat: add traceable hybrid knowledge search",
+    "3c076c3 2026-08-04 09:51:12 -0300 fix: remove simulated content from production flow",
+    "58e557a 2026-08-04 09:40:51 -0300 feat: add audited idempotent radar jobs",
+    "794b47e 2026-08-04 09:29:12 -0300 fix: mark operations scripts executable",
+    "54040b4 2026-08-04 09:28:20 -0300 fix: verify API readiness during deploy",
+    "d43a5ab 2026-08-04 09:24:53 -0300 feat: persist authenticated operations and private assets",
+    "540a638 2026-08-03 22:29:24 -0300 fix: route health checks to API",
+    "e1d432b 2026-08-03 22:07:05 -0300 fix: include Linux optional dependencies in lockfile",
+    "67fe995 2026-08-03 22:01:55 -0300 fix: preserve LF endings for deployment scripts",
+    "08c9492 2026-08-03 22:01:16 -0300 feat: add production foundation and contextual radar"
+  ],
+  "checkoutChanged": false,
+  "localChangesDiscarded": false
+}

@@ -1,0 +1,78 @@
+{
+  "scope": "actual_worker_PNG_header_validator_not_decoder",
+  "passed": 17,
+  "cases": [
+    {
+      "id": "fixture",
+      "status": "passed"
+    },
+    {
+      "id": "source-max",
+      "status": "passed"
+    },
+    {
+      "id": "aggregate-max",
+      "status": "passed"
+    },
+    {
+      "id": "short",
+      "status": "passed"
+    },
+    {
+      "id": "signature",
+      "status": "passed"
+    },
+    {
+      "id": "mime",
+      "status": "passed"
+    },
+    {
+      "id": "zero-width",
+      "status": "passed"
+    },
+    {
+      "id": "source-too-large",
+      "status": "passed"
+    },
+    {
+      "id": "aggregate-too-large",
+      "status": "passed"
+    },
+    {
+      "id": "negative-budget",
+      "status": "passed"
+    },
+    {
+      "id": "nonfinite-budget",
+      "status": "passed"
+    },
+    {
+      "id": "ihdr-length",
+      "status": "passed"
+    },
+    {
+      "id": "animation-control-before-IDAT",
+      "status": "passed"
+    },
+    {
+      "id": "truncated-pre-IDAT-chunk",
+      "status": "passed"
+    },
+    {
+      "id": "animation-name-in-text-is-not-animation",
+      "status": "passed"
+    },
+    {
+      "id": "original-two-frame-APNG-rejected",
+      "status": "passed",
+      "fixture": "docs/studios/research/editor-oss-20261002/original-animated-matte-negative.png",
+      "sha256": "86979f99bc1733443e031399a3ceea69e42113f890e4587c8af71d5284051fb6"
+    },
+    {
+      "id": "original-static-PNG-accepted",
+      "status": "passed"
+    }
+  ],
+  "source": "workers/remotion-benchmark/src/asset-matte-png.mjs",
+  "sourceSha256": "ae1dfd474f2fee3e68b008c24da94856abb3bd863965bb8b2638f0418476c399"
+}

@@ -515,6 +515,24 @@
   object-fit: cover;
 }
 
+.vs-canvas-wrap:has(.vs-composition-frame) {
+  container-type: size;
+}
+
+.vs-composition-frame {
+  width: min(calc(100cqw - 34px), calc((100cqh - 34px) * var(--composition-aspect)));
+  height: auto;
+  max-height: none;
+  aspect-ratio: var(--composition-aspect);
+  border-radius: 0;
+}
+
+.vs-composition-frame > video {
+  position: absolute;
+  inset: 0;
+  object-fit: contain;
+}
+
 .vs-safe-area {
   position: absolute;
   inset: 6%;
@@ -998,6 +1016,17 @@
   display: grid;
   grid-template-columns: 118px 1fr;
 }
+
+.vs-canonical-timeline { max-height: 195px; overflow: auto; padding: 0 12px 8px; }
+.vs-canonical-ruler { margin-left: 160px; display: flex; justify-content: space-between; padding: 6px 0; cursor: crosshair; font-size: 10px; }
+.vs-canonical-timeline > p { margin: 2px 0 6px; font-size: 10px; color: #9ca3ac; }
+.vs-canonical-row { display: grid; grid-template-columns: 160px 1fr; height: 26px; border-top: 1px solid var(--vs-line); }
+.vs-canonical-row > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding: 5px 8px 0 0; font-size: 10px; }
+.vs-canonical-lane { position: relative; min-width: 0; }
+.vs-canonical-lane button { position: absolute; top: 2px; bottom: 2px; overflow: hidden; white-space: nowrap; font-size: 10px; background: #263f51; border: 1px solid #47708a; border-radius: 3px; cursor: pointer; }
+.vs-canonical-lane em { font-size: 10px; color: #e6ae69; }
+.vs-canonical-playhead { position: absolute; top: 0; bottom: 0; width: 1px; background: #9ce8ff; pointer-events: none; }
+.vs-canonical-ruler:focus-visible, .vs-canonical-lane button:focus-visible { outline: 2px solid #9ce8ff; outline-offset: -2px; }
 
 .vs-track-labels {
   display: grid;

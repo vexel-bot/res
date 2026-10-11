@@ -1,0 +1,22 @@
+{
+  "scope": "production_and_strong_fixture_bytes_at_native12_explicit_swangle_qualification_start",
+  "sources": {
+    "backend/app/domain/studios/temporal_exposure.py": "d9b28d5f3f71c72e05e77e4de3a3659c98b756c4f99f2cfbf64d26a445caeb69",
+    "backend/app/domain/studios/motion_recipes.py": "8122f1c2f2a9a8030bd1b5407a7a8d2ed22cad7225bcba94ffe29fefd886861b",
+    "backend/app/services/studios/native_motion_recipes.py": "9f9083f3747f442737b35336eed12f36bb283e4abed40594d68c9566b0fe3f1f",
+    "backend/app/providers/studios/remotion_projection.py": "ae148ca325f4112a8595fcca9b0578aacad14daca2899498ebaf4577d7e8f149",
+    "backend/app/providers/studios/remotion_render.py": "7a0674b32328ba307d8878d87ee1ae806265b18de517d91455d57488c549e3b2",
+    "backend/app/providers/studios/contextual_render.py": "41da67ed3c9e74afee3585f504fa507aa32da72c27f9d61a7cd2f40028e6c2c6",
+    "workers/remotion-benchmark/src/hybrid.tsx": "3e158b300bacc4a1ce5859ce2e8c3b5ab53f561096dda3e7fd5a76a430a3c06c",
+    "workers/remotion-benchmark/src/temporal-exposure.tsx": "48a609ab733ee2e5c4e6be07f8073a483ff986b235dcb1c34d365f1b4fcc2fc1",
+    "workers/remotion-benchmark/render-hybrid.mjs": "1e41e72cbf8a50b9623d707a37fac6d85184258d4b6aa2dfeacf32985d386b76",
+    "backend/tests/test_temporal_rig_render.py": "ae696a2eb7f18364e3103bd2391cc1f9b172e8929755e5de9b7f685577330e28",
+    "backend/tests/test_temporal_exposure.py": "b064e4aac79e451b35f4824c6c5771d73d3d527d57a97319a9cf64d8733167b5",
+    "backend/tests/test_spatial_effects_render.py": "199f550bd6b726714944b65d6b78f8ad3e3b846edb8597c782966002af57d3ce",
+    "backend/app/domain/studios/contextual_editing_v2.py": "37acb13095b740386501649dbdd9d1a70f91a7a14c500c90299e4b60ed6cc8ce",
+    "workers/remotion-benchmark/src/spatial-effects.ts": "cab39ac4863a50bcec80760cb85d969507865f2461fb855c39c1adc105530a9c",
+    "backend/tests/test_spatial_effects.py": "af6721e973275ba8a62437f6feca3eaf33a61d23b29f953f042938c3d1858938",
+    "backend/tests/test_spatial_effects_oracle.py": "33709042ef5de611028d59336f3ab8732e5ad3a5cc609a4a3e999b6da8bbd7af",
+    "backend/tests/spatial_effects_kernel_diagnostic.py": "03f609d8dc758516a8dabd770e67584cf5062bd2da78dd3b9a4b855edfebeb06"
+  }
+}

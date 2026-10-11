@@ -1,0 +1,1798 @@
+{
+  "schemaVersion": "res.temporal-matte-qualification.v1",
+  "generatedAt": "2026-10-04T00:12:59.392934+00:00",
+  "qualification": "fixture_specific_technical_ready_for_local_incorporation",
+  "productionAdmission": "pending",
+  "humanReview": "pending",
+  "autonomy": "pending",
+  "providerVersion": "4.0.527-native.14",
+  "contextualFinalizerVersion": "1.4.1",
+  "highCrf": 10,
+  "pixelReference": "swiftshader4_affine_png_v1",
+  "originalDiagnosticAndVerdictsPreserved": true,
+  "newApiCasesPassed": 7,
+  "historicalCases": [
+    {
+      "name": "tests.test_asset_matte::test_invalid_matte_scene_is_rejected_before_persist[duplicate]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_asset_matte::test_invalid_matte_scene_is_rejected_before_persist[self]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_asset_matte::test_invalid_matte_scene_is_rejected_before_persist[source-kind]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_asset_matte::test_invalid_matte_scene_is_rejected_before_persist[source-missing]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_asset_matte::test_invalid_matte_scene_is_rejected_before_persist[source-repeat]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_asset_matte::test_invalid_matte_scene_is_rejected_before_persist[source-short]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_asset_matte::test_legacy_parameters_do_not_gain_empty_matte_field",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_asset_matte::test_legacy_v3_measured_typography_remains_readable",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_asset_matte::test_matte_lowers_source_asset_space_interval_and_digest",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_asset_matte::test_unbound_or_unsupported_matte_fails_projection[checksum]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_asset_matte::test_unbound_or_unsupported_matte_fails_projection[legacy]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_asset_matte::test_unbound_or_unsupported_matte_fails_projection[mask-conflict]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_asset_matte::test_unbound_or_unsupported_matte_fails_projection[mime]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_asset_matte::test_unbound_or_unsupported_matte_fails_projection[missing]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_asset_matte::test_unbound_or_unsupported_matte_fails_projection[node]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_asset_matte::test_unbound_or_unsupported_matte_fails_projection[orphan]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_asset_matte::test_unbound_or_unsupported_matte_fails_projection[parent-cycle]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_asset_matte::test_unbound_or_unsupported_matte_fails_projection[ref-mime]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_asset_matte::test_unbound_or_unsupported_matte_fails_projection[source-id]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_asset_matte::test_unbound_or_unsupported_matte_fails_projection[source-role]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_asset_matte::test_unbound_or_unsupported_matte_fails_projection[source-scene]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_asset_matte::test_unbound_or_unsupported_matte_fails_projection[source-stack]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_asset_matte::test_unbound_or_unsupported_matte_fails_projection[spec]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_asset_matte::test_unbound_or_unsupported_matte_fails_projection[target-id]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_asset_matte_render::test_asset_matte_actual_job_rejects_animated_png_without_publication",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_asset_matte_render::test_asset_matte_cover_crops_in_source_space",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_asset_matte_render::test_asset_matte_preserves_wide_png_aspect_and_letterbox",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_asset_matte_render::test_asset_matte_real_api_job_and_intermediate_alpha_pixels[alpha-False]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_asset_matte_render::test_asset_matte_real_api_job_and_intermediate_alpha_pixels[alpha-True]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_asset_matte_render::test_asset_matte_real_api_job_and_intermediate_alpha_pixels[luminance-False]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_asset_matte_render::test_asset_matte_real_api_job_and_intermediate_alpha_pixels[luminance-True]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_contextual_editing::test_real_render_multitrack_mask_keyframes_and_audio[size0]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_contextual_editing::test_real_render_multitrack_mask_keyframes_and_audio[size1]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_contextual_editing::test_real_render_multitrack_mask_keyframes_and_audio[size2]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_contextual_encode_quality::test_requested_quality_controls_real_contextual_encode[draft-28]",
+      "status": "failure",
+      "message": "AssertionError: assert (50 == 50 and '1.4.1' == '1.4.0'\n +  where 50 = VideoRenderEncodeResultV1(renderer_checks={'encodeQuality': 'draft', 'videoCrf': 28}, schema_version='studio.video-ren..._track_ids=[], rendered_audio_clip_ids=['clip'], warnings=['Editorial quality requires review of the rendered video.']).frames_rendered\n  \n  - 1.4.0\n  ?     ^\n  + 1.4.1\n  ?     ^)"
+    },
+    {
+      "name": "tests.test_contextual_encode_quality::test_requested_quality_controls_real_contextual_encode[high-14]",
+      "status": "failure",
+      "message": "AssertionError: assert (1 == 1 and '10' == '14'\n +  where 1 = len([['-hide_banner', '-nostdin', '-y', '-filter_complex_threads', '1', '-threads', ...]])\n  \n  - 14\n  + 10)"
+    },
+    {
+      "name": "tests.test_contextual_encode_quality::test_requested_quality_controls_real_contextual_encode[standard-23]",
+      "status": "failure",
+      "message": "AssertionError: assert (50 == 50 and '1.4.1' == '1.4.0'\n +  where 50 = VideoRenderEncodeResultV1(renderer_checks={'encodeQuality': 'standard', 'videoCrf': 23}, schema_version='studio.video-..._track_ids=[], rendered_audio_clip_ids=['clip'], warnings=['Editorial quality requires review of the rendered video.']).frames_rendered\n  \n  - 1.4.0\n  ?     ^\n  + 1.4.1\n  ?     ^)"
+    },
+    {
+      "name": "tests.test_editor_commands::test_atomic_recipe_graph_projection_replay_and_undo",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_editor_commands::test_bezier_time_inverse_not_parameter_and_no_arbitrary_code",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_editor_commands::test_command_api_job_real_mp4_and_stale_review[rig]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_editor_commands::test_command_api_job_real_mp4_and_stale_review[shape]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_editor_commands::test_concurrent_command_receipts_and_compare_and_swap",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_editor_commands::test_exact_frame_local_evaluation[ease_in-6.25]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_editor_commands::test_exact_frame_local_evaluation[ease_in_out-12.5]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_editor_commands::test_exact_frame_local_evaluation[ease_out-43.75]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_editor_commands::test_exact_frame_local_evaluation[hold-0]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_editor_commands::test_exact_frame_local_evaluation[linear-25]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_editor_commands::test_failed_batch_preserves_document_plan_and_history",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_editor_commands::test_other_workspace_cannot_inspect_or_replay",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_editor_commands::test_parent_command_preserves_local_coordinates_and_rejects_cycles[rig]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_editor_commands::test_replay_is_bound_to_authenticated_author",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_editor_commands::test_revision_identity_and_author_cannot_be_supplied",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_native_motion_recipes::test_conflicting_recipe_authors_rejected",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_native_motion_recipes::test_graphics_readiness_does_not_weaken_product_gate",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_native_motion_recipes::test_legacy_shape_unchanged_and_study_needs_direction",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_native_motion_recipes::test_lowered_tracks_pivot_hash_and_no_double_transform",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_native_motion_recipes::test_missing_capability_is_not_decorative_fallback",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_native_motion_recipes::test_real_pixels_mask_stroke_parenting_and_temporal_blur",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_native_motion_recipes::test_recipe_parameters_cannot_diverge_from_lowered_execution",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_native_motion_recipes::test_sequential_heroes_do_not_weaken_simultaneous_hierarchy_rule",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_native_motion_recipes::test_typography_requires_complete_reading_hold",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_remotion_native::test_native_missing_checksum_and_cancellation",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_remotion_native::test_native_parameters_are_persisted_and_invalidate_digest",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_remotion_native::test_native_video_trim_speed_and_observed_geometry[24]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_remotion_native::test_native_video_trim_speed_and_observed_geometry[60]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_remotion_native::test_unknown_component_and_unbound_speed_rejected",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_remotion_native_api::test_native_plan_apply_render_api_and_provider_binding",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_spatial_effects::test_persisted_depth_invalid_values_have_target_diagnostic[value0]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_spatial_effects::test_persisted_depth_invalid_values_have_target_diagnostic[value1]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_spatial_effects::test_persisted_depth_invalid_values_have_target_diagnostic[value2]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_spatial_effects::test_persisted_depth_invalid_values_have_target_diagnostic[value3]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_spatial_effects::test_persisted_depth_invalid_values_have_target_diagnostic[value4]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_spatial_effects::test_persisted_depth_invalid_values_have_target_diagnostic[value5]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_spatial_effects::test_persisted_shadow_invalid_values_and_aliases_have_target_diagnostic[free CSS]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_spatial_effects::test_persisted_shadow_invalid_values_and_aliases_have_target_diagnostic[value0]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_spatial_effects::test_persisted_shadow_invalid_values_and_aliases_have_target_diagnostic[value1]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_spatial_effects::test_persisted_shadow_invalid_values_and_aliases_have_target_diagnostic[value2]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_spatial_effects::test_persisted_shadow_invalid_values_and_aliases_have_target_diagnostic[value3]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_spatial_effects::test_persisted_shadow_invalid_values_and_aliases_have_target_diagnostic[value4]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_spatial_effects::test_persisted_shadow_invalid_values_and_aliases_have_target_diagnostic[value5]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_spatial_effects::test_persisted_shadow_invalid_values_and_aliases_have_target_diagnostic[value6]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_spatial_effects::test_persisted_shadow_invalid_values_and_aliases_have_target_diagnostic[value7]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_spatial_effects::test_persisted_shadow_invalid_values_and_aliases_have_target_diagnostic[value8]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_spatial_effects::test_persisted_static_and_animated_blur_cannot_compete",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_spatial_effects::test_shadow_defaults_normalize_only_the_manifest_and_none_is_absent",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_spatial_effects::test_spatial_authored_parameters_and_digest_change_without_document_mutation",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_spatial_effects::test_unregistered_effect_stack_still_requires_qualification",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_spatial_effects_oracle::test_gaussian_integral_conserves_rectangle_area_and_sharp_edges",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_spatial_effects_oracle::test_known_gaussian_boundary_and_source_over_shadow",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_spatial_effects_render::test_spatial_effects_actual_api_and_gaussian_pixels[control]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_spatial_effects_render::test_spatial_effects_actual_api_and_gaussian_pixels[exposure]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_spatial_effects_render::test_spatial_effects_actual_api_and_gaussian_pixels[spatial]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_temporal_exposure::test_disjoint_subtree_scopes_compile_and_persisted_overlap_cannot_project",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_temporal_exposure::test_explicit_exposure_lowers_and_selects_library_seven",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_temporal_exposure::test_legacy_blur_has_no_policy_and_preserves_its_library",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_temporal_exposure::test_legacy_mask_cannot_supply_uncontrolled_animation_to_static_reduction",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_temporal_exposure::test_legacy_zero_shutter_has_explicit_correction_instead_of_browser_crash",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_temporal_exposure::test_lowered_exposure_cannot_diverge[endFrameExclusive-29]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_temporal_exposure::test_lowered_exposure_cannot_diverge[exposurePolicy-value4]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_temporal_exposure::test_lowered_exposure_cannot_diverge[samples-16]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_temporal_exposure::test_lowered_exposure_cannot_diverge[shutterAngle-0]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_temporal_exposure::test_lowered_exposure_cannot_diverge[startFrame-1]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_temporal_exposure::test_matte_under_moving_external_parent_requires_exposing_its_rig",
+      "status": "failure",
+      "message": "Failed: DID NOT RAISE <class 'ValueError'>"
+    },
+    {
+      "name": "tests.test_temporal_exposure::test_nested_exposure_overlap_is_explicitly_rejected[False-False]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_temporal_exposure::test_nested_exposure_overlap_is_explicitly_rejected[False-True]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_temporal_exposure::test_nested_exposure_overlap_is_explicitly_rejected[True-False]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_temporal_exposure::test_nested_exposure_overlap_is_explicitly_rejected[True-True]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_temporal_exposure::test_new_policy_cannot_claim_old_compiler_semantics",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_temporal_exposure::test_orphan_exposure_is_rejected",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_temporal_exposure::test_policy_requires_blur_recipe",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_temporal_exposure::test_typography_hold_counts_the_whole_exposure[0-0-11-True]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_temporal_exposure::test_typography_hold_counts_the_whole_exposure[180-0-10-True]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_temporal_exposure::test_typography_hold_counts_the_whole_exposure[180-0-11-False]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_temporal_exposure::test_typography_hold_counts_the_whole_exposure[180-19-11-True]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_temporal_exposure::test_unregistered_policy_is_rejected[ancestorTime-sample_frame]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_temporal_exposure::test_unregistered_policy_is_rejected[compositing-screen]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_temporal_exposure::test_unregistered_policy_is_rejected[coordinateSpace-world]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_temporal_exposure::test_unregistered_policy_is_rejected[sampling-forward]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_temporal_exposure::test_unregistered_policy_is_rejected[schemaVersion-studio.temporal-exposure.v2]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_temporal_exposure::test_unregistered_policy_is_rejected[staticReduction-always]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_temporal_exposure_render::test_temporal_exposure_actual_api_measurement[0-180]",
+      "status": "failure",
+      "message": "assert 10 == 14"
+    },
+    {
+      "name": "tests.test_temporal_exposure_render::test_temporal_exposure_actual_api_measurement[16-180]",
+      "status": "failure",
+      "message": "assert 10 == 14"
+    },
+    {
+      "name": "tests.test_temporal_exposure_render::test_temporal_exposure_actual_api_measurement[2-180]",
+      "status": "failure",
+      "message": "assert 10 == 14"
+    },
+    {
+      "name": "tests.test_temporal_exposure_render::test_temporal_exposure_actual_api_measurement[8-0]",
+      "status": "failure",
+      "message": "assert 10 == 14"
+    },
+    {
+      "name": "tests.test_temporal_exposure_render::test_temporal_exposure_actual_api_measurement[8-180]",
+      "status": "failure",
+      "message": "assert 10 == 14"
+    },
+    {
+      "name": "tests.test_temporal_rig_oracle::test_affine_oracle_authored_origin_and_two_border_offsets",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_temporal_rig_oracle::test_affine_oracle_rotation_preserves_scaled_area",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_temporal_rig_oracle::test_area_oracle_square_triangle_touch_and_reversed_winding",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_temporal_rig_render::test_temporal_rig_actual_api_affine_pixels[child]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_temporal_rig_render::test_temporal_rig_actual_api_affine_pixels[control]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_temporal_rig_render::test_temporal_rig_actual_api_affine_pixels[disjoint]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_temporal_rig_render::test_temporal_rig_actual_api_affine_pixels[rig]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_typography_font_binding::test_final_font_failure_stops_before_render_and_publishes_nothing[checksum]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_typography_font_binding::test_final_font_failure_stops_before_render_and_publishes_nothing[glyph]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_typography_font_binding::test_final_font_failure_stops_before_render_and_publishes_nothing[missing]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_typography_layout::test_layout_policy_is_bound_to_canvas_and_changes_digest",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_typography_layout::test_oversized_layout_fails_before_render_or_dom_allocation",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_typography_layout::test_stale_or_unbound_layout_is_rejected[downgrade]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_typography_layout::test_stale_or_unbound_layout_is_rejected[floor]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_typography_layout::test_stale_or_unbound_layout_is_rejected[layer]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_typography_layout::test_stale_or_unbound_layout_is_rejected[limit]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_typography_layout::test_stale_or_unbound_layout_is_rejected[missing]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_typography_layout::test_stale_or_unbound_layout_is_rejected[orphan]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_typography_layout::test_stale_or_unbound_layout_is_rejected[policy]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_typography_layout_render::test_real_animated_font_style_and_transformed_parent_share_canonical_frames",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_typography_layout_render::test_real_final_font_overflow_publishes_no_mp4",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_typography_render::test_typography_real_api_job_mp4_and_complete_hold[False-unicode]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_typography_render::test_typography_real_api_job_mp4_and_complete_hold[False-wrapped_words]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_typography_render::test_typography_real_api_job_mp4_and_complete_hold[True-unicode]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_typography_render::test_typography_real_api_job_mp4_and_complete_hold[True-wrapped_words]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_typography_units::test_all_official_unicode17_grapheme_break_vectors",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_typography_units::test_duplicate_typography_and_hidden_hold_interval_rejected",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_typography_units::test_exact_reading_hold_uses_same_animated_unit_count_as_renderer",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_typography_units::test_legacy_materialization_keeps_v1_interpolation_and_timing",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_typography_units::test_materialized_units_preserve_text_and_contiguous_animation_indices[A \\t\\r\\n B-expected5]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_typography_units::test_materialized_units_preserve_text_and_contiguous_animation_indices[AC\\u0327A\\u0303O-expected1]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_typography_units::test_materialized_units_preserve_text_and_contiguous_animation_indices[A\\xc7\\xc3O-expected0]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_typography_units::test_materialized_units_preserve_text_and_contiguous_animation_indices[\\U0001f44d\\U0001f3fd\\U0001f1e7\\U0001f1f7-expected3]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_typography_units::test_materialized_units_preserve_text_and_contiguous_animation_indices[\\U0001f468\\u200d\\U0001f469\\u200d\\U0001f467\\u200d\\U0001f466-expected2]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_typography_units::test_materialized_units_preserve_text_and_contiguous_animation_indices[\\u1100\\u1161\\u11a8-expected4]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_typography_units::test_normalization_is_not_a_silent_content_rewrite",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_typography_units::test_recipe_font_binding_is_required_and_checksum_checked",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_typography_units::test_stale_units_and_timing_cannot_enter_native_manifest[boundary]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_typography_units::test_stale_units_and_timing_cannot_enter_native_manifest[count]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_typography_units::test_stale_units_and_timing_cannot_enter_native_manifest[index]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_typography_units::test_stale_units_and_timing_cannot_enter_native_manifest[operation]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_typography_units::test_stale_units_and_timing_cannot_enter_native_manifest[text]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_typography_units::test_stale_units_and_timing_cannot_enter_native_manifest[timing]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_typography_units::test_stale_units_and_timing_cannot_enter_native_manifest[unit]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_typography_units::test_whitespace_is_preserved_and_does_not_consume_stagger",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_typography_units::test_whitespace_only_and_unregistered_segmenter_do_not_fall_back",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_temporal_matte_oracle::test_original_png_coverage_has_viewport_and_premultiplied_values[-0.1-20-alpha-0]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_temporal_matte_oracle::test_original_png_coverage_has_viewport_and_premultiplied_values[0.1-20-alpha-1]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_temporal_matte_oracle::test_original_png_coverage_has_viewport_and_premultiplied_values[80-20-alpha-0]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_temporal_matte_oracle::test_original_png_coverage_has_viewport_and_premultiplied_values[20.5-20.5-alpha-0]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_temporal_matte_oracle::test_original_png_coverage_has_viewport_and_premultiplied_values[60.5-20.5-alpha-1]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_temporal_matte_oracle::test_original_png_coverage_has_viewport_and_premultiplied_values[60.5-20.5-luminance-0]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_temporal_matte_oracle::test_original_png_coverage_has_viewport_and_premultiplied_values[20.5-60.5-alpha-0.5019607843137255]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_temporal_matte_oracle::test_original_png_coverage_has_viewport_and_premultiplied_values[20.5-60.5-luminance-0.2519646289888504]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_temporal_matte_oracle::test_axis_aligned_authored_pixels_have_analytic_values[104-78-alpha-False-105.34049999999999]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_temporal_matte_oracle::test_axis_aligned_authored_pixels_have_analytic_values[98-94-alpha-False-0]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_temporal_matte_oracle::test_axis_aligned_authored_pixels_have_analytic_values[100-94-alpha-False-105.34049999999999]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_temporal_matte_oracle::test_axis_aligned_authored_pixels_have_analytic_values[142-80-alpha-False-105.34049999999999]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_temporal_matte_oracle::test_axis_aligned_authored_pixels_have_analytic_values[142-80-luminance-False-0]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_temporal_matte_oracle::test_axis_aligned_authored_pixels_have_analytic_values[142-80-luminance-True-175.5675]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_temporal_matte_oracle::test_axis_aligned_authored_pixels_have_analytic_values[110-134-alpha-False-52.876799999999996]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_temporal_matte_oracle::test_axis_aligned_authored_pixels_have_analytic_values[110-134-luminance-False-26.542080000000002]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_temporal_matte_oracle::test_axis_aligned_authored_pixels_have_analytic_values[44-92-alpha-True-87.78375]",
+      "status": "passed",
+      "message": ""
+    }
+  ],
+  "historicalUnchangedCasesPassed": 179,
+  "intentionallyChangedHistoricalContracts": [
+    "tests.test_contextual_encode_quality::test_requested_quality_controls_real_contextual_encode[draft-28]",
+    "tests.test_contextual_encode_quality::test_requested_quality_controls_real_contextual_encode[high-14]",
+    "tests.test_contextual_encode_quality::test_requested_quality_controls_real_contextual_encode[standard-23]",
+    "tests.test_temporal_exposure::test_matte_under_moving_external_parent_requires_exposing_its_rig",
+    "tests.test_temporal_exposure_render::test_temporal_exposure_actual_api_measurement[0-180]",
+    "tests.test_temporal_exposure_render::test_temporal_exposure_actual_api_measurement[16-180]",
+    "tests.test_temporal_exposure_render::test_temporal_exposure_actual_api_measurement[2-180]",
+    "tests.test_temporal_exposure_render::test_temporal_exposure_actual_api_measurement[8-0]",
+    "tests.test_temporal_exposure_render::test_temporal_exposure_actual_api_measurement[8-180]"
+  ],
+  "newContractCases": [
+    {
+      "name": "tests.temporal_matte_candidate_contract_diagnostic::test_candidate_quality_controls_real_contextual_encode[draft-28]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.temporal_matte_candidate_contract_diagnostic::test_candidate_quality_controls_real_contextual_encode[standard-23]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.temporal_matte_candidate_contract_diagnostic::test_candidate_quality_controls_real_contextual_encode[high-10]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.temporal_matte_candidate_contract_diagnostic::test_candidate_matte_under_moving_external_parent_compiles_at_both_scopes",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_temporal_exposure_render::test_temporal_exposure_actual_api_measurement[0-180]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_temporal_exposure_render::test_temporal_exposure_actual_api_measurement[2-180]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_temporal_exposure_render::test_temporal_exposure_actual_api_measurement[8-180]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_temporal_exposure_render::test_temporal_exposure_actual_api_measurement[16-180]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.test_temporal_exposure_render::test_temporal_exposure_actual_api_measurement[8-0]",
+      "status": "passed",
+      "message": ""
+    }
+  ],
+  "pixelProbeCount": 1164,
+  "matrixCheckCount": 42,
+  "maximumPixelError": 4.375,
+  "maximumMatrixError": 0.000274272036193679,
+  "newSubpixelPngControls": 64,
+  "subpixelPixelComparisons": 1674508,
+  "retainedQuadControlsReassessed": 28,
+  "quadPixelComparisons": 179328,
+  "retainedTexturedControlsReassessed": 7,
+  "texturedPixelComparisons": 716800,
+  "runtimeTreeChecks": 38,
+  "newApiRenders": [
+    {
+      "role": "new_quantized_API_matrix",
+      "variant": "child-common-alpha-normal",
+      "video": "temporal-matte-native14-balanced-vector-guard-svg-subtract-quantized-full/child-common-alpha-normal/matte-exposure.mp4",
+      "videoSha256": "ad7227c324a1eec7ff4402403cc1407fbd3b856bdbd8587fbb6ceaf1b90b5f46",
+      "evidence": "temporal-matte-native14-balanced-vector-guard-svg-subtract-quantized-full/child-common-alpha-normal/evidence.json",
+      "evidenceSha256": "ec74def0c727009653217e18433e9d0dd48beab565b9940d64f7f5b63c07447a",
+      "bytes": 8689,
+      "jobId": "a95b31f4-8dcd-40de-9a5b-a954ff6c63f2",
+      "documentId": "9ba06243-1ec0-4e2d-afa7-409360d4cd00",
+      "documentRevision": 2,
+      "qc": "passed",
+      "humanReview": "pending",
+      "quality": "high",
+      "renderDurationMs": 8485,
+      "timingsMs": {
+        "assetPreparation": 2,
+        "bundle": 2523,
+        "selectComposition": 1386,
+        "renderAndEncode": 2990
+      },
+      "pixelProbes": 162,
+      "matrixChecks": 6,
+      "maximumPixelError": 3.5,
+      "maximumMatrixError": 7.78962733534172e-05
+    },
+    {
+      "role": "new_quantized_API_matrix",
+      "variant": "child-external-alpha-inverted",
+      "video": "temporal-matte-native14-balanced-vector-guard-svg-subtract-quantized-full/child-external-alpha-inverted/matte-exposure.mp4",
+      "videoSha256": "d0d0cd3b9f5c50eaf34957daa44f0c7ee97be3e86524f8dc8cc9b38d3743f3fd",
+      "evidence": "temporal-matte-native14-balanced-vector-guard-svg-subtract-quantized-full/child-external-alpha-inverted/evidence.json",
+      "evidenceSha256": "3f95461b353bf1166b0156bf90319b0d3c76755bf0081b2c1d5394eeb58491c5",
+      "bytes": 15276,
+      "jobId": "891f7ca7-0001-441b-be84-b78d5a6532ab",
+      "documentId": "d42acee8-0d8c-4031-9ef3-b6640005378c",
+      "documentRevision": 2,
+      "qc": "passed",
+      "humanReview": "pending",
+      "quality": "high",
+      "renderDurationMs": 8250,
+      "timingsMs": {
+        "assetPreparation": 2,
+        "bundle": 2460,
+        "selectComposition": 1683,
+        "renderAndEncode": 2587
+      },
+      "pixelProbes": 168,
+      "matrixChecks": 6,
+      "maximumPixelError": 3.03125,
+      "maximumMatrixError": 0.00015526993207970463
+    },
+    {
+      "role": "new_quantized_API_matrix",
+      "variant": "child-external-alpha-normal",
+      "video": "temporal-matte-native14-balanced-vector-guard-svg-subtract-quantized-full/child-external-alpha-normal/matte-exposure.mp4",
+      "videoSha256": "955042e87bbaef0046cad4b2f419b472093ec67d2332d2fcefbbe04dd9e7a11c",
+      "evidence": "temporal-matte-native14-balanced-vector-guard-svg-subtract-quantized-full/child-external-alpha-normal/evidence.json",
+      "evidenceSha256": "132e340bfc7415250e856bdfeb7686ecb73c4e53b3573f2e5a15b502db12f36a",
+      "bytes": 8627,
+      "jobId": "538213ac-4cd2-4a99-bed3-4a9de84be7a7",
+      "documentId": "b32b5a7a-b8ba-488b-b5fb-37a8ece83669",
+      "documentRevision": 2,
+      "qc": "passed",
+      "humanReview": "pending",
+      "quality": "high",
+      "renderDurationMs": 8156,
+      "timingsMs": {
+        "assetPreparation": 3,
+        "bundle": 2542,
+        "selectComposition": 1365,
+        "renderAndEncode": 2603
+      },
+      "pixelProbes": 168,
+      "matrixChecks": 6,
+      "maximumPixelError": 2.75,
+      "maximumMatrixError": 0.00015526993207970463
+    },
+    {
+      "role": "new_quantized_API_matrix",
+      "variant": "control-external-alpha-normal",
+      "video": "temporal-matte-native14-balanced-vector-guard-svg-subtract-quantized-full/control-external-alpha-normal/matte-exposure.mp4",
+      "videoSha256": "9ed624d3f82d75065ed1abeb8f26b4bb011c8dd918e2b6b3accc0471bf2c2af4",
+      "evidence": "temporal-matte-native14-balanced-vector-guard-svg-subtract-quantized-full/control-external-alpha-normal/evidence.json",
+      "evidenceSha256": "2c8b95b26d5b2ab9cd22fd53fb26db41f2b2b383479e41a8e15e52aae6786338",
+      "bytes": 8463,
+      "jobId": "3fc185c2-d338-45b3-aeed-127adcb13bc8",
+      "documentId": "87684bfb-720b-44fc-9cd4-e8e4cc2c9499",
+      "documentRevision": 2,
+      "qc": "passed",
+      "humanReview": "pending",
+      "quality": "high",
+      "renderDurationMs": 10469,
+      "timingsMs": {
+        "assetPreparation": 5,
+        "bundle": 2812,
+        "selectComposition": 2230,
+        "renderAndEncode": 2591
+      },
+      "pixelProbes": 168,
+      "matrixChecks": 6,
+      "maximumPixelError": 2.75,
+      "maximumMatrixError": 0.000274272036193679
+    },
+    {
+      "role": "new_quantized_API_matrix",
+      "variant": "rig-common-luminance-normal",
+      "video": "temporal-matte-native14-balanced-vector-guard-svg-subtract-quantized-full/rig-common-luminance-normal/matte-exposure.mp4",
+      "videoSha256": "9a506aa662d52c39291d8e2afaecbe2f2270e54651f8c7f2a72375078c3df909",
+      "evidence": "temporal-matte-native14-balanced-vector-guard-svg-subtract-quantized-full/rig-common-luminance-normal/evidence.json",
+      "evidenceSha256": "9796d2d8a530a514b58628d8795796cc21b7dc6832b197467362b38b039546ce",
+      "bytes": 6898,
+      "jobId": "c80096f6-c999-430e-baee-55d989bccfcc",
+      "documentId": "000e8af3-ebfd-4fc5-beb0-9681536344cd",
+      "documentRevision": 2,
+      "qc": "passed",
+      "humanReview": "pending",
+      "quality": "high",
+      "renderDurationMs": 8766,
+      "timingsMs": {
+        "assetPreparation": 7,
+        "bundle": 2334,
+        "selectComposition": 1441,
+        "renderAndEncode": 3322
+      },
+      "pixelProbes": 162,
+      "matrixChecks": 6,
+      "maximumPixelError": 2.0,
+      "maximumMatrixError": 0.00011529654032926828
+    },
+    {
+      "role": "new_quantized_API_matrix",
+      "variant": "rig-external-alpha-normal",
+      "video": "temporal-matte-native14-balanced-vector-guard-svg-subtract-quantized-full/rig-external-alpha-normal/matte-exposure.mp4",
+      "videoSha256": "a834b3c04bc97cc69349109b33dc66d8d25f007e1bbac8c087cb6a740dee713d",
+      "evidence": "temporal-matte-native14-balanced-vector-guard-svg-subtract-quantized-full/rig-external-alpha-normal/evidence.json",
+      "evidenceSha256": "2ad74e404f3f65b683144758c20fed5b0656bb845d426e0b1247dc020ebe34d8",
+      "bytes": 8731,
+      "jobId": "b56d30c9-4e9a-4097-bb34-196a6e9628d3",
+      "documentId": "cb57fd95-f06a-4bf0-8fcd-7e0c2ab464d3",
+      "documentRevision": 2,
+      "qc": "passed",
+      "humanReview": "pending",
+      "quality": "high",
+      "renderDurationMs": 8188,
+      "timingsMs": {
+        "assetPreparation": 4,
+        "bundle": 2394,
+        "selectComposition": 1490,
+        "renderAndEncode": 2961
+      },
+      "pixelProbes": 168,
+      "matrixChecks": 6,
+      "maximumPixelError": 3.96875,
+      "maximumMatrixError": 0.00012884263594514778
+    },
+    {
+      "role": "new_quantized_API_matrix",
+      "variant": "rig-external-luminance-inverted",
+      "video": "temporal-matte-native14-balanced-vector-guard-svg-subtract-quantized-full/rig-external-luminance-inverted/matte-exposure.mp4",
+      "videoSha256": "4f1f329600d81493b1616b30f95f63e1786526787457e09f39e828b2d6a96baf",
+      "evidence": "temporal-matte-native14-balanced-vector-guard-svg-subtract-quantized-full/rig-external-luminance-inverted/evidence.json",
+      "evidenceSha256": "bcce85e70cc7d5311910fa8a920c81f8ac0d28e7b96c4fe59f05482d2e8c4c51",
+      "bytes": 12464,
+      "jobId": "43203ad6-111d-485b-b4dd-507b9eefd832",
+      "documentId": "24a1e453-e6f5-4a63-818a-71d72c106aa1",
+      "documentRevision": 2,
+      "qc": "passed",
+      "humanReview": "pending",
+      "quality": "high",
+      "renderDurationMs": 8765,
+      "timingsMs": {
+        "assetPreparation": 3,
+        "bundle": 2385,
+        "selectComposition": 1348,
+        "renderAndEncode": 3476
+      },
+      "pixelProbes": 168,
+      "matrixChecks": 6,
+      "maximumPixelError": 4.375,
+      "maximumMatrixError": 0.00012884263594514778
+    },
+    {
+      "role": "new_existing_capability_regression",
+      "variant": "rig",
+      "video": "temporal-matte-native14-quantized-candidate-regression/command/rig/edited.mp4",
+      "videoSha256": "098cace6194118cd2c8974d0f8ace75bdf01f1f256c278135dc95e9e64c01a94",
+      "evidence": "temporal-matte-native14-quantized-candidate-regression/command/rig/evidence.json",
+      "evidenceSha256": "207e74206ee56f5771377e99189f80111aca079f75eeb7b6fa99fec47b6d8edf",
+      "bytes": 3950,
+      "jobId": "fb385aed-b90c-4823-8b99-7673159ee611",
+      "documentId": "a67da8d3-be1e-4256-9cf9-25cd79f699e7",
+      "documentRevision": 3,
+      "qc": "passed",
+      "humanReview": "pending",
+      "quality": "standard",
+      "renderDurationMs": 8109,
+      "timingsMs": {
+        "assetPreparation": 0,
+        "bundle": 2316,
+        "selectComposition": 1731,
+        "renderAndEncode": 2480
+      }
+    },
+    {
+      "role": "new_existing_capability_regression",
+      "variant": "shape",
+      "video": "temporal-matte-native14-quantized-candidate-regression/command/shape/edited.mp4",
+      "videoSha256": "09d4f427862714acb391deee20f2489b1d1ccbeb79aa360b7c463feecff03d3b",
+      "evidence": "temporal-matte-native14-quantized-candidate-regression/command/shape/evidence.json",
+      "evidenceSha256": "83ded5e8676ee6a6a1bef1035b5b128c284a900224ffdaa00761ee75f1d78f17",
+      "bytes": 3909,
+      "jobId": "4d087653-42d5-4ef9-bff5-8c5d7deb5038",
+      "documentId": "a22b53c3-25da-47c5-a6a8-aab988a5352f",
+      "documentRevision": 3,
+      "qc": "passed",
+      "humanReview": "pending",
+      "quality": "standard",
+      "renderDurationMs": 8672,
+      "timingsMs": {
+        "assetPreparation": 0,
+        "bundle": 2331,
+        "selectComposition": 2361,
+        "renderAndEncode": 2556
+      }
+    },
+    {
+      "role": "new_existing_capability_regression",
+      "variant": "alpha-inverted",
+      "video": "temporal-matte-native14-quantized-candidate-regression/matte/alpha-inverted/matte.mp4",
+      "videoSha256": "b7c423f099cfbb3490597511472af460301570e5b393c3b8a51a5488ea8807ba",
+      "evidence": "temporal-matte-native14-quantized-candidate-regression/matte/alpha-inverted/evidence.json",
+      "evidenceSha256": "d190da88ebbd74cc83b6cb430f42cb4e330b9eb7ffbf565b59222781c11a717c",
+      "bytes": 9497,
+      "jobId": "fdde36a9-ee7e-41be-8d05-ff83da66c580",
+      "documentId": "8e92f282-4f35-4b95-967f-d990ca121b1a",
+      "documentRevision": 2,
+      "qc": "passed",
+      "humanReview": "pending",
+      "quality": "standard",
+      "renderDurationMs": 8094,
+      "timingsMs": {
+        "assetPreparation": 6,
+        "bundle": 2162,
+        "selectComposition": 1288,
+        "renderAndEncode": 2944
+      }
+    },
+    {
+      "role": "new_existing_capability_regression",
+      "variant": "alpha-normal",
+      "video": "temporal-matte-native14-quantized-candidate-regression/matte/alpha-normal/matte.mp4",
+      "videoSha256": "6402df3290cdd22c943ffc64bace7138262d3102b8f3e0be02316978eb67642f",
+      "evidence": "temporal-matte-native14-quantized-candidate-regression/matte/alpha-normal/evidence.json",
+      "evidenceSha256": "84b4f612b86ae6b65a148f7e74a21b1b7cd8e1235a03f8d1ec889c5ab141482a",
+      "bytes": 7951,
+      "jobId": "4d33927a-61ef-440e-a02a-1ee63396caab",
+      "documentId": "78013440-362e-4d01-bac3-df9fae3c6ed0",
+      "documentRevision": 2,
+      "qc": "passed",
+      "humanReview": "pending",
+      "quality": "standard",
+      "renderDurationMs": 9266,
+      "timingsMs": {
+        "assetPreparation": 3,
+        "bundle": 2604,
+        "selectComposition": 1257,
+        "renderAndEncode": 3168
+      }
+    },
+    {
+      "role": "new_existing_capability_regression",
+      "variant": "alpha-wide-contain",
+      "video": "temporal-matte-native14-quantized-candidate-regression/matte/alpha-wide-contain/matte.mp4",
+      "videoSha256": "024bb566917bd036dd4d0178b8befa704cf4f3fe405d71c0eb3559f704405476",
+      "evidence": "temporal-matte-native14-quantized-candidate-regression/matte/alpha-wide-contain/evidence.json",
+      "evidenceSha256": "26d068ef40b5bd2f051bbda0f53b5a26e010b08158c2d556bdee49e7f2a6c6cf",
+      "bytes": 6377,
+      "jobId": "22a746c2-be68-4164-9774-e21341a7028c",
+      "documentId": "ce86e1db-aa28-41bc-891b-4ccd934dbcf0",
+      "documentRevision": 2,
+      "qc": "passed",
+      "humanReview": "pending",
+      "quality": "standard",
+      "renderDurationMs": 10797,
+      "timingsMs": {
+        "assetPreparation": 2,
+        "bundle": 2674,
+        "selectComposition": 2020,
+        "renderAndEncode": 3226
+      }
+    },
+    {
+      "role": "new_existing_capability_regression",
+      "variant": "alpha-wide-cover",
+      "video": "temporal-matte-native14-quantized-candidate-regression/matte/alpha-wide-cover/matte.mp4",
+      "videoSha256": "24d8b7d85beab4c5bbb0f34d53f24bc916b88e5f72c8f8a82c169ce754cef699",
+      "evidence": "temporal-matte-native14-quantized-candidate-regression/matte/alpha-wide-cover/evidence.json",
+      "evidenceSha256": "f07d80d115b29a2f82a43aa18e5ef8ba6cea85858a44a03915c6d4aa59d2a6e3",
+      "bytes": 5902,
+      "jobId": "e8287585-d226-42cb-9fec-e6020810b17c",
+      "documentId": "2d372388-c1c9-49a7-af58-4e3f5de0d872",
+      "documentRevision": 2,
+      "qc": "passed",
+      "humanReview": "pending",
+      "quality": "standard",
+      "renderDurationMs": 11828,
+      "timingsMs": {
+        "assetPreparation": 2,
+        "bundle": 5309,
+        "selectComposition": 2294,
+        "renderAndEncode": 2726
+      }
+    },
+    {
+      "role": "new_existing_capability_regression",
+      "variant": "luminance-inverted",
+      "video": "temporal-matte-native14-quantized-candidate-regression/matte/luminance-inverted/matte.mp4",
+      "videoSha256": "8177409613aca82dae00b4064f4989bf632f0964c5dc5d9e5f7b248bc292ae27",
+      "evidence": "temporal-matte-native14-quantized-candidate-regression/matte/luminance-inverted/evidence.json",
+      "evidenceSha256": "961d054b36d23ff66ad116adf56dd1a6122db6f0a8ebd1e125030d56056d0868",
+      "bytes": 8018,
+      "jobId": "7c2dd532-8222-4302-9114-1d9c3273e6d1",
+      "documentId": "91c0568c-8d45-4d9e-ab76-b487e4778609",
+      "documentRevision": 2,
+      "qc": "passed",
+      "humanReview": "pending",
+      "quality": "standard",
+      "renderDurationMs": 8312,
+      "timingsMs": {
+        "assetPreparation": 3,
+        "bundle": 2110,
+        "selectComposition": 1232,
+        "renderAndEncode": 3369
+      }
+    },
+    {
+      "role": "new_existing_capability_regression",
+      "variant": "luminance-normal",
+      "video": "temporal-matte-native14-quantized-candidate-regression/matte/luminance-normal/matte.mp4",
+      "videoSha256": "066e550a75bc52c3f5844465d2e3146bb3878e657d4db9ef2440f05e11ef5817",
+      "evidence": "temporal-matte-native14-quantized-candidate-regression/matte/luminance-normal/evidence.json",
+      "evidenceSha256": "7fb5b421e796d8f63f091ee8e9bf92d0acf47e7d6d78bc0319642f4c8d10201c",
+      "bytes": 6544,
+      "jobId": "0079c377-a2d1-4913-81d5-3e08e32da2a1",
+      "documentId": "73c6311b-a208-4b22-9768-2fd1529fd443",
+      "documentRevision": 2,
+      "qc": "passed",
+      "humanReview": "pending",
+      "quality": "standard",
+      "renderDurationMs": 7672,
+      "timingsMs": {
+        "assetPreparation": 2,
+        "bundle": 2248,
+        "selectComposition": 1384,
+        "renderAndEncode": 2537
+      }
+    },
+    {
+      "role": "new_existing_capability_regression",
+      "variant": "child",
+      "video": "temporal-matte-native14-quantized-candidate-regression/rig/child/rig.mp4",
+      "videoSha256": "3e5c999803fba90e958f80fc577167ee334d43f6ae4f8d084cffc9e285b1af9b",
+      "evidence": "temporal-matte-native14-quantized-candidate-regression/rig/child/evidence.json",
+      "evidenceSha256": "65694424679904ad9169b992ba518ace1e6618c9a73edcc94240e4608f2162d4",
+      "bytes": 8560,
+      "jobId": "c52ff46d-7f37-45fd-93d0-84c4446a7d76",
+      "documentId": "ae54ede5-a3e6-40a5-b071-a333c755cf16",
+      "documentRevision": 2,
+      "qc": "passed",
+      "humanReview": "pending",
+      "quality": "high",
+      "renderDurationMs": 8860,
+      "timingsMs": {
+        "assetPreparation": 0,
+        "bundle": 2314,
+        "selectComposition": 1802,
+        "renderAndEncode": 3069
+      }
+    },
+    {
+      "role": "new_existing_capability_regression",
+      "variant": "control",
+      "video": "temporal-matte-native14-quantized-candidate-regression/rig/control/rig.mp4",
+      "videoSha256": "812943e344be5f6ec3268b1df572a9e23c3c6dd28e39f127c4de38762203c7a4",
+      "evidence": "temporal-matte-native14-quantized-candidate-regression/rig/control/evidence.json",
+      "evidenceSha256": "769f9ed66b780e8440b38722577c778ebfe891f1d62556c5c2417128e62894d3",
+      "bytes": 8280,
+      "jobId": "1b1af587-6895-4c95-a733-f35297af6d6d",
+      "documentId": "afa129c9-2630-4ac6-8de0-00948ebb3e91",
+      "documentRevision": 2,
+      "qc": "passed",
+      "humanReview": "pending",
+      "quality": "high",
+      "renderDurationMs": 8703,
+      "timingsMs": {
+        "assetPreparation": 0,
+        "bundle": 2516,
+        "selectComposition": 1359,
+        "renderAndEncode": 3174
+      }
+    },
+    {
+      "role": "new_existing_capability_regression",
+      "variant": "disjoint",
+      "video": "temporal-matte-native14-quantized-candidate-regression/rig/disjoint/rig.mp4",
+      "videoSha256": "9117ab2803a4c7cbb75aaad4fa3f1bbed9ccc290379a2040c66a460cad8797bf",
+      "evidence": "temporal-matte-native14-quantized-candidate-regression/rig/disjoint/evidence.json",
+      "evidenceSha256": "3566eb706eddba71f741a76e475ff1f9e5ae234bf2a841d027461eb0631dca8c",
+      "bytes": 10667,
+      "jobId": "82c5d02e-b965-4d40-9a19-b5b8dab70d71",
+      "documentId": "a338da4c-bcac-4629-acfe-b6f9105e3313",
+      "documentRevision": 2,
+      "qc": "passed",
+      "humanReview": "pending",
+      "quality": "high",
+      "renderDurationMs": 8391,
+      "timingsMs": {
+        "assetPreparation": 0,
+        "bundle": 2619,
+        "selectComposition": 1079,
+        "renderAndEncode": 3209
+      }
+    },
+    {
+      "role": "new_existing_capability_regression",
+      "variant": "rig",
+      "video": "temporal-matte-native14-quantized-candidate-regression/rig/rig/rig.mp4",
+      "videoSha256": "86125a45c67d0c3a1836ee03d2c28e70417a0ba120ec0f81daf9ee8e426b101a",
+      "evidence": "temporal-matte-native14-quantized-candidate-regression/rig/rig/evidence.json",
+      "evidenceSha256": "79294e93f1ff802d650141b8319a36d64b39d5e0674fe8e723423a7e4fe4f0e4",
+      "bytes": 11197,
+      "jobId": "021beb44-9a02-44ba-9bc8-a4035593abdb",
+      "documentId": "08a2a5a6-84a5-4ae9-acea-01de9830bccc",
+      "documentRevision": 2,
+      "qc": "passed",
+      "humanReview": "pending",
+      "quality": "high",
+      "renderDurationMs": 8828,
+      "timingsMs": {
+        "assetPreparation": 0,
+        "bundle": 2283,
+        "selectComposition": 1405,
+        "renderAndEncode": 3500
+      }
+    },
+    {
+      "role": "new_existing_capability_regression",
+      "variant": "control",
+      "video": "temporal-matte-native14-quantized-candidate-regression/spatial/control/spatial.mp4",
+      "videoSha256": "4b538ce8083104a40b1eef5acc57cebc966868c7e5bae564ece3b811c280e14d",
+      "evidence": "temporal-matte-native14-quantized-candidate-regression/spatial/control/evidence.json",
+      "evidenceSha256": "538e37526e80c6a7acd09519edfdccf088a69e37ceffeb8ce3478d68a4363371",
+      "bytes": 4235,
+      "jobId": "13a20603-a5e5-4794-8e55-6dd64a4bd009",
+      "documentId": "0c2feda2-99c1-46b7-a71f-21c3bebd7fa9",
+      "documentRevision": 2,
+      "qc": "passed",
+      "humanReview": "pending",
+      "quality": "high",
+      "renderDurationMs": 8125,
+      "timingsMs": {
+        "assetPreparation": 0,
+        "bundle": 2340,
+        "selectComposition": 1591,
+        "renderAndEncode": 2768
+      }
+    },
+    {
+      "role": "new_existing_capability_regression",
+      "variant": "exposure",
+      "video": "temporal-matte-native14-quantized-candidate-regression/spatial/exposure/spatial.mp4",
+      "videoSha256": "835aa5e93dd0a14b7da2bf0e2be7a25428b1f09baecc30607dd5e4a009ae4591",
+      "evidence": "temporal-matte-native14-quantized-candidate-regression/spatial/exposure/evidence.json",
+      "evidenceSha256": "15c785d649a6891637a7bf0025fa5197ef608980c05437a8a7431b8b9ae108f3",
+      "bytes": 8140,
+      "jobId": "d64e78c1-249c-4c4b-91fd-8b8979deb9e2",
+      "documentId": "f1711779-bd8e-4a9b-9134-28f996c672e5",
+      "documentRevision": 2,
+      "qc": "passed",
+      "humanReview": "pending",
+      "quality": "high",
+      "renderDurationMs": 8109,
+      "timingsMs": {
+        "assetPreparation": 0,
+        "bundle": 2277,
+        "selectComposition": 1259,
+        "renderAndEncode": 3384
+      }
+    },
+    {
+      "role": "new_existing_capability_regression",
+      "variant": "spatial",
+      "video": "temporal-matte-native14-quantized-candidate-regression/spatial/spatial/spatial.mp4",
+      "videoSha256": "350d1516f31c5e7b7ab8d73dd0d849990d8bec948a53785c64ac4180329b489c",
+      "evidence": "temporal-matte-native14-quantized-candidate-regression/spatial/spatial/evidence.json",
+      "evidenceSha256": "822e47c6282f5345dcafb43280b8a43200db7244ccff11e4c56097b3f0178736",
+      "bytes": 7656,
+      "jobId": "ac700163-25a2-4e61-be78-6e0e7abd4cbf",
+      "documentId": "e30330c0-6448-43b6-9785-3d46bf88bcf6",
+      "documentRevision": 2,
+      "qc": "passed",
+      "humanReview": "pending",
+      "quality": "high",
+      "renderDurationMs": 8375,
+      "timingsMs": {
+        "assetPreparation": 0,
+        "bundle": 2409,
+        "selectComposition": 1418,
+        "renderAndEncode": 3294
+      }
+    },
+    {
+      "role": "new_existing_capability_regression",
+      "variant": "unicode",
+      "video": "temporal-matte-native14-quantized-candidate-regression/typography/unicode/typography.mp4",
+      "videoSha256": "d59d94ffd0e664d09236d9ce6bb4cd9c796cebc8bd32a0f2228367235655f45d",
+      "evidence": "temporal-matte-native14-quantized-candidate-regression/typography/unicode/evidence.json",
+      "evidenceSha256": "250b7c2bd128e3734d18327295d50ef694c3588163dbd293a9091cb7303c003b",
+      "bytes": 24787,
+      "jobId": "c743ef2d-ed14-4561-af26-7f000e853818",
+      "documentId": "b1557665-c6f9-4389-b2b9-12ade2fb925c",
+      "documentRevision": 2,
+      "qc": "passed",
+      "humanReview": "pending",
+      "quality": "high",
+      "renderDurationMs": 10312,
+      "timingsMs": {
+        "assetPreparation": 7,
+        "bundle": 2280,
+        "selectComposition": 2100,
+        "renderAndEncode": 4143
+      }
+    },
+    {
+      "role": "new_existing_capability_regression",
+      "variant": "wrapped_words",
+      "video": "temporal-matte-native14-quantized-candidate-regression/typography/wrapped_words/typography.mp4",
+      "videoSha256": "cdda919a5f4cd38800d97561fe64d0d93e430820da93a22a7e95cb337cf7ed1e",
+      "evidence": "temporal-matte-native14-quantized-candidate-regression/typography/wrapped_words/evidence.json",
+      "evidenceSha256": "fdb1598b32f511e75c1df366e396c5e3f9a2015ee6f72bfa663cae34fdfa397c",
+      "bytes": 107951,
+      "jobId": "e928c114-6a9f-431b-807e-5cdc4b3fb7ec",
+      "documentId": "9c25af0e-a44f-4e4f-9b17-d47b7796dd7e",
+      "documentRevision": 2,
+      "qc": "passed",
+      "humanReview": "pending",
+      "quality": "high",
+      "renderDurationMs": 10047,
+      "timingsMs": {
+        "assetPreparation": 3,
+        "bundle": 2419,
+        "selectComposition": 1210,
+        "renderAndEncode": 4955
+      }
+    },
+    {
+      "role": "new_exposure_regression_with_updated_encode_receipt",
+      "variant": "samples-0-shutter-180",
+      "video": "temporal-matte-native14-quantized-exposure-regression/exposure/samples-0-shutter-180/exposure.mp4",
+      "videoSha256": "8fe65f6b3b01b7092895e7223affdc30b8b7fe9da2980889fa5aac79c18b9c16",
+      "evidence": "temporal-matte-native14-quantized-exposure-regression/exposure/samples-0-shutter-180/evidence.json",
+      "evidenceSha256": "4cf63d2959b8d1ffd01f063d481b965b10fd2b563609058809d71bcfdab2e692",
+      "bytes": 8786,
+      "jobId": "69dc067a-6519-4d0b-b27f-2e27fef8075b",
+      "documentId": "f42a69ae-e0c4-492e-9216-1690a7395860",
+      "documentRevision": 2,
+      "qc": "passed",
+      "humanReview": "pending",
+      "quality": "high",
+      "renderDurationMs": 9813,
+      "timingsMs": {
+        "assetPreparation": 0,
+        "bundle": 2572,
+        "selectComposition": 1690,
+        "renderAndEncode": 3741
+      }
+    },
+    {
+      "role": "new_exposure_regression_with_updated_encode_receipt",
+      "variant": "samples-16-shutter-180",
+      "video": "temporal-matte-native14-quantized-exposure-regression/exposure/samples-16-shutter-180/exposure.mp4",
+      "videoSha256": "f1f3f0b0102bfaa06a85a251200df0610b7de55bc3c6e390b827dfd9a1de4084",
+      "evidence": "temporal-matte-native14-quantized-exposure-regression/exposure/samples-16-shutter-180/evidence.json",
+      "evidenceSha256": "753b623d51fe874b66fc2c2842b4bbcc54f9a47d9ced1a992b898f315c736760",
+      "bytes": 9049,
+      "jobId": "6b0b8251-c7d7-4c77-9ba8-cfcbc129aa30",
+      "documentId": "e04761a8-54a6-456f-9ab7-a63ff5fc98bd",
+      "documentRevision": 2,
+      "qc": "passed",
+      "humanReview": "pending",
+      "quality": "high",
+      "renderDurationMs": 8906,
+      "timingsMs": {
+        "assetPreparation": 0,
+        "bundle": 2315,
+        "selectComposition": 1614,
+        "renderAndEncode": 3581
+      }
+    },
+    {
+      "role": "new_exposure_regression_with_updated_encode_receipt",
+      "variant": "samples-2-shutter-180",
+      "video": "temporal-matte-native14-quantized-exposure-regression/exposure/samples-2-shutter-180/exposure.mp4",
+      "videoSha256": "db3c399d66fe2b1f1dd8882d9293d667cecdb140e2c2cf15e7810e61d9499f0c",
+      "evidence": "temporal-matte-native14-quantized-exposure-regression/exposure/samples-2-shutter-180/evidence.json",
+      "evidenceSha256": "8a8de9eb074dc4e8cef746cdd3493560621225290306ee95a09aa06c3a0e31df",
+      "bytes": 9303,
+      "jobId": "55d48bf2-a059-4a34-9bb8-b8df2fa1b7d2",
+      "documentId": "b29a2b8e-3dbe-4935-b96e-fe7b92d651f9",
+      "documentRevision": 2,
+      "qc": "passed",
+      "humanReview": "pending",
+      "quality": "high",
+      "renderDurationMs": 9313,
+      "timingsMs": {
+        "assetPreparation": 0,
+        "bundle": 2388,
+        "selectComposition": 1412,
+        "renderAndEncode": 3931
+      }
+    },
+    {
+      "role": "new_exposure_regression_with_updated_encode_receipt",
+      "variant": "samples-8-shutter-0",
+      "video": "temporal-matte-native14-quantized-exposure-regression/exposure/samples-8-shutter-0/exposure.mp4",
+      "videoSha256": "8fe65f6b3b01b7092895e7223affdc30b8b7fe9da2980889fa5aac79c18b9c16",
+      "evidence": "temporal-matte-native14-quantized-exposure-regression/exposure/samples-8-shutter-0/evidence.json",
+      "evidenceSha256": "d9a6b1d044ab6c6e140ef25a7a5eccdb880890449a6bb735aa95793378c5c70a",
+      "bytes": 8786,
+      "jobId": "129fd8f8-f1a7-4d75-b92b-455f5c78c48f",
+      "documentId": "e2d2e35a-cbe1-4e35-9778-e7be46e8f555",
+      "documentRevision": 2,
+      "qc": "passed",
+      "humanReview": "pending",
+      "quality": "high",
+      "renderDurationMs": 8984,
+      "timingsMs": {
+        "assetPreparation": 0,
+        "bundle": 2278,
+        "selectComposition": 1511,
+        "renderAndEncode": 3646
+      }
+    },
+    {
+      "role": "new_exposure_regression_with_updated_encode_receipt",
+      "variant": "samples-8-shutter-180",
+      "video": "temporal-matte-native14-quantized-exposure-regression/exposure/samples-8-shutter-180/exposure.mp4",
+      "videoSha256": "b103b298a53c7a26f8c9c143efa8d7c5e338e8208a10fd16fab281a68842a7f4",
+      "evidence": "temporal-matte-native14-quantized-exposure-regression/exposure/samples-8-shutter-180/evidence.json",
+      "evidenceSha256": "0495e35fa786d2b8a039e5af542bfe7e639e94e2746cd7690ba0affb301aecbf",
+      "bytes": 9259,
+      "jobId": "0cd5bc67-8e90-450c-af61-b4381cc7f934",
+      "documentId": "12ed4b5e-b621-4242-94dd-d28254447414",
+      "documentRevision": 2,
+      "qc": "passed",
+      "humanReview": "pending",
+      "quality": "high",
+      "renderDurationMs": 9359,
+      "timingsMs": {
+        "assetPreparation": 0,
+        "bundle": 2595,
+        "selectComposition": 1258,
+        "renderAndEncode": 3888
+      }
+    }
+  ],
+  "negativeApiJobs": [
+    {
+      "path": "temporal-matte-native14-quantized-candidate-regression/matte/animated-negative/evidence.json",
+      "sha256": "9894f6dfa37b231b35230c34fced7ea9fbc6ea45ef411ace818a930bc6eb50c2",
+      "diagnostic": "remotion_render_failed:file:///C:/Users/edugu/Downloads/res/workers/remotion-benchmark/render-hybrid.mjs:47\n    catch(error){throw new Error(`${String(error)}:asset=${id}`);}\n                       ^\n\nError: Error: hybrid_asset_matte_animated_png_pending:asset=5837d48d-d072-4691-9c11-61c230920a78\n    at file:///C:/Users/edugu/Downloads/res/workers/remotion-benchmark/render-hybrid.mjs:47:24\n\nNode.js v22.15.0\nfull_log:C:\\Users\\edugu\\Downloads\\res\\workers\\remotion-benchmark\\output\\diagnostics\\1c5c2d2be6b84dbe04968a18ae628a032cd856cd8e9653d6fec0220edcba6563.log",
+      "publishedArtifact": false
+    }
+  ],
+  "zeroShutterControlDecodedEquality": {
+    "frames": 60,
+    "rgbBytes": 18432000,
+    "maximumDifference": 0
+  },
+  "fontOverflow": {
+    "reportedFrame": 1,
+    "outputPublished": false
+  },
+  "localFixtureRenderDurationMs": {
+    "count": 7,
+    "min": 8156,
+    "median": 8485,
+    "max": 10469,
+    "interpretation": "320x320, 16 frames, 30fps; no p95/realtime claim."
+  },
+  "proofHashes": {
+    "swiftshader-subpixel-runtime.json": "109a0553db17c0846f3c924d0585e0f57d709e83cc21faf6b131a50aab4ae65e",
+    "temporal-matte-subpixel-phase-controls/analysis.json": "ac54b6ce5a52f7295f1d39f86c582f4438c30ca2bc214640a1af252f4e0ae7a7",
+    "temporal-matte-quad-raster-conformance.json": "ebeed1e9c6d59501c8fd1137a5b6822ff3ea622f66d69f14db026c4e39148fd6",
+    "temporal-matte-textured-source-conformance.json": "71e358532d6c7f42b0eacae5fba17eb7961874142d79d9cc8f89e06775512312",
+    "temporal-matte-native14-balanced-runtime.json": "5df8cc7886f587daa66150cb4ba03f7d3c2f58a18124a27e64e815041d8e3c71",
+    "temporal-matte-native14-balanced-vector-guard-svg-subtract-quantized-full/tests.xml": "67b98b47e95f104889f488bc6d0474e489f473b2d530dc870fd3a64700ad8a4d",
+    "temporal-matte-native14-quantized-candidate-regression/historical-tests.xml": "f0089bd811aa08337ed3081e8decadce76337c32fe296f1206b54fffdcd421c9",
+    "temporal-matte-native14-quantized-candidate-regression/proposed-contract-tests.xml": "686c0a9c43796b19a39ce9f69d445113da65a894201740970de19e6c875e4c2d",
+    "temporal-matte-native14-balanced-vector-guard-svg-subtract-crf10-full/tests.xml": "d92acebbdb5a9947bd3adce1d8069c85d4ae950b3985eafec46c942ce1c26bd7",
+    "temporal-matte-native14-quantized-exposure-regression/tests.xml": "53273ada3c08119a5df197ce480921c3e248af3e5e116998e22e4c42424f91e1"
+  },
+  "candidateSources": {
+    "backend/app/domain/studios/contextual_editing_v2.py": "37acb13095b740386501649dbdd9d1a70f91a7a14c500c90299e4b60ed6cc8ce",
+    "backend/app/domain/studios/motion_recipes.py": "8122f1c2f2a9a8030bd1b5407a7a8d2ed22cad7225bcba94ffe29fefd886861b",
+    "backend/app/domain/studios/temporal_exposure.py": "b697fab23e268f44d98619873dfdb1126c44bf9e52ec2ee5be5da84d770ec886",
+    "backend/app/providers/studios/contextual_render.py": "1cabaa5683f67a2326cf9db2997e342a78620a699e2c8954cd0d260cf9714d71",
+    "backend/app/providers/studios/remotion_projection.py": "ae148ca325f4112a8595fcca9b0578aacad14daca2899498ebaf4577d7e8f149",
+    "backend/app/providers/studios/remotion_render.py": "ea6f6957458176d016c6e5dbfd5f60454c5229295cd7e613b76d829c5ddb2556",
+    "backend/app/services/studios/native_motion_recipes.py": "9f9083f3747f442737b35336eed12f36bb283e4abed40594d68c9566b0fe3f1f",
+    "backend/tests/spatial_effects_kernel_diagnostic.py": "03f609d8dc758516a8dabd770e67584cf5062bd2da78dd3b9a4b855edfebeb06",
+    "backend/tests/temporal_matte_kernel_diagnostic.py": "33f91e2a0da5f61ade7c69d66fb91de21526954cb15c779c64348547c1505eef",
+    "backend/tests/test_spatial_effects.py": "af6721e973275ba8a62437f6feca3eaf33a61d23b29f953f042938c3d1858938",
+    "backend/tests/test_spatial_effects_oracle.py": "33709042ef5de611028d59336f3ab8732e5ad3a5cc609a4a3e999b6da8bbd7af",
+    "backend/tests/test_spatial_effects_render.py": "199f550bd6b726714944b65d6b78f8ad3e3b846edb8597c782966002af57d3ce",
+    "backend/tests/test_temporal_exposure.py": "b064e4aac79e451b35f4824c6c5771d73d3d527d57a97319a9cf64d8733167b5",
+    "backend/tests/test_temporal_matte_oracle.py": "0e4d6bfc3f6004ff528aa37d0e5e0997bf97416b71ec2bde56337ef8389a50db",
+    "backend/tests/test_temporal_rig_render.py": "ae696a2eb7f18364e3103bd2391cc1f9b172e8929755e5de9b7f685577330e28",
+    "scripts/validation/editor-temporal-matte-regression.py": "c62d19e74ff910c6f167388937f93c6854cb2edd4d7fbaa0cba73ccf3caa4149",
+    "workers/remotion-benchmark/render-hybrid.mjs": "1e41e72cbf8a50b9623d707a37fac6d85184258d4b6aa2dfeacf32985d386b76",
+    "workers/remotion-benchmark/src/asset-matte.tsx": "8ed4d0828f2c5eaec1ce0d02ecdfa292a01e4a98ff67c88d3a1b0888888c2876",
+    "workers/remotion-benchmark/src/hybrid.tsx": "69f66dbfd02be683fe9e6a0d6559ad9e9487c8d7ee48f9fbabf44f0884f5f170",
+    "workers/remotion-benchmark/src/spatial-effects.ts": "cab39ac4863a50bcec80760cb85d969507865f2461fb855c39c1adc105530a9c",
+    "workers/remotion-benchmark/src/temporal-exposure.tsx": "659066d8daef0d664b3f6d8f503d4120ec8e32a0ac513b590096bcdfbceef9dc"
+  },
+  "historicalSupersampledReferenceVerdicts": [
+    {
+      "name": "tests.temporal_matte_kernel_diagnostic::test_temporal_matte_actual_api_pixels[control-external-alpha-False]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.temporal_matte_kernel_diagnostic::test_temporal_matte_actual_api_pixels[child-external-alpha-False]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.temporal_matte_kernel_diagnostic::test_temporal_matte_actual_api_pixels[child-external-alpha-True]",
+      "status": "failure",
+      "message": "AssertionError: [('pixel', 0, 138, 82, 9.016281249999963)]\nassert not [('pixel', 0, 138, 82, 9.016281249999963)]"
+    },
+    {
+      "name": "tests.temporal_matte_kernel_diagnostic::test_temporal_matte_actual_api_pixels[rig-external-alpha-False]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.temporal_matte_kernel_diagnostic::test_temporal_matte_actual_api_pixels[rig-external-luminance-True]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.temporal_matte_kernel_diagnostic::test_temporal_matte_actual_api_pixels[child-common-alpha-False]",
+      "status": "passed",
+      "message": ""
+    },
+    {
+      "name": "tests.temporal_matte_kernel_diagnostic::test_temporal_matte_actual_api_pixels[rig-common-luminance-False]",
+      "status": "passed",
+      "message": ""
+    }
+  ],
+  "scriptSha256": "3b738943e29c8d15a411ee608789f45834f6ff5c516abc7c9bd4f8e5f81d4992",
+  "limitations": [
+    "Large affine quads and PNG fixtures on pinned four-bit SwiftShader; no arbitrary path/perspective oracle claim.",
+    "Quantized coverage and premultiplied texture sampling are independently derived, not fitted to failing video probes.",
+    "Original historical oracle/thresholds/probes and negative receipts remain unchanged.",
+    "No human scores, blind preference or autonomy evidence is inferred from QC or pixel passes.",
+    "The rejected cleanup of study repositories and existing DOM/PNG bundles has not been retried."
+  ]
+}

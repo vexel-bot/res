@@ -574,8 +574,23 @@ def job_out(job: StudioGenerationJob) -> GenerationJobV1:
 
 
 def create_job(
-    db: Session, request: CreateGenerationJobRequest, idempotency_key: str, user: User
+    db: Session, request: CreateGenerationJobRequest, idempotency_key: str, user: User, *, commit: bool = True
 ) -> tuple[StudioGenerationJob, bool]:
+    if request.provider == "alight-motion.contextual-v1":
+        from ...models import Membership
+
+        member = db.scalar(select(Membership).where(
+            Membership.workspace_id == request.workspace_id, Membership.user_id == user.id,
+        ))
+        if (not get_settings().studio_alight_motion_enabled or request.job_type != "video_render"
+                or not member or member.role.lower() not in {"owner", "admin"}):
+            raise ValueError("alight_experiment_access_denied")
+        from ...providers.studios.alight_motion import refresh_registration
+        from ...providers.studios.video_render import VIDEO_RENDER_PROVIDERS
+
+        admission = refresh_registration(get_settings(), VIDEO_RENDER_PROVIDERS)
+        if not admission["available"]:
+            raise ValueError("alight_worker_not_ready:" + ",".join(admission["blockers"]))
     digest = payload_hash(request)
     existing = db.scalar(
         select(StudioGenerationJob).where(
@@ -731,7 +746,10 @@ def create_job(
         execution_capability=profile.capability,
         queue_name=profile.queue,
         resource_class=profile.resource_class,
-        hard_time_limit_seconds=profile.hard_time_limit_seconds,
+        hard_time_limit_seconds=(
+            1890 if request.provider == "alight-motion.contextual-v1" else profile.hard_time_limit_seconds
+        ),
+        max_attempts=1 if request.provider == "alight-motion.contextual-v1" else 3,
         idempotency_key=idempotency_key,
         payload_hash=digest,
         correlation_id=request.correlation_id or idempotency_key,
@@ -756,7 +774,8 @@ def create_job(
             "resourceClass": job.resource_class,
         },
     )
-    db.commit()
+    if commit:
+        db.commit()
     db.refresh(job)
     return job, True
 

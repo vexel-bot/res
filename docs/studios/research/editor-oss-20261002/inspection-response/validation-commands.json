@@ -1,0 +1,31 @@
+{
+  "tests": [
+    {
+      "command": "python -m pytest tests/test_editor_inspection_summary.py -q",
+      "sessionId": 25119,
+      "exitCode": 0,
+      "passed": 9,
+      "subsequentChanges": "Formatting and equivalent assignment only"
+    },
+    {
+      "command": "python -m pytest tests/test_editing_plan_projection.py tests/test_editor_commands.py::test_atomic_recipe_graph_projection_replay_and_undo tests/test_editor_commands.py::test_failed_batch_preserves_document_plan_and_history -q",
+      "sessionId": 28736,
+      "exitCode": 0,
+      "passed": 8
+    }
+  ],
+  "typecheck": {
+    "command": "npm run lint",
+    "sessionId": 42398,
+    "exitCode": 0
+  },
+  "ruff": {
+    "firstResult": "9 lint findings retained as diagnostic, corrected only new lines/fixture convention",
+    "finalExitCode": 0
+  },
+  "browser": {
+    "initialObservation": "20-second timeout retained; same session reobserved",
+    "localApiRestart": "Once after tests to activate source; not prompted by timeout"
+  },
+  "sourceBackupAttempt": "Basename collision stopped before editing source; partial backup preserved"
+}

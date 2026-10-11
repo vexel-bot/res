@@ -1,0 +1,17 @@
+{
+  "sourceScope": "Typecheck after both frontend changes; eight existing loading/render helper regressions after VideoStudio change, before optional-probe UI change; helpers unchanged",
+  "commands": [
+    {
+      "command": "npm run lint",
+      "exitCode": 0,
+      "completedExecSession": 84916
+    },
+    {
+      "command": "npx tsx --test tests/unit/videoStudioLoading.test.ts tests/unit/videoRenderRequest.test.ts",
+      "exitCode": 0,
+      "passed": 8,
+      "failed": 0,
+      "skipped": 0
+    }
+  ]
+}

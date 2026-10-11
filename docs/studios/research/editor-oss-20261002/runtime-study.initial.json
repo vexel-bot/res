@@ -1,0 +1,345 @@
+{
+  "schemaVersion": "res.editor-oss-runtime-study.v1",
+  "date": "2026-10-02",
+  "source": {
+    "path": "workers/remotion-benchmark/src/hybrid.tsx",
+    "sha256": "ce29b5073cb5cca59975d9ac130509ba1c7aa6dcfa20bd76bf3d79d3668a0dbd"
+  },
+  "evidenceLevel": "Executed current local numerical evaluator and JSX unit segmentation; no render, API job, pixel proof or human approval.",
+  "checks": [
+    {
+      "name": "interpolation_oracle",
+      "mode": "linear",
+      "samples": 601,
+      "maxErrorPx": 4.547473508864641e-13,
+      "tolerancePx": 0.02,
+      "passed": true
+    },
+    {
+      "name": "clamp_and_exact_keys",
+      "mode": "linear",
+      "passed": true
+    },
+    {
+      "name": "absolute_frame_shift",
+      "mode": "linear",
+      "passed": true
+    },
+    {
+      "name": "interpolation_oracle",
+      "mode": "hold",
+      "samples": 601,
+      "maxErrorPx": 0,
+      "tolerancePx": 0.02,
+      "passed": true
+    },
+    {
+      "name": "clamp_and_exact_keys",
+      "mode": "hold",
+      "passed": true
+    },
+    {
+      "name": "absolute_frame_shift",
+      "mode": "hold",
+      "passed": true
+    },
+    {
+      "name": "interpolation_oracle",
+      "mode": "ease_in",
+      "samples": 601,
+      "maxErrorPx": 9.094947017729282e-13,
+      "tolerancePx": 0.02,
+      "passed": true
+    },
+    {
+      "name": "clamp_and_exact_keys",
+      "mode": "ease_in",
+      "passed": true
+    },
+    {
+      "name": "absolute_frame_shift",
+      "mode": "ease_in",
+      "passed": true
+    },
+    {
+      "name": "interpolation_oracle",
+      "mode": "ease_out",
+      "samples": 601,
+      "maxErrorPx": 4.973799150320701e-13,
+      "tolerancePx": 0.02,
+      "passed": true
+    },
+    {
+      "name": "clamp_and_exact_keys",
+      "mode": "ease_out",
+      "passed": true
+    },
+    {
+      "name": "absolute_frame_shift",
+      "mode": "ease_out",
+      "passed": true
+    },
+    {
+      "name": "interpolation_oracle",
+      "mode": "ease_in_out",
+      "samples": 601,
+      "maxErrorPx": 6.821210263296962e-13,
+      "tolerancePx": 0.02,
+      "passed": true
+    },
+    {
+      "name": "clamp_and_exact_keys",
+      "mode": "ease_in_out",
+      "passed": true
+    },
+    {
+      "name": "absolute_frame_shift",
+      "mode": "ease_in_out",
+      "passed": true
+    },
+    {
+      "name": "interpolation_oracle",
+      "mode": "cubic_bezier",
+      "controls": [
+        0.22,
+        0.75,
+        0.25,
+        1
+      ],
+      "samples": 601,
+      "maxErrorPx": 0.0039446624291201715,
+      "tolerancePx": 0.02,
+      "passed": true
+    },
+    {
+      "name": "clamp_and_exact_keys",
+      "mode": "cubic_bezier",
+      "controls": [
+        0.22,
+        0.75,
+        0.25,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "name": "absolute_frame_shift",
+      "mode": "cubic_bezier",
+      "controls": [
+        0.22,
+        0.75,
+        0.25,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "name": "interpolation_oracle",
+      "mode": "cubic_bezier",
+      "controls": [
+        0.34,
+        1.56,
+        0.64,
+        1
+      ],
+      "samples": 601,
+      "maxErrorPx": 0.008697541025085798,
+      "tolerancePx": 0.02,
+      "passed": true
+    },
+    {
+      "name": "clamp_and_exact_keys",
+      "mode": "cubic_bezier",
+      "controls": [
+        0.34,
+        1.56,
+        0.64,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "name": "absolute_frame_shift",
+      "mode": "cubic_bezier",
+      "controls": [
+        0.34,
+        1.56,
+        0.64,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "name": "interpolation_oracle",
+      "mode": "cubic_bezier",
+      "controls": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "samples": 601,
+      "maxErrorPx": 0.00286102294921875,
+      "tolerancePx": 0.02,
+      "passed": true
+    },
+    {
+      "name": "clamp_and_exact_keys",
+      "mode": "cubic_bezier",
+      "controls": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "name": "absolute_frame_shift",
+      "mode": "cubic_bezier",
+      "controls": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "name": "interpolation_oracle",
+      "mode": "cubic_bezier",
+      "controls": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "samples": 601,
+      "maxErrorPx": 0.0028610229495598105,
+      "tolerancePx": 0.02,
+      "passed": true
+    },
+    {
+      "name": "clamp_and_exact_keys",
+      "mode": "cubic_bezier",
+      "controls": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "name": "absolute_frame_shift",
+      "mode": "cubic_bezier",
+      "controls": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "name": "interpolation_oracle",
+      "mode": "cubic_bezier",
+      "controls": [
+        0,
+        -4,
+        1,
+        4
+      ],
+      "samples": 601,
+      "maxErrorPx": 0.01765042276508666,
+      "tolerancePx": 0.02,
+      "passed": true
+    },
+    {
+      "name": "clamp_and_exact_keys",
+      "mode": "cubic_bezier",
+      "controls": [
+        0,
+        -4,
+        1,
+        4
+      ],
+      "passed": true
+    },
+    {
+      "name": "absolute_frame_shift",
+      "mode": "cubic_bezier",
+      "controls": [
+        0,
+        -4,
+        1,
+        4
+      ],
+      "passed": true
+    },
+    {
+      "name": "hold_boundary_and_rest",
+      "passed": true
+    }
+  ],
+  "summary": {
+    "checks": 31,
+    "passed": 31,
+    "samples": 6010,
+    "maximumAbsoluteErrorPx": 0.01765042276508666
+  },
+  "typography": [
+    {
+      "text": "A B",
+      "codePoints": 3,
+      "graphemes": 3,
+      "animatedSpans": 2,
+      "renderedUnits": [
+        "A",
+        "B"
+      ]
+    },
+    {
+      "text": "AÇÃO",
+      "codePoints": 4,
+      "graphemes": 4,
+      "animatedSpans": 4,
+      "renderedUnits": [
+        "A",
+        "Ç",
+        "Ã",
+        "O"
+      ]
+    },
+    {
+      "text": "AÇÃO",
+      "codePoints": 6,
+      "graphemes": 4,
+      "animatedSpans": 6,
+      "renderedUnits": [
+        "A",
+        "C",
+        "̧",
+        "A",
+        "̃",
+        "O"
+      ]
+    },
+    {
+      "text": "👨‍👩‍👧‍👦",
+      "codePoints": 7,
+      "graphemes": 1,
+      "animatedSpans": 7,
+      "renderedUnits": [
+        "👨",
+        "‍",
+        "👩",
+        "‍",
+        "👧",
+        "‍",
+        "👦"
+      ]
+    }
+  ],
+  "externalCodeCopied": false
+}

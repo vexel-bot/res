@@ -1,0 +1,25 @@
+{
+  "scope": "Actual unmodified product download link, ordinary agent-browser click in fresh authenticated study session with --download-path; local downloaded bytes verified",
+  "observedAt": "2026-10-05T18:55:26.399930+00:00",
+  "session": "res-output-download-20261005",
+  "url": "http://127.0.0.1:3000/content/7b95a586-c571-403a-a930-5ac7cb11819a/edit?mode=video",
+  "jobId": "bfc6a1c9-afd0-410f-a635-f7654d676f7f",
+  "assetId": "83e06255-2a93-43db-b3d6-63c5b978642c",
+  "downloadAttribute": "Estudo native14 / interface-a-prova.mp4",
+  "browserSavedName": "Estudo native14 _ interface-a-prova.mp4",
+  "retainedPath": "docs/studios/research/editor-oss-20261002/output-render-routing/interface-a-output-ui-download.mp4",
+  "sha256": "1b856b62acb23b07d488c1c6f9582af75fa5cf074f49c465cdab0a40d6943925",
+  "bytes": 2635718,
+  "matchesRenderArtifact": true,
+  "negativeDiagnostics": {
+    "agentBrowserVersion": "0.27.0",
+    "downloadCommand": "Download was canceled",
+    "occurrences": 3,
+    "shortPathAlsoCanceled": true,
+    "temporarySafeFilenameAlsoCanceled": true,
+    "originalFilenameRestored": true,
+    "diagnosticWasNotProductImplementation": true,
+    "ordinaryClickSuccessful": true,
+    "exactCommandCancellationCause": "not_proven; upstream canonicalize/download-path handling inspected, without modifying CLI or disabling browser protections"
+  }
+}

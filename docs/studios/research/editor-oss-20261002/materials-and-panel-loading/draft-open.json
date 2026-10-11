@@ -1,0 +1,569 @@
+{
+  "success": true,
+  "data": {
+    "origin": "http://127.0.0.1:3000/content/78cece9f-50bd-49d6-8b85-2f1b8d59377c/edit?mode=video",
+    "result": {
+      "cards": [
+        {
+          "assetId": "83be05f7-bc4c-4531-8962-5a7085f730cf",
+          "imageElements": 0,
+          "mediaType": "font/woff2",
+          "rights": "Fonte tipográfica · direitos verificados",
+          "thumbnailText": "Aa\nFONTE TIPOGRÁFICA",
+          "title": "Fonte tipográfica 1",
+          "videoElements": 0
+        },
+        {
+          "assetId": "a9264483-2f2c-4abb-8843-93c8a43e4177",
+          "imageElements": 0,
+          "mediaType": "audio/wav",
+          "rights": "Áudio · direitos verificados",
+          "thumbnailText": "Áudio\nÁUDIO",
+          "title": "Áudio 2",
+          "videoElements": 0
+        }
+      ],
+      "directionDraft": null,
+      "directionMounted": true,
+      "directionVisible": true,
+      "inspectorFrame": "0",
+      "inspectorText": "Composição e movimento\n\nRevisão 2 · plano 2\n\nAtualizar inspeção\nFrame da composição\n\nPropriedades calculadas no frame 0. Valores locais ao nó; posição final e limites do texto dependem do render.\n\nCena\nstudy · [0, 450)\nCamada\nLayer · group · 728a08\nLayer · group · 07e34c\nLayer · group · 570188\nLayer · group · 3ca427\nLayer · shape · 440816\nsignature · text · 63616b\ntitle · text · 2ec080\nending · text · abff3b\ndisclosure · text · 0bf73c\nitem-0 · group · 4dd08e\npanel-0 · shape · fbf81c\ndot-0 · shape · 658c3b\nword-0 · text · f87e93\nitem-1 · group · 2c1430\npanel-1 · shape · 597662\ndot-1 · shape · b60175\nword-1 · text · c8ac90\nitem-2 · group · 64553e\npanel-2 · shape · c7996a\ndot-2 · shape · 4161c2\nword-2 · text · 83fd06\nconnector · shape · f78ee3\nreveal-group · group · 94a500\nresult · text · efb25b\noccluder · shape · 2886c4\n\nTarget: ed2-c0b192b1157bfa33da728a08\nPai: raiz\nIntervalo: [0, 450)\nBase: x 0, y 0, 1080 × 1920, rotação 0°, opacidade 1\nPivô: 0.5, 0.5\n\nEfeitos espaciais\n\nDesfoque estático authored: 0 px.\nDesfoque no instante central do frame 0: 0 px · valor estático.\n\nSem sombra authored.\n\nTracks do target no frame 0\nPropriedade\tAvaliada\tKeyframes authored\n\nEsta camada não tem receita editável. Os tracks acima pertencem à composição atual.\n\nRenderizar esta revisão\n\nRender associado à revisão 2 · 409f0916ab33a58241b1deed17848e09e87e544399261978cdf141e6527d2a4a\n\nRenderer do MP4: remotion.contextual-v2 · versão 4.0.527-native.14.\n\nVersões, digests e materiais",
+      "observedAt": "2026-10-05T19:45:46.072Z",
+      "overlays": 0,
+      "ready": true,
+      "resources": [
+        {
+          "durationMs": 66.09999999403954,
+          "endMs": 3761.599999994039,
+          "path": "/api/v1/bootstrap",
+          "startMs": 3695.5,
+          "status": 200
+        },
+        {
+          "durationMs": 9.699999988079073,
+          "endMs": 3705.7999999821186,
+          "path": "/api/governance/session",
+          "startMs": 3696.099999994039,
+          "status": 200
+        },
+        {
+          "durationMs": 83.2000000178814,
+          "endMs": 3782.099999994039,
+          "path": "/api/v1/bootstrap",
+          "startMs": 3698.899999976158,
+          "status": 200
+        },
+        {
+          "durationMs": 8.100000023841858,
+          "endMs": 3707.5,
+          "path": "/api/governance/session",
+          "startMs": 3699.399999976158,
+          "status": 200
+        },
+        {
+          "durationMs": 97.69999998807909,
+          "endMs": 3798.7999999821186,
+          "path": "/api/v1/bootstrap",
+          "startMs": 3701.099999994039,
+          "status": 200
+        },
+        {
+          "durationMs": 137.90000000596046,
+          "endMs": 3839,
+          "path": "/api/v1/bootstrap",
+          "startMs": 3701.099999994039,
+          "status": 200
+        },
+        {
+          "durationMs": 2.5,
+          "endMs": 3741,
+          "path": "/api/governance/workspace",
+          "startMs": 3738.5,
+          "status": 200
+        },
+        {
+          "durationMs": 3.600000023841858,
+          "endMs": 3742.5,
+          "path": "/api/governance/workspace",
+          "startMs": 3738.899999976158,
+          "status": 200
+        },
+        {
+          "durationMs": 2.9000000059604645,
+          "endMs": 3745.599999994039,
+          "path": "/api/governance/users",
+          "startMs": 3742.699999988079,
+          "status": 200
+        },
+        {
+          "durationMs": 3.2000000178813934,
+          "endMs": 3746.099999994039,
+          "path": "/api/governance/plans",
+          "startMs": 3742.899999976158,
+          "status": 200
+        },
+        {
+          "durationMs": 2.4000000059604645,
+          "endMs": 3745.599999994039,
+          "path": "/api/governance/subscription",
+          "startMs": 3743.199999988079,
+          "status": 200
+        },
+        {
+          "durationMs": 3.5,
+          "endMs": 3746.7999999821186,
+          "path": "/api/governance/approvals",
+          "startMs": 3743.2999999821186,
+          "status": 200
+        },
+        {
+          "durationMs": 4,
+          "endMs": 3747.399999976158,
+          "path": "/api/governance/audit-logs",
+          "startMs": 3743.399999976158,
+          "status": 200
+        },
+        {
+          "durationMs": 2.9000000059604645,
+          "endMs": 3754.2999999821186,
+          "path": "/api/governance/users",
+          "startMs": 3751.399999976158,
+          "status": 200
+        },
+        {
+          "durationMs": 2.800000011920929,
+          "endMs": 3754.5,
+          "path": "/api/governance/plans",
+          "startMs": 3751.699999988079,
+          "status": 200
+        },
+        {
+          "durationMs": 3.300000011920929,
+          "endMs": 3755.199999988079,
+          "path": "/api/governance/subscription",
+          "startMs": 3751.899999976158,
+          "status": 200
+        },
+        {
+          "durationMs": 4.199999988079071,
+          "endMs": 3756.2999999821186,
+          "path": "/api/governance/approvals",
+          "startMs": 3752.099999994039,
+          "status": 200
+        },
+        {
+          "durationMs": 4.800000011920929,
+          "endMs": 3757,
+          "path": "/api/governance/audit-logs",
+          "startMs": 3752.199999988079,
+          "status": 200
+        },
+        {
+          "durationMs": 128.09999999403954,
+          "endMs": 3931.399999976158,
+          "path": "/api/v1/studios/v1/capabilities",
+          "startMs": 3803.2999999821186,
+          "status": 200
+        },
+        {
+          "durationMs": 39.80000001192093,
+          "endMs": 3843.5,
+          "path": "/api/v1/campaigns",
+          "startMs": 3803.699999988079,
+          "status": 200
+        },
+        {
+          "durationMs": 92.80000001192091,
+          "endMs": 3896.699999988079,
+          "path": "/api/v1/posts",
+          "startMs": 3803.899999976158,
+          "status": 200
+        },
+        {
+          "durationMs": 187.5,
+          "endMs": 3991.5,
+          "path": "/api/v1/creatives",
+          "startMs": 3804,
+          "status": 200
+        },
+        {
+          "durationMs": 17001.30000001192,
+          "endMs": 20805.5,
+          "path": "/api/v1/assets",
+          "startMs": 3804.199999988079,
+          "status": 200
+        },
+        {
+          "durationMs": 68.59999999403954,
+          "endMs": 3872.899999976158,
+          "path": "/api/v1/posts/approval-events",
+          "startMs": 3804.2999999821186,
+          "status": 200
+        },
+        {
+          "durationMs": 175.60000002384186,
+          "endMs": 3980,
+          "path": "/api/v1/analytics/summary",
+          "startMs": 3804.399999976158,
+          "status": 200
+        },
+        {
+          "durationMs": 140.19999998807907,
+          "endMs": 3944.7999999821186,
+          "path": "/api/v1/radar/state",
+          "startMs": 3804.599999994039,
+          "status": 200
+        },
+        {
+          "durationMs": 127.40000000596046,
+          "endMs": 3932.099999994039,
+          "path": "/api/v1/workspace-resources",
+          "startMs": 3804.699999988079,
+          "status": 200
+        },
+        {
+          "durationMs": 199.4000000059605,
+          "endMs": 4004.199999988079,
+          "path": "/api/v1/workspace-resources",
+          "startMs": 3804.7999999821186,
+          "status": 200
+        },
+        {
+          "durationMs": 202.9000000059605,
+          "endMs": 4007.7999999821186,
+          "path": "/api/v1/workspace-resources",
+          "startMs": 3804.899999976158,
+          "status": 200
+        },
+        {
+          "durationMs": 221.80000001192093,
+          "endMs": 4062.599999994039,
+          "path": "/api/v1/studios/v1/capabilities",
+          "startMs": 3840.7999999821186,
+          "status": 200
+        },
+        {
+          "durationMs": 158.39999997615814,
+          "endMs": 3999.399999976158,
+          "path": "/api/v1/campaigns",
+          "startMs": 3841,
+          "status": 200
+        },
+        {
+          "durationMs": 231.30000001192093,
+          "endMs": 4072.5,
+          "path": "/api/v1/posts",
+          "startMs": 3841.199999988079,
+          "status": 200
+        },
+        {
+          "durationMs": 252.2000000178814,
+          "endMs": 4093.5,
+          "path": "/api/v1/creatives",
+          "startMs": 3841.2999999821186,
+          "status": 200
+        },
+        {
+          "durationMs": 64397.30000001192,
+          "endMs": 68238.59999999404,
+          "path": "/api/v1/assets",
+          "startMs": 3841.2999999821186,
+          "status": 200
+        },
+        {
+          "durationMs": 174.10000002384186,
+          "endMs": 4015.5,
+          "path": "/api/v1/posts/approval-events",
+          "startMs": 3841.399999976158,
+          "status": 200
+        },
+        {
+          "durationMs": 203.4000000059605,
+          "endMs": 4045,
+          "path": "/api/v1/radar/state",
+          "startMs": 3841.599999994039,
+          "status": 200
+        },
+        {
+          "durationMs": 231.9000000059605,
+          "endMs": 4073.5,
+          "path": "/api/v1/analytics/summary",
+          "startMs": 3841.599999994039,
+          "status": 200
+        },
+        {
+          "durationMs": 192.30000001192093,
+          "endMs": 4034,
+          "path": "/api/v1/workspace-resources",
+          "startMs": 3841.699999988079,
+          "status": 200
+        },
+        {
+          "durationMs": 218.9000000059605,
+          "endMs": 4060.7999999821186,
+          "path": "/api/v1/workspace-resources",
+          "startMs": 3841.899999976158,
+          "status": 200
+        },
+        {
+          "durationMs": 247.80000001192093,
+          "endMs": 4089.699999988079,
+          "path": "/api/v1/workspace-resources",
+          "startMs": 3841.899999976158,
+          "status": 200
+        },
+        {
+          "durationMs": 166.90000000596046,
+          "endMs": 26455.79999998212,
+          "path": "/api/v1/studios/v1/documents",
+          "startMs": 26288.89999997616,
+          "status": 200
+        },
+        {
+          "durationMs": 164.69999998807907,
+          "endMs": 26454.39999997616,
+          "path": "/api/v1/studios/v1/media-ingests",
+          "startMs": 26289.69999998808,
+          "status": 200
+        },
+        {
+          "durationMs": 181.9000000059605,
+          "endMs": 26472.09999999404,
+          "path": "/api/v1/studios/v1/documents",
+          "startMs": 26290.19999998808,
+          "status": 200
+        },
+        {
+          "durationMs": 182.5999999940395,
+          "endMs": 26473.09999999404,
+          "path": "/api/v1/studios/v1/media-ingests",
+          "startMs": 26290.5,
+          "status": 200
+        },
+        {
+          "durationMs": 38.400000005960464,
+          "endMs": 26515.09999999404,
+          "path": "/api/v1/studios/v1/jobs",
+          "startMs": 26476.69999998808,
+          "status": 200
+        },
+        {
+          "durationMs": 4710.5999999940395,
+          "endMs": 31229.29999998212,
+          "path": "/api/v1/assets/dc10e6a4-204f-410d-85c0-51eacb6eaa49/content",
+          "startMs": 26518.69999998808,
+          "status": 200
+        },
+        {
+          "durationMs": 13635.90000000596,
+          "endMs": 40723.29999998212,
+          "path": "/api/v1/studios/v1/documents/377a8aa0-598c-44ca-aa71-a675133b5df6/editorial-readiness",
+          "startMs": 27087.39999997616,
+          "status": 200
+        },
+        {
+          "durationMs": 9495.19999998808,
+          "endMs": 40743.29999998212,
+          "path": "/api/v1/studios/v1/creative/casebook",
+          "startMs": 31248.09999999404,
+          "status": 200
+        },
+        {
+          "durationMs": 9496.90000000596,
+          "endMs": 40745.09999999404,
+          "path": "/api/v1/studios/v1/creative/assisted-intelligence",
+          "startMs": 31248.19999998808,
+          "status": 200
+        },
+        {
+          "durationMs": 9497.5,
+          "endMs": 40745.69999998808,
+          "path": "/api/v1/studios/v1/creative/factory-program",
+          "startMs": 31248.19999998808,
+          "status": 200
+        },
+        {
+          "durationMs": 9473,
+          "endMs": 40721.39999997616,
+          "path": "/api/v1/studios/v1/creative/replan-state",
+          "startMs": 31248.39999997616,
+          "status": 200
+        },
+        {
+          "durationMs": 10294.19999998808,
+          "endMs": 41542.69999998808,
+          "path": "/api/v1/studios/v1/creative/advanced-capabilities",
+          "startMs": 31248.5,
+          "status": 200
+        },
+        {
+          "durationMs": 10292.20000001788,
+          "endMs": 41541,
+          "path": "/api/v1/studios/v1/creative/autonomy-audit",
+          "startMs": 31248.79999998212,
+          "status": 200
+        },
+        {
+          "durationMs": 187.5,
+          "endMs": 169305.69999998808,
+          "path": "/api/v1/studios/v1/workspaces/4812f2c0-1a2a-4f6d-967d-17b370c8d849/render-engines",
+          "startMs": 169118.19999998808,
+          "status": 0
+        },
+        {
+          "durationMs": 185.39999997615817,
+          "endMs": 169305.89999997616,
+          "path": "/api/v1/studios/v1/workspaces/4812f2c0-1a2a-4f6d-967d-17b370c8d849/engine-campaigns",
+          "startMs": 169120.5,
+          "status": 0
+        },
+        {
+          "durationMs": 184,
+          "endMs": 169305.89999997616,
+          "path": "/api/v1/studios/v1/editing/ai",
+          "startMs": 169121.89999997616,
+          "status": 0
+        },
+        {
+          "durationMs": 14297.19999998808,
+          "endMs": 183419.89999997616,
+          "path": "/api/v1/studios/v1/editing/resources",
+          "startMs": 169122.69999998808,
+          "status": 200
+        },
+        {
+          "durationMs": 180.69999998807907,
+          "endMs": 169304.69999998808,
+          "path": "/api/v1/studios/v1/workspaces/4812f2c0-1a2a-4f6d-967d-17b370c8d849/render-engines",
+          "startMs": 169124,
+          "status": 0
+        },
+        {
+          "durationMs": 180.7000000178814,
+          "endMs": 169305.59999999404,
+          "path": "/api/v1/studios/v1/editing/ai",
+          "startMs": 169124.89999997616,
+          "status": 0
+        },
+        {
+          "durationMs": 180,
+          "endMs": 169305.69999998808,
+          "path": "/api/v1/studios/v1/scene-generation-capability",
+          "startMs": 169125.69999998808,
+          "status": 0
+        },
+        {
+          "durationMs": 179.19999998807907,
+          "endMs": 169305.69999998808,
+          "path": "/api/v1/studios/v1/transcripts",
+          "startMs": 169126.5,
+          "status": 0
+        },
+        {
+          "durationMs": 178.59999999403954,
+          "endMs": 169305.69999998808,
+          "path": "/api/v1/studios/v1/editing/repertoire",
+          "startMs": 169127.09999999404,
+          "status": 0
+        },
+        {
+          "durationMs": 178,
+          "endMs": 169305.69999998808,
+          "path": "/api/v1/studios/v1/documents/377a8aa0-598c-44ca-aa71-a675133b5df6/editing-plans/latest",
+          "startMs": 169127.69999998808,
+          "status": 0
+        },
+        {
+          "durationMs": 618.0999999940395,
+          "endMs": 169748.69999998808,
+          "path": "/api/v1/studios/v1/workspaces/4812f2c0-1a2a-4f6d-967d-17b370c8d849/render-engines",
+          "startMs": 169130.59999999404,
+          "status": 200
+        },
+        {
+          "durationMs": 562.9000000059605,
+          "endMs": 169694.09999999404,
+          "path": "/api/v1/studios/v1/workspaces/4812f2c0-1a2a-4f6d-967d-17b370c8d849/engine-campaigns",
+          "startMs": 169131.19999998808,
+          "status": 200
+        },
+        {
+          "durationMs": 581.8000000119209,
+          "endMs": 169713.5,
+          "path": "/api/v1/studios/v1/editing/ai",
+          "startMs": 169131.69999998808,
+          "status": 200
+        },
+        {
+          "durationMs": 28507.09999999404,
+          "endMs": 197639.09999999404,
+          "path": "/api/v1/studios/v1/editing/resources",
+          "startMs": 169132,
+          "status": 200
+        },
+        {
+          "durationMs": 684,
+          "endMs": 169816.59999999404,
+          "path": "/api/v1/studios/v1/workspaces/4812f2c0-1a2a-4f6d-967d-17b370c8d849/render-engines",
+          "startMs": 169132.59999999404,
+          "status": 200
+        },
+        {
+          "durationMs": 625.5,
+          "endMs": 169758.39999997616,
+          "path": "/api/v1/studios/v1/editing/ai",
+          "startMs": 169132.89999997616,
+          "status": 200
+        },
+        {
+          "durationMs": 491.7000000178814,
+          "endMs": 169625.5,
+          "path": "/api/v1/studios/v1/transcripts",
+          "startMs": 169133.79999998212,
+          "status": 200
+        },
+        {
+          "durationMs": 561.5999999940395,
+          "endMs": 169695.89999997616,
+          "path": "/api/v1/studios/v1/editing/repertoire",
+          "startMs": 169134.29999998212,
+          "status": 200
+        },
+        {
+          "durationMs": 28913.59999999404,
+          "endMs": 198048.29999998212,
+          "path": "/api/v1/studios/v1/documents/377a8aa0-598c-44ca-aa71-a675133b5df6/editing-plans/latest",
+          "startMs": 169134.69999998808,
+          "status": 200
+        },
+        {
+          "durationMs": 3718.800000011921,
+          "endMs": 173044.19999998808,
+          "path": "/api/v1/studios/v1/documents/377a8aa0-598c-44ca-aa71-a675133b5df6/editor/inspection",
+          "startMs": 169325.39999997616,
+          "status": 200
+        },
+        {
+          "durationMs": 13819.09999999404,
+          "endMs": 183676.39999997616,
+          "path": "/api/v1/studios/v1/workspaces/4812f2c0-1a2a-4f6d-967d-17b370c8d849/visual-quality",
+          "startMs": 169857.29999998212,
+          "status": 200
+        }
+      ],
+      "reviewGateMounted": true,
+      "scope": "Public DOM and performance timings; no document edits",
+      "url": "http://127.0.0.1:3000/content/78cece9f-50bd-49d6-8b85-2f1b8d59377c/edit?mode=video",
+      "video": {
+        "currentTime": 0,
+        "duration": 15,
+        "height": 1920,
+        "paused": true,
+        "readyState": 4,
+        "seeking": false,
+        "width": 1080
+      }
+    }
+  },
+  "error": null
+}

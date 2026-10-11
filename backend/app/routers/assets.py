@@ -1,6 +1,8 @@
 import mimetypes
 import tempfile
 from pathlib import Path, PurePosixPath
+from types import SimpleNamespace
+from urllib.parse import quote
 
 from fastapi import APIRouter, Depends, File, Form, HTTPException, Query, UploadFile, status
 from fastapi.responses import FileResponse, RedirectResponse, Response
@@ -13,9 +15,10 @@ from ..database import get_db
 from ..domain.studios.image_edit import ImageDerivationRequestV1
 from ..models import Campaign, LibraryAsset, Membership, Post, User
 from ..providers.studios.pillow_image_edit import PillowImageEditProvider
-from ..schemas import AssetIn, AssetOut
+from ..schemas import AssetCatalogItemV1, AssetIn, AssetOut
 from ..security import get_current_user
 from ..services.object_storage import get_object_storage, object_key
+from ..services.studios.asset_read_projection import ASSET_FIELDS, project_assets
 from ..services.studios.image_edit import derive_image_asset
 
 router = APIRouter(prefix="/assets", tags=["assets"])
@@ -32,6 +35,7 @@ ALLOWED_UPLOAD_TYPES = {
     "audio/x-wav": ".wav",
     "audio/mpeg": ".mp3",
     "audio/flac": ".flac",
+    "font/woff2": ".woff2",
 }
 IMAGE_FORMATS = {
     "image/jpeg": "JPEG",
@@ -43,6 +47,28 @@ MAX_IMAGE_PIXELS = 50_000_000
 
 def validate_uploaded_content(path: Path, content_type: str) -> None:
     try:
+        if content_type == "font/woff2":
+            import struct
+
+            from fontTools.ttLib import TTFont, TTLibError
+
+            header = path.read_bytes()[:48]
+            if len(header) < 48 or header[:4] != b"wOF2":
+                raise ValueError("Invalid WOFF2 signature")
+            if (
+                struct.unpack(">I", header[8:12])[0] != path.stat().st_size
+                or struct.unpack(">I", header[16:20])[0] > 50_000_000
+            ):
+                raise ValueError("Invalid WOFF2 bounds")
+            try:
+                with TTFont(path) as font:
+                    if not font.getBestCmap() or not font.getGlyphOrder():
+                        raise ValueError("Font has no readable characters")
+            except TTLibError as error:
+                raise ValueError("Invalid WOFF2 tables") from error
+            except ImportError as error:
+                raise HTTPException(status_code=503, detail="WOFF2 decoder unavailable") from error
+            return
         if content_type in IMAGE_FORMATS:
             with Image.open(path) as image:
                 if image.format != IMAGE_FORMATS[content_type]:
@@ -93,7 +119,9 @@ def asset_out(item: LibraryAsset) -> AssetOut:
     url = (
         f"/api/v1/assets/{item.id}/content"
         if item.lifecycle_status == "active" and item.storage_key
-        else item.url if item.lifecycle_status == "active" else None
+        else item.url
+        if item.lifecycle_status == "active"
+        else None
     )
     return AssetOut(
         id=item.id,
@@ -112,6 +140,43 @@ def asset_out(item: LibraryAsset) -> AssetOut:
         created_at=item.created_at,
         updated_at=item.updated_at,
     )
+
+
+@router.get("/catalog", response_model=list[AssetCatalogItemV1])
+def asset_catalog(
+    workspace_id: str = Query(...), db: Session = Depends(get_db), user: User = Depends(get_current_user),
+) -> list[AssetCatalogItemV1]:
+    assert_access(db, user.id, workspace_id)
+    statement = select(LibraryAsset).where(
+        LibraryAsset.workspace_id == workspace_id, LibraryAsset.lifecycle_status == "active",
+    ).order_by(LibraryAsset.created_at.desc())
+    items = project_assets(db, statement, [("sourceAssetId",)])
+    if items is None:
+        items = db.scalars(statement).all()
+    result = []
+    for item in items:
+        metadata = item.object_metadata or {}
+        if not isinstance(metadata, dict):
+            asset_out(item)  # Preserve existing validation failure for malformed metadata.
+        summary = {"sourceAssetId": metadata["sourceAssetId"]} if "sourceAssetId" in metadata else {}
+        view = SimpleNamespace(**{name: getattr(item, name) for name in ASSET_FIELDS}, object_metadata=summary)
+        result.append(AssetCatalogItemV1(
+            **asset_out(view).model_dump(),
+            full_metadata_path=f"/api/v1/assets/{quote(item.id, safe='')}",
+        ))
+    return result
+
+
+@router.get("/{asset_id}", response_model=AssetOut)
+def get_asset_details(asset_id: str, db: Session = Depends(get_db), user: User = Depends(get_current_user)):
+    item = db.scalar(select(LibraryAsset).join(
+        Membership, Membership.workspace_id == LibraryAsset.workspace_id,
+    ).where(
+        LibraryAsset.id == asset_id, LibraryAsset.lifecycle_status == "active", Membership.user_id == user.id,
+    ))
+    if not item:
+        raise HTTPException(status_code=404, detail="Asset not found")
+    return asset_out(item)
 
 
 @router.get("", response_model=list[AssetOut])

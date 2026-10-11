@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="3" skipped="0" tests="3" time="44.344" timestamp="2026-10-03T18:21:38.572817-03:00" hostname="Computador"><testcase classname="tests.temporal_matte_kernel_diagnostic" name="test_temporal_matte_actual_api_pixels[child-external-alpha-True]" time="18.007"><failure message="AssertionError: assert 'failed' == 'passed'&#10;  &#10;  - passed&#10;  + failed">tests\temporal_matte_kernel_diagnostic.py:281: in test_temporal_matte_actual_api_pixels
+    assert result["qualityEvaluation"]["status"] == "passed"
+E   AssertionError: assert 'failed' == 'passed'
+E     
+E     - passed
+E     + failed</failure></testcase><testcase classname="tests.temporal_matte_kernel_diagnostic" name="test_temporal_matte_actual_api_pixels[rig-external-alpha-False]" time="13.324"><failure message="AssertionError: assert 'failed' == 'passed'&#10;  &#10;  - passed&#10;  + failed">tests\temporal_matte_kernel_diagnostic.py:281: in test_temporal_matte_actual_api_pixels
+    assert result["qualityEvaluation"]["status"] == "passed"
+E   AssertionError: assert 'failed' == 'passed'
+E     
+E     - passed
+E     + failed</failure></testcase><testcase classname="tests.temporal_matte_kernel_diagnostic" name="test_temporal_matte_actual_api_pixels[rig-external-luminance-True]" time="12.234"><failure message="AssertionError: assert 'failed' == 'passed'&#10;  &#10;  - passed&#10;  + failed">tests\temporal_matte_kernel_diagnostic.py:281: in test_temporal_matte_actual_api_pixels
+    assert result["qualityEvaluation"]["status"] == "passed"
+E   AssertionError: assert 'failed' == 'passed'
+E     
+E     - passed
+E     + failed</failure></testcase></testsuite></testsuites>

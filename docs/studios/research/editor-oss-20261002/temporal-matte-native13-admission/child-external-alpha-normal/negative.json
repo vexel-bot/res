@@ -1,0 +1,12 @@
+{
+  "scope": "actual_API_current_native13_plan_rejection",
+  "httpStatus": 422,
+  "response": {
+    "detail": {
+      "code": "motion_recipe_temporal_matte_moving_external_ancestor_pending"
+    }
+  },
+  "publishedArtifact": false,
+  "historicalHarnessScope": "actual_API_native12_plan_rejection",
+  "runtimeVersionDuringTest": "4.0.527-native.13"
+}

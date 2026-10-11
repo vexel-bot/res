@@ -1,0 +1,12 @@
+{
+  "scope": "baseline before new policy integration",
+  "sources": {
+    "backend/app/domain/studios/motion_recipes.py": "9c7f83a7233fb5aef8283d169c9250e10ccff2c4208e01ad7b7eab9499d6f6e6",
+    "backend/app/services/studios/native_motion_recipes.py": "1135e1848f5b08ad668d26421a5c9fc2dd79d361a1d8433fe9224cbec2b27b78",
+    "backend/app/providers/studios/remotion_projection.py": "605e0ec008959006dfc7d6d6ca64b23d0abd7965e5dfe509e27a361ba4b5741e",
+    "backend/app/providers/studios/remotion_render.py": "bd25d5607413957bc425e51e31a13f24599986868baa04db4693f1abcbfd2b31",
+    "workers/remotion-benchmark/src/hybrid.tsx": "e91c51af40d36f2de1615beea1d7228acd937f7d4d66c87b52f810111a6f2b6b",
+    "workers/remotion-benchmark/render-hybrid.mjs": "f73225a66a33204eaf4e7b90e8acfd022cd2fc359bda8eee3fb6ee73b36c148c",
+    "workers/remotion-benchmark/node_modules/@remotion/motion-blur/dist/cjs/CameraMotionBlur.js": "45ffad6218436e369e06c5e1d3f3d0ea7ff9b8d77a10ac2c34ffac6ba178f164"
+  }
+}

@@ -4,11 +4,12 @@ import type { StudioDocumentRecord } from "../api/productApi";
 import { EditingResourcesPanel } from "./EditingResourcesPanel";
 import { VisualAuditPanel, type VisualAudit } from "./VisualAuditPanel";
 import { VisualQualityIndicator } from "./VisualQualityIndicator";
+import { EngineQualificationPanel } from "./EngineQualificationPanel";
 import { EditingMaterialRequests, needFromRequest, type MaterialNeed, type MaterialRequest } from "./EditingMaterialRequests";
 
 type Plan = {
   schemaVersion?: string;
-  direction?: { scenes: { id: string; purpose: string; durationFrames: number;
+  direction?: { renderEngine?: "current" | "alight_motion"; scenes: { id: string; purpose: string; durationFrames: number;
     operationBindings?: { techniqueId: string; version: number; targetIds: string[]; anchorId: string;
       cutMotivation: string; newInformation: string }[] }[];
     semanticVerificationPolicy?: string;
@@ -66,6 +67,8 @@ type CandidateScores = { relevance: number; subjectIdentity: number; temporalCon
 
 function editingError(error: unknown) {
   const code = error instanceof Error ? error.message : "";
+  if (code.includes("alight_worker_not_ready")) return "Alight Motion pendente: configure o Android ou emulador e valide a importação e exportação. Nenhum render alternativo foi iniciado.";
+  if (code.includes("production_render_engine_conflict")) return "O plano pertence a outro motor. Prepare uma nova direção com o motor selecionado.";
   if (code.includes("conflict")) return "O projeto mudou. Atualize a edição para usar a versão atual.";
   if (code.includes("choice_required")) return "Resolva as escolhas pendentes antes de gerar o vídeo.";
   if (code.includes("feedback_requires_matching_material")) return "Este ajuste precisa de texto ou apoio visual na cena selecionada.";
@@ -106,12 +109,36 @@ export function ContextualEditingPanel({ document: incomingDocument, disabled, o
     && Number.isFinite(Number(finding.startSeconds)) && finding.startSeconds !== ""
     && Number(finding.startSeconds) >= 0 && Number(finding.endSeconds) > Number(finding.startSeconds);
   const [nativeAvailable, setNativeAvailable] = React.useState(false);
+  const [renderEngine, setRenderEngine] = React.useState<"current" | "alight_motion">("current");
+  const [alight, setAlight] = React.useState<{ available: boolean; blockers?: string[];
+    applicationProbe?: { installed: boolean | null; version: string | null } | null }>();
+  React.useEffect(() => {
+    const controller = new AbortController();
+    setAlight(undefined);
+    if (!document) return () => controller.abort();
+    const savedRenderer = (document.composition.narrative?.editorialV2 as { renderer?: string } | undefined)?.renderer;
+    setRenderEngine(savedRenderer === "alight-motion.contextual-v1" ? "alight_motion" : "current");
+    apiFetch<{ engines: { provider: string; available: boolean; blockers?: string[];
+      applicationProbe?: { installed: boolean | null; version: string | null } | null }[] }>(
+      `/api/v1/studios/v1/workspaces/${encodeURIComponent(document.workspaceId)}/render-engines`, { signal: controller.signal },
+    ).then(value => {
+      if (controller.signal.aborted) return;
+      const candidate = value.engines.find(engine => engine.provider === "alight-motion.contextual-v1");
+      setAlight(candidate);
+      // Only new directions without an existing renderer prefer the candidate.
+      if (candidate && !savedRenderer) setRenderEngine("alight_motion");
+    }).catch(() => {});
+    return () => controller.abort();
+  }, [document?.documentId, document?.workspaceId]);
   const [qualityIndicatorEnabled, setQualityIndicatorEnabled] = React.useState(false);
   const [qualityPhaseMode, setQualityPhaseMode] = React.useState(false);
   const [nativeEditing, setNativeEditing] = React.useState(false);
   const [visualOnly, setVisualOnly] = React.useState(true);
   const [useLocalDiffusion, setUseLocalDiffusion] = React.useState(false);
   const [localDiffusion, setLocalDiffusion] = React.useState<LocalDiffusionCapability>();
+  const [localDiffusionProbe, setLocalDiffusionProbe] = React.useState(0);
+  const [localDiffusionChecking, setLocalDiffusionChecking] = React.useState(false);
+  const [localDiffusionError, setLocalDiffusionError] = React.useState("");
   const [candidateVideo, setCandidateVideo] = React.useState("");
   const [candidateScores, setCandidateScores] = React.useState<Record<keyof CandidateScores, string>>({
     relevance: "", subjectIdentity: "", temporalContinuity: "", actionClarity: "",
@@ -167,15 +194,16 @@ export function ContextualEditingPanel({ document: incomingDocument, disabled, o
     return () => controller.abort();
   }, []);
   React.useEffect(() => {
+    if (!localDiffusionProbe) return;
     const controller = new AbortController();
+    setLocalDiffusionChecking(true); setLocalDiffusionError("");
+    setLocalDiffusion(undefined); setUseLocalDiffusion(false);
     apiFetch<LocalDiffusionCapability>("/api/v1/studios/v1/scene-generation-capability", { signal: controller.signal })
-      .then(value => { if (!controller.signal.aborted) {
-        setLocalDiffusion(value);
-        setUseLocalDiffusion(value.state !== "unavailable" && value.adapterSupport === "available");
-      } })
-      .catch(() => { if (!controller.signal.aborted) setUseLocalDiffusion(false); });
+      .then(value => { if (!controller.signal.aborted) setLocalDiffusion(value); })
+      .catch(() => { if (!controller.signal.aborted) setLocalDiffusionError("Não foi possível verificar o gerador local. Tente novamente."); })
+      .finally(() => { if (!controller.signal.aborted) setLocalDiffusionChecking(false); });
     return () => controller.abort();
-  }, []);
+  }, [localDiffusionProbe]);
   const candidateJobId = production?.blockers
     .find(code => code.startsWith("production_local_generation_review_required:"))?.split(":", 2)[1];
   React.useEffect(() => {
@@ -242,6 +270,8 @@ export function ContextualEditingPanel({ document: incomingDocument, disabled, o
     setPlan(next);
     setMaterialNeeds((next.materialRequests ?? []).map(needFromRequest));
     if (next.status !== "ready") return;
+    if ((next.direction?.renderEngine ?? "current") !== renderEngine) throw new Error("production_render_engine_conflict");
+    if (renderEngine === "alight_motion" && !alight?.available) throw new Error("alight_worker_not_ready");
     const saved = await post<StudioDocumentRecord>(`${base}/${next.id}/apply`, { expectedPlanRevision: next.revision });
     await onRender(saved, next.id);
   }
@@ -266,6 +296,7 @@ export function ContextualEditingPanel({ document: incomingDocument, disabled, o
   }
   async function developDirection(mode: "mixed_montage" | "motion" = "mixed_montage") {
     if (!document) return;
+    if (renderEngine === "alight_motion" && !alight?.available) throw new Error("alight_worker_not_ready");
     if (qualityPhaseMode && (mode !== "mixed_montage" || visualOnly || !nativeEditing)) {
       throw new Error("A fase visual exige montagem híbrida de 15 s com áudio.");
     }
@@ -276,6 +307,7 @@ export function ContextualEditingPanel({ document: incomingDocument, disabled, o
       ...(qualityPhaseMode ? { qualityPhaseId: "visual-quality-2026-10-01" } : {}),
       demonstrationPolicy: "required", materialSemanticsPolicy: mode === "motion" ? "legacy" : "contextual_video_v1",
       cinematicDirectionPolicy: mode === "motion" ? "editorial_motion_v2" : "mixed_motion_v1",
+      renderEngine,
       nativeSceneEditing: mode === "mixed_montage" && nativeEditing,
       ...(useLocalDiffusion ? { hybridPolicy: {
         mode: "auto", allowedProfileIds: ["animatediff-lightning-sd15-a-v1"],
@@ -306,6 +338,9 @@ export function ContextualEditingPanel({ document: incomingDocument, disabled, o
   }
   async function generate() {
     if (!document) return;
+    if (renderEngine === "alight_motion") {
+      await developDirection("motion"); return;
+    }
     const direction = buildDirection();
     if (useAI) {
       type PlanningJob = { id: string; status: string; result?: { plan?: Plan }; errorMessage?: string };
@@ -334,6 +369,8 @@ export function ContextualEditingPanel({ document: incomingDocument, disabled, o
     setPlan(derivative);
   }
   const blocked = busy || disabled || !document;
+  const enginePending = renderEngine === "alight_motion" && !alight?.available;
+  const planEngineMismatch = !!plan && (plan.direction?.renderEngine ?? "current") !== renderEngine;
   const stale = !!plan && plan.documentRevision !== document?.revision;
   const orderedClips = clipOrder.length ? clipOrder.flatMap(id => clips.filter(c => c.id === id)) : clips;
   function changeBeat(id: string, value: Partial<BeatInput>) {
@@ -349,6 +386,18 @@ export function ContextualEditingPanel({ document: incomingDocument, disabled, o
     <p>Defina o que o vídeo precisa comunicar. A montagem preserva a mensagem e apresenta o vídeo para sua revisão.</p>
     <VisualQualityIndicator document={document} runId={production?.id}
       refreshKey={production?.revision} enabled={qualityIndicatorEnabled && !disabled} />
+    <EngineQualificationPanel document={document} disabled={blocked} onAlightStatus={setAlight} />
+    {alight && <fieldset disabled={blocked} aria-label="Motor da nova edição">
+      <label>Motor da nova edição<select value={renderEngine} onChange={event => setRenderEngine(event.target.value as "current" | "alight_motion")}>
+        <option value="alight_motion">Alight Motion — experimental{alight.available ? "" : " (pendente)"}</option>
+        <option value="current">Motor atual do projeto</option>
+      </select></label>
+      {enginePending && <p role="status">{alight.applicationProbe?.installed
+        ? `Alight Motion ${alight.applicationProbe.version} instalado. O render aguarda perfil homologado e importação/exportação validadas.`
+        : "Alight Motion aguarda Android ou emulador configurado, perfil homologado e importação/exportação validadas."} Nenhum vídeo será gerado por outro motor automaticamente.
+        <br />Diagnóstico: {(alight.blockers ?? []).join(", ")}</p>}
+      {planEngineMismatch && <p>O plano atual pertence a outro motor. Desenvolva uma nova direção antes de renderizar.</p>}
+    </fieldset>}
     {document && <EditingResourcesPanel document={document} onDocument={setDocument} disabled={blocked} />}
     <label>Roteiro e informações de origem<textarea value={script} onChange={e => setScript(e.target.value)} disabled={blocked} maxLength={100000} /></label>
     <label>Fatos que devem permanecer (um por linha)<textarea value={lockedFacts} onChange={e => setLockedFacts(e.target.value)} disabled={blocked} /></label>
@@ -437,10 +486,10 @@ export function ContextualEditingPanel({ document: incomingDocument, disabled, o
         </label>
       </fieldset>)}
     </details>
-    <button type="button" className="vs-button primary" disabled={blocked || !objective.trim()} onClick={() => void run(generate)}>
+    <button type="button" className="vs-button primary" disabled={blocked || enginePending || !objective.trim() || (renderEngine === "alight_motion" && !script.trim())} onClick={() => void run(generate)}>
       {busy ? "Preparando edição…" : "Criar vídeo com esta direção"}
     </button>
-    {nativeAvailable && <label><input type="checkbox" checked={nativeEditing} disabled={blocked}
+    {(nativeAvailable || renderEngine === "alight_motion") && <label><input type="checkbox" checked={nativeEditing} disabled={blocked}
       onChange={e => setNativeEditing(e.target.checked)} /> Edição híbrida experimental: filmagem, produto e tipografia</label>}
     {qualityIndicatorEnabled && <label><input type="checkbox" checked={qualityPhaseMode} disabled={blocked || !nativeAvailable}
       onChange={e => { setQualityPhaseMode(e.target.checked); if (e.target.checked) { setNativeEditing(true); setVisualOnly(false); } }} />
@@ -448,7 +497,11 @@ export function ContextualEditingPanel({ document: incomingDocument, disabled, o
     <label><input type="checkbox" checked={visualOnly} disabled={blocked} onChange={e => setVisualOnly(e.target.checked)} />
       Desenvolver somente o visual nesta rodada, sem produzir narração, música ou efeitos sonoros
     </label>
-    <label><input type="checkbox" checked={useLocalDiffusion} disabled={blocked || localDiffusion?.adapterSupport !== "available"}
+    <button type="button" disabled={blocked || localDiffusionChecking} onClick={() => setLocalDiffusionProbe(value => value + 1)}>
+      {localDiffusionChecking ? "Verificando gerador local…" : localDiffusion ? "Verificar gerador local novamente" : "Verificar gerador local"}
+    </button>
+    {localDiffusionError && <p role="alert">{localDiffusionError}</p>}
+    <label><input type="checkbox" checked={useLocalDiffusion} disabled={blocked || localDiffusionChecking || localDiffusion?.adapterSupport !== "available"}
       onChange={e => setUseLocalDiffusion(e.target.checked)} />
       Incluir um trecho experimental criado pelo difusor local
     </label>
@@ -456,10 +509,10 @@ export function ContextualEditingPanel({ document: incomingDocument, disabled, o
       Difusor local: {localDiffusion.serviceAccessible ? "serviço acessível" : "serviço indisponível"}; modelo {localDiffusion.modelReadiness};
       recursos agora {localDiffusion.resourceAdmission}. O trecho só entra na montagem depois de avaliação.
     </p>}
-    <button type="button" disabled={blocked || (qualityPhaseMode && (visualOnly || !nativeEditing)) || !objective.trim() || !script.trim()} onClick={() => void run(() => developDirection("mixed_montage"))}>
+    <button type="button" disabled={blocked || enginePending || (qualityPhaseMode && (visualOnly || !nativeEditing)) || !objective.trim() || !script.trim()} onClick={() => void run(() => developDirection("mixed_montage"))}>
       Desenvolver montagem mista
     </button>
-    <button type="button" disabled={blocked || qualityPhaseMode || !objective.trim() || !script.trim()} onClick={() => void run(() => developDirection("motion"))}>
+    <button type="button" disabled={blocked || enginePending || qualityPhaseMode || !objective.trim() || !script.trim()} onClick={() => void run(() => developDirection("motion"))}>
       Desenvolver motion editorial
     </button>
     {production && <section aria-label="Direção visual">
@@ -676,10 +729,10 @@ export function ContextualEditingPanel({ document: incomingDocument, disabled, o
           })))}>{a.label}</button><p>{a.impact}</p>
         </div>)}
       </fieldset>)}
-      {plan.status === "ready" && !stale && <button disabled={blocked} onClick={() => void run(() => finish(plan))}>Gerar vídeo</button>}
-      {plan.status === "applied" && !stale && document && <button disabled={blocked}
+      {plan.status === "ready" && !stale && <button disabled={blocked || enginePending || planEngineMismatch} onClick={() => void run(() => finish(plan))}>Gerar vídeo</button>}
+      {plan.status === "applied" && !stale && document && <button disabled={blocked || enginePending || planEngineMismatch}
         onClick={() => void run(async () => { await onRender(document, plan.id); })}>Abrir ou retomar renderização</button>}
-      {plan.direction && !stale && <button disabled={blocked} onClick={() => void run(recompile)}>
+      {plan.direction && !stale && <button disabled={blocked || enginePending || planEngineMismatch} onClick={() => void run(recompile)}>
         Recompilar composição atual
       </button>}
       {plan.manifest?.recompilation && <p>

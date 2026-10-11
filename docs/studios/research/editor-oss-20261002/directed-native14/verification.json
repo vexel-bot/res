@@ -1,0 +1,681 @@
+{
+  "scope": "nine_real_API_directed_study_renders_native14_not_human_or_autonomy_approval",
+  "technicalChecks": "passed",
+  "sourcesVerified": 66,
+  "variants": [
+    {
+      "key": "organization-a",
+      "documentId": "79f5a459-8278-4331-af17-60f41e042480",
+      "revision": 2,
+      "jobId": "de7cd5f3-7e82-41ca-a79f-d2599c06c623",
+      "attempts": 1,
+      "artifact": {
+        "schemaVersion": "studio.rendered-video-artifact.v1",
+        "assetId": "bc8d3578-02ec-4712-8bfb-a061e44a78c8",
+        "storageUri": "/api/v1/assets/bc8d3578-02ec-4712-8bfb-a061e44a78c8/content",
+        "mediaType": "video/mp4",
+        "checksumSha256": "f2eae2907b62bebd648a5142e851de6253f367594b7f68e5a06a224be8687d63",
+        "sizeBytes": 591346,
+        "width": 1080,
+        "height": 1920,
+        "durationMs": 15000,
+        "fps": 30.0,
+        "videoCodec": "h264",
+        "audioCodec": "aac"
+      },
+      "renderDurationMs": 172406,
+      "qcStatus": "passed",
+      "qcWarnings": [
+        {
+          "schemaVersion": "studio.video-technical-quality-check.v1",
+          "id": "silence_ratio",
+          "severity": "warning",
+          "status": "warning",
+          "actual": 0.823756,
+          "minimum": null,
+          "maximum": 0.2,
+          "expected": null,
+          "unit": "ratio",
+          "message": "Silêncio excessivo exige revisão editorial."
+        }
+      ],
+      "decodedFrames": 450,
+      "geometryFrames": 450,
+      "offCanvasSemanticIds": [],
+      "humanReview": "not_assessed"
+    },
+    {
+      "key": "organization-b",
+      "documentId": "7b8b9df1-7bd5-4f71-b2e3-3c9a8f0629f5",
+      "revision": 2,
+      "jobId": "057e7203-cd32-4f0a-b403-45a9f08a3472",
+      "attempts": 4,
+      "artifact": {
+        "schemaVersion": "studio.rendered-video-artifact.v1",
+        "assetId": "b856aefe-1db9-43d3-ad88-995d5ab1b6c8",
+        "storageUri": "/api/v1/assets/b856aefe-1db9-43d3-ad88-995d5ab1b6c8/content",
+        "mediaType": "video/mp4",
+        "checksumSha256": "7f3a7c3a7fac037dcde962c98e5dc4279efeb5fa81d27dfd5cce2fd699933cf8",
+        "sizeBytes": 596336,
+        "width": 1080,
+        "height": 1920,
+        "durationMs": 15000,
+        "fps": 30.0,
+        "videoCodec": "h264",
+        "audioCodec": "aac"
+      },
+      "renderDurationMs": 85468,
+      "qcStatus": "passed",
+      "qcWarnings": [
+        {
+          "schemaVersion": "studio.video-technical-quality-check.v1",
+          "id": "silence_ratio",
+          "severity": "warning",
+          "status": "warning",
+          "actual": 0.823756,
+          "minimum": null,
+          "maximum": 0.2,
+          "expected": null,
+          "unit": "ratio",
+          "message": "Silêncio excessivo exige revisão editorial."
+        }
+      ],
+      "decodedFrames": 450,
+      "geometryFrames": 450,
+      "offCanvasSemanticIds": [],
+      "humanReview": "not_assessed"
+    },
+    {
+      "key": "organization-control",
+      "documentId": "d4685b9d-f0d1-459c-91c8-8535ce2e588e",
+      "revision": 2,
+      "jobId": "fffdd1d5-0534-4a77-9f62-abdba8143162",
+      "attempts": 1,
+      "artifact": {
+        "schemaVersion": "studio.rendered-video-artifact.v1",
+        "assetId": "e865743b-6061-4b50-8c22-a483e75c064a",
+        "storageUri": "/api/v1/assets/e865743b-6061-4b50-8c22-a483e75c064a/content",
+        "mediaType": "video/mp4",
+        "checksumSha256": "8934f4a1274d422c98e9c9d9d4f776110f25ac31ce246bdec1a660b830d29d44",
+        "sizeBytes": 276976,
+        "width": 1080,
+        "height": 1920,
+        "durationMs": 15000,
+        "fps": 30.0,
+        "videoCodec": "h264",
+        "audioCodec": "aac"
+      },
+      "renderDurationMs": 86391,
+      "qcStatus": "passed",
+      "qcWarnings": [
+        {
+          "schemaVersion": "studio.video-technical-quality-check.v1",
+          "id": "silence_ratio",
+          "severity": "warning",
+          "status": "warning",
+          "actual": 0.823756,
+          "minimum": null,
+          "maximum": 0.2,
+          "expected": null,
+          "unit": "ratio",
+          "message": "Silêncio excessivo exige revisão editorial."
+        }
+      ],
+      "decodedFrames": 450,
+      "geometryFrames": 450,
+      "offCanvasSemanticIds": [],
+      "humanReview": "not_assessed"
+    },
+    {
+      "key": "comparison-a",
+      "documentId": "377a8aa0-598c-44ca-aa71-a675133b5df6",
+      "revision": 2,
+      "jobId": "81998d75-384a-4d44-b601-a356b28e0d52",
+      "attempts": 1,
+      "artifact": {
+        "schemaVersion": "studio.rendered-video-artifact.v1",
+        "assetId": "dc10e6a4-204f-410d-85c0-51eacb6eaa49",
+        "storageUri": "/api/v1/assets/dc10e6a4-204f-410d-85c0-51eacb6eaa49/content",
+        "mediaType": "video/mp4",
+        "checksumSha256": "409f0916ab33a58241b1deed17848e09e87e544399261978cdf141e6527d2a4a",
+        "sizeBytes": 624796,
+        "width": 1080,
+        "height": 1920,
+        "durationMs": 15000,
+        "fps": 30.0,
+        "videoCodec": "h264",
+        "audioCodec": "aac"
+      },
+      "renderDurationMs": 73312,
+      "qcStatus": "passed",
+      "qcWarnings": [
+        {
+          "schemaVersion": "studio.video-technical-quality-check.v1",
+          "id": "silence_ratio",
+          "severity": "warning",
+          "status": "warning",
+          "actual": 0.823756,
+          "minimum": null,
+          "maximum": 0.2,
+          "expected": null,
+          "unit": "ratio",
+          "message": "Silêncio excessivo exige revisão editorial."
+        }
+      ],
+      "decodedFrames": 450,
+      "geometryFrames": 450,
+      "offCanvasSemanticIds": [
+        "occluder"
+      ],
+      "humanReview": "not_assessed"
+    },
+    {
+      "key": "comparison-b",
+      "documentId": "dceb53fc-7f7c-481e-b073-999ec21ee94d",
+      "revision": 2,
+      "jobId": "5bd81595-5fa1-491d-8a22-6872af347da0",
+      "attempts": 1,
+      "artifact": {
+        "schemaVersion": "studio.rendered-video-artifact.v1",
+        "assetId": "eec08ddb-e889-4c47-9053-2b65e33fd52d",
+        "storageUri": "/api/v1/assets/eec08ddb-e889-4c47-9053-2b65e33fd52d/content",
+        "mediaType": "video/mp4",
+        "checksumSha256": "b7eca6bcf9188ef05c5bd1e92c8c63fd74b259db5c43e5c7140772a8817ee04d",
+        "sizeBytes": 630038,
+        "width": 1080,
+        "height": 1920,
+        "durationMs": 15000,
+        "fps": 30.0,
+        "videoCodec": "h264",
+        "audioCodec": "aac"
+      },
+      "renderDurationMs": 66297,
+      "qcStatus": "passed",
+      "qcWarnings": [
+        {
+          "schemaVersion": "studio.video-technical-quality-check.v1",
+          "id": "silence_ratio",
+          "severity": "warning",
+          "status": "warning",
+          "actual": 0.823756,
+          "minimum": null,
+          "maximum": 0.2,
+          "expected": null,
+          "unit": "ratio",
+          "message": "Silêncio excessivo exige revisão editorial."
+        }
+      ],
+      "decodedFrames": 450,
+      "geometryFrames": 450,
+      "offCanvasSemanticIds": [
+        "occluder"
+      ],
+      "humanReview": "not_assessed"
+    },
+    {
+      "key": "comparison-control",
+      "documentId": "7bb3cf87-c2c3-4a56-bd3d-d2d79447c457",
+      "revision": 2,
+      "jobId": "f51e18b8-adfa-4fe9-b199-6ff10389adc5",
+      "attempts": 1,
+      "artifact": {
+        "schemaVersion": "studio.rendered-video-artifact.v1",
+        "assetId": "2325b3bd-ab88-44a7-951e-ac4fbf323c3f",
+        "storageUri": "/api/v1/assets/2325b3bd-ab88-44a7-951e-ac4fbf323c3f/content",
+        "mediaType": "video/mp4",
+        "checksumSha256": "25010327326a4245468b1c996122615db7b3ac60b4a906611ae554d4f01614c1",
+        "sizeBytes": 295904,
+        "width": 1080,
+        "height": 1920,
+        "durationMs": 15000,
+        "fps": 30.0,
+        "videoCodec": "h264",
+        "audioCodec": "aac"
+      },
+      "renderDurationMs": 65188,
+      "qcStatus": "passed",
+      "qcWarnings": [
+        {
+          "schemaVersion": "studio.video-technical-quality-check.v1",
+          "id": "silence_ratio",
+          "severity": "warning",
+          "status": "warning",
+          "actual": 0.823756,
+          "minimum": null,
+          "maximum": 0.2,
+          "expected": null,
+          "unit": "ratio",
+          "message": "Silêncio excessivo exige revisão editorial."
+        }
+      ],
+      "decodedFrames": 450,
+      "geometryFrames": 450,
+      "offCanvasSemanticIds": [],
+      "humanReview": "not_assessed"
+    },
+    {
+      "key": "interface-a",
+      "documentId": "0ae12fe1-c3aa-4f42-a764-33d076ade8cd",
+      "revision": 2,
+      "jobId": "3abb31e4-941f-4a19-a954-fd036c1ca2de",
+      "attempts": 1,
+      "artifact": {
+        "schemaVersion": "studio.rendered-video-artifact.v1",
+        "assetId": "98b7f4d5-c48d-4a08-aff4-d6483f456a1d",
+        "storageUri": "/api/v1/assets/98b7f4d5-c48d-4a08-aff4-d6483f456a1d/content",
+        "mediaType": "video/mp4",
+        "checksumSha256": "1b856b62acb23b07d488c1c6f9582af75fa5cf074f49c465cdab0a40d6943925",
+        "sizeBytes": 2635718,
+        "width": 1080,
+        "height": 1920,
+        "durationMs": 15000,
+        "fps": 30.0,
+        "videoCodec": "h264",
+        "audioCodec": "aac"
+      },
+      "renderDurationMs": 99953,
+      "qcStatus": "passed",
+      "qcWarnings": [
+        {
+          "schemaVersion": "studio.video-technical-quality-check.v1",
+          "id": "silence_ratio",
+          "severity": "warning",
+          "status": "warning",
+          "actual": 0.823756,
+          "minimum": null,
+          "maximum": 0.2,
+          "expected": null,
+          "unit": "ratio",
+          "message": "Silêncio excessivo exige revisão editorial."
+        }
+      ],
+      "decodedFrames": 450,
+      "geometryFrames": 450,
+      "offCanvasSemanticIds": [],
+      "humanReview": "not_assessed"
+    },
+    {
+      "key": "interface-b",
+      "documentId": "7fb69e28-6649-4f82-b533-01ac293ae544",
+      "revision": 2,
+      "jobId": "929b3737-a378-4229-88e5-6ca02b4a9ad8",
+      "attempts": 1,
+      "artifact": {
+        "schemaVersion": "studio.rendered-video-artifact.v1",
+        "assetId": "c6e35a2a-bfd5-4a0b-bfc5-4bad7042adba",
+        "storageUri": "/api/v1/assets/c6e35a2a-bfd5-4a0b-bfc5-4bad7042adba/content",
+        "mediaType": "video/mp4",
+        "checksumSha256": "7002cbf41c552c2f30aabfa2ee7bfa160e373404e6495fc9f1b9449fa185173f",
+        "sizeBytes": 2544413,
+        "width": 1080,
+        "height": 1920,
+        "durationMs": 15000,
+        "fps": 30.0,
+        "videoCodec": "h264",
+        "audioCodec": "aac"
+      },
+      "renderDurationMs": 98297,
+      "qcStatus": "passed",
+      "qcWarnings": [
+        {
+          "schemaVersion": "studio.video-technical-quality-check.v1",
+          "id": "silence_ratio",
+          "severity": "warning",
+          "status": "warning",
+          "actual": 0.823756,
+          "minimum": null,
+          "maximum": 0.2,
+          "expected": null,
+          "unit": "ratio",
+          "message": "Silêncio excessivo exige revisão editorial."
+        }
+      ],
+      "decodedFrames": 450,
+      "geometryFrames": 450,
+      "offCanvasSemanticIds": [],
+      "humanReview": "not_assessed"
+    },
+    {
+      "key": "interface-control",
+      "documentId": "30a9b1dc-f0a8-4431-af03-569319298246",
+      "revision": 2,
+      "jobId": "803b739e-2d60-4af6-ae1f-cd091d6f90a2",
+      "attempts": 1,
+      "artifact": {
+        "schemaVersion": "studio.rendered-video-artifact.v1",
+        "assetId": "b3e6621c-df2e-48db-9b08-880719522bec",
+        "storageUri": "/api/v1/assets/b3e6621c-df2e-48db-9b08-880719522bec/content",
+        "mediaType": "video/mp4",
+        "checksumSha256": "f64a30a01174c0eb05200fe8a4e66dc8632097050278b662f688ecb6933f0ced",
+        "sizeBytes": 1987066,
+        "width": 1080,
+        "height": 1920,
+        "durationMs": 15000,
+        "fps": 30.0,
+        "videoCodec": "h264",
+        "audioCodec": "aac"
+      },
+      "renderDurationMs": 109344,
+      "qcStatus": "passed",
+      "qcWarnings": [
+        {
+          "schemaVersion": "studio.video-technical-quality-check.v1",
+          "id": "silence_ratio",
+          "severity": "warning",
+          "status": "warning",
+          "actual": 0.823756,
+          "minimum": null,
+          "maximum": 0.2,
+          "expected": null,
+          "unit": "ratio",
+          "message": "Silêncio excessivo exige revisão editorial."
+        }
+      ],
+      "decodedFrames": 450,
+      "geometryFrames": 450,
+      "offCanvasSemanticIds": [],
+      "humanReview": "not_assessed"
+    }
+  ],
+  "decodedFramesTotal": 4050,
+  "geometryFramesTotal": 4050,
+  "blindSessions": {
+    "organization": {
+      "id": "d2412e84-c643-4c3d-b697-583c31562a47",
+      "language": "motion_graphics",
+      "status": "not_assessed",
+      "blockers": [],
+      "labels": [
+        {
+          "label": "A",
+          "assetId": "b856aefe-1db9-43d3-ad88-995d5ab1b6c8",
+          "checksum": "7f3a7c3a7fac037dcde962c98e5dc4279efeb5fa81d27dfd5cce2fd699933cf8",
+          "documentId": "7b8b9df1-7bd5-4f71-b2e3-3c9a8f0629f5",
+          "documentRevision": 2
+        },
+        {
+          "label": "B",
+          "assetId": "bc8d3578-02ec-4712-8bfb-a061e44a78c8",
+          "checksum": "f2eae2907b62bebd648a5142e851de6253f367594b7f68e5a06a224be8687d63",
+          "documentId": "79f5a459-8278-4331-af17-60f41e042480",
+          "documentRevision": 2
+        },
+        {
+          "label": "C",
+          "assetId": "e865743b-6061-4b50-8c22-a483e75c064a",
+          "checksum": "8934f4a1274d422c98e9c9d9d4f776110f25ac31ce246bdec1a660b830d29d44",
+          "documentId": "d4685b9d-f0d1-459c-91c8-8535ce2e588e",
+          "documentRevision": 2
+        }
+      ],
+      "review": null
+    },
+    "comparison": {
+      "id": "c7d85c2d-2dad-4e7f-8fca-b45736544732",
+      "language": "motion_graphics",
+      "status": "not_assessed",
+      "blockers": [],
+      "labels": [
+        {
+          "label": "A",
+          "assetId": "dc10e6a4-204f-410d-85c0-51eacb6eaa49",
+          "checksum": "409f0916ab33a58241b1deed17848e09e87e544399261978cdf141e6527d2a4a",
+          "documentId": "377a8aa0-598c-44ca-aa71-a675133b5df6",
+          "documentRevision": 2
+        },
+        {
+          "label": "B",
+          "assetId": "2325b3bd-ab88-44a7-951e-ac4fbf323c3f",
+          "checksum": "25010327326a4245468b1c996122615db7b3ac60b4a906611ae554d4f01614c1",
+          "documentId": "7bb3cf87-c2c3-4a56-bd3d-d2d79447c457",
+          "documentRevision": 2
+        },
+        {
+          "label": "C",
+          "assetId": "eec08ddb-e889-4c47-9053-2b65e33fd52d",
+          "checksum": "b7eca6bcf9188ef05c5bd1e92c8c63fd74b259db5c43e5c7140772a8817ee04d",
+          "documentId": "dceb53fc-7f7c-481e-b073-999ec21ee94d",
+          "documentRevision": 2
+        }
+      ],
+      "review": null
+    },
+    "interface": {
+      "id": "e2182ac8-2824-4888-b385-a14ffb81c8ef",
+      "language": "interface_capture",
+      "status": "not_assessed",
+      "blockers": [],
+      "labels": [
+        {
+          "label": "A",
+          "assetId": "b3e6621c-df2e-48db-9b08-880719522bec",
+          "checksum": "f64a30a01174c0eb05200fe8a4e66dc8632097050278b662f688ecb6933f0ced",
+          "documentId": "30a9b1dc-f0a8-4431-af03-569319298246",
+          "documentRevision": 2
+        },
+        {
+          "label": "B",
+          "assetId": "98b7f4d5-c48d-4a08-aff4-d6483f456a1d",
+          "checksum": "1b856b62acb23b07d488c1c6f9582af75fa5cf074f49c465cdab0a40d6943925",
+          "documentId": "0ae12fe1-c3aa-4f42-a764-33d076ade8cd",
+          "documentRevision": 2
+        },
+        {
+          "label": "C",
+          "assetId": "c6e35a2a-bfd5-4a0b-bfc5-4bad7042adba",
+          "checksum": "7002cbf41c552c2f30aabfa2ee7bfa160e373404e6495fc9f1b9449fa185173f",
+          "documentId": "7fb69e28-6649-4f82-b533-01ac293ae544",
+          "documentRevision": 2
+        }
+      ],
+      "review": null
+    }
+  },
+  "browserPlaybacks": [
+    {
+      "label": "organization opção A",
+      "src": "file:///C:/Users/edugu/Downloads/res/output/visual-directed-native14-20261004/blind-review/organization/A.mp4",
+      "elapsedMs": 15443.40000000596,
+      "timeupdateEvents": 60,
+      "fullMutedPlayback": true
+    },
+    {
+      "label": "organization opção B",
+      "src": "file:///C:/Users/edugu/Downloads/res/output/visual-directed-native14-20261004/blind-review/organization/B.mp4",
+      "elapsedMs": 16297.199999988079,
+      "timeupdateEvents": 64,
+      "fullMutedPlayback": true
+    },
+    {
+      "label": "organization opção C",
+      "src": "file:///C:/Users/edugu/Downloads/res/output/visual-directed-native14-20261004/blind-review/organization/C.mp4",
+      "elapsedMs": 15672.90000000596,
+      "timeupdateEvents": 62,
+      "fullMutedPlayback": true
+    },
+    {
+      "label": "comparison opção A",
+      "src": "file:///C:/Users/edugu/Downloads/res/output/visual-directed-native14-20261004/blind-review/comparison/A.mp4",
+      "elapsedMs": 15182.800000011921,
+      "timeupdateEvents": 60,
+      "fullMutedPlayback": true
+    },
+    {
+      "label": "comparison opção B",
+      "src": "file:///C:/Users/edugu/Downloads/res/output/visual-directed-native14-20261004/blind-review/comparison/B.mp4",
+      "elapsedMs": 15121.5,
+      "timeupdateEvents": 60,
+      "fullMutedPlayback": true
+    },
+    {
+      "label": "comparison opção C",
+      "src": "file:///C:/Users/edugu/Downloads/res/output/visual-directed-native14-20261004/blind-review/comparison/C.mp4",
+      "elapsedMs": 15201.100000023842,
+      "timeupdateEvents": 61,
+      "fullMutedPlayback": true
+    },
+    {
+      "label": "interface opção A",
+      "src": "file:///C:/Users/edugu/Downloads/res/output/visual-directed-native14-20261004/blind-review/interface/A.mp4",
+      "elapsedMs": 15483.699999988079,
+      "timeupdateEvents": 60,
+      "fullMutedPlayback": true
+    },
+    {
+      "label": "interface opção B",
+      "src": "file:///C:/Users/edugu/Downloads/res/output/visual-directed-native14-20261004/blind-review/interface/B.mp4",
+      "elapsedMs": 15167.800000011921,
+      "timeupdateEvents": 60,
+      "fullMutedPlayback": true
+    },
+    {
+      "label": "interface opção C",
+      "src": "file:///C:/Users/edugu/Downloads/res/output/visual-directed-native14-20261004/blind-review/interface/C.mp4",
+      "elapsedMs": 15165.300000011921,
+      "timeupdateEvents": 60,
+      "fullMutedPlayback": true
+    }
+  ],
+  "mediaBytes": 10182593,
+  "aliasExtraMediaBytes": 0,
+  "interventions": [
+    "Original authored direction reused, not generated by a planner.",
+    "Fresh documents/plans on the same original assets; expected revision rebound explicitly.",
+    "Current native.14 execution, high/CRF10 output; no assumption of visual improvement.",
+    "No new media source, paid generation, human score or blind preference invented.",
+    "Stopped embedded worker for organization-b reconciled through API cancellation and existing cancellation-only service branch; retry explicit."
+  ],
+  "registrationFailureRetained": "c21d1a789820d4118b79f03b5c1ca4bb9a5ed82945312dcc67a67cc2705a4489",
+  "stoppedWorkerRetained": "76fb408a18c9d6448ddd400114065cf0c01f2f4409fcbe2c1d5bfa5063b1947e",
+  "humanReview": "not_assessed",
+  "autonomy": "not_demonstrated",
+  "centralEditorPreviewQualification": "pending_for_these_portrait_15s_projects",
+  "cleanup": "prior_automatic_review_rejected_not_retried",
+  "evidence": {
+    "output/visual-directed-native14-20261004/blind-export.json": "2e6ec6cb8785a8e042542614aa799ed11582de12730a732f6d0dae6eb699c384",
+    "output/visual-directed-native14-20261004/blind-gallery-browser.json": "687db59466fc48d954c6412ff25455202efa2329190300e9dc278ba5388afdbb",
+    "output/visual-directed-native14-20261004/blind-gallery-reset.json": "7af7479ddad4643c169c285245b98baf79f8541d2d4ee6895587e0613132ce43",
+    "output/visual-directed-native14-20261004/blind-gallery-reset.png": "190e540121d25bf73af9767de727c39c952a62a38e351fa32a046d42a8d33a31",
+    "output/visual-directed-native14-20261004/blind-gallery.png": "5965412b2ce0be671dc50e6b8d440ccbb8f38eefc430f8a2d4242ab199520849",
+    "output/visual-directed-native14-20261004/blind-playback-0.json": "b4af2b8dfb2994b0b54241017ea7de83b8102443143877f02ad087a833e7904c",
+    "output/visual-directed-native14-20261004/blind-playback-1.json": "f8a1c695d83b3735553c25526eefe8b8baf0b4d17c4d3a8bb94f7fb150e9a546",
+    "output/visual-directed-native14-20261004/blind-playback-2.json": "ff439d8abf256440584c3be881296e69568b4ea92660f8eddd87da2a8501859b",
+    "output/visual-directed-native14-20261004/blind-playback-3.json": "7c9d3626915da5dc8f9d7c26c591e04ededb916294cec496779dec3dcd8e054f",
+    "output/visual-directed-native14-20261004/blind-playback-4.json": "2d00f854b57edb7880071fac43e890b731bd25067ce2b8dbc8be49963453f154",
+    "output/visual-directed-native14-20261004/blind-playback-5.json": "bc2aea7f3631c0fe02736487796c61d8f2c8ec2465b5a37832d89e6a5c29ddb1",
+    "output/visual-directed-native14-20261004/blind-playback-6.json": "7e239a6f15ab08652759fe0424b0497b208c61248a3b88f6d2cd73615dc6e1d9",
+    "output/visual-directed-native14-20261004/blind-playback-7.json": "bdeea7add8af082a09bed95327856f6b66dc09c04117beda2b05f1d408859fbc",
+    "output/visual-directed-native14-20261004/blind-playback-8.json": "6e863ca41578a03a097d11e8f06e753f92c9a949549f31ab2cdf183834ff7137",
+    "output/visual-directed-native14-20261004/comparison-a-analysis-contact.png": "e3e2914db05ff1ce4361f150b2cfa7635431ed63e8c0c0863d277b07cfc15f77",
+    "output/visual-directed-native14-20261004/comparison-a-document.json": "c667a0a24889345b6729c8a3df89eb58898cebf393f3a8d39382ab1ae1dc87e8",
+    "output/visual-directed-native14-20261004/comparison-a-frame0.png": "c5187433d81f0a0f1376e8143bcbdc8bdbc1d43dcfb53651bd44c792c1cbc34f",
+    "output/visual-directed-native14-20261004/comparison-a-plan.json": "5e45527a14c4561e84c7b8dc5bf2bd3840ce4b8f28b086c4403ea076efe31285",
+    "output/visual-directed-native14-20261004/comparison-a-render.json": "2cdecceb985e2705ff9ca22ba0709c91b42d9465d96415c5938376ee04de4789",
+    "output/visual-directed-native14-20261004/comparison-a-request.json": "b2c9e0f3dfd0f84987464969546d45f5c7dc120516df9e5dc224866568fcc2de",
+    "output/visual-directed-native14-20261004/comparison-a-source-document.json": "a8ebd7ec1265e76da0af3784e7253ca67be6b50da5f1776f5206c64b50a2506f",
+    "output/visual-directed-native14-20261004/comparison-a-source-plan.json": "2963cf3c6adccba5be66f850c9fbb3d9e718539cf72cd1d804847f751c43a2ca",
+    "output/visual-directed-native14-20261004/comparison-a-technical-audit.json": "acb08ee26c78b772b308321bd3ebf8ec0f2589dabde895f333c90bf1ed9e3fb1",
+    "output/visual-directed-native14-20261004/comparison-a.mp4": "409f0916ab33a58241b1deed17848e09e87e544399261978cdf141e6527d2a4a",
+    "output/visual-directed-native14-20261004/comparison-b-analysis-contact.png": "8833461d892bb43dada5547d40bfdc8596d090920db9becbacb5228e95c68647",
+    "output/visual-directed-native14-20261004/comparison-b-document.json": "d27e507e353357039776a4583000ad8d3baf62871432669f9ae255be2c6a1c3e",
+    "output/visual-directed-native14-20261004/comparison-b-plan.json": "00a2e6f2273aa840691a833c9b11041918729c47b8c244abdb0508970051b5a3",
+    "output/visual-directed-native14-20261004/comparison-b-render.json": "2ed81f8b37df181ad3e70ce93a65206c40d2e370e4221995adeb84977c9daacd",
+    "output/visual-directed-native14-20261004/comparison-b-request.json": "4bfdca1f3cf7d081aef1726c182ae2da9ebd862e5bace4e102db3a8e987d08a8",
+    "output/visual-directed-native14-20261004/comparison-b-source-document.json": "6131083bbb7beb797025b65b39bf74050d5672ca19edf0bf68969532213f03e3",
+    "output/visual-directed-native14-20261004/comparison-b-source-plan.json": "6203972f464542ccfe757c71c7d5d2884227840f83d1c855d74465403632db5a",
+    "output/visual-directed-native14-20261004/comparison-b-technical-audit.json": "6abd63e3cee25f5380a83cd4ea05ce66ef74f92c29f2bebeb167032762deb1a3",
+    "output/visual-directed-native14-20261004/comparison-b.mp4": "b7eca6bcf9188ef05c5bd1e92c8c63fd74b259db5c43e5c7140772a8817ee04d",
+    "output/visual-directed-native14-20261004/comparison-blind-session.json": "a89470521a944c7e458c95bbca10e8bacd7de0174ecf8c77be100d13956d1df9",
+    "output/visual-directed-native14-20261004/comparison-control-analysis-contact.png": "336b6ae51dc8b34ef7c8013f6975037447c8b7bec6340e5ff2f9a505f4d3bb31",
+    "output/visual-directed-native14-20261004/comparison-control-document.json": "38bc4bfa748f521c3427cf803e8f525118a057be6d2bc6799b3b9c384760c820",
+    "output/visual-directed-native14-20261004/comparison-control-plan.json": "3032451c74b2db524d8a56107fe1b08793a1c1b90c7966825454cbcffd5bee33",
+    "output/visual-directed-native14-20261004/comparison-control-render.json": "2c77e7e3acc75c5af97b2b7ba3995c606a4d0931e1df8b824e74dbdf1fc2980e",
+    "output/visual-directed-native14-20261004/comparison-control-request.json": "4c439c49ba1b81ea1715ce649ee0d680bd8096349ef6f5ef67b7635abbf8dc2d",
+    "output/visual-directed-native14-20261004/comparison-control-source-document.json": "69bbdc81ebc88a6380ea3ff443d653014a2ab5c382e45d129e94c2d57ee3d7d6",
+    "output/visual-directed-native14-20261004/comparison-control-source-plan.json": "10bd6708aa224a40ac57bef1029aeb914d84b31c342d5ca0f2c5164dceb51083",
+    "output/visual-directed-native14-20261004/comparison-control-technical-audit.json": "eefa771bbf11ffddffc720f83a91ce8c60c1a014bfd660049558479c74097de4",
+    "output/visual-directed-native14-20261004/comparison-control.mp4": "25010327326a4245468b1c996122615db7b3ac60b4a906611ae554d4f01614c1",
+    "output/visual-directed-native14-20261004/execution.json": "0d8f7cbbd16c50d829a6d1edef4f8ce53faf158a4f796e7d30484d86fcd3f2fa",
+    "output/visual-directed-native14-20261004/interface-a-analysis-contact.png": "fa2e14aa1ee5787fee63d16b89b668afe2254cbdd82eda6797c66e8634c1adc1",
+    "output/visual-directed-native14-20261004/interface-a-document.json": "1e099d93f31696a57d0ca8dd869b7002c2394aecb4bec13663b92088a9054127",
+    "output/visual-directed-native14-20261004/interface-a-plan.json": "1d5b61a393950f3a2aa27591ccc78d7f223a8ace8a1958c0b500296f85a189f2",
+    "output/visual-directed-native14-20261004/interface-a-render.json": "3d2eb89103408f123a9f501f83406d696d00fe0b3027599da4811984584c3711",
+    "output/visual-directed-native14-20261004/interface-a-request.json": "cf657715e267439eeeac060462644239a5be7a38931ff8e67b16a9527633dfee",
+    "output/visual-directed-native14-20261004/interface-a-source-document.json": "ff67bf772dfc1ef6185ed2633e3a1ce9e75b88a51be750fb497e8fff4e2b5532",
+    "output/visual-directed-native14-20261004/interface-a-source-plan.json": "de7440ca2746e7188ea1b284d3aa354e963e4656b2aaf7b8aa98a5e0112bafab",
+    "output/visual-directed-native14-20261004/interface-a-technical-audit.json": "5b31bb247cb4ad2aef2d36c600173f418fdf29e8aec7eff7380af2015acb6d9e",
+    "output/visual-directed-native14-20261004/interface-a.mp4": "1b856b62acb23b07d488c1c6f9582af75fa5cf074f49c465cdab0a40d6943925",
+    "output/visual-directed-native14-20261004/interface-b-analysis-contact.png": "313f425a089df1038048a12980b8a8cb4c4a795b52143ef013ce1f7daa6b45a3",
+    "output/visual-directed-native14-20261004/interface-b-document.json": "e0a250ad3336bcc77c1e7735accbc5d4b15498ca7cbdebf9667069c79dee980c",
+    "output/visual-directed-native14-20261004/interface-b-plan.json": "9595ab464b9c310cc75586b650fbf80656019d81c926a604ff08d9f86afc24c0",
+    "output/visual-directed-native14-20261004/interface-b-render.json": "1cf4aca7257b79b6ef8599025e53eab19a1dfa1f987c86787d28d3df7dea2193",
+    "output/visual-directed-native14-20261004/interface-b-request.json": "6407da7fc67275e8663da690e5580d4d18eb8af37be6cae55dd989f7381b37ed",
+    "output/visual-directed-native14-20261004/interface-b-source-document.json": "48cffa561d580320680d67aac9a9e162bf6249685c1655269a57eab7129c7bec",
+    "output/visual-directed-native14-20261004/interface-b-source-plan.json": "f2a717c34626bdac4f8663fc5caea468cc8db43d00f7559366e9c87dd653d68f",
+    "output/visual-directed-native14-20261004/interface-b-technical-audit.json": "866ddad1dd6bd751ee966a5cd45f6c729c9c2865b5cf0d5264a294d6011003e3",
+    "output/visual-directed-native14-20261004/interface-b.mp4": "7002cbf41c552c2f30aabfa2ee7bfa160e373404e6495fc9f1b9449fa185173f",
+    "output/visual-directed-native14-20261004/interface-blind-session.json": "bb4f7ebcf401f3906ebe7521cef8ac3e131ee9360147a82f5ad2b025f2d65ee5",
+    "output/visual-directed-native14-20261004/interface-control-analysis-contact.png": "3816a3b2483b1cec96922bc8a39ccaaf97db4b82caaa0ad20a2afa5c342a94b2",
+    "output/visual-directed-native14-20261004/interface-control-document.json": "6b73913a7e83a534517ad94748278953cf3dba2615504443ce3129c53cd11284",
+    "output/visual-directed-native14-20261004/interface-control-plan.json": "7ef202e92bd6b2d9c3c844ef4a4e59713e266824913ba11198a8dd39c043fa6e",
+    "output/visual-directed-native14-20261004/interface-control-render.json": "2690f3ce9ba8a3d19bc80ea6cec1cd371212e457ba1ffdff8b51ffbc9538019c",
+    "output/visual-directed-native14-20261004/interface-control-request.json": "0825d2df72e460c5ceb9116c5cc721867b1381dcdac0b32a2a62fe1f4841641a",
+    "output/visual-directed-native14-20261004/interface-control-source-document.json": "a4b9c73cc999846b1c6543356e1a740340a1478528d72c21addb9757941fce74",
+    "output/visual-directed-native14-20261004/interface-control-source-plan.json": "79877d7f77e0865db986227e6ba186b72780784b007d96611040f756495bca94",
+    "output/visual-directed-native14-20261004/interface-control-technical-audit.json": "314a99852ea217439188ad43bb164d8d1b71a0ddd325e4489ecec6fb75c45543",
+    "output/visual-directed-native14-20261004/interface-control.mp4": "f64a30a01174c0eb05200fe8a4e66dc8632097050278b662f688ecb6933f0ced",
+    "output/visual-directed-native14-20261004/organization-a-analysis-contact.png": "efc740e4e5ebecd3e227cca47055fc2a002523fb8e2af924641a8ed47110be87",
+    "output/visual-directed-native14-20261004/organization-a-contact.png": "efc740e4e5ebecd3e227cca47055fc2a002523fb8e2af924641a8ed47110be87",
+    "output/visual-directed-native14-20261004/organization-a-document.json": "ddda9f280486e57efe9dc3b7e828a37999fc42b1402d03dcd06736e4970b007b",
+    "output/visual-directed-native14-20261004/organization-a-frame0.png": "bc8bcf50c28c905a538260c8d9fb30f04af028561c03a3c8fb4634e0f896b182",
+    "output/visual-directed-native14-20261004/organization-a-http-recovery.json": "4dddf1e0a35de2a0d50597124c8b450f286d4d104523fc9518c782ad9e3e5d16",
+    "output/visual-directed-native14-20261004/organization-a-plan.json": "ba6a56aa3441b1e9accccda3550c33062d5e154d75a74f8d1f879e86953a5da1",
+    "output/visual-directed-native14-20261004/organization-a-probe.json": "567356a36a2dddb1200985b3f81bce81219d13f7476da79b7d84e88ad8b3b97d",
+    "output/visual-directed-native14-20261004/organization-a-render.json": "50b14400c8fb84743b44fb8180c697c96cd9c45902e95757df6e43229c6698be",
+    "output/visual-directed-native14-20261004/organization-a-request.json": "2644127e93d0042865a4be63e465cee1f17ebc35288c08c21cdbad9168795179",
+    "output/visual-directed-native14-20261004/organization-a-source-document.json": "d76cc9d8693d188236ba2e857d3589c1f75107d542a61d413dbea4f373259908",
+    "output/visual-directed-native14-20261004/organization-a-source-plan.json": "0bac1a8c4c30e4a8a8a89a24b3bfe588c02dd9b9a396df84097ed90fe0d37a6c",
+    "output/visual-directed-native14-20261004/organization-a-technical-audit.json": "f3eeae38b8b4e36d90c816afdd8b8587cdb94d950ec8ce2ff8a6ef9030139a68",
+    "output/visual-directed-native14-20261004/organization-a.mp4": "f2eae2907b62bebd648a5142e851de6253f367594b7f68e5a06a224be8687d63",
+    "output/visual-directed-native14-20261004/organization-b-analysis-contact.png": "719f71506dcc3ce3257f5034600ff211ca087fe8fad99c58f4c752f2ea3f6654",
+    "output/visual-directed-native14-20261004/organization-b-document.json": "f133989020052c5441c2a1724b9c6dbaea41a99e856f8649ad3a8e13646a9716",
+    "output/visual-directed-native14-20261004/organization-b-http-recovery.json": "9006a5eba1c6f2ec356e62c9186a50b160b8dda94f280e57bb08e696864d9b90",
+    "output/visual-directed-native14-20261004/organization-b-plan.json": "5fe401293dc126faddecb4ad1afdf687312792c66d4f556bf19359a1ac154e8a",
+    "output/visual-directed-native14-20261004/organization-b-provider-registration-failure.json": "c21d1a789820d4118b79f03b5c1ca4bb9a5ed82945312dcc67a67cc2705a4489",
+    "output/visual-directed-native14-20261004/organization-b-render.json": "a634351dfff4de86af7634a0513a050029b909b644872939a8ae083e77a5f0b9",
+    "output/visual-directed-native14-20261004/organization-b-request.json": "98199c8dd3279eaa1fcdd10f100c9fe287c96d92592c808bf8555a6c7831c0dc",
+    "output/visual-directed-native14-20261004/organization-b-source-document.json": "4632fc29137dd10b213d08a723b769fac811063d4ae3477034d87f0f32c48797",
+    "output/visual-directed-native14-20261004/organization-b-source-plan.json": "155fb4e10a29de88d0a6c0f7fd58f5e225dc32759e66435a58be156a5c2a80d9",
+    "output/visual-directed-native14-20261004/organization-b-stopped-worker.json": "76fb408a18c9d6448ddd400114065cf0c01f2f4409fcbe2c1d5bfa5063b1947e",
+    "output/visual-directed-native14-20261004/organization-b-technical-audit.json": "9d634d3a8543120895408544783475b5a841ad73caced806e49815aac1a83884",
+    "output/visual-directed-native14-20261004/organization-b.mp4": "7f3a7c3a7fac037dcde962c98e5dc4279efeb5fa81d27dfd5cce2fd699933cf8",
+    "output/visual-directed-native14-20261004/organization-blind-session.json": "883fdae82543bff882e1bd9513267bbd06c65fb0383f98b900f43edc63433018",
+    "output/visual-directed-native14-20261004/organization-control-analysis-contact.png": "52b1796b05ea61ed12de5a1d7175d02d85d3babd87772a89c8a7e9eb68c84796",
+    "output/visual-directed-native14-20261004/organization-control-document.json": "784137638c21cd40ea55a573e5825dd3bf00e0d9f37e7c31063b90a2b19b1cc5",
+    "output/visual-directed-native14-20261004/organization-control-plan.json": "69e8625301ed1447de4e09d7d6664bdc5261a67627d83b0337e2f74e756ac634",
+    "output/visual-directed-native14-20261004/organization-control-render.json": "4a4422a06d56394f80b06517b456e970622489638b1ae29fbffe78e9806bb7bc",
+    "output/visual-directed-native14-20261004/organization-control-request.json": "443f5bc7451ea00fd31a2c2ac49ed287adf94bb3e89632cfe0309e5f4c2edc4c",
+    "output/visual-directed-native14-20261004/organization-control-source-document.json": "30d5fc9b7bc96c64dca4b06f75c3a9b16b73605f6494d9ba5c5c532369f27cdd",
+    "output/visual-directed-native14-20261004/organization-control-source-plan.json": "9fa45ac739866be65a0b2b9e995dc51ae9a668fba7411f3223c20d5f29446471",
+    "output/visual-directed-native14-20261004/organization-control-technical-audit.json": "7a9440c072a78ac304b8982870dd3a2e24eab889aca0ca8b5b4b633a68b12cd0",
+    "output/visual-directed-native14-20261004/organization-control.mp4": "8934f4a1274d422c98e9c9d9d4f776110f25ac31ce246bdec1a660b830d29d44",
+    "output/visual-directed-native14-20261004/blind-review/REVIEW.html": "00574860a77ea795a7573153274986d133c7a9ac257092128c42d09261ab0279",
+    "output/visual-directed-native14-20261004/blind-review/REVIEW.md": "2769fa0b2b287af40c228c7c86508c58e1d9542686867a5861bb358376ebb55e",
+    "output/visual-directed-native14-20261004/blind-review/comparison/A.mp4": "409f0916ab33a58241b1deed17848e09e87e544399261978cdf141e6527d2a4a",
+    "output/visual-directed-native14-20261004/blind-review/comparison/B.mp4": "25010327326a4245468b1c996122615db7b3ac60b4a906611ae554d4f01614c1",
+    "output/visual-directed-native14-20261004/blind-review/comparison/C.mp4": "b7eca6bcf9188ef05c5bd1e92c8c63fd74b259db5c43e5c7140772a8817ee04d",
+    "output/visual-directed-native14-20261004/blind-review/interface/A.mp4": "f64a30a01174c0eb05200fe8a4e66dc8632097050278b662f688ecb6933f0ced",
+    "output/visual-directed-native14-20261004/blind-review/interface/B.mp4": "1b856b62acb23b07d488c1c6f9582af75fa5cf074f49c465cdab0a40d6943925",
+    "output/visual-directed-native14-20261004/blind-review/interface/C.mp4": "7002cbf41c552c2f30aabfa2ee7bfa160e373404e6495fc9f1b9449fa185173f",
+    "output/visual-directed-native14-20261004/blind-review/organization/A.mp4": "7f3a7c3a7fac037dcde962c98e5dc4279efeb5fa81d27dfd5cce2fd699933cf8",
+    "output/visual-directed-native14-20261004/blind-review/organization/B.mp4": "f2eae2907b62bebd648a5142e851de6253f367594b7f68e5a06a224be8687d63",
+    "output/visual-directed-native14-20261004/blind-review/organization/C.mp4": "8934f4a1274d422c98e9c9d9d4f776110f25ac31ce246bdec1a660b830d29d44"
+  },
+  "limitations": [
+    "Complete decode is at 270x480; stream dimensions are 1080x1920.",
+    "DOM bounds do not prove glyph or mask coverage.",
+    "Browser playback was muted; human listening and preference pending.",
+    "Directions remain historical authored directions, not three new briefs.",
+    "Renderer durations are individual local measurements, not p95 or realtime claims."
+  ]
+}

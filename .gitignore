@@ -39,3 +39,5 @@ tmp/
 *.sqlite-*
 .local-session.json
 workers/media-assets-local/models/
+# Local Android discovery build products and development signing identity.
+output/alight-discovery-20261002/android-bridge/

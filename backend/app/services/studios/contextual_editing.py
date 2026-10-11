@@ -48,6 +48,7 @@ from .contextual_assembly import (
     transcript_captions,
     validate_transcript_bindings,
 )
+from .editing_plan_validation import load_validated_plan
 from .editing_repertoire import contextual_references, ensure_repertoire, search_repertoire
 from .kernel import emit_event
 from .review_binding import invalidate_linked_post_review
@@ -65,6 +66,9 @@ def _events(db, workspace_id, event_type, aggregate_id=None):
 
 
 def get_plan(db, workspace_id, plan_id):
+    # Preserve identity-map semantics, including unflushed nested JSON changes.
+    if plan_id and not any(isinstance(item, StudioDomainEvent) for item in db.identity_map.values()):
+        return load_validated_plan(db, workspace_id, plan_id, parse_editing_plan)
     events = _events(db, workspace_id, PLAN_EVENT, plan_id)
     if not events:
         raise ValueError("editing_plan_not_found")
@@ -73,18 +77,19 @@ def get_plan(db, workspace_id, plan_id):
 
 
 def latest_plan(db, document):
-    events = [
-        e
-        for e in _events(db, document.workspace_id, PLAN_EVENT)
-        if e.payload.get("plan", {}).get("documentId") == document.id
-    ]
-    if not events:
+    # Select by document before hydrating JSON: historical plans can contain
+    # multi-megabyte manifests. Persisted timestamp/id, not client-created time
+    # or plan revision, still determine the newest sibling or plan revision.
+    newest = db.scalar(
+        select(StudioDomainEvent).where(
+            StudioDomainEvent.workspace_id == document.workspace_id,
+            StudioDomainEvent.event_type == PLAN_EVENT,
+            StudioDomainEvent.payload["plan"]["documentId"].as_string() == document.id,
+        ).order_by(StudioDomainEvent.occurred_at.desc(), StudioDomainEvent.id.desc()).limit(1)
+    )
+    if newest is None:
         return None
-    # `_events` is ordered by the persisted event timestamp and id.  Using the
-    # plan's client-shaped `createdAt` plus revision caused different plans
-    # created in the same clock tick to tie, allowing an older sibling to be
-    # returned.  The last persisted event is the actual latest projection.
-    newest = events[-1]
+    # A malformed newest plan must fail validation, never fall back to an older one.
     return parse_editing_plan(newest.payload["plan"])
 
 

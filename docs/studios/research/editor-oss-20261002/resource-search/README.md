@@ -1,0 +1,11 @@
+# Pesquisa do acervo: resposta mais recente e recuperação
+
+Mudança pequena no painel existente: aguarda 250 ms depois da mudança da busca, cancela a leitura anterior e descarta conclusão/erro que pertença a outra busca, documento ou workspace. Resultados de outro contexto deixam de aparecer imediatamente. Uma falha mostra mensagem explícita e o botão “Atualizar acervo” permite nova leitura. Não há cache de resultados, mudança de contrato backend ou integração de gerador nesta alteração.
+
+Verificações executadas sobre os bytes finais: sete testes de ordenação/contexto/cancelamento/falha/recuperação em `latestResourceRead.test.ts`, mais quatro testes existentes de carregamento; onze passaram. `npm run lint` (checagem TypeScript do projeto) terminou com código 0. Comandos: `node --import tsx --test tests/unit/latestResourceRead.test.ts tests/unit/videoStudioLoading.test.ts` e `npm run lint`.
+
+UI real no laboratório local: leitura inicial com 46 resultados; busca comparison cancelada e busca interface concluída com 22 IDs, conferidos contra a API real; interrupção intencional apenas da busca bloqueiocodex20261005 mostrou erro e lista vazia; após retirar a interrupção, “Atualizar acervo” recebeu 200 e exibiu estado pronto/vazio. O teste de transporte que ignora abort é unitário; não atribuir esse cenário à prova do navegador.
+
+As observações `initial`, `initial-open`, `recovered-query` e `recovered-visible-query` registram tentativas de clique pelo CLI fora da área visível. Não abriram/acionaram o controle esperado e o observador terminou com erro. Foram conservadas. O percurso efetivo rolou até o controle antes do clique; os arquivos `visible-initial`, `latest-query`, `failed-query`, `recovered-scrolled-query` registram os estados válidos. Esse diagnóstico não representa falha demonstrada do handler de busca nem aprovação visual do vídeo.
+
+O verificador confere hashes anteriores, gera diff contra o arquivo já sujo preservado, compara IDs do catálogo, os nove documentos/MP4 e as três revisões às cegas. Não foram clicados importar, usar material, gerar, renderizar ou aprovar. O feedback humano informal 1/5 está em `../human-review/feedback-20261005.json`; as revisões estruturadas da API continuam sem avaliação.

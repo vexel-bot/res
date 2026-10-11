@@ -1,0 +1,14 @@
+{
+  "scope": "production_bytes_during_final_render_round",
+  "sources": {
+    "backend/app/domain/studios/motion_recipes.py": "8122f1c2f2a9a8030bd1b5407a7a8d2ed22cad7225bcba94ffe29fefd886861b",
+    "backend/app/domain/studios/temporal_exposure.py": "eb50ef108486dc0dbfa7bfb579a67ff7ecb8c51e77db2a986e17f60b1b6b3802",
+    "backend/app/services/studios/native_motion_recipes.py": "caddae72274753a2865e890fa52e435f56559a6e5c571df8d51811a7a7feb605",
+    "backend/app/providers/studios/remotion_projection.py": "bfebd3a5a78286934a62ac8a6bc298b4aa463dedfc369b356546f30acd8141dd",
+    "backend/app/providers/studios/remotion_render.py": "66f25daa507d0edfe60e4f9576c4ae3ef4e74bab02e164cfd2a46bd5a64fd393",
+    "backend/app/providers/studios/contextual_render.py": "2661a3eeb7795d0ae5adab688d321122e5185db50683c9df3a2ec2724bdf864c",
+    "workers/remotion-benchmark/src/hybrid.tsx": "7e5adbe1383b7b07eff486dc438c4e214126ae618f7f9072466ff3058f280a6b",
+    "workers/remotion-benchmark/src/temporal-exposure.tsx": "48a609ab733ee2e5c4e6be07f8073a483ff986b235dcb1c34d365f1b4fcc2fc1",
+    "workers/remotion-benchmark/render-hybrid.mjs": "466d942452b63c27de4bb49c86411c2d5e2a6e3eb0a3d2de021a242db57ff1e9"
+  }
+}

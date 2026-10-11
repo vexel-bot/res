@@ -1,0 +1,1769 @@
+{
+  "id": "bfc6a1c9-afd0-410f-a635-f7654d676f7f",
+  "type": "video_render",
+  "status": "running",
+  "provider": "remotion.contextual-v2",
+  "createdAt": "2026-10-05 18:40:06.580844",
+  "finishedAt": "None",
+  "key": "video-render-a2ceb750-c177-4542-8c51-dafd64d7231f",
+  "output": {
+    "schemaVersion": "studio.video-render-spec.v1",
+    "format": "mp4",
+    "width": 1080,
+    "height": 1920,
+    "fps": 30.0,
+    "videoCodec": "h264",
+    "audioCodec": "aac",
+    "quality": "high"
+  },
+  "resultKeys": [],
+  "startedAt": "2026-10-05 18:40:06.664182",
+  "progress": 0,
+  "request": {
+    "renderRequest": {
+      "schemaVersion": "studio.video-render-request.v1",
+      "workspaceId": "4812f2c0-1a2a-4f6d-967d-17b370c8d849",
+      "documentId": "0ae12fe1-c3aa-4f42-a764-33d076ade8cd",
+      "documentRevision": 2,
+      "documentVersion": 1,
+      "pageIds": [
+        "page"
+      ],
+      "assetIds": [
+        "83be05f7-bc4c-4531-8962-5a7085f730cf",
+        "a9264483-2f2c-4abb-8843-93c8a43e4177",
+        "78221c57-92c0-4587-b061-e2044d6b0584",
+        "b103665b-6507-4b60-ad63-0efe5ca40d2a",
+        "55c8c866-2531-4a05-a6e3-09a2c2d14ac2"
+      ],
+      "output": {
+        "schemaVersion": "studio.video-render-spec.v1",
+        "format": "mp4",
+        "width": 1080,
+        "height": 1920,
+        "fps": 30.0,
+        "videoCodec": "h264",
+        "audioCodec": "aac",
+        "quality": "high"
+      },
+      "correlationId": "e5dfbbf1-3e09-47de-b298-609c7befb0a5"
+    },
+    "documentSnapshot": {
+      "schemaVersion": "studio.creative-document.v1",
+      "documentId": "0ae12fe1-c3aa-4f42-a764-33d076ade8cd",
+      "workspaceId": "4812f2c0-1a2a-4f6d-967d-17b370c8d849",
+      "title": "Estudo native14 / interface-a",
+      "contentType": "video",
+      "status": "draft",
+      "revision": 2,
+      "version": 1,
+      "actorId": "09574145-7a25-45be-b426-151d18cd460c",
+      "correlationId": "dce0d853-fc4b-45b5-b61a-946495b6b989",
+      "campaignRef": null,
+      "postRef": {
+        "id": "7b95a586-c571-403a-a930-5ac7cb11819a",
+        "version": null
+      },
+      "opportunityRef": null,
+      "brandMemoryRef": {
+        "id": "4df4b41f-b580-4c47-bcc0-e7e6b023ca28",
+        "version": null,
+        "revision": 1
+      },
+      "brief": {
+        "schemaVersion": "studio.creative-brief.v1",
+        "objective": "Qualidade dirigida — interface",
+        "audience": "Equipe interna do res",
+        "angle": "",
+        "promise": "",
+        "hook": "",
+        "cta": "",
+        "channel": "instagram",
+        "format": "post",
+        "tone": "",
+        "restrictions": [
+          "Não publicar; estudo sem aprovação humana"
+        ],
+        "hypotheses": [],
+        "evidence": []
+      },
+      "composition": {
+        "pages": [
+          {
+            "id": "page",
+            "role": "content",
+            "width": 1080,
+            "height": 1920,
+            "safeArea": 90,
+            "background": "#101416",
+            "durationMs": 15000,
+            "layers": [
+              {
+                "id": "ed2-c0b192b1157bfa33da728a08",
+                "kind": "group",
+                "name": "Layer",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 1080.0,
+                "height": 1920.0,
+                "rotation": 0.0,
+                "opacity": 1.0,
+                "visible": true,
+                "locked": false,
+                "zIndex": 1,
+                "properties": {
+                  "editorialTiming": {
+                    "startFrame": 0,
+                    "durationFrames": 450,
+                    "fps": 30.0,
+                    "reveal": "none"
+                  },
+                  "editorialAuditFrames": [
+                    0,
+                    224,
+                    449
+                  ]
+                }
+              },
+              {
+                "id": "ed2-f926f3bba8195aaf6007e34c",
+                "kind": "group",
+                "name": "Layer",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 1080.0,
+                "height": 1920.0,
+                "rotation": 0.0,
+                "opacity": 1.0,
+                "visible": true,
+                "locked": false,
+                "zIndex": 0,
+                "properties": {
+                  "editorialRole": "background",
+                  "editorialTiming": {
+                    "startFrame": 0,
+                    "durationFrames": 450,
+                    "fps": 30.0,
+                    "reveal": "none"
+                  }
+                }
+              },
+              {
+                "id": "ed2-537abf573f365fc6bc570188",
+                "kind": "group",
+                "name": "Layer",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 1080.0,
+                "height": 1920.0,
+                "rotation": 0.0,
+                "opacity": 1.0,
+                "visible": true,
+                "locked": false,
+                "zIndex": 1,
+                "properties": {
+                  "editorialRole": "content",
+                  "editorialTiming": {
+                    "startFrame": 0,
+                    "durationFrames": 450,
+                    "fps": 30.0,
+                    "reveal": "none"
+                  }
+                }
+              },
+              {
+                "id": "ed2-62c55650b95fddc1353ca427",
+                "kind": "group",
+                "name": "Layer",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 1080.0,
+                "height": 1920.0,
+                "rotation": 0.0,
+                "opacity": 1.0,
+                "visible": true,
+                "locked": false,
+                "zIndex": 2,
+                "properties": {
+                  "editorialRole": "text",
+                  "editorialTiming": {
+                    "startFrame": 0,
+                    "durationFrames": 450,
+                    "fps": 30.0,
+                    "reveal": "none"
+                  }
+                }
+              },
+              {
+                "id": "ed2-e3733b192f20a1827d440816",
+                "kind": "shape",
+                "name": "Layer",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 1080.0,
+                "height": 1920.0,
+                "rotation": 0.0,
+                "opacity": 1.0,
+                "visible": true,
+                "locked": false,
+                "zIndex": 0,
+                "properties": {
+                  "fill": "#101416",
+                  "editorialTiming": {
+                    "startFrame": 0,
+                    "durationFrames": 450,
+                    "fps": 30.0,
+                    "reveal": "none"
+                  }
+                }
+              },
+              {
+                "id": "ed2-6384297804590b3e4763616b",
+                "kind": "text",
+                "name": "signature",
+                "x": 90.0,
+                "y": 165.0,
+                "width": 880.0,
+                "height": 74.0,
+                "rotation": 0.0,
+                "opacity": 1.0,
+                "visible": true,
+                "locked": false,
+                "zIndex": 5,
+                "properties": {
+                  "editorialSceneId": "study",
+                  "editorialOperationIds": [],
+                  "editorialTiming": {
+                    "startFrame": 0,
+                    "durationFrames": 450,
+                    "fps": 30.0,
+                    "reveal": "none",
+                    "revealFrames": 12
+                  },
+                  "fill": "#183343",
+                  "color": "#818f92",
+                  "text": "res / laboratório de movimento",
+                  "fontSize": 57.6,
+                  "editorialTextFit": true,
+                  "editorialConnector": null,
+                  "fontWeight": 700,
+                  "letterSpacing": 0.0,
+                  "lineHeight": 1.1,
+                  "textAlign": "left",
+                  "editorialTextSpans": [],
+                  "editorialShadow": null,
+                  "editorialEffects": [],
+                  "editorialBlendMode": "normal",
+                  "editorialBorder": {
+                    "width": 0.0,
+                    "color": "#ffffff"
+                  },
+                  "fontAssetId": "83be05f7-bc4c-4531-8962-5a7085f730cf",
+                  "borderRadius": 16.0,
+                  "shape": "rectangle",
+                  "assetId": null,
+                  "editorialContentIdentity": null,
+                  "editorialContentReferenceId": null,
+                  "editorialContentPartId": null,
+                  "maskAssetId": null,
+                  "objectFit": "contain",
+                  "editorialRegionOfInterest": null,
+                  "editorialCropIntentional": false,
+                  "sourceStartSeconds": 0.0,
+                  "playbackRate": 1.0,
+                  "editorialVisualRole": "text",
+                  "editorialDepth": {
+                    "opacity": 1.0,
+                    "blurPx": 0.0,
+                    "parallax": 0.0
+                  }
+                }
+              },
+              {
+                "id": "ed2-895c9ff7a0a9ce1cb92ec080",
+                "kind": "text",
+                "name": "title",
+                "x": 90.0,
+                "y": 330.0,
+                "width": 880.0,
+                "height": 246.39999999999998,
+                "rotation": 0.0,
+                "opacity": 1.0,
+                "visible": true,
+                "locked": false,
+                "zIndex": 5,
+                "properties": {
+                  "editorialSceneId": "study",
+                  "editorialOperationIds": [],
+                  "editorialTiming": {
+                    "startFrame": 0,
+                    "durationFrames": 450,
+                    "fps": 30.0,
+                    "reveal": "none",
+                    "revealFrames": 12
+                  },
+                  "fill": "#183343",
+                  "color": "#efece1",
+                  "text": "Uma mudança.\nUm resultado real.",
+                  "fontSize": 88.0,
+                  "editorialTextFit": true,
+                  "editorialConnector": null,
+                  "fontWeight": 700,
+                  "letterSpacing": 0.0,
+                  "lineHeight": 1.1,
+                  "textAlign": "left",
+                  "editorialTextSpans": [],
+                  "editorialShadow": null,
+                  "editorialEffects": [],
+                  "editorialBlendMode": "normal",
+                  "editorialBorder": {
+                    "width": 0.0,
+                    "color": "#ffffff"
+                  },
+                  "fontAssetId": "83be05f7-bc4c-4531-8962-5a7085f730cf",
+                  "borderRadius": 16.0,
+                  "shape": "rectangle",
+                  "assetId": null,
+                  "editorialContentIdentity": null,
+                  "editorialContentReferenceId": "study-content",
+                  "editorialContentPartId": "title",
+                  "maskAssetId": null,
+                  "objectFit": "contain",
+                  "editorialRegionOfInterest": null,
+                  "editorialCropIntentional": false,
+                  "sourceStartSeconds": 0.0,
+                  "playbackRate": 1.0,
+                  "editorialVisualRole": "text",
+                  "editorialDepth": {
+                    "opacity": 1.0,
+                    "blurPx": 0.0,
+                    "parallax": 0.0
+                  },
+                  "recipeTextLayout": {
+                    "schemaVersion": "studio.typography-layout-policy.v1",
+                    "policy": "dom.units-fit.v1",
+                    "fitMode": "wrap_shrink",
+                    "minFontSizePx": 57.6,
+                    "maxMeasureSteps": 18,
+                    "maxLayoutUnits": 2000,
+                    "tolerancePx": 0.5,
+                    "fontQuantizationPx": 0.015625
+                  },
+                  "recipeTypography": {
+                    "version": 2,
+                    "segmentation": {
+                      "schemaVersion": "studio.typography-units.v1",
+                      "policy": "unicode17.regex2026.1.15.whitespace-v1",
+                      "unit": "word",
+                      "textChecksumSha256": "8bd74094a1d7276c287382c4c67ab36afeb8ad8e4decee7a4ce94b1d4cc66626",
+                      "units": [
+                        {
+                          "text": "Uma",
+                          "animationIndex": 0
+                        },
+                        {
+                          "text": " ",
+                          "animationIndex": null
+                        },
+                        {
+                          "text": "mudança.",
+                          "animationIndex": 1
+                        },
+                        {
+                          "text": "\n",
+                          "animationIndex": null
+                        },
+                        {
+                          "text": "Um",
+                          "animationIndex": 2
+                        },
+                        {
+                          "text": " ",
+                          "animationIndex": null
+                        },
+                        {
+                          "text": "resultado",
+                          "animationIndex": 3
+                        },
+                        {
+                          "text": " ",
+                          "animationIndex": null
+                        },
+                        {
+                          "text": "real.",
+                          "animationIndex": 4
+                        }
+                      ],
+                      "animatedCount": 5
+                    },
+                    "startFrame": 0,
+                    "unit": "word",
+                    "staggerFrames": 5,
+                    "entranceFrames": 10,
+                    "readingHoldFrames": 160,
+                    "completeFrame": 30
+                  }
+                }
+              },
+              {
+                "id": "ed2-9571262843af6b1155abff3b",
+                "kind": "text",
+                "name": "ending",
+                "x": 90.0,
+                "y": 1530.0,
+                "width": 880.0,
+                "height": 74.0,
+                "rotation": 0.0,
+                "opacity": 1.0,
+                "visible": true,
+                "locked": false,
+                "zIndex": 5,
+                "properties": {
+                  "editorialSceneId": "study",
+                  "editorialOperationIds": [],
+                  "editorialTiming": {
+                    "startFrame": 0,
+                    "durationFrames": 450,
+                    "fps": 30.0,
+                    "reveal": "none",
+                    "revealFrames": 12
+                  },
+                  "fill": "#183343",
+                  "color": "#c9ed84",
+                  "text": "Clareza é o resultado.",
+                  "fontSize": 57.6,
+                  "editorialTextFit": true,
+                  "editorialConnector": null,
+                  "fontWeight": 700,
+                  "letterSpacing": 0.0,
+                  "lineHeight": 1.1,
+                  "textAlign": "left",
+                  "editorialTextSpans": [],
+                  "editorialShadow": null,
+                  "editorialEffects": [],
+                  "editorialBlendMode": "normal",
+                  "editorialBorder": {
+                    "width": 0.0,
+                    "color": "#ffffff"
+                  },
+                  "fontAssetId": "83be05f7-bc4c-4531-8962-5a7085f730cf",
+                  "borderRadius": 16.0,
+                  "shape": "rectangle",
+                  "assetId": null,
+                  "editorialContentIdentity": null,
+                  "editorialContentReferenceId": null,
+                  "editorialContentPartId": null,
+                  "maskAssetId": null,
+                  "objectFit": "contain",
+                  "editorialRegionOfInterest": null,
+                  "editorialCropIntentional": false,
+                  "sourceStartSeconds": 0.0,
+                  "playbackRate": 1.0,
+                  "editorialVisualRole": "text",
+                  "editorialDepth": {
+                    "opacity": 1.0,
+                    "blurPx": 0.0,
+                    "parallax": 0.0
+                  },
+                  "recipeTextLayout": {
+                    "schemaVersion": "studio.typography-layout-policy.v1",
+                    "policy": "dom.units-fit.v1",
+                    "fitMode": "wrap_shrink",
+                    "minFontSizePx": 57.6,
+                    "maxMeasureSteps": 18,
+                    "maxLayoutUnits": 2000,
+                    "tolerancePx": 0.5,
+                    "fontQuantizationPx": 0.015625
+                  },
+                  "recipeTypography": {
+                    "version": 2,
+                    "segmentation": {
+                      "schemaVersion": "studio.typography-units.v1",
+                      "policy": "unicode17.regex2026.1.15.whitespace-v1",
+                      "unit": "word",
+                      "textChecksumSha256": "b44e652c824bd15a7a20690d48ee9d56e6e21f618012cade4d98344abac6b130",
+                      "units": [
+                        {
+                          "text": "Clareza",
+                          "animationIndex": 0
+                        },
+                        {
+                          "text": " ",
+                          "animationIndex": null
+                        },
+                        {
+                          "text": "é",
+                          "animationIndex": 1
+                        },
+                        {
+                          "text": " ",
+                          "animationIndex": null
+                        },
+                        {
+                          "text": "o",
+                          "animationIndex": 2
+                        },
+                        {
+                          "text": " ",
+                          "animationIndex": null
+                        },
+                        {
+                          "text": "resultado.",
+                          "animationIndex": 3
+                        }
+                      ],
+                      "animatedCount": 4
+                    },
+                    "startFrame": 330,
+                    "unit": "word",
+                    "staggerFrames": 2,
+                    "entranceFrames": 10,
+                    "readingHoldFrames": 90,
+                    "completeFrame": 346
+                  }
+                }
+              },
+              {
+                "id": "ed2-edaebb1b62438f24d20bf73c",
+                "kind": "text",
+                "name": "disclosure",
+                "x": 90.0,
+                "y": 1707.4,
+                "width": 880.0,
+                "height": 137.0,
+                "rotation": 0.0,
+                "opacity": 1.0,
+                "visible": true,
+                "locked": false,
+                "zIndex": 5,
+                "properties": {
+                  "editorialSceneId": "study",
+                  "editorialOperationIds": [],
+                  "editorialTiming": {
+                    "startFrame": 0,
+                    "durationFrames": 450,
+                    "fps": 30.0,
+                    "reveal": "none",
+                    "revealFrames": 12
+                  },
+                  "fill": "#183343",
+                  "color": "#818f92",
+                  "text": "ESTUDO PRÓPRIO · REVISÃO HUMANA PENDENTE",
+                  "fontSize": 57.6,
+                  "editorialTextFit": true,
+                  "editorialConnector": null,
+                  "fontWeight": 700,
+                  "letterSpacing": 0.0,
+                  "lineHeight": 1.1,
+                  "textAlign": "left",
+                  "editorialTextSpans": [],
+                  "editorialShadow": null,
+                  "editorialEffects": [],
+                  "editorialBlendMode": "normal",
+                  "editorialBorder": {
+                    "width": 0.0,
+                    "color": "#ffffff"
+                  },
+                  "fontAssetId": "83be05f7-bc4c-4531-8962-5a7085f730cf",
+                  "borderRadius": 16.0,
+                  "shape": "rectangle",
+                  "assetId": null,
+                  "editorialContentIdentity": null,
+                  "editorialContentReferenceId": null,
+                  "editorialContentPartId": null,
+                  "maskAssetId": null,
+                  "objectFit": "contain",
+                  "editorialRegionOfInterest": null,
+                  "editorialCropIntentional": false,
+                  "sourceStartSeconds": 0.0,
+                  "playbackRate": 1.0,
+                  "editorialVisualRole": "text",
+                  "editorialDepth": {
+                    "opacity": 1.0,
+                    "blurPx": 0.0,
+                    "parallax": 0.0
+                  }
+                }
+              },
+              {
+                "id": "ed2-155bd463ff8cc8f706cc9f63",
+                "kind": "video",
+                "name": "capture",
+                "x": 72.0,
+                "y": 620.0,
+                "width": 936.0,
+                "height": 840.0,
+                "rotation": 0.0,
+                "opacity": 1.0,
+                "visible": true,
+                "locked": false,
+                "zIndex": 5,
+                "properties": {
+                  "editorialSceneId": "study",
+                  "editorialOperationIds": [],
+                  "editorialTiming": {
+                    "startFrame": 0,
+                    "durationFrames": 285,
+                    "fps": 30.0,
+                    "reveal": "none",
+                    "revealFrames": 12
+                  },
+                  "fill": "#183343",
+                  "color": "#ffffff",
+                  "text": "",
+                  "fontSize": 48.0,
+                  "editorialTextFit": false,
+                  "editorialConnector": null,
+                  "fontWeight": 700,
+                  "letterSpacing": 0.0,
+                  "lineHeight": 1.1,
+                  "textAlign": "left",
+                  "editorialTextSpans": [],
+                  "editorialShadow": null,
+                  "editorialEffects": [],
+                  "editorialBlendMode": "normal",
+                  "editorialBorder": {
+                    "width": 0.0,
+                    "color": "#ffffff"
+                  },
+                  "fontAssetId": null,
+                  "borderRadius": 16.0,
+                  "shape": "rectangle",
+                  "assetId": "b103665b-6507-4b60-ad63-0efe5ca40d2a",
+                  "editorialContentIdentity": null,
+                  "editorialContentReferenceId": "study-content",
+                  "editorialContentPartId": "primary",
+                  "maskAssetId": null,
+                  "objectFit": "contain",
+                  "editorialRegionOfInterest": null,
+                  "editorialCropIntentional": false,
+                  "sourceStartSeconds": 0.0,
+                  "playbackRate": 1.0,
+                  "editorialVisualRole": "hero",
+                  "editorialDepth": {
+                    "opacity": 1.0,
+                    "blurPx": 0.0,
+                    "parallax": 0.0
+                  }
+                }
+              },
+              {
+                "id": "ed2-e2096c387219040be4073ade",
+                "kind": "video",
+                "name": "capture-result",
+                "x": 72.0,
+                "y": 620.0,
+                "width": 936.0,
+                "height": 840.0,
+                "rotation": 0.0,
+                "opacity": 1.0,
+                "visible": true,
+                "locked": false,
+                "zIndex": 5,
+                "properties": {
+                  "editorialSceneId": "study",
+                  "editorialOperationIds": [],
+                  "editorialTiming": {
+                    "startFrame": 285,
+                    "durationFrames": 165,
+                    "fps": 30.0,
+                    "reveal": "none",
+                    "revealFrames": 12
+                  },
+                  "fill": "#183343",
+                  "color": "#ffffff",
+                  "text": "",
+                  "fontSize": 48.0,
+                  "editorialTextFit": false,
+                  "editorialConnector": null,
+                  "fontWeight": 700,
+                  "letterSpacing": 0.0,
+                  "lineHeight": 1.1,
+                  "textAlign": "left",
+                  "editorialTextSpans": [],
+                  "editorialShadow": null,
+                  "editorialEffects": [],
+                  "editorialBlendMode": "normal",
+                  "editorialBorder": {
+                    "width": 0.0,
+                    "color": "#ffffff"
+                  },
+                  "fontAssetId": null,
+                  "borderRadius": 16.0,
+                  "shape": "rectangle",
+                  "assetId": "55c8c866-2531-4a05-a6e3-09a2c2d14ac2",
+                  "editorialContentIdentity": null,
+                  "editorialContentReferenceId": "study-content",
+                  "editorialContentPartId": "result-media",
+                  "maskAssetId": null,
+                  "objectFit": "contain",
+                  "editorialRegionOfInterest": null,
+                  "editorialCropIntentional": false,
+                  "sourceStartSeconds": 9.5,
+                  "playbackRate": 1.0,
+                  "editorialVisualRole": "hero",
+                  "editorialDepth": {
+                    "opacity": 1.0,
+                    "blurPx": 0.0,
+                    "parallax": 0.0
+                  }
+                }
+              },
+              {
+                "id": "ed2-d8f485d1c7801359328d5d27",
+                "kind": "text",
+                "name": "action-label",
+                "x": 90.0,
+                "y": 1455.0,
+                "width": 880.0,
+                "height": 74.0,
+                "rotation": 0.0,
+                "opacity": 1.0,
+                "visible": true,
+                "locked": false,
+                "zIndex": 5,
+                "properties": {
+                  "editorialSceneId": "study",
+                  "editorialOperationIds": [],
+                  "editorialTiming": {
+                    "startFrame": 0,
+                    "durationFrames": 450,
+                    "fps": 30.0,
+                    "reveal": "none",
+                    "revealFrames": 12
+                  },
+                  "fill": "#183343",
+                  "color": "#818f92",
+                  "text": "Editar / aplicar / conferir",
+                  "fontSize": 57.6,
+                  "editorialTextFit": true,
+                  "editorialConnector": null,
+                  "fontWeight": 700,
+                  "letterSpacing": 0.0,
+                  "lineHeight": 1.1,
+                  "textAlign": "left",
+                  "editorialTextSpans": [],
+                  "editorialShadow": null,
+                  "editorialEffects": [],
+                  "editorialBlendMode": "normal",
+                  "editorialBorder": {
+                    "width": 0.0,
+                    "color": "#ffffff"
+                  },
+                  "fontAssetId": "83be05f7-bc4c-4531-8962-5a7085f730cf",
+                  "borderRadius": 16.0,
+                  "shape": "rectangle",
+                  "assetId": null,
+                  "editorialContentIdentity": null,
+                  "editorialContentReferenceId": null,
+                  "editorialContentPartId": null,
+                  "maskAssetId": null,
+                  "objectFit": "contain",
+                  "editorialRegionOfInterest": null,
+                  "editorialCropIntentional": false,
+                  "sourceStartSeconds": 0.0,
+                  "playbackRate": 1.0,
+                  "editorialVisualRole": "text",
+                  "editorialDepth": {
+                    "opacity": 1.0,
+                    "blurPx": 0.0,
+                    "parallax": 0.0
+                  }
+                }
+              }
+            ]
+          }
+        ],
+        "narrative": {
+          "editorialV2": {
+            "planId": "364e858f-4334-4cb7-b384-38ef0207547a",
+            "renderPolicy": "automatic_draft",
+            "artDirection": {
+              "schemaVersion": "studio.cinematic-art-direction.v1",
+              "visualSystem": "Editorial original: um mundo escuro, informação clara, motivo verde persistente",
+              "palette": [
+                "#101416",
+                "#efece1",
+                "#c9ed84"
+              ],
+              "typography": "Manrope licenciada, palavras inteiras e pausa final",
+              "contrastStrategy": "Texto creme sobre fundo escuro; verde marca a consequência",
+              "footageTreatment": "Captura de teste real sem inventar ações",
+              "graphicsRelationship": "Elementos se organizam para explicar a mensagem",
+              "continuityRules": [
+                "Preservar texto e identidade",
+                "Movimento local sob grupo explícito"
+              ],
+              "rejectedStyleMoves": [
+                "Zoom sem consequência",
+                "Dissolve como substituto de oclusão"
+              ],
+              "motionSystem": null
+            },
+            "visualStudy": {
+              "phaseId": "visual-quality-2026-10-01",
+              "language": "interface_capture",
+              "variant": "a",
+              "directionStatus": "authored",
+              "humanVisualApproval": "pending",
+              "autonomy": "not_demonstrated"
+            },
+            "operationBindings": [],
+            "motionRecipes": [
+              {
+                "sceneId": "study",
+                "schemaVersion": "studio.motion-recipe.v1",
+                "id": "type-task",
+                "version": 1,
+                "technique": "integrated_type",
+                "targetIds": [
+                  "title"
+                ],
+                "startFrame": 0,
+                "endFrameExclusive": 450,
+                "intent": "Transformação dirigida com leitura e consequência",
+                "continuityAnchor": "Mesmo texto, identidade, cor e fonte durante a passagem",
+                "parameters": {
+                  "tracks": [],
+                  "pivot": [
+                    0.5,
+                    0.5
+                  ],
+                  "parentTargetId": null,
+                  "maskAssetId": null,
+                  "occluderTargetId": null,
+                  "textUnit": "word",
+                  "staggerFrames": 5,
+                  "readingHoldFrames": 160,
+                  "shutterDegrees": 180.0,
+                  "temporalSamples": 8,
+                  "focusDistance": 1000.0,
+                  "depthOfField": 100.0,
+                  "displacementRatio": 0.01
+                },
+                "soundEvents": [],
+                "verification": [
+                  "Identidade preservada; estados inicial e final legíveis; sem salto de acomodação"
+                ]
+              },
+              {
+                "sceneId": "study",
+                "schemaVersion": "studio.motion-recipe.v1",
+                "id": "frame-task",
+                "version": 1,
+                "technique": "motion_choreography",
+                "targetIds": [
+                  "capture"
+                ],
+                "startFrame": 0,
+                "endFrameExclusive": 285,
+                "intent": "Transformação dirigida com leitura e consequência",
+                "continuityAnchor": "Mesmo texto, identidade, cor e fonte durante a passagem",
+                "parameters": {
+                  "tracks": [
+                    {
+                      "targetId": "capture",
+                      "property": "scale_x",
+                      "keyframes": [
+                        {
+                          "frame": 0,
+                          "value": 1.0,
+                          "curve": [
+                            0.22,
+                            0.75,
+                            0.25,
+                            1.0
+                          ]
+                        },
+                        {
+                          "frame": 90,
+                          "value": 1.0,
+                          "curve": [
+                            0.22,
+                            0.75,
+                            0.25,
+                            1.0
+                          ]
+                        },
+                        {
+                          "frame": 284,
+                          "value": 1.03,
+                          "curve": [
+                            0.22,
+                            0.75,
+                            0.25,
+                            1.0
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "targetId": "capture",
+                      "property": "scale_y",
+                      "keyframes": [
+                        {
+                          "frame": 0,
+                          "value": 1.0,
+                          "curve": [
+                            0.22,
+                            0.75,
+                            0.25,
+                            1.0
+                          ]
+                        },
+                        {
+                          "frame": 90,
+                          "value": 1.0,
+                          "curve": [
+                            0.22,
+                            0.75,
+                            0.25,
+                            1.0
+                          ]
+                        },
+                        {
+                          "frame": 284,
+                          "value": 1.03,
+                          "curve": [
+                            0.22,
+                            0.75,
+                            0.25,
+                            1.0
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "pivot": [
+                    0.5,
+                    0.5
+                  ],
+                  "parentTargetId": null,
+                  "maskAssetId": null,
+                  "occluderTargetId": null,
+                  "textUnit": "word",
+                  "staggerFrames": 3,
+                  "readingHoldFrames": 30,
+                  "shutterDegrees": 180.0,
+                  "temporalSamples": 8,
+                  "focusDistance": 1000.0,
+                  "depthOfField": 100.0,
+                  "displacementRatio": 0.01
+                },
+                "soundEvents": [],
+                "verification": [
+                  "Identidade preservada; estados inicial e final legíveis; sem salto de acomodação"
+                ]
+              },
+              {
+                "sceneId": "study",
+                "schemaVersion": "studio.motion-recipe.v1",
+                "id": "interface-consequence",
+                "version": 1,
+                "technique": "integrated_type",
+                "targetIds": [
+                  "ending"
+                ],
+                "startFrame": 330,
+                "endFrameExclusive": 450,
+                "intent": "Transformação dirigida com leitura e consequência",
+                "continuityAnchor": "Mesmo texto, identidade, cor e fonte durante a passagem",
+                "parameters": {
+                  "tracks": [],
+                  "pivot": [
+                    0.5,
+                    0.5
+                  ],
+                  "parentTargetId": null,
+                  "maskAssetId": null,
+                  "occluderTargetId": null,
+                  "textUnit": "word",
+                  "staggerFrames": 2,
+                  "readingHoldFrames": 90,
+                  "shutterDegrees": 180.0,
+                  "temporalSamples": 8,
+                  "focusDistance": 1000.0,
+                  "depthOfField": 100.0,
+                  "displacementRatio": 0.01
+                },
+                "soundEvents": [],
+                "verification": [
+                  "Identidade preservada; estados inicial e final legíveis; sem salto de acomodação"
+                ]
+              }
+            ],
+            "motionRecipesDigest": "63a6e604f92751f8b00e07a0d11b7447498fed35d0270a73f55d10673081a6bd",
+            "nativeRecipeOperations": [
+              {
+                "id": "type-task",
+                "sceneId": "study",
+                "technique": "integrated_type",
+                "version": 1,
+                "compilerVersion": "res.native-recipes.v4",
+                "startFrame": 0,
+                "endFrameExclusive": 450,
+                "targetLayerIds": [
+                  "ed2-895c9ff7a0a9ce1cb92ec080"
+                ],
+                "parameters": {
+                  "tracks": [],
+                  "pivot": [
+                    0.5,
+                    0.5
+                  ],
+                  "parentTargetId": null,
+                  "maskAssetId": null,
+                  "occluderTargetId": null,
+                  "textUnit": "word",
+                  "staggerFrames": 5,
+                  "readingHoldFrames": 160,
+                  "shutterDegrees": 180.0,
+                  "temporalSamples": 8,
+                  "focusDistance": 1000.0,
+                  "depthOfField": 100.0,
+                  "displacementRatio": 0.01
+                },
+                "qualification": "implemented",
+                "knowledgeTechniqueId": "alight.integrated_type",
+                "evidenceClassification": "documentation_and_editorial_inference",
+                "typographyLayouts": {
+                  "ed2-895c9ff7a0a9ce1cb92ec080": {
+                    "schemaVersion": "studio.typography-layout-policy.v1",
+                    "policy": "dom.units-fit.v1",
+                    "fitMode": "wrap_shrink",
+                    "minFontSizePx": 57.6,
+                    "maxMeasureSteps": 18,
+                    "maxLayoutUnits": 2000,
+                    "tolerancePx": 0.5,
+                    "fontQuantizationPx": 0.015625
+                  }
+                },
+                "typographyTargets": {
+                  "ed2-895c9ff7a0a9ce1cb92ec080": {
+                    "schemaVersion": "studio.typography-units.v1",
+                    "policy": "unicode17.regex2026.1.15.whitespace-v1",
+                    "unit": "word",
+                    "textChecksumSha256": "8bd74094a1d7276c287382c4c67ab36afeb8ad8e4decee7a4ce94b1d4cc66626",
+                    "units": [
+                      {
+                        "text": "Uma",
+                        "animationIndex": 0
+                      },
+                      {
+                        "text": " ",
+                        "animationIndex": null
+                      },
+                      {
+                        "text": "mudança.",
+                        "animationIndex": 1
+                      },
+                      {
+                        "text": "\n",
+                        "animationIndex": null
+                      },
+                      {
+                        "text": "Um",
+                        "animationIndex": 2
+                      },
+                      {
+                        "text": " ",
+                        "animationIndex": null
+                      },
+                      {
+                        "text": "resultado",
+                        "animationIndex": 3
+                      },
+                      {
+                        "text": " ",
+                        "animationIndex": null
+                      },
+                      {
+                        "text": "real.",
+                        "animationIndex": 4
+                      }
+                    ],
+                    "animatedCount": 5
+                  }
+                }
+              },
+              {
+                "id": "frame-task",
+                "sceneId": "study",
+                "technique": "motion_choreography",
+                "version": 1,
+                "compilerVersion": "res.native-recipes.v4",
+                "startFrame": 0,
+                "endFrameExclusive": 285,
+                "targetLayerIds": [
+                  "ed2-155bd463ff8cc8f706cc9f63"
+                ],
+                "parameters": {
+                  "tracks": [
+                    {
+                      "targetId": "capture",
+                      "property": "scale_x",
+                      "keyframes": [
+                        {
+                          "frame": 0,
+                          "value": 1.0,
+                          "curve": [
+                            0.22,
+                            0.75,
+                            0.25,
+                            1.0
+                          ]
+                        },
+                        {
+                          "frame": 90,
+                          "value": 1.0,
+                          "curve": [
+                            0.22,
+                            0.75,
+                            0.25,
+                            1.0
+                          ]
+                        },
+                        {
+                          "frame": 284,
+                          "value": 1.03,
+                          "curve": [
+                            0.22,
+                            0.75,
+                            0.25,
+                            1.0
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "targetId": "capture",
+                      "property": "scale_y",
+                      "keyframes": [
+                        {
+                          "frame": 0,
+                          "value": 1.0,
+                          "curve": [
+                            0.22,
+                            0.75,
+                            0.25,
+                            1.0
+                          ]
+                        },
+                        {
+                          "frame": 90,
+                          "value": 1.0,
+                          "curve": [
+                            0.22,
+                            0.75,
+                            0.25,
+                            1.0
+                          ]
+                        },
+                        {
+                          "frame": 284,
+                          "value": 1.03,
+                          "curve": [
+                            0.22,
+                            0.75,
+                            0.25,
+                            1.0
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "pivot": [
+                    0.5,
+                    0.5
+                  ],
+                  "parentTargetId": null,
+                  "maskAssetId": null,
+                  "occluderTargetId": null,
+                  "textUnit": "word",
+                  "staggerFrames": 3,
+                  "readingHoldFrames": 30,
+                  "shutterDegrees": 180.0,
+                  "temporalSamples": 8,
+                  "focusDistance": 1000.0,
+                  "depthOfField": 100.0,
+                  "displacementRatio": 0.01
+                },
+                "qualification": "implemented",
+                "knowledgeTechniqueId": "alight.motion_choreography",
+                "evidenceClassification": "documentation_and_editorial_inference"
+              },
+              {
+                "id": "interface-consequence",
+                "sceneId": "study",
+                "technique": "integrated_type",
+                "version": 1,
+                "compilerVersion": "res.native-recipes.v4",
+                "startFrame": 330,
+                "endFrameExclusive": 450,
+                "targetLayerIds": [
+                  "ed2-9571262843af6b1155abff3b"
+                ],
+                "parameters": {
+                  "tracks": [],
+                  "pivot": [
+                    0.5,
+                    0.5
+                  ],
+                  "parentTargetId": null,
+                  "maskAssetId": null,
+                  "occluderTargetId": null,
+                  "textUnit": "word",
+                  "staggerFrames": 2,
+                  "readingHoldFrames": 90,
+                  "shutterDegrees": 180.0,
+                  "temporalSamples": 8,
+                  "focusDistance": 1000.0,
+                  "depthOfField": 100.0,
+                  "displacementRatio": 0.01
+                },
+                "qualification": "implemented",
+                "knowledgeTechniqueId": "alight.integrated_type",
+                "evidenceClassification": "documentation_and_editorial_inference",
+                "typographyLayouts": {
+                  "ed2-9571262843af6b1155abff3b": {
+                    "schemaVersion": "studio.typography-layout-policy.v1",
+                    "policy": "dom.units-fit.v1",
+                    "fitMode": "wrap_shrink",
+                    "minFontSizePx": 57.6,
+                    "maxMeasureSteps": 18,
+                    "maxLayoutUnits": 2000,
+                    "tolerancePx": 0.5,
+                    "fontQuantizationPx": 0.015625
+                  }
+                },
+                "typographyTargets": {
+                  "ed2-9571262843af6b1155abff3b": {
+                    "schemaVersion": "studio.typography-units.v1",
+                    "policy": "unicode17.regex2026.1.15.whitespace-v1",
+                    "unit": "word",
+                    "textChecksumSha256": "b44e652c824bd15a7a20690d48ee9d56e6e21f618012cade4d98344abac6b130",
+                    "units": [
+                      {
+                        "text": "Clareza",
+                        "animationIndex": 0
+                      },
+                      {
+                        "text": " ",
+                        "animationIndex": null
+                      },
+                      {
+                        "text": "é",
+                        "animationIndex": 1
+                      },
+                      {
+                        "text": " ",
+                        "animationIndex": null
+                      },
+                      {
+                        "text": "o",
+                        "animationIndex": 2
+                      },
+                      {
+                        "text": " ",
+                        "animationIndex": null
+                      },
+                      {
+                        "text": "resultado.",
+                        "animationIndex": 3
+                      }
+                    ],
+                    "animatedCount": 4
+                  }
+                }
+              }
+            ],
+            "renderer": "remotion.contextual-v2",
+            "nativeComponentVersion": 1,
+            "motionGraph": {
+              "schemaVersion": "studio.motion-graph.v1",
+              "graphId": "motion-ca014b3dc7f648f546afdcef",
+              "workspaceId": "4812f2c0-1a2a-4f6d-967d-17b370c8d849",
+              "documentId": "0ae12fe1-c3aa-4f42-a764-33d076ade8cd",
+              "documentRevision": 2,
+              "frameRate": {
+                "numerator": 30,
+                "denominator": 1
+              },
+              "durationFrames": 450,
+              "canvasWidth": 1080,
+              "canvasHeight": 1920,
+              "realityMode": "graphic",
+              "completeness": "complete",
+              "status": "suggested",
+              "nodes": [
+                {
+                  "nodeId": "node-ed2-c0b192b1157bfa33da728a08",
+                  "targetLayerId": "ed2-c0b192b1157bfa33da728a08",
+                  "parentNodeId": null,
+                  "transformOriginX": 0.5,
+                  "transformOriginY": 0.5
+                },
+                {
+                  "nodeId": "node-ed2-f926f3bba8195aaf6007e34c",
+                  "targetLayerId": "ed2-f926f3bba8195aaf6007e34c",
+                  "parentNodeId": "node-ed2-c0b192b1157bfa33da728a08",
+                  "transformOriginX": 0.5,
+                  "transformOriginY": 0.5
+                },
+                {
+                  "nodeId": "node-ed2-537abf573f365fc6bc570188",
+                  "targetLayerId": "ed2-537abf573f365fc6bc570188",
+                  "parentNodeId": "node-ed2-c0b192b1157bfa33da728a08",
+                  "transformOriginX": 0.5,
+                  "transformOriginY": 0.5
+                },
+                {
+                  "nodeId": "node-ed2-62c55650b95fddc1353ca427",
+                  "targetLayerId": "ed2-62c55650b95fddc1353ca427",
+                  "parentNodeId": "node-ed2-c0b192b1157bfa33da728a08",
+                  "transformOriginX": 0.5,
+                  "transformOriginY": 0.5
+                },
+                {
+                  "nodeId": "node-ed2-e3733b192f20a1827d440816",
+                  "targetLayerId": "ed2-e3733b192f20a1827d440816",
+                  "parentNodeId": "node-ed2-f926f3bba8195aaf6007e34c",
+                  "transformOriginX": 0.5,
+                  "transformOriginY": 0.5
+                },
+                {
+                  "nodeId": "node-ed2-6384297804590b3e4763616b",
+                  "targetLayerId": "ed2-6384297804590b3e4763616b",
+                  "parentNodeId": "node-ed2-62c55650b95fddc1353ca427",
+                  "transformOriginX": 0.5,
+                  "transformOriginY": 0.5
+                },
+                {
+                  "nodeId": "node-ed2-895c9ff7a0a9ce1cb92ec080",
+                  "targetLayerId": "ed2-895c9ff7a0a9ce1cb92ec080",
+                  "parentNodeId": "node-ed2-62c55650b95fddc1353ca427",
+                  "transformOriginX": 0.5,
+                  "transformOriginY": 0.5
+                },
+                {
+                  "nodeId": "node-ed2-9571262843af6b1155abff3b",
+                  "targetLayerId": "ed2-9571262843af6b1155abff3b",
+                  "parentNodeId": "node-ed2-62c55650b95fddc1353ca427",
+                  "transformOriginX": 0.5,
+                  "transformOriginY": 0.5
+                },
+                {
+                  "nodeId": "node-ed2-edaebb1b62438f24d20bf73c",
+                  "targetLayerId": "ed2-edaebb1b62438f24d20bf73c",
+                  "parentNodeId": "node-ed2-62c55650b95fddc1353ca427",
+                  "transformOriginX": 0.5,
+                  "transformOriginY": 0.5
+                },
+                {
+                  "nodeId": "node-ed2-155bd463ff8cc8f706cc9f63",
+                  "targetLayerId": "ed2-155bd463ff8cc8f706cc9f63",
+                  "parentNodeId": "node-ed2-537abf573f365fc6bc570188",
+                  "transformOriginX": 0.5,
+                  "transformOriginY": 0.5
+                },
+                {
+                  "nodeId": "node-ed2-e2096c387219040be4073ade",
+                  "targetLayerId": "ed2-e2096c387219040be4073ade",
+                  "parentNodeId": "node-ed2-537abf573f365fc6bc570188",
+                  "transformOriginX": 0.5,
+                  "transformOriginY": 0.5
+                },
+                {
+                  "nodeId": "node-ed2-d8f485d1c7801359328d5d27",
+                  "targetLayerId": "ed2-d8f485d1c7801359328d5d27",
+                  "parentNodeId": "node-ed2-62c55650b95fddc1353ca427",
+                  "transformOriginX": 0.5,
+                  "transformOriginY": 0.5
+                }
+              ],
+              "tracks": [
+                {
+                  "trackId": "ed2-6384297804590b3e4763616b-static",
+                  "targetLayerId": "ed2-6384297804590b3e4763616b",
+                  "property": "opacity",
+                  "unit": "ratio",
+                  "keyframes": [
+                    {
+                      "frame": 0,
+                      "value": 1.0,
+                      "easing": "linear",
+                      "cubicBezier": null
+                    }
+                  ]
+                },
+                {
+                  "trackId": "ed2-895c9ff7a0a9ce1cb92ec080-static",
+                  "targetLayerId": "ed2-895c9ff7a0a9ce1cb92ec080",
+                  "property": "opacity",
+                  "unit": "ratio",
+                  "keyframes": [
+                    {
+                      "frame": 0,
+                      "value": 1.0,
+                      "easing": "linear",
+                      "cubicBezier": null
+                    }
+                  ]
+                },
+                {
+                  "trackId": "ed2-9571262843af6b1155abff3b-static",
+                  "targetLayerId": "ed2-9571262843af6b1155abff3b",
+                  "property": "opacity",
+                  "unit": "ratio",
+                  "keyframes": [
+                    {
+                      "frame": 0,
+                      "value": 1.0,
+                      "easing": "linear",
+                      "cubicBezier": null
+                    }
+                  ]
+                },
+                {
+                  "trackId": "ed2-edaebb1b62438f24d20bf73c-static",
+                  "targetLayerId": "ed2-edaebb1b62438f24d20bf73c",
+                  "property": "opacity",
+                  "unit": "ratio",
+                  "keyframes": [
+                    {
+                      "frame": 0,
+                      "value": 1.0,
+                      "easing": "linear",
+                      "cubicBezier": null
+                    }
+                  ]
+                },
+                {
+                  "trackId": "ed2-e2096c387219040be4073ade-static",
+                  "targetLayerId": "ed2-e2096c387219040be4073ade",
+                  "property": "opacity",
+                  "unit": "ratio",
+                  "keyframes": [
+                    {
+                      "frame": 285,
+                      "value": 1.0,
+                      "easing": "linear",
+                      "cubicBezier": null
+                    }
+                  ]
+                },
+                {
+                  "trackId": "ed2-d8f485d1c7801359328d5d27-static",
+                  "targetLayerId": "ed2-d8f485d1c7801359328d5d27",
+                  "property": "opacity",
+                  "unit": "ratio",
+                  "keyframes": [
+                    {
+                      "frame": 0,
+                      "value": 1.0,
+                      "easing": "linear",
+                      "cubicBezier": null
+                    }
+                  ]
+                },
+                {
+                  "trackId": "ed2-155bd463ff8cc8f706cc9f63-recipe-scale_x",
+                  "targetLayerId": "ed2-155bd463ff8cc8f706cc9f63",
+                  "property": "scale_x",
+                  "unit": "ratio",
+                  "keyframes": [
+                    {
+                      "frame": 0,
+                      "value": 1.0,
+                      "easing": "cubic_bezier",
+                      "cubicBezier": [
+                        0.22,
+                        0.75,
+                        0.25,
+                        1.0
+                      ]
+                    },
+                    {
+                      "frame": 90,
+                      "value": 1.0,
+                      "easing": "cubic_bezier",
+                      "cubicBezier": [
+                        0.22,
+                        0.75,
+                        0.25,
+                        1.0
+                      ]
+                    },
+                    {
+                      "frame": 284,
+                      "value": 1.03,
+                      "easing": "cubic_bezier",
+                      "cubicBezier": [
+                        0.22,
+                        0.75,
+                        0.25,
+                        1.0
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "trackId": "ed2-155bd463ff8cc8f706cc9f63-recipe-scale_y",
+                  "targetLayerId": "ed2-155bd463ff8cc8f706cc9f63",
+                  "property": "scale_y",
+                  "unit": "ratio",
+                  "keyframes": [
+                    {
+                      "frame": 0,
+                      "value": 1.0,
+                      "easing": "cubic_bezier",
+                      "cubicBezier": [
+                        0.22,
+                        0.75,
+                        0.25,
+                        1.0
+                      ]
+                    },
+                    {
+                      "frame": 90,
+                      "value": 1.0,
+                      "easing": "cubic_bezier",
+                      "cubicBezier": [
+                        0.22,
+                        0.75,
+                        0.25,
+                        1.0
+                      ]
+                    },
+                    {
+                      "frame": 284,
+                      "value": 1.03,
+                      "easing": "cubic_bezier",
+                      "cubicBezier": [
+                        0.22,
+                        0.75,
+                        0.25,
+                        1.0
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "transitions": [],
+              "audioEvents": [
+                {
+                  "eventId": "event-ed2-0a9839e98947ab337188fc39",
+                  "frame": 0,
+                  "role": "impact",
+                  "eventBinding": "Pontuação dos estados e da leitura",
+                  "audioClipId": "ed2-0a9839e98947ab337188fc39",
+                  "assetId": "a9264483-2f2c-4abb-8843-93c8a43e4177",
+                  "rightsStatus": "verified"
+                }
+              ],
+              "reducedMotionSupported": true,
+              "constraints": [],
+              "sourceEvidenceIds": [],
+              "realityBinding": null,
+              "abstentions": [],
+              "createdBy": "09574145-7a25-45be-b426-151d18cd460c",
+              "lineage": null,
+              "humanReviewRequired": true,
+              "createdAt": "2026-10-04T13:05:27.039277Z"
+            }
+          },
+          "contextualPlanId": "364e858f-4334-4cb7-b384-38ef0207547a",
+          "editingPolicy": "draft-first-preserve-message"
+        },
+        "tracks": [],
+        "mediaTimeline": {
+          "schemaVersion": "studio.media-timeline.v1",
+          "frameRate": {
+            "numerator": 30,
+            "denominator": 1
+          },
+          "durationFrames": 450,
+          "tracks": [
+            {
+              "id": "track-ed2-0a9839e98947ab337188fc39",
+              "kind": "audio",
+              "name": "effect",
+              "muted": false,
+              "locked": false,
+              "clips": [
+                {
+                  "id": "ed2-0a9839e98947ab337188fc39",
+                  "assetId": "a9264483-2f2c-4abb-8843-93c8a43e4177",
+                  "timeline": {
+                    "startFrame": 0,
+                    "durationFrames": 450
+                  },
+                  "source": {
+                    "startMicroseconds": 0,
+                    "durationMicroseconds": 15000000
+                  },
+                  "enabled": true,
+                  "locked": false,
+                  "label": "effect",
+                  "playbackRate": 1.0,
+                  "transform": {},
+                  "effects": [],
+                  "keyframes": [],
+                  "gainDb": -6.0,
+                  "pan": 0.0,
+                  "fadeInFrames": 0,
+                  "fadeOutFrames": 15
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "contentReferences": [
+        {
+          "id": "study-content",
+          "version": 1,
+          "purpose": "Conteúdo próprio reconhecível",
+          "parts": [
+            {
+              "id": "primary",
+              "role": "primary_media",
+              "text": null,
+              "assetId": "b103665b-6507-4b60-ad63-0efe5ca40d2a",
+              "checksumSha256": "41953a0abac52a1412243bc1ea44f19f535383cc7cabb058aead984831d44e73",
+              "required": true
+            },
+            {
+              "id": "title",
+              "role": "title",
+              "text": "Uma mudança.\nUm resultado real.",
+              "assetId": null,
+              "checksumSha256": null,
+              "required": true
+            },
+            {
+              "id": "result-media",
+              "role": "body",
+              "text": null,
+              "assetId": "55c8c866-2531-4a05-a6e3-09a2c2d14ac2",
+              "checksumSha256": "04f1c92c89ce73bb155e8df122a1987950e90c5f7a63c60fb21381c5d8fb2e8c",
+              "required": true
+            }
+          ]
+        }
+      ],
+      "assets": [
+        {
+          "id": "83be05f7-bc4c-4531-8962-5a7085f730cf",
+          "version": null,
+          "mediaType": "font/woff2",
+          "checksum": "a30ddcd349703aff7464c34bef3fffdff405ee50c113440d7c8693c02d210972",
+          "origin": "user-upload",
+          "rightsStatus": "verified",
+          "provenance": {
+            "sourceDeclaration": "Own study or bundled OFL font, no client assets",
+            "licenseDeclaration": "Original internal res study / Manrope SIL Open Font License"
+          }
+        },
+        {
+          "id": "a9264483-2f2c-4abb-8843-93c8a43e4177",
+          "version": null,
+          "mediaType": "audio/wav",
+          "checksum": "fd7ae18639752a6e9a9a8046e1e325b35a4026f7416a518db946d6c9758d2687",
+          "origin": "user-upload",
+          "rightsStatus": "verified",
+          "provenance": {
+            "sourceDeclaration": "Own study or bundled OFL font, no client assets",
+            "licenseDeclaration": "Original internal res study / Manrope SIL Open Font License",
+            "purpose": "natural-sound-candidate",
+            "rightsReviewId": "34a4c5c1-5b31-44b7-a172-3c9b5d527d25",
+            "rightsReviewedAt": "2026-10-02T22:10:58.354665+00:00",
+            "rightsReviewerId": "09574145-7a25-45be-b426-151d18cd460c",
+            "rightsExpiresAt": null,
+            "rightsPublicationScope": "commercial-saas",
+            "rightsStatusReason": "rights_review_verified"
+          }
+        },
+        {
+          "id": "78221c57-92c0-4587-b061-e2044d6b0584",
+          "version": null,
+          "mediaType": "video/mp4",
+          "checksum": "7a25f9ccf7a1c36487353551d768b1a5edcef5fcfe6c204471beacfffd03ba37",
+          "origin": "user-upload",
+          "rightsStatus": "verified",
+          "provenance": {
+            "sourceDeclaration": "Own study or bundled OFL font, no client assets",
+            "licenseDeclaration": "Original internal res study / Manrope SIL Open Font License",
+            "testEnvironmentCapture": true,
+            "observableAction": "Texto fictício alterado e aplicado à timeline real do res",
+            "sourceIntervals": null,
+            "editorialIntervention": "Startup trim"
+          }
+        },
+        {
+          "id": "b103665b-6507-4b60-ad63-0efe5ca40d2a",
+          "version": null,
+          "mediaType": "video/mp4",
+          "checksum": "41953a0abac52a1412243bc1ea44f19f535383cc7cabb058aead984831d44e73",
+          "origin": "user-upload",
+          "rightsStatus": "verified",
+          "provenance": {
+            "sourceDeclaration": "Own study or bundled OFL font, no client assets",
+            "licenseDeclaration": "Original internal res study / Manrope SIL Open Font License",
+            "testEnvironmentCapture": true,
+            "observableAction": "Texto fictício alterado e aplicado à timeline real do res",
+            "sourceIntervals": null,
+            "editorialIntervention": "Startup trim",
+            "parentAssetId": "78221c57-92c0-4587-b061-e2044d6b0584",
+            "parentChecksum": "7a25f9ccf7a1c36487353551d768b1a5edcef5fcfe6c204471beacfffd03ba37",
+            "cropPixels": "300:300:978:342",
+            "sourceTimeUnchanged": true,
+            "encodingProfile": "h264_cfr30_all_intra_no_b_frames",
+            "reason": "Explicit compatibility experiment after audited OffthreadVideo decode failure"
+          }
+        },
+        {
+          "id": "55c8c866-2531-4a05-a6e3-09a2c2d14ac2",
+          "version": null,
+          "mediaType": "video/mp4",
+          "checksum": "04f1c92c89ce73bb155e8df122a1987950e90c5f7a63c60fb21381c5d8fb2e8c",
+          "origin": "user-upload",
+          "rightsStatus": "verified",
+          "provenance": {
+            "sourceDeclaration": "Own study or bundled OFL font, no client assets",
+            "licenseDeclaration": "Original internal res study / Manrope SIL Open Font License",
+            "testEnvironmentCapture": true,
+            "observableAction": "Texto fictício alterado e aplicado à timeline real do res",
+            "sourceIntervals": null,
+            "editorialIntervention": "Startup trim",
+            "parentAssetId": "78221c57-92c0-4587-b061-e2044d6b0584",
+            "parentChecksum": "7a25f9ccf7a1c36487353551d768b1a5edcef5fcfe6c204471beacfffd03ba37",
+            "cropPixels": "244:220:475:350",
+            "sourceTimeUnchanged": true,
+            "encodingProfile": "h264_cfr30_all_intra_no_b_frames",
+            "reason": "Explicit compatibility experiment after audited OffthreadVideo decode failure"
+          }
+        }
+      ],
+      "identityRef": null,
+      "voiceRef": null,
+      "sceneRef": null,
+      "scriptRef": null,
+      "shotPlanRef": null,
+      "lineage": [],
+      "review": {
+        "status": "draft",
+        "requestedVersion": null,
+        "approvalId": null
+      },
+      "exports": [],
+      "createdAt": "2026-10-04T13:05:24.132948Z",
+      "updatedAt": "2026-10-04T13:05:30.388534"
+    },
+    "editorialPlanId": null,
+    "contextualPlanId": "364e858f-4334-4cb7-b384-38ef0207547a",
+    "contextualPlanRevision": 2,
+    "motionProjection": null
+  },
+  "result": null
+}

@@ -1,0 +1,163 @@
+{
+  "schemaVersion": "res.typography-layout-receipt.v1",
+  "generatedAt": "2026-10-02T23:39:06.201229+00:00",
+  "qualification": "implemented_with_technical_evidence",
+  "humanReview": "pending",
+  "compilerVersion": "res.native-recipes.v3",
+  "componentLibraryVersion": 5,
+  "providerVersion": "4.0.527-native.7",
+  "policy": "dom.units-fit.v1",
+  "legacyVersionsReadable": [
+    1,
+    2
+  ],
+  "tests": [
+    {
+      "path": "docs/studios/research/editor-oss-20261002/text-layout-regression-tests.xml",
+      "cases": 81,
+      "sha256": "cf0cc2cebfff2e39119c2db7cc33aebee3b7fdecb5a18ba54d14783e5462995b"
+    },
+    {
+      "path": "docs/studios/research/editor-oss-20261002/text-layout-policy-tests.xml",
+      "cases": 9,
+      "sha256": "a54a3737b97fddc5656d554d4d37f699127b6f2afcbcd0abd399a571a4256730"
+    },
+    {
+      "path": "docs/studios/research/editor-oss-20261002/text-layout-real-tests.xml",
+      "cases": 2,
+      "sha256": "be8e088a3503be31c3390c92a4d26b759deb6630ed656007cf339e17ae168496"
+    },
+    {
+      "path": "docs/studios/research/editor-oss-20261002/text-layout-font-parent-tests.xml",
+      "cases": 2,
+      "sha256": "728a8da4cd78a24af107028acb6393b4d01ba31a28bf3cee1cae6f2cdee8bb30"
+    },
+    {
+      "path": "docs/studios/research/editor-oss-20261002/text-layout-real-negative-regression-tests.xml",
+      "cases": 2,
+      "sha256": "00127c70cbd7c80536b61158b601d7ff74d0383d04649f59d95d09410e9ebbae"
+    }
+  ],
+  "uniquePytestCases": 86,
+  "testReceiptsOverlap": true,
+  "officialUnicode17Vectors": 766,
+  "actualBrowserCases": 13,
+  "actualBrowserStudySha256": "2f862f20f7a9b7f41f4856396e73b387d312ed0816ea43363a633737a4666457",
+  "renders": [
+    {
+      "variant": "unicode",
+      "scope": "actual_API_plan_job_font_MP4",
+      "jobId": "75f545d1-de7a-47f0-b266-8a7ae20ac573",
+      "documentId": "666bde2d-c423-4825-b481-ff77f277cf29",
+      "documentRevision": 2,
+      "provider": "remotion.contextual-v2",
+      "providerVersion": "4.0.527-native.7",
+      "video": "docs/studios/research/editor-oss-20261002/text-layout-render/unicode/typography.mp4",
+      "videoSha256": "814285f2c3495dc8d69850ca0ea2345b592d9c16f578ca25946ab6529f139aef",
+      "videoBytes": 12843,
+      "width": 320,
+      "height": 320,
+      "fps": 30,
+      "frames": 60,
+      "renderDurationMs": 11016,
+      "qcStatus": "passed",
+      "font": {
+        "assetId": "8d956a1c-888b-4ea7-aa1c-92a07d6c50b1",
+        "source": "local licensed test font; binary not retained",
+        "sha256": "b3658eadae55e682b5f69eb64c439c1ecc8f196c0bb8d4756d145d13bc86476a"
+      },
+      "completeFrame": 19,
+      "animatedCount": 4,
+      "requestedFontSizePx": 42,
+      "effectiveFontSizePx": 42,
+      "lineCount": 1,
+      "contentHeightPx": 46.1875,
+      "pixels": {
+        "holdBeginVsEndMeanAbsoluteChannelError": 0.009078776041666667,
+        "settledVsZeroStaggerControlMeanAbsoluteChannelError": 0.26958984375,
+        "firstFrameBrightChannels": 0,
+        "settledBrightChannels": 3670,
+        "scope": "whole decoded frame"
+      },
+      "evidenceSha256": "274ac8443567bdc24812ee474264018eae3822ef04be546f569a969efe0d7e02"
+    },
+    {
+      "variant": "wrapped_words",
+      "scope": "actual_API_plan_job_font_MP4",
+      "jobId": "4a61d68d-f763-47cc-aa64-2f17a1b3cc43",
+      "documentId": "b752d350-c92f-4905-a141-b408ac3439a7",
+      "documentRevision": 2,
+      "provider": "remotion.contextual-v2",
+      "providerVersion": "4.0.527-native.7",
+      "video": "docs/studios/research/editor-oss-20261002/text-layout-render/wrapped_words/typography.mp4",
+      "videoSha256": "97ef10bcf5a224a1caee5dec02ba7cf843cd76d214cda6318f113191251ce00a",
+      "videoBytes": 31174,
+      "width": 320,
+      "height": 320,
+      "fps": 30,
+      "frames": 60,
+      "renderDurationMs": 9063,
+      "qcStatus": "passed",
+      "font": {
+        "assetId": "e7196316-7bb9-4535-bedd-f78a72b4ad80",
+        "source": "local licensed test font; binary not retained",
+        "sha256": "b3658eadae55e682b5f69eb64c439c1ecc8f196c0bb8d4756d145d13bc86476a"
+      },
+      "completeFrame": 10,
+      "animatedCount": 9,
+      "requestedFontSizePx": 42,
+      "effectiveFontSizePx": 42,
+      "lineCount": 5,
+      "contentHeightPx": 230.9375,
+      "pixels": {
+        "holdBeginVsEndMeanAbsoluteChannelError": 0.030966796875,
+        "settledVsZeroStaggerControlMeanAbsoluteChannelError": 1.3921549479166666,
+        "firstFrameBrightChannels": 0,
+        "settledBrightChannels": 27259,
+        "scope": "whole decoded frame"
+      },
+      "evidenceSha256": "19f62cb51721f3deeb8d977975aa700caf9fd75c3f0d8d531a5211e7528f47b5"
+    }
+  ],
+  "negativeOutputPublished": false,
+  "negativeScope": "actual_canonical_projection_font_Remotion_failure_before_output",
+  "negativeEvidenceSha256": "3ce6ec02826683e644984769004f39aeff1796b3dfea5405e6e6241a96cf53d6",
+  "animatedStyleParentScope": "actual_canonical_graph_final_font_Remotion_frames",
+  "animatedStyleParentVideoSha256": "912fd9601d41e6fb59b7f922ced61e883d0573f6354610a62618228219e4ffc0",
+  "animatedStyleParentHoldPixelDifference": 0.0006966145833333334,
+  "sources": {
+    "backend/app/domain/studios/typography.py": "0c77abc82c4fa2ec0640c0a8a5010eccdf385a5f720a23e8d6dac9b4e0c97bb1",
+    "backend/app/services/studios/native_motion_recipes.py": "21fc828cc70fc3541350d4c5f94ac66545d1c17b960dc54c7bdb16b5364d6660",
+    "backend/app/providers/studios/remotion_projection.py": "587d3eab54f1869ae8e12447e64a6cdb0f392608356e3ab8e14727aac69edb63",
+    "backend/app/providers/studios/remotion_render.py": "c685ce0d4f4f56c47a4aecabb6c3d7b8a556da2bc0d85924cb49804b48e6e574",
+    "workers/remotion-benchmark/src/hybrid.tsx": "3d58be14f2b909f126c760047ae009e3e6293459a9dd6491ee7b7fede3048b63",
+    "workers/remotion-benchmark/src/typography-layout.tsx": "a1a4b461cb292d794330a25c5ce30b9a5d61633b7f77a4fc54b5d352811bc744",
+    "workers/remotion-benchmark/render-hybrid.mjs": "05de74a876d8e0330c51961bd92ef06a6149cc9c6ad80195bf6c7bb19968055d",
+    "workers/remotion-benchmark/tests/typography-layout-study.tsx": "b380e726c977778dfc5d3720d491c6160d621c6a957fd9c17d719cdd8cf4bc4d",
+    "backend/tests/test_typography_layout.py": "7d54d7cc4f4c79c0324f5ceb72ca7575b041e919e676cae745d90a6dfa993bf9",
+    "backend/tests/test_typography_layout_render.py": "98c73c046dea01cf1947677384a260077c284ba7e2b0a232dc6cbe8e37151621",
+    "backend/tests/test_typography_units.py": "807f0eec206706d844fe3682de0e5c58130c3414d835cace3e650a262bf9f471",
+    "backend/tests/test_typography_render.py": "8288ef631dbf7ae0c64f15b248b933d34015e2606b662f4a59fefa0efcaaa51e",
+    "scripts/validation/editor-text-layout-dom-study.mjs": "12312e04d8194ad596436e2d82b6346f4d3895a4f481d40533542bbf725597b2",
+    "scripts/validation/editor-text-layout-receipt.py": "3e6e396bc2a95db863835868abc5075a66333d584a23f2cb2934ac081f70171e"
+  },
+  "cleanup": {
+    "status": "blocked_by_policy",
+    "clonesLogicalBytesPreviouslyMeasured": 3831737,
+    "newBrowserBundlesLogicalBytes": 59308030,
+    "bundles": [
+      "tmp/text-layout-dom-study-4f29b935-7ff5-4177-9c84-e513542a1027",
+      "tmp/text-layout-dom-study-820d0c1d-7987-4b05-9dbf-7b887596136c"
+    ],
+    "noRemovalWorkaroundAttempted": true
+  },
+  "limitations": [
+    "Ink metrics do not prove decoded pixel coverage or transformed clipping; fit constrains local DOM wrapping/block height.",
+    "No human readability/mobile/esthetic/commercial/autonomy qualification.",
+    "Explicit font fixture covers Latin accents. Emoji/Indic shaping and kerning across unit spans remain unqualified.",
+    "Legacy integrated_typography V1 and recipes compiler v1/v2 retain their historical fitting.",
+    "Unbound platform fonts are identified as unfixed_platform_font.",
+    "Eight positive render tests and one negative do not establish p95/realtime performance.",
+    "24/60-fps trim/speed fixtures passed this regression; earlier failures remain historical evidence."
+  ]
+}

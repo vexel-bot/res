@@ -1,0 +1,9 @@
+{
+  "source": "backend/app/services/studios/contextual_editing.py",
+  "sha256": "7325ad6fcc9646c369ef46abcce684e9b10a77cabac8073d67ac064e263d25c2",
+  "bytes": 66095,
+  "workspacePlanEvents": 95,
+  "workspacePayloadCharacters": 186948201,
+  "legacyFullWorkspaceBenchmarkExecuted": false,
+  "reason": "Avoid hydrating 187 million JSON characters into Python on memory-constrained host; measure candidate and stream reference semantics instead"
+}

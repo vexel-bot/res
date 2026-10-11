@@ -1,0 +1,11 @@
+--- before/src/studios/EditorInspectionPanel.tsx
++++ after/src/studios/EditorInspectionPanel.tsx
+@@ -65,7 +65,7 @@
+   const video = playbackRef ?? localVideo;
+   const base = `/api/v1/studios/v1/documents/${encodeURIComponent(document.documentId)}/editor`;
+   const load = React.useCallback(async (at: number, signal?: AbortSignal) => {
+-    const next = await apiFetch<Inspection>(`${base}/inspection?frame=${Math.max(0, at)}`, { signal });
++    const next = await apiFetch<Inspection>(`${base}/inspection?frame=${Math.max(0, at)}&evaluationDetail=summary`, { signal });
+     if (!signal?.aborted) setSnapshot(next);
+     return next;
+   }, [base]);

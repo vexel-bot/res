@@ -1,0 +1,67 @@
+--- before/backend/app/routers/assets.py
++++ after/backend/app/routers/assets.py
+@@ -1,6 +1,8 @@
+ import mimetypes
+ import tempfile
+ from pathlib import Path, PurePosixPath
++from types import SimpleNamespace
++from urllib.parse import quote
+ 
+ from fastapi import APIRouter, Depends, File, Form, HTTPException, Query, UploadFile, status
+ from fastapi.responses import FileResponse, RedirectResponse, Response
+@@ -13,9 +15,10 @@
+ from ..domain.studios.image_edit import ImageDerivationRequestV1
+ from ..models import Campaign, LibraryAsset, Membership, Post, User
+ from ..providers.studios.pillow_image_edit import PillowImageEditProvider
+-from ..schemas import AssetIn, AssetOut
++from ..schemas import AssetCatalogItemV1, AssetIn, AssetOut
+ from ..security import get_current_user
+ from ..services.object_storage import get_object_storage, object_key
++from ..services.studios.asset_read_projection import ASSET_FIELDS, project_assets
+ from ..services.studios.image_edit import derive_image_asset
+ 
+ router = APIRouter(prefix="/assets", tags=["assets"])
+@@ -137,6 +140,43 @@
+         created_at=item.created_at,
+         updated_at=item.updated_at,
+     )
++
++
++@router.get("/catalog", response_model=list[AssetCatalogItemV1])
++def asset_catalog(
++    workspace_id: str = Query(...), db: Session = Depends(get_db), user: User = Depends(get_current_user),
++) -> list[AssetCatalogItemV1]:
++    assert_access(db, user.id, workspace_id)
++    statement = select(LibraryAsset).where(
++        LibraryAsset.workspace_id == workspace_id, LibraryAsset.lifecycle_status == "active",
++    ).order_by(LibraryAsset.created_at.desc())
++    items = project_assets(db, statement, [("sourceAssetId",)])
++    if items is None:
++        items = db.scalars(statement).all()
++    result = []
++    for item in items:
++        metadata = item.object_metadata or {}
++        if not isinstance(metadata, dict):
++            asset_out(item)  # Preserve existing validation failure for malformed metadata.
++        summary = {"sourceAssetId": metadata["sourceAssetId"]} if "sourceAssetId" in metadata else {}
++        view = SimpleNamespace(**{name: getattr(item, name) for name in ASSET_FIELDS}, object_metadata=summary)
++        result.append(AssetCatalogItemV1(
++            **asset_out(view).model_dump(),
++            full_metadata_path=f"/api/v1/assets/{quote(item.id, safe='')}",
++        ))
++    return result
++
++
++@router.get("/{asset_id}", response_model=AssetOut)
++def get_asset_details(asset_id: str, db: Session = Depends(get_db), user: User = Depends(get_current_user)):
++    item = db.scalar(select(LibraryAsset).join(
++        Membership, Membership.workspace_id == LibraryAsset.workspace_id,
++    ).where(
++        LibraryAsset.id == asset_id, LibraryAsset.lifecycle_status == "active", Membership.user_id == user.id,
++    ))
++    if not item:
++        raise HTTPException(status_code=404, detail="Asset not found")
++    return asset_out(item)
+ 
+ 
+ @router.get("", response_model=list[AssetOut])
