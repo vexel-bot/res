@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-from pathlib import Path
-
 import httpx
 
 from ...config import get_settings
@@ -13,7 +11,6 @@ from ...domain.studios.hybrid_video import (
     HybridCapabilityManifestV1,
     HybridExecutionProfileV1,
 )
-from ...providers.studios.video_render import VIDEO_RENDER_PROVIDERS
 
 
 def _readiness(
@@ -39,13 +36,6 @@ def _readiness(
 
 def hybrid_capability_manifest(settings=None) -> HybridCapabilityManifestV1:
     settings = settings or get_settings()
-    hyperframes = "hyperframes.contextual-v2" in VIDEO_RENDER_PROVIDERS
-    motion_canvas_configured = "motion-canvas.contextual-v1" in VIDEO_RENDER_PROVIDERS
-    motion_canvas_worker = Path(__file__).resolve().parents[4] / "workers" / "motion-canvas-local"
-    motion_canvas_installed = (motion_canvas_worker / "node_modules" / "@motion-canvas" / "core").is_dir()
-    remotion_configured = "remotion.contextual-v1" in VIDEO_RENDER_PROVIDERS
-    remotion_worker = Path(__file__).resolve().parents[4] / "workers" / "remotion-benchmark"
-    remotion_installed = (remotion_worker / "node_modules" / "@remotion" / "renderer").is_dir()
     local_diffusion_enabled = bool(getattr(settings, "studio_local_diffusion_enabled", False))
     gemini_video_enabled = bool(getattr(settings, "gemini_video_generation_enabled", False))
     longcat_enabled = bool(getattr(settings, "studio_longcat_avatar_enabled", False))
@@ -54,10 +44,7 @@ def hybrid_capability_manifest(settings=None) -> HybridCapabilityManifestV1:
         try:
             response = httpx.get(
                 settings.studio_longcat_avatar_url.rstrip("/") + "/api/v1/capabilities",
-                headers={
-                    "Authorization": "Bearer "
-                    + settings.studio_longcat_avatar_token.get_secret_value()
-                },
+                headers={"Authorization": "Bearer " + settings.studio_longcat_avatar_token.get_secret_value()},
                 timeout=2,
             )
             response.raise_for_status()
@@ -65,68 +52,6 @@ def hybrid_capability_manifest(settings=None) -> HybridCapabilityManifestV1:
         except (httpx.HTTPError, ValueError, AttributeError):
             longcat_worker = None
     profiles = [
-        HybridExecutionProfileV1(
-            profile_id="hyperframes-motion-v1",
-            provider_id="builtin.hyperframes-motion-v1",
-            capability="motion",
-            operations=["compose_motion_graph"],
-            environment="local",
-            qualification_state="experimental" if hyperframes else "unavailable",
-            commercial_use="approved",
-            readiness=_readiness(
-                hyperframes,
-                hyperframes,
-                hyperframes,
-                hyperframes,
-                False,
-                blockers=() if hyperframes else ("hyperframes_runtime_unavailable",),
-            ),
-            input_requirements=["motion_graph"],
-            cost=CapabilityUnitCostV1(price_version="local-unpriced-v1"),
-            evidence_refs=["docs/studios/OPEN_SOURCE_INTEGRATION_ROADMAP.md"],
-        ),
-        HybridExecutionProfileV1(
-            profile_id="motion-canvas-experimental-v1",
-            provider_id="motion-canvas",
-            capability="motion",
-            operations=["compose_motion_graph"],
-            environment="local",
-            qualification_state="experimental" if motion_canvas_configured and motion_canvas_installed else "unavailable",
-            commercial_use="approved",
-            readiness=_readiness(
-                configured=motion_canvas_configured,
-                accessible=motion_canvas_configured and motion_canvas_installed,
-                installed=motion_canvas_installed,
-                resources=motion_canvas_configured and motion_canvas_installed,
-                validated=motion_canvas_configured and motion_canvas_installed,
-                blockers=("visual_qualification_pending",) if motion_canvas_configured and motion_canvas_installed
-                else ("motion_canvas_worker_unavailable",),
-            ),
-            input_requirements=["motion_graph"],
-            cost=CapabilityUnitCostV1(price_version="local-unpriced-v1"),
-            evidence_refs=["https://motion-canvas.io/docs/rendering/video/"],
-        ),
-        HybridExecutionProfileV1(
-            profile_id="remotion-experimental-v1",
-            provider_id="remotion",
-            capability="motion",
-            operations=["compose_motion_graph"],
-            environment="local",
-            qualification_state="experimental" if remotion_configured and remotion_installed else "unavailable",
-            commercial_use="conditional",
-            readiness=_readiness(
-                configured=remotion_configured,
-                accessible=remotion_configured and remotion_installed,
-                installed=remotion_installed,
-                resources=remotion_configured and remotion_installed,
-                validated=remotion_configured and remotion_installed,
-                blockers=("license_review_pending", "visual_qualification_pending")
-                if remotion_configured and remotion_installed else ("remotion_worker_unavailable",),
-            ),
-            input_requirements=["motion_graph"],
-            cost=CapabilityUnitCostV1(price_version="local-unpriced-v1"),
-            evidence_refs=["https://www.remotion.dev/docs/", "https://github.com/remotion-dev/remotion/blob/main/LICENSE.md"],
-        ),
         HybridExecutionProfileV1(
             profile_id="musetalk-1.5-evidence-v1",
             provider_id="musetalk",
@@ -160,18 +85,16 @@ def hybrid_capability_manifest(settings=None) -> HybridCapabilityManifestV1:
             operations=["image_audio_to_avatar"],
             environment="local",
             qualification_state=(
-                "experimental"
-                if longcat_worker and longcat_worker.get("usableNow")
-                else "unavailable"
+                "experimental" if longcat_worker and longcat_worker.get("usableNow") else "unavailable"
             ),
             commercial_use="conditional",
             readiness=_readiness(
                 configured=longcat_enabled,
                 accessible=longcat_worker is not None,
-                installed=bool(longcat_worker and not any(
-                    reason == "weights_not_installed"
-                    for reason in longcat_worker.get("reasons", [])
-                )),
+                installed=bool(
+                    longcat_worker
+                    and not any(reason == "weights_not_installed" for reason in longcat_worker.get("reasons", []))
+                ),
                 resources=bool(longcat_worker and longcat_worker.get("usableNow")),
                 validated=False,
                 blockers=tuple(longcat_worker.get("reasons", []))
@@ -252,9 +175,7 @@ def hybrid_capability_manifest(settings=None) -> HybridCapabilityManifestV1:
                 else ("gemini_video_disabled",),
             ),
             maximum_native_seconds=10,
-            cost=CapabilityUnitCostV1(
-                currency="USD", unit="second", amount=0.05, price_version="google-2026-09-14"
-            ),
+            cost=CapabilityUnitCostV1(currency="USD", unit="second", amount=0.05, price_version="google-2026-09-14"),
             model_id=getattr(settings, "studio_gemini_video_model", "veo-3.1-lite-generate-preview"),
             model_revision="google-api-price-and-model-binding-2026-09-14",
             runtime_revision="res-gemini-editing-adapter-v1",
@@ -274,4 +195,30 @@ def hybrid_capability_manifest(settings=None) -> HybridCapabilityManifestV1:
             evidence_refs=["https://github.com/Wan-Video/Wan2.2"],
         ),
     ]
+    from ...providers.studios.craft import engine_capability
+
+    profiles = [profile for profile in profiles if profile.capability != "motion"]
+    native = engine_capability("effectcraft")
+    available = native["available"]
+    profiles.append(
+        HybridExecutionProfileV1(
+            profile_id="effectcraft-motion-v1",
+            provider_id="craft.effectcraft",
+            capability="motion",
+            operations=["compose_motion_graph"],
+            environment="local",
+            qualification_state="experimental" if available else "unavailable",
+            commercial_use="approved",
+            readiness=_readiness(
+                configured=available,
+                accessible=available,
+                installed=available,
+                resources=available,
+                blockers=() if available else (native.get("reason", "craft_runtime_unavailable"),),
+            ),
+            input_requirements=["motion_graph"],
+            cost=CapabilityUnitCostV1(price_version="local-unpriced-v1"),
+            evidence_refs=["workers/craft/sources.lock.json"],
+        )
+    )
     return HybridCapabilityManifestV1(profiles=profiles)

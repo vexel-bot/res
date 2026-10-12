@@ -10,7 +10,6 @@ from test_remotion_native import native_document
 from app.domain.studios.contextual_editing_v2 import ContextualPlanRequestV2
 from app.domain.studios.contracts import AssetReferenceV1
 from app.domain.studios.typography import graphemes, segment_text
-from app.providers.studios.remotion_projection import compile_remotion_composition
 
 
 @pytest.fixture(autouse=True)
@@ -108,81 +107,12 @@ def test_whitespace_only_and_unregistered_segmenter_do_not_fall_back(monkeypatch
         segment_text("Título", "character")
 
 
-def test_recipe_font_binding_is_required_and_checksum_checked():
-    doc, projection = native_document(typography_direction("AC\u0327A\u0303O"))
-    hero = next(layer for layer in doc.composition.pages[0].layers if layer.name == "hero")
-    hero.properties["fontAssetId"] = "bound-font"
-    doc.assets.append(AssetReferenceV1(id="bound-font", media_type="font/ttf", checksum="a" * 64))
-    with pytest.raises(ValueError, match="asset_missing:bound-font"):
-        compile_remotion_composition(doc, projection, {})
-    with pytest.raises(ValueError, match="asset_checksum_conflict:bound-font"):
-        compile_remotion_composition(
-            doc, projection, {"bound-font": {"sha256": "b" * 64, "mime": "font/ttf", "path": "unused"}}
-        )
 
 
-def test_exact_reading_hold_uses_same_animated_unit_count_as_renderer():
-    direction = typography_direction("A B", duration=28, hold=15)
-    doc, projection = native_document(direction)
-    manifest = compile_remotion_composition(doc, projection, {})
-    hero = next(layer for layer in manifest["layers"] if layer["name"] == "hero")
-    spec = hero["properties"]["recipeTypography"]
-    assert spec["segmentation"]["animatedCount"] == 2
-    assert spec["completeFrame"] == 13
-    assert manifest["componentLibraryVersion"] == 6
-    assert manifest["nativeRecipeOperations"][0]["compilerVersion"] == "res.native-recipes.v4"
-    with pytest.raises(ValueError, match="complete_reading_hold"):
-        native_document(typography_direction("A B", duration=27, hold=15))
 
 
-@pytest.mark.parametrize("mutation", ["text", "unit", "index", "count", "boundary", "timing", "operation"])
-def test_stale_units_and_timing_cannot_enter_native_manifest(mutation):
-    doc, projection = native_document(typography_direction("AC\u0327A\u0303O"))
-    hero = next(layer for layer in doc.composition.pages[0].layers if layer.name == "hero")
-    spec = hero.properties["recipeTypography"]
-    op = doc.composition.narrative["editorialV2"]["nativeRecipeOperations"][0]
-    if mutation == "text":
-        hero.properties["text"] = "Outro título"
-    elif mutation == "unit":
-        spec["unit"] = "word"
-    elif mutation == "index":
-        op["typographyTargets"][hero.id]["units"][0]["animationIndex"] = 2
-    elif mutation == "count":
-        op["typographyTargets"][hero.id]["animatedCount"] = 8
-    elif mutation == "boundary":
-        units = op["typographyTargets"][hero.id]["units"]
-        units[1:2] = [{"text": "C", "animationIndex": 1}, {"text": "\u0327", "animationIndex": 2}]
-        for i, unit in enumerate(units):
-            unit["animationIndex"] = i
-        op["typographyTargets"][hero.id]["animatedCount"] = len(units)
-    elif mutation == "timing":
-        spec["completeFrame"] += 1
-    else:
-        op["typographyTargets"] = {}
-    with pytest.raises(ValueError, match="typography"):
-        compile_remotion_composition(doc, projection, {})
 
 
-def test_legacy_materialization_keeps_v1_interpolation_and_timing():
-    doc, projection = native_document(typography_direction("AC\u0327A\u0303O"))
-    hero = next(layer for layer in doc.composition.pages[0].layers if layer.name == "hero")
-    old_spec = {
-        k: v
-        for k, v in hero.properties["recipeTypography"].items()
-        if k not in {"version", "segmentation", "completeFrame"}
-    }
-    hero.properties["recipeTypography"] = old_spec
-    hero.properties.pop("recipeTextLayout")
-    op = doc.composition.narrative["editorialV2"]["nativeRecipeOperations"][0]
-    op["compilerVersion"] = "res.native-recipes.v1"
-    op.pop("typographyTargets")
-    op.pop("typographyLayouts")
-    manifest = compile_remotion_composition(doc, projection, {})
-    assert manifest["componentLibraryVersion"] == 3
-    assert (
-        next(layer for layer in manifest["layers"] if layer["name"] == "hero")["properties"]["recipeTypography"]
-        == old_spec
-    )
 
 
 def test_duplicate_typography_and_hidden_hold_interval_rejected():

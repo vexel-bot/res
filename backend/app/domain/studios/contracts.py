@@ -1032,6 +1032,73 @@ class ExportReferenceV1(StudioContract):
     created_at: datetime
 
 
+CraftEngine = Literal["photocraft", "filmcraft", "effectcraft"]
+
+
+class NativeMediaReferenceV1(StudioContract):
+    asset_id: str = Field(min_length=1, max_length=120)
+    path: str = Field(min_length=1, max_length=500)
+    checksum_sha256: str = Field(pattern=SHA256_PATTERN)
+    media_type: str = Field(min_length=1, max_length=160)
+
+    @model_validator(mode="after")
+    def relative_path(self) -> NativeMediaReferenceV1:
+        from pathlib import PurePosixPath
+
+        value = PurePosixPath(self.path)
+        if value.is_absolute() or "\\" in self.path or ":" in self.path or ".." in value.parts:
+            raise ValueError("craft_media_path_invalid")
+        return self
+
+
+class NativeCompositionReferenceV1(StudioContract):
+    engine: CraftEngine
+    project_asset_id: str = Field(min_length=1, max_length=120)
+    checksum_sha256: str = Field(pattern=SHA256_PATTERN)
+    build_id: str = Field(min_length=1, max_length=240)
+    source_document_id: str | None = Field(default=None, max_length=120)
+    rendered_asset_id: str | None = Field(default=None, max_length=120)
+
+
+class NativePageProjectV1(StudioContract):
+    page_id: str = Field(min_length=1, max_length=160)
+    title: str = Field(min_length=1, max_length=240)
+    width: int = Field(gt=0, le=8192)
+    height: int = Field(gt=0, le=8192)
+    project_asset_id: str = Field(min_length=1, max_length=120)
+    checksum_sha256: str = Field(pattern=SHA256_PATTERN)
+    size_bytes: int = Field(gt=0)
+
+
+class NativeEditorStateV1(StudioContract):
+    schema_version: Literal["studio.native-editor-state.v1"] = "studio.native-editor-state.v1"
+    engine: CraftEngine
+    format_version: str = Field(min_length=1, max_length=120)
+    build_id: str = Field(min_length=1, max_length=240)
+    upstream_revision: str = Field(min_length=7, max_length=64)
+    project_asset_id: str = Field(min_length=1, max_length=120)
+    checksum_sha256: str = Field(pattern=SHA256_PATTERN)
+    size_bytes: int = Field(gt=0)
+    asset_manifest: list[NativeMediaReferenceV1] = Field(default_factory=list, max_length=10000)
+    font_manifest: list[NativeMediaReferenceV1] = Field(default_factory=list, max_length=1000)
+    dependencies: list[NativeCompositionReferenceV1] = Field(default_factory=list, max_length=1000)
+    page_projects: list[NativePageProjectV1] = Field(default_factory=list, max_length=100)
+    migration_warnings: list[str] = Field(default_factory=list, max_length=1000)
+    legacy_archive_asset_id: str | None = Field(default=None, max_length=120)
+
+    @model_validator(mode="after")
+    def consistent_page_projects(self) -> NativeEditorStateV1:
+        if self.page_projects:
+            if self.engine != "photocraft":
+                raise ValueError("craft_page_projects_require_photocraft")
+            if len({page.page_id for page in self.page_projects}) != len(self.page_projects):
+                raise ValueError("craft_page_projects_duplicate_id")
+            first = self.page_projects[0]
+            if first.project_asset_id != self.project_asset_id or first.checksum_sha256 != self.checksum_sha256:
+                raise ValueError("craft_primary_page_reference_mismatch")
+        return self
+
+
 class CreativeDocumentV1(StudioContract):
     schema_version: Literal["studio.creative-document.v1"] = "studio.creative-document.v1"
     document_id: str = Field(min_length=1, max_length=120)
@@ -1049,6 +1116,7 @@ class CreativeDocumentV1(StudioContract):
     brand_memory_ref: BrandMemoryReferenceV1
     brief: CreativeBriefV1
     composition: CreativeCompositionV1
+    native_editor_state: NativeEditorStateV1 | None = None
     # Versioned canonical content is authored by contextual plan V2 and kept
     # with the document so derived layouts do not rely on renderer-only IDs.
     # The V2 plan owns the typed validation; V1 readers preserve this additive payload.
@@ -1464,6 +1532,7 @@ class CreateStudioDocumentRequest(StudioContract):
     workspace_id: str
     title: str = Field(min_length=1, max_length=240)
     content_type: Literal["visual", "carousel", "video", "presenter"] = "visual"
+    engine: CraftEngine | None = None
     campaign_id: str | None = None
     post_id: str | None = None
     opportunity_id: str | None = None
@@ -1550,6 +1619,7 @@ class CreateGenerationJobRequest(StudioContract):
         "voice_clone",
         "avatar_video",
         "scene_generation",
+        "craft_render",
     ] = "document_snapshot"
     provider: str = Field(default="builtin.snapshot", min_length=1, max_length=240)
     request: dict[str, Any] = Field(default_factory=dict)
@@ -1558,6 +1628,7 @@ class CreateGenerationJobRequest(StudioContract):
     @model_validator(mode="after")
     def validate_job_provider(self) -> CreateGenerationJobRequest:
         expected = {
+            "craft_render": {"craft.photocraft", "craft.filmcraft", "craft.effectcraft"},
             "editing_gemini": {"google.gemini-editing"},
             "editing_ai": {
                 "compatible.editing-planner",

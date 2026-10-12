@@ -2018,9 +2018,10 @@ def create_editorial_review(
 
 @router.get("/editing/capabilities")
 def editing_capabilities(user: User = Depends(get_current_user)):
-    from ..providers.studios.video_render import VIDEO_RENDER_PROVIDERS
+    from ..providers.studios.craft import ENGINES, engine_capability
 
-    return VIDEO_RENDER_PROVIDERS["builtin.ffmpeg-contextual-v1"].capabilities()
+    return {"schemaVersion": "studio.craft-engines.v1",
+            "engines": [engine_capability(engine) for engine in ENGINES]}
 
 
 @router.get("/editing/hybrid-capabilities", response_model=HybridCapabilityManifestV1)
@@ -2100,9 +2101,7 @@ def create_editing_plan(
 ):
     document = owned_document(db, user.id, document_id)
     if isinstance(request, ContextualPlanRequestV2) and request.render_engine == "alight_motion":
-        from .studio_engine_qualification import guard
-
-        guard(db, user, document.workspace_id)
+        raise HTTPException(status_code=410, detail={"code": "editor_replaced_by_effectcraft"})
     try:
         db.execute(select(Workspace).where(Workspace.id == document.workspace_id).with_for_update()).scalar_one()
         return (
@@ -2295,10 +2294,6 @@ def enqueue_video_render(
     user: User = Depends(get_current_user),
 ) -> GenerationJobV1:
     assert_access(db, user.id, request.workspace_id)
-    if request.provider == "alight-motion.contextual-v1":
-        from .studio_engine_qualification import guard
-
-        guard(db, user, request.workspace_id)
     document = owned_document(db, user.id, request.document_id)
     try:
         job, created = create_video_render_job(db, document, request, idempotency_key, user)
@@ -2543,7 +2538,4 @@ def retry_studio_job(
     return job_out(job)
 
 
-# Isolated experiment routes share the established Studio prefix and auth.
-from .studio_engine_qualification import router as engine_qualification_router  # noqa: E402
-
-router.include_router(engine_qualification_router)
+# Native Craft capabilities replace the retired editor experiment routes.

@@ -50,6 +50,8 @@ def create_document(db: Session, request: CreateStudioDocumentRequest, user: Use
     creation_key = (
         f"studio:{request.workspace_id}:post:{request.post_id}:{request.content_type}" if request.post_id else None
     )
+    if creation_key and request.engine:
+        creation_key += ":" + request.engine
     if creation_key:
         existing = db.scalar(select(CreativeDocument).where(CreativeDocument.studio_creation_key == creation_key))
         if existing:
@@ -140,6 +142,9 @@ def replace_document(
     if request.expected_revision != record.revision:
         raise ValueError("studio_document_conflict")
     incoming = project_natural_sound_rights(db, request.document)
+    current = record_to_contract(record)
+    if incoming.native_editor_state != current.native_editor_state or incoming.composition != current.composition:
+        raise ValueError("craft_project_content_requires_native_commands_or_migration")
     if incoming.document_id != record.id or incoming.workspace_id != record.workspace_id:
         raise ValueError("studio_document_identity_mismatch")
     next_contract = incoming.model_copy(
@@ -151,7 +156,6 @@ def replace_document(
             "updated_at": datetime.now(UTC),
         }
     )
-    current = record_to_contract(record)
     changed = reviewable_content(next_contract) != reviewable_content(current)
     # Review state is server-owned; editing cannot mint or carry approval onto changed content.
     next_contract = next_contract.model_copy(
@@ -308,7 +312,9 @@ def restore_document_version(
     record.post_id = restored.post_ref.id if restored.post_ref else None
     record.version = restored_number
     record.versions = snapshots[-20:]
-    persist_contract(record, restored)
+    if current.native_editor_state and not restored.native_editor_state:
+        raise ValueError("craft_legacy_restore_requires_migration")
+    persist_contract(record, restored, allow_native=True)
     emit_event(
         db,
         workspace_id=record.workspace_id,

@@ -1,0 +1,116 @@
+name: Studios Craft integration
+on:
+  pull_request:
+    paths: ['third_party/craft/**', 'workers/craft/**', 'scripts/craft/**', 'backend/**', 'src/**', 'tests/**', '.github/workflows/studios-craft.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source-and-host:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: python scripts/craft/provenance.py
+      - run: python -m unittest discover -s workers/craft/tests -v
+      - run: npm ci
+      - run: npm run lint && npm run build
+      - run: node --import tsx --test tests/unit/craft*.test.ts
+      - run: pip install -r backend/requirements-dev.txt
+      - run: >-
+          python -m pytest backend/tests/test_craft*.py backend/tests/test_worker_runtime.py
+          backend/tests/test_creatives.py backend/tests/test_studio_publication_preflight.py
+          backend/tests/test_natural_sound_render.py backend/tests/test_scene_compiler_v2.py
+        env:
+          PYTHONPATH: backend
+  engines:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { adapter: photo, engine: photocraft, target: /target }
+          - { adapter: film, engine: filmcraft, target: /target/film }
+          - { adapter: effect, engine: effectcraft, target: /target/effect }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: docker build -f workers/craft/Dockerfile.builder -t clicko-craft-builder:local workers/craft
+      - run: docker volume create clicko-craft-cargo && docker volume create clicko-craft-target
+      - name: Shared transport, frame units and typed command schemas
+        if: matrix.adapter == 'photo'
+        run: >-
+          docker run --rm --mount type=bind,source=${{ github.workspace }},target=/workspace
+          --mount type=volume,source=clicko-craft-cargo,target=/cargo
+          --mount type=volume,source=clicko-craft-target,target=/target
+          -e CARGO_TARGET_DIR=/target/common clicko-craft-builder:local
+          cargo test --locked --manifest-path workers/craft/adapters/common/Cargo.toml
+      - name: Engine pixels, serialization and command regression tests
+        run: >-
+          docker run --rm --mount type=bind,source=${{ github.workspace }},target=/workspace
+          --mount type=volume,source=clicko-craft-cargo,target=/cargo
+          --mount type=volume,source=clicko-craft-target,target=/target
+          -e CARGO_TARGET_DIR=${{ matrix.target }}
+          -e CARGO_BUILD_JOBS=2 -e CARGO_PROFILE_RELEASE_LTO=false -e CARGO_PROFILE_RELEASE_CODEGEN_UNITS=16
+          -e CRAFT_FONTS_DIR=/workspace/third_party/craft/craft-fonts
+          clicko-craft-builder:local cargo test --locked --release
+          --manifest-path workers/craft/adapters/${{ matrix.adapter }}/Cargo.toml
+      - name: Native executable and browser bundle
+        run: |
+          python scripts/craft/build.py --engine ${{ matrix.engine }}
+          python scripts/craft/build.py --engine ${{ matrix.engine }} --wasm
+      - uses: actions/upload-artifact@v4
+        with:
+          name: craft-${{ matrix.engine }}
+          include-hidden-files: true
+          path: |
+            public/craft/
+            .codex-runtime/craft/bin/
+  acceptance:
+    needs: [engines, source-and-host]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: craft-*
+          merge-multiple: true
+      - run: chmod +x .codex-runtime/craft/bin/* && python scripts/craft/build.py --package-only
+      - run: pip install -r backend/requirements-dev.txt && npm ci && npx playwright install --with-deps chromium
+      - name: Real API, native exports and browser pixels
+        run: |
+          python -m uvicorn app.main:app --app-dir backend --host 127.0.0.1 --port 8018 > .codex-runtime/craft/qa-api.log 2>&1 &
+          PORT=3018 CLICKO_API_ORIGIN=http://127.0.0.1:8018 npm run dev:web > .codex-runtime/craft/qa-web.log 2>&1 &
+          python scripts/craft/wait_ready.py
+          python scripts/craft/acceptance.py
+          python scripts/craft/media_acceptance.py
+          node scripts/validation/craft-wasm-reference.mjs
+          node scripts/validation/craft-wasm-effects.mjs
+          node scripts/validation/craft-browser-parity.mjs
+        env:
+          ENVIRONMENT: development
+          DATABASE_URL: sqlite:///./.codex-runtime/craft/qa.sqlite
+          STORAGE_PATH: ./.codex-runtime/craft/qa-storage
+          CELERY_TASK_ALWAYS_EAGER: 'true'
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: craft-acceptance-evidence
+          path: |
+            .codex-runtime/craft/*-results.json
+            .codex-runtime/craft/studio-*-editing.png
+            .codex-runtime/craft/qa-*.log

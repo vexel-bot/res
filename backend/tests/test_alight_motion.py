@@ -20,9 +20,8 @@ from app.domain.studios.contextual_editing_v2 import ContextualPlanRequestV2
 from app.domain.studios.engine_qualification import CreateEngineComparisonV1, EngineComparisonReviewV1
 from app.domain.studios.motion_recipes import MotionRecipeV1, TechniqueSourceV1
 from app.models import CreativeDocument, LibraryAsset, Membership, StudioGenerationJob
-from app.providers.studios.alight_motion import prepare_bundle, refresh_registration
-from app.providers.studios.alight_worker import NAME, PhysicalAlightWorker, TransientAlightError, load_profile
-from app.providers.studios.remotion_projection import compile_remotion_composition
+from app.providers.studios.alight_motion import refresh_registration
+from app.providers.studios.alight_worker import NAME
 from app.services.studios.alight_techniques import alight_technique_cards
 from app.services.studios.compatibility import persist_contract, record_to_contract
 from app.services.studios.engine_qualification import create_comparison, review_comparison
@@ -158,25 +157,6 @@ def test_recipe_rejects_code_invalid_intervals_and_nonfinite_parameters(change):
         MotionRecipeV1.model_validate({**recipe(), **change})
 
 
-def test_recipe_parameters_are_persisted_hashed_and_never_silently_rendered():
-    value = native_direction().model_dump(mode="json", by_alias=True)
-    value["scenes"][0]["motionRecipes"] = [recipe()]
-    direction = ContextualPlanRequestV2.model_validate(value)
-    first, projection = native_document(direction)
-    assert first.composition.narrative["editorialV2"]["motionRecipes"][0]["technique"] == "velocity_blur"
-    compiled = compile_remotion_composition(first, projection, {})
-    assert compiled["nativeRecipeOperations"][0]["qualification"] == "implemented"
-    uncompiled = first.model_copy(deep=True)
-    uncompiled.composition.narrative["editorialV2"].pop("nativeRecipeOperations")
-    with pytest.raises(ValueError, match="engine_not_qualified"):
-        compile_remotion_composition(uncompiled, projection, {})
-    direction.scenes[0].motion_recipes[0].parameters.shutter_degrees = 90
-    second, _ = native_document(direction)
-    assert digest(first.composition) != digest(second.composition)
-    assert (
-        first.composition.narrative["editorialV2"]["motionRecipesDigest"]
-        != second.composition.narrative["editorialV2"]["motionRecipesDigest"]
-    )
 
 
 def test_tutorial_requires_watched_steps_interval_and_result():
@@ -197,15 +177,6 @@ def test_tutorial_requires_watched_steps_interval_and_result():
     )
 
 
-def test_worker_unavailable_without_adb_device_and_calibration(tmp_path, monkeypatch):
-    worker = PhysicalAlightWorker(adb="absent-adb", state_dir=tmp_path)
-    state = worker.status()
-    assert not state["available"]
-    assert {"adb_unavailable", "physical_device_missing", "validated_compiler_missing"} <= set(state["blockers"])
-    assert not list(tmp_path.iterdir())
-    monkeypatch.setattr(worker, "command", lambda *_: "List of devices attached\nemulator-5554 device")
-    assert not worker.status()["available"]
-    assert "physical_device_missing" in worker.status()["blockers"]
 
 
 def test_disabled_provider_never_registers():
@@ -237,63 +208,10 @@ def test_alight_refuses_native_components_without_their_exact_capability(tmp_pat
     assert not (tmp_path / "out").exists()
 
 
-def test_calibration_cannot_be_replaced_by_a_declaration(tmp_path):
-    path = tmp_path / "profile.json"
-    path.write_text(json.dumps({"serial": "device", "calibrated": True}), encoding="utf-8")
-    with pytest.raises(ValueError, match="incomplete"):
-        load_profile(path)
 
 
-def test_bundle_binds_actual_files_and_is_not_an_xml_exporter(tmp_path):
-    source = tmp_path / "product.png"
-    source.write_bytes(b"fixture-image")
-    checksum = __import__("hashlib").sha256(source.read_bytes()).hexdigest()
-    from app.domain.studios.contracts import VideoRenderRequestV1
-
-    doc, _ = native_document(native_direction())
-    doc.assets = [{"id": "product", "checksum": checksum, "media_type": "image/png", "rights_status": "verified"}]
-    from app.domain.studios.contracts import AssetReferenceV1
-
-    doc.assets = [AssetReferenceV1.model_validate(doc.assets[0])]
-    request = VideoRenderRequestV1(
-        workspace_id=doc.workspace_id,
-        document_id=doc.document_id,
-        document_revision=doc.revision,
-        document_version=doc.version,
-        page_ids=[doc.composition.pages[0].id],
-        correlation_id="test",
-        output={"width": 320, "height": 320, "fps": 30, "audioCodec": "none"},
-    )
-    result = prepare_bundle(doc, request, {"product": source}, tmp_path / "bundle", "job-1")
-    assert result["schemaVersion"] == "studio.alight-transport.v1"
-    assert result["assets"]["product"]["sha256"] == checksum
-    assert result["packageDigest"] == digest({k: v for k, v in result.items() if k != "packageDigest"})
-    source.write_bytes(b"changed")
-    with pytest.raises(ValueError, match="checksum_conflict"):
-        prepare_bundle(doc, request, {"product": source}, tmp_path / "second", "job-2")
 
 
-def test_unknown_errors_do_not_retry_and_known_errors_require_confirmed_interruption(tmp_path, monkeypatch):
-    worker = PhysicalAlightWorker(state_dir=tmp_path)
-    calls = []
-
-    def fail(*_):
-        calls.append(1)
-        raise ValueError("unknown_failure")
-
-    monkeypatch.setattr(worker, "_render_once", fail)
-    with pytest.raises(ValueError, match="unknown_failure"):
-        worker.render({"jobId": "job"}, tmp_path, tmp_path / "out", lambda *_: None, lambda: False)
-    assert len(calls) == 1
-
-    def transient(*_):
-        raise TransientAlightError("device_disconnected")
-
-    monkeypatch.setattr(worker, "_render_once", transient)
-    with pytest.raises(TransientAlightError):
-        worker.render({"jobId": "job"}, tmp_path, tmp_path / "out", lambda *_: None, lambda: False)
-    with pytest.raises(ValueError):
-        TransientAlightError("out_of_memory")
 
 
 @pytest.fixture

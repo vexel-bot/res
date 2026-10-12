@@ -11,7 +11,7 @@ from ...config import get_settings
 from ...domain.studios.editing_resources import EditingAIRequestV1, ResourceMetadataV1
 from ...domain.studios.generative_video import GenerativeVideoOperationV1, GenerativeVideoRequestV1
 from ...models import User
-from ...providers.studios.contextual_render import ContextualFFmpegProvider
+from ...providers.studios.ffmpeg_utility import FFmpegUtility
 from ...providers.studios.media_probe import MEDIA_PROBE_PROVIDERS
 from ...providers.studios.openai_video import OpenAISoraVideoProvider
 from .editing_resources import store_resource
@@ -74,7 +74,7 @@ def execute_sora_editing(db, job, progress, is_cancelled):
             raw = directory / "raw.mp4"
             provider.download(generated, operation, raw)
             silent = directory / "silent.mp4"
-            ContextualFFmpegProvider(settings.ffmpeg_path, settings.ffmpeg_timeout_seconds)._run(
+            FFmpegUtility(settings.ffmpeg_path, settings.ffmpeg_timeout_seconds)._run(
                 ["-y", "-i", str(raw), "-map", "0:v:0", "-an", "-c:v", "copy", str(silent)],
                 directory,
                 is_cancelled,

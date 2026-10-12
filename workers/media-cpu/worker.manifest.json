@@ -1,7 +1,7 @@
 {
   "schemaVersion": "studio.worker-runtime-manifest.v1",
   "runtimeName": "clicko-media-cpu",
-  "runtimeVersion": "0.4.0",
+  "runtimeVersion": "1.0.0",
   "capability": "media_cpu",
   "queues": [
     "studio.media.cpu"
@@ -13,21 +13,21 @@
     "media_probe",
     "video_proxy",
     "media_waveform",
-    "video_render",
     "editing_gemini",
-    "editing_ai"
+    "editing_ai",
+    "craft_render"
   ],
   "providers": [
     "builtin.ffprobe",
     "builtin.ffmpeg-proxy",
     "builtin.ffmpeg-waveform",
-    "builtin.ffmpeg-ugc-v1",
-    "builtin.ffmpeg-contextual-v1",
     "google.gemini-editing",
     "compatible.editing-planner",
     "runway.editing-video",
     "builtin.ffmpeg-qc-v1",
-    "hyperframes.cli"
+    "craft.photocraft",
+    "craft.filmcraft",
+    "craft.effectcraft"
   ],
   "requiredEnvironment": [
     "DATABASE_URL",
@@ -42,49 +42,66 @@
   "requiredPaths": [
     "/usr/bin/ffmpeg",
     "/usr/bin/ffprobe",
-    "/usr/bin/chromium",
-    "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf",
-    "/opt/clicko/media-runtime/node_modules/hyperframes/package.json"
+    "/opt/clicko/bin/clicko-photocraft-adapter",
+    "/opt/clicko/bin/clicko-filmcraft-adapter",
+    "/opt/clicko/bin/clicko-effectcraft-adapter"
   ],
   "tools": [
     {
-      "id": "node",
-      "command": ["node", "--version"],
-      "versionPattern": "v22\\.15\\.0"
-    },
-    {
       "id": "python",
-      "command": ["python", "--version"],
+      "command": [
+        "python",
+        "--version"
+      ],
       "versionPattern": "Python 3\\.11\\.2"
     },
     {
       "id": "celery",
-      "command": ["celery", "--version"],
+      "command": [
+        "celery",
+        "--version"
+      ],
       "versionPattern": "5\\.6\\.2"
     },
     {
       "id": "ffmpeg",
-      "command": ["ffmpeg", "-version"],
+      "command": [
+        "ffmpeg",
+        "-version"
+      ],
       "versionPattern": "ffmpeg version 5\\.1\\.9"
     },
     {
       "id": "ffprobe",
-      "command": ["ffprobe", "-version"],
+      "command": [
+        "ffprobe",
+        "-version"
+      ],
       "versionPattern": "ffprobe version 5\\.1\\.9"
     },
     {
-      "id": "chromium",
-      "command": ["chromium", "--version"],
-      "versionPattern": "Chromium 151\\.0\\.7922\\.173"
+      "id": "photocraft",
+      "command": [
+        "/opt/clicko/bin/clicko-photocraft-adapter",
+        "--version"
+      ],
+      "versionPattern": "clicko-photocraft-1\\.0\\.0\\+a7f26522"
     },
     {
-      "id": "hyperframes",
+      "id": "filmcraft",
       "command": [
-        "node",
-        "-p",
-        "require('/opt/clicko/media-runtime/node_modules/hyperframes/package.json').version"
+        "/opt/clicko/bin/clicko-filmcraft-adapter",
+        "--version"
       ],
-      "versionPattern": "0\\.8\\.12"
+      "versionPattern": "clicko-filmcraft-1\\.0\\.0\\+0800a8b0"
+    },
+    {
+      "id": "effectcraft",
+      "command": [
+        "/opt/clicko/bin/clicko-effectcraft-adapter",
+        "--version"
+      ],
+      "versionPattern": "clicko-effectcraft-1\\.0\\.0\\+67434e90"
     }
   ],
   "isolation": {
@@ -93,7 +110,7 @@
     "allowPrivilegeEscalation": false,
     "networkEgressPolicy": "private-dependencies-only",
     "maxConcurrentJobs": 1,
-    "ephemeralTempPath": "/tmp/clicko-hyperframes",
+    "ephemeralTempPath": "/tmp/clicko-craft",
     "minimumTempBytes": 4294967296
   }
 }

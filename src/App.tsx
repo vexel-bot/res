@@ -1,3 +1,4 @@
+import { CraftStudio } from "./studios/craft/CraftStudio";
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
@@ -11,8 +12,6 @@ import { BrainView } from "./components/BrainView";
 import { StrategyView } from "./components/StrategyView";
 import { StudioView } from "./components/StudioImmersiveView";
 import { LibraryView } from "./components/LibraryView";
-import { ImageStudioView } from "./components/ImageStudioView";
-import { VideoEditorView } from "./components/VideoEditorView";
 import { CreationStudioView } from "./components/CreationStudioView";
 import { AIChatView } from "./components/AIChatView";
 import { FloatingAIAssistant } from "./components/FloatingAIAssistant";
@@ -223,11 +222,11 @@ export default function App() {
               )}
 
               {hasAccessToCurrentTab && currentTab === "create-image" && (
-                <ImageStudioView />
+                <CraftStudio mode="visual" />
               )}
 
               {hasAccessToCurrentTab && currentTab === "create-video" && (
-                <VideoEditorView />
+                <CraftStudio mode="video" />
               )}
 
               {hasAccessToCurrentTab && currentTab === "create-copy" && (

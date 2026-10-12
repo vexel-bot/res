@@ -460,7 +460,9 @@ def preflight(db, document, executed_capabilities=None):
                         problems.append(_block(clip.id, "audio_stream_missing", "Este material não contém áudio."))
     from ...providers.studios.video_render import VIDEO_RENDER_PROVIDERS
 
-    renderer = VIDEO_RENDER_PROVIDERS[CONTEXTUAL_PROVIDER]
+    renderer = VIDEO_RENDER_PROVIDERS.get(CONTEXTUAL_PROVIDER)
+    if renderer is None:
+        raise ValueError("legacy_contextual_renderer_replaced_by_craft_commands")
     if not renderer.capabilities()["available"]:
         problems.append(_block("renderer", "renderer_unavailable", "O renderizador local não está disponível."))
     else:

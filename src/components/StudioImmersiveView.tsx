@@ -1,8 +1,7 @@
+import { CraftStudio } from "../studios/craft/CraftStudio";
 import React from 'react';
 import { BrainCircuit, FileEdit, FileText, Image as ImageIcon, Sparkles, Target, Video, X } from 'lucide-react';
 import { CreationStudioView } from './CreationStudioView';
-import { ImageStudioView } from './ImageStudioView';
-import { VideoEditorView } from './VideoEditorView';
 import { CreativeMatrixView } from './CreativeMatrixView';
 import { SmartBriefingView } from './SmartBriefingView';
 import { useOperations } from '../context/OperationsContext';
@@ -91,8 +90,8 @@ export function StudioView({ onSavePost, initialMode = 'create' }: StudioViewPro
 
         <div className="clicko-studio-canvas min-w-0 px-3 pb-10 pt-3 sm:px-4 2xl:px-6">
           {mode === 'create' && <CreationStudioView onSavePost={(post) => onSavePost({ ...post, clientId: activeClient?.id, campaignId: activeCampaign?.id, strategyId: activeCampaign?.id, brainRevision: brain.revision, origin: studioHandoff?.source === 'analytics' ? 'analytics' : activeCampaign ? 'strategy' : 'brain', objective: studioHandoff?.objective || activeCampaign?.objective })} />}
-          {mode === 'edit_image' && <ImageStudioView />}
-          {mode === 'edit_video' && <VideoEditorView />}
+          {mode === 'edit_image' && <CraftStudio mode="visual" />}
+          {mode === 'edit_video' && <CraftStudio mode="video" />}
           {mode === 'matrix' && <CreativeMatrixView onSavePost={onSavePost} />}
           {mode === 'briefing' && <SmartBriefingView />}
         </div>

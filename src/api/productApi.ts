@@ -37,7 +37,9 @@ export type CreativeUpdate = BackendSchema<"CreativeDocumentUpdate">;
 export type CreativeCanvas = BackendSchema<"CreativeCanvas">;
 export type StudioDocumentRecord = BackendSchema<"CreativeDocumentV1-Output">;
 export type StudioDocumentInput = BackendSchema<"CreativeDocumentV1-Input">;
-export type StudioDocumentCreate = BackendSchema<"CreateStudioDocumentRequest">;
+export type StudioDocumentCreate = BackendSchema<"CreateStudioDocumentRequest"> & {
+  engine?: "photocraft" | "filmcraft" | "effectcraft";
+};
 export type StudioDocumentVersionRecord = BackendSchema<"StudioDocumentVersionV1">;
 export type StudioReviewRecord = BackendSchema<"StudioReviewRequestV1">;
 export type EditorialReadiness = BackendSchema<"EditorialReadinessV1">;
@@ -672,56 +674,6 @@ export const productApi = {
         },
       ),
       "Restauração do conteúdo",
-    );
-  },
-
-  async createCreative(input: CreativeInput) {
-    return requireBackendData(
-      await backendClient.POST("/api/v1/creatives", { body: input }),
-      "Criação de documento criativo",
-    );
-  },
-
-  async getCreative(documentId: string) {
-    return requireBackendData(
-      await backendClient.GET("/api/v1/creatives/{document_id}", {
-        params: { path: { document_id: documentId } },
-      }),
-      "Documento criativo",
-    );
-  },
-
-  async updateCreative(documentId: string, input: CreativeUpdate) {
-    return requireBackendData(
-      await backendClient.PATCH("/api/v1/creatives/{document_id}", {
-        params: { path: { document_id: documentId } },
-        body: input,
-      }),
-      "Autosave do documento criativo",
-    );
-  },
-
-  async createCreativeVersion(documentId: string, label?: string) {
-    return requireBackendData(
-      await backendClient.POST("/api/v1/creatives/{document_id}/versions", {
-        params: { path: { document_id: documentId } },
-        body: { label: label ?? "Versão manual" },
-      }),
-      "Versionamento criativo",
-    );
-  },
-
-  async restoreCreativeVersion(documentId: string, versionNumber: number) {
-    return requireBackendData(
-      await backendClient.POST(
-        "/api/v1/creatives/{document_id}/versions/{version_number}/restore",
-        {
-          params: {
-            path: { document_id: documentId, version_number: versionNumber },
-          },
-        },
-      ),
-      "Restauração do documento criativo",
     );
   },
 

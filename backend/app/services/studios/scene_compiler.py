@@ -28,17 +28,17 @@ from ...domain.studios.motion import (
 )
 
 COMPONENTS = {
-    "typography": {"renderer": "hyperframes", "operations": ["text", "word_reveal", "kinetic_keyword"]},
-    "groups": {"renderer": "hyperframes", "operations": ["group", "repeat", "stagger"]},
-    "paths": {"renderer": "hyperframes", "operations": ["polyline", "path_reveal"]},
-    "depth": {"renderer": "hyperframes", "operations": ["mask", "occlusion", "wipe", "layer_blur", "parallax"]},
+    "typography": {"renderer": "craft.effectcraft", "operations": ["text", "word_reveal", "kinetic_keyword"]},
+    "groups": {"renderer": "craft.effectcraft", "operations": ["group", "repeat", "stagger"]},
+    "paths": {"renderer": "craft.effectcraft", "operations": ["polyline", "path_reveal"]},
+    "depth": {"renderer": "craft.effectcraft", "operations": ["mask", "occlusion", "wipe", "layer_blur", "parallax"]},
     "effects": {
-        "renderer": "hyperframes",
+        "renderer": "craft.effectcraft",
         "operations": ["ordered_filter_stack", "blend_mode"],
     },
-    "panels": {"renderer": "hyperframes", "operations": ["card", "image", "video"]},
+    "panels": {"renderer": "craft.effectcraft", "operations": ["card", "image", "video"]},
     "semantic_compositions": {
-        "renderer": "hyperframes",
+        "renderer": "craft.effectcraft",
         "operations": [
             "annotated_material",
             "format_transformation",
@@ -47,7 +47,7 @@ COMPONENTS = {
         ],
     },
     "continuity": {
-        "renderer": "hyperframes",
+        "renderer": "craft.effectcraft",
         "operations": [
             "cut",
             "dissolve",
@@ -59,7 +59,7 @@ COMPONENTS = {
             "overshoot",
         ],
     },
-    "sound_events": {"renderer": "ffmpeg", "operations": ["mix", "fade", "ducking", "silence"]},
+    "sound_events": {"renderer": "craft.filmcraft", "operations": ["mix", "fade", "ducking", "silence"]},
 }
 COMPILER_VERSION = "res.scene-compiler.v2.16"
 COMPONENTS_VERSION = "res.editorial-components.v2.20"
@@ -370,9 +370,8 @@ def _normalize_text_layout(direction, width, height):
             available_width = max(1, container_width - 2 * margin)
             available_height = max(1, container_height - 2 * margin)
             minimum_font_size = width * 16 / 300
-            # HyperFrames enforces this same minimum after fonts load. Measure
-            # at that effective size here so recompilation cannot reproduce an
-            # overflow that only appears in the browser runtime.
+            # Preserve the existing authored text-size floor when importing
+            # documents into the native engine; final font metrics are native.
             font_size = max(element.font_size, minimum_font_size)
             padding = 32 if element.kind == "card" else 0
             longest_word = max(element.text.split(), key=len, default="")
@@ -1242,10 +1241,10 @@ def compile_scenes(document, direction: ContextualPlanRequestV2, user_id, plan_i
         if native_recipe_operations:
             draft.composition.narrative["editorialV2"]["nativeRecipeOperations"] = native_recipe_operations
     if native_recipe_operations or any(scene.native_components for scene in direction.scenes):
-        draft.composition.narrative["editorialV2"]["renderer"] = "remotion.contextual-v2"
+        draft.composition.narrative["editorialV2"]["renderer"] = "craft.effectcraft"
         draft.composition.narrative["editorialV2"]["nativeComponentVersion"] = 1
     if direction.render_engine == "alight_motion":
-        draft.composition.narrative["editorialV2"]["renderer"] = "alight-motion.contextual-v1"
+        raise ValueError("editor_replaced_by_effectcraft")
     executable_direction = direction.model_dump(mode="json", by_alias=True)
     return (
         draft,

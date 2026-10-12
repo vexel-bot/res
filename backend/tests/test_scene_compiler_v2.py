@@ -5,7 +5,6 @@ import pytest
 from app.domain.studios.contextual_editing_v2 import ContextualPlanRequestV2
 from app.domain.studios.contracts import CreativeDocumentV1, VideoRenderRequestV1
 from app.domain.studios.motion import project_motion_graph
-from app.providers.studios.hyperframes_projection import project_creative_document
 from app.services.studios.scene_compiler import (
     compile_scenes,
     current_execution_versions,
@@ -98,47 +97,6 @@ def test_new_provider_output_cannot_select_an_older_execution_runtime():
     assert repairs[0]["requiresAlternative"] is False
 
 
-def test_ordered_effect_stack_and_blend_mode_reach_shared_runtime():
-    request = direction(
-        effects=[
-            {"id": "desaturate", "kind": "saturate", "amount": 0.4},
-            {"id": "contrast", "kind": "contrast", "amount": 1.25},
-            {
-                "id": "contact-shadow",
-                "kind": "drop_shadow",
-                "amount": 8,
-                "x": 0,
-                "y": 5,
-                "color": "#000000",
-                "opacity": 0.3,
-            },
-        ],
-        blendMode="screen",
-    )
-    draft, graph, _, _ = compile_scenes(document(), request, "user", "plan")
-    projection = project_motion_graph(graph, "hyperframes")
-    render_request = VideoRenderRequestV1.model_validate(
-        {
-            "workspaceId": draft.workspace_id,
-            "documentId": draft.document_id,
-            "documentRevision": draft.revision,
-            "documentVersion": draft.version,
-            "pageIds": [draft.composition.pages[0].id],
-            "output": {"width": 640, "height": 640, "fps": 30, "audioCodec": "none"},
-            "correlationId": "effect-stack-test",
-        }
-    )
-    html, warnings = project_creative_document(
-        draft,
-        render_request,
-        {},
-        projection,
-        automatic_draft=True,
-    )
-
-    assert warnings == ["motion:human-review-required-before-production-render"]
-    assert "filter:saturate(0.4) contrast(1.25) drop-shadow(" in html
-    assert "mix-blend-mode:screen" in html
 
 
 def test_multiple_audio_roles_bind_independently():
@@ -175,23 +133,6 @@ def test_repeat_outside_scene_is_not_silently_clipped():
         compile_scenes(document(), direction(repeat_count=3, stagger_frames=20), "user", "plan")
 
 
-def test_draft_projection_is_separate_from_reviewed_render_and_escapes_text():
-    draft, graph, _, _ = compile_scenes(document(), direction(text="<script>erro</script>"), "user", "plan")
-    projection = project_motion_graph(graph, "hyperframes")
-    request = VideoRenderRequestV1(
-        workspace_id="workspace",
-        document_id="doc",
-        document_revision=1,
-        document_version=1,
-        page_ids=["page"],
-        output={"width": 640, "height": 640},
-        correlation_id="test",
-    )
-    with pytest.raises(ValueError, match="requires_review"):
-        project_creative_document(draft, request, {}, projection)
-    rendered, _ = project_creative_document(draft, request, {}, projection, automatic_draft=True)
-    assert "&lt;script&gt;erro&lt;/script&gt;" in rendered
-    assert "__resEditorialApply(t)" in rendered
 
 
 def test_fact_text_cannot_be_invented():

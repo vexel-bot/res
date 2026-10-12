@@ -14,12 +14,10 @@ from ..config import get_settings
 from ..database import get_db
 from ..domain.studios.image_edit import ImageDerivationRequestV1
 from ..models import Campaign, LibraryAsset, Membership, Post, User
-from ..providers.studios.pillow_image_edit import PillowImageEditProvider
 from ..schemas import AssetCatalogItemV1, AssetIn, AssetOut
 from ..security import get_current_user
 from ..services.object_storage import get_object_storage, object_key
 from ..services.studios.asset_read_projection import ASSET_FIELDS, project_assets
-from ..services.studios.image_edit import derive_image_asset
 
 router = APIRouter(prefix="/assets", tags=["assets"])
 settings = get_settings()
@@ -45,6 +43,11 @@ IMAGE_FORMATS = {
 MAX_IMAGE_PIXELS = 50_000_000
 
 
+def _file_header(path: Path, size: int) -> bytes:
+    with path.open("rb") as source:
+        return source.read(size)
+
+
 def validate_uploaded_content(path: Path, content_type: str) -> None:
     try:
         if content_type == "font/woff2":
@@ -52,7 +55,7 @@ def validate_uploaded_content(path: Path, content_type: str) -> None:
 
             from fontTools.ttLib import TTFont, TTLibError
 
-            header = path.read_bytes()[:48]
+            header = _file_header(path, 48)
             if len(header) < 48 or header[:4] != b"wOF2":
                 raise ValueError("Invalid WOFF2 signature")
             if (
@@ -78,26 +81,26 @@ def validate_uploaded_content(path: Path, content_type: str) -> None:
                 image.verify()
             return
         if content_type == "application/pdf":
-            if not path.read_bytes()[:5] == b"%PDF-":
+            if not _file_header(path, 5) == b"%PDF-":
                 raise ValueError("Invalid PDF signature")
             return
         if content_type == "video/mp4":
-            header = path.read_bytes()[:32]
+            header = _file_header(path, 32)
             if len(header) < 12 or header[4:8] != b"ftyp":
                 raise ValueError("Invalid MP4 signature")
             return
         if content_type in {"audio/wav", "audio/x-wav"}:
-            header = path.read_bytes()[:12]
+            header = _file_header(path, 12)
             if len(header) < 12 or header[:4] != b"RIFF" or header[8:12] != b"WAVE":
                 raise ValueError("Invalid WAV signature")
             return
         if content_type == "audio/mpeg":
-            header = path.read_bytes()[:3]
+            header = _file_header(path, 3)
             if not (header == b"ID3" or (len(header) >= 2 and header[0] == 0xFF and header[1] & 0xE0 == 0xE0)):
                 raise ValueError("Invalid MP3 signature")
             return
         if content_type == "audio/flac":
-            if path.read_bytes()[:4] != b"fLaC":
+            if _file_header(path, 4) != b"fLaC":
                 raise ValueError("Invalid FLAC signature")
             return
         if content_type == "text/plain":
@@ -144,12 +147,19 @@ def asset_out(item: LibraryAsset) -> AssetOut:
 
 @router.get("/catalog", response_model=list[AssetCatalogItemV1])
 def asset_catalog(
-    workspace_id: str = Query(...), db: Session = Depends(get_db), user: User = Depends(get_current_user),
+    workspace_id: str = Query(...),
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
 ) -> list[AssetCatalogItemV1]:
     assert_access(db, user.id, workspace_id)
-    statement = select(LibraryAsset).where(
-        LibraryAsset.workspace_id == workspace_id, LibraryAsset.lifecycle_status == "active",
-    ).order_by(LibraryAsset.created_at.desc())
+    statement = (
+        select(LibraryAsset)
+        .where(
+            LibraryAsset.workspace_id == workspace_id,
+            LibraryAsset.lifecycle_status == "active",
+        )
+        .order_by(LibraryAsset.created_at.desc())
+    )
     items = project_assets(db, statement, [("sourceAssetId",)])
     if items is None:
         items = db.scalars(statement).all()
@@ -160,20 +170,29 @@ def asset_catalog(
             asset_out(item)  # Preserve existing validation failure for malformed metadata.
         summary = {"sourceAssetId": metadata["sourceAssetId"]} if "sourceAssetId" in metadata else {}
         view = SimpleNamespace(**{name: getattr(item, name) for name in ASSET_FIELDS}, object_metadata=summary)
-        result.append(AssetCatalogItemV1(
-            **asset_out(view).model_dump(),
-            full_metadata_path=f"/api/v1/assets/{quote(item.id, safe='')}",
-        ))
+        result.append(
+            AssetCatalogItemV1(
+                **asset_out(view).model_dump(),
+                full_metadata_path=f"/api/v1/assets/{quote(item.id, safe='')}",
+            )
+        )
     return result
 
 
 @router.get("/{asset_id}", response_model=AssetOut)
 def get_asset_details(asset_id: str, db: Session = Depends(get_db), user: User = Depends(get_current_user)):
-    item = db.scalar(select(LibraryAsset).join(
-        Membership, Membership.workspace_id == LibraryAsset.workspace_id,
-    ).where(
-        LibraryAsset.id == asset_id, LibraryAsset.lifecycle_status == "active", Membership.user_id == user.id,
-    ))
+    item = db.scalar(
+        select(LibraryAsset)
+        .join(
+            Membership,
+            Membership.workspace_id == LibraryAsset.workspace_id,
+        )
+        .where(
+            LibraryAsset.id == asset_id,
+            LibraryAsset.lifecycle_status == "active",
+            Membership.user_id == user.id,
+        )
+    )
     if not item:
         raise HTTPException(status_code=404, detail="Asset not found")
     return asset_out(item)
@@ -323,21 +342,9 @@ def derive_image(
 ) -> AssetOut:
     assert_access(db, user.id, request.workspace_id)
     source = db.get(LibraryAsset, asset_id)
-    if source is None or source.lifecycle_status != "active":
+    if not source or source.workspace_id != request.workspace_id:
         raise HTTPException(status_code=404, detail="Asset not found")
-    try:
-        derived = derive_image_asset(
-            db,
-            source=source,
-            request=request,
-            user=user,
-            provider=PillowImageEditProvider(),
-        )
-    except ValueError as error:
-        code = str(error)
-        status_code = 409 if code.endswith("conflict") else 422
-        raise HTTPException(status_code=status_code, detail={"code": code}) from error
-    return asset_out(derived)
+    raise HTTPException(status_code=410, detail={"code": "image_editor_replaced_by_photocraft"})
 
 
 @router.delete("/{asset_id}", status_code=status.HTTP_204_NO_CONTENT)
@@ -350,6 +357,10 @@ def delete_asset(
     if not item or item.lifecycle_status != "active":
         raise HTTPException(status_code=404, detail="Asset not found")
     assert_access(db, user.id, item.workspace_id)
+    from ..services.studios.craft import asset_is_retained
+
+    if asset_is_retained(db, item):
+        raise HTTPException(status_code=409, detail={"code": "craft_asset_retained_by_project_or_history"})
     if item.storage_key:
         get_object_storage(item.storage_backend or "local", settings).delete(item.storage_key)
     db.delete(item)

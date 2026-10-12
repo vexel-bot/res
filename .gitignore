@@ -41,3 +41,9 @@ tmp/
 workers/media-assets-local/models/
 # Local Android discovery build products and development signing identity.
 output/alight-discovery-20261002/android-bridge/
+# Craft source trees are complete; build products and local executable caches are not source.
+.codex-runtime/
+target/
+workers/craft/.runs/
+third_party/craft/**/target/
+public/craft/

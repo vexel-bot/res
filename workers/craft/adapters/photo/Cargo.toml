@@ -1,0 +1,26 @@
+[package]
+name = "clicko-photocraft-adapter"
+version = "1.0.0"
+edition = "2024"
+license = "MIT"
+
+[workspace]
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[[bin]]
+name = "clicko-photocraft-adapter"
+path = "src/main.rs"
+
+[dependencies]
+clicko-craft-protocol = { path = "../common" }
+photocraft-engine = { path = "../../../../third_party/craft/photocraft/crates/engine" }
+photocraft-format = { path = "../../../../third_party/craft/photocraft/crates/format" }
+photocraft-io = { path = "../../../../third_party/craft/photocraft/crates/io" }
+photocraft-compose = { path = "../../../../third_party/craft/photocraft/crates/compose" }
+photocraft-codecs = { path = "../../../../third_party/craft/photocraft/crates/codecs" }
+serde_json = "1"
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+wasm-bindgen = "=0.2.129"

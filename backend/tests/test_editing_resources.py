@@ -18,7 +18,7 @@ from app.config import get_settings
 from app.database import SessionLocal
 from app.domain.studios.contracts import CreativeDocumentV1
 from app.models import LibraryAsset, StudioGenerationJob
-from app.providers.studios.contextual_render import ContextualFFmpegProvider, inspect_document
+from app.providers.studios.contextual_render import inspect_document
 from app.providers.studios.gemini_editing import GeminiEditingProvider
 from app.providers.studios.resource_download import PublicHTTPSConnection, download_resource
 from app.services.studios.jobs import execute_job_once, retry_job
@@ -237,63 +237,8 @@ def test_pexels_variant_fallback_keeps_same_candidate_and_registered_hosts(tmp_p
     assert all(item[1] == ["videos.pexels.com"] for item in attempts)
 
 
-def test_font_used_in_export_and_missing_font_never_falls_back(tmp_path, media):
-    candidates = [Path("C:/Windows/Fonts/georgia.ttf"), Path("/usr/share/fonts/truetype/dejavu/DejaVuSerif.ttf")]
-    font = next((p for p in candidates if p.exists()), None)
-    if not font:
-        pytest.skip("Serif font required")
-    raw = document().model_dump(mode="json", by_alias=True)
-    raw["assets"].append({"id": "font", "mediaType": "font/ttf"})
-    raw["composition"]["pages"][0]["layers"] = [
-        {
-            "id": "text",
-            "kind": "text",
-            "width": 300,
-            "height": 100,
-            "properties": {"text": "Ação e precisão", "fontSize": 32, "fontAssetId": "font"},
-        }
-    ]
-    doc = CreativeDocumentV1.model_validate(raw)
-    renderer = ContextualFFmpegProvider("ffmpeg", 60)
-    with pytest.raises(ValueError, match="editing_font_asset_missing"):
-        renderer.validate_text(doc)
-    renderer.validate_text(doc, {"font": font})
-    custom = tmp_path / "custom.mp4"
-    renderer.render(doc, request(doc), {**media, "font": font}, custom, lambda _: None, lambda: False)
-    raw["composition"]["pages"][0]["layers"][0]["properties"].pop("fontAssetId")
-    default_doc = CreativeDocumentV1.model_validate(raw)
-    default = tmp_path / "default.mp4"
-    renderer.render(default_doc, request(default_doc), media, default, lambda _: None, lambda: False)
-    ffmpeg("-i", custom, "-frames:v", "1", tmp_path / "custom.png")
-    ffmpeg("-i", default, "-frames:v", "1", tmp_path / "default.png")
-    assert (tmp_path / "custom.png").read_bytes() != (tmp_path / "default.png").read_bytes()
 
 
-@pytest.mark.parametrize(
-    "prop,unit,values",
-    [
-        ("opacity", "ratio", [0, 1]),
-        ("scale_x", "ratio", [0.5, 1]),
-        ("rotation_degrees", "degrees", [0, 45]),
-    ],
-)
-def test_motion_renders_with_curves(tmp_path, media, prop, unit, values):
-    doc = document()
-    clip = doc.composition.media_timeline.tracks[0].clips[0]
-    clip.keyframes = [
-        {
-            "trackId": "motion",
-            "targetLayerId": clip.id,
-            "property": prop,
-            "unit": unit,
-            "keyframes": [{"frame": 0, "value": values[0], "easing": "ease_in_out"}, {"frame": 49, "value": values[1]}],
-        }
-    ]
-    assert not inspect_document(doc)
-    result = ContextualFFmpegProvider("ffmpeg", 60).render(
-        doc, request(doc), media, tmp_path / "motion.mp4", lambda _: None, lambda: False
-    )
-    assert result.frames_rendered == 50
 
 
 def test_gemini_image_job_persists_result_and_requires_review(client, project, monkeypatch):
@@ -910,47 +855,6 @@ def test_stale_document_blocks_before_external_post(client, project, monkeypatch
         assert "document_conflict" in record.error_message
 
 
-def test_mask_scale_and_opacity_compose_on_late_overlay(tmp_path, media):
-    raw = document().model_dump(mode="json", by_alias=True)
-    picture, mask = tmp_path / "picture.png", tmp_path / "mask.png"
-    Image.new("RGB", (100, 100), "red").save(picture)
-    Image.new("L", (100, 100), 255).save(mask)
-    raw["assets"] += [{"id": "picture", "mediaType": "image/png"}, {"id": "mask", "mediaType": "image/png"}]
-    raw["composition"]["mediaTimeline"]["tracks"] += [
-        {
-            "id": "overlay",
-            "kind": "overlay",
-            "clips": [
-                {
-                    "id": "overlay-clip",
-                    "assetId": "picture",
-                    "timeline": {"startFrame": 5, "durationFrames": 40},
-                    "transform": {"width": 100, "height": 100},
-                    "keyframes": [
-                        {
-                            "trackId": prop,
-                            "targetLayerId": "overlay-clip",
-                            "property": prop,
-                            "unit": "ratio",
-                            "keyframes": [{"frame": 0, "value": 0.25, "easing": "ease_out"}, {"frame": 39, "value": 1}],
-                        }
-                        for prop in ["scale_x", "scale_y", "opacity"]
-                    ],
-                }
-            ],
-        },
-        {"id": "mask-track", "kind": "mask", "targetTrackId": "overlay", "artifactAssetId": "mask"},
-    ]
-    doc = CreativeDocumentV1.model_validate(raw)
-    output = tmp_path / "combined.mp4"
-    ContextualFFmpegProvider("ffmpeg", 60).render(
-        doc, request(doc), {**media, "picture": picture, "mask": mask}, output, lambda _: None, lambda: False
-    )
-    ffmpeg("-ss", "0.3", "-i", output, "-frames:v", "1", tmp_path / "early.png")
-    ffmpeg("-ss", "1.6", "-i", output, "-frames:v", "1", tmp_path / "late.png")
-    early = Image.open(tmp_path / "early.png").convert("RGB")
-    late = Image.open(tmp_path / "late.png").convert("RGB")
-    assert late.getpixel((70, 70))[0] > early.getpixel((70, 70))[0] + 100
 
 
 def test_library_audio_is_planned_with_explicit_role(client, project, tmp_path):

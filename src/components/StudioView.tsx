@@ -1,3 +1,4 @@
+import { CraftStudio } from "../studios/craft/CraftStudio";
 import React from 'react';
 import {
   BrainCircuit,
@@ -11,8 +12,6 @@ import {
   ChevronRight
 } from 'lucide-react';
 import { CreationStudioView } from './CreationStudioView';
-import { ImageStudioView } from './ImageStudioView';
-import { VideoEditorView } from './VideoEditorView';
 import { CreativeMatrixView } from './CreativeMatrixView';
 import { SmartBriefingView } from './SmartBriefingView';
 import { useOperations } from '../context/OperationsContext';
@@ -181,9 +180,9 @@ export function StudioView({ onSavePost, initialMode = 'create' }: StudioViewPro
           />
         )}
 
-        {mode === 'edit_image' && <ImageStudioView />}
+        {mode === 'edit_image' && <CraftStudio mode="visual" />}
 
-        {mode === 'edit_video' && <VideoEditorView />}
+        {mode === 'edit_video' && <CraftStudio mode="video" />}
 
         {mode === 'matrix' && <CreativeMatrixView onSavePost={onSavePost} />}
 

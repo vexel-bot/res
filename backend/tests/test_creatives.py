@@ -1,10 +1,4 @@
-from io import BytesIO
-
 from conftest import register
-from PIL import Image
-
-from app.schemas import CreativeTextLayer
-from app.services.creatives import fit_text
 
 
 def auth(token: str) -> dict[str, str]:
@@ -69,87 +63,25 @@ def canvas(image_asset_id: str | None = None) -> dict:
     }
 
 
-def test_creative_autosave_version_export_and_tenant_isolation(client, tmp_path, monkeypatch):
-    from app.routers import creatives as creatives_router
-
-    monkeypatch.setattr(creatives_router.settings, "storage_path", str(tmp_path))
-    token, workspace = register(client, "creative@example.com", "Marca Criativa")
-    other_token, _ = register(client, "other-creative@example.com", "Outra Marca")
-
-    source = BytesIO()
-    Image.new("RGB", (120, 80), "#ffcc00").save(source, format="PNG")
-    uploaded = client.post(
-        "/api/v1/assets/upload",
-        headers=auth(token),
-        data={"workspace_id": workspace, "title": "Produto", "tags": "produto,real"},
-        files={"file": ("produto.png", source.getvalue(), "image/png")},
-    )
-    assert uploaded.status_code == 201, uploaded.text
-
+def test_legacy_canvas_is_readable_but_cannot_edit_or_restore(client):
+    token, workspace = register(client, "creative-archive@example.com", "Marca Criativa")
+    other_token, _ = register(client, "other-archive@example.com", "Outra Marca")
     created = client.post(
-        "/api/v1/creatives",
-        headers=auth(token),
-        json={"workspaceId": workspace, "title": "Peça principal", "document": canvas(uploaded.json()["id"])},
+        "/api/v1/creatives", headers=auth(token),
+        json={"workspaceId": workspace, "title": "Arquivo importado", "document": canvas()},
     )
     assert created.status_code == 201, created.text
     creative_id = created.json()["id"]
-    assert created.json()["version"] == 1
-    assert created.json()["kind"] == "document"
-    assert client.get(f"/api/v1/creatives/{creative_id}", headers=auth(other_token)).status_code == 404
-
-    changed_canvas = canvas(uploaded.json()["id"])
-    changed_canvas["background"] = "#081018"
-    original_updated_at = created.json()["updatedAt"]
-    autosaved = client.patch(
-        f"/api/v1/creatives/{creative_id}",
-        headers=auth(token),
-        json={"document": changed_canvas, "expectedUpdatedAt": original_updated_at},
-    )
-    assert autosaved.status_code == 200 and autosaved.json()["version"] == 1
-    conflict = client.patch(
-        f"/api/v1/creatives/{creative_id}",
-        headers=auth(token),
-        json={"title": "Sobrescrita obsoleta", "expectedUpdatedAt": original_updated_at},
-    )
-    assert conflict.status_code == 409
-    assert conflict.json()["detail"]["code"] == "creative_version_conflict"
-
-    versioned = client.post(
-        f"/api/v1/creatives/{creative_id}/versions",
-        headers=auth(token),
-        json={"label": "Direção aprovada"},
-    )
-    assert versioned.status_code == 200 and versioned.json()["version"] == 2
-    assert versioned.json()["versions"][0]["document"]["background"] == "#081018"
-
-    changed_again = canvas(uploaded.json()["id"])
-    changed_again["background"] = "#ffffff"
-    client.patch(f"/api/v1/creatives/{creative_id}", headers=auth(token), json={"document": changed_again})
-    restored = client.post(f"/api/v1/creatives/{creative_id}/versions/2/restore", headers=auth(token))
-    assert restored.status_code == 200 and restored.json()["version"] == 3
-    assert restored.json()["document"]["background"] == "#081018"
-
-    exported = client.post(
-        f"/api/v1/creatives/{creative_id}/export",
-        headers=auth(token),
-        json={"format": "png"},
-    )
-    assert exported.status_code == 201, exported.text
-    assert {"export", "png", f"creative:{creative_id}"}.issubset(set(exported.json()["tags"]))
-    downloaded = client.get(exported.json()["url"], headers=auth(token))
-    assert downloaded.status_code == 200 and downloaded.headers["content-type"] == "image/png"
-    with Image.open(BytesIO(downloaded.content)) as result:
-        assert result.size == (1080, 1080)
-
-    from app.services import creatives as creatives_service
-
-    monkeypatch.setattr(creatives_service, "MAX_SOURCE_PIXELS", 1)
-    oversized = client.post(
-        f"/api/v1/creatives/{creative_id}/export",
-        headers=auth(token),
-        json={"format": "jpeg"},
-    )
-    assert oversized.status_code == 422
+    base = f"/api/v1/creatives/{creative_id}"
+    assert client.get(base, headers=auth(other_token)).status_code == 404
+    assert client.get(base, headers=auth(token)).json()["document"] == created.json()["document"]
+    changed = canvas()
+    changed["background"] = "#ffffff"
+    assert client.patch(base, headers=auth(token), json={"document": changed}).status_code == 410
+    assert client.post(base + "/versions", headers=auth(token), json={"label": "Antigo"}).status_code == 410
+    assert client.post(base + "/versions/1/restore", headers=auth(token)).status_code == 410
+    assert client.post(base + "/versions", headers=auth(other_token), json={}).status_code == 404
+    assert client.get(base, headers=auth(token)).json()["document"] == created.json()["document"]
 
 
 def test_creative_schema_rejects_invalid_dimensions_and_colors(client):
@@ -211,23 +143,3 @@ def test_layered_template_can_be_saved_and_filtered(client):
     assert reused.status_code == 201, reused.text
     assert reused.json()["kind"] == "document"
     assert reused.json()["document"]["layers"] == template.json()["document"]["layers"]
-
-
-def test_text_fitting_reduces_font_size_to_prevent_overflow():
-    layer = CreativeTextLayer.model_validate(
-        {
-            "id": "fit",
-            "name": "Texto longo",
-            "type": "text",
-            "x": 0,
-            "y": 0,
-            "width": 220,
-            "height": 100,
-            "text": "Esta chamada precisa caber sem ultrapassar a área definida",
-            "fontSize": 80,
-            "minFontSize": 12,
-        }
-    )
-    font, lines, line_height = fit_text(layer)
-    assert getattr(font, "size", 12) < 80
-    assert line_height * len(lines) <= layer.height

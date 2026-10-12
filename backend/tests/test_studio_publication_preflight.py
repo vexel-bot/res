@@ -7,12 +7,18 @@ from datetime import UTC, datetime, timedelta
 
 import pytest
 from conftest import register
-from test_ffmpeg_ugc_video_render_provider import ugc_fixture
+from media_fixtures import ugc_fixture
+from test_craft_studios import native_boundary  # noqa: F401
 from test_studio_kernel import auth, create_document
 
 from app.database import SessionLocal
-from app.models import Post, StudioDomainEvent
+from app.domain.studios.craft import CraftRenderRequestV1
+from app.models import CreativeDocument, Post, StudioDomainEvent, User
+from app.services.studios import craft
+from app.services.studios.jobs import execute_job_once
 from app.services.studios.publication import _require_audio_admission
+
+pytestmark = pytest.mark.usefixtures("native_boundary")
 
 
 @pytest.mark.parametrize("policy", [
@@ -57,7 +63,26 @@ def create_linked_review(client, token: str, workspace: str):
     assert document_response.status_code == 201, document_response.text
     document = document_response.json()
     document_url = f"/api/v1/studios/v1/documents/{document['documentId']}"
-    review_response = client.post(f"{document_url}/reviews", headers=auth(token), json={})
+    migrated = client.post(
+        f"{document_url}/craft/migrate", headers={**auth(token), "Idempotency-Key": "publication-native-migrate"},
+        json={"engine": "photocraft", "expectedRevision": document["revision"]},
+    )
+    assert migrated.status_code == 200, migrated.text
+    document = client.get(document_url, headers=auth(token)).json()
+    # This suite verifies publication binding, not renderer fidelity. The shared
+    # process-boundary fixture supplies an immutable, checksummed native export.
+    with SessionLocal() as db:
+        record = db.get(CreativeDocument, document["documentId"])
+        actor = db.get(User, record.created_by)
+        job, _ = craft.create_render_job(
+            db, record, CraftRenderRequestV1(expected_revision=record.revision, format="png_set"),
+            actor, "publication-native-export",
+        )
+        assert execute_job_once(db, job) == "succeeded", job.error_message
+        render_job_id = job.id
+    review_response = client.post(
+        f"{document_url}/reviews", headers=auth(token), json={"renderJobId": render_job_id},
+    )
     assert review_response.status_code == 201, review_response.text
     review = review_response.json()
     approval = client.post(

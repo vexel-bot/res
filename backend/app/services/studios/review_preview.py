@@ -1,59 +1,34 @@
-"""Read-only, authenticated rendering of the immutable review snapshot."""
+"""Authenticated preview of the immutable, verified native render approved by review."""
 
-import hashlib
-import io
-from contextlib import ExitStack
-
-from sqlalchemy import select
+import json
+import zipfile
 
 from ...domain.studios.contracts import CreativeDocumentV1
-from ...models import LibraryAsset, StudioReviewRequest
-from ..creatives import render_creative
-from ..object_storage import get_object_storage
-from .compatibility import composition_page_to_canvas
+from ..object_storage import get_object_storage, sha256_file
+from .craft import scoped_asset
 
 
-def render_review_page(db, review: StudioReviewRequest, page_id: str) -> bytes:
+def render_review_page(db, review, page_id):
     snapshot = CreativeDocumentV1.model_validate(review.snapshot)
     if snapshot.workspace_id != review.workspace_id or snapshot.document_id != review.document_id:
         raise ValueError("studio_review_snapshot_binding_mismatch")
-    if snapshot.content_type not in {"visual", "carousel"}:
+    if not snapshot.native_editor_state:
+        raise ValueError("studio_review_native_migration_required")
+    if snapshot.native_editor_state.engine != "photocraft":
         raise ValueError("studio_review_requires_rendered_video")
-    index = next((i for i, page in enumerate(snapshot.composition.pages) if page.id == page_id), None)
-    if index is None:
-        raise ValueError("studio_review_page_not_found")
-    page = snapshot.composition.pages[index]
-    if page.width * page.height > 16_000_000 or any(layer.width * layer.height > 16_000_000 for layer in page.layers):
-        raise ValueError("studio_review_preview_pixel_limit")
-    canvas = composition_page_to_canvas(snapshot, index)
-    required_ids = {
-        layer.asset_id for layer in canvas.layers if layer.type == "image" and layer.visible and layer.opacity > 0
-    }
-    references = {asset.id: asset for asset in snapshot.assets}
-    with ExitStack() as stack:
-        paths = {}
-        for asset_id in required_ids:
-            ref = references.get(asset_id)
-            asset = db.scalar(
-                select(LibraryAsset).where(
-                    LibraryAsset.id == asset_id,
-                    LibraryAsset.workspace_id == review.workspace_id,
-                    LibraryAsset.lifecycle_status == "active",
-                )
-            )
-            if not ref or not ref.checksum or not asset or not asset.storage_key:
-                raise ValueError("studio_review_source_unavailable_or_unpinned")
-            if ref.checksum.lower() != (asset.checksum_sha256 or "").lower():
-                raise ValueError("studio_review_source_changed")
-            path = stack.enter_context(
-                get_object_storage(asset.storage_backend or "local").materialize(asset.storage_key)
-            )
-            with path.open("rb") as source:
-                digest = hashlib.file_digest(source, "sha256").hexdigest()
-            if digest != ref.checksum.lower():
-                raise ValueError("studio_review_source_changed")
-            paths[asset_id] = path
-        image = render_creative(canvas, paths)
-    output = io.BytesIO()
-    image.save(output, format="PNG")
-    return output.getvalue()
+    if not review.render_asset_id or not review.render_checksum_sha256:
+        raise ValueError("studio_review_craft_render_required")
+    artifact = scoped_asset(db, review.workspace_id, review.render_asset_id, review.render_checksum_sha256)
+    with get_object_storage(artifact.storage_backend).materialize(artifact.storage_key) as path:
+        if sha256_file(path) != review.render_checksum_sha256:
+            raise ValueError("studio_review_render_artifact_mismatch")
+        if artifact.media_type == "application/zip":
+            with zipfile.ZipFile(path) as archive:
+                manifest = json.loads(archive.read("manifest.json"))
+                filename = manifest["pages"].get(page_id)
+                if not filename or filename not in archive.namelist():
+                    raise ValueError("studio_review_page_not_found")
+                return archive.read(filename)
+        if len(snapshot.composition.pages) != 1 or snapshot.composition.pages[0].id != page_id:
+            raise ValueError("studio_review_page_not_found")
+        return path.read_bytes()

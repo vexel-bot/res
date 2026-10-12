@@ -17,6 +17,7 @@ from ...domain.studios.contracts import (
     AvatarVideoRequestV1,
     AvatarVideoRequestV2,
     CreateGenerationJobRequest,
+    CreativeDocumentV1,
     GenerationJobV1,
     TranscriptionRequestV1,
 )
@@ -576,6 +577,24 @@ def job_out(job: StudioGenerationJob) -> GenerationJobV1:
 def create_job(
     db: Session, request: CreateGenerationJobRequest, idempotency_key: str, user: User, *, commit: bool = True
 ) -> tuple[StudioGenerationJob, bool]:
+    if request.job_type == "video_render":
+        raise ValueError("craft_editors_replaced_legacy_renderer_use_craft_render_jobs")
+    if request.job_type == "craft_render":
+        from ...domain.studios.contracts import NativeEditorStateV1
+        from ...providers.studios.craft import require_capability
+        from .craft import assert_build, scoped_asset
+
+        state = NativeEditorStateV1.model_validate(request.request.get("nativeEditorState"))
+        if request.provider != "craft." + state.engine:
+            raise ValueError("craft_render_provider_mismatch")
+        snapshot = CreativeDocumentV1.model_validate(request.request.get("documentSnapshot"))
+        record = db.get(CreativeDocument, request.document_id)
+        if (not record or record.workspace_id != request.workspace_id or snapshot.document_id != record.id
+                or snapshot.workspace_id != record.workspace_id or snapshot.revision != record.revision
+                or snapshot.native_editor_state != state):
+            raise ValueError("craft_render_snapshot_conflict")
+        scoped_asset(db, record.workspace_id, state.project_asset_id, state.checksum_sha256)
+        assert_build(state, require_capability(state.engine))
     if request.provider == "alight-motion.contextual-v1":
         from ...models import Membership
 
@@ -879,6 +898,7 @@ def execute_job_once(db: Session, job: StudioGenerationJob) -> str:
             "video_render",
             "avatar_video",
             "scene_generation",
+            "craft_render",
         }
     ):
         provider = PROVIDERS.get(job.provider)
@@ -933,10 +953,12 @@ def execute_job_once(db: Session, job: StudioGenerationJob) -> str:
             from .media_waveform import execute_media_waveform
 
             result = execute_media_waveform(db, job, progress, is_cancelled)
-        elif job.job_type == "video_render":
-            from .video_render import execute_video_render
+        elif job.job_type == "craft_render":
+            from .craft import execute_render_job
 
-            result = execute_video_render(db, job, progress, is_cancelled)
+            result = execute_render_job(db, job, progress, is_cancelled)
+        elif job.job_type == "video_render":
+            raise ValueError("craft_editors_replaced_legacy_renderer_use_craft_render_jobs")
         elif job.job_type == "avatar_video":
             from .avatar_video import execute_avatar_video
 

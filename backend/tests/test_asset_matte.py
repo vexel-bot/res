@@ -8,7 +8,6 @@ from test_remotion_native import native_direction, native_document
 
 from app.domain.studios.contextual_editing_v2 import ContextualPlanRequestV2
 from app.domain.studios.motion_recipes import MotionRecipeV1, RecipeParametersV1
-from app.providers.studios.remotion_projection import compile_remotion_composition
 
 
 @pytest.fixture(autouse=True)
@@ -108,84 +107,8 @@ def compiled():
     )
 
 
-def test_matte_lowers_source_asset_space_interval_and_digest():
-    doc, projection = compiled()
-    asset = {"mask": {"sha256": "a" * 64, "mime": "image/png", "path": "fixture.png"}}
-    manifest = compile_remotion_composition(doc, projection, asset)
-    source = next(layer for layer in manifest["layers"] if layer["name"] == "matte")
-    hero = next(layer for layer in manifest["layers"] if layer["name"] == "hero")
-    assert source["properties"]["matteSourceOnly"]
-    spec = hero["properties"]["recipeAssetMatte"]
-    assert spec["sourceLayerId"] == source["id"] and spec["assetId"] == "mask"
-    assert spec["coordinateSpace"] == "composition_world" and spec["opacitySpace"] == "source_layer_only"
-    assert (spec["startFrame"], spec["endFrameExclusive"]) == (2, 13)
-    assert manifest["componentLibraryVersion"] == 6
-    changed, p2 = native_document(matte_direction(invert=True), doc.assets)
-    assert (
-        compile_remotion_composition(changed, p2, asset)["nativeCompositionDigest"]
-        != manifest["nativeCompositionDigest"]
-    )
 
 
-@pytest.mark.parametrize(
-    "failure",
-    [
-        "missing",
-        "checksum",
-        "mime",
-        "spec",
-        "source-role",
-        "source-id",
-        "legacy",
-        "source-stack",
-        "mask-conflict",
-        "orphan",
-        "source-scene",
-        "target-id",
-        "node",
-        "parent-cycle",
-        "ref-mime",
-    ],
-)
-def test_unbound_or_unsupported_matte_fails_projection(failure):
-    doc, projection = compiled()
-    hero = next(layer for layer in doc.composition.pages[0].layers if layer.name == "hero")
-    source = next(layer for layer in doc.composition.pages[0].layers if layer.name == "matte")
-    op = doc.composition.narrative["editorialV2"]["nativeRecipeOperations"][0]
-    asset = {"mask": {"sha256": "a" * 64, "mime": "image/png", "path": "fixture.png"}}
-    if failure == "missing":
-        asset = {}
-    elif failure == "checksum":
-        asset["mask"]["sha256"] = "b" * 64
-    elif failure == "mime":
-        asset["mask"]["mime"] = "image/jpeg"
-    elif failure == "spec":
-        hero.properties["recipeAssetMatte"]["invert"] = True
-    elif failure == "source-role":
-        source.properties["matteSourceOnly"] = False
-    elif failure == "source-id":
-        op["matteSourceLayerId"] = "absent"
-    elif failure == "legacy":
-        op["compilerVersion"] = "res.native-recipes.v3"
-    elif failure == "source-stack":
-        source.properties["maskAssetId"] = "mask"
-    elif failure == "mask-conflict":
-        hero.properties["maskAssetId"] = "mask"
-    elif failure == "source-scene":
-        source.properties["editorialSceneId"] = "other-scene"
-    elif failure == "target-id":
-        op["targetLayerIds"] = [source.id]
-    elif failure == "node":
-        projection.nodes = [node for node in projection.nodes if node.target_layer_id != source.id]
-    elif failure == "parent-cycle":
-        node = next(node for node in projection.nodes if node.target_layer_id == source.id)
-        node.parent_node_id = node.node_id
-    elif failure == "ref-mime":
-        doc.assets[0].media_type = "image/jpeg"
-    else:
-        source.properties["recipeAssetMatte"] = copy.deepcopy(hero.properties["recipeAssetMatte"])
-    with pytest.raises(ValueError):
-        compile_remotion_composition(doc, projection, asset)
 
 
 @pytest.mark.parametrize(
@@ -217,14 +140,3 @@ def test_legacy_parameters_do_not_gain_empty_matte_field():
     assert "assetMatte" not in RecipeParametersV1().model_dump(mode="json", by_alias=True)
     old = MotionRecipeV1.model_validate(recipe("motivated_occlusion", occluderTargetId="cover"))
     assert "assetMatte" not in old.model_dump(mode="json", by_alias=True)["parameters"]
-
-
-def test_legacy_v3_measured_typography_remains_readable():
-    from test_typography_units import typography_direction
-
-    doc, projection = native_document(typography_direction("Título"))
-    for operation in doc.composition.narrative["editorialV2"]["nativeRecipeOperations"]:
-        operation["compilerVersion"] = "res.native-recipes.v3"
-    manifest = compile_remotion_composition(doc, projection, {})
-    assert manifest["componentLibraryVersion"] == 5
-    assert next(layer for layer in manifest["layers"] if layer["name"] == "hero")["properties"]["recipeTextLayout"]

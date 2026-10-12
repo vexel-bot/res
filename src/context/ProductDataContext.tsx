@@ -6,9 +6,6 @@ import {
   type BootstrapRecord,
   type CampaignInput,
   type CampaignUpdate,
-  type CreativeInput,
-  type CreativeRecord,
-  type CreativeUpdate,
   type PostInput,
   type HistoryReuseInput,
   type PostUpdate,
@@ -38,13 +35,6 @@ interface ProductDataValue {
   createPostDerivation: (postId: string, input: HistoryReuseInput) => Promise<string>;
   updatePost: (postId: string, input: PostUpdate) => Promise<void>;
   decidePost: (postId: string, input: ApprovalActionInput) => Promise<void>;
-  createCreative: (
-    input: Omit<CreativeInput, "workspaceId">,
-  ) => Promise<CreativeRecord>;
-  updateCreative: (
-    documentId: string,
-    input: CreativeUpdate,
-  ) => Promise<CreativeRecord>;
   saveWorkspaceResource: (
     kind: WorkspaceResourceInput["kind"],
     resourceKey: string,
@@ -227,17 +217,6 @@ export function ProductDataProvider({
           productApi.approvalAction(postId, input),
         );
       },
-      createCreative: async (input) =>
-        runMutation("create-creative", () =>
-          productApi.createCreative({
-            ...input,
-            workspaceId: requireWorkspaceId(),
-          }),
-        ),
-      updateCreative: async (documentId, input) =>
-        runMutation("autosave-creative", () =>
-          productApi.updateCreative(documentId, input),
-        ),
       saveWorkspaceResource: async (kind, resourceKey, payload) => {
         const workspaceId = requireWorkspaceId();
         const current = snapshotRef.current;

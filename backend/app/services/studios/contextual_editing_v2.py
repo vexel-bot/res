@@ -10,7 +10,7 @@ from ...domain.studios.material_inspection import material_inspection_criteria
 from .editorial_components import FAMILIES as COMPOSITION_FAMILIES
 from .scene_compiler import COMPONENTS, compile_scenes
 
-PROVIDER = "hyperframes.contextual-v2"
+PROVIDER = "craft.effectcraft"
 
 
 def omit_unresolved_optional_materials(direction, material_requests):
@@ -25,10 +25,7 @@ def omit_unresolved_optional_materials(direction, material_requests):
     """
 
     executable = direction.model_copy(deep=True)
-    requests = {
-        (item.get("sceneId"), item.get("id")): item
-        for item in material_requests
-    }
+    requests = {(item.get("sceneId"), item.get("id")): item for item in material_requests}
     receipts = []
     for scene in executable.scenes:
         ordered_needs = list(scene.material_needs)
@@ -57,9 +54,7 @@ def omit_unresolved_optional_materials(direction, material_requests):
         scene.material_needs = [need for need in scene.material_needs if need.target_id not in removed_ids]
         scene.elements = [element for element in scene.elements if element.id not in removed_ids]
         replacement_by_target = {
-            target.id: replacement
-            for _need, target, replacement, _owner in removals
-            if replacement
+            target.id: replacement for _need, target, replacement, _owner in removals if replacement
         }
         for composition in scene.compositions:
             composition.target_ids = [
@@ -104,12 +99,8 @@ def omit_unresolved_optional_materials(direction, material_requests):
                 if requirement_id not in {need.id for need, *_rest in removals}
             ]
             if affected and shot.target_element_ids:
-                shot.verification = [
-                    "A mesma identidade de conteúdo permanece visível durante a mudança de viewport."
-                ]
-                shot.lighting = shot.lighting.model_copy(
-                    update={"execution_mode": "deterministic_composite"}
-                )
+                shot.verification = ["A mesma identidade de conteúdo permanece visível durante a mudança de viewport."]
+                shot.lighting = shot.lighting.model_copy(update={"execution_mode": "deterministic_composite"})
             if shot.target_element_ids:
                 kept_shots.append(shot)
         if kept_shots:
@@ -285,18 +276,14 @@ def resolve_materials(db, document, direction):
             if selected and need.source_class == "generated_original":
                 selected_asset = db.get(LibraryAsset, selected)
                 procedural = (
-                    (selected_asset.object_metadata or {}).get("proceduralComponent")
-                    if selected_asset
-                    else None
+                    (selected_asset.object_metadata or {}).get("proceduralComponent") if selected_asset else None
                 )
                 if procedural and procedural.get("kind") == "registered-procedural-icon":
                     # A deterministic registered component is a catalog resource,
                     # even when it satisfied a director's request to create an
                     # original-looking symbol. Persist the actual provenance.
                     need.source_class = "catalog"
-            semantic_query = " ".join(
-                part for part in (need.query, need.entity, need.action, need.appearance) if part
-            )
+            semantic_query = " ".join(part for part in (need.query, need.entity, need.action, need.appearance) if part)
             candidates = catalog(
                 db,
                 document.workspace_id,
@@ -314,9 +301,7 @@ def resolve_materials(db, document, direction):
                 candidates = [c for c in candidates if c.get("resource", {}).get("official") is True]
             elif need.source_class == "generated_original":
                 candidates = [
-                    c
-                    for c in candidates
-                    if c.get("resource", {}).get("official") is False and c.get("generationJobId")
+                    c for c in candidates if c.get("resource", {}).get("official") is False and c.get("generationJobId")
                 ]
             project_candidates = [c for c in candidates if c["id"] in project_asset_ids]
             preferred = project_candidates or candidates
@@ -346,12 +331,10 @@ def resolve_materials(db, document, direction):
                             if receipt.get("status") == "accepted"
                             and receipt.get("checksum") == asset.checksum_sha256
                             and receipt.get("request", {}).get("purpose") == need.purpose
-                            and receipt.get("request", {}).get("criteria")
-                            == material_inspection_criteria(need)
+                            and receipt.get("request", {}).get("criteria") == material_inspection_criteria(need)
                             and (
                                 need.kind != "video"
-                                or receipt.get("request", {}).get("requiredSeconds", 0)
-                                >= required_seconds
+                                or receipt.get("request", {}).get("requiredSeconds", 0) >= required_seconds
                             )
                             and receipt.get("request", {}).get("sourceStartSeconds", 0)
                             == getattr(target, "source_start_seconds", 0)
@@ -414,7 +397,6 @@ def preflight_v2(db, document):
 
     problems = asset_blockers(db, document)
     from ...domain.studios.motion_recipes import RECIPE_CAPABILITIES
-    from .engine_qualification import engine_capabilities
 
     narrative = document.composition.narrative.get("editorialV2", {})
     capabilities = set()
@@ -427,41 +409,47 @@ def preflight_v2(db, document):
             for operation in compiled
             if supported_recipe_operation(operation)
         }
-    if narrative.get("renderer") == "alight-motion.contextual-v1":
-        engine = engine_capabilities()["engines"][-1]
-        capabilities = set(engine["capabilities"])
-        if not engine["available"]:
-            from .contextual_editing import _block
-
-            problems.append(_block("alight", "alight_worker_not_ready", "Alight pendente: " + ", ".join(engine["blockers"])))
-        from ...providers.studios.alight_motion import required_capabilities
-        from .contextual_editing import _block
-
-        for capability in sorted(required_capabilities(document) - capabilities):
-            problems.append(_block("alight", "alight_capability_not_qualified", "Recurso sem homologação no Alight: " + capability))
     for recipe in narrative.get("motionRecipes", []):
         from .contextual_editing import _block
 
         if RECIPE_CAPABILITIES[recipe["technique"]] not in capabilities:
-            problems.append(_block(
-                recipe["id"], "motion_recipe_engine_not_qualified",
-                "A receita de movimento exige um adaptador validado; nenhum efeito será substituído silenciosamente.",
-            ))
+            problems.append(
+                _block(
+                    recipe["id"],
+                    "motion_recipe_engine_not_qualified",
+                    "A receita de movimento exige um adaptador validado; "
+                    "nenhum efeito será substituído silenciosamente.",
+                )
+            )
         mask = recipe.get("parameters", {}).get("maskAssetId")
         if mask and mask not in {asset.id for asset in document.assets}:
-            problems.append(_block(recipe["id"], "motion_recipe_mask_missing", "Adicione o mapa ou máscara da receita."))
+            problems.append(
+                _block(recipe["id"], "motion_recipe_mask_missing", "Adicione o mapa ou máscara da receita.")
+            )
         if recipe["technique"] == "asset_matte":
             source_name = recipe["parameters"]["assetMatte"]["sourceTargetId"]
-            source = next((
-                layer for page in document.composition.pages for layer in page.layers
-                if layer.name == source_name and layer.properties.get("editorialSceneId") == recipe["sceneId"]
-            ), None)
-            ref = next((asset for asset in document.assets
-                        if source and asset.id == source.properties.get("assetId")), None)
+            source = next(
+                (
+                    layer
+                    for page in document.composition.pages
+                    for layer in page.layers
+                    if layer.name == source_name and layer.properties.get("editorialSceneId") == recipe["sceneId"]
+                ),
+                None,
+            )
+            ref = next(
+                (asset for asset in document.assets if source and asset.id == source.properties.get("assetId")), None
+            )
             if ref and ref.media_type != "image/png":
-                problems.append(_block(recipe["id"], "motion_recipe_asset_matte_png_required",
-                                       "Forneça uma máscara PNG para a camada fonte desta receita."))
-    # Unlike V1, V2 graphical layers are validated by their typed source scene and HyperFrames.
+                problems.append(
+                    _block(
+                        recipe["id"],
+                        "motion_recipe_asset_matte_png_required",
+                        "Forneça uma máscara PNG para a camada fonte desta receita.",
+                    )
+                )
+    # Native migration additionally validates rendered treatments and preserves
+    # unsupported authored details as explicit review warnings.
     return problems, 0
 
 
@@ -487,11 +475,13 @@ def ensure_visual_material_needs(direction):
                 and not need.alpha_required
             ):
                 need.alpha_required = True
-                repairs.append({
-                    "sceneId": scene.id,
-                    "needId": need.id,
-                    "reason": "registered_icon_requires_transparent_surface",
-                })
+                repairs.append(
+                    {
+                        "sceneId": scene.id,
+                        "needId": need.id,
+                        "reason": "registered_icon_requires_transparent_surface",
+                    }
+                )
             target = indexed.get(need.target_id)
             if need.field == "asset" and target is not None and target.kind not in {"image", "video"}:
                 repairs.append(
@@ -544,14 +534,14 @@ def promote_synthesized_composable_icons(direction):
     repairs = []
     for scene in direction.scenes:
         icon_needs = [
-            need for need in scene.material_needs
+            need
+            for need in scene.material_needs
             if need.kind == "image"
             and need.requirement_class == "composable"
             and need.component_id == "procedural-icon"
         ]
         if not icon_needs or any(
-            need.kind == "image" and need.component_id not in {None, "procedural-icon"}
-            for need in scene.material_needs
+            need.kind == "image" and need.component_id not in {None, "procedural-icon"} for need in scene.material_needs
         ):
             continue
         requirement_ids = {need.blueprint_requirement_id for need in icon_needs}
@@ -569,12 +559,14 @@ def promote_synthesized_composable_icons(direction):
             need.component_id = "procedural-icon"
             need.blueprint_requirement_id = blueprint_requirement_id
             need.alpha_required = True
-            repairs.append({
-                "sceneId": scene.id,
-                "needId": need.id,
-                "reason": "synthesized_icon_need_bound_to_declared_component",
-                "component": match["candidates"][0]["providerId"],
-            })
+            repairs.append(
+                {
+                    "sceneId": scene.id,
+                    "needId": need.id,
+                    "reason": "synthesized_icon_need_bound_to_declared_component",
+                    "component": match["candidates"][0]["providerId"],
+                }
+            )
     return repairs
 
 
@@ -593,22 +585,8 @@ def create_plan(db, record, direction, user, key):
 
     source = record_to_contract(record)
     direction = direction.model_copy(deep=True)
-    if direction.render_engine == "current" and direction.engine_profile:
-        from .engine_qualification import default_engine_for_new_document
-
-        if default_engine_for_new_document(db, record, direction.engine_profile, user):
-            direction.render_engine = "alight_motion"
     if direction.render_engine == "alight_motion":
-        from sqlalchemy import select
-
-        from ...config import get_settings
-        from ...models import Membership
-
-        member = db.scalar(select(Membership).where(
-            Membership.workspace_id == record.workspace_id, Membership.user_id == user.id,
-        ))
-        if not get_settings().studio_alight_motion_enabled or not member or member.role.lower() not in {"owner", "admin"}:
-            raise ValueError("alight_experiment_access_denied")
+        raise ValueError("editor_replaced_by_effectcraft")
     input_request_digest = digest(direction)
     versions_were_explicit = direction.execution_versions is not None
     if direction.execution_versions is None:
@@ -617,8 +595,7 @@ def create_plan(db, record, direction, user, key):
     for event in v1._events(db, record.workspace_id, v1.PLAN_EVENT):
         if event.payload.get("idempotencyKey") == key:
             matches_request = event.payload.get("requestDigest") == request_digest or (
-                not versions_were_explicit
-                and event.payload.get("inputRequestDigest") == input_request_digest
+                not versions_were_explicit and event.payload.get("inputRequestDigest") == input_request_digest
             )
             if not matches_request or event.payload["plan"]["documentId"] != record.id:
                 raise ValueError("editing_idempotency_conflict")
@@ -629,13 +606,9 @@ def create_plan(db, record, direction, user, key):
         ensure_visual_material_needs(direction)
     material_source = source.model_copy(deep=True)
     material_requests = resolve_materials(db, material_source, direction)
-    executable_direction, optional_omissions = omit_unresolved_optional_materials(
-        direction, material_requests
-    )
+    executable_direction, optional_omissions = omit_unresolved_optional_materials(direction, material_requests)
     plan_id = str(uuid4())
-    draft, graph, operations, manifest = compile_scenes(
-        material_source, executable_direction, user.id, plan_id
-    )
+    draft, graph, operations, manifest = compile_scenes(material_source, executable_direction, user.id, plan_id)
     manifest["omittedOptionalMaterials"] = optional_omissions
     from ...domain.studios.visual_audit import preflight_visual
     from .scene_compiler import prepare_direction
@@ -667,7 +640,8 @@ def create_plan(db, record, direction, user, key):
             "editing_operation_prerequisite_missing",
             " ".join([*decision["reasons"], decision["alternative"]]),
         )
-        for decision in operation_decisions if decision["status"] == "blocked"
+        for decision in operation_decisions
+        if decision["status"] == "blocked"
     )
     researched_ids = {technique.id for technique in research_operation_cards()}
     non_executable = researched_ids - RESEARCH_EXECUTABLE_IDS
@@ -691,7 +665,11 @@ def create_plan(db, record, direction, user, key):
         db,
         record.workspace_id,
         direction.intent.objective + " " + direction.intent.script,
-        [*COMPONENTS, *(op for spec in COMPONENTS.values() for op in spec["operations"]), *native_reference_capabilities],
+        [
+            *COMPONENTS,
+            *(op for spec in COMPONENTS.values() for op in spec["operations"]),
+            *native_reference_capabilities,
+        ],
         [t for s in direction.scenes for t in s.technique_ids],
         material_kinds={a.media_type.split("/")[0] for a in draft.assets},
     )
@@ -743,7 +721,8 @@ def create_plan(db, record, direction, user, key):
                 "causalPerformanceClaim": False,
             }
             for t in techniques
-        ] + [{"type": "operation_decision", **decision} for decision in operation_decisions],
+        ]
+        + [{"type": "operation_decision", **decision} for decision in operation_decisions],
         created_at=datetime.now(UTC),
     )
     v1._save(
@@ -772,8 +751,11 @@ def recompile_plan(db, record, plan_id, request, user, key):
         saved = event.payload.get("plan", {})
         provenance = saved.get("manifest", {}).get("recompilation") or {}
         if provenance:
-            if (saved.get("documentId") != record.id or provenance.get("sourcePlanId") != plan_id
-                    or event.payload.get("recompileRequestDigest") != digest(request)):
+            if (
+                saved.get("documentId") != record.id
+                or provenance.get("sourcePlanId") != plan_id
+                or event.payload.get("recompileRequestDigest") != digest(request)
+            ):
                 raise ValueError("editing_idempotency_conflict")
             return v1.get_plan(db, record.workspace_id, saved["id"])
 
@@ -805,8 +787,11 @@ def recompile_plan(db, record, plan_id, request, user, key):
             record,
             derivative,
             user,
-            {"recompiledFromPlanId": source_plan.id, "idempotencyKey": replay_key,
-             "recompileRequestDigest": digest(request)},
+            {
+                "recompiledFromPlanId": source_plan.id,
+                "idempotencyKey": replay_key,
+                "recompileRequestDigest": digest(request),
+            },
         )
         db.commit()
     return derivative

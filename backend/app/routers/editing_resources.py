@@ -266,10 +266,8 @@ def revise_production_run(
 def editing_ai_status(user: User = Depends(get_current_user)):
     from dataclasses import asdict
 
-    from ..providers.studios.contextual_render import ADVANCED, CAPABILITIES
     from ..providers.studios.editing_ai import ADAPTERS, compatible_binding, selected_adapter
-    from ..providers.studios.video_render import VIDEO_RENDER_PROVIDERS
-    from ..services.studios.scene_compiler import COMPONENTS
+    from ..providers.studios.craft import ENGINES, engine_capability
 
     settings = get_settings()
     providers = []
@@ -328,34 +326,7 @@ def editing_ai_status(user: User = Depends(get_current_user)):
         "qualityIndicatorEnabled": settings.studio_visual_quality_indicator_enabled,
         "qualification": "pending_real_media_validation",
         "generatedMaterialPolicy": "candidate-human-review-v1",
-        "contextualV2": {
-            "configured": "hyperframes.contextual-v2" in VIDEO_RENDER_PROVIDERS,
-            "provider": "hyperframes.contextual-v2",
-            "components": COMPONENTS,
-            "qualification": "pending_full_audiovisual_validation",
-        },
-        "motionCanvas": {
-            "configured": "motion-canvas.contextual-v1" in VIDEO_RENDER_PROVIDERS,
-            "provider": "motion-canvas.contextual-v1",
-            "qualification": "experimental_engineering_render;visual_review_pending",
-        },
-        "remotion": {
-            "configured": "remotion.contextual-v1" in VIDEO_RENDER_PROVIDERS,
-            "provider": "remotion.contextual-v1",
-            "qualification": "experimental_engineering_render;license_and_visual_review_pending",
-        },
-        "remotionNative": {
-            "configured": "remotion.contextual-v2" in VIDEO_RENDER_PROVIDERS,
-            "provider": "remotion.contextual-v2",
-            "experimental": True,
-            "qualification": "license_and_human_visual_review_pending",
-        },
-        "renderer": {
-            "provider": "builtin.ffmpeg-contextual-v1",
-            "requiresAI": False,
-            "capabilities": CAPABILITIES,
-            "unsupported": ADVANCED,
-        },
+        "craftStudios": {"engines": [engine_capability(engine) for engine in ENGINES], "requiresAI": False},
     }
 
 
