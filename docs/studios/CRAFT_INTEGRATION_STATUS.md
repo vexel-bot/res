@@ -94,6 +94,8 @@ para a prévia. Nenhum editor antigo serve de alternativa.
 | Recuperação no frontend | Navegação para a composição, worker WASM, paridade de pixels e revisão da montagem preservada passaram |
 | Referência CLI upstream PhotoCraft | Compilou integralmente em 47 min; CLI Film/Effect e interfaces desktop ainda não qualificados |
 | `.pcraft` Clicko → CLI PhotoCraft original → PNG | Abriu e converteu; pixels RGBA idênticos ao adaptador, com codificação PNG diferente |
+| Testes unitários upstream `photocraft-engine` | 1.285 passaram, 12 ignorados e um falhou: `destructive_levels_dont_clip_in_32_bit`; suíte não aprovada |
+| Integração upstream `photocraft-engine` | 45 executáveis concluídos: 129 testes passaram, cinco ignorados e nenhuma falha |
 | Transporte Rust compartilhado | 6 testes passaram, incluindo frames e schemas de parâmetros |
 | Runner isolado | 3 testes passaram |
 | Estado e rotas TypeScript | 7 testes passaram |
@@ -114,6 +116,17 @@ As verificações de pixels descritas na tabela executaram os motores reais.
 A suíte completa de regressão do sistema e as suítes completas upstream ainda
 não foram qualificadas. As interfaces desktop upstream não foram recompiladas;
 os seus fontes completos estão preservados.
+
+Na revisão PhotoCraft fixada, o teste de níveis de 32 bits espera preto em zero,
+mas obteve `-0.0796427`. O comentário do próprio teste descreve extrapolação em
+32 bits; ainda é necessário resolver a divergência entre expectativa e resultado
+antes de qualificar essa operação HDR. O fonte e o teste upstream permanecem
+intactos. A falha está em `upstream-photo-engine-tests-retry.log` e não foi
+contabilizada como sucesso dos testes Clicko.
+Os testes de integração foram executados separadamente com `--test '*'`, pois
+o Cargo encerrou a primeira execução após a falha unitária. O consolidado
+`upstream-photo-tests-results.json` preserva os dois resultados, sem declarar
+a suíte upstream aprovada.
 
 O Docker Desktop foi atualizado para 4.94.0 (241994), com Engine 29.8.2. O
 problema anterior de inicialização deixou de bloquear os builds e jobs. Houve
@@ -187,5 +200,5 @@ node scripts/validation/craft-wasm-effects.mjs
 
 Os dois últimos testes podem usar as referências nativas já salvas, mesmo com
 Docker indisponível. Logs, projetos, PNGs, exports e credenciais de QA ficam em
-`.codex-runtime/craft`, ignorados pelo Git. Essas verificações não substituem os
+`.codex-runtime/craft`, ignorados pelo Git. Essas verificações não substituem as
 qualificações dos projetos reais e da implantação.
