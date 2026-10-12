@@ -65,7 +65,7 @@ fn value_at(keys: &[Value], frame: u64) -> Option<f64> {
     None
 }
 
-pub fn apply(session: &mut Session, graph: &Value, layers: &HashMap<String, u64>) -> Vec<String> {
+pub fn apply(session: &mut Session, graph: &Value, layers: &HashMap<String, u64>, page: &Value, parents: &HashMap<String, String>) -> Vec<String> {
     let mut warnings = Vec::new();
     let rate = graph.get("frameRate").unwrap_or(&Value::Null);
     let fps = rate
@@ -79,11 +79,12 @@ pub fn apply(session: &mut Session, graph: &Value, layers: &HashMap<String, u64>
     let frames = graph
         .get("durationFrames")
         .and_then(Value::as_u64)
-        .unwrap_or(0);
+        .unwrap_or(if graph.is_null() {1} else {0});
     if !fps.is_finite() || fps <= 0.0 || frames == 0 {
         return vec!["Motion graph has invalid timing; original preserved".into()];
     }
     let mut groups: BTreeMap<(u64, &str), Vec<&Value>> = BTreeMap::new();
+    let mut opacity_tracks = HashMap::new();
     for track in graph
         .get("tracks")
         .and_then(Value::as_array)
@@ -101,6 +102,7 @@ pub fn apply(session: &mut Session, graph: &Value, layers: &HashMap<String, u64>
             continue;
         };
         let property = track.get("property").and_then(Value::as_str).unwrap_or("");
+        if property == "opacity" { opacity_tracks.insert(target, track); }
         let path = match property {
             "position_x" | "position_y" => "transform/position",
             "scale_x" | "scale_y" => "transform/scale",
@@ -113,11 +115,33 @@ pub fn apply(session: &mut Session, graph: &Value, layers: &HashMap<String, u64>
         };
         groups.entry((layer, path)).or_default().push(track);
     }
-    // Engine edits retain undo snapshots. Bound conversion work explicitly,
-    // rather than truncate a long animation or exhaust a worker's memory.
-    if frames.saturating_mul(groups.len() as u64) > 10_000 {
+    for child in parents.keys() {
+        groups.entry((layers[child], "transform/opacity")).or_default();
+    }
+    // Bound validation as well as native key creation before sampling any frames.
+    if frames.saturating_mul(groups.len().max(1) as u64) > 10_000 {
         return vec!["Motion graph exceeds the automatic keyframe conversion budget; original preserved for manual conversion".into()];
     }
+    let specs: HashMap<&str, &Value> = page["layers"].as_array().into_iter().flatten()
+        .filter_map(|spec| Some((spec["id"].as_str()?,spec))).collect();
+    for (&target, spec) in &specs {
+        let tracks: Vec<&Value> = graph["tracks"].as_array().into_iter().flatten()
+            .filter(|track|track["targetLayerId"].as_str()==Some(target)).collect();
+        let rotation = spec["rotation"].as_f64().unwrap_or(0.0) != 0.0 || tracks.iter().any(|track|
+            track["property"] == "rotation_degrees" && track["keyframes"].as_array().into_iter().flatten()
+                .any(|key|key["value"].as_f64().unwrap_or(0.0)!=0.0));
+        let x = tracks.iter().find(|track|track["property"]=="scale_x");
+        let y = tracks.iter().find(|track|track["property"]=="scale_y");
+        if rotation && (x.is_some() || y.is_some()) && (0..frames).any(|frame| {
+            let scalar = |track: Option<&&Value>| track.and_then(|track|track["keyframes"].as_array())
+                .and_then(|keys|value_at(keys,frame)).unwrap_or(1.0);
+            (scalar(x)-scalar(y)).abs()>1e-9
+        }) {
+            warnings.push(format!("Rotated nonuniform scaling on `{target}` has a different transform order; original preserved for review"));
+        }
+    }
+    // Engine edits retain undo snapshots. Bound conversion work explicitly,
+    // rather than truncate a long animation or exhaust a worker's memory.
     for ((layer, path), tracks) in groups {
         let result = (|| -> Result<(), String> {
             let base = session
@@ -152,37 +176,36 @@ pub fn apply(session: &mut Session, graph: &Value, layers: &HashMap<String, u64>
                         _ => return Err("unsupported motion property".into()),
                     }
                 }
-                session.execute("prop.addKey", json!({"layer":layer,"path":path,"time":frame as f64/fps,"timeBase":"comp","value":value})).map_err(|e| e.to_string())?;
+                if path == "transform/opacity" {
+                    let legacy = layers.iter().find(|(_, id)| **id == layer).map(|(legacy,_)|legacy.as_str()).ok_or("missing layer mapping")?;
+                    let mut parent = parents.get(legacy);
+                    let mut alpha = value.as_f64().ok_or("opacity value")?;
+                    while let Some(ancestor) = parent {
+                        let spec = specs.get(ancestor.as_str()).ok_or("missing parent specification")?;
+                        let parent_alpha = if let Some(track) = opacity_tracks.get(ancestor.as_str()) {
+                            value_at(track["keyframes"].as_array().ok_or("missing parent keys")?,frame).ok_or("invalid parent keys")?
+                        } else { spec["opacity"].as_f64().unwrap_or(1.0) };
+                        let timing = &spec["properties"]["editorialTiming"];
+                        let active = if let (Some(start),Some(duration),Some(rate)) = (timing["startFrame"].as_f64(),timing["durationFrames"].as_f64(),timing["fps"].as_f64()) {
+                            let seconds=frame as f64/fps;
+                            rate > 0.0 && seconds >= start/rate && seconds < (start+duration)/rate
+                        } else {true};
+                        alpha *= if spec["visible"].as_bool().unwrap_or(true) && active {parent_alpha} else {0.0};
+                        parent = parents.get(ancestor);
+                    }
+                    value=json!(alpha);
+                }
+                if graph.is_null() {
+                    session.execute("prop.set",json!({"layer":layer,"path":path,"value":value})).map_err(|e|e.to_string())?;
+                } else {
+                    session.execute("prop.addKey", json!({"layer":layer,"path":path,"time":frame as f64/fps,"timeBase":"comp","value":value})).map_err(|e| e.to_string())?;
+                }
             }
             Ok(())
         })();
         if let Err(error) = result {
             warnings.push(format!(
                 "Motion `{path}` on native layer {layer}: {error}; original preserved"
-            ));
-        }
-    }
-    for node in graph
-        .get("nodes")
-        .and_then(Value::as_array)
-        .into_iter()
-        .flatten()
-    {
-        if node.get("parentNodeId").is_some_and(|v| !v.is_null())
-            || node
-                .get("transformOriginX")
-                .and_then(Value::as_f64)
-                .unwrap_or(0.5)
-                != 0.5
-            || node
-                .get("transformOriginY")
-                .and_then(Value::as_f64)
-                .unwrap_or(0.5)
-                != 0.5
-        {
-            warnings.push(format!(
-                "Motion hierarchy/pivot on `{}` requires manual review; original preserved",
-                node["targetLayerId"].as_str().unwrap_or("unknown")
             ));
         }
     }

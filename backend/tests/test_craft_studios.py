@@ -64,6 +64,29 @@ def test_invalid_carousel_returns_validation_error_without_creating_document(cli
     assert after == before
 
 
+def test_group_composition_is_preserved_without_projecting_into_legacy_canvas(client):
+    token, workspace = register(client, "craft-group-navigation@example.com")
+    layers = [
+        {"id": "parent", "kind": "group", "x": 20, "y": 20, "width": 100, "height": 100},
+        {"id": "child", "kind": "shape", "x": 10, "y": 10, "width": 20, "height": 20,
+         "properties": {"fill": "#ff0000", "parentId": "parent"}},
+    ]
+    response = client.post("/api/v1/studios/v1/documents", headers=headers(token), json={
+        "workspaceId": workspace, "title": "Grouped composition", "contentType": "visual",
+        "brief": {"objective": "Keep editable hierarchy", "audience": "QA"},
+        "composition": {"pages": [{"id": "page", "width": 320, "height": 320, "layers": layers}]},
+    })
+    assert response.status_code == 201, response.text
+    created = response.json()
+    assert created["composition"]["pages"][0]["layers"][0]["kind"] == "group"
+    assert created["composition"]["pages"][0]["layers"][1]["properties"]["parentId"] == "parent"
+    base = "/api/v1/studios/v1/documents/" + created["documentId"]
+    assert client.get(base, headers=headers(token)).json()["composition"] == created["composition"]
+    archived = client.get("/api/v1/creatives/" + created["documentId"], headers=headers(token))
+    assert archived.status_code == 200
+    assert archived.json()["document"]["brandTokens"]["readOnly"] is True
+
+
 @pytest.fixture
 def native_boundary(monkeypatch, tmp_path):
     settings = get_settings()

@@ -277,7 +277,7 @@ dependencies = [
 
 [[package]]
 name = "clicko-effectcraft-adapter"
-version = "1.0.0"
+version = "1.0.1"
 dependencies = [
  "clicko-craft-protocol",
  "effectcraft-engine",

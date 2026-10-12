@@ -65,7 +65,9 @@ def composition_page_to_canvas(document: CreativeDocumentV1, page_index: int = 0
                 "height": max(1, min(page.height, 4096) - 48), "fontSize": 24,
             }],
         })
-    if document.composition.narrative.get("editorialV2"):
+    if document.composition.narrative.get("editorialV2") or any(
+        layer.kind not in {"text", "shape", "image"} for layer in page.layers
+    ):
         # The legacy canvas cannot represent temporal groups or video. Store an explicit
         # read-only navigation poster; the full composition stays in canonical_document.
         return CreativeCanvas.model_validate(
@@ -73,13 +75,16 @@ def composition_page_to_canvas(document: CreativeDocumentV1, page_index: int = 0
                 "width": min(page.width, 4096),
                 "height": min(page.height, 4096),
                 "background": "#10181c",
-                "brandTokens": {"editorialV2": True, "readOnly": True},
+                "brandTokens": {
+                    "editorialV2": bool(document.composition.narrative.get("editorialV2")),
+                    "readOnly": True,
+                },
                 "layers": [
                     {
                         "id": "editorial-studio-poster",
                         "type": "text",
                         "name": "Abrir no estúdio",
-                        "text": "Vídeo com edição e motion.\nAbra no estúdio de vídeo para visualizar e revisar.",
+                        "text": "Projeto Clicko Studios. Abra o Studio para editar e revisar.",
                         "x": 24,
                         "y": 24,
                         "width": min(page.width, 4096) - 48,
@@ -117,7 +122,11 @@ def composition_page_to_canvas(document: CreativeDocumentV1, page_index: int = 0
             "safeArea": page.safe_area,
             # The navigation canvas only supports RGB; the canonical project
             # retains its full RGBA background for the native Craft migration.
-            "background": page.background[:7] if len(page.background) == 9 and page.background.startswith("#") else page.background,
+            "background": (
+                page.background[:7]
+                if len(page.background) == 9 and page.background.startswith("#")
+                else page.background
+            ),
             "brandTokens": {"brandRevision": document.brand_memory_ref.revision},
             "layers": layers,
         }

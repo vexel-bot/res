@@ -60,6 +60,13 @@ e recursos, inclusive fontes tipográficas, em seus diretórios `licenses`.
   A interface abre a composição e oferece seu retorno ao FilmCraft. Composições
   pendentes precisam ser vinculadas antes da exportação. Reabrir uma composição
   já recuperada mantém a revisão e as aprovações da montagem.
+- O adaptador EffectCraft `1.0.1` converte grupos em camadas nulas nativas,
+  mantém coordenadas locais, pivôs e animação e calcula a opacidade herdada.
+  Ciclos, pais não representados, escala não uniforme com rotação e diferenças
+  de composição de grupos com filhos sobrepostos geram avisos explícitos.
+  Composições com grupos mantêm o documento canônico completo; a biblioteca
+  guarda somente sua indicação de abertura no Studio, sem projetá-las no
+  formato do editor retirado.
 - Componentes, timelines, hooks e renderizadores exclusivos dos editores antigos
   retirados da execução. Os workers anteriores e testes específicos desses
   motores estão arquivados em `docs/studios/archive`, fora dos builds e imports.
@@ -88,9 +95,11 @@ para a prévia. Nenhum editor antigo serve de alternativa.
 | Inventário CycloneDX | 825 componentes instalados/registrados nos locks, com versões, imagem e checksums registrados |
 | Fila HTTP/Redis/Celery real | Exportação MP4 e checksum passaram no worker atestado e isolado |
 | Cancelamento nativo em execução | Passou novamente na imagem atualizada durante exportação real; nenhum artefato parcial publicado |
-| Contratos de backend | 23 testes passaram, incluindo falha de commit, recuperação de efeitos, snapshots adulterados, rejeição de carrossel inválido e impossibilidade de reativar motores antigos |
+| Contratos de backend | 24 testes passaram, incluindo falha de commit, recuperação de efeitos, snapshots adulterados, criação com grupos, rejeição de carrossel inválido e impossibilidade de reativar motores antigos |
 | Criação com carrossel inválido | Rejeitada com `422` antes da persistência; nenhum documento criado. O caso antes retornava `500` |
-| Regressões dos adaptadores Rust | Photo 2, Film 3 e Effect 9 testes passaram; transparência total/parcial e reabertura verificadas |
+| Regressões dos adaptadores Rust | Photo 2, Film 3 e Effect 12 testes passaram; transparência, hierarquia/pivôs, ciclos e reabertura verificadas |
+| Hierarquia EffectCraft real | Posição, rotação, pivô e alpha herdado passaram na API e no WASM; SHA dos dois frames idêntico, reabertura preservada e pixels iguais na CLI upstream |
+| Ensaio representativo de hierarquia | Um projeto existente reaberto em cópia privada: avisos EffectCraft caíram de 37 para 9; sete grupos e nove pendências de hierarquia/pivô resolvidos. Os demais avisos continuam em revisão |
 | Recuperação real de camadas | Animação de opacity, fundo transparente, replay, CAS e composição vinculada passaram nos motores reais |
 | Recuperação no frontend | Navegação para a composição, worker WASM, paridade de pixels e revisão da montagem preservada passaram |
 | Referências CLI upstream PhotoCraft, FilmCraft e EffectCraft | Compilaram integralmente; executaram os arquivos Clicko sem rede e com fontes em montagem somente leitura. Interfaces desktop ainda não qualificadas |
@@ -155,7 +164,7 @@ uma interrupção posterior do daemon durante a qualificação upstream; o servi
 foi reiniciado e o último documento do ensaio foi repetido com sucesso em outra
 cópia privada. A interrupção não foi contabilizada como aprovação dos testes.
 Imagem media CPU validada nesta rodada:
-`sha256:a7b4d7eafc7e4b843a6dacf338337fdcbb4e22a245b80991c035aeb97434d4d7`.
+`sha256:7fd63dfd80011cc997f4a94be878f41ed2930303922b16cbb8958dc91002a8f7`.
 Esse identificador corresponde à imagem local; não houve publicação em registry.
 Evidências estão em `media-worker-attestation.json`, `media-worker-sbom.cdx.json`
 e `queue-acceptance-results.json`, no diretório de QA ignorado.
@@ -176,6 +185,20 @@ O script de ensaio aceita `--document-id` para repetir somente uma pendência,
 sempre copiando o banco de origem em modo somente leitura; falhas retornam
 código de saída não zero. As composições recuperadas continuam pendentes de
 revisão e vínculo na montagem, sem promover a migração no banco original.
+
+O ensaio do build `1.0.1` está em `migration-qa-1d2be2fadf2b/results.json`.
+Somente esse projeto existente foi repetido com a nova conversão; os números
+globais dos 31 documentos acima descrevem o ensaio anterior. Não foi declarada
+fidelidade completa para o conjunto. `hierarchy-acceptance-results.json`,
+`wasm-effects-results.json` e `hierarchy-cli-results.json` registram a validação
+do fixture de hierarquia nos três ambientes.
+
+A revisão upstream EffectCraft permanece `67434e90`; somente o adaptador Clicko
+mudou para `1.0.1`. A identidade do build é conferida na abertura do projeto;
+projetos vinculados a `1.0.0` não são trocados silenciosamente de motor.
+O runtime e worker anteriores estão preservados localmente nas tags
+`pre-hierarchy-1.0.0`; binário e WASM anteriores ficam em
+`.codex-runtime/craft/previous-builds` e `browser-builds/effectcraft-1.0.0`.
 
 ## Pendências para o aceite final
 
@@ -211,6 +234,7 @@ python scripts/craft/acceptance.py
 python scripts/craft/media_acceptance.py
 python scripts/craft/recovery_acceptance.py
 python scripts/craft/concurrency_acceptance.py
+python scripts/craft/hierarchy_acceptance.py
 python scripts/craft/worker_acceptance.py
 docker pull redis:8.2.1-alpine
 python scripts/craft/queue_acceptance.py

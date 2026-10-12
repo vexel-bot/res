@@ -1,6 +1,6 @@
 // Actual EffectCraft commands, timed legacy migration, alpha and native reopening.
 import assert from 'node:assert/strict';
-import { writeFile } from 'node:fs/promises';
+import { readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { chromium } from '@playwright/test';
 
@@ -32,6 +32,23 @@ try {
     };
     try {
       await worker.initialize();
+      await request('project.new', { width: 320, height: 320, fps: 10, durationMs: 200,
+        legacyDocument: { composition: { pages: [{ width: 320, height: 320, background: '#00000000', layers: [
+          { id: 'child', kind: 'shape', x: 4, y: 0, width: 4, height: 4, opacity: 0.5, properties: { fill: '#ff0000' } },
+          { id: 'group', kind: 'group', x: 20, y: 20, width: 16, height: 16, rotation: 90, opacity: 0.5, properties: {} },
+        ] }] } },
+        legacyMotionGraph: { frameRate: { numerator: 10, denominator: 1 }, durationFrames: 2,
+          nodes: [{ nodeId: 'g', targetLayerId: 'group', transformOriginX: 0, transformOriginY: 0 },
+            { nodeId: 'c', targetLayerId: 'child', parentNodeId: 'g' }],
+          tracks: [{ targetLayerId: 'group', property: 'position_x', keyframes: [{ frame: 0, value: 0 }, { frame: 1, value: 8 }] },
+            { targetLayerId: 'group', property: 'opacity', keyframes: [{ frame: 0, value: 0.5 }, { frame: 1, value: 1 }] }],
+        } });
+      const groupFirst = await preview(0), groupLast = await preview(0.1);
+      if (JSON.stringify(await pixel(groupFirst, 17, 25)) !== '[255,0,0,64]' ||
+          JSON.stringify(await pixel(groupLast, 25, 25)) !== '[255,0,0,128]') throw new Error('Group geometry/alpha changed');
+      await worker.call('open', await worker.call('save'));
+      if (await digest(groupFirst) !== await digest(await preview(0)) ||
+          await digest(groupLast) !== await digest(await preview(0.1))) throw new Error('Group reopening changed pixels');
       await request('project.new', { width: 16, height: 16, fps: 10, durationMs: 1000,
         legacyDocument: { composition: { pages: [{ width: 16, height: 16, layers: [{
           id: 'square', kind: 'shape', name: 'Square', x: 0, y: 0, width: 8, height: 8,
@@ -50,11 +67,15 @@ try {
       const center = await pixel(rgba, 8, 8);
       await worker.call('open', await worker.call('save'));
       if (await digest(rgba) !== await digest(await preview(0))) throw new Error('Reopening changed transparency');
-      return { engine: 'effectcraft', timing: true, editClear: true, alpha: true, reopen: true, corner, center };
+      return { engine: 'effectcraft', hierarchy: true, pivot: true, inheritedAlpha: true,
+        groupFrameSha256: [await digest(groupFirst), await digest(groupLast)],
+        timing: true, editClear: true, alpha: true, reopen: true, corner, center };
     } finally { worker.close(); }
   });
   assert.equal(result.corner[3], 0);
   assert.deepEqual(result.center, [255, 0, 0, 255]);
+  const native = JSON.parse(await readFile(resolve('.codex-runtime/craft/hierarchy-acceptance-results.json'), 'utf8'));
+  assert.deepEqual(result.groupFrameSha256, native.frameSha256, 'WASM hierarchy pixels differ from the native API');
   console.log(JSON.stringify(result));
   await writeFile(resolve('.codex-runtime/craft/wasm-effects-results.json'), JSON.stringify(result, null, 2));
 } finally { await browser.close(); }

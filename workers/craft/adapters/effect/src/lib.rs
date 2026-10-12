@@ -1,5 +1,6 @@
 #![forbid(unsafe_code)]
 mod migration_motion;
+mod migration_hierarchy;
 mod migration_timeline;
 use clicko_craft_protocol::{
     Result, Workspace, command_schema, commands, dimensions, legacy_pages, text,
@@ -23,7 +24,7 @@ use std::{
 use wasm_bindgen::prelude::*;
 
 pub const REVISION: &str = "67434e90388b6dca4417555346fa6850b6f96033";
-pub const BUILD: &str = "clicko-effectcraft-1.0.0+67434e90";
+pub const BUILD: &str = "clicko-effectcraft-1.0.1+67434e90";
 
 #[derive(Default)]
 struct Store {
@@ -642,6 +643,7 @@ impl Adapter {
                 let result = match layer.get("kind").and_then(Value::as_str).unwrap_or("") {
                     "text" => self.session.execute("layer.newText", json!({"name":name,"text":p.get("text"),"box":[x,y,w,h],"fill":p.get("color").and_then(Value::as_str).unwrap_or("#ffffff"),"size":p.get("fontSize").and_then(Value::as_f64).unwrap_or(48.0)})).map_err(|e| e.to_string()),
                     "shape" => self.session.execute("layer.newShape", json!({"name":name,"kind":"rect","position":[x+w/2.0,y+h/2.0],"size":[w,h],"fill":p.get("fill").and_then(Value::as_str).unwrap_or("#6c5ce7")})).map_err(|e| e.to_string()),
+                    "group" => self.session.execute("layer.newNull", json!({"name":name})).map_err(|e|e.to_string()),
                     "image"|"video"|"audio" => self.execute("asset.import", &json!({"assetId":p.get("assetId").or_else(|| p.get("asset_id")),"addToComp":true}), params),
                     _ => Err("unsupported composition layer type".into()),
                 };
@@ -704,14 +706,16 @@ impl Adapter {
                     }
                 }
             }
-            if let Some(graph) = params
-                .get("legacyMotionGraph")
-                .filter(|value| value.is_object())
+            let graph = params.get("legacyMotionGraph").filter(|value|value.is_object()).unwrap_or(&Value::Null);
+            let (parents, warnings) = migration_hierarchy::apply(&mut self.session, page, graph, &native_layers);
+            self.warnings.extend(warnings);
             {
                 self.warnings.extend(migration_motion::apply(
                     &mut self.session,
                     graph,
                     &native_layers,
+                    page,
+                    &parents,
                 ));
             }
         }
@@ -863,6 +867,72 @@ mod tests {
         let bytes = adapter.native_bytes().unwrap();
         adapter.open_bytes(&bytes).unwrap();
         assert_eq!(visible, adapter.preview_png(0.2, 0).unwrap());
+    }
+    #[test]
+    fn migrated_cycles_and_group_compositing_are_explicit_review_items() {
+        let mut adapter=Adapter::default();
+        adapter.dispatch("project.new", &json!({"width":24,"height":24,"legacyDocument":{"composition":{"pages":[{
+            "width":24,"height":24,"layers":[
+                {"id":"a","kind":"group","properties":{"parentId":"b"}},
+                {"id":"b","kind":"group","properties":{"parentId":"a"}},
+                {"id":"c","kind":"group","opacity":0.5,"properties":{}},
+                {"id":"s1","kind":"shape","properties":{"parentId":"c"}},
+                {"id":"s2","kind":"shape","properties":{"parentId":"c"}}
+            ]}]}}
+        })).unwrap();
+        assert_eq!(adapter.warnings.iter().filter(|warning|warning.contains("Cyclic")).count(),2);
+        assert!(adapter.warnings.iter().any(|warning|warning.contains("compositing review")));
+        assert!(adapter.preview_png(0.0,0).is_ok());
+    }
+    #[test]
+    fn migrated_group_pivot_animation_and_inherited_alpha_survive_reopening() {
+        let mut adapter = Adapter::default();
+        adapter.dispatch("project.new", &json!({"width":48,"height":48,"fps":10,"durationMs":200,
+            "legacyDocument":{"composition":{"pages":[{"width":48,"height":48,"background":"#00000000","layers":[
+                {"id":"child","kind":"shape","x":4,"y":0,"width":4,"height":4,"opacity":0.5,"properties":{"fill":"#ff0000"}},
+                {"id":"group","kind":"group","x":20,"y":20,"width":16,"height":16,"rotation":90,"opacity":0.5,"properties":{}}
+            ]}]}},
+            "legacyMotionGraph":{"frameRate":{"numerator":10,"denominator":1},"durationFrames":2,
+                "nodes":[{"nodeId":"g","targetLayerId":"group","transformOriginX":0,"transformOriginY":0},
+                    {"nodeId":"c","targetLayerId":"child","parentNodeId":"g"}],
+                "tracks":[{"targetLayerId":"group","property":"position_x","keyframes":[{"frame":0,"value":0},{"frame":1,"value":8}]},
+                    {"targetLayerId":"group","property":"opacity","keyframes":[{"frame":0,"value":0.5},{"frame":1,"value":1.0}]}]}
+        })).unwrap();
+        assert!(adapter.warnings.is_empty(), "{:?}",adapter.warnings);
+        let first=adapter.preview_png(0.0,0).unwrap();
+        let last=adapter.preview_png(0.1,0).unwrap();
+        let a=image::load_from_memory(&first).unwrap().to_rgba8();
+        let b=image::load_from_memory(&last).unwrap().to_rgba8();
+        assert_eq!(a.get_pixel(17,25).0,[255,0,0,64]);
+        assert_eq!(a.get_pixel(25,25).0,[0,0,0,0]);
+        assert_eq!(b.get_pixel(25,25).0,[255,0,0,128]);
+        assert_eq!(b.get_pixel(17,25).0,[0,0,0,0]);
+        let bytes=adapter.native_bytes().unwrap();
+        adapter.open_bytes(&bytes).unwrap();
+        assert_eq!(first,adapter.preview_png(0.0,0).unwrap());
+        assert_eq!(last,adapter.preview_png(0.1,0).unwrap());
+        let comp=adapter.session.active_comp().unwrap();
+        assert!(comp.layers.iter().any(|layer|layer.parent.is_some()));
+    }
+    #[test]
+    fn migrated_leaf_pivot_and_hidden_static_group_preserve_pixels() {
+        let mut adapter=Adapter::default();
+        adapter.dispatch("project.new", &json!({"width":24,"height":24,"legacyDocument":{"composition":{"pages":[{
+            "width":24,"height":24,"background":"#00000000","layers":[
+                {"id":"leaf","kind":"shape","x":8,"y":8,"width":4,"height":8,"rotation":90,"properties":{"fill":"#ff0000"}},
+                {"id":"hidden","kind":"group","x":0,"y":0,"width":24,"height":24,"visible":false,"properties":{}},
+                {"id":"hidden-child","kind":"shape","x":12,"y":12,"width":8,"height":8,"properties":{"fill":"#0000ff","parentId":"hidden"}}
+            ]}]}},"legacyMotionGraph":{"frameRate":{"numerator":30,"denominator":1},"durationFrames":1,
+                "nodes":[{"nodeId":"n","targetLayerId":"leaf","transformOriginX":0,"transformOriginY":0}],"tracks":[]}
+        })).unwrap();
+        assert!(adapter.warnings.is_empty(),"{:?}",adapter.warnings);
+        let png=adapter.preview_png(0.0,0).unwrap();
+        let image=image::load_from_memory(&png).unwrap().to_rgba8();
+        assert_eq!(image.get_pixel(2,10).0,[255,0,0,255]);
+        assert_eq!(image.get_pixel(15,15).0,[0,0,0,0]);
+        let bytes=adapter.native_bytes().unwrap();
+        adapter.open_bytes(&bytes).unwrap();
+        assert_eq!(png,adapter.preview_png(0.0,0).unwrap());
     }
     #[test]
     fn migrated_motion_changes_native_pixels_and_survives_reopening() {

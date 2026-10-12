@@ -1,7 +1,7 @@
 {
   "schemaVersion": "studio.worker-runtime-manifest.v1",
   "runtimeName": "clicko-media-cpu",
-  "runtimeVersion": "1.0.0",
+  "runtimeVersion": "1.0.1",
   "capability": "media_cpu",
   "queues": [
     "studio.media.cpu"
@@ -101,7 +101,7 @@
         "/opt/clicko/bin/clicko-effectcraft-adapter",
         "--version"
       ],
-      "versionPattern": "clicko-effectcraft-1\\.0\\.0\\+67434e90"
+      "versionPattern": "clicko-effectcraft-1\\.0\\.1\\+67434e90"
     }
   ],
   "isolation": {
