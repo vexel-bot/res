@@ -1542,6 +1542,12 @@ class CreateStudioDocumentRequest(StudioContract):
     assets: list[AssetReferenceV1] = Field(default_factory=list)
     correlation_id: str | None = Field(default=None, max_length=128)
 
+    @model_validator(mode="after")
+    def validate_carousel_pages(self) -> CreateStudioDocumentRequest:
+        if self.content_type == "carousel" and len(self.composition.pages) < 2:
+            raise ValueError("Carousel documents require at least two pages")
+        return self
+
 
 class ReplaceStudioDocumentRequest(StudioContract):
     expected_revision: int = Field(ge=1)

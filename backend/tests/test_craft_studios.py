@@ -47,6 +47,23 @@ def headers(token, key=None):
     return result
 
 
+def test_invalid_carousel_returns_validation_error_without_creating_document(client):
+    token, workspace = register(client, "invalid-craft-carousel@example.com")
+    base = "/api/v1/studios/v1/documents"
+    before = client.get(base, headers=headers(token), params={"workspace_id": workspace}).json()
+    response = client.post(base, headers=headers(token), json={
+        "workspaceId": workspace, "title": "Incomplete carousel", "contentType": "carousel",
+        "brief": {"objective": "Validate page cardinality", "audience": "QA"},
+        "composition": {"pages": [{
+            "id": "only-page", "width": 320, "height": 320, "layers": [],
+        }]},
+    })
+    assert response.status_code == 422, response.text
+    assert "at least two pages" in response.text
+    after = client.get(base, headers=headers(token), params={"workspace_id": workspace}).json()
+    assert after == before
+
+
 @pytest.fixture
 def native_boundary(monkeypatch, tmp_path):
     settings = get_settings()

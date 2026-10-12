@@ -87,8 +87,9 @@ para a prévia. Nenhum editor antigo serve de alternativa.
 | Imagem media CPU | Build concluído; usuário 10001, root somente leitura, sem rede na atestação e sete ferramentas verificadas |
 | Inventário CycloneDX | 825 componentes instalados/registrados nos locks, com versões, imagem e checksums registrados |
 | Fila HTTP/Redis/Celery real | Exportação MP4 e checksum passaram no worker atestado e isolado |
-| Cancelamento nativo em execução | Passou em 0,406 s no fixture; nenhum artefato parcial publicado |
-| Contratos de backend | 22 testes passaram, incluindo falha de commit, recuperação de efeitos, snapshots adulterados e impossibilidade de reativar motores antigos |
+| Cancelamento nativo em execução | Passou novamente na imagem atualizada durante exportação real; nenhum artefato parcial publicado |
+| Contratos de backend | 23 testes passaram, incluindo falha de commit, recuperação de efeitos, snapshots adulterados, rejeição de carrossel inválido e impossibilidade de reativar motores antigos |
+| Criação com carrossel inválido | Rejeitada com `422` antes da persistência; nenhum documento criado. O caso antes retornava `500` |
 | Regressões dos adaptadores Rust | Photo 2, Film 3 e Effect 9 testes passaram; transparência total/parcial e reabertura verificadas |
 | Recuperação real de camadas | Animação de opacity, fundo transparente, replay, CAS e composição vinculada passaram nos motores reais |
 | Recuperação no frontend | Navegação para a composição, worker WASM, paridade de pixels e revisão da montagem preservada passaram |
@@ -136,7 +137,7 @@ uma interrupção posterior do daemon durante a qualificação upstream; o servi
 foi reiniciado e o último documento do ensaio foi repetido com sucesso em outra
 cópia privada. A interrupção não foi contabilizada como aprovação dos testes.
 Imagem media CPU validada nesta rodada:
-`sha256:840cc18ef3a3c3e5d361dd46b4e547b59cf3abfe620f5bb4333328067f645627`.
+`sha256:a7b4d7eafc7e4b843a6dacf338337fdcbb4e22a245b80991c035aeb97434d4d7`.
 Esse identificador corresponde à imagem local; não houve publicação em registry.
 Evidências estão em `media-worker-attestation.json`, `media-worker-sbom.cdx.json`
 e `queue-acceptance-results.json`, no diretório de QA ignorado.
