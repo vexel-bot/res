@@ -23,6 +23,8 @@ interface Options {
 }
 
 export function craftError(cause: unknown) {
+  if (cause instanceof Error && cause.message.includes("craft_pending_composition_requires_link")) return "Revise a composição de efeitos e use-a na montagem antes de exportar.";
+  if (cause instanceof Error && cause.message.includes("craft_legacy_visual_layers_missing")) return "O arquivo original não contém camadas visuais recuperáveis. Revise os avisos de migração.";
   return cause instanceof Error ? cause.message : "Não foi possível concluir a operação do Studio.";
 }
 function isConflict(cause: unknown) { return cause instanceof APIError && cause.status === 409; }
@@ -272,6 +274,7 @@ export function useCraftStudio(options: Options) {
     selectPage: (pageId: string) => operate((active) => craftApi.inspection(active.documentId, undefined, pageId), (value) => { setInspection(value); setActivePageId(value.activePageId || pageId); activePageRef.current = value.activePageId || pageId; }),
     pageCommand: (id: string, params: Record<string, unknown>) => operate((active) => craftApi.commands(active.documentId, active.revision, [{ id, params }], crypto.randomUUID(), "Organização de páginas", activePageRef.current), accept),
     linkComposition: (compositionDocumentId: string) => operate((active) => craftApi.linkComposition(active.documentId, active.revision, compositionDocumentId, crypto.randomUUID()), accept),
+    recoverEffects: () => operate((active) => craftApi.recoverEffects(active.documentId, active.revision, crypto.randomUUID()), accept),
     review: async () => operate((active) => {
       if (job?.status !== "succeeded" || jobRevision !== active.revision) throw new Error("Exporte a revisão atual antes de enviá-la para aprovação.");
       return productApi.requestStudioReview(active.documentId, "Criado e editado no Clicko Studios", job.id);

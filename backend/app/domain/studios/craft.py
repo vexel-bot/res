@@ -30,6 +30,10 @@ class CraftMigrationRequestV1(StudioContract):
     expected_revision: int = Field(ge=1)
 
 
+class CraftRecoverEffectsRequestV1(StudioContract):
+    expected_revision: int = Field(ge=1)
+
+
 class CraftRenderRequestV1(StudioContract):
     expected_revision: int = Field(ge=1)
     format: str = Field(default="png", pattern=r"^[a-z0-9_]{2,12}$")

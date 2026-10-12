@@ -1,8 +1,9 @@
 # Substituição dos Studios por Craft
 
 Estado em 12 de outubro de 2026: implementação no checkout de integração,
-com fontes completos e builds reais dos três motores. O aceite final ainda
-depende das verificações de servidor descritas abaixo.
+com fontes completos, builds reais dos três motores e exportação/cancelamento
+pela fila de servidor validados. O aceite final ainda depende da qualificação
+de projetos reais e dos fluxos descritos abaixo.
 
 Checkout: `C:/Users/edugu/Downloads/res-craft-integration`, branch
 `codex/craft-studios`. O projeto original em `C:/Users/edugu/Downloads/res`
@@ -54,6 +55,11 @@ e recursos, inclusive fontes tipográficas, em seus diretórios `licenses`.
   ao artefato e à versão aprovados.
 - Migração para os modelos nativos com arquivo dos originais e pendências
   explícitas para operações que não podem ser convertidas com fidelidade.
+- Recuperação das camadas visuais e motion graphs arquivados em composições
+  EffectCraft editáveis, sem duplicar footage/áudio/legendas da montagem.
+  A interface abre a composição e oferece seu retorno ao FilmCraft. Composições
+  pendentes precisam ser vinculadas antes da exportação. Reabrir uma composição
+  já recuperada mantém a revisão e as aprovações da montagem.
 - Componentes, timelines, hooks e renderizadores exclusivos dos editores antigos
   retirados da execução. Os workers anteriores e testes específicos desses
   motores estão arquivados em `docs/studios/archive`, fora dos builds e imports.
@@ -74,17 +80,32 @@ para a prévia. Nenhum editor antigo serve de alternativa.
 | WASM Photo/Film/Effect | Bundles gerados; execução real dos três em workers validada |
 | Arquivo nativo → WASM → salvar/reabrir → PNG | Passou nos três motores; SHA-256 igual à referência nativa |
 | EffectCraft: tempo de entrada/saída, alpha e reabertura | Passou no WASM real; canto transparente e centro vermelho verificados |
-| API real dos três motores | Criação, migração, edição, histórico, conflito, reabertura e exportação passaram na rodada anterior |
+| API real dos três motores | Criação, migração, edição, histórico, conflito, reabertura e exportação passaram novamente nos builds finais |
 | Áudio real em FilmCraft | Importação, mix e MP4 com áudio não silencioso passaram |
-| Contratos de backend | 19 testes passaram; teste adicional de impossibilidade de reativar os motores antigos também passou |
+| EffectCraft → FilmCraft | WebM transparente, atualização da mesma composição, áudio preservado e bundle com `.ecproj`/WAV passaram |
+| Prévia do frontend → exportação nativa | PNG do worker real da interface conferido por SHA-256 nos três motores |
+| Imagem media CPU | Build concluído; usuário 10001, root somente leitura, sem rede na atestação e sete ferramentas verificadas |
+| Inventário CycloneDX | 825 componentes instalados/registrados nos locks, com versões, imagem e checksums registrados |
+| Fila HTTP/Redis/Celery real | Exportação MP4 e checksum passaram no worker atestado e isolado |
+| Cancelamento nativo em execução | Passou em 0,406 s no fixture; nenhum artefato parcial publicado |
+| Contratos de backend | 22 testes passaram, incluindo falha de commit, recuperação de efeitos, snapshots adulterados e impossibilidade de reativar motores antigos |
+| Regressões dos adaptadores Rust | Photo 2, Film 3 e Effect 9 testes passaram; transparência total/parcial e reabertura verificadas |
+| Recuperação real de camadas | Animação de opacity, fundo transparente, replay, CAS e composição vinculada passaram nos motores reais |
+| Recuperação no frontend | Navegação para a composição, worker WASM, paridade de pixels e revisão da montagem preservada passaram |
+| Referência CLI upstream PhotoCraft | Compilou integralmente em 47 min; CLI Film/Effect e interfaces desktop ainda não qualificados |
+| `.pcraft` Clicko → CLI PhotoCraft original → PNG | Abriu e converteu; pixels RGBA idênticos ao adaptador, com codificação PNG diferente |
 | Transporte Rust compartilhado | 6 testes passaram, incluindo frames e schemas de parâmetros |
 | Runner isolado | 3 testes passaram |
 | Estado e rotas TypeScript | 7 testes passaram |
 | Interface Playwright | 7 testes passaram: edição, autosave, páginas, IA/undo, cancelamento, conflitos e recuperação |
 | Compilação editorial de documentos | 27 testes passaram |
 | Publicação e áudio | 8 testes passaram; binding a export nativo, pacote, revisão, agendamento e isolamento |
-| TypeScript e build de produção | Passaram; build inclui os três bundles WASM e workers |
+| Avatar, biblioteca, API, aprovações e workspace | 32 testes de regressão passaram |
+| Ensaio do banco existente | 31 vídeos convertidos para arquivos FilmCraft válidos e reabertos; originais/versões arquivados e checksums conferidos numa cópia privada |
+| Fidelidade desse ensaio | 30 dos 31 vídeos têm avisos (1.267 ao todo); camadas visuais e 25 motion graphs exigem integração/migração EffectCraft. A reabertura não comprova fidelidade |
+| TypeScript e build de produção | Passaram; build repetido com os três bundles WASM finais e workers |
 | Coleção da suíte de backend | Sem erros de importação após arquivar testes exclusivos dos renderizadores retirados |
+| Regressão ampla do backend | Não qualificada: execução interrompida após falhas no primeiro bloco; amostras diagnosticadas exigem fixture local de auditoria ausente e esperam acesso ao renderer Alight retirado |
 
 Os testes de contrato usam doubles somente nas fronteiras de processo/provider.
 Eles não comprovam fidelidade visual nem uma chamada a um provedor pago de IA.
@@ -93,27 +114,27 @@ A suíte completa de regressão do sistema e as suítes completas upstream ainda
 não foram qualificadas. As interfaces desktop upstream não foram recompiladas;
 os seus fontes completos estão preservados.
 
+O Docker Desktop foi atualizado para 4.94.0 (241994), com Engine 29.8.2. O
+problema anterior de inicialização deixou de bloquear os builds e jobs.
+Imagem media CPU validada nesta rodada:
+`sha256:840cc18ef3a3c3e5d361dd46b4e547b59cf3abfe620f5bb4333328067f645627`.
+Esse identificador corresponde à imagem local; não houve publicação em registry.
+Evidências estão em `media-worker-attestation.json`, `media-worker-sbom.cdx.json`
+e `queue-acceptance-results.json`, no diretório de QA ignorado.
+
+O teste de fila usa cópia do banco em volume Linux descartável. A primeira
+tentativa identificou erro de I/O ao compartilhar SQLite simultaneamente entre
+Windows e Linux por NTFS. A infraestrutura de QA foi corrigida, e o worker agora
+recupera a transação antes de registrar uma falha SQLAlchemy. Projetos e banco
+originais não foram usados para escrita nesse teste.
+
 ## Pendências para o aceite final
 
-1. Recuperar o engine Linux do Docker Desktop. Ele não inicia devido ao socket
-   `sailor-ingest.sock`; a tentativa de limpeza manual foi bloqueada pela revisão
-   automática de execução. Reinícios oficiais não resolveram. A preferência
-   temporária de downloads de atualização foi restaurada ao valor original.
-2. Repetir a aceitação HTTP nos builds finais e a comparação da prévia da
-   interface com a exportação. Atualizar os bundles Photo/Film após as últimas
-   alterações de migração e schemas, e repetir a paridade de operações completas.
-3. Concluir o teste de ligação EffectCraft → FilmCraft com WebM transparente,
-   atualização da mesma composição na timeline, manutenção do áudio e bundle
-   editável. O teste existe; sua rodada anterior parou no schema de `edit.clear`,
-   corrigido e já validado no WASM. O caminho completo de servidor ainda precisa
-   ser repetido.
-4. Construir e atestar a imagem `workers/media-cpu/Dockerfile`, conferir suas
-   versões reais, digest OCI, SBOM e execução de jobs. O Dockerfile e manifesto
-   foram substituídos, mas essa imagem ainda não foi construída.
-5. Qualificar migrações de documentos reais com efeitos/receitas avançadas,
+1. Qualificar migrações de documentos reais com efeitos/receitas avançadas,
    concorrência, arquivos grandes, recuperação e cancelamento de exportações
-   demoradas. Pendências de conversão preservam os originais e exigem revisão.
-6. Qualificar a IA com o provedor configurado, builds de referência upstream e
+   maiores. O cancelamento durante um fixture de 60 segundos já passou; faltam
+   os casos reais de carga. Pendências de conversão preservam os originais.
+2. Qualificar a IA com o provedor configurado, builds de referência upstream e
    regressões dos fluxos de geração, avatar, revisão e publicação. Não houve
    promoção de produção nem implantação na VPS.
 
@@ -139,7 +160,12 @@ Com API de QA em `8018` e frontend em `3018`:
 ```powershell
 python scripts/craft/acceptance.py
 python scripts/craft/media_acceptance.py
+python scripts/craft/recovery_acceptance.py
+python scripts/craft/worker_acceptance.py
+docker pull redis:8.2.1-alpine
+python scripts/craft/queue_acceptance.py
 node scripts/validation/craft-browser-parity.mjs
+node scripts/validation/craft-recovery-browser.mjs
 node scripts/validation/craft-wasm-reference.mjs
 node scripts/validation/craft-wasm-effects.mjs
 ```
@@ -147,4 +173,4 @@ node scripts/validation/craft-wasm-effects.mjs
 Os dois últimos testes podem usar as referências nativas já salvas, mesmo com
 Docker indisponível. Logs, projetos, PNGs, exports e credenciais de QA ficam em
 `.codex-runtime/craft`, ignorados pelo Git. Essas verificações não substituem os
-testes pendentes de exportação no servidor.
+qualificação dos projetos reais e da implantação.

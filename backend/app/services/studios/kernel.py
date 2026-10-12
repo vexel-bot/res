@@ -46,8 +46,10 @@ def emit_event(
     return event
 
 
-def create_document(db: Session, request: CreateStudioDocumentRequest, user: User) -> CreativeDocument:
-    creation_key = (
+def create_document(
+    db: Session, request: CreateStudioDocumentRequest, user: User, *, creation_key: str | None = None
+) -> CreativeDocument:
+    creation_key = creation_key or (
         f"studio:{request.workspace_id}:post:{request.post_id}:{request.content_type}" if request.post_id else None
     )
     if creation_key and request.engine:

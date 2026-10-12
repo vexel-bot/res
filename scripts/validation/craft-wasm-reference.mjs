@@ -20,7 +20,7 @@ try {
     assert.equal(sha256(png), fixture.previewSha256, 'Native PNG checksum changed');
     const page = await browser.newPage();
     try {
-      await page.goto('http://127.0.0.1:3018', { waitUntil: 'domcontentloaded' });
+      await page.goto('http://127.0.0.1:3018', { waitUntil: 'domcontentloaded', timeout: 120000 });
       const result = await page.evaluate(async ({ fixture, bytes }) => {
         const { CraftWorker } = await import('/src/studios/craft/craftWorker.ts');
         const worker = new CraftWorker(fixture.engine, fixture.documentId, fixture.revision);

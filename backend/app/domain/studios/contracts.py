@@ -120,7 +120,7 @@ class CreativePageV1(StudioContract):
     width: int = Field(ge=320, le=8192)
     height: int = Field(ge=320, le=8192)
     safe_area: int = Field(default=48, ge=0, le=1000)
-    background: str = Field(default="#10181c", pattern=r"^#[0-9a-fA-F]{6}$")
+    background: str = Field(default="#10181c", pattern=r"^#(?:[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$")
     duration_ms: int | None = Field(default=None, ge=1, le=86_400_000)
     layers: list[CreativeLayerV1] = Field(default_factory=list, max_length=1000)
 

@@ -6,6 +6,7 @@ from datetime import UTC, datetime
 
 from pydantic import ValidationError
 from sqlalchemy import select
+from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 
 from ...config import get_settings
@@ -583,6 +584,7 @@ def create_job(
         from ...domain.studios.contracts import NativeEditorStateV1
         from ...providers.studios.craft import require_capability
         from .craft import assert_build, scoped_asset
+        from .compatibility import record_to_contract
 
         state = NativeEditorStateV1.model_validate(request.request.get("nativeEditorState"))
         if request.provider != "craft." + state.engine:
@@ -591,8 +593,10 @@ def create_job(
         record = db.get(CreativeDocument, request.document_id)
         if (not record or record.workspace_id != request.workspace_id or snapshot.document_id != record.id
                 or snapshot.workspace_id != record.workspace_id or snapshot.revision != record.revision
-                or snapshot.native_editor_state != state):
+                or snapshot.native_editor_state != state or snapshot != record_to_contract(record)):
             raise ValueError("craft_render_snapshot_conflict")
+        if any(item.engine == "effectcraft" and item.source_document_id and not item.rendered_asset_id for item in state.dependencies):
+            raise ValueError("craft_pending_composition_requires_link")
         scoped_asset(db, record.workspace_id, state.project_asset_id, state.checksum_sha256)
         assert_build(state, require_capability(state.engine))
     if request.provider == "alight-motion.contextual-v1":
@@ -1017,6 +1021,10 @@ def execute_job_once(db: Session, job: StudioGenerationJob) -> str:
         db.commit()
         return job.status
     except Exception as error:
+        # A failed flush/commit leaves the transaction unusable. Recover it
+        # before reading persisted state and recording the job's retry/failure.
+        if isinstance(error, SQLAlchemyError):
+            db.rollback()
         db.refresh(job)
         job.error_code = type(error).__name__
         job.error_message = str(error)[:2000]

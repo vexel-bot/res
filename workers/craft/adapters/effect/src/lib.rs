@@ -598,12 +598,25 @@ impl Adapter {
                 self.session.execute("comp.new", json!({"name":format!("Página {}", index+1),"width":page.get("width"),"height":page.get("height"),"duration":page.get("durationMs").and_then(Value::as_f64).unwrap_or(5000.0)/1000.0})).map_err(|e| e.to_string())?;
             }
             if let Some(background) = page.get("background") {
+                // Craft solids store RGB separately from transform opacity.
+                // Translating RGBA as an RGB string makes transparent overlays opaque.
+                let (rgb, alpha) = match background.as_str() {
+                    Some(hex) if hex.len() == 9 && hex.starts_with('#') => (
+                        json!(&hex[..7]),
+                        f64::from(u8::from_str_radix(&hex[7..], 16).map_err(|e| e.to_string())?) / 255.0,
+                    ),
+                    _ => (background.clone(), 1.0),
+                };
                 self.session
-                    .execute("comp.settings", json!({"background":background}))
+                    .execute("comp.settings", json!({"background":rgb}))
                     .map_err(|e| e.to_string())?;
-                self.session
-                    .execute("layer.newSolid", json!({"name":"Fundo","color":background}))
-                    .map_err(|e| e.to_string())?;
+                if alpha > 0.0 {
+                    let created = self.session
+                        .execute("layer.newSolid", json!({"name":"Fundo","color":rgb}))
+                        .map_err(|e| e.to_string())?;
+                    let id = created["layer"].as_u64().ok_or("background layer missing")?;
+                    self.session.execute("prop.set", json!({"layer":id,"path":"transform/opacity","value":alpha * 100.0})).map_err(|e|e.to_string())?;
+                }
             }
             if index == 0 {
                 native_layers.extend(migration_timeline::apply(self, params));
@@ -785,6 +798,21 @@ impl Adapter {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn rgba_background_alpha_survives_native_reopening() {
+        for (color, expected_alpha) in [("#ff000000", 0u8), ("#ff000080", 128), ("#ff0000", 255)] {
+            let mut adapter = Adapter::default();
+            adapter.dispatch("project.new", &json!({"width":16,"height":16,
+                "legacyDocument":{"composition":{"pages":[{"width":16,"height":16,"background":color,"layers":[]}]}}
+            })).unwrap();
+            let png = adapter.preview_png(0.0, 0).unwrap();
+            let image = image::load_from_memory(&png).unwrap().to_rgba8();
+            assert_eq!(image.get_pixel(8, 8).0[3], expected_alpha, "{color}");
+            let bytes = adapter.native_bytes().unwrap();
+            adapter.open_bytes(&bytes).unwrap();
+            assert_eq!(png, adapter.preview_png(0.0, 0).unwrap());
+        }
+    }
     #[test]
     fn media_timeline_trim_survives_native_reopening() {
         let root =

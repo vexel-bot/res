@@ -1057,6 +1057,8 @@ def create_render_job(db, record, request, user, key):
         raise ValueError("craft_native_project_required")
     if request.expected_revision != contract.revision:
         raise ValueError("studio_document_conflict")
+    if any(item.engine == "effectcraft" and item.source_document_id and not item.rendered_asset_id for item in state.dependencies):
+        raise ValueError("craft_pending_composition_requires_link")
     capability = require_capability(state.engine)
     assert_build(state, capability)
     if request.format not in capability.get("formats", []):
@@ -1375,6 +1377,95 @@ def verified_render(db, record, job_id):
         if sha256_file(path) != artifact.checksum_sha256:
             raise ValueError("studio_review_render_artifact_mismatch")
     return result
+
+
+def recover_effects(db, record, request, user, key):
+    """Recover archived visual layers as an editable overlay, preserving the montage.
+
+    Footage, audio and captions stay in FilmCraft. The new composition is ready
+    for native review; its render is linked through the existing composition flow.
+    """
+    from ...domain.studios.contracts import CreateStudioDocumentRequest, NativeCompositionReferenceV1
+    from ...domain.studios.craft import CraftMigrationRequestV1
+    from ...models import BrandProfile
+    from ..brand import brand_readiness
+    from .kernel import create_document
+
+    digest = operation_digest("recover-effects", request.model_dump(mode="json"))
+    existing = receipt(db, record, key, digest)
+    if existing:
+        return existing
+    current = record_to_contract(record)
+    state = current.native_editor_state
+    if current.revision != request.expected_revision:
+        raise ValueError("studio_document_conflict")
+    if not state or state.engine != "filmcraft" or not state.legacy_archive_asset_id:
+        raise ValueError("craft_effect_recovery_requires_migrated_filmcraft")
+    require_capability("effectcraft")
+    archive_asset = scoped_asset(db, record.workspace_id, state.legacy_archive_asset_id)
+    with get_object_storage(archive_asset.storage_backend).materialize(archive_asset.storage_key) as path:
+        if sha256_file(path) != archive_asset.checksum_sha256:
+            raise ValueError("craft_legacy_archive_checksum_mismatch")
+        archived = json.loads(path.read_text(encoding="utf-8"))
+    original = CreativeDocumentV1.model_validate(archived["canonicalDocument"])
+    if original.document_id != record.id or original.workspace_id != record.workspace_id:
+        raise ValueError("craft_legacy_archive_scope_mismatch")
+    if not any(page.layers for page in original.composition.pages):
+        raise ValueError("craft_legacy_visual_layers_missing")
+    graph = next((item.get("graph") for item in archived.get("motionGraphs", []) if item.get("graph")), None)
+    graph = graph or (original.composition.narrative.get("editorialV2") or {}).get("motionGraph") or original.composition.narrative.get("motionGraph")
+    narrative = {**original.composition.narrative, "craftMigrationSource": {
+        "documentId": record.id, "archiveAssetId": archive_asset.id,
+        "checksumSha256": archive_asset.checksum_sha256,
+    }}
+    if graph:
+        narrative["motionGraph"] = graph
+    pages = [page.model_copy(update={"background": "#00000000"}) for page in original.composition.pages]
+    composition = original.composition.model_copy(update={
+        "pages": pages, "media_timeline": None, "narrative": narrative,
+    })
+    brand = db.scalar(select(BrandProfile).where(BrandProfile.workspace_id == record.workspace_id))
+    if not brand:
+        raise ValueError("studio_brand_revision_mismatch")
+    source = create_document(db, CreateStudioDocumentRequest(
+        workspace_id=record.workspace_id, title=(original.title[:200] + " · camadas e efeitos"),
+        content_type="video", engine="effectcraft", brand_revision=brand_readiness(brand)["revision"],
+        brief=original.brief, composition=composition, assets=original.assets,
+    ), user, creation_key="craft-recovery:" + operation_digest("source", {
+        "workspace": record.workspace_id, "parent": record.id, "archive": archive_asset.checksum_sha256,
+    }))
+    if not record_to_contract(source).native_editor_state:
+        migrate(db, source, CraftMigrationRequestV1(engine="effectcraft", expected_revision=source.revision),
+                user, "recover-source:" + source.id)
+    source_state = record_to_contract(source).native_editor_state
+    dependency = NativeCompositionReferenceV1(
+        engine="effectcraft", source_document_id=source.id, project_asset_id=source_state.project_asset_id,
+        checksum_sha256=source_state.checksum_sha256, build_id=source_state.build_id,
+    )
+    previous = next((item for item in state.dependencies if item.source_document_id == source.id), None)
+    if previous:
+        from uuid import NAMESPACE_URL, uuid5
+
+        # Opening an existing recovered composition must not revoke approvals
+        # or create a new montage revision when its native content is unchanged.
+        return {
+            "document": current.model_dump(by_alias=True, mode="json"),
+            "inspection": inspection(db, record),
+            "receiptId": str(uuid5(NAMESPACE_URL, digest + ":" + key + ":" + source.id)),
+            "compositionDocumentId": source.id,
+            "requiresCompositionReview": not previous.rendered_asset_id or previous.checksum_sha256 != source_state.checksum_sha256,
+        }
+    dependencies = [item for item in state.dependencies if item.source_document_id != source.id]
+    with workspace_files(db, record, state) as (_directory, params, _manifest):
+        project = call_engine("filmcraft", "project.inspect", params)
+        return _commit_project(
+            db, record, user, Path(params["nativePath"]), engine="filmcraft",
+            capability=require_capability("filmcraft"), expected_revision=request.expected_revision,
+            key=key, digest=digest, project=project.get("inspection", project),
+            manifests=state.asset_manifest, warnings=state.migration_warnings,
+            dependencies=[*dependencies, dependency], label="Recuperar camadas e efeitos",
+            operation_metadata={"compositionDocumentId": source.id, "requiresCompositionReview": True},
+        )
 
 
 def link_composition(db, record, source, request, user, key):

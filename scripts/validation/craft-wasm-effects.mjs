@@ -7,7 +7,7 @@ import { chromium } from '@playwright/test';
 const browser = await chromium.launch({ headless: true });
 try {
   const page = await browser.newPage();
-  await page.goto('http://127.0.0.1:3018', { waitUntil: 'domcontentloaded' });
+  await page.goto('http://127.0.0.1:3018', { waitUntil: 'domcontentloaded', timeout: 120000 });
   const result = await page.evaluate(async () => {
     const { CraftWorker } = await import('/src/studios/craft/craftWorker.ts');
     const worker = new CraftWorker('effectcraft', crypto.randomUUID(), 1);

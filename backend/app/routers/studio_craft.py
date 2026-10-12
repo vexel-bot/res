@@ -19,6 +19,7 @@ from ..domain.studios.craft import (
     CraftLinkRequestV1,
     CraftMigrationRequestV1,
     CraftPreviewRequestV1,
+    CraftRecoverEffectsRequestV1,
     CraftRenderRequestV1,
 )
 from ..models import User
@@ -89,6 +90,17 @@ def execute_commands(
     result = invoke(craft.commands, db, record, request, user, key)
     result["linkedCompositionRefresh"] = schedule_composition_refresh(db, record, user)
     return result
+
+
+@router.post("/documents/{document_id}/craft/recover-effects")
+def recover_effects(
+    document_id: str,
+    request: CraftRecoverEffectsRequestV1,
+    key: str = Header(alias="Idempotency-Key", min_length=8, max_length=160),
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
+):
+    return invoke(craft.recover_effects, db, owned_document(db, user.id, document_id), request, user, key)
 
 
 @router.post("/documents/{document_id}/craft/ai-commands")

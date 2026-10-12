@@ -115,7 +115,9 @@ def composition_page_to_canvas(document: CreativeDocumentV1, page_index: int = 0
             "width": page.width,
             "height": page.height,
             "safeArea": page.safe_area,
-            "background": page.background,
+            # The navigation canvas only supports RGB; the canonical project
+            # retains its full RGBA background for the native Craft migration.
+            "background": page.background[:7] if len(page.background) == 9 and page.background.startswith("#") else page.background,
             "brandTokens": {"brandRevision": document.brand_memory_ref.revision},
             "layers": layers,
         }

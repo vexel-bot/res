@@ -98,9 +98,15 @@ jobs:
           python scripts/craft/wait_ready.py
           python scripts/craft/acceptance.py
           python scripts/craft/media_acceptance.py
+          python scripts/craft/recovery_acceptance.py
           node scripts/validation/craft-wasm-reference.mjs
           node scripts/validation/craft-wasm-effects.mjs
           node scripts/validation/craft-browser-parity.mjs
+          node scripts/validation/craft-recovery-browser.mjs
+          docker build --file workers/media-cpu/Dockerfile --tag clicko-media-cpu:craft .
+          python scripts/craft/worker_acceptance.py
+          docker pull redis:8.2.1-alpine
+          python scripts/craft/queue_acceptance.py
         env:
           ENVIRONMENT: development
           DATABASE_URL: sqlite:///./.codex-runtime/craft/qa.sqlite
@@ -114,3 +120,5 @@ jobs:
             .codex-runtime/craft/*-results.json
             .codex-runtime/craft/studio-*-editing.png
             .codex-runtime/craft/qa-*.log
+            .codex-runtime/craft/media-worker-*.json
+            .codex-runtime/craft/queue-qa-*/*.log

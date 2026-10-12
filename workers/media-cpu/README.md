@@ -37,3 +37,26 @@ transporte direto; o runner por job oferece um container sem rede.
 Os builds e testes locais não promovem uma imagem nem alteram a VPS Nexus.
 As evidências dos workers anteriores estão em
 `docs/studios/archive/media-cpu-runtime-pre-craft.md` e não atestam este runtime.
+
+## Validação reproduzível
+
+Após a aceitação HTTP com banco e storage de QA isolados:
+
+```bash
+python scripts/craft/worker_acceptance.py
+docker pull redis:8.2.1-alpine
+python scripts/craft/queue_acceptance.py
+```
+
+O primeiro teste confere usuário, filesystem, versões e checksums dos motores
+na imagem real e gera attestation e inventário CycloneDX em
+`.codex-runtime/craft/media-worker-*.json`. O inventário reúne pacotes instalados
+Python/Debian e dependências dos locks Rust; não é uma lista apenas das bibliotecas
+Rust efetivamente ligadas nos executáveis.
+
+O segundo cria API, Redis e worker descartáveis, usa uma cópia do banco de QA,
+exporta MP4 pela fila e cancela um processo nativo em andamento. O worker tem
+somente rede interna; os recursos criados pelo teste são removidos ao final.
+SQLite fica em volume Linux compartilhado entre API e worker: não use o mesmo
+arquivo SQLite por Windows e Linux em bind mount NTFS. `STORAGE_PATH` seleciona
+o storage de QA existente; os projetos originais não entram nesse teste.

@@ -121,6 +121,7 @@ export const craftApi = {
   ai: (id: string, revision: number, instruction: string, key: string, pageId?: string) => apiFetch<CraftReceipt>(`${path(id)}/craft/ai-commands`, json({ expectedRevision: revision, instruction, pageId }, key)),
   render: (id: string, revision: number, format: string, key: string, frame = 0, pageId?: string) => apiFetch<StudioGenerationJobRecord>(`${path(id)}/craft/render-jobs`, json({ expectedRevision: revision, format, frame, pageId }, key)),
   linkComposition: (id: string, revision: number, compositionDocumentId: string, key: string) => apiFetch<CraftReceipt>(`${path(id)}/craft/link-composition`, json({ expectedRevision: revision, compositionDocumentId }, key)),
+  recoverEffects: (id: string, revision: number, key: string) => apiFetch<CraftReceipt & { compositionDocumentId: string }>(`${path(id)}/craft/recover-effects`, json({ expectedRevision: revision }, key)),
   async preview(id: string, frame: number, signal?: AbortSignal, pageId?: string) {
     const response = await binary(`${path(id)}/craft/preview`, { ...json({ frame, pageId }), headers: { "Content-Type": "application/json" }, signal });
     return response.blob();
