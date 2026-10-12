@@ -1,5 +1,5 @@
 {
-  "exclude": ["node_modules", "dist", "tmp", "docs/studios/research"],
+  "exclude": ["node_modules", "dist", "tmp", "docs/studios/research", "docs/studios/archive", "third_party", "workers", ".codex-runtime"],
   "compilerOptions": {
     "target": "ES2022",
     "experimentalDecorators": true,
