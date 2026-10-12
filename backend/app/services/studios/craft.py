@@ -491,6 +491,10 @@ def legacy_conversion_warnings(contract, engine: str) -> list[str]:
     """Flag authored treatments outside the explicit native migration mapping."""
     warnings = []
     for page in contract.composition.pages:
+        if engine == "effectcraft" and page.layers != sorted(page.layers, key=lambda layer: layer.z_index):
+            warnings.append(
+                f"Page {page.id}: zIndex order needs native EffectCraft review; original preserved."
+            )
         for layer in page.layers:
             props = layer.properties
             for field in (
@@ -520,12 +524,42 @@ def legacy_conversion_warnings(contract, engine: str) -> list[str]:
                             ):
                                 continue
                     warnings.append(f"Layer {layer.id}: {field} needs native {engine} review; original preserved.")
-            if engine == "effectcraft" and layer.kind == "text":
-                for field in ("fontFamily", "fontWeight", "fontAssetId", "lineHeight", "letterSpacing", "align"):
-                    if props.get(field) is not None:
+            if engine == "photocraft" and props.get("parentId"):
+                warnings.append(
+                    f"Layer {layer.id}: parentId needs native PhotoCraft review; original preserved."
+                )
+            if layer.kind == "shape":
+                shape = props.get("shape", "rectangle")
+                supported_shapes = {"rectangle", "rect", "ellipse"} if engine == "photocraft" else {"rectangle", "rect"}
+                if not isinstance(shape, str) or shape not in supported_shapes:
+                    warnings.append(
+                        f"Layer {layer.id}: shape needs native {engine} review; original preserved."
+                    )
+                for field in ("borderRadius",) if engine == "photocraft" else ("radius", "borderRadius"):
+                    if props.get(field):
                         warnings.append(
-                            f"Layer {layer.id}: typography {field} needs native review; original preserved."
+                            f"Layer {layer.id}: {field} needs native {engine} review; original preserved."
                         )
+            if layer.kind == "text":
+                typography_fields = (
+                    "fontFamily", "font_family", "fontWeight", "font_weight", "fontAssetId",
+                    "font_size", "lineHeight", "line_height", "letterSpacing", "letterSpacingPx", "align",
+                    "autoFit", "fontStyle", "italic", "decoration", "textTransform",
+                ) if engine == "effectcraft" else (
+                    "fontAssetId", "font_style", "fontStyle", "italic", "line_height", "letter_spacing",
+                    "decoration", "textTransform",
+                )
+                for field in typography_fields:
+                    value = props.get(field)
+                    if value is None or (field in {"italic", "autoFit"} and value is False):
+                        continue
+                    if field in {"fontStyle", "font_style"} and value == "normal":
+                        continue
+                    if field in {"decoration", "textTransform"} and value == "none":
+                        continue
+                    warnings.append(
+                        f"Layer {layer.id}: typography {field} needs native review; original preserved."
+                    )
     recipes = contract.composition.narrative.get("editorialV2", {}).get("motionRecipes", [])
     if recipes:
         warnings.append("Legacy motion recipes require native EffectCraft authoring; original recipes preserved.")
@@ -1057,7 +1091,10 @@ def create_render_job(db, record, request, user, key):
         raise ValueError("craft_native_project_required")
     if request.expected_revision != contract.revision:
         raise ValueError("studio_document_conflict")
-    if any(item.engine == "effectcraft" and item.source_document_id and not item.rendered_asset_id for item in state.dependencies):
+    if any(
+        item.engine == "effectcraft" and item.source_document_id and not item.rendered_asset_id
+        for item in state.dependencies
+    ):
         raise ValueError("craft_pending_composition_requires_link")
     capability = require_capability(state.engine)
     assert_build(state, capability)
@@ -1413,7 +1450,10 @@ def recover_effects(db, record, request, user, key):
     if not any(page.layers for page in original.composition.pages):
         raise ValueError("craft_legacy_visual_layers_missing")
     graph = next((item.get("graph") for item in archived.get("motionGraphs", []) if item.get("graph")), None)
-    graph = graph or (original.composition.narrative.get("editorialV2") or {}).get("motionGraph") or original.composition.narrative.get("motionGraph")
+    graph = (
+        graph or (original.composition.narrative.get("editorialV2") or {}).get("motionGraph")
+        or original.composition.narrative.get("motionGraph")
+    )
     narrative = {**original.composition.narrative, "craftMigrationSource": {
         "documentId": record.id, "archiveAssetId": archive_asset.id,
         "checksumSha256": archive_asset.checksum_sha256,
@@ -1453,7 +1493,9 @@ def recover_effects(db, record, request, user, key):
             "inspection": inspection(db, record),
             "receiptId": str(uuid5(NAMESPACE_URL, digest + ":" + key + ":" + source.id)),
             "compositionDocumentId": source.id,
-            "requiresCompositionReview": not previous.rendered_asset_id or previous.checksum_sha256 != source_state.checksum_sha256,
+            "requiresCompositionReview": (
+                not previous.rendered_asset_id or previous.checksum_sha256 != source_state.checksum_sha256
+            ),
         }
     dependencies = [item for item in state.dependencies if item.source_document_id != source.id]
     with workspace_files(db, record, state) as (_directory, params, _manifest):

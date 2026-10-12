@@ -55,6 +55,9 @@ e recursos, inclusive fontes tipográficas, em seus diretórios `licenses`.
   ao artefato e à versão aprovados.
 - Migração para os modelos nativos com arquivo dos originais e pendências
   explícitas para operações que não podem ser convertidas com fidelidade.
+  O relatório registra build e checksums do arquivo nativo e do original.
+  Formas, cantos arredondados, tipografia e relações de parentesco não mapeadas
+  recebem avisos específicos; valores neutros não acrescentam pendências.
 - Recuperação das camadas visuais e motion graphs arquivados em composições
   EffectCraft editáveis, sem duplicar footage/áudio/legendas da montagem.
   A interface abre a composição e oferece seu retorno ao FilmCraft. Composições
@@ -95,11 +98,13 @@ para a prévia. Nenhum editor antigo serve de alternativa.
 | Inventário CycloneDX | 825 componentes instalados/registrados nos locks, com versões, imagem e checksums registrados |
 | Fila HTTP/Redis/Celery real | Exportação MP4 e checksum passaram no worker atestado e isolado |
 | Cancelamento nativo em execução | Passou novamente na imagem atualizada durante exportação real; nenhum artefato parcial publicado |
-| Contratos de backend | 24 testes passaram, incluindo falha de commit, recuperação de efeitos, snapshots adulterados, criação com grupos, rejeição de carrossel inválido e impossibilidade de reativar motores antigos |
+| Contratos de backend | 28 testes passaram, incluindo falha de commit, recuperação de efeitos, snapshots adulterados, criação com grupos, rejeição de carrossel inválido, avisos de fidelidade e impossibilidade de reativar motores antigos |
+| Regressão selecionada do Studio | 63 testes de contratos, publicação, áudio e compilação editorial passaram; os quatro casos de avisos de conversão foram repetidos após os últimos ajustes |
 | Criação com carrossel inválido | Rejeitada com `422` antes da persistência; nenhum documento criado. O caso antes retornava `500` |
 | Regressões dos adaptadores Rust | Photo 2, Film 3 e Effect 12 testes passaram; transparência, hierarquia/pivôs, ciclos e reabertura verificadas |
 | Hierarquia EffectCraft real | Posição, rotação, pivô e alpha herdado passaram na API e no WASM; SHA dos dois frames idêntico, reabertura preservada e pixels iguais na CLI upstream |
 | Ensaio representativo de hierarquia | Um projeto existente reaberto em cópia privada: avisos EffectCraft caíram de 37 para 9; sete grupos e nove pendências de hierarquia/pivô resolvidos. Os demais avisos continuam em revisão |
+| Ensaio completo de hierarquia `1.0.1` | 31 montagens e 29 composições reabertas; 120 arquivos nativos/originais com checksums conferidos. Avisos EffectCraft de 1.572 para 963; 384 avisos de hierarquia/pivô e 138 de camadas não suportadas resolvidos. Montagens nativas preservadas byte a byte |
 | Recuperação real de camadas | Animação de opacity, fundo transparente, replay, CAS e composição vinculada passaram nos motores reais |
 | Recuperação no frontend | Navegação para a composição, worker WASM, paridade de pixels e revisão da montagem preservada passaram |
 | Referências CLI upstream PhotoCraft, FilmCraft e EffectCraft | Compilaram integralmente; executaram os arquivos Clicko sem rede e com fontes em montagem somente leitura. Interfaces desktop ainda não qualificadas |
@@ -121,7 +126,7 @@ para a prévia. Nenhum editor antigo serve de alternativa.
 | Avatar, biblioteca, API, aprovações e workspace | 32 testes de regressão passaram |
 | Ensaio do banco existente | 31 vídeos convertidos para arquivos FilmCraft válidos e reabertos; originais/versões arquivados e checksums conferidos numa cópia privada |
 | Recuperação dos documentos existentes | 31 montagens nativas reabertas; 29 composições EffectCraft criadas e reabertas; dois vídeos sem camadas visuais. Ensaio somente em cópias privadas |
-| Fidelidade desse ensaio | 30 dos 31 vídeos exigem revisão. Os 1.267 avisos da montagem e 1.572 da composição preservam propriedades não representadas, hierarquia/pivôs, máscaras e receitas avançadas. A reabertura não comprova fidelidade |
+| Fidelidade desse ensaio | 30 dos 31 vídeos exigem revisão. Permanecem 1.267 avisos da montagem e 963 da composição no ensaio `1.0.1`; 14 composições excedem o orçamento automático de keyframes, quatro exigem revisão da composição de grupos e três de escala não uniforme. Máscaras e receitas avançadas também seguem pendentes. A reabertura não comprova fidelidade |
 | TypeScript e build de produção | Passaram; build repetido com os três bundles WASM finais e workers |
 | Coleção da suíte de backend | Sem erros de importação após arquivar testes exclusivos dos renderizadores retirados |
 | Regressão ampla do backend | Não qualificada: execução interrompida após falhas no primeiro bloco; amostras diagnosticadas exigem fixture local de auditoria ausente e esperam acesso ao renderer Alight retirado |
@@ -186,12 +191,32 @@ sempre copiando o banco de origem em modo somente leitura; falhas retornam
 código de saída não zero. As composições recuperadas continuam pendentes de
 revisão e vínculo na montagem, sem promover a migração no banco original.
 
-O ensaio do build `1.0.1` está em `migration-qa-1d2be2fadf2b/results.json`.
-Somente esse projeto existente foi repetido com a nova conversão; os números
-globais dos 31 documentos acima descrevem o ensaio anterior. Não foi declarada
-fidelidade completa para o conjunto. `hierarchy-acceptance-results.json`,
+O primeiro ensaio do build `1.0.1` está em `migration-qa-1d2be2fadf2b/results.json`.
+O conjunto completo foi repetido em `migration-qa-9e93982dcdf2/results.json`, sem
+falhas: 31 montagens, 29 composições e dois vídeos sem camadas visuais. O resumo
+`existing-hierarchy-full-summary.json` relaciona checksums das evidências,
+builds reais, integridade de 120 assets e contagens anteriores/atuais. Nenhuma
+montagem FilmCraft foi substituída e o banco original não recebeu alterações.
+Essas contagens precedem os avisos adicionais de formas/tipografia introduzidos
+na API nesta rodada; essa extensão recebe qualificação separada abaixo.
+Não foi declarada fidelidade completa para o conjunto. `hierarchy-acceptance-results.json`,
 `wasm-effects-results.json` e `hierarchy-cli-results.json` registram a validação
 do fixture de hierarquia nos três ambientes.
+
+Os avisos adicionais passaram em quatro casos de persistência/arquivo com
+fronteira de processo simulada: PhotoCraft e EffectCraft, forma textual e forma
+estruturada, parentesco, tipografia e ordem de camadas. Valores neutros não
+geraram avisos. O projeto representativo foi repetido com os motores reais em
+`migration-qa-adb47ecb538a/results.json`: dez avisos, incluindo a ordem `zIndex`
+antes não informada, com checksums do original/arquivos nativos e builds
+registrados. Não se contou esse aviso adicional como perda de uma operação
+antes convertida. A redução de 37 para nove descreve o teste anterior.
+
+O ensaio agora reconhece o motor nativo existente e materializa os arquivos da
+composição vinculada, independentemente da ordem dos documentos. A repetição
+da montagem e da composição já convertidas passou em
+`migration-qa-b77a05fd9ea5/results.json`, com as duas identidades de motor
+corretas, fontes de origem somente leitura e reabertura conferida.
 
 A revisão upstream EffectCraft permanece `67434e90`; somente o adaptador Clicko
 mudou para `1.0.1`. A identidade do build é conferida na abertura do projeto;

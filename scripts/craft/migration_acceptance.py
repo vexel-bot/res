@@ -126,6 +126,20 @@ def main():
                             *native_source.font_manifest,
                         ]
                     )
+                    if args.recover_effects and native_source.engine == "filmcraft":
+                        for dependency in native_source.dependencies:
+                            if dependency.engine != "effectcraft" or not dependency.source_document_id:
+                                continue
+                            child = db.get(CreativeDocument, dependency.source_document_id)
+                            if child is None or child.workspace_id != record.workspace_id:
+                                raise ValueError("migration_composition_scope_mismatch")
+                            child_state = record_to_contract(child).native_editor_state
+                            if child_state is None or child_state.engine != "effectcraft":
+                                raise ValueError("migration_composition_native_state_missing")
+                            referenced.update([child_state.project_asset_id, child_state.legacy_archive_asset_id])
+                            referenced.update(
+                                item.asset_id for item in [*child_state.asset_manifest, *child_state.font_manifest]
+                            )
                 for asset_id in sorted(item for item in referenced if item):
                     asset = db.get(LibraryAsset, asset_id)
                     if asset is None or asset.storage_backend != "local":
@@ -148,10 +162,8 @@ def main():
                     )
                     results.append(result)
                     continue
-                chosen = (
-                    "filmcraft"
-                    if contract.content_type in {"video", "presenter"}
-                    else "photocraft"
+                chosen = contract.native_editor_state.engine if contract.native_editor_state else (
+                    "filmcraft" if contract.content_type in {"video", "presenter"} else "photocraft"
                 )
                 state = (
                     craft.inspection(db, record)
@@ -191,6 +203,9 @@ def main():
                 result.update(
                     status="converted",
                     engine=chosen,
+                    nativeBuildId=native.build_id,
+                    nativeChecksumSha256=native.checksum_sha256,
+                    originalArchiveChecksumSha256=archive_asset.checksum_sha256,
                     originalArchived=True,
                     nativeReopened=True,
                     migrationWarnings=state["migrationWarnings"],
@@ -216,6 +231,7 @@ def main():
                             CreativeDocument, recovered["compositionDocumentId"]
                         )
                         source_view = craft.inspection(db, child)
+                        effect_state = source_view["nativeEditorState"]
                         with get_object_storage(
                             native_asset.storage_backend
                         ).materialize(native_asset.storage_key) as path:
@@ -226,6 +242,8 @@ def main():
                         result.update(
                             effectCompositionReopened=True,
                             compositionDocumentId=child.id,
+                            effectBuildId=effect_state["buildId"],
+                            effectChecksumSha256=effect_state["checksumSha256"],
                             effectMigrationWarnings=source_view["migrationWarnings"],
                             requiresCompositionReview=True,
                         )

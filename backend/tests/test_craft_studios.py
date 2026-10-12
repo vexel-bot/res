@@ -210,6 +210,54 @@ def test_migration_all_pages_archive_and_project_access(client, native_boundary)
     assert len(archived.json()["canonicalDocument"]["composition"]["pages"]) == 3
 
 
+@pytest.mark.parametrize("engine", ["photocraft", "effectcraft"])
+@pytest.mark.parametrize("shape", ["ellipse", {"kind": "ellipse"}])
+def test_migration_records_unmapped_shape_typography_and_parenting(client, native_boundary, engine, shape):
+    token, workspace = register(client, f"craft-treatments-{engine}@example.com")
+    response = client.post("/api/v1/studios/v1/documents", headers=headers(token), json={
+        "workspaceId": workspace, "title": "Authored treatments", "contentType": "visual",
+        "brief": {"objective": "Preserve unsupported treatments", "audience": "QA"},
+        "composition": {"pages": [{"id": "page", "width": 320, "height": 320, "layers": [
+            {"id": "group", "kind": "group", "width": 100, "height": 100, "zIndex": 10},
+            {"id": "circle", "kind": "shape", "width": 40, "height": 40,
+             "properties": {"shape": shape, "radius": 10, "borderRadius": 20, "parentId": "group"}},
+            {"id": "caption", "kind": "text", "width": 100, "height": 40, "zIndex": 0,
+             "properties": {"text": "Preserved", "font_size": 22, "italic": True, "line_height": 1.4,
+                            "fontStyle": "normal", "decoration": "none", "autoFit": False}},
+        ]}]},
+    })
+    assert response.status_code == 201, response.text
+    document = response.json()
+    result = client.post(
+        f"/api/v1/studios/v1/documents/{document['documentId']}/craft/migrate",
+        headers=headers(token, "treatments-migration-0001"),
+        json={"engine": engine, "expectedRevision": document["revision"]},
+    )
+    assert result.status_code == 200, result.text
+    state = result.json()["nativeEditorState"]
+    warnings = state["migrationWarnings"]
+    assert any("borderRadius" in warning for warning in warnings)
+    assert any("typography italic" in warning for warning in warnings)
+    assert any("typography line_height" in warning for warning in warnings)
+    assert not any("fontStyle" in warning or "decoration" in warning or "autoFit" in warning for warning in warnings)
+    if engine == "effectcraft":
+        assert any("zIndex order" in warning for warning in warnings)
+        assert any("shape needs" in warning for warning in warnings)
+        assert any(": radius needs" in warning for warning in warnings)
+        assert any("typography font_size" in warning for warning in warnings)
+    else:
+        assert not any("zIndex order" in warning for warning in warnings)
+        assert any("parentId" in warning for warning in warnings)
+        assert any("shape needs" in warning for warning in warnings) == (shape != "ellipse")
+        assert not any(": radius needs" in warning for warning in warnings)
+        assert not any("typography font_size" in warning for warning in warnings)
+    archived = client.get(
+        f"/api/v1/assets/{state['legacyArchiveAssetId']}/content", headers=headers(token),
+    )
+    assert archived.status_code == 200
+    assert archived.json()["canonicalDocument"]["composition"] == document["composition"]
+
+
 def test_atomic_commands_replay_conflict_failed_engine_retains_bytes(client, native_boundary):
     token, workspace = register(client, "craft-save@example.com")
     document = create(client, token, workspace)
