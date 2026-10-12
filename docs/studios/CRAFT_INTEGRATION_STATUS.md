@@ -92,8 +92,10 @@ para a prévia. Nenhum editor antigo serve de alternativa.
 | Regressões dos adaptadores Rust | Photo 2, Film 3 e Effect 9 testes passaram; transparência total/parcial e reabertura verificadas |
 | Recuperação real de camadas | Animação de opacity, fundo transparente, replay, CAS e composição vinculada passaram nos motores reais |
 | Recuperação no frontend | Navegação para a composição, worker WASM, paridade de pixels e revisão da montagem preservada passaram |
-| Referência CLI upstream PhotoCraft | Compilou integralmente em 47 min; CLI Film/Effect e interfaces desktop ainda não qualificados |
+| Referências CLI upstream PhotoCraft e FilmCraft | Compilaram integralmente; CLI EffectCraft e interfaces desktop ainda não qualificados |
 | `.pcraft` Clicko → CLI PhotoCraft original → PNG | Abriu e converteu; pixels RGBA idênticos ao adaptador, com codificação PNG diferente |
+| `.fcproj` Clicko → CLI FilmCraft original → PNG | Abriu e renderizou; pixels RGBA idênticos ao adaptador em 320 × 320 |
+| Concorrência HTTP com motor real | Duas edições na mesma revisão: uma salva e uma `409`; revisão única, replay estável e undo restaurando os bytes originais |
 | Testes unitários upstream `photocraft-engine` | 1.285 passaram, 12 ignorados e um falhou: `destructive_levels_dont_clip_in_32_bit`; suíte não aprovada |
 | Integração upstream `photocraft-engine` | 45 executáveis concluídos: 129 testes passaram, cinco ignorados e nenhuma falha |
 | Transporte Rust compartilhado | 6 testes passaram, incluindo frames e schemas de parâmetros |
@@ -189,6 +191,7 @@ Com API de QA em `8018` e frontend em `3018`:
 python scripts/craft/acceptance.py
 python scripts/craft/media_acceptance.py
 python scripts/craft/recovery_acceptance.py
+python scripts/craft/concurrency_acceptance.py
 python scripts/craft/worker_acceptance.py
 docker pull redis:8.2.1-alpine
 python scripts/craft/queue_acceptance.py

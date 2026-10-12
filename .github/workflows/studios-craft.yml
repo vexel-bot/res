@@ -99,6 +99,7 @@ jobs:
           python scripts/craft/acceptance.py
           python scripts/craft/media_acceptance.py
           python scripts/craft/recovery_acceptance.py
+          python scripts/craft/concurrency_acceptance.py
           node scripts/validation/craft-wasm-reference.mjs
           node scripts/validation/craft-wasm-effects.mjs
           node scripts/validation/craft-browser-parity.mjs
