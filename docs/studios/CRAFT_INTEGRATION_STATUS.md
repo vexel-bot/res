@@ -102,7 +102,8 @@ para a prévia. Nenhum editor antigo serve de alternativa.
 | Publicação e áudio | 8 testes passaram; binding a export nativo, pacote, revisão, agendamento e isolamento |
 | Avatar, biblioteca, API, aprovações e workspace | 32 testes de regressão passaram |
 | Ensaio do banco existente | 31 vídeos convertidos para arquivos FilmCraft válidos e reabertos; originais/versões arquivados e checksums conferidos numa cópia privada |
-| Fidelidade desse ensaio | 30 dos 31 vídeos têm avisos (1.267 ao todo); camadas visuais e 25 motion graphs exigem integração/migração EffectCraft. A reabertura não comprova fidelidade |
+| Recuperação dos documentos existentes | 31 montagens nativas reabertas; 29 composições EffectCraft criadas e reabertas; dois vídeos sem camadas visuais. Ensaio somente em cópias privadas |
+| Fidelidade desse ensaio | 30 dos 31 vídeos exigem revisão. Os 1.267 avisos da montagem e 1.572 da composição preservam propriedades não representadas, hierarquia/pivôs, máscaras e receitas avançadas. A reabertura não comprova fidelidade |
 | TypeScript e build de produção | Passaram; build repetido com os três bundles WASM finais e workers |
 | Coleção da suíte de backend | Sem erros de importação após arquivar testes exclusivos dos renderizadores retirados |
 | Regressão ampla do backend | Não qualificada: execução interrompida após falhas no primeiro bloco; amostras diagnosticadas exigem fixture local de auditoria ausente e esperam acesso ao renderer Alight retirado |
@@ -115,7 +116,10 @@ não foram qualificadas. As interfaces desktop upstream não foram recompiladas;
 os seus fontes completos estão preservados.
 
 O Docker Desktop foi atualizado para 4.94.0 (241994), com Engine 29.8.2. O
-problema anterior de inicialização deixou de bloquear os builds e jobs.
+problema anterior de inicialização deixou de bloquear os builds e jobs. Houve
+uma interrupção posterior do daemon durante a qualificação upstream; o serviço
+foi reiniciado e o último documento do ensaio foi repetido com sucesso em outra
+cópia privada. A interrupção não foi contabilizada como aprovação dos testes.
 Imagem media CPU validada nesta rodada:
 `sha256:840cc18ef3a3c3e5d361dd46b4e547b59cf3abfe620f5bb4333328067f645627`.
 Esse identificador corresponde à imagem local; não houve publicação em registry.
@@ -127,6 +131,17 @@ tentativa identificou erro de I/O ao compartilhar SQLite simultaneamente entre
 Windows e Linux por NTFS. A infraestrutura de QA foi corrigida, e o worker agora
 recupera a transação antes de registrar uma falha SQLAlchemy. Projetos e banco
 originais não foram usados para escrita nesse teste.
+
+O ensaio de recuperação está registrado em
+`migration-qa-567b7cd1d286/results.json`; o último documento, interrompido pelo
+daemon, foi concluído em `migration-qa-9e51a24f9da7/results.json`. Ambos ficam em
+`.codex-runtime/craft`, fora do Git, pois contêm informações de projetos locais.
+O consolidado `existing-recovery-summary.json` registra os checksums das duas
+evidências e a substituição do resultado interrompido pelo resultado repetido.
+O script de ensaio aceita `--document-id` para repetir somente uma pendência,
+sempre copiando o banco de origem em modo somente leitura; falhas retornam
+código de saída não zero. As composições recuperadas continuam pendentes de
+revisão e vínculo na montagem, sem promover a migração no banco original.
 
 ## Pendências para o aceite final
 
@@ -173,4 +188,4 @@ node scripts/validation/craft-wasm-effects.mjs
 Os dois últimos testes podem usar as referências nativas já salvas, mesmo com
 Docker indisponível. Logs, projetos, PNGs, exports e credenciais de QA ficam em
 `.codex-runtime/craft`, ignorados pelo Git. Essas verificações não substituem os
-qualificação dos projetos reais e da implantação.
+qualificações dos projetos reais e da implantação.

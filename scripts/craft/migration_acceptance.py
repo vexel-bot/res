@@ -26,6 +26,12 @@ def main():
     parser.add_argument("--database", type=Path, required=True)
     parser.add_argument("--storage", type=Path, required=True)
     parser.add_argument(
+        "--document-id",
+        action="append",
+        default=[],
+        help="Rehearse only these document IDs, still in a private database copy",
+    )
+    parser.add_argument(
         "--recover-effects",
         action="store_true",
         help="Also recover visual layers of FilmCraft projects into editable EffectCraft overlays",
@@ -71,7 +77,12 @@ def main():
     Base.metadata.create_all(engine)
     results = []
     with SessionLocal() as db:
-        identifiers = list(db.scalars(select(CreativeDocument.id)))
+        query = select(CreativeDocument.id)
+        if args.document_id:
+            query = query.where(CreativeDocument.id.in_(args.document_id))
+        identifiers = list(db.scalars(query))
+        if set(args.document_id) - set(identifiers):
+            raise ValueError("migration_document_not_found")
     for identifier in identifiers:
         result = {"documentId": identifier, "status": "pending"}
         try:
@@ -224,7 +235,11 @@ def main():
                             requiresCompositionReview=bool(state["migrationWarnings"]),
                         )
         except Exception as error:
-            result.update(errorType=type(error).__name__, reason=str(error)[:1200])
+            result.update(
+                status="pending",
+                errorType=type(error).__name__,
+                reason=str(error)[:1200],
+            )
         results.append(result)
         print(
             f"Migration rehearsal {len(results)}/{len(identifiers)}: {result['status']}",
@@ -245,6 +260,8 @@ def main():
         for state in ("converted", "already_native", "pending")
     }
     print(json.dumps({"counts": counts, "evidence": str(output / "results.json")}))
+    if counts["pending"]:
+        raise SystemExit(1)
 
 
 if __name__ == "__main__":
