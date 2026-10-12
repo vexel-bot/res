@@ -93,12 +93,16 @@ para a prévia. Nenhum editor antigo serve de alternativa.
 | Regressões dos adaptadores Rust | Photo 2, Film 3 e Effect 9 testes passaram; transparência total/parcial e reabertura verificadas |
 | Recuperação real de camadas | Animação de opacity, fundo transparente, replay, CAS e composição vinculada passaram nos motores reais |
 | Recuperação no frontend | Navegação para a composição, worker WASM, paridade de pixels e revisão da montagem preservada passaram |
-| Referências CLI upstream PhotoCraft e FilmCraft | Compilaram integralmente; CLI EffectCraft e interfaces desktop ainda não qualificados |
+| Referências CLI upstream PhotoCraft, FilmCraft e EffectCraft | Compilaram integralmente; executaram os arquivos Clicko sem rede e com fontes em montagem somente leitura. Interfaces desktop ainda não qualificadas |
 | `.pcraft` Clicko → CLI PhotoCraft original → PNG | Abriu e converteu; pixels RGBA idênticos ao adaptador, com codificação PNG diferente |
 | `.fcproj` Clicko → CLI FilmCraft original → PNG | Abriu e renderizou; pixels RGBA idênticos ao adaptador em 320 × 320 |
+| `.ecproj` Clicko → CLI EffectCraft original → PNG | Abriu e renderizou; pixels RGBA idênticos ao adaptador, inclusive overlay transparente nos frames 0 e 10 da animação recuperada |
 | Concorrência HTTP com motor real | Duas edições na mesma revisão: uma salva e uma `409`; revisão única, replay estável e undo restaurando os bytes originais |
 | Testes unitários upstream `photocraft-engine` | 1.285 passaram, 12 ignorados e um falhou: `destructive_levels_dont_clip_in_32_bit`; suíte não aprovada |
 | Integração upstream `photocraft-engine` | 45 executáveis concluídos: 129 testes passaram, cinco ignorados e nenhuma falha |
+| Testes unitários upstream `filmcraft-engine` | 541 passaram, três ignorados e um falhou na conferência do preset APV pelo FFprobe; suíte não aprovada |
+| Integração da CLI FilmCraft original | 11 testes passaram, incluindo presets de exportação, probe de mídia e execução de comandos |
+| Testes upstream `effectcraft-engine` | 523 passaram, dois ignorados e nenhuma falha; inclui unitários e três executáveis de integração |
 | Transporte Rust compartilhado | 6 testes passaram, incluindo frames e schemas de parâmetros |
 | Runner isolado | 3 testes passaram |
 | Estado e rotas TypeScript | 7 testes passaram |
@@ -130,6 +134,20 @@ Os testes de integração foram executados separadamente com `--test '*'`, pois
 o Cargo encerrou a primeira execução após a falha unitária. O consolidado
 `upstream-photo-tests-results.json` preserva os dois resultados, sem declarar
 a suíte upstream aprovada.
+
+O caso FilmCraft APV foi reproduzido separadamente: o motor exportou um arquivo
+`apv1` de 320 × 320, e seu probe nativo identificou `APV 422-10`. O FFprobe
+5.1.9 instalado retornou dimensões e tag, mas omitiu `codec_name`, causando a
+falha da expectativa do teste. Essa incompatibilidade de verificação permanece
+pendente, sem alterar ou ignorar o teste upstream. Logs estão em
+`upstream-film-engine-tests.log`, `upstream-film-apv-ffprobe.log` e
+`upstream-film-apv-native-probe.log`.
+
+Os resultados agregados dos motores originais estão em
+`upstream-photo-tests-results.json`, `upstream-film-tests-results.json` e
+`upstream-effect-tests-results.json`: 2.489 testes passaram, 22 foram ignorados
+e duas expectativas falharam. Isso cobre os pacotes descritos na tabela,
+sem qualificar os demais crates, interfaces desktop ou corpus externos.
 
 O Docker Desktop foi atualizado para 4.94.0 (241994), com Engine 29.8.2. O
 problema anterior de inicialização deixou de bloquear os builds e jobs. Houve
