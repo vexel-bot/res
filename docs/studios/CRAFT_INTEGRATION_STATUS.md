@@ -1,9 +1,10 @@
 # Substituição dos Studios por Craft
 
-Estado em 13 de outubro de 2026: implementação no checkout de integração,
-com fontes completos, builds reais dos três motores e exportação/cancelamento
-pela fila de servidor validados. O aceite final ainda depende da qualificação
-de projetos reais e dos fluxos descritos abaixo.
+Estado em 13 de outubro de 2026: três motores integrados e ativados localmente
+no projeto principal, com fontes completos, builds reais e exportação/cancelamento
+pela fila de servidor validados. Os documentos anteriores foram migrados com
+originais preservados. A revisão de fidelidade dos tratamentos avançados
+permanece necessária; a inferência com LLM real foi adiada pelo usuário.
 
 Checkout de integração: `C:/Users/edugu/Downloads/res-craft-integration`, branch
 `codex/craft-studios`. O checkout principal em `C:/Users/edugu/Downloads/res`
@@ -315,6 +316,39 @@ As evidências privadas ficam em `.codex-runtime/craft`: `dense-motion-results.j
 `media-worker-sbom.cdx.json` e `queue-acceptance-results.json`.
 
 ## Retomada reproduzível
+
+O principal está disponível em `http://127.0.0.1:3000`, com API em `8000`.
+O broker próprio usa somente `127.0.0.1:6383`, com persistência em volume Docker.
+O orquestrador Celery local usa Windows e as filas `celery,studio.media.cpu`;
+os motores Rust continuam executando em containers limitados e sem rede.
+Assim o banco SQLite não é compartilhado entre processos Windows e Linux.
+A instalação local usa contexto de execução `embedded`, sem declarar a
+atestação reservada ao worker Linux de produção. API, frontend e worker
+foram ligados; o worker respondeu ao ping. O container HeyGem existente
+permaneceu em execução.
+
+Os 31 documentos do banco principal foram convertidos sem pendências técnicas,
+e 29 composições EffectCraft `1.0.2` foram reabertas. São 60 projetos nativos
+após a criação dessas composições. Trinta documentos têm avisos que exigem
+revisão de fidelidade; suas composições ficam pendentes de aprovação e vínculo,
+sem publicar ou descartar silenciosamente a edição original. O banco anterior
+está preservado em `.codex-runtime/craft/primary-migration-*/database-before-native-migration.sqlite`.
+O resultado real fica em `.codex-runtime/craft/primary-migration-latest.json`
+no checkout principal. Os 35 testes selecionados de áudio, compilação de cenas
+e revisão/publicação passaram após essa integração, além dos 46 contratos
+descritos acima.
+
+Para retomar o ambiente local já compilado no checkout principal:
+
+```powershell
+./scripts/craft/start_local.ps1
+./scripts/craft/start_local.ps1 -StatusOnly
+```
+
+O script usa janelas ocultas, registra os processos próprios e não para serviços
+que estejam ocupando as portas. Configurações privadas existentes não são
+reescritas. Logs e identificação dos processos ficam em
+`.codex-runtime/craft/local`. A configuração de LLM real continua adiada.
 
 Execute no checkout de integração. Use banco e storage isolados para QA.
 
