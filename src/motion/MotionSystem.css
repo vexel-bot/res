@@ -1,0 +1,106 @@
+/* Motion only: colors, geometry and layout remain owned by the design system. */
+:root {
+  --clicko-motion-instant: 90ms;
+  --clicko-motion-fast: 140ms;
+  --clicko-motion-state: 180ms;
+  --clicko-motion-enter: 220ms;
+  --clicko-motion-ease: cubic-bezier(.2, 0, 0, 1);
+  --clicko-motion-ease-out: cubic-bezier(.16, 1, .3, 1);
+  --clicko-motion-ease-in: cubic-bezier(.4, 0, 1, 1);
+  --clicko-motion-panel: var(--clicko-motion-state) var(--clicko-motion-ease-out);
+}
+
+/* Both original assets stay decoded and mounted in an unchanged fixed slot. */
+.clicko-logo[data-logo-theme] { position: relative; overflow: hidden; }
+.clicko-logo[data-logo-theme] > .clicko-logo__image {
+  flex: none;
+}
+.clicko-logo[data-logo-theme] .clicko-logo__theme-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity var(--clicko-motion-state) var(--clicko-motion-ease);
+}
+.clicko-logo[data-logo-theme="light"][data-logo-base="dark"] .clicko-logo__theme-overlay,
+.clicko-logo[data-logo-theme="dark"][data-logo-base="light"] .clicko-logo__theme-overlay { opacity: 1; }
+
+/* Snapshot crossfade coordinates theme colors and imagery in a single frame.
+   No bitmap is exposed as a control; the live UI remains interactive underneath. */
+html[data-clicko-transition="content"] { view-transition-name: none; }
+html[data-clicko-transition="content"] .clicko-main-stage { view-transition-name: clicko-content; }
+html[data-clicko-transition]::view-transition { pointer-events: none; }
+html[data-clicko-transition]::view-transition-group(*) { animation-duration: 0s; }
+html[data-clicko-transition]::view-transition-old(*),
+html[data-clicko-transition]::view-transition-new(*) {
+  animation-duration: var(--clicko-motion-state);
+  animation-timing-function: var(--clicko-motion-ease);
+}
+/* Keep old pixels opaque until the new surface covers them: never expose a
+   white/black intermediate frame. Only the incoming snapshot fades. */
+html[data-clicko-transition]::view-transition-old(*) { animation-name: none; }
+html[data-clicko-transition]::view-transition-new(*) { animation-name: clicko-motion-fade-in; }
+html[data-clicko-transition]::view-transition-image-pair(*) { isolation: isolate; }
+html[data-clicko-transition]::view-transition-old(*),
+html[data-clicko-transition]::view-transition-new(*) { mix-blend-mode: normal; }
+
+/* Avoid a second staggered color animation inside the synchronized snapshot. */
+html[data-clicko-transition="theme"] .clicko-app-shell *,
+html[data-clicko-transition="theme"] body > [data-clicko-presence] * {
+  transition-duration: 0s !important;
+}
+html[data-clicko-transition="content"] .clicko-main-stage > div,
+html[data-clicko-transition="content"] .clicko-main-stage :is(.clicko-dashboard-hero, .clicko-dashboard-metrics, .clicko-dashboard-body, .clicko-dashboard-insight, .clicko-dashboard-flow, .clicko-metric-cell) {
+  animation: none !important;
+}
+
+.clicko-app-shell .clicko-main-stage > div {
+  animation-duration: var(--clicko-motion-enter);
+  animation-timing-function: var(--clicko-motion-ease-out);
+}
+.clicko-app-shell :is(.clicko-dashboard-hero, .clicko-dashboard-metrics, .clicko-dashboard-body, .clicko-dashboard-insight, .clicko-dashboard-flow, .clicko-metric-cell) {
+  animation-duration: var(--clicko-motion-enter);
+  animation-delay: 0s;
+}
+.clicko-app-shell .transition-all {
+  transition-property: color, background-color, border-color, box-shadow, opacity, transform;
+}
+.clicko-app-shell .clicko-app-stage {
+  transition-property: padding-left;
+}
+.clicko-app-shell :is(.clicko-sidebar, .clicko-app-stage) {
+  transition-duration: var(--clicko-motion-enter) !important;
+}
+.clicko-app-shell :is(.clicko-search-overlay, .clicko-search-panel, .klic-floating-panel) {
+  animation-duration: var(--clicko-motion-state);
+}
+
+/* Presence applies to existing surface roots, without introducing layout wrappers. */
+[data-clicko-presence="open"] {
+  animation: clicko-motion-fade-in var(--clicko-motion-state) var(--clicko-motion-ease-out) both !important;
+}
+[data-clicko-presence="closed"] {
+  pointer-events: none;
+  animation: clicko-motion-fade-out var(--clicko-motion-fast) var(--clicko-motion-ease-in) both !important;
+}
+[data-clicko-presence="closed"] > :is(div, section) { animation: none !important; }
+
+/* Tooltips/chart changes stay immediate; long sequential reveals hide real data. */
+.clicko-app-shell .clicko-chart-line { animation-duration: var(--clicko-motion-enter); animation-delay: 0s; }
+.clicko-app-shell :is(.clicko-chart-area, .clicko-chart-point) { animation-duration: var(--clicko-motion-state); animation-delay: 0s; }
+.clicko-app-shell [role="tooltip"] { animation: clicko-motion-fade-in var(--clicko-motion-fast) var(--clicko-motion-ease-out); }
+
+@keyframes clicko-motion-fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes clicko-motion-fade-out { from { opacity: 1; } to { opacity: 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-clicko-transition]::view-transition-group(*),
+  html[data-clicko-transition]::view-transition-old(*),
+  html[data-clicko-transition]::view-transition-new(*) { animation-duration: .01ms !important; }
+  .clicko-app-shell *, [data-clicko-presence], [data-clicko-presence] * {
+    animation-duration: .01ms !important;
+    animation-delay: 0s !important;
+    transition-duration: .01ms !important;
+  }
+}

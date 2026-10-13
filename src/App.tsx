@@ -4,70 +4,135 @@
  */
 
 import React from 'react';
+import { visualTransition } from './motion/visualTransition';
+import { appearance } from './theme/appearance';
 import { Sidebar } from './components/Sidebar';
 import { Header } from './components/Header';
 import { SpotlightModal } from './components/SpotlightModal';
-import { DashboardView } from './components/DashboardEditorialView';
-import { WorkspaceView } from './components/WorkspaceView';
-import { StrategyView } from './components/StrategyView';
-import { LibraryView } from './components/LibraryView';
 import { ImageStudioView } from './components/ImageStudioView';
 import { VideoEditorView } from './components/VideoEditorView';
-import { CreationStudioView } from './components/CreationStudioView';
-import { AIChatView } from './components/AIChatView';
-import { FloatingAIAssistant } from './components/FloatingAIAssistant';
-import { ConnectedAccountsView } from './components/ConnectedAccountsView';
-import { EditorialCalendarView } from './components/EditorialCalendarView';
-import { AnalyticsView } from './components/AnalyticsView';
-import { AutomationBuilderView } from './components/AutomationBuilderView';
-import { SettingsView } from './components/SettingsView';
-import { ClickoLogo } from './components/ClickoLogo';
+import { ClickoLoader } from './components/ClickoLoader';
 import { LoginView } from './components/LoginView';
-import { TeamManagementView } from './components/TeamManagementView';
-import { ApprovalsView } from './components/ApprovalsView';
-import { SubscriptionView } from './components/SubscriptionView';
+import { SubscriptionGateView } from './components/SubscriptionGateView';
 import { AccessDeniedView } from './components/AccessDeniedView';
 import { GovernanceFeedback } from './components/GovernanceFeedback';
+import { PublicComplianceView, publicCompliancePage } from './components/PublicComplianceView';
+import { ClientPortalView } from './components/ClientPortalView';
 import { useGovernance } from './context/GovernanceContext';
+import { useAuth } from './context/AuthContext';
 import { useOperations } from './context/OperationsContext';
+import { useTheme } from './context/ThemeContext';
+import { useVisualViewport } from './hooks/useVisualViewport';
+import { setKlicActiveModule } from './klic/pageContext';
 import type { ApprovalStage } from './types';
 
 import {
   NavigationTab,
   Post,
-  AIActionSuggestion,
 } from './types';
-import {
-  AI_SUGGESTIONS,
-} from './data/mockData';
+
+const DashboardView = React.lazy(() => import('./components/DashboardEditorialView').then(module => ({ default: module.DashboardView })));
+const WorkspaceView = React.lazy(() => import('./components/WorkspaceView').then(module => ({ default: module.WorkspaceView })));
+const StrategyView = React.lazy(() => import('./components/StrategyView').then(module => ({ default: module.StrategyView })));
+const LibraryView = React.lazy(() => import('./components/LibraryView').then(module => ({ default: module.LibraryView })));
+const CreationStudioView = React.lazy(() => import('./components/CreationStudioView').then(module => ({ default: module.CreationStudioView })));
+const AIChatView = React.lazy(() => import('./components/AIChatView').then(module => ({ default: module.AIChatView })));
+const ConnectedAccountsView = React.lazy(() => import('./components/ConnectedAccountsView').then(module => ({ default: module.ConnectedAccountsView })));
+const EditorialCalendarView = React.lazy(() => import('./components/EditorialCalendarView').then(module => ({ default: module.EditorialCalendarView })));
+const AnalyticsView = React.lazy(() => import('./components/AnalyticsIntelligenceView').then(module => ({ default: module.AnalyticsView })));
+const AutomationBuilderView = React.lazy(() => import('./components/AutomationBuilderView').then(module => ({ default: module.AutomationBuilderView })));
+const SettingsView = React.lazy(() => import('./components/SettingsView').then(module => ({ default: module.SettingsView })));
+const TeamManagementView = React.lazy(() => import('./components/TeamManagementView').then(module => ({ default: module.TeamManagementView })));
+const ApprovalsView = React.lazy(() => import('./components/ApprovalsView').then(module => ({ default: module.ApprovalsView })));
+const SubscriptionView = React.lazy(() => import('./components/SubscriptionView').then(module => ({ default: module.SubscriptionView })));
+const FloatingAIAssistant = React.lazy(() => import('./components/FloatingAIAssistant').then(module => ({ default: module.FloatingAIAssistant })));
+const KlicOperationalBridge = React.lazy(() => import('./klic/KlicOperationalBridge').then(module => ({ default: module.KlicOperationalBridge })));
+
+const TAB_PATHS: Record<NavigationTab, string> = {
+  dashboard: '/dashboard',
+  'create-image': '/image',
+  'create-video': '/video',
+  'create-copy': '/create',
+  'ai-chat': '/klic',
+  'connected-accounts': '/connected-accounts',
+  workspace: '/clients',
+  strategy: '/strategy',
+  library: '/library',
+  calendar: '/calendar',
+  analytics: '/analytics',
+  automations: '/automations',
+  approvals: '/approvals',
+  team: '/team',
+  subscription: '/subscription',
+  settings: '/settings',
+};
+
+const PATH_TABS = Object.fromEntries(
+  Object.entries(TAB_PATHS).map(([tab, path]) => [path, tab as NavigationTab]),
+) as Record<string, NavigationTab>;
 
 const initialNavigationTab = (): NavigationTab => {
-  const path = window.location.pathname.replace(/\/+$/, '');
-  if (path === '/connected-accounts') return 'connected-accounts';
-  if (path === '/calendar') return 'calendar';
-  return 'dashboard';
+  const path = window.location.pathname.replace(/\/+$/, '') || '/';
+  return PATH_TABS[path] || 'dashboard';
 };
 
 export default function App() {
+  useVisualViewport();
+  const { theme } = useTheme();
+  const auth = useAuth();
   const { currentUser, canAccess, loading: governanceLoading } = useGovernance();
   const { activeWorkspace, posts, addPosts, updatePosts } = useOperations();
   const [currentTab, setCurrentTab] = React.useState<NavigationTab>(initialNavigationTab);
-  const [suggestions] = React.useState<AIActionSuggestion[]>(AI_SUGGESTIONS);
 
   const [isSpotlightOpen, setIsSpotlightOpen] = React.useState(false);
   const [isCompact, setIsCompact] = React.useState(false);
-  const [isDarkMode, setIsDarkMode] = React.useState(true);
   const [showSplash, setShowSplash] = React.useState(() => window.location.pathname !== '/login');
+  const compliancePage = publicCompliancePage(window.location.pathname);
+  const subscriptionAccessAllowed = auth.account?.subscriptionAccessAllowed ?? ['active', 'trialing'].includes(auth.account?.subscriptionStatus || '');
+
+  const navigate = React.useCallback((tab: NavigationTab, replace = false) => {
+    setKlicActiveModule(tab);
+    visualTransition('content', () => setCurrentTab(tab));
+    const nextPath = TAB_PATHS[tab];
+    if (window.location.pathname !== nextPath) {
+      window.history[replace ? 'replaceState' : 'pushState']({}, '', nextPath);
+    }
+  }, []);
 
   React.useEffect(() => {
-    document.documentElement.dataset.theme = isDarkMode ? 'dark' : 'light';
-  }, [isDarkMode]);
+    const openCommandCenter = (event: KeyboardEvent) => {
+      if ((event.ctrlKey || event.metaKey) && event.key.toLocaleLowerCase('pt-BR') === 'k') {
+        event.preventDefault();
+        setIsSpotlightOpen(true);
+      }
+    };
+    window.addEventListener('keydown', openCommandCenter);
+    return () => window.removeEventListener('keydown', openCommandCenter);
+  }, []);
+
+  React.useEffect(() => {
+    const onPopState = () => {
+      const tab = initialNavigationTab();
+      setKlicActiveModule(tab);
+      visualTransition('content', () => setCurrentTab(tab));
+    };
+    window.addEventListener('popstate', onPopState);
+    return () => window.removeEventListener('popstate', onPopState);
+  }, []);
 
   React.useEffect(() => {
     if (!showSplash) return;
     const timer = window.setTimeout(() => setShowSplash(false), 780);
     return () => window.clearTimeout(timer);
   }, [showSplash]);
+
+  React.useEffect(() => {
+    if (auth.authenticated && ['/login', '/signup', '/forgot-password', '/reset-password', '/verify-email'].includes(window.location.pathname.replace(/\/+$/, '') || '/')) {
+      const destination = subscriptionAccessAllowed ? '/dashboard' : '/plans';
+      window.history.replaceState({}, '', destination);
+      if (destination === '/dashboard') { setKlicActiveModule('dashboard'); setCurrentTab('dashboard'); }
+    }
+  }, [auth.authenticated, subscriptionAccessAllowed]);
 
   // Global handler to add new posts generated by AI or created manually
   const handleAddPosts = (newPostsData: Partial<Post>[]) => {
@@ -102,7 +167,7 @@ export default function App() {
 
   const handleSaveSinglePost = (postData: Partial<Post>) => {
     handleAddPosts([postData]);
-    setCurrentTab('calendar');
+    navigate('calendar');
   };
 
   const handleApprovalStatusChange = (contentId: string, stage: ApprovalStage) => {
@@ -118,29 +183,46 @@ export default function App() {
     updatePosts((current) => current.map((post) => post.id === contentId ? { ...post, status: statusMap[stage] } : post));
   };
 
-  const hasAccessToCurrentTab = governanceLoading || !currentUser || canAccess(currentTab);
+  // Image/Video retain their existing flow: this audit explicitly excludes them.
+  const excludedMediaTab = currentTab === 'create-image' || currentTab === 'create-video';
+  const hasAccessToCurrentTab = excludedMediaTab
+    ? governanceLoading || !currentUser || canAccess(currentTab)
+    : !governanceLoading && Boolean(currentUser) && canAccess(currentTab);
 
-  if (window.location.pathname.replace(/\/+$/, '') === '/login') {
+  if (compliancePage) {
+    return <PublicComplianceView page={compliancePage} />;
+  }
+
+  if (window.location.pathname === '/client-portal') return <ClientPortalView />;
+
+  if (auth.loading) {
+    return <main data-theme={theme} className="clicko-session-loading grid min-h-screen place-items-center bg-black text-white"><ClickoLoader size="large" tone={appearance.isAuthPath(location.pathname) ? 'dark' : 'auto'} label="Verificando sessão" /></main>;
+  }
+
+  if (!auth.authenticated) {
     return <LoginView />;
   }
 
+  if (!subscriptionAccessAllowed) {
+    return <SubscriptionGateView />;
+  }
+
   return (
-    <div data-theme={isDarkMode ? 'dark' : 'light'} data-current-tab={currentTab} className="clicko-app-shell flex min-h-screen font-sans antialiased selection:bg-[#B8B8B8] selection:text-[#0B0B0B]">
+    <div data-theme={theme} data-current-tab={currentTab} data-atmosphere="solid" className={`clicko-app-shell ${currentTab === 'create-image' || currentTab === 'create-video' ? '' : 'clicko-creative-workspace'} flex min-h-screen font-sans antialiased selection:bg-[rgba(255,255,255,0.72)] selection:text-[#000000]`}>
+      {currentTab !== 'create-image' && currentTab !== 'create-video' && <React.Suspense fallback={null}><KlicOperationalBridge module={currentTab} /></React.Suspense>}
       {showSplash && (
         <div className="clicko-splash fixed inset-0 z-[100] grid place-items-center bg-black">
-          <div className="clicko-splash-logo text-center">
-            <ClickoLogo appearance="seamless" className="h-[180px] w-[360px] max-w-[78vw]" />
-          </div>
+          <ClickoLoader size="large" label="Carregando Clicko" />
         </div>
       )}
       {/* Sidebar Navigation */}
       <Sidebar
         currentTab={currentTab}
-        onSelectTab={setCurrentTab}
+        onSelectTab={navigate}
         isCompact={isCompact}
         onToggleCompact={() => setIsCompact(!isCompact)}
         onOpenSpotlight={() => setIsSpotlightOpen(true)}
-        onNewPost={() => setCurrentTab('create-copy')}
+        onNewPost={() => navigate('create-copy')}
       />
 
       {/* Main Workspace Stage */}
@@ -154,35 +236,33 @@ export default function App() {
           currentTab={currentTab}
           activeWorkspace={activeWorkspace}
           onOpenSpotlight={() => setIsSpotlightOpen(true)}
-          onOpenAICentral={() => setCurrentTab('ai-chat')}
-          onNewPost={() => setCurrentTab('create-copy')}
+          onOpenAICentral={() => navigate('ai-chat')}
+          onNewPost={() => navigate('create-copy')}
           isCompact={isCompact}
           onToggleCompact={() => setIsCompact(!isCompact)}
-          isDarkMode={isDarkMode}
-          onToggleDarkMode={() => setIsDarkMode(!isDarkMode)}
+          onNavigate={navigate}
         />
 
         {/* Dynamic Tab View Area */}
         <main className="clicko-main-stage flex-1 overflow-x-hidden overflow-y-auto">
-          {!hasAccessToCurrentTab && <AccessDeniedView onBack={() => setCurrentTab('dashboard')} />}
+          <React.Suspense fallback={<ClickoLoader context="section" label="Carregando o módulo" />}>
+            {!hasAccessToCurrentTab && (governanceLoading ? <ClickoLoader context="section" label="Carregando o ambiente" /> : <AccessDeniedView onBack={() => navigate('dashboard')} />)}
 
           {hasAccessToCurrentTab && currentTab === 'dashboard' && (
             <DashboardView
               posts={posts}
-              suggestions={suggestions}
               activeWorkspace={activeWorkspace}
-              onNavigate={setCurrentTab}
-              onOpenCampaignWizard={() => setCurrentTab('ai-chat')}
-              onNewPost={() => setCurrentTab('create-copy')}
-              onSelectPost={(p) => setCurrentTab('calendar')}
+              onNavigate={navigate}
+              onNewPost={() => navigate('create-copy')}
+              onSelectPost={() => navigate('calendar')}
             />
           )}
 
-          {hasAccessToCurrentTab && currentTab === 'workspace' && <WorkspaceView onNavigate={setCurrentTab} />}
+          {hasAccessToCurrentTab && currentTab === 'workspace' && <WorkspaceView onNavigate={navigate} />}
 
-          {hasAccessToCurrentTab && currentTab === 'strategy' && <StrategyView onOpenStudio={() => setCurrentTab('create-image')} />}
+          {hasAccessToCurrentTab && currentTab === 'strategy' && <StrategyView onOpenStudio={() => navigate('create-image')} />}
 
-          {hasAccessToCurrentTab && currentTab === 'library' && <LibraryView onOpenStudio={() => setCurrentTab('create-image')} />}
+          {hasAccessToCurrentTab && currentTab === 'library' && <LibraryView onOpenStudio={() => navigate('create-image')} />}
 
           {hasAccessToCurrentTab && currentTab === 'create-image' && <ImageStudioView />}
 
@@ -190,30 +270,30 @@ export default function App() {
 
           {hasAccessToCurrentTab && currentTab === 'create-copy' && <CreationStudioView onSavePost={handleSaveSinglePost} />}
 
-          {hasAccessToCurrentTab && currentTab === 'ai-chat' && <AIChatView onNavigate={setCurrentTab} />}
+          {hasAccessToCurrentTab && currentTab === 'ai-chat' && <AIChatView onNavigate={navigate} />}
 
           {hasAccessToCurrentTab && currentTab === 'connected-accounts' && <ConnectedAccountsView />}
 
           {hasAccessToCurrentTab && currentTab === 'calendar' && (
             <EditorialCalendarView
               posts={posts}
-              onSelectPost={() => {}}
-              onNewPost={() => setCurrentTab('create-copy')}
-              onNavigate={setCurrentTab}
+              onNewPost={() => navigate('create-copy')}
+              onNavigate={navigate}
             />
           )}
 
-          {hasAccessToCurrentTab && currentTab === 'analytics' && <AnalyticsView onOpenStudio={() => setCurrentTab('create-image')} />}
+          {hasAccessToCurrentTab && currentTab === 'analytics' && <AnalyticsView onOpenStudio={() => navigate('create-image')} onNavigate={navigate} />}
 
-          {hasAccessToCurrentTab && currentTab === 'automations' && <AutomationBuilderView />}
+          {hasAccessToCurrentTab && currentTab === 'automations' && <AutomationBuilderView onNavigate={navigate} />}
 
-          {hasAccessToCurrentTab && currentTab === 'approvals' && <ApprovalsView onStatusChange={handleApprovalStatusChange} />}
+          {hasAccessToCurrentTab && currentTab === 'approvals' && <ApprovalsView onStatusChange={handleApprovalStatusChange} onNavigate={navigate} />}
 
           {hasAccessToCurrentTab && currentTab === 'team' && <TeamManagementView />}
 
           {hasAccessToCurrentTab && currentTab === 'subscription' && <SubscriptionView />}
 
-          {hasAccessToCurrentTab && currentTab === 'settings' && <SettingsView />}
+            {hasAccessToCurrentTab && currentTab === 'settings' && <SettingsView />}
+          </React.Suspense>
         </main>
       </div>
 
@@ -221,10 +301,10 @@ export default function App() {
       <SpotlightModal
         isOpen={isSpotlightOpen}
         onClose={() => setIsSpotlightOpen(false)}
-        onNavigate={setCurrentTab}
+        onNavigate={navigate}
       />
       <GovernanceFeedback />
-      {currentTab !== 'ai-chat' && <FloatingAIAssistant currentTab={currentTab} onOpenFullChat={() => setCurrentTab('ai-chat')} />}
+      {currentTab !== 'ai-chat' && currentTab !== 'dashboard' && <React.Suspense fallback={null}><FloatingAIAssistant currentTab={currentTab} onOpenFullChat={() => navigate('ai-chat')} /></React.Suspense>}
     </div>
   );
 }

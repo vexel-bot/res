@@ -6,7 +6,8 @@ O logotipo oficial da aplicação é o arquivo:
 
 - Origem: `/clicko-ai-studios-logo-stacked.png`
 - Asset público: `/public/clicko-ai-studios-logo-stacked.png`
-- Logo compacta e favicon: `/public/clicko-ai-studios-logo-compact.png`
+- Logo compacta: `/public/clicko-ai-studios-logo-compact.png`
+- Favicon transparente: `/public/branding/favicon-clicko.png` (com variantes otimizadas em 16, 32 e 48 px)
 - Dimensões originais: `1774 × 887 px`
 - Proporção: `2:1`
 - Fundo detectado: preto sólido `#000000` (preservado no arquivo e na interface)
@@ -21,7 +22,8 @@ O asset público é uma cópia binária idêntica ao arquivo mestre. A aplicaç�
 - Não remover o fundo preto, o subtítulo `AI Studios` ou qualquer elemento da composição.
 - Não aplicar filtros, máscaras, sombras, contornos ou alterações de contraste.
 - Em espaços compactos, reduzir a imagem completa proporcionalmente.
-- No estado recolhido da sidebar e no favicon, utilizar exclusivamente a logo compacta de `740 × 735 px`.
+- No estado recolhido da sidebar, utilizar exclusivamente a logo compacta de `740 × 735 px`.
+- No favicon, utilizar somente o símbolo oficial isolado, centralizado e com fundo transparente, sem texto ou `TM`.
 - Na sidebar recolhida, utilizar um container de `52 × 52 px` com `5 px` de padding; a imagem ocupa aproximadamente `81%` do espaço em cada eixo.
 - Em superfícies escuras, utilizar um contêiner `#000000` sem recorte para integrar o fundo original.
 - Em superfícies claras, utilizar um badge preto com respiro e cantos arredondados, sem processar a imagem.

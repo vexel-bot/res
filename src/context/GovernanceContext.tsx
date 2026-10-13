@@ -4,15 +4,22 @@ import type {
   ContentApprovalItem,
   GovernanceSession,
   GovernanceWorkspace,
+  OrganizationLicense,
   NavigationTab,
   OfferEventPayload,
+  AccessScope,
+  OrganizationPermission,
   SaaSPlan,
   UserAccount,
   WorkspaceMember,
   WorkspaceModule,
   WorkspaceSubscription,
+  UsagePool,
+  UserRole,
 } from '../types';
-import { canAccessNavigation } from '../security/accessControl';
+import { canAccessNavigation, hasPermission, isPrivilegedRole } from '../security/accessControl';
+import { createRequestGuard } from '../utils/requestGuard';
+import { useAuth } from './AuthContext';
 
 export type EnvironmentMode = 'company' | 'personal';
 
@@ -34,89 +41,31 @@ type GovernanceContextValue = {
   users: WorkspaceMember[];
   plans: SaaSPlan[];
   subscription?: WorkspaceSubscription;
+  licenses: OrganizationLicense[];
+  usage?: UsagePool;
   approvals: ContentApprovalItem[];
   auditLogs: AuditLogEntry[];
   isMaster: boolean;
   canAccess: (tab: NavigationTab) => boolean;
   clearFeedback: () => void;
-  inviteUser: (payload: { name: string; email: string; modules: WorkspaceModule[] }) => Promise<boolean>;
-  updateUser: (userId: string, payload: { name?: string; status?: 'active' | 'disabled'; modules?: WorkspaceModule[] }) => Promise<boolean>;
+  inviteUser: (payload: { name: string; email: string; modules: WorkspaceModule[]; role?: UserRole; permissions?: OrganizationPermission[]; scope?: AccessScope; reserveSeat?: boolean }) => Promise<boolean>;
+  updateUser: (userId: string, payload: { name?: string; status?: 'active' | 'disabled'; modules?: WorkspaceModule[]; role?: UserRole; permissions?: OrganizationPermission[]; scope?: AccessScope }) => Promise<boolean>;
   deleteUser: (userId: string) => Promise<boolean>;
   resendInvite: (userId: string) => Promise<boolean>;
-  changePlan: (planId: SaaSPlan['id']) => Promise<boolean>;
+  changePlan: (planId: SaaSPlan['id'], billingCycle?: NonNullable<WorkspaceSubscription['billingCycle']>) => Promise<boolean>;
   recordOfferEvent: (payload: OfferEventPayload) => Promise<void>;
   createApproval: (payload: Pick<ContentApprovalItem, 'contentId' | 'title' | 'copy' | 'platform' | 'format' | 'scheduledAt' | 'campaignId' | 'strategyId'>) => Promise<ContentApprovalItem | null>;
-  approvalAction: (approvalId: string, action: 'approve' | 'request_changes' | 'reject' | 'publish' | 'schedule' | 'comment', comment?: string, scheduledAt?: string) => Promise<ContentApprovalItem | null>;
+  approvalAction: (approvalId: string, action: 'approve' | 'request_changes' | 'reject' | 'publish' | 'schedule' | 'reschedule' | 'comment', comment?: string, scheduledAt?: string) => Promise<ContentApprovalItem | null>;
   refresh: () => Promise<void>;
 };
 
 const GovernanceContext = React.createContext<GovernanceContextValue | null>(null);
 
-const DEFAULT_ACCOUNTS: UserAccount[] = [
-  {
-    id: 'acc-personal-1',
-    workspaceId: 'ws-personal',
-    userId: 'usr-master-personal',
-    name: 'Pedro Henrique',
-    type: 'personal',
-    role: 'Solo Creator',
-    planName: 'Plano Solo',
-    email: 'pedro.henrique@clickostudio.com',
-  },
-  {
-    id: 'acc-ws-1',
-    workspaceId: 'ws-1',
-    userId: 'usr-master',
-    name: 'Clicko Studio',
-    type: 'company',
-    role: 'Equipe & Governança',
-    planName: 'Plano Enterprise',
-    membersCount: 12,
-    email: 'equipe@clickostudio.com',
-  },
-];
-
-function normalizeAccount(account: Partial<UserAccount> & Pick<UserAccount, 'id' | 'name' | 'type'>): UserAccount {
-  const isDefaultPersonal = account.id === 'acc-personal-1';
-  const isDefaultCompany = account.id === 'acc-ws-1';
-  const workspaceId = account.workspaceId || (isDefaultPersonal ? 'ws-personal' : isDefaultCompany ? 'ws-1' : `ws-${account.id.replace(/^acc-/, '')}`);
-  const userId = account.userId || (isDefaultPersonal ? 'usr-master-personal' : isDefaultCompany ? 'usr-master' : `usr-master-${workspaceId}`);
-  const name = isDefaultPersonal && account.name === 'Conta Pessoal'
-    ? 'Pedro Henrique'
-    : isDefaultCompany && account.name === 'Conta Workspace'
-      ? 'Clicko Studio'
-      : account.name;
-  return { ...account, name, workspaceId, userId } as UserAccount;
-}
-
-function getStoredAccounts(): UserAccount[] {
-  try {
-    const stored = window.localStorage.getItem('clicko-studio:user-accounts');
-    if (stored) {
-      const parsed = JSON.parse(stored);
-      if (Array.isArray(parsed) && parsed.length > 0) {
-        const hasPersonal = parsed.some((a: UserAccount) => a.type === 'personal');
-        const hasCompany = parsed.some((a: UserAccount) => a.type === 'company');
-        let updated = parsed.map((account: UserAccount) => normalizeAccount(account));
-        if (!hasPersonal) {
-          updated.unshift(DEFAULT_ACCOUNTS[0]);
-        }
-        if (!hasCompany) {
-          updated.push(DEFAULT_ACCOUNTS[1]);
-        }
-        return updated;
-      }
-    }
-  } catch (e) {
-    console.error('Error reading stored accounts', e);
-  }
-  return DEFAULT_ACCOUNTS.map(normalizeAccount);
-}
-
-function getStoredEnvironment(): EnvironmentMode {
-  const stored = window.localStorage.getItem('clicko-studio:environment');
-  return stored === 'personal' ? 'personal' : 'company';
-}
+const ANONYMOUS_ACCOUNT: UserAccount = { id: 'anonymous', workspaceId: 'anonymous', userId: 'anonymous', name: 'Clicko', type: 'personal' };
+const navigationCapability: Partial<Record<NavigationTab, keyof NonNullable<UserAccount['capabilities']>>> = {
+  dashboard: 'dashboard', 'create-image': 'image_generation', 'create-video': 'video_generation', 'create-copy': 'copy_creation', 'ai-chat': 'klic',
+  'connected-accounts': 'connected_accounts', workspace: 'clients', strategy: 'radar', library: 'library', calendar: 'calendar', analytics: 'analytics', automations: 'automations', approvals: 'approvals', team: 'team',
+};
 
 async function request<T>(path: string, account: UserAccount, init?: RequestInit): Promise<T> {
   const response = await fetch(`/api/governance${path}`, {
@@ -137,19 +86,10 @@ async function request<T>(path: string, account: UserAccount, init?: RequestInit
 }
 
 export const GovernanceProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [accounts, setAccounts] = React.useState<UserAccount[]>(getStoredAccounts);
-  const [activeAccountId, setActiveAccountId] = React.useState<string>(() => {
-    const stored = window.localStorage.getItem('clicko-studio:active-account-id');
-    const existing = getStoredAccounts();
-    if (stored && existing.some((a) => a.id === stored)) return stored;
-    return existing[0]?.id || 'acc-personal-1';
-  });
-
-  const [environmentMode, setEnvironmentModeState] = React.useState<EnvironmentMode>(() => {
-    const activeAcc = getStoredAccounts().find(a => a.id === window.localStorage.getItem('clicko-studio:active-account-id'));
-    if (activeAcc) return activeAcc.type;
-    return getStoredEnvironment();
-  });
+  const auth = useAuth();
+  const accounts = auth.accounts;
+  const activeAccountId = auth.account?.id || '';
+  const activeAccount = auth.account || ANONYMOUS_ACCOUNT;
 
   const [loading, setLoading] = React.useState(true);
   const [feedback, setFeedback] = React.useState<Feedback>(null);
@@ -158,28 +98,28 @@ export const GovernanceProvider: React.FC<{ children: React.ReactNode }> = ({ ch
   const [users, setUsers] = React.useState<WorkspaceMember[]>([]);
   const [plans, setPlans] = React.useState<SaaSPlan[]>([]);
   const [subscription, setSubscription] = React.useState<WorkspaceSubscription>();
+  const [licenses, setLicenses] = React.useState<OrganizationLicense[]>([]);
+  const [usage, setUsage] = React.useState<UsagePool>();
   const [approvals, setApprovals] = React.useState<ContentApprovalItem[]>([]);
   const [auditLogs, setAuditLogs] = React.useState<AuditLogEntry[]>([]);
 
-  const activeAccount = React.useMemo(() => {
-    return accounts.find((a) => a.id === activeAccountId) || accounts[0] || DEFAULT_ACCOUNTS[0];
-  }, [accounts, activeAccountId]);
+  const accountRef = React.useRef(activeAccount.id);
+  accountRef.current = activeAccount.id;
+  const refreshGuard = React.useRef(createRequestGuard());
+  React.useEffect(() => () => refreshGuard.current.invalidate(), []);
 
   const setEnvironmentMode = React.useCallback((mode: EnvironmentMode) => {
     window.localStorage.setItem('clicko-studio:environment', mode);
-    setEnvironmentModeState(mode);
     window.dispatchEvent(new CustomEvent('clicko:environment-change', { detail: { mode } }));
   }, []);
+
+  React.useEffect(() => { setEnvironmentMode(activeAccount.type); }, [activeAccount.type, setEnvironmentMode]);
 
   const switchAccount = React.useCallback((accountId: string) => {
     const target = accounts.find((a) => a.id === accountId);
     if (!target) return;
-    setActiveAccountId(accountId);
-    window.localStorage.setItem('clicko-studio:active-account-id', accountId);
-    if (target.type !== environmentMode) {
-      setEnvironmentMode(target.type);
-    }
-  }, [accounts, environmentMode, setEnvironmentMode]);
+    void auth.switchAccount(target.workspaceId).then(() => setEnvironmentMode(target.type)).catch(error => setFeedback({ type: 'error', message: error instanceof Error ? error.message : 'Não foi possível trocar de perfil.' }));
+  }, [accounts, auth, setEnvironmentMode]);
 
   const addAccount = React.useCallback(async (newAccData: Omit<UserAccount, 'id' | 'workspaceId' | 'userId'>) => {
     const id = `acc-${newAccData.type}-${Date.now()}`;
@@ -203,78 +143,75 @@ export const GovernanceProvider: React.FC<{ children: React.ReactNode }> = ({ ch
       setFeedback({ type: 'error', message: error instanceof Error ? error.message : 'Não foi possível criar o ambiente.' });
       return null;
     }
-    setAccounts((current) => {
-      const updated = [...current, newAcc];
-      window.localStorage.setItem('clicko-studio:user-accounts', JSON.stringify(updated));
-      return updated;
-    });
-    setActiveAccountId(id);
-    window.localStorage.setItem('clicko-studio:active-account-id', id);
+    await auth.refresh();
     setEnvironmentMode(newAcc.type);
     return id;
-  }, [setEnvironmentMode]);
+  }, [auth, setEnvironmentMode]);
 
   const removeAccount = React.useCallback((accountId: string) => {
-    setAccounts((current) => {
-      if (current.length <= 1) return current;
-      const updated = current.filter((a) => a.id !== accountId);
-      window.localStorage.setItem('clicko-studio:user-accounts', JSON.stringify(updated));
-      if (activeAccountId === accountId && updated.length > 0) {
-        const fallback = updated[0];
-        setActiveAccountId(fallback.id);
-        window.localStorage.setItem('clicko-studio:active-account-id', fallback.id);
-        setEnvironmentMode(fallback.type);
-      }
-      return updated;
-    });
-  }, [activeAccountId, setEnvironmentMode]);
+    const target = accounts.find(item => item.id === accountId);
+    if (!target) return;
+    void auth.removeAccount(target.workspaceId).catch(error => setFeedback({ type: 'error', message: error instanceof Error ? error.message : 'Não foi possível remover o perfil.' }));
+  }, [accounts, auth]);
 
   const refresh = React.useCallback(async () => {
+    if (!auth.authenticated || !auth.account) {
+      refreshGuard.current.invalidate();
+      setSession(undefined); setWorkspace(undefined); setUsers([]); setPlans([]); setSubscription(undefined); setLicenses([]); setUsage(undefined); setApprovals([]); setAuditLogs([]);
+      setLoading(auth.loading);
+      return;
+    }
+    const isCurrent = refreshGuard.current.begin(activeAccount.id, () => accountRef.current);
     setLoading(true);
+    setSession(undefined);
+    setWorkspace(undefined);
+    setUsers([]); setPlans([]); setSubscription(undefined); setLicenses([]); setUsage(undefined); setApprovals([]); setAuditLogs([]);
     try {
-      if (!['ws-1', 'ws-personal'].includes(activeAccount.workspaceId)) {
-        await fetch('/api/governance/workspaces/register', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ workspaceId: activeAccount.workspaceId, userId: activeAccount.userId, name: activeAccount.name, type: activeAccount.type, email: activeAccount.email, planName: activeAccount.planName }) });
-      }
       const nextSession = await request<GovernanceSession>('/session', activeAccount);
       const nextWorkspace = await request<GovernanceWorkspace>('/workspace', activeAccount);
+      const nextPlans = hasPermission(nextSession.currentUser, 'subscription.read') ? await request<SaaSPlan[]>('/plans', activeAccount) : [];
+      const nextSubscription = hasPermission(nextSession.currentUser, 'subscription.read') ? await request<WorkspaceSubscription>('/subscription', activeAccount) : undefined;
+      if (!activeAccount.subscriptionAccessAllowed) {
+        if (!isCurrent()) return;
+        setPlans(nextPlans); setSubscription(nextSubscription); setSession(nextSession); setWorkspace(nextWorkspace);
+        return;
+      }
+      const [nextUsers, nextLicenses, nextUsage, nextApprovals, nextAuditLogs] = await Promise.all([
+        activeAccount.type === 'company' && hasPermission(nextSession.currentUser, 'members.read') ? request<WorkspaceMember[]>('/users', activeAccount) : Promise.resolve([nextSession.currentUser]),
+        activeAccount.type === 'company' && hasPermission(nextSession.currentUser, 'licenses.read') ? request<OrganizationLicense[]>('/licenses', activeAccount) : Promise.resolve([]),
+        hasPermission(nextSession.currentUser, 'usage.read.own') ? request<UsagePool>('/usage', activeAccount) : Promise.resolve(undefined),
+        activeAccount.type === 'company' && hasPermission(nextSession.currentUser, 'content.approve') ? request<ContentApprovalItem[]>('/approvals', activeAccount) : Promise.resolve([]),
+        hasPermission(nextSession.currentUser, 'audit.read') ? request<AuditLogEntry[]>('/audit-logs', activeAccount) : Promise.resolve([]),
+      ]);
+      if (!isCurrent()) return;
+      setUsers(nextUsers);
+      setPlans(nextPlans);
+      setSubscription(nextSubscription);
+      setLicenses(nextLicenses);
+      setUsage(nextUsage);
+      setApprovals(nextApprovals);
+      setAuditLogs(nextAuditLogs);
       setSession(nextSession);
       setWorkspace(nextWorkspace);
-      if (nextSession.currentUser.role === 'master') {
-        const [nextUsers, nextPlans, nextSubscription, nextApprovals, nextAuditLogs] = await Promise.all([
-          request<WorkspaceMember[]>('/users', activeAccount),
-          request<SaaSPlan[]>('/plans', activeAccount),
-          request<WorkspaceSubscription>('/subscription', activeAccount),
-          request<ContentApprovalItem[]>('/approvals', activeAccount),
-          request<AuditLogEntry[]>('/audit-logs', activeAccount),
-        ]);
-        setUsers(nextUsers);
-        setPlans(nextPlans);
-        setSubscription(nextSubscription);
-        setApprovals(nextApprovals);
-        setAuditLogs(nextAuditLogs);
-      } else {
-        setUsers([nextSession.currentUser]);
-        setPlans([]);
-        setSubscription(undefined);
-        setApprovals([]);
-        setAuditLogs([]);
-      }
     } catch (error) {
-      setFeedback({ type: 'error', message: error instanceof Error ? error.message : 'Falha ao carregar a governança.' });
+      if (isCurrent()) setFeedback({ type: 'error', message: error instanceof Error ? error.message : 'Falha ao carregar a governança.' });
     } finally {
-      setLoading(false);
+      if (isCurrent()) setLoading(false);
     }
-  }, [activeAccount]);
+  }, [activeAccount, auth.account, auth.authenticated, auth.loading]);
 
   React.useEffect(() => { void refresh(); }, [refresh]);
 
   const run = async <T,>(operation: () => Promise<T>, message: string, onSuccess?: (value: T) => void) => {
+    const accountId = activeAccount.id;
     try {
       const value = await operation();
+      if (accountId !== accountRef.current) return null;
       onSuccess?.(value);
       setFeedback({ type: 'success', message });
       return value;
     } catch (error) {
+      if (accountId !== accountRef.current) return null;
       setFeedback({ type: 'error', message: error instanceof Error ? error.message : 'Não foi possível concluir a ação.' });
       return null;
     }
@@ -282,7 +219,7 @@ export const GovernanceProvider: React.FC<{ children: React.ReactNode }> = ({ ch
 
   const inviteUser: GovernanceContextValue['inviteUser'] = async (payload) => Boolean(await run(
     () => request<WorkspaceMember>('/invites', activeAccount, { method: 'POST', body: JSON.stringify(payload) }),
-    'Convite enviado com sucesso.',
+    'Convite registrado. O envio de e-mail ainda depende da integração de entrega.',
     (member) => setUsers((current) => [...current, member]),
   ));
 
@@ -299,14 +236,14 @@ export const GovernanceProvider: React.FC<{ children: React.ReactNode }> = ({ ch
 
   const resendInvite: GovernanceContextValue['resendInvite'] = async (userId) => Boolean(await run(
     () => request<WorkspaceMember>(`/users/${userId}/resend-invite`, activeAccount, { method: 'POST' }),
-    'Convite reenviado e prazo renovado.',
+    'Prazo do convite renovado. O envio de e-mail ainda depende da integração de entrega.',
     (member) => setUsers((current) => current.map((item) => item.id === member.id ? member : item)),
   ));
 
-  const changePlan: GovernanceContextValue['changePlan'] = async (planId) => Boolean(await run(
-    () => request<{ subscription: WorkspaceSubscription; workspace: GovernanceWorkspace }>('/subscription', activeAccount, { method: 'PATCH', body: JSON.stringify({ planId }) }),
-    'Plano atualizado com sucesso.',
-    (result) => { setSubscription(result.subscription); setWorkspace(result.workspace); },
+  const changePlan: GovernanceContextValue['changePlan'] = async (planId, billingCycle = 'monthly') => Boolean(await run(
+    () => request<{ checkoutUrl: string }>('/billing/checkout', activeAccount, { method: 'POST', body: JSON.stringify({ planId, billingCycle }) }),
+    'Checkout seguro iniciado.',
+    (result) => window.location.assign(result.checkoutUrl),
   ));
 
   const recordOfferEvent: GovernanceContextValue['recordOfferEvent'] = async (payload) => {
@@ -335,9 +272,9 @@ export const GovernanceProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     (approval) => setApprovals((current) => [approval, ...current.filter((item) => item.id !== approval.id)]),
   );
 
-  const currentUser = session?.currentUser;
+  const currentUser = session?.currentUser.workspaceId === activeAccount.workspaceId && session.currentUser.id === activeAccount.userId ? session.currentUser : undefined;
   const value: GovernanceContextValue = {
-    environmentMode,
+    environmentMode: activeAccount.type,
     setEnvironmentMode,
     accounts,
     activeAccountId,
@@ -348,14 +285,16 @@ export const GovernanceProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     loading,
     feedback,
     currentUser,
-    workspace,
-    users,
+    workspace: workspace?.id === activeAccount.workspaceId ? workspace : undefined,
+    users: users.filter(item => item.workspaceId === activeAccount.workspaceId),
     plans,
-    subscription,
-    approvals,
-    auditLogs,
-    isMaster: currentUser?.role === 'master',
-    canAccess: (tab) => canAccessNavigation(currentUser, tab, environmentMode),
+    subscription: subscription?.workspaceId === activeAccount.workspaceId ? subscription : undefined,
+    licenses: licenses.filter(item => item.workspaceId === activeAccount.workspaceId),
+    usage: usage?.workspaceId === activeAccount.workspaceId ? usage : undefined,
+    approvals: approvals.filter(item => item.workspaceId === activeAccount.workspaceId),
+    auditLogs: auditLogs.filter(item => item.workspaceId === activeAccount.workspaceId),
+    isMaster: isPrivilegedRole(currentUser?.role),
+    canAccess: (tab) => canAccessNavigation(currentUser, tab, activeAccount.type) && (navigationCapability[tab] ? activeAccount.capabilities?.[navigationCapability[tab]!] === true : true),
     clearFeedback: () => setFeedback(null),
     inviteUser,
     updateUser,

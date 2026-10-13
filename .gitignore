@@ -2,7 +2,22 @@ node_modules/
 build/
 dist/
 coverage/
+# Generated Playwright reports and screenshots (test sources stay tracked).
+/test-results/
+/playwright-report/
 .DS_Store
 *.log
 .env*
 !.env.example
+.clicko-data/
+
+# Local/private credentials. Keep examples and application data models tracked;
+# real provider credentials belong outside the repository or in .secrets/.
+.secrets/
+*service-account*.json
+*service_account*.json
+*oauth-credentials*.json
+*oauth_credentials*.json
+google-credentials*.json
+*.pem
+*.key

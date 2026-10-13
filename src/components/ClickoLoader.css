@@ -1,0 +1,68 @@
+.clicko-loader {
+  --clicko-loader-ink: #f7f7f7;
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  gap: .65em;
+  color: var(--clicko-loader-ink);
+  vertical-align: middle;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  animation: none;
+}
+.clicko-loader::before,
+.clicko-loader::after { content: none !important; }
+.clicko-loader[data-tone="light"],
+[data-theme="light"] .clicko-loader[data-tone="auto"] { --clicko-loader-ink: #111; }
+.clicko-loader[data-tone="dark"] { --clicko-loader-ink: #f7f7f7; }
+.clicko-loader--tiny { --clicko-loader-size: 16px; }
+.clicko-loader--small { --clicko-loader-size: 20px; }
+.clicko-loader--medium { --clicko-loader-size: 42px; }
+.clicko-loader--large { --clicko-loader-size: 92px; }
+.clicko-loader__symbol {
+  display: block;
+  width: var(--clicko-loader-size);
+  height: var(--clicko-loader-size);
+  aspect-ratio: 1 / 1;
+  flex: none;
+  background: var(--clicko-loader-ink);
+  -webkit-mask: url('/branding/simbolo_escuro.png') 58% 50% / 145% 145% no-repeat;
+  mask: url('/branding/simbolo_escuro.png') 58% 50% / 145% 145% no-repeat;
+  mask-mode: luminance;
+  animation: clicko-loader-turn 1.2s linear infinite;
+}
+.clicko-loader__message { color: inherit; font: inherit; opacity: .65; }
+.clicko-loader--section,
+.clicko-loader--page {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  text-align: center;
+}
+.clicko-loader--section { min-height: 200px; }
+.clicko-loader--page { min-height: 100vh; }
+/* Outrank the legacy status/toast styles, including their :not() selectors. */
+.clicko-app-shell span.clicko-loader[role="status"][data-tone][class*="clicko-loader--"] {
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  animation: none !important;
+  color: var(--clicko-loader-ink) !important;
+}
+@keyframes clicko-loader-turn { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) {
+  .clicko-loader__symbol { animation: none; }
+}
+@supports not (mask-mode: luminance) {
+  .clicko-loader__symbol {
+    background: url('/branding/simbolo_escuro.png') 58% 50% / 145% 145% no-repeat;
+    mix-blend-mode: screen;
+  }
+  .clicko-loader[data-tone="light"] .clicko-loader__symbol,
+  [data-theme="light"] .clicko-loader[data-tone="auto"] .clicko-loader__symbol {
+    background-image: url('/branding/simbolo_claro.png');
+    mix-blend-mode: multiply;
+  }
+}

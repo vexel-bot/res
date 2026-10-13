@@ -1,0 +1,732 @@
+/* Internal settings navigation: one responsive, theme-aware horizontal system. */
+.clicko-settings-top-nav {
+  position: sticky;
+  top: 70px;
+  z-index: 20;
+  width: 100%;
+  margin: 0 0 26px;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  border-bottom: 1px solid var(--clicko-border-soft);
+  background: color-mix(in srgb, var(--clicko-ui-canvas) 92%, transparent);
+  backdrop-filter: blur(14px);
+  scrollbar-width: none;
+}
+
+.clicko-settings-top-nav::-webkit-scrollbar { display: none; }
+
+.clicko-settings-top-nav__track {
+  display: flex;
+  width: max-content;
+  min-width: 100%;
+  align-items: stretch;
+  gap: 4px;
+}
+
+.clicko-settings-top-tab {
+  position: relative;
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 15px;
+  border: 0;
+  border-radius: 9px 9px 0 0;
+  background: transparent;
+  color: var(--clicko-text-muted);
+  font-size: 10px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color 150ms ease, background-color 150ms ease;
+}
+
+.clicko-settings-top-tab svg {
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+  stroke-width: 1.8;
+}
+
+.clicko-settings-top-tab::after {
+  position: absolute;
+  right: 14px;
+  bottom: -1px;
+  left: 14px;
+  height: 2px;
+  border-radius: 2px 2px 0 0;
+  background: var(--clicko-accent);
+  content: '';
+  opacity: 0;
+  transform: scaleX(.55);
+  transition: opacity 150ms ease, transform 150ms ease;
+}
+
+.clicko-settings-top-tab:hover {
+  background: var(--clicko-ui-surface-muted);
+  color: var(--clicko-text-primary);
+}
+
+.clicko-settings-top-tab.is-active {
+  background: color-mix(in srgb, var(--clicko-accent) 8%, transparent);
+  color: var(--clicko-accent-ink);
+}
+
+.clicko-settings-top-tab.is-active::after {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+.clicko-settings-top-tab:focus-visible {
+  z-index: 1;
+  outline: 2px solid color-mix(in srgb, var(--clicko-accent) 70%, transparent);
+  outline-offset: -3px;
+}
+
+@media (max-width: 640px) {
+  .clicko-settings-top-nav { top: 66px; margin-bottom: 20px; }
+  .clicko-settings-top-tab { min-height: 44px; padding: 0 12px; font-size: 9px; }
+}
+
+.clicko-settings-theme-switcher { position:static; display:flex; flex:0 0 auto; gap:2px; margin-left:auto; padding:4px; border:1px solid rgba(255,255,255,.1); border-radius:9px; background:#0b0b0b; box-shadow:none; color-scheme:dark; }
+.clicko-settings-theme-switcher button { min-width:48px; border:0; border-radius:6px; padding:6px 10px; background:transparent; color:#9b9b9b; font:600 8px/1 system-ui,sans-serif; cursor:pointer; transition:background-color 160ms ease,color 160ms ease; }
+.clicko-settings-theme-switcher button:hover { color:#fff; background:#171717; }
+.clicko-settings-theme-switcher button.is-selected,
+.clicko-settings-theme-switcher button[aria-checked="true"] { background:#FF7F50; color:#111; }
+html[data-theme="light"] .clicko-settings-theme-switcher { border-color:rgba(17,17,17,.12); background:#fff; box-shadow:0 12px 28px rgba(17,17,17,.1); color-scheme:light; }
+html[data-theme="light"] .clicko-settings-theme-switcher button { color:#626262; }
+html[data-theme="light"] .clicko-settings-theme-switcher button:hover { color:#171717; background:#f0f0ed; }
+html[data-theme="light"] .clicko-settings-theme-switcher button.is-selected,
+html[data-theme="light"] .clicko-settings-theme-switcher button[aria-checked="true"] { background:#FF7F50; color:#111; }
+@media (max-width: 640px) { .clicko-settings-theme-switcher { order:2; margin-left:0; } }
+
+/* Settings selectors share the same Clicko listbox used by Calendar filters. */
+.clicko-app-shell[data-current-tab="settings"] .settings-select-menu {
+  --clicko-select-height: 40px;
+}
+
+.clicko-app-shell[data-current-tab="settings"] .settings-select-menu .clicko-select-menu__label {
+  color: var(--clicko-text-secondary);
+  font-size: 10px;
+  font-weight: 500;
+}
+
+.clicko-app-shell[data-current-tab="settings"] .settings-select-menu .clicko-select-menu__trigger {
+  font-size: 11px;
+}
+
+.settings-select-field__hint {
+  display: block;
+  margin-top: 6px;
+  color: var(--clicko-text-muted);
+  font-size: 8px;
+  line-height: 16px;
+}
+
+/* The full avatar surface opens the native picker; the camera remains the
+   visible affordance without limiting the clickable area to a tiny icon. */
+.clicko-app-shell[data-current-tab="settings"] section:first-of-type .relative.h-20.w-20 > label.absolute {
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  padding: 4px !important;
+  place-items: end !important;
+  border: 0 !important;
+  border-radius: inherit !important;
+  background: transparent !important;
+}
+
+.clicko-app-shell[data-current-tab="settings"] section:first-of-type .relative.h-20.w-20 > label.absolute > svg {
+  width: 28px !important;
+  height: 28px !important;
+  padding: 7px !important;
+  border: 1px solid var(--clicko-border) !important;
+  border-radius: 8px !important;
+  background: var(--clicko-ui-popover) !important;
+  color: var(--clicko-text-secondary) !important;
+  pointer-events: none !important;
+}
+
+.clicko-app-shell[data-current-tab="settings"] section:first-of-type .relative.h-20.w-20 > label.absolute > input[type="file"] {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 2 !important;
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  opacity: 0 !important;
+  cursor: pointer !important;
+}
+
+.clicko-app-shell[data-current-tab="settings"] section:first-of-type .relative.h-20.w-20 > label.absolute:hover > svg {
+  border-color: rgba(255, 127, 80, 0.42) !important;
+  color: #ff7f50 !important;
+}
+
+/* Ajuda e Suporte */
+.clicko-support-center {
+  color: var(--clicko-text-primary);
+}
+
+.clicko-support-intro {
+  display: grid;
+  gap: 18px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--clicko-border-soft);
+}
+
+.clicko-support-intro-copy {
+  max-width: 680px;
+}
+
+.clicko-support-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--clicko-accent-ink);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+.clicko-support-eyebrow svg,
+.clicko-support-icon svg,
+.clicko-support-document-icon svg {
+  width: 15px;
+  height: 15px;
+}
+
+.clicko-support-intro-copy h3 {
+  margin-top: 10px;
+  max-width: 620px;
+  color: var(--clicko-text-primary);
+  font-size: clamp(19px, 2vw, 25px);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -.025em;
+}
+
+.clicko-support-intro-copy > p {
+  margin-top: 8px;
+  color: var(--clicko-text-muted);
+  font-size: 10px;
+  line-height: 1.8;
+}
+
+.clicko-support-contact-card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 14px;
+  padding: 16px;
+  border: 1px solid var(--clicko-border-soft);
+  border-radius: 14px;
+  background: var(--clicko-ui-surface-muted);
+}
+
+.clicko-support-icon,
+.clicko-support-document-icon {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--clicko-accent) 22%, transparent);
+  border-radius: 9px;
+  background: color-mix(in srgb, var(--clicko-accent) 8%, transparent);
+  color: var(--clicko-accent-ink);
+}
+
+.clicko-support-contact-card strong {
+  color: var(--clicko-text-primary);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.clicko-support-contact-card p {
+  margin-top: 3px;
+  max-width: 690px;
+  color: var(--clicko-text-muted);
+  font-size: 9px;
+  line-height: 1.65;
+}
+
+.clicko-support-primary-link {
+  display: inline-flex;
+  min-height: 36px;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 0 14px;
+  border-radius: 8px;
+  background: #ff7f50;
+  color: #111;
+  font-size: 9px;
+  font-weight: 700;
+  white-space: nowrap;
+  transition: background-color 160ms ease, transform 160ms ease;
+}
+
+.clicko-support-primary-link:hover {
+  background: #f28500;
+}
+
+.clicko-support-primary-link svg,
+.clicko-support-institutional-links svg {
+  width: 13px;
+  height: 13px;
+}
+
+.clicko-support-shortcuts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  padding: 20px 0;
+}
+
+.clicko-support-shortcuts a {
+  display: flex;
+  min-height: 43px;
+  align-items: center;
+  gap: 9px;
+  padding: 0 13px;
+  border: 1px solid var(--clicko-border-soft);
+  border-radius: 10px;
+  color: var(--clicko-text-secondary);
+  font-size: 9px;
+  font-weight: 600;
+  transition: border-color 160ms ease, background-color 160ms ease, color 160ms ease;
+}
+
+.clicko-support-shortcuts a:hover {
+  border-color: color-mix(in srgb, var(--clicko-accent) 35%, transparent);
+  background: var(--clicko-ui-surface-muted);
+  color: var(--clicko-accent-ink);
+}
+
+.clicko-support-shortcuts svg {
+  width: 14px;
+  height: 14px;
+  color: var(--clicko-accent-ink);
+}
+
+.clicko-support-search {
+  display: flex;
+  height: 43px;
+  align-items: center;
+  gap: 10px;
+  padding: 0 13px;
+  border: 1px solid var(--clicko-border-soft);
+  border-radius: 10px;
+  background: var(--clicko-control);
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.clicko-support-search:focus-within {
+  border-color: color-mix(in srgb, var(--clicko-accent) 55%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--clicko-accent) 9%, transparent);
+}
+
+.clicko-support-search svg {
+  width: 15px;
+  height: 15px;
+  color: var(--clicko-text-muted);
+}
+
+.clicko-support-search input,
+.clicko-support-search input:focus,
+.clicko-support-search input:focus-visible {
+  min-width: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0 !important;
+  outline: 0 !important;
+  background: transparent !important;
+  color: var(--clicko-text-primary) !important;
+  box-shadow: none !important;
+  font-size: 10px;
+}
+
+.clicko-support-section {
+  padding: 30px 0;
+  border-bottom: 1px solid var(--clicko-border-soft);
+  scroll-margin-top: 92px;
+}
+
+.clicko-support-section:last-child {
+  border-bottom: 0;
+}
+
+.clicko-support-section > header {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 15px;
+}
+
+.clicko-support-section > header span {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--clicko-accent-ink);
+  font-size: 7px;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+.clicko-support-section > header h3 {
+  color: var(--clicko-text-primary);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -.015em;
+}
+
+.clicko-support-section > header > p {
+  max-width: 360px;
+  color: var(--clicko-text-muted);
+  font-size: 8px;
+  line-height: 1.6;
+  text-align: right;
+}
+
+.clicko-support-document-list,
+.clicko-support-faq-list {
+  overflow: hidden;
+  border: 1px solid var(--clicko-border-soft);
+  border-radius: 13px;
+  background: var(--clicko-surface-1);
+}
+
+.clicko-support-disclosure {
+  border-bottom: 1px solid var(--clicko-border-soft);
+}
+
+.clicko-support-disclosure:last-child {
+  border-bottom: 0;
+}
+
+.clicko-support-disclosure > summary {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 13px;
+  min-height: 68px;
+  padding: 12px 15px;
+  cursor: pointer;
+  list-style: none;
+  transition: background-color 160ms ease;
+}
+
+.clicko-support-disclosure > summary::-webkit-details-marker {
+  display: none;
+}
+
+.clicko-support-disclosure > summary:hover,
+.clicko-support-disclosure[open] > summary {
+  background: var(--clicko-ui-surface-muted);
+}
+
+.clicko-support-disclosure > summary:focus-visible,
+.clicko-support-shortcuts a:focus-visible,
+.clicko-support-primary-link:focus-visible,
+.clicko-support-institutional-links a:focus-visible {
+  outline: 2px solid var(--clicko-accent);
+  outline-offset: -2px;
+}
+
+.clicko-support-document-copy {
+  min-width: 0;
+}
+
+.clicko-support-document-copy strong,
+.clicko-support-faq summary > strong {
+  display: block;
+  color: var(--clicko-text-primary);
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.clicko-support-document-copy small {
+  display: block;
+  margin-top: 3px;
+  overflow: hidden;
+  color: var(--clicko-text-muted);
+  font-size: 8px;
+  line-height: 1.5;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.clicko-support-document-meta {
+  color: var(--clicko-text-secondary);
+  font-size: 8px;
+  font-weight: 600;
+  text-align: right;
+}
+
+.clicko-support-document-meta small {
+  display: block;
+  margin-top: 3px;
+  color: var(--clicko-text-muted);
+  font-size: 7px;
+  font-weight: 400;
+}
+
+.clicko-support-chevron {
+  width: 14px;
+  height: 14px;
+  color: var(--clicko-text-muted);
+  transition: transform 160ms ease;
+}
+
+.clicko-support-disclosure[open] > summary .clicko-support-chevron {
+  transform: rotate(180deg);
+}
+
+.clicko-support-document-body {
+  padding: 5px 62px 22px;
+}
+
+.clicko-support-document-notice {
+  display: flex;
+  gap: 9px;
+  margin-bottom: 18px;
+  padding: 11px 12px;
+  border: 1px solid color-mix(in srgb, var(--clicko-accent-warm) 20%, transparent);
+  border-radius: 9px;
+  background: color-mix(in srgb, var(--clicko-accent-warm) 5%, transparent);
+  color: var(--clicko-warm-ink);
+}
+
+.clicko-support-document-notice svg {
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+}
+
+.clicko-support-document-notice p,
+.clicko-support-document-body section p,
+.clicko-support-document-body li,
+.clicko-support-faq > p {
+  color: var(--clicko-text-secondary);
+  font-size: 9px;
+  line-height: 1.75;
+}
+
+.clicko-support-document-body section + section {
+  margin-top: 17px;
+}
+
+.clicko-support-document-body h4 {
+  margin-bottom: 6px;
+  color: var(--clicko-text-primary);
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.clicko-support-document-body ul {
+  display: grid;
+  gap: 5px;
+  margin-top: 6px;
+  padding-left: 17px;
+  list-style: disc;
+}
+
+.clicko-support-document-body li::marker {
+  color: var(--clicko-accent);
+}
+
+.clicko-support-document-body footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 20px;
+  padding-top: 12px;
+  border-top: 1px solid var(--clicko-border-soft);
+  color: var(--clicko-text-muted);
+  font-size: 7px;
+}
+
+.clicko-support-faq > summary {
+  grid-template-columns: 100px minmax(0, 1fr) auto;
+  min-height: 55px;
+}
+
+.clicko-support-faq-category {
+  color: var(--clicko-accent-ink);
+  font-size: 7px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.clicko-support-faq > p {
+  max-width: 820px;
+  padding: 0 42px 17px 128px;
+}
+
+.clicko-support-about-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.clicko-support-about-grid article {
+  min-width: 0;
+  padding: 18px;
+  border: 1px solid var(--clicko-border-soft);
+  border-radius: 13px;
+  background: var(--clicko-surface-1);
+}
+
+.clicko-support-about-grid h4 {
+  margin-top: 14px;
+  color: var(--clicko-text-primary);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.clicko-support-about-grid article > p {
+  margin-top: 6px;
+  color: var(--clicko-text-muted);
+  font-size: 9px;
+  line-height: 1.7;
+}
+
+.clicko-support-about-grid article > strong {
+  display: block;
+  margin-top: 14px;
+  color: var(--clicko-text-secondary);
+  font-size: 9px;
+  font-weight: 600;
+}
+
+.clicko-support-about-grid dl {
+  margin-top: 13px;
+}
+
+.clicko-support-about-grid dl > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--clicko-border-soft);
+  font-size: 8px;
+}
+
+.clicko-support-about-grid dl > div:last-child {
+  border-bottom: 0;
+}
+
+.clicko-support-about-grid dt {
+  color: var(--clicko-text-muted);
+}
+
+.clicko-support-about-grid dd {
+  color: var(--clicko-text-primary);
+  font-weight: 600;
+  text-align: right;
+}
+
+.clicko-support-institutional-links {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding-top: 14px;
+  color: var(--clicko-text-muted);
+  font-size: 8px;
+}
+
+.clicko-support-institutional-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--clicko-accent-ink);
+  font-weight: 600;
+}
+
+.clicko-support-empty {
+  display: flex;
+  min-height: 220px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  border: 1px dashed var(--clicko-border);
+  border-radius: 13px;
+  text-align: center;
+}
+
+.clicko-support-empty svg {
+  width: 18px;
+  height: 18px;
+  color: var(--clicko-text-muted);
+}
+
+.clicko-support-empty strong {
+  margin-top: 10px;
+  color: var(--clicko-text-primary);
+  font-size: 11px;
+}
+
+.clicko-support-empty p {
+  margin-top: 4px;
+  color: var(--clicko-text-muted);
+  font-size: 8px;
+}
+
+.clicko-support-empty button {
+  margin-top: 13px;
+  border: 0;
+  background: transparent;
+  color: var(--clicko-accent-ink);
+  font-size: 8px;
+  font-weight: 600;
+}
+
+@media (max-width: 720px) {
+  .clicko-support-contact-card {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+  .clicko-support-primary-link {
+    grid-column: 1 / -1;
+  }
+  .clicko-support-shortcuts {
+    grid-template-columns: 1fr;
+  }
+  .clicko-support-section > header {
+    align-items: start;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .clicko-support-section > header > p {
+    text-align: left;
+  }
+  .clicko-support-document-meta {
+    display: none;
+  }
+  .clicko-support-disclosure > summary {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+  }
+  .clicko-support-document-body {
+    padding: 4px 15px 20px;
+  }
+  .clicko-support-faq > summary {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  .clicko-support-faq-category {
+    grid-column: 1 / -1;
+  }
+  .clicko-support-faq > p {
+    padding: 0 15px 17px;
+  }
+  .clicko-support-about-grid {
+    grid-template-columns: 1fr;
+  }
+}

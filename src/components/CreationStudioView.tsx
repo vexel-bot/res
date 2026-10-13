@@ -1,30 +1,23 @@
 import React from 'react';
+import { ClickoLoader } from './ClickoLoader';
 import {
   PenTool,
   Layers,
-  Send,
-  Calendar,
-  CheckCircle2,
-  Copy,
   Plus,
   Trash2,
-  Sliders,
   Eye,
   Heart,
   MessageCircle,
   Bookmark,
   Share2,
-  RefreshCw,
-  Image as ImageIcon,
-  ChevronLeft,
-  ChevronRight,
   Gauge,
-  WandSparkles,
 } from 'lucide-react';
 import { PostFormat, SocialPlatform, Post, CarouselSlide, ClickScoreBreakdown } from '../types';
 import { useOperations } from '../context/OperationsContext';
+import { klicPageScope, useKlicPageDetails } from '../klic/pageContext';
 import { useGovernance } from '../context/GovernanceContext';
 import { useOffers } from '../context/OfferContext';
+import { KlicSymbol } from './KlicSymbol';
 
 interface CreationStudioViewProps {
   onSavePost: (newPost: Partial<Post>) => void;
@@ -48,12 +41,16 @@ function calculateClickScore(title: string, copy: string, audience: string, ctaP
 export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
   onSavePost,
 }) => {
-  const { contextSnapshot, activeClient, activeCampaign, studioHandoff, connectedAccounts } = useOperations();
+  const { contextSnapshot, activeWorkspace, activeClient, activeCampaign, studioHandoff, connectedAccounts } = useOperations();
   const { environmentMode, currentUser, subscription } = useGovernance();
   const { openOffer } = useOffers();
   const isPersonal = environmentMode === 'personal';
   const isCollaborator = currentUser?.role === 'collaborator';
   const [copyTool, setCopyTool] = React.useState('Publicações');
+  useKlicPageDetails('create-copy', klicPageScope(activeWorkspace.id, activeClient?.id), {
+    view: copyTool,
+    selected: activeCampaign ? { kind: 'campanha', id: activeCampaign.id } : undefined,
+  });
   const [selectedFormat, setSelectedFormat] = React.useState<PostFormat>('carousel');
   const [selectedPlatform, setSelectedPlatform] = React.useState<SocialPlatform>('instagram');
   const [postTitle, setPostTitle] = React.useState('5 Pilares do Crescimento Digital');
@@ -88,8 +85,9 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
   ]);
   const [activeSlideIndex, setActiveSlideIndex] = React.useState(0);
   const [isGenerating, setIsGenerating] = React.useState(false);
+  const [generationError, setGenerationError] = React.useState('');
   const [publicationError, setPublicationError] = React.useState('');
-  const [previewImageUrl, setPreviewImageUrl] = React.useState(
+  const [previewImageUrl] = React.useState(
     'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80'
   );
   const appliedHandoff = React.useRef<string | undefined>(undefined);
@@ -126,6 +124,7 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
 
   const handleGenerateAICopy = async (optimize = false) => {
     setIsGenerating(true);
+    setGenerationError('');
     try {
       const res = await fetch('/api/ai/generate-copy', {
         method: 'POST',
@@ -142,12 +141,13 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
         }),
       });
 
-      const data = await res.json();
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || 'Não foi possível gerar o conteúdo agora.');
       if (data.copy) setCopyText(data.copy);
       if (data.hashtags) setHashtags(data.hashtags);
       if (data.slides && data.slides.length > 0) setSlides(data.slides);
     } catch (err) {
-      console.error(err);
+      setGenerationError(err instanceof Error ? err.message : 'Não foi possível gerar o conteúdo agora.');
     } finally {
       setIsGenerating(false);
     }
@@ -217,12 +217,12 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
       <div className="clicko-studio-actionbar flex flex-col justify-between gap-4 border-b border-white/[0.06] pb-5 md:flex-row md:items-center">
         <div>
           <div className="flex items-center gap-2">
-            <PenTool className="w-5 h-5 text-[#8bd132]" />
+            <PenTool className="w-5 h-5 text-[#FF7F50]" />
             <h2 className="text-xl font-bold tracking-tight text-white">
               {isPersonal ? 'Estúdio de Criação Pessoal' : 'Estúdio de Criação Universal'}
             </h2>
           </div>
-          <p className="text-xs text-[#78848c] mt-0.5">
+          <p className="text-xs text-[#808080] mt-0.5">
             {isPersonal
               ? 'Crie livremente; publicação e agendamento respeitam as contas realmente autorizadas'
               : 'Crie conteúdos com governança corporativa e fluxo de aprovação'}
@@ -243,7 +243,7 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
               <button
                 type="button"
                 onClick={() => handleSaveDraft('published')}
-                className="rounded-lg bg-[#8bd132] px-4 py-2 text-xs font-semibold text-[#080e05] transition-colors hover:bg-[#9be24d]"
+                className="rounded-lg bg-[#FF7F50] px-4 py-2 text-xs font-semibold text-[#000000] transition-colors hover:bg-[#F28500]"
               >
                 Publicar Imediatamente
               </button>
@@ -259,7 +259,7 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
             <button
               type="button"
               onClick={() => handleSaveDraft('pending_approval')}
-              className="rounded-lg border border-amber-500/25 bg-amber-500/15 px-4 py-2 text-xs font-semibold text-amber-300 transition-colors hover:bg-amber-500/20"
+              className="rounded-lg border border-[#F28500]/25 bg-[#F28500]/15 px-4 py-2 text-xs font-semibold text-[#F28500] transition-colors hover:bg-[#F28500]/20"
             >
               Enviar para Aprovação
             </button>
@@ -268,7 +268,7 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
               <button
                 type="button"
                 onClick={() => handleSaveDraft('published')}
-                className="rounded-lg bg-[#8bd132] px-4 py-2 text-xs font-semibold text-[#080e05] transition-colors hover:bg-[#9be24d]"
+                className="rounded-lg bg-[#FF7F50] px-4 py-2 text-xs font-semibold text-[#000000] transition-colors hover:bg-[#F28500]"
               >
                 Publicar Imediatamente
               </button>
@@ -284,12 +284,13 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
         </div>
       </div>
 
-      {publicationError && <div role="alert" className="rounded-lg border border-amber-400/20 bg-amber-400/[0.06] px-4 py-3 text-[9px] text-amber-200">{publicationError}</div>}
+      {generationError && <div role="alert" className="rounded-lg border border-[#F28500]/20 bg-[#F28500]/[0.06] px-4 py-3 text-[9px] text-[#F28500]">{generationError}</div>}
+      {publicationError && <div role="alert" className="rounded-lg border border-[#F28500]/20 bg-[#F28500]/[0.06] px-4 py-3 text-[9px] text-[#F28500]">{publicationError}</div>}
 
-      <div className="rounded-xl border border-white/[0.06] bg-[#101316] p-3.5">
+      <div className="rounded-xl border border-white/[0.06] bg-[rgba(128,128,128,0.14)] p-3.5">
         <div className="mb-2.5 flex items-center justify-between">
-          <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#6c7880]">Ferramentas de Redação</span>
-          <span className="text-[10px] font-mono font-bold text-[#8bd132]">Biblioteca de Prompts Conectada</span>
+          <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#808080]">Ferramentas de Redação</span>
+          <span className="text-[10px] font-mono font-bold text-[#FF7F50]">Biblioteca de Prompts Conectada</span>
         </div>
         <div className="flex gap-2 overflow-x-auto custom-scrollbar pb-1">
           {[
@@ -316,8 +317,8 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
               }}
               className={`shrink-0 rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${
                 copyTool === tool
-                  ? 'bg-[#8bd132] font-semibold text-[#080e05]'
-                  : 'border border-white/[0.06] bg-white/[0.02] text-[#8e9aa2] hover:bg-white/[0.06] hover:text-white'
+                  ? 'bg-[#FF7F50] font-semibold text-[#000000]'
+                  : 'border border-white/[0.06] bg-white/[0.02] text-[#808080] hover:bg-white/[0.06] hover:text-white'
               }`}
             >
               {tool}
@@ -337,8 +338,8 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
             }}
             className={`shrink-0 rounded-lg px-3.5 py-2 text-xs font-medium transition-colors ${
               selectedFormat === f.id
-                ? 'border border-[#8bd132] bg-[#8bd132] font-semibold text-[#0e170a]'
-                : 'bg-[#0d1216] text-[#8e989e] hover:text-white border border-white/[0.06]'
+                ? 'border border-[#FF7F50] bg-[#FF7F50] font-semibold text-[#000000]'
+                : 'bg-[rgba(128,128,128,0.14)] text-[#808080] hover:text-white border border-white/[0.06]'
             }`}
           >
             {f.label}
@@ -347,16 +348,16 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
       </div>
 
       {/* Studio Workspace Grid */}
-      <section className="clicko-score-panel grid gap-4 rounded-xl border border-white/[0.06] bg-[#0d0d0d] p-4 md:grid-cols-[150px_minmax(0,1fr)_auto] md:items-center">
-        <div className="flex items-center gap-3"><span className="relative grid h-14 w-14 place-items-center rounded-full border border-[#ff7a00]/25 bg-[#ff7a00]/[0.06]"><Gauge className="absolute h-8 w-8 text-[#ff7a00]/20" /><strong className="relative text-lg text-white">{clickScore.total}</strong></span><div><span className="text-[8px] font-semibold uppercase tracking-[0.16em] text-[#ff7a00]">Click Score</span><p className="mt-1 text-[8px] text-[#666]">Leitura da peça</p></div></div>
-        <div className="grid gap-3 sm:grid-cols-2"><div><span className="text-[8px] uppercase text-[#666]">O que está forte</span><p className="mt-1 text-[9px] leading-relaxed text-[#aaa]">{clickScore.strengths[0] || 'Estrutura pronta para refinamento.'}</p></div><div><span className="text-[8px] uppercase text-[#666]">Próximo ajuste</span><p className="mt-1 text-[9px] leading-relaxed text-[#aaa]">{clickScore.improvements[0] || 'A peça está equilibrada; refine apenas o ritmo.'}</p></div></div>
-        <button onClick={handleOptimizeContent} disabled={isGenerating} className="flex items-center justify-center gap-2 rounded-lg border border-[#ff5c5c]/25 bg-[#ff5c5c]/[0.07] px-4 py-2.5 text-[9px] font-semibold text-[#ff8a8a] disabled:opacity-40"><WandSparkles className="h-4 w-4" />Otimizar conteúdo</button>
+      <section className="clicko-score-panel grid gap-4 rounded-xl border border-white/[0.06] bg-[#000000] p-4 md:grid-cols-[150px_minmax(0,1fr)_auto] md:items-center">
+        <div className="flex items-center gap-3"><span className="relative grid h-14 w-14 place-items-center rounded-full border border-[#F28500]/25 bg-[#F28500]/[0.06]"><Gauge className="absolute h-8 w-8 text-[#F28500]/20" /><strong className="relative text-lg text-white">{clickScore.total}</strong></span><div><span className="text-[8px] font-semibold uppercase tracking-[0.16em] text-[#F28500]">Click Score</span><p className="mt-1 text-[8px] text-[#808080]">Leitura da peça</p></div></div>
+        <div className="grid gap-3 sm:grid-cols-2"><div><span className="text-[8px] uppercase text-[#808080]">O que está forte</span><p className="mt-1 text-[9px] leading-relaxed text-[rgba(255,255,255,0.72)]">{clickScore.strengths[0] || 'Estrutura pronta para refinamento.'}</p></div><div><span className="text-[8px] uppercase text-[#808080]">Próximo ajuste</span><p className="mt-1 text-[9px] leading-relaxed text-[rgba(255,255,255,0.72)]">{clickScore.improvements[0] || 'A peça está equilibrada; refine apenas o ritmo.'}</p></div></div>
+        <button onClick={handleOptimizeContent} disabled={isGenerating} className="flex items-center justify-center gap-2 rounded-lg border border-[#FF7F50]/25 bg-[#FF7F50]/[0.07] px-4 py-2.5 text-[9px] font-semibold text-[#FF7F50] disabled:opacity-40"><KlicSymbol className="h-4 w-4" />Otimizar conteúdo</button>
       </section>
 
       {/* Studio Workspace Grid */}
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
         {/* Left Col: Content Inputs & AI Copywriter */}
-        <div className="space-y-4 rounded-xl border border-white/[0.06] bg-[#101316] p-4">
+        <div className="space-y-4 rounded-xl border border-white/[0.06] bg-[rgba(128,128,128,0.14)] p-4">
           <div className="flex items-center justify-between border-b border-white/[0.06] pb-3">
             <span className="text-xs font-bold text-white flex items-center gap-1.5">
               Redação com a KLIC e parâmetros
@@ -364,11 +365,11 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
             <button
               onClick={() => handleGenerateAICopy()}
               disabled={isGenerating}
-              className="flex items-center gap-1.5 rounded-lg bg-[#8bd132] px-3.5 py-1.5 text-xs font-semibold text-[#0b1208] transition-colors hover:bg-[#9be24d] disabled:opacity-50"
+              className="flex items-center gap-1.5 rounded-lg bg-[#FF7F50] px-3.5 py-1.5 text-xs font-semibold text-[#000000] transition-colors hover:bg-[#F28500] disabled:opacity-50"
             >
               {isGenerating ? (
                 <>
-                  <RefreshCw className="w-3.5 h-3.5 animate-spin" /> Escrevendo...
+                  <ClickoLoader size="tiny" label="Escrevendo conteúdo" /> Escrevendo...
                 </>
               ) : (
                 <>
@@ -385,7 +386,7 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
                 type="text"
                 value={postTitle}
                 onChange={(e) => setPostTitle(e.target.value)}
-                className="w-full bg-[#070a0d] border border-white/[0.08] rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-[#8bd132] focus:ring-1 focus:ring-[#8bd132] transition"
+                className="w-full bg-[#000000] border border-white/[0.08] rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-[#FF7F50] focus:ring-1 focus:ring-[#FF7F50] transition"
               />
             </div>
 
@@ -395,7 +396,7 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
                 value={topicPrompt}
                 onChange={(e) => setTopicPrompt(e.target.value)}
                 rows={2}
-                className="w-full bg-[#070a0d] border border-white/[0.08] rounded-xl p-3 text-xs text-white focus:outline-none focus:border-[#8bd132] focus:ring-1 focus:ring-[#8bd132] resize-none transition"
+                className="w-full bg-[#000000] border border-white/[0.08] rounded-xl p-3 text-xs text-white focus:outline-none focus:border-[#FF7F50] focus:ring-1 focus:ring-[#FF7F50] resize-none transition"
                 placeholder="Descreva o objetivo do conteúdo..."
               />
             </div>
@@ -407,7 +408,7 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
                   type="text"
                   value={tone}
                   onChange={(e) => setTone(e.target.value)}
-                  className="w-full bg-[#070a0d] border border-white/[0.08] rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-[#8bd132] transition"
+                  className="w-full bg-[#000000] border border-white/[0.08] rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-[#FF7F50] transition"
                 />
               </div>
 
@@ -416,7 +417,7 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
                 <select
                   value={selectedPlatform}
                   onChange={(e) => setSelectedPlatform(e.target.value as SocialPlatform)}
-                  className="w-full bg-[#070a0d] border border-white/[0.08] rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-[#8bd132] transition"
+                  className="w-full bg-[#000000] border border-white/[0.08] rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-[#FF7F50] transition"
                 >
                   <option value="instagram">Instagram</option>
                   <option value="linkedin">LinkedIn</option>
@@ -435,7 +436,7 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
                 value={copyText}
                 onChange={(e) => setCopyText(e.target.value)}
                 rows={6}
-                className="w-full bg-[#070a0d] border border-white/[0.08] rounded-xl p-3 text-xs text-white focus:outline-none focus:border-[#8bd132] font-sans leading-relaxed resize-y transition"
+                className="w-full bg-[#000000] border border-white/[0.08] rounded-xl p-3 text-xs text-white focus:outline-none focus:border-[#FF7F50] font-sans leading-relaxed resize-y transition"
               />
             </div>
 
@@ -443,25 +444,25 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
             {selectedFormat === 'carousel' && (
               <div className="p-4 rounded-xl bg-white/[0.02] border border-white/5 space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="font-bold text-[#ededed] flex items-center gap-1.5">
-                    <Layers className="w-4 h-4 text-indigo-400" /> Slides do Carrossel ({slides.length})
+                  <span className="font-bold text-[rgba(255,255,255,0.88)] flex items-center gap-1.5">
+                    <Layers className="w-4 h-4 text-[#FF7F50]" /> Slides do Carrossel ({slides.length})
                   </span>
                   <button
                     onClick={handleAddSlide}
-                    className="px-2.5 py-1 rounded-lg bg-indigo-600/20 text-indigo-300 hover:bg-indigo-600/30 text-[11px] font-bold flex items-center gap-1"
+                    className="px-2.5 py-1 rounded-lg bg-[#FF7F50]/20 text-[#FF7F50] hover:bg-[#FF7F50]/30 text-[11px] font-bold flex items-center gap-1"
                   >
                     <Plus className="w-3.5 h-3.5" /> Slide
                   </button>
                 </div>
 
                 <div className="flex gap-2 overflow-x-auto pb-1">
-                  {slides.map((s, idx) => (
+                  {slides.map((_slide, idx) => (
                     <button
                       key={idx}
                       onClick={() => setActiveSlideIndex(idx)}
                       className={`px-3 py-1.5 rounded-lg text-[11px] font-bold shrink-0 ${
                         activeSlideIndex === idx
-                          ? 'bg-indigo-600 text-white'
+                          ? 'bg-[#FF7F50] text-white'
                           : 'bg-white/[0.03] text-white/40 hover:text-white'
                       }`}
                     >
@@ -479,7 +480,7 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
                       {slides.length > 1 && (
                         <button
                           onClick={() => handleRemoveSlide(activeSlideIndex)}
-                          className="text-rose-400 hover:text-rose-300 text-[10px] flex items-center gap-1"
+                          className="text-[#FF7F50] hover:text-[#FF7F50] text-[10px] flex items-center gap-1"
                         >
                           <Trash2 className="w-3 h-3" /> Excluir
                         </button>
@@ -494,7 +495,7 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
                         updated[activeSlideIndex].headline = e.target.value;
                         setSlides(updated);
                       }}
-                      className="w-full bg-white/[0.03] border border-white/5 rounded-lg p-2 text-xs text-[#ededed] focus:outline-none"
+                      className="w-full bg-white/[0.03] border border-white/5 rounded-lg p-2 text-xs text-[rgba(255,255,255,0.88)] focus:outline-none"
                       placeholder="Título do slide"
                     />
 
@@ -506,7 +507,7 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
                         setSlides(updated);
                       }}
                       rows={2}
-                      className="w-full bg-white/[0.03] border border-white/5 rounded-lg p-2 text-xs text-[#ededed] focus:outline-none resize-none"
+                      className="w-full bg-white/[0.03] border border-white/5 rounded-lg p-2 text-xs text-[rgba(255,255,255,0.88)] focus:outline-none resize-none"
                       placeholder="Texto complementar do slide"
                     />
                   </div>
@@ -519,23 +520,23 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
         {/* Right Col: Live Social Preview Card */}
         <div className="space-y-4 flex flex-col">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-[#ededed] flex items-center gap-1.5">
-              <Eye className="w-4 h-4 text-emerald-400" /> Visualização em Tempo Real ({selectedPlatform})
+            <span className="text-xs font-bold text-[rgba(255,255,255,0.88)] flex items-center gap-1.5">
+              <Eye className="w-4 h-4 text-[#FF7F50]" /> Visualização em Tempo Real ({selectedPlatform})
             </span>
             <span className="text-[10px] text-white/40">Simulação fiel da interface</span>
           </div>
 
           {/* Social Card Mockup */}
-          <div className="flex flex-1 flex-col items-center justify-center rounded-xl border border-white/[0.06] bg-[#101316] p-4">
-            <div className="w-full max-w-sm bg-[#050505] border border-white/10 rounded-xl overflow-hidden shadow-xl shadow-black/40">
+          <div className="flex flex-1 flex-col items-center justify-center rounded-xl border border-white/[0.06] bg-[rgba(128,128,128,0.14)] p-4">
+            <div className="w-full max-w-sm bg-[#000000] border border-white/10 rounded-xl overflow-hidden shadow-xl shadow-black/40">
               {/* Mockup Header */}
               <div className="p-3 border-b border-white/5 flex items-center justify-between">
                 <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-full bg-indigo-600/30 border border-indigo-500/40 flex items-center justify-center text-xs font-bold text-indigo-300">
+                  <div className="w-8 h-8 rounded-full bg-[#FF7F50]/30 border border-[#FF7F50]/40 flex items-center justify-center text-xs font-bold text-[#FF7F50]">
                     NX
                   </div>
                   <div>
-                    <div className="text-xs font-bold text-[#ededed]">Clicko Studio</div>
+                    <div className="text-xs font-bold text-[rgba(255,255,255,0.88)]">Clicko Studio</div>
                     <div className="text-[10px] text-white/40">Patrocinado • Agora</div>
                   </div>
                 </div>
@@ -554,13 +555,13 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
                 <div className="relative z-10 space-y-3 max-w-xs">
                   {selectedFormat === 'carousel' && slides[activeSlideIndex] ? (
                     <>
-                      <div className="text-xs font-bold uppercase text-indigo-400 tracking-wider">
+                      <div className="text-xs font-bold uppercase text-[#FF7F50] tracking-wider">
                         Slide {activeSlideIndex + 1} / {slides.length}
                       </div>
                       <h3 className="text-base font-extrabold text-white leading-tight">
                         {slides[activeSlideIndex].headline}
                       </h3>
-                      <p className="text-xs text-neutral-300 line-clamp-3">
+                      <p className="text-xs text-[#FFFFFF]/72 line-clamp-3">
                         {slides[activeSlideIndex].text}
                       </p>
                     </>
@@ -569,7 +570,7 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
                       <h3 className="text-base font-extrabold text-white leading-tight">
                         {postTitle}
                       </h3>
-                      <p className="text-xs text-neutral-300 line-clamp-3">
+                      <p className="text-xs text-[#FFFFFF]/72 line-clamp-3">
                         {copyText.slice(0, 120)}...
                       </p>
                     </>
@@ -582,7 +583,7 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
                       <span
                         key={idx}
                         className={`w-1.5 h-1.5 rounded-full ${
-                          idx === activeSlideIndex ? 'bg-indigo-400 w-3' : 'bg-white/30'
+                          idx === activeSlideIndex ? 'bg-[#FF7F50] w-3' : 'bg-white/30'
                         } transition-all`}
                       ></span>
                     ))}
@@ -592,20 +593,20 @@ export const CreationStudioView: React.FC<CreationStudioViewProps> = ({
 
               {/* Mockup Actions & Copy */}
               <div className="p-3 space-y-2 text-xs">
-                <div className="flex items-center justify-between text-neutral-300">
+                <div className="flex items-center justify-between text-[#FFFFFF]/72">
                   <div className="flex items-center gap-3">
-                    <Heart className="w-4 h-4 hover:text-rose-400 cursor-pointer" />
-                    <MessageCircle className="w-4 h-4 hover:text-indigo-400 cursor-pointer" />
-                    <Share2 className="w-4 h-4 hover:text-indigo-400 cursor-pointer" />
+                    <Heart className="w-4 h-4 hover:text-[#FF7F50] cursor-pointer" />
+                    <MessageCircle className="w-4 h-4 hover:text-[#FF7F50] cursor-pointer" />
+                    <Share2 className="w-4 h-4 hover:text-[#FF7F50] cursor-pointer" />
                   </div>
-                  <Bookmark className="w-4 h-4 hover:text-amber-400 cursor-pointer" />
+                  <Bookmark className="w-4 h-4 hover:text-[#F28500] cursor-pointer" />
                 </div>
 
-                <div className="text-[11px] text-neutral-300 leading-normal line-clamp-3 whitespace-pre-wrap">
-                  <strong className="text-[#ededed]">clickostudio</strong> {copyText}
+                <div className="text-[11px] text-[#FFFFFF]/72 leading-normal line-clamp-3 whitespace-pre-wrap">
+                  <strong className="text-[rgba(255,255,255,0.88)]">clickostudio</strong> {copyText}
                 </div>
 
-                <div className="flex flex-wrap gap-1 text-[10px] text-indigo-400 font-medium pt-1">
+                <div className="flex flex-wrap gap-1 text-[10px] text-[#FF7F50] font-medium pt-1">
                   {hashtags.map((h, i) => (
                     <span key={i}>{h}</span>
                   ))}

@@ -1,0 +1,212 @@
+/* Shared light-blue surface for the main KLIC stage and floating launcher.
+   Optical lengths scale with the visible sphere, never the surrounding layout. */
+.clicko-app-shell .klic-plasma-wrap.klic-plasma-wrap--signature {
+  --klic-surface-size: calc(var(--klic-size) * .74);
+  --klic-surface-inset: 13%;
+  --presence-breath: 8.8s;
+  --presence-current: 14s;
+  --presence-expansion: 1.013;
+  --presence-light: .28;
+}
+
+.clicko-app-shell .klic-plasma-wrap.klic-plasma-wrap--signature[data-activity] .klic-plasma__body {
+  animation: klic-presence-breath var(--presence-breath) cubic-bezier(.45, 0, .55, 1) infinite;
+  border-radius: 50%;
+  inset: var(--klic-surface-inset);
+  border: 0;
+  background: radial-gradient(circle at 32% 25%, #a8dcff 0%, #6eb8f5 38%, #398ac4 72%, #236b9f 100%);
+  box-shadow: inset calc(var(--klic-surface-size) / 15) calc(var(--klic-surface-size) / 12) calc(var(--klic-surface-size) / 6) rgba(239, 250, 255, .24),
+    inset calc(var(--klic-surface-size) / -12) calc(var(--klic-surface-size) / -7.5) calc(var(--klic-surface-size) * .216667) rgba(15, 72, 114, .22),
+    0 0 calc(var(--klic-surface-size) * .366667) rgba(110, 184, 245, .38);
+}
+
+.clicko-app-shell .klic-plasma-wrap.klic-plasma-wrap--signature[data-activity] .klic-plasma__body::before {
+  inset: -14%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at 32% 38%, rgba(168, 220, 255, .6), transparent 58%),
+    radial-gradient(ellipse at 74% 68%, rgba(35, 107, 159, .24), transparent 62%);
+  filter: blur(calc(var(--klic-surface-size) / 12));
+  mix-blend-mode: normal;
+  animation: klic-presence-current var(--presence-current) ease-in-out infinite;
+  will-change: auto;
+}
+
+.clicko-app-shell .klic-plasma-wrap.klic-plasma-wrap--signature[data-activity] .klic-plasma__body::after {
+  inset: 4%;
+  border: 0;
+  background: radial-gradient(ellipse at 34% 27%, rgba(168, 220, 255, .48), transparent 58%);
+  filter: blur(calc(var(--klic-surface-size) / 20));
+  animation: klic-presence-glint 19s ease-in-out infinite;
+  will-change: auto;
+}
+
+.clicko-app-shell .klic-plasma-wrap.klic-plasma-wrap--signature[data-activity] .klic-plasma__fluid {
+  opacity: calc(.22 + var(--klic-energy) * .16);
+  filter: blur(calc(var(--klic-surface-size) / 15));
+  animation-name: klic-presence-flow;
+  animation-duration: var(--presence-current);
+  animation-timing-function: cubic-bezier(.45, 0, .55, 1);
+  animation-direction: alternate;
+}
+.clicko-app-shell .klic-plasma-wrap.klic-plasma-wrap--signature[data-activity] .klic-plasma__fluid--two {
+  animation-duration: calc(var(--presence-current) * 1.27);
+  animation-delay: -5s;
+  animation-direction: alternate-reverse;
+}
+.clicko-app-shell .klic-plasma-wrap.klic-plasma-wrap--signature[data-activity] .klic-plasma__fluid--three {
+  animation-duration: calc(var(--presence-current) * .83);
+  animation-delay: -3s;
+}
+.clicko-app-shell .klic-plasma-wrap.klic-plasma-wrap--signature[data-activity] .klic-plasma__core {
+  filter: blur(calc(var(--klic-surface-size) / 12));
+  animation: klic-presence-light calc(var(--presence-breath) * 1.17) ease-in-out infinite;
+}
+.clicko-app-shell .klic-plasma-wrap.klic-plasma-wrap--signature[data-activity] .klic-plasma__aura {
+  animation: klic-presence-halo 11.6s ease-in-out infinite;
+}
+
+/* The large KLIC stage keeps a visible current moving inside the sphere.
+   Compact instances (the floating launcher and message avatars) retain their
+   existing, quieter treatment. */
+.clicko-app-shell .klic-plasma-wrap.klic-plasma-wrap--signature:not(.klic-plasma-wrap--compact)[data-activity] .klic-plasma__body::before {
+  background:
+    radial-gradient(ellipse at 31% 39%, rgba(210, 239, 255, .62), transparent 47%),
+    radial-gradient(ellipse at 73% 68%, rgba(35, 107, 159, .3), transparent 58%),
+    linear-gradient(128deg, transparent 18%, rgba(168, 220, 255, .18) 43%, transparent 67%);
+  opacity: .68;
+  animation: klic-stage-inner-current var(--presence-current) cubic-bezier(.45, 0, .55, 1) infinite;
+}
+
+.clicko-app-shell .klic-plasma-wrap.klic-plasma-wrap--signature:not(.klic-plasma-wrap--compact)[data-activity] .klic-plasma__body::after {
+  inset: -13%;
+  background:
+    linear-gradient(122deg, transparent 28%, rgba(225, 245, 255, .24) 44%, rgba(110, 184, 245, .11) 54%, transparent 69%),
+    radial-gradient(ellipse at 38% 44%, rgba(168, 220, 255, .18), transparent 54%);
+  filter: blur(calc(var(--klic-surface-size) / 18));
+  opacity: .22;
+  animation: klic-stage-light-sweep calc(var(--presence-current) * 1.18) cubic-bezier(.45, 0, .55, 1) infinite;
+}
+
+.clicko-app-shell .klic-plasma-wrap.klic-plasma-wrap--signature:not(.klic-plasma-wrap--compact)[data-activity] .klic-plasma__fluid {
+  opacity: calc(.3 + var(--klic-energy) * .18);
+  filter: blur(calc(var(--klic-surface-size) / 18));
+}
+
+.clicko-app-shell .klic-plasma-wrap.klic-plasma-wrap--signature:not(.klic-plasma-wrap--compact)[data-activity] .klic-plasma__fluid--one {
+  animation-name: klic-stage-flow-one;
+}
+
+.clicko-app-shell .klic-plasma-wrap.klic-plasma-wrap--signature:not(.klic-plasma-wrap--compact)[data-activity] .klic-plasma__fluid--two {
+  animation-name: klic-stage-flow-two;
+}
+
+.clicko-app-shell .klic-plasma-wrap.klic-plasma-wrap--signature:not(.klic-plasma-wrap--compact)[data-activity] .klic-plasma__fluid--three {
+  animation-name: klic-stage-flow-three;
+}
+
+.clicko-app-shell .klic-plasma-wrap.klic-plasma-wrap--signature:is([data-activity="interacting"], [data-activity="connecting"]) {
+  --presence-breath: 7s;
+  --presence-current: 11s;
+}
+.clicko-app-shell .klic-plasma-wrap.klic-plasma-wrap--signature[data-activity="processing"] {
+  --presence-breath: 5.8s;
+  --presence-current: 7.8s;
+  --presence-expansion: 1.01;
+  --presence-light: .32;
+}
+.clicko-app-shell .klic-plasma-wrap.klic-plasma-wrap--signature[data-activity="responding"] {
+  --presence-breath: 5.2s;
+  --presence-current: 9s;
+  --presence-expansion: 1.018;
+  --presence-light: .36;
+}
+.clicko-app-shell .klic-plasma-wrap.klic-plasma-wrap--signature[data-activity="listening"] {
+  --presence-breath: 6.4s;
+  --presence-current: 10.4s;
+  --presence-light: .34;
+}
+.clicko-app-shell .klic-plasma-wrap.klic-plasma-wrap--signature[data-activity="speaking"] {
+  --presence-breath: 4.8s;
+  --presence-current: 8.6s;
+  --presence-expansion: 1.018;
+  --presence-light: .38;
+}
+.clicko-app-shell .klic-plasma-wrap.klic-plasma-wrap--signature:is([data-activity="listening"], [data-activity="speaking"]) .klic-plasma__body {
+  scale: calc(1 + var(--klic-energy) * .025);
+}
+.clicko-app-shell .klic-plasma-wrap.klic-plasma-wrap--signature[data-activity="error"] {
+  --presence-breath: 12s;
+  --presence-current: 22s;
+  --presence-expansion: 1.004;
+  --presence-light: .2;
+}
+
+.clicko-app-shell .klic-plasma-wrap.klic-plasma-wrap--signature.klic-plasma-wrap--compact {
+  --klic-surface-size: var(--klic-size);
+  --klic-surface-inset: 0%;
+}
+.clicko-app-shell .klic-plasma-wrap.klic-plasma-wrap--signature[data-activity] .klic-plasma__aura {
+  inset: calc(var(--klic-surface-inset) + (100% - var(--klic-surface-inset) * 2) * .05);
+  filter: blur(calc(var(--klic-surface-size) * .116667));
+}
+.clicko-app-shell .klic-plasma-wrap.klic-plasma-wrap--signature[data-activity] .klic-plasma__sheen {
+  filter: blur(calc(var(--klic-surface-size) * .15));
+}
+@keyframes klic-presence-breath {
+  0%, 100% { transform: scale(1); }
+  46% { transform: scale(var(--presence-expansion)); }
+}
+@keyframes klic-presence-current {
+  0%, 100% { transform: translate(-3%, 1%) scale(1); opacity: .42; }
+  38% { transform: translate(4%, -3%) scale(1.04); opacity: .58; }
+  72% { transform: translate(1%, 4%) scale(1.02); opacity: .46; }
+}
+@keyframes klic-presence-flow {
+  from { transform: translate(-3%, -4%) scale(.96); }
+  to { transform: translate(9%, 8%) scale(1.06); }
+}
+@keyframes klic-presence-light {
+  0%, 100% { opacity: var(--presence-light); transform: translate(-3%, 2%) scale(.98); }
+  54% { opacity: calc(var(--presence-light) + .12); transform: translate(5%, -3%) scale(1.05); }
+}
+@keyframes klic-presence-halo { 0%, 100% { opacity: .4; } 48% { opacity: .55; } }
+@keyframes klic-presence-glint {
+  0%, 65%, 100% { opacity: .06; transform: translate(-12%, 6%); }
+  77% { opacity: .3; transform: translate(2%, -4%); }
+  90% { opacity: .06; transform: translate(14%, -8%); }
+}
+
+@keyframes klic-stage-inner-current {
+  0%, 100% { transform: translate(-5%, 2%) rotate(-4deg) scale(1.02); }
+  35% { transform: translate(3%, -5%) rotate(3deg) scale(1.08); }
+  68% { transform: translate(7%, 4%) rotate(7deg) scale(1.04); }
+}
+
+@keyframes klic-stage-light-sweep {
+  0%, 100% { transform: translate(-13%, 7%) rotate(-7deg) scale(1.03); opacity: .12; }
+  42% { transform: translate(1%, -4%) rotate(1deg) scale(1.09); opacity: .34; }
+  76% { transform: translate(12%, 3%) rotate(8deg) scale(1.04); opacity: .18; }
+}
+
+@keyframes klic-stage-flow-one {
+  0%, 100% { transform: translate(-5%, -7%) rotate(-3deg) scale(.98); }
+  48% { transform: translate(11%, 8%) rotate(7deg) scale(1.09); }
+}
+
+@keyframes klic-stage-flow-two {
+  0%, 100% { transform: translate(7%, 7%) rotate(4deg) scale(1.04); }
+  52% { transform: translate(-10%, -8%) rotate(-7deg) scale(.97); }
+}
+
+@keyframes klic-stage-flow-three {
+  0%, 100% { transform: translate(-7%, 4%) scale(.96); }
+  45% { transform: translate(9%, -6%) scale(1.08); }
+  73% { transform: translate(2%, 8%) scale(1.02); }
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+  .clicko-app-shell .klic-plasma-wrap.klic-plasma-wrap--signature:is([data-activity="listening"], [data-activity="speaking"]) .klic-plasma__body { scale: 1; }
+  .clicko-app-shell .klic-plasma-wrap.klic-plasma-wrap--signature[data-activity] .klic-plasma__body::before { opacity: .42; }
+  .clicko-app-shell .klic-plasma-wrap.klic-plasma-wrap--signature[data-activity] .klic-plasma__body::after { opacity: .06; }
+}

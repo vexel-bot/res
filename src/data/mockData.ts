@@ -1,10 +1,4 @@
-import {
-  Workspace,
-  Post,
-  AutomationFlow,
-  ConnectedAccount,
-  AIActionSuggestion,
-} from '../types';
+import type { Workspace, Post } from '../types';
 
 export const INITIAL_WORKSPACES: Workspace[] = [
   {
@@ -20,7 +14,7 @@ export const INITIAL_WORKSPACES: Workspace[] = [
       targetAudience: 'CTOs, Diretores de Inovação, Fundadores de Startups e Líderes de Produto',
       keywords: ['SaaS', 'Inteligência Artificial', 'Automação corporativa', 'Produtividade', 'Escalabilidade'],
       doAndDonts: 'DO: Usar linguagem clara e focada em ROI. DONT: Usar gírias informais ou promessas exageradas.',
-      primaryColor: '#6366F1',
+      primaryColor: '#FF7F50',
     },
   },
   {
@@ -36,7 +30,7 @@ export const INITIAL_WORKSPACES: Workspace[] = [
       targetAudience: 'Engenheiros de Software, Criadores de Conteúdo Tech, Entusiastas de IA e Liderança em Tecnologia',
       keywords: ['Engenharia de Software', 'IA Generativa', 'Liderança Tech', 'Produtividade', 'Carreira'],
       doAndDonts: 'DO: Compartilhar bastidores reais, aprendizados práticos e visões sobre o futuro. DONT: Fazer corporativismo excessivo ou distante.',
-      primaryColor: '#10B981',
+      primaryColor: '#FF7F50',
     },
   },
   {
@@ -52,7 +46,7 @@ export const INITIAL_WORKSPACES: Workspace[] = [
       targetAudience: 'Jovens adultos, entusiastas de design e moda urbana',
       keywords: ['Lifestyle', 'Design Urbano', 'Tendência', 'Sustentabilidade'],
       doAndDonts: 'DO: Abusar de apelo visual e storytelling. DONT: Textos longos e sem apelo visual.',
-      primaryColor: '#EC4899',
+      primaryColor: '#FF7F50',
     },
   },
 ];
@@ -215,120 +209,5 @@ export const INITIAL_POSTS: Post[] = [
     author: 'Pedro Henrique',
     createdAt: '2026-08-03T09:00:00Z',
     aiScore: 91,
-  },
-];
-
-export const INITIAL_AUTOMATIONS: AutomationFlow[] = [
-  {
-    id: 'flow-1',
-    title: 'Fluxo automático de Reels & Shorts',
-    trigger: 'Novo Roteiro Aprovado',
-    isActive: true,
-    executionsCount: 38,
-    lastRun: 'Hoje às 11:20',
-    nodes: [
-      { id: 'n1', type: 'trigger', label: 'Roteiro de Vídeo Aprovado', details: 'Detecta novas publicações no formato Reel/Short' },
-      { id: 'n2', type: 'ai_generate', label: 'Gerar Legendas & Transcrição', details: 'Aplica IA para criação de legendas otimizadas' },
-      { id: 'n3', type: 'image_studio', label: 'Gerar Thumbnail HD', details: 'Gera capa 9:16 com tipografia de alto contraste' },
-      { id: 'n4', type: 'schedule', label: 'Agendar Melhor Horário IA', details: 'Calcula pico de audiência (ex: Terça 18:30)' },
-      { id: 'n5', type: 'publish', label: 'Disparo Multicanal', details: 'Publica no Instagram, TikTok e YouTube Shorts' },
-    ],
-  },
-  {
-    id: 'flow-2',
-    title: 'Reciclagem Inteligente de Conteúdo B2B',
-    trigger: 'Nova publicação de sucesso no LinkedIn (>500 interações)',
-    isActive: true,
-    executionsCount: 14,
-    lastRun: 'Ontem às 16:45',
-    nodes: [
-      { id: 'n1', type: 'trigger', label: 'Publicação com alto desempenho', details: 'Filtra publicações com engajamento acima da média' },
-      { id: 'n2', type: 'ai_generate', label: 'Transformar em Carrossel', details: 'IA resume o post em 5 slides visuais' },
-      { id: 'n3', type: 'schedule', label: 'Agendar para Instagram', details: 'Enfileira para publicação 3 dias depois' },
-    ],
-  },
-];
-
-export const CONNECTED_ACCOUNTS: ConnectedAccount[] = [
-  {
-    id: 'acc-1',
-    platform: 'instagram',
-    handle: '@clickostudio',
-    connected: true,
-    followers: '142.8K',
-    bestTime: '18:30 - Ter / Qui',
-    engagement: '5.8%',
-  },
-  {
-    id: 'acc-2',
-    platform: 'linkedin',
-    handle: 'Clicko Studio',
-    connected: true,
-    followers: '89.4K',
-    bestTime: '09:00 - Qua / Sex',
-    engagement: '7.2%',
-  },
-  {
-    id: 'acc-3',
-    platform: 'tiktok',
-    handle: '@clickostudio',
-    connected: true,
-    followers: '210.5K',
-    bestTime: '20:00 - Todos os dias',
-    engagement: '8.4%',
-  },
-  {
-    id: 'acc-4',
-    platform: 'youtube',
-    handle: 'Clicko Studio',
-    connected: true,
-    followers: '45.2K',
-    bestTime: '12:00 - Sábado',
-    engagement: '11.1%',
-  },
-  {
-    id: 'acc-5',
-    platform: 'threads',
-    handle: '@clickostudio',
-    connected: true,
-    followers: '28.1K',
-    bestTime: '14:00 - Seg / Qua',
-    engagement: '4.6%',
-  },
-  {
-    id: 'acc-6',
-    platform: 'x',
-    handle: '@clickostudio',
-    connected: true,
-    followers: '62.9K',
-    bestTime: '11:00 - Ter / Qui',
-    engagement: '3.9%',
-  },
-];
-
-export const AI_SUGGESTIONS: AIActionSuggestion[] = [
-  {
-    id: 'sug-1',
-    title: 'Criar Campanha de Lançamento Q3',
-    description: 'Com base no histórico da marca, a IA recomenda disparar 3 carrosséis e 2 vídeos curtos esta semana.',
-    type: 'campaign',
-    badge: 'Alta Conversão',
-    impact: '+28% Estimado de Alcance',
-  },
-  {
-    id: 'sug-2',
-    title: 'Otimizar Horários de Sexta-feira',
-    description: 'Seu engajamento às sextas subiu das 16h para as 19h. Desloque 2 agendamentos.',
-    type: 'schedule',
-    badge: 'Algoritmo Otimizado',
-    impact: '+14% Engajamento',
-  },
-  {
-    id: 'sug-3',
-    title: 'Reciclar publicação de destaque do LinkedIn',
-    description: 'O artigo sobre "Fluxo de trabalho unificado" atingiu 1,2 mil curtidas. Converter em Carrossel para Instagram.',
-    type: 'repurpose',
-    badge: 'Conteúdo Viral',
-    impact: 'Lançamento com 1-Clique',
   },
 ];

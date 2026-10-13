@@ -1,4 +1,4 @@
-import type { NavigationTab, UserRole, WorkspaceMember, WorkspaceModule } from '../types';
+import type { NavigationTab, OrganizationPermission, UserRole, WorkspaceMember, WorkspaceModule } from '../types';
 
 export const workspaceModules: Array<{ id: WorkspaceModule; label: string; description: string }> = [
   { id: 'dashboard', label: 'Painel', description: 'Resumo inteligente da operação' },
@@ -15,7 +15,38 @@ export const workspaceModules: Array<{ id: WorkspaceModule; label: string; descr
   { id: 'library', label: 'Biblioteca', description: 'Ativos, versões e materiais' },
 ];
 
-const masterOnlyTabs = new Set<NavigationTab>(['approvals', 'connected-accounts', 'team', 'subscription', 'settings']);
+export const isPrivilegedRole = (role: UserRole | undefined) => role === 'master';
+
+export const rolePresets: Record<Exclude<UserRole, 'collaborator'>, { label: string; permissions: OrganizationPermission[] }> = {
+  master: { label: 'Master', permissions: ['organization.manage', 'subscription.read', 'subscription.manage', 'billing.read', 'licenses.read', 'licenses.manage', 'members.read', 'members.manage', 'permissions.manage', 'clients.read', 'clients.manage', 'connections.read', 'connections.manage', 'content.create', 'content.edit', 'content.approve', 'content.publish', 'analytics.read', 'automations.manage', 'audit.read', 'usage.read.own', 'usage.read.organization', 'usage.manage'] },
+  administrator: { label: 'Administrador', permissions: ['organization.manage', 'subscription.read', 'licenses.read', 'licenses.manage', 'members.read', 'members.manage', 'permissions.manage', 'clients.read', 'clients.manage', 'connections.read', 'connections.manage', 'content.create', 'content.edit', 'content.approve', 'content.publish', 'analytics.read', 'automations.manage', 'audit.read', 'usage.read.own', 'usage.read.organization', 'usage.manage'] },
+  manager: { label: 'Gestor', permissions: ['members.read', 'clients.read', 'clients.manage', 'connections.read', 'content.create', 'content.edit', 'content.approve', 'content.publish', 'analytics.read', 'automations.manage', 'usage.read.own', 'usage.read.organization'] },
+  social_media: { label: 'Social Media', permissions: ['clients.read', 'connections.read', 'content.create', 'content.edit', 'content.publish', 'analytics.read', 'usage.read.own'] },
+  creative: { label: 'Designer / Criativo', permissions: ['clients.read', 'content.create', 'content.edit', 'usage.read.own'] },
+  analyst: { label: 'Analista', permissions: ['clients.read', 'connections.read', 'analytics.read', 'usage.read.own'] },
+  approver: { label: 'Aprovador', permissions: ['clients.read', 'content.approve', 'analytics.read', 'usage.read.own'] },
+  custom: { label: 'Personalizado', permissions: ['usage.read.own'] },
+};
+
+export const effectivePermissions = (user: Pick<WorkspaceMember, 'role' | 'permissions'> | undefined): OrganizationPermission[] => {
+  if (!user) return [];
+  if (user.permissions) return user.permissions;
+  if (user.role === 'collaborator') return rolePresets.custom.permissions;
+  return rolePresets[user.role].permissions;
+};
+
+export const hasPermission = (user: Pick<WorkspaceMember, 'role' | 'permissions'> | undefined, permission: OrganizationPermission) =>
+  Boolean(user && (user.role === 'master' || effectivePermissions(user).includes(permission)));
+
+const tabPermissions: Partial<Record<NavigationTab, OrganizationPermission>> = {
+  approvals: 'content.approve',
+  'connected-accounts': 'connections.read',
+  workspace: 'clients.read',
+  analytics: 'analytics.read',
+  automations: 'automations.manage',
+  team: 'members.read',
+  subscription: 'subscription.read',
+};
 
 const tabModules: Partial<Record<NavigationTab, WorkspaceModule>> = {
   dashboard: 'dashboard',
@@ -33,7 +64,7 @@ const tabModules: Partial<Record<NavigationTab, WorkspaceModule>> = {
 const corporateOnlyTabs = new Set<NavigationTab>(['approvals', 'team', 'automations', 'workspace']);
 
 export function canAccessNavigation(
-  user: Pick<WorkspaceMember, 'role' | 'modules'> | undefined,
+  user: Pick<WorkspaceMember, 'role' | 'modules' | 'permissions'> | undefined,
   tab: NavigationTab,
   environmentMode: 'company' | 'personal' = 'company'
 ) {
@@ -41,11 +72,14 @@ export function canAccessNavigation(
   if (environmentMode === 'personal' && corporateOnlyTabs.has(tab)) {
     return false;
   }
-  if (user.role === 'master') return true;
-  if (masterOnlyTabs.has(tab)) return false;
+  if (isPrivilegedRole(user.role)) return true;
+  const requiredPermission = tabPermissions[tab];
+  if (requiredPermission && !hasPermission(user, requiredPermission)) return false;
   const requiredModule = tabModules[tab];
-  return requiredModule ? user.modules.includes(requiredModule) : false;
+  return requiredModule ? user.modules.includes(requiredModule) : true;
 }
 
-export function roleLabel(role: UserRole) { return role === 'master' ? 'Administrador' : 'Colaborador'; }
-export function isCriticalTab(tab: NavigationTab) { return masterOnlyTabs.has(tab); }
+export function roleLabel(role: UserRole) {
+  if (role === 'collaborator') return 'Colaborador';
+  return rolePresets[role].label;
+}

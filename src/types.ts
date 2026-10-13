@@ -16,7 +16,17 @@ export type NavigationTab =
   | 'subscription'
   | 'settings';
 
-export type UserRole = 'master' | 'collaborator';
+export type UserRole =
+  | 'master'
+  | 'administrator'
+  | 'manager'
+  | 'social_media'
+  | 'creative'
+  | 'analyst'
+  | 'approver'
+  | 'custom'
+  /** @deprecated Kept only while persisted v1/v2 workspaces are migrated. */
+  | 'collaborator';
 
 export type WorkspaceModule =
   | 'dashboard'
@@ -34,6 +44,85 @@ export type WorkspaceModule =
 
 export type MemberStatus = 'active' | 'invited' | 'disabled';
 
+export type OrganizationPermission =
+  | 'organization.manage'
+  | 'subscription.read'
+  | 'subscription.manage'
+  | 'billing.read'
+  | 'licenses.read'
+  | 'licenses.manage'
+  | 'members.read'
+  | 'members.manage'
+  | 'permissions.manage'
+  | 'clients.read'
+  | 'clients.manage'
+  | 'connections.read'
+  | 'connections.manage'
+  | 'content.create'
+  | 'content.edit'
+  | 'content.approve'
+  | 'content.publish'
+  | 'analytics.read'
+  | 'automations.manage'
+  | 'audit.read'
+  | 'usage.read.own'
+  | 'usage.read.organization'
+  | 'usage.manage';
+
+export interface AccessScope {
+  allClients: boolean;
+  clientIds: string[];
+  allSocialAccounts: boolean;
+  socialAccountIds: string[];
+  allProjects: boolean;
+  projectIds: string[];
+  resourceIds: string[];
+}
+
+export type UsageResource =
+  | 'image_generations'
+  | 'video_minutes'
+  | 'klic_credits'
+  | 'storage_bytes'
+  | 'social_accounts'
+  | 'clients'
+  | 'automations';
+
+export interface UsageAllowance {
+  limit: number | null;
+  used: number;
+}
+
+export interface UsagePool {
+  workspaceId: string;
+  periodStartedAt: string;
+  periodEndsAt: string;
+  resources: Record<UsageResource, UsageAllowance>;
+  memberLimits: Record<string, Partial<Record<UsageResource, number | null>>>;
+  memberUsage: Record<string, Partial<Record<UsageResource, number>>>;
+  allocationMode: 'shared' | 'member_limits';
+}
+
+export type LicenseStatus = 'available' | 'reserved' | 'in_use' | 'suspended';
+
+export interface OrganizationLicense {
+  id: string;
+  workspaceId: string;
+  status: LicenseStatus;
+  memberId?: string;
+  reservedEmail?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface SubscriptionAddOn {
+  id: string;
+  resource: UsageResource | 'licenses';
+  quantity: number;
+  status: 'active' | 'canceled';
+  createdAt: string;
+}
+
 export interface UserAccount {
   id: string;
   workspaceId: string;
@@ -42,6 +131,9 @@ export interface UserAccount {
   type: 'personal' | 'company';
   role?: string;
   planName?: string;
+  subscriptionStatus?: SubscriptionStatus;
+  subscriptionAccessAllowed?: boolean;
+  capabilities?: Partial<Record<PlanCapability, boolean>>;
   membersCount?: number;
   email?: string;
   avatar?: string;
@@ -57,6 +149,9 @@ export interface WorkspaceMember {
   role: UserRole;
   status: MemberStatus;
   modules: WorkspaceModule[];
+  permissions?: OrganizationPermission[];
+  scope?: AccessScope;
+  licenseId?: string;
   lastAccess: string;
   createdAt: string;
   invitedAt?: string;
@@ -70,6 +165,60 @@ export interface SaaSPlan {
   monthlyPrice: number | null;
   description: string;
   features: string[];
+  audience?: 'personal' | 'organization' | 'both';
+  includedLicenses?: number;
+  entitlements?: Partial<Record<UsageResource, number | null>>;
+  capabilities?: Partial<Record<PlanCapability, boolean>>;
+  catalogVersion?: string;
+}
+
+export type SubscriptionStatus =
+  | 'no_plan'
+  | 'pending_checkout'
+  | 'pending_payment'
+  | 'active'
+  | 'trialing'
+  | 'past_due'
+  | 'payment_failed'
+  | 'canceled'
+  | 'suspended'
+  | 'ended';
+
+export type PlanCapability =
+  | 'dashboard'
+  | 'image_generation'
+  | 'image_editing'
+  | 'video_generation'
+  | 'video_editing'
+  | 'copy_creation'
+  | 'klic'
+  | 'library'
+  | 'calendar'
+  | 'analytics'
+  | 'radar'
+  | 'automations'
+  | 'connected_accounts'
+  | 'clients'
+  | 'approvals'
+  | 'team';
+
+export interface SubscriptionEntitlementSnapshot {
+  planId: SaaSPlan['id'];
+  catalogVersion: string;
+  capabilities: Partial<Record<PlanCapability, boolean>>;
+  quotas: Partial<Record<UsageResource, number | null>>;
+  includedLicenses: number;
+  capturedAt: string;
+}
+
+export interface SubscriptionHistoryEntry {
+  id: string;
+  event: 'created' | 'checkout_started' | 'activated' | 'payment_failed' | 'renewed' | 'plan_changed' | 'cancel_scheduled' | 'canceled' | 'reactivated' | 'suspended' | 'ended';
+  fromStatus?: SubscriptionStatus;
+  toStatus: SubscriptionStatus;
+  planId: SaaSPlan['id'];
+  occurredAt: string;
+  providerEventId?: string;
 }
 
 export type OfferContextType =
@@ -140,22 +289,43 @@ export interface WorkspaceSubscription {
   id: string;
   workspaceId: string;
   planId: SaaSPlan['id'];
-  status: 'active' | 'trialing' | 'past_due' | 'canceled';
+  status: SubscriptionStatus;
   startedAt: string;
   renewsAt: string;
   billingEmail: string;
   paymentMethod: string;
+  ownerType?: 'personal_account' | 'organization' | 'managed_operation';
+  addOns?: SubscriptionAddOn[];
+  billingCycle?: 'monthly' | 'annual';
+  cancelAtPeriodEnd?: boolean;
+  canceledAt?: string;
+  endsAt?: string;
+  provider?: 'stripe' | 'custom' | 'none';
+  providerCustomerId?: string;
+  providerSubscriptionId?: string;
+  checkoutSessionId?: string;
+  pendingPlanId?: SaaSPlan['id'];
+  pendingBillingCycle?: 'monthly' | 'annual';
+  entitlementSnapshot?: SubscriptionEntitlementSnapshot;
+  capabilityOverrides?: Partial<Record<PlanCapability, boolean>>;
+  quotaOverrides?: Partial<Record<UsageResource, number | null>>;
+  history?: SubscriptionHistoryEntry[];
+  accessOverride?: { enabled: boolean; reason: string };
 }
 
 export interface GovernanceWorkspace {
   id: string;
   name: string;
   logo: string;
+  parentWorkspaceId?: string;
+  managedClientId?: string;
   planId: SaaSPlan['id'];
   maxUsers: number | null;
   activeUsers: number;
   subscriptionDate: string;
   subscriptionStatus: WorkspaceSubscription['status'];
+  kind?: 'personal' | 'organization';
+  ownerUserId?: string;
   settings: {
     inviteExpiryDays: number;
     requireApproval: boolean;
@@ -243,7 +413,7 @@ export type SocialPlatform =
 export interface ConnectedResource {
   id: string;
   name: string;
-  type: 'profile' | 'page' | 'channel' | 'board';
+  type: 'profile' | 'page' | 'channel' | 'board' | 'organization';
   handle?: string;
   avatar?: string;
 }
@@ -266,7 +436,7 @@ export type PostFormat =
   | 'presentation'
   | 'script';
 
-export type PostStatus = 'draft' | 'in_production' | 'in_review' | 'pending_approval' | 'approved' | 'changes_requested' | 'rejected' | 'scheduled' | 'published' | 'error';
+export type PostStatus = 'draft' | 'in_production' | 'in_review' | 'pending_approval' | 'approved' | 'changes_requested' | 'rejected' | 'scheduled' | 'processing' | 'published' | 'error' | 'cancelled';
 
 export interface BrandProfile {
   name: string;
@@ -304,18 +474,37 @@ export interface ClientIntelligenceProfile {
   id: string;
   workspaceId: string;
   name: string;
+  logoUrl?: string;
+  status?: 'active' | 'approval' | 'paused';
+  responsibleId?: string;
+  responsibleName?: string;
+  lastActivityAt?: string;
   segment: string;
   products: string;
   audience: string;
   positioning: string;
   toneOfVoice: string;
   visualIdentity: string;
+  brandColors?: string[];
+  typography?: string;
+  visualReferences?: string;
   differentiators: string;
+  competitors?: string;
+  keywords?: string;
+  avoidTopics?: string;
+  notes?: string;
   featuredOffer: string;
   currentObjective: string;
   highlightedContentIds: string[];
   activeCampaignIds: string[];
   recommendedActions: string[];
+  access?: {
+    view: boolean;
+    create: boolean;
+    edit: boolean;
+    approve: boolean;
+    publish: boolean;
+  };
   updatedAt: string;
 }
 
@@ -419,8 +608,12 @@ export interface LibraryAsset {
   type: 'content' | 'upload' | 'campaign' | 'version' | 'prompt' | 'image' | 'video' | 'template' | 'document';
   tags: string[];
   campaignId?: string;
+  clientId?: string;
   contentId?: string;
   url?: string;
+  description?: string;
+  mimeType?: string;
+  size?: number;
   createdAt: string;
   updatedAt: string;
 }
@@ -483,6 +676,15 @@ export interface Post {
   comments?: number;
   shares?: number;
   reach?: number;
+  impressions?: number;
+  saves?: number;
+  clicks?: number;
+  views?: number;
+  replies?: number;
+  conversions?: number;
+  spend?: number;
+  revenue?: number;
+  paid?: boolean;
   author: string;
   createdAt: string;
   approvals?: ApprovalStatus[];
@@ -492,6 +694,10 @@ export interface Post {
   responsibleId?: string;
   responsibleName?: string;
   assetIds?: string[];
+  socialAccountIds?: string[];
+  scheduledPublicationId?: string;
+  externalPostId?: string;
+  tiktokConsentConfirmed?: boolean;
   publicationError?: string;
   history?: Array<{
     id: string;
@@ -526,9 +732,66 @@ export interface AutomationFlow {
   lastRun?: string;
 }
 
-export interface ConnectedAccount {
+export interface ConnectedAnalyticsPoint {
+  date: string;
+  followers?: number | null;
+  gained?: number | null;
+  lost?: number | null;
+  reach?: number | null;
+  impressions?: number | null;
+  engagements?: number | null;
+  likes?: number | null;
+  comments?: number | null;
+  shares?: number | null;
+  saves?: number | null;
+  replies?: number | null;
+  clicks?: number | null;
+  views?: number | null;
+  conversions?: number | null;
+  spend?: number | null;
+  revenue?: number | null;
+  retention?: number | null;
+  posts?: number;
+}
+
+export interface ConnectedAnalyticsContent {
   id: string;
-  workspaceId?: string;
+  title: string;
+  date: string;
+  format: PostFormat;
+  thumbnail?: string;
+  caption?: string;
+  campaignId?: string;
+  status?: PostStatus;
+  paid?: boolean | null;
+  reach?: number | null;
+  impressions?: number | null;
+  likes?: number | null;
+  comments?: number | null;
+  shares?: number | null;
+  saves?: number | null;
+  replies?: number | null;
+  clicks?: number | null;
+  views?: number | null;
+  conversions?: number | null;
+  spend?: number | null;
+  revenue?: number | null;
+}
+
+export interface ConnectedAnalyticsSnapshot {
+  source: 'provider-api';
+  dataStatus: 'available' | 'partial' | 'unavailable';
+  updatedAt: string;
+  refreshIntervalMinutes?: number;
+  points: ConnectedAnalyticsPoint[];
+  contents?: ConnectedAnalyticsContent[];
+  unavailableMetrics?: string[];
+}
+
+export interface ConnectedAccount {
+    id: string;
+    workspaceId?: string;
+    clientId?: string;
   platform: SocialPlatform;
   handle: string;
   connected: boolean;
@@ -544,8 +807,29 @@ export interface ConnectedAccount {
   syncPreferences?: Array<'profile' | 'publishing' | 'analytics'>;
   isDefault?: boolean;
   company?: string;
-  connectionStatus?: 'not_configured' | 'authorization_required' | 'connecting' | 'connected' | 'syncing' | 'synced' | 'sync_error' | 'expired' | 'error';
+  connectionStatus?: 'not_configured' | 'authorization_required' | 'connecting' | 'connected' | 'syncing' | 'synced' | 'sync_error' | 'expired' | 'permission_insufficient' | 'authorization_revoked' | 'error';
   lastError?: string;
+  analytics?: ConnectedAnalyticsSnapshot;
+  providerAccountId?: string;
+  providerConnectionIds?: string[];
+  accountType?: string;
+  connectedAt?: string;
+  tokenExpiring?: boolean;
+  capabilities?: {
+    canReadProfile: boolean;
+    canReadAnalytics: boolean;
+    canPublishText: boolean;
+    canPublishImage: boolean;
+    canPublishCarousel: boolean;
+    canPublishVideo: boolean;
+    canPublishShortVideo: boolean;
+    canPublishStory: boolean;
+    canPublishDocument: boolean;
+    canSchedule: boolean;
+    canReadPosts: boolean;
+    canReadComments: boolean;
+    canReplyComments: boolean;
+  };
 }
 
 export interface AIChatMessage {
@@ -562,6 +846,8 @@ export interface AIChatMessage {
     tab: NavigationTab;
     kind: 'campaign' | 'studio' | 'calendar' | 'variants';
     actionId?: string;
+    risk?: 'read' | 'reversible' | 'external' | 'critical';
+    requiresConfirmation?: boolean;
   }>;
 }
 
@@ -571,6 +857,8 @@ export type AIMemoryScope = 'task' | 'temporary' | 'recurring' | 'permanent';
 export interface AIMemoryEntry {
   id: string;
   workspaceId: string;
+  /** Optional client boundary. Workspace memories never override a selected client's identity. */
+  clientId?: string;
   category: AIMemoryCategory;
   label: string;
   value: string;
@@ -583,31 +871,10 @@ export interface AIMemoryEntry {
   evolution?: Array<{ value: string; changedAt: string; source: AIMemoryEntry['source'] }>;
 }
 
-export interface ContentTemplate {
-  id: string;
-  name: string;
-  category: 'image' | 'video' | 'copy' | 'campaign' | 'calendar' | 'prompt' | 'brand';
-  description: string;
-  thumbnail?: string;
-  favorite: boolean;
-  shared: boolean;
-  uses: number;
-  updatedAt: string;
-}
-
-export interface AIActionSuggestion {
-  id: string;
-  title: string;
-  description: string;
-  type: 'campaign' | 'schedule' | 'repurpose' | 'optimize';
-  badge: string;
-  impact: string;
-}
-
 export interface SearchResultItem {
   id: string;
   title: string;
   subtitle: string;
-  type: 'post' | 'campaign' | 'action' | 'workspace' | 'automation';
+  type: 'post' | 'campaign' | 'action' | 'workspace' | 'automation' | 'client' | 'asset';
   tabToNavigate: NavigationTab;
 }

@@ -1,0 +1,16 @@
+:where(.klic-symbol) {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  flex: none;
+  vertical-align: -0.12em;
+  background-color: currentColor;
+  -webkit-mask-image: url('/branding/logo-klic.png');
+  mask-image: url('/branding/logo-klic.png');
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 135% 135%;
+  mask-size: 135% 135%;
+}

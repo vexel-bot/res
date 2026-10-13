@@ -1,16 +1,17 @@
 import React from 'react';
+import './KlicSymbol.css';
 
-type KlicSymbolProps = {
-  className?: string;
+type KlicSymbolProps = React.HTMLAttributes<HTMLSpanElement> & {
+  size?: number | string;
   strokeWidth?: number;
 };
 
-export const KlicSymbol: React.FC<KlicSymbolProps> = ({ className }) => (
+/** Static KLIC identity. Interactive plasma and voice UI use KlicPlasma instead. */
+export const KlicSymbol: React.FC<KlicSymbolProps> = ({ className = '', size, strokeWidth: _strokeWidth, style, ...props }) => (
   <span
+    {...props}
     aria-hidden="true"
-    className={`${className || ''} grid place-items-center text-[15px] font-normal leading-none`}
-    style={{ fontFamily: '"Segoe UI Symbol", sans-serif' }}
-  >
-    ✧
-  </span>
+    className={`klic-symbol ${className}`.trim()}
+    style={{ flex: 'none', ...style, ...(size !== undefined ? { width: size, height: size } : {}) }}
+  />
 );

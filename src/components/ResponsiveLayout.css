@@ -1,0 +1,178 @@
+/* Geometry only. Component palettes, type, motion and desktop artwork stay local. */
+:root {
+  --clicko-viewport-height: 100dvh;
+  --clicko-viewport-top: 0px;
+  --clicko-keyboard-inset: 0px;
+}
+.clicko-app-shell, .clicko-app-shell .clicko-app-stage { min-height: 100dvh; }
+.clicko-app-shell .clicko-main-stage { min-width: 0; }
+.clicko-app-shell .clicko-topbar { flex-shrink: 0; }
+.clicko-app-shell .clicko-main-stage > div { min-width: 0; }
+.clicko-app-shell .clicko-sidebar { padding-bottom: env(safe-area-inset-bottom, 0px); }
+.clicko-app-shell :is(.cx-client-dialog, .cx-library-modal > form, .aw-dialog, .au-dialog, .clicko-search-panel) {
+  max-height: calc(var(--clicko-viewport-height) - 32px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.clicko-app-shell :is(.cx-client-dialog-backdrop, .cx-library-modal, .team-access-drawer-backdrop, [role="dialog"].fixed.inset-0) {
+  top: var(--clicko-viewport-top);
+  bottom: auto;
+  height: var(--clicko-viewport-height);
+}
+.clicko-app-shell [role="dialog"].fixed.inset-0 > :is(section, aside, form, div.relative) {
+  max-height: 100%;
+  min-width: 0;
+  overflow-y: auto;
+}
+.clicko-app-shell .team-access-drawer { max-height: var(--clicko-viewport-height); }
+.clicko-app-shell .team-access-drawer-body { padding-bottom: max(32px, env(safe-area-inset-bottom)); }
+.clicko-app-shell :is(input, textarea, select) { scroll-margin-block: 100px; }
+.clicko-app-shell :is(.cx-client-dialog, .cx-library-modal, .team-access-drawer) :is(input, textarea, select) {
+  scroll-margin-block: 110px 24px;
+}
+.clicko-app-shell .klic-floating-root {
+  bottom: calc(var(--clicko-keyboard-inset) + max(18px, env(safe-area-inset-bottom)));
+  max-width: calc(100vw - 24px);
+}
+.clicko-app-shell .klic-floating-panel {
+  height: min(558px, calc(var(--clicko-viewport-height) - 104px));
+  min-height: min(300px, calc(var(--clicko-viewport-height) - 104px));
+  max-height: calc(var(--clicko-viewport-height) - 104px);
+}
+.clicko-app-shell .klic-floating-trigger-hint {
+  max-width: min(300px, calc(100vw - 108px));
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.clicko-app-shell .klic-floating-stream { min-height: 0; overscroll-behavior: contain; }
+.clicko-app-shell .klic-floating-actions { flex-shrink: 0; }
+.clicko-app-shell .klic-floating-composer-wrap { flex-shrink: 0; }
+
+/* The rail remains the existing navigation; compact mode frees room on small screens. */
+@media (max-width: 900px) {
+  .clicko-app-shell .clicko-app-stage { transition: none; }
+}
+@media (max-width: 640px) {
+  .clicko-app-shell { --clicko-ui-page-x: 12px; --clicko-ui-page-y: 18px; }
+  .clicko-app-shell .clicko-sidebar { width: 56px; left: max(4px, env(safe-area-inset-left)); top: max(4px, env(safe-area-inset-top)); bottom: 4px; }
+  .clicko-app-shell .clicko-sidebar-nav { min-height: 0; padding-inline: 5px; }
+  .clicko-app-shell .clicko-nav-item { min-height: 44px; padding-inline: 6px; }
+  .clicko-app-shell .clicko-app-stage { padding-left: calc(64px + env(safe-area-inset-left)); }
+  .clicko-app-shell .clicko-topbar { margin-inline: 6px; padding-inline: 6px; gap: 6px; }
+  .clicko-app-shell .clicko-topbar > div:last-child { gap: 6px; min-width: 0; }
+  .clicko-app-shell .clicko-topbar :is(.clicko-command-search, button[aria-label="Notificações"], button[aria-label="Seletor de Perfis"]) { min-height: 40px; }
+  .clicko-app-shell .clicko-command-search { min-width: 36px; }
+  .clicko-app-shell .clicko-topbar button[aria-label="Seletor de Perfis"] { gap: 5px; padding-inline: 7px; }
+  .clicko-app-shell .clicko-topbar :is(.clicko-notification-panel, #clicko-profile-menu) {
+    position: fixed;
+    top: calc(var(--clicko-viewport-top) + 62px + env(safe-area-inset-top));
+    right: max(10px, env(safe-area-inset-right));
+    left: auto;
+    width: min(304px, calc(100% - 78px - env(safe-area-inset-left))) !important;
+    max-height: calc(var(--clicko-viewport-height) - 76px - env(safe-area-inset-top));
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+  .clicko-app-shell .clicko-main-stage { overflow-x: clip; overflow-y: visible; }
+  .clicko-app-shell .clicko-main-stage > div:not(.clicko-dashboard-editorial):not(.clicko-studio-immersive):not(.klic-chat-workspace) {
+    padding: 18px 12px calc(88px + env(safe-area-inset-bottom)) !important;
+  }
+  .clicko-app-shell .clicko-dashboard-editorial.cd-root { padding-inline: 12px !important; }
+  .clicko-app-shell .cd-root .cd-hero { min-height: 0; }
+  .clicko-app-shell .cd-root .cd-hero-copy { width: 100%; padding: 28px 8px 32px; }
+  .clicko-app-shell .cd-root .cd-hero-scene { display: none; }
+  .clicko-app-shell .cd-root .cd-content { padding-inline: 0; }
+  .clicko-app-shell .cd-root :is(.cd-overview, .cd-quick-actions, .cd-planning, .cd-command-side, .cd-automations) { padding: 14px; }
+  .clicko-app-shell .cd-root :is(.cd-attention-items button, .cd-button, .cd-activity-tabs button) { white-space: normal; }
+  .clicko-app-shell .cd-root .cd-attention-items button { align-items: center; text-align: left; }
+  .clicko-app-shell .cd-root .cd-attention-items { min-width: 0; }
+  .clicko-app-shell .cd-root .cd-overview-metrics button { padding: 10px; }
+  .clicko-app-shell .cd-root .cd-metric-top { flex-wrap: wrap; }
+  .clicko-app-shell .cd-root .cd-quick-main .cd-button { gap: 6px; }
+  .clicko-app-shell .cd-root .cd-panel-heading { flex-wrap: wrap; gap: 12px; }
+  .clicko-app-shell .cd-root .cd-automation-overview { min-width: 0; }
+  .clicko-app-shell .klic-floating-root { bottom: calc(var(--clicko-keyboard-inset) + max(12px, env(safe-area-inset-bottom))); }
+  .clicko-app-shell .klic-floating-panel {
+    height: min(560px, calc(var(--clicko-viewport-height) - 88px));
+    min-height: min(260px, calc(var(--clicko-viewport-height) - 88px));
+    max-height: calc(var(--clicko-viewport-height) - 88px);
+  }
+  .clicko-app-shell .clicko-main-stage :is(.cx-library-approved > nav, .cx-client-detail-tabs, .au-tabs, .aw-tabs) {
+    max-width: 100%;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+  }
+  .clicko-app-shell .clicko-main-stage :is(.cx-library-button, .cx-client-button, .au-button, .aw-button, .calendar-filter-button, .clicko-select-menu__trigger) {
+    min-height: 44px;
+    height: auto;
+  }
+  .clicko-app-shell .clicko-main-stage .clicko-select-menu__option { min-height: 44px; }
+  .clicko-app-shell .clicko-main-stage .clicko-select-menu__option > span { white-space: normal; overflow-wrap: anywhere; }
+  .clicko-app-shell .clicko-main-stage :is(.cx-client-toolbar, .cx-library-toolbar) { min-width: 0; }
+  .clicko-app-shell .cx-client-dialog-backdrop { padding: 10px; }
+  .clicko-app-shell .cx-clients-shell .cx-activation-dialog { width: 100%; max-height: calc(var(--clicko-viewport-height) - 20px); }
+  .clicko-app-shell .cx-library-modal > form { max-height: calc(var(--clicko-viewport-height) - 20px); }
+  .clicko-app-shell .calendar-period-card, .clicko-app-shell .calendar-period-nav { min-width: 0; }
+  .clicko-app-shell .calendar-period-presets { max-width: 100%; }
+  .clicko-app-shell .calendar-custom-range input { min-width: 0; max-width: 100%; }
+  .clicko-app-shell .clicko-search-overlay { padding: max(10px, env(safe-area-inset-top)) 10px max(10px, env(safe-area-inset-bottom)); }
+  .clicko-app-shell .clicko-search-panel { max-height: calc(var(--clicko-viewport-height) - 20px); }
+}
+
+/* Chat keeps its existing composer anchored to available height, including the keyboard. */
+@media (max-width: 900px), (max-height: 600px) {
+  .clicko-app-shell.clicko-creative-workspace[data-current-tab="ai-chat"] .clicko-main-stage > .klic-chat-workspace {
+    height: calc(var(--clicko-viewport-height) - 60px);
+    min-height: 280px;
+    padding: 18px 12px max(12px, env(safe-area-inset-bottom)) !important;
+  }
+  .clicko-app-shell .klic-chat-workspace > section { min-width: 0; }
+  .clicko-app-shell .klic-chat-header { flex-wrap: wrap; gap: 12px; flex-shrink: 0; }
+  .clicko-app-shell .klic-chat-header > div:last-child { margin-left: auto; }
+  .clicko-app-shell .klic-chat-composer { flex-wrap: wrap; }
+  .clicko-app-shell .klic-chat-composer > textarea { flex-basis: calc(100% - 45px); }
+  .clicko-app-shell .klic-chat-composer > div { margin-left: auto; }
+  .clicko-app-shell .klic-chat-workspace [role="dialog"].absolute { max-width: calc(100vw - 102px); }
+  .clicko-app-shell .klic-chat-workspace .klic-plasma-wrap:not(.klic-plasma-wrap--compact) {
+    --klic-size: clamp(100px, calc(var(--clicko-viewport-height) * .3), 220px);
+  }
+}
+@media (max-height: 560px) {
+  .clicko-app-shell .klic-chat-header { gap: 4px; padding-bottom: 8px; }
+  .clicko-app-shell .klic-floating-actions { display: flex; }
+  .clicko-app-shell .klic-floating-header { min-height: 48px; padding-block: 6px; }
+  .clicko-app-shell .klic-floating-stream { padding-block: 8px; }
+  .clicko-app-shell .klic-floating-panel { overflow-y: auto; }
+}
+
+/* Keep all analytics columns available; contain wide tabular content locally. */
+@media (max-width: 1100px) {
+  .clicko-app-shell .cd-root .cd-overview-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .clicko-app-shell .clicko-audit-log > .grid { grid-template-columns: minmax(0, 1fr); }
+  .clicko-app-shell .clicko-audit-log > section > .hidden { display: none; }
+  .clicko-app-shell .clicko-audit-log > section > div > button { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 800px) {
+  .clicko-app-shell .clicko-analytics-workspace :is(.aw-content-row, .aw-content-labels) {
+    grid-template-columns: minmax(140px, 1fr) 85px 90px;
+    min-width: 335px;
+  }
+  .clicko-app-shell .clicko-analytics-workspace :is(.aw-content-row, .aw-content-labels) > :nth-child(3) { display: flex; }
+  .clicko-app-shell .aw-content-table { max-width: 100%; overflow-x: auto; }
+}
+@media (max-width: 380px) {
+  .clicko-app-shell .cd-root .cd-overview-metrics { grid-template-columns: minmax(0, 1fr); }
+  .clicko-app-shell .cd-root .cd-overview-metrics button { min-height: 110px; }
+  .clicko-app-shell .cd-root .cd-quick-main > div { grid-template-columns: minmax(0, 1fr); }
+  .clicko-app-shell .cx-client-metrics { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* Public forms and client portals share the same viewport and safe-area constraints. */
+.clicko-auth-scene { min-height: 100dvh; }
+@media (max-width: 640px) {
+  .clicko-auth-scene { padding-top: env(safe-area-inset-top); padding-bottom: env(safe-area-inset-bottom); }
+  .clicko-auth-scene :is(input, button) { scroll-margin-block: 24px; }
+  .clicko-auth-form-height { height: auto !important; overflow: visible; }
+  .cx-portal { padding-inline: 16px; }
+  .cx-portal-header, .cx-portal-heading { flex-wrap: wrap; gap: 12px; }
+}

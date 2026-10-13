@@ -1,0 +1,13 @@
+.git
+.env*
+!.env.example
+.clicko-data
+.secrets
+node_modules
+dist
+coverage
+*.log
+*.pem
+*.key
+*service-account*.json
+*oauth-credentials*.json

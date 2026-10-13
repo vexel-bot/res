@@ -1,0 +1,256 @@
+.clicko-search-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: clamp(72px, 10vh, 112px) 20px 24px;
+  overflow-y: auto;
+  background:
+    radial-gradient(circle at 50% 12%, rgba(255, 127, 80, 0.045), transparent 34%),
+    rgba(0, 0, 0, 0.64);
+  backdrop-filter: blur(18px) saturate(0.78);
+  -webkit-backdrop-filter: blur(18px) saturate(0.78);
+  animation: clicko-search-overlay-in 160ms ease-out both;
+}
+
+.clicko-search-panel {
+  width: min(680px, 100%);
+  max-height: min(650px, calc(100dvh - clamp(96px, 14vh, 144px)));
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.085);
+  border-radius: 16px;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.026), transparent 44%),
+    rgba(7, 8, 9, 0.94);
+  box-shadow:
+    0 36px 100px rgba(0, 0, 0, 0.72),
+    0 0 0 1px rgba(0, 0, 0, 0.35),
+    inset 0 1px rgba(255, 255, 255, 0.025);
+  animation: clicko-search-panel-in 190ms cubic-bezier(0.2, 0.8, 0.3, 1) both;
+}
+
+.clicko-search-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 20px 22px 15px;
+}
+
+.clicko-search-eyebrow {
+  display: block;
+  color: #ff7f50;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.clicko-search-heading h2 {
+  margin: 6px 0 0;
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 17px;
+  font-weight: 620;
+  letter-spacing: -0.025em;
+}
+
+.clicko-search-heading-actions {
+  display: flex;
+  align-items: center;
+}
+
+.clicko-search-heading-actions { gap: 9px; }
+
+.clicko-search-heading-actions button,
+.clicko-search-clear {
+  display: grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  border-radius: 8px;
+  color: #808080;
+  transition: color 140ms ease, background-color 140ms ease;
+}
+
+.clicko-search-heading-actions button:hover,
+.clicko-search-clear:hover { background: rgba(255, 255, 255, 0.045); color: #fff; }
+.clicko-search-heading-actions svg,
+.clicko-search-clear svg { width: 14px; height: 14px; }
+
+.clicko-search-field {
+  display: flex;
+  min-height: 54px;
+  align-items: center;
+  gap: 12px;
+  margin: 0 22px;
+  padding: 0 14px;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.48);
+  box-shadow: inset 0 1px rgba(255, 255, 255, 0.015);
+  transition: border-color 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
+}
+
+.clicko-search-field:focus-within {
+  border-color: rgba(255, 255, 255, 0.09);
+  background: rgba(0, 0, 0, 0.62);
+  box-shadow: inset 0 1px rgba(255, 255, 255, 0.025);
+}
+
+.clicko-search-field > svg { width: 18px; height: 18px; flex: 0 0 auto; color: #ff7f50; }
+
+.clicko-search-field input {
+  min-width: 0;
+  flex: 1;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.clicko-search-field input::placeholder { color: rgba(128, 128, 128, 0.72); }
+.clicko-search-field input::-webkit-search-cancel-button { display: none; }
+.clicko-search-panel .clicko-search-field input:focus,
+.clicko-search-panel .clicko-search-field input:focus-visible {
+  border-color: transparent !important;
+  outline: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.clicko-search-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 24px 8px;
+  color: rgba(128, 128, 128, 0.82);
+  font-size: 9px;
+}
+
+.clicko-search-results {
+  min-height: 126px;
+  overflow-y: auto;
+  padding: 4px 12px 12px;
+  scrollbar-color: rgba(255, 255, 255, 0.12) transparent;
+  scrollbar-width: thin;
+}
+
+.clicko-search-result {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  border: 1px solid transparent;
+  border-radius: 11px;
+  color: inherit;
+  text-align: left;
+  transition: border-color 140ms ease, background-color 140ms ease, transform 140ms ease;
+}
+
+.clicko-search-result:hover,
+.clicko-search-result.is-active,
+.clicko-search-result:focus-visible {
+  border-color: rgba(255, 127, 80, 0.18);
+  outline: none;
+  background: linear-gradient(90deg, rgba(255, 127, 80, 0.09), rgba(255, 127, 80, 0.025));
+}
+
+.clicko-search-result:active { transform: scale(0.995); }
+
+.clicko-search-result-icon {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.025);
+  color: #808080;
+  transition: border-color 140ms ease, color 140ms ease, background-color 140ms ease;
+}
+
+.clicko-search-result-icon svg { width: 15px; height: 15px; }
+.clicko-search-result-icon.is-post,
+.clicko-search-result-icon.is-automation,
+.clicko-search-result-icon.is-workspace { color: #ff7f50; }
+.clicko-search-result-icon.is-campaign { color: #f28500; }
+
+.clicko-search-result:hover .clicko-search-result-icon {
+  border-color: rgba(255, 127, 80, 0.2);
+  background: rgba(255, 127, 80, 0.08);
+}
+
+.clicko-search-result.is-active .clicko-search-result-icon { border-color: rgba(255, 127, 80, 0.2); background: rgba(255, 127, 80, 0.08); }
+
+.clicko-search-result-copy { min-width: 0; flex: 1; }
+.clicko-search-result-copy strong,
+.clicko-search-result-copy small { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.clicko-search-result-copy strong { color: rgba(255, 255, 255, 0.88); font-size: 11px; font-weight: 600; }
+.clicko-search-result-copy small { margin-top: 3px; color: #808080; font-size: 9px; }
+
+.clicko-search-result-action {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-right: 4px;
+  color: #ff7f50;
+  font-size: 9px;
+  font-weight: 600;
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity 140ms ease, transform 140ms ease;
+}
+
+.clicko-search-result-action svg { width: 13px; height: 13px; }
+.clicko-search-result:hover .clicko-search-result-action,
+.clicko-search-result.is-active .clicko-search-result-action,
+.clicko-search-result:focus-visible .clicko-search-result-action { opacity: 1; transform: translateX(0); }
+
+.clicko-search-shortcuts { display: flex; flex-wrap: wrap; gap: 6px; padding: 10px 22px 16px; border-top: 1px solid rgba(255,255,255,.055); }
+.clicko-search-shortcuts button { display: inline-flex; min-height: 30px; align-items: center; gap: 6px; padding: 0 9px; border: 1px solid rgba(255,255,255,.06); border-radius: 8px; color: #808080; font-size: 9px; transition: border-color 140ms ease, color 140ms ease, background-color 140ms ease; }
+.clicko-search-shortcuts button:hover, .clicko-search-shortcuts button:focus-visible { border-color: rgba(255,127,80,.2); outline: none; background: rgba(255,127,80,.055); color: var(--clicko-text, #fff); }
+.clicko-search-shortcuts svg { width: 13px; height: 13px; color: #ff7f50; }
+
+.clicko-search-empty {
+  display: grid;
+  min-height: 156px;
+  place-items: center;
+  align-content: center;
+  padding: 24px;
+  text-align: center;
+}
+
+.clicko-search-empty > span { display: grid; width: 36px; height: 36px; place-items: center; border-radius: 50%; background: rgba(255, 255, 255, 0.025); color: #808080; }
+.clicko-search-empty svg { width: 15px; height: 15px; }
+.clicko-search-empty strong { margin-top: 10px; color: rgba(255, 255, 255, 0.72); font-size: 11px; font-weight: 600; }
+.clicko-search-empty p { margin: 4px 0 0; color: #808080; font-size: 9px; }
+
+@keyframes clicko-search-overlay-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes clicko-search-panel-in { from { opacity: 0; transform: translateY(-8px) scale(0.985); } to { opacity: 1; transform: none; } }
+
+@media (max-width: 640px) {
+  .clicko-search-overlay { padding: 12px; align-items: center; }
+  .clicko-search-panel { max-height: calc(100dvh - 24px); border-radius: 14px; }
+  .clicko-search-heading { padding: 17px 16px 13px; }
+  .clicko-search-heading h2 { font-size: 15px; }
+  .clicko-search-field { min-height: 50px; margin: 0 16px; }
+  .clicko-search-meta { padding-inline: 18px; }
+  .clicko-search-results { padding-inline: 8px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .clicko-search-overlay,
+  .clicko-search-panel { animation: none; }
+  .clicko-search-result,
+  .clicko-search-result-action,
+  .clicko-search-field { transition-duration: 0.01ms; }
+}
