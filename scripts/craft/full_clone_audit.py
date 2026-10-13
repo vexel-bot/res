@@ -27,20 +27,23 @@ def audit(root: Path, mirrors: Path) -> dict:
         raise ValueError("Refresh the mirrors with the complete-ref verification first")
     repositories = {item["repository"]: item for item in receipt["repositories"]}
     reports = []
+    verified_repositories = set()
     known_pins = {item["commit"] for item in manifest["sources"]}
     for source in manifest["sources"]:
         directory = root / source["sourceDirectory"]
         name = source["repository"].rsplit("/", 1)[1].removesuffix(".git")
         mirror = mirrors / (name + ".git")
-        verify_complete(mirror)
         repo = repositories[source["repository"]]
         refs = refs_from_lines(git(mirror, "show-ref"))
         if refs != refs_from_lines("\n".join(repo["refs"])) or not repo["advertisedRefsMatch"]:
             raise ValueError("Mirror refs changed after the upstream comparison")
-        bundle = mirrors / (name + ".bundle")
-        bundle_result = verify_bundle(mirror, bundle, refs)
-        if bundle_result["bundleSha256"] != repo["bundleSha256"]:
-            raise ValueError("Portable bundle differs from its verified receipt")
+        if source["repository"] not in verified_repositories:
+            verify_complete(mirror)
+            bundle = mirrors / (name + ".bundle")
+            bundle_result = verify_bundle(mirror, bundle, refs)
+            if bundle_result["bundleSha256"] != repo["bundleSha256"]:
+                raise ValueError("Portable bundle differs from its verified receipt")
+            verified_repositories.add(source["repository"])
         if git(mirror, "rev-parse", source["commit"] + "^{tree}") != source["gitTree"]:
             raise ValueError("Pinned source tree differs from the original Git tree")
         files = []
@@ -54,25 +57,11 @@ def audit(root: Path, mirrors: Path) -> dict:
             files.append({"path": path, "mode": mode, "gitBlob": oid})
         if files != source["files"]:
             raise ValueError("The import inventory omits or changes original source entries")
-        indexed = subprocess.check_output(
-            ["git", "-C", str(root), "ls-files", "--stage", "-z", "--", source["sourceDirectory"]], text=True
-        )
-        expected = {source["sourceDirectory"] + "/" + f["path"]: (f["mode"], f["gitBlob"]) for f in files}
-        actual = {}
-        for line in indexed.split("\0"):
-            if not line:
-                continue
-            metadata, path = line.split("\t", 1)
-            mode, oid, stage = metadata.split()
-            if stage != "0":
-                raise ValueError("The source import has unresolved Git conflicts")
-            actual[path] = (mode, oid)
-        if actual != expected:
-            raise ValueError("The tracked import differs from the entire upstream snapshot")
+        # provenance.py checked the exact tracked path set, modes and blobs.
         lfs_pointers = []
         for file in files:
             with (directory / file["path"]).open("rb") as handle:
-                if handle.read(128).startswith(b"version https://git-lfs.github.com/spec/v1\n"):
+                if handle.read(128).splitlines()[:1] == [b"version https://git-lfs.github.com/spec/v1"]:
                     lfs_pointers.append(file["path"])
         if lfs_pointers:
             raise ValueError(f"LFS assets must be materialized and audited: {lfs_pointers}")

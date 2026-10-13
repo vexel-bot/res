@@ -6,6 +6,7 @@ import unittest
 from pathlib import Path
 
 from mirror import git, refs_from_lines, verify_bundle, verify_complete
+from provenance import verify_tracked_snapshot
 
 
 class FullMirrorTests(unittest.TestCase):
@@ -62,6 +63,25 @@ class FullMirrorTests(unittest.TestCase):
         git(self.mirror, "bundle", "create", str(incremental), "HEAD^..HEAD")
         with self.assertRaisesRegex(ValueError, "prerequisites"):
             verify_bundle(self.mirror, incremental, refs)
+
+    def test_lost_executable_mode_is_rejected_even_with_identical_bytes(self):
+        oid = subprocess.check_output(["git", "-C", str(self.repo), "rev-parse", "HEAD:source.txt"], text=True).strip()
+        source = {"name": "fixture", "sourceDirectory": "", "files":
+                  [{"path": "source.txt", "mode": "100755", "gitBlob": oid}]}
+        # Use a real subdirectory to exercise the same prefix rules as subtree imports.
+        directory = self.repo / "vendor"
+        directory.mkdir()
+        (directory / "source.txt").write_text("second")
+        subprocess.run(["git", "-C", str(self.repo), "add", "vendor/source.txt"], check=True)
+        source["sourceDirectory"] = "vendor"
+        with self.assertRaisesRegex(ValueError, "files/modes differ"):
+            verify_tracked_snapshot(self.repo, source)
+        subprocess.run(["git", "-C", str(self.repo), "update-index", "--chmod=+x", "vendor/source.txt"], check=True)
+        verify_tracked_snapshot(self.repo, source)
+        (directory / "omitted.txt").write_text("unlisted upstream file")
+        subprocess.run(["git", "-C", str(self.repo), "add", "vendor/omitted.txt"], check=True)
+        with self.assertRaisesRegex(ValueError, "omitted.txt"):
+            verify_tracked_snapshot(self.repo, source)
 
 
 if __name__ == "__main__":

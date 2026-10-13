@@ -34,10 +34,26 @@ permanecem nos fontes. As adaptações Clicko ficam fora desses diretórios.
 
 Os mirrors completos e bundles verificados ficam em
 `.codex-runtime/craft/upstream`; preservam refs, branches, tags e histórico.
+Os mirrors e bundles completos também estão no checkout principal, em
+`.codex-runtime/craft/upstream`, com cópias independentes dos objetos Git.
 O script `scripts/craft/mirror.py --bundle` reproduz esse material. O manifesto
 `workers/craft/sources.lock.json` fixa árvores, blobs e checksums dos inventários.
 Cada adaptador tem seu próprio `Cargo.lock`. O EffectCraft mantém a dependência
 FilmCraft antiga, independentemente da montagem com o FilmCraft mais recente.
+
+A auditoria integral está em `CRAFT_SOURCE_COMPLETENESS.json`. Ela confere todos
+os arquivos, blobs e permissões contra as árvores upstream, rejeita clones
+rasos/parciais e objetos emprestados, compara as referências anunciadas pelo
+upstream e verifica os backups com histórico completo. Os quatro arquivos de
+fontes externas e suas licenças também passaram. Foram restauradas as permissões
+executáveis de seis scripts de empacotamento da cópia FilmCraft de compatibilidade;
+o conteúdo desses arquivos permaneceu igual ao upstream. Cinco testes locais
+de integridade passaram, incluindo a reprodução dessa perda de permissão.
+
+As interfaces desktop/web originais, screenshots, temas, painéis e ícones estão
+preservados nos fontes integrais. O índice dos screenshots com checksums está
+na auditoria. O planejamento visual solicitado será feito depois desta etapa;
+este fechamento não altera o desenho do frontend Clicko.
 
 Os builds próprios incluem licenças, atribuições e checksums. As marcas e logos
 upstream ficam nos fontes de referência; o frontend e executáveis distribuídos

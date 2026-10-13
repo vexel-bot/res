@@ -18,6 +18,8 @@ python scripts/craft/provenance.py
 python scripts/craft/build.py
 python scripts/craft/build.py --wasm
 python scripts/craft/mirror.py --bundle
+python scripts/craft/full_clone_audit.py
+python scripts/craft/test_mirror.py
 ```
 
 Native builds produce `clicko-craft-runtime:local`, containing the three real

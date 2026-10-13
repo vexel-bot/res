@@ -31,6 +31,29 @@ def git(*args: str) -> bytes:
     ).stdout
 
 
+def verify_tracked_snapshot(root: Path, source: dict) -> None:
+    expected = {
+        f"{source['sourceDirectory']}/{entry['path']}": (entry["mode"], entry["gitBlob"])
+        for entry in source["files"]
+    }
+    listing = subprocess.check_output(
+        ["git", "-C", str(root), "ls-files", "--stage", "-z", "--", source["sourceDirectory"]]
+    ).decode()
+    actual = {}
+    for line in listing.split("\0"):
+        if not line:
+            continue
+        metadata, path = line.split("\t", 1)
+        mode, oid, stage = metadata.split()
+        if stage != "0":
+            raise ValueError("The source import has unresolved Git conflicts")
+        actual[path] = (mode, oid)
+    if actual != expected:
+        differences = sorted(path for path in actual.keys() | expected.keys()
+                             if actual.get(path) != expected.get(path))
+        raise ValueError(f"Tracked upstream files/modes differ in {source['name']}: {differences[:8]}")
+
+
 def inventory(name: str, sha: str, version: str | None) -> dict:
     # The compatibility commit is present in the imported FilmCraft history.
     listing = git("ls-tree", "-r", "-z", sha).split(b"\0")
@@ -88,6 +111,7 @@ def main():
                 "Craft source manifest differs from the pinned complete revisions"
             )
         for source in manifest["sources"]:
+            verify_tracked_snapshot(ROOT, source)
             files = source["files"]
             canonical = json.dumps(
                 files, sort_keys=True, separators=(",", ":")
