@@ -8,7 +8,9 @@ if (Test-Path -LiteralPath $taskMarker) {
     $taskPrevious = Get-Content -LiteralPath $taskMarker -Raw | ConvertFrom-Json
     $taskAlive = @($taskPrevious.processes | Where-Object {
         $taskProcess = Get-Process -Id $_.pid -ErrorAction SilentlyContinue
-        $taskProcess -and $taskProcess.StartTime.ToUniversalTime().ToString('o') -eq $_.startedAt
+        $taskRecordedStart = if ($_.startedAt -is [datetime]) { $_.startedAt.ToUniversalTime() }
+            else { [DateTimeOffset]::Parse([string]$_.startedAt, [Globalization.CultureInfo]::InvariantCulture).UtcDateTime }
+        $taskProcess -and $taskProcess.StartTime.ToUniversalTime() -eq $taskRecordedStart
     })
     if ($taskAlive.Count -eq 3) { Write-Output 'Clicko Craft is running at http://127.0.0.1:3000'; return }
     if ($taskAlive.Count -gt 0) { throw 'A partial local runtime remains active. Inspect the recorded processes before restarting.' }
