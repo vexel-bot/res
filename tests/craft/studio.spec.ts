@@ -15,12 +15,13 @@ const workspace = { id: "workspace-one", name: "Clicko test", brandProfile: { ta
 const onePixelPng = Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9Y9ZlLkAAAAASUVORK5CYII=", "base64");
 type RequestReceipt = { expectedRevision: number; commands: CraftCommand[]; pageId?: string; key: string };
 
-async function setup(page: Page, options: { available?: boolean; conflict?: boolean; interruptCommit?: boolean; recovery?: unknown } = {}) {
+async function setup(page: Page, options: { available?: boolean; conflict?: boolean; interruptCommit?: boolean; interruptAI?: boolean; recovery?: unknown } = {}) {
   let current = structuredClone(record);
   let activePageId = "page-one";
   const requests: RequestReceipt[] = [];
   const previewPages: string[] = [];
   const ai: Record<string, unknown>[] = [];
+  let aiReceipt: unknown;
   const cached = new Map<string, unknown>();
   let cancelled = false;
   let renders = 0;
@@ -33,6 +34,9 @@ async function setup(page: Page, options: { available?: boolean; conflict?: bool
     const request = route.request(); const url = new URL(request.url()); const endpoint = url.pathname;
     if (endpoint.endsWith("/bootstrap")) return route.fulfill({ json: { user: { id: "user-one" }, workspaces: [workspace], posts: [], suggestions: [] } });
     if (endpoint.endsWith("/capabilities")) return route.fulfill({ json: { capabilities: [] } });
+    if (endpoint.endsWith("/craft/llm-catalog")) return route.fulfill({ json: { providers: [], credentialStorageReady: true, legacyPlanningAvailable: true } });
+    if (endpoint.endsWith("/craft/llm-connections")) return route.fulfill({ json: { connections: [], canManage: false } });
+    if (endpoint.includes("/craft/ai-requests/")) return route.fulfill({ json: aiReceipt ? { status: "committed", receipt: aiReceipt } : { status: "not_found" } });
     if (endpoint.endsWith("/craft/engines")) return route.fulfill({ json: { schemaVersion: "studio.craft-engines.v1", engines: [{ engine: "photocraft", available: options.available !== false, buildId: "native-test-build", formatVersion: "1", upstreamRevision: "revision", commands: capabilities, formats: ["png", "pcraft"], reason: "Motor em preparação" }] } });
     if (endpoint.endsWith("/documents")) return route.fulfill({ json: [current] });
     if (endpoint.endsWith("/documents/document-one")) return route.fulfill({ json: current });
@@ -54,7 +58,13 @@ async function setup(page: Page, options: { available?: boolean; conflict?: bool
       if (options.interruptCommit && requests.length === 1) return route.abort("failed");
       return route.fulfill({ json: receipt });
     }
-    if (endpoint.endsWith("/craft/ai-commands")) { const body = request.postDataJSON(); ai.push(body); activePageId = body.pageId; current = { ...current, revision: current.revision + 1 }; return route.fulfill({ json: { document: current, inspection: inspect(), receiptId: "ai-one" } }); }
+    if (endpoint.endsWith("/craft/ai-commands")) {
+      const body = request.postDataJSON(); ai.push(body); activePageId = body.pageId;
+      current = { ...current, revision: current.revision + 1 };
+      aiReceipt = { document: current, inspection: inspect(), receiptId: "ai-one" };
+      if (options.interruptAI) return route.abort("failed");
+      return route.fulfill({ json: aiReceipt });
+    }
     if (endpoint.endsWith("/craft/render-jobs")) { renders++; return route.fulfill({ json: { id: "job-one", provider: "craft.photocraft", status: "queued", progress: 0, request: { documentRevision: current.revision } } }); }
     if (endpoint.endsWith("/jobs/job-one/cancel")) { cancelled = true; return route.fulfill({ json: { id: "job-one", provider: "craft.photocraft", status: "cancelled", progress: 0 } }); }
     if (endpoint.endsWith("/jobs/job-one")) return route.fulfill({ json: { id: "job-one", provider: "craft.photocraft", status: cancelled ? "cancelled" : "running", progress: 45 } });
@@ -158,4 +168,19 @@ test("unavailable engine and responsive layout never expose a legacy editor", as
     await page.setViewportSize({ width, height: 1000 });
     expect(await page.locator(".craft-studio").evaluate((element) => element.scrollWidth <= element.clientWidth)).toBe(true);
   }
+});
+
+test("an interrupted AI result is recovered without a second paid submission", async ({ page }) => {
+  const state = await setup(page, { interruptAI: true });
+  await page.getByLabel("Pedido de edição com IA").fill("Ajuste uma vez");
+  await page.getByRole("button", { name: "Aplicar direção" }).click();
+  await expect(page.getByRole("button", { name: "Verificar pedido de IA" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Aplicar direção" })).toBeDisabled();
+  const stored = await page.evaluate(() => localStorage.getItem("clicko:craft:v1:user-one:workspace-one:document-one:photocraft:ai"));
+  expect(stored).toContain('"instruction":"Ajuste uma vez"');
+  await page.reload();
+  await page.getByRole("button", { name: "Verificar pedido de IA" }).click();
+  await expect(page.getByRole("button", { name: "Verificar pedido de IA" })).toHaveCount(0);
+  await expect(page.getByText("Salvo · revisão 2", { exact: true })).toBeVisible();
+  expect(state.ai).toHaveLength(1);
 });

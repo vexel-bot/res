@@ -24,7 +24,7 @@ use std::{
 use wasm_bindgen::prelude::*;
 
 pub const REVISION: &str = "67434e90388b6dca4417555346fa6850b6f96033";
-pub const BUILD: &str = "clicko-effectcraft-1.0.1+67434e90";
+pub const BUILD: &str = "clicko-effectcraft-1.0.2+67434e90";
 
 #[derive(Default)]
 struct Store {
@@ -949,6 +949,45 @@ mod tests {
         adapter.open_bytes(&bytes).unwrap();
         assert_eq!(first, adapter.preview_png(0.0, 0).unwrap());
         assert_eq!(last, adapter.preview_png(0.9, 0).unwrap());
+    }
+    #[test]
+    fn large_motion_import_preserves_all_frames_in_one_native_history_step() {
+        let mut adapter=Adapter::default();
+        adapter.dispatch("project.new", &json!({"width":16,"height":16,"fps":10,"durationMs":1_200_000,
+            "legacyDocument":{"composition":{"pages":[{"width":16,"height":16,"background":"#00000000","layers":[
+                {"id":"square","kind":"shape","x":0,"y":0,"width":8,"height":8,"properties":{"fill":"#ff0000"}}
+            ]}]}},"legacyMotionGraph":{"frameRate":{"numerator":10,"denominator":1},"durationFrames":12_000,
+                "tracks":[{"targetLayerId":"square","property":"opacity","keyframes":[
+                    {"frame":0,"value":0.0,"easing":"linear"},{"frame":11_999,"value":1.0}]}]}
+        })).unwrap();
+        assert!(adapter.warnings.is_empty(),"{:?}",adapter.warnings);
+        let comp=adapter.session.active_comp().unwrap();
+        let layer=comp.layers.iter().find(|layer|layer.name=="Camada").unwrap();
+        let opacity=layer.props.prop("transform/opacity").unwrap();
+        assert_eq!(opacity.keys.len(),12_000);
+        assert_eq!(adapter.session.history.undo.last().unwrap().0,"Import legacy animation");
+        let at=|adapter:&mut Adapter, seconds:f64|image::load_from_memory(&adapter.preview_png(seconds,0).unwrap()).unwrap().to_rgba8().get_pixel(4,4).0;
+        assert_eq!(at(&mut adapter,0.0),[0,0,0,0]);
+        assert_eq!(at(&mut adapter,600.0),[255,0,0,128]);
+        assert_eq!(at(&mut adapter,1199.9),[255,0,0,255]);
+        let bytes=adapter.native_bytes().unwrap();
+        adapter.open_bytes(&bytes).unwrap();
+        assert_eq!(at(&mut adapter,600.0),[255,0,0,128]);
+    }
+    #[test]
+    fn invalid_motion_property_does_not_leave_partial_native_keys() {
+        let mut adapter=Adapter::default();
+        adapter.dispatch("project.new", &json!({"width":16,"height":16,"fps":10,"durationMs":300,
+            "legacyDocument":{"composition":{"pages":[{"width":16,"height":16,"layers":[
+                {"id":"square","kind":"shape","width":8,"height":8,"properties":{"fill":"#ff0000"}}
+            ]}]}},"legacyMotionGraph":{"frameRate":{"numerator":10,"denominator":1},"durationFrames":3,
+                "tracks":[{"targetLayerId":"square","property":"opacity","keyframes":[
+                    {"frame":0,"value":0.0,"easing":"unsupported"},{"frame":2,"value":1.0}]}]}
+        })).unwrap();
+        assert!(adapter.warnings.iter().any(|warning|warning.contains("invalid motion keys")));
+        let comp=adapter.session.active_comp().unwrap();
+        let layer=comp.layers.iter().find(|layer|layer.name=="Camada").unwrap();
+        assert!(layer.props.prop("transform/opacity").unwrap().keys.is_empty());
     }
     #[test]
     fn composition_native_roundtrip_and_pixels() {

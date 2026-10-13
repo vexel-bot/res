@@ -1,8 +1,31 @@
 //! Convert legacy transform tracks through native keyframe commands. Sampling at
 //! the graph's frame grid preserves rendered easing, including custom Beziers.
-use effectcraft_engine::Session;
+use effectcraft_engine::{Session, EngineError};
+use effectcraft_engine::project::{Layer, LayerId, Keyframe};
+use effectcraft_time::{FrameRate, Tick};
 use serde_json::{Value, json};
 use std::collections::{BTreeMap, HashMap};
+
+// Whole-project snapshots for every key are quadratic. Prepare bounded native
+// key arrays and install them through one undoable engine edit instead.
+const MAX_SAMPLED_KEYS: u64 = 100_000;
+
+fn layer_tick(layer: &Layer, rate: FrameRate, seconds: f64) -> Result<Tick, String> {
+    if !seconds.is_finite() || seconds < Tick::MIN.seconds() || seconds > Tick::MAX.seconds()
+        || !layer.stretch.is_finite() || layer.stretch == 0.0 {
+        return Err("invalid native key time".into());
+    }
+    let ct = rate.snap_nearest(Tick::from_seconds_f64(seconds));
+    let offset = ct.0.checked_sub(layer.start_time.0)
+        .filter(|ticks| (Tick::MIN.0..=Tick::MAX.0).contains(ticks))
+        .ok_or("native key time outside supported range")?;
+    if (layer.stretch - 100.0).abs() < 1e-9 { return Ok(Tick(offset)); }
+    let scaled = offset as f64 * 100.0 / layer.stretch;
+    if !scaled.is_finite() || scaled < Tick::MIN.0 as f64 || scaled > Tick::MAX.0 as f64 {
+        return Err("native key time outside supported range".into());
+    }
+    Ok(Tick(scaled as i64))
+}
 
 fn value_at(keys: &[Value], frame: u64) -> Option<f64> {
     let first = keys.first()?;
@@ -119,7 +142,7 @@ pub fn apply(session: &mut Session, graph: &Value, layers: &HashMap<String, u64>
         groups.entry((layers[child], "transform/opacity")).or_default();
     }
     // Bound validation as well as native key creation before sampling any frames.
-    if frames.saturating_mul(groups.len().max(1) as u64) > 10_000 {
+    if frames.saturating_mul(groups.len().max(1) as u64) > MAX_SAMPLED_KEYS {
         return vec!["Motion graph exceeds the automatic keyframe conversion budget; original preserved for manual conversion".into()];
     }
     let specs: HashMap<&str, &Value> = page["layers"].as_array().into_iter().flatten()
@@ -140,14 +163,21 @@ pub fn apply(session: &mut Session, graph: &Value, layers: &HashMap<String, u64>
             warnings.push(format!("Rotated nonuniform scaling on `{target}` has a different transform order; original preserved for review"));
         }
     }
-    // Engine edits retain undo snapshots. Bound conversion work explicitly,
-    // rather than truncate a long animation or exhaust a worker's memory.
+    let Some(cid) = session.active_comp_id() else {
+        return vec!["Motion composition is unavailable; original preserved".into()];
+    };
+    let mut prepared = Vec::new();
     for ((layer, path), tracks) in groups {
         let result = (|| -> Result<(), String> {
             let base = session
                 .execute("prop.get", json!({"layer":layer,"path":path}))
                 .map_err(|e| e.to_string())?["value"]
                 .clone();
+            let comp = session.project.comp(cid).ok_or("missing native composition")?;
+            let source_layer = comp.layer(LayerId(layer)).ok_or("missing native layer")?;
+            let property = source_layer.props.prop(path).ok_or("missing native property")?;
+            let mut keys = BTreeMap::new();
+            let mut static_value = None;
             for frame in 0..frames {
                 let mut value = base.clone();
                 for track in &tracks {
@@ -195,18 +225,42 @@ pub fn apply(session: &mut Session, graph: &Value, layers: &HashMap<String, u64>
                     }
                     value=json!(alpha);
                 }
+                let native_value = property.value.coerce_json(&value).ok_or("invalid native property value")?;
                 if graph.is_null() {
-                    session.execute("prop.set",json!({"layer":layer,"path":path,"value":value})).map_err(|e|e.to_string())?;
+                    static_value = Some(native_value);
                 } else {
-                    session.execute("prop.addKey", json!({"layer":layer,"path":path,"time":frame as f64/fps,"timeBase":"comp","value":value})).map_err(|e| e.to_string())?;
+                    let time = layer_tick(source_layer, comp.frame_rate, frame as f64 / fps)?;
+                    let mut key = Keyframe::new(time, native_value);
+                    if property.hold_only { key = key.hold(); }
+                    if session.prefs.general.default_spatial_linear && property.spatial {
+                        key.spatial_auto = false;
+                    }
+                    // Same snapping/replacement semantics as native prop.addKey.
+                    keys.insert(time, key);
                 }
             }
+            prepared.push((layer, path, keys.into_values().collect::<Vec<_>>(), static_value));
             Ok(())
         })();
         if let Err(error) = result {
             warnings.push(format!(
                 "Motion `{path}` on native layer {layer}: {error}; original preserved"
             ));
+        }
+    }
+    if !prepared.is_empty() {
+        let result = session.edit("Import legacy animation", None, |project, _| {
+            let comp = project.comp_mut(cid).ok_or(EngineError::NoComp)?;
+            for (layer, path, keys, static_value) in &prepared {
+                let property = comp.layer_mut(LayerId(*layer)).and_then(|layer|layer.props.prop_mut(path))
+                    .ok_or_else(||EngineError::Other("native motion property disappeared".into()))?;
+                property.keys = keys.clone();
+                if let Some(value) = static_value { property.value = value.clone(); }
+            }
+            Ok(())
+        });
+        if let Err(error) = result {
+            warnings.push(format!("Motion import was rolled back: {error}; original preserved"));
         }
     }
     for field in ["transitions", "audioEvents", "constraints"] {

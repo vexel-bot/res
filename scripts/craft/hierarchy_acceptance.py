@@ -112,7 +112,7 @@ def main():
         base + "/craft/migrate",
         {"engine": "effectcraft", "expectedRevision": document["revision"]},
     )
-    assert state["nativeEditorState"]["buildId"] == "clicko-effectcraft-1.0.1+67434e90"
+    assert state["nativeEditorState"]["buildId"] == "clicko-effectcraft-1.0.2+67434e90"
     frames = []
     for frame, x, alpha in [(0, 17, 64), (1, 25, 128)]:
         png = call("POST", base + "/craft/preview", {"frame": frame}, binary=True)

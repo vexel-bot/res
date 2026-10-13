@@ -120,3 +120,13 @@
 @media (max-width:1280px) { .craft-workspace { grid-template-columns:195px minmax(240px,1fr) 235px; } .craft-engine-tabs { order:3; } .craft-heading { flex-basis:30%; } }
 @media (max-width:960px) { .craft-workspace { grid-template-columns:170px minmax(220px,1fr); } .craft-inspector { grid-column:1/-1; display:grid; gap:20px; grid-template-columns:1fr 1fr; border-top:1px solid var(--craft-border); } .craft-inspector .craft-panel-title { grid-column:1/-1; } .craft-inspector>label { grid-column:1/-1; } .craft-ai { margin:0; padding:0; border:0; } .craft-create form { padding:40px 25px; } }
 @media (max-width:640px) { .craft-studio { border-radius:8px; } .craft-header { padding:12px; gap:8px; } .craft-heading h1 { font-size:15px; } .craft-toolbar { order:4; width:100%; } .craft-engine-tabs { flex:1; width:100%; justify-content:center; } .craft-engine-tabs button { font-size:10px; } .craft-workspace { display:flex; flex-direction:column; } .craft-library { border-bottom:1px solid var(--craft-border); border-right:0; } .craft-panel-content { max-height:220px; overflow:auto; } .craft-library>nav button { flex-direction:row; } .craft-preview { height:50vh; min-height:310px; } .craft-inspector { display:block; border-left:0; } .craft-ai { border-top:1px solid var(--craft-border); padding-top:20px; margin-top:20px; } .craft-create { display:block; } .craft-create-art { min-height:200px; } .craft-create-art>span { font-size:22px; } .craft-create form { padding:30px 22px; max-width:100%; } .craft-empty { min-height:420px; } }
+
+.craft-ai>.craft-model-picker { display:grid; gap:10px; align-items:stretch; color:inherit; min-width:0; width:100%; margin-bottom:14px; }
+.craft-model-manager { border:1px solid var(--craft-border); border-radius:8px; padding:10px; min-width:0; max-height:480px; overflow:auto; }
+.craft-model-manager summary { cursor:pointer; font-size:12px; }
+.craft-connection-row { display:flex; flex-wrap:wrap; gap:6px; align-items:center; margin:10px 0; }
+.craft-connection-row span { width:100%; font-size:11px; overflow-wrap:anywhere; }
+.craft-connection-form { display:grid; gap:10px; margin-top:14px; }
+.craft-connection-form label { display:grid; gap:5px; }
+.craft-connection-form textarea { min-height:80px; }
+.craft-connection-form input[type=checkbox] { width:auto; }

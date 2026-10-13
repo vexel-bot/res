@@ -1,6 +1,6 @@
 # Substituição dos Studios por Craft
 
-Estado em 12 de outubro de 2026: implementação no checkout de integração,
+Estado em 13 de outubro de 2026: implementação no checkout de integração,
 com fontes completos, builds reais dos três motores e exportação/cancelamento
 pela fila de servidor validados. O aceite final ainda depende da qualificação
 de projetos reais e dos fluxos descritos abaixo.
@@ -231,9 +231,69 @@ O runtime e worker anteriores estão preservados localmente nas tags
    concorrência, arquivos grandes, recuperação e cancelamento de exportações
    maiores. O cancelamento durante um fixture de 60 segundos já passou; faltam
    os casos reais de carga. Pendências de conversão preservam os originais.
-2. Qualificar a IA com o provedor configurado, builds de referência upstream e
-   regressões dos fluxos de geração, avatar, revisão e publicação. Não houve
-   promoção de produção nem implantação na VPS.
+2. A validação com um LLM real foi adiada explicitamente pelo usuário em
+   13/10/2026. A implementação dos endpoints e a integração HTTP→comandos
+   nativos foram qualificadas com endpoint local determinístico; isso não
+   comprova a qualidade de planejamento de modelos reais. Não houve
+   implantação na VPS nem publicação externa.
+
+## Conclusão da implementação em 13/10/2026
+
+O adaptador EffectCraft agora usa o build `clicko-effectcraft-1.0.2+67434e90`.
+A instalação de animações amostradas ocorre em uma única transação do histórico
+nativo, evitando copiar toda a composição para cada keyframe. O limite
+protetor passou de 10.000 para 100.000 chaves; valores ou propriedades inválidos
+não deixam uma sequência parcialmente convertida. Os fontes upstream não
+foram modificados.
+
+- Quatorze testes do adaptador EffectCraft passaram. Um fixture com 12.000
+  quadros passou pela API real e pelo worker WASM, com SHA-256 idêntico nas
+  transparências inicial, intermediária e final, incluindo salvar e reabrir.
+- O novo ensaio completo converteu 31 documentos e reabriu 29 composições.
+  Nenhum ficou bloqueado pelo orçamento antigo de keyframes. Trinta documentos
+  continuam exigindo revisão de fidelidade; os originais permanecem arquivados.
+  Os 1.129 avisos de EffectCraft são superiores aos 963 do ensaio anterior
+  porque a interrupção por orçamento deixou de ocultar os avisos posteriores.
+  Isso não representa fidelidade integral para formas, tipografia ou efeitos
+  avançados que continuam explicitamente em revisão.
+  A verificação adicional conferiu 149 arquivos nativos/originais por checksum
+  e confirmou que as 31 montagens FilmCraft permaneceram idênticas em bytes.
+- A atualização de projetos `1.0.0`/`1.0.1` para `1.0.2` exige operação explícita
+  com revisão esperada e build alvo. Preserva o arquivo anterior no histórico.
+  Um projeto antigo real passou por comparação de pixels com o runtime
+  anterior, replay do recibo e undo. Outras combinações de build são rejeitadas.
+- Quarenta e seis testes selecionados de persistência, protocolos de IA,
+  permissões, cifragem, orçamento e manifesto do worker passaram; oito testes
+  de interface passaram, incluindo recuperação de IA após resposta perdida
+  sem uma segunda submissão. A suíte completa de backend e os dois casos
+  upstream anteriormente descritos continuam com os limites registrados.
+- O novo worker foi atestado como usuário 10001, raiz somente leitura e sem
+  rede na atestação. Seu inventário CycloneDX tem 828 componentes. Exportação
+  HTTP/Redis/Celery e cancelamento em execução passaram na imagem
+  `sha256:f3f4a27e6b8cc233540278f079cd54a38fbf1699b2d3a71637a8e5dd69561ef8`.
+- O provedor Pillow antigo, sem consumidores, foi removido da árvore executável
+  e preservado em `archive/pillow_image_edit.py.source`.
+
+O cadastro de IA oferece sete protocolos HTTP, treze presets de provedores e
+25 sugestões de modelos. A edição usa o catálogo nativo validado e o mesmo
+histórico da edição manual. Credenciais cifradas por workspace não são
+retornadas à interface nem persistidas no navegador. Pedidos interrompidos
+conservam a chave de idempotência; resultados desconhecidos continuam pendentes
+até reconciliação. Não há reenvio automático com uma nova chave.
+Veja [configuração e fontes dos provedores](LLM_PROVIDERS.md).
+
+O teste HTTP real usou um endpoint local determinístico e PhotoCraft real:
+uma submissão, pixel azul conferido, recibo reconciliado e undo com pixels
+originais. O cadastro real na interface passou pela criação, leitura sem chave,
+reabertura do formulário sem segredo e remoção da credencial. A produção
+TypeScript/React compila. Essa evidência não é um teste de inferência de LLM.
+
+As evidências privadas ficam em `.codex-runtime/craft`: `dense-motion-results.json`,
+`wasm-dense-results.json`, `upgrade-build-results.json`,
+`existing-bulk-motion-summary.json`, `migration-qa-0de1a60264f3/results.json`,
+`llm-http-native-results.json`, `llm-connections-ui-results.json`,
+`craft-llm-final-contracts-diagnostic.log`, `media-worker-attestation.json`,
+`media-worker-sbom.cdx.json` e `queue-acceptance-results.json`.
 
 ## Retomada reproduzível
 

@@ -2,6 +2,25 @@ import { apiFetch, authToken, APIError } from "../../api";
 import type { AssetRecord, StudioDocumentRecord, StudioGenerationJobRecord } from "../../api/productApi";
 
 export type CraftEngine = "photocraft" | "filmcraft" | "effectcraft";
+export type LLMProtocol = "openai_chat" | "openai_responses" | "anthropic_messages" | "gemini_generate" | "cohere_chat" | "ollama_chat" | "custom_json";
+export interface LLMConnectionInput {
+  label: string; provider: string; protocol: LLMProtocol; baseUrl: string; models: string[];
+  apiKey?: string; authHeader: string; authPrefix: string; extraHeaders?: Record<string, string>;
+  requestPath?: string | null; requestTemplate?: Record<string, unknown> | null; responseTextPath?: string | null;
+  enabled: boolean; billingMode: "metered" | "local_free"; budgetUsd: number;
+  inputUsdPerMillion: number; outputUsdPerMillion: number; maxOutputTokens: number; expectedRevision?: number;
+}
+export interface LLMConnection {
+  id: string; workspaceId: string; label: string; provider: string; revision: number; hasCredential: boolean;
+  config: Omit<LLMConnectionInput, "label" | "provider" | "apiKey" | "expectedRevision">;
+  qualification: string;
+}
+export interface LLMCatalog {
+  credentialStorageReady: boolean; legacyPlanningAvailable?: boolean;
+  providers: { id: string; label: string; protocol: LLMProtocol; baseUrl: string;
+    models: { id: string; label: string }[]; documentationUrl: string; verifiedAt: string;
+    authHeader?: string; authPrefix?: string; billingMode?: "metered" | "local_free" }[];
+}
 export interface CraftInputSchema {
   type?: string | string[];
   title?: string;
@@ -86,6 +105,12 @@ export interface CraftReceipt {
   receiptId: string;
   aiTrace?: Record<string, unknown>;
 }
+export interface CraftAIRecovery {
+  schemaVersion: "clicko.craft-ai-recovery.v1";
+  userId: string; workspaceId: string; documentId: string; engine: CraftEngine;
+  expectedRevision: number; instruction: string; idempotencyKey: string;
+  pageId?: string; connectionId?: string; model?: string;
+}
 
 const base = "/api/v1/studios/v1";
 const path = (id: string) => `${base}/documents/${encodeURIComponent(id)}`;
@@ -113,12 +138,18 @@ async function binary(url: string, init: RequestInit = {}): Promise<Response> {
 }
 
 export const craftApi = {
+  llmCatalog: (signal?: AbortSignal) => apiFetch<LLMCatalog>(`${base}/craft/llm-catalog`, { signal }),
+  llmConnections: (workspaceId: string, signal?: AbortSignal) => apiFetch<{ connections: LLMConnection[]; canManage: boolean }>(`${base}/craft/llm-connections?workspace_id=${encodeURIComponent(workspaceId)}`, { signal }),
+  saveLLMConnection: (workspaceId: string, body: LLMConnectionInput, id?: string) => apiFetch<LLMConnection>(`${base}/craft/llm-connections${id ? `/${encodeURIComponent(id)}` : ""}?workspace_id=${encodeURIComponent(workspaceId)}`, { method: id ? "PUT" : "POST", body: JSON.stringify(body) }),
+  removeLLMConnection: (workspaceId: string, connection: LLMConnection) => apiFetch<LLMConnection>(`${base}/craft/llm-connections/${encodeURIComponent(connection.id)}?workspace_id=${encodeURIComponent(workspaceId)}&expected_revision=${connection.revision}`, { method: "DELETE" }),
   assetDetails: (id: string, signal?: AbortSignal) => apiFetch<AssetRecord>(`/api/v1/assets/${encodeURIComponent(id)}`, { signal }),
   engines: (signal?: AbortSignal) => apiFetch<{ schemaVersion: "studio.craft-engines.v1"; engines: CraftEngineDescriptor[] }>(`${base}/craft/engines`, { signal }),
   inspection: (id: string, signal?: AbortSignal, pageId?: string) => apiFetch<CraftInspection>(`${path(id)}/craft/inspection${pageId ? `?pageId=${encodeURIComponent(pageId)}` : ""}`, { signal }),
   migrate: (id: string, engine: CraftEngine, revision: number, key: string) => apiFetch<CraftInspection>(`${path(id)}/craft/migrate`, json({ engine, expectedRevision: revision }, key)),
+  upgradeBuild: (id: string, revision: number, targetBuildId: string, key: string) => apiFetch<CraftReceipt>(`${path(id)}/craft/upgrade-build`, json({ expectedRevision: revision, targetBuildId }, key)),
   commands: (id: string, revision: number, commands: CraftCommand[], key: string, label?: string, pageId?: string) => apiFetch<CraftReceipt>(`${path(id)}/craft/commands`, json({ expectedRevision: revision, commands, label, pageId }, key)),
-  ai: (id: string, revision: number, instruction: string, key: string, pageId?: string) => apiFetch<CraftReceipt>(`${path(id)}/craft/ai-commands`, json({ expectedRevision: revision, instruction, pageId }, key)),
+  ai: (id: string, revision: number, instruction: string, key: string, pageId?: string, connectionId?: string, model?: string) => apiFetch<CraftReceipt>(`${path(id)}/craft/ai-commands`, json({ expectedRevision: revision, instruction, pageId, connectionId, model }, key)),
+  aiRequest: (id: string, key: string) => apiFetch<{ status: string; receipt?: CraftReceipt; responseReady?: boolean; errorCode?: string }>(`${path(id)}/craft/ai-requests/${encodeURIComponent(key)}`),
   render: (id: string, revision: number, format: string, key: string, frame = 0, pageId?: string) => apiFetch<StudioGenerationJobRecord>(`${path(id)}/craft/render-jobs`, json({ expectedRevision: revision, format, frame, pageId }, key)),
   linkComposition: (id: string, revision: number, compositionDocumentId: string, key: string) => apiFetch<CraftReceipt>(`${path(id)}/craft/link-composition`, json({ expectedRevision: revision, compositionDocumentId }, key)),
   recoverEffects: (id: string, revision: number, key: string) => apiFetch<CraftReceipt & { compositionDocumentId: string }>(`${path(id)}/craft/recover-effects`, json({ expectedRevision: revision }, key)),

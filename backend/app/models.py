@@ -73,6 +73,18 @@ class Membership(Base, TimestampMixin):
     workspace: Mapped[Workspace] = relationship(back_populates="memberships")
 
 
+class StudioLLMConnection(Base, TimestampMixin):
+    __tablename__ = "studio_llm_connections"
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=new_id)
+    workspace_id: Mapped[str] = mapped_column(ForeignKey("workspaces.id", ondelete="CASCADE"), index=True)
+    label: Mapped[str] = mapped_column(String(120), nullable=False)
+    provider: Mapped[str] = mapped_column(String(80), nullable=False)
+    config: Mapped[dict[str, Any]] = mapped_column(JSON, nullable=False)
+    credential_ciphertext: Mapped[str | None] = mapped_column(Text, nullable=True)
+    revision: Mapped[int] = mapped_column(Integer, default=1, nullable=False)
+    created_by: Mapped[str] = mapped_column(ForeignKey("users.id", ondelete="RESTRICT"), nullable=False)
+
+
 class BrandProfile(Base, TimestampMixin):
     __tablename__ = "brand_profiles"
     id: Mapped[str] = mapped_column(String(36), primary_key=True, default=new_id)

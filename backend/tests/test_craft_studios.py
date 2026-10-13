@@ -51,13 +51,26 @@ def test_invalid_carousel_returns_validation_error_without_creating_document(cli
     token, workspace = register(client, "invalid-craft-carousel@example.com")
     base = "/api/v1/studios/v1/documents"
     before = client.get(base, headers=headers(token), params={"workspace_id": workspace}).json()
-    response = client.post(base, headers=headers(token), json={
-        "workspaceId": workspace, "title": "Incomplete carousel", "contentType": "carousel",
-        "brief": {"objective": "Validate page cardinality", "audience": "QA"},
-        "composition": {"pages": [{
-            "id": "only-page", "width": 320, "height": 320, "layers": [],
-        }]},
-    })
+    response = client.post(
+        base,
+        headers=headers(token),
+        json={
+            "workspaceId": workspace,
+            "title": "Incomplete carousel",
+            "contentType": "carousel",
+            "brief": {"objective": "Validate page cardinality", "audience": "QA"},
+            "composition": {
+                "pages": [
+                    {
+                        "id": "only-page",
+                        "width": 320,
+                        "height": 320,
+                        "layers": [],
+                    }
+                ]
+            },
+        },
+    )
     assert response.status_code == 422, response.text
     assert "at least two pages" in response.text
     after = client.get(base, headers=headers(token), params={"workspace_id": workspace}).json()
@@ -68,14 +81,27 @@ def test_group_composition_is_preserved_without_projecting_into_legacy_canvas(cl
     token, workspace = register(client, "craft-group-navigation@example.com")
     layers = [
         {"id": "parent", "kind": "group", "x": 20, "y": 20, "width": 100, "height": 100},
-        {"id": "child", "kind": "shape", "x": 10, "y": 10, "width": 20, "height": 20,
-         "properties": {"fill": "#ff0000", "parentId": "parent"}},
+        {
+            "id": "child",
+            "kind": "shape",
+            "x": 10,
+            "y": 10,
+            "width": 20,
+            "height": 20,
+            "properties": {"fill": "#ff0000", "parentId": "parent"},
+        },
     ]
-    response = client.post("/api/v1/studios/v1/documents", headers=headers(token), json={
-        "workspaceId": workspace, "title": "Grouped composition", "contentType": "visual",
-        "brief": {"objective": "Keep editable hierarchy", "audience": "QA"},
-        "composition": {"pages": [{"id": "page", "width": 320, "height": 320, "layers": layers}]},
-    })
+    response = client.post(
+        "/api/v1/studios/v1/documents",
+        headers=headers(token),
+        json={
+            "workspaceId": workspace,
+            "title": "Grouped composition",
+            "contentType": "visual",
+            "brief": {"objective": "Keep editable hierarchy", "audience": "QA"},
+            "composition": {"pages": [{"id": "page", "width": 320, "height": 320, "layers": layers}]},
+        },
+    )
     assert response.status_code == 201, response.text
     created = response.json()
     assert created["composition"]["pages"][0]["layers"][0]["kind"] == "group"
@@ -136,6 +162,8 @@ def native_boundary(monkeypatch, tmp_path):
             Path(params["outputPath"]).write_text(json.dumps(data), encoding="utf-8")
             return {"inspection": data, "warnings": []}
         data = json.loads(Path(params["nativePath"]).read_text(encoding="utf-8"))
+        if method == "project.save":
+            Path(params["outputPath"]).write_text(json.dumps(data), encoding="utf-8")
         if method in {"render.frame", "render.export"}:
             # A known decodable fixture exercises byte/storage contracts, not engine fidelity.
             from PIL import Image
@@ -214,18 +242,51 @@ def test_migration_all_pages_archive_and_project_access(client, native_boundary)
 @pytest.mark.parametrize("shape", ["ellipse", {"kind": "ellipse"}])
 def test_migration_records_unmapped_shape_typography_and_parenting(client, native_boundary, engine, shape):
     token, workspace = register(client, f"craft-treatments-{engine}@example.com")
-    response = client.post("/api/v1/studios/v1/documents", headers=headers(token), json={
-        "workspaceId": workspace, "title": "Authored treatments", "contentType": "visual",
-        "brief": {"objective": "Preserve unsupported treatments", "audience": "QA"},
-        "composition": {"pages": [{"id": "page", "width": 320, "height": 320, "layers": [
-            {"id": "group", "kind": "group", "width": 100, "height": 100, "zIndex": 10},
-            {"id": "circle", "kind": "shape", "width": 40, "height": 40,
-             "properties": {"shape": shape, "radius": 10, "borderRadius": 20, "parentId": "group"}},
-            {"id": "caption", "kind": "text", "width": 100, "height": 40, "zIndex": 0,
-             "properties": {"text": "Preserved", "font_size": 22, "italic": True, "line_height": 1.4,
-                            "fontStyle": "normal", "decoration": "none", "autoFit": False}},
-        ]}]},
-    })
+    response = client.post(
+        "/api/v1/studios/v1/documents",
+        headers=headers(token),
+        json={
+            "workspaceId": workspace,
+            "title": "Authored treatments",
+            "contentType": "visual",
+            "brief": {"objective": "Preserve unsupported treatments", "audience": "QA"},
+            "composition": {
+                "pages": [
+                    {
+                        "id": "page",
+                        "width": 320,
+                        "height": 320,
+                        "layers": [
+                            {"id": "group", "kind": "group", "width": 100, "height": 100, "zIndex": 10},
+                            {
+                                "id": "circle",
+                                "kind": "shape",
+                                "width": 40,
+                                "height": 40,
+                                "properties": {"shape": shape, "radius": 10, "borderRadius": 20, "parentId": "group"},
+                            },
+                            {
+                                "id": "caption",
+                                "kind": "text",
+                                "width": 100,
+                                "height": 40,
+                                "zIndex": 0,
+                                "properties": {
+                                    "text": "Preserved",
+                                    "font_size": 22,
+                                    "italic": True,
+                                    "line_height": 1.4,
+                                    "fontStyle": "normal",
+                                    "decoration": "none",
+                                    "autoFit": False,
+                                },
+                            },
+                        ],
+                    }
+                ]
+            },
+        },
+    )
     assert response.status_code == 201, response.text
     document = response.json()
     result = client.post(
@@ -252,7 +313,8 @@ def test_migration_records_unmapped_shape_typography_and_parenting(client, nativ
         assert not any(": radius needs" in warning for warning in warnings)
         assert not any("typography font_size" in warning for warning in warnings)
     archived = client.get(
-        f"/api/v1/assets/{state['legacyArchiveAssetId']}/content", headers=headers(token),
+        f"/api/v1/assets/{state['legacyArchiveAssetId']}/content",
+        headers=headers(token),
     )
     assert archived.status_code == 200
     assert archived.json()["canonicalDocument"]["composition"] == document["composition"]
@@ -407,3 +469,60 @@ def test_compare_and_swap_preserves_concurrent_native_document(client, native_bo
             record.canonical_document["nativeEditorState"]["projectAssetId"]
             == state["nativeEditorState"]["projectAssetId"]
         )
+
+
+def test_effect_build_upgrade_is_explicit_preserves_original_and_supports_undo(client, native_boundary, monkeypatch):
+    from app.routers import studio_craft
+
+    monkeypatch.setattr(studio_craft, "schedule_composition_refresh", lambda *_args: {"queued": True})
+    token, workspace = register(client, "craft-build-upgrade@example.com")
+    document = create(client, token, workspace)
+    base = "/api/v1/studios/v1/documents/" + document["documentId"]
+    original_capability = craft.require_capability
+    old_build = "clicko-effectcraft-1.0.1+67434e90"
+    new_build = "clicko-effectcraft-1.0.2+67434e90"
+    monkeypatch.setattr(
+        craft, "require_capability", lambda engine: {**original_capability(engine), "buildId": old_build}
+    )
+    migrated = client.post(
+        base + "/craft/migrate",
+        headers=headers(token, "effect-upgrade-migration-001"),
+        json={"engine": "effectcraft", "expectedRevision": document["revision"]},
+    )
+    assert migrated.status_code == 200, migrated.text
+    old_state = migrated.json()["nativeEditorState"]
+    monkeypatch.setattr(
+        craft, "require_capability", lambda engine: {**original_capability(engine), "buildId": new_build}
+    )
+    assert client.get(base + "/craft/inspection", headers=headers(token)).status_code == 422
+    request = {"expectedRevision": migrated.json()["revision"], "targetBuildId": new_build}
+    upgraded = client.post(
+        base + "/craft/upgrade-build", headers=headers(token, "effect-upgrade-request-001"), json=request
+    )
+    assert upgraded.status_code == 200, upgraded.text
+    replay = client.post(
+        base + "/craft/upgrade-build", headers=headers(token, "effect-upgrade-request-001"), json=request
+    )
+    assert replay.json()["receiptId"] == upgraded.json()["receiptId"]
+    state = upgraded.json()["document"]["nativeEditorState"]
+    assert state["buildId"] == new_build and state["projectAssetId"] != old_state["projectAssetId"]
+    assert state["legacyArchiveAssetId"] == old_state["legacyArchiveAssetId"]
+    with SessionLocal() as db:
+        record = db.get(CreativeDocument, document["documentId"])
+        snapshots = [
+            v["canonicalDocument"]["nativeEditorState"]
+            for v in record.versions
+            if v.get("canonicalDocument", {}).get("nativeEditorState")
+        ]
+        assert any(s["projectAssetId"] == old_state["projectAssetId"] and s["buildId"] == old_build for s in snapshots)
+        assert db.get(LibraryAsset, old_state["projectAssetId"]).lifecycle_status == "active"
+    undo = client.post(
+        base + "/craft/commands",
+        headers=headers(token, "effect-upgrade-undo-001"),
+        json={
+            "expectedRevision": upgraded.json()["document"]["revision"],
+            "commands": [{"id": "host.history.undo", "params": {}}],
+        },
+    )
+    assert undo.status_code == 200, undo.text
+    assert undo.json()["document"]["nativeEditorState"]["buildId"] == new_build

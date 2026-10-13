@@ -277,7 +277,7 @@ dependencies = [
 
 [[package]]
 name = "clicko-effectcraft-adapter"
-version = "1.0.1"
+version = "1.0.2"
 dependencies = [
  "clicko-craft-protocol",
  "effectcraft-engine",
@@ -285,6 +285,7 @@ dependencies = [
  "effectcraft-host",
  "effectcraft-media",
  "effectcraft-model",
+ "effectcraft-time",
  "image",
  "serde_json",
  "wasm-bindgen",

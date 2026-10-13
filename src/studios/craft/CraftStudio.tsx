@@ -7,6 +7,7 @@ import { craftApi, type CraftCapability, type CraftEngine, type CraftInputSchema
 import { commandValidation, craftCommands, frameCount, initialCommandParams, safeCraftMode } from "./craftState";
 import { craftError, useCraftStudio } from "./useCraftStudio";
 import { useCraftBrowser } from "./useCraftBrowser";
+import { CraftModelPicker, type ModelSelection } from "./CraftModelPicker";
 import "./craft-studio.css";
 
 interface Props {
@@ -118,6 +119,7 @@ export function CraftStudio({ mode, pathname = window.location.pathname, search 
   const [commandId, setCommandId] = React.useState("");
   const [commandParams, setCommandParams] = React.useState<Record<string, unknown>>({});
   const [instruction, setInstruction] = React.useState("");
+  const [modelSelection, setModelSelection] = React.useState<ModelSelection>({ available: true });
   const [localError, setLocalError] = React.useState<string>();
   const [frame, setFrame] = React.useState(0);
   const [zoom, setZoom] = React.useState(85);
@@ -149,7 +151,7 @@ export function CraftStudio({ mode, pathname = window.location.pathname, search 
   const layer = layers.find((item) => item.id === selectedLayer);
   const assets = [...uploadedAssets, ...(data.snapshot?.assets ?? [])].filter((asset, index, all) => all.findIndex((item) => item.id === asset.id) === index);
   const ready = Boolean(studio.engineInfo?.available && native?.engine === engine && studio.inspection);
-  const locked = !ready || studio.busy || browser.applying || browser.state === "loading" || Boolean(studio.recovery) || studio.status === "conflict" || Boolean(studio.pending?.attempted);
+  const locked = !ready || studio.busy || browser.applying || browser.state === "loading" || Boolean(studio.recovery) || Boolean(studio.aiRecovery) || studio.status === "conflict" || Boolean(studio.pending?.attempted);
   const supportedFormats = studio.engineInfo?.formats ?? [];
   const formats = supportedFormats.filter((item) => !["pcraft", "fcproj", "ecproj"].includes(item));
   const warnings = [...new Set([...(native?.migrationWarnings ?? []), ...(studio.inspection?.migrationWarnings ?? []), ...(studio.inspection?.project.warnings ?? [])])];
@@ -262,6 +264,8 @@ export function CraftStudio({ mode, pathname = window.location.pathname, search 
     {(studio.error || localError) && <div className="craft-message craft-message--error" role="alert"><X size={16} /><span>{localError || studio.error}</span><button disabled={studio.busy || browser.applying || Boolean(studio.pending)} onClick={studio.refresh}><RefreshCw size={14} /> Recarregar</button></div>}
     {studio.notice && <div className="craft-message" role="status"><Check size={16} /> {studio.notice}</div>}
     {studio.recovery && <div className="craft-message craft-message--recovery"><History size={17} /><span>Há {studio.recovery.commands.length} alterações recuperáveis desta sessão. Revisão {studio.recovery.expectedRevision}.</span><button disabled={studio.busy} onClick={studio.recover}>Recuperar</button><button onClick={() => download(new Blob([JSON.stringify(studio.recovery, null, 2)], { type: "application/json" }), "clicko-recuperacao.json")}>Guardar cópia</button><button disabled={studio.busy} onClick={studio.discardRecovery}>Descartar</button></div>}
+    {studio.aiRecovery && <div className="craft-message craft-message--recovery"><Sparkles size={17} /><span>Há um pedido de IA com resultado pendente. Verifique antes de continuar a edição.</span><button disabled={studio.busy} onClick={() => void run(studio.reconcileAI)}>Verificar pedido de IA</button></div>}
+    {native?.engine === "effectcraft" && studio.engineInfo?.available && native.buildId !== studio.engineInfo.buildId && <div className="craft-message craft-message--recovery"><History size={17} /><span>Este projeto usa uma versão anterior do motor. A atualização preserva o arquivo e a revisão anteriores no histórico.</span><button disabled={studio.busy || Boolean(studio.aiRecovery)} onClick={() => void run(studio.upgradeBuild)}>Atualizar motor do projeto</button></div>}
     {warnings.length > 0 && <details className="craft-warnings"><summary>{warnings.length} observações sobre a conversão deste projeto</summary><ul>{warnings.map((warning) => <li key={warning}>{warning}</li>)}</ul></details>}
 
     {!data.activeWorkspace || !userId ? <div className="craft-empty"><Layers3 size={34} /><h2>Abra seu workspace para editar</h2><p>Os projetos e materiais são privados e vinculados à sua conta.</p><button onClick={() => navigate("/login")}>Entrar</button></div>
@@ -316,7 +320,7 @@ export function CraftStudio({ mode, pathname = window.location.pathname, search 
           navigate(`${pathname}?${next}`);
         })}><WandSparkles size={15} /> Converter camadas e efeitos</button>}
         {layer?.properties && <details className="craft-properties"><summary>Propriedades atuais</summary><dl>{Object.entries(layer.properties).filter(([, value]) => typeof value === "string" || typeof value === "number" || typeof value === "boolean").map(([key, value]) => <React.Fragment key={key}><dt>{friendlyFields[key] || key}</dt><dd>{String(value)}</dd></React.Fragment>)}</dl></details>}
-        <div className="craft-ai"><div><Sparkles size={17} /><h2>Direção com IA</h2></div><p>Descreva a mudança. A IA usa as mesmas ferramentas e registra suas alterações no histórico.</p><label htmlFor="craft-instruction" className="craft-sr-only">Pedido de edição com IA</label><textarea id="craft-instruction" value={instruction} onChange={(event) => setInstruction(event.target.value)} placeholder={engine === "photocraft" ? "Ajuste o título e deixe a composição mais leve…" : "Ajuste os cortes e crie uma abertura mais direta…"} disabled={locked} /><button disabled={locked || !instruction.trim()} onClick={() => void run(async () => { await studio.applyAI(instruction.trim()); setInstruction(""); })}><Sparkles size={15} /> Aplicar direção</button></div>
+        <div className="craft-ai"><div><Sparkles size={17} /><h2>Direção com IA</h2></div><p>Descreva a mudança. A IA usa as mesmas ferramentas e registra suas alterações no histórico.</p><CraftModelPicker workspaceId={data.activeWorkspace.id} userId={userId} disabled={locked} onChange={setModelSelection} /><label htmlFor="craft-instruction" className="craft-sr-only">Pedido de edição com IA</label><textarea id="craft-instruction" value={instruction} onChange={(event) => setInstruction(event.target.value)} placeholder={engine === "photocraft" ? "Ajuste o título e deixe a composição mais leve…" : "Ajuste os cortes e crie uma abertura mais direta…"} disabled={locked} /><button disabled={locked || !instruction.trim() || !modelSelection.available} onClick={() => void run(async () => { await studio.applyAI(instruction.trim(), modelSelection.connectionId, modelSelection.model); setInstruction(""); })}><Sparkles size={15} /> Aplicar direção</button></div>
         <div className="craft-export-options"><h2>Saída</h2><label>Formato<select value={exportFormat} onChange={(event) => setExportFormat(event.target.value)} disabled={locked || !formats.length}>{formats.map((item) => <option key={item} value={item}>{item === "png_set" ? "Todas as páginas · PNG em ZIP" : item.toUpperCase()}</option>)}</select></label><small>Exportações são processadas no servidor a partir da revisão salva.</small></div>
         {engine === "effectcraft" && sourceDocumentId && <button disabled={locked} onClick={() => void run(async () => { await studio.save(); const montage = await productApi.studioDocument(sourceDocumentId); await craftApi.linkComposition(montage.documentId, montage.revision, doc.documentId, crypto.randomUUID()); const next = new URLSearchParams(search); next.set("mode", "video"); next.set("document", montage.documentId); next.delete("sourceDocument"); navigate(`${pathname}?${next}`); })}><Film size={15} /> Usar na montagem</button>}
       </aside>

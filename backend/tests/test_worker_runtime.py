@@ -49,7 +49,7 @@ def test_manifest_validation_proves_tools_and_rejects_version_drift() -> None:
         "ffprobe": "ffprobe version 5.1.9-0+deb12u1",
         "/opt/clicko/bin/clicko-photocraft-adapter": "clicko-photocraft-1.0.0+a7f26522",
         "/opt/clicko/bin/clicko-filmcraft-adapter": "clicko-filmcraft-1.0.0+0800a8b0",
-        "/opt/clicko/bin/clicko-effectcraft-adapter": "clicko-effectcraft-1.0.1+67434e90",
+        "/opt/clicko/bin/clicko-effectcraft-adapter": "clicko-effectcraft-1.0.2+67434e90",
     }
 
     def runner(command: list[str]) -> str:
@@ -63,7 +63,7 @@ def test_manifest_validation_proves_tools_and_rejects_version_drift() -> None:
     )
     versions = worker_runtime.validate_worker_manifest(manifest, settings, tool_runner=runner)
     assert versions["ffmpeg"].startswith("ffmpeg version 5.1.9")
-    assert versions["effectcraft"] == "clicko-effectcraft-1.0.1+67434e90"
+    assert versions["effectcraft"] == "clicko-effectcraft-1.0.2+67434e90"
     assert not {"hyperframes", "chromium", "node"} & versions.keys()
 
     outputs["ffmpeg"] = "ffmpeg version 7.0-unapproved"

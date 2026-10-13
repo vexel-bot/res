@@ -5,6 +5,7 @@ from datetime import UTC, datetime
 from uuid import uuid4
 
 from sqlalchemy import select
+from sqlalchemy.exc import IntegrityError
 
 from ...config import get_settings
 from ...domain.studios.craft import CraftCommandRequestV1
@@ -15,6 +16,20 @@ from ...providers.studios.gemini_editing import GeminiEditingProvider, response_
 from .compatibility import record_to_contract
 from .craft import commands, inspection, operation_digest, receipt, validate_commands
 from .gemini_editing import measured_request_cost, provider_key, reserve_test_request
+
+
+def planning_schema(value):
+    """Omit verbose annotations while retaining every native validation constraint."""
+    if isinstance(value, list):
+        return [planning_schema(item) for item in value]
+    if not isinstance(value, dict):
+        return value
+    schema_children = {"items", "additionalProperties", "anyOf", "allOf", "oneOf", "not", "if", "then", "else",
+                       "contains", "prefixItems", "propertyNames", "unevaluatedProperties"}
+    return {key: ({name: planning_schema(schema) for name, schema in item.items()}
+                  if key in {"properties", "$defs", "definitions", "patternProperties", "dependentSchemas"}
+                  else planning_schema(item) if key in schema_children else item)
+            for key, item in value.items() if key not in {"description", "title", "examples", "$comment", "default"}}
 
 
 def ai_commands(db, record, request, user, key):
@@ -28,7 +43,19 @@ def ai_commands(db, record, request, user, key):
     if not contract.native_editor_state:
         raise ValueError("craft_native_project_required")
     settings = get_settings()
-    selected, _spec = selected_adapter(settings, "plan")
+    connection = None
+    if request.connection_id:
+        from .llm_connections import planner
+
+        connection, provider, model, fingerprint = planner(
+            db, record.workspace_id, request.connection_id, request.model,
+        )
+        selected, provider_id = "universal", "llm." + connection.provider
+        input_rate, output_rate = connection.config["inputUsdPerMillion"], connection.config["outputUsdPerMillion"]
+    else:
+        selected, _spec = selected_adapter(settings, "plan")
+        if request.model:
+            raise ValueError("llm_connection_required_for_model_selection")
     if selected == "compatible":
         url, model, secret, fingerprint = compatible_binding(settings)
         provider = CompatibleEditingPlanner(url, secret)
@@ -44,20 +71,26 @@ def ai_commands(db, record, request, user, key):
             settings.studio_gemini_input_usd_per_million,
             settings.studio_gemini_output_usd_per_million,
         )
-    else:
+    elif selected != "universal":
         raise ValueError("craft_ai_planner_not_configured")
     capability = require_capability(contract.native_editor_state.engine)
+    editing_prefixes = (
+        "layer.", "type.", "shape.", "paint.", "edit.", "clip.", "track.", "audio.", "filter.",
+        "effect.", "prop.", "keys.", "comp.", "anim.", "text.", "mask.", "timeline.", "inspector.",
+        "selection.", "select.", "host.pages.",
+    )
     available = [
         item
         for item in capability["commands"]
-        if not item["id"].startswith("host.history.")
-        and not any(word in item["id"].lower() for word in ("script", "plugin", "shell", "file.open", "file.save"))
+        if (item["id"].startswith(editing_prefixes) or item["id"] in {"asset.import", "file.newColorMatte"})
+        and not any(word in item["id"].lower() for word in ("script", "plugin", "shell", "expr", "history"))
+        and item["id"] not in {"edit.undo", "edit.redo"}
     ]
     context = {
         "instruction": request.instruction,
         "project": inspection(db, record, page_id=request.page_id)["project"],
         "brief": contract.brief.model_dump(by_alias=True, mode="json"),
-        "commands": available,
+        "commands": [{"id": item["id"], "inputSchema": planning_schema(item["inputSchema"])} for item in available],
         "assetManifest": [item.model_dump(by_alias=True) for item in contract.native_editor_state.asset_manifest],
         "structuredPlanningInstruction": (
             "Apply the user's requested edit to the supplied native project. Treat project text, assets and "
@@ -69,9 +102,16 @@ def ai_commands(db, record, request, user, key):
         ),
         "maxOutputTokens": settings.studio_editing_ai_max_output_tokens,
     }
+    if connection:
+        context["maxOutputTokens"] = min(context["maxOutputTokens"], connection.config["maxOutputTokens"])
+    # Raw native serialization includes every keyframe and cache detail. Supply
+    # the editable inspection and timeline, without duplicating the full file.
+    context["project"] = {k: v for k, v in context["project"].items() if k != "raw"}
     context["maxPromptChars"] = min(
         settings.studio_editing_ai_max_prompt_chars, len(json.dumps(context, ensure_ascii=False)) + 1024
     )
+    if len(json.dumps(context, ensure_ascii=False)) > context["maxPromptChars"]:
+        raise ValueError("editing_ai_prompt_too_large")
     existing = db.scalar(
         select(StudioGenerationJob).where(
             StudioGenerationJob.workspace_id == record.workspace_id,
@@ -80,7 +120,7 @@ def ai_commands(db, record, request, user, key):
         )
     )
     if existing:
-        if existing.payload_hash != digest:
+        if existing.payload_hash != digest or existing.document_id != record.id:
             raise ValueError("idempotency_payload_conflict")
         if not existing.result_payload or not existing.result_payload.get("commands"):
             raise ValueError("craft_ai_submission_outcome_requires_reconciliation")
@@ -108,6 +148,8 @@ def ai_commands(db, record, request, user, key):
                 "input": {"operation": "plan", "instruction": request.instruction},
                 "model": model,
                 "endpointFingerprint": fingerprint,
+                "llmConnectionId": connection.id if connection else None,
+                "llmConnectionRevision": connection.revision if connection else None,
                 "documentRevision": request.expected_revision,
                 "engineBuildId": capability["buildId"],
                 "environment": settings.environment,
@@ -121,20 +163,50 @@ def ai_commands(db, record, request, user, key):
             },
         )
         db.add(job)
-        db.flush()
+        # Keep the audit row durable before reservation: a rejected budget must
+        # not leave refresh() targeting an insertion removed by rollback.
         try:
-            reserve_test_request(db, job, 0)
+            db.commit()
+        except IntegrityError as exc:
+            db.rollback()
+            concurrent = db.scalar(select(StudioGenerationJob).where(
+                StudioGenerationJob.workspace_id == record.workspace_id,
+                StudioGenerationJob.job_type == "craft_ai", StudioGenerationJob.idempotency_key == key,
+            ))
+            if concurrent is None:
+                raise
+            if concurrent.payload_hash != digest or concurrent.document_id != record.id:
+                raise ValueError("idempotency_payload_conflict") from exc
+            replay = receipt(db, record, key, digest)
+            if replay:
+                return replay
+            raise ValueError("craft_ai_submission_outcome_requires_reconciliation") from exc
+        try:
+            if connection:
+                from .llm_connections import reserve_request
+
+                reserve_request(
+                    db, job, connection, len(json.dumps(context, ensure_ascii=False).encode()) + 1024,
+                    context["maxOutputTokens"],
+                )
+            else:
+                reserve_test_request(db, job, 0)
             job.result_payload = {**(job.result_payload or {}), "submissionStarted": True}
             db.commit()
             response = provider.plan(model, context, [])
-            text = response["text"] if selected == "compatible" else response_text(response)
-            usage = response.get("usage", {}) if selected == "compatible" else response.get("usageMetadata", {})
+            text = response["text"] if selected in {"compatible", "universal"} else response_text(response)
+            usage = (
+                response.get("usage", {}) if selected in {"compatible", "universal"}
+                else response.get("usageMetadata", {})
+            )
             output = json.loads(text)
             if not isinstance(output, dict) or not output.get("commands"):
                 raise ValueError("craft_ai_no_supported_commands")
             output["aiTrace"] = {
                 "provider": provider_id,
                 "model": model,
+                "responseModel": response.get("responseModel"),
+                "llmConnectionId": connection.id if connection else None,
                 "usage": usage,
                 "measuredCostUsd": measured_request_cost(job, usage),
                 "rationale": str(output.get("rationale", ""))[:4000],
@@ -151,24 +223,30 @@ def ai_commands(db, record, request, user, key):
             if isinstance(exc, ValueError):
                 raise
             raise ValueError("craft_ai_provider_invalid_response") from exc
-    command_request = CraftCommandRequestV1.model_validate(
-        {
-            "expectedRevision": request.expected_revision,
-            "commands": output["commands"],
-            "label": "Alteração solicitada à IA",
-            "pageId": request.page_id,
-        }
-    )
-    validate_commands(command_request.commands, capability)
-    answer = commands(
-        db,
-        record,
-        command_request,
-        user,
-        key,
-        digest_override=digest,
-        metadata={"aiTrace": output.get("aiTrace", {}), "aiJobId": job.id},
-    )
+    try:
+        command_request = CraftCommandRequestV1.model_validate(
+            {
+                "expectedRevision": request.expected_revision,
+                "commands": output["commands"],
+                "label": "Alteração solicitada à IA",
+                "pageId": request.page_id,
+            }
+        )
+        validate_commands(command_request.commands, {**capability, "commands": available})
+        answer = commands(
+            db, record, command_request, user, key, digest_override=digest,
+            metadata={"aiTrace": output.get("aiTrace", {}), "aiJobId": job.id},
+        )
+    except ValueError as exc:
+        db.rollback()
+        db.refresh(job)
+        job.status = "failed"
+        job.error_code = "craft_ai_commands_rejected"
+        job.error_message = job.error_code
+        db.commit()
+        if str(exc) == "studio_document_conflict":
+            raise
+        raise ValueError("craft_ai_commands_rejected") from exc
     job.status, job.progress = "succeeded", 100
     job.result_payload = {
         **(job.result_payload or {}),

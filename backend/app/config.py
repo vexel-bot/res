@@ -26,6 +26,7 @@ class Settings(BaseSettings):
     studio_craft_photocraft_binary: str | None = None
     studio_craft_filmcraft_binary: str | None = None
     studio_craft_effectcraft_binary: str | None = None
+    studio_llm_credential_key: SecretStr | None = Field(default=None, min_length=32)
     studio_craft_timeout_seconds: int = Field(default=600, ge=5, le=3600)
     studio_craft_max_upload_bytes: int = Field(default=2 * 1024**3, ge=1024, le=20 * 1024**3)
     ai_embedding_model: str | None = None
@@ -77,7 +78,7 @@ class Settings(BaseSettings):
     # tokens. The per-request tariff and production envelope still reserve the
     # worst case before submission.
     studio_editing_ai_max_output_tokens: int = Field(default=4096, ge=256, le=16384)
-    studio_editing_ai_max_prompt_chars: int = Field(default=100_000, ge=1_000, le=500_000)
+    studio_editing_ai_max_prompt_chars: int = Field(default=200_000, ge=1_000, le=500_000)
     studio_gemini_production_key: SecretStr | None = None
     studio_gemini_test_key: SecretStr | None = None
     studio_gemini_planning_model: Literal[

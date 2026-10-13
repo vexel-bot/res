@@ -729,6 +729,43 @@ def validate_commands(commands, capability: dict) -> None:
         safe(command.params)
 
 
+def compatible_effect_upgrade(state, capability):
+    return (state.engine == "effectcraft"
+            and state.build_id in {"clicko-effectcraft-1.0.0+67434e90", "clicko-effectcraft-1.0.1+67434e90"}
+            and capability["buildId"] == "clicko-effectcraft-1.0.2+67434e90"
+            and state.upstream_revision == capability["upstreamRevision"]
+            and state.format_version == capability["formatVersion"])
+
+
+def upgrade_build(db, record, request, user, key):
+    """Explicitly reopen a compatible, immutable source; preserve the prior version."""
+    digest = operation_digest("upgrade-build", request.model_dump(mode="json"))
+    replay = receipt(db, record, key, digest)
+    if replay:
+        return replay
+    contract = record_to_contract(record)
+    state = contract.native_editor_state
+    if contract.revision != request.expected_revision:
+        raise ValueError("studio_document_conflict")
+    if state is None:
+        raise ValueError("craft_native_project_required")
+    capability = require_capability(state.engine)
+    if request.target_build_id != capability["buildId"] or not compatible_effect_upgrade(state, capability):
+        raise ValueError("craft_build_upgrade_not_qualified")
+    with workspace_files(db, record, state) as (directory, params, manifests):
+        output = directory / "upgraded.ecproj"
+        opened = call_engine(state.engine, "project.save", {**params, "outputPath": str(output)})
+        checked = call_engine(state.engine, "project.open", {**params, "nativePath": str(output)})
+        return _commit_project(
+            db, record, user, output, engine=state.engine, capability=capability,
+            expected_revision=request.expected_revision, key=key, digest=digest,
+            project=checked.get("inspection", checked), manifests=manifests,
+            warnings=[*state.migration_warnings, *opened.get("warnings", [])],
+            label="Atualização explícita do motor de efeitos",
+            operation_metadata={"previousBuildId": state.build_id, "previousNativeChecksum": state.checksum_sha256},
+        )
+
+
 def commands(db, record, request, user, key: str, *, metadata=None, digest_override=None, dependencies=None) -> dict:
     digest = digest_override or operation_digest("commands", request.model_dump(mode="json"))
     existing = receipt(db, record, key, digest)
@@ -819,7 +856,10 @@ def history_command(db, record, request, user, key, digest, capability):
         raise ValueError("craft_history_boundary")
     target_document = CreativeDocumentV1.model_validate(eligible[target_cursor]["canonicalDocument"])
     target = target_document.native_editor_state
-    assert_build(target, capability)
+    # An explicit compatible upgrade also qualifies reopening that project's
+    # previous snapshots. Persist the undo as a new revision of the current build.
+    if not compatible_effect_upgrade(target, capability):
+        assert_build(target, capability)
     with workspace_files(db, record, target) as (_directory, params, manifests):
         result = call_engine(target.engine, "project.inspect", params)
         return _commit_project(

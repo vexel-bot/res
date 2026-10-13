@@ -23,6 +23,8 @@ class CraftAICommandRequestV1(StudioContract):
     expected_revision: int = Field(ge=1)
     instruction: str = Field(min_length=1, max_length=10000)
     page_id: str | None = Field(default=None, max_length=160)
+    connection_id: str | None = Field(default=None, max_length=36)
+    model: str | None = Field(default=None, min_length=1, max_length=240)
 
 
 class CraftMigrationRequestV1(StudioContract):
@@ -32,6 +34,11 @@ class CraftMigrationRequestV1(StudioContract):
 
 class CraftRecoverEffectsRequestV1(StudioContract):
     expected_revision: int = Field(ge=1)
+
+
+class CraftUpgradeRequestV1(StudioContract):
+    expected_revision: int = Field(ge=1)
+    target_build_id: str = Field(min_length=1, max_length=160)
 
 
 class CraftRenderRequestV1(StudioContract):

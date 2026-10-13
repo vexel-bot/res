@@ -1,6 +1,6 @@
 [package]
 name = "clicko-effectcraft-adapter"
-version = "1.0.1"
+version = "1.0.2"
 edition = "2024"
 license = "MIT"
 
@@ -20,6 +20,7 @@ effectcraft-host = { path = "../../../../third_party/craft/effectcraft/crates/ho
 effectcraft-media = { path = "../../../../third_party/craft/effectcraft/crates/media" }
 effectcraft-export = { path = "../../../../third_party/craft/effectcraft/crates/export" }
 effectcraft-model = { path = "../../../../third_party/craft/effectcraft/crates/model" }
+effectcraft-time = { path = "../../../../third_party/craft/effectcraft/crates/time" }
 image = { version = "0.25", default-features = false, features = ["png"] }
 serde_json = "1"
 

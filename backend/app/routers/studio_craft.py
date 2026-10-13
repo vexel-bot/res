@@ -21,7 +21,9 @@ from ..domain.studios.craft import (
     CraftPreviewRequestV1,
     CraftRecoverEffectsRequestV1,
     CraftRenderRequestV1,
+    CraftUpgradeRequestV1,
 )
+from ..domain.studios.llm import LLMConnectionRequest
 from ..models import User
 from ..providers.studios.craft import ENGINES, EXTENSIONS, CraftRuntimeError, engine_capability
 from ..schemas import AssetOut
@@ -54,6 +56,80 @@ def invoke(function, *args, **kwargs):
 @router.get("/craft/engines")
 def engines(user: User = Depends(get_current_user)):
     return {"schemaVersion": "studio.craft-engines.v1", "engines": [engine_capability(engine) for engine in ENGINES]}
+
+
+@router.get("/craft/llm-catalog")
+def llm_catalog(user: User = Depends(get_current_user)):
+    from ..config import get_settings
+    from ..providers.studios.llm_catalog import PROVIDERS
+
+    settings = get_settings()
+    selected = settings.studio_editing_ai_planning_provider or settings.studio_editing_ai_provider
+    legacy_ready = (
+        selected == "compatible" and bool(settings.studio_editing_ai_base_url and settings.studio_editing_ai_model)
+    ) or (selected == "gemini" and settings.studio_gemini_enabled)
+    return {"providers": PROVIDERS, "credentialStorageReady": bool(settings.studio_llm_credential_key),
+            "legacyPlanningAvailable": legacy_ready}
+
+
+@router.get("/craft/llm-connections")
+def llm_connections(
+    workspace_id: str, db: Session = Depends(get_db), user: User = Depends(get_current_user),
+):
+    from sqlalchemy import select
+
+    from ..models import Membership, StudioLLMConnection
+    from ..services.studios import llm_connections as service
+
+    service.access(db, user.id, workspace_id)
+    role = db.scalar(select(Membership.role).where(
+        Membership.user_id == user.id, Membership.workspace_id == workspace_id,
+    ))
+    rows = db.scalars(select(StudioLLMConnection).where(StudioLLMConnection.workspace_id == workspace_id))
+    return {"connections": [service.public(row) for row in rows], "canManage": role.lower() in {"owner", "admin"}}
+
+
+@router.post("/craft/llm-connections", status_code=201)
+def create_llm_connection(
+    workspace_id: str, request: LLMConnectionRequest,
+    db: Session = Depends(get_db), user: User = Depends(get_current_user),
+):
+    from ..services.studios.llm_connections import save
+
+    return invoke(save, db, workspace_id, request, user)
+
+
+@router.put("/craft/llm-connections/{connection_id}")
+def update_llm_connection(
+    connection_id: str, workspace_id: str, request: LLMConnectionRequest,
+    db: Session = Depends(get_db), user: User = Depends(get_current_user),
+):
+    from ..services.studios.llm_connections import save
+
+    return invoke(save, db, workspace_id, request, user, connection_id)
+
+
+@router.delete("/craft/llm-connections/{connection_id}")
+def disable_llm_connection(
+    connection_id: str, workspace_id: str, expected_revision: int = Query(ge=1),
+    db: Session = Depends(get_db), user: User = Depends(get_current_user),
+):
+    from sqlalchemy import update
+
+    from ..models import StudioLLMConnection
+    from ..services.studios import llm_connections as service
+
+    service.access(db, user.id, workspace_id, owner=True)
+    row = invoke(service.scoped, db, workspace_id, connection_id)
+    changed = db.execute(update(StudioLLMConnection).where(
+        StudioLLMConnection.id == row.id, StudioLLMConnection.revision == expected_revision,
+    ).values(config={**row.config, "enabled": False}, credential_ciphertext=None, revision=expected_revision + 1))
+    if changed.rowcount != 1:
+        db.rollback()
+        raise error(ValueError("llm_connection_revision_conflict"))
+    db.commit()
+    db.refresh(row)
+    return service.public(row)
 
 
 @router.get("/documents/{document_id}/craft/inspection")
@@ -92,6 +168,18 @@ def execute_commands(
     return result
 
 
+@router.post("/documents/{document_id}/craft/upgrade-build")
+def upgrade_build(
+    document_id: str, request: CraftUpgradeRequestV1,
+    key: str = Header(alias="Idempotency-Key", min_length=8, max_length=160),
+    db: Session = Depends(get_db), user: User = Depends(get_current_user),
+):
+    record = owned_document(db, user.id, document_id)
+    result = invoke(craft.upgrade_build, db, record, request, user, key)
+    result["linkedCompositionRefresh"] = schedule_composition_refresh(db, record, user)
+    return result
+
+
 @router.post("/documents/{document_id}/craft/recover-effects")
 def recover_effects(
     document_id: str,
@@ -119,13 +207,34 @@ def execute_ai_commands(
     return result
 
 
+@router.get("/documents/{document_id}/craft/ai-requests/{key}")
+def reconcile_ai_request(
+    document_id: str, key: str, db: Session = Depends(get_db), user: User = Depends(get_current_user),
+):
+    from sqlalchemy import select
+
+    from ..models import StudioGenerationJob
+
+    record = owned_document(db, user.id, document_id)
+    job = db.scalar(select(StudioGenerationJob).where(
+        StudioGenerationJob.workspace_id == record.workspace_id,
+        StudioGenerationJob.document_id == record.id,
+        StudioGenerationJob.job_type == "craft_ai", StudioGenerationJob.idempotency_key == key,
+    ))
+    if job is None:
+        return {"status": "not_found"}
+    committed = invoke(craft.receipt, db, record, key, job.payload_hash)
+    return {"status": "committed" if committed else job.status, "receipt": committed,
+            "responseReady": bool((job.result_payload or {}).get("commands")), "errorCode": job.error_code}
+
+
 def schedule_composition_refresh(db, record, user):
     state = record_to_contract(record).native_editor_state
     if state and state.engine == "effectcraft":
         from ..tasks import refresh_craft_compositions
 
         try:
-            refresh_craft_compositions.apply_async(args=[record.id, user.id], queue="studio.media.cpu")
+            refresh_craft_compositions.apply_async(args=[record.id, user.id], queue="studio.media.cpu", retry=False)
             return {"queued": True}
         except Exception:
             craft.emit_event(
