@@ -338,6 +338,15 @@ no checkout principal. Os 35 testes selecionados de áudio, compilação de cena
 e revisão/publicação passaram após essa integração, além dos 46 contratos
 descritos acima.
 
+A conferência final no principal verificou 149 arquivos nativos/históricos por
+checksum, 60 de 60 documentos com estado nativo e os 262 arquivos de saída
+contra os blobs do stash anterior. A configuração privada permaneceu idêntica.
+Os três workers WASM da versão de produção passaram por abertura, salvar e
+reabrir com SHA-256 de pixels igual às referências da API nativa. Evidências:
+`.codex-runtime/craft/primary-final-integrity.json` e
+`.codex-runtime/craft/production-wasm-results.json`. A aplicação local respondeu
+com `200`, assim como `/health/ready`; o worker de segundo plano respondeu ao ping.
+
 Para retomar o ambiente local já compilado no checkout principal:
 
 ```powershell
