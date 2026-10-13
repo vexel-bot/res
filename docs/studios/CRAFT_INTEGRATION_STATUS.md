@@ -5,10 +5,15 @@ com fontes completos, builds reais dos três motores e exportação/cancelamento
 pela fila de servidor validados. O aceite final ainda depende da qualificação
 de projetos reais e dos fluxos descritos abaixo.
 
-Checkout: `C:/Users/edugu/Downloads/res-craft-integration`, branch
-`codex/craft-studios`. O projeto original em `C:/Users/edugu/Downloads/res`
-permanece preservado. O commit de base da integração registra as mudanças
-locais do projeto antes das importações.
+Checkout de integração: `C:/Users/edugu/Downloads/res-craft-integration`, branch
+`codex/craft-studios`. O checkout principal em `C:/Users/edugu/Downloads/res`
+foi ativado na branch `codex/craft-studios-active`. O estado anterior, incluindo
+mudanças locais e arquivos não rastreados, está preservado na branch
+`codex/pre-craft-activation-b30b5174a362` e no stash
+`3750573789e3144ac8ffb8fcefe3184f11494f30`. Os 262 arquivos de saída criados após
+a captura inicial foram restaurados. Configuração e bancos mantiveram seus
+checksums durante a troca do código; as migrações posteriores têm backups próprios.
+O commit de base registra as mudanças locais anteriores às importações.
 
 ## Fontes e procedência
 
@@ -287,6 +292,20 @@ uma submissão, pixel azul conferido, recibo reconciliado e undo com pixels
 originais. O cadastro real na interface passou pela criação, leitura sem chave,
 reabertura do formulário sem segredo e remoção da credencial. A produção
 TypeScript/React compila. Essa evidência não é um teste de inferência de LLM.
+
+O principal também passou pela conferência dos 4.838 arquivos upstream e pelo
+build de produção. O proxy passou a transmitir projetos/exports com backpressure,
+sem materializar toda a resposta na memória. Um teste com 16 MiB conferiu que
+os primeiros bytes chegaram antes do término do upstream e verificou a
+integridade de toda a transmissão. A nova migração de esquema `0027` foi aplicada
+depois de um backup do banco com os 31 documentos originais.
+
+`migrate_primary.py` exige `--apply`, banco e storage pertencentes ao checkout,
+cria um backup SQLite antes de qualquer edição e registra cada conversão.
+Verifica o checksum e a correspondência do arquivo histórico com o canvas e
+as versões anteriores. Sua execução foi qualificada em dois documentos nativos
+de uma cópia privada, incluindo composição dependente. A execução no principal
+permanece registrada separadamente da evidência de ensaio.
 
 As evidências privadas ficam em `.codex-runtime/craft`: `dense-motion-results.json`,
 `wasm-dense-results.json`, `upgrade-build-results.json`,
