@@ -25,6 +25,8 @@ jobs:
       - run: npx playwright install --with-deps chromium
       - run: npx playwright test --config playwright.craft.config.ts
       - run: pip install -r backend/requirements-dev.txt
+      - name: Install media probe utilities for the real audio ingest test
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg && ffprobe -version
       - run: >-
           python -m pytest backend/tests/test_craft*.py backend/tests/test_studio_department.py backend/tests/test_worker_runtime.py
           backend/tests/test_creatives.py backend/tests/test_studio_publication_preflight.py
@@ -93,6 +95,8 @@ jobs:
           merge-multiple: true
       - run: chmod +x .codex-runtime/craft/bin/* && python scripts/craft/build.py --package-only
       - run: pip install -r backend/requirements-dev.txt && npm ci && npx playwright install --with-deps chromium
+      - name: Install host media probe utilities
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg && ffprobe -version
       - name: Real API, native exports and browser pixels
         run: |
           python -m uvicorn app.main:app --app-dir backend --host 127.0.0.1 --port 8018 > .codex-runtime/craft/qa-api.log 2>&1 &
