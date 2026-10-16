@@ -1,0 +1,155 @@
+{
+  "schemaVersion": "clicko.creative-research-coverage.v1",
+  "documentIntegrity": "passed",
+  "selectedCases": 36,
+  "caseStatuses": {
+    "documentary-analysis": 12,
+    "textual-analysis-with-modality-gaps": 24
+  },
+  "fullyReviewedAudiovisualCases": 0,
+  "casesRequiringAudiovisualReview": 20,
+  "mediaCoverageGaps": [
+    {
+      "caseId": "AS-YT-01",
+      "modality": "audiovisual",
+      "reason": "Full audiovisual review is not attested; inspect declared coverage"
+    },
+    {
+      "caseId": "AS-YT-02",
+      "modality": "audiovisual",
+      "reason": "Full audiovisual review is not attested; inspect declared coverage"
+    },
+    {
+      "caseId": "AS-YT-03",
+      "modality": "audiovisual",
+      "reason": "Full audiovisual review is not attested; inspect declared coverage"
+    },
+    {
+      "caseId": "AS-YT-04",
+      "modality": "audiovisual",
+      "reason": "Full audiovisual review is not attested; inspect declared coverage"
+    },
+    {
+      "caseId": "AS-YT-05",
+      "modality": "audiovisual",
+      "reason": "Full audiovisual review is not attested; inspect declared coverage"
+    },
+    {
+      "caseId": "AS-YT-06",
+      "modality": "audiovisual",
+      "reason": "Full audiovisual review is not attested; inspect declared coverage"
+    },
+    {
+      "caseId": "HZ-YT-01",
+      "modality": "audiovisual",
+      "reason": "Full audiovisual review is not attested; inspect declared coverage"
+    },
+    {
+      "caseId": "HZ-YT-02",
+      "modality": "audiovisual",
+      "reason": "Full audiovisual review is not attested; inspect declared coverage"
+    },
+    {
+      "caseId": "HZ-YT-03",
+      "modality": "audiovisual",
+      "reason": "Full audiovisual review is not attested; inspect declared coverage"
+    },
+    {
+      "caseId": "HZ-YT-04",
+      "modality": "audiovisual",
+      "reason": "Full audiovisual review is not attested; inspect declared coverage"
+    },
+    {
+      "caseId": "HZ-YT-05",
+      "modality": "audiovisual",
+      "reason": "Full audiovisual review is not attested; inspect declared coverage"
+    },
+    {
+      "caseId": "HZ-YT-06",
+      "modality": "audiovisual",
+      "reason": "Full audiovisual review is not attested; inspect declared coverage"
+    },
+    {
+      "caseId": "AS-IG-02",
+      "modality": "visual",
+      "reason": "Complete carousel visual review is not attested"
+    },
+    {
+      "caseId": "AS-IG-03",
+      "modality": "audiovisual",
+      "reason": "Full audiovisual review is not attested; inspect declared coverage"
+    },
+    {
+      "caseId": "AS-IG-04",
+      "modality": "audiovisual",
+      "reason": "Full audiovisual review is not attested; inspect declared coverage"
+    },
+    {
+      "caseId": "AS-IG-05",
+      "modality": "audiovisual",
+      "reason": "Full audiovisual review is not attested; inspect declared coverage"
+    },
+    {
+      "caseId": "AS-IG-06",
+      "modality": "visual",
+      "reason": "Complete carousel visual review is not attested"
+    },
+    {
+      "caseId": "HZ-IG-01",
+      "modality": "visual",
+      "reason": "Complete carousel visual review is not attested"
+    },
+    {
+      "caseId": "HZ-IG-02",
+      "modality": "audiovisual",
+      "reason": "Full audiovisual review is not attested; inspect declared coverage"
+    },
+    {
+      "caseId": "HZ-IG-03",
+      "modality": "audiovisual",
+      "reason": "Full audiovisual review is not attested; inspect declared coverage"
+    },
+    {
+      "caseId": "HZ-IG-04",
+      "modality": "audiovisual",
+      "reason": "Full audiovisual review is not attested; inspect declared coverage"
+    },
+    {
+      "caseId": "HZ-IG-05",
+      "modality": "audiovisual",
+      "reason": "Full audiovisual review is not attested; inspect declared coverage"
+    },
+    {
+      "caseId": "HZ-IG-06",
+      "modality": "audiovisual",
+      "reason": "Full audiovisual review is not attested; inspect declared coverage"
+    }
+  ],
+  "caseCountsByAuthor": {
+    "alex-hormozi": 12,
+    "alfredo-soares": 12,
+    "andy-crestodina": 2,
+    "ann-handley": 2,
+    "april-dunford": 2,
+    "donald-miller": 2,
+    "joe-pulizzi": 2,
+    "seth-godin": 2
+  },
+  "discoveredCandidatesByAuthor": {
+    "alex-hormozi": 46,
+    "alfredo-soares": 46
+  },
+  "frameworkCount": 16,
+  "exerciseCount": 9,
+  "totalDiscoveredCandidates": 92,
+  "humanReview": "not-attested",
+  "prototypeGate": "review-required",
+  "runtimeImplementation": "not-part-of-this-research-delivery",
+  "errors": [],
+  "inputsSha256": {
+    "candidates.json": "845c7a3d72ce2cc90889dfff62514b9e24cfcb095439ac0665d337f79a2d57f0",
+    "cases.json": "97f5dcdb797fa7ce7b6de43e0c21108b87ee1276513c736a41d40437d67be420",
+    "frameworks.json": "b6df6e36724c290622e0633ce94d056299dbbfff73c7cb5197f52039faa5b98f",
+    "exercises.json": "118570105f252906d2f3abbddcfb12aa0fb29ec83b1c14c5d9357b644db71a61"
+  }
+}

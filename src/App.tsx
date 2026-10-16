@@ -1,4 +1,4 @@
-import { CraftStudio } from "./studios/craft/CraftStudio";
+import { DepartmentStudio } from "./studios/department/DepartmentStudio";
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
@@ -12,7 +12,6 @@ import { BrainView } from "./components/BrainView";
 import { StrategyView } from "./components/StrategyView";
 import { StudioView } from "./components/StudioImmersiveView";
 import { LibraryView } from "./components/LibraryView";
-import { CreationStudioView } from "./components/CreationStudioView";
 import { AIChatView } from "./components/AIChatView";
 import { FloatingAIAssistant } from "./components/FloatingAIAssistant";
 import { TemplatesView } from "./components/TemplatesView";
@@ -222,15 +221,15 @@ export default function App() {
               )}
 
               {hasAccessToCurrentTab && currentTab === "create-image" && (
-                <CraftStudio mode="visual" />
+                <DepartmentStudio mode="visual" />
               )}
 
               {hasAccessToCurrentTab && currentTab === "create-video" && (
-                <CraftStudio mode="video" />
+                <DepartmentStudio mode="video" />
               )}
 
               {hasAccessToCurrentTab && currentTab === "create-copy" && (
-                <CreationStudioView onSavePost={handleSaveSinglePost} />
+                <DepartmentStudio />
               )}
 
               {hasAccessToCurrentTab && currentTab === "ai-chat" && (

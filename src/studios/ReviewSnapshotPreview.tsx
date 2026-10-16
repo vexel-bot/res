@@ -1,10 +1,11 @@
 import React from "react";
 import { productApi, type StudioReviewRecord } from "../api/productApi";
 
-export function ReviewSnapshotPreview({ review, pageId, onReady }: {
+export function ReviewSnapshotPreview({ review, pageId, onReady, onPositionChange }: {
   review: StudioReviewRecord;
   pageId?: string;
   onReady: (ready: boolean) => void;
+  onPositionChange?: (seconds: number) => void;
 }) {
   const [url, setUrl] = React.useState<string>();
   const [error, setError] = React.useState<string>();
@@ -40,6 +41,6 @@ export function ReviewSnapshotPreview({ review, pageId, onReady }: {
   }, [review.id, review.renderAssetId, review.renderChecksumSha256, pageId, video, onReady]);
   if (error) return <p role="alert">{error}</p>;
   if (!url) return <p role="status">Carregando mídia da versão fixada…</p>;
-  if (video) return <video className="cx-review-snapshot-media" data-testid="review-snapshot-video" controls src={url} onLoadedData={() => onReady(true)} onError={() => { onReady(false); setError("O render não pôde ser reproduzido."); }} aria-label={`Render da versão ${review.documentVersion}`} />;
+  if (video) return <video className="cx-review-snapshot-media" data-testid="review-snapshot-video" controls src={url} onTimeUpdate={event => onPositionChange?.(event.currentTarget.currentTime)} onLoadedData={() => onReady(true)} onError={() => { onReady(false); setError("O render não pôde ser reproduzido."); }} aria-label={`Render da versão ${review.documentVersion}`} />;
   return <img className="cx-review-snapshot-media" data-testid="review-snapshot-image" src={url} onLoad={() => onReady(true)} onError={() => { onReady(false); setError("A imagem da revisão não pôde ser exibida."); }} alt={`Página ${pageId} da versão ${review.documentVersion}`} />;
 }

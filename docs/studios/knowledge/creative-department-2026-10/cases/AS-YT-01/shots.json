@@ -1,0 +1,41 @@
+{
+  "schemaVersion": "clicko.research-modality-map.v1",
+  "caseId": "AS-YT-01",
+  "source": "https://www.youtube.com/watch?v=2iFV3cfk4WE",
+  "coverage": {
+    "text": "located-excerpts",
+    "visual": "page-and-player-sample",
+    "audio": "not-reviewed",
+    "completeAudiovisual": false
+  },
+  "editorialCuts": [],
+  "visualChangeCandidates": [],
+  "locatedTextUnits": [
+    {
+      "locator": "2:33–3:24; 6:15–7:44",
+      "kind": "teaching"
+    },
+    {
+      "locator": "9:43–10:33",
+      "kind": "teaching"
+    },
+    {
+      "locator": "8:10–9:42; legendas",
+      "kind": "observation"
+    },
+    {
+      "locator": "0:24–0:28; legendas",
+      "kind": "observation"
+    },
+    {
+      "locator": "comparação com HZ-YT-01",
+      "kind": "interpretation"
+    },
+    {
+      "locator": "pedido → direção",
+      "kind": "clicko_hypothesis"
+    }
+  ],
+  "reviewGap": "Cuts, timing and audio not fully annotated; text locators are not cut boundaries",
+  "distributedMedia": false
+}

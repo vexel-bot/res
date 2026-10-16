@@ -61,7 +61,7 @@ import { productApi } from "../api/productApi";
 import { useOperations } from "../context/OperationsContext";
 import { useProductData } from "../context/ProductDataContext";
 import { useServerState } from "../context/ServerStateContext";
-import { CraftStudio } from "../studios/craft/CraftStudio";
+import { DepartmentStudio } from "../studios/department/DepartmentStudio";
 import type { Post, PostFormat } from "../types";
 import {
   SCREEN_TOTALS,
@@ -1719,7 +1719,7 @@ function ContentSurface({
   const post = posts.find((item) => item.id === contentId) || posts[0];
   if (pathname.endsWith("/edit"))
     return (
-      <CraftStudio
+      <DepartmentStudio
         pathname={pathname}
         search={search}
         navigate={onNavigate}
@@ -1736,7 +1736,7 @@ function ContentSurface({
   if (pathname.endsWith("/variations"))
     return <VariationSurface post={post} onNavigate={onNavigate} />;
   if (pathname === "/content/new")
-    return <CreateHub type={params.get("type")} onNavigate={onNavigate} />;
+    return <DepartmentStudio pathname={pathname} search={search} navigate={onNavigate} />;
   if (pathname === "/content" || pathname === "/content/dashboard")
     return <ContentBoard posts={posts} view={view} onNavigate={onNavigate} />;
   return <ContentDetail post={post} onNavigate={onNavigate} />;
@@ -3198,7 +3198,9 @@ export function ProductSurfaceView({
   onNavigate,
 }: ProductSurfaceViewProps) {
   let content: React.ReactNode;
-  if (pathname === "/today")
+  if (/^\/(campaigns\/[^/]+\/studio|projects\/[^/]+\/creative)$/.test(pathname))
+    content = <DepartmentStudio pathname={pathname} search={search} navigate={onNavigate} campaignId={pathname.split("/")[2]} />;
+  else if (pathname === "/today")
     content = <TodayCommandSurface onNavigate={onNavigate} />;
   else if (pathname === "/projects" || pathname === "/campaigns")
     content = <LabProjectsSurface onNavigate={onNavigate} />;

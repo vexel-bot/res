@@ -1,0 +1,182 @@
+{
+  "schemaVersion": "clicko.temporary-research-sources.v1",
+  "date": "2026-10-14",
+  "distributedSourceMedia": false,
+  "records": [
+    {
+      "location": ".codex-runtime/research/captions/2iFV3cfk4WE.info.json",
+      "source": "https://www.youtube.com/watch?v=2iFV3cfk4WE",
+      "ownership": "collected-this-task",
+      "sha256": "6587b522ce34edea78c30e676dea6e7dd045ce27aef621ba0207df1a3a1e32cc",
+      "status": "deleted-and-absence-verified"
+    },
+    {
+      "location": ".codex-runtime/research/captions/b2Fur8D7zQw.info.json",
+      "source": "https://www.youtube.com/watch?v=b2Fur8D7zQw",
+      "ownership": "collected-this-task",
+      "sha256": "d6261b202e3aac35ad4e6a7c9b3627adae47ce3697a770140cca28027957e192",
+      "status": "deleted-and-absence-verified"
+    },
+    {
+      "location": ".codex-runtime/research/captions/CsivxdkrABQ.info.json",
+      "source": "https://www.youtube.com/watch?v=CsivxdkrABQ",
+      "ownership": "collected-this-task",
+      "sha256": "d966f8414885ea05f6044171b2e3b618e3db7d6e9186ab03abd72fd71b3729c8",
+      "status": "deleted-and-absence-verified"
+    },
+    {
+      "location": ".codex-runtime/research/captions/7w7175Qm3UU.info.json",
+      "source": "https://www.youtube.com/watch?v=7w7175Qm3UU",
+      "ownership": "collected-this-task",
+      "sha256": "27728130c006927a58ee1a8780b0f70889f3517ee77829abace53b99740c3eef",
+      "status": "deleted-and-absence-verified"
+    },
+    {
+      "location": ".codex-runtime/research/captions/rFsfyjJTlc0.info.json",
+      "source": "https://www.youtube.com/watch?v=rFsfyjJTlc0",
+      "ownership": "collected-this-task",
+      "sha256": "028e77aa5709603cb759c64ab2e2f56ae9ac6f9030065b04b7c342614ce55116",
+      "status": "deleted-and-absence-verified"
+    },
+    {
+      "location": ".codex-runtime/research/captions/q-nyNYyZw54.info.json",
+      "source": "https://www.youtube.com/watch?v=q-nyNYyZw54",
+      "ownership": "collected-this-task",
+      "sha256": "186a890636efba8f59eaad4ace1a6fe616b87d0eb22ce88ab69fe0f5231caf0b",
+      "status": "deleted-and-absence-verified"
+    },
+    {
+      "location": ".codex-runtime/research/captions/JOfsujnXxCg.info.json",
+      "source": "https://www.youtube.com/watch?v=JOfsujnXxCg",
+      "ownership": "collected-this-task",
+      "sha256": "736a0efaff178554c5a7538215299e4c08cb66a89762c18ec51278f31de2cfcc",
+      "status": "deleted-and-absence-verified"
+    },
+    {
+      "location": ".codex-runtime/research/captions/21flGkcZO3A.info.json",
+      "source": "https://www.youtube.com/watch?v=21flGkcZO3A",
+      "ownership": "collected-this-task",
+      "sha256": "0384ae4ad1dddacce846d1d890f837c8735769153528c096f723548b08a47aca",
+      "status": "deleted-and-absence-verified"
+    },
+    {
+      "location": ".codex-runtime/research/captions/XsWSvz-aewA.info.json",
+      "source": "https://www.youtube.com/watch?v=XsWSvz-aewA",
+      "ownership": "collected-this-task",
+      "sha256": "7cfcbfe07f8d130dc906ddd5795e25030406ff4db7d55669a1a5be578aef965a",
+      "status": "deleted-and-absence-verified"
+    },
+    {
+      "location": ".codex-runtime/research/captions/R6gTKTFI-zA.info.json",
+      "source": "https://www.youtube.com/watch?v=R6gTKTFI-zA",
+      "ownership": "collected-this-task",
+      "sha256": "d3f581ba0b4c20b65ef253a054bc59388c80c93466d1ed2eee979cacdd635de4",
+      "status": "deleted-and-absence-verified"
+    },
+    {
+      "location": ".codex-runtime/research/captions/R6gTKTFI-zA.en.json3",
+      "source": "https://www.youtube.com/watch?v=R6gTKTFI-zA",
+      "ownership": "collected-this-task",
+      "sha256": "14ead2d7729bbcd35dfb237f1dba7154b9f2bc9509dd8b841a2039fff66405c6",
+      "status": "deleted-and-absence-verified"
+    },
+    {
+      "location": ".codex-runtime/research/captions/9XIgalr9aWY.info.json",
+      "source": "https://www.youtube.com/watch?v=9XIgalr9aWY",
+      "ownership": "collected-this-task",
+      "sha256": "bd40a1fa08d7f0c7c6536302d51bf17e74cdbb58590bc7958034a36bae941a58",
+      "status": "deleted-and-absence-verified"
+    },
+    {
+      "location": ".codex-runtime/research/captions/9XIgalr9aWY.en.json3",
+      "source": "https://www.youtube.com/watch?v=9XIgalr9aWY",
+      "ownership": "collected-this-task",
+      "sha256": "fc68761be5e53e2862771951ac7943d7b80974918da8545bff49fd72221ddd53",
+      "status": "deleted-and-absence-verified"
+    },
+    {
+      "location": ".codex-runtime/research/captions/fSbqaTlWaYI.info.json",
+      "source": "https://www.youtube.com/watch?v=fSbqaTlWaYI",
+      "ownership": "collected-this-task",
+      "sha256": "d6e2ce5c6b6330be4f76c86762d854fec4d7abb17f530817cf82555993c8f774",
+      "status": "deleted-and-absence-verified"
+    },
+    {
+      "location": ".codex-runtime/research/captions/fSbqaTlWaYI.en.json3",
+      "source": "https://www.youtube.com/watch?v=fSbqaTlWaYI",
+      "ownership": "collected-this-task",
+      "sha256": "e987e97a2ea979feb7fd8d100e6670631f00c5ab62ebd49ff60ec59b3243ad40",
+      "status": "deleted-and-absence-verified"
+    },
+    {
+      "location": ".codex-runtime/research/storybrand-guide.pdf",
+      "source": "https://storybrand.com/downloads/your-brand-is-not-the-hero.pdf",
+      "ownership": "collected-this-task",
+      "sha256": "b448096d04ec755def0be5d8e7f202e535a4d16e45a4af835966636122a68dee",
+      "status": "deleted-and-absence-verified"
+    },
+    {
+      "location": "browser-use/exports/youtube-2iFV3cfk4WE-fe7e483a-7b19-4a83-a2a0-f6d55845f437.txt",
+      "source": "https://www.youtube.com/watch?v=2iFV3cfk4WE",
+      "ownership": "collected-this-research-session",
+      "sha256": "44c553a74b32233ee41c532065ce523965dee7a87a549181ee7c49987c28e4ed",
+      "status": "deleted-and-absence-verified"
+    },
+    {
+      "location": "browser-use/exports/youtube-JOfsujnXxCg-622de71d-f2a8-45dc-9af2-0731aad5c29e.txt",
+      "source": "https://www.youtube.com/watch?v=JOfsujnXxCg",
+      "ownership": "collected-this-research-session",
+      "sha256": "d32206fccd2bed0fd8c706743372fe7fdd1f9886e087cb57cb0a56e9d1046811",
+      "status": "deleted-and-absence-verified"
+    },
+    {
+      "location": "browser-use/exports/youtube-21flGkcZO3A-44b87849-6671-46bb-8c08-5ea4b3f4c69b.txt",
+      "source": "https://www.youtube.com/watch?v=21flGkcZO3A",
+      "ownership": "collected-this-research-session",
+      "sha256": "96842cbd4881b54a008793d37042f677744610430e6a70844ff379e26129728e",
+      "status": "deleted-and-absence-verified"
+    },
+    {
+      "location": "browser-use/exports/youtube-XsWSvz-aewA-72a33f9e-f6c9-49dd-b462-f7e453305013.txt",
+      "source": "https://www.youtube.com/watch?v=XsWSvz-aewA",
+      "ownership": "collected-this-research-session",
+      "sha256": "6ad9ca494947dc72e7cf81ae8ab0aeba5b33e68838a86d406a6f00338bbf0707",
+      "status": "deleted-and-absence-verified"
+    },
+    {
+      "location": "browser-use/exports/youtube-b2Fur8D7zQw-f39f2038-a6f7-466d-8f44-f8cfb84a3338.txt",
+      "source": "https://www.youtube.com/watch?v=b2Fur8D7zQw",
+      "ownership": "preexisting-user-file",
+      "sha256": "efdadf65bcd19c0b122dc16500ff0ded2d97273829067f328ce0bbe78882a77f",
+      "status": "preserved-preexisting"
+    },
+    {
+      "location": "browser-use/exports/youtube-CsivxdkrABQ-7f29cacc-b1c2-4b04-a858-ec705aabe065.txt",
+      "source": "https://www.youtube.com/watch?v=CsivxdkrABQ",
+      "ownership": "preexisting-user-file",
+      "sha256": "2a602cb74eec93f5bcb1d61ad37e194f8914fd43a5f3c9c985243965df6e79ce",
+      "status": "preserved-preexisting"
+    },
+    {
+      "location": "browser-use/exports/youtube-7w7175Qm3UU-061b3ae3-c9a0-4b1a-9538-1585102e9841.txt",
+      "source": "https://www.youtube.com/watch?v=7w7175Qm3UU",
+      "ownership": "preexisting-user-file",
+      "sha256": "8b9d2da6c7c8bb5054979f4c8e4c6b52e59c6b0634beed57c4291c2dff1e0c69",
+      "status": "preserved-preexisting"
+    },
+    {
+      "location": "browser-use/exports/youtube-rFsfyjJTlc0-044769d4-8a00-4082-810f-be369f30c24c.txt",
+      "source": "https://www.youtube.com/watch?v=rFsfyjJTlc0",
+      "ownership": "preexisting-user-file",
+      "sha256": "78a57b55c3e90210d60d9204f4c722f3a52eb819441960ccd898a2caad568bfa",
+      "status": "preserved-preexisting"
+    },
+    {
+      "location": "browser-use/exports/youtube-q-nyNYyZw54-ac81eead-fb92-41ff-a410-6a95acd09a24.txt",
+      "source": "https://www.youtube.com/watch?v=q-nyNYyZw54",
+      "ownership": "preexisting-user-file",
+      "sha256": "5419fe54949973357716a60317a20c2a7534509db1edac68210212bafdfc89df",
+      "status": "preserved-preexisting"
+    }
+  ]
+}

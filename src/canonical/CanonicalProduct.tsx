@@ -95,7 +95,7 @@ import { BackendRequestError } from "../api/client";
 import { ReviewSnapshotPreview } from "../studios/ReviewSnapshotPreview";
 import { STOCK_AVATAR_CANDIDATES } from "../studios/stockAvatars";
 import { studioHeadlines } from "../studios/craft/craftState";
-import { CraftStudio } from "../studios/craft/CraftStudio";
+import { DepartmentStudio } from "../studios/department/DepartmentStudio";
 import {
   demoCampaign,
   demoMedia,
@@ -297,7 +297,7 @@ export function CanonicalProduct({
   const workspace = demo
     ? { id: brand.id, name: brand.name, avatar: brand.avatar }
     : data.activeWorkspace;
-  const focus = pathname.includes("/edit") || pathname.includes("/approvals/");
+  const focus = pathname === "/studios" || pathname.includes("/edit") || pathname.includes("/approvals/");
 
   React.useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
@@ -743,6 +743,7 @@ function Header({
 function RouteSurface(props: AnyRecord) {
   const p = normalize(props.pathname);
   const mode = props.params.get("mode");
+  if (p === "/studios") return <DepartmentStudio pathname={props.pathname} search={props.search} navigate={props.navigate} />;
   if (p === "/" || p === "/dashboard" || p === "/today")
     return <HomeSurface {...props} />;
   if (p === "/radar" && props.params.get("view") === "opportunity")
@@ -759,8 +760,6 @@ function RouteSurface(props: AnyRecord) {
     );
   if (/^\/campaigns\/[^/]+$/.test(p)) return <CampaignSurface {...props} />;
   if (p === "/content") return <ApprovedContentHub {...props} />;
-  if (/^\/content\/[^/]+\/edit$/.test(p) && mode === "presenter")
-    return <PresenterStudioSurface {...props} />;
   if (/^\/content\/[^/]+\/edit$/.test(p))
     return <ApprovedEditorSurface {...props} mode={mode || "visual"} />;
   if (/^\/approvals\/[^/]+$/.test(p))
@@ -774,7 +773,7 @@ function RouteSurface(props: AnyRecord) {
   if (p === "/brand-memory") return <BrandMemory {...props} />;
   if (p === "/library/identities") return <IdentityLibrarySurface {...props} />;
   if (/^\/library\/assets\/[^/]+\/edit$/.test(p))
-    return <CraftStudio mode="visual" pathname={props.pathname} search={props.search} navigate={props.navigate} sourceAssetId={decodeURIComponent(p.split("/")[3])} returnTo={safeImageLabReturn(props.params.get("returnTo"))} />;
+    return <DepartmentStudio mode="visual" pathname={props.pathname} search={props.search} navigate={props.navigate} sourceAssetId={decodeURIComponent(p.split("/")[3])} />;
   if (p === "/library/assets") return <ApprovedLibrarySurface {...props} />;
   if (p === "/analytics/learning")
     return <ApprovedAnalyticsSurface {...props} />;
@@ -2682,8 +2681,7 @@ function ApprovedContentHub({ navigate }: AnyRecord) {
 }
 
 function ApprovedEditorSurface(props: AnyRecord) {
-  if (props.mode === "editorial") return <ApprovedEditorialDesk {...props} />;
-  return <CraftStudio pathname={props.pathname} search={props.search} mode={props.mode} navigate={props.navigate} />;
+  return <DepartmentStudio pathname={props.pathname} search={props.search} mode={props.mode} navigate={props.navigate} />;
 }
 
 function ApprovedEditorialDesk({ navigate, setToast }: AnyRecord) {

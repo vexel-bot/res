@@ -294,7 +294,11 @@ def render_job(
                 execute_studio_generation, job, isolated_queues_enabled=get_settings().studio_isolated_queues_enabled
             )
         except Exception as exc:
-            # A durable queued job remains retryable if the broker is temporarily unavailable.
+            # Make broker failures visible and eligible for the existing retry endpoint.
+            job.status = "failed"
+            job.error_code = "queue_unavailable"
+            job.error_message = type(exc).__name__
+            db.commit()
             raise HTTPException(
                 status_code=503, detail={"code": "craft_job_queue_unavailable", "jobId": job.id}
             ) from exc

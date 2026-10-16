@@ -1,0 +1,33 @@
+{
+  "schemaVersion": "clicko.research-modality-map.v1",
+  "caseId": "JP-01",
+  "source": "https://www.joepulizzi.com/wp-content/uploads/2021/05/contentinc_intro.pdf",
+  "coverage": {
+    "text": "pdf-located-pages",
+    "visual": "not-reviewed",
+    "audio": "not-applicable",
+    "completeAudiovisual": false
+  },
+  "editorialCuts": [],
+  "visualChangeCandidates": [],
+  "locatedTextUnits": [
+    {
+      "locator": "PDF, páginas físicas 8–12; edição 2021",
+      "kind": "teaching"
+    },
+    {
+      "locator": "introdução e modelo",
+      "kind": "observation"
+    },
+    {
+      "locator": "comparação com JP-02",
+      "kind": "interpretation"
+    },
+    {
+      "locator": "estratégia",
+      "kind": "clicko_hypothesis"
+    }
+  ],
+  "reviewGap": "Cuts, timing and audio not fully annotated; text locators are not cut boundaries",
+  "distributedMedia": false
+}

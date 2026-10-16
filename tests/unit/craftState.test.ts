@@ -63,11 +63,14 @@ test("studio routes select Craft motors and native frame units", () => {
   assert.deepEqual(studioHeadlines({ composition: { pages: [{ layers: [{ kind: "text", properties: { text: "Arquivo preservado" } }] }] } }), ["Arquivo preservado"]);
 });
 
-test("all image and video route implementations use Craft; retired editors are removed", () => {
+test("client routes use the creative department over Craft; retired editors remain removed", () => {
   const canonical = readFileSync(resolve("src/canonical/CanonicalProduct.tsx"), "utf8");
   const product = readFileSync(resolve("src/product/ProductSurfaceView.tsx"), "utf8");
   const app = readFileSync(resolve("src/App.tsx"), "utf8");
-  assert.ok(canonical.includes("<CraftStudio")); assert.ok(product.includes("<CraftStudio")); assert.ok(app.includes("<CraftStudio"));
+  for (const source of [canonical, product, app]) {
+    assert.ok(source.includes("<DepartmentStudio"));
+    assert.ok(!source.includes("<CraftStudio"), "Client routes must not expose the technical editor");
+  }
   for (const old of ["ApprovedVisualEditor", "ApprovedCarouselBuilder", "VideoStudio", "ImageStudioView", "VideoEditorView", "useCreativeAutosave"]) assert.ok(![canonical, product, app].some((source) => source.includes(old)), old);
   for (const file of ["src/studios/VideoStudio.tsx", "src/components/ImageStudioView.tsx", "src/components/VideoEditorView.tsx", "src/studios/EditorInspectionPanel.tsx", "src/studios/ContextualEditingPanel.tsx"]) assert.equal(existsSync(resolve(file)), false, file);
 });
