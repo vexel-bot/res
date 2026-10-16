@@ -629,7 +629,12 @@ Monte automaticamente o planejamento completo com cronograma, lista de conteúdo
           return;
         }
         try {
-          const source = readFileSync(path.join(process.cwd(), 'index.html'), 'utf8');
+          // Technical engine validation is available only in this isolated E2E
+          // server. Customer routes always render the creative department.
+          const entry = req.path === '/__craft-validation'
+            ? 'tests/fixtures/craft-validation.html'
+            : 'index.html';
+          const source = readFileSync(path.join(process.cwd(), entry), 'utf8');
           const html = await vite.transformIndexHtml(req.originalUrl, source);
           res.type('html').send(
             html.replace(/\s*<script\b[^>]*src=["']\/@vite\/client["'][^>]*><\/script>\s*/i, '\n'),

@@ -98,6 +98,14 @@ test("manual editing persists native page and revision; unsaved changes do not c
   expect(await page.evaluate(() => localStorage.getItem("clicko:craft:v1:user-one:workspace-one:document-one:photocraft"))).toBeNull();
 });
 
+test("the internal validation harness reopens native documents without using a customer editor route", async ({ page }) => {
+  await setup(page);
+  await page.goto("/__craft-validation?mode=carousel&document=document-one");
+  await expect(page.getByRole("heading", { name: "Carrossel Clicko" })).toBeVisible();
+  await expect(page.locator(".craft-workspace")).toBeVisible();
+  await expect(page.getByTestId("department-studio")).toHaveCount(0);
+});
+
 test("autosave waits five seconds and uses a single immutable batch", async ({ page }) => {
   const state = await setup(page);
   await page.getByLabel("Operação").selectOption("type.setText");

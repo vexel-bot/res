@@ -1,7 +1,7 @@
 name: Studios Craft integration
 on:
   pull_request:
-    paths: ['third_party/craft/**', 'workers/craft/**', 'scripts/craft/**', 'backend/**', 'src/**', 'tests/**', '.github/workflows/studios-craft.yml']
+    paths: ['third_party/craft/**', 'workers/craft/**', 'scripts/craft/**', 'scripts/validation/craft-*.mjs', 'backend/**', 'src/**', 'tests/**', 'server.ts', 'package.json', 'package-lock.json', '.github/workflows/studios-craft.yml']
   workflow_dispatch:
 permissions:
   contents: read
@@ -22,9 +22,11 @@ jobs:
       - run: npm ci
       - run: npm run lint && npm run build
       - run: node --import tsx --test tests/unit/craft*.test.ts
+      - run: npx playwright install --with-deps chromium
+      - run: npx playwright test --config playwright.craft.config.ts
       - run: pip install -r backend/requirements-dev.txt
       - run: >-
-          python -m pytest backend/tests/test_craft*.py backend/tests/test_worker_runtime.py
+          python -m pytest backend/tests/test_craft*.py backend/tests/test_studio_department.py backend/tests/test_worker_runtime.py
           backend/tests/test_creatives.py backend/tests/test_studio_publication_preflight.py
           backend/tests/test_natural_sound_render.py backend/tests/test_scene_compiler_v2.py
         env:
@@ -94,7 +96,7 @@ jobs:
       - name: Real API, native exports and browser pixels
         run: |
           python -m uvicorn app.main:app --app-dir backend --host 127.0.0.1 --port 8018 > .codex-runtime/craft/qa-api.log 2>&1 &
-          PORT=3018 CLICKO_API_ORIGIN=http://127.0.0.1:8018 npm run dev:web > .codex-runtime/craft/qa-web.log 2>&1 &
+          PORT=3018 CLICKO_API_ORIGIN=http://127.0.0.1:8018 CLICKO_E2E=true npm run dev:web > .codex-runtime/craft/qa-web.log 2>&1 &
           python scripts/craft/wait_ready.py
           python scripts/craft/acceptance.py
           python scripts/craft/media_acceptance.py

@@ -1,4 +1,4 @@
-// Customer UI recovery/reopening with real API, WASM and native pixel parity.
+// Internal recovery/reopening harness with real API, WASM and native pixel parity.
 import { chromium } from '@playwright/test';
 import { readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
@@ -17,7 +17,7 @@ try {
   const page = await context.newPage();
   const failures = [];
   page.on('pageerror', error => failures.push(error.message));
-  await page.goto(`http://127.0.0.1:3018/content/draft/edit?mode=video&document=${fixture.documentId}`, { waitUntil: 'domcontentloaded', timeout: 120000 });
+  await page.goto(`http://127.0.0.1:3018/__craft-validation?mode=video&document=${fixture.documentId}`, { waitUntil: 'domcontentloaded', timeout: 120000 });
   await page.locator('.craft-workspace').waitFor({ state: 'visible', timeout: 120000 });
   await page.getByRole('button', { name: 'Converter camadas e efeitos', exact: true }).click();
   await page.waitForURL(url => url.searchParams.get('mode') === 'effects' && url.searchParams.get('document') === fixture.compositionDocumentId, { timeout: 120000 });
@@ -39,8 +39,8 @@ try {
   if (after.revision !== before.revision || after.nativeEditorState.checksumSha256 !== before.nativeEditorState.checksumSha256) throw new Error('Reopening effects changed the montage');
   if (failures.length) throw new Error(failures.join(' | '));
   await page.screenshot({ path: resolve(output, 'studio-recovered-effects.png'), fullPage: true });
-  await writeFile(resolve(output, 'browser-recovery-results.json'), JSON.stringify({ recoveredSourceOpened: true, customerWorkerReady: true, nativePreviewSha256: sha256, montageRevisionPreserved: true }, null, 2));
-  console.log('Passed customer recovery navigation, WASM/native pixels and unchanged montage revision');
+  await writeFile(resolve(output, 'browser-recovery-results.json'), JSON.stringify({ recoveredSourceOpened: true, validationWorkerReady: true, nativePreviewSha256: sha256, montageRevisionPreserved: true }, null, 2));
+  console.log('Passed internal recovery navigation, WASM/native pixels and unchanged montage revision');
 } finally {
   await context.close();
   await browser.close();

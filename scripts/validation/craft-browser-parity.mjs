@@ -15,7 +15,7 @@ const results = [];
 try {
   for (const fixture of fixtures.filter(item => !process.argv[2] || item.engine === process.argv[2])) {
     const mode = {photocraft: 'carousel', filmcraft: 'video', effectcraft: 'effects'}[fixture.engine];
-    await page.goto(`http://127.0.0.1:3018/content/draft/edit?mode=${mode}&document=${fixture.documentId}`, {waitUntil: 'domcontentloaded', timeout: 120000});
+    await page.goto(`http://127.0.0.1:3018/__craft-validation?mode=${mode}&document=${fixture.documentId}`, {waitUntil: 'domcontentloaded', timeout: 120000});
     await page.locator('.craft-workspace').waitFor({state: 'visible', timeout: 120000});
     if (fixture.pageId === 'page-1') await page.locator('.craft-page-list button').nth(1).click();
     const result = await page.evaluate(async ({fixture, token}) => {
@@ -42,13 +42,13 @@ try {
     }, {fixture, token: auth.token});
     await page.locator('.craft-preview img').waitFor({state: 'visible', timeout: 120000});
     await page.locator('.craft-stage[data-craft-browser-state="ready"]').waitFor({state: 'visible', timeout: 120000});
-    if (!page.workers().some(worker => worker.url().includes('craft.worker'))) throw new Error('Customer preview did not start the native Web Worker');
+    if (!page.workers().some(worker => worker.url().includes('craft.worker'))) throw new Error('Validation preview did not start the native Web Worker');
     const actualPreview = await page.locator('.craft-preview img').evaluate(async image => {
       const blob = await (await fetch(image.src)).arrayBuffer();
       return Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256', blob)), b => b.toString(16).padStart(2, '0')).join('');
     });
-    if (actualPreview !== result.sha256) throw new Error('Customer worker preview differs from the native reference');
-    if (await page.locator('vite-error-overlay').count()) throw new Error('The customer Studio has a module-loading overlay');
+    if (actualPreview !== result.sha256) throw new Error('Validation worker preview differs from the native reference');
+    if (await page.locator('vite-error-overlay').count()) throw new Error('The validation harness has a module-loading overlay');
     await page.screenshot({path: resolve(output, `studio-${fixture.engine}-editing.png`), fullPage: true});
     results.push(result);
     console.log(JSON.stringify(result));
