@@ -1,0 +1,2530 @@
+{
+  "schemaVersion": "clicko.creative-research-cases.v1",
+  "accessedAt": "2026-10-14",
+  "cases": [
+    {
+      "id": "AS-YT-01",
+      "author": "alfredo-soares",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=2iFV3cfk4WE",
+      "title": "A Estratégia de Posicionamento do Sócio Mais Rico do G4",
+      "selectionReason": "Ensinamento explícito com diagnóstico individual; conecta identidade, linha editorial e negócio.",
+      "publishedAt": "2026-08-05",
+      "accessedAt": "2026-10-14",
+      "format": null,
+      "status": "textual-analysis-with-modality-gaps",
+      "coverage": {
+        "text": "located-excerpts",
+        "visual": "page-and-player-sample",
+        "audio": "not-reviewed",
+        "completeAudiovisual": false
+      },
+      "analysis": {
+        "intent": "Diagnosticar comunicação de um sócio do G4",
+        "audience": "Empresários com repertório que ainda não o traduziram editorialmente",
+        "problem": "Temas desconectados da identidade e dos objetivos",
+        "thesis": "Organizar assuntos conforme identidade e jornada",
+        "opening": "0:00–0:43: teaser com contrastes e cadência; 0:45–1:05: situa o caso",
+        "development": "Identidade, tipos de pauta, distribuição e métricas",
+        "evidence": "Exemplos de Nardon; recomendações do consultor",
+        "value": "Relacionar repertório real a pautas distintas",
+        "cta": "1:17–1:33: formação, inscrição e comentários; conversão não auditada",
+        "visualLanguage": "Página e apresentação amostradas; ritmo/cortes não revisados",
+        "strategy": "Educação e geração de oportunidades no mesmo sistema"
+      },
+      "notes": [
+        {
+          "kind": "teaching",
+          "locator": "2:33–3:24; 6:15–7:44",
+          "text": "O autor relaciona características de Nardon a pautas e profundidades diferentes."
+        },
+        {
+          "kind": "teaching",
+          "locator": "9:43–10:33",
+          "text": "No caso comercial, prioriza sinais de negócio antes das métricas de seguidores."
+        },
+        {
+          "kind": "observation",
+          "locator": "8:10–9:42; legendas",
+          "text": "Há discussão de cadências de publicação, aplicada ao caso."
+        },
+        {
+          "kind": "observation",
+          "locator": "0:24–0:28; legendas",
+          "text": "O apelido de posicionamento é assumido como invenção no próprio diálogo; não é um arquétipo validado."
+        },
+        {
+          "kind": "interpretation",
+          "locator": "comparação com HZ-YT-01",
+          "text": "A pauta precisa ter propósito antes de escolher sua embalagem."
+        },
+        {
+          "kind": "clicko_hypothesis",
+          "locator": "pedido → direção",
+          "text": "A direção deve relacionar um fato da marca, um público e uma mudança desejada."
+        }
+      ],
+      "limitations": "Cadência e apelido de posicionamento são escolhas do caso, não taxonomia universal. Somar visualizações não mede pessoas únicas. Apenas excertos textuais e amostras da página; revisão audiovisual integral pendente.",
+      "counterexample": "Uma marca sem porta-voz disponível pode construir autoridade com demonstrações de produto; não deve inventar uma personalidade de fundador.",
+      "sourceIntegrity": {
+        "primary": true,
+        "sha256": "44c553a74b32233ee41c532065ce523965dee7a87a549181ee7c49987c28e4ed",
+        "hashScope": "Public captions used for located text excerpts, not original audiovisual file",
+        "captionLanguage": "pt",
+        "captionType": "auto-generated",
+        "captionReliability": "Exported captions can contain recognition or editorial errors; proper names and figures require source confirmation"
+      },
+      "metrics": {
+        "causality": "not-established",
+        "performanceValidation": "not-performed"
+      },
+      "rights": {
+        "sourceOwner": "Third-party author/publisher",
+        "useScope": "Transformative research notes and source links only; no licence to reuse media or identity",
+        "distributedSourceMedia": false
+      },
+      "publisher": "Alfredo Soares",
+      "publisherUrl": "https://www.youtube.com/channel/UCh9HMS4C3F02msM-kiilAdA",
+      "publicationDateBasis": "YouTube public upload_date metadata; displayed local date may differ by timezone",
+      "durationSeconds": 2369
+    },
+    {
+      "id": "AS-YT-02",
+      "author": "alfredo-soares",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=b2Fur8D7zQw",
+      "title": "A Estratégia para CRIAR um ECOSSISTEMA de MARCA | O ADVISOR",
+      "selectionReason": "Aplicação prática B2B: diagnóstico e interlocução, útil para separar conselho de evidência de execução.",
+      "publishedAt": "2026-07-09",
+      "accessedAt": "2026-10-14",
+      "format": null,
+      "status": "textual-analysis-with-modality-gaps",
+      "coverage": {
+        "text": "located-excerpts",
+        "visual": "page-only",
+        "audio": "not-reviewed",
+        "completeAudiovisual": false
+      },
+      "analysis": {
+        "intent": "Discutir evolução de uma operação contábil",
+        "audience": "Donos de serviços B2B",
+        "problem": "Ser percebido como executor burocrático",
+        "thesis": "Explorar valor estratégico e relações do ecossistema",
+        "opening": "Teaser de uma transformação e conversa consultiva",
+        "development": "Diagnóstico, oportunidades e contato com possível parceiro",
+        "evidence": "Conversa com gestor da Syhus; proposta não prova contrato fechado",
+        "value": "Mostrar raciocínio aplicado a um negócio",
+        "cta": "22:43–23:16: programa, comentários e inscrição",
+        "visualLanguage": "Página oficial e descrição verificadas; composição audiovisual não revisada",
+        "strategy": "Caso educativo ligado à oferta de formação"
+      },
+      "notes": [
+        {
+          "kind": "observation",
+          "locator": "descrição oficial; 1:41–4:09",
+          "text": "A descrição identifica Syhus; o episódio discute o papel do serviço para empresários."
+        },
+        {
+          "kind": "teaching",
+          "locator": "9:13–13:18; 22:06–22:36",
+          "text": "A conversa explora parceiros e priorização de oportunidades."
+        },
+        {
+          "kind": "interpretation",
+          "locator": "11:54–13:07",
+          "text": "Uma ligação demonstra iniciativa, mas não comprova venda nem execução posterior."
+        },
+        {
+          "kind": "clicko_hypothesis",
+          "locator": "agente de roteiro",
+          "text": "Um caso deve separar situação, raciocínio, ação observável e resultado comprovado."
+        }
+      ],
+      "limitations": "A legenda preexistente tem erros em nomes e valores; a descrição corrige a identificação da empresa. Não repetir cifras sem confirmação. Apenas excertos; sem revisão audiovisual integral.",
+      "counterexample": "Um setor com obrigações especializadas pode exigir precisão antes de ampliar sua promessa de consultoria.",
+      "sourceIntegrity": {
+        "primary": true,
+        "sha256": "efdadf65bcd19c0b122dc16500ff0ded2d97273829067f328ce0bbe78882a77f",
+        "hashScope": "Public captions used for located text excerpts, not original audiovisual file",
+        "captionLanguage": "pt",
+        "captionType": "authored or unspecified",
+        "captionReliability": "Exported captions can contain recognition or editorial errors; proper names and figures require source confirmation"
+      },
+      "metrics": {
+        "causality": "not-established",
+        "performanceValidation": "not-performed"
+      },
+      "rights": {
+        "sourceOwner": "Third-party author/publisher",
+        "useScope": "Transformative research notes and source links only; no licence to reuse media or identity",
+        "distributedSourceMedia": false
+      },
+      "publisher": "Alfredo Soares",
+      "publisherUrl": "https://www.youtube.com/channel/UCh9HMS4C3F02msM-kiilAdA",
+      "publicationDateBasis": "YouTube public upload_date metadata; displayed local date may differ by timezone",
+      "durationSeconds": 1401
+    },
+    {
+      "id": "AS-YT-03",
+      "author": "alfredo-soares",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=CsivxdkrABQ",
+      "title": "As Estratégias Para ESTRUTURAR MARKETING de EMPRESA | ADVISOR",
+      "selectionReason": "Distingue funções e horizontes de marketing; complementa o caso de posicionamento individual.",
+      "publishedAt": "2026-05-05",
+      "accessedAt": "2026-10-14",
+      "format": null,
+      "status": "textual-analysis-with-modality-gaps",
+      "coverage": {
+        "text": "located-excerpts",
+        "visual": "not-reviewed",
+        "audio": "not-reviewed",
+        "completeAudiovisual": false
+      },
+      "analysis": {
+        "intent": "Organizar marketing de uma empresa de energia",
+        "audience": "Gestores que acumulam decisões de marketing",
+        "problem": "Confundir presença, audiência e aquisição",
+        "thesis": "Separar responsabilidades e mapear a jornada",
+        "opening": "Teaser de pilares e apresentação da empresa",
+        "development": "Diagnóstico, públicos, canais e arquitetura do marketing",
+        "evidence": "BC Energia como contexto, sem experimento controlado",
+        "value": "Ajudar a reconhecer objetivos diferentes",
+        "cta": "34:51–35:15: interação e continuidade do canal",
+        "visualLanguage": "Linguagem visual integral não revisada",
+        "strategy": "Autoridade, educação e performance com tempos distintos"
+      },
+      "notes": [
+        {
+          "kind": "teaching",
+          "locator": "21:14–22:59",
+          "text": "A discussão diferencia recortes editoriais, regionais e setoriais."
+        },
+        {
+          "kind": "teaching",
+          "locator": "25:46–29:23",
+          "text": "Apresenta frentes institucional, audiência/conteúdo e performance, relacionadas à jornada."
+        },
+        {
+          "kind": "interpretation",
+          "locator": "32:47–34:28",
+          "text": "Sugestões sobre plataformas dependem do momento e não devem virar regras fixas."
+        },
+        {
+          "kind": "clicko_hypothesis",
+          "locator": "estratégia editorial",
+          "text": "Cada direção declara seu objetivo e indicador; não exigir venda imediata de toda peça."
+        }
+      ],
+      "limitations": "Recomendações de canais são contextuais e podem envelhecer. Captação de legenda não atesta o áudio nem o quadro inteiro.",
+      "counterexample": "Uma peça de suporte pós-venda pode ser valiosa sem ampliar alcance ou gerar leads.",
+      "sourceIntegrity": {
+        "primary": true,
+        "sha256": "2a602cb74eec93f5bcb1d61ad37e194f8914fd43a5f3c9c985243965df6e79ce",
+        "hashScope": "Public captions used for located text excerpts, not original audiovisual file",
+        "captionLanguage": "pt",
+        "captionType": "auto-generated",
+        "captionReliability": "Exported captions can contain recognition or editorial errors; proper names and figures require source confirmation"
+      },
+      "metrics": {
+        "causality": "not-established",
+        "performanceValidation": "not-performed"
+      },
+      "rights": {
+        "sourceOwner": "Third-party author/publisher",
+        "useScope": "Transformative research notes and source links only; no licence to reuse media or identity",
+        "distributedSourceMedia": false
+      },
+      "publisher": "Alfredo Soares",
+      "publisherUrl": "https://www.youtube.com/channel/UCh9HMS4C3F02msM-kiilAdA",
+      "publicationDateBasis": "YouTube public upload_date metadata; displayed local date may differ by timezone",
+      "durationSeconds": 2124
+    },
+    {
+      "id": "AS-YT-04",
+      "author": "alfredo-soares",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=7w7175Qm3UU",
+      "title": "Como Criar Novos Canais de Aquisição Para Sua Empresa",
+      "selectionReason": "Caso recente que explicita três maneiras de reaproveitar conteúdo e dependência do fundador.",
+      "publishedAt": "2026-10-04",
+      "accessedAt": "2026-10-14",
+      "format": null,
+      "status": "textual-analysis-with-modality-gaps",
+      "coverage": {
+        "text": "located-excerpts",
+        "visual": "not-reviewed",
+        "audio": "not-reviewed",
+        "completeAudiovisual": false
+      },
+      "analysis": {
+        "intent": "Diagnosticar aquisição e expansão de serviço de indicação",
+        "audience": "Empresas de serviços com poucos canais",
+        "problem": "Ampliar presença sem ajustar oferta ou operação",
+        "thesis": "Oferta, distribuição e capacidade precisam combinar",
+        "opening": "0:05–0:46: excertos de decisões; 0:52–2:03: contexto",
+        "development": "Diagnóstico, exemplos de conteúdo e opções de canal",
+        "evidence": "Conversa com operador; resultados citados são relatos",
+        "value": "Distinguir reaproveitamento de adaptação e nova pauta",
+        "cta": "1:49–1:59: comentar, inscrever e compartilhar",
+        "visualLanguage": "Sem inspeção completa de quadros ou áudio",
+        "strategy": "Relaciona criação à distribuição e à sustentação operacional"
+      },
+      "notes": [
+        {
+          "kind": "teaching",
+          "locator": "7:14–7:43",
+          "text": "A aquisição é tratada junto da oferta, canais e produto."
+        },
+        {
+          "kind": "teaching",
+          "locator": "19:44–20:43",
+          "text": "Distingue reutilizar uma peça, reeditá-la e aproveitar parte dela para outra peça."
+        },
+        {
+          "kind": "observation",
+          "locator": "21:53–22:06",
+          "text": "A conversa formula a escolha entre dependência do fundador e uma operação menos dependente dele."
+        },
+        {
+          "kind": "clicko_hypothesis",
+          "locator": "continuidade do projeto",
+          "text": "Registrar se a entrega é nova ideia, adaptação para canal ou variante da mesma peça."
+        }
+      ],
+      "limitations": "Excertos localizados; não foi revisada a íntegra audiovisual. Recomendações de aquisição não comprovam resultados de cada canal.",
+      "counterexample": "Trocar apenas a cor de uma peça pode não resolver uma mensagem irrelevante; uma variante técnica não é nova direção editorial.",
+      "sourceIntegrity": {
+        "primary": true,
+        "sha256": "8b9d2da6c7c8bb5054979f4c8e4c6b52e59c6b0634beed57c4291c2dff1e0c69",
+        "hashScope": "Public captions used for located text excerpts, not original audiovisual file",
+        "captionLanguage": "pt",
+        "captionType": "auto-generated",
+        "captionReliability": "Exported captions can contain recognition or editorial errors; proper names and figures require source confirmation"
+      },
+      "metrics": {
+        "causality": "not-established",
+        "performanceValidation": "not-performed"
+      },
+      "rights": {
+        "sourceOwner": "Third-party author/publisher",
+        "useScope": "Transformative research notes and source links only; no licence to reuse media or identity",
+        "distributedSourceMedia": false
+      },
+      "publisher": "Alfredo Soares",
+      "publisherUrl": "https://www.youtube.com/channel/UCh9HMS4C3F02msM-kiilAdA",
+      "publicationDateBasis": "YouTube public upload_date metadata; displayed local date may differ by timezone",
+      "durationSeconds": 3161
+    },
+    {
+      "id": "AS-YT-05",
+      "author": "alfredo-soares",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=rFsfyjJTlc0",
+      "title": "O Posicionamento que faz você Cobrar Mais Caro",
+      "selectionReason": "Contraexemplo à ideia de que fama ou aparência sofisticada equivalem a autoridade.",
+      "publishedAt": "2026-09-06",
+      "accessedAt": "2026-10-14",
+      "format": null,
+      "status": "textual-analysis-with-modality-gaps",
+      "coverage": {
+        "text": "located-excerpts",
+        "visual": "not-reviewed",
+        "audio": "not-reviewed",
+        "completeAudiovisual": false
+      },
+      "analysis": {
+        "intent": "Discutir percepção e ofertas de maior valor",
+        "audience": "Consultores e empresários com serviços diferentes",
+        "problem": "Confundir atenção e validação do trabalho",
+        "thesis": "Articular competência, público e arquitetura de ofertas",
+        "opening": "0:09–0:48: contraste entre aprovação e compra",
+        "development": "Diagnóstico de percepção, modalidades e parcerias",
+        "evidence": "Consultoria situada; promessas não são testes causais",
+        "value": "Diferenciar conteúdo, serviço e marca",
+        "cta": "Conexão comercial do episódio; fechamento integral não revisado",
+        "visualLanguage": "Produção visual não auditada",
+        "strategy": "Posicionamento antecede a expressão visual"
+      },
+      "notes": [
+        {
+          "kind": "teaching",
+          "locator": "4:34–6:35",
+          "text": "A discussão separa visibilidade de autoridade e diferentes públicos de ofertas."
+        },
+        {
+          "kind": "observation",
+          "locator": "7:51–12:10",
+          "text": "O caso explora marcas, ambientes e parcerias com especialistas."
+        },
+        {
+          "kind": "interpretation",
+          "locator": "4:34–6:35",
+          "text": "Uma embalagem cara não substitui prova de valor."
+        },
+        {
+          "kind": "clicko_hypothesis",
+          "locator": "direção visual",
+          "text": "Escolher linguagem visual conforme público e argumento, sem prometer que ela aumenta preço automaticamente."
+        }
+      ],
+      "limitations": "A análise cobre excertos da primeira parte. Não atribuir causalidade a preço, aparência, ambiente ou associações.",
+      "counterexample": "Para um serviço acessível, uma estética exclusiva pode afastar o público que a marca pretende atender.",
+      "sourceIntegrity": {
+        "primary": true,
+        "sha256": "78a57b55c3e90210d60d9204f4c722f3a52eb819441960ccd898a2caad568bfa",
+        "hashScope": "Public captions used for located text excerpts, not original audiovisual file",
+        "captionLanguage": "pt",
+        "captionType": "auto-generated",
+        "captionReliability": "Exported captions can contain recognition or editorial errors; proper names and figures require source confirmation"
+      },
+      "metrics": {
+        "causality": "not-established",
+        "performanceValidation": "not-performed"
+      },
+      "rights": {
+        "sourceOwner": "Third-party author/publisher",
+        "useScope": "Transformative research notes and source links only; no licence to reuse media or identity",
+        "distributedSourceMedia": false
+      },
+      "publisher": "Alfredo Soares",
+      "publisherUrl": "https://www.youtube.com/channel/UCh9HMS4C3F02msM-kiilAdA",
+      "publicationDateBasis": "YouTube public upload_date metadata; displayed local date may differ by timezone",
+      "durationSeconds": 1973
+    },
+    {
+      "id": "AS-YT-06",
+      "author": "alfredo-soares",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=q-nyNYyZw54",
+      "title": "COMO CONSTRUIR AUTORIDADE e VIRAR REFERÊNCIA NO SEU MERCADO DIGITAL | Alfredo Soares da G4 Educação",
+      "selectionReason": "Referência histórica e entrevista de terceiro com Alfredo como fonte; inclui afirmações a contestar.",
+      "publishedAt": "2025-06-19",
+      "accessedAt": "2026-10-14",
+      "format": null,
+      "status": "textual-analysis-with-modality-gaps",
+      "coverage": {
+        "text": "located-excerpts",
+        "visual": "not-reviewed",
+        "audio": "not-reviewed",
+        "completeAudiovisual": false
+      },
+      "analysis": {
+        "intent": "Explorar autoridade e reconhecimento profissional",
+        "audience": "Empresários e especialistas",
+        "problem": "Tratar fama como reconhecimento setorial",
+        "thesis": "Construir relevância junto de públicos distintos",
+        "opening": "0:00–0:48: tese e afirmações fortes; 1:22–3:44: pergunta",
+        "development": "Conversa sobre públicos, trabalho e educação",
+        "evidence": "Relatos e opiniões, sem comprovação de retorno universal",
+        "value": "Separar reconhecimento público de competência demonstrada",
+        "cta": "1:12:04–1:12:21: compartilhar e assinar o canal",
+        "visualLanguage": "Entrevista hospedada por O Mentor Podcast; visual não auditado",
+        "strategy": "Educação como relacionamento e demonstração de competência"
+      },
+      "notes": [
+        {
+          "kind": "teaching",
+          "locator": "1:22–6:05",
+          "text": "Alfredo distingue audiência, reconhecimento setorial e respeito de quem trabalha junto."
+        },
+        {
+          "kind": "observation",
+          "locator": "0:31–0:45",
+          "text": "A abertura contém generalização que associa competência e riqueza; é opinião do entrevistado."
+        },
+        {
+          "kind": "interpretation",
+          "locator": "0:31–0:45",
+          "text": "A generalização desconsidera acesso a recursos, condições de mercado e desigualdades; não integra os critérios de qualidade."
+        },
+        {
+          "kind": "teaching",
+          "locator": "1:10:53–1:11:49",
+          "text": "Educação aparece como ferramenta de relacionamento com compradores."
+        },
+        {
+          "kind": "clicko_hypothesis",
+          "locator": "revisão editorial",
+          "text": "O agente deve avaliar o argumento, inclusive quando discorda de uma referência admirada."
+        }
+      ],
+      "limitations": "O publicador é O Mentor Podcast, não o canal de Alfredo. Excertos iniciais e finais; sem revisão audiovisual integral. Conclusões econômicas não são evidência científica.",
+      "counterexample": "Uma pessoa competente pode não ter renda alta; usar riqueza como validação excluiria especialistas e entidades relevantes.",
+      "sourceIntegrity": {
+        "primary": true,
+        "sha256": "5419fe54949973357716a60317a20c2a7534509db1edac68210212bafdfc89df",
+        "hashScope": "Public captions used for located text excerpts, not original audiovisual file",
+        "captionLanguage": "pt",
+        "captionType": "auto-generated",
+        "captionReliability": "Exported captions can contain recognition or editorial errors; proper names and figures require source confirmation"
+      },
+      "metrics": {
+        "causality": "not-established",
+        "performanceValidation": "not-performed"
+      },
+      "rights": {
+        "sourceOwner": "Third-party author/publisher",
+        "useScope": "Transformative research notes and source links only; no licence to reuse media or identity",
+        "distributedSourceMedia": false
+      },
+      "publisher": "O Mentor Podcast",
+      "publisherUrl": "https://www.youtube.com/channel/UC7WLRw8wWr2vXIhPwvpJgTA",
+      "publicationDateBasis": "YouTube public upload_date metadata; displayed local date may differ by timezone",
+      "durationSeconds": 4345
+    },
+    {
+      "id": "HZ-YT-01",
+      "author": "alex-hormozi",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=JOfsujnXxCg",
+      "title": "I Posted ONLY Business Content for 30 Days [STRATEGY REVEALED]",
+      "selectionReason": "Ensinamento histórico sobre adequação ao público e mudança de métricas, com limite causal explícito.",
+      "publishedAt": "2024-05-28",
+      "accessedAt": "2026-10-14",
+      "format": null,
+      "status": "textual-analysis-with-modality-gaps",
+      "coverage": {
+        "text": "located-excerpts",
+        "visual": "page-and-player-sample",
+        "audio": "not-reviewed",
+        "completeAudiovisual": false
+      },
+      "analysis": {
+        "intent": "Explicar uma mudança da própria estratégia",
+        "audience": "Empresários que usam mídia para apoiar seu negócio",
+        "problem": "Crescer com público pouco relevante",
+        "thesis": "Ajustar temas e avaliação ao objetivo",
+        "opening": "0:19–0:46: educação em vez de entretenimento como prioridade",
+        "development": "Relato de mudanças simultâneas e discussão de indicadores",
+        "evidence": "Resultados autorrelatados de sua operação",
+        "value": "Diferenciar consumo de aprendizagem e interesse qualificado",
+        "cta": "Conteúdo integrado à marca e ofertas; CTA integral não revisado",
+        "visualLanguage": "Excertos da página/player; som e montagem completos pendentes",
+        "strategy": "Sistema editorial orientado a compradores"
+      },
+      "notes": [
+        {
+          "kind": "teaching",
+          "locator": "0:19–1:58",
+          "text": "Discute educação, necessidades do público e recorte de negócios."
+        },
+        {
+          "kind": "observation",
+          "locator": "2:00–3:12",
+          "text": "RPM aparece como aproximação do valor de audiência, não receita atribuída de sua empresa."
+        },
+        {
+          "kind": "interpretation",
+          "locator": "5:15 em diante",
+          "text": "Mudanças simultâneas e relato observacional não isolam a causa de melhoria."
+        },
+        {
+          "kind": "clicko_hypothesis",
+          "locator": "objetivo do pedido",
+          "text": "Separar alcance, interesse do público, aprendizagem e resultado comercial."
+        }
+      ],
+      "limitations": "Cobertura por excertos. Os resultados não foram auditados. Preferência por longos ou curtos é situada; RPM não é venda nem LTV.",
+      "counterexample": "Uma campanha de serviço público pode priorizar alcance; monetização da audiência não é indicador apropriado.",
+      "sourceIntegrity": {
+        "primary": true,
+        "sha256": "d32206fccd2bed0fd8c706743372fe7fdd1f9886e087cb57cb0a56e9d1046811",
+        "hashScope": "Public captions used for located text excerpts, not original audiovisual file",
+        "captionLanguage": "en",
+        "captionType": "auto-generated",
+        "captionReliability": "Exported captions can contain recognition or editorial errors; proper names and figures require source confirmation"
+      },
+      "metrics": {
+        "causality": "not-established",
+        "performanceValidation": "not-performed"
+      },
+      "rights": {
+        "sourceOwner": "Third-party author/publisher",
+        "useScope": "Transformative research notes and source links only; no licence to reuse media or identity",
+        "distributedSourceMedia": false
+      },
+      "publisher": "Alex Hormozi",
+      "publisherUrl": "https://www.youtube.com/channel/UCUyDOdBWhC1MCxEjC46d-zw",
+      "publicationDateBasis": "YouTube public upload_date metadata; displayed local date may differ by timezone",
+      "durationSeconds": 1523
+    },
+    {
+      "id": "HZ-YT-02",
+      "author": "alex-hormozi",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=21flGkcZO3A",
+      "title": "How to become rich with social media (my exact playbook)",
+      "selectionReason": "Caso recente que formula a diferença entre ser empresa de mídia e usar mídia para um negócio.",
+      "publishedAt": "2026-09-25",
+      "accessedAt": "2026-10-14",
+      "format": null,
+      "status": "textual-analysis-with-modality-gaps",
+      "coverage": {
+        "text": "located-excerpts",
+        "visual": "not-reviewed",
+        "audio": "not-reviewed",
+        "completeAudiovisual": false
+      },
+      "analysis": {
+        "intent": "Reorientar objetivos de mídia",
+        "audience": "Donos de empresas",
+        "problem": "Aumentar visualizações sem apoiar a oferta",
+        "thesis": "Partir dos compradores e problemas reais",
+        "opening": "0:00–1:17: diferença entre modelos de negócio",
+        "development": "Relato de métricas, nicho e rastreamento",
+        "evidence": "Afirmações sobre o próprio funil, sem acesso aos dados",
+        "value": "Identificar o público capaz de usar e comprar",
+        "cta": "5:22–5:49: material educativo próprio",
+        "visualLanguage": "Página oficial e legenda; visual e som completos não revisados",
+        "strategy": "Conteúdo acessível com utilidade específica"
+      },
+      "notes": [
+        {
+          "kind": "teaching",
+          "locator": "0:00–1:17; 8:23–9:20",
+          "text": "O autor diferencia incentivos da mídia e do negócio servido pelo conteúdo."
+        },
+        {
+          "kind": "observation",
+          "locator": "2:01–3:36",
+          "text": "O relato contrasta métricas de atenção e vendas atribuídas; não foi auditado."
+        },
+        {
+          "kind": "teaching",
+          "locator": "9:41–10:20",
+          "text": "Sugere partir de padrões de clientes e acompanhar ações por links e CTAs."
+        },
+        {
+          "kind": "clicko_hypothesis",
+          "locator": "pesquisa de público",
+          "text": "Solicitar exemplos reais de clientes e objeções, sem inventar um ICP para preencher o briefing."
+        }
+      ],
+      "limitations": "Excertos textuais; links atribuídos podem perder contribuição indireta de marca. Nenhuma validação de receita ou audiovisual integral.",
+      "counterexample": "Conteúdo amplo pode criar familiaridade útil para venda futura; ausência de venda por link não prova ausência de efeito.",
+      "sourceIntegrity": {
+        "primary": true,
+        "sha256": "96842cbd4881b54a008793d37042f677744610430e6a70844ff379e26129728e",
+        "hashScope": "Public captions used for located text excerpts, not original audiovisual file",
+        "captionLanguage": "en",
+        "captionType": "auto-generated",
+        "captionReliability": "Exported captions can contain recognition or editorial errors; proper names and figures require source confirmation"
+      },
+      "metrics": {
+        "causality": "not-established",
+        "performanceValidation": "not-performed"
+      },
+      "rights": {
+        "sourceOwner": "Third-party author/publisher",
+        "useScope": "Transformative research notes and source links only; no licence to reuse media or identity",
+        "distributedSourceMedia": false
+      },
+      "publisher": "Alex Hormozi",
+      "publisherUrl": "https://www.youtube.com/channel/UCUyDOdBWhC1MCxEjC46d-zw",
+      "publicationDateBasis": "YouTube public upload_date metadata; displayed local date may differ by timezone",
+      "durationSeconds": 621
+    },
+    {
+      "id": "HZ-YT-03",
+      "author": "alex-hormozi",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=XsWSvz-aewA",
+      "title": "The New Way of Making Content In The Age of AI",
+      "selectionReason": "Ensinamento recente sobre prova e documentação de trabalho; tensiona criação autônoma com autenticidade.",
+      "publishedAt": "2026-05-26",
+      "accessedAt": "2026-10-14",
+      "format": null,
+      "status": "textual-analysis-with-modality-gaps",
+      "coverage": {
+        "text": "located-excerpts",
+        "visual": "not-reviewed",
+        "audio": "not-reviewed",
+        "completeAudiovisual": false
+      },
+      "analysis": {
+        "intent": "Discutir diferenciação diante da IA",
+        "audience": "Empresários e criadores de serviços",
+        "problem": "Mensagem facilmente replicável sem competência demonstrada",
+        "thesis": "Documentar atividade e demonstrações reais",
+        "opening": "0:00–0:19: dimensão da audiência como credencial autorrelatada",
+        "development": "Contínuo de risco, prova, documentação e exemplos",
+        "evidence": "Argumentação e situações propostas, não previsão validada",
+        "value": "Encontrar material próprio nas operações",
+        "cta": "4:43–5:26: oferta de livros e comunidade",
+        "visualLanguage": "Legenda textual; apresentação gráfica e áudio não foram auditados",
+        "strategy": "Conteúdo de autoridade fundamentado no trabalho"
+      },
+      "notes": [
+        {
+          "kind": "teaching",
+          "locator": "8:39–9:23; 10:37–11:06",
+          "text": "Sugere documentar trabalho e demonstrar valor em interações reais."
+        },
+        {
+          "kind": "teaching",
+          "locator": "11:54–13:26",
+          "text": "Relaciona demonstração, documentação e sua rotina de produção."
+        },
+        {
+          "kind": "interpretation",
+          "locator": "2:06–3:20",
+          "text": "A escala de risco proposta é discutível: saúde e relações podem ter consequências graves. Não adotá-la como classificação de segurança."
+        },
+        {
+          "kind": "clicko_hypothesis",
+          "locator": "banco de evidências da marca",
+          "text": "Agentes organizam material autorizado; não fabricam testemunhos nem acontecimentos para parecerem reais."
+        }
+      ],
+      "limitations": "Previsões sobre IA e hierarquia de risco são opiniões. Transcrição foi lida, mas não atesta imagem ou som. Reuniões e demonstrações exigem permissão de uso.",
+      "counterexample": "Um produto confidencial pode demonstrar seu mecanismo com exemplo sintético identificado, sem expor clientes ou simular prova real.",
+      "sourceIntegrity": {
+        "primary": true,
+        "sha256": "6ad9ca494947dc72e7cf81ae8ab0aeba5b33e68838a86d406a6f00338bbf0707",
+        "hashScope": "Public captions used for located text excerpts, not original audiovisual file",
+        "captionLanguage": "en",
+        "captionType": "auto-generated",
+        "captionReliability": "Exported captions can contain recognition or editorial errors; proper names and figures require source confirmation"
+      },
+      "metrics": {
+        "causality": "not-established",
+        "performanceValidation": "not-performed"
+      },
+      "rights": {
+        "sourceOwner": "Third-party author/publisher",
+        "useScope": "Transformative research notes and source links only; no licence to reuse media or identity",
+        "distributedSourceMedia": false
+      },
+      "publisher": "Alex Hormozi",
+      "publisherUrl": "https://www.youtube.com/channel/UCUyDOdBWhC1MCxEjC46d-zw",
+      "publicationDateBasis": "YouTube public upload_date metadata; displayed local date may differ by timezone",
+      "durationSeconds": 833
+    },
+    {
+      "id": "HZ-YT-04",
+      "author": "alex-hormozi",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=R6gTKTFI-zA",
+      "title": "Why My Content Is Original",
+      "selectionReason": "Peça histórica curta, escolhida para estudar uma tese compacta e a fonte do repertório.",
+      "publishedAt": "2023-06-27",
+      "accessedAt": "2026-10-14",
+      "format": null,
+      "status": "textual-analysis-with-modality-gaps",
+      "coverage": {
+        "text": "complete-short-caption",
+        "visual": "not-reviewed",
+        "audio": "not-reviewed",
+        "completeAudiovisual": false
+      },
+      "analysis": {
+        "intent": "Explicar a origem do próprio conteúdo",
+        "audience": "Profissionais que repetem tendências",
+        "problem": "Dependência editorial de outras pessoas",
+        "thesis": "Buscar acontecimentos do próprio trabalho",
+        "opening": "0:00–0:04: responde por que seu conteúdo seria original",
+        "development": "Exemplo de reunião, registro e independência",
+        "evidence": "Relato pessoal sem comparação controlada",
+        "value": "Critério de origem para uma pauta",
+        "cta": "Sem CTA explícito na legenda de 27 segundos",
+        "visualLanguage": "Não houve inspeção dos quadros nem do som",
+        "strategy": "Repertório próprio como insumo para consistência"
+      },
+      "notes": [
+        {
+          "kind": "teaching",
+          "locator": "0:04–0:17",
+          "text": "Relaciona suas ideias a acontecimentos reais e ao registro escrito."
+        },
+        {
+          "kind": "observation",
+          "locator": "0:00–0:25; duração pública 27s",
+          "text": "A legenda contém uma tese, um exemplo e uma justificativa de continuidade."
+        },
+        {
+          "kind": "interpretation",
+          "locator": "0:17–0:25",
+          "text": "Originalidade não significa ausência de influência; distinguir síntese própria de cópia."
+        },
+        {
+          "kind": "clicko_hypothesis",
+          "locator": "pesquisa → roteiro",
+          "text": "Toda ideia baseada na marca deve apontar a entrevista, fato ou material que a originou."
+        }
+      ],
+      "limitations": "Vídeo é um Short de 27s, não aula extensa. Legenda completa curta disponível; sem avaliação audiovisual.",
+      "counterexample": "Novas empresas podem ainda não ter casos; podem explicar uma decisão ou processo sem fingir histórico.",
+      "sourceIntegrity": {
+        "primary": true,
+        "sha256": "14ead2d7729bbcd35dfb237f1dba7154b9f2bc9509dd8b841a2039fff66405c6",
+        "hashScope": "Public captions used for located text excerpts, not original audiovisual file",
+        "captionLanguage": "en",
+        "captionType": "auto-generated",
+        "captionReliability": "Exported captions can contain recognition or editorial errors; proper names and figures require source confirmation"
+      },
+      "metrics": {
+        "causality": "not-established",
+        "performanceValidation": "not-performed"
+      },
+      "rights": {
+        "sourceOwner": "Third-party author/publisher",
+        "useScope": "Transformative research notes and source links only; no licence to reuse media or identity",
+        "distributedSourceMedia": false
+      },
+      "publisher": "Alex Hormozi",
+      "publisherUrl": "https://www.youtube.com/channel/UCUyDOdBWhC1MCxEjC46d-zw",
+      "publicationDateBasis": "YouTube public upload_date metadata; displayed local date may differ by timezone",
+      "durationSeconds": 27
+    },
+    {
+      "id": "HZ-YT-05",
+      "author": "alex-hormozi",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=9XIgalr9aWY",
+      "title": "I Analyzed 2,000 Ads (Here's My Biggest Learning)",
+      "selectionReason": "Short histórico que permite discutir evidência, amostra e diferença entre promessa e prova.",
+      "publishedAt": "2024-07-18",
+      "accessedAt": "2026-10-14",
+      "format": null,
+      "status": "textual-analysis-with-modality-gaps",
+      "coverage": {
+        "text": "complete-short-caption",
+        "visual": "not-reviewed",
+        "audio": "not-reviewed",
+        "completeAudiovisual": false
+      },
+      "analysis": {
+        "intent": "Compartilhar uma conclusão sobre criativos",
+        "audience": "Anunciantes e empresários",
+        "problem": "Promessas pouco críveis",
+        "thesis": "Dar mais atenção à prova",
+        "opening": "0:00–0:03: anuncia sua amostra",
+        "development": "Contrasta total de anúncios e melhores da amostra",
+        "evidence": "Contagens relatadas; conjunto e critério não publicados na peça",
+        "value": "Enfatizar credibilidade",
+        "cta": "Conclusão prescritiva, sem CTA comercial explícito na legenda",
+        "visualLanguage": "Quadros e som não revisados",
+        "strategy": "Anúncio orientado por evidência disponível"
+      },
+      "notes": [
+        {
+          "kind": "observation",
+          "locator": "0:00–0:21",
+          "text": "O autor relata uma análise de anúncios e associa os melhores a prova."
+        },
+        {
+          "kind": "interpretation",
+          "locator": "0:00–0:21",
+          "text": "A seleção e o significado de melhor não são verificáveis nesta peça; não estimar efeito causal."
+        },
+        {
+          "kind": "clicko_hypothesis",
+          "locator": "revisão de anúncio",
+          "text": "Todo benefício prometido deve ter evidência compatível; credibilidade é requisito, não garantia de performance."
+        }
+      ],
+      "limitations": "Vídeo de 26s. Não há dados ou metodologia para reproduzir a análise; proporções autorrelatadas não viram regra de orçamento. AV pendente.",
+      "counterexample": "Uma oferta nova não possui depoimentos; pode mostrar funcionamento real e condições transparentes, sem inventá-los.",
+      "sourceIntegrity": {
+        "primary": true,
+        "sha256": "fc68761be5e53e2862771951ac7943d7b80974918da8545bff49fd72221ddd53",
+        "hashScope": "Public captions used for located text excerpts, not original audiovisual file",
+        "captionLanguage": "en",
+        "captionType": "auto-generated",
+        "captionReliability": "Exported captions can contain recognition or editorial errors; proper names and figures require source confirmation"
+      },
+      "metrics": {
+        "causality": "not-established",
+        "performanceValidation": "not-performed"
+      },
+      "rights": {
+        "sourceOwner": "Third-party author/publisher",
+        "useScope": "Transformative research notes and source links only; no licence to reuse media or identity",
+        "distributedSourceMedia": false
+      },
+      "publisher": "Alex Hormozi",
+      "publisherUrl": "https://www.youtube.com/channel/UCUyDOdBWhC1MCxEjC46d-zw",
+      "publicationDateBasis": "YouTube public upload_date metadata; displayed local date may differ by timezone",
+      "durationSeconds": 26
+    },
+    {
+      "id": "HZ-YT-06",
+      "author": "alex-hormozi",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/watch?v=fSbqaTlWaYI",
+      "title": "Learn Paid Ads in 30 Minutes!",
+      "selectionReason": "Aula histórica complementar aos Shorts, com demonstração, variantes e limites de benchmark.",
+      "publishedAt": "2024-07-20",
+      "accessedAt": "2026-10-14",
+      "format": null,
+      "status": "textual-analysis-with-modality-gaps",
+      "coverage": {
+        "text": "located-excerpts",
+        "visual": "not-reviewed",
+        "audio": "not-reviewed",
+        "completeAudiovisual": false
+      },
+      "analysis": {
+        "intent": "Responder dúvidas de anúncios em negócios diferentes",
+        "audience": "Empresários iniciando ou ampliando aquisição",
+        "problem": "Escalar sem confiança ou sistema de criativos",
+        "thesis": "Ajustar prova e mensagem ao público",
+        "opening": "0:00–0:29: apresenta perguntas de negócios de tamanhos distintos",
+        "development": "Perguntas, exemplos e recomendações por contexto",
+        "evidence": "Experiência relatada; números sem auditoria",
+        "value": "Pensar em prova relevante e reaproveitamento",
+        "cta": "Encaminhamentos para ofertas e grupos; não medir sua eficácia",
+        "visualLanguage": "Excertos textuais; sem revisão de imagem ou som",
+        "strategy": "Anúncios como segunda frente integrada ao conteúdo"
+      },
+      "notes": [
+        {
+          "kind": "teaching",
+          "locator": "6:13–7:49",
+          "text": "Discute proximidade, especificidade e dificuldade de falsificação da prova."
+        },
+        {
+          "kind": "teaching",
+          "locator": "14:33–15:53",
+          "text": "Relata criar variações a partir de um depoimento que considerou vencedor."
+        },
+        {
+          "kind": "observation",
+          "locator": "21:57–22:18; 29:18–30:21",
+          "text": "Propõe proporções de testes e benchmarks; são recomendações situadas e relatos."
+        },
+        {
+          "kind": "interpretation",
+          "locator": "28:17–29:14",
+          "text": "Prova e mecanismo apoiam credibilidade; não eliminam diferenças reais de produto."
+        },
+        {
+          "kind": "clicko_hypothesis",
+          "locator": "variantes de anúncio",
+          "text": "Vincular cada variante ao argumento base e à variável alterada; validar gasto e resultado em etapa própria."
+        }
+      ],
+      "limitations": "A análise cobre excertos de 30:43. Relatos de conversão, receitas e alocação não são metas universais. Nenhum teste pago, áudio ou quadro integral revisado.",
+      "counterexample": "Uma variante pode renovar atenção sem melhorar resultado; reutilizar até a exaustão pode prejudicar a marca.",
+      "sourceIntegrity": {
+        "primary": true,
+        "sha256": "e987e97a2ea979feb7fd8d100e6670631f00c5ab62ebd49ff60ec59b3243ad40",
+        "hashScope": "Public captions used for located text excerpts, not original audiovisual file",
+        "captionLanguage": "en",
+        "captionType": "auto-generated",
+        "captionReliability": "Exported captions can contain recognition or editorial errors; proper names and figures require source confirmation"
+      },
+      "metrics": {
+        "causality": "not-established",
+        "performanceValidation": "not-performed"
+      },
+      "rights": {
+        "sourceOwner": "Third-party author/publisher",
+        "useScope": "Transformative research notes and source links only; no licence to reuse media or identity",
+        "distributedSourceMedia": false
+      },
+      "publisher": "Alex Hormozi",
+      "publisherUrl": "https://www.youtube.com/channel/UCUyDOdBWhC1MCxEjC46d-zw",
+      "publicationDateBasis": "YouTube public upload_date metadata; displayed local date may differ by timezone",
+      "durationSeconds": 1843
+    },
+    {
+      "id": "AS-IG-01",
+      "author": "alfredo-soares",
+      "platform": "instagram",
+      "url": "https://www.instagram.com/alfredosoares/p/Deeg_6LP1eV/",
+      "title": "Preço e valor",
+      "selectionReason": "Aplicação da mensagem em publicação pública, contrastada com ensinamentos dos vídeos.",
+      "publishedAt": "2026-10-14",
+      "accessedAt": "2026-10-14",
+      "format": "static",
+      "status": "textual-analysis-with-modality-gaps",
+      "coverage": {
+        "text": "public-caption",
+        "visual": "single-image-reviewed",
+        "audio": "not-applicable",
+        "completeAudiovisual": false
+      },
+      "analysis": {
+        "intent": "Argumentar e apresentar uma oferta",
+        "audience": "Empresários que discutem preço",
+        "problem": "Confundir custo e valor percebido",
+        "thesis": "Relacionar valor a mudanças no negócio",
+        "opening": "Abertura da legenda; cobertura visual indicada separadamente",
+        "development": "Tese, desdobramento e convite",
+        "evidence": "Opinião comercial; sem teste causal",
+        "value": "Reconsiderar o argumento de valor",
+        "cta": "Link da bio para programa G4",
+        "visualLanguage": "Amostra visual descrita nas notas, sem inventar quadros não vistos",
+        "strategy": "Oferta apoiada por educação"
+      },
+      "notes": [
+        {
+          "kind": "observation",
+          "locator": "imagem única",
+          "text": "Quadro com escrita simples e contraste destacado em vermelho."
+        },
+        {
+          "kind": "teaching",
+          "locator": "legenda",
+          "text": "Relaciona preço e valor a decisões de gestão."
+        },
+        {
+          "kind": "interpretation",
+          "locator": "imagem + legenda",
+          "text": "A simplicidade produtiva sustenta uma tese; não explica isoladamente seu alcance."
+        },
+        {
+          "kind": "clicko_hypothesis",
+          "locator": "direção",
+          "text": "Permitir peça estática simples quando o argumento não exige demonstração audiovisual."
+        }
+      ],
+      "limitations": "Legenda pública observada; ela não atesta o roteiro falado. Cobertura de imagens declarada; não atesta recepção nem resultados. Métricas de desempenho não auditadas.",
+      "counterexample": "Uma objeção de preço pode refletir orçamento ou inadequação real; não presumir que falta educar o comprador.",
+      "sourceIntegrity": {
+        "primary": true,
+        "sha256": null,
+        "hashScope": "Live source not archived; locators preserved"
+      },
+      "metrics": {
+        "causality": "not-established",
+        "performanceValidation": "not-performed"
+      },
+      "rights": {
+        "sourceOwner": "Third-party author/publisher",
+        "useScope": "Transformative research notes and source links only; no licence to reuse media or identity",
+        "distributedSourceMedia": false
+      }
+    },
+    {
+      "id": "AS-IG-02",
+      "author": "alfredo-soares",
+      "platform": "instagram",
+      "url": "https://www.instagram.com/alfredosoares/p/Dec1PHAm8zl/",
+      "title": "Reconhecimento sem logo",
+      "selectionReason": "Aplicação da mensagem em publicação pública, contrastada com ensinamentos dos vídeos.",
+      "publishedAt": "2026-10-13",
+      "accessedAt": "2026-10-14",
+      "format": "carousel",
+      "status": "textual-analysis-with-modality-gaps",
+      "coverage": {
+        "text": "public-caption",
+        "visual": "cover-only",
+        "audio": "not-applicable",
+        "completeAudiovisual": false
+      },
+      "analysis": {
+        "intent": "Discutir identidade e promover formação",
+        "audience": "Gestores de marcas",
+        "problem": "Identidade pouco reconhecível",
+        "thesis": "Distinção vai além de colocar o logo",
+        "opening": "Abertura da legenda; cobertura visual indicada separadamente",
+        "development": "Legenda desenvolve reconhecimento e conecta a programa",
+        "evidence": "Analogia visual e opinião",
+        "value": "Reconhecer ativos de identidade",
+        "cta": "Bio para formação G4",
+        "visualLanguage": "Amostra visual descrita nas notas, sem inventar quadros não vistos",
+        "strategy": "Educação de marca com oferta"
+      },
+      "notes": [
+        {
+          "kind": "observation",
+          "locator": "capa do carrossel",
+          "text": "Batatas em embalagem vermelha sem logo acompanham uma provocação sobre marca."
+        },
+        {
+          "kind": "observation",
+          "locator": "interface da publicação",
+          "text": "A interface exibe indicação de conteúdo de IA."
+        },
+        {
+          "kind": "teaching",
+          "locator": "legenda",
+          "text": "A legenda trata de reconhecimento, memória e diferenciação."
+        },
+        {
+          "kind": "clicko_hypothesis",
+          "locator": "revisão de marca",
+          "text": "Conferir ativos distintivos autorizados sem copiar a embalagem da referência."
+        }
+      ],
+      "limitations": "Legenda pública observada; ela não atesta o roteiro falado. Cobertura de imagens declarada; não atesta recepção nem resultados. Métricas de desempenho não auditadas.",
+      "counterexample": "Marcas novas podem precisar do nome e de pistas de categoria; esconder o logo não é objetivo universal.",
+      "sourceIntegrity": {
+        "primary": true,
+        "sha256": null,
+        "hashScope": "Live source not archived; locators preserved"
+      },
+      "metrics": {
+        "causality": "not-established",
+        "performanceValidation": "not-performed"
+      },
+      "rights": {
+        "sourceOwner": "Third-party author/publisher",
+        "useScope": "Transformative research notes and source links only; no licence to reuse media or identity",
+        "distributedSourceMedia": false
+      }
+    },
+    {
+      "id": "AS-IG-03",
+      "author": "alfredo-soares",
+      "platform": "instagram",
+      "url": "https://www.instagram.com/alfredosoares/reel/DecgGsSvAoF/",
+      "title": "Presença e distribuição",
+      "selectionReason": "Aplicação da mensagem em publicação pública, contrastada com ensinamentos dos vídeos.",
+      "publishedAt": "2026-10-13",
+      "accessedAt": "2026-10-14",
+      "format": "reel",
+      "status": "textual-analysis-with-modality-gaps",
+      "coverage": {
+        "text": "public-caption",
+        "visual": "not-reviewed",
+        "audio": "not-reviewed",
+        "completeAudiovisual": false
+      },
+      "analysis": {
+        "intent": "Conectar presença a disciplina de execução",
+        "audience": "Empresários com atividade digital irregular",
+        "problem": "Publicar sem continuidade",
+        "thesis": "Planejar distribuição e consistência",
+        "opening": "A tese abre a legenda; abertura falada do Reel não observada",
+        "development": "Legenda argumenta e oferece aprofundamento",
+        "evidence": "Opinião do autor",
+        "value": "Distinguir estar online de distribuir com intenção",
+        "cta": "Programa G4 pela bio",
+        "visualLanguage": "Sem revisão visual",
+        "strategy": "Relacionamento e oferta"
+      },
+      "notes": [
+        {
+          "kind": "teaching",
+          "locator": "legenda pública no perfil",
+          "text": "A legenda associa presença digital a distribuição e execução consistente."
+        },
+        {
+          "kind": "interpretation",
+          "locator": "legenda",
+          "text": "Consistência exige capacidade e propósito; não somente frequência."
+        },
+        {
+          "kind": "clicko_hypothesis",
+          "locator": "continuidade",
+          "text": "Sugerir próxima pauta vinculada à direção escolhida e ao material disponível."
+        }
+      ],
+      "limitations": "Legenda pública observada; ela não atesta o roteiro falado. Som, ritmo e íntegra visual do Reel não revisados. Métricas de desempenho não auditadas.",
+      "counterexample": "Publicar com maior frequência pode repetir conteúdo sem valor e consumir recursos de uma operação pequena.",
+      "sourceIntegrity": {
+        "primary": true,
+        "sha256": null,
+        "hashScope": "Live source not archived; locators preserved"
+      },
+      "metrics": {
+        "causality": "not-established",
+        "performanceValidation": "not-performed"
+      },
+      "rights": {
+        "sourceOwner": "Third-party author/publisher",
+        "useScope": "Transformative research notes and source links only; no licence to reuse media or identity",
+        "distributedSourceMedia": false
+      }
+    },
+    {
+      "id": "AS-IG-04",
+      "author": "alfredo-soares",
+      "platform": "instagram",
+      "url": "https://www.instagram.com/alfredosoares/reel/DeefNYdP-Om/",
+      "title": "Necessidades de franqueados",
+      "selectionReason": "Aplicação da mensagem em publicação pública, contrastada com ensinamentos dos vídeos.",
+      "publishedAt": "2026-10-14",
+      "accessedAt": "2026-10-14",
+      "format": "reel",
+      "status": "textual-analysis-with-modality-gaps",
+      "coverage": {
+        "text": "public-caption",
+        "visual": "not-reviewed",
+        "audio": "not-reviewed",
+        "completeAudiovisual": false
+      },
+      "analysis": {
+        "intent": "Reenquadrar o entendimento do comprador",
+        "audience": "Franqueadores e empresários",
+        "problem": "Otimizar unidades sem entender a pessoa",
+        "thesis": "Considerar expectativas de negócio e de vida",
+        "opening": "A tese abre a legenda; abertura falada do Reel não observada",
+        "development": "Contraste entre a oferta e o desejo do comprador",
+        "evidence": "Opinião e exemplo setorial",
+        "value": "Investigar o que o cliente procura",
+        "cta": "Oferta G4 pela bio",
+        "visualLanguage": "Sem revisão visual",
+        "strategy": "Educação que revela distância entre produto e público"
+      },
+      "notes": [
+        {
+          "kind": "teaching",
+          "locator": "legenda pública no perfil",
+          "text": "Relaciona a decisão de franquia a expectativas além do retorno financeiro."
+        },
+        {
+          "kind": "interpretation",
+          "locator": "legenda",
+          "text": "A hipótese de motivação deve ser conferida com clientes; não presumida para todos."
+        },
+        {
+          "kind": "clicko_hypothesis",
+          "locator": "pesquisa",
+          "text": "Guardar motivação declarada, origem e divergências entre compradores."
+        }
+      ],
+      "limitations": "Legenda pública observada; ela não atesta o roteiro falado. Som, ritmo e íntegra visual do Reel não revisados. Métricas de desempenho não auditadas.",
+      "counterexample": "Há compradores que priorizam investimento e escala; usar família e equilíbrio em todo anúncio seria estereotipar.",
+      "sourceIntegrity": {
+        "primary": true,
+        "sha256": null,
+        "hashScope": "Live source not archived; locators preserved"
+      },
+      "metrics": {
+        "causality": "not-established",
+        "performanceValidation": "not-performed"
+      },
+      "rights": {
+        "sourceOwner": "Third-party author/publisher",
+        "useScope": "Transformative research notes and source links only; no licence to reuse media or identity",
+        "distributedSourceMedia": false
+      }
+    },
+    {
+      "id": "AS-IG-05",
+      "author": "alfredo-soares",
+      "platform": "instagram",
+      "url": "https://www.instagram.com/alfredosoares/reel/DeeQ5ifPLm2/",
+      "title": "Caso de uma marca de bebidas",
+      "selectionReason": "Aplicação da mensagem em publicação pública, contrastada com ensinamentos dos vídeos.",
+      "publishedAt": "2026-10-14",
+      "accessedAt": "2026-10-14",
+      "format": "reel",
+      "status": "textual-analysis-with-modality-gaps",
+      "coverage": {
+        "text": "public-caption",
+        "visual": "not-reviewed",
+        "audio": "not-reviewed",
+        "completeAudiovisual": false
+      },
+      "analysis": {
+        "intent": "Promover um caso de empreendedorismo",
+        "audience": "Empresários de marcas de consumo",
+        "problem": "Atenção sem sustentação de negócio",
+        "thesis": "Distinguir presença de resultado operacional",
+        "opening": "A tese abre a legenda; abertura falada do Reel não observada",
+        "development": "Contrasta marca pequena e grandes competidores; encaminha ao caso longo",
+        "evidence": "Relatos de expansão e negócio, não auditados",
+        "value": "Apontar decisões de uma operação",
+        "cta": "Comentar CANAL para acessar o vídeo",
+        "visualLanguage": "Sem revisão visual",
+        "strategy": "Reel encaminha para estudo mais profundo"
+      },
+      "notes": [
+        {
+          "kind": "observation",
+          "locator": "legenda pública no perfil",
+          "text": "Apresenta Dane-se e seu fundador em contraste com grandes marcas."
+        },
+        {
+          "kind": "interpretation",
+          "locator": "legenda",
+          "text": "Resultados de distribuição e equilíbrio econômico são relatos, não provas de que conteúdo os causou."
+        },
+        {
+          "kind": "clicko_hypothesis",
+          "locator": "distribuição",
+          "text": "Uma peça breve pode encaminhar à demonstração detalhada sem alegar que todo consumidor fará essa jornada."
+        }
+      ],
+      "limitations": "Legenda pública observada; ela não atesta o roteiro falado. Som, ritmo e íntegra visual do Reel não revisados. Métricas de desempenho não auditadas.",
+      "counterexample": "Um caso excepcional não representa a probabilidade de sucesso de toda marca pequena.",
+      "sourceIntegrity": {
+        "primary": true,
+        "sha256": null,
+        "hashScope": "Live source not archived; locators preserved"
+      },
+      "metrics": {
+        "causality": "not-established",
+        "performanceValidation": "not-performed"
+      },
+      "rights": {
+        "sourceOwner": "Third-party author/publisher",
+        "useScope": "Transformative research notes and source links only; no licence to reuse media or identity",
+        "distributedSourceMedia": false
+      }
+    },
+    {
+      "id": "AS-IG-06",
+      "author": "alfredo-soares",
+      "platform": "instagram",
+      "url": "https://www.instagram.com/alfredosoares/p/DNmAhVMtpjj/",
+      "title": "Registro pessoal de gratidão",
+      "selectionReason": "Aplicação da mensagem em publicação pública, contrastada com ensinamentos dos vídeos.",
+      "publishedAt": "2025-08-20",
+      "accessedAt": "2026-10-14",
+      "format": "carousel",
+      "status": "textual-analysis-with-modality-gaps",
+      "coverage": {
+        "text": "public-caption",
+        "visual": "not-reviewed",
+        "audio": "not-applicable",
+        "completeAudiovisual": false
+      },
+      "analysis": {
+        "intent": "Compartilhar um acontecimento pessoal",
+        "audience": "Comunidade que acompanha o autor",
+        "problem": "Conexão sem tema comercial",
+        "thesis": "Gratidão e vínculo pessoal",
+        "opening": "Abertura da legenda; cobertura visual indicada separadamente",
+        "development": "Legenda retrospectiva; sequência de fotos não revisada",
+        "evidence": "Relato pessoal",
+        "value": "Vínculo, sem tutorial ou oferta",
+        "cta": "Não identificado CTA comercial na legenda",
+        "visualLanguage": "Sem revisão visual",
+        "strategy": "Expressão pessoal no conjunto da presença pública"
+      },
+      "notes": [
+        {
+          "kind": "observation",
+          "locator": "legenda pública; metadata da publicação",
+          "text": "Registro familiar; data narrada do acontecimento difere da data de publicação."
+        },
+        {
+          "kind": "interpretation",
+          "locator": "legenda",
+          "text": "Autenticidade pode incluir vida pessoal, mas não exige exposição de familiares."
+        },
+        {
+          "kind": "clicko_hypothesis",
+          "locator": "briefing de marca",
+          "text": "O cliente pode excluir assuntos pessoais de sua linha editorial; não reutilizar detalhes de terceiros."
+        }
+      ],
+      "limitations": "Legenda pública observada; ela não atesta o roteiro falado. Cobertura de imagens declarada; não atesta recepção nem resultados. Métricas de desempenho não auditadas.",
+      "counterexample": "Uma marca institucional pode construir confiança com processos e equipe, sem conteúdo familiar.",
+      "sourceIntegrity": {
+        "primary": true,
+        "sha256": null,
+        "hashScope": "Live source not archived; locators preserved"
+      },
+      "metrics": {
+        "causality": "not-established",
+        "performanceValidation": "not-performed"
+      },
+      "rights": {
+        "sourceOwner": "Third-party author/publisher",
+        "useScope": "Transformative research notes and source links only; no licence to reuse media or identity",
+        "distributedSourceMedia": false
+      }
+    },
+    {
+      "id": "HZ-IG-01",
+      "author": "alex-hormozi",
+      "platform": "instagram",
+      "url": "https://www.instagram.com/hormozi/p/DedJ5XkFEeG/",
+      "title": "Três tipos de jogadores",
+      "selectionReason": "Aplicação da mensagem em publicação pública, contrastada com ensinamentos dos vídeos.",
+      "publishedAt": "2026-10-13",
+      "accessedAt": "2026-10-14",
+      "format": "carousel",
+      "status": "textual-analysis-with-modality-gaps",
+      "coverage": {
+        "text": "public-caption",
+        "visual": "cover-categories-conclusion-sampled",
+        "audio": "not-applicable",
+        "completeAudiovisual": false
+      },
+      "analysis": {
+        "intent": "Propor uma atitude diante do jogo de negócios",
+        "audience": "Empresários e seguidores do autor",
+        "problem": "Confundir medo, vitória e continuidade",
+        "thesis": "Valorizar a continuidade do jogo",
+        "opening": "Abertura da legenda; cobertura visual indicada separadamente",
+        "development": "Categorias, contrastes e conclusão",
+        "evidence": "Opinião; sem estudo comparativo",
+        "value": "Um modelo curto para reflexão",
+        "cta": "Sem oferta explícita observada",
+        "visualLanguage": "Amostra visual descrita nas notas, sem inventar quadros não vistos",
+        "strategy": "Conteúdo de opinião e vínculo com a visão do autor"
+      },
+      "notes": [
+        {
+          "kind": "observation",
+          "locator": "capa → cartões de categorias → conclusão",
+          "text": "Sequência com três atitudes, contrastes e conclusão; foram observados esses cartões. Não se afirma contagem total de slides."
+        },
+        {
+          "kind": "observation",
+          "locator": "cartões observados",
+          "text": "Texto em estrutura consistente com retratos do autor em variação."
+        },
+        {
+          "kind": "interpretation",
+          "locator": "sequência observada",
+          "text": "Progressão de classificação sustenta a leitura; não prova maior retenção."
+        },
+        {
+          "kind": "clicko_hypothesis",
+          "locator": "roteiro de carrossel",
+          "text": "Cada cartão deve cumprir uma função e a conclusão resolver a questão aberta."
+        }
+      ],
+      "limitations": "Legenda pública observada; ela não atesta o roteiro falado. Cobertura de imagens declarada; não atesta recepção nem resultados. Métricas de desempenho não auditadas.",
+      "counterexample": "Gostar do jogo não impede falência; restrições de caixa e mercado podem exigir encerramento.",
+      "sourceIntegrity": {
+        "primary": true,
+        "sha256": null,
+        "hashScope": "Live source not archived; locators preserved"
+      },
+      "metrics": {
+        "causality": "not-established",
+        "performanceValidation": "not-performed"
+      },
+      "rights": {
+        "sourceOwner": "Third-party author/publisher",
+        "useScope": "Transformative research notes and source links only; no licence to reuse media or identity",
+        "distributedSourceMedia": false
+      }
+    },
+    {
+      "id": "HZ-IG-02",
+      "author": "alex-hormozi",
+      "platform": "instagram",
+      "url": "https://www.instagram.com/hormozi/reel/Ddii_P4BHns/",
+      "title": "Quatro maneiras de influenciar comportamento",
+      "selectionReason": "Aplicação da mensagem em publicação pública, contrastada com ensinamentos dos vídeos.",
+      "publishedAt": null,
+      "accessedAt": "2026-10-14",
+      "format": "reel",
+      "status": "textual-analysis-with-modality-gaps",
+      "coverage": {
+        "text": "public-caption",
+        "visual": "not-reviewed",
+        "audio": "not-reviewed",
+        "completeAudiovisual": false
+      },
+      "analysis": {
+        "intent": "Explicar uma classificação com analogia",
+        "audience": "Gestores e seguidores interessados em comportamento",
+        "problem": "Confundir consequências de ações",
+        "thesis": "Organizar tipos de consequências",
+        "opening": "A tese abre a legenda; abertura falada do Reel não observada",
+        "development": "Legenda usa exemplos cotidianos",
+        "evidence": "Explicação popular, sem protocolo científico",
+        "value": "Vocabulário para discutir consequências",
+        "cta": "Sem CTA comercial identificado na legenda",
+        "visualLanguage": "Sem revisão visual",
+        "strategy": "Educação em linguagem acessível"
+      },
+      "notes": [
+        {
+          "kind": "teaching",
+          "locator": "legenda pública no perfil",
+          "text": "Apresenta quatro modos de consequência com exemplos cotidianos."
+        },
+        {
+          "kind": "interpretation",
+          "locator": "legenda",
+          "text": "A tradição conceitual de reforço não foi criada por Hormozi; o Reel não valida intervenções psicológicas."
+        },
+        {
+          "kind": "clicko_hypothesis",
+          "locator": "pesquisa",
+          "text": "Verificar a origem conceitual antes de atribuir um framework a um influenciador."
+        }
+      ],
+      "limitations": "Legenda pública observada; ela não atesta o roteiro falado. Som, ritmo e íntegra visual do Reel não revisados. Métricas de desempenho não auditadas.",
+      "counterexample": "Em relações de trabalho, consequências podem produzir medo e efeitos indesejados; não converter a peça em instrução de manipulação.",
+      "sourceIntegrity": {
+        "primary": true,
+        "sha256": null,
+        "hashScope": "Live source not archived; locators preserved"
+      },
+      "metrics": {
+        "causality": "not-established",
+        "performanceValidation": "not-performed"
+      },
+      "rights": {
+        "sourceOwner": "Third-party author/publisher",
+        "useScope": "Transformative research notes and source links only; no licence to reuse media or identity",
+        "distributedSourceMedia": false
+      }
+    },
+    {
+      "id": "HZ-IG-03",
+      "author": "alex-hormozi",
+      "platform": "instagram",
+      "url": "https://www.instagram.com/hormozi/reel/DXJzj70hTEm/",
+      "title": "Valor de talento",
+      "selectionReason": "Aplicação da mensagem em publicação pública, contrastada com ensinamentos dos vídeos.",
+      "publishedAt": null,
+      "accessedAt": "2026-10-14",
+      "format": "reel",
+      "status": "textual-analysis-with-modality-gaps",
+      "coverage": {
+        "text": "public-caption",
+        "visual": "not-reviewed",
+        "audio": "not-reviewed",
+        "completeAudiovisual": false
+      },
+      "analysis": {
+        "intent": "Defender investimento em pessoas",
+        "audience": "Donos de empresas",
+        "problem": "Comparar apenas o custo da contratação",
+        "thesis": "Considerar contribuição e capacidade",
+        "opening": "A tese abre a legenda; abertura falada do Reel não observada",
+        "development": "Legenda contrasta custo e retorno alegado",
+        "evidence": "Estimativas autorais não verificadas",
+        "value": "Perguntar o que uma função pode realizar",
+        "cta": "Sem CTA comercial identificado na legenda",
+        "visualLanguage": "Sem revisão visual",
+        "strategy": "Opinião sobre alocação de recursos"
+      },
+      "notes": [
+        {
+          "kind": "teaching",
+          "locator": "legenda pública no perfil",
+          "text": "Argumenta que contribuição de talentos pode superar a comparação de salários."
+        },
+        {
+          "kind": "interpretation",
+          "locator": "legenda",
+          "text": "Multiplicadores apresentados são alegações; não constituem fórmula de ROI."
+        },
+        {
+          "kind": "clicko_hypothesis",
+          "locator": "controle de afirmações",
+          "text": "Qualificar números sem fonte ou retirar a cifra quando não é necessária à tese."
+        }
+      ],
+      "limitations": "Legenda pública observada; ela não atesta o roteiro falado. Som, ritmo e íntegra visual do Reel não revisados. Métricas de desempenho não auditadas.",
+      "counterexample": "Uma contratação sem contexto, suporte e definição de responsabilidade pode não gerar a contribuição esperada.",
+      "sourceIntegrity": {
+        "primary": true,
+        "sha256": null,
+        "hashScope": "Live source not archived; locators preserved"
+      },
+      "metrics": {
+        "causality": "not-established",
+        "performanceValidation": "not-performed"
+      },
+      "rights": {
+        "sourceOwner": "Third-party author/publisher",
+        "useScope": "Transformative research notes and source links only; no licence to reuse media or identity",
+        "distributedSourceMedia": false
+      }
+    },
+    {
+      "id": "HZ-IG-04",
+      "author": "alex-hormozi",
+      "platform": "instagram",
+      "url": "https://www.instagram.com/hormozi/reel/DecMGCvBorF/",
+      "title": "Utilidade para o cliente",
+      "selectionReason": "Aplicação da mensagem em publicação pública, contrastada com ensinamentos dos vídeos.",
+      "publishedAt": null,
+      "accessedAt": "2026-10-14",
+      "format": "reel",
+      "status": "textual-analysis-with-modality-gaps",
+      "coverage": {
+        "text": "public-caption",
+        "visual": "not-reviewed",
+        "audio": "not-reviewed",
+        "completeAudiovisual": false
+      },
+      "analysis": {
+        "intent": "Reorientar a mensagem ao benefício",
+        "audience": "Empresários comunicando serviços",
+        "problem": "Apresentar apenas currículo ou passado",
+        "thesis": "Mostrar como ajudar o comprador",
+        "opening": "A tese abre a legenda; abertura falada do Reel não observada",
+        "development": "Legenda contrasta credenciais e utilidade",
+        "evidence": "Opinião aplicada à mensagem",
+        "value": "Foco no problema atendido",
+        "cta": "Sem CTA comercial identificado na legenda",
+        "visualLanguage": "Sem revisão visual",
+        "strategy": "Mensagem centrada no cliente"
+      },
+      "notes": [
+        {
+          "kind": "teaching",
+          "locator": "legenda pública no perfil",
+          "text": "A mensagem enfatiza o que o profissional pode fazer para o cliente."
+        },
+        {
+          "kind": "interpretation",
+          "locator": "legenda",
+          "text": "Isso não elimina a necessidade de credenciais e prova em decisões de maior consequência."
+        },
+        {
+          "kind": "clicko_hypothesis",
+          "locator": "direção de autoridade",
+          "text": "Converter uma capacidade real em benefício específico e evidência pertinente."
+        }
+      ],
+      "limitations": "Legenda pública observada; ela não atesta o roteiro falado. Som, ritmo e íntegra visual do Reel não revisados. Métricas de desempenho não auditadas.",
+      "counterexample": "Em serviços especializados, omitir qualificações necessárias pode prejudicar confiança e decisão informada.",
+      "sourceIntegrity": {
+        "primary": true,
+        "sha256": null,
+        "hashScope": "Live source not archived; locators preserved"
+      },
+      "metrics": {
+        "causality": "not-established",
+        "performanceValidation": "not-performed"
+      },
+      "rights": {
+        "sourceOwner": "Third-party author/publisher",
+        "useScope": "Transformative research notes and source links only; no licence to reuse media or identity",
+        "distributedSourceMedia": false
+      }
+    },
+    {
+      "id": "HZ-IG-05",
+      "author": "alex-hormozi",
+      "platform": "instagram",
+      "url": "https://www.instagram.com/hormozi/reel/DecgnD8BVPj/",
+      "title": "Falha e aprendizagem",
+      "selectionReason": "Aplicação da mensagem em publicação pública, contrastada com ensinamentos dos vídeos.",
+      "publishedAt": null,
+      "accessedAt": "2026-10-14",
+      "format": "reel",
+      "status": "textual-analysis-with-modality-gaps",
+      "coverage": {
+        "text": "public-caption",
+        "visual": "not-reviewed",
+        "audio": "not-reviewed",
+        "completeAudiovisual": false
+      },
+      "analysis": {
+        "intent": "Reenquadrar reação a uma tentativa",
+        "audience": "Pessoas construindo projetos",
+        "problem": "Interpretar toda falha como identidade",
+        "thesis": "Usar feedback para ajustar a ação",
+        "opening": "A tese abre a legenda; abertura falada do Reel não observada",
+        "development": "Legenda apresenta a mudança de perspectiva",
+        "evidence": "Opinião motivacional",
+        "value": "Separar resultado de julgamento pessoal",
+        "cta": "Sem CTA comercial identificado na legenda",
+        "visualLanguage": "Sem revisão visual",
+        "strategy": "Vínculo e atitude diante de execução"
+      },
+      "notes": [
+        {
+          "kind": "teaching",
+          "locator": "legenda pública no perfil",
+          "text": "O autor trata falha como feedback esperado em tentativas."
+        },
+        {
+          "kind": "interpretation",
+          "locator": "legenda",
+          "text": "A utilidade depende de existir observação e ajuste, não apenas repetir."
+        },
+        {
+          "kind": "clicko_hypothesis",
+          "locator": "aprendizado do projeto",
+          "text": "Registrar o que mudou, o sinal observado e a decisão seguinte; não chamar comparação visual de teste causal."
+        }
+      ],
+      "limitations": "Legenda pública observada; ela não atesta o roteiro falado. Som, ritmo e íntegra visual do Reel não revisados. Métricas de desempenho não auditadas.",
+      "counterexample": "Erros evitáveis que afetam pessoas não devem ser celebrados como experimentação; corrigir e reparar continua necessário.",
+      "sourceIntegrity": {
+        "primary": true,
+        "sha256": null,
+        "hashScope": "Live source not archived; locators preserved"
+      },
+      "metrics": {
+        "causality": "not-established",
+        "performanceValidation": "not-performed"
+      },
+      "rights": {
+        "sourceOwner": "Third-party author/publisher",
+        "useScope": "Transformative research notes and source links only; no licence to reuse media or identity",
+        "distributedSourceMedia": false
+      }
+    },
+    {
+      "id": "HZ-IG-06",
+      "author": "alex-hormozi",
+      "platform": "instagram",
+      "url": "https://www.instagram.com/hormozi/reel/DeXXBb6ho82/",
+      "title": "Preço e lucro",
+      "selectionReason": "Aplicação da mensagem em publicação pública, contrastada com ensinamentos dos vídeos.",
+      "publishedAt": null,
+      "accessedAt": "2026-10-14",
+      "format": "reel",
+      "status": "textual-analysis-with-modality-gaps",
+      "coverage": {
+        "text": "public-caption",
+        "visual": "not-reviewed",
+        "audio": "not-reviewed",
+        "completeAudiovisual": false
+      },
+      "analysis": {
+        "intent": "Provocar reflexão sobre definição de preço",
+        "audience": "Donos de empresas",
+        "problem": "Definir preço apenas por concorrentes",
+        "thesis": "Examinar decisão de preço e efeitos no negócio",
+        "opening": "A tese abre a legenda; abertura falada do Reel não observada",
+        "development": "Legenda abre com afirmação forte e exemplo de comparação",
+        "evidence": "Percentual alegado sem metodologia",
+        "value": "Questionar pressuposto de preço",
+        "cta": "Sem CTA comercial identificado na legenda",
+        "visualLanguage": "Sem revisão visual",
+        "strategy": "Opinião comercial curta"
+      },
+      "notes": [
+        {
+          "kind": "teaching",
+          "locator": "legenda pública no perfil",
+          "text": "Critica definir preço apenas pela média de competidores."
+        },
+        {
+          "kind": "interpretation",
+          "locator": "legenda",
+          "text": "O percentual citado não tem fonte verificada; não entra no acervo como estatística estabelecida."
+        },
+        {
+          "kind": "clicko_hypothesis",
+          "locator": "revisão factual",
+          "text": "Toda estatística publicada deve ter fonte, população, período e uso compatível."
+        }
+      ],
+      "limitations": "Legenda pública observada; ela não atesta o roteiro falado. Som, ritmo e íntegra visual do Reel não revisados. Métricas de desempenho não auditadas.",
+      "counterexample": "Subir preços sem considerar elasticidade, valor, público e custos pode reduzir resultado; conteúdo não substitui análise do negócio.",
+      "sourceIntegrity": {
+        "primary": true,
+        "sha256": null,
+        "hashScope": "Live source not archived; locators preserved"
+      },
+      "metrics": {
+        "causality": "not-established",
+        "performanceValidation": "not-performed"
+      },
+      "rights": {
+        "sourceOwner": "Third-party author/publisher",
+        "useScope": "Transformative research notes and source links only; no licence to reuse media or identity",
+        "distributedSourceMedia": false
+      }
+    },
+    {
+      "id": "AH-01",
+      "author": "ann-handley",
+      "platform": "article",
+      "url": "https://www.marketingprofs.com/articles/2022/48188/writing-gps-writing-framework-ann-handley",
+      "title": "Writing GPS",
+      "selectionReason": "Framework explícito com versão verificável e processo de revisão.",
+      "publishedAt": "2022",
+      "accessedAt": "2026-10-14",
+      "format": null,
+      "status": "documentary-analysis",
+      "coverage": {
+        "text": "article-text-reviewed",
+        "visual": "not-reviewed",
+        "audio": "not-applicable",
+        "completeAudiovisual": false
+      },
+      "analysis": {
+        "intent": "Orientar escrita útil",
+        "audience": "Profissionais de conteúdo",
+        "problem": "Escrever antes de entender leitor e propósito",
+        "thesis": "Preparar, desenvolver e lapidar",
+        "opening": "Introdução atualiza o método de escrita",
+        "development": "Go, Push e Shine em 17 passos",
+        "evidence": "Método profissional, não ensaio causal",
+        "value": "Processo para sair do rascunho e revisar",
+        "cta": "Continuar a relação após publicar",
+        "visualLanguage": "Estrutura do artigo lida; imagens ilustrativas não auditadas",
+        "strategy": "Qualidade editorial precede acabamento"
+      },
+      "notes": [
+        {
+          "kind": "teaching",
+          "locator": "Go / Push / Shine; artigo de 2022",
+          "text": "A versão apresentada organiza 17 passos, admite adaptação e revisão não linear."
+        },
+        {
+          "kind": "observation",
+          "locator": "etapas 11–13",
+          "text": "Há revisão assistida e revisão humana, além de leitura em voz alta."
+        },
+        {
+          "kind": "interpretation",
+          "locator": "etapas de revisão",
+          "text": "Separar redator e revisor entre agentes é uma adaptação, não substituição comprovada do editor humano."
+        },
+        {
+          "kind": "clicko_hypothesis",
+          "locator": "roteiro e revisão",
+          "text": "Exigir intenção, leitor, evidência e teste de compreensão antes da produção."
+        }
+      ],
+      "limitations": "A versão anterior tinha 12 passos; não misturar versões. Não se testou eficácia do método em agentes autônomos.",
+      "counterexample": "Uma correção curta pode dispensar várias etapas formais; o processo deve servir à necessidade.",
+      "sourceIntegrity": {
+        "primary": true,
+        "sha256": null,
+        "hashScope": "Live source not archived; locators preserved"
+      },
+      "metrics": {
+        "causality": "not-established",
+        "performanceValidation": "not-performed"
+      },
+      "rights": {
+        "sourceOwner": "Third-party author/publisher",
+        "useScope": "Transformative research notes and source links only; no licence to reuse media or identity",
+        "distributedSourceMedia": false
+      }
+    },
+    {
+      "id": "AH-02",
+      "author": "ann-handley",
+      "platform": "article",
+      "url": "https://annhandley.com/when-to-use-artificial-intelligence/",
+      "title": "Quando usar IA",
+      "selectionReason": "Relato primário que preserva divergência relevante sobre voz e experiência humana.",
+      "publishedAt": null,
+      "accessedAt": "2026-10-14",
+      "format": null,
+      "status": "documentary-analysis",
+      "coverage": {
+        "text": "article-text-reviewed",
+        "visual": "not-reviewed",
+        "audio": "not-applicable",
+        "completeAudiovisual": false
+      },
+      "analysis": {
+        "intent": "Explicar limites pessoais do uso de IA",
+        "audience": "Escritores e profissionais de marca",
+        "problem": "Delegar escrita sem preservar experiência",
+        "thesis": "IA auxilia investigação; a autora preserva a escrita pessoal",
+        "opening": "Caso de uma cerimônia e sua preparação",
+        "development": "Pesquisa, entrevistas, escrita e avaliação qualitativa",
+        "evidence": "Relato próprio, sem comparação experimental",
+        "value": "Considerar voz e experiência antes de automatizar",
+        "cta": "Reflexão e relação com leitores",
+        "visualLanguage": "Texto lido; mídia ilustrativa não auditada",
+        "strategy": "Voz e vínculo como critérios editoriais"
+      },
+      "notes": [
+        {
+          "kind": "teaching",
+          "locator": "trechos sobre research, interviews e writing",
+          "text": "A autora admite IA para apoio à investigação e organização, mas preserva sua escrita pessoal."
+        },
+        {
+          "kind": "observation",
+          "locator": "caso da cerimônia",
+          "text": "Avalia a resposta também por sinais qualitativos de conexão."
+        },
+        {
+          "kind": "interpretation",
+          "locator": "contraste com HZ-YT-03",
+          "text": "Há convergência em repertório real e divergência quanto à autoria automatizada."
+        },
+        {
+          "kind": "clicko_hypothesis",
+          "locator": "voz de marca",
+          "text": "Agentes precisam de materiais reais e confirmação do cliente; não declarar equivalência ao método humano."
+        }
+      ],
+      "limitations": "Data exata não confirmada. Caso pessoal não demonstra ROI comercial nem endossa o departamento autônomo.",
+      "counterexample": "Uma voz de marca coletiva pode usar revisão distribuída; atribuir texto simulado a uma pessoa sem aprovação é inadequado.",
+      "sourceIntegrity": {
+        "primary": true,
+        "sha256": null,
+        "hashScope": "Live source not archived; locators preserved"
+      },
+      "metrics": {
+        "causality": "not-established",
+        "performanceValidation": "not-performed"
+      },
+      "rights": {
+        "sourceOwner": "Third-party author/publisher",
+        "useScope": "Transformative research notes and source links only; no licence to reuse media or identity",
+        "distributedSourceMedia": false
+      }
+    },
+    {
+      "id": "JP-01",
+      "author": "joe-pulizzi",
+      "platform": "pdf",
+      "url": "https://www.joepulizzi.com/wp-content/uploads/2021/05/contentinc_intro.pdf",
+      "title": "Content Inc., introdução de 2021",
+      "selectionReason": "Modelo explícito de negócio de conteúdo, útil para diferenciação e versões.",
+      "publishedAt": "2021",
+      "accessedAt": "2026-10-14",
+      "format": null,
+      "status": "documentary-analysis",
+      "coverage": {
+        "text": "pdf-located-pages",
+        "visual": "not-reviewed",
+        "audio": "not-applicable",
+        "completeAudiovisual": false
+      },
+      "analysis": {
+        "intent": "Explicar construção de um negócio de conteúdo",
+        "audience": "Empreendedores orientados a audiência",
+        "problem": "Criar oferta antes de entender uma audiência fiel",
+        "thesis": "Construir base editorial diferenciada",
+        "opening": "Introdução sobre empreender a partir de conteúdo",
+        "development": "Modelo de sete etapas, com saída ou expansão",
+        "evidence": "Casos e experiência do autor; sem garantia",
+        "value": "Relacionar expertise, público e distinção",
+        "cta": "Convite ao aprofundamento no livro",
+        "visualLanguage": "Texto das páginas do modelo consultado; sem auditagem completa do design",
+        "strategy": "Audiência como base de um modelo de negócio específico"
+      },
+      "notes": [
+        {
+          "kind": "teaching",
+          "locator": "PDF, páginas físicas 8–12; edição 2021",
+          "text": "Apresenta expertise/interesse, diferenciação, base, audiência e evolução do negócio."
+        },
+        {
+          "kind": "observation",
+          "locator": "introdução e modelo",
+          "text": "A edição de 2021 explicita sete etapas e comenta a versão anterior."
+        },
+        {
+          "kind": "interpretation",
+          "locator": "comparação com JP-02",
+          "text": "O modelo de empresa de conteúdo não é idêntico a marketing de um negócio com produto estabelecido."
+        },
+        {
+          "kind": "clicko_hypothesis",
+          "locator": "estratégia",
+          "text": "Usar diferenciação editorial sem obrigar todo cliente a criar produto somente depois da audiência."
+        }
+      ],
+      "limitations": "Excertos da introdução, não livro integral. Etapas e ordem histórica divergem da edição de 2015.",
+      "counterexample": "Um varejista com estoque existente precisa atender demanda e operação enquanto desenvolve audiência.",
+      "sourceIntegrity": {
+        "primary": true,
+        "sha256": null,
+        "hashScope": "Live source not archived; locators preserved"
+      },
+      "metrics": {
+        "causality": "not-established",
+        "performanceValidation": "not-performed"
+      },
+      "rights": {
+        "sourceOwner": "Third-party author/publisher",
+        "useScope": "Transformative research notes and source links only; no licence to reuse media or identity",
+        "distributedSourceMedia": false
+      }
+    },
+    {
+      "id": "JP-02",
+      "author": "joe-pulizzi",
+      "platform": "article",
+      "url": "https://www.joepulizzi.com/news/find-your-people-sharpen-your-edge-why-community-tilt-real-momentum/",
+      "title": "Comunidade, Tilt e premissa",
+      "selectionReason": "Fonte primária detalhada que refina diferenciação e aplica a premissa aos próprios projetos.",
+      "publishedAt": "2025-09-29",
+      "accessedAt": "2026-10-14",
+      "format": null,
+      "status": "documentary-analysis",
+      "coverage": {
+        "text": "article-text-reviewed",
+        "visual": "not-reviewed",
+        "audio": "not-applicable",
+        "completeAudiovisual": false
+      },
+      "analysis": {
+        "intent": "Explicar diferenciação e relações de apoio",
+        "audience": "Empreendedores e profissionais de conteúdo",
+        "problem": "Escolher tema sem contribuição distinguível",
+        "thesis": "Conectar ângulo editorial e premissa defensável",
+        "opening": "Anedota de um grupo de pares",
+        "development": "Comunidade, diferenciação, exemplos de projetos e perguntas de aplicação",
+        "evidence": "Relato e método, sem teste causal",
+        "value": "Distinguir assunto amplo de razão para acompanhar",
+        "cta": "Refletir sobre o próprio ângulo e assinar newsletter",
+        "visualLanguage": "Texto integral do artigo lido; imagens não auditadas",
+        "strategy": "Relação continuada e diferenciação editorial"
+      },
+      "notes": [
+        {
+          "kind": "teaching",
+          "locator": "Find Your Tilt; The Premise",
+          "text": "Relaciona diferenciação a uma premissa e atribui a formulação de premissa a Jay Acunzo."
+        },
+        {
+          "kind": "observation",
+          "locator": "Examples of Tilts and Premises",
+          "text": "Aplica a discussão ao livro e aos seus podcasts."
+        },
+        {
+          "kind": "interpretation",
+          "locator": "How to Find Your Tilt and Premise",
+          "text": "Ser contrário a um padrão não basta para estar correto ou ser útil; pertinência e evidência continuam necessárias."
+        },
+        {
+          "kind": "clicko_hypothesis",
+          "locator": "estratégia editorial",
+          "text": "Declarar a contribuição da marca e testar se ela é específica, útil e defensável."
+        }
+      ],
+      "limitations": "Relatos de crescimento e afirmações de futuro não foram validados. Não atribuir a fórmula de Jay Acunzo exclusivamente a Pulizzi. Ser distinto não garante audiência ou receita.",
+      "counterexample": "Uma tese contrária apenas para provocar pode ser falsa ou prejudicial; a diferenciação deve servir uma necessidade real.",
+      "sourceIntegrity": {
+        "primary": true,
+        "sha256": null,
+        "hashScope": "Live source not archived; locators preserved"
+      },
+      "metrics": {
+        "causality": "not-established",
+        "performanceValidation": "not-performed"
+      },
+      "rights": {
+        "sourceOwner": "Third-party author/publisher",
+        "useScope": "Transformative research notes and source links only; no licence to reuse media or identity",
+        "distributedSourceMedia": false
+      },
+      "supplementaryVersionSource": {
+        "url": "https://www.contentinc.io/episode-45-a-step-by-step-content-inc-model-in-action/",
+        "coverage": "public-synopsis-only",
+        "publishedAt": "2015-05-04",
+        "purpose": "Version comparison only; not a separately counted in-depth case"
+      }
+    },
+    {
+      "id": "SG-01",
+      "author": "seth-godin",
+      "platform": "article",
+      "url": "https://seths.blog/2022/05/the-smallest-viable-audience/",
+      "title": "A menor audiência viável",
+      "selectionReason": "Ensinamento compacto sobre recorte de público sem impor metas de seguidores.",
+      "publishedAt": "2022-05-22",
+      "accessedAt": "2026-10-14",
+      "format": null,
+      "status": "documentary-analysis",
+      "coverage": {
+        "text": "article-text-reviewed",
+        "visual": "not-reviewed",
+        "audio": "not-applicable",
+        "completeAudiovisual": false
+      },
+      "analysis": {
+        "intent": "Defender foco em um público que possa ser servido",
+        "audience": "Profissionais construindo uma proposta",
+        "problem": "Procurar agradar a todos",
+        "thesis": "Escolher para quem e para que serve",
+        "opening": "Apresenta a pergunta sobre a audiência",
+        "development": "Conexão entre especificidade, serviço e recomendação",
+        "evidence": "Argumento, sem tamanho mínimo demonstrado",
+        "value": "Uma pergunta de foco editorial",
+        "cta": "Reflexão, sem oferta específica auditada",
+        "visualLanguage": "Texto curto; sem análise de mídia ilustrativa",
+        "strategy": "Relevância e conexão antes de generalização"
+      },
+      "notes": [
+        {
+          "kind": "teaching",
+          "locator": "texto principal",
+          "text": "Propõe especificidade e compromisso em servir uma audiência viável."
+        },
+        {
+          "kind": "interpretation",
+          "locator": "texto principal",
+          "text": "Menor não significa necessariamente pequeno para sempre nem um número fixo."
+        },
+        {
+          "kind": "clicko_hypothesis",
+          "locator": "direção",
+          "text": "Nomear quem consegue usar o conteúdo e qual ação ou compreensão ele habilita."
+        }
+      ],
+      "limitations": "Ensaio conceitual; não oferece algoritmo de segmentação ou previsão de resultado.",
+      "counterexample": "Uma comunicação de utilidade pública pode precisar de múltiplos recortes e distribuição ampla.",
+      "sourceIntegrity": {
+        "primary": true,
+        "sha256": null,
+        "hashScope": "Live source not archived; locators preserved"
+      },
+      "metrics": {
+        "causality": "not-established",
+        "performanceValidation": "not-performed"
+      },
+      "rights": {
+        "sourceOwner": "Third-party author/publisher",
+        "useScope": "Transformative research notes and source links only; no licence to reuse media or identity",
+        "distributedSourceMedia": false
+      }
+    },
+    {
+      "id": "SG-02",
+      "author": "seth-godin",
+      "platform": "article",
+      "url": "https://seths.blog/2026/02/a-starting-point-for-the-blog/",
+      "title": "Um ponto de partida para o blog",
+      "selectionReason": "Exemplo recente de curadoria editorial aplicado à própria biblioteca.",
+      "publishedAt": "2026-02-10",
+      "accessedAt": "2026-10-14",
+      "format": null,
+      "status": "documentary-analysis",
+      "coverage": {
+        "text": "article-text-reviewed",
+        "visual": "not-reviewed",
+        "audio": "not-applicable",
+        "completeAudiovisual": false
+      },
+      "analysis": {
+        "intent": "Ajudar quem chega a um acervo grande",
+        "audience": "Leitores sem ponto de partida",
+        "problem": "Ter material disponível sem orientação",
+        "thesis": "Curadoria facilita a entrada",
+        "opening": "Metáfora de biblioteca e orientação",
+        "development": "Apresenta seleção de entradas para leitores",
+        "evidence": "Aplicação em seu próprio blog, sem teste de usabilidade",
+        "value": "Reduzir esforço de escolher por onde começar",
+        "cta": "Explorar os pontos de entrada",
+        "visualLanguage": "Lista de links e texto; layout não avaliado por usuários",
+        "strategy": "Curadoria como serviço, além da produção"
+      },
+      "notes": [
+        {
+          "kind": "observation",
+          "locator": "texto e lista de entradas",
+          "text": "O autor orienta a entrada em seu acervo por uma seleção editorial."
+        },
+        {
+          "kind": "interpretation",
+          "locator": "metáfora de biblioteca",
+          "text": "Um catálogo grande não resolve sozinho a decisão de quem chega."
+        },
+        {
+          "kind": "clicko_hypothesis",
+          "locator": "escolha de direção",
+          "text": "Apresentar poucas direções fundamentadas; o acervo amplo fica como suporte interno."
+        }
+      ],
+      "limitations": "Não houve teste com usuários; reduzir opções é hipótese de experiência, não limiar universal.",
+      "counterexample": "Uma equipe especialista pode desejar busca avançada; ela não precisa dominar a entrada do cliente.",
+      "sourceIntegrity": {
+        "primary": true,
+        "sha256": null,
+        "hashScope": "Live source not archived; locators preserved"
+      },
+      "metrics": {
+        "causality": "not-established",
+        "performanceValidation": "not-performed"
+      },
+      "rights": {
+        "sourceOwner": "Third-party author/publisher",
+        "useScope": "Transformative research notes and source links only; no licence to reuse media or identity",
+        "distributedSourceMedia": false
+      }
+    },
+    {
+      "id": "AD-01",
+      "author": "april-dunford",
+      "platform": "article",
+      "url": "https://aprildunford.substack.com/p/positioning-prep-part-1-decisions",
+      "title": "Preparação do posicionamento",
+      "selectionReason": "Fonte recente que explicita atualização e decisões prévias do método.",
+      "publishedAt": "2026-01-29",
+      "accessedAt": "2026-10-14",
+      "format": null,
+      "status": "documentary-analysis",
+      "coverage": {
+        "text": "article-text-reviewed",
+        "visual": "not-reviewed",
+        "audio": "not-applicable",
+        "completeAudiovisual": false
+      },
+      "analysis": {
+        "intent": "Preparar trabalho de posicionamento",
+        "audience": "Empresas e responsáveis por marketing",
+        "problem": "Iniciar com objeto ou público indefinido",
+        "thesis": "Definir escopo, prontidão e público da decisão",
+        "opening": "Apresenta revisão do processo",
+        "development": "Decisões anteriores ao exercício de posicionamento",
+        "evidence": "Método consultivo, não experimento",
+        "value": "Evitar responder perguntas sobre objetos distintos",
+        "cta": "Continuidade da série e livro",
+        "visualLanguage": "Texto consultado; diagramas não auditados integralmente",
+        "strategy": "Posicionamento como insumo de estratégia"
+      },
+      "notes": [
+        {
+          "kind": "teaching",
+          "locator": "trechos sobre readiness, object e audience",
+          "text": "Distingue prontidão, objeto do posicionamento e público a quem ele se destina."
+        },
+        {
+          "kind": "observation",
+          "locator": "introdução sobre a segunda edição",
+          "text": "Descreve preparação, cinco passos centrais e atividades posteriores; não igualar à antiga sequência de dez passos."
+        },
+        {
+          "kind": "interpretation",
+          "locator": "trecho sobre empresas pré-lançamento",
+          "text": "Uma hipótese inicial precisa permanecer revisável."
+        },
+        {
+          "kind": "clicko_hypothesis",
+          "locator": "pedido",
+          "text": "Distinguir campanha de produto, empresa ou linha; registrar o que já foi validado."
+        }
+      ],
+      "limitations": "A nota de preparação não substitui o método completo nem pesquisa de clientes. Versão descrita no artigo de 2026.",
+      "counterexample": "Uma promoção simples para produto bem estabelecido pode não exigir refazer todo o posicionamento.",
+      "sourceIntegrity": {
+        "primary": true,
+        "sha256": null,
+        "hashScope": "Live source not archived; locators preserved"
+      },
+      "metrics": {
+        "causality": "not-established",
+        "performanceValidation": "not-performed"
+      },
+      "rights": {
+        "sourceOwner": "Third-party author/publisher",
+        "useScope": "Transformative research notes and source links only; no licence to reuse media or identity",
+        "distributedSourceMedia": false
+      }
+    },
+    {
+      "id": "AD-02",
+      "author": "april-dunford",
+      "platform": "article",
+      "url": "https://aprildunford.substack.com/p/positioning-and-competition",
+      "title": "Posicionamento e competição",
+      "selectionReason": "Complementa a preparação com uma pergunta operacional de pesquisa.",
+      "publishedAt": "2020-12-28",
+      "accessedAt": "2026-10-14",
+      "format": null,
+      "status": "documentary-analysis",
+      "coverage": {
+        "text": "article-text-reviewed",
+        "visual": "not-reviewed",
+        "audio": "not-applicable",
+        "completeAudiovisual": false
+      },
+      "analysis": {
+        "intent": "Identificar alternativas relevantes",
+        "audience": "Equipes B2B",
+        "problem": "Comparar apenas concorrentes semelhantes",
+        "thesis": "Partir do que o cliente faria sem a solução",
+        "opening": "Questiona a definição de concorrente",
+        "development": "Contrasta lista do fornecedor e opções do cliente",
+        "evidence": "Experiência consultiva e exemplos",
+        "value": "Incluir status quo e não decidir",
+        "cta": "Discussão e continuidade editorial",
+        "visualLanguage": "Texto consultado; mídia ilustrativa não revisada",
+        "strategy": "Diferenciação frente à escolha real"
+      },
+      "notes": [
+        {
+          "kind": "teaching",
+          "locator": "corpo do artigo, competitive alternatives",
+          "text": "Alternativas incluem status quo, processos manuais ou não decidir."
+        },
+        {
+          "kind": "interpretation",
+          "locator": "trechos sobre phantom competitors",
+          "text": "Uma lista de concorrentes de mercado não comprova a shortlist do cliente."
+        },
+        {
+          "kind": "clicko_hypothesis",
+          "locator": "pesquisa de audiência",
+          "text": "Separar alternativa declarada por clientes de alternativa suposta por agentes."
+        }
+      ],
+      "limitations": "Artigo de 2020; estatísticas externas mencionadas não foram revalidadas nesta rodada e não são usadas como benchmarks.",
+      "counterexample": "Uma marca de consumo com compra impulsiva pode ter alternativas e jornadas diferentes de uma compra B2B.",
+      "sourceIntegrity": {
+        "primary": true,
+        "sha256": null,
+        "hashScope": "Live source not archived; locators preserved"
+      },
+      "metrics": {
+        "causality": "not-established",
+        "performanceValidation": "not-performed"
+      },
+      "rights": {
+        "sourceOwner": "Third-party author/publisher",
+        "useScope": "Transformative research notes and source links only; no licence to reuse media or identity",
+        "distributedSourceMedia": false
+      }
+    },
+    {
+      "id": "DM-01",
+      "author": "donald-miller",
+      "platform": "pdf",
+      "url": "https://storybrand.com/downloads/your-brand-is-not-the-hero.pdf",
+      "title": "A marca como guia",
+      "selectionReason": "Fonte original com estrutura, aplicação e convite comercial verificáveis por páginas.",
+      "publishedAt": null,
+      "accessedAt": "2026-10-14",
+      "format": null,
+      "status": "documentary-analysis",
+      "coverage": {
+        "text": "pdf-text-reviewed",
+        "visual": "not-reviewed",
+        "audio": "not-applicable",
+        "completeAudiovisual": false
+      },
+      "analysis": {
+        "intent": "Introduzir o StoryBrand",
+        "audience": "Empresários com mensagem confusa",
+        "problem": "Colocar a empresa no centro sem ajudar o comprador",
+        "thesis": "Cliente como personagem e marca como guia",
+        "opening": "Introdução relaciona clareza e marketing",
+        "development": "Estrutura narrativa, exemplo comercial e convite",
+        "evidence": "Argumentação e relatos comerciais, sem teste causal",
+        "value": "Tornar problema, ajuda e ação compreensíveis",
+        "cta": "Páginas 15–17: inscrição no workshop",
+        "visualLanguage": "Texto de 17 páginas extraído; layout não auditado",
+        "strategy": "Clareza da oferta e narrativa do cliente"
+      },
+      "notes": [
+        {
+          "kind": "teaching",
+          "locator": "páginas físicas 7–8 e 12–13",
+          "text": "Apresenta personagem, problema, guia, plano, ação e desfechos, com empatia e autoridade do guia."
+        },
+        {
+          "kind": "observation",
+          "locator": "páginas 4, 15–17",
+          "text": "A publicação também vende o workshop e relata resultados."
+        },
+        {
+          "kind": "interpretation",
+          "locator": "páginas 12–13",
+          "text": "O exemplo de campanha ilustra o método; não prova que o método explica sozinho seu desempenho."
+        },
+        {
+          "kind": "clicko_hypothesis",
+          "locator": "roteiro de oferta",
+          "text": "Explicar quem recebe ajuda, com que problema, por qual mecanismo e com qual próximo passo."
+        }
+      ],
+      "limitations": "Data/edição do PDF não confirmadas. Declarações abrangentes sobre histórias e crescimento são afirmações do material comercial. Layout e filmes citados não revisados.",
+      "counterexample": "Nem todo conteúdo educativo precisa apresentar marca, risco de fracasso e convite de compra.",
+      "sourceIntegrity": {
+        "primary": true,
+        "sha256": "b448096d04ec755def0be5d8e7f202e535a4d16e45a4af835966636122a68dee",
+        "hashScope": "Original publicly downloaded PDF used for text extraction; not distributed"
+      },
+      "metrics": {
+        "causality": "not-established",
+        "performanceValidation": "not-performed"
+      },
+      "rights": {
+        "sourceOwner": "Third-party author/publisher",
+        "useScope": "Transformative research notes and source links only; no licence to reuse media or identity",
+        "distributedSourceMedia": false
+      }
+    },
+    {
+      "id": "DM-02",
+      "author": "donald-miller",
+      "platform": "pdf",
+      "url": "https://storybrand.com/wp-content/uploads/2014/02/StoryBrand.pdf",
+      "title": "Brochura histórica StoryBrand",
+      "selectionReason": "Aplicação do próprio método no material que promove o serviço.",
+      "publishedAt": null,
+      "accessedAt": "2026-10-14",
+      "format": null,
+      "status": "documentary-analysis",
+      "coverage": {
+        "text": "pdf-located-pages",
+        "visual": "not-reviewed",
+        "audio": "not-applicable",
+        "completeAudiovisual": false
+      },
+      "analysis": {
+        "intent": "Vender simplificação da mensagem",
+        "audience": "Líderes e equipes",
+        "problem": "Comunicação confusa entre áreas e clientes",
+        "thesis": "Uma mensagem comum orienta a comunicação",
+        "opening": "Apresentação do desafio de clareza",
+        "development": "O líder é o herói, o serviço é o guia e o BrandScript é o recurso",
+        "evidence": "Autodemonstração e relatos comerciais",
+        "value": "Ver a estrutura aplicada em uma oferta",
+        "cta": "Inscrição na experiência StoryBrand",
+        "visualLanguage": "Texto de oito páginas consultado; sem revisão completa do design",
+        "strategy": "Clareza e alinhamento da mensagem"
+      },
+      "notes": [
+        {
+          "kind": "observation",
+          "locator": "páginas físicas 5–7",
+          "text": "O material posiciona o líder como protagonista e o StoryBrand como ajuda."
+        },
+        {
+          "kind": "interpretation",
+          "locator": "páginas 5–7",
+          "text": "A peça aplica sua estrutura à própria venda; é exemplo comercial, não avaliação independente."
+        },
+        {
+          "kind": "clicko_hypothesis",
+          "locator": "revisão",
+          "text": "Conferir se a marca facilita a ação do comprador ou apenas narra sua grandeza."
+        }
+      ],
+      "limitations": "Caminho contém 2014/02, mas isso não comprova data de publicação nem edição. Resultados comerciais não foram auditados.",
+      "counterexample": "Uma história de origem pode ser pertinente quando explica uma decisão útil ao cliente; não banir toda narrativa da marca.",
+      "sourceIntegrity": {
+        "primary": true,
+        "sha256": null,
+        "hashScope": "Live source not archived; locators preserved"
+      },
+      "metrics": {
+        "causality": "not-established",
+        "performanceValidation": "not-performed"
+      },
+      "rights": {
+        "sourceOwner": "Third-party author/publisher",
+        "useScope": "Transformative research notes and source links only; no licence to reuse media or identity",
+        "distributedSourceMedia": false
+      }
+    },
+    {
+      "id": "AC-01",
+      "author": "andy-crestodina",
+      "platform": "article",
+      "url": "https://www.orbitmedia.com/blog/research-best-form-of-content/",
+      "title": "Pesquisa original para conteúdo",
+      "selectionReason": "Fonte detalhada com modalidades de pesquisa e limites de inferência.",
+      "publishedAt": null,
+      "accessedAt": "2026-10-14",
+      "format": null,
+      "status": "documentary-analysis",
+      "coverage": {
+        "text": "article-text-reviewed",
+        "visual": "not-reviewed",
+        "audio": "not-applicable",
+        "completeAudiovisual": false
+      },
+      "analysis": {
+        "intent": "Defender criação de informação útil por pesquisa",
+        "audience": "Equipes de marketing de conteúdo",
+        "problem": "Repetir afirmações sem dados próprios",
+        "thesis": "Investigar perguntas ainda pouco respondidas",
+        "opening": "Discute oportunidades em afirmações sem evidência",
+        "development": "Modalidades de pesquisa e exemplos",
+        "evidence": "Método profissional com dados históricos e ilustrações",
+        "value": "Saber o que pode constituir pesquisa original",
+        "cta": "Continuidade em conteúdos e serviços do publicador",
+        "visualLanguage": "Texto e referências consultados; imagens não auditadas",
+        "strategy": "Autoridade mediante contribuição informativa"
+      },
+      "notes": [
+        {
+          "kind": "teaching",
+          "locator": "seções de tipos de pesquisa",
+          "text": "Inclui observação/análise, experimentos, agregação, pesquisas por questionário e entrevistas."
+        },
+        {
+          "kind": "observation",
+          "locator": "comentário sobre gráfico ilustrativo",
+          "text": "O próprio texto qualifica um gráfico como não científico."
+        },
+        {
+          "kind": "interpretation",
+          "locator": "tipos de pesquisa",
+          "text": "Agregação ou entrevista requer método, fonte e limites; um LLM não produz uma amostra real por imaginar respostas."
+        },
+        {
+          "kind": "clicko_hypothesis",
+          "locator": "agente de pesquisa",
+          "text": "Identificar pergunta, amostra, origem e análise; marcar pesquisa secundária como secundária."
+        }
+      ],
+      "limitations": "Dados históricos e exemplos do artigo não são benchmarks atuais. Não houve coleta de entrevistados nem pesquisa empírica própria nesta tarefa.",
+      "counterexample": "Uma amostra pequena e conveniente não sustenta uma conclusão sobre todo um setor.",
+      "sourceIntegrity": {
+        "primary": true,
+        "sha256": null,
+        "hashScope": "Live source not archived; locators preserved"
+      },
+      "metrics": {
+        "causality": "not-established",
+        "performanceValidation": "not-performed"
+      },
+      "rights": {
+        "sourceOwner": "Third-party author/publisher",
+        "useScope": "Transformative research notes and source links only; no licence to reuse media or identity",
+        "distributedSourceMedia": false
+      }
+    },
+    {
+      "id": "AC-02",
+      "author": "andy-crestodina",
+      "platform": "article",
+      "url": "https://www.orbitmedia.com/blog/orbit-media-content-strategy/",
+      "title": "Retrospectiva editorial da Orbit Media",
+      "selectionReason": "Caso longitudinal que inclui equipe, capacidade e mudanças de canal.",
+      "publishedAt": null,
+      "accessedAt": "2026-10-14",
+      "format": null,
+      "status": "documentary-analysis",
+      "coverage": {
+        "text": "article-text-reviewed",
+        "visual": "not-reviewed",
+        "audio": "not-applicable",
+        "completeAudiovisual": false
+      },
+      "analysis": {
+        "intent": "Explicar evolução de uma operação editorial",
+        "audience": "Equipes pequenas comparando-se a referências consolidadas",
+        "problem": "Copiar volume sem capacidade e contexto",
+        "thesis": "Construir consistência e atualizar materiais ao longo do tempo",
+        "opening": "Retrospectiva de uma estratégia de muitos anos",
+        "development": "Fases de equipe, profundidade, pesquisa e canais",
+        "evidence": "Relato da própria empresa, sem controle causal",
+        "value": "Mostrar amadurecimento, manutenção e relações",
+        "cta": "Convites para canais e recursos do publicador",
+        "visualLanguage": "Texto revisado; mídia e eventos não analisados",
+        "strategy": "Conteúdo como ativo mantido e adaptado"
+      },
+      "notes": [
+        {
+          "kind": "observation",
+          "locator": "seções 2007–2010, 2011–2014, 2015–2019 e 2020+",
+          "text": "A retrospectiva distingue fases, equipe, formatos e mudanças de distribuição."
+        },
+        {
+          "kind": "teaching",
+          "locator": "conclusões e operação editorial",
+          "text": "Revisar conteúdos existentes e adaptar capacidade fazem parte da estratégia."
+        },
+        {
+          "kind": "interpretation",
+          "locator": "retrospectiva",
+          "text": "A descrição não isola o efeito de conteúdo sobre receitas; atribuir todo resultado ao autor apagaria contribuição da equipe."
+        },
+        {
+          "kind": "clicko_hypothesis",
+          "locator": "continuidade",
+          "text": "Cada entrega pode gerar atualização, adaptação ou nova investigação vinculada ao projeto."
+        }
+      ],
+      "limitations": "Data exata não confirmada. Resultados são autorrelatados; calendário de uma empresa consolidada não é regra para toda marca.",
+      "counterexample": "Atualizar um material irrelevante pode custar mais que aposentá-lo; continuidade deve considerar necessidade atual.",
+      "sourceIntegrity": {
+        "primary": true,
+        "sha256": null,
+        "hashScope": "Live source not archived; locators preserved"
+      },
+      "metrics": {
+        "causality": "not-established",
+        "performanceValidation": "not-performed"
+      },
+      "rights": {
+        "sourceOwner": "Third-party author/publisher",
+        "useScope": "Transformative research notes and source links only; no licence to reuse media or identity",
+        "distributedSourceMedia": false
+      }
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8' ?><!--
+Created by Alight Motion (http://alightmotion.com)
+Exported: 2026-10-02 05:06 PM
+5.0.273.1028425 (1028425)
+2d5c0f8 (19 de mai de 2026 6:16:19 PM)
+-->
+<scene title="res Alight - prova 01" width="540" height="960" exportWidth="540" exportHeight="960" precompose="dynamicResolution" bgcolor="#ffd8d8d8" totalTime="2032" fps="30" modifiedTime="1790971587098" amver="1028425" ffver="106" am="com.alightcreative.motion/5.0.273.1028425" amplatform="android" retime="freeze" retimeAdaptFPS="false">
+  <text id="87" startTime="0" endTime="2032" fillType="color" mediaFillMode="fill" size="18.000000" font="googlefonts?name=Roboto&amp;weight=400" wrapWidth="512" align="left">
+    <transform>
+      <location>
+        <kf t="0.007874" v="-270.000000,480.000000,0.000000" />
+        <kf t="0.992126" v="270.000000,480.000000,0.000000" />
+      </location>
+    </transform>
+    <fillColor value="#ff000000" />
+    <content>res Alight • prova 01</content>
+  </text>
+</scene>

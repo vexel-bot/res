@@ -1,0 +1,100 @@
+{
+  "scope": "direct_encode_diagnostic_not_API_finalization_qualification",
+  "records": [
+    {
+      "variant": "rig",
+      "preset": "veryfast",
+      "crf": 18,
+      "sourceSha256": "1f2bcbb62847f661fadbebd0f4aa832558e85edada35f588fcf04aa02618dd38",
+      "videoSha256": "e4c9d05fe8f324a6fc7b2f9ffe373e47d80d066246008c8e01d6e0302d98f1ad",
+      "maximumLuminanceError": 13.444590828647952,
+      "failedProbes": [
+        {
+          "frame": 0,
+          "x": 168,
+          "y": 152,
+          "luminanceError": 13.444590828647952
+        }
+      ],
+      "probes": 90
+    },
+    {
+      "variant": "rig",
+      "preset": "medium",
+      "crf": 18,
+      "sourceSha256": "1f2bcbb62847f661fadbebd0f4aa832558e85edada35f588fcf04aa02618dd38",
+      "videoSha256": "865a0b1aaef05ef6c337dbe2954573a3c9595d83c6212f72ad53f4eb93d2958b",
+      "maximumLuminanceError": 12.71759082864795,
+      "failedProbes": [
+        {
+          "frame": 0,
+          "x": 168,
+          "y": 152,
+          "luminanceError": 12.71759082864795
+        }
+      ],
+      "probes": 90
+    },
+    {
+      "variant": "rig",
+      "preset": "slow",
+      "crf": 18,
+      "sourceSha256": "1f2bcbb62847f661fadbebd0f4aa832558e85edada35f588fcf04aa02618dd38",
+      "videoSha256": "3a461f71a6c23f8349c54dcf70bfddafac78660588cfb15ab16daa72169f609d",
+      "maximumLuminanceError": 10.863190828647953,
+      "failedProbes": [
+        {
+          "frame": 0,
+          "x": 168,
+          "y": 152,
+          "luminanceError": 10.863190828647953
+        }
+      ],
+      "probes": 90
+    },
+    {
+      "variant": "child",
+      "preset": "veryfast",
+      "crf": 18,
+      "sourceSha256": "07bb03995d063bba1e9c6695983b3a85de0b69a99ddfe4a80ff204cfd9c3c458",
+      "videoSha256": "fa4bae1c96eadc943e034c11151dc7b795b8d0249c5cbe9f6fad6b2d0439249d",
+      "maximumLuminanceError": 8.20755761085329,
+      "failedProbes": [
+        {
+          "frame": 0,
+          "x": 168,
+          "y": 152,
+          "luminanceError": 8.20755761085329
+        }
+      ],
+      "probes": 90
+    },
+    {
+      "variant": "child",
+      "preset": "medium",
+      "crf": 18,
+      "sourceSha256": "07bb03995d063bba1e9c6695983b3a85de0b69a99ddfe4a80ff204cfd9c3c458",
+      "videoSha256": "fdb0ffa4d48357b48972f2d3716a6b993956c31f83610bef17a3f03fc4e849d9",
+      "maximumLuminanceError": 10.305157610853287,
+      "failedProbes": [
+        {
+          "frame": 0,
+          "x": 168,
+          "y": 152,
+          "luminanceError": 10.305157610853287
+        }
+      ],
+      "probes": 90
+    },
+    {
+      "variant": "child",
+      "preset": "slow",
+      "crf": 18,
+      "sourceSha256": "07bb03995d063bba1e9c6695983b3a85de0b69a99ddfe4a80ff204cfd9c3c458",
+      "videoSha256": "84fe4f9342c565dcbbcf56552610aa53a8138559317e3b1122feda2f3c74508c",
+      "maximumLuminanceError": 6.745547150900597,
+      "failedProbes": [],
+      "probes": 90
+    }
+  ]
+}

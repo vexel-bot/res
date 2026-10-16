@@ -1,0 +1,30 @@
+[
+  {
+    "schemaVersion": "studio.motion-recipe.v1", "id": "study-title-settle", "version": 1,
+    "technique": "motion_choreography", "targetIds": ["title"], "startFrame": 0, "endFrameExclusive": 450,
+    "intent": "O mesmo título chega, acomoda e permanece para leitura.", "continuityAnchor": "Texto e asset de fonte preservados.",
+    "parameters": {"pivot": [0, 0.5], "tracks": [{"targetId": "title", "property": "y", "keyframes": [{"frame": 0, "value": 64, "curve": [0.22, 0.75, 0.25, 1]}, {"frame": 24, "value": 0}, {"frame": 449, "value": 0}]}]},
+    "verification": ["Frames 0, 12, 24, 100 e 449: graph, manifest e pixels concordam.", "Texto inteiro permanece na área de leitura após a acomodação."]
+  },
+  {
+    "schemaVersion": "studio.motion-recipe.v1", "id": "study-whole-words", "version": 1,
+    "technique": "integrated_type", "targetIds": ["title"], "startFrame": 0, "endFrameExclusive": 450,
+    "intent": "Palavras inteiras tornam a transformação compreensível.", "continuityAnchor": "Conteúdo canônico e fonte final vinculada.",
+    "parameters": {"textUnit": "word", "staggerFrames": 4, "readingHoldFrames": 90},
+    "verification": ["Usar o texto original AÇÃO, AÇÃO e emoji composto em casos separados.", "Verificar wraps e altura na fonte final, em tamanho de celular.", "Aceite humano pendente; validar contrato não demonstra legibilidade."]
+  },
+  {
+    "schemaVersion": "studio.motion-recipe.v1", "id": "study-motivated-matte", "version": 1,
+    "technique": "motivated_occlusion", "targetIds": ["result"], "startFrame": 0, "endFrameExclusive": 90,
+    "intent": "A passagem do oclusor revela a consequência da organização.", "continuityAnchor": "Resultado e oclusor pertencem ao mesmo espaço local.",
+    "parameters": {"occluderTargetId": "occluder"},
+    "verification": ["Oclusor retangular irmão e acima do resultado; trajetória crescente em um eixo.", "Inspecionar pixels nos frames 0, 22, 45, 67 e 89.", "Rotações, formas arbitrárias e máscara por asset seguem pendentes."]
+  },
+  {
+    "schemaVersion": "studio.motion-recipe.v1", "id": "study-temporal-exposure", "version": 1,
+    "technique": "velocity_blur", "targetIds": ["title"], "startFrame": 0, "endFrameExclusive": 24,
+    "intent": "Acabamento temporal apenas durante o movimento do título.", "continuityAnchor": "Mesma coreografia, fonte, cor e composição da variante sem blur.",
+    "parameters": {"temporalSamples": 8, "shutterDegrees": 180},
+    "verification": ["Comparar pixels e alpha com controle; amostras 2, 8 e 16 em renders separados.", "Frames 24, 100 e 449 permanecem nítidos.", "Não declarar qualidade ou desempenho a partir de uma amostra numérica."]
+  }
+]

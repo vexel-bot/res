@@ -1,0 +1,929 @@
+{
+  "scope": "actual_Chromium_final_font_DOM_and_Canvas",
+  "humanReview": "pending",
+  "cases": [
+    {
+      "id": "wrap",
+      "status": "passed",
+      "result": {
+        "fontSizePx": 39.875,
+        "contentHeightPx": 191.375,
+        "lines": [
+          {
+            "x": 0,
+            "y": 1,
+            "width": 226.03125,
+            "height": 44
+          },
+          {
+            "x": 0,
+            "y": 48.84375,
+            "width": 248.203125,
+            "height": 44
+          },
+          {
+            "x": 0,
+            "y": 96.6875,
+            "width": 274.90625,
+            "height": 44
+          },
+          {
+            "x": 0,
+            "y": 144.53125,
+            "width": 206.09375,
+            "height": 44
+          }
+        ],
+        "units": [
+          {
+            "animationIndex": 0,
+            "text": "Uma",
+            "layout": {
+              "x": 0,
+              "y": 1,
+              "width": 84.1875,
+              "height": 44
+            },
+            "baselinePx": 37,
+            "ink": {
+              "x": 2,
+              "y": 8,
+              "width": 81.00485229492188,
+              "height": 29
+            }
+          },
+          {
+            "animationIndex": 1,
+            "text": "palavra",
+            "layout": {
+              "x": 95.265625,
+              "y": 1,
+              "width": 130.765625,
+              "height": 44
+            },
+            "baselinePx": 37,
+            "ink": {
+              "x": 97.265625,
+              "y": 8,
+              "width": 127.5911865234375,
+              "height": 37
+            }
+          },
+          {
+            "animationIndex": 2,
+            "text": "inteira",
+            "layout": {
+              "x": 0,
+              "y": 48.84375,
+              "width": 108.59375,
+              "height": 44
+            },
+            "baselinePx": 84.84375,
+            "ink": {
+              "x": 2,
+              "y": 55.84375,
+              "width": 105.41738891601562,
+              "height": 29
+            }
+          },
+          {
+            "animationIndex": 3,
+            "text": "precisa",
+            "layout": {
+              "x": 119.671875,
+              "y": 48.84375,
+              "width": 128.53125,
+              "height": 44
+            },
+            "baselinePx": 84.84375,
+            "ink": {
+              "x": 121.671875,
+              "y": 55.84375,
+              "width": 125.35240173339844,
+              "height": 37
+            }
+          },
+          {
+            "animationIndex": 4,
+            "text": "de",
+            "layout": {
+              "x": 0,
+              "y": 96.6875,
+              "width": 44.359375,
+              "height": 44
+            },
+            "baselinePx": 132.6875,
+            "ink": {
+              "x": 1,
+              "y": 103.6875,
+              "width": 42.17378234863281,
+              "height": 29
+            }
+          },
+          {
+            "animationIndex": 5,
+            "text": "espaço",
+            "layout": {
+              "x": 55.4375,
+              "y": 96.6875,
+              "width": 128.578125,
+              "height": 44
+            },
+            "baselinePx": 132.6875,
+            "ink": {
+              "x": 56.4375,
+              "y": 111.6875,
+              "width": 127.39134216308594,
+              "height": 30
+            }
+          },
+          {
+            "animationIndex": 6,
+            "text": "para",
+            "layout": {
+              "x": 195.09375,
+              "y": 96.6875,
+              "width": 79.8125,
+              "height": 44
+            },
+            "baselinePx": 132.6875,
+            "ink": {
+              "x": 197.09375,
+              "y": 111.6875,
+              "width": 76.62457275390625,
+              "height": 29
+            }
+          },
+          {
+            "animationIndex": 7,
+            "text": "leitura",
+            "layout": {
+              "x": 0,
+              "y": 144.53125,
+              "width": 108.59375,
+              "height": 44
+            },
+            "baselinePx": 180.53125,
+            "ink": {
+              "x": 2,
+              "y": 151.53125,
+              "width": 105.41738891601562,
+              "height": 29
+            }
+          },
+          {
+            "animationIndex": 8,
+            "text": "clara",
+            "layout": {
+              "x": 119.671875,
+              "y": 144.53125,
+              "width": 86.421875,
+              "height": 44
+            },
+            "baselinePx": 180.53125,
+            "ink": {
+              "x": 120.671875,
+              "y": 151.53125,
+              "width": 84.24362182617188,
+              "height": 29
+            }
+          }
+        ],
+        "fits": true,
+        "policy": "dom.units-fit.v1",
+        "requestedFontSizePx": 42,
+        "minimumFontSizePx": 17.066666666666666,
+        "fontFamily": "StudyBoundArial",
+        "fontWeight": "400",
+        "letterSpacingPx": 0,
+        "lineHeightPx": "47.85px",
+        "measurements": 21,
+        "geometryBasis": "local_dom_range_and_block_height",
+        "inkBasis": "canvas_font_textmetrics",
+        "inkCoverageObserved": false,
+        "fontBindingBasis": "checksum_bound_asset"
+      }
+    },
+    {
+      "id": "transformed",
+      "status": "passed",
+      "result": {
+        "fontSizePx": 39.875,
+        "contentHeightPx": 191.375,
+        "lines": [
+          {
+            "x": 0,
+            "y": 1,
+            "width": 226.03125,
+            "height": 44
+          },
+          {
+            "x": 0,
+            "y": 48.84375,
+            "width": 248.203125,
+            "height": 44
+          },
+          {
+            "x": 0,
+            "y": 96.6875,
+            "width": 274.90625,
+            "height": 44
+          },
+          {
+            "x": 0,
+            "y": 144.53125,
+            "width": 206.09375,
+            "height": 44
+          }
+        ],
+        "units": [
+          {
+            "animationIndex": 0,
+            "text": "Uma",
+            "layout": {
+              "x": 0,
+              "y": 1,
+              "width": 84.1875,
+              "height": 44
+            },
+            "baselinePx": 37,
+            "ink": {
+              "x": 2,
+              "y": 8,
+              "width": 81.00485229492188,
+              "height": 29
+            }
+          },
+          {
+            "animationIndex": 1,
+            "text": "palavra",
+            "layout": {
+              "x": 95.265625,
+              "y": 1,
+              "width": 130.765625,
+              "height": 44
+            },
+            "baselinePx": 37,
+            "ink": {
+              "x": 97.265625,
+              "y": 8,
+              "width": 127.5911865234375,
+              "height": 37
+            }
+          },
+          {
+            "animationIndex": 2,
+            "text": "inteira",
+            "layout": {
+              "x": 0,
+              "y": 48.84375,
+              "width": 108.59375,
+              "height": 44
+            },
+            "baselinePx": 84.84375,
+            "ink": {
+              "x": 2,
+              "y": 55.84375,
+              "width": 105.41738891601562,
+              "height": 29
+            }
+          },
+          {
+            "animationIndex": 3,
+            "text": "precisa",
+            "layout": {
+              "x": 119.671875,
+              "y": 48.84375,
+              "width": 128.53125,
+              "height": 44
+            },
+            "baselinePx": 84.84375,
+            "ink": {
+              "x": 121.671875,
+              "y": 55.84375,
+              "width": 125.35240173339844,
+              "height": 37
+            }
+          },
+          {
+            "animationIndex": 4,
+            "text": "de",
+            "layout": {
+              "x": 0,
+              "y": 96.6875,
+              "width": 44.359375,
+              "height": 44
+            },
+            "baselinePx": 132.6875,
+            "ink": {
+              "x": 1,
+              "y": 103.6875,
+              "width": 42.17378234863281,
+              "height": 29
+            }
+          },
+          {
+            "animationIndex": 5,
+            "text": "espaço",
+            "layout": {
+              "x": 55.4375,
+              "y": 96.6875,
+              "width": 128.578125,
+              "height": 44
+            },
+            "baselinePx": 132.6875,
+            "ink": {
+              "x": 56.4375,
+              "y": 111.6875,
+              "width": 127.39134216308594,
+              "height": 30
+            }
+          },
+          {
+            "animationIndex": 6,
+            "text": "para",
+            "layout": {
+              "x": 195.09375,
+              "y": 96.6875,
+              "width": 79.8125,
+              "height": 44
+            },
+            "baselinePx": 132.6875,
+            "ink": {
+              "x": 197.09375,
+              "y": 111.6875,
+              "width": 76.62457275390625,
+              "height": 29
+            }
+          },
+          {
+            "animationIndex": 7,
+            "text": "leitura",
+            "layout": {
+              "x": 0,
+              "y": 144.53125,
+              "width": 108.59375,
+              "height": 44
+            },
+            "baselinePx": 180.53125,
+            "ink": {
+              "x": 2,
+              "y": 151.53125,
+              "width": 105.41738891601562,
+              "height": 29
+            }
+          },
+          {
+            "animationIndex": 8,
+            "text": "clara",
+            "layout": {
+              "x": 119.671875,
+              "y": 144.53125,
+              "width": 86.421875,
+              "height": 44
+            },
+            "baselinePx": 180.53125,
+            "ink": {
+              "x": 120.671875,
+              "y": 151.53125,
+              "width": 84.24362182617188,
+              "height": 29
+            }
+          }
+        ],
+        "fits": true,
+        "policy": "dom.units-fit.v1",
+        "requestedFontSizePx": 42,
+        "minimumFontSizePx": 17.066666666666666,
+        "fontFamily": "StudyBoundArial",
+        "fontWeight": "400",
+        "letterSpacingPx": 0,
+        "lineHeightPx": "47.85px",
+        "measurements": 21,
+        "geometryBasis": "local_dom_range_and_block_height",
+        "inkBasis": "canvas_font_textmetrics",
+        "inkCoverageObserved": false,
+        "fontBindingBasis": "checksum_bound_asset"
+      }
+    },
+    {
+      "id": "unicode",
+      "status": "passed",
+      "result": {
+        "fontSizePx": 42,
+        "contentHeightPx": 50.390625,
+        "lines": [
+          {
+            "x": 0,
+            "y": 1,
+            "width": 119.046875,
+            "height": 47
+          }
+        ],
+        "units": [
+          {
+            "animationIndex": 0,
+            "text": "A",
+            "layout": {
+              "x": 0,
+              "y": 1,
+              "width": 28.015625,
+              "height": 47
+            },
+            "baselinePx": 39,
+            "ink": {
+              "x": -1,
+              "y": 9,
+              "width": 30,
+              "height": 30
+            }
+          },
+          {
+            "animationIndex": 1,
+            "text": "Ç",
+            "layout": {
+              "x": 28.015625,
+              "y": 1,
+              "width": 30.34375,
+              "height": 47
+            },
+            "baselinePx": 39,
+            "ink": {
+              "x": 29.015625,
+              "y": 9,
+              "width": 28,
+              "height": 39
+            }
+          },
+          {
+            "animationIndex": 2,
+            "text": "Ã",
+            "layout": {
+              "x": 58.359375,
+              "y": 1,
+              "width": 28.015625,
+              "height": 47
+            },
+            "baselinePx": 39,
+            "ink": {
+              "x": 57.359375,
+              "y": 2,
+              "width": 30,
+              "height": 37
+            }
+          },
+          {
+            "animationIndex": 3,
+            "text": "O",
+            "layout": {
+              "x": 86.375,
+              "y": 1,
+              "width": 32.671875,
+              "height": 47
+            },
+            "baselinePx": 39,
+            "ink": {
+              "x": 87.375,
+              "y": 9,
+              "width": 31,
+              "height": 30
+            }
+          }
+        ],
+        "fits": true,
+        "policy": "dom.units-fit.v1",
+        "requestedFontSizePx": 42,
+        "minimumFontSizePx": 17.066666666666666,
+        "fontFamily": "StudyBoundArial",
+        "fontWeight": "400",
+        "letterSpacingPx": 0,
+        "lineHeightPx": "50.4px",
+        "measurements": 1,
+        "geometryBasis": "local_dom_range_and_block_height",
+        "inkBasis": "canvas_font_textmetrics",
+        "inkCoverageObserved": false,
+        "fontBindingBasis": "checksum_bound_asset"
+      }
+    },
+    {
+      "id": "blank-lines",
+      "status": "passed",
+      "result": {
+        "fontSizePx": 42,
+        "contentHeightPx": 151.171875,
+        "lines": [
+          {
+            "x": 0,
+            "y": 1,
+            "width": 28.015625,
+            "height": 47
+          },
+          {
+            "x": 0,
+            "y": 101.78125,
+            "width": 28.015625,
+            "height": 47
+          }
+        ],
+        "units": [
+          {
+            "animationIndex": 0,
+            "text": "A",
+            "layout": {
+              "x": 0,
+              "y": 1,
+              "width": 28.015625,
+              "height": 47
+            },
+            "baselinePx": 39,
+            "ink": {
+              "x": -1,
+              "y": 9,
+              "width": 30,
+              "height": 30
+            }
+          },
+          {
+            "animationIndex": 1,
+            "text": "B",
+            "layout": {
+              "x": 0,
+              "y": 101.78125,
+              "width": 28.015625,
+              "height": 47
+            },
+            "baselinePx": 139.78125,
+            "ink": {
+              "x": 2,
+              "y": 109.78125,
+              "width": 25,
+              "height": 30
+            }
+          }
+        ],
+        "fits": true,
+        "policy": "dom.units-fit.v1",
+        "requestedFontSizePx": 42,
+        "minimumFontSizePx": 17.066666666666666,
+        "fontFamily": "StudyBoundArial",
+        "fontWeight": "400",
+        "letterSpacingPx": 0,
+        "lineHeightPx": "50.4px",
+        "measurements": 1,
+        "geometryBasis": "local_dom_range_and_block_height",
+        "inkBasis": "canvas_font_textmetrics",
+        "inkCoverageObserved": false,
+        "fontBindingBasis": "checksum_bound_asset"
+      }
+    },
+    {
+      "id": "shrink",
+      "status": "passed",
+      "result": {
+        "fontSizePx": 23.875,
+        "contentHeightPx": 28.640625,
+        "lines": [
+          {
+            "x": 0,
+            "y": 0,
+            "width": 149.953125,
+            "height": 27
+          }
+        ],
+        "units": [
+          {
+            "animationIndex": 0,
+            "text": "palavra",
+            "layout": {
+              "x": 0,
+              "y": 0,
+              "width": 78.296875,
+              "height": 27
+            },
+            "baselinePx": 22,
+            "ink": {
+              "x": 1,
+              "y": 5,
+              "width": 77.0130615234375,
+              "height": 22
+            }
+          },
+          {
+            "animationIndex": 1,
+            "text": "inteira",
+            "layout": {
+              "x": 84.9375,
+              "y": 0,
+              "width": 65.015625,
+              "height": 27
+            },
+            "baselinePx": 22,
+            "ink": {
+              "x": 85.9375,
+              "y": 5,
+              "width": 63.737701416015625,
+              "height": 17
+            }
+          }
+        ],
+        "fits": true,
+        "policy": "dom.units-fit.v1",
+        "requestedFontSizePx": 42,
+        "minimumFontSizePx": 17.066666666666666,
+        "fontFamily": "StudyBoundArial",
+        "fontWeight": "400",
+        "letterSpacingPx": 0,
+        "lineHeightPx": "28.65px",
+        "measurements": 21,
+        "geometryBasis": "local_dom_range_and_block_height",
+        "inkBasis": "canvas_font_textmetrics",
+        "inkCoverageObserved": false,
+        "fontBindingBasis": "checksum_bound_asset"
+      }
+    },
+    {
+      "id": "weight-400",
+      "status": "passed",
+      "result": {
+        "fontSizePx": 42,
+        "contentHeightPx": 50.390625,
+        "lines": [
+          {
+            "x": 0,
+            "y": 1,
+            "width": 263.84375,
+            "height": 47
+          }
+        ],
+        "units": [
+          {
+            "animationIndex": 0,
+            "text": "palavra",
+            "layout": {
+              "x": 0,
+              "y": 1,
+              "width": 137.765625,
+              "height": 47
+            },
+            "baselinePx": 39,
+            "ink": {
+              "x": 2,
+              "y": 9,
+              "width": 134.392578125,
+              "height": 38
+            }
+          },
+          {
+            "animationIndex": 1,
+            "text": "inteira",
+            "layout": {
+              "x": 149.4375,
+              "y": 1,
+              "width": 114.40625,
+              "height": 47
+            },
+            "baselinePx": 39,
+            "ink": {
+              "x": 151.4375,
+              "y": 9,
+              "width": 111.0341796875,
+              "height": 30
+            }
+          }
+        ],
+        "fits": true,
+        "policy": "dom.units-fit.v1",
+        "requestedFontSizePx": 42,
+        "minimumFontSizePx": 17.066666666666666,
+        "fontFamily": "StudyBoundArial",
+        "fontWeight": "400",
+        "letterSpacingPx": 0,
+        "lineHeightPx": "50.4px",
+        "measurements": 1,
+        "geometryBasis": "local_dom_range_and_block_height",
+        "inkBasis": "canvas_font_textmetrics",
+        "inkCoverageObserved": false,
+        "fontBindingBasis": "checksum_bound_asset"
+      }
+    },
+    {
+      "id": "weight-700",
+      "status": "passed",
+      "result": {
+        "fontSizePx": 41.875,
+        "contentHeightPx": 100.5,
+        "lines": [
+          {
+            "x": 0,
+            "y": 1,
+            "width": 146.65625,
+            "height": 47
+          },
+          {
+            "x": 0,
+            "y": 51.25,
+            "width": 125.65625,
+            "height": 47
+          }
+        ],
+        "units": [
+          {
+            "animationIndex": 0,
+            "text": "palavra",
+            "layout": {
+              "x": 0,
+              "y": 1,
+              "width": 146.65625,
+              "height": 47
+            },
+            "baselinePx": 39,
+            "ink": {
+              "x": 2,
+              "y": 9,
+              "width": 144.36105346679688,
+              "height": 38
+            }
+          },
+          {
+            "animationIndex": 1,
+            "text": "inteira",
+            "layout": {
+              "x": 0,
+              "y": 51.25,
+              "width": 125.65625,
+              "height": 47
+            },
+            "baselinePx": 89.25,
+            "ink": {
+              "x": 2,
+              "y": 59.25,
+              "width": 123.36471557617188,
+              "height": 30
+            }
+          }
+        ],
+        "fits": true,
+        "policy": "dom.units-fit.v1",
+        "requestedFontSizePx": 42,
+        "minimumFontSizePx": 17.066666666666666,
+        "fontFamily": "StudyBoundArial",
+        "fontWeight": "700",
+        "letterSpacingPx": 0,
+        "lineHeightPx": "50.25px",
+        "measurements": 21,
+        "geometryBasis": "local_dom_range_and_block_height",
+        "inkBasis": "canvas_font_textmetrics",
+        "inkCoverageObserved": false,
+        "fontBindingBasis": "checksum_bound_asset"
+      }
+    },
+    {
+      "id": "spacing",
+      "status": "passed",
+      "result": {
+        "fontSizePx": 41.875,
+        "contentHeightPx": 100.5,
+        "lines": [
+          {
+            "x": 0,
+            "y": 1,
+            "width": 151.328125,
+            "height": 47
+          },
+          {
+            "x": 0,
+            "y": 51.25,
+            "width": 128.046875,
+            "height": 47
+          }
+        ],
+        "units": [
+          {
+            "animationIndex": 0,
+            "text": "palavra",
+            "layout": {
+              "x": 0,
+              "y": 1,
+              "width": 151.328125,
+              "height": 47
+            },
+            "baselinePx": 39,
+            "ink": {
+              "x": 2,
+              "y": 9,
+              "width": 146.0384521484375,
+              "height": 38
+            }
+          },
+          {
+            "animationIndex": 1,
+            "text": "inteira",
+            "layout": {
+              "x": 0,
+              "y": 51.25,
+              "width": 128.046875,
+              "height": 47
+            },
+            "baselinePx": 89.25,
+            "ink": {
+              "x": 2,
+              "y": 59.25,
+              "width": 122.75234985351562,
+              "height": 30
+            }
+          }
+        ],
+        "fits": true,
+        "policy": "dom.units-fit.v1",
+        "requestedFontSizePx": 42,
+        "minimumFontSizePx": 17.066666666666666,
+        "fontFamily": "StudyBoundArial",
+        "fontWeight": "400",
+        "letterSpacingPx": 2,
+        "lineHeightPx": "50.25px",
+        "measurements": 21,
+        "geometryBasis": "local_dom_range_and_block_height",
+        "inkBasis": "canvas_font_textmetrics",
+        "inkCoverageObserved": false,
+        "fontBindingBasis": "checksum_bound_asset"
+      }
+    },
+    {
+      "id": "center",
+      "status": "passed",
+      "result": {
+        "fontSizePx": 42,
+        "contentHeightPx": 50.390625,
+        "lines": [
+          {
+            "x": 68.609375,
+            "y": 1,
+            "width": 137.765625,
+            "height": 47
+          }
+        ],
+        "units": [
+          {
+            "animationIndex": 0,
+            "text": "palavra",
+            "layout": {
+              "x": 68.609375,
+              "y": 1,
+              "width": 137.765625,
+              "height": 47
+            },
+            "baselinePx": 39,
+            "ink": {
+              "x": 70.609375,
+              "y": 9,
+              "width": 134.392578125,
+              "height": 38
+            }
+          }
+        ],
+        "fits": true,
+        "policy": "dom.units-fit.v1",
+        "requestedFontSizePx": 42,
+        "minimumFontSizePx": 17.066666666666666,
+        "fontFamily": "StudyBoundArial",
+        "fontWeight": "400",
+        "letterSpacingPx": 0,
+        "lineHeightPx": "50.4px",
+        "measurements": 1,
+        "geometryBasis": "local_dom_range_and_block_height",
+        "inkBasis": "canvas_font_textmetrics",
+        "inkCoverageObserved": false,
+        "fontBindingBasis": "checksum_bound_asset"
+      }
+    },
+    {
+      "id": "overflow",
+      "status": "passed",
+      "expectedRejection": "Error: hybrid_typography_does_not_fit_at_reading_floor:enlarge_box_or_shorten_text"
+    },
+    {
+      "id": "below-floor",
+      "status": "passed",
+      "expectedRejection": "Error: hybrid_typography_below_reading_floor:increase_fontSize_or_canvas"
+    },
+    {
+      "id": "policy",
+      "status": "passed",
+      "expectedRejection": "Error: hybrid_typography_layout_policy_invalid"
+    },
+    {
+      "id": "unit-limit",
+      "status": "passed",
+      "expectedRejection": "Error: hybrid_typography_layout_unit_limit"
+    }
+  ],
+  "passed": 13,
+  "fontSha256": "b3658eadae55e682b5f69eb64c439c1ecc8f196c0bb8d4756d145d13bc86476a",
+  "boldFontSha256": "e8f4e3baf6cc35fed6fcce3a540e8b39e8f6cda1d22a28f2ec8f526fef7a43f5",
+  "cleanupDirectory": "C:\\Users\\edugu\\Downloads\\res\\tmp\\text-layout-dom-study-4f29b935-7ff5-4177-9c84-e513542a1027",
+  "sourceHashes": {
+    "workers/remotion-benchmark/src/typography-layout.tsx": "a1a4b461cb292d794330a25c5ce30b9a5d61633b7f77a4fc54b5d352811bc744",
+    "workers/remotion-benchmark/tests/typography-layout-study.tsx": "b380e726c977778dfc5d3720d491c6160d621c6a957fd9c17d719cdd8cf4bc4d",
+    "scripts/validation/editor-text-layout-dom-study.mjs": "12312e04d8194ad596436e2d82b6346f4d3895a4f481d40533542bbf725597b2"
+  }
+}

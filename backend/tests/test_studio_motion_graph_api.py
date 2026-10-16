@@ -57,7 +57,7 @@ def motion_graph(
     workspace_id: str,
     *,
     graph_id: str = "motion-api-1",
-    velocity_threshold: float = 400,
+    velocity_threshold: float = 700,
 ) -> dict[str, object]:
     return {
         "graphId": graph_id,
@@ -164,7 +164,7 @@ def test_motion_graph_api_is_idempotent_versioned_reviewed_and_tenant_scoped(cli
     assert reviewed["storageRevision"] == 2
     assert reviewed["graph"]["status"] == "reviewed"
     assert reviewed["evaluation"]["eligibleForReviewedProjection"] is True
-    assert reviewed["evaluation"]["observations"][0]["measuredValue"] == 300
+    assert reviewed["evaluation"]["observations"][0]["measuredValue"] == 600
 
     projection = client.get(
         f"/api/v1/studios/v1/motion-graphs/{graph_id}/projection/hyperframes",
@@ -205,7 +205,7 @@ def test_motion_review_fails_closed_and_preserves_suggestion(client) -> None:
         document,
         workspace,
         graph_id="motion-api-blocked",
-        velocity_threshold=100,
+        velocity_threshold=400,  # The old 300 px/s secant passed; the 600 px/s peak fails.
     )
     created = client.post(
         "/api/v1/studios/v1/motion-graphs",

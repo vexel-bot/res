@@ -1,0 +1,115 @@
+{
+  "scope": "Final read-only artifact and source consistency audit; no human approval",
+  "observedAt": "2026-10-05T18:57:58.517947+00:00",
+  "sourcesMatch": 73,
+  "highJobStatus": "succeeded",
+  "frames": 450,
+  "normalPlaybackReachedEnd": true,
+  "exclusivePlayback": true,
+  "unmodifiedUIAssetDownloadMatchesJob": true,
+  "humanQuality": "not_assessed",
+  "autonomy": "not_demonstrated",
+  "pendingSubmissionUICapture": "not_reobserved_after_presentation_change",
+  "files": {
+    "api-after.json": {
+      "bytes": 4610,
+      "sha256": "8dde8995b0c595dcbc048fd90dc6e739f3673965ac7e6927a786570f29a4cad8"
+    },
+    "api-before.json": {
+      "bytes": 59480,
+      "sha256": "e677b8d8220b36f5986fffc1b41fd485a509bfd3bd6c193df1499825d7e4f6fe"
+    },
+    "before-ui.png": {
+      "bytes": 164188,
+      "sha256": "7ed47eb5a9e553d4cee0c2a29120aee58d05e6309255961489f2af7f91db63b2"
+    },
+    "before.json": {
+      "bytes": 356,
+      "sha256": "6db3b969c291308d023bd842e7aec911fc83d335d2922fd5a34d0d26713d0c1e"
+    },
+    "download-cli-source.json": {
+      "bytes": 18677,
+      "sha256": "dbf12d465b6d388bca99fda9220c48651f6b91b4b42dc6c6f11ab87e8fc5202f"
+    },
+    "draft-probe.json": {
+      "bytes": 3880,
+      "sha256": "07384b02393a427ee3cf4d14787313775ac5715913886344db8f4049f723c1b2"
+    },
+    "high-job-observed.json": {
+      "bytes": 67865,
+      "sha256": "048076ae14598243ed75927279afc6a061a52d676f1cab7c1b01d6f1c9ff47fd"
+    },
+    "high-job-terminal.json": {
+      "bytes": 76974,
+      "sha256": "705cdd2dcb95dd874084db2493488d0d30bef062bbac809b73d1bf7a90d806a4"
+    },
+    "high-media-verification.json": {
+      "bytes": 7167,
+      "sha256": "c74869a9b85d62f24f44c5e1be57a2b73bab5d0901522785bceda809b90aa1a6"
+    },
+    "high-probe.json": {
+      "bytes": 3848,
+      "sha256": "4561a7efa472ecd81c0bf67960e4a9c7f4849760e032200a5785678026f6a7d6"
+    },
+    "high-ui-after.png": {
+      "bytes": 122251,
+      "sha256": "28c7827f0712c7b90ce1a81eca73dba1ebee1532ad22dd9f09c130a1440a6579"
+    },
+    "high-ui-download.json": {
+      "bytes": 1392,
+      "sha256": "7989b5dae047ceba0e296dff26367d1838685e9ea7f426c72a4de839b2000511"
+    },
+    "high-ui-playback-arm.json": {
+      "bytes": 1080,
+      "sha256": "ddaf317b15c0471ccd2fb30f8c6499a14aa6a54e50322f1a5d31de0ca764e6ca"
+    },
+    "high-ui-playback-collect.json": {
+      "bytes": 15929,
+      "sha256": "e03610ab4546aab4d1e7736c92d8f4da1a21b864e3575ec1f264480b8a1dc9dc"
+    },
+    "high-ui-playback-settled-arm.json": {
+      "bytes": 1080,
+      "sha256": "69eba156eeafd4faa63a2f1db6fb323c262782ce3c132f2fb235c8deb1d13aeb"
+    },
+    "high-ui-playback-settled-collect.json": {
+      "bytes": 12753,
+      "sha256": "8f0a3df2ec5f20fabdc4b912950d54605f9525195fb06216d8ec79b74c47dcbb"
+    },
+    "high-ui-replay-after-end.json": {
+      "bytes": 514,
+      "sha256": "e4bf9be1cb50a48333e929118c9db4eb141d248ccde3c2510f98e41d3e1ef8a8"
+    },
+    "interface-a-output-draft.mp4": {
+      "bytes": 307059,
+      "sha256": "3725a7cb8cadf075ec5529ea35e870e070896a09bf38c113e6117a46c766d51b"
+    },
+    "interface-a-output-high.mp4": {
+      "bytes": 2635718,
+      "sha256": "1b856b62acb23b07d488c1c6f9582af75fa5cf074f49c465cdab0a40d6943925"
+    },
+    "interface-a-output-ui-download.mp4": {
+      "bytes": 2635718,
+      "sha256": "1b856b62acb23b07d488c1c6f9582af75fa5cf074f49c465cdab0a40d6943925"
+    },
+    "job-submitted.json": {
+      "bytes": 67630,
+      "sha256": "2b169cf0750904beb6e11b664672cfc7db6dda9dfc066c768748f75b86f581a0"
+    },
+    "job-terminal.json": {
+      "bytes": 77020,
+      "sha256": "0dd9f6ed9727ae1d376f14fa0fc1945616504b067da8647806d9c5353e7d490e"
+    },
+    "README.md": {
+      "bytes": 7542,
+      "sha256": "21c362a8901fcb0ac53a1b5d551e2df144c112cbf8c2d6c0f7b9d649566042ff"
+    },
+    "sources.json": {
+      "bytes": 10841,
+      "sha256": "3cb53c9eacf0f94456eff9718226c5e546cd45836062f73451a7263203caef87"
+    },
+    "useVideoStudio.before.ts": {
+      "bytes": 59055,
+      "sha256": "bcd4dbbadc3990fef94498cef83a4a87ce0d17d001e6188e565d1b5447a6d857"
+    }
+  }
+}

@@ -1,0 +1,162 @@
+{
+  "scope": "sealed_native14_React_tree_equal_weights_time_reduction_not_pixel_evidence",
+  "passed": 38,
+  "checks": [
+    {
+      "name": "all 2 leaves retain normalized equal exposure",
+      "status": "passed"
+    },
+    {
+      "name": "all 3 leaves retain normalized equal exposure",
+      "status": "passed"
+    },
+    {
+      "name": "all 4 leaves retain normalized equal exposure",
+      "status": "passed"
+    },
+    {
+      "name": "all 5 leaves retain normalized equal exposure",
+      "status": "passed"
+    },
+    {
+      "name": "all 6 leaves retain normalized equal exposure",
+      "status": "passed"
+    },
+    {
+      "name": "all 7 leaves retain normalized equal exposure",
+      "status": "passed"
+    },
+    {
+      "name": "all 8 leaves retain normalized equal exposure",
+      "status": "passed"
+    },
+    {
+      "name": "all 9 leaves retain normalized equal exposure",
+      "status": "passed"
+    },
+    {
+      "name": "all 10 leaves retain normalized equal exposure",
+      "status": "passed"
+    },
+    {
+      "name": "all 11 leaves retain normalized equal exposure",
+      "status": "passed"
+    },
+    {
+      "name": "all 12 leaves retain normalized equal exposure",
+      "status": "passed"
+    },
+    {
+      "name": "all 13 leaves retain normalized equal exposure",
+      "status": "passed"
+    },
+    {
+      "name": "all 14 leaves retain normalized equal exposure",
+      "status": "passed"
+    },
+    {
+      "name": "all 15 leaves retain normalized equal exposure",
+      "status": "passed"
+    },
+    {
+      "name": "all 16 leaves retain normalized equal exposure",
+      "status": "passed"
+    },
+    {
+      "name": "all 17 leaves retain normalized equal exposure",
+      "status": "passed"
+    },
+    {
+      "name": "all 18 leaves retain normalized equal exposure",
+      "status": "passed"
+    },
+    {
+      "name": "all 19 leaves retain normalized equal exposure",
+      "status": "passed"
+    },
+    {
+      "name": "all 20 leaves retain normalized equal exposure",
+      "status": "passed"
+    },
+    {
+      "name": "all 21 leaves retain normalized equal exposure",
+      "status": "passed"
+    },
+    {
+      "name": "all 22 leaves retain normalized equal exposure",
+      "status": "passed"
+    },
+    {
+      "name": "all 23 leaves retain normalized equal exposure",
+      "status": "passed"
+    },
+    {
+      "name": "all 24 leaves retain normalized equal exposure",
+      "status": "passed"
+    },
+    {
+      "name": "all 25 leaves retain normalized equal exposure",
+      "status": "passed"
+    },
+    {
+      "name": "all 26 leaves retain normalized equal exposure",
+      "status": "passed"
+    },
+    {
+      "name": "all 27 leaves retain normalized equal exposure",
+      "status": "passed"
+    },
+    {
+      "name": "all 28 leaves retain normalized equal exposure",
+      "status": "passed"
+    },
+    {
+      "name": "all 29 leaves retain normalized equal exposure",
+      "status": "passed"
+    },
+    {
+      "name": "all 30 leaves retain normalized equal exposure",
+      "status": "passed"
+    },
+    {
+      "name": "all 31 leaves retain normalized equal exposure",
+      "status": "passed"
+    },
+    {
+      "name": "all 32 leaves retain normalized equal exposure",
+      "status": "passed"
+    },
+    {
+      "name": "stationary registered draw inputs reduce to center once",
+      "status": "passed"
+    },
+    {
+      "name": "unregistered draw inputs retain all sample leaves",
+      "status": "passed"
+    },
+    {
+      "name": "zero shutter bypasses averaging for unregistered components",
+      "status": "passed"
+    },
+    {
+      "name": "frame zero clips and renormalizes within its interval",
+      "status": "passed"
+    },
+    {
+      "name": "cut restarts at the next authored interval",
+      "status": "passed"
+    },
+    {
+      "name": "sample past an exclusive end is rejected",
+      "status": "passed"
+    },
+    {
+      "name": "unregistered compositor policy is rejected",
+      "status": "passed"
+    }
+  ],
+  "source": "workers/remotion-benchmark/src/temporal-exposure.tsx",
+  "sourceSha256": "659066d8daef0d664b3f6d8f503d4120ec8e32a0ac513b590096bcdfbceef9dc",
+  "apiSourcesSha256": "d7289e0907cc9d78769e129c703c1f7c3cb44147dc37a50df47e5b144d5bbbad",
+  "scriptSha256": "68a8525eaee6413086c97782e5c6f9d7e68f50d59e0127a95c65ba72034ac1ba"
+}

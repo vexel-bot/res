@@ -1,0 +1,5 @@
+{
+  "src/studios/EditorInspectionPanel.tsx": "4affbab9cc3db57c7eed800bbbae378a20ec97c65f698c7d29554986f7c217b3",
+  "scripts/validation/editor-spatial-inspection-fixture.py": "2f32ec2d77b9536995a9a809038757c936f2d2aff5c6a0f07bd6568c849e75ea",
+  "scripts/validation/editor-spatial-inspection-receipt.py": "6ae5f439eaea70e6cbcf73859ce4c002dd28adb7d5ed8bbd1347366d13bf7999"
+}

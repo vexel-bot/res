@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="5" skipped="0" tests="5" time="45.547" timestamp="2026-10-02T21:56:23.975723-03:00" hostname="Computador"><testcase classname="tests.test_temporal_exposure_render" name="test_temporal_exposure_actual_api_measurement[0-180]" time="9.332"><failure message="AssertionError: {&quot;detail&quot;:{&quot;code&quot;:&quot;editing_visual_preflight_required&quot;}}&#10;assert 422 == 200&#10; +  where 422 = &lt;Response [422 Unprocessable Entity]&gt;.status_code">client = &lt;starlette.testclient.TestClient object at 0x00000250FBECB850&gt;
+project = {'asset': 'aab199f0-dd43-484f-8de5-05147d63056b', 'document': '6854a457-33c8-4cc7-b3f3-d6735814eea6', 'token': 'eyJhbG...dHlwZSI6ImFjY2VzcyJ9.Sf5dloOXLxaBUqSecio9UF1X95cyC4XcER9s97YLED4', 'workspace': '52a13424-3f8a-4c80-8e81-887865f50892'}
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x00000250FF88B550&gt;
+tmp_path = WindowsPath('C:/Users/edugu/AppData/Local/Temp/pytest-of-edugu/pytest-129/test_temporal_exposure_actual_0')
+samples = 0, shutter = 180
+
+    @pytest.mark.parametrize("samples,shutter", [(0, 180), (2, 180), (8, 180), (16, 180), (8, 0)])
+    def test_temporal_exposure_actual_api_measurement(client, project, monkeypatch, tmp_path, samples, shutter):
+        with SessionLocal() as db:
+            record = db.get(CreativeDocument, project["document"])
+            doc = record_to_contract(record)
+            doc.composition.media_timeline.tracks = []
+            persist_contract(record, doc)
+            db.commit()
+        headers = {"Authorization": "Bearer " + project["token"]}
+        base = f"/api/v1/studios/v1/documents/{project['document']}"
+        response = client.post(
+            base + "/editing-plans",
+            headers={**headers, "Idempotency-Key": "exposure-plan"},
+            json=exposure_direction(samples, shutter),
+        )
+        assert response.status_code == 200, response.text
+        plan = response.json()
+        assert plan["status"] == "ready", plan["blockers"]
+        applied = client.post(
+            base + f"/editing-plans/{plan['id']}/apply", headers=headers, json={"expectedPlanRevision": plan["revision"]}
+        )
+&gt;       assert applied.status_code == 200, applied.text
+E       AssertionError: {"detail":{"code":"editing_visual_preflight_required"}}
+E       assert 422 == 200
+E        +  where 422 = &lt;Response [422 Unprocessable Entity]&gt;.status_code
+
+tests\test_temporal_exposure_render.py:144: AssertionError</failure></testcase><testcase classname="tests.test_temporal_exposure_render" name="test_temporal_exposure_actual_api_measurement[2-180]" time="12.233"><failure message="AssertionError: {&quot;detail&quot;:{&quot;code&quot;:&quot;editing_visual_preflight_required&quot;}}&#10;assert 422 == 200&#10; +  where 422 = &lt;Response [422 Unprocessable Entity]&gt;.status_code">client = &lt;starlette.testclient.TestClient object at 0x00000250FFCA8810&gt;
+project = {'asset': '92ff0930-b739-476e-9093-80cf0fcab71f', 'document': 'bf33ef53-b1ab-40da-8326-706e53000680', 'token': 'eyJhbG...dHlwZSI6ImFjY2VzcyJ9.8FbY1-ocAa8nsu-9KyFTuwpyVSt_Wqzuy6fGWpsNBpk', 'workspace': 'c0a0adcc-27ed-4107-8181-ee18d8dcfcbc'}
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x00000250FFC9A750&gt;
+tmp_path = WindowsPath('C:/Users/edugu/AppData/Local/Temp/pytest-of-edugu/pytest-129/test_temporal_exposure_actual_1')
+samples = 2, shutter = 180
+
+    @pytest.mark.parametrize("samples,shutter", [(0, 180), (2, 180), (8, 180), (16, 180), (8, 0)])
+    def test_temporal_exposure_actual_api_measurement(client, project, monkeypatch, tmp_path, samples, shutter):
+        with SessionLocal() as db:
+            record = db.get(CreativeDocument, project["document"])
+            doc = record_to_contract(record)
+            doc.composition.media_timeline.tracks = []
+            persist_contract(record, doc)
+            db.commit()
+        headers = {"Authorization": "Bearer " + project["token"]}
+        base = f"/api/v1/studios/v1/documents/{project['document']}"
+        response = client.post(
+            base + "/editing-plans",
+            headers={**headers, "Idempotency-Key": "exposure-plan"},
+            json=exposure_direction(samples, shutter),
+        )
+        assert response.status_code == 200, response.text
+        plan = response.json()
+        assert plan["status"] == "ready", plan["blockers"]
+        applied = client.post(
+            base + f"/editing-plans/{plan['id']}/apply", headers=headers, json={"expectedPlanRevision": plan["revision"]}
+        )
+&gt;       assert applied.status_code == 200, applied.text
+E       AssertionError: {"detail":{"code":"editing_visual_preflight_required"}}
+E       assert 422 == 200
+E        +  where 422 = &lt;Response [422 Unprocessable Entity]&gt;.status_code
+
+tests\test_temporal_exposure_render.py:144: AssertionError</failure></testcase><testcase classname="tests.test_temporal_exposure_render" name="test_temporal_exposure_actual_api_measurement[8-180]" time="5.711"><failure message="AssertionError: {&quot;detail&quot;:{&quot;code&quot;:&quot;editing_visual_preflight_required&quot;}}&#10;assert 422 == 200&#10; +  where 422 = &lt;Response [422 Unprocessable Entity]&gt;.status_code">client = &lt;starlette.testclient.TestClient object at 0x00000250811E3450&gt;
+project = {'asset': 'b6c8fe13-7ffa-499b-b68a-b50295424d2c', 'document': '52f44dbb-0937-4b47-8e7d-f2a11595b316', 'token': 'eyJhbG...dHlwZSI6ImFjY2VzcyJ9.mIMEFHqBIbZfpiaPpwaxskMrNkDWjS5650Sk_gAvNNw', 'workspace': '33801a09-e664-4766-bc82-e734bb91b003'}
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002508142D250&gt;
+tmp_path = WindowsPath('C:/Users/edugu/AppData/Local/Temp/pytest-of-edugu/pytest-129/test_temporal_exposure_actual_2')
+samples = 8, shutter = 180
+
+    @pytest.mark.parametrize("samples,shutter", [(0, 180), (2, 180), (8, 180), (16, 180), (8, 0)])
+    def test_temporal_exposure_actual_api_measurement(client, project, monkeypatch, tmp_path, samples, shutter):
+        with SessionLocal() as db:
+            record = db.get(CreativeDocument, project["document"])
+            doc = record_to_contract(record)
+            doc.composition.media_timeline.tracks = []
+            persist_contract(record, doc)
+            db.commit()
+        headers = {"Authorization": "Bearer " + project["token"]}
+        base = f"/api/v1/studios/v1/documents/{project['document']}"
+        response = client.post(
+            base + "/editing-plans",
+            headers={**headers, "Idempotency-Key": "exposure-plan"},
+            json=exposure_direction(samples, shutter),
+        )
+        assert response.status_code == 200, response.text
+        plan = response.json()
+        assert plan["status"] == "ready", plan["blockers"]
+        applied = client.post(
+            base + f"/editing-plans/{plan['id']}/apply", headers=headers, json={"expectedPlanRevision": plan["revision"]}
+        )
+&gt;       assert applied.status_code == 200, applied.text
+E       AssertionError: {"detail":{"code":"editing_visual_preflight_required"}}
+E       assert 422 == 200
+E        +  where 422 = &lt;Response [422 Unprocessable Entity]&gt;.status_code
+
+tests\test_temporal_exposure_render.py:144: AssertionError</failure></testcase><testcase classname="tests.test_temporal_exposure_render" name="test_temporal_exposure_actual_api_measurement[16-180]" time="9.323"><failure message="AssertionError: {&quot;detail&quot;:{&quot;code&quot;:&quot;editing_visual_preflight_required&quot;}}&#10;assert 422 == 200&#10; +  where 422 = &lt;Response [422 Unprocessable Entity]&gt;.status_code">client = &lt;starlette.testclient.TestClient object at 0x00000250811E1A50&gt;
+project = {'asset': '3795a91e-401d-4671-93b3-9ff97733c244', 'document': '3d12f29c-79ba-4f99-b0e8-aa64096f76a1', 'token': 'eyJhbG...dHlwZSI6ImFjY2VzcyJ9.6JS8v2vDbF5vtA5Nv-tskql4miQhCxnlcwzZ72_VT0k', 'workspace': 'c0a48749-51ac-4b39-b9f5-1692358b76c2'}
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x00000250824CF950&gt;
+tmp_path = WindowsPath('C:/Users/edugu/AppData/Local/Temp/pytest-of-edugu/pytest-129/test_temporal_exposure_actual_3')
+samples = 16, shutter = 180
+
+    @pytest.mark.parametrize("samples,shutter", [(0, 180), (2, 180), (8, 180), (16, 180), (8, 0)])
+    def test_temporal_exposure_actual_api_measurement(client, project, monkeypatch, tmp_path, samples, shutter):
+        with SessionLocal() as db:
+            record = db.get(CreativeDocument, project["document"])
+            doc = record_to_contract(record)
+            doc.composition.media_timeline.tracks = []
+            persist_contract(record, doc)
+            db.commit()
+        headers = {"Authorization": "Bearer " + project["token"]}
+        base = f"/api/v1/studios/v1/documents/{project['document']}"
+        response = client.post(
+            base + "/editing-plans",
+            headers={**headers, "Idempotency-Key": "exposure-plan"},
+            json=exposure_direction(samples, shutter),
+        )
+        assert response.status_code == 200, response.text
+        plan = response.json()
+        assert plan["status"] == "ready", plan["blockers"]
+        applied = client.post(
+            base + f"/editing-plans/{plan['id']}/apply", headers=headers, json={"expectedPlanRevision": plan["revision"]}
+        )
+&gt;       assert applied.status_code == 200, applied.text
+E       AssertionError: {"detail":{"code":"editing_visual_preflight_required"}}
+E       assert 422 == 200
+E        +  where 422 = &lt;Response [422 Unprocessable Entity]&gt;.status_code
+
+tests\test_temporal_exposure_render.py:144: AssertionError</failure></testcase><testcase classname="tests.test_temporal_exposure_render" name="test_temporal_exposure_actual_api_measurement[8-0]" time="4.872"><failure message="AssertionError: {&quot;detail&quot;:{&quot;code&quot;:&quot;editing_visual_preflight_required&quot;}}&#10;assert 422 == 200&#10; +  where 422 = &lt;Response [422 Unprocessable Entity]&gt;.status_code">client = &lt;starlette.testclient.TestClient object at 0x0000025081421C10&gt;
+project = {'asset': '64aabecd-22d3-4950-ab1e-7e5dae0fb164', 'document': 'c9e75457-427f-41e1-99db-f13f838fcb18', 'token': 'eyJhbG...dHlwZSI6ImFjY2VzcyJ9.WIr2WlVGdGs0aC6d45ckpzP0MIDViZJl-l5UZV601Ck', 'workspace': '02cf8784-d5cb-46a1-9f7d-c9edc0775f0a'}
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x0000025081333D50&gt;
+tmp_path = WindowsPath('C:/Users/edugu/AppData/Local/Temp/pytest-of-edugu/pytest-129/test_temporal_exposure_actual_4')
+samples = 8, shutter = 0
+
+    @pytest.mark.parametrize("samples,shutter", [(0, 180), (2, 180), (8, 180), (16, 180), (8, 0)])
+    def test_temporal_exposure_actual_api_measurement(client, project, monkeypatch, tmp_path, samples, shutter):
+        with SessionLocal() as db:
+            record = db.get(CreativeDocument, project["document"])
+            doc = record_to_contract(record)
+            doc.composition.media_timeline.tracks = []
+            persist_contract(record, doc)
+            db.commit()
+        headers = {"Authorization": "Bearer " + project["token"]}
+        base = f"/api/v1/studios/v1/documents/{project['document']}"
+        response = client.post(
+            base + "/editing-plans",
+            headers={**headers, "Idempotency-Key": "exposure-plan"},
+            json=exposure_direction(samples, shutter),
+        )
+        assert response.status_code == 200, response.text
+        plan = response.json()
+        assert plan["status"] == "ready", plan["blockers"]
+        applied = client.post(
+            base + f"/editing-plans/{plan['id']}/apply", headers=headers, json={"expectedPlanRevision": plan["revision"]}
+        )
+&gt;       assert applied.status_code == 200, applied.text
+E       AssertionError: {"detail":{"code":"editing_visual_preflight_required"}}
+E       assert 422 == 200
+E        +  where 422 = &lt;Response [422 Unprocessable Entity]&gt;.status_code
+
+tests\test_temporal_exposure_render.py:144: AssertionError</failure></testcase></testsuite></testsuites>

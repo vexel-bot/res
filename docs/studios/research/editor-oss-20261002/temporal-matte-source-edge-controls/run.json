@@ -1,0 +1,16 @@
+{
+  "phases": [
+    {
+      "phase": "native13",
+      "exitCode": 0
+    },
+    {
+      "phase": "vector-guard",
+      "exitCode": 0
+    }
+  ],
+  "originalBytesRestored": true,
+  "conflictingConcurrentEdits": [],
+  "providerAndGateChanged": false,
+  "productionAdmission": "pending"
+}

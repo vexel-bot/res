@@ -52,6 +52,7 @@ def research_operation_cards() -> list[EditingTechniqueV1]:
 
 
 def seed_techniques() -> list[EditingTechniqueV1]:
+    from .alight_techniques import alight_technique_cards
     data = [
         (
             "continuity",
@@ -642,6 +643,7 @@ def seed_techniques() -> list[EditingTechniqueV1]:
         *cinematic_craft,
         *external_workflow_principles,
         *research_operation_cards(),
+        *alight_technique_cards(),
     ]
 
 

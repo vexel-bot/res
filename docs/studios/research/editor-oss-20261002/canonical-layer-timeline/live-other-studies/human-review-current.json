@@ -1,0 +1,23 @@
+{
+  "observedAt": "2026-10-05T19:34:51.863088+00:00",
+  "comparisons": {
+    "organization": {
+      "id": "d2412e84-c643-4c3d-b697-583c31562a47",
+      "status": "not_assessed",
+      "review": null,
+      "labelsUnchanged": true
+    },
+    "comparison": {
+      "id": "c7d85c2d-2dad-4e7f-8fca-b45736544732",
+      "status": "not_assessed",
+      "review": null,
+      "labelsUnchanged": true
+    },
+    "interface": {
+      "id": "e2182ac8-2824-4888-b385-a14ffb81c8ef",
+      "status": "not_assessed",
+      "review": null,
+      "labelsUnchanged": true
+    }
+  }
+}

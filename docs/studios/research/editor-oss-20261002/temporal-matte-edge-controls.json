@@ -1,0 +1,886 @@
+{
+  "scope": "research_only_mask_edge_control",
+  "productionAdmission": "pending",
+  "grid": 64,
+  "bitmapIntersectionAtProbes": false,
+  "pairedManifestHashesMatched": 10,
+  "scriptSha256": "434ff8aecb36e407b9233ae7d8cbf65c350689741a0fd2abc5d30462d1440e0f",
+  "maskedReceipt": {
+    "scope": "lossless_browser_png_composition_diagnostic",
+    "canonicalManifestSha256": "bab6f76fe23c45ef4ebf26d1741e0a03b2da385e1ed533e50a3bc3b37f2cada9",
+    "maskSha256": "ee10f031a17421859e3af5f725273644b8534709cb23173c6e1bf0ac8787e2c2",
+    "fixture": "child-inverted",
+    "derivation": {
+      "sampledTarget": "hero",
+      "externalRigFrame": 0,
+      "matteMode": "alpha",
+      "matteInvert": true
+    },
+    "sourceHashes": {
+      "workers/remotion-benchmark/src/hybrid.tsx": "69f66dbfd02be683fe9e6a0d6559ad9e9487c8d7ee48f9fbabf44f0884f5f170",
+      "workers/remotion-benchmark/src/asset-matte.tsx": "f14ea79323d8261197180db6824bcef707e4b9481154cb2d6beed16342c49a99",
+      "workers/remotion-benchmark/src/temporal-exposure.tsx": "48a609ab733ee2e5c4e6be07f8073a483ff986b235dcb1c34d365f1b4fcc2fc1",
+      "scripts/validation/editor-temporal-matte-png-capture.mjs": "4f6912024fc04f2faae28f7a0e51e4de8e8c065b0f148cbfa7f46dbd7f0e0756"
+    },
+    "records": [
+      {
+        "name": "temporal",
+        "manifestSha256": "5baaa1a3108709c640fb7c84b7d47db54ee6f9cd4387e23aa4be93f2af805646",
+        "pngSha256": "d646f3f72977322585b77f0d298273b774d24d533464cbc1aadc104fd7a15b91"
+      },
+      {
+        "name": "center",
+        "manifestSha256": "464a5090456844f89d7d1749e7c0893ae19e06b88646f736e625de9a4f686605",
+        "pngSha256": "46df6e5eae67090d1a05bbbc7671d60a7a277f130583a3670f7158f3c01fd129"
+      },
+      {
+        "name": "sample-1",
+        "manifestSha256": "a09dd98f3149893d3640e84db3df2b4374802868277bfc4f507d8b5da568b714",
+        "pngSha256": "78be03af4eda4f4ac972bdeabd98e9e24bc7de3fac56a6f72b20135516cb2630"
+      },
+      {
+        "name": "sample-2",
+        "manifestSha256": "78f2e7ce93cb3082d727c77ded43ec8de1f1c8061f66d025210254129bae6c6f",
+        "pngSha256": "a7e41724c2b91532cfa0fb7e0a56af2003430bfac1edc4bae105739fe9c5a98d"
+      },
+      {
+        "name": "sample-3",
+        "manifestSha256": "e45e615de4c14f0fdae44e36a0c33dfdb69cff365f103d2ea68a5b4d2bb0c3ff",
+        "pngSha256": "57e9dd83e17b37fab2f7d23f9d632c4fd12e47901c5d69f07c6d81fbb88b539f"
+      },
+      {
+        "name": "sample-4",
+        "manifestSha256": "97d05a1e246925316f1b6465b592cdf3f9b85a695ffc64bfaed02ff0497568bd",
+        "pngSha256": "6a772d23a37de35c25d06e3cb60a507408817ddb6cd860c627dec31a5c9e6374"
+      },
+      {
+        "name": "sample-5",
+        "manifestSha256": "36cd4167d206ac779cdb206638d8058ebfc0b550304986749030cc8be1e54422",
+        "pngSha256": "01e13fe98a2c9f3ee7400cec11953febb7ed9e172d4db04ded8d8c95d7a09504"
+      },
+      {
+        "name": "sample-6",
+        "manifestSha256": "3e5f447ed46d0b6332ce25dac203f7da84c7cf298a7c487e8208df5142d24478",
+        "pngSha256": "2cd2b409e5d9f9d16e0e655a6f81a55a4b6872bfedb02da375a7b8d22ccf8d12"
+      },
+      {
+        "name": "sample-7",
+        "manifestSha256": "fda515266c54bc2cc8c883a766e070f81593477e56b0cc1c27b8b1d9386a5d1f",
+        "pngSha256": "7e02218301f902f8c43d46e3523c4899a65980261a5c827bb1cacebd2db06fc0"
+      },
+      {
+        "name": "sample-8",
+        "manifestSha256": "155f96ec4d499854a9a5b0c279ade954d2a49149d77276dae2df49e82f18b227",
+        "pngSha256": "c59e5f06d274e82e9d65b41f5723f7097d2eb5827a587f35fce9e6276de46874"
+      }
+    ]
+  },
+  "unmaskedReceipt": {
+    "scope": "lossless_browser_png_composition_diagnostic",
+    "canonicalManifestSha256": "bab6f76fe23c45ef4ebf26d1741e0a03b2da385e1ed533e50a3bc3b37f2cada9",
+    "maskSha256": "ee10f031a17421859e3af5f725273644b8534709cb23173c6e1bf0ac8787e2c2",
+    "fixture": "child-unmasked",
+    "derivation": {
+      "sampledTarget": "hero",
+      "externalRigFrame": 0,
+      "matteMode": null,
+      "matteInvert": false
+    },
+    "sourceHashes": {
+      "workers/remotion-benchmark/src/hybrid.tsx": "69f66dbfd02be683fe9e6a0d6559ad9e9487c8d7ee48f9fbabf44f0884f5f170",
+      "workers/remotion-benchmark/src/asset-matte.tsx": "f14ea79323d8261197180db6824bcef707e4b9481154cb2d6beed16342c49a99",
+      "workers/remotion-benchmark/src/temporal-exposure.tsx": "48a609ab733ee2e5c4e6be07f8073a483ff986b235dcb1c34d365f1b4fcc2fc1",
+      "scripts/validation/editor-temporal-matte-png-capture.mjs": "ecad6c0ea5ec2b1fe96aca768785154e6b8efdfc43df666b7241a20cc8147267"
+    },
+    "records": [
+      {
+        "name": "temporal",
+        "manifestSha256": "45f9a05da80bfcecc34a8330aac60488c085d4ae10c1624364d016f79b46a354",
+        "pngSha256": "574a832138766d74377a9cfcec49cf84ffb39e7f37fd92d982b1ebe59f6fa276"
+      },
+      {
+        "name": "center",
+        "manifestSha256": "86ac51a62a9132b9ce73b90926ec7bb252c4c10c1eee67f21887e77fd19fd272",
+        "pngSha256": "4b9879e00ad603415cc29bc3572d59971aeb390ceb22e80cd7b59e2b3a78f48d"
+      },
+      {
+        "name": "sample-1",
+        "manifestSha256": "079a7cfd8fc5a6a9f58fee7ba7f3be397214c9fd11539daea7f13e036299d7bb",
+        "pngSha256": "c9eedfcab0ef2d9463b31f3aedb1f3da5b1603eb7dd707e1d08bf616918bcec6"
+      },
+      {
+        "name": "sample-2",
+        "manifestSha256": "6e806b4583fbdb9797857707487951697ebceecaac8c961fc71b5f7736b5a2a1",
+        "pngSha256": "4af26b57866618cbe156cb338bcf2b3fb3479a8dff14561951cd5bdf2ee39835"
+      },
+      {
+        "name": "sample-3",
+        "manifestSha256": "7f0967517b4c1b8d093c6312b18cb866ac088e67845cb4987146436c16fe71ab",
+        "pngSha256": "799d02ef92ce4d31f5d9c4e5d025135fd2c20aee83690dd965c5c1bfed31c03a"
+      },
+      {
+        "name": "sample-4",
+        "manifestSha256": "b6ef1653cb36d312d6d7f7d0151068855f6d4508a24b28696ed8c9b86afe3687",
+        "pngSha256": "eaa8ed7962eb3e32457a8abc9dd058c39128a444205c7f6f5ec54aa3d4cd3ea3"
+      },
+      {
+        "name": "sample-5",
+        "manifestSha256": "da6c6afcb4fae3282859c920cd34822e619238b097bc7d42eb37850fe7958166",
+        "pngSha256": "437bb27a6c1eb0617c888501a001ba40a94b10a90de8b64ec95f45830e58e40d"
+      },
+      {
+        "name": "sample-6",
+        "manifestSha256": "26d23e17ae0da386ff275aa9d40d34e3a7675c58f66c216ae9dc8d15798f54e2",
+        "pngSha256": "9d80e04fa0a983fc823fde9e19613c3ddb7ebbc8f32584a62ce4af9f9d92ea80"
+      },
+      {
+        "name": "sample-7",
+        "manifestSha256": "73fe31be95123100a4d9e717f89eb3b2d39dcda32237b97a25bd125e824815ea",
+        "pngSha256": "55c491e0f6dda7dda004fb786eac775ae7955ab7219311e7359c2444ebcb2b6d"
+      },
+      {
+        "name": "sample-8",
+        "manifestSha256": "09899a6f62b4f4aa80f0616051af4f937b5a2069da20aba94ff0fdef98bfcc9e",
+        "pngSha256": "ab44bba615ed2e0acfdbe6b5255d9b0a8a5ef95abe7da448f394825438898d74"
+      }
+    ]
+  },
+  "maximumMaskedUnmaskedDifference": 44.25,
+  "maximumUnmaskedGeometricError": 2.8041210937500125,
+  "checks": [
+    {
+      "sample": "center",
+      "time": 0,
+      "x": 214,
+      "y": 96,
+      "maskedRgb": [
+        88.5,
+        88.5,
+        88.5
+      ],
+      "unmaskedRgb": [
+        88.5,
+        88.5,
+        88.5
+      ],
+      "maskedMinusUnmasked": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "geometricCoverageChannel": 87.78375,
+      "squaredCoverageChannel": 87.78375,
+      "unmaskedGeometricError": 0.7162500000000023,
+      "maskedSquaredError": 0.7162500000000023
+    },
+    {
+      "sample": "center",
+      "time": 0,
+      "x": 44,
+      "y": 96,
+      "maskedRgb": [
+        88.5,
+        88.5,
+        88.5
+      ],
+      "unmaskedRgb": [
+        88.5,
+        88.5,
+        88.5
+      ],
+      "maskedMinusUnmasked": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "geometricCoverageChannel": 87.78375,
+      "squaredCoverageChannel": 87.78375,
+      "unmaskedGeometricError": 0.7162500000000023,
+      "maskedSquaredError": 0.7162500000000023
+    },
+    {
+      "sample": "center",
+      "time": 0,
+      "x": 94,
+      "y": 46,
+      "maskedRgb": [
+        177.0,
+        177.0,
+        177.0
+      ],
+      "unmaskedRgb": [
+        177.0,
+        177.0,
+        177.0
+      ],
+      "maskedMinusUnmasked": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "geometricCoverageChannel": 175.5675,
+      "squaredCoverageChannel": 175.5675,
+      "unmaskedGeometricError": 1.4325000000000045,
+      "maskedSquaredError": 1.4325000000000045
+    },
+    {
+      "sample": "sample-1",
+      "time": 0.015625,
+      "x": 214,
+      "y": 96,
+      "maskedRgb": [
+        88.5,
+        88.5,
+        88.5
+      ],
+      "unmaskedRgb": [
+        92.0,
+        92.0,
+        92.0
+      ],
+      "maskedMinusUnmasked": [
+        -3.5,
+        -3.5,
+        -3.5
+      ],
+      "geometricCoverageChannel": 93.27023437500002,
+      "squaredCoverageChannel": 88.1266552734375,
+      "unmaskedGeometricError": 1.2702343750000153,
+      "maskedSquaredError": 0.3733447265624932
+    },
+    {
+      "sample": "sample-1",
+      "time": 0.015625,
+      "x": 44,
+      "y": 96,
+      "maskedRgb": [
+        80.5,
+        80.5,
+        80.5
+      ],
+      "unmaskedRgb": [
+        85.0,
+        85.0,
+        85.0
+      ],
+      "maskedMinusUnmasked": [
+        -4.5,
+        -4.5,
+        -4.5
+      ],
+      "geometricCoverageChannel": 83.66888671874999,
+      "squaredCoverageChannel": 79.74690765380859,
+      "unmaskedGeometricError": 1.331113281250012,
+      "maskedSquaredError": 0.7530923461914085
+    },
+    {
+      "sample": "sample-1",
+      "time": 0.015625,
+      "x": 94,
+      "y": 46,
+      "maskedRgb": [
+        174.75,
+        174.75,
+        174.75
+      ],
+      "unmaskedRgb": [
+        175.0,
+        175.0,
+        175.0
+      ],
+      "maskedMinusUnmasked": [
+        -0.25,
+        -0.25,
+        -0.25
+      ],
+      "geometricCoverageChannel": 175.5675,
+      "squaredCoverageChannel": 175.5675,
+      "unmaskedGeometricError": 0.5674999999999955,
+      "maskedSquaredError": 0.8174999999999955
+    },
+    {
+      "sample": "sample-2",
+      "time": 0.046875,
+      "x": 214,
+      "y": 96,
+      "maskedRgb": [
+        88.5,
+        88.5,
+        88.5
+      ],
+      "unmaskedRgb": [
+        104.5,
+        104.5,
+        104.5
+      ],
+      "maskedMinusUnmasked": [
+        -16.0,
+        -16.0,
+        -16.0
+      ],
+      "geometricCoverageChannel": 104.24320312500002,
+      "squaredCoverageChannel": 90.8698974609375,
+      "unmaskedGeometricError": 0.25679687499997783,
+      "maskedSquaredError": 2.3698974609374943
+    },
+    {
+      "sample": "sample-2",
+      "time": 0.046875,
+      "x": 44,
+      "y": 96,
+      "maskedRgb": [
+        64.75,
+        64.75,
+        64.75
+      ],
+      "unmaskedRgb": [
+        75.75,
+        75.75,
+        75.75
+      ],
+      "maskedMinusUnmasked": [
+        -11.0,
+        -11.0,
+        -11.0
+      ],
+      "geometricCoverageChannel": 75.43916015625,
+      "squaredCoverageChannel": 64.83052825927734,
+      "unmaskedGeometricError": 0.31083984375000284,
+      "maskedSquaredError": 0.08052825927734375
+    },
+    {
+      "sample": "sample-2",
+      "time": 0.046875,
+      "x": 94,
+      "y": 46,
+      "maskedRgb": [
+        175.5,
+        175.5,
+        175.5
+      ],
+      "unmaskedRgb": [
+        177.0,
+        177.0,
+        177.0
+      ],
+      "maskedMinusUnmasked": [
+        -1.5,
+        -1.5,
+        -1.5
+      ],
+      "geometricCoverageChannel": 174.19587890625,
+      "squaredCoverageChannel": 172.84568939208987,
+      "unmaskedGeometricError": 2.8041210937500125,
+      "maskedSquaredError": 2.6543106079101335
+    },
+    {
+      "sample": "sample-3",
+      "time": 0.078125,
+      "x": 214,
+      "y": 96,
+      "maskedRgb": [
+        88.5,
+        88.5,
+        88.5
+      ],
+      "unmaskedRgb": [
+        114.0,
+        114.0,
+        114.0
+      ],
+      "maskedMinusUnmasked": [
+        -25.5,
+        -25.5,
+        -25.5
+      ],
+      "geometricCoverageChannel": 115.216171875,
+      "squaredCoverageChannel": 96.3563818359375,
+      "unmaskedGeometricError": 1.2161718750000006,
+      "maskedSquaredError": 7.856381835937498
+    },
+    {
+      "sample": "sample-3",
+      "time": 0.078125,
+      "x": 44,
+      "y": 96,
+      "maskedRgb": [
+        52.0,
+        52.0,
+        52.0
+      ],
+      "unmaskedRgb": [
+        68.25,
+        68.25,
+        68.25
+      ],
+      "maskedMinusUnmasked": [
+        -16.25,
+        -16.25,
+        -16.25
+      ],
+      "geometricCoverageChannel": 67.20943359375,
+      "squaredCoverageChannel": 51.457222595214844,
+      "unmaskedGeometricError": 1.0405664062499937,
+      "maskedSquaredError": 0.5427774047851557
+    },
+    {
+      "sample": "sample-3",
+      "time": 0.078125,
+      "x": 94,
+      "y": 46,
+      "maskedRgb": [
+        173.25,
+        173.25,
+        173.25
+      ],
+      "unmaskedRgb": [
+        174.0,
+        174.0,
+        174.0
+      ],
+      "maskedMinusUnmasked": [
+        -0.75,
+        -0.75,
+        -0.75
+      ],
+      "geometricCoverageChannel": 174.19587890625,
+      "squaredCoverageChannel": 172.84568939208987,
+      "unmaskedGeometricError": 0.1958789062499875,
+      "maskedSquaredError": 0.4043106079101335
+    },
+    {
+      "sample": "sample-4",
+      "time": 0.109375,
+      "x": 214,
+      "y": 96,
+      "maskedRgb": [
+        88.5,
+        88.5,
+        88.5
+      ],
+      "unmaskedRgb": [
+        127.25,
+        127.25,
+        127.25
+      ],
+      "maskedMinusUnmasked": [
+        -38.75,
+        -38.75,
+        -38.75
+      ],
+      "geometricCoverageChannel": 126.49989852905274,
+      "squaredCoverageChannel": 104.8602217547223,
+      "unmaskedGeometricError": 0.7501014709472571,
+      "maskedSquaredError": 16.360221754722303
+    },
+    {
+      "sample": "sample-4",
+      "time": 0.109375,
+      "x": 44,
+      "y": 96,
+      "maskedRgb": [
+        40.75,
+        40.75,
+        40.75
+      ],
+      "unmaskedRgb": [
+        61.0,
+        61.0,
+        61.0
+      ],
+      "maskedMinusUnmasked": [
+        -20.25,
+        -20.25,
+        -20.25
+      ],
+      "geometricCoverageChannel": 58.97970703125001,
+      "squaredCoverageChannel": 39.62699066162109,
+      "unmaskedGeometricError": 2.0202929687499918,
+      "maskedSquaredError": 1.1230093383789068
+    },
+    {
+      "sample": "sample-4",
+      "time": 0.109375,
+      "x": 94,
+      "y": 46,
+      "maskedRgb": [
+        170.75,
+        170.75,
+        170.75
+      ],
+      "unmaskedRgb": [
+        173.0,
+        173.0,
+        173.0
+      ],
+      "maskedMinusUnmasked": [
+        -2.25,
+        -2.25,
+        -2.25
+      ],
+      "geometricCoverageChannel": 173.10286834716794,
+      "squaredCoverageChannel": 170.70831837818025,
+      "unmaskedGeometricError": 0.10286834716794147,
+      "maskedSquaredError": 0.041681621819748216
+    },
+    {
+      "sample": "sample-5",
+      "time": 0.140625,
+      "x": 214,
+      "y": 96,
+      "maskedRgb": [
+        117.75,
+        117.75,
+        117.75
+      ],
+      "unmaskedRgb": [
+        140.0,
+        140.0,
+        140.0
+      ],
+      "maskedMinusUnmasked": [
+        -22.25,
+        -22.25,
+        -22.25
+      ],
+      "geometricCoverageChannel": 138.0086567687988,
+      "squaredCoverageChannel": 116.52274739217015,
+      "unmaskedGeometricError": 1.9913432312011992,
+      "maskedSquaredError": 1.227252607829854
+    },
+    {
+      "sample": "sample-5",
+      "time": 0.140625,
+      "x": 44,
+      "y": 96,
+      "maskedRgb": [
+        30.0,
+        30.0,
+        30.0
+      ],
+      "unmaskedRgb": [
+        52.0,
+        52.0,
+        52.0
+      ],
+      "maskedMinusUnmasked": [
+        -22.0,
+        -22.0,
+        -22.0
+      ],
+      "geometricCoverageChannel": 50.74998046875001,
+      "squaredCoverageChannel": 29.339832458496094,
+      "unmaskedGeometricError": 1.2500195312499898,
+      "maskedSquaredError": 0.6601675415039061
+    },
+    {
+      "sample": "sample-5",
+      "time": 0.140625,
+      "x": 94,
+      "y": 46,
+      "maskedRgb": [
+        172.5,
+        172.5,
+        172.5
+      ],
+      "unmaskedRgb": [
+        174.75,
+        174.75,
+        174.75
+      ],
+      "maskedMinusUnmasked": [
+        -2.25,
+        -2.25,
+        -2.25
+      ],
+      "geometricCoverageChannel": 172.8242578125,
+      "squaredCoverageChannel": 170.1667419433594,
+      "unmaskedGeometricError": 1.925742187499992,
+      "maskedSquaredError": 2.3332580566406023
+    },
+    {
+      "sample": "sample-6",
+      "time": 0.171875,
+      "x": 214,
+      "y": 96,
+      "maskedRgb": [
+        131.0,
+        131.0,
+        131.0
+      ],
+      "unmaskedRgb": [
+        148.75,
+        148.75,
+        148.75
+      ],
+      "maskedMinusUnmasked": [
+        -17.75,
+        -17.75,
+        -17.75
+      ],
+      "geometricCoverageChannel": 149.34596237182618,
+      "squaredCoverageChannel": 130.95725111436101,
+      "unmaskedGeometricError": 0.5959623718261753,
+      "maskedSquaredError": 0.04274888563898571
+    },
+    {
+      "sample": "sample-6",
+      "time": 0.171875,
+      "x": 44,
+      "y": 96,
+      "maskedRgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "unmaskedRgb": [
+        44.25,
+        44.25,
+        44.25
+      ],
+      "maskedMinusUnmasked": [
+        -44.25,
+        -44.25,
+        -44.25
+      ],
+      "geometricCoverageChannel": 42.520253906250005,
+      "squaredCoverageChannel": 20.59574798583984,
+      "unmaskedGeometricError": 1.7297460937499949,
+      "maskedSquaredError": 20.59574798583984
+    },
+    {
+      "sample": "sample-6",
+      "time": 0.171875,
+      "x": 94,
+      "y": 46,
+      "maskedRgb": [
+        169.0,
+        169.0,
+        169.0
+      ],
+      "unmaskedRgb": [
+        172.0,
+        172.0,
+        172.0
+      ],
+      "maskedMinusUnmasked": [
+        -3.0,
+        -3.0,
+        -3.0
+      ],
+      "geometricCoverageChannel": 172.29918411254883,
+      "squaredCoverageChannel": 169.15569304894657,
+      "unmaskedGeometricError": 0.29918411254882926,
+      "maskedSquaredError": 0.1556930489465742
+    },
+    {
+      "sample": "sample-7",
+      "time": 0.203125,
+      "x": 214,
+      "y": 96,
+      "maskedRgb": [
+        149.0,
+        149.0,
+        149.0
+      ],
+      "unmaskedRgb": [
+        161.75,
+        161.75,
+        161.75
+      ],
+      "maskedMinusUnmasked": [
+        -12.75,
+        -12.75,
+        -12.75
+      ],
+      "geometricCoverageChannel": 160.47966796875,
+      "squaredCoverageChannel": 147.98505706787108,
+      "unmaskedGeometricError": 1.2703320312500068,
+      "maskedSquaredError": 1.0149429321289176
+    },
+    {
+      "sample": "sample-7",
+      "time": 0.203125,
+      "x": 44,
+      "y": 96,
+      "maskedRgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "unmaskedRgb": [
+        35.25,
+        35.25,
+        35.25
+      ],
+      "maskedMinusUnmasked": [
+        -35.25,
+        -35.25,
+        -35.25
+      ],
+      "geometricCoverageChannel": 34.29052734375,
+      "squaredCoverageChannel": 13.394737243652344,
+      "unmaskedGeometricError": 0.95947265625,
+      "maskedSquaredError": 13.394737243652344
+    },
+    {
+      "sample": "sample-7",
+      "time": 0.203125,
+      "x": 94,
+      "y": 46,
+      "maskedRgb": [
+        170.5,
+        170.5,
+        170.5
+      ],
+      "unmaskedRgb": [
+        173.75,
+        173.75,
+        173.75
+      ],
+      "maskedMinusUnmasked": [
+        -3.25,
+        -3.25,
+        -3.25
+      ],
+      "geometricCoverageChannel": 171.45263671875,
+      "squaredCoverageChannel": 167.5306576538086,
+      "unmaskedGeometricError": 2.29736328125,
+      "maskedSquaredError": 2.969342346191411
+    },
+    {
+      "sample": "sample-8",
+      "time": 0.234375,
+      "x": 214,
+      "y": 96,
+      "maskedRgb": [
+        167.25,
+        167.25,
+        167.25
+      ],
+      "unmaskedRgb": [
+        171.25,
+        171.25,
+        171.25
+      ],
+      "maskedMinusUnmasked": [
+        -4.0,
+        -4.0,
+        -4.0
+      ],
+      "geometricCoverageChannel": 171.45263671875,
+      "squaredCoverageChannel": 167.5306576538086,
+      "unmaskedGeometricError": 0.20263671875,
+      "maskedSquaredError": 0.2806576538085892
+    },
+    {
+      "sample": "sample-8",
+      "time": 0.234375,
+      "x": 44,
+      "y": 96,
+      "maskedRgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "unmaskedRgb": [
+        28.25,
+        28.25,
+        28.25
+      ],
+      "maskedMinusUnmasked": [
+        -28.25,
+        -28.25,
+        -28.25
+      ],
+      "geometricCoverageChannel": 26.060800781250006,
+      "squaredCoverageChannel": 7.736800231933595,
+      "unmaskedGeometricError": 2.1891992187499945,
+      "maskedSquaredError": 7.736800231933595
+    },
+    {
+      "sample": "sample-8",
+      "time": 0.234375,
+      "x": 94,
+      "y": 46,
+      "maskedRgb": [
+        166.75,
+        166.75,
+        166.75
+      ],
+      "unmaskedRgb": [
+        171.25,
+        171.25,
+        171.25
+      ],
+      "maskedMinusUnmasked": [
+        -4.5,
+        -4.5,
+        -4.5
+      ],
+      "geometricCoverageChannel": 171.28118408203125,
+      "squaredCoverageChannel": 167.20449580192567,
+      "unmaskedGeometricError": 0.031184082031245453,
+      "maskedSquaredError": 0.45449580192567396
+    }
+  ],
+  "temporalChecks": [
+    {
+      "x": 214,
+      "y": 96,
+      "maskedRgb": [
+        114.25,
+        114.25,
+        114.25
+      ],
+      "unmaskedRgb": [
+        132.0,
+        132.0,
+        132.0
+      ],
+      "maskedMinusUnmasked": [
+        -17.75,
+        -17.75,
+        -17.75
+      ]
+    },
+    {
+      "x": 44,
+      "y": 96,
+      "maskedRgb": [
+        34.0,
+        34.0,
+        34.0
+      ],
+      "unmaskedRgb": [
+        56.5,
+        56.5,
+        56.5
+      ],
+      "maskedMinusUnmasked": [
+        -22.5,
+        -22.5,
+        -22.5
+      ]
+    },
+    {
+      "x": 94,
+      "y": 46,
+      "maskedRgb": [
+        171.5,
+        171.5,
+        171.5
+      ],
+      "unmaskedRgb": [
+        173.25,
+        173.25,
+        173.25
+      ],
+      "maskedMinusUnmasked": [
+        -1.75,
+        -1.75,
+        -1.75
+      ]
+    }
+  ]
+}

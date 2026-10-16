@@ -1,0 +1,885 @@
+{
+  "scope": "Real old running API before source reload; read-only",
+  "elapsedMs": 6483.214400010183,
+  "value": {
+    "schemaVersion": "studio.visual-quality-program.v1",
+    "workspaceId": "4812f2c0-1a2a-4f6d-967d-17b370c8d849",
+    "targetBriefs": 3,
+    "baseline": {
+      "schemaVersion": "studio.visual-quality-baseline.v1",
+      "recordedAt": "2026-10-01",
+      "source": "local_engineering_fixture_and_user_feedback",
+      "technicalStatus": "passed_for_synthetic_fixtures",
+      "visualStatus": "rejected",
+      "humanScores": null,
+      "autonomyStatus": "not_demonstrated",
+      "limitations": [
+        "synthetic_vector_materials",
+        "fixed_centered_composition",
+        "four_second_square_format",
+        "no_audio",
+        "fixture_script_authored_materials_and_plans"
+      ],
+      "renders": [
+        {
+          "brief": "bebida",
+          "variant": "A",
+          "sha256": "b71d0367a71ccbe81296be1f586a7313200072189726655ecc907dd4d785c0cf"
+        },
+        {
+          "brief": "bebida",
+          "variant": "B",
+          "sha256": "acb4e188385c7612a87adabace49eac95573ef937d352b74447bbd7de3cb2650"
+        },
+        {
+          "brief": "mochila",
+          "variant": "A",
+          "sha256": "0da5f005039c6327e08727dd5d38813846b7d90b256b88b07ebba393b5a8b2f2"
+        },
+        {
+          "brief": "mochila",
+          "variant": "B",
+          "sha256": "0b8e389235c68bebe4b2a7770a075db255f55e95a9a127cccd4a4cfb62f83865"
+        },
+        {
+          "brief": "tarefas",
+          "variant": "A",
+          "sha256": "501c6843e3a582c95bbfed10f50c973bc45e312d430539c8a2710a7655300362"
+        },
+        {
+          "brief": "tarefas",
+          "variant": "B",
+          "sha256": "cdf2824fa1bdc8df4fc8d7fcd90213eb8d5f4818a9a3633228710b4f5dcd89d7"
+        }
+      ]
+    },
+    "cases": [
+      {
+        "documentId": "0ae12fe1-c3aa-4f42-a764-33d076ade8cd",
+        "title": "Estudo native14 / interface-a",
+        "briefKey": "d8d23e11b3229625f8b1741f2aa8639418ba38fe67024aad9eff8c2168951de2",
+        "materials": {
+          "status": "ready",
+          "blockers": [],
+          "language": "interface_capture",
+          "distinctMotionSources": 0,
+          "actionSourcesWithEvidence": 0
+        },
+        "renderStatus": "rendered",
+        "visualStatus": "pending",
+        "comparisonStatus": "pending",
+        "language": "interface_capture"
+      },
+      {
+        "documentId": "377a8aa0-598c-44ca-aa71-a675133b5df6",
+        "title": "Estudo native14 / comparison-a",
+        "briefKey": "6b11d06f2f2d691f066787e84c2ff5c0e9add49ce9992163d9c6aad3a194ba74",
+        "materials": {
+          "status": "ready",
+          "blockers": [],
+          "language": "motion_graphics",
+          "distinctMotionSources": 0,
+          "actionSourcesWithEvidence": 0
+        },
+        "renderStatus": "rendered",
+        "visualStatus": "pending",
+        "comparisonStatus": "pending",
+        "language": "motion_graphics"
+      },
+      {
+        "documentId": "79f5a459-8278-4331-af17-60f41e042480",
+        "title": "Estudo native14 / organization-a",
+        "briefKey": "feace579488e9c872298b95bfadd952b8dacb4e97d08a4da1ee629c46d208b25",
+        "materials": {
+          "status": "ready",
+          "blockers": [],
+          "language": "motion_graphics",
+          "distinctMotionSources": 0,
+          "actionSourcesWithEvidence": 0
+        },
+        "renderStatus": "rendered",
+        "visualStatus": "pending",
+        "comparisonStatus": "pending",
+        "language": "motion_graphics"
+      }
+    ],
+    "renders": [
+      {
+        "runId": "2eefc3af-edad-4b2f-afb0-87037f1666cd",
+        "documentId": "0ae12fe1-c3aa-4f42-a764-33d076ade8cd",
+        "qualityPhaseId": "visual-quality-2026-10-01",
+        "documentRevision": 2,
+        "assetId": "dd30c81a-429f-4f68-b375-97f0d9c59203",
+        "renderChecksum": "3725a7cb8cadf075ec5529ea35e870e070896a09bf38c113e6117a46c766d51b",
+        "technicalStatus": "passed",
+        "visualStatus": "not_assessed",
+        "autonomyStatus": "not_demonstrated",
+        "recordedManualInterventions": 1,
+        "humanScores": null,
+        "findings": [],
+        "reviewedAt": null,
+        "blockers": [
+          "current_render_human_review_missing"
+        ],
+        "studyLanguage": "interface_capture",
+        "studyVariant": "a"
+      },
+      {
+        "runId": "3abb31e4-941f-4a19-a954-fd036c1ca2de",
+        "documentId": "0ae12fe1-c3aa-4f42-a764-33d076ade8cd",
+        "qualityPhaseId": "visual-quality-2026-10-01",
+        "documentRevision": 2,
+        "assetId": "98b7f4d5-c48d-4a08-aff4-d6483f456a1d",
+        "renderChecksum": "1b856b62acb23b07d488c1c6f9582af75fa5cf074f49c465cdab0a40d6943925",
+        "technicalStatus": "passed",
+        "visualStatus": "not_assessed",
+        "autonomyStatus": "not_demonstrated",
+        "recordedManualInterventions": 1,
+        "humanScores": null,
+        "findings": [],
+        "reviewedAt": null,
+        "blockers": [
+          "current_render_human_review_missing"
+        ],
+        "studyLanguage": "interface_capture",
+        "studyVariant": "a"
+      },
+      {
+        "runId": "bfc6a1c9-afd0-410f-a635-f7654d676f7f",
+        "documentId": "0ae12fe1-c3aa-4f42-a764-33d076ade8cd",
+        "qualityPhaseId": "visual-quality-2026-10-01",
+        "documentRevision": 2,
+        "assetId": "83e06255-2a93-43db-b3d6-63c5b978642c",
+        "renderChecksum": "1b856b62acb23b07d488c1c6f9582af75fa5cf074f49c465cdab0a40d6943925",
+        "technicalStatus": "passed",
+        "visualStatus": "not_assessed",
+        "autonomyStatus": "not_demonstrated",
+        "recordedManualInterventions": 1,
+        "humanScores": null,
+        "findings": [],
+        "reviewedAt": null,
+        "blockers": [
+          "current_render_human_review_missing"
+        ],
+        "studyLanguage": "interface_capture",
+        "studyVariant": "a"
+      },
+      {
+        "runId": "504ea473-e77b-453d-8789-f68e7826df51",
+        "documentId": "0c0542bc-f8bb-4c4c-a29c-c66aeb2ea48a",
+        "qualityPhaseId": "visual-quality-2026-10-01",
+        "documentRevision": 3,
+        "assetId": "aa21c460-e8b2-4849-857a-ddd72187e75f",
+        "renderChecksum": "9d7cd8e5f44ca857d9fb3b3f6a707f93aba39473115a20ec1ad4748c6eb8686f",
+        "technicalStatus": "passed",
+        "visualStatus": "not_assessed",
+        "autonomyStatus": "not_demonstrated",
+        "recordedManualInterventions": 1,
+        "humanScores": null,
+        "findings": [],
+        "reviewedAt": null,
+        "blockers": [
+          "document_revision_stale"
+        ],
+        "studyLanguage": "interface_capture",
+        "studyVariant": "control"
+      },
+      {
+        "runId": "c12e2f73-8323-41f5-bb87-6d1fe709fd68",
+        "documentId": "0c0542bc-f8bb-4c4c-a29c-c66aeb2ea48a",
+        "qualityPhaseId": "visual-quality-2026-10-01",
+        "documentRevision": 5,
+        "assetId": "c4500e16-f4a3-4a85-a186-42546b1684a4",
+        "renderChecksum": "4535e66ff5085a3dcfc488973b9c9567790165a7aa97d87b829c326bec66fbe9",
+        "technicalStatus": "passed",
+        "visualStatus": "not_assessed",
+        "autonomyStatus": "not_demonstrated",
+        "recordedManualInterventions": 1,
+        "humanScores": null,
+        "findings": [],
+        "reviewedAt": null,
+        "blockers": [
+          "current_render_human_review_missing"
+        ],
+        "studyLanguage": "interface_capture",
+        "studyVariant": "control"
+      },
+      {
+        "runId": "803b739e-2d60-4af6-ae1f-cd091d6f90a2",
+        "documentId": "30a9b1dc-f0a8-4431-af03-569319298246",
+        "qualityPhaseId": "visual-quality-2026-10-01",
+        "documentRevision": 2,
+        "assetId": "b3e6621c-df2e-48db-9b08-880719522bec",
+        "renderChecksum": "f64a30a01174c0eb05200fe8a4e66dc8632097050278b662f688ecb6933f0ced",
+        "technicalStatus": "passed",
+        "visualStatus": "not_assessed",
+        "autonomyStatus": "not_demonstrated",
+        "recordedManualInterventions": 1,
+        "humanScores": null,
+        "findings": [],
+        "reviewedAt": null,
+        "blockers": [
+          "current_render_human_review_missing"
+        ],
+        "studyLanguage": "interface_capture",
+        "studyVariant": "control"
+      },
+      {
+        "runId": "0db93fe3-b4af-456a-9e75-afd7b7602370",
+        "documentId": "32aa4bba-50eb-4a0e-a790-6649d48e1cee",
+        "qualityPhaseId": "visual-quality-2026-10-01",
+        "documentRevision": 8,
+        "assetId": "6d2e6d09-315c-4944-801b-9dfb15cd0ed8",
+        "renderChecksum": "5992317608ae66fb45bfd6737f63090e49697fb2328c78033be77c65ed189892",
+        "technicalStatus": "passed",
+        "visualStatus": "not_assessed",
+        "autonomyStatus": "not_demonstrated",
+        "recordedManualInterventions": 1,
+        "humanScores": null,
+        "findings": [],
+        "reviewedAt": null,
+        "blockers": [
+          "current_render_human_review_missing"
+        ],
+        "studyLanguage": "interface_capture",
+        "studyVariant": "a"
+      },
+      {
+        "runId": "68137b70-133f-425c-b9f9-5014b6cd7d31",
+        "documentId": "32aa4bba-50eb-4a0e-a790-6649d48e1cee",
+        "qualityPhaseId": "visual-quality-2026-10-01",
+        "documentRevision": 6,
+        "assetId": "598d409f-5a63-4c43-ac1d-53ef2d0f136b",
+        "renderChecksum": "9230ce70b69bfe7da2e9eb595182587541be8f188325ce1883fb9fc89e50a5ab",
+        "technicalStatus": "passed",
+        "visualStatus": "not_assessed",
+        "autonomyStatus": "not_demonstrated",
+        "recordedManualInterventions": 1,
+        "humanScores": null,
+        "findings": [],
+        "reviewedAt": null,
+        "blockers": [
+          "document_revision_stale"
+        ],
+        "studyLanguage": "interface_capture",
+        "studyVariant": "a"
+      },
+      {
+        "runId": "81998d75-384a-4d44-b601-a356b28e0d52",
+        "documentId": "377a8aa0-598c-44ca-aa71-a675133b5df6",
+        "qualityPhaseId": "visual-quality-2026-10-01",
+        "documentRevision": 2,
+        "assetId": "dc10e6a4-204f-410d-85c0-51eacb6eaa49",
+        "renderChecksum": "409f0916ab33a58241b1deed17848e09e87e544399261978cdf141e6527d2a4a",
+        "technicalStatus": "passed",
+        "visualStatus": "not_assessed",
+        "autonomyStatus": "not_demonstrated",
+        "recordedManualInterventions": 1,
+        "humanScores": null,
+        "findings": [],
+        "reviewedAt": null,
+        "blockers": [
+          "current_render_human_review_missing"
+        ],
+        "studyLanguage": "motion_graphics",
+        "studyVariant": "a"
+      },
+      {
+        "runId": "da482d18-3c7a-429a-901f-72c725fb3784",
+        "documentId": "4f04b38b-ebbb-467a-82d8-d7c84b36d085",
+        "qualityPhaseId": "visual-quality-2026-10-01",
+        "documentRevision": 4,
+        "assetId": "9f39d1e6-0a04-473d-8102-9a0c125dd4e7",
+        "renderChecksum": "eabfe054ce3934a1eed31e94e033df088192379d743e03679efadbef60aa18ca",
+        "technicalStatus": "passed",
+        "visualStatus": "not_assessed",
+        "autonomyStatus": "not_demonstrated",
+        "recordedManualInterventions": 1,
+        "humanScores": null,
+        "findings": [],
+        "reviewedAt": null,
+        "blockers": [
+          "current_render_human_review_missing"
+        ],
+        "studyLanguage": "motion_graphics",
+        "studyVariant": "a"
+      },
+      {
+        "runId": "e048b454-310e-45e8-8d91-7f5af98b167d",
+        "documentId": "4f04b38b-ebbb-467a-82d8-d7c84b36d085",
+        "qualityPhaseId": "visual-quality-2026-10-01",
+        "documentRevision": 3,
+        "assetId": "bb23c4e9-391b-4a8e-a018-64fa4d34f550",
+        "renderChecksum": "f993cf52776b51ba901a3e0afe9270e679e2e787ee0645c7e49e5cbe843bef07",
+        "technicalStatus": "passed",
+        "visualStatus": "not_assessed",
+        "autonomyStatus": "not_demonstrated",
+        "recordedManualInterventions": 1,
+        "humanScores": null,
+        "findings": [],
+        "reviewedAt": null,
+        "blockers": [
+          "document_revision_stale"
+        ],
+        "studyLanguage": "motion_graphics",
+        "studyVariant": "a"
+      },
+      {
+        "runId": "de7cd5f3-7e82-41ca-a79f-d2599c06c623",
+        "documentId": "79f5a459-8278-4331-af17-60f41e042480",
+        "qualityPhaseId": "visual-quality-2026-10-01",
+        "documentRevision": 2,
+        "assetId": "bc8d3578-02ec-4712-8bfb-a061e44a78c8",
+        "renderChecksum": "f2eae2907b62bebd648a5142e851de6253f367594b7f68e5a06a224be8687d63",
+        "technicalStatus": "passed",
+        "visualStatus": "not_assessed",
+        "autonomyStatus": "not_demonstrated",
+        "recordedManualInterventions": 1,
+        "humanScores": null,
+        "findings": [],
+        "reviewedAt": null,
+        "blockers": [
+          "current_render_human_review_missing"
+        ],
+        "studyLanguage": "motion_graphics",
+        "studyVariant": "a"
+      },
+      {
+        "runId": "8217c92d-7b09-465e-bb0b-07a068d0be47",
+        "documentId": "7ab58089-0e0b-49d5-829e-cf5295746eff",
+        "qualityPhaseId": "visual-quality-2026-10-01",
+        "documentRevision": 3,
+        "assetId": "6861773d-f03a-4e76-8752-af88471e95e3",
+        "renderChecksum": "04a7f63875dbef3590dd6f3fa9f323b08fa2496e5e4ca92c66936e254da222f1",
+        "technicalStatus": "passed",
+        "visualStatus": "not_assessed",
+        "autonomyStatus": "not_demonstrated",
+        "recordedManualInterventions": 1,
+        "humanScores": null,
+        "findings": [],
+        "reviewedAt": null,
+        "blockers": [
+          "document_revision_stale"
+        ],
+        "studyLanguage": "motion_graphics",
+        "studyVariant": "b"
+      },
+      {
+        "runId": "ef95a875-d4f0-4174-94f8-437a94b38dfd",
+        "documentId": "7ab58089-0e0b-49d5-829e-cf5295746eff",
+        "qualityPhaseId": "visual-quality-2026-10-01",
+        "documentRevision": 4,
+        "assetId": "527bd4ca-217d-4084-8c15-67c83efed530",
+        "renderChecksum": "25232fbfb67726e4415ba0624211475547e9b66f670e7005c6c438856028c1e2",
+        "technicalStatus": "passed",
+        "visualStatus": "not_assessed",
+        "autonomyStatus": "not_demonstrated",
+        "recordedManualInterventions": 1,
+        "humanScores": null,
+        "findings": [],
+        "reviewedAt": null,
+        "blockers": [
+          "current_render_human_review_missing"
+        ],
+        "studyLanguage": "motion_graphics",
+        "studyVariant": "b"
+      },
+      {
+        "runId": "057e7203-cd32-4f0a-b403-45a9f08a3472",
+        "documentId": "7b8b9df1-7bd5-4f71-b2e3-3c9a8f0629f5",
+        "qualityPhaseId": "visual-quality-2026-10-01",
+        "documentRevision": 2,
+        "assetId": "b856aefe-1db9-43d3-ad88-995d5ab1b6c8",
+        "renderChecksum": "7f3a7c3a7fac037dcde962c98e5dc4279efeb5fa81d27dfd5cce2fd699933cf8",
+        "technicalStatus": "passed",
+        "visualStatus": "not_assessed",
+        "autonomyStatus": "not_demonstrated",
+        "recordedManualInterventions": 1,
+        "humanScores": null,
+        "findings": [],
+        "reviewedAt": null,
+        "blockers": [
+          "current_render_human_review_missing"
+        ],
+        "studyLanguage": "motion_graphics",
+        "studyVariant": "b"
+      },
+      {
+        "runId": "f51e18b8-adfa-4fe9-b199-6ff10389adc5",
+        "documentId": "7bb3cf87-c2c3-4a56-bd3d-d2d79447c457",
+        "qualityPhaseId": "visual-quality-2026-10-01",
+        "documentRevision": 2,
+        "assetId": "2325b3bd-ab88-44a7-951e-ac4fbf323c3f",
+        "renderChecksum": "25010327326a4245468b1c996122615db7b3ac60b4a906611ae554d4f01614c1",
+        "technicalStatus": "passed",
+        "visualStatus": "not_assessed",
+        "autonomyStatus": "not_demonstrated",
+        "recordedManualInterventions": 1,
+        "humanScores": null,
+        "findings": [],
+        "reviewedAt": null,
+        "blockers": [
+          "current_render_human_review_missing"
+        ],
+        "studyLanguage": "motion_graphics",
+        "studyVariant": "control"
+      },
+      {
+        "runId": "929b3737-a378-4229-88e5-6ca02b4a9ad8",
+        "documentId": "7fb69e28-6649-4f82-b533-01ac293ae544",
+        "qualityPhaseId": "visual-quality-2026-10-01",
+        "documentRevision": 2,
+        "assetId": "c6e35a2a-bfd5-4a0b-bfc5-4bad7042adba",
+        "renderChecksum": "7002cbf41c552c2f30aabfa2ee7bfa160e373404e6495fc9f1b9449fa185173f",
+        "technicalStatus": "passed",
+        "visualStatus": "not_assessed",
+        "autonomyStatus": "not_demonstrated",
+        "recordedManualInterventions": 1,
+        "humanScores": null,
+        "findings": [],
+        "reviewedAt": null,
+        "blockers": [
+          "current_render_human_review_missing"
+        ],
+        "studyLanguage": "interface_capture",
+        "studyVariant": "b"
+      },
+      {
+        "runId": "5e418722-1722-4d09-9e91-36d1ca1d1d9c",
+        "documentId": "94782222-8f3d-493b-a2bf-aea164d7ccd3",
+        "qualityPhaseId": "visual-quality-2026-10-01",
+        "documentRevision": 5,
+        "assetId": "689876b2-4fbd-4148-9063-56b4d40254b5",
+        "renderChecksum": "c612c87cfb0c7b7fb8c5ad0eb741bbe8f5e7dd84f20ab02e91ea2e5b9702a953",
+        "technicalStatus": "passed",
+        "visualStatus": "not_assessed",
+        "autonomyStatus": "not_demonstrated",
+        "recordedManualInterventions": 1,
+        "humanScores": null,
+        "findings": [],
+        "reviewedAt": null,
+        "blockers": [
+          "current_render_human_review_missing"
+        ],
+        "studyLanguage": "interface_capture",
+        "studyVariant": "b"
+      },
+      {
+        "runId": "72476f90-f18a-4b4e-ac55-f41cf56488f6",
+        "documentId": "94782222-8f3d-493b-a2bf-aea164d7ccd3",
+        "qualityPhaseId": "visual-quality-2026-10-01",
+        "documentRevision": 3,
+        "assetId": "ee75b17c-7c3a-47d8-95fc-6117db374c09",
+        "renderChecksum": "f486bf827e0025ab6703e342b9924082c9212f2a80264f506198931cf0dd092f",
+        "technicalStatus": "passed",
+        "visualStatus": "not_assessed",
+        "autonomyStatus": "not_demonstrated",
+        "recordedManualInterventions": 1,
+        "humanScores": null,
+        "findings": [],
+        "reviewedAt": null,
+        "blockers": [
+          "document_revision_stale"
+        ],
+        "studyLanguage": "interface_capture",
+        "studyVariant": "b"
+      },
+      {
+        "runId": "5966694e-c057-4506-8128-42405d64179b",
+        "documentId": "b9540f29-ca5b-4500-9af7-1671ba8c1b30",
+        "qualityPhaseId": "visual-quality-2026-10-01",
+        "documentRevision": 4,
+        "assetId": "369c15ae-7f43-4078-ab77-4fc6ff264ec4",
+        "renderChecksum": "b69a3e79092b3af6d178d5c847084405b8ccbc7561e510aa715ed3d1d0487e9d",
+        "technicalStatus": "passed",
+        "visualStatus": "not_assessed",
+        "autonomyStatus": "not_demonstrated",
+        "recordedManualInterventions": 1,
+        "humanScores": null,
+        "findings": [],
+        "reviewedAt": null,
+        "blockers": [
+          "current_render_human_review_missing"
+        ],
+        "studyLanguage": "motion_graphics",
+        "studyVariant": "a"
+      },
+      {
+        "runId": "8715f068-7846-4559-9f3e-cd88683bd0a3",
+        "documentId": "b9540f29-ca5b-4500-9af7-1671ba8c1b30",
+        "qualityPhaseId": "visual-quality-2026-10-01",
+        "documentRevision": 3,
+        "assetId": "b7a221ca-c094-479c-90c1-25a5ca3f9782",
+        "renderChecksum": "ca6739bd4102eb9d9ecefd3c26d0b858b3e4cab575d125a38a9ac2e708a3c52d",
+        "technicalStatus": "passed",
+        "visualStatus": "not_assessed",
+        "autonomyStatus": "not_demonstrated",
+        "recordedManualInterventions": 1,
+        "humanScores": null,
+        "findings": [],
+        "reviewedAt": null,
+        "blockers": [
+          "document_revision_stale"
+        ],
+        "studyLanguage": "motion_graphics",
+        "studyVariant": "a"
+      },
+      {
+        "runId": "47c4943e-1a85-4e88-abad-6176768c8956",
+        "documentId": "c9e6fd7a-26c6-4b94-a025-6e04f51975a2",
+        "qualityPhaseId": "visual-quality-2026-10-01",
+        "documentRevision": 4,
+        "assetId": "4a63843b-3d93-4d0f-9a4c-b09b85a34ab8",
+        "renderChecksum": "f6d5225ac64fcfac7d0e94fdd64b22edcf4ae3c2d33c4d3d2aeaa7759cd8344f",
+        "technicalStatus": "passed",
+        "visualStatus": "not_assessed",
+        "autonomyStatus": "not_demonstrated",
+        "recordedManualInterventions": 1,
+        "humanScores": null,
+        "findings": [],
+        "reviewedAt": null,
+        "blockers": [
+          "current_render_human_review_missing"
+        ],
+        "studyLanguage": "motion_graphics",
+        "studyVariant": "b"
+      },
+      {
+        "runId": "7cb147ca-2321-4912-bc38-7dad70b0ce1e",
+        "documentId": "c9e6fd7a-26c6-4b94-a025-6e04f51975a2",
+        "qualityPhaseId": "visual-quality-2026-10-01",
+        "documentRevision": 3,
+        "assetId": "250336e3-294c-4909-a8d4-b2ea6c5c23e4",
+        "renderChecksum": "0cc8a400264e358fd2e4fda9f54f08d77f9ad12ca503d0b6f2c9da6811af0b77",
+        "technicalStatus": "passed",
+        "visualStatus": "not_assessed",
+        "autonomyStatus": "not_demonstrated",
+        "recordedManualInterventions": 1,
+        "humanScores": null,
+        "findings": [],
+        "reviewedAt": null,
+        "blockers": [
+          "document_revision_stale"
+        ],
+        "studyLanguage": "motion_graphics",
+        "studyVariant": "b"
+      },
+      {
+        "runId": "fffdd1d5-0534-4a77-9f62-abdba8143162",
+        "documentId": "d4685b9d-f0d1-459c-91c8-8535ce2e588e",
+        "qualityPhaseId": "visual-quality-2026-10-01",
+        "documentRevision": 2,
+        "assetId": "e865743b-6061-4b50-8c22-a483e75c064a",
+        "renderChecksum": "8934f4a1274d422c98e9c9d9d4f776110f25ac31ce246bdec1a660b830d29d44",
+        "technicalStatus": "passed",
+        "visualStatus": "not_assessed",
+        "autonomyStatus": "not_demonstrated",
+        "recordedManualInterventions": 1,
+        "humanScores": null,
+        "findings": [],
+        "reviewedAt": null,
+        "blockers": [
+          "current_render_human_review_missing"
+        ],
+        "studyLanguage": "motion_graphics",
+        "studyVariant": "control"
+      },
+      {
+        "runId": "ad077711-11c5-4f17-bf7c-ca6c1e04b818",
+        "documentId": "d53e33fc-4f01-446f-b163-9d14bebd8fcd",
+        "qualityPhaseId": "visual-quality-2026-10-01",
+        "documentRevision": 4,
+        "assetId": "e4157212-eca5-46f5-9794-8391fb737dab",
+        "renderChecksum": "fddc154d6d7ebd4c320574f955eb82479dde5ec82a5a414a3dca7bdadfe53b3a",
+        "technicalStatus": "passed",
+        "visualStatus": "not_assessed",
+        "autonomyStatus": "not_demonstrated",
+        "recordedManualInterventions": 1,
+        "humanScores": null,
+        "findings": [],
+        "reviewedAt": null,
+        "blockers": [
+          "current_render_human_review_missing"
+        ],
+        "studyLanguage": "motion_graphics",
+        "studyVariant": "control"
+      },
+      {
+        "runId": "ce189c17-2bb5-459e-bce3-4c7467321486",
+        "documentId": "d53e33fc-4f01-446f-b163-9d14bebd8fcd",
+        "qualityPhaseId": "visual-quality-2026-10-01",
+        "documentRevision": 3,
+        "assetId": "1cfda9b6-1082-4d20-95c5-68bf022c508a",
+        "renderChecksum": "06e75c28e3accb1f25e0b7f611736e2db401db212618dd0ead64765b7093f400",
+        "technicalStatus": "passed",
+        "visualStatus": "not_assessed",
+        "autonomyStatus": "not_demonstrated",
+        "recordedManualInterventions": 1,
+        "humanScores": null,
+        "findings": [],
+        "reviewedAt": null,
+        "blockers": [
+          "document_revision_stale"
+        ],
+        "studyLanguage": "motion_graphics",
+        "studyVariant": "control"
+      },
+      {
+        "runId": "5bd81595-5fa1-491d-8a22-6872af347da0",
+        "documentId": "dceb53fc-7f7c-481e-b073-999ec21ee94d",
+        "qualityPhaseId": "visual-quality-2026-10-01",
+        "documentRevision": 2,
+        "assetId": "eec08ddb-e889-4c47-9053-2b65e33fd52d",
+        "renderChecksum": "b7eca6bcf9188ef05c5bd1e92c8c63fd74b259db5c43e5c7140772a8817ee04d",
+        "technicalStatus": "passed",
+        "visualStatus": "not_assessed",
+        "autonomyStatus": "not_demonstrated",
+        "recordedManualInterventions": 1,
+        "humanScores": null,
+        "findings": [],
+        "reviewedAt": null,
+        "blockers": [
+          "current_render_human_review_missing"
+        ],
+        "studyLanguage": "motion_graphics",
+        "studyVariant": "b"
+      },
+      {
+        "runId": "4d3a1e70-b5d2-418b-9616-5ff32f625975",
+        "documentId": "f75f2e05-e826-4c41-a612-34b7bed701b7",
+        "qualityPhaseId": "visual-quality-2026-10-01",
+        "documentRevision": 3,
+        "assetId": "245bfd7a-0b19-4ce5-91fb-05830255d788",
+        "renderChecksum": "106f55dd7a268e0566eab77ec1441beba8508e00a92f0e2d0dcf4c65e50686ef",
+        "technicalStatus": "passed",
+        "visualStatus": "not_assessed",
+        "autonomyStatus": "not_demonstrated",
+        "recordedManualInterventions": 1,
+        "humanScores": null,
+        "findings": [],
+        "reviewedAt": null,
+        "blockers": [
+          "document_revision_stale"
+        ],
+        "studyLanguage": "motion_graphics",
+        "studyVariant": "control"
+      },
+      {
+        "runId": "ce04e720-4de2-45c6-8855-45ac32af439a",
+        "documentId": "f75f2e05-e826-4c41-a612-34b7bed701b7",
+        "qualityPhaseId": "visual-quality-2026-10-01",
+        "documentRevision": 4,
+        "assetId": "1d1568e9-d1a6-45b9-856e-4a55403b9cae",
+        "renderChecksum": "eb36ba07b28d90e7e2fd2a836897cb5121f5571bf9fe09e80e2259f25622eb0a",
+        "technicalStatus": "passed",
+        "visualStatus": "not_assessed",
+        "autonomyStatus": "not_demonstrated",
+        "recordedManualInterventions": 1,
+        "humanScores": null,
+        "findings": [],
+        "reviewedAt": null,
+        "blockers": [
+          "current_render_human_review_missing"
+        ],
+        "studyLanguage": "motion_graphics",
+        "studyVariant": "control"
+      }
+    ],
+    "studyComparisons": [
+      {
+        "id": "9bd403fd-4abf-455a-8938-8b7d4bf1cfed",
+        "language": "motion_graphics",
+        "status": "not_assessed",
+        "blockers": [],
+        "labels": [
+          {
+            "label": "A",
+            "assetId": "369c15ae-7f43-4078-ab77-4fc6ff264ec4",
+            "checksum": "b69a3e79092b3af6d178d5c847084405b8ccbc7561e510aa715ed3d1d0487e9d",
+            "documentId": "b9540f29-ca5b-4500-9af7-1671ba8c1b30",
+            "documentRevision": 4
+          },
+          {
+            "label": "B",
+            "assetId": "527bd4ca-217d-4084-8c15-67c83efed530",
+            "checksum": "25232fbfb67726e4415ba0624211475547e9b66f670e7005c6c438856028c1e2",
+            "documentId": "7ab58089-0e0b-49d5-829e-cf5295746eff",
+            "documentRevision": 4
+          },
+          {
+            "label": "C",
+            "assetId": "1d1568e9-d1a6-45b9-856e-4a55403b9cae",
+            "checksum": "eb36ba07b28d90e7e2fd2a836897cb5121f5571bf9fe09e80e2259f25622eb0a",
+            "documentId": "f75f2e05-e826-4c41-a612-34b7bed701b7",
+            "documentRevision": 4
+          }
+        ],
+        "review": null
+      },
+      {
+        "id": "2b489959-2d88-4c68-949f-6a2d012f3e78",
+        "language": "motion_graphics",
+        "status": "not_assessed",
+        "blockers": [],
+        "labels": [
+          {
+            "label": "A",
+            "assetId": "4a63843b-3d93-4d0f-9a4c-b09b85a34ab8",
+            "checksum": "f6d5225ac64fcfac7d0e94fdd64b22edcf4ae3c2d33c4d3d2aeaa7759cd8344f",
+            "documentId": "c9e6fd7a-26c6-4b94-a025-6e04f51975a2",
+            "documentRevision": 4
+          },
+          {
+            "label": "B",
+            "assetId": "9f39d1e6-0a04-473d-8102-9a0c125dd4e7",
+            "checksum": "eabfe054ce3934a1eed31e94e033df088192379d743e03679efadbef60aa18ca",
+            "documentId": "4f04b38b-ebbb-467a-82d8-d7c84b36d085",
+            "documentRevision": 4
+          },
+          {
+            "label": "C",
+            "assetId": "e4157212-eca5-46f5-9794-8391fb737dab",
+            "checksum": "fddc154d6d7ebd4c320574f955eb82479dde5ec82a5a414a3dca7bdadfe53b3a",
+            "documentId": "d53e33fc-4f01-446f-b163-9d14bebd8fcd",
+            "documentRevision": 4
+          }
+        ],
+        "review": null
+      },
+      {
+        "id": "9991cf4a-bec0-4e27-93a8-e94ddacc04fc",
+        "language": "interface_capture",
+        "status": "not_assessed",
+        "blockers": [],
+        "labels": [
+          {
+            "label": "A",
+            "assetId": "c4500e16-f4a3-4a85-a186-42546b1684a4",
+            "checksum": "4535e66ff5085a3dcfc488973b9c9567790165a7aa97d87b829c326bec66fbe9",
+            "documentId": "0c0542bc-f8bb-4c4c-a29c-c66aeb2ea48a",
+            "documentRevision": 5
+          },
+          {
+            "label": "B",
+            "assetId": "689876b2-4fbd-4148-9063-56b4d40254b5",
+            "checksum": "c612c87cfb0c7b7fb8c5ad0eb741bbe8f5e7dd84f20ab02e91ea2e5b9702a953",
+            "documentId": "94782222-8f3d-493b-a2bf-aea164d7ccd3",
+            "documentRevision": 5
+          },
+          {
+            "label": "C",
+            "assetId": "6d2e6d09-315c-4944-801b-9dfb15cd0ed8",
+            "checksum": "5992317608ae66fb45bfd6737f63090e49697fb2328c78033be77c65ed189892",
+            "documentId": "32aa4bba-50eb-4a0e-a790-6649d48e1cee",
+            "documentRevision": 8
+          }
+        ],
+        "review": null
+      },
+      {
+        "id": "d2412e84-c643-4c3d-b697-583c31562a47",
+        "language": "motion_graphics",
+        "status": "not_assessed",
+        "blockers": [],
+        "labels": [
+          {
+            "label": "A",
+            "assetId": "b856aefe-1db9-43d3-ad88-995d5ab1b6c8",
+            "checksum": "7f3a7c3a7fac037dcde962c98e5dc4279efeb5fa81d27dfd5cce2fd699933cf8",
+            "documentId": "7b8b9df1-7bd5-4f71-b2e3-3c9a8f0629f5",
+            "documentRevision": 2
+          },
+          {
+            "label": "B",
+            "assetId": "bc8d3578-02ec-4712-8bfb-a061e44a78c8",
+            "checksum": "f2eae2907b62bebd648a5142e851de6253f367594b7f68e5a06a224be8687d63",
+            "documentId": "79f5a459-8278-4331-af17-60f41e042480",
+            "documentRevision": 2
+          },
+          {
+            "label": "C",
+            "assetId": "e865743b-6061-4b50-8c22-a483e75c064a",
+            "checksum": "8934f4a1274d422c98e9c9d9d4f776110f25ac31ce246bdec1a660b830d29d44",
+            "documentId": "d4685b9d-f0d1-459c-91c8-8535ce2e588e",
+            "documentRevision": 2
+          }
+        ],
+        "review": null
+      },
+      {
+        "id": "c7d85c2d-2dad-4e7f-8fca-b45736544732",
+        "language": "motion_graphics",
+        "status": "not_assessed",
+        "blockers": [],
+        "labels": [
+          {
+            "label": "A",
+            "assetId": "dc10e6a4-204f-410d-85c0-51eacb6eaa49",
+            "checksum": "409f0916ab33a58241b1deed17848e09e87e544399261978cdf141e6527d2a4a",
+            "documentId": "377a8aa0-598c-44ca-aa71-a675133b5df6",
+            "documentRevision": 2
+          },
+          {
+            "label": "B",
+            "assetId": "2325b3bd-ab88-44a7-951e-ac4fbf323c3f",
+            "checksum": "25010327326a4245468b1c996122615db7b3ac60b4a906611ae554d4f01614c1",
+            "documentId": "7bb3cf87-c2c3-4a56-bd3d-d2d79447c457",
+            "documentRevision": 2
+          },
+          {
+            "label": "C",
+            "assetId": "eec08ddb-e889-4c47-9053-2b65e33fd52d",
+            "checksum": "b7eca6bcf9188ef05c5bd1e92c8c63fd74b259db5c43e5c7140772a8817ee04d",
+            "documentId": "dceb53fc-7f7c-481e-b073-999ec21ee94d",
+            "documentRevision": 2
+          }
+        ],
+        "review": null
+      },
+      {
+        "id": "e2182ac8-2824-4888-b385-a14ffb81c8ef",
+        "language": "interface_capture",
+        "status": "not_assessed",
+        "blockers": [],
+        "labels": [
+          {
+            "label": "A",
+            "assetId": "b3e6621c-df2e-48db-9b08-880719522bec",
+            "checksum": "f64a30a01174c0eb05200fe8a4e66dc8632097050278b662f688ecb6933f0ced",
+            "documentId": "30a9b1dc-f0a8-4431-af03-569319298246",
+            "documentRevision": 2
+          },
+          {
+            "label": "B",
+            "assetId": "98b7f4d5-c48d-4a08-aff4-d6483f456a1d",
+            "checksum": "1b856b62acb23b07d488c1c6f9582af75fa5cf074f49c465cdab0a40d6943925",
+            "documentId": "0ae12fe1-c3aa-4f42-a764-33d076ade8cd",
+            "documentRevision": 2
+          },
+          {
+            "label": "C",
+            "assetId": "c6e35a2a-bfd5-4a0b-bfc5-4bad7042adba",
+            "checksum": "7002cbf41c552c2f30aabfa2ee7bfa160e373404e6495fc9f1b9449fa185173f",
+            "documentId": "7fb69e28-6649-4f82-b533-01ac293ae544",
+            "documentRevision": 2
+          }
+        ],
+        "review": null
+      }
+    ],
+    "budget": {
+      "limitUsd": 10,
+      "committedOrReservedUsd": 0,
+      "attempts": 0,
+      "remainingUsd": 10
+    },
+    "progress": {
+      "distinctBriefs": 3,
+      "materialsReady": 3,
+      "rendered": 3,
+      "visualApproved": 0,
+      "comparisonPassed": 0
+    },
+    "phaseStatus": "pending"
+  }
+}

@@ -4,7 +4,7 @@ import re
 import unicodedata
 from typing import Any, Literal
 
-from pydantic import Field, model_validator
+from pydantic import Field, model_serializer, model_validator
 
 from .cinematic_direction import CinematicArtDirectionV1, CinematicShotIntentV1
 from .contextual_editing import ContextualPlanRequestV1
@@ -158,12 +158,29 @@ class ProductionRequestV1(StudioContract):
     material_semantics_policy: Literal["legacy", "contextual_video_v1"] = "legacy"
     cinematic_direction_policy: Literal["disabled", "mixed_motion_v1", "editorial_motion_v2"] = "disabled"
     native_scene_editing: bool = False
+    render_engine: Literal["current", "alight_motion"] = "current"
     generated_video_policy: Literal["disabled", "single_short_clip"] = "disabled"
     generated_video: GeneratedVideoPolicyV2 | None = None
     hybrid_policy: HybridProductionPolicyV1 | None = None
     narration_asset_id: str | None = None
     stock_voice_provider: str = Field(default="kokoro-82m-stock", min_length=1, max_length=160)
     stock_voice_key: str = Field(default="pf_dora", min_length=1, max_length=120)
+
+    @model_serializer(mode="wrap")
+    def preserve_legacy_engine(self, handler):
+        payload = handler(self)
+        if self.render_engine == "current":
+            payload.pop("renderEngine", None)
+            payload.pop("render_engine", None)
+        return payload
+
+    def bind_render_engine(self, candidate):
+        # Engine choice belongs to the user request, never the model response.
+        candidate.render_engine = self.render_engine
+        candidate.engine_profile = (
+            "kinetic_type" if self.mode == "motion" else "action_product"
+        ) if self.render_engine == "alight_motion" else None
+        return candidate
 
     def effective_generated_video_policy(self) -> GeneratedVideoPolicyV2:
         if self.generated_video is not None:

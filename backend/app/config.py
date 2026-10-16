@@ -22,6 +22,13 @@ class Settings(BaseSettings):
     ai_base_url: str | None = None
     ai_api_key: str | None = None
     ai_model: str | None = None
+    # Commands are dispatched to the built Rust adapters, never a shell or a legacy renderer.
+    studio_craft_photocraft_binary: str | None = None
+    studio_craft_filmcraft_binary: str | None = None
+    studio_craft_effectcraft_binary: str | None = None
+    studio_llm_credential_key: SecretStr | None = Field(default=None, min_length=32)
+    studio_craft_timeout_seconds: int = Field(default=600, ge=5, le=3600)
+    studio_craft_max_upload_bytes: int = Field(default=2 * 1024**3, ge=1024, le=20 * 1024**3)
     ai_embedding_model: str | None = None
     gemini_api_key_1: SecretStr | None = Field(
         default=None,
@@ -51,6 +58,11 @@ class Settings(BaseSettings):
     studio_editing_ai_test_budget_usd: float = Field(default=0, ge=0)
     studio_production_test_budget_usd: float = Field(default=0, ge=0, le=10)
     studio_visual_quality_indicator_enabled: bool = False
+    studio_alight_motion_enabled: bool = False
+    studio_alight_execution_mode: Literal["physical_android_ui", "android_emulator_ui"] = "physical_android_ui"
+    studio_alight_adb_path: str = "adb"
+    studio_alight_profile_path: str | None = None
+    studio_alight_worker_timeout_seconds: int = Field(default=900, ge=60, le=900)
     studio_editing_ai_price_version: str = "unpriced"
     studio_editing_ai_input_usd_per_million: float = Field(default=0, ge=0)
     studio_editing_ai_output_usd_per_million: float = Field(default=0, ge=0)
@@ -66,7 +78,7 @@ class Settings(BaseSettings):
     # tokens. The per-request tariff and production envelope still reserve the
     # worst case before submission.
     studio_editing_ai_max_output_tokens: int = Field(default=4096, ge=256, le=16384)
-    studio_editing_ai_max_prompt_chars: int = Field(default=100_000, ge=1_000, le=500_000)
+    studio_editing_ai_max_prompt_chars: int = Field(default=200_000, ge=1_000, le=500_000)
     studio_gemini_production_key: SecretStr | None = None
     studio_gemini_test_key: SecretStr | None = None
     studio_gemini_planning_model: Literal[
@@ -140,7 +152,7 @@ class Settings(BaseSettings):
     remotion_native_enabled: bool = False
     remotion_node_path: str = "node"
     remotion_timeout_seconds: int = Field(default=7_200, ge=60, le=21_600)
-    studio_editorial_motion_provider: Literal["hyperframes.contextual-v2", "motion-canvas.contextual-v1", "remotion.contextual-v1", "remotion.contextual-v2"] = "hyperframes.contextual-v2"
+    studio_editorial_motion_provider: Literal["craft.effectcraft"] = "craft.effectcraft"
     max_external_text_chars: int = 20_000
     rate_limit_requests: int = Field(default=240, ge=1, le=100_000)
     rate_limit_auth_requests: int = Field(default=10, ge=1, le=10_000)
@@ -149,6 +161,21 @@ class Settings(BaseSettings):
     rate_limit_window_seconds: int = Field(default=60, ge=1, le=86_400)
     radar_contextual_v2_enabled: bool = False
     radar_contextual_v2_shadow_mode: bool = False
+
+    @field_validator(
+        "hyperframes_enabled", "hyperframes_local_qualification_enabled",
+        "motion_canvas_enabled", "remotion_enabled", "remotion_native_enabled",
+        "studio_alight_motion_enabled", mode="before",
+    )
+    @classmethod
+    def retired_editor_flags_are_disabled(cls, value: object) -> bool:
+        # Old environment files remain loadable but cannot reactivate an editor.
+        return False
+
+    @field_validator("studio_editorial_motion_provider", mode="before")
+    @classmethod
+    def editorial_engine_is_effectcraft(cls, value: object) -> str:
+        return "craft.effectcraft"
 
     @field_validator("cors_origins", mode="before")
     @classmethod
@@ -219,16 +246,6 @@ class Settings(BaseSettings):
                 raise RuntimeError("Studio workers cannot use CELERY_TASK_ALWAYS_EAGER")
             if self.environment == "production" and not self.studio_worker_image_digest:
                 raise RuntimeError("Production Studio workers require STUDIO_WORKER_IMAGE_DIGEST")
-        if self.hyperframes_enabled:
-            local_qualification = (
-                self.environment != "production"
-                and self.hyperframes_local_qualification_enabled
-                and self.celery_task_always_eager
-            )
-            if not self.studio_isolated_queues_enabled and not local_qualification:
-                raise RuntimeError("HyperFrames requires STUDIO_ISOLATED_QUEUES_ENABLED=true")
-            if not self.hyperframes_cli_path:
-                raise RuntimeError("HYPERFRAMES_CLI_PATH is required when HyperFrames is enabled")
         if self.studio_background_removal_enabled and not (
             self.studio_background_removal_model_path and self.studio_background_removal_model_sha256
         ):

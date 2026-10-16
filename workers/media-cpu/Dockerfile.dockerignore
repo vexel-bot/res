@@ -1,0 +1,11 @@
+**
+!backend/
+!backend/requirements.txt
+!backend/app/
+!backend/app/**
+!workers/
+!workers/media-cpu/
+!workers/media-cpu/worker.manifest.json
+**/__pycache__/
+**/*.pyc
+**/.env*

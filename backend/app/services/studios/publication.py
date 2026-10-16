@@ -79,7 +79,7 @@ def _validated_binding(
     current = record_to_contract(record)
     # This rollout admits private rough cuts only. Preproduction reviews must
     # never be mistaken for approval of the final edited artifact.
-    if editorial_readiness(db, record).managed:
+    if not current.native_editor_state and editorial_readiness(db, record).managed:
         raise ValueError("studio_publication_editorial_final_review_pending")
     snapshot = CreativeDocumentV1.model_validate(review.snapshot)
     if (

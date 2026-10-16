@@ -3,6 +3,7 @@ from __future__ import annotations
 import hashlib
 import json
 from datetime import UTC, datetime
+from types import SimpleNamespace
 
 from sqlalchemy import select
 from sqlalchemy.orm import Session
@@ -13,16 +14,13 @@ from ...domain.studios.contracts import (
     StudioListeningReviewRecordV1,
     StudioListeningReviewSubmissionV1,
     StudioReviewRequestV1,
-    VideoRenderResultV1,
 )
 from ...models import (
     ApprovalEvent,
     CreativeDocument,
     FeedbackEvent,
-    LibraryAsset,
     Post,
     StudioDomainEvent,
-    StudioGenerationJob,
     StudioReviewRequest,
     User,
 )
@@ -110,43 +108,19 @@ def request_review(
         return existing
 
     render_result = None
-    if render_job_id:
-        render_job = db.scalar(
-            select(StudioGenerationJob).where(
-                StudioGenerationJob.id == render_job_id,
-                StudioGenerationJob.workspace_id == record.workspace_id,
-                StudioGenerationJob.document_id == record.id,
+    if contract.native_editor_state:
+        if not render_job_id:
+            raise ValueError("studio_review_craft_render_required")
+        from .craft import verified_render
+
+        rendered = verified_render(db, record, render_job_id)
+        render_result = SimpleNamespace(
+            artifact=SimpleNamespace(
+                asset_id=rendered["artifact"]["assetId"], checksum_sha256=rendered["artifact"]["checksumSha256"]
             )
         )
-        if not render_job or render_job.job_type != "video_render":
-            raise ValueError("studio_review_render_not_found")
-        if render_job.status != "succeeded" or not render_job.result_payload:
-            raise ValueError("studio_review_render_not_ready")
-        render_result = VideoRenderResultV1.model_validate(render_job.result_payload)
-        if (
-            render_result.document_id != record.id
-            or render_result.document_revision != record.revision
-            or render_result.document_version != record.version
-        ):
-            raise ValueError("studio_review_render_snapshot_mismatch")
-        artifact = db.scalar(
-            select(LibraryAsset).where(
-                LibraryAsset.id == render_result.artifact.asset_id,
-                LibraryAsset.workspace_id == record.workspace_id,
-                LibraryAsset.lifecycle_status == "active",
-            )
-        )
-        if (
-            not artifact
-            or not artifact.storage_key
-            or not artifact.checksum_sha256
-            or artifact.checksum_sha256.lower() != render_result.artifact.checksum_sha256.lower()
-        ):
-            raise ValueError("studio_review_render_artifact_mismatch")
-        if render_result.quality_evaluation is None or render_result.quality_evaluation.status != "passed":
-            raise ValueError("studio_review_render_quality_failed")
-    elif contract.content_type in {"video", "presenter"}:
-        raise ValueError("studio_review_video_render_required")
+    elif render_job_id or contract.content_type in {"video", "presenter"}:
+        raise ValueError("studio_review_native_migration_required")
     immutable_snapshot = contract.model_copy(deep=True)
     if record.post_id:
         linked_post = db.get(Post, record.post_id)

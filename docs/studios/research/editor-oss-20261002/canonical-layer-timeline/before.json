@@ -1,0 +1,25 @@
+{
+  "historicalFreezeSha256": "5db07ba811bc5d1f9abb3e1cd7111748a04643372a1ff335aa6d0642c4c230ac",
+  "qualifiedSourcesUnchanged": 66,
+  "before": {
+    "src/studios/VideoStudio.tsx": "e8ae58fe7dd2aff35fcad90ad87a6e3541a1e5a1630b121512ec71d058f96ee7",
+    "src/studios/EditorInspectionPanel.tsx": "e960707ca3937a563e39105c1f91be0c10337ed9c4c5fec58c98030647fd4fed",
+    "src/studios/video-studio.css": "2b678a1c20011b924bb10a7e5ebeb2fd27c8f765375325c0ad78efd07055b1ba"
+  },
+  "portraitObservations": {
+    "interface-a-frame0.json": "28106138b5d5c3b94fa2264f8ed68f52e32412884502cdba6e0f768c473127aa",
+    "interface-a-frame284.json": "626fd1367e118c3e36f815c6464470d09d77a987dd899a028759d537e6ca319d",
+    "organization-a-clamp450.json": "aeb7be437ab164326ede5169c83bf03d234a4d67938c3849b91f70c9c0bb3c4a",
+    "organization-a-frame0.json": "c22853a5dfc939273d1c2338f9700e03555d15b1f899399e6bbfaafe1996ceef",
+    "organization-a-frame139.json": "4e24d9ff4b4a8060eed9861e3b0e186e6105ca407e1d41cffe96acdb34bea204",
+    "organization-a-frame244.json": "3073e59e3f5f0c98ec074217b2f981b836b0a1415a5c6b4bfe42f3e105f0c6bf",
+    "organization-a-frame449.json": "6ec039505de40e0b165bf63a7f8421e50d1dd953d02fc9b3e2251c2bdaaf2590",
+    "organization-a-frame449.png": "0902a79c78b0241c8bb77c7efb1487de4f18b721c22a82d65b8f9029544b6fbc",
+    "organization-a-main-end.json": "53d128ca0892fbaf8423ac78ca080ccd30ea2477548a3820498a8360dcad91bb",
+    "organization-a-main-home.json": "b12f60c4504af4f991fe660453a42b5ca4ffbf3ed1e790fd67386e43fc5416d7"
+  },
+  "interventions": [
+    "Original frontend3000 restored through npm run dev:web; no rejected frontend3319 launch repeated",
+    "Browser connection failed after interface frame284; no frame285/286 capture certified; no canonical mutations"
+  ]
+}

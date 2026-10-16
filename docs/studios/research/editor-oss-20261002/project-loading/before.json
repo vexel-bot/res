@@ -1,0 +1,7 @@
+{
+  "scope": "Source snapshot before splitting project loading from support resources",
+  "sources": {
+    "src/studios/useVideoStudio.ts": "7f5cf8a639ff7ef884aa4b5a4c61d89252068425e4b33a34b2f3b4bda20946bd",
+    "src/studios/VideoStudio.tsx": "d77c0acf1f7e2689814e1be27de8bcf9690c0d72538b974b5c7268cc3c723514"
+  }
+}

@@ -1,7 +1,4 @@
-import tempfile
-from contextlib import ExitStack
 from datetime import UTC, datetime
-from pathlib import Path
 
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy import select
@@ -9,7 +6,7 @@ from sqlalchemy.orm import Session
 
 from ..config import get_settings
 from ..database import get_db
-from ..models import Campaign, CreativeDocument, FeedbackEvent, LibraryAsset, Membership, Post, User, utcnow
+from ..models import Campaign, CreativeDocument, FeedbackEvent, Membership, Post, User
 from ..schemas import (
     AssetOut,
     CreativeDocumentIn,
@@ -19,8 +16,6 @@ from ..schemas import (
     CreativeVersionIn,
 )
 from ..security import get_current_user
-from ..services.creatives import render_creative
-from ..services.object_storage import get_object_storage, object_key
 from .assets import asset_out
 
 router = APIRouter(prefix="/creatives", tags=["creatives"])
@@ -134,14 +129,12 @@ def update_creative(
 ):
     item = owned_document(db, user.id, document_id)
     changes = data.model_dump(exclude_unset=True)
-    if data.document is not None and (
-        (item.canonical_document or {}).get("composition", {}).get("narrative", {}).get("editorialV2")
-    ):
-        raise HTTPException(status_code=409, detail={"code": "editorial_v2_requires_video_studio"})
+    if data.document is not None:
+        raise HTTPException(status_code=410, detail={"code": "legacy_canvas_editor_replaced_by_craft"})
     expected_updated_at = changes.pop("expected_updated_at", None)
-    if expected_updated_at is not None and normalized_timestamp(
-        item.updated_at
-    ) != normalized_timestamp(expected_updated_at):
+    if expected_updated_at is not None and normalized_timestamp(item.updated_at) != normalized_timestamp(
+        expected_updated_at
+    ):
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
             detail={
@@ -161,8 +154,6 @@ def update_creative(
         item.post_id = changes["post_id"]
     if "kind" in changes:
         item.kind = changes["kind"]
-    if data.document is not None:
-        item.document = data.document.model_dump(by_alias=True)
     if changes:
         db.add(
             FeedbackEvent(
@@ -184,17 +175,8 @@ def update_creative(
 def save_version(
     document_id: str, data: CreativeVersionIn, db: Session = Depends(get_db), user: User = Depends(get_current_user)
 ):
-    item = owned_document(db, user.id, document_id)
-    next_version = item.version + 1
-    snapshots = list(item.versions or [])
-    snapshots.append(
-        {"number": next_version, "label": data.label, "createdAt": utcnow().isoformat(), "document": item.document}
-    )
-    item.version = next_version
-    item.versions = snapshots[-20:]
-    db.commit()
-    db.refresh(item)
-    return creative_out(item)
+    owned_document(db, user.id, document_id)
+    raise HTTPException(status_code=410, detail={"code": "legacy_versioning_replaced_by_craft_history"})
 
 
 @router.post("/{document_id}/versions/{version_number}/restore", response_model=CreativeDocumentOut)
@@ -204,120 +186,22 @@ def restore_version(
     db: Session = Depends(get_db),
     user: User = Depends(get_current_user),
 ):
-    item = owned_document(db, user.id, document_id)
-    snapshot = next((value for value in item.versions or [] if value.get("number") == version_number), None)
-    if not snapshot:
-        raise HTTPException(status_code=404, detail="Creative version not found")
-    snapshots = list(item.versions or [])
-    next_version = item.version + 1
-    item.document = snapshot["document"]
-    snapshots.append(
-        {
-            "number": next_version,
-            "label": f"Restaurada da versão {version_number}",
-            "createdAt": utcnow().isoformat(),
-            "document": item.document,
-        }
-    )
-    item.version = next_version
-    item.versions = snapshots[-20:]
-    db.commit()
-    db.refresh(item)
-    return creative_out(item)
+    owned_document(db, user.id, document_id)
+    raise HTTPException(status_code=410, detail={"code": "legacy_restore_replaced_by_craft_history"})
 
 
 @router.post("/{document_id}/export", response_model=AssetOut, status_code=status.HTTP_201_CREATED)
 def export_creative(
     document_id: str, data: CreativeExportIn, db: Session = Depends(get_db), user: User = Depends(get_current_user)
 ):
+    from ..services.studios.exports import export_document
+
     item = owned_document(db, user.id, document_id)
-    image_ids = {layer.asset_id for layer in data_canvas(item).layers if layer.type == "image"}
-    assets = (
-        db.scalars(
-            select(LibraryAsset).where(
-                LibraryAsset.id.in_(image_ids),
-                LibraryAsset.workspace_id == item.workspace_id,
-                LibraryAsset.lifecycle_status == "active",
-            )
-        ).all()
-        if image_ids
-        else []
-    )
-    if len(assets) != len(image_ids) or any(not asset.storage_key for asset in assets):
-        raise HTTPException(status_code=422, detail="One or more image layers are unavailable")
     try:
-        with ExitStack() as stack:
-            paths = {
-                asset.id: stack.enter_context(
-                    get_object_storage(asset.storage_backend or "local").materialize(str(asset.storage_key))
-                )
-                for asset in assets
-            }
-            rendered = render_creative(data_canvas(item), paths)
-    except (OSError, ValueError) as exc:
-        raise HTTPException(status_code=422, detail=str(exc)) from exc
-    extension = ".png" if data.format == "png" else ".jpg"
-    media_type = "image/png" if data.format == "png" else "image/jpeg"
-    storage_key = object_key(item.workspace_id, "exports", extension)
-    storage = get_object_storage()
-    with tempfile.TemporaryDirectory(prefix="clicko-creative-export-") as temporary_directory:
-        destination = Path(temporary_directory) / f"export{extension}"
-        if data.format == "png":
-            rendered.save(destination, format="PNG", optimize=True)
-        else:
-            rendered.convert("RGB").save(destination, format="JPEG", quality=data.quality, optimize=True)
-        stored = storage.put_file(
-            destination,
-            key=storage_key,
-            media_type=media_type,
-            metadata={
-                "workspace-id": item.workspace_id,
-                "document-id": item.id,
-                "document-version": str(item.version),
-                "source": "legacy-creative-export",
-            },
-        )
-    try:
-        asset = LibraryAsset(
-            workspace_id=item.workspace_id,
-            title=f"{item.title} v{item.version}",
-            asset_type="image",
-            tags=["export", data.format, f"creative:{item.id}", f"version:{item.version}"],
-            campaign_id=item.campaign_id,
-            content_id=item.post_id,
-            storage_key=storage_key,
-            storage_backend=stored.backend,
-            media_type=stored.media_type,
-            size_bytes=stored.size_bytes,
-            checksum_sha256=stored.checksum_sha256,
-            object_metadata=stored.metadata,
-        )
-        db.add(asset)
-        db.flush()
-        db.add(
-            FeedbackEvent(
-                workspace_id=item.workspace_id,
-                campaign_id=item.campaign_id,
-                content_id=item.post_id,
-                creative_document_id=item.id,
-                user_id=user.id,
-                event_type="generated",
-                payload={"exportAssetId": asset.id, "format": data.format, "version": item.version},
-            )
-        )
-        db.commit()
-        db.refresh(asset)
-    except Exception:
-        db.rollback()
-        storage.delete(storage_key)
-        raise
+        asset = export_document(db, item, user, export_format=data.format)
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail={"code": str(exc)}) from exc
     return asset_out(asset)
-
-
-def data_canvas(item: CreativeDocument):
-    from ..schemas import CreativeCanvas
-
-    return CreativeCanvas.model_validate(item.document)
 
 
 @router.delete("/{document_id}", status_code=status.HTTP_204_NO_CONTENT)

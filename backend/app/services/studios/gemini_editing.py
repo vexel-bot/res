@@ -22,7 +22,7 @@ from ...domain.studios.contextual_editing import (
 from ...domain.studios.contracts import CreateGenerationJobRequest, StudioContract
 from ...domain.studios.editing_resources import EditingAIRequestV1, ResourceMetadataV1
 from ...models import CreativeDocument, LibraryAsset, StudioGenerationJob, User
-from ...providers.studios.contextual_render import ContextualFFmpegProvider
+from ...providers.studios.ffmpeg_utility import FFmpegUtility
 from ...providers.studios.gemini_editing import PRICE_VERSION, GeminiEditingProvider, response_text, save_media
 from ...providers.studios.media_probe import MEDIA_PROBE_PROVIDERS
 from ..object_storage import get_object_storage, object_key, sha256_file
@@ -874,7 +874,7 @@ def reserve_test_request(db, job, seconds):
         settings.studio_runway_test_budget_usd
         if job.provider == "runway.editing-video"
         else settings.studio_editing_ai_test_budget_usd
-        if job.job_type == "editing_ai"
+        if job.job_type == "editing_ai" or job.provider == "compatible.editing-planner"
         else settings.studio_gemini_test_budget_usd
     )
     # The production envelope belongs to an explicit autonomous production
@@ -1175,7 +1175,7 @@ def execute_editing_gemini(db, job, progress, is_cancelled):
                     raise ValueError("editing_source_interval_out_of_bounds")
                 original = path
                 clip = directory / "source.mp4"
-                ContextualFFmpegProvider(settings.ffmpeg_path, settings.ffmpeg_timeout_seconds)._run(
+                FFmpegUtility(settings.ffmpeg_path, settings.ffmpeg_timeout_seconds)._run(
                     [
                         "-y",
                         "-i",
@@ -1210,7 +1210,7 @@ def execute_editing_gemini(db, job, progress, is_cancelled):
             # Sample the actual clip intervals; labels bind each frame to its scene and source time.
             samples = []
             coverage = []
-            runner = ContextualFFmpegProvider(settings.ffmpeg_path, settings.ffmpeg_timeout_seconds)
+            runner = FFmpegUtility(settings.ffmpeg_path, settings.ffmpeg_timeout_seconds)
             timeline = contract.composition.media_timeline
             clips = (
                 [c for t in timeline.tracks if t.kind in {"video", "overlay"} for c in t.clips if c.enabled]
@@ -2187,6 +2187,8 @@ def execute_editing_gemini(db, job, progress, is_cancelled):
                             request.revision_plan, candidate, request.revision_scene_ids
                         )
                 candidate.intent = request.direction.intent.model_copy(deep=True)
+                if request.production_request is not None:
+                    candidate = request.production_request.bind_render_engine(candidate)
                 candidate.expected_document_revision = record.revision
                 if request.direction.font_asset_id:
                     for scene in candidate.scenes:
@@ -2323,7 +2325,7 @@ def execute_editing_gemini(db, job, progress, is_cancelled):
             else:
                 args += ["-map", "0:v:0", "-map", "0:a?"]
             args += ["-c:v", "copy", "-c:a", "aac", "-t", str(request.duration_seconds), str(normalized)]
-            ContextualFFmpegProvider(settings.ffmpeg_path, settings.ffmpeg_timeout_seconds)._run(
+            FFmpegUtility(settings.ffmpeg_path, settings.ffmpeg_timeout_seconds)._run(
                 args, directory, is_cancelled
             )
             output = normalized

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="16.146" timestamp="2026-10-03T15:58:04.789324-03:00" hostname="Computador"><testcase classname="tests.test_spatial_effects_kernel_diagnostic" name="test_controlled_small_sigma_against_continuous_reference" time="15.463"><failure message="AssertionError: [{'frame': 0, 'luminanceError': 13.175126258118468, 'maximumChannelError': 13.175126258118468, 'target': 'animated', ....{'frame': 8, 'luminanceError': 8.456640083465857, 'maximumChannelError': 8.456640083465857, 'target': 'animated', ...}]&#10;assert not [{'frame': 0, 'luminanceError': 13.175126258118468, 'maximumChannelError': 13.175126258118468, 'target': 'animated', ....{'frame': 8, 'luminanceError': 8.456640083465857, 'maximumChannelError': 8.456640083465857, 'target': 'animated', ...}]">client = &lt;starlette.testclient.TestClient object at 0x0000027B579B3750&gt;
+project = {'asset': '60b0d120-06f0-4216-8d88-88c2c716bc35', 'document': '0f1d9b5d-d5fd-41a8-b224-81764cdcbdc8', 'token': 'eyJhbG...dHlwZSI6ImFjY2VzcyJ9.jmR6yc9G7JaNOG_BkFtlC3wzI7TmC9n_IhZu39C2u28', 'workspace': 'c7ead477-c6b6-4300-92db-5c9994ca26d7'}
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x0000027B5544FCD0&gt;
+tmp_path = WindowsPath('C:/Users/edugu/AppData/Local/Temp/pytest-of-edugu/pytest-159/test_controlled_small_sigma_ag0')
+
+    def test_controlled_small_sigma_against_continuous_reference(client, project, monkeypatch, tmp_path):
+        original_direction = fixture.spatial_direction
+        original_sample = fixture.sample_rgba
+        sigmas = {0: .25, 1: .75, 4: 1.25, 8: 1.75, 29: 3.75}
+    
+        def direction(variant):
+            raw = original_direction(variant)
+            animated = next(e for e in raw["scenes"][0]["elements"] if e["id"] == "animated")
+            animated["animations"][0]["keyframes"] = [{"frame": frame, "value": sigma, "easing": "linear"}
+                                                       for frame, sigma in sigmas.items()]
+            return raw
+    
+        def sample(target, frame, x, y, variant):
+            # Reuse the continuous reference, translating its sigma-time relation only.
+            return original_sample(target, sigmas[frame] / 16 if target == "animated" else frame, x, y, variant)
+    
+        monkeypatch.setattr(fixture, "spatial_direction", direction)
+        monkeypatch.setattr(fixture, "sample_rgba", sample)
+&gt;       fixture.test_spatial_effects_actual_api_and_gaussian_pixels(client, project, monkeypatch, tmp_path, "spatial")
+
+tests\test_spatial_effects_kernel_diagnostic.py:26: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+client = &lt;starlette.testclient.TestClient object at 0x0000027B579B3750&gt;
+project = {'asset': '60b0d120-06f0-4216-8d88-88c2c716bc35', 'document': '0f1d9b5d-d5fd-41a8-b224-81764cdcbdc8', 'token': 'eyJhbG...dHlwZSI6ImFjY2VzcyJ9.jmR6yc9G7JaNOG_BkFtlC3wzI7TmC9n_IhZu39C2u28', 'workspace': 'c7ead477-c6b6-4300-92db-5c9994ca26d7'}
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x0000027B5544FCD0&gt;
+tmp_path = WindowsPath('C:/Users/edugu/AppData/Local/Temp/pytest-of-edugu/pytest-159/test_controlled_small_sigma_ag0')
+variant = 'spatial'
+
+    @pytest.mark.parametrize("variant", ["control", "spatial", "exposure"])
+    def test_spatial_effects_actual_api_and_gaussian_pixels(client, project, monkeypatch, tmp_path, variant):
+        with SessionLocal() as db:
+            record = db.get(CreativeDocument, project["document"])
+            doc = record_to_contract(record)
+            doc.composition.media_timeline.tracks = []
+            persist_contract(record, doc)
+            db.commit()
+        headers = {"Authorization": "Bearer " + project["token"]}
+        base = f"/api/v1/studios/v1/documents/{project['document']}"
+        response = client.post(base + "/editing-plans", headers={**headers, "Idempotency-Key": "spatial-plan"},
+                               json=spatial_direction(variant))
+        assert response.status_code == 200, response.text
+        plan = response.json()
+        assert plan["status"] == "ready", plan["blockers"]
+        applied = client.post(base + f"/editing-plans/{plan['id']}/apply", headers=headers,
+                              json={"expectedPlanRevision": plan["revision"]})
+        assert applied.status_code == 200, applied.text + json.dumps(plan.get("manifest", {}).get("visualAudit"))
+        inspection = client.get(base + "/editor/inspection?frame=4", headers=headers).json()
+        graphics = RemotionNativeGraphicsProvider("node", "ffmpeg", 180)
+        original_render = graphics.render
+        intermediate = tmp_path / "graphics-intermediate.mp4"
+    
+        def retaining_render(*args, **kwargs):
+            encoded = original_render(*args, **kwargs)
+            shutil.copy2(args[3], intermediate)
+            return encoded
+    
+        monkeypatch.setattr(graphics, "render", retaining_render)
+        monkeypatch.setitem(VIDEO_RENDER_PROVIDERS, "remotion.contextual-v2", RemotionNativeContextualRenderProvider(
+            graphics, VIDEO_RENDER_PROVIDERS["builtin.ffmpeg-contextual-v1"]))
+        monkeypatch.setattr("app.tasks.execute_studio_generation.delay", lambda *_: None)
+        submitted = client.post("/api/v1/studios/v1/video-renders",
+                                headers={**headers, "Idempotency-Key": "spatial-render"},
+                                json={"workspaceId": project["workspace"], "documentId": project["document"],
+                                      "expectedDocumentRevision": applied.json()["revision"], "expectedDocumentVersion": 1,
+                                      "contextualPlanId": plan["id"], "provider": "remotion.contextual-v2",
+                                      "output": {"width": 320, "height": 320, "fps": 30, "quality": "high"}})
+        assert submitted.status_code == 202, submitted.text
+        deadline = time.monotonic() + 120
+        while _active(_read(lease_path())):
+            if time.monotonic() &gt;= deadline:
+                pytest.skip("Live local operation occupies heavy-media capacity")
+            time.sleep(1)
+        with SessionLocal() as db:
+            job = db.get(StudioGenerationJob, submitted.json()["id"])
+            execute_job_once(db, job)
+            assert job.status == "succeeded", job.error_message
+            result = job.result_payload
+            assert result["qualityEvaluation"]["status"] == "passed"
+            asset = db.get(LibraryAsset, result["artifact"]["assetId"])
+            metadata = asset.object_metadata
+            video = tmp_path / "spatial.mp4"
+            with get_object_storage(asset.storage_backend).materialize(asset.storage_key) as source:
+                shutil.copy2(source, video)
+            assert hashlib.sha256(video.read_bytes()).hexdigest() == result["artifact"]["checksumSha256"]
+        assert result["documentRevision"] == applied.json()["revision"] == inspection["document"]["revision"]
+        remotion_receipt = metadata["contextualEditing"]["rendererChecks"]["graphics"]["remotionReceipt"]
+        assert hashlib.sha256(intermediate.read_bytes()).hexdigest() == remotion_receipt["videoSha256"]
+        rgb = subprocess.run(["ffmpeg", "-v", "error", "-i", str(video), "-f", "rawvideo", "-pix_fmt", "rgb24", "-"],
+                             capture_output=True, check=True, timeout=30,
+                             creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0)).stdout
+        assert len(rgb) == 30 * 320 * 320 * 3
+        checks, failures, temporal_checks = [], [], []
+        geometry = metadata["contextualEditing"]["rendererChecks"]["geometrySamples"]
+        for frame in [0, 1, 4, 8, 29]:
+            if variant == "exposure":
+                element = next(item for item in geometry[frame]["elements"] if item["semanticId"] == "animated")
+                exposure = element["temporalExposure"]
+                assert exposure["sampleFrames"] == pytest.approx(sample_frames(frame, variant, "animated"))
+                assert exposure["actualSamples"] == len(sample_frames(frame, variant, "animated"))
+                assert not exposure["pixelCoverageObserved"]
+                temporal_checks.append({"frame": frame, "exposure": exposure})
+            for target, points in PROBES.items():
+                for x, y in points:
+                    expected = expected_rgb(frame, x, y, variant)
+                    observed = [sum(rgb[(frame * 320 * 320 + (y + dy) * 320 + x + dx) * 3 + channel]
+                                    for dx in range(2) for dy in range(2)) / 4 for channel in range(3)]
+                    luma = abs(sum((a - b) * weight for a, b, weight in zip(
+                        observed, expected, [.2126, .7152, .0722], strict=True)))
+                    channel = max(abs(a - b) for a, b in zip(observed, expected, strict=True))
+                    checks.append({"target": target, "frame": frame, "x": x, "y": y, "expectedRgb": expected,
+                                   "observedRgb": observed, "luminanceError": luma, "maximumChannelError": channel})
+                    if luma &gt;= 8 or channel &gt;= 12:
+                        failures.append({"target": target, "frame": frame, "x": x, "y": y,
+                                         "luminanceError": luma, "maximumChannelError": channel})
+        discriminating_probe = None
+        if variant == "exposure":
+            probe = next(p for p in checks if p["frame"] == 0 and p["target"] == "animated" and p["x"] == 128)
+            center = expected_rgb(0, probe["x"], probe["y"], "spatial")
+            difference = abs(sum((a - b) * w for a, b, w in zip(
+                probe["observedRgb"], center, [.2126, .7152, .0722], strict=True)))
+            discriminating_probe = {"frame": 0, "x": probe["x"], "y": probe["y"],
+                                    "centerFrameExpectedRgb": center, "exposedObservedRgb": probe["observedRgb"],
+                                    "luminanceDifferenceFromUnexposedCenter": difference}
+            if difference &lt;= 12:
+                failures.append({"exposureNotPixelDistinguishableFromCenterFrame": difference})
+        if directory := os.environ.get("SPATIAL_EFFECTS_EVIDENCE_DIR"):
+            output = Path(directory) / variant
+            output.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(video, output / "spatial.mp4")
+            shutil.copy2(intermediate, output / "graphics-intermediate.mp4")
+            (output / "evidence.json").write_text(json.dumps({
+                "scope": "actual_API_plan_apply_inspection_job_MP4_QC_independent_gaussian_pixels", "variant": variant,
+                "measurementStatus": "failed" if failures else "passed", "humanReview": "pending",
+                "inspection": inspection, "renderResult": result, "renderMetadata": metadata,
+                "pixelChecks": checks, "temporalChecks": temporal_checks,
+                "discriminatingExposureProbe": discriminating_probe,
+                "failures": failures}, ensure_ascii=False, indent=2), encoding="utf-8")
+&gt;       assert not failures, failures
+E       AssertionError: [{'frame': 0, 'luminanceError': 13.175126258118468, 'maximumChannelError': 13.175126258118468, 'target': 'animated', ....{'frame': 8, 'luminanceError': 8.456640083465857, 'maximumChannelError': 8.456640083465857, 'target': 'animated', ...}]
+E       assert not [{'frame': 0, 'luminanceError': 13.175126258118468, 'maximumChannelError': 13.175126258118468, 'target': 'animated', ....{'frame': 8, 'luminanceError': 8.456640083465857, 'maximumChannelError': 8.456640083465857, 'target': 'animated', ...}]
+
+tests\test_spatial_effects_render.py:252: AssertionError</failure></testcase></testsuite></testsuites>

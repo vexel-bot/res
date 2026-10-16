@@ -11,10 +11,11 @@ import json
 from datetime import datetime
 from typing import Literal
 
-from pydantic import Field, model_validator
+from pydantic import Field, model_serializer, model_validator
 
 from .contracts import CreativeDocumentV1, EditDecisionV1, StudioContract
 from .intelligence import EditOperationBaseV1
+from .motion_recipes import EngineTechniqueQualificationV1, TechniqueSourceV1
 
 CONTEXTUAL_PROVIDER = "builtin.ffmpeg-contextual-v1"
 
@@ -190,6 +191,19 @@ class EditingCompositionProfileV1(StudioContract):
 
 
 class EditingTechniqueV1(StudioContract):
+    source_evidence: list[TechniqueSourceV1] = Field(default_factory=list, max_length=30)
+    engine_qualifications: list[EngineTechniqueQualificationV1] = Field(default_factory=list, max_length=30)
+
+    @model_serializer(mode="wrap")
+    def preserve_legacy_shape(self, handler):
+        value = handler(self)
+        if not self.source_evidence:
+            value.pop("sourceEvidence", None)
+            value.pop("source_evidence", None)
+        if not self.engine_qualifications:
+            value.pop("engineQualifications", None)
+            value.pop("engine_qualifications", None)
+        return value
     version: int = Field(default=1, ge=1)
     qualification: Literal["knowledge_only", "implemented", "render_verified"] = "knowledge_only"
     source_digest: str | None = Field(default=None, pattern=r"^[a-f0-9]{64}$")

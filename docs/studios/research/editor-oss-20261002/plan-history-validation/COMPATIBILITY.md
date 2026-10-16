@@ -1,0 +1,9 @@
+# Registro prévio — validação de histórico por conteúdo
+
+05/10/2026. Incremento interno de leitura; contratos de projeto/plano/comando/recibo, schema da inspeção e renderer não mudam. `get_plan` continua escolhendo a maior revisão e o último evento persistido em caso de empate. Qualquer evento inválido continua interrompendo a leitura.
+
+Proposta: no caminho sem eventos ORM já carregados, ler IDs e texto JSON integral dos eventos, no mesmo escopo e ordem; calcular SHA-256 do conteúdo de cada evento. Uma memória limitada de revisões previamente validadas permite evitar decodificar novamente conteúdos idênticos. Conteúdo novo/modificado passa novamente pelo parser completo; o plano escolhido é sempre decodificado/validado e devolvido como objeto novo. Não guardar payloads/modelos nessa memória, não confiar apenas em ID/revisão/timestamp, não guardar falhas. Teto de 1.024 fatos por processo, com acesso protegido para threads. Perda/expulsão/reinício só volta a validar dados.
+
+Semântica da sessão: quando há qualquer evento ORM na identity map ou plan_id vazio, usar o caminho anterior. Isso conserva inclusive mutações em payloads carregados não descarregadas no banco, que consultas escalares não enxergariam. Novos eventos são consultados no banco toda vez; transação e autorização mantêm os controles existentes. Nenhum índice, coluna, migração ou dado novo.
+
+Antes da admissão: comprovar cache frio/quente e paridade integral com implementação anterior em dados reais; teste de corrupção após aquecimento, novos eventos/revisões, desempates, isolamento, retorno independente de mutações, sessão com objetos carregados/nested mutation, falha não memorizada e teto de memória. Reexecutar contratos/inspeção e comandos/idempotência. Medir e registrar custo frio/quente e limites; memória do cache não equivale a memória de todo o processo. Não declarar scrubbing realtime com amostra pequena.

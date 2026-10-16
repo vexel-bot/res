@@ -1,0 +1,112 @@
+{
+  "observedAt": "2026-10-05T20:37:18.640036+00:00",
+  "scope": "Six sequential real direct API requests, three frames of the unchanged interface study",
+  "documentId": "0ae12fe1-c3aa-4f42-a764-33d076ade8cd",
+  "samples": [
+    {
+      "frame": 0,
+      "wire": {
+        "full": {
+          "httpStatus": 200,
+          "bytes": 7201865,
+          "headersMs": 5874.51590001001,
+          "completeBodyMs": 6008.2256000023335,
+          "jsonParseMs": 277.2292000008747,
+          "canonicalJsonDigest": "41cee706b19bfb58655d1a61af3a9051f0d04739714f95bac0af9ae199d6c948"
+        },
+        "summary": {
+          "httpStatus": 200,
+          "bytes": 41758,
+          "headersMs": 3264.5698999986053,
+          "completeBodyMs": 3265.8573999942746,
+          "jsonParseMs": 1.0048000258393586,
+          "canonicalJsonDigest": "ae2d2bbf92b5a28ce716dfb36c4c7123c12997cb5ef1b8473f7c21d39c29bc50"
+        }
+      },
+      "allOtherFieldsEqual": true,
+      "coreDigest": "5bb162b7e219d8971319f9d33cbfccce3d9d867816caf54103e849068b1d2a23",
+      "legacyMatchesPriorProfile": true,
+      "evaluationSummary": {
+        "schemaVersion": "studio.editor-evaluation-summary.v1",
+        "detail": "summary",
+        "technical": "passed",
+        "audiovisual": "pending",
+        "human": "pending",
+        "fullInspectionPath": "/api/v1/studios/v1/documents/0ae12fe1-c3aa-4f42-a764-33d076ade8cd/editor/inspection?frame=0"
+      },
+      "fullEvaluationDigest": "cc04ad0dceb7dc96345efe1f6ec674eecf6679c69fa5d34e371afdae8152fed0"
+    },
+    {
+      "frame": 244,
+      "wire": {
+        "full": {
+          "httpStatus": 200,
+          "bytes": 7201895,
+          "headersMs": 2645.980800007237,
+          "completeBodyMs": 2675.195000017993,
+          "jsonParseMs": 282.75730001041666,
+          "canonicalJsonDigest": "ecab0442d434abfccc2e0a311f4631b46835b751f155c1c5ebb0f04178ef67d8"
+        },
+        "summary": {
+          "httpStatus": 200,
+          "bytes": 41790,
+          "headersMs": 761.3695999898482,
+          "completeBodyMs": 762.0459999889135,
+          "jsonParseMs": 1.0628000018186867,
+          "canonicalJsonDigest": "1c0eab8272273aecc1c81f52df14ebf9c0bc9c684565249c24201fd8e5740b0a"
+        }
+      },
+      "allOtherFieldsEqual": true,
+      "coreDigest": "5be1ece639d39a545575b527a151f0d36a7cfe804700246d975dd4344e489593",
+      "legacyMatchesPriorProfile": true,
+      "evaluationSummary": {
+        "schemaVersion": "studio.editor-evaluation-summary.v1",
+        "detail": "summary",
+        "technical": "passed",
+        "audiovisual": "pending",
+        "human": "pending",
+        "fullInspectionPath": "/api/v1/studios/v1/documents/0ae12fe1-c3aa-4f42-a764-33d076ade8cd/editor/inspection?frame=244"
+      },
+      "fullEvaluationDigest": "cc04ad0dceb7dc96345efe1f6ec674eecf6679c69fa5d34e371afdae8152fed0"
+    },
+    {
+      "frame": 449,
+      "wire": {
+        "full": {
+          "httpStatus": 200,
+          "bytes": 7201869,
+          "headersMs": 2674.630099994829,
+          "completeBodyMs": 2684.2188999871723,
+          "jsonParseMs": 263.5631999874022,
+          "canonicalJsonDigest": "393eedf571694533c34839ed16334b76b775dcd23a971c2ea76e2b6b724fb655"
+        },
+        "summary": {
+          "httpStatus": 200,
+          "bytes": 41764,
+          "headersMs": 918.6755000264384,
+          "completeBodyMs": 920.3792000189424,
+          "jsonParseMs": 1.0691999923437834,
+          "canonicalJsonDigest": "50d9eba9c9d4affeaa311dcab124c8fdc37c818314f3a428462694957de23aa5"
+        }
+      },
+      "allOtherFieldsEqual": true,
+      "coreDigest": "b669004406e7278b2767f597be391a2078148d720b190ac63000891e14aee2e7",
+      "legacyMatchesPriorProfile": true,
+      "evaluationSummary": {
+        "schemaVersion": "studio.editor-evaluation-summary.v1",
+        "detail": "summary",
+        "technical": "passed",
+        "audiovisual": "pending",
+        "human": "pending",
+        "fullInspectionPath": "/api/v1/studios/v1/documents/0ae12fe1-c3aa-4f42-a764-33d076ade8cd/editor/inspection?frame=449"
+      },
+      "fullEvaluationDigest": "cc04ad0dceb7dc96345efe1f6ec674eecf6679c69fa5d34e371afdae8152fed0"
+    }
+  ],
+  "limits": [
+    "Three pairs, always full then summary; not randomized, not p95 or a controlled speedup benchmark",
+    "Wire-size and field-parity comparison is exact for the observed responses",
+    "get_plan still hydrates and validates history; no CPU or scrubbing latency guarantee",
+    "Full QC evidence was not discarded, regenerated or reclassified"
+  ]
+}

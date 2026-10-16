@@ -1,0 +1,9 @@
+{
+  "scope": "invalid_derived_common_parent_diagnostic",
+  "admissionEvidence": false,
+  "invalidCase": "rig-common-luminance-normal",
+  "reason": "Derived source was parented under rig at (100,74) and incorrectly sampled. The frozen original API fixture parents mask-rig under outer at (80,60) and keeps source time at the center frame.",
+  "replacement": "temporal-matte-svg-subtract-residual-controls-v2",
+  "originalApiTestsChanged": false,
+  "oldCapturedBytesPreserved": true
+}

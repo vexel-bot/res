@@ -1,0 +1,67 @@
+--- VideoStudio.tsx.before
++++ VideoStudio.tsx
+@@ -126,6 +126,12 @@
+   const [inspector, setInspector] = React.useState<
+     "preproduction" | "editorial" | "assistant" | "factory" | "captions" | "cuts" | "brand" | "sound" | "render"
+   >("captions");
++  const directionScope = `${data.activeWorkspace?.id ?? "demo"}/${postId}/${studio.document?.documentId ?? "draft"}`;
++  const [openedDirectionScope, setOpenedDirectionScope] = React.useState<string>();
++  React.useEffect(() => {
++    if (inspector === "editorial") setOpenedDirectionScope(directionScope);
++  }, [inspector, directionScope]);
++  const directionPanelMounted = inspector === "editorial" || openedDirectionScope === directionScope;
+   const [editorialGate, setEditorialGate] = React.useState<EditorialGateState>();
+   const editorialRenderBlocked = Boolean(!demo && studio.document && (
+     editorialGate?.documentId !== studio.document.documentId ||
+@@ -968,19 +974,30 @@
+           {(studio.document?.assets?.length ? studio.document.assets : [undefined]).map((reference: AnyRecord | undefined, index: number) => {
+             const mediaUrl = reference?.id ? studio.previewUrlsByAssetId[reference.id] : previewUrl;
+             const usedByActiveClip = reference?.id && activeSourceClip?.assetId === reference.id;
++            const mediaType = String(reference?.mediaType ?? "").split(";", 1)[0].trim().toLowerCase();
++            const isVideo = !reference || mediaType.startsWith("video/");
++            const isImage = mediaType.startsWith("image/");
++            const isFont = mediaType.startsWith("font/") || /^application\/(?:x-)?font/.test(mediaType)
++              || mediaType === "application/vnd.ms-opentype";
++            const mediaLabel = isVideo ? "Vídeo" : isImage ? "Imagem" : isFont ? "Fonte tipográfica"
++              : mediaType.startsWith("audio/") ? "Áudio" : "Arquivo";
+             return (
+-              <article key={reference?.id ?? "empty"} className={`vs-media-card ${usedByActiveClip || (!reference && previewUrl) ? "is-active" : ""}`}>
++              <article key={reference?.id ?? "empty"} data-asset-id={reference?.id} data-media-type={reference?.mediaType}
++                className={`vs-media-card ${usedByActiveClip || (!reference && previewUrl) ? "is-active" : ""}`}>
+                 <div className="vs-media-thumb">
+-                  {mediaUrl ? (
++                  {mediaUrl && isVideo ? (
+                     <video src={mediaUrl} muted preload="metadata" />
+-                  ) : demo ? (
++                  ) : mediaUrl && isImage ? (
++                    <img src={mediaUrl} alt={reference?.provenance?.originalFilename || `Imagem ${index + 1}`} />
++                  ) : demo && isVideo ? (
+                     <img src="/canonical/figma/phase2/s06-ugc.png" alt={reference ? "Take aguardando preview" : "Exemplo de take UGC"} />
+-                  ) : <span>{reference ? "Prévia pendente" : "Adicione um material"}</span>}
+-                  <span>{reference ? `FONTE ${index + 1}` : "EXEMPLO"}</span>
++                  ) : <span>{!reference ? "Adicione um material" : isFont ? "Aa"
++                    : isVideo ? "Prévia pendente" : isImage ? "Imagem sem prévia" : mediaLabel}</span>}
++                  <span>{reference ? mediaLabel.toUpperCase() : "EXEMPLO"}</span>
+                 </div>
+                 <div>
+-                  <b>{reference?.provenance?.originalFilename || (reference ? `Take ${index + 1}` : "Seu primeiro take")}</b>
+-                  <small>{reference?.rightsStatus === "verified" ? "direitos verificados" : "direitos pendentes"}</small>
++                  <b>{reference?.provenance?.originalFilename || (reference ? `${mediaLabel} ${index + 1}` : "Seu primeiro take")}</b>
++                  <small>{reference ? `${mediaLabel} · ` : ""}{reference?.rightsStatus === "verified" ? "direitos verificados" : "direitos pendentes"}</small>
+                 </div>
+               </article>
+             );
+@@ -1183,11 +1200,11 @@
+           </div>
+           <div className="vs-inspector-body" hidden={inspector !== "editorial"}
+             key={`${studio.document?.documentId}:${studio.document?.revision}`}>
+-            <ContextualEditingPanel document={studio.document} disabled={demo || studio.status === "working"}
++            {directionPanelMounted && <ContextualEditingPanel document={studio.document} disabled={demo || studio.status === "working"}
+               onRender={async (document, planId) => {
+                 await studio.renderContextual(document, planId);
+                 setInspector("render");
+-              }} />
++              }} />}
+             <EditorialReviewPanel
+               document={studio.document} disabled={demo || studio.status === "working"}
+               active={inspector === "editorial"} onGateChange={setEditorialGate} />

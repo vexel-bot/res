@@ -1,0 +1,29 @@
+{
+  "schemaVersion": "clicko.research-modality-map.v1",
+  "caseId": "DM-02",
+  "source": "https://storybrand.com/wp-content/uploads/2014/02/StoryBrand.pdf",
+  "coverage": {
+    "text": "pdf-located-pages",
+    "visual": "not-reviewed",
+    "audio": "not-applicable",
+    "completeAudiovisual": false
+  },
+  "editorialCuts": [],
+  "visualChangeCandidates": [],
+  "locatedTextUnits": [
+    {
+      "locator": "páginas físicas 5–7",
+      "kind": "observation"
+    },
+    {
+      "locator": "páginas 5–7",
+      "kind": "interpretation"
+    },
+    {
+      "locator": "revisão",
+      "kind": "clicko_hypothesis"
+    }
+  ],
+  "reviewGap": "Cuts, timing and audio not fully annotated; text locators are not cut boundaries",
+  "distributedMedia": false
+}

@@ -24,17 +24,17 @@ def test_media_worker_manifest_is_versioned_and_matches_execution_profiles() -> 
         "media_probe",
         "video_proxy",
         "media_waveform",
-        "video_render",
+        "craft_render",
         "editing_gemini",
         "editing_ai",
     }
-    assert {"google.gemini-editing", "builtin.ffmpeg-contextual-v1"} <= set(manifest.providers)
+    assert {"google.gemini-editing", "craft.photocraft", "craft.filmcraft", "craft.effectcraft"} <= set(
+        manifest.providers
+    )
     digest = worker_runtime.manifest_digest(manifest)
     assert len(digest) == 64
     assert digest == worker_runtime.manifest_digest(
-        type(manifest).model_validate(
-            manifest.model_dump(by_alias=True, mode="json")
-        )
+        type(manifest).model_validate(manifest.model_dump(by_alias=True, mode="json"))
     )
 
 
@@ -43,17 +43,16 @@ def test_manifest_validation_proves_tools_and_rejects_version_drift() -> None:
         update={"required_environment": [], "required_paths": []}
     )
     outputs = {
-        "node": "v22.15.0",
         "python": "Python 3.11.2",
         "celery": "5.6.2 (recovery)",
         "ffmpeg": "ffmpeg version 5.1.9-0+deb12u1",
         "ffprobe": "ffprobe version 5.1.9-0+deb12u1",
-        "chromium": "Chromium 151.0.7922.173",
+        "/opt/clicko/bin/clicko-photocraft-adapter": "clicko-photocraft-1.0.0+a7f26522",
+        "/opt/clicko/bin/clicko-filmcraft-adapter": "clicko-filmcraft-1.0.0+0800a8b0",
+        "/opt/clicko/bin/clicko-effectcraft-adapter": "clicko-effectcraft-1.0.2+67434e90",
     }
 
     def runner(command: list[str]) -> str:
-        if command[:2] == ["node", "-p"]:
-            return "0.8.12"
         return outputs[command[0]]
 
     settings = Settings(
@@ -62,11 +61,10 @@ def test_manifest_validation_proves_tools_and_rejects_version_drift() -> None:
         studio_worker_manifest_path=str(MANIFEST),
         studio_worker_capability="media_cpu",
     )
-    versions = worker_runtime.validate_worker_manifest(
-        manifest, settings, tool_runner=runner
-    )
+    versions = worker_runtime.validate_worker_manifest(manifest, settings, tool_runner=runner)
     assert versions["ffmpeg"].startswith("ffmpeg version 5.1.9")
-    assert versions["hyperframes"] == "0.8.12"
+    assert versions["effectcraft"] == "clicko-effectcraft-1.0.2+67434e90"
+    assert not {"hyperframes", "chromium", "node"} & versions.keys()
 
     outputs["ffmpeg"] = "ffmpeg version 7.0-unapproved"
     with pytest.raises(ValueError, match="worker_tool_version_mismatch:ffmpeg"):
@@ -74,9 +72,7 @@ def test_manifest_validation_proves_tools_and_rejects_version_drift() -> None:
 
 
 def test_manifest_rejects_wrong_capability_and_missing_environment() -> None:
-    manifest = worker_runtime.load_worker_manifest(MANIFEST).model_copy(
-        update={"required_paths": []}
-    )
+    manifest = worker_runtime.load_worker_manifest(MANIFEST).model_copy(update={"required_paths": []})
     wrong = Settings(
         celery_task_always_eager=False,
         studio_isolated_queues_enabled=True,
@@ -155,9 +151,7 @@ def test_vision_worker_manifest_requires_and_attests_gpu_inventory() -> None:
         == "fbe3c7a55ba2d98a7a12a4ae37e8b97b46d2282bcb89cfe5a657d6b60ac0efb1"
     )
     assert source_manifest.providers == []
-    manifest = source_manifest.model_copy(
-        update={"required_environment": [], "required_paths": []}
-    )
+    manifest = source_manifest.model_copy(update={"required_environment": [], "required_paths": []})
     settings = Settings(
         celery_task_always_eager=False,
         studio_isolated_queues_enabled=True,
@@ -184,9 +178,7 @@ def test_vision_worker_manifest_requires_and_attests_gpu_inventory() -> None:
         return runner(command)
 
     with pytest.raises(ValueError, match="worker_accelerator_requirements_unmet"):
-        worker_runtime.validate_worker_manifest(
-            manifest, settings, tool_runner=insufficient_gpu
-        )
+        worker_runtime.validate_worker_manifest(manifest, settings, tool_runner=insufficient_gpu)
 
 
 def test_speech_preflight_manifests_reserve_separate_queues_without_providers() -> None:
@@ -213,9 +205,7 @@ def test_speech_preflight_manifests_reserve_separate_queues_without_providers() 
 
 def test_speech_gpu_preflight_validates_attested_hardware_floor() -> None:
     source_manifest = worker_runtime.load_worker_manifest(SPEECH_GPU_MANIFEST)
-    manifest = source_manifest.model_copy(
-        update={"required_environment": [], "required_paths": []}
-    )
+    manifest = source_manifest.model_copy(update={"required_environment": [], "required_paths": []})
     settings = Settings(
         celery_task_always_eager=False,
         studio_isolated_queues_enabled=True,
@@ -244,6 +234,4 @@ def test_speech_gpu_preflight_validates_attested_hardware_floor() -> None:
         return runner(command)
 
     with pytest.raises(ValueError, match="worker_accelerator_requirements_unmet"):
-        worker_runtime.validate_worker_manifest(
-            manifest, settings, tool_runner=insufficient_gpu
-        )
+        worker_runtime.validate_worker_manifest(manifest, settings, tool_runner=insufficient_gpu)

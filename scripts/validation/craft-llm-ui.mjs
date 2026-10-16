@@ -1,0 +1,52 @@
+// Exercise the real settings UI and encrypted API storage, without a remote model call.
+import assert from 'node:assert/strict';
+import { readFile, writeFile } from 'node:fs/promises';
+import { resolve } from 'node:path';
+import { randomUUID } from 'node:crypto';
+import { chromium, request, expect } from '@playwright/test';
+
+const output = resolve('.codex-runtime/craft');
+const { token } = JSON.parse(await readFile(resolve(output, 'frontend-qa-auth.json'), 'utf8'));
+const api = await request.newContext({ baseURL: 'http://127.0.0.1:3018', extraHTTPHeaders: { Authorization: `Bearer ${token}` } });
+const bootstrap = await (await api.get('/api/v1/bootstrap')).json();
+const workspaceId = bootstrap.workspaces[0].id;
+const connectionLabel = `UI protocol ${randomUUID().slice(0, 8)}`;
+const docs = await (await api.get(`/api/v1/studios/v1/documents?workspace_id=${workspaceId}`)).json();
+const document = docs.find(item => item.title === 'Native AI transport qualification' && item.nativeEditorState?.engine === 'photocraft');
+assert.ok(document, 'Run llm_acceptance.py first');
+const browser = await chromium.launch({ headless: true });
+const context = await browser.newContext({ viewport: { width: 1440, height: 1000 } });
+await context.addInitScript(value => localStorage.setItem('nexus_access_token', value), token);
+try {
+  const page = await context.newPage();
+  await page.goto(`http://127.0.0.1:3018/content/draft/edit?mode=visual&document=${document.documentId}`, { waitUntil: 'domcontentloaded', timeout: 120000 });
+  const manager = page.locator('.craft-model-manager');
+  await manager.locator('summary').click();
+  await manager.getByRole('button', { name: 'Adicionar conexão' }).click({ timeout: 120000 });
+  const form = manager.locator('.craft-connection-form');
+  await form.getByLabel('Nome', { exact: true }).fill(connectionLabel);
+  await form.getByLabel('Endpoint', { exact: true }).fill('https://provider.example/v1');
+  await form.getByLabel('Modelos da conexão').fill('ui-model-one\nui-model-two');
+  await form.getByLabel('Chave da API', { exact: true }).fill('ui-test-only-secret');
+  await form.getByRole('button', { name: 'Salvar conexão', exact: true }).click();
+  const row = manager.locator('.craft-connection-row').filter({ hasText: connectionLabel });
+  await expect(row).toBeVisible();
+  const saved = await (await api.get(`/api/v1/studios/v1/craft/llm-connections?workspace_id=${workspaceId}`)).json();
+  const connection = saved.connections.find(item => item.label === connectionLabel);
+  assert.ok(connection.hasCredential);
+  assert.deepEqual(connection.config.models, ['ui-model-one', 'ui-model-two']);
+  assert.ok(!JSON.stringify(saved).includes('ui-test-only-secret'));
+  const local = await page.evaluate(() => JSON.stringify(localStorage));
+  assert.ok(!local.includes('ui-test-only-secret'));
+  await row.getByRole('button', { name: 'Configurar', exact: true }).click();
+  await expect(form.locator('input[type=password]')).toHaveValue('');
+  await page.screenshot({ path: resolve(output, 'llm-connections-ui.png'), fullPage: true });
+  await form.getByRole('button', { name: 'Cancelar', exact: true }).click();
+  await row.getByRole('button', { name: `Remover conexão ${connectionLabel}` }).click();
+  await expect(row).toContainText('Desativada');
+  const cleared = await (await api.get(`/api/v1/studios/v1/craft/llm-connections?workspace_id=${workspaceId}`)).json();
+  assert.equal(cleared.connections.find(item => item.id === connection.id).hasCredential, false);
+  const result = { realUI: true, encryptedConnectionAPI: true, modelList: true, noBrowserCredentialPersistence: true, credentialRemoval: true, realLLM: false };
+  await writeFile(resolve(output, 'llm-connections-ui-results.json'), JSON.stringify(result, null, 2));
+  console.log(JSON.stringify(result));
+} finally { await context.close(); await browser.close(); await api.dispose(); }

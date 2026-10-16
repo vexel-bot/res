@@ -1,0 +1,55 @@
+{
+  "scope": "reconstructed_lossless_browser_diagnostic",
+  "bundlePath": "C:\\Users\\edugu\\Downloads\\res\\tmp\\temporal-rig-raster-bundle",
+  "hybridSha256": "8e933f8d90821cc04801db09d680d2ad4f90aef4932dc6c805b42e865f416b1d",
+  "captures": [
+    {
+      "variant": "control",
+      "frame": 0,
+      "manifestSha256": "2aef441c26884a8c6f9165db5fd72229872230c997d0119bfc643d9cc51ab1fb",
+      "pngSha256": "41501b907a6edc0359ee8598a762cf00523a8eb88a6063f03213b45e71a2af0c"
+    },
+    {
+      "variant": "control",
+      "frame": 6,
+      "manifestSha256": "2aef441c26884a8c6f9165db5fd72229872230c997d0119bfc643d9cc51ab1fb",
+      "pngSha256": "8442ab13b1ab7d72ce6ccc50226350544ce21ee19cd7167010cdc95e95181f97"
+    },
+    {
+      "variant": "rig",
+      "frame": 0,
+      "manifestSha256": "5b242365857362a73fe8266e7f33f6e0d5a7fca40d0225e3144c15131c29a02b",
+      "pngSha256": "e1264da9c4d2a182d016f3d5b7b987f5bb9e84c41881540deb25b9bf8a7e221f"
+    },
+    {
+      "variant": "rig",
+      "frame": 6,
+      "manifestSha256": "5b242365857362a73fe8266e7f33f6e0d5a7fca40d0225e3144c15131c29a02b",
+      "pngSha256": "73dc4c5244201f833f70a938c5ada4cd2cf0512c383380dde8dffc9a52b29a66"
+    },
+    {
+      "variant": "child",
+      "frame": 0,
+      "manifestSha256": "bd57d007ea175a9bd00e61c69c5275e368414c362ee57149a42c69359d106a47",
+      "pngSha256": "8d8e114ebdfd5b0f358f7036939444dd9c63d966508ab60e11a4ef395e45aa03"
+    },
+    {
+      "variant": "child",
+      "frame": 6,
+      "manifestSha256": "bd57d007ea175a9bd00e61c69c5275e368414c362ee57149a42c69359d106a47",
+      "pngSha256": "d2387af0455e937551f28f45deb83c5ca099f8381b5b08c031af9e7d8921a3dd"
+    },
+    {
+      "variant": "disjoint",
+      "frame": 0,
+      "manifestSha256": "206309c62890f879108cded0a7d75842d247736c6714a66c0151451150ba5b58",
+      "pngSha256": "e1264da9c4d2a182d016f3d5b7b987f5bb9e84c41881540deb25b9bf8a7e221f"
+    },
+    {
+      "variant": "disjoint",
+      "frame": 6,
+      "manifestSha256": "206309c62890f879108cded0a7d75842d247736c6714a66c0151451150ba5b58",
+      "pngSha256": "9d569b4745e62003c4390add6193b28ff9b6e94ac3f9646deab840a567d496d3"
+    }
+  ]
+}

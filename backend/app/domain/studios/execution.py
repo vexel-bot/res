@@ -26,6 +26,7 @@ class ExecutionProfile:
 
 
 EXECUTION_PROFILES: dict[str, ExecutionProfile] = {
+    "craft_render": ExecutionProfile("media_cpu", "studio.media.cpu", "cpu.media", 3600),
     "editing_gemini": ExecutionProfile("media_cpu", "studio.media.cpu", "cpu.media", 1800),
     "editing_ai": ExecutionProfile("media_cpu", "studio.media.cpu", "cpu.media", 1800),
     "document_snapshot": ExecutionProfile("control", "studio.cpu", "cpu.standard", 300),

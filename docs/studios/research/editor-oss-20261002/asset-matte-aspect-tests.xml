@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="0" skipped="0" tests="1" time="32.340" timestamp="2026-10-02T21:32:43.271223-03:00" hostname="Computador"><testcase classname="tests.test_asset_matte_render" name="test_asset_matte_preserves_wide_png_aspect_and_letterbox" time="31.760" /></testsuite></testsuites>

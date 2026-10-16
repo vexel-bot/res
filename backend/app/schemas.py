@@ -523,6 +523,12 @@ class AssetOut(AssetIn):
     updated_at: datetime
 
 
+class AssetCatalogItemV1(AssetOut):
+    schema_version: Literal["studio.asset-catalog-item.v1"] = "studio.asset-catalog-item.v1"
+    metadata_detail: Literal["summary"] = "summary"
+    full_metadata_path: str
+
+
 class KnowledgeDocumentIn(APIModel):
     workspace_id: str
     title: str = Field(min_length=1, max_length=240)

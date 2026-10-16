@@ -39,3 +39,18 @@ tmp/
 *.sqlite-*
 .local-session.json
 workers/media-assets-local/models/
+# Local Android discovery build products and development signing identity.
+output/alight-discovery-20261002/android-bridge/
+# Craft source trees are complete; build products and local executable caches are not source.
+.codex-runtime/
+target/
+workers/craft/.runs/
+third_party/craft/**/target/
+public/craft/
+# Preserved local experiments and rendered evidence are not distributable source.
+output/alight-discovery-20261002/
+output/space-cleanup-20261002/
+output/studio-motion-test-20261001/
+output/visual-directed-native14-20261004/
+output/visual-distance-20261002/
+workers/motion-canvas-local/

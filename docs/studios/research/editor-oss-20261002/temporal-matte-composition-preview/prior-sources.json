@@ -1,0 +1,8 @@
+{
+  "priorRoundtripSha256": "bb8ce3f97182bcb14de918ab07f9a92c8e2bd0577eafb4092abb304a654901d8",
+  "sources": {
+    "src/studios/VideoStudio.tsx": "a1bb8b850fb26c93abf1e623915bc74fbdebbf39da638374e1284148b58c9efd",
+    "src/studios/EditorInspectionPanel.tsx": "71a0dd2781766d7f387ea332301302a2c85e71303423a86d64f2a5e8c26bd32d",
+    "src/studios/video-studio.css": "6821dafe3fc2fac5de69c519b454c1038bffd84d1e378d1ce367c6a24dc4a6d1"
+  }
+}

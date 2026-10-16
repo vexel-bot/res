@@ -1,0 +1,496 @@
+{
+  "observedAt": "2026-10-05T20:13:07.204769+00:00",
+  "scope": "Read-only isolated identity, current inspector computation and sequential HTTP requests; no production benchmark",
+  "study": "interface-a",
+  "documentId": "0ae12fe1-c3aa-4f42-a764-33d076ade8cd",
+  "workspaceId": "4812f2c0-1a2a-4f6d-967d-17b370c8d849",
+  "rounds": [
+    {
+      "frame": 0,
+      "ownershipMs": 9.911700006341562,
+      "inspectionMsWithCProfile": 1329.667000012705,
+      "jsonEncodeMs": 250.32749999081716,
+      "localBytes": 7201865,
+      "sql": [
+        {
+          "operation": "SELECT",
+          "durationMs": 0.37369999336078763
+        },
+        {
+          "operation": "SELECT",
+          "durationMs": 2.597600017907098
+        },
+        {
+          "operation": "SELECT",
+          "durationMs": 0.43239997467026114
+        },
+        {
+          "operation": "SELECT",
+          "durationMs": 28.206399991177022
+        },
+        {
+          "operation": "SELECT",
+          "durationMs": 2.063099993392825
+        }
+      ],
+      "nodes": 12,
+      "tracks": 8,
+      "http": [
+        {
+          "origin": "http://127.0.0.1:8000",
+          "status": 200,
+          "headersMs": 2866.516699985368,
+          "completeBodyMs": 2896.9222999876365,
+          "jsonParseMs": 413.76300001866184,
+          "bytes": 7201865,
+          "canonicalJsonDigest": "41cee706b19bfb58655d1a61af3a9051f0d04739714f95bac0af9ae199d6c948",
+          "matchesLocalInspection": true
+        },
+        {
+          "origin": "http://127.0.0.1:3000",
+          "status": 200,
+          "headersMs": 2719.160400010878,
+          "completeBodyMs": 2729.1074999957345,
+          "jsonParseMs": 238.84309999994002,
+          "bytes": 7201865,
+          "canonicalJsonDigest": "41cee706b19bfb58655d1a61af3a9051f0d04739714f95bac0af9ae199d6c948",
+          "matchesLocalInspection": true
+        }
+      ]
+    },
+    {
+      "frame": 244,
+      "ownershipMs": 4.217299981974065,
+      "inspectionMsWithCProfile": 1280.218599975342,
+      "jsonEncodeMs": 278.021300007822,
+      "localBytes": 7201895,
+      "sql": [
+        {
+          "operation": "SELECT",
+          "durationMs": 0.48809999134391546
+        },
+        {
+          "operation": "SELECT",
+          "durationMs": 0.5210000090301037
+        },
+        {
+          "operation": "SELECT",
+          "durationMs": 0.3380000125616789
+        },
+        {
+          "operation": "SELECT",
+          "durationMs": 2.1588999952655286
+        },
+        {
+          "operation": "SELECT",
+          "durationMs": 0.8036000072024763
+        }
+      ],
+      "nodes": 12,
+      "tracks": 8,
+      "http": [
+        {
+          "origin": "http://127.0.0.1:8000",
+          "status": 200,
+          "headersMs": 4032.277599995723,
+          "completeBodyMs": 4043.9158999943174,
+          "jsonParseMs": 196.1114000005182,
+          "bytes": 7201895,
+          "canonicalJsonDigest": "ecab0442d434abfccc2e0a311f4631b46835b751f155c1c5ebb0f04178ef67d8",
+          "matchesLocalInspection": true
+        },
+        {
+          "origin": "http://127.0.0.1:3000",
+          "status": 200,
+          "headersMs": 3031.301600014558,
+          "completeBodyMs": 3044.526700017741,
+          "jsonParseMs": 211.0617000143975,
+          "bytes": 7201895,
+          "canonicalJsonDigest": "ecab0442d434abfccc2e0a311f4631b46835b751f155c1c5ebb0f04178ef67d8",
+          "matchesLocalInspection": true
+        }
+      ]
+    },
+    {
+      "frame": 449,
+      "ownershipMs": 3.29660001443699,
+      "inspectionMsWithCProfile": 1174.6272000018507,
+      "jsonEncodeMs": 279.9493999918923,
+      "localBytes": 7201869,
+      "sql": [
+        {
+          "operation": "SELECT",
+          "durationMs": 0.38690000656060874
+        },
+        {
+          "operation": "SELECT",
+          "durationMs": 0.38629997288808227
+        },
+        {
+          "operation": "SELECT",
+          "durationMs": 0.33489998895674944
+        },
+        {
+          "operation": "SELECT",
+          "durationMs": 1.5047000197228044
+        },
+        {
+          "operation": "SELECT",
+          "durationMs": 1.3990000006742775
+        }
+      ],
+      "nodes": 12,
+      "tracks": 8,
+      "http": [
+        {
+          "origin": "http://127.0.0.1:8000",
+          "status": 200,
+          "headersMs": 3058.16629997571,
+          "completeBodyMs": 3084.771499998169,
+          "jsonParseMs": 186.75880000228062,
+          "bytes": 7201869,
+          "canonicalJsonDigest": "393eedf571694533c34839ed16334b76b775dcd23a971c2ea76e2b6b724fb655",
+          "matchesLocalInspection": true
+        },
+        {
+          "origin": "http://127.0.0.1:3000",
+          "status": 200,
+          "headersMs": 2845.6088000093587,
+          "completeBodyMs": 2884.2781000130344,
+          "jsonParseMs": 452.7990999922622,
+          "bytes": 7201869,
+          "canonicalJsonDigest": "393eedf571694533c34839ed16334b76b775dcd23a971c2ea76e2b6b724fb655",
+          "matchesLocalInspection": true
+        }
+      ]
+    }
+  ],
+  "profileFunctions": [
+    {
+      "file": "backend/app/services/studios/editor_commands.py",
+      "line": 247,
+      "function": "inspect_editor",
+      "calls": 3,
+      "internalMs": 1.2553,
+      "cumulativeMs": 3759.1252
+    },
+    {
+      "file": "backend/app/services/studios/editor_commands.py",
+      "line": 41,
+      "function": "_bound_plan",
+      "calls": 3,
+      "internalMs": 90.4615,
+      "cumulativeMs": 3735.2515000000003
+    },
+    {
+      "file": "backend/app/services/studios/contextual_editing.py",
+      "line": 67,
+      "function": "get_plan",
+      "calls": 3,
+      "internalMs": 0.0522,
+      "cumulativeMs": 3629.3584
+    },
+    {
+      "file": "backend/app/services/studios/contextual_editing.py",
+      "line": 58,
+      "function": "_events",
+      "calls": 3,
+      "internalMs": 0.15370000000000003,
+      "cumulativeMs": 3582.3989
+    },
+    {
+      "file": "result.py",
+      "line": 1778,
+      "function": "all",
+      "calls": 6,
+      "internalMs": 0.0209,
+      "cumulativeMs": 3540.8559000000005
+    },
+    {
+      "file": "result.py",
+      "line": 555,
+      "function": "_allrows",
+      "calls": 6,
+      "internalMs": 0.0326,
+      "cumulativeMs": 3540.8350000000005
+    },
+    {
+      "file": "result.py",
+      "line": 1692,
+      "function": "_fetchall_impl",
+      "calls": 6,
+      "internalMs": 0.013600000000000001,
+      "cumulativeMs": 3540.7477000000003
+    },
+    {
+      "file": "result.py",
+      "line": 2283,
+      "function": "_fetchall_impl",
+      "calls": 6,
+      "internalMs": 0.0759,
+      "cumulativeMs": 3540.7341
+    },
+    {
+      "file": "loading.py",
+      "line": 208,
+      "function": "chunks",
+      "calls": 12,
+      "internalMs": 9.0931,
+      "cumulativeMs": 3540.5110000000004
+    },
+    {
+      "file": "result.py",
+      "line": 549,
+      "function": "_raw_all_rows",
+      "calls": 6,
+      "internalMs": 0.0402,
+      "cumulativeMs": 3530.6791000000003
+    },
+    {
+      "file": "result.py",
+      "line": 553,
+      "function": "<listcomp>",
+      "calls": 6,
+      "internalMs": 0.3217,
+      "cumulativeMs": 2658.2715000000003
+    },
+    {
+      "file": "base.py",
+      "line": 1043,
+      "function": "process",
+      "calls": 15,
+      "internalMs": 0.04290000000000001,
+      "cumulativeMs": 2657.9498000000003
+    },
+    {
+      "file": "sqltypes.py",
+      "line": 2815,
+      "function": "process",
+      "calls": 15,
+      "internalMs": 0.0668,
+      "cumulativeMs": 2657.9069
+    },
+    {
+      "file": "__init__.py",
+      "line": 299,
+      "function": "loads",
+      "calls": 15,
+      "internalMs": 0.1128,
+      "cumulativeMs": 2657.8401
+    },
+    {
+      "file": "decoder.py",
+      "line": 332,
+      "function": "decode",
+      "calls": 15,
+      "internalMs": 0.22130000000000002,
+      "cumulativeMs": 2657.6902
+    },
+    {
+      "file": "decoder.py",
+      "line": 343,
+      "function": "raw_decode",
+      "calls": 15,
+      "internalMs": 2657.2938000000004,
+      "cumulativeMs": 2657.2938000000004
+    },
+    {
+      "file": "cursor.py",
+      "line": 2251,
+      "function": "_fetchall_impl",
+      "calls": 6,
+      "internalMs": 0.0134,
+      "cumulativeMs": 872.3674
+    },
+    {
+      "file": "cursor.py",
+      "line": 1191,
+      "function": "fetchall",
+      "calls": 6,
+      "internalMs": 0.057,
+      "cumulativeMs": 872.354
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<method 'fetchall' of 'sqlite3.Cursor' objects>",
+      "calls": 6,
+      "internalMs": 872.2071,
+      "cumulativeMs": 872.2071
+    },
+    {
+      "file": "main.py",
+      "line": 669,
+      "function": "model_validate",
+      "calls": 18,
+      "internalMs": 0.07170000000000001,
+      "cumulativeMs": 50.40070000000001
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<method 'validate_python' of 'pydantic_core._pydantic_core.SchemaValidator' objects>",
+      "calls": 18,
+      "internalMs": 33.6346,
+      "cumulativeMs": 50.32900000000001
+    },
+    {
+      "file": "session.py",
+      "line": 2430,
+      "function": "scalars",
+      "calls": 6,
+      "internalMs": 0.0604,
+      "cumulativeMs": 50.2393
+    },
+    {
+      "file": "session.py",
+      "line": 2136,
+      "function": "_execute_internal",
+      "calls": 6,
+      "internalMs": 0.1864,
+      "cumulativeMs": 50.1476
+    },
+    {
+      "file": "context.py",
+      "line": 296,
+      "function": "orm_execute_statement",
+      "calls": 6,
+      "internalMs": 0.0454,
+      "cumulativeMs": 49.525000000000006
+    },
+    {
+      "file": "base.py",
+      "line": 1375,
+      "function": "execute",
+      "calls": 6,
+      "internalMs": 0.031900000000000005,
+      "cumulativeMs": 47.9505
+    },
+    {
+      "file": "elements.py",
+      "line": 518,
+      "function": "_execute_on_connection",
+      "calls": 6,
+      "internalMs": 0.0304,
+      "cumulativeMs": 47.918600000000005
+    },
+    {
+      "file": "base.py",
+      "line": 1591,
+      "function": "_execute_clauseelement",
+      "calls": 6,
+      "internalMs": 0.1844,
+      "cumulativeMs": 47.888200000000005
+    },
+    {
+      "file": "backend/app/services/studios/contextual_editing.py",
+      "line": 71,
+      "function": "<listcomp>",
+      "calls": 3,
+      "internalMs": 0.10840000000000001,
+      "cumulativeMs": 46.8803
+    },
+    {
+      "file": "backend/app/domain/studios/contextual_editing_v2.py",
+      "line": 965,
+      "function": "parse_editing_plan",
+      "calls": 15,
+      "internalMs": 0.11230000000000001,
+      "cumulativeMs": 46.6788
+    },
+    {
+      "file": "base.py",
+      "line": 1791,
+      "function": "_execute_context",
+      "calls": 6,
+      "internalMs": 0.1438,
+      "cumulativeMs": 37.818200000000004
+    },
+    {
+      "file": "base.py",
+      "line": 1850,
+      "function": "_exec_single_context",
+      "calls": 6,
+      "internalMs": 0.26130000000000003,
+      "cumulativeMs": 37.142500000000005
+    },
+    {
+      "file": "default.py",
+      "line": 951,
+      "function": "do_execute",
+      "calls": 6,
+      "internalMs": 0.0302,
+      "cumulativeMs": 35.7616
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<method 'execute' of 'sqlite3.Cursor' objects>",
+      "calls": 6,
+      "internalMs": 35.7314,
+      "cumulativeMs": 35.7314
+    },
+    {
+      "file": "backend/app/services/studios/contextual_editing.py",
+      "line": 133,
+      "function": "_source_digest",
+      "calls": 3,
+      "internalMs": 0.45460000000000006,
+      "cumulativeMs": 10.6853
+    },
+    {
+      "file": "main.py",
+      "line": 421,
+      "function": "model_dump",
+      "calls": 93,
+      "internalMs": 0.1889,
+      "cumulativeMs": 9.9498
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<method 'to_python' of 'pydantic_core._pydantic_core.SchemaSerializer' objects>",
+      "calls": 93,
+      "internalMs": 9.760900000000001,
+      "cumulativeMs": 9.760900000000001
+    },
+    {
+      "file": "elements.py",
+      "line": 680,
+      "function": "_compile_w_cache",
+      "calls": 6,
+      "internalMs": 0.1428,
+      "cumulativeMs": 9.7163
+    },
+    {
+      "file": "backend/app/domain/studios/contextual_editing.py",
+      "line": 23,
+      "function": "digest",
+      "calls": 12,
+      "internalMs": 0.36210000000000003,
+      "cumulativeMs": 9.5954
+    },
+    {
+      "file": "__init__.py",
+      "line": 183,
+      "function": "dumps",
+      "calls": 15,
+      "internalMs": 0.15810000000000002,
+      "cumulativeMs": 6.667
+    },
+    {
+      "file": "elements.py",
+      "line": 318,
+      "function": "_compiler",
+      "calls": 2,
+      "internalMs": 0.027700000000000002,
+      "cumulativeMs": 6.4489
+    }
+  ],
+  "limits": [
+    "Separate Python process and cProfile add overhead; not CPU timing inside running API server",
+    "HTTP requests sequential direct then proxy, with fresh urllib connections; browser has other concurrency",
+    "Three samples not p95 and not a controlled before/after comparison",
+    "SQL cursor timings exclude hydration and response serialization; no document mutations"
+  ]
+}

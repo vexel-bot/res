@@ -6,6 +6,7 @@ from datetime import UTC, datetime
 
 from pydantic import ValidationError
 from sqlalchemy import select
+from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 
 from ...config import get_settings
@@ -17,6 +18,7 @@ from ...domain.studios.contracts import (
     AvatarVideoRequestV1,
     AvatarVideoRequestV2,
     CreateGenerationJobRequest,
+    CreativeDocumentV1,
     GenerationJobV1,
     TranscriptionRequestV1,
 )
@@ -574,8 +576,44 @@ def job_out(job: StudioGenerationJob) -> GenerationJobV1:
 
 
 def create_job(
-    db: Session, request: CreateGenerationJobRequest, idempotency_key: str, user: User
+    db: Session, request: CreateGenerationJobRequest, idempotency_key: str, user: User, *, commit: bool = True
 ) -> tuple[StudioGenerationJob, bool]:
+    if request.job_type == "video_render":
+        raise ValueError("craft_editors_replaced_legacy_renderer_use_craft_render_jobs")
+    if request.job_type == "craft_render":
+        from ...domain.studios.contracts import NativeEditorStateV1
+        from ...providers.studios.craft import require_capability
+        from .craft import assert_build, scoped_asset
+        from .compatibility import record_to_contract
+
+        state = NativeEditorStateV1.model_validate(request.request.get("nativeEditorState"))
+        if request.provider != "craft." + state.engine:
+            raise ValueError("craft_render_provider_mismatch")
+        snapshot = CreativeDocumentV1.model_validate(request.request.get("documentSnapshot"))
+        record = db.get(CreativeDocument, request.document_id)
+        if (not record or record.workspace_id != request.workspace_id or snapshot.document_id != record.id
+                or snapshot.workspace_id != record.workspace_id or snapshot.revision != record.revision
+                or snapshot.native_editor_state != state or snapshot != record_to_contract(record)):
+            raise ValueError("craft_render_snapshot_conflict")
+        if any(item.engine == "effectcraft" and item.source_document_id and not item.rendered_asset_id for item in state.dependencies):
+            raise ValueError("craft_pending_composition_requires_link")
+        scoped_asset(db, record.workspace_id, state.project_asset_id, state.checksum_sha256)
+        assert_build(state, require_capability(state.engine))
+    if request.provider == "alight-motion.contextual-v1":
+        from ...models import Membership
+
+        member = db.scalar(select(Membership).where(
+            Membership.workspace_id == request.workspace_id, Membership.user_id == user.id,
+        ))
+        if (not get_settings().studio_alight_motion_enabled or request.job_type != "video_render"
+                or not member or member.role.lower() not in {"owner", "admin"}):
+            raise ValueError("alight_experiment_access_denied")
+        from ...providers.studios.alight_motion import refresh_registration
+        from ...providers.studios.video_render import VIDEO_RENDER_PROVIDERS
+
+        admission = refresh_registration(get_settings(), VIDEO_RENDER_PROVIDERS)
+        if not admission["available"]:
+            raise ValueError("alight_worker_not_ready:" + ",".join(admission["blockers"]))
     digest = payload_hash(request)
     existing = db.scalar(
         select(StudioGenerationJob).where(
@@ -731,7 +769,10 @@ def create_job(
         execution_capability=profile.capability,
         queue_name=profile.queue,
         resource_class=profile.resource_class,
-        hard_time_limit_seconds=profile.hard_time_limit_seconds,
+        hard_time_limit_seconds=(
+            1890 if request.provider == "alight-motion.contextual-v1" else profile.hard_time_limit_seconds
+        ),
+        max_attempts=1 if request.provider == "alight-motion.contextual-v1" else 3,
         idempotency_key=idempotency_key,
         payload_hash=digest,
         correlation_id=request.correlation_id or idempotency_key,
@@ -756,7 +797,8 @@ def create_job(
             "resourceClass": job.resource_class,
         },
     )
-    db.commit()
+    if commit:
+        db.commit()
     db.refresh(job)
     return job, True
 
@@ -860,6 +902,7 @@ def execute_job_once(db: Session, job: StudioGenerationJob) -> str:
             "video_render",
             "avatar_video",
             "scene_generation",
+            "craft_render",
         }
     ):
         provider = PROVIDERS.get(job.provider)
@@ -914,10 +957,12 @@ def execute_job_once(db: Session, job: StudioGenerationJob) -> str:
             from .media_waveform import execute_media_waveform
 
             result = execute_media_waveform(db, job, progress, is_cancelled)
-        elif job.job_type == "video_render":
-            from .video_render import execute_video_render
+        elif job.job_type == "craft_render":
+            from .craft import execute_render_job
 
-            result = execute_video_render(db, job, progress, is_cancelled)
+            result = execute_render_job(db, job, progress, is_cancelled)
+        elif job.job_type == "video_render":
+            raise ValueError("craft_editors_replaced_legacy_renderer_use_craft_render_jobs")
         elif job.job_type == "avatar_video":
             from .avatar_video import execute_avatar_video
 
@@ -976,6 +1021,10 @@ def execute_job_once(db: Session, job: StudioGenerationJob) -> str:
         db.commit()
         return job.status
     except Exception as error:
+        # A failed flush/commit leaves the transaction unusable. Recover it
+        # before reading persisted state and recording the job's retry/failure.
+        if isinstance(error, SQLAlchemyError):
+            db.rollback()
         db.refresh(job)
         job.error_code = type(error).__name__
         job.error_message = str(error)[:2000]

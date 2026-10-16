@@ -1,0 +1,4665 @@
+{
+  "scope": "research_only_uniform_mask_exact_polygon_analysis",
+  "productionAdmission": "pending",
+  "humanReview": "pending",
+  "originalOracleChanged": false,
+  "reference": "Exact convex polygon intersection with output pixel; C and C\u00b2 retained separately.",
+  "closedFormCalibrationCases": 4,
+  "uniformEquivalentPairs": [
+    {
+      "variant": "identity",
+      "allRgbPixelsEqual": true
+    },
+    {
+      "variant": "fractional-translation",
+      "allRgbPixelsEqual": true
+    },
+    {
+      "variant": "small-affine",
+      "allRgbPixelsEqual": true
+    },
+    {
+      "variant": "rotation",
+      "allRgbPixelsEqual": true
+    },
+    {
+      "variant": "nonuniform-scale",
+      "allRgbPixelsEqual": true
+    },
+    {
+      "variant": "rotation-scale",
+      "allRgbPixelsEqual": true
+    },
+    {
+      "variant": "parented-hold",
+      "allRgbPixelsEqual": true
+    }
+  ],
+  "scriptSha256": "eac9b096c2db60422eddf3d1d4d394c6f72eb4ebad038a013bcc3f803f253f01",
+  "captureReceiptSha256": "79744075d7bb3213089d679e82d33719d0036b4b8915a68cc9406b484fe067af",
+  "records": [
+    {
+      "name": "identity--unmasked",
+      "variant": "identity",
+      "mode": "unmasked",
+      "manifestSha256": "afa621861e7cf5a677c2c1bafdf320c94ee15549de65dee69915f1858625a91f",
+      "pngSha256": "4b9879e00ad603415cc29bc3572d59971aeb390ceb22e80cd7b59e2b3a78f48d",
+      "imageSha256": "61b54f7950e32fd56911e6825578166b092195884d0ca9cdcbe3292098d7776e",
+      "negativeControl": false,
+      "geometry": {
+        "x": 10,
+        "y": 10,
+        "width": 170,
+        "height": 150,
+        "rotation": 0,
+        "opacity": 0.85,
+        "polygon": [
+          [
+            45.0,
+            46.0
+          ],
+          [
+            215.0,
+            46.0
+          ],
+          [
+            215.0,
+            196.0
+          ],
+          [
+            45.0,
+            196.0
+          ]
+        ],
+        "tracks": [
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-x",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "position.x",
+            "unit": "pixels",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-y",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "position.y",
+            "unit": "pixels",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-rotation",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "rotation.degrees",
+            "unit": "degrees",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-scale_x",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "scale.x",
+            "unit": "ratio",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 1,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-scale_y",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "scale.y",
+            "unit": "ratio",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 1,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          }
+        ]
+      },
+      "referenceMetrics": {
+        "C1": {
+          "maximumPerPixelChannelError": 1.4325000000025057,
+          "worstPixel": [
+            {
+              "x": 96,
+              "y": 122,
+              "coverage": 0.9999999999999858,
+              "expectedChannel": 175.5674999999975,
+              "observedRgb": [
+                177,
+                177,
+                177
+              ],
+              "maximumChannelError": 1.4325000000025057
+            }
+          ],
+          "boundaryPixelCount": 0,
+          "boundaryMeanAbsoluteError": null,
+          "boundaryRootMeanSquareError": null,
+          "maximumOutsideGeometryChannel": 0
+        },
+        "C2": {
+          "maximumPerPixelChannelError": 1.4325000000050068,
+          "worstPixel": [
+            {
+              "x": 96,
+              "y": 122,
+              "coverage": 0.9999999999999858,
+              "expectedChannel": 175.567499999995,
+              "observedRgb": [
+                177,
+                177,
+                177
+              ],
+              "maximumChannelError": 1.4325000000050068
+            }
+          ],
+          "boundaryPixelCount": 0,
+          "boundaryMeanAbsoluteError": null,
+          "boundaryRootMeanSquareError": null,
+          "maximumOutsideGeometryChannel": 0
+        }
+      },
+      "comparison": null
+    },
+    {
+      "name": "identity--normal-white-local",
+      "variant": "identity",
+      "mode": "normal-white-local",
+      "manifestSha256": "ee4dc94983b218ed105977f42979ca408cb98938d01b78590d269a5e699d500d",
+      "pngSha256": "4b9879e00ad603415cc29bc3572d59971aeb390ceb22e80cd7b59e2b3a78f48d",
+      "imageSha256": "61b54f7950e32fd56911e6825578166b092195884d0ca9cdcbe3292098d7776e",
+      "negativeControl": false,
+      "geometry": {
+        "x": 10,
+        "y": 10,
+        "width": 170,
+        "height": 150,
+        "rotation": 0,
+        "opacity": 0.85,
+        "polygon": [
+          [
+            45.0,
+            46.0
+          ],
+          [
+            215.0,
+            46.0
+          ],
+          [
+            215.0,
+            196.0
+          ],
+          [
+            45.0,
+            196.0
+          ]
+        ],
+        "tracks": [
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-x",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "position.x",
+            "unit": "pixels",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-y",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "position.y",
+            "unit": "pixels",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-rotation",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "rotation.degrees",
+            "unit": "degrees",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-scale_x",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "scale.x",
+            "unit": "ratio",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 1,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-scale_y",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "scale.y",
+            "unit": "ratio",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 1,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          }
+        ]
+      },
+      "referenceMetrics": {
+        "C1": {
+          "maximumPerPixelChannelError": 1.4325000000025057,
+          "worstPixel": [
+            {
+              "x": 96,
+              "y": 122,
+              "coverage": 0.9999999999999858,
+              "expectedChannel": 175.5674999999975,
+              "observedRgb": [
+                177,
+                177,
+                177
+              ],
+              "maximumChannelError": 1.4325000000025057
+            }
+          ],
+          "boundaryPixelCount": 0,
+          "boundaryMeanAbsoluteError": null,
+          "boundaryRootMeanSquareError": null,
+          "maximumOutsideGeometryChannel": 0
+        },
+        "C2": {
+          "maximumPerPixelChannelError": 1.4325000000050068,
+          "worstPixel": [
+            {
+              "x": 96,
+              "y": 122,
+              "coverage": 0.9999999999999858,
+              "expectedChannel": 175.567499999995,
+              "observedRgb": [
+                177,
+                177,
+                177
+              ],
+              "maximumChannelError": 1.4325000000050068
+            }
+          ],
+          "boundaryPixelCount": 0,
+          "boundaryMeanAbsoluteError": null,
+          "boundaryRootMeanSquareError": null,
+          "maximumOutsideGeometryChannel": 0
+        }
+      },
+      "comparison": {
+        "maximumPerPixelDifferenceFromUnmasked": 0,
+        "empiricalPixelCenterClipPredictionMaximumError": 0,
+        "empiricalPixelCenterClipPredictionUnequalPixels": 0,
+        "predictionScope": "Captured unmasked pixels plus independent center inclusion; not admission or an independent color reference."
+      }
+    },
+    {
+      "name": "identity--normal-white-cover",
+      "variant": "identity",
+      "mode": "normal-white-cover",
+      "manifestSha256": "dc6ae3670ef92239c9814ddc08592c6e1d74b42d760e072127a5dcb00a36309d",
+      "pngSha256": "4b9879e00ad603415cc29bc3572d59971aeb390ceb22e80cd7b59e2b3a78f48d",
+      "imageSha256": "61b54f7950e32fd56911e6825578166b092195884d0ca9cdcbe3292098d7776e",
+      "negativeControl": false,
+      "geometry": {
+        "x": 10,
+        "y": 10,
+        "width": 170,
+        "height": 150,
+        "rotation": 0,
+        "opacity": 0.85,
+        "polygon": [
+          [
+            45.0,
+            46.0
+          ],
+          [
+            215.0,
+            46.0
+          ],
+          [
+            215.0,
+            196.0
+          ],
+          [
+            45.0,
+            196.0
+          ]
+        ],
+        "tracks": [
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-x",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "position.x",
+            "unit": "pixels",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-y",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "position.y",
+            "unit": "pixels",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-rotation",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "rotation.degrees",
+            "unit": "degrees",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-scale_x",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "scale.x",
+            "unit": "ratio",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 1,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-scale_y",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "scale.y",
+            "unit": "ratio",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 1,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          }
+        ]
+      },
+      "referenceMetrics": {
+        "C1": {
+          "maximumPerPixelChannelError": 1.4325000000025057,
+          "worstPixel": [
+            {
+              "x": 96,
+              "y": 122,
+              "coverage": 0.9999999999999858,
+              "expectedChannel": 175.5674999999975,
+              "observedRgb": [
+                177,
+                177,
+                177
+              ],
+              "maximumChannelError": 1.4325000000025057
+            }
+          ],
+          "boundaryPixelCount": 0,
+          "boundaryMeanAbsoluteError": null,
+          "boundaryRootMeanSquareError": null,
+          "maximumOutsideGeometryChannel": 0
+        },
+        "C2": {
+          "maximumPerPixelChannelError": 1.4325000000050068,
+          "worstPixel": [
+            {
+              "x": 96,
+              "y": 122,
+              "coverage": 0.9999999999999858,
+              "expectedChannel": 175.567499999995,
+              "observedRgb": [
+                177,
+                177,
+                177
+              ],
+              "maximumChannelError": 1.4325000000050068
+            }
+          ],
+          "boundaryPixelCount": 0,
+          "boundaryMeanAbsoluteError": null,
+          "boundaryRootMeanSquareError": null,
+          "maximumOutsideGeometryChannel": 0
+        }
+      },
+      "comparison": {
+        "maximumPerPixelDifferenceFromUnmasked": 0,
+        "empiricalPixelCenterClipPredictionMaximumError": 0,
+        "empiricalPixelCenterClipPredictionUnequalPixels": 0,
+        "predictionScope": "Captured unmasked pixels plus independent center inclusion; not admission or an independent color reference."
+      }
+    },
+    {
+      "name": "identity--inverse-empty",
+      "variant": "identity",
+      "mode": "inverse-empty",
+      "manifestSha256": "96d4bcde32017f0e2c934c3ba1cc4187637057fa9a4b34849ecabd05791c7289",
+      "pngSha256": "4b9879e00ad603415cc29bc3572d59971aeb390ceb22e80cd7b59e2b3a78f48d",
+      "imageSha256": "4342d917e16fcbba852128452258ce7cb3bd64c6c45a9e88ca5ca99d1203b3ee",
+      "negativeControl": false,
+      "geometry": {
+        "x": 10,
+        "y": 10,
+        "width": 170,
+        "height": 150,
+        "rotation": 0,
+        "opacity": 0.85,
+        "polygon": [
+          [
+            45.0,
+            46.0
+          ],
+          [
+            215.0,
+            46.0
+          ],
+          [
+            215.0,
+            196.0
+          ],
+          [
+            45.0,
+            196.0
+          ]
+        ],
+        "tracks": [
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-x",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "position.x",
+            "unit": "pixels",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-y",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "position.y",
+            "unit": "pixels",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-rotation",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "rotation.degrees",
+            "unit": "degrees",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-scale_x",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "scale.x",
+            "unit": "ratio",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 1,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-scale_y",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "scale.y",
+            "unit": "ratio",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 1,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          }
+        ]
+      },
+      "referenceMetrics": {
+        "C1": {
+          "maximumPerPixelChannelError": 1.4325000000025057,
+          "worstPixel": [
+            {
+              "x": 96,
+              "y": 122,
+              "coverage": 0.9999999999999858,
+              "expectedChannel": 175.5674999999975,
+              "observedRgb": [
+                177,
+                177,
+                177
+              ],
+              "maximumChannelError": 1.4325000000025057
+            }
+          ],
+          "boundaryPixelCount": 0,
+          "boundaryMeanAbsoluteError": null,
+          "boundaryRootMeanSquareError": null,
+          "maximumOutsideGeometryChannel": 0
+        },
+        "C2": {
+          "maximumPerPixelChannelError": 1.4325000000050068,
+          "worstPixel": [
+            {
+              "x": 96,
+              "y": 122,
+              "coverage": 0.9999999999999858,
+              "expectedChannel": 175.567499999995,
+              "observedRgb": [
+                177,
+                177,
+                177
+              ],
+              "maximumChannelError": 1.4325000000050068
+            }
+          ],
+          "boundaryPixelCount": 0,
+          "boundaryMeanAbsoluteError": null,
+          "boundaryRootMeanSquareError": null,
+          "maximumOutsideGeometryChannel": 0
+        }
+      },
+      "comparison": {
+        "maximumPerPixelDifferenceFromUnmasked": 0,
+        "empiricalPixelCenterClipPredictionMaximumError": 0,
+        "empiricalPixelCenterClipPredictionUnequalPixels": 0,
+        "predictionScope": "Captured unmasked pixels plus independent center inclusion; not admission or an independent color reference."
+      }
+    },
+    {
+      "name": "identity--normal-empty-negative",
+      "variant": "identity",
+      "mode": "normal-empty-negative",
+      "manifestSha256": "8c43ca8d45bcfc778289938868c6e7acfdfcfef0d9ace8af96485261fc564f74",
+      "pngSha256": "03cf8543f81694b2387fb57bf553b8c2d4e6df5385858d8027a9b7b7bed2aa93",
+      "imageSha256": "4342d917e16fcbba852128452258ce7cb3bd64c6c45a9e88ca5ca99d1203b3ee",
+      "negativeControl": true,
+      "geometry": {
+        "x": 10,
+        "y": 10,
+        "width": 170,
+        "height": 150,
+        "rotation": 0,
+        "opacity": 0.85,
+        "polygon": [
+          [
+            45.0,
+            46.0
+          ],
+          [
+            215.0,
+            46.0
+          ],
+          [
+            215.0,
+            196.0
+          ],
+          [
+            45.0,
+            196.0
+          ]
+        ],
+        "tracks": [
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-x",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "position.x",
+            "unit": "pixels",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-y",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "position.y",
+            "unit": "pixels",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-rotation",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "rotation.degrees",
+            "unit": "degrees",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-scale_x",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "scale.x",
+            "unit": "ratio",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 1,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-scale_y",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "scale.y",
+            "unit": "ratio",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 1,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          }
+        ]
+      },
+      "referenceMetrics": {
+        "C1": {
+          "maximumPerPixelChannelError": 0,
+          "worstPixel": [],
+          "boundaryPixelCount": 0,
+          "boundaryMeanAbsoluteError": null,
+          "boundaryRootMeanSquareError": null,
+          "maximumOutsideGeometryChannel": 0
+        },
+        "C2": {
+          "maximumPerPixelChannelError": 0,
+          "worstPixel": [],
+          "boundaryPixelCount": 0,
+          "boundaryMeanAbsoluteError": null,
+          "boundaryRootMeanSquareError": null,
+          "maximumOutsideGeometryChannel": 0
+        }
+      },
+      "comparison": {
+        "maximumPerPixelDifferenceFromUnmasked": 177,
+        "empiricalPixelCenterClipPredictionMaximumError": 177,
+        "empiricalPixelCenterClipPredictionUnequalPixels": 25500,
+        "predictionScope": "Captured unmasked pixels plus independent center inclusion; not admission or an independent color reference."
+      }
+    },
+    {
+      "name": "identity--inverse-white-negative",
+      "variant": "identity",
+      "mode": "inverse-white-negative",
+      "manifestSha256": "7ee992e6570f65540cfcf3baf755ccc6da9ba323f48467170ef1af32928b6675",
+      "pngSha256": "03cf8543f81694b2387fb57bf553b8c2d4e6df5385858d8027a9b7b7bed2aa93",
+      "imageSha256": "61b54f7950e32fd56911e6825578166b092195884d0ca9cdcbe3292098d7776e",
+      "negativeControl": true,
+      "geometry": {
+        "x": 10,
+        "y": 10,
+        "width": 170,
+        "height": 150,
+        "rotation": 0,
+        "opacity": 0.85,
+        "polygon": [
+          [
+            45.0,
+            46.0
+          ],
+          [
+            215.0,
+            46.0
+          ],
+          [
+            215.0,
+            196.0
+          ],
+          [
+            45.0,
+            196.0
+          ]
+        ],
+        "tracks": [
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-x",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "position.x",
+            "unit": "pixels",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-y",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "position.y",
+            "unit": "pixels",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-rotation",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "rotation.degrees",
+            "unit": "degrees",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-scale_x",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "scale.x",
+            "unit": "ratio",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 1,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-scale_y",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "scale.y",
+            "unit": "ratio",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 1,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          }
+        ]
+      },
+      "referenceMetrics": {
+        "C1": {
+          "maximumPerPixelChannelError": 0,
+          "worstPixel": [],
+          "boundaryPixelCount": 0,
+          "boundaryMeanAbsoluteError": null,
+          "boundaryRootMeanSquareError": null,
+          "maximumOutsideGeometryChannel": 0
+        },
+        "C2": {
+          "maximumPerPixelChannelError": 0,
+          "worstPixel": [],
+          "boundaryPixelCount": 0,
+          "boundaryMeanAbsoluteError": null,
+          "boundaryRootMeanSquareError": null,
+          "maximumOutsideGeometryChannel": 0
+        }
+      },
+      "comparison": {
+        "maximumPerPixelDifferenceFromUnmasked": 177,
+        "empiricalPixelCenterClipPredictionMaximumError": 177,
+        "empiricalPixelCenterClipPredictionUnequalPixels": 25500,
+        "predictionScope": "Captured unmasked pixels plus independent center inclusion; not admission or an independent color reference."
+      }
+    },
+    {
+      "name": "fractional-translation--unmasked",
+      "variant": "fractional-translation",
+      "mode": "unmasked",
+      "manifestSha256": "3646066b4c2155acb7d74759e36520a37e95c67270937148db5bbd2c3706fced",
+      "pngSha256": "475649b6567bd48bb518747d5acc6ecfe563712d0be155925055397e563de3aa",
+      "imageSha256": "61b54f7950e32fd56911e6825578166b092195884d0ca9cdcbe3292098d7776e",
+      "negativeControl": false,
+      "geometry": {
+        "x": 10,
+        "y": 10,
+        "width": 170,
+        "height": 150,
+        "rotation": 0,
+        "opacity": 0.85,
+        "polygon": [
+          [
+            45.349999999999994,
+            46.650000000000006
+          ],
+          [
+            215.35,
+            46.650000000000006
+          ],
+          [
+            215.35,
+            196.65
+          ],
+          [
+            45.349999999999994,
+            196.65
+          ]
+        ],
+        "tracks": [
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-x",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "position.x",
+            "unit": "pixels",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0.35,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-y",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "position.y",
+            "unit": "pixels",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0.65,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-rotation",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "rotation.degrees",
+            "unit": "degrees",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-scale_x",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "scale.x",
+            "unit": "ratio",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 1,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-scale_y",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "scale.y",
+            "unit": "ratio",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 1,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          }
+        ]
+      },
+      "referenceMetrics": {
+        "C1": {
+          "maximumPerPixelChannelError": 44.492981250000696,
+          "worstPixel": [
+            {
+              "x": 215,
+              "y": 46,
+              "coverage": 0.12249999999999601,
+              "expectedChannel": 21.5070187499993,
+              "observedRgb": [
+                66,
+                66,
+                66
+              ],
+              "maximumChannelError": 44.492981250000696
+            }
+          ],
+          "boundaryPixelCount": 640,
+          "boundaryMeanAbsoluteError": 4.019643750000995,
+          "boundaryRootMeanSquareError": 4.739181842888186,
+          "maximumOutsideGeometryChannel": 0
+        },
+        "C2": {
+          "maximumPerPixelChannelError": 79.66010395312391,
+          "worstPixel": [
+            {
+              "x": 45,
+              "y": 196,
+              "coverage": 0.42250000000000737,
+              "expectedChannel": 31.339896046876092,
+              "observedRgb": [
+                111,
+                111,
+                111
+              ],
+              "maximumChannelError": 79.66010395312391
+            }
+          ],
+          "boundaryPixelCount": 640,
+          "boundaryMeanAbsoluteError": 40.80507599736298,
+          "boundaryRootMeanSquareError": 41.03239049133022,
+          "maximumOutsideGeometryChannel": 0
+        }
+      },
+      "comparison": null
+    },
+    {
+      "name": "fractional-translation--normal-white-local",
+      "variant": "fractional-translation",
+      "mode": "normal-white-local",
+      "manifestSha256": "ebe1828fa488c179707032336c7dea5bbfd06b3f104a8e378915762367eaf11e",
+      "pngSha256": "57b2d4bc0185b819249d8782660cebd481df9b110c0383596713ca745b56a10b",
+      "imageSha256": "61b54f7950e32fd56911e6825578166b092195884d0ca9cdcbe3292098d7776e",
+      "negativeControl": false,
+      "geometry": {
+        "x": 10,
+        "y": 10,
+        "width": 170,
+        "height": 150,
+        "rotation": 0,
+        "opacity": 0.85,
+        "polygon": [
+          [
+            45.349999999999994,
+            46.650000000000006
+          ],
+          [
+            215.35,
+            46.650000000000006
+          ],
+          [
+            215.35,
+            196.65
+          ],
+          [
+            45.349999999999994,
+            196.65
+          ]
+        ],
+        "tracks": [
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-x",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "position.x",
+            "unit": "pixels",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0.35,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-y",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "position.y",
+            "unit": "pixels",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0.65,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-rotation",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "rotation.degrees",
+            "unit": "degrees",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-scale_x",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "scale.x",
+            "unit": "ratio",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 1,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-scale_y",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "scale.y",
+            "unit": "ratio",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 1,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          }
+        ]
+      },
+      "referenceMetrics": {
+        "C1": {
+          "maximumPerPixelChannelError": 45.11887500000262,
+          "worstPixel": [
+            {
+              "x": 93,
+              "y": 196,
+              "coverage": 0.6500000000000149,
+              "expectedChannel": 114.11887500000262,
+              "observedRgb": [
+                69,
+                69,
+                69
+              ],
+              "maximumChannelError": 45.11887500000262
+            }
+          ],
+          "boundaryPixelCount": 640,
+          "boundaryMeanAbsoluteError": 40.58909134765585,
+          "boundaryRootMeanSquareError": 40.89441290810449,
+          "maximumOutsideGeometryChannel": 0
+        },
+        "C2": {
+          "maximumPerPixelChannelError": 37.66010395312391,
+          "worstPixel": [
+            {
+              "x": 45,
+              "y": 196,
+              "coverage": 0.42250000000000737,
+              "expectedChannel": 31.339896046876092,
+              "observedRgb": [
+                69,
+                69,
+                69
+              ],
+              "maximumChannelError": 37.66010395312391
+            }
+          ],
+          "boundaryPixelCount": 640,
+          "boundaryMeanAbsoluteError": 4.451549317676721,
+          "boundaryRootMeanSquareError": 4.813483472985774,
+          "maximumOutsideGeometryChannel": 0
+        }
+      },
+      "comparison": {
+        "maximumPerPixelDifferenceFromUnmasked": 42,
+        "empiricalPixelCenterClipPredictionMaximumError": 42,
+        "empiricalPixelCenterClipPredictionUnequalPixels": 640,
+        "predictionScope": "Captured unmasked pixels plus independent center inclusion; not admission or an independent color reference."
+      }
+    },
+    {
+      "name": "fractional-translation--normal-white-cover",
+      "variant": "fractional-translation",
+      "mode": "normal-white-cover",
+      "manifestSha256": "7eb7516811c8b56ea378ff7b44842fef15a949891b1be2339810482e554cd303",
+      "pngSha256": "954a0e4b103150786fbe72bbd2dbae7de3118695f5843a489bfcf46034cce4c2",
+      "imageSha256": "61b54f7950e32fd56911e6825578166b092195884d0ca9cdcbe3292098d7776e",
+      "negativeControl": false,
+      "geometry": {
+        "x": 10,
+        "y": 10,
+        "width": 170,
+        "height": 150,
+        "rotation": 0,
+        "opacity": 0.85,
+        "polygon": [
+          [
+            45.349999999999994,
+            46.650000000000006
+          ],
+          [
+            215.35,
+            46.650000000000006
+          ],
+          [
+            215.35,
+            196.65
+          ],
+          [
+            45.349999999999994,
+            196.65
+          ]
+        ],
+        "tracks": [
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-x",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "position.x",
+            "unit": "pixels",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0.35,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-y",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "position.y",
+            "unit": "pixels",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0.65,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-rotation",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "rotation.degrees",
+            "unit": "degrees",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-scale_x",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "scale.x",
+            "unit": "ratio",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 1,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-scale_y",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "scale.y",
+            "unit": "ratio",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 1,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          }
+        ]
+      },
+      "referenceMetrics": {
+        "C1": {
+          "maximumPerPixelChannelError": 61.44862499999944,
+          "worstPixel": [
+            {
+              "x": 215,
+              "y": 69,
+              "coverage": 0.3499999999999968,
+              "expectedChannel": 61.44862499999944,
+              "observedRgb": [
+                0,
+                0,
+                0
+              ],
+              "maximumChannelError": 61.44862499999944
+            }
+          ],
+          "boundaryPixelCount": 640,
+          "boundaryMeanAbsoluteError": 32.79324681640571,
+          "boundaryRootMeanSquareError": 43.50068701088269,
+          "maximumOutsideGeometryChannel": 0
+        },
+        "C2": {
+          "maximumPerPixelChannelError": 78.66010395312391,
+          "worstPixel": [
+            {
+              "x": 45,
+              "y": 196,
+              "coverage": 0.42250000000000737,
+              "expectedChannel": 31.339896046876092,
+              "observedRgb": [
+                110,
+                110,
+                110
+              ],
+              "maximumChannelError": 78.66010395312391
+            }
+          ],
+          "boundaryPixelCount": 640,
+          "boundaryMeanAbsoluteError": 28.64113850717657,
+          "boundaryRootMeanSquareError": 29.620786292334977,
+          "maximumOutsideGeometryChannel": 0
+        }
+      },
+      "comparison": {
+        "maximumPerPixelDifferenceFromUnmasked": 66,
+        "empiricalPixelCenterClipPredictionMaximumError": 1,
+        "empiricalPixelCenterClipPredictionUnequalPixels": 319,
+        "predictionScope": "Captured unmasked pixels plus independent center inclusion; not admission or an independent color reference."
+      }
+    },
+    {
+      "name": "fractional-translation--inverse-empty",
+      "variant": "fractional-translation",
+      "mode": "inverse-empty",
+      "manifestSha256": "d03a4e21f1ea99834885c164853a34df18312bc6804de48e80d49e1b8034fd37",
+      "pngSha256": "954a0e4b103150786fbe72bbd2dbae7de3118695f5843a489bfcf46034cce4c2",
+      "imageSha256": "4342d917e16fcbba852128452258ce7cb3bd64c6c45a9e88ca5ca99d1203b3ee",
+      "negativeControl": false,
+      "geometry": {
+        "x": 10,
+        "y": 10,
+        "width": 170,
+        "height": 150,
+        "rotation": 0,
+        "opacity": 0.85,
+        "polygon": [
+          [
+            45.349999999999994,
+            46.650000000000006
+          ],
+          [
+            215.35,
+            46.650000000000006
+          ],
+          [
+            215.35,
+            196.65
+          ],
+          [
+            45.349999999999994,
+            196.65
+          ]
+        ],
+        "tracks": [
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-x",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "position.x",
+            "unit": "pixels",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0.35,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-y",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "position.y",
+            "unit": "pixels",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0.65,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-rotation",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "rotation.degrees",
+            "unit": "degrees",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-scale_x",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "scale.x",
+            "unit": "ratio",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 1,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-scale_y",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "scale.y",
+            "unit": "ratio",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 1,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          }
+        ]
+      },
+      "referenceMetrics": {
+        "C1": {
+          "maximumPerPixelChannelError": 61.44862499999944,
+          "worstPixel": [
+            {
+              "x": 215,
+              "y": 69,
+              "coverage": 0.3499999999999968,
+              "expectedChannel": 61.44862499999944,
+              "observedRgb": [
+                0,
+                0,
+                0
+              ],
+              "maximumChannelError": 61.44862499999944
+            }
+          ],
+          "boundaryPixelCount": 640,
+          "boundaryMeanAbsoluteError": 32.79324681640571,
+          "boundaryRootMeanSquareError": 43.50068701088269,
+          "maximumOutsideGeometryChannel": 0
+        },
+        "C2": {
+          "maximumPerPixelChannelError": 78.66010395312391,
+          "worstPixel": [
+            {
+              "x": 45,
+              "y": 196,
+              "coverage": 0.42250000000000737,
+              "expectedChannel": 31.339896046876092,
+              "observedRgb": [
+                110,
+                110,
+                110
+              ],
+              "maximumChannelError": 78.66010395312391
+            }
+          ],
+          "boundaryPixelCount": 640,
+          "boundaryMeanAbsoluteError": 28.64113850717657,
+          "boundaryRootMeanSquareError": 29.620786292334977,
+          "maximumOutsideGeometryChannel": 0
+        }
+      },
+      "comparison": {
+        "maximumPerPixelDifferenceFromUnmasked": 66,
+        "empiricalPixelCenterClipPredictionMaximumError": 1,
+        "empiricalPixelCenterClipPredictionUnequalPixels": 319,
+        "predictionScope": "Captured unmasked pixels plus independent center inclusion; not admission or an independent color reference."
+      }
+    },
+    {
+      "name": "small-affine--unmasked",
+      "variant": "small-affine",
+      "mode": "unmasked",
+      "manifestSha256": "7aaa05715cf0aafc87c3dc538740d4e79b8204a492668dfe20fbbb5c1ea06c64",
+      "pngSha256": "d2cf2a8e340cede2f1903f06b32b6d007f5762076a05462912e3727c8d5dd71d",
+      "imageSha256": "61b54f7950e32fd56911e6825578166b092195884d0ca9cdcbe3292098d7776e",
+      "negativeControl": false,
+      "geometry": {
+        "x": 10,
+        "y": 10,
+        "width": 170,
+        "height": 150,
+        "rotation": 0,
+        "opacity": 0.85,
+        "polygon": [
+          [
+            45.51344058525876,
+            45.893296536710125
+          ],
+          [
+            215.64562045114928,
+            46.35726123409859
+          ],
+          [
+            215.23655941474124,
+            196.35670346328988
+          ],
+          [
+            45.10437954885069,
+            195.8927387659014
+          ]
+        ],
+        "tracks": [
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-x",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "position.x",
+            "unit": "pixels",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0.375,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-y",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "position.y",
+            "unit": "pixels",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0.125,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-rotation",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "rotation.degrees",
+            "unit": "degrees",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0.15625,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-scale_x",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "scale.x",
+            "unit": "ratio",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 1.00078125,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-scale_y",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "scale.y",
+            "unit": "ratio",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 1,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          }
+        ]
+      },
+      "referenceMetrics": {
+        "C1": {
+          "maximumPerPixelChannelError": 38.14469231084989,
+          "worstPixel": [
+            {
+              "x": 215,
+              "y": 46,
+              "coverage": 0.4149703543602894,
+              "expectedChannel": 72.85530768915011,
+              "observedRgb": [
+                111,
+                111,
+                111
+              ],
+              "maximumChannelError": 38.14469231084989
+            }
+          ],
+          "boundaryPixelCount": 642,
+          "boundaryMeanAbsoluteError": 1.634469329204441,
+          "boundaryRootMeanSquareError": 2.6864973014207227,
+          "maximumOutsideGeometryChannel": 1
+        },
+        "C2": {
+          "maximumPerPixelChannelError": 80.76720715120547,
+          "worstPixel": [
+            {
+              "x": 215,
+              "y": 46,
+              "coverage": 0.4149703543602894,
+              "expectedChannel": 30.23279284879454,
+              "observedRgb": [
+                111,
+                111,
+                111
+              ],
+              "maximumChannelError": 80.76720715120547
+            }
+          ],
+          "boundaryPixelCount": 642,
+          "boundaryMeanAbsoluteError": 28.91119463387301,
+          "boundaryRootMeanSquareError": 31.97198869805794,
+          "maximumOutsideGeometryChannel": 1
+        }
+      },
+      "comparison": null
+    },
+    {
+      "name": "small-affine--normal-white-local",
+      "variant": "small-affine",
+      "mode": "normal-white-local",
+      "manifestSha256": "0829510db567e2643ec353697a26f490ddebc82cec79cb834e6b7e8870cf689b",
+      "pngSha256": "fc973b632035a8871864c6b90d7f4a3e9254a5718e7f6f84200b055a390ba4b5",
+      "imageSha256": "61b54f7950e32fd56911e6825578166b092195884d0ca9cdcbe3292098d7776e",
+      "negativeControl": false,
+      "geometry": {
+        "x": 10,
+        "y": 10,
+        "width": 170,
+        "height": 150,
+        "rotation": 0,
+        "opacity": 0.85,
+        "polygon": [
+          [
+            45.51344058525876,
+            45.893296536710125
+          ],
+          [
+            215.64562045114928,
+            46.35726123409859
+          ],
+          [
+            215.23655941474124,
+            196.35670346328988
+          ],
+          [
+            45.10437954885069,
+            195.8927387659014
+          ]
+        ],
+        "tracks": [
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-x",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "position.x",
+            "unit": "pixels",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0.375,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-y",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "position.y",
+            "unit": "pixels",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0.125,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-rotation",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "rotation.degrees",
+            "unit": "degrees",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0.15625,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-scale_x",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "scale.x",
+            "unit": "ratio",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 1.00078125,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-scale_y",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "scale.y",
+            "unit": "ratio",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 1,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          }
+        ]
+      },
+      "referenceMetrics": {
+        "C1": {
+          "maximumPerPixelChannelError": 87.62965102440938,
+          "worstPixel": [
+            {
+              "x": 45,
+              "y": 50,
+              "coverage": 0.4991222807433573,
+              "expectedChannel": 87.62965102440938,
+              "observedRgb": [
+                0,
+                0,
+                0
+              ],
+              "maximumChannelError": 87.62965102440938
+            }
+          ],
+          "boundaryPixelCount": 642,
+          "boundaryMeanAbsoluteError": 46.07423238276898,
+          "boundaryRootMeanSquareError": 51.52090131645505,
+          "maximumOutsideGeometryChannel": 0
+        },
+        "C2": {
+          "maximumPerPixelChannelError": 43.73791128004768,
+          "worstPixel": [
+            {
+              "x": 45,
+              "y": 50,
+              "coverage": 0.4991222807433573,
+              "expectedChannel": 43.73791128004768,
+              "observedRgb": [
+                0,
+                0,
+                0
+              ],
+              "maximumChannelError": 43.73791128004768
+            }
+          ],
+          "boundaryPixelCount": 642,
+          "boundaryMeanAbsoluteError": 17.605206905111253,
+          "boundaryRootMeanSquareError": 20.595774859435856,
+          "maximumOutsideGeometryChannel": 0
+        }
+      },
+      "comparison": {
+        "maximumPerPixelDifferenceFromUnmasked": 90,
+        "empiricalPixelCenterClipPredictionMaximumError": 82,
+        "empiricalPixelCenterClipPredictionUnequalPixels": 370,
+        "predictionScope": "Captured unmasked pixels plus independent center inclusion; not admission or an independent color reference."
+      }
+    },
+    {
+      "name": "small-affine--normal-white-cover",
+      "variant": "small-affine",
+      "mode": "normal-white-cover",
+      "manifestSha256": "8a6fad1fcf4d26411cc98808e5c99df760ba5bd62b81117122f9693b661f64c8",
+      "pngSha256": "490bb28ed9e84fa864c0fae8f0b364eeba8efc15f305a80ce5413869ee6f8982",
+      "imageSha256": "61b54f7950e32fd56911e6825578166b092195884d0ca9cdcbe3292098d7776e",
+      "negativeControl": false,
+      "geometry": {
+        "x": 10,
+        "y": 10,
+        "width": 170,
+        "height": 150,
+        "rotation": 0,
+        "opacity": 0.85,
+        "polygon": [
+          [
+            45.51344058525876,
+            45.893296536710125
+          ],
+          [
+            215.64562045114928,
+            46.35726123409859
+          ],
+          [
+            215.23655941474124,
+            196.35670346328988
+          ],
+          [
+            45.10437954885069,
+            195.8927387659014
+          ]
+        ],
+        "tracks": [
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-x",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "position.x",
+            "unit": "pixels",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0.375,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-y",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "position.y",
+            "unit": "pixels",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0.125,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-rotation",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "rotation.degrees",
+            "unit": "degrees",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0.15625,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-scale_x",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "scale.x",
+            "unit": "ratio",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 1.00078125,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-scale_y",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "scale.y",
+            "unit": "ratio",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 1,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          }
+        ]
+      },
+      "referenceMetrics": {
+        "C1": {
+          "maximumPerPixelChannelError": 87.62965102440938,
+          "worstPixel": [
+            {
+              "x": 45,
+              "y": 50,
+              "coverage": 0.4991222807433573,
+              "expectedChannel": 87.62965102440938,
+              "observedRgb": [
+                0,
+                0,
+                0
+              ],
+              "maximumChannelError": 87.62965102440938
+            }
+          ],
+          "boundaryPixelCount": 642,
+          "boundaryMeanAbsoluteError": 34.223014452632654,
+          "boundaryRootMeanSquareError": 39.777896831444146,
+          "maximumOutsideGeometryChannel": 0
+        },
+        "C2": {
+          "maximumPerPixelChannelError": 43.73791128004768,
+          "worstPixel": [
+            {
+              "x": 45,
+              "y": 50,
+              "coverage": 0.4991222807433573,
+              "expectedChannel": 43.73791128004768,
+              "observedRgb": [
+                0,
+                0,
+                0
+              ],
+              "maximumChannelError": 43.73791128004768
+            }
+          ],
+          "boundaryPixelCount": 642,
+          "boundaryMeanAbsoluteError": 6.287405758652709,
+          "boundaryRootMeanSquareError": 11.945034399627884,
+          "maximumOutsideGeometryChannel": 0
+        }
+      },
+      "comparison": {
+        "maximumPerPixelDifferenceFromUnmasked": 90,
+        "empiricalPixelCenterClipPredictionMaximumError": 65,
+        "empiricalPixelCenterClipPredictionUnequalPixels": 367,
+        "predictionScope": "Captured unmasked pixels plus independent center inclusion; not admission or an independent color reference."
+      }
+    },
+    {
+      "name": "small-affine--inverse-empty",
+      "variant": "small-affine",
+      "mode": "inverse-empty",
+      "manifestSha256": "1ebb0456079f5ba6645722c7949bebd657996355a9669a410edcf9156ff01d6a",
+      "pngSha256": "490bb28ed9e84fa864c0fae8f0b364eeba8efc15f305a80ce5413869ee6f8982",
+      "imageSha256": "4342d917e16fcbba852128452258ce7cb3bd64c6c45a9e88ca5ca99d1203b3ee",
+      "negativeControl": false,
+      "geometry": {
+        "x": 10,
+        "y": 10,
+        "width": 170,
+        "height": 150,
+        "rotation": 0,
+        "opacity": 0.85,
+        "polygon": [
+          [
+            45.51344058525876,
+            45.893296536710125
+          ],
+          [
+            215.64562045114928,
+            46.35726123409859
+          ],
+          [
+            215.23655941474124,
+            196.35670346328988
+          ],
+          [
+            45.10437954885069,
+            195.8927387659014
+          ]
+        ],
+        "tracks": [
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-x",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "position.x",
+            "unit": "pixels",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0.375,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-y",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "position.y",
+            "unit": "pixels",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0.125,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-rotation",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "rotation.degrees",
+            "unit": "degrees",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0.15625,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-scale_x",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "scale.x",
+            "unit": "ratio",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 1.00078125,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-scale_y",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "scale.y",
+            "unit": "ratio",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 1,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          }
+        ]
+      },
+      "referenceMetrics": {
+        "C1": {
+          "maximumPerPixelChannelError": 87.62965102440938,
+          "worstPixel": [
+            {
+              "x": 45,
+              "y": 50,
+              "coverage": 0.4991222807433573,
+              "expectedChannel": 87.62965102440938,
+              "observedRgb": [
+                0,
+                0,
+                0
+              ],
+              "maximumChannelError": 87.62965102440938
+            }
+          ],
+          "boundaryPixelCount": 642,
+          "boundaryMeanAbsoluteError": 34.223014452632654,
+          "boundaryRootMeanSquareError": 39.777896831444146,
+          "maximumOutsideGeometryChannel": 0
+        },
+        "C2": {
+          "maximumPerPixelChannelError": 43.73791128004768,
+          "worstPixel": [
+            {
+              "x": 45,
+              "y": 50,
+              "coverage": 0.4991222807433573,
+              "expectedChannel": 43.73791128004768,
+              "observedRgb": [
+                0,
+                0,
+                0
+              ],
+              "maximumChannelError": 43.73791128004768
+            }
+          ],
+          "boundaryPixelCount": 642,
+          "boundaryMeanAbsoluteError": 6.287405758652709,
+          "boundaryRootMeanSquareError": 11.945034399627884,
+          "maximumOutsideGeometryChannel": 0
+        }
+      },
+      "comparison": {
+        "maximumPerPixelDifferenceFromUnmasked": 90,
+        "empiricalPixelCenterClipPredictionMaximumError": 65,
+        "empiricalPixelCenterClipPredictionUnequalPixels": 367,
+        "predictionScope": "Captured unmasked pixels plus independent center inclusion; not admission or an independent color reference."
+      }
+    },
+    {
+      "name": "rotation--unmasked",
+      "variant": "rotation",
+      "mode": "unmasked",
+      "manifestSha256": "f01282404184e39b212ae7daa2ab503d90351b45dbdc9a494894b68c876e0de4",
+      "pngSha256": "fbe695d0e974e8edcdccdbebfb184db464f3ddf0073533610d545fa6e501fa0e",
+      "imageSha256": "61b54f7950e32fd56911e6825578166b092195884d0ca9cdcbe3292098d7776e",
+      "negativeControl": false,
+      "geometry": {
+        "x": 10,
+        "y": 10,
+        "width": 170,
+        "height": 150,
+        "rotation": 0,
+        "opacity": 0.85,
+        "polygon": [
+          [
+            86.45083074895847,
+            37.96643622545503
+          ],
+          [
+            252.73592287370542,
+            73.31142366447412
+          ],
+          [
+            221.54916925104152,
+            220.03356377454497
+          ],
+          [
+            55.264077126294566,
+            184.68857633552588
+          ]
+        ],
+        "tracks": [
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-x",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "position.x",
+            "unit": "pixels",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 24,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-y",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "position.y",
+            "unit": "pixels",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 8,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-rotation",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "rotation.degrees",
+            "unit": "degrees",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 12,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-scale_x",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "scale.x",
+            "unit": "ratio",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 1,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-scale_y",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "scale.y",
+            "unit": "ratio",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 1,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          }
+        ]
+      },
+      "referenceMetrics": {
+        "C1": {
+          "maximumPerPixelChannelError": 28.774628292969368,
+          "worstPixel": [
+            {
+              "x": 252,
+              "y": 73,
+              "coverage": 0.5139070255430569,
+              "expectedChannel": 90.22537170703063,
+              "observedRgb": [
+                119,
+                119,
+                119
+              ],
+              "maximumChannelError": 28.774628292969368
+            }
+          ],
+          "boundaryPixelCount": 758,
+          "boundaryMeanAbsoluteError": 1.5058927027391704,
+          "boundaryRootMeanSquareError": 2.3414048934839466,
+          "maximumOutsideGeometryChannel": 0
+        },
+        "C2": {
+          "maximumPerPixelChannelError": 72.6325475975232,
+          "worstPixel": [
+            {
+              "x": 252,
+              "y": 73,
+              "coverage": 0.5139070255430569,
+              "expectedChannel": 46.36745240247679,
+              "observedRgb": [
+                119,
+                119,
+                119
+              ],
+              "maximumChannelError": 72.6325475975232
+            }
+          ],
+          "boundaryPixelCount": 758,
+          "boundaryMeanAbsoluteError": 24.592546648463806,
+          "boundaryRootMeanSquareError": 29.102993337783783,
+          "maximumOutsideGeometryChannel": 0
+        }
+      },
+      "comparison": null
+    },
+    {
+      "name": "rotation--normal-white-local",
+      "variant": "rotation",
+      "mode": "normal-white-local",
+      "manifestSha256": "c7f1ab907d6169262f12d47b8f89ad883548459edcc221d9345046f0aaeab790",
+      "pngSha256": "31d50aea55b482a610cf58068531860a7e4f5ae97fd8b22a1e1e2f928da80893",
+      "imageSha256": "61b54f7950e32fd56911e6825578166b092195884d0ca9cdcbe3292098d7776e",
+      "negativeControl": false,
+      "geometry": {
+        "x": 10,
+        "y": 10,
+        "width": 170,
+        "height": 150,
+        "rotation": 0,
+        "opacity": 0.85,
+        "polygon": [
+          [
+            86.45083074895847,
+            37.96643622545503
+          ],
+          [
+            252.73592287370542,
+            73.31142366447412
+          ],
+          [
+            221.54916925104152,
+            220.03356377454497
+          ],
+          [
+            55.264077126294566,
+            184.68857633552588
+          ]
+        ],
+        "tracks": [
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-x",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "position.x",
+            "unit": "pixels",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 24,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-y",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "position.y",
+            "unit": "pixels",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 8,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-rotation",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "rotation.degrees",
+            "unit": "degrees",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 12,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-scale_x",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "scale.x",
+            "unit": "ratio",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 1,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-scale_y",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "scale.y",
+            "unit": "ratio",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 1,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          }
+        ]
+      },
+      "referenceMetrics": {
+        "C1": {
+          "maximumPerPixelChannelError": 87.1941810240205,
+          "worstPixel": [
+            {
+              "x": 195,
+              "y": 214,
+              "coverage": 0.49664192418312325,
+              "expectedChannel": 87.1941810240205,
+              "observedRgb": [
+                0,
+                0,
+                0
+              ],
+              "maximumChannelError": 87.1941810240205
+            }
+          ],
+          "boundaryPixelCount": 758,
+          "boundaryMeanAbsoluteError": 39.56723994250618,
+          "boundaryRootMeanSquareError": 47.77669812982112,
+          "maximumOutsideGeometryChannel": 0
+        },
+        "C2": {
+          "maximumPerPixelChannelError": 43.304285841341105,
+          "worstPixel": [
+            {
+              "x": 195,
+              "y": 214,
+              "coverage": 0.49664192418312325,
+              "expectedChannel": 43.304285841341105,
+              "observedRgb": [
+                0,
+                0,
+                0
+              ],
+              "maximumChannelError": 43.304285841341105
+            }
+          ],
+          "boundaryPixelCount": 758,
+          "boundaryMeanAbsoluteError": 15.242696088323262,
+          "boundaryRootMeanSquareError": 19.289612670860876,
+          "maximumOutsideGeometryChannel": 0
+        }
+      },
+      "comparison": {
+        "maximumPerPixelDifferenceFromUnmasked": 87,
+        "empiricalPixelCenterClipPredictionMaximumError": 78,
+        "empiricalPixelCenterClipPredictionUnequalPixels": 324,
+        "predictionScope": "Captured unmasked pixels plus independent center inclusion; not admission or an independent color reference."
+      }
+    },
+    {
+      "name": "rotation--normal-white-cover",
+      "variant": "rotation",
+      "mode": "normal-white-cover",
+      "manifestSha256": "efe4116aff099914e7ac2a61ecd12584d30c9a539a5f8b1a78025440b27d6509",
+      "pngSha256": "158ed38b5e04984a69f51df2c3da951cfd880152303824b23dfac8a8831103db",
+      "imageSha256": "61b54f7950e32fd56911e6825578166b092195884d0ca9cdcbe3292098d7776e",
+      "negativeControl": false,
+      "geometry": {
+        "x": 10,
+        "y": 10,
+        "width": 170,
+        "height": 150,
+        "rotation": 0,
+        "opacity": 0.85,
+        "polygon": [
+          [
+            86.45083074895847,
+            37.96643622545503
+          ],
+          [
+            252.73592287370542,
+            73.31142366447412
+          ],
+          [
+            221.54916925104152,
+            220.03356377454497
+          ],
+          [
+            55.264077126294566,
+            184.68857633552588
+          ]
+        ],
+        "tracks": [
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-x",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "position.x",
+            "unit": "pixels",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 24,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-y",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "position.y",
+            "unit": "pixels",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 8,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-rotation",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "rotation.degrees",
+            "unit": "degrees",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 12,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-scale_x",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "scale.x",
+            "unit": "ratio",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 1,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-scale_y",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "scale.y",
+            "unit": "ratio",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 1,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          }
+        ]
+      },
+      "referenceMetrics": {
+        "C1": {
+          "maximumPerPixelChannelError": 87.1941810240205,
+          "worstPixel": [
+            {
+              "x": 195,
+              "y": 214,
+              "coverage": 0.49664192418312325,
+              "expectedChannel": 87.1941810240205,
+              "observedRgb": [
+                0,
+                0,
+                0
+              ],
+              "maximumChannelError": 87.1941810240205
+            }
+          ],
+          "boundaryPixelCount": 758,
+          "boundaryMeanAbsoluteError": 30.965817094579965,
+          "boundaryRootMeanSquareError": 38.69650370518998,
+          "maximumOutsideGeometryChannel": 0
+        },
+        "C2": {
+          "maximumPerPixelChannelError": 43.304285841341105,
+          "worstPixel": [
+            {
+              "x": 195,
+              "y": 214,
+              "coverage": 0.49664192418312325,
+              "expectedChannel": 43.304285841341105,
+              "observedRgb": [
+                0,
+                0,
+                0
+              ],
+              "maximumChannelError": 43.304285841341105
+            }
+          ],
+          "boundaryPixelCount": 758,
+          "boundaryMeanAbsoluteError": 7.00881846842558,
+          "boundaryRootMeanSquareError": 12.646650893698848,
+          "maximumOutsideGeometryChannel": 0
+        }
+      },
+      "comparison": {
+        "maximumPerPixelDifferenceFromUnmasked": 87,
+        "empiricalPixelCenterClipPredictionMaximumError": 59,
+        "empiricalPixelCenterClipPredictionUnequalPixels": 322,
+        "predictionScope": "Captured unmasked pixels plus independent center inclusion; not admission or an independent color reference."
+      }
+    },
+    {
+      "name": "rotation--inverse-empty",
+      "variant": "rotation",
+      "mode": "inverse-empty",
+      "manifestSha256": "9d9e01aed1ee15187cd95358d6969eca5945506f745b386f5f696bc78cf2c34e",
+      "pngSha256": "158ed38b5e04984a69f51df2c3da951cfd880152303824b23dfac8a8831103db",
+      "imageSha256": "4342d917e16fcbba852128452258ce7cb3bd64c6c45a9e88ca5ca99d1203b3ee",
+      "negativeControl": false,
+      "geometry": {
+        "x": 10,
+        "y": 10,
+        "width": 170,
+        "height": 150,
+        "rotation": 0,
+        "opacity": 0.85,
+        "polygon": [
+          [
+            86.45083074895847,
+            37.96643622545503
+          ],
+          [
+            252.73592287370542,
+            73.31142366447412
+          ],
+          [
+            221.54916925104152,
+            220.03356377454497
+          ],
+          [
+            55.264077126294566,
+            184.68857633552588
+          ]
+        ],
+        "tracks": [
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-x",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "position.x",
+            "unit": "pixels",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 24,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-y",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "position.y",
+            "unit": "pixels",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 8,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-rotation",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "rotation.degrees",
+            "unit": "degrees",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 12,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-scale_x",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "scale.x",
+            "unit": "ratio",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 1,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-scale_y",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "scale.y",
+            "unit": "ratio",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 1,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          }
+        ]
+      },
+      "referenceMetrics": {
+        "C1": {
+          "maximumPerPixelChannelError": 87.1941810240205,
+          "worstPixel": [
+            {
+              "x": 195,
+              "y": 214,
+              "coverage": 0.49664192418312325,
+              "expectedChannel": 87.1941810240205,
+              "observedRgb": [
+                0,
+                0,
+                0
+              ],
+              "maximumChannelError": 87.1941810240205
+            }
+          ],
+          "boundaryPixelCount": 758,
+          "boundaryMeanAbsoluteError": 30.965817094579965,
+          "boundaryRootMeanSquareError": 38.69650370518998,
+          "maximumOutsideGeometryChannel": 0
+        },
+        "C2": {
+          "maximumPerPixelChannelError": 43.304285841341105,
+          "worstPixel": [
+            {
+              "x": 195,
+              "y": 214,
+              "coverage": 0.49664192418312325,
+              "expectedChannel": 43.304285841341105,
+              "observedRgb": [
+                0,
+                0,
+                0
+              ],
+              "maximumChannelError": 43.304285841341105
+            }
+          ],
+          "boundaryPixelCount": 758,
+          "boundaryMeanAbsoluteError": 7.00881846842558,
+          "boundaryRootMeanSquareError": 12.646650893698848,
+          "maximumOutsideGeometryChannel": 0
+        }
+      },
+      "comparison": {
+        "maximumPerPixelDifferenceFromUnmasked": 87,
+        "empiricalPixelCenterClipPredictionMaximumError": 59,
+        "empiricalPixelCenterClipPredictionUnequalPixels": 322,
+        "predictionScope": "Captured unmasked pixels plus independent center inclusion; not admission or an independent color reference."
+      }
+    },
+    {
+      "name": "nonuniform-scale--unmasked",
+      "variant": "nonuniform-scale",
+      "mode": "unmasked",
+      "manifestSha256": "2d1828396e6f2ece33319c322beae140e2f7ae007c076f3bf3c8e754dd0b30f7",
+      "pngSha256": "8cc13b019d03af05c6f905d946e0afd7cb771f782a836551670de65b9e95a7a6",
+      "imageSha256": "61b54f7950e32fd56911e6825578166b092195884d0ca9cdcbe3292098d7776e",
+      "negativeControl": false,
+      "geometry": {
+        "x": 10,
+        "y": 10,
+        "width": 170,
+        "height": 150,
+        "rotation": 0,
+        "opacity": 0.85,
+        "polygon": [
+          [
+            35.14999999999999,
+            59.400000000000006
+          ],
+          [
+            225.55,
+            59.400000000000006
+          ],
+          [
+            225.55,
+            183.9
+          ],
+          [
+            35.14999999999999,
+            183.9
+          ]
+        ],
+        "tracks": [
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-x",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "position.x",
+            "unit": "pixels",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0.35,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-y",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "position.y",
+            "unit": "pixels",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0.65,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-rotation",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "rotation.degrees",
+            "unit": "degrees",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-scale_x",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "scale.x",
+            "unit": "ratio",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 1.12,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-scale_y",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "scale.y",
+            "unit": "ratio",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0.83,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          }
+        ]
+      },
+      "referenceMetrics": {
+        "C1": {
+          "maximumPerPixelChannelError": 41.062724999999354,
+          "worstPixel": [
+            {
+              "x": 225,
+              "y": 59,
+              "coverage": 0.3300000000000037,
+              "expectedChannel": 57.937275000000646,
+              "observedRgb": [
+                99,
+                99,
+                99
+              ],
+              "maximumChannelError": 41.062724999999354
+            }
+          ],
+          "boundaryPixelCount": 628,
+          "boundaryMeanAbsoluteError": 4.47175477706995,
+          "boundaryRootMeanSquareError": 4.936132475699835,
+          "maximumOutsideGeometryChannel": 0
+        },
+        "C2": {
+          "maximumPerPixelChannelError": 79.88069924999957,
+          "worstPixel": [
+            {
+              "x": 225,
+              "y": 59,
+              "coverage": 0.3300000000000037,
+              "expectedChannel": 19.119300750000427,
+              "observedRgb": [
+                99,
+                99,
+                99
+              ],
+              "maximumChannelError": 79.88069924999957
+            }
+          ],
+          "boundaryPixelCount": 628,
+          "boundaryMeanAbsoluteError": 32.64098222631255,
+          "boundaryRootMeanSquareError": 36.22640849942063,
+          "maximumOutsideGeometryChannel": 0
+        }
+      },
+      "comparison": null
+    },
+    {
+      "name": "nonuniform-scale--normal-white-local",
+      "variant": "nonuniform-scale",
+      "mode": "normal-white-local",
+      "manifestSha256": "ba65dbf014e3843488ee3a78fd3d23f2087694813eac5fb8d8a69061dd6e48ef",
+      "pngSha256": "c5d9a4a85ee4060fc44894f97ab64407054a965862064c00a00680668b9fee42",
+      "imageSha256": "61b54f7950e32fd56911e6825578166b092195884d0ca9cdcbe3292098d7776e",
+      "negativeControl": false,
+      "geometry": {
+        "x": 10,
+        "y": 10,
+        "width": 170,
+        "height": 150,
+        "rotation": 0,
+        "opacity": 0.85,
+        "polygon": [
+          [
+            35.14999999999999,
+            59.400000000000006
+          ],
+          [
+            225.55,
+            59.400000000000006
+          ],
+          [
+            225.55,
+            183.9
+          ],
+          [
+            35.14999999999999,
+            183.9
+          ]
+        ],
+        "tracks": [
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-x",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "position.x",
+            "unit": "pixels",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0.35,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-y",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "position.y",
+            "unit": "pixels",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0.65,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-rotation",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "rotation.degrees",
+            "unit": "degrees",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-scale_x",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "scale.x",
+            "unit": "ratio",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 1.12,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-scale_y",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "scale.y",
+            "unit": "ratio",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0.83,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          }
+        ]
+      },
+      "referenceMetrics": {
+        "C1": {
+          "maximumPerPixelChannelError": 41.562125000002,
+          "worstPixel": [
+            {
+              "x": 225,
+              "y": 60,
+              "coverage": 0.5500000000000114,
+              "expectedChannel": 96.562125000002,
+              "observedRgb": [
+                55,
+                55,
+                55
+              ],
+              "maximumChannelError": 41.562125000002
+            }
+          ],
+          "boundaryPixelCount": 628,
+          "boundaryMeanAbsoluteError": 28.879272651274704,
+          "boundaryRootMeanSquareError": 30.6123616655047,
+          "maximumOutsideGeometryChannel": 0
+        },
+        "C2": {
+          "maximumPerPixelChannelError": 35.88069924999957,
+          "worstPixel": [
+            {
+              "x": 225,
+              "y": 59,
+              "coverage": 0.3300000000000037,
+              "expectedChannel": 19.119300750000427,
+              "observedRgb": [
+                55,
+                55,
+                55
+              ],
+              "maximumChannelError": 35.88069924999957
+            }
+          ],
+          "boundaryPixelCount": 628,
+          "boundaryMeanAbsoluteError": 6.0458502995621055,
+          "boundaryRootMeanSquareError": 6.653758569045549,
+          "maximumOutsideGeometryChannel": 0
+        }
+      },
+      "comparison": {
+        "maximumPerPixelDifferenceFromUnmasked": 44,
+        "empiricalPixelCenterClipPredictionMaximumError": 44,
+        "empiricalPixelCenterClipPredictionUnequalPixels": 628,
+        "predictionScope": "Captured unmasked pixels plus independent center inclusion; not admission or an independent color reference."
+      }
+    },
+    {
+      "name": "nonuniform-scale--normal-white-cover",
+      "variant": "nonuniform-scale",
+      "mode": "normal-white-cover",
+      "manifestSha256": "b451672f4b7a8d6e04252d2e1a6834550444a2989e34729d1d8dc59429d9bbff",
+      "pngSha256": "862898d5d449c24e713e5d8f6c664704be2da011e88e19df04e9d5d3b03873d1",
+      "imageSha256": "61b54f7950e32fd56911e6825578166b092195884d0ca9cdcbe3292098d7776e",
+      "negativeControl": false,
+      "geometry": {
+        "x": 10,
+        "y": 10,
+        "width": 170,
+        "height": 150,
+        "rotation": 0,
+        "opacity": 0.85,
+        "polygon": [
+          [
+            35.14999999999999,
+            59.400000000000006
+          ],
+          [
+            225.55,
+            59.400000000000006
+          ],
+          [
+            225.55,
+            183.9
+          ],
+          [
+            35.14999999999999,
+            183.9
+          ]
+        ],
+        "tracks": [
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-x",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "position.x",
+            "unit": "pixels",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0.35,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-y",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "position.y",
+            "unit": "pixels",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0.65,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-rotation",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "rotation.degrees",
+            "unit": "degrees",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-scale_x",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "scale.x",
+            "unit": "ratio",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 1.12,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-scale_y",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "scale.y",
+            "unit": "ratio",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0.83,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          }
+        ]
+      },
+      "referenceMetrics": {
+        "C1": {
+          "maximumPerPixelChannelError": 41.062724999999354,
+          "worstPixel": [
+            {
+              "x": 225,
+              "y": 59,
+              "coverage": 0.3300000000000037,
+              "expectedChannel": 57.937275000000646,
+              "observedRgb": [
+                99,
+                99,
+                99
+              ],
+              "maximumChannelError": 41.062724999999354
+            }
+          ],
+          "boundaryPixelCount": 628,
+          "boundaryMeanAbsoluteError": 4.1692070063693265,
+          "boundaryRootMeanSquareError": 4.603595494490548,
+          "maximumOutsideGeometryChannel": 0
+        },
+        "C2": {
+          "maximumPerPixelChannelError": 79.88069924999957,
+          "worstPixel": [
+            {
+              "x": 225,
+              "y": 59,
+              "coverage": 0.3300000000000037,
+              "expectedChannel": 19.119300750000427,
+              "observedRgb": [
+                99,
+                99,
+                99
+              ],
+              "maximumChannelError": 79.88069924999957
+            }
+          ],
+          "boundaryPixelCount": 628,
+          "boundaryMeanAbsoluteError": 32.3384344556119,
+          "boundaryRootMeanSquareError": 35.82845793871264,
+          "maximumOutsideGeometryChannel": 0
+        }
+      },
+      "comparison": {
+        "maximumPerPixelDifferenceFromUnmasked": 1,
+        "empiricalPixelCenterClipPredictionMaximumError": 1,
+        "empiricalPixelCenterClipPredictionUnequalPixels": 190,
+        "predictionScope": "Captured unmasked pixels plus independent center inclusion; not admission or an independent color reference."
+      }
+    },
+    {
+      "name": "nonuniform-scale--inverse-empty",
+      "variant": "nonuniform-scale",
+      "mode": "inverse-empty",
+      "manifestSha256": "8b45e90fb154aa63789d99acff9b879480f60a2d24fa71d6cff2bfb0f77fea00",
+      "pngSha256": "862898d5d449c24e713e5d8f6c664704be2da011e88e19df04e9d5d3b03873d1",
+      "imageSha256": "4342d917e16fcbba852128452258ce7cb3bd64c6c45a9e88ca5ca99d1203b3ee",
+      "negativeControl": false,
+      "geometry": {
+        "x": 10,
+        "y": 10,
+        "width": 170,
+        "height": 150,
+        "rotation": 0,
+        "opacity": 0.85,
+        "polygon": [
+          [
+            35.14999999999999,
+            59.400000000000006
+          ],
+          [
+            225.55,
+            59.400000000000006
+          ],
+          [
+            225.55,
+            183.9
+          ],
+          [
+            35.14999999999999,
+            183.9
+          ]
+        ],
+        "tracks": [
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-x",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "position.x",
+            "unit": "pixels",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0.35,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-y",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "position.y",
+            "unit": "pixels",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0.65,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-rotation",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "rotation.degrees",
+            "unit": "degrees",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-scale_x",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "scale.x",
+            "unit": "ratio",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 1.12,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-scale_y",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "scale.y",
+            "unit": "ratio",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0.83,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          }
+        ]
+      },
+      "referenceMetrics": {
+        "C1": {
+          "maximumPerPixelChannelError": 41.062724999999354,
+          "worstPixel": [
+            {
+              "x": 225,
+              "y": 59,
+              "coverage": 0.3300000000000037,
+              "expectedChannel": 57.937275000000646,
+              "observedRgb": [
+                99,
+                99,
+                99
+              ],
+              "maximumChannelError": 41.062724999999354
+            }
+          ],
+          "boundaryPixelCount": 628,
+          "boundaryMeanAbsoluteError": 4.1692070063693265,
+          "boundaryRootMeanSquareError": 4.603595494490548,
+          "maximumOutsideGeometryChannel": 0
+        },
+        "C2": {
+          "maximumPerPixelChannelError": 79.88069924999957,
+          "worstPixel": [
+            {
+              "x": 225,
+              "y": 59,
+              "coverage": 0.3300000000000037,
+              "expectedChannel": 19.119300750000427,
+              "observedRgb": [
+                99,
+                99,
+                99
+              ],
+              "maximumChannelError": 79.88069924999957
+            }
+          ],
+          "boundaryPixelCount": 628,
+          "boundaryMeanAbsoluteError": 32.3384344556119,
+          "boundaryRootMeanSquareError": 35.82845793871264,
+          "maximumOutsideGeometryChannel": 0
+        }
+      },
+      "comparison": {
+        "maximumPerPixelDifferenceFromUnmasked": 1,
+        "empiricalPixelCenterClipPredictionMaximumError": 1,
+        "empiricalPixelCenterClipPredictionUnequalPixels": 190,
+        "predictionScope": "Captured unmasked pixels plus independent center inclusion; not admission or an independent color reference."
+      }
+    },
+    {
+      "name": "rotation-scale--unmasked",
+      "variant": "rotation-scale",
+      "mode": "unmasked",
+      "manifestSha256": "1bce79dab62e4aeac9480e0dbb3bc64532f632821247185a3946943b48b36447",
+      "pngSha256": "f0c1874eb69cbd110589f775a084f39f983f871e6d08cbf8fb21f447c9e1b327",
+      "imageSha256": "61b54f7950e32fd56911e6825578166b092195884d0ca9cdcbe3292098d7776e",
+      "negativeControl": false,
+      "geometry": {
+        "x": 10,
+        "y": 10,
+        "width": 170,
+        "height": 150,
+        "rotation": 0,
+        "opacity": 0.85,
+        "polygon": [
+          [
+            53.03748485960443,
+            38.21812657823085
+          ],
+          [
+            237.78179114255417,
+            84.2800555004076
+          ],
+          [
+            207.66251514039553,
+            205.08187342176916
+          ],
+          [
+            22.91820885744579,
+            159.0199444995924
+          ]
+        ],
+        "tracks": [
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-x",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "position.x",
+            "unit": "pixels",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0.35,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-y",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "position.y",
+            "unit": "pixels",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0.65,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-rotation",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "rotation.degrees",
+            "unit": "degrees",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 14,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-scale_x",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "scale.x",
+            "unit": "ratio",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 1.12,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-scale_y",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "scale.y",
+            "unit": "ratio",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0.83,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          }
+        ]
+      },
+      "referenceMetrics": {
+        "C1": {
+          "maximumPerPixelChannelError": 27.149693277259104,
+          "worstPixel": [
+            {
+              "x": 237,
+              "y": 84,
+              "coverage": 0.5744246897788081,
+              "expectedChannel": 100.8503067227409,
+              "observedRgb": [
+                128,
+                128,
+                128
+              ],
+              "maximumChannelError": 27.149693277259104
+            }
+          ],
+          "boundaryPixelCount": 762,
+          "boundaryMeanAbsoluteError": 2.2446610865678562,
+          "boundaryRootMeanSquareError": 2.9844915250970923,
+          "maximumOutsideGeometryChannel": 0
+        },
+        "C2": {
+          "maximumPerPixelChannelError": 70.06909384669191,
+          "worstPixel": [
+            {
+              "x": 237,
+              "y": 84,
+              "coverage": 0.5744246897788081,
+              "expectedChannel": 57.93090615330808,
+              "observedRgb": [
+                128,
+                128,
+                128
+              ],
+              "maximumChannelError": 70.06909384669191
+            }
+          ],
+          "boundaryPixelCount": 762,
+          "boundaryMeanAbsoluteError": 24.84708445381629,
+          "boundaryRootMeanSquareError": 29.581837749606883,
+          "maximumOutsideGeometryChannel": 0
+        }
+      },
+      "comparison": null
+    },
+    {
+      "name": "rotation-scale--normal-white-local",
+      "variant": "rotation-scale",
+      "mode": "normal-white-local",
+      "manifestSha256": "f7337624fa3941e01402e73a74d78cb2f31b4d334bb2c01bdaf61e4583506107",
+      "pngSha256": "b8ae30b0e2f9ceb7c9c321d2db829f6ff93bcd4b54b0d71679bef19e11dc6845",
+      "imageSha256": "61b54f7950e32fd56911e6825578166b092195884d0ca9cdcbe3292098d7776e",
+      "negativeControl": false,
+      "geometry": {
+        "x": 10,
+        "y": 10,
+        "width": 170,
+        "height": 150,
+        "rotation": 0,
+        "opacity": 0.85,
+        "polygon": [
+          [
+            53.03748485960443,
+            38.21812657823085
+          ],
+          [
+            237.78179114255417,
+            84.2800555004076
+          ],
+          [
+            207.66251514039553,
+            205.08187342176916
+          ],
+          [
+            22.91820885744579,
+            159.0199444995924
+          ]
+        ],
+        "tracks": [
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-x",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "position.x",
+            "unit": "pixels",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0.35,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-y",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "position.y",
+            "unit": "pixels",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0.65,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-rotation",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "rotation.degrees",
+            "unit": "degrees",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 14,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-scale_x",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "scale.x",
+            "unit": "ratio",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 1.12,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-scale_y",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "scale.y",
+            "unit": "ratio",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0.83,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          }
+        ]
+      },
+      "referenceMetrics": {
+        "C1": {
+          "maximumPerPixelChannelError": 87.64228119507432,
+          "worstPixel": [
+            {
+              "x": 40,
+              "y": 88,
+              "coverage": 0.49919421985888235,
+              "expectedChannel": 87.64228119507432,
+              "observedRgb": [
+                0,
+                0,
+                0
+              ],
+              "maximumChannelError": 87.64228119507432
+            }
+          ],
+          "boundaryPixelCount": 762,
+          "boundaryMeanAbsoluteError": 37.93604284284072,
+          "boundaryRootMeanSquareError": 46.827510093951,
+          "maximumOutsideGeometryChannel": 0
+        },
+        "C2": {
+          "maximumPerPixelChannelError": 43.750520187827924,
+          "worstPixel": [
+            {
+              "x": 40,
+              "y": 88,
+              "coverage": 0.49919421985888235,
+              "expectedChannel": 43.750520187827924,
+              "observedRgb": [
+                0,
+                0,
+                0
+              ],
+              "maximumChannelError": 43.750520187827924
+            }
+          ],
+          "boundaryPixelCount": 762,
+          "boundaryMeanAbsoluteError": 14.73040924087374,
+          "boundaryRootMeanSquareError": 18.888795135432797,
+          "maximumOutsideGeometryChannel": 0
+        }
+      },
+      "comparison": {
+        "maximumPerPixelDifferenceFromUnmasked": 89,
+        "empiricalPixelCenterClipPredictionMaximumError": 76,
+        "empiricalPixelCenterClipPredictionUnequalPixels": 319,
+        "predictionScope": "Captured unmasked pixels plus independent center inclusion; not admission or an independent color reference."
+      }
+    },
+    {
+      "name": "rotation-scale--normal-white-cover",
+      "variant": "rotation-scale",
+      "mode": "normal-white-cover",
+      "manifestSha256": "10effea0fa62bfef8c1b7a9f10f1364867e1cc20796c944efaa732cded1a3571",
+      "pngSha256": "5641b0a4d22070e738376b536c66e4cbfff07fcc425695b9b7a21934a823693a",
+      "imageSha256": "61b54f7950e32fd56911e6825578166b092195884d0ca9cdcbe3292098d7776e",
+      "negativeControl": false,
+      "geometry": {
+        "x": 10,
+        "y": 10,
+        "width": 170,
+        "height": 150,
+        "rotation": 0,
+        "opacity": 0.85,
+        "polygon": [
+          [
+            53.03748485960443,
+            38.21812657823085
+          ],
+          [
+            237.78179114255417,
+            84.2800555004076
+          ],
+          [
+            207.66251514039553,
+            205.08187342176916
+          ],
+          [
+            22.91820885744579,
+            159.0199444995924
+          ]
+        ],
+        "tracks": [
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-x",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "position.x",
+            "unit": "pixels",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0.35,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-y",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "position.y",
+            "unit": "pixels",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0.65,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-rotation",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "rotation.degrees",
+            "unit": "degrees",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 14,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-scale_x",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "scale.x",
+            "unit": "ratio",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 1.12,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-scale_y",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "scale.y",
+            "unit": "ratio",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0.83,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          }
+        ]
+      },
+      "referenceMetrics": {
+        "C1": {
+          "maximumPerPixelChannelError": 87.64228119507432,
+          "worstPixel": [
+            {
+              "x": 40,
+              "y": 88,
+              "coverage": 0.49919421985888235,
+              "expectedChannel": 87.64228119507432,
+              "observedRgb": [
+                0,
+                0,
+                0
+              ],
+              "maximumChannelError": 87.64228119507432
+            }
+          ],
+          "boundaryPixelCount": 762,
+          "boundaryMeanAbsoluteError": 29.99996365175955,
+          "boundaryRootMeanSquareError": 38.2300454951987,
+          "maximumOutsideGeometryChannel": 0
+        },
+        "C2": {
+          "maximumPerPixelChannelError": 43.750520187827924,
+          "worstPixel": [
+            {
+              "x": 40,
+              "y": 88,
+              "coverage": 0.49919421985888235,
+              "expectedChannel": 43.750520187827924,
+              "observedRgb": [
+                0,
+                0,
+                0
+              ],
+              "maximumChannelError": 43.750520187827924
+            }
+          ],
+          "boundaryPixelCount": 762,
+          "boundaryMeanAbsoluteError": 7.3522914404678295,
+          "boundaryRootMeanSquareError": 13.077647694343078,
+          "maximumOutsideGeometryChannel": 0
+        }
+      },
+      "comparison": {
+        "maximumPerPixelDifferenceFromUnmasked": 89,
+        "empiricalPixelCenterClipPredictionMaximumError": 56,
+        "empiricalPixelCenterClipPredictionUnequalPixels": 319,
+        "predictionScope": "Captured unmasked pixels plus independent center inclusion; not admission or an independent color reference."
+      }
+    },
+    {
+      "name": "rotation-scale--inverse-empty",
+      "variant": "rotation-scale",
+      "mode": "inverse-empty",
+      "manifestSha256": "445e11b921909a4f69387cb82afbdd9ca4489e5b9885179ec451ac3e3f86b57e",
+      "pngSha256": "5641b0a4d22070e738376b536c66e4cbfff07fcc425695b9b7a21934a823693a",
+      "imageSha256": "4342d917e16fcbba852128452258ce7cb3bd64c6c45a9e88ca5ca99d1203b3ee",
+      "negativeControl": false,
+      "geometry": {
+        "x": 10,
+        "y": 10,
+        "width": 170,
+        "height": 150,
+        "rotation": 0,
+        "opacity": 0.85,
+        "polygon": [
+          [
+            53.03748485960443,
+            38.21812657823085
+          ],
+          [
+            237.78179114255417,
+            84.2800555004076
+          ],
+          [
+            207.66251514039553,
+            205.08187342176916
+          ],
+          [
+            22.91820885744579,
+            159.0199444995924
+          ]
+        ],
+        "tracks": [
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-x",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "position.x",
+            "unit": "pixels",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0.35,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-y",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "position.y",
+            "unit": "pixels",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0.65,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-rotation",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "rotation.degrees",
+            "unit": "degrees",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 14,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-scale_x",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "scale.x",
+            "unit": "ratio",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 1.12,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-scale_y",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "scale.y",
+            "unit": "ratio",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 0.83,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          }
+        ]
+      },
+      "referenceMetrics": {
+        "C1": {
+          "maximumPerPixelChannelError": 87.64228119507432,
+          "worstPixel": [
+            {
+              "x": 40,
+              "y": 88,
+              "coverage": 0.49919421985888235,
+              "expectedChannel": 87.64228119507432,
+              "observedRgb": [
+                0,
+                0,
+                0
+              ],
+              "maximumChannelError": 87.64228119507432
+            }
+          ],
+          "boundaryPixelCount": 762,
+          "boundaryMeanAbsoluteError": 29.99996365175955,
+          "boundaryRootMeanSquareError": 38.2300454951987,
+          "maximumOutsideGeometryChannel": 0
+        },
+        "C2": {
+          "maximumPerPixelChannelError": 43.750520187827924,
+          "worstPixel": [
+            {
+              "x": 40,
+              "y": 88,
+              "coverage": 0.49919421985888235,
+              "expectedChannel": 43.750520187827924,
+              "observedRgb": [
+                0,
+                0,
+                0
+              ],
+              "maximumChannelError": 43.750520187827924
+            }
+          ],
+          "boundaryPixelCount": 762,
+          "boundaryMeanAbsoluteError": 7.3522914404678295,
+          "boundaryRootMeanSquareError": 13.077647694343078,
+          "maximumOutsideGeometryChannel": 0
+        }
+      },
+      "comparison": {
+        "maximumPerPixelDifferenceFromUnmasked": 89,
+        "empiricalPixelCenterClipPredictionMaximumError": 56,
+        "empiricalPixelCenterClipPredictionUnequalPixels": 319,
+        "predictionScope": "Captured unmasked pixels plus independent center inclusion; not admission or an independent color reference."
+      }
+    },
+    {
+      "name": "parented-hold--unmasked",
+      "variant": "parented-hold",
+      "mode": "unmasked",
+      "manifestSha256": "35f2da3932ebbe9a4df5913d6d4aac202ece2a3ecb639a9ba67eac1fa8a9d1fe",
+      "pngSha256": "2591ec9fbae3f50e987b034997282c4178e181117f21b9bac62b706c83271179",
+      "imageSha256": "61b54f7950e32fd56911e6825578166b092195884d0ca9cdcbe3292098d7776e",
+      "negativeControl": false,
+      "geometry": {
+        "x": 10,
+        "y": 10,
+        "width": 170,
+        "height": 150,
+        "rotation": 0,
+        "opacity": 0.85,
+        "polygon": [
+          [
+            175.32080726084166,
+            41.15534597846053
+          ],
+          [
+            354.69729490155555,
+            75.16363829023084
+          ],
+          [
+            318.7795809839275,
+            230.0782240946837
+          ],
+          [
+            139.40309334321358,
+            196.06993178291341
+          ]
+        ],
+        "tracks": [
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-x",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "position.x",
+            "unit": "pixels",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 24,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-y",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "position.y",
+            "unit": "pixels",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 8,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-rotation",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "rotation.degrees",
+            "unit": "degrees",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 10,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-scale_x",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "scale.x",
+            "unit": "ratio",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 1.05,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-scale_y",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "scale.y",
+            "unit": "ratio",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 1,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          }
+        ]
+      },
+      "referenceMetrics": {
+        "C1": {
+          "maximumPerPixelChannelError": 26.436703486192144,
+          "worstPixel": [
+            {
+              "x": 175,
+              "y": 41,
+              "coverage": 0.6126606377251362,
+              "expectedChannel": 107.56329651380786,
+              "observedRgb": [
+                134,
+                134,
+                134
+              ],
+              "maximumChannelError": 26.436703486192144
+            }
+          ],
+          "boundaryPixelCount": 582,
+          "boundaryMeanAbsoluteError": 1.6194450404762906,
+          "boundaryRootMeanSquareError": 2.268848395731863,
+          "maximumOutsideGeometryChannel": 0
+        },
+        "C2": {
+          "maximumPerPixelChannelError": 68.10020216203256,
+          "worstPixel": [
+            {
+              "x": 175,
+              "y": 41,
+              "coverage": 0.6126606377251362,
+              "expectedChannel": 65.89979783796744,
+              "observedRgb": [
+                134,
+                134,
+                134
+              ],
+              "maximumChannelError": 68.10020216203256
+            }
+          ],
+          "boundaryPixelCount": 582,
+          "boundaryMeanAbsoluteError": 25.588654493108116,
+          "boundaryRootMeanSquareError": 29.99535790724367,
+          "maximumOutsideGeometryChannel": 0
+        }
+      },
+      "comparison": null
+    },
+    {
+      "name": "parented-hold--normal-white-local",
+      "variant": "parented-hold",
+      "mode": "normal-white-local",
+      "manifestSha256": "79095428d0364f16cc71ab64368869eb8ce5ef9ba782eb6ae0ca75eeb18d60a2",
+      "pngSha256": "34832b860d2c3817722eaa43731dbdb702f970c01de9900fad8a602424b9800e",
+      "imageSha256": "61b54f7950e32fd56911e6825578166b092195884d0ca9cdcbe3292098d7776e",
+      "negativeControl": false,
+      "geometry": {
+        "x": 10,
+        "y": 10,
+        "width": 170,
+        "height": 150,
+        "rotation": 0,
+        "opacity": 0.85,
+        "polygon": [
+          [
+            175.32080726084166,
+            41.15534597846053
+          ],
+          [
+            354.69729490155555,
+            75.16363829023084
+          ],
+          [
+            318.7795809839275,
+            230.0782240946837
+          ],
+          [
+            139.40309334321358,
+            196.06993178291341
+          ]
+        ],
+        "tracks": [
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-x",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "position.x",
+            "unit": "pixels",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 24,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-y",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "position.y",
+            "unit": "pixels",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 8,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-rotation",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "rotation.degrees",
+            "unit": "degrees",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 10,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-scale_x",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "scale.x",
+            "unit": "ratio",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 1.05,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-scale_y",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "scale.y",
+            "unit": "ratio",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 1,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          }
+        ]
+      },
+      "referenceMetrics": {
+        "C1": {
+          "maximumPerPixelChannelError": 87.30502841177601,
+          "worstPixel": [
+            {
+              "x": 215,
+              "y": 210,
+              "coverage": 0.4972732903970041,
+              "expectedChannel": 87.30502841177601,
+              "observedRgb": [
+                0,
+                0,
+                0
+              ],
+              "maximumChannelError": 87.30502841177601
+            }
+          ],
+          "boundaryPixelCount": 582,
+          "boundaryMeanAbsoluteError": 39.63270796429915,
+          "boundaryRootMeanSquareError": 47.76143062359923,
+          "maximumOutsideGeometryChannel": 0
+        },
+        "C2": {
+          "maximumPerPixelChannelError": 43.414458746527785,
+          "worstPixel": [
+            {
+              "x": 215,
+              "y": 210,
+              "coverage": 0.4972732903970041,
+              "expectedChannel": 43.414458746527785,
+              "observedRgb": [
+                0,
+                0,
+                0
+              ],
+              "maximumChannelError": 43.414458746527785
+            }
+          ],
+          "boundaryPixelCount": 582,
+          "boundaryMeanAbsoluteError": 15.155236354145673,
+          "boundaryRootMeanSquareError": 19.12706005004154,
+          "maximumOutsideGeometryChannel": 0
+        }
+      },
+      "comparison": {
+        "maximumPerPixelDifferenceFromUnmasked": 88,
+        "empiricalPixelCenterClipPredictionMaximumError": 72,
+        "empiricalPixelCenterClipPredictionUnequalPixels": 247,
+        "predictionScope": "Captured unmasked pixels plus independent center inclusion; not admission or an independent color reference."
+      }
+    },
+    {
+      "name": "parented-hold--normal-white-cover",
+      "variant": "parented-hold",
+      "mode": "normal-white-cover",
+      "manifestSha256": "ef0935e73a541e6ae3d4ba971e2d283ffc0722bf2fc6bd490b7384369f2b9758",
+      "pngSha256": "52cd9e2b939a171421492dce69843dc909f276d5dd62c228b094ccb4c06ef92f",
+      "imageSha256": "61b54f7950e32fd56911e6825578166b092195884d0ca9cdcbe3292098d7776e",
+      "negativeControl": false,
+      "geometry": {
+        "x": 10,
+        "y": 10,
+        "width": 170,
+        "height": 150,
+        "rotation": 0,
+        "opacity": 0.85,
+        "polygon": [
+          [
+            175.32080726084166,
+            41.15534597846053
+          ],
+          [
+            354.69729490155555,
+            75.16363829023084
+          ],
+          [
+            318.7795809839275,
+            230.0782240946837
+          ],
+          [
+            139.40309334321358,
+            196.06993178291341
+          ]
+        ],
+        "tracks": [
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-x",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "position.x",
+            "unit": "pixels",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 24,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-y",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "position.y",
+            "unit": "pixels",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 8,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-rotation",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "rotation.degrees",
+            "unit": "degrees",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 10,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-scale_x",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "scale.x",
+            "unit": "ratio",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 1.05,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-scale_y",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "scale.y",
+            "unit": "ratio",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 1,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          }
+        ]
+      },
+      "referenceMetrics": {
+        "C1": {
+          "maximumPerPixelChannelError": 87.30502841177601,
+          "worstPixel": [
+            {
+              "x": 215,
+              "y": 210,
+              "coverage": 0.4972732903970041,
+              "expectedChannel": 87.30502841177601,
+              "observedRgb": [
+                0,
+                0,
+                0
+              ],
+              "maximumChannelError": 87.30502841177601
+            }
+          ],
+          "boundaryPixelCount": 582,
+          "boundaryMeanAbsoluteError": 31.10875118904618,
+          "boundaryRootMeanSquareError": 38.88853696616858,
+          "maximumOutsideGeometryChannel": 0
+        },
+        "C2": {
+          "maximumPerPixelChannelError": 43.414458746527785,
+          "worstPixel": [
+            {
+              "x": 215,
+              "y": 210,
+              "coverage": 0.4972732903970041,
+              "expectedChannel": 43.414458746527785,
+              "observedRgb": [
+                0,
+                0,
+                0
+              ],
+              "maximumChannelError": 43.414458746527785
+            }
+          ],
+          "boundaryPixelCount": 582,
+          "boundaryMeanAbsoluteError": 6.959958786619177,
+          "boundaryRootMeanSquareError": 12.866883441168145,
+          "maximumOutsideGeometryChannel": 0
+        }
+      },
+      "comparison": {
+        "maximumPerPixelDifferenceFromUnmasked": 88,
+        "empiricalPixelCenterClipPredictionMaximumError": 53,
+        "empiricalPixelCenterClipPredictionUnequalPixels": 245,
+        "predictionScope": "Captured unmasked pixels plus independent center inclusion; not admission or an independent color reference."
+      }
+    },
+    {
+      "name": "parented-hold--inverse-empty",
+      "variant": "parented-hold",
+      "mode": "inverse-empty",
+      "manifestSha256": "09322dc5e76d043b95d230bae68e08f47976bd2dfd16be2f5baf9113c00d0d86",
+      "pngSha256": "52cd9e2b939a171421492dce69843dc909f276d5dd62c228b094ccb4c06ef92f",
+      "imageSha256": "4342d917e16fcbba852128452258ce7cb3bd64c6c45a9e88ca5ca99d1203b3ee",
+      "negativeControl": false,
+      "geometry": {
+        "x": 10,
+        "y": 10,
+        "width": 170,
+        "height": 150,
+        "rotation": 0,
+        "opacity": 0.85,
+        "polygon": [
+          [
+            175.32080726084166,
+            41.15534597846053
+          ],
+          [
+            354.69729490155555,
+            75.16363829023084
+          ],
+          [
+            318.7795809839275,
+            230.0782240946837
+          ],
+          [
+            139.40309334321358,
+            196.06993178291341
+          ]
+        ],
+        "tracks": [
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-x",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "position.x",
+            "unit": "pixels",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 24,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-y",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "position.y",
+            "unit": "pixels",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 8,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-rotation",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "rotation.degrees",
+            "unit": "degrees",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 10,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-scale_x",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "scale.x",
+            "unit": "ratio",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 1.05,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          },
+          {
+            "sourceTrackId": "ed2-dc4fb9af60c130fbb12fd888-recipe-scale_y",
+            "targetLayerId": "ed2-dc4fb9af60c130fbb12fd888",
+            "propertyPath": "scale.y",
+            "unit": "ratio",
+            "keyframes": [
+              {
+                "frame": 0,
+                "value": 1,
+                "easing": "linear",
+                "cubicBezier": null
+              }
+            ]
+          }
+        ]
+      },
+      "referenceMetrics": {
+        "C1": {
+          "maximumPerPixelChannelError": 87.30502841177601,
+          "worstPixel": [
+            {
+              "x": 215,
+              "y": 210,
+              "coverage": 0.4972732903970041,
+              "expectedChannel": 87.30502841177601,
+              "observedRgb": [
+                0,
+                0,
+                0
+              ],
+              "maximumChannelError": 87.30502841177601
+            }
+          ],
+          "boundaryPixelCount": 582,
+          "boundaryMeanAbsoluteError": 31.10875118904618,
+          "boundaryRootMeanSquareError": 38.88853696616858,
+          "maximumOutsideGeometryChannel": 0
+        },
+        "C2": {
+          "maximumPerPixelChannelError": 43.414458746527785,
+          "worstPixel": [
+            {
+              "x": 215,
+              "y": 210,
+              "coverage": 0.4972732903970041,
+              "expectedChannel": 43.414458746527785,
+              "observedRgb": [
+                0,
+                0,
+                0
+              ],
+              "maximumChannelError": 43.414458746527785
+            }
+          ],
+          "boundaryPixelCount": 582,
+          "boundaryMeanAbsoluteError": 6.959958786619177,
+          "boundaryRootMeanSquareError": 12.866883441168145,
+          "maximumOutsideGeometryChannel": 0
+        }
+      },
+      "comparison": {
+        "maximumPerPixelDifferenceFromUnmasked": 88,
+        "empiricalPixelCenterClipPredictionMaximumError": 53,
+        "empiricalPixelCenterClipPredictionUnequalPixels": 245,
+        "predictionScope": "Captured unmasked pixels plus independent center inclusion; not admission or an independent color reference."
+      }
+    }
+  ]
+}

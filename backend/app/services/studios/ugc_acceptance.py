@@ -5,6 +5,7 @@ import io
 import json
 import shutil
 import subprocess
+import tempfile
 import zipfile
 from datetime import UTC, datetime
 from pathlib import Path
@@ -33,8 +34,7 @@ from ...domain.studios.ugc_acceptance import (
     UgcCapabilityGateV1,
     UgcCriterionResultV1,
 )
-from ..creatives import render_creative
-from .compatibility import composition_page_to_canvas
+from ...providers.studios.craft import call_engine
 
 AVATAR_COLORS = {
     "lia": ("#ff8f70", "#3f1710"),
@@ -707,7 +707,7 @@ def build_ad_document(
         ),
         lineage=[
             ProviderLineageV1(
-                provider="clicko.canonical-static-compositor",
+                provider="craft.photocraft",
                 model=None,
                 provider_version="ugc-acceptance-v1",
                 parameters={"avatarMode": "catalog-placeholder", "publicationEnabled": False},
@@ -720,10 +720,35 @@ def build_ad_document(
 
 
 def _render_document(document: CreativeDocumentV1) -> list[Image.Image]:
-    return [
-        render_creative(composition_page_to_canvas(document, index), {})
-        for index in range(len(document.composition.pages))
-    ]
+    images = []
+    for page in document.composition.pages:
+        with tempfile.TemporaryDirectory(prefix="craft-ugc-validation-") as directory:
+            root = Path(directory).resolve()
+            native = root / "project.pcraft"
+            output = root / "preview.png"
+            legacy = document.model_dump(by_alias=True, mode="json")
+            legacy["composition"]["pages"] = [page.model_dump(by_alias=True, mode="json")]
+            created = call_engine(
+                "photocraft",
+                "project.new",
+                {
+                    "mediaRoot": str(root),
+                    "outputPath": str(native),
+                    "width": page.width,
+                    "height": page.height,
+                    "legacyDocument": legacy,
+                },
+            )
+            if created.get("warnings"):
+                raise ValueError("ugc_native_conversion_requires_review:" + ";".join(created["warnings"]))
+            call_engine(
+                "photocraft",
+                "render.frame",
+                {"mediaRoot": str(root), "nativePath": str(native), "outputPath": str(output)},
+            )
+            with Image.open(output) as image:
+                images.append(image.convert("RGBA").copy())
+    return images
 
 
 def _artifact(

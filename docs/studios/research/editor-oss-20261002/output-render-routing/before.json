@@ -1,0 +1,6 @@
+{
+  "source": "src\\studios\\useVideoStudio.ts",
+  "sha256": "bcd4dbbadc3990fef94498cef83a4a87ce0d17d001e6188e565d1b5447a6d857",
+  "backup": "docs\\studios\\research\\editor-oss-20261002\\output-render-routing\\useVideoStudio.before.ts",
+  "reason": "Output action routes contextual documents to UGC; preserve original bytes before routing repair"
+}

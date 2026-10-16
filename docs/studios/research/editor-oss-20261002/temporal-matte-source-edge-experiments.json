@@ -1,0 +1,757 @@
+{
+  "scope": "temporary_actual_API_inverse_operator_experiments",
+  "productionAdmission": "pending",
+  "providerAfterExperiments": "4.0.527-native.13",
+  "humanReview": "pending",
+  "originalOracleChanged": false,
+  "tolerance": 8,
+  "phases": [
+    {
+      "name": "composite-inverse",
+      "testCount": 3,
+      "run": {
+        "exitCode": 1,
+        "originalBytesRestored": true,
+        "conflictingConcurrentEdits": [],
+        "productionProviderAfterExperiment": "4.0.527-native.13",
+        "productionCombinedAdmission": "pending"
+      },
+      "tests": [
+        {
+          "name": "test_temporal_matte_actual_api_pixels[child-external-alpha-True]",
+          "failed": true,
+          "errored": false,
+          "skipped": false
+        },
+        {
+          "name": "test_temporal_matte_actual_api_pixels[rig-external-alpha-False]",
+          "failed": false,
+          "errored": false,
+          "skipped": false
+        },
+        {
+          "name": "test_temporal_matte_actual_api_pixels[rig-external-luminance-True]",
+          "failed": true,
+          "errored": false,
+          "skipped": false
+        }
+      ],
+      "records": [
+        {
+          "variant": "child-external-alpha-inverted",
+          "measurementStatus": "failed",
+          "qc": "passed",
+          "maximumChannelError": 12.26008789062503,
+          "maximumMatrixError": 0.00015526993207970463,
+          "failures": [
+            [
+              "pixel",
+              0,
+              214,
+              96,
+              12.26008789062503
+            ],
+            [
+              "pixel",
+              4,
+              142,
+              198,
+              11.56750000000008
+            ],
+            [
+              "pixel",
+              10,
+              192,
+              204,
+              8.817499999999995
+            ],
+            [
+              "pixel",
+              15,
+              192,
+              204,
+              8.817499999999995
+            ]
+          ],
+          "failedPixelChecks": [
+            {
+              "frame": 0,
+              "x": 214,
+              "y": 96,
+              "expectedChannel": 122.76008789062503,
+              "observedRgb": [
+                110.5,
+                110.5,
+                110.5
+              ],
+              "maximumChannelError": 12.26008789062503
+            },
+            {
+              "frame": 4,
+              "x": 142,
+              "y": 198,
+              "expectedChannel": 175.56750000000008,
+              "observedRgb": [
+                164.0,
+                164.0,
+                164.0
+              ],
+              "maximumChannelError": 11.56750000000008
+            },
+            {
+              "frame": 10,
+              "x": 192,
+              "y": 204,
+              "expectedChannel": 175.5675,
+              "observedRgb": [
+                166.75,
+                166.75,
+                166.75
+              ],
+              "maximumChannelError": 8.817499999999995
+            },
+            {
+              "frame": 15,
+              "x": 192,
+              "y": 204,
+              "expectedChannel": 175.5675,
+              "observedRgb": [
+                166.75,
+                166.75,
+                166.75
+              ],
+              "maximumChannelError": 8.817499999999995
+            }
+          ],
+          "pixelProbeCount": 168,
+          "videoSha256": "b7afbd3faf0f2f9fa7b99a19dc439be6bb5e6367fc0ed78fd9c00c13e48fa23c",
+          "evidenceSha256": "31118d323aa57eb95d53bd6c82f6eff731c08ca1f0ec8b33a27fa1763d76c3d7"
+        },
+        {
+          "variant": "rig-external-alpha-normal",
+          "measurementStatus": "passed",
+          "qc": "passed",
+          "maximumChannelError": 6.243281249999882,
+          "maximumMatrixError": 0.00012884263594514778,
+          "failures": [],
+          "failedPixelChecks": [],
+          "pixelProbeCount": 168,
+          "videoSha256": "8c84502252aff9a3d61381e2f6ab35ce5628ac0f87ce796e607e5168c5335554",
+          "evidenceSha256": "0e5acdb3b69ac0fd9dbd92d561bfbf97b87491745884cdce598ebac569290ef0"
+        },
+        {
+          "variant": "rig-external-luminance-inverted",
+          "measurementStatus": "failed",
+          "qc": "passed",
+          "maximumChannelError": 8.817499999999995,
+          "maximumMatrixError": 0.00012884263594514778,
+          "failures": [
+            [
+              "pixel",
+              10,
+              192,
+              204,
+              8.817499999999995
+            ],
+            [
+              "pixel",
+              15,
+              192,
+              204,
+              8.817499999999995
+            ]
+          ],
+          "failedPixelChecks": [
+            {
+              "frame": 10,
+              "x": 192,
+              "y": 204,
+              "expectedChannel": 175.5675,
+              "observedRgb": [
+                166.75,
+                166.75,
+                166.75
+              ],
+              "maximumChannelError": 8.817499999999995
+            },
+            {
+              "frame": 15,
+              "x": 192,
+              "y": 204,
+              "expectedChannel": 175.5675,
+              "observedRgb": [
+                166.75,
+                166.75,
+                166.75
+              ],
+              "maximumChannelError": 8.817499999999995
+            }
+          ],
+          "pixelProbeCount": 168,
+          "videoSha256": "1e9a403aab02fcc31812efedf084491962e2a559b9720f1eba9e39d5cc066652",
+          "evidenceSha256": "68ff070e86373177ae930bb6a881ef98cbeba11316636d64e05b2c120c5a1710"
+        }
+      ]
+    },
+    {
+      "name": "target-inverse",
+      "testCount": 3,
+      "run": {
+        "exitCode": 1,
+        "originalBytesRestored": true,
+        "conflictingConcurrentEdits": [],
+        "productionProviderAfterExperiment": "4.0.527-native.13",
+        "productionCombinedAdmission": "pending"
+      },
+      "tests": [
+        {
+          "name": "test_temporal_matte_actual_api_pixels[child-external-alpha-True]",
+          "failed": true,
+          "errored": false,
+          "skipped": false
+        },
+        {
+          "name": "test_temporal_matte_actual_api_pixels[rig-external-alpha-False]",
+          "failed": false,
+          "errored": false,
+          "skipped": false
+        },
+        {
+          "name": "test_temporal_matte_actual_api_pixels[rig-external-luminance-True]",
+          "failed": true,
+          "errored": false,
+          "skipped": false
+        }
+      ],
+      "records": [
+        {
+          "variant": "child-external-alpha-inverted",
+          "measurementStatus": "failed",
+          "qc": "passed",
+          "maximumChannelError": 10.773000000000124,
+          "maximumMatrixError": 0.00015526993207970463,
+          "failures": [
+            [
+              "pixel",
+              0,
+              98,
+              94,
+              8.06750000000008
+            ],
+            [
+              "pixel",
+              0,
+              100,
+              94,
+              10.773000000000124
+            ],
+            [
+              "pixel",
+              0,
+              178,
+              94,
+              9.773000000000124
+            ],
+            [
+              "pixel",
+              0,
+              180,
+              94,
+              8.56750000000008
+            ],
+            [
+              "pixel",
+              8,
+              208,
+              94,
+              9.326020507812519
+            ],
+            [
+              "pixel",
+              10,
+              208,
+              94,
+              9.326020507812515
+            ],
+            [
+              "pixel",
+              15,
+              208,
+              94,
+              9.326020507812515
+            ]
+          ],
+          "failedPixelChecks": [
+            {
+              "frame": 0,
+              "x": 98,
+              "y": 94,
+              "expectedChannel": 175.56750000000008,
+              "observedRgb": [
+                167.5,
+                167.5,
+                167.5
+              ],
+              "maximumChannelError": 8.06750000000008
+            },
+            {
+              "frame": 0,
+              "x": 100,
+              "y": 94,
+              "expectedChannel": 70.22699999999988,
+              "observedRgb": [
+                81.0,
+                81.0,
+                81.0
+              ],
+              "maximumChannelError": 10.773000000000124
+            },
+            {
+              "frame": 0,
+              "x": 178,
+              "y": 94,
+              "expectedChannel": 70.22699999999988,
+              "observedRgb": [
+                80.0,
+                80.0,
+                80.0
+              ],
+              "maximumChannelError": 9.773000000000124
+            },
+            {
+              "frame": 0,
+              "x": 180,
+              "y": 94,
+              "expectedChannel": 175.56750000000008,
+              "observedRgb": [
+                167.0,
+                167.0,
+                167.0
+              ],
+              "maximumChannelError": 8.56750000000008
+            },
+            {
+              "frame": 8,
+              "x": 208,
+              "y": 94,
+              "expectedChannel": 18.17397949218748,
+              "observedRgb": [
+                27.5,
+                27.5,
+                27.5
+              ],
+              "maximumChannelError": 9.326020507812519
+            },
+            {
+              "frame": 10,
+              "x": 208,
+              "y": 94,
+              "expectedChannel": 18.173979492187485,
+              "observedRgb": [
+                27.5,
+                27.5,
+                27.5
+              ],
+              "maximumChannelError": 9.326020507812515
+            },
+            {
+              "frame": 15,
+              "x": 208,
+              "y": 94,
+              "expectedChannel": 18.173979492187485,
+              "observedRgb": [
+                27.5,
+                27.5,
+                27.5
+              ],
+              "maximumChannelError": 9.326020507812515
+            }
+          ],
+          "pixelProbeCount": 168,
+          "videoSha256": "14d26f8e10b494e38c6a26cad07d1b495d84c2e84baa644b1e1ef37f3a601696",
+          "evidenceSha256": "7f7f46158be2633a6a3c3b0d3ce9660a3877e10618ffdcc9d2b8b4466416ea33"
+        },
+        {
+          "variant": "rig-external-alpha-normal",
+          "measurementStatus": "passed",
+          "qc": "passed",
+          "maximumChannelError": 6.243281249999882,
+          "maximumMatrixError": 0.00012884263594514778,
+          "failures": [],
+          "failedPixelChecks": [],
+          "pixelProbeCount": 168,
+          "videoSha256": "8c84502252aff9a3d61381e2f6ab35ce5628ac0f87ce796e607e5168c5335554",
+          "evidenceSha256": "b9800b71ea15be87dbdd06094afdb75beda69e6095e46bbb58933f4beec35cb4"
+        },
+        {
+          "variant": "rig-external-luminance-inverted",
+          "measurementStatus": "failed",
+          "qc": "passed",
+          "maximumChannelError": 8.773000000000096,
+          "maximumMatrixError": 0.00012884263594514778,
+          "failures": [
+            [
+              "pixel",
+              0,
+              100,
+              94,
+              8.773000000000096
+            ],
+            [
+              "pixel",
+              4,
+              110,
+              100,
+              8.267785644531216
+            ]
+          ],
+          "failedPixelChecks": [
+            {
+              "frame": 0,
+              "x": 100,
+              "y": 94,
+              "expectedChannel": 70.2269999999999,
+              "observedRgb": [
+                79.0,
+                79.0,
+                79.0
+              ],
+              "maximumChannelError": 8.773000000000096
+            },
+            {
+              "frame": 4,
+              "x": 110,
+              "y": 100,
+              "expectedChannel": 127.73221435546878,
+              "observedRgb": [
+                136.0,
+                136.0,
+                136.0
+              ],
+              "maximumChannelError": 8.267785644531216
+            }
+          ],
+          "pixelProbeCount": 168,
+          "videoSha256": "0a5f89e6ee3f9cfc1e6d2a714f4d1094bd6612c6090fdda4069e7b7f88ebfbb4",
+          "evidenceSha256": "ddf525ae1c8ecd258ae3e148f5212de25f27c27b67a2944e2c2d9e45a8552040"
+        }
+      ]
+    },
+    {
+      "name": "svg-subtract",
+      "testCount": 3,
+      "run": {
+        "exitCode": 1,
+        "originalBytesRestored": true,
+        "conflictingConcurrentEdits": [],
+        "productionProviderAfterExperiment": "4.0.527-native.13",
+        "productionCombinedAdmission": "pending"
+      },
+      "tests": [
+        {
+          "name": "test_temporal_matte_actual_api_pixels[child-external-alpha-True]",
+          "failed": true,
+          "errored": false,
+          "skipped": false
+        },
+        {
+          "name": "test_temporal_matte_actual_api_pixels[rig-external-alpha-False]",
+          "failed": false,
+          "errored": false,
+          "skipped": false
+        },
+        {
+          "name": "test_temporal_matte_actual_api_pixels[rig-external-luminance-True]",
+          "failed": false,
+          "errored": false,
+          "skipped": false
+        }
+      ],
+      "records": [
+        {
+          "variant": "child-external-alpha-inverted",
+          "measurementStatus": "failed",
+          "qc": "passed",
+          "maximumChannelError": 8.017785644531216,
+          "maximumMatrixError": 0.00015526993207970463,
+          "failures": [
+            [
+              "pixel",
+              4,
+              110,
+              100,
+              8.017785644531216
+            ]
+          ],
+          "failedPixelChecks": [
+            {
+              "frame": 4,
+              "x": 110,
+              "y": 100,
+              "expectedChannel": 127.73221435546878,
+              "observedRgb": [
+                135.75,
+                135.75,
+                135.75
+              ],
+              "maximumChannelError": 8.017785644531216
+            }
+          ],
+          "pixelProbeCount": 168,
+          "videoSha256": "bcdf1c3708bf85d068f66c1bbe3b9227eea70ecbed87a36084496a13c995db29",
+          "evidenceSha256": "8accb27ff9e7eda5eb55b7d96d72176ac7d5f073957ce0b8197e16753ec94c07"
+        },
+        {
+          "variant": "rig-external-alpha-normal",
+          "measurementStatus": "passed",
+          "qc": "passed",
+          "maximumChannelError": 6.243281249999882,
+          "maximumMatrixError": 0.00012884263594514778,
+          "failures": [],
+          "failedPixelChecks": [],
+          "pixelProbeCount": 168,
+          "videoSha256": "8c84502252aff9a3d61381e2f6ab35ce5628ac0f87ce796e607e5168c5335554",
+          "evidenceSha256": "586f33c291ae0aa6278767483e2c910d8619d5987c8a63f5d5b2cacdcb01a24e"
+        },
+        {
+          "variant": "rig-external-luminance-inverted",
+          "measurementStatus": "passed",
+          "qc": "passed",
+          "maximumChannelError": 6.767785644531216,
+          "maximumMatrixError": 0.00012884263594514778,
+          "failures": [],
+          "failedPixelChecks": [],
+          "pixelProbeCount": 168,
+          "videoSha256": "16ff3fe1e408feb34848eb3c1005d59f6abb453395f05e8bdc265cef3048d413",
+          "evidenceSha256": "77efd40021cf5053876aeeeca0094109afcc740b93fd91dfcab9b82ae158cae5"
+        }
+      ]
+    },
+    {
+      "name": "svg-subtract-full",
+      "testCount": 7,
+      "run": {
+        "exitCode": 1,
+        "originalBytesRestored": true,
+        "conflictingConcurrentEdits": [],
+        "productionProviderAfterExperiment": "4.0.527-native.13",
+        "productionCombinedAdmission": "pending"
+      },
+      "tests": [
+        {
+          "name": "test_temporal_matte_actual_api_pixels[control-external-alpha-False]",
+          "failed": false,
+          "errored": false,
+          "skipped": false
+        },
+        {
+          "name": "test_temporal_matte_actual_api_pixels[child-external-alpha-False]",
+          "failed": false,
+          "errored": false,
+          "skipped": false
+        },
+        {
+          "name": "test_temporal_matte_actual_api_pixels[child-external-alpha-True]",
+          "failed": true,
+          "errored": false,
+          "skipped": false
+        },
+        {
+          "name": "test_temporal_matte_actual_api_pixels[rig-external-alpha-False]",
+          "failed": false,
+          "errored": false,
+          "skipped": false
+        },
+        {
+          "name": "test_temporal_matte_actual_api_pixels[rig-external-luminance-True]",
+          "failed": false,
+          "errored": false,
+          "skipped": false
+        },
+        {
+          "name": "test_temporal_matte_actual_api_pixels[child-common-alpha-False]",
+          "failed": false,
+          "errored": false,
+          "skipped": false
+        },
+        {
+          "name": "test_temporal_matte_actual_api_pixels[rig-common-luminance-False]",
+          "failed": true,
+          "errored": false,
+          "skipped": false
+        }
+      ],
+      "records": [
+        {
+          "variant": "child-common-alpha-normal",
+          "measurementStatus": "passed",
+          "qc": "passed",
+          "maximumChannelError": 6.291248046875083,
+          "maximumMatrixError": 7.78962733534172e-05,
+          "failures": [],
+          "failedPixelChecks": [],
+          "pixelProbeCount": 162,
+          "videoSha256": "62db0ca0ed362492be039b903487b094a60b891021dc90ab12e68b6eb977f2fa",
+          "evidenceSha256": "bfbbcad2c964a09bea37288f5f4709a012d4944a4d410219d47b6e0aca5dc56e"
+        },
+        {
+          "variant": "child-external-alpha-inverted",
+          "measurementStatus": "failed",
+          "qc": "passed",
+          "maximumChannelError": 8.017785644531216,
+          "maximumMatrixError": 0.00015526993207970463,
+          "failures": [
+            [
+              "pixel",
+              4,
+              110,
+              100,
+              8.017785644531216
+            ]
+          ],
+          "failedPixelChecks": [
+            {
+              "frame": 4,
+              "x": 110,
+              "y": 100,
+              "expectedChannel": 127.73221435546878,
+              "observedRgb": [
+                135.75,
+                135.75,
+                135.75
+              ],
+              "maximumChannelError": 8.017785644531216
+            }
+          ],
+          "pixelProbeCount": 168,
+          "videoSha256": "bcdf1c3708bf85d068f66c1bbe3b9227eea70ecbed87a36084496a13c995db29",
+          "evidenceSha256": "5dd82650e6da8b6ce71d6c7b930556f0b207832b020845995f00a8c8c3795a4b"
+        },
+        {
+          "variant": "child-external-alpha-normal",
+          "measurementStatus": "passed",
+          "qc": "passed",
+          "maximumChannelError": 6.243281249999882,
+          "maximumMatrixError": 0.00015526993207970463,
+          "failures": [],
+          "failedPixelChecks": [],
+          "pixelProbeCount": 168,
+          "videoSha256": "f38b3cc3ee42e40d2e79b78e3d16dbada03aaebbdb3199e73dd665af75328dbd",
+          "evidenceSha256": "84065d538ecec307bd4b86145d8eedb0804dd4b24a782b34c8ce6c55916b7c58"
+        },
+        {
+          "variant": "control-external-alpha-normal",
+          "measurementStatus": "passed",
+          "qc": "passed",
+          "maximumChannelError": 6.243281249999882,
+          "maximumMatrixError": 0.000274272036193679,
+          "failures": [],
+          "failedPixelChecks": [],
+          "pixelProbeCount": 168,
+          "videoSha256": "8cd9dcb4421c5a8750e10b3391157f051bc21c18efe3922963534f3a8e8585de",
+          "evidenceSha256": "c56aacd5e1d9807d5baf6381a334319d0874fa9a004d693a44e9ea57381cd327"
+        },
+        {
+          "variant": "rig-common-luminance-normal",
+          "measurementStatus": "failed",
+          "qc": "passed",
+          "maximumChannelError": 8.111630699291396,
+          "maximumMatrixError": 0.00011529654032926828,
+          "failures": [
+            [
+              "pixel",
+              7,
+              208,
+              100,
+              8.111630699291396
+            ]
+          ],
+          "failedPixelChecks": [
+            {
+              "frame": 7,
+              "x": 208,
+              "y": 100,
+              "expectedChannel": 142.8883693007086,
+              "observedRgb": [
+                151.0,
+                151.0,
+                151.0
+              ],
+              "maximumChannelError": 8.111630699291396
+            }
+          ],
+          "pixelProbeCount": 162,
+          "videoSha256": "6ceb9dddb42d3adc2e7889fc58edb8f11d4ff8804c17e3703c5fa8d02b145c42",
+          "evidenceSha256": "e58d0841b7f89ec35af6becf66b4ab06aeb3819f394afbb1bc66a960bd673035"
+        },
+        {
+          "variant": "rig-external-alpha-normal",
+          "measurementStatus": "passed",
+          "qc": "passed",
+          "maximumChannelError": 6.243281249999882,
+          "maximumMatrixError": 0.00012884263594514778,
+          "failures": [],
+          "failedPixelChecks": [],
+          "pixelProbeCount": 168,
+          "videoSha256": "8c84502252aff9a3d61381e2f6ab35ce5628ac0f87ce796e607e5168c5335554",
+          "evidenceSha256": "32e467162438db34b8a14974cbc88e0d1b19ebb8b76cff762bb7d5e749af5043"
+        },
+        {
+          "variant": "rig-external-luminance-inverted",
+          "measurementStatus": "passed",
+          "qc": "passed",
+          "maximumChannelError": 6.767785644531216,
+          "maximumMatrixError": 0.00012884263594514778,
+          "failures": [],
+          "failedPixelChecks": [],
+          "pixelProbeCount": 168,
+          "videoSha256": "16ff3fe1e408feb34848eb3c1005d59f6abb453395f05e8bdc265cef3048d413",
+          "evidenceSha256": "796af52641095c6dc376a3760505e60dfec324147b9a5e510326239dee319f51"
+        }
+      ]
+    }
+  ],
+  "sourceEdgeControls": {
+    "analysisSha256": "2a217d6e3983b5993ea2441004d8af801d9e9f85e64a90ea8e3e88be9d755cdd",
+    "phaseCount": 4,
+    "captureCount": 32,
+    "scope": "worker_PNG_controls_not_API_videos"
+  },
+  "derivedResidualControls": {
+    "analysisSha256": "201be2ca514be92107697a21fb538dceea54c63e0a9f783532c54e953d3fcce9",
+    "caseCount": 2,
+    "validCaptureCount": 20,
+    "scope": "derived_worker_PNG_controls_not_API_admission",
+    "invalidEarlierControlsExcluded": "temporal-matte-svg-subtract-residual-controls/classification.json"
+  },
+  "finalEncodeStudy": {
+    "analysisSha256": "0974bfb47ae795f9ff2465d957eab5496445a9c8673efede8ff2aded38fb3c49",
+    "derivativeVideoCount": 21,
+    "crf14ControlMatchesAllApiProbes": true,
+    "scope": "retained_intermediate_reencode_not_API_admission"
+  },
+  "productionSourceHashes": {
+    "backend/app/domain/studios/contextual_editing_v2.py": "37acb13095b740386501649dbdd9d1a70f91a7a14c500c90299e4b60ed6cc8ce",
+    "backend/app/domain/studios/motion_recipes.py": "8122f1c2f2a9a8030bd1b5407a7a8d2ed22cad7225bcba94ffe29fefd886861b",
+    "backend/app/domain/studios/temporal_exposure.py": "29f544705762a3b694b141308249cc00680d877cd7709f9b7d0a35ea45108dd8",
+    "backend/app/providers/studios/contextual_render.py": "41da67ed3c9e74afee3585f504fa507aa32da72c27f9d61a7cd2f40028e6c2c6",
+    "backend/app/providers/studios/remotion_projection.py": "ae148ca325f4112a8595fcca9b0578aacad14daca2899498ebaf4577d7e8f149",
+    "backend/app/providers/studios/remotion_render.py": "7f106741b62414f824bc1e4e80183a2a7a6ab1d900f8f8b64e750f5ae8adc2ec",
+    "backend/app/services/studios/native_motion_recipes.py": "9f9083f3747f442737b35336eed12f36bb283e4abed40594d68c9566b0fe3f1f",
+    "backend/tests/spatial_effects_kernel_diagnostic.py": "03f609d8dc758516a8dabd770e67584cf5062bd2da78dd3b9a4b855edfebeb06",
+    "backend/tests/temporal_matte_kernel_diagnostic.py": "33f91e2a0da5f61ade7c69d66fb91de21526954cb15c779c64348547c1505eef",
+    "backend/tests/test_spatial_effects.py": "af6721e973275ba8a62437f6feca3eaf33a61d23b29f953f042938c3d1858938",
+    "backend/tests/test_spatial_effects_oracle.py": "33709042ef5de611028d59336f3ab8732e5ad3a5cc609a4a3e999b6da8bbd7af",
+    "backend/tests/test_spatial_effects_render.py": "199f550bd6b726714944b65d6b78f8ad3e3b846edb8597c782966002af57d3ce",
+    "backend/tests/test_temporal_exposure.py": "b064e4aac79e451b35f4824c6c5771d73d3d527d57a97319a9cf64d8733167b5",
+    "backend/tests/test_temporal_matte_oracle.py": "0e4d6bfc3f6004ff528aa37d0e5e0997bf97416b71ec2bde56337ef8389a50db",
+    "backend/tests/test_temporal_rig_render.py": "ae696a2eb7f18364e3103bd2391cc1f9b172e8929755e5de9b7f685577330e28",
+    "scripts/validation/editor-temporal-matte-regression.py": "c62d19e74ff910c6f167388937f93c6854cb2edd4d7fbaa0cba73ccf3caa4149",
+    "workers/remotion-benchmark/render-hybrid.mjs": "1e41e72cbf8a50b9623d707a37fac6d85184258d4b6aa2dfeacf32985d386b76",
+    "workers/remotion-benchmark/src/asset-matte.tsx": "f14ea79323d8261197180db6824bcef707e4b9481154cb2d6beed16342c49a99",
+    "workers/remotion-benchmark/src/hybrid.tsx": "69f66dbfd02be683fe9e6a0d6559ad9e9487c8d7ee48f9fbabf44f0884f5f170",
+    "workers/remotion-benchmark/src/spatial-effects.ts": "cab39ac4863a50bcec80760cb85d969507865f2461fb855c39c1adc105530a9c",
+    "workers/remotion-benchmark/src/temporal-exposure.tsx": "48a609ab733ee2e5c4e6be07f8073a483ff986b235dcb1c34d365f1b4fcc2fc1"
+  },
+  "consolidatorSha256": "aa02ab09c9c0e5d3004ddcc9893c7a7887be55b8025e8dc756633b0929078289"
+}

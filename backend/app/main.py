@@ -25,6 +25,8 @@ from .routers import (
     knowledge,
     posts,
     radar,
+    studio_craft,
+    studio_department,
     studios,
     workspace_features,
     workspaces,
@@ -151,6 +153,8 @@ app.include_router(jobs.router, prefix="/api/v1")
 app.include_router(knowledge.router, prefix="/api/v1")
 app.include_router(radar.router, prefix="/api/v1")
 app.include_router(studios.router, prefix="/api/v1")
+app.include_router(studio_craft.router, prefix="/api/v1")
+app.include_router(studio_department.router, prefix="/api/v1")
 app.include_router(editing_resources.router, prefix="/api/v1")
 app.include_router(workspace_features.router, prefix="/api/v1")
 app.include_router(ai.router, prefix="/api")

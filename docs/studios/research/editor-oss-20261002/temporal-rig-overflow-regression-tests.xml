@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="0" skipped="0" tests="1" time="5.197" timestamp="2026-10-03T15:02:08.620597-03:00" hostname="Computador"><testcase classname="tests.test_typography_layout_render" name="test_real_final_font_overflow_publishes_no_mp4" time="5.043" /></testsuite></testsuites>

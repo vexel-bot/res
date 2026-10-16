@@ -1,0 +1,218 @@
+[
+  {
+    "file": "temporal_matte_candidate_contract_diagnostic.py",
+    "retiredDefinitions": [
+      "test_candidate_quality_controls_real_contextual_encode"
+    ]
+  },
+  {
+    "file": "temporal_matte_kernel_diagnostic.py",
+    "retiredDefinitions": [
+      "test_temporal_matte_actual_api_pixels"
+    ]
+  },
+  {
+    "file": "temporal_matte_quantized_kernel_diagnostic.py",
+    "retiredDefinitions": [
+      "test_temporal_matte_quantized_actual_api_pixels"
+    ]
+  },
+  {
+    "file": "test_alight_motion.py",
+    "retiredDefinitions": [
+      "test_recipe_parameters_are_persisted_hashed_and_never_silently_rendered",
+      "test_worker_unavailable_without_adb_device_and_calibration",
+      "test_calibration_cannot_be_replaced_by_a_declaration",
+      "test_bundle_binds_actual_files_and_is_not_an_xml_exporter",
+      "test_unknown_errors_do_not_retry_and_known_errors_require_confirmed_interruption"
+    ]
+  },
+  {
+    "file": "test_alight_worker_boundary.py",
+    "retiredDefinitions": [
+      "simulated_worker",
+      "test_single_transient_retry_retains_evidence_and_never_uses_prior_host_file",
+      "test_emulator_mode_does_not_claim_a_missing_phone",
+      "test_installed_application_is_observed_without_admitting_render",
+      "test_application_discovery_does_not_guess_device_or_success",
+      "test_profile_pins_driver_calibration_resources_and_capabilities",
+      "test_unknown_or_invalid_output_is_audited_and_quarantined",
+      "test_cancel_blocks_delivery_and_releases_lock_with_audited_interruption",
+      "test_worker_timeout_has_error_evidence",
+      "test_restart_requires_same_package_profile_and_proven_state",
+      "test_exclusive_device_lock_rejects_another_job",
+      "test_emulator_job_rejects_a_receipt_claiming_physical_device"
+    ]
+  },
+  {
+    "file": "test_asset_matte.py",
+    "retiredDefinitions": [
+      "test_matte_lowers_source_asset_space_interval_and_digest",
+      "test_unbound_or_unsupported_matte_fails_projection",
+      "test_legacy_v3_measured_typography_remains_readable"
+    ]
+  },
+  {
+    "file": "test_asset_matte_render.py",
+    "retiredDefinitions": [
+      "test_asset_matte_real_api_job_and_intermediate_alpha_pixels",
+      "test_asset_matte_preserves_wide_png_aspect_and_letterbox",
+      "test_asset_matte_cover_crops_in_source_space",
+      "test_asset_matte_actual_job_rejects_animated_png_without_publication"
+    ]
+  },
+  {
+    "file": "test_contextual_editing.py",
+    "retiredDefinitions": [
+      "test_real_render_multitrack_mask_keyframes_and_audio",
+      "test_short_delayed_effect_survives_contextual_mix",
+      "test_real_freeze_speed_color_text_and_fades",
+      "test_real_paired_source_audio_and_music_ducking"
+    ]
+  },
+  {
+    "file": "test_contextual_encode_quality.py",
+    "retiredDefinitions": [
+      "test_requested_quality_controls_real_contextual_encode"
+    ]
+  },
+  {
+    "file": "test_editing_font_acquisition.py",
+    "retiredDefinitions": [
+      "test_missing_font_and_svg_material_resolve_to_real_mp4"
+    ]
+  },
+  {
+    "file": "test_editing_resources.py",
+    "retiredDefinitions": [
+      "test_font_used_in_export_and_missing_font_never_falls_back",
+      "test_motion_renders_with_curves",
+      "test_mask_scale_and_opacity_compose_on_late_overlay"
+    ]
+  },
+  {
+    "file": "test_editorial_v2_integration.py",
+    "retiredDefinitions": [
+      "test_scene_change_sampling_observes_cut_and_reports_gaps"
+    ]
+  },
+  {
+    "file": "test_motion_canvas_render.py",
+    "retiredDefinitions": [
+      "test_motion_canvas_produces_real_mp4_from_compiled_document",
+      "test_canonical_format_transformation_reaches_motion_canvas"
+    ]
+  },
+  {
+    "file": "test_native_motion_recipes.py",
+    "retiredDefinitions": [
+      "test_lowered_tracks_pivot_hash_and_no_double_transform",
+      "test_recipe_parameters_cannot_diverge_from_lowered_execution",
+      "test_real_pixels_mask_stroke_parenting_and_temporal_blur"
+    ]
+  },
+  {
+    "file": "test_remotion_native.py",
+    "retiredDefinitions": [
+      "test_native_parameters_are_persisted_and_invalidate_digest",
+      "test_native_video_trim_speed_and_observed_geometry",
+      "test_native_missing_checksum_and_cancellation"
+    ]
+  },
+  {
+    "file": "test_remotion_native_api.py",
+    "retiredDefinitions": [
+      "test_native_plan_apply_render_api_and_provider_binding"
+    ]
+  },
+  {
+    "file": "test_research_editing_operations.py",
+    "retiredDefinitions": [
+      "test_moving_mask_changes_visible_pixels_and_receipt",
+      "test_gesture_occluder_tracks_the_reveal_edge"
+    ]
+  },
+  {
+    "file": "test_scene_compiler_v2.py",
+    "retiredDefinitions": [
+      "test_ordered_effect_stack_and_blend_mode_reach_shared_runtime",
+      "test_draft_projection_is_separate_from_reviewed_render_and_escapes_text"
+    ]
+  },
+  {
+    "file": "test_spatial_effects.py",
+    "retiredDefinitions": [
+      "test_spatial_authored_parameters_and_digest_change_without_document_mutation",
+      "test_persisted_shadow_invalid_values_and_aliases_have_target_diagnostic",
+      "test_persisted_depth_invalid_values_have_target_diagnostic",
+      "test_shadow_defaults_normalize_only_the_manifest_and_none_is_absent",
+      "test_persisted_static_and_animated_blur_cannot_compete",
+      "test_unregistered_effect_stack_still_requires_qualification"
+    ]
+  },
+  {
+    "file": "test_spatial_effects_render.py",
+    "retiredDefinitions": [
+      "test_spatial_effects_actual_api_and_gaussian_pixels"
+    ]
+  },
+  {
+    "file": "test_temporal_exposure.py",
+    "retiredDefinitions": [
+      "test_explicit_exposure_lowers_and_selects_library_seven",
+      "test_legacy_blur_has_no_policy_and_preserves_its_library",
+      "test_legacy_mask_cannot_supply_uncontrolled_animation_to_static_reduction",
+      "test_lowered_exposure_cannot_diverge",
+      "test_orphan_exposure_is_rejected",
+      "test_new_policy_cannot_claim_old_compiler_semantics",
+      "test_disjoint_subtree_scopes_compile_and_persisted_overlap_cannot_project"
+    ]
+  },
+  {
+    "file": "test_temporal_exposure_render.py",
+    "retiredDefinitions": [
+      "test_temporal_exposure_actual_api_measurement"
+    ]
+  },
+  {
+    "file": "test_temporal_rig_render.py",
+    "retiredDefinitions": [
+      "test_temporal_rig_actual_api_affine_pixels"
+    ]
+  },
+  {
+    "file": "test_typography_font_binding.py",
+    "retiredDefinitions": [
+      "test_final_font_failure_stops_before_render_and_publishes_nothing"
+    ]
+  },
+  {
+    "file": "test_typography_layout.py",
+    "retiredDefinitions": [
+      "test_layout_policy_is_bound_to_canvas_and_changes_digest",
+      "test_stale_or_unbound_layout_is_rejected"
+    ]
+  },
+  {
+    "file": "test_typography_layout_render.py",
+    "retiredDefinitions": [
+      "test_real_final_font_overflow_publishes_no_mp4",
+      "test_real_animated_font_style_and_transformed_parent_share_canonical_frames"
+    ]
+  },
+  {
+    "file": "test_typography_render.py",
+    "retiredDefinitions": [
+      "test_typography_real_api_job_mp4_and_complete_hold"
+    ]
+  },
+  {
+    "file": "test_typography_units.py",
+    "retiredDefinitions": [
+      "test_recipe_font_binding_is_required_and_checksum_checked",
+      "test_exact_reading_hold_uses_same_animated_unit_count_as_renderer",
+      "test_stale_units_and_timing_cannot_enter_native_manifest",
+      "test_legacy_materialization_keeps_v1_interpolation_and_timing"
+    ]
+  }
+]

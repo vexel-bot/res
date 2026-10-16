@@ -1,0 +1,21 @@
+{
+  "kind": "alight.shared_xml_transfer.v1",
+  "transferId": "c0ab8ac7-9f21-4044-b1a4-fc6803cd0e18",
+  "receivedAtUnixMs": 1790970199156,
+  "sourceAuthority": "com.alightcreative.app.motion.fileprovider",
+  "sourceName": "res Alight - prova 01.xml",
+  "sha256": "25e4b3e9d1d7b7d0b4e8fdd324a0a1993c6e3000c50676af14a39377a8038d52",
+  "bytes": 912,
+  "appVersion": "5.0.273.1028425",
+  "renderQualification": false,
+  "workerJob": null,
+  "qualification": "discovery_only",
+  "source": "Created and exported in installed Alight; captured through Android SEND and local receiver",
+  "manualInterventions": [
+    "Agent-directed project creation, editing, export and selection of receiver"
+  ],
+  "importVerified": true,
+  "renderVerified": false,
+  "importVerificationScope": "Copied original XML to Android Download; selected it in Alight Load XML; editable scene preserves text, Roboto, position and duration in UI. No pixel-fidelity or other layer qualification.",
+  "importVerificationKind": "agent_directed_real_emulator"
+}

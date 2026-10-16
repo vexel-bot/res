@@ -1,0 +1,75 @@
+{
+  "scope": "BT709 fallback diagnostic only, declared bound4 preserved",
+  "captures": [
+    {
+      "capture": "interface-a-frame0.json",
+      "frame": 0,
+      "maximumChannelError": 2
+    },
+    {
+      "capture": "interface-a-frame284.json",
+      "frame": 284,
+      "maximumChannelError": 2
+    },
+    {
+      "capture": "interface-a-timeline-frame0.json",
+      "frame": 0,
+      "maximumChannelError": 2
+    },
+    {
+      "capture": "interface-a-timeline-frame284.json",
+      "frame": 284,
+      "maximumChannelError": 2
+    },
+    {
+      "capture": "interface-a-timeline-frame285.json",
+      "frame": 285,
+      "maximumChannelError": 2
+    },
+    {
+      "capture": "interface-a-timeline-frame286.json",
+      "frame": 286,
+      "maximumChannelError": 2
+    },
+    {
+      "capture": "interface-a-timeline-frame449.json",
+      "frame": 449,
+      "maximumChannelError": 2
+    },
+    {
+      "capture": "organization-a-clamp450.json",
+      "frame": 449,
+      "maximumChannelError": 2
+    },
+    {
+      "capture": "organization-a-frame0.json",
+      "frame": 0,
+      "maximumChannelError": 23
+    },
+    {
+      "capture": "organization-a-frame139.json",
+      "frame": 139,
+      "maximumChannelError": 2
+    },
+    {
+      "capture": "organization-a-frame244.json",
+      "frame": 244,
+      "maximumChannelError": 2
+    },
+    {
+      "capture": "organization-a-frame449.json",
+      "frame": 449,
+      "maximumChannelError": 2
+    },
+    {
+      "capture": "organization-a-main-end.json",
+      "frame": 449,
+      "maximumChannelError": 2
+    },
+    {
+      "capture": "organization-a-main-home.json",
+      "frame": 0,
+      "maximumChannelError": 23
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+............................................                             [100%]
+============================== warnings summary ===============================
+..\..\..\AppData\Local\Programs\Python\Python311\Lib\site-packages\pydantic\_internal\_fields.py:198
+  C:\Users\edugu\AppData\Local\Programs\Python\Python311\Lib\site-packages\pydantic\_internal\_fields.py:198: UserWarning: Field name "copy" in "PostIn" shadows an attribute in parent "APIModel"
+    warnings.warn(
+
+..\..\..\AppData\Local\Programs\Python\Python311\Lib\site-packages\pydantic\_internal\_fields.py:198
+  C:\Users\edugu\AppData\Local\Programs\Python\Python311\Lib\site-packages\pydantic\_internal\_fields.py:198: UserWarning: Field name "copy" in "PostUpdate" shadows an attribute in parent "APIModel"
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+44 passed, 2 warnings in 0.54s

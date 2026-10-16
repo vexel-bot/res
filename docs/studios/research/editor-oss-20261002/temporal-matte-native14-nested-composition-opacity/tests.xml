@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="3" skipped="0" tests="3" time="52.189" timestamp="2026-10-03T18:06:56.350562-03:00" hostname="Computador"><testcase classname="tests.temporal_matte_kernel_diagnostic" name="test_temporal_matte_actual_api_pixels[child-external-alpha-True]" time="16.456"><failure message="AssertionError: [('pixel', 4, 110, 100, 8.017785644531216)]&#10;assert not [('pixel', 4, 110, 100, 8.017785644531216)]">tests\temporal_matte_kernel_diagnostic.py:329: in test_temporal_matte_actual_api_pixels
+    assert not failures, failures
+E   AssertionError: [('pixel', 4, 110, 100, 8.017785644531216)]
+E   assert not [('pixel', 4, 110, 100, 8.017785644531216)]</failure></testcase><testcase classname="tests.temporal_matte_kernel_diagnostic" name="test_temporal_matte_actual_api_pixels[rig-external-alpha-False]" time="18.489"><failure message="AssertionError: [('pixel', 0, 138, 134, 8.428000000000011), ('pixel', 0, 140, 82, 9.243281249999882)]&#10;assert not [('pixel', 0, 138, 134, 8.428000000000011), ('pixel', 0, 140, 82, 9.243281249999882)]">tests\temporal_matte_kernel_diagnostic.py:329: in test_temporal_matte_actual_api_pixels
+    assert not failures, failures
+E   AssertionError: [('pixel', 0, 138, 134, 8.428000000000011), ('pixel', 0, 140, 82, 9.243281249999882)]
+E   assert not [('pixel', 0, 138, 134, 8.428000000000011), ('pixel', 0, 140, 82, 9.243281249999882)]</failure></testcase><testcase classname="tests.temporal_matte_kernel_diagnostic" name="test_temporal_matte_actual_api_pixels[rig-external-luminance-True]" time="16.373"><failure message="AssertionError: [('pixel', 4, 102, 92, 8.10951705932618)]&#10;assert not [('pixel', 4, 102, 92, 8.10951705932618)]">tests\temporal_matte_kernel_diagnostic.py:329: in test_temporal_matte_actual_api_pixels
+    assert not failures, failures
+E   AssertionError: [('pixel', 4, 102, 92, 8.10951705932618)]
+E   assert not [('pixel', 4, 102, 92, 8.10951705932618)]</failure></testcase></testsuite></testsuites>

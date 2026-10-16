@@ -1,0 +1,7 @@
+{
+  "url": "https://chromium.googlesource.com/chromium/src/+/refs/tags/148.0.7778.97/media/base/video_color_space.h?format=TEXT",
+  "sha256": "37659be37f1eb5d68aa39b4063521cb26f6d341b4372fd5b40fd07c9121962c4",
+  "bytes": 3539,
+  "purpose": "Document exact browser fallback only; no source imported into production",
+  "initialVerifierSha256": "bac25406b2529fa19ca3de194a6ab3965530b8ca68a5db58afb55f1a79b54ad5"
+}

@@ -1,0 +1,41 @@
+{
+  "scope": "selected_primary_sources_read_in_memory_no_repository_clone_no_source_code_copied",
+  "installedBrowserVersion": "Google Chrome for Testing 149.0.7790.0",
+  "installedBrowserSha256": "ec76dc3e69ffab9daddf0bbe7bf0a9e0a034b2d086741a0ae2ef6358a597537b",
+  "browserPath": "C:\\Users\\edugu\\Downloads\\res\\workers\\remotion-benchmark\\node_modules\\.remotion\\chrome-headless-shell\\win64\\chrome-headless-shell-win64\\chrome-headless-shell.exe",
+  "skiaRevisionFromChromiumDeps": "0cb35533022b3912904831c2290680bb8eea0363",
+  "license": "Skia BSD-style; no implementation copied",
+  "sources": [
+    {
+      "url": "https://chromium.googlesource.com/chromium/src/+/refs/tags/149.0.7790.0/DEPS",
+      "sha256": "b3ba6e672b4f78eab2dfebd2739a601e2f6ddb958ea1e20bcfabe80c1de240dd",
+      "bytes": 186396
+    },
+    {
+      "url": "https://skia.googlesource.com/skia/+/0cb35533022b3912904831c2290680bb8eea0363/src/core/SkBlurEngine.cpp",
+      "sha256": "79077dda720301317687be492b9e1fedc5a285276794cb43e100d1a1a0dc1672",
+      "bytes": 73694,
+      "lines": 1740
+    },
+    {
+      "url": "https://skia.googlesource.com/skia/+/0cb35533022b3912904831c2290680bb8eea0363/src/core/SkBlurEngine.h",
+      "sha256": "56d524c90403ef9debd9f826d1161b05471e761e5c2a1456743ddd46c78286e8",
+      "bytes": 15487,
+      "lines": 285
+    },
+    {
+      "url": "https://skia.googlesource.com/skia/+/0cb35533022b3912904831c2290680bb8eea0363/src/effects/imagefilters/SkBlurImageFilter.cpp",
+      "sha256": "1a6bd9c49920f232c4f46bf3c80b5f728fc207db25d93ceb83cbc6454078ea6f",
+      "bytes": 10257,
+      "lines": 241
+    },
+    {
+      "url": "https://skia.googlesource.com/skia/+/0cb35533022b3912904831c2290680bb8eea0363/LICENSE",
+      "sha256": "5f787c1dee3c56547f09ccc2906ab5f5293c4d8dd6c8654e573216c38e908dbd",
+      "bytes": 1507,
+      "lines": 29
+    }
+  ],
+  "inference": "Source has backend/build-dependent kernels; exact branch executed is not observed",
+  "experiment": "Controlled actual job sigma .25/.75 had sharp edges under default GL; explicit swangle passed strong temporal fixture"
+}

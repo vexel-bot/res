@@ -1,0 +1,33 @@
+{
+  "schemaVersion": "clicko.research-modality-map.v1",
+  "caseId": "HZ-YT-01",
+  "source": "https://www.youtube.com/watch?v=JOfsujnXxCg",
+  "coverage": {
+    "text": "located-excerpts",
+    "visual": "page-and-player-sample",
+    "audio": "not-reviewed",
+    "completeAudiovisual": false
+  },
+  "editorialCuts": [],
+  "visualChangeCandidates": [],
+  "locatedTextUnits": [
+    {
+      "locator": "0:19–1:58",
+      "kind": "teaching"
+    },
+    {
+      "locator": "2:00–3:12",
+      "kind": "observation"
+    },
+    {
+      "locator": "5:15 em diante",
+      "kind": "interpretation"
+    },
+    {
+      "locator": "objetivo do pedido",
+      "kind": "clicko_hypothesis"
+    }
+  ],
+  "reviewGap": "Cuts, timing and audio not fully annotated; text locators are not cut boundaries",
+  "distributedMedia": false
+}

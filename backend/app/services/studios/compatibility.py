@@ -51,7 +51,23 @@ def canvas_to_composition(canvas: CreativeCanvas, *, page_id: str = "page-1") ->
 
 def composition_page_to_canvas(document: CreativeDocumentV1, page_index: int = 0) -> CreativeCanvas:
     page = document.composition.pages[page_index]
-    if document.composition.narrative.get("editorialV2"):
+    if document.native_editor_state:
+        # Navigation poster only. Native bytes are the authoritative editable state.
+        return CreativeCanvas.model_validate({
+            "width": min(page.width, 4096), "height": min(page.height, 4096),
+            "background": "#10181c", "brandTokens": {
+                "readOnly": True, "craftEngine": document.native_editor_state.engine,
+                "nativeProjectChecksum": document.native_editor_state.checksum_sha256,
+            }, "layers": [{
+                "id": "craft-project-poster", "type": "text", "name": "Abrir no Studio",
+                "text": "Projeto Clicko Studios. Abra o Studio para editar e revisar.",
+                "x": 24, "y": 24, "width": max(1, min(page.width, 4096) - 48),
+                "height": max(1, min(page.height, 4096) - 48), "fontSize": 24,
+            }],
+        })
+    if document.composition.narrative.get("editorialV2") or any(
+        layer.kind not in {"text", "shape", "image"} for layer in page.layers
+    ):
         # The legacy canvas cannot represent temporal groups or video. Store an explicit
         # read-only navigation poster; the full composition stays in canonical_document.
         return CreativeCanvas.model_validate(
@@ -59,13 +75,16 @@ def composition_page_to_canvas(document: CreativeDocumentV1, page_index: int = 0
                 "width": min(page.width, 4096),
                 "height": min(page.height, 4096),
                 "background": "#10181c",
-                "brandTokens": {"editorialV2": True, "readOnly": True},
+                "brandTokens": {
+                    "editorialV2": bool(document.composition.narrative.get("editorialV2")),
+                    "readOnly": True,
+                },
                 "layers": [
                     {
                         "id": "editorial-studio-poster",
                         "type": "text",
                         "name": "Abrir no estúdio",
-                        "text": "Vídeo com edição e motion.\nAbra no estúdio de vídeo para visualizar e revisar.",
+                        "text": "Projeto Clicko Studios. Abra o Studio para editar e revisar.",
                         "x": 24,
                         "y": 24,
                         "width": min(page.width, 4096) - 48,
@@ -101,7 +120,13 @@ def composition_page_to_canvas(document: CreativeDocumentV1, page_index: int = 0
             "width": page.width,
             "height": page.height,
             "safeArea": page.safe_area,
-            "background": page.background,
+            # The navigation canvas only supports RGB; the canonical project
+            # retains its full RGBA background for the native Craft migration.
+            "background": (
+                page.background[:7]
+                if len(page.background) == 9 and page.background.startswith("#")
+                else page.background
+            ),
             "brandTokens": {"brandRevision": document.brand_memory_ref.revision},
             "layers": layers,
         }
@@ -145,7 +170,13 @@ def record_to_contract(record: CreativeDocument) -> CreativeDocumentV1:
     )
 
 
-def persist_contract(record: CreativeDocument, contract: CreativeDocumentV1) -> None:
+def persist_contract(record: CreativeDocument, contract: CreativeDocumentV1, *, allow_native: bool = False) -> None:
+    existing = record.canonical_document or {}
+    if existing.get("nativeEditorState") and not allow_native:
+        if (existing["nativeEditorState"] != (contract.native_editor_state.model_dump(by_alias=True, mode="json")
+                if contract.native_editor_state else None)
+                or existing.get("composition") != contract.composition.model_dump(by_alias=True, mode="json")):
+            raise ValueError("craft_native_project_requires_craft_commands")
     record.schema_version = contract.schema_version
     record.canonical_document = contract.model_dump(by_alias=True, mode="json")
     record.document = composition_to_canvas(contract).model_dump(by_alias=True)

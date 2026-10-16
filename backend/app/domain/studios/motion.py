@@ -9,6 +9,7 @@ from pydantic import Field, model_validator
 
 from .contracts import CreativeDocumentV1, FrameRateV1, StudioContract
 from .intelligence import IntelligenceLineageV1
+from .motion_derivatives import track_derivative
 from .reality import RealityModelV1, reality_model_digest
 
 SHA256_PATTERN = r"^[0-9a-fA-F]{64}$"
@@ -578,31 +579,11 @@ def validate_motion_graph_bindings(
 
 
 def _track_velocity(track: MotionTrackV1, frames_per_second: float) -> float | None:
-    if len(track.keyframes) < 2:
-        return None
-    return max(
-        abs(right.value - left.value) * frames_per_second / (right.frame - left.frame)
-        for left, right in zip(track.keyframes, track.keyframes[1:], strict=False)
-    )
+    return track_derivative(track, frames_per_second, 1)[0]
 
 
 def _track_acceleration(track: MotionTrackV1, frames_per_second: float) -> float | None:
-    if len(track.keyframes) < 3:
-        return None
-    segments = []
-    for left, right in zip(track.keyframes, track.keyframes[1:], strict=False):
-        duration_seconds = (right.frame - left.frame) / frames_per_second
-        velocity = (right.value - left.value) / duration_seconds
-        midpoint_seconds = (left.frame + right.frame) / (2 * frames_per_second)
-        segments.append((velocity, midpoint_seconds))
-    return max(
-        abs(right_velocity - left_velocity) / (right_time - left_time)
-        for (left_velocity, left_time), (right_velocity, right_time) in zip(
-            segments,
-            segments[1:],
-            strict=False,
-        )
-    )
+    return track_derivative(track, frames_per_second, 2)[0]
 
 
 def _potential_overshoot(track: MotionTrackV1) -> bool:
@@ -668,24 +649,19 @@ def evaluate_motion_graph(
         evidence_ids: list[str] = []
         if isinstance(constraint, MotionDesignConstraintV1):
             selected = [tracks[track_id] for track_id in constraint.target_track_ids]
-            if constraint.kind == "maximum_velocity":
-                values = [_track_velocity(track, frames_per_second) for track in selected]
-                measured = max((value for value in values if value is not None), default=None)
+            if constraint.kind in {"maximum_velocity", "maximum_acceleration"}:
+                bounds = [track_derivative(
+                    track, frames_per_second,
+                    1 if constraint.kind == "maximum_velocity" else 2,
+                    constraint.frame_range.start_frame,
+                    constraint.frame_range.end_frame_exclusive,
+                ) for track in selected]
+                pending = next((reason for value, reason in bounds if value is None), None)
+                measured = None if pending else max((value for value, _ in bounds), default=None)
                 status = "incomplete" if measured is None else (
                     "passed" if measured <= constraint.threshold else "failed"  # type: ignore[operator]
                 )
-                reason = "maximum-velocity-evaluated" if measured is not None else "velocity-needs-two-keyframes"
-            elif constraint.kind == "maximum_acceleration":
-                values = [_track_acceleration(track, frames_per_second) for track in selected]
-                measured = max((value for value in values if value is not None), default=None)
-                status = "incomplete" if measured is None else (
-                    "passed" if measured <= constraint.threshold else "failed"  # type: ignore[operator]
-                )
-                reason = (
-                    "maximum-acceleration-evaluated"
-                    if measured is not None
-                    else "acceleration-needs-three-keyframes"
-                )
+                reason = pending or f"{constraint.kind.replace('_', '-')}-curve-evaluated"
             elif constraint.kind == "no_overshoot":
                 measured = float(any(_potential_overshoot(track) for track in selected))
                 status = "passed" if measured == 0 else "failed"
@@ -764,6 +740,14 @@ def project_motion_graph(
             raise ValueError("Reviewed motion projection requires constraint evaluation")
         if not evaluation.eligible_for_reviewed_projection:
             raise ValueError("Reviewed motion projection is blocked by constraint evaluation")
+        observations_by_id = {item.constraint_id: item for item in evaluation.observations}
+        for constraint in blocking_constraints:
+            if constraint.kind not in {"maximum_velocity", "maximum_acceleration"}:
+                continue
+            observation = observations_by_id.get(constraint.constraint_id)
+            expected_reason = f"{constraint.kind.replace('_', '-')}-curve-evaluated"
+            if observation is None or observation.reason != expected_reason:
+                raise ValueError("Motion derivative constraints require current curve evaluation")
     if graph.status != "reviewed":
         warnings.append("human-review-required-before-production-render")
     if reduced_motion:

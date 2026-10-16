@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="26.888" timestamp="2026-10-02T21:20:08.143865-03:00" hostname="Computador"><testcase classname="tests.test_asset_matte_render" name="test_asset_matte_preserves_wide_png_aspect_and_letterbox" time="23.303"><failure message="AssertionError: (4, 'white-triangle', (113, 115, 113), 102.0)&#10;assert False&#10; +  where False = all(&lt;generator object test_asset_matte_real_api_job_and_intermediate_alpha_pixels.&lt;locals&gt;.&lt;genexpr&gt; at 0x00000231AD86B6A0&gt;)">client = &lt;starlette.testclient.TestClient object at 0x00000231AD35ED90&gt;
+project = {'asset': '7409a368-552b-49d6-a38f-bf7865e6b07c', 'document': 'ae5f5258-8ea5-4c2e-b978-39933c6572e1', 'token': 'eyJhbG...dHlwZSI6ImFjY2VzcyJ9.WaukOT1oxtXh74ck1mb1CXhap3bo8Iyr4fJo-R4g2TQ', 'workspace': 'e247b98b-4fbd-4826-be92-f0cff555b917'}
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x00000231AD510D50&gt;
+tmp_path = WindowsPath('C:/Users/edugu/AppData/Local/Temp/pytest-of-edugu/pytest-121/test_asset_matte_preserves_wid0')
+
+    def test_asset_matte_preserves_wide_png_aspect_and_letterbox(client, project, monkeypatch, tmp_path):
+&gt;       test_asset_matte_real_api_job_and_intermediate_alpha_pixels(
+            client, project, monkeypatch, tmp_path, "alpha", False, wide=True,
+        )
+
+tests\test_asset_matte_render.py:226: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+client = &lt;starlette.testclient.TestClient object at 0x00000231AD35ED90&gt;
+project = {'asset': '7409a368-552b-49d6-a38f-bf7865e6b07c', 'document': 'ae5f5258-8ea5-4c2e-b978-39933c6572e1', 'token': 'eyJhbG...dHlwZSI6ImFjY2VzcyJ9.WaukOT1oxtXh74ck1mb1CXhap3bo8Iyr4fJo-R4g2TQ', 'workspace': 'e247b98b-4fbd-4826-be92-f0cff555b917'}
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x00000231AD510D50&gt;
+tmp_path = WindowsPath('C:/Users/edugu/AppData/Local/Temp/pytest-of-edugu/pytest-121/test_asset_matte_preserves_wid0')
+mode = 'alpha', invert = False, wide = True
+
+    @pytest.mark.parametrize("mode,invert", [("alpha", False), ("alpha", True), ("luminance", False), ("luminance", True)])
+    def test_asset_matte_real_api_job_and_intermediate_alpha_pixels(client, project, monkeypatch, tmp_path, mode, invert, wide=False):
+        mask = Image.new("RGBA", (256 if wide else 128, 128), (0, 0, 0, 0))
+        draw = ImageDraw.Draw(mask)
+        draw.polygon([(0, 0), (63, 0), (0, 63)], fill=(255, 255, 255, 255))
+        draw.ellipse((13, 13, 27, 27), fill=(255, 255, 255, 0))
+        draw.rectangle((64, 0, 127, 63), fill=(0, 0, 0, 255))
+        draw.rectangle((0, 64, 63, 127), fill=(128, 128, 128, 128))
+        image = tmp_path / "original-matte.png"
+        mask.save(image)
+        with SessionLocal() as db:
+            record = db.get(CreativeDocument, project["document"])
+            doc = record_to_contract(record)
+            doc.composition.media_timeline.tracks = []
+            persist_contract(record, doc)
+            db.commit()
+        headers = {"Authorization": "Bearer " + project["token"]}
+        with image.open("rb") as file:
+            uploaded = client.post(
+                "/api/v1/studios/v1/editing/resources/upload",
+                headers=headers,
+                data={
+                    "workspace_id": project["workspace"],
+                    "title": "Original arbitrary matte fixture",
+                    "metadata": json.dumps({"kind": "image", "usageEvidence": "Original synthetic matte fixture"}),
+                },
+                files={"file": (image.name, file, "image/png")},
+            )
+        assert uploaded.status_code == 200, uploaded.text
+        asset_id = uploaded.json()["id"]
+        direction = matte_direction(asset_id, mode, invert).model_dump(mode="json", by_alias=True)
+        base = f"/api/v1/studios/v1/documents/{project['document']}"
+        response = client.post(
+            base + "/editing-plans", headers={**headers, "Idempotency-Key": "asset-matte-plan"}, json=direction
+        )
+        assert response.status_code == 200, response.text
+        plan = response.json()
+        assert plan["status"] == "ready", plan["blockers"]
+        applied = client.post(
+            base + f"/editing-plans/{plan['id']}/apply", headers=headers, json={"expectedPlanRevision": plan["revision"]}
+        )
+        assert applied.status_code == 200, applied.text
+        inspection = client.get(base + "/editor/inspection?frame=4", headers=headers).json()
+        monkeypatch.setitem(
+            VIDEO_RENDER_PROVIDERS,
+            "remotion.contextual-v2",
+            RemotionNativeContextualRenderProvider(
+                RemotionNativeGraphicsProvider("node", "ffmpeg", 180),
+                VIDEO_RENDER_PROVIDERS["builtin.ffmpeg-contextual-v1"],
+            ),
+        )
+        monkeypatch.setattr("app.tasks.execute_studio_generation.delay", lambda *_: None)
+        response = client.post(
+            "/api/v1/studios/v1/video-renders",
+            headers={**headers, "Idempotency-Key": "asset-matte-render"},
+            json={
+                "workspaceId": project["workspace"],
+                "documentId": project["document"],
+                "expectedDocumentRevision": applied.json()["revision"],
+                "expectedDocumentVersion": 1,
+                "contextualPlanId": plan["id"],
+                "provider": "remotion.contextual-v2",
+                "output": {"width": 320, "height": 320, "fps": 30},
+            },
+        )
+        assert response.status_code == 202, response.text
+        wait_until = time.monotonic() + 120
+        while _active(_read(lease_path())):
+            if time.monotonic() &gt;= wait_until:
+                pytest.skip("Another live local operation occupies heavy-media capacity")
+            time.sleep(1)
+        with SessionLocal() as db:
+            job = db.get(StudioGenerationJob, response.json()["id"])
+            execute_job_once(db, job)
+            assert job.status == "succeeded", job.error_message
+            result = job.result_payload
+            assert result["providerVersion"] == "4.0.527-native.8"
+            assert result["documentRevision"] == applied.json()["revision"]
+            asset = db.get(LibraryAsset, result["artifact"]["assetId"])
+            metadata = asset.object_metadata
+            samples = metadata["contextualEditing"]["rendererChecks"]["geometrySamples"]
+            assert len(samples) == 15
+            for frame in [0, 2, 4, 7, 12, 13, 14]:
+                hero = next(item for item in samples[frame]["elements"] if item["semanticId"] == "hero")
+                assert ("assetMatte" in hero) == (2 &lt;= frame &lt; 13)
+                if 2 &lt;= frame &lt; 13:
+                    observed = hero["assetMatte"]
+                    assert observed["assetId"] == asset_id and observed["mode"] == mode and observed["invert"] == invert
+                    assert observed["sourceLocalOpacity"] == 0.5 and not observed["pixelCoverageObserved"]
+                    part = min(frame / 7, 1)
+                    source_angle, target_angle = math.radians(90 * part), math.radians(-5 * part)
+                    scale, delta = 1 + 0.2 * part, source_angle - target_angle
+                    target_x = 20 + 4 * (math.cos(target_angle) - math.sin(target_angle))
+                    target_y = 20 + 10 * part + 4 * (math.sin(target_angle) + math.cos(target_angle))
+                    dx = 80 + 80 * part + 10 * scale * math.cos(source_angle) - target_x
+                    dy = 80 + 10 * scale * math.sin(source_angle) - target_y
+                    expected_matrix = [
+                        scale * math.cos(delta), scale * math.sin(delta),
+                        -scale * math.sin(delta), scale * math.cos(delta),
+                        dx * math.cos(target_angle) + dy * math.sin(target_angle),
+                        -dx * math.sin(target_angle) + dy * math.cos(target_angle),
+                    ]
+                    assert observed["sourceToTargetMatrix"] == pytest.approx(expected_matrix, abs=0.002)
+                source_observation = next(item for item in samples[frame]["elements"] if item["semanticId"] == "matte")
+                assert source_observation["matteSourceOnly"] and not source_observation["visible"]
+            with get_object_storage(asset.storage_backend).materialize(asset.storage_key) as output:
+                assert hashlib.sha256(output.read_bytes()).hexdigest() == result["artifact"]["checksumSha256"]
+                pixels = subprocess.run(
+                    ["ffmpeg", "-v", "error", "-i", str(output), "-f", "rawvideo", "-pix_fmt", "rgb24", "-"],
+                    capture_output=True,
+                    check=True,
+                    timeout=30,
+                    creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0),
+                ).stdout
+                assert len(pixels) == 15 * 320 * 320 * 3
+                checks = []
+                # Independent spatial oracle uses the authored source parent's
+                # rotation/scale/translation, not the worker's matrices or DOM bbox.
+                for frame in [0, 2, 4, 7, 12, 13, 14]:
+                    part = min(frame / 7, 1)
+                    angle, scale = math.radians(90 * part), 1 + 0.2 * part
+                    for name, u, v in [
+                        ("white-triangle", 30, 12),
+                        ("hole", 20, 20),
+                        ("opaque-black", 90, 20),
+                        ("semi-gray", 25, 95),
+                            ("transparent", 90, 80),
+                    ]:
+                        local_u, local_v = (u * .5, 32 + v * .5) if wide else (u, v)
+                        x = round(80 + 80 * part + scale * ((local_u + 10) * math.cos(angle) - local_v * math.sin(angle)))
+                        y = round(80 + scale * ((local_u + 10) * math.sin(angle) + local_v * math.cos(angle)))
+                        # Confirm each probe is inside the transformed target.
+                        target_angle = math.radians(-5 * part)
+                        target_x = 20 + 4 * (math.cos(target_angle) - math.sin(target_angle))
+                        target_y = 20 + 10 * part + 4 * (math.sin(target_angle) + math.cos(target_angle))
+                        dx, dy = x - target_x, y - target_y
+                        tx = dx * math.cos(target_angle) + dy * math.sin(target_angle)
+                        ty = -dx * math.sin(target_angle) + dy * math.cos(target_angle)
+                        assert 2 &lt; tx &lt; 278 and 2 &lt; ty &lt; 278, (frame, name, tx, ty)
+                        red, green, blue, alpha = mask.getpixel((u, v))
+                        value = alpha / 255 * 0.5
+                        if mode == "luminance":
+                            value *= (0.2126 * red + 0.7152 * green + 0.0722 * blue) / 255
+                        if invert:
+                            value = 1 - value
+                        expected = 204 * value if 2 &lt;= frame &lt; 13 else 204
+                        offset = (frame * 320 * 320 + y * 320 + x) * 3
+                        observed = tuple(pixels[offset : offset + 3])
+&gt;                       assert all(abs(channel - expected) &lt; 12 for channel in observed), (frame, name, observed, expected)
+E                       AssertionError: (4, 'white-triangle', (113, 115, 113), 102.0)
+E                       assert False
+E                        +  where False = all(&lt;generator object test_asset_matte_real_api_job_and_intermediate_alpha_pixels.&lt;locals&gt;.&lt;genexpr&gt; at 0x00000231AD86B6A0&gt;)
+
+tests\test_asset_matte_render.py:177: AssertionError</failure></testcase></testsuite></testsuites>

@@ -1,0 +1,113 @@
+{
+  "scope": "sparse browser-to-independent-original-size-MP4 pixels; no human quality verdict",
+  "reference": "Explicit BT709 limited-to-full RGB, bilinear full chroma interpolation and accurate rounding to compare observed Chrome fallback; not portable export color qualification",
+  "colorMetadata": {
+    "interface-a": {
+      "pix_fmt": "yuv420p"
+    },
+    "organization-a": {
+      "pix_fmt": "yuv420p"
+    }
+  },
+  "declaredMaxChannelError": 4,
+  "captures": [
+    {
+      "capture": "interface-a-frame0.json",
+      "frame": 0,
+      "sha256": "28106138b5d5c3b94fa2264f8ed68f52e32412884502cdba6e0f768c473127aa",
+      "points": 7,
+      "maxChannelError": 0
+    },
+    {
+      "capture": "interface-a-frame284.json",
+      "frame": 284,
+      "sha256": "626fd1367e118c3e36f815c6464470d09d77a987dd899a028759d537e6ca319d",
+      "points": 7,
+      "maxChannelError": 0
+    },
+    {
+      "capture": "interface-a-timeline-frame0.json",
+      "frame": 0,
+      "sha256": "e7349e7911f65aee6e9c22a27dbbd3412487be7849063b40be783bda89d0a524",
+      "points": 7,
+      "maxChannelError": 0
+    },
+    {
+      "capture": "interface-a-timeline-frame284.json",
+      "frame": 284,
+      "sha256": "fe9e083a265f09242034220c7d117cfceb52f561a0633915c82d9436aa52547a",
+      "points": 7,
+      "maxChannelError": 0
+    },
+    {
+      "capture": "interface-a-timeline-frame285.json",
+      "frame": 285,
+      "sha256": "106ae78ab6c751cc9534236e8cd5a95e091b01c08ffb6ec18dc73293bafcf5ee",
+      "points": 7,
+      "maxChannelError": 0
+    },
+    {
+      "capture": "interface-a-timeline-frame286.json",
+      "frame": 286,
+      "sha256": "7c6398e49e9b508a8135dee32298edf04557b8255439f176f5ddb18bb8941834",
+      "points": 7,
+      "maxChannelError": 0
+    },
+    {
+      "capture": "interface-a-timeline-frame449.json",
+      "frame": 449,
+      "sha256": "8eec4b9b6d1cf9beabafb5e2d7aa278b5e4f79ae38880373499dcc97e1fe6ea9",
+      "points": 7,
+      "maxChannelError": 0
+    },
+    {
+      "capture": "organization-a-clamp450.json",
+      "frame": 449,
+      "sha256": "aeb7be437ab164326ede5169c83bf03d234a4d67938c3849b91f70c9c0bb3c4a",
+      "points": 7,
+      "maxChannelError": 0
+    },
+    {
+      "capture": "organization-a-frame0.json",
+      "frame": 0,
+      "sha256": "c22853a5dfc939273d1c2338f9700e03555d15b1f899399e6bbfaafe1996ceef",
+      "points": 7,
+      "maxChannelError": 0
+    },
+    {
+      "capture": "organization-a-frame139.json",
+      "frame": 139,
+      "sha256": "4e24d9ff4b4a8060eed9861e3b0e186e6105ca407e1d41cffe96acdb34bea204",
+      "points": 7,
+      "maxChannelError": 0
+    },
+    {
+      "capture": "organization-a-frame244.json",
+      "frame": 244,
+      "sha256": "3073e59e3f5f0c98ec074217b2f981b836b0a1415a5c6b4bfe42f3e105f0c6bf",
+      "points": 7,
+      "maxChannelError": 0
+    },
+    {
+      "capture": "organization-a-frame449.json",
+      "frame": 449,
+      "sha256": "6ec039505de40e0b165bf63a7f8421e50d1dd953d02fc9b3e2251c2bdaaf2590",
+      "points": 7,
+      "maxChannelError": 0
+    },
+    {
+      "capture": "organization-a-main-end.json",
+      "frame": 449,
+      "sha256": "53d128ca0892fbaf8423ac78ca080ccd30ea2477548a3820498a8360dcad91bb",
+      "points": 7,
+      "maxChannelError": 0
+    },
+    {
+      "capture": "organization-a-main-home.json",
+      "frame": 0,
+      "sha256": "b12f60c4504af4f991fe660453a42b5ca4ffbf3ed1e790fd67386e43fc5416d7",
+      "points": 7,
+      "maxChannelError": 0
+    }
+  ]
+}

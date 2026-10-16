@@ -31,7 +31,7 @@ export const NAVIGATION_TAB_PATHS: Readonly<Record<NavigationTab, string>> = {
   workspace: "/discover",
   brain: "/brand-memory",
   strategy: "/projects",
-  studio: "/campaigns/active/studio",
+  studio: "/studios",
   library: "/library/assets",
   "create-image": "/content/draft/edit?mode=visual",
   "create-video": "/content/draft/edit?mode=video",
@@ -114,6 +114,7 @@ const pattern = (
  * time. Matchers are non-overlapping so one URL can never have two owners.
  */
 export const ROUTE_REGISTRY: readonly RouteDefinition[] = [
+  exact("ROUTE-STUDIOS", "/studios", "editor", "canonical", "studio", true, "studio"),
   exact("ROUTE-ROOT", "/", "home", "canonical", "global", true, "dashboard"),
   exact("ROUTE-DASHBOARD", "/dashboard", "home", "canonical", "global", true, "dashboard"),
   exact("ROUTE-TODAY", "/today", "home", "canonical", "global", true, "dashboard"),

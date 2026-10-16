@@ -1,0 +1,76 @@
+{
+  "scope": "isolated_single_sample_diagnostic_from_actual_canonical_manifest",
+  "sourceManifestSha256": "bab6f76fe23c45ef4ebf26d1741e0a03b2da385e1ed533e50a3bc3b37f2cada9",
+  "maskSha256": "ee10f031a17421859e3af5f725273644b8534709cb23173c6e1bf0ac8787e2c2",
+  "sampledLayerIds": [
+    "ed2-cede67250799ff0e90550c70",
+    "ed2-dc4fb9af60c130fbb12fd888"
+  ],
+  "centerFrame": 0,
+  "sampleTimes": [
+    0.015625,
+    0.046875,
+    0.078125,
+    0.109375,
+    0.140625,
+    0.171875,
+    0.203125,
+    0.234375
+  ],
+  "records": [
+    {
+      "name": "center",
+      "time": 0,
+      "manifestSha256": "d758c247d8ada5e43d676047753cd927806bf6d28e625bc976b8e3436fb6bc52",
+      "videoSha256": "d8005351622def142d6257ce634d1beda4b6613ec5d4a864da3f5cc713e64e8d"
+    },
+    {
+      "name": "sample-1",
+      "time": 0.015625,
+      "manifestSha256": "d825f4fa1b45b543f4a24063064059cbd84a943b0209d59dbb416f2e31fecb17",
+      "videoSha256": "d8005351622def142d6257ce634d1beda4b6613ec5d4a864da3f5cc713e64e8d"
+    },
+    {
+      "name": "sample-2",
+      "time": 0.046875,
+      "manifestSha256": "f3274844875d8467ad3d53ba9ec0d9e430c4c550d0382a9857772f2438a035ca",
+      "videoSha256": "d8005351622def142d6257ce634d1beda4b6613ec5d4a864da3f5cc713e64e8d"
+    },
+    {
+      "name": "sample-3",
+      "time": 0.078125,
+      "manifestSha256": "f2aa1225cab0f389156afb0942742ce7850e0b3350bd9d4c6b7466c5ba5209b0",
+      "videoSha256": "d8005351622def142d6257ce634d1beda4b6613ec5d4a864da3f5cc713e64e8d"
+    },
+    {
+      "name": "sample-4",
+      "time": 0.109375,
+      "manifestSha256": "6eb4456423f626621c03a67ab9da38366ab3930d2d203f22d22e12c9b933f3c2",
+      "videoSha256": "d8005351622def142d6257ce634d1beda4b6613ec5d4a864da3f5cc713e64e8d"
+    },
+    {
+      "name": "sample-5",
+      "time": 0.140625,
+      "manifestSha256": "7511e5fab5ef51c47ce1dcd1fede4323b4996ef97339eb15324316eb71a61c89",
+      "videoSha256": "d8005351622def142d6257ce634d1beda4b6613ec5d4a864da3f5cc713e64e8d"
+    },
+    {
+      "name": "sample-6",
+      "time": 0.171875,
+      "manifestSha256": "11a62c0220773cb0857e4bcd60b1dacfc0f78aff3b21fb7393c6fc14ca5b644a",
+      "videoSha256": "d8005351622def142d6257ce634d1beda4b6613ec5d4a864da3f5cc713e64e8d"
+    },
+    {
+      "name": "sample-7",
+      "time": 0.203125,
+      "manifestSha256": "e20a850212796e061a0bf76b09f1fa4ff9031bff6878f76840c8db7ed772a328",
+      "videoSha256": "d8005351622def142d6257ce634d1beda4b6613ec5d4a864da3f5cc713e64e8d"
+    },
+    {
+      "name": "sample-8",
+      "time": 0.234375,
+      "manifestSha256": "0bc0438a32e35173b7efe4c86856b84ca77ecca48465da7fdfbd4e42cfedf459",
+      "videoSha256": "d8005351622def142d6257ce634d1beda4b6613ec5d4a864da3f5cc713e64e8d"
+    }
+  ]
+}

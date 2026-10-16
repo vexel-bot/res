@@ -3,7 +3,7 @@
 import re
 
 from ...models import LibraryAsset
-from ...providers.studios.contextual_render import ContextualFFmpegProvider
+from ...providers.studios.ffmpeg_utility import FFmpegUtility
 from ...providers.studios.media_probe import MEDIA_PROBE_PROVIDERS
 from ..object_storage import get_object_storage, sha256_file
 
@@ -39,7 +39,7 @@ def prepare_samples(db, workspace_id, request, stack, directory, settings, cance
     end = min(duration, start + max(request.required_seconds, 1))
     if start >= duration:
         raise ValueError("material_inspection_source_interval_unavailable")
-    renderer = ContextualFFmpegProvider(settings.ffmpeg_path, settings.ffmpeg_timeout_seconds)
+    renderer = FFmpegUtility(settings.ffmpeg_path, settings.ffmpeg_timeout_seconds)
     sample_times = [start + max(0, end - start - 0.08) * index / 5 for index in range(6)]
     if request.max_samples > 6:
         renderer._run(

@@ -1,0 +1,78 @@
+{
+  "observedAt": "2026-10-05T21:00:23.539248+00:00",
+  "sourceHashesMatch": 96,
+  "scope": "Content-keyed bounded validation facts, fresh selected plan, legacy session behavior, real parity/UI/preservation",
+  "tests": {
+    "passed": 26,
+    "failed": 0,
+    "scope": "Eight new validation cases, six query cases, nine summary cases, three command cases"
+  },
+  "ruff": "passed",
+  "noNewGenerationOrPaidCalls": true,
+  "summaryUiVerified": true,
+  "realtimeScrubbingDemonstrated": false,
+  "humanApproval": "not_assessed",
+  "autonomy": "not_demonstrated",
+  "files": {
+    "before.json": {
+      "sha256": "dc046116d7584db760da83390ca0a61035e992570128fb8e07ae055192a2cdac",
+      "bytes": 172
+    },
+    "COMPATIBILITY.md": {
+      "sha256": "ff239f658a08c74f30bfbda5559d398c2f9bd286ed88ec71f02b5d603a8f40ff",
+      "bytes": 1969
+    },
+    "contextual_editing.py.before": {
+      "sha256": "e1b18d17028aeec88cfbc6871794468209367b1a496e0bc5d76017ab70286e7f",
+      "bytes": 66302
+    },
+    "history-ui-frame244-settled.json": {
+      "sha256": "202d421e4760ef0e38e2651fae3cc066f28e6ce07b3dd91bc30ffb858793042c",
+      "bytes": 36940
+    },
+    "history-ui-frame244.json": {
+      "sha256": "0e640b55560a512172b1dab9ab029eb3c7a77f71beb860d6bb1de939f50f958f",
+      "bytes": 34333
+    },
+    "history-ui-frame449-settled.json": {
+      "sha256": "7d150d7f55402695e433264b8b25bf7bf0490c8f36bf252f1040c92da35684a3",
+      "bytes": 36514
+    },
+    "history-ui-frame449.json": {
+      "sha256": "a8256d02b39561461ee8bef9a5230a0dc97008cdbfe84196552154e5849b3569",
+      "bytes": 34769
+    },
+    "history-ui-initial.json": {
+      "sha256": "3be72858f7702c1ba8b1e8ddf0dec4b1eb563b510b240ac925a6875c533cca39",
+      "bytes": 23550
+    },
+    "history-ui-open.json": {
+      "sha256": "6fa887f90d14c88dea3cddbdc6bbaf86a21fa0a58edadd4217a7aa3c2be79e58",
+      "bytes": 33435
+    },
+    "observation.json": {
+      "sha256": "e66a2cfcbb2a55151f6986827b230d84d5bc6191f32f64c2fcd57a25c1c7bb6a",
+      "bytes": 4464
+    },
+    "preservation.json": {
+      "sha256": "2f292190a49ac2fe0dd463d9b6a9a1d80fd979662efbc0088a8b63f16789feb7",
+      "bytes": 3091
+    },
+    "sources.json": {
+      "sha256": "2dc25e602be30d816b600e54362dbf5794efc83dc9005ddcb7f8f6a4ffbe02f5",
+      "bytes": 12550
+    },
+    "contextual_editing.py.diff": {
+      "sha256": "ba97ab21752b536b37b78b267e50724530cf83a95919137826110389c24758a3",
+      "bytes": 873
+    },
+    "README.md": {
+      "sha256": "3ec39a4be3bcf8d46e503dee2100b0c69221be68ac1a96df5053c5920202c2e8",
+      "bytes": 6635
+    },
+    "validation-commands.json": {
+      "sha256": "a5156ddec67103752a283892e2c2d798f51be1cec043ab278744d4e674db5681",
+      "bytes": 1095
+    }
+  }
+}

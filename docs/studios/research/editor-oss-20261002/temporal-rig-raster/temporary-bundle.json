@@ -1,0 +1,10 @@
+{
+  "path": "C:\\Users\\edugu\\Downloads\\res\\tmp\\temporal-rig-raster-bundle",
+  "verifiedOwnedWorkspaceTarget": true,
+  "files": 50,
+  "logicalBytes": 26640368,
+  "attempt": "native PowerShell Remove-Item -LiteralPath -Recurse -Force",
+  "status": "pending_automatic_policy_rejected",
+  "rejection": "blocked by policy",
+  "bypassAttempted": false
+}

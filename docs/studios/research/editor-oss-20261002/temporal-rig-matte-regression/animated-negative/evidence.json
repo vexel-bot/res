@@ -1,0 +1,10 @@
+{
+  "scope": "actual_API_plan_apply_job_animated_PNG_rejection",
+  "jobId": "68311b81-0d6a-476d-b6ce-bd042befa6ba",
+  "status": "retrying",
+  "errorCode": "ValueError",
+  "errorMessage": "remotion_render_failed:file:///C:/Users/edugu/Downloads/res/workers/remotion-benchmark/render-hybrid.mjs:47\n    catch(error){throw new Error(`${String(error)}:asset=${id}`);}\n                       ^\n\nError: Error: hybrid_asset_matte_animated_png_pending:asset=d330655b-19cf-4630-bcdf-ace52582ae96\n    at file:///C:/Users/edugu/Downloads/res/workers/remotion-benchmark/render-hybrid.mjs:47:24\n\nNode.js v22.15.0\nfull_log:C:\\Users\\edugu\\Downloads\\res\\workers\\remotion-benchmark\\output\\diagnostics\\c89927d4977747b25ae42673242ac9387e97ec9e64038ea3ac37cfbb492b5ded.log",
+  "publishedArtifact": false,
+  "sourceSha256": "d6122034969fe1946219f1025db6ab8be5f8663954c087f8a3b3a2070ea8ab02",
+  "correction": "Supply a static PNG matte; APNG is unsupported by asset_matte v1."
+}

@@ -2,6 +2,8 @@ import express from 'express';
 import { readFileSync } from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { Readable } from 'node:stream';
+import { pipeline } from 'node:stream/promises';
 import { createServer as createViteServer } from 'vite';
 import { GoogleGenAI, Type } from '@google/genai';
 import dotenv from 'dotenv';
@@ -20,6 +22,10 @@ async function startServer() {
 
   app.use(['/api/v1', '/health'], async (req, res) => {
     const targetUrl = new URL(req.originalUrl, API_ORIGIN);
+    const controller = new AbortController();
+    const abort = () => { if (!res.writableEnded) controller.abort(); };
+    req.on('aborted', abort);
+    res.on('close', abort);
     const headers = new Headers();
     for (const [name, value] of Object.entries(req.headers)) {
       if (!value || ['host', 'connection', 'content-length'].includes(name.toLowerCase())) continue;
@@ -32,21 +38,28 @@ async function startServer() {
         headers,
         body: ['GET', 'HEAD'].includes(req.method) ? undefined : (req as unknown as BodyInit),
         duplex: ['GET', 'HEAD'].includes(req.method) ? undefined : 'half',
+        signal: controller.signal,
       } as RequestInit & { duplex?: 'half' });
 
       res.status(upstream.status);
       upstream.headers.forEach((value, name) => {
-        if (!['content-encoding', 'transfer-encoding', 'connection'].includes(name.toLowerCase())) {
+        if (!['content-encoding', 'transfer-encoding', 'connection', 'content-length'].includes(name.toLowerCase())) {
           res.setHeader(name, value);
         }
       });
-      res.send(Buffer.from(await upstream.arrayBuffer()));
+      if (upstream.body) await pipeline(Readable.fromWeb(upstream.body as Parameters<typeof Readable.fromWeb>[0]), res);
+      else res.end();
     } catch (error) {
+      if (controller.signal.aborted) return;
       console.error('Clicko API proxy unavailable:', error);
+      if (res.headersSent) { res.destroy(); return; }
       res.status(503).json({
         detail: 'A API funcional da Clicko está temporariamente indisponível.',
         upstream: API_ORIGIN,
       });
+    } finally {
+      req.off('aborted', abort);
+      res.off('close', abort);
     }
   });
 
@@ -616,7 +629,12 @@ Monte automaticamente o planejamento completo com cronograma, lista de conteúdo
           return;
         }
         try {
-          const source = readFileSync(path.join(process.cwd(), 'index.html'), 'utf8');
+          // Technical engine validation is available only in this isolated E2E
+          // server. Customer routes always render the creative department.
+          const entry = req.path === '/__craft-validation'
+            ? 'tests/fixtures/craft-validation.html'
+            : 'index.html';
+          const source = readFileSync(path.join(process.cwd(), entry), 'utf8');
           const html = await vite.transformIndexHtml(req.originalUrl, source);
           res.type('html').send(
             html.replace(/\s*<script\b[^>]*src=["']\/@vite\/client["'][^>]*><\/script>\s*/i, '\n'),

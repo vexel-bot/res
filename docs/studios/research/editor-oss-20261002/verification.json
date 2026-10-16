@@ -1,0 +1,124 @@
+{
+  "schemaVersion": "res.editor-oss-verification.v1",
+  "date": "2026-10-02",
+  "research": {
+    "repositories": 7,
+    "selectedFiles": 44,
+    "externalCodeCopiedIntoApplication": false
+  },
+  "numericalRuntime": {
+    "checks": 31,
+    "passed": 31,
+    "samples": 6010,
+    "maximumAbsoluteErrorPx": 0.01765042276508666
+  },
+  "recipes": {
+    "path": "docs/studios/research/editor-oss-20261002/recipes.v1.json",
+    "sha256": "786f8b328a827d149c42835eccd1f8aba1701ff1c93df44b3a425631dead8c25",
+    "validatedAgainst": "app.domain.studios.motion_recipes.MotionRecipeV1",
+    "count": 4,
+    "ids": [
+      "study-title-settle",
+      "study-whole-words",
+      "study-motivated-matte",
+      "study-temporal-exposure"
+    ],
+    "qualification": "contract_validated_only"
+  },
+  "pythonTestSuites": [
+    {
+      "receipt": "backend-tests.xml",
+      "tests": 28,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "elapsedSeconds": 101.989,
+      "failureCases": [],
+      "passed": 28
+    },
+    {
+      "receipt": "render-tests.xml",
+      "tests": 6,
+      "failures": 3,
+      "errors": 0,
+      "skipped": 0,
+      "elapsedSeconds": 59.489,
+      "failureCases": [
+        "test_native_video_trim_speed_and_observed_geometry[24]",
+        "test_native_video_trim_speed_and_observed_geometry[60]",
+        "test_native_plan_apply_render_api_and_provider_binding"
+      ],
+      "passed": 3
+    }
+  ],
+  "lint": {
+    "pythonResearchScripts": "passed",
+    "runtimeStudyNodeSyntax": "passed"
+  },
+  "sourceHashes": [
+    {
+      "path": "backend/app/domain/studios/motion.py",
+      "sha256": "63d489b6feb4d1ca53b7f73a292a6663ff458ca2f4ae7467cdc4cd67485d5b69"
+    },
+    {
+      "path": "backend/app/domain/studios/motion_recipes.py",
+      "sha256": "e604d9d44e51cebb2c2b0dc24f8e2144948e07735f201d086ddb0d8eccd2fd0c"
+    },
+    {
+      "path": "backend/app/services/studios/native_motion_recipes.py",
+      "sha256": "e88cf6a494dd9dbf60e6bef568e070cce7cb8cc683ff8b799cc87d1d0f0e6eef"
+    },
+    {
+      "path": "backend/app/providers/studios/remotion_projection.py",
+      "sha256": "080e8a1b3e2c416ad285690069db492824a28e8c30570aef19a55ea29a26e674"
+    },
+    {
+      "path": "backend/app/providers/studios/remotion_render.py",
+      "sha256": "29ed4352573fa4bcfd8883a9a0b1b7fb7c4708687581cd5fb271fc36406abe94"
+    },
+    {
+      "path": "workers/remotion-benchmark/src/hybrid.tsx",
+      "sha256": "09416f6c85bb060a0a65d2171ad56c0ad63420f3315d4389130fff98674b4bf7"
+    },
+    {
+      "path": "workers/remotion-benchmark/render-hybrid.mjs",
+      "sha256": "755dd1cb4272923d8e6a3087be018b8b2d92c37e95a33df9e4c811cec7c6cad5"
+    },
+    {
+      "path": "backend/tests/test_native_motion_recipes.py",
+      "sha256": "8b75916d476b0504293b2035e85315e303dbbccdabe4e81b5f3da98025d11ec8"
+    },
+    {
+      "path": "backend/tests/test_studio_motion_graph.py",
+      "sha256": "b4b9e1d2d207b9a0386cbdc2adbfbf2e2896d777cb0481abc80f0d3df189cdbb"
+    },
+    {
+      "path": "backend/tests/test_editorial_motion_v2.py",
+      "sha256": "463453e72456a32f6be3abaa593bdbc95fc689d2e66b4d101b9b3f3ea5228260"
+    },
+    {
+      "path": "backend/tests/test_remotion_native.py",
+      "sha256": "a59508d34152ddadc69e67364f52e659fd50b2328494256e8bb7e711466db0fc"
+    },
+    {
+      "path": "backend/tests/test_remotion_native_api.py",
+      "sha256": "7f862c2aaafdc3690e119fa17457f69c8d3c0704b3e1cc6cd8264ba4f73d8473"
+    }
+  ],
+  "sourceHashSnapshotMeaning": "Collected after test runs; local changes from another session were observed. Numeric probes bind their own execution-source hashes; pytest receipts describe those executions and do not qualify later edits.",
+  "cleanup": {
+    "status": "blocked_by_automatic_approval_review",
+    "logicalCloneBytes": 3831737,
+    "removed": false
+  },
+  "technicalRenderQualifiedByThisStudy": false,
+  "humanVisualReview": "not_performed",
+  "autonomyQualified": false,
+  "sharedContractsChanged": false,
+  "applicationSourceChangedByThisStudy": false,
+  "pending": [
+    "Temporary clone removal rejected by automatic approval review",
+    "Investigate worker extraction failure after media owner finishes",
+    "Complete implementation handoff and real human review"
+  ]
+}

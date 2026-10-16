@@ -1,0 +1,56 @@
+{
+  "scope": "selected_primary_sources_read_in_memory_no_clone_no_implementation_copied",
+  "browserVersion": "Google Chrome for Testing 149.0.7790.0",
+  "browserSha256": "ec76dc3e69ffab9daddf0bbe7bf0a9e0a034b2d086741a0ae2ef6358a597537b",
+  "license": "Chromium BSD-style; no implementation copied",
+  "sources": [
+    {
+      "url": "https://chromium.googlesource.com/chromium/src/+/149.0.7790.0/third_party/blink/renderer/core/paint/svg_mask_painter.cc",
+      "sha256": "71f4676187a98ee59ebc6081d50724305d8583125914d7d952f4981ca053b668",
+      "bytes": 13181,
+      "lines": 337,
+      "selectedSymbolLines": {
+        "context.Clip(masker->ResourceBoundingBox(reference_box, zoom));": [
+          286
+        ]
+      }
+    },
+    {
+      "url": "https://chromium.googlesource.com/chromium/src/+/149.0.7790.0/third_party/blink/renderer/platform/graphics/graphics_context.h",
+      "sha256": "ec03e0fee199275cc6827badf4a6f614af3acc48f2ddc77def4de1bf8e16e735",
+      "bytes": 22526,
+      "lines": 583,
+      "selectedSymbolLines": {
+        "void Clip(const gfx::RectF& rect)": [
+          377
+        ],
+        "void ClipRect(const SkRect&": [
+          391
+        ],
+        "AntiAliasingMode = kNotAntiAliased": [
+          389,
+          392,
+          520
+        ]
+      }
+    },
+    {
+      "url": "https://chromium.googlesource.com/chromium/src/+/149.0.7790.0/third_party/blink/renderer/platform/graphics/graphics_context.cc",
+      "sha256": "225ea1bac7d2dff2a8b5ca3280efc663101821fa1e4545beeb0bb0e7e4d6b96c",
+      "bytes": 37397,
+      "lines": 1009,
+      "selectedSymbolLines": {
+        "void GraphicsContext::ClipRect": [
+          938
+        ],
+        "canvas_->clipRect": [
+          942
+        ]
+      }
+    }
+  ],
+  "scriptSha256": "c933c32b79a88bd37b60ab7d116889b4bd8a2c40fc09b94a37e2905c1fe50008",
+  "finding": "SVG mask resource bounds call GraphicsContext::Clip(RectF), whose ClipRect default is kNotAntiAliased.",
+  "limitation": "The call does not establish the device raster transform or a universal final pixel-center/coverage-squared model.",
+  "productionAdmission": "pending"
+}

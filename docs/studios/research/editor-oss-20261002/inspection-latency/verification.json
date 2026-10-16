@@ -1,0 +1,70 @@
+{
+  "observedAt": "2026-10-05T20:27:56.597693+00:00",
+  "sourceHashesMatch": 85,
+  "scope": "Latest-document query only, three real API selections, one real UI open, nine studies preserved",
+  "tests": {
+    "passed": 10,
+    "failed": 0,
+    "scope": "Six query semantics/hydration tests and four existing command/API regressions"
+  },
+  "ruff": "passed",
+  "latestQueryHydratesOneEvent": true,
+  "inspectorLatencyResolved": false,
+  "noNewGenerationOrPaidCalls": true,
+  "humanApproval": "not_assessed",
+  "autonomy": "not_demonstrated",
+  "files": {
+    "contextual_editing.py.before": {
+      "sha256": "7325ad6fcc9646c369ef46abcce684e9b10a77cabac8073d67ac064e263d25c2",
+      "bytes": 66095
+    },
+    "event-sizes.json": {
+      "sha256": "d9abdc0d27baac8d4046e9a83db21771727fd742861baa5461579d9185285ec4",
+      "bytes": 813
+    },
+    "interface-a-profile.json": {
+      "sha256": "c2f7d4e3e762f6c4995c1081aa3b366cbf67e9a9471eb4e3be53bd8421cf39e9",
+      "bytes": 13573
+    },
+    "latest-plan-observation.json": {
+      "sha256": "d44bf0ce255635b2153bf01e6d4c0f653599e7975a91cf693bbd037abaf776b0",
+      "bytes": 2861
+    },
+    "preservation.json": {
+      "sha256": "763438ebaa76c7daa9a84191233f412c50ce8b09d177738e49c46ca985c83e17",
+      "bytes": 3091
+    },
+    "query-before.json": {
+      "sha256": "d1abf4afb92bb44de631e308c4133182158c07de4ad636142e6f8191644048bd",
+      "bytes": 453
+    },
+    "query-ui-initial.json": {
+      "sha256": "617aef92b1c6ee29662aa4851a6b38216cbbcc5a37f444f821a3c57b9de14211",
+      "bytes": 14189
+    },
+    "query-ui-open.json": {
+      "sha256": "0986613e7ab5e49f3e57267c54b1040d08812637f3000f15756cb853449c8e96",
+      "bytes": 30571
+    },
+    "query-ui-settled.json": {
+      "sha256": "f36741b67915a88cce450e62ce9481a9196ec52869e9d48647790624978850b1",
+      "bytes": 19556
+    },
+    "sources.json": {
+      "sha256": "008570440d1447805f3b55a789c30679007631a7266f35c06beb815c41cb33be",
+      "bytes": 10575
+    },
+    "README.md": {
+      "sha256": "6a78ea405b7324ae447d4e928cc08cfa1631b585134a98b6c40a23ffac7f70c4",
+      "bytes": 5788
+    },
+    "contextual_editing.py.diff": {
+      "sha256": "3158fecb1b7d4636727a8f521fe7ee89e3bf7a4a67d59c40446676d3330a6b02",
+      "bytes": 1493
+    },
+    "validation-commands.json": {
+      "sha256": "097712075d61965cd590cbbdd58db6962429db71e4e6ca16763fe63710d821fe",
+      "bytes": 894
+    }
+  }
+}

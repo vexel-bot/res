@@ -1,0 +1,31 @@
+{
+  "scope": "Length projection only, no payload dump",
+  "planId": "364e858f-4334-4cb7-b384-38ef0207547a",
+  "events": [
+    {
+      "id": "10ee8482-73a2-404f-9fc1-d131423413f2",
+      "payloadCharacters": 95192,
+      "planCharacters": 88405
+    },
+    {
+      "id": "9f86c2d1-309e-4a79-bd90-b685ae36e727",
+      "payloadCharacters": 95058,
+      "planCharacters": 88513
+    },
+    {
+      "id": "a7764a0e-d573-4395-b785-3671ce93601f",
+      "payloadCharacters": 7979589,
+      "planCharacters": 7263227
+    },
+    {
+      "id": "e09c505d-3045-4486-a8d8-a795a0491435",
+      "payloadCharacters": 7977755,
+      "planCharacters": 7261393
+    },
+    {
+      "id": "1230eb39-7e78-40fa-96a5-0782fb78bbad",
+      "payloadCharacters": 7979589,
+      "planCharacters": 7263227
+    }
+  ]
+}

@@ -1,0 +1,677 @@
+{
+  "schemaVersion": "res.spatial-effects-receipt.v1",
+  "generatedAt": "2026-10-03T19:13:27.283032+00:00",
+  "qualification": "fixture_specific_technical_evidence",
+  "humanReview": "pending",
+  "providerVersion": "4.0.527-native.12",
+  "contextualFinalizerVersion": "1.4.0",
+  "compilerVersion": "res.native-recipes.v4",
+  "componentLibraryVersion": 7,
+  "uniquePassedPytestCases": 171,
+  "runtimeGuardChecks": 23,
+  "testRuns": [
+    {
+      "path": "docs/studios/research/editor-oss-20261002/spatial-effects-native12-render-tests.xml",
+      "sha256": "9f9268dc27196bf4cb861935d71dfa21c92da200a958152b0934c440f37c201d",
+      "cases": 25,
+      "failure": 0,
+      "error": 0,
+      "skipped": 0
+    },
+    {
+      "path": "docs/studios/research/editor-oss-20261002/spatial-effects-native12-pure-regression-tests.xml",
+      "sha256": "48a78c6abe7562572e539768d90eb6891244ee5712e89aa260e3b459a8d1c8c2",
+      "cases": 134,
+      "failure": 0,
+      "error": 0,
+      "skipped": 0
+    },
+    {
+      "path": "docs/studios/research/editor-oss-20261002/spatial-effects-native12-native-regression-tests.xml",
+      "sha256": "d8b7f9bbb0825780de4b888aa9d1baad55384239e0a341af720341330ba0f0ff",
+      "cases": 37,
+      "failure": 0,
+      "error": 0,
+      "skipped": 0
+    }
+  ],
+  "testRunInterpretation": "Deduplicated current cases; file named pure-regression also contains three actual renderer cases.",
+  "renders": [
+    {
+      "path": "docs/studios/research/editor-oss-20261002/spatial-effects-native12-render/control/spatial.mp4",
+      "videoSha256": "cf751be6689b2f28fde9a7affb6594a773d2d45269b7baa6815abf28e10d9cba",
+      "bytes": 4232,
+      "evidencePath": "docs/studios/research/editor-oss-20261002/spatial-effects-native12-render/control/evidence.json",
+      "evidenceSha256": "6f24e80a0f72e613ab6659f9a451c871d41c66af1e3cef5c44a5ccd990905186",
+      "jobId": "2cdd61fc-7b62-4bdf-b04d-67813744bea3",
+      "documentId": "07b01688-7509-4b82-a0f7-5a8e8dad4fd3",
+      "revision": 2,
+      "providerVersion": "4.0.527-native.12",
+      "qc": "passed",
+      "humanReview": "pending",
+      "graphicsBackend": "chromium_swangle",
+      "quality": "high",
+      "renderDurationMs": 10562,
+      "timingsMs": {
+        "assetPreparation": 0,
+        "bundle": 2388,
+        "selectComposition": 1999,
+        "renderAndEncode": 2707
+      },
+      "variant": "control",
+      "pixelProbes": 190,
+      "maximumLuminanceError": 5.684341886080802e-14
+    },
+    {
+      "path": "docs/studios/research/editor-oss-20261002/spatial-effects-native12-render/exposure/spatial.mp4",
+      "videoSha256": "6ea761141f2d9fc65d60ef9fd46713616236a0c886ea7ba3629abff5661352ab",
+      "bytes": 6943,
+      "evidencePath": "docs/studios/research/editor-oss-20261002/spatial-effects-native12-render/exposure/evidence.json",
+      "evidenceSha256": "3b6a30a7f17041ab48fccac4a0cd09407d9d2bd9d5332b5498a2f16f570fb7cd",
+      "jobId": "f2290a30-0c93-47eb-94c7-3afcf77a3308",
+      "documentId": "f864c981-4e56-48f6-9468-36e2e5e7f0cc",
+      "revision": 2,
+      "providerVersion": "4.0.527-native.12",
+      "qc": "passed",
+      "humanReview": "pending",
+      "graphicsBackend": "chromium_swangle",
+      "quality": "high",
+      "renderDurationMs": 8093,
+      "timingsMs": {
+        "assetPreparation": 0,
+        "bundle": 2324,
+        "selectComposition": 1304,
+        "renderAndEncode": 3193
+      },
+      "variant": "exposure",
+      "pixelProbes": 190,
+      "maximumLuminanceError": 3.661318265325292,
+      "discriminatingExposureProbe": {
+        "frame": 0,
+        "x": 128,
+        "y": 134,
+        "centerFrameExpectedRgb": [
+          254.99999999999994,
+          254.99999999999994,
+          254.99999999999994
+        ],
+        "exposedObservedRgb": [
+          188.5,
+          188.5,
+          188.5
+        ],
+        "luminanceDifferenceFromUnexposedCenter": 66.49999999999994
+      }
+    },
+    {
+      "path": "docs/studios/research/editor-oss-20261002/spatial-effects-native12-render/spatial/spatial.mp4",
+      "videoSha256": "bb64ba76b3071553cda1ec341c41656d2dce15e777654b6da0d952cd39ff23bd",
+      "bytes": 6518,
+      "evidencePath": "docs/studios/research/editor-oss-20261002/spatial-effects-native12-render/spatial/evidence.json",
+      "evidenceSha256": "735c1d855995b14421be7dfb230ebfca9364659c13cf28372ef608cd9b4fc8ef",
+      "jobId": "dac3ea0a-d2e0-4311-b75e-13805df21596",
+      "documentId": "98ee4854-9109-4851-ba81-9f4d3242fdf1",
+      "revision": 2,
+      "providerVersion": "4.0.527-native.12",
+      "qc": "passed",
+      "humanReview": "pending",
+      "graphicsBackend": "chromium_swangle",
+      "quality": "high",
+      "renderDurationMs": 9407,
+      "timingsMs": {
+        "assetPreparation": 0,
+        "bundle": 2904,
+        "selectComposition": 1585,
+        "renderAndEncode": 3248
+      },
+      "variant": "spatial",
+      "pixelProbes": 190,
+      "maximumLuminanceError": 2.3946983180704904
+    },
+    {
+      "path": "docs/studios/research/editor-oss-20261002/spatial-effects-native12-rig-regression/child/rig.mp4",
+      "videoSha256": "00c9ad3f4c000ed8712adad323b649c2695e379b21f6461de41a63ef63ef5e66",
+      "bytes": 7558,
+      "evidencePath": "docs/studios/research/editor-oss-20261002/spatial-effects-native12-rig-regression/child/evidence.json",
+      "evidenceSha256": "3fc028f6415933ab8810c8a133ea3385736f06544c5a029b79936f2ab295753f",
+      "jobId": "01189d4b-cb9e-4793-a244-3a6097c2f18e",
+      "documentId": "3afd5e73-d3f6-4643-a459-50f5054206e1",
+      "revision": 2,
+      "providerVersion": "4.0.527-native.12",
+      "qc": "passed",
+      "humanReview": "pending",
+      "graphicsBackend": "chromium_swangle",
+      "quality": "high",
+      "renderDurationMs": 8188,
+      "timingsMs": {
+        "assetPreparation": 0,
+        "bundle": 2210,
+        "selectComposition": 1501,
+        "renderAndEncode": 3075
+      },
+      "variant": "child",
+      "pixelProbes": 90,
+      "maximumLuminanceError": 7.366142567468589,
+      "maximumGeometryErrorPx": 0.00013579239541172683
+    },
+    {
+      "path": "docs/studios/research/editor-oss-20261002/spatial-effects-native12-rig-regression/control/rig.mp4",
+      "videoSha256": "553aa697ab8908f79bb8990a4e6f0bf565e5515a003d088335db33610c8afb7a",
+      "bytes": 7197,
+      "evidencePath": "docs/studios/research/editor-oss-20261002/spatial-effects-native12-rig-regression/control/evidence.json",
+      "evidenceSha256": "01fb7a744afe216d4a7c6a261eeca67afe32bd943f3171fe6a47db3d6191ade2",
+      "jobId": "721a437b-1f6c-46dd-a6bd-2d5f5cb04e93",
+      "documentId": "cc6cbf20-726d-4618-a145-a3389ef196c8",
+      "revision": 2,
+      "providerVersion": "4.0.527-native.12",
+      "qc": "passed",
+      "humanReview": "pending",
+      "graphicsBackend": "chromium_swangle",
+      "quality": "high",
+      "renderDurationMs": 10829,
+      "timingsMs": {
+        "assetPreparation": 0,
+        "bundle": 2519,
+        "selectComposition": 1535,
+        "renderAndEncode": 5097
+      },
+      "variant": "control",
+      "pixelProbes": 90,
+      "maximumLuminanceError": 4.633430068121042,
+      "maximumGeometryErrorPx": 0.00024411901101473177
+    },
+    {
+      "path": "docs/studios/research/editor-oss-20261002/spatial-effects-native12-rig-regression/disjoint/rig.mp4",
+      "videoSha256": "478fa32d49b11af8a56ce881908b72d872ac47ac78af05b031271916b950cee0",
+      "bytes": 8781,
+      "evidencePath": "docs/studios/research/editor-oss-20261002/spatial-effects-native12-rig-regression/disjoint/evidence.json",
+      "evidenceSha256": "fa652cef587b3e78ce4f360d809f1ba005944375a2e6a6dca8b512f72a2d6a8e",
+      "jobId": "5dfa6807-928c-4bff-8bad-69bec0318a74",
+      "documentId": "2372a382-4ec8-414c-9839-a1fa57cc654a",
+      "revision": 2,
+      "providerVersion": "4.0.527-native.12",
+      "qc": "passed",
+      "humanReview": "pending",
+      "graphicsBackend": "chromium_swangle",
+      "quality": "high",
+      "renderDurationMs": 8594,
+      "timingsMs": {
+        "assetPreparation": 0,
+        "bundle": 2456,
+        "selectComposition": 1045,
+        "renderAndEncode": 3384
+      },
+      "variant": "disjoint",
+      "pixelProbes": 90,
+      "maximumLuminanceError": 4.084272436441689,
+      "maximumGeometryErrorPx": 6.213917393438351e-05
+    },
+    {
+      "path": "docs/studios/research/editor-oss-20261002/spatial-effects-native12-rig-regression/rig/rig.mp4",
+      "videoSha256": "e4f2f31c99b1bf782a89ff1ac60314624dbd91042efaa74c6dd4e5f0963536c2",
+      "bytes": 8781,
+      "evidencePath": "docs/studios/research/editor-oss-20261002/spatial-effects-native12-rig-regression/rig/evidence.json",
+      "evidenceSha256": "c8acce4534c4ab5ce7f549c8adb5d154a6a917ddae27e2ade39cedfb54ffa109",
+      "jobId": "e697dfc6-5d7a-40a9-9be5-391ebb8162a5",
+      "documentId": "59aed312-8525-4906-b104-a84286972697",
+      "revision": 2,
+      "providerVersion": "4.0.527-native.12",
+      "qc": "passed",
+      "humanReview": "pending",
+      "graphicsBackend": "chromium_swangle",
+      "quality": "high",
+      "renderDurationMs": 8719,
+      "timingsMs": {
+        "assetPreparation": 0,
+        "bundle": 2561,
+        "selectComposition": 1110,
+        "renderAndEncode": 3380
+      },
+      "variant": "rig",
+      "pixelProbes": 90,
+      "maximumLuminanceError": 4.331190828647952,
+      "maximumGeometryErrorPx": 8.723962210410718e-05
+    },
+    {
+      "path": "docs/studios/research/editor-oss-20261002/spatial-effects-native12-exposure-regression/samples-0-shutter-180/exposure.mp4",
+      "videoSha256": "97ba27ecbb8a44eb43932006333807a09d78dc35bf55b0d17dec794c5c116605",
+      "bytes": 8367,
+      "evidencePath": "docs/studios/research/editor-oss-20261002/spatial-effects-native12-exposure-regression/samples-0-shutter-180/evidence.json",
+      "evidenceSha256": "6ddf92f6fd5c0a418c4cd1be459879dfa9356c636646fbf614fce0fa2067b86a",
+      "jobId": "68ee3448-4190-44ba-8b48-82a1fb034048",
+      "documentId": "ca3dbbe6-973d-4d23-8d27-46b691a1996e",
+      "revision": 2,
+      "providerVersion": "4.0.527-native.12",
+      "qc": "passed",
+      "humanReview": "pending",
+      "graphicsBackend": "chromium_swangle",
+      "quality": "high",
+      "renderDurationMs": 8125,
+      "timingsMs": {
+        "assetPreparation": 0,
+        "bundle": 2258,
+        "selectComposition": 839,
+        "renderAndEncode": 3615
+      }
+    },
+    {
+      "path": "docs/studios/research/editor-oss-20261002/spatial-effects-native12-exposure-regression/samples-16-shutter-180/exposure.mp4",
+      "videoSha256": "c84080f07c80bb2f639104146bb74a1c8c5b8ed361dd424b3dd672bc87f3553d",
+      "bytes": 8714,
+      "evidencePath": "docs/studios/research/editor-oss-20261002/spatial-effects-native12-exposure-regression/samples-16-shutter-180/evidence.json",
+      "evidenceSha256": "2448a4dcc2bb31e0e637fc2ed2409a2b1d6c8eeff0d6b487077532eb2c1da456",
+      "jobId": "fcb39d52-c064-40ce-ae2d-cd7bc363ae65",
+      "documentId": "01756e51-d2e7-4096-91dd-40081e36a5c7",
+      "revision": 2,
+      "providerVersion": "4.0.527-native.12",
+      "qc": "passed",
+      "humanReview": "pending",
+      "graphicsBackend": "chromium_swangle",
+      "quality": "high",
+      "renderDurationMs": 8391,
+      "timingsMs": {
+        "assetPreparation": 0,
+        "bundle": 2070,
+        "selectComposition": 932,
+        "renderAndEncode": 3958
+      }
+    },
+    {
+      "path": "docs/studios/research/editor-oss-20261002/spatial-effects-native12-exposure-regression/samples-2-shutter-180/exposure.mp4",
+      "videoSha256": "6702fd04e15d72870ffb8497c55ae19747ee651819abcbcf941eb5fcc885ff33",
+      "bytes": 8907,
+      "evidencePath": "docs/studios/research/editor-oss-20261002/spatial-effects-native12-exposure-regression/samples-2-shutter-180/evidence.json",
+      "evidenceSha256": "6bbfdba3ced0ff0d55ebfffd2f5cf8225b240a13734a28106e6d5ec605771021",
+      "jobId": "d1a43380-9fb9-49d2-9002-2d5571cb0d2a",
+      "documentId": "c45805f7-0885-48d9-ae57-ddca08138d68",
+      "revision": 2,
+      "providerVersion": "4.0.527-native.12",
+      "qc": "passed",
+      "humanReview": "pending",
+      "graphicsBackend": "chromium_swangle",
+      "quality": "high",
+      "renderDurationMs": 9453,
+      "timingsMs": {
+        "assetPreparation": 0,
+        "bundle": 2421,
+        "selectComposition": 1224,
+        "renderAndEncode": 4120
+      }
+    },
+    {
+      "path": "docs/studios/research/editor-oss-20261002/spatial-effects-native12-exposure-regression/samples-8-shutter-0/exposure.mp4",
+      "videoSha256": "97ba27ecbb8a44eb43932006333807a09d78dc35bf55b0d17dec794c5c116605",
+      "bytes": 8367,
+      "evidencePath": "docs/studios/research/editor-oss-20261002/spatial-effects-native12-exposure-regression/samples-8-shutter-0/evidence.json",
+      "evidenceSha256": "ff284e6aaa21f83f871e4dcd9a2a2e4f27ae02635fe6cec0c7542091a53e7c0c",
+      "jobId": "4c0bfe25-9bc3-4aa9-8b4a-26ddc8a01bb3",
+      "documentId": "2b8a9954-c109-4b33-b173-965746b19e3b",
+      "revision": 2,
+      "providerVersion": "4.0.527-native.12",
+      "qc": "passed",
+      "humanReview": "pending",
+      "graphicsBackend": "chromium_swangle",
+      "quality": "high",
+      "renderDurationMs": 8953,
+      "timingsMs": {
+        "assetPreparation": 0,
+        "bundle": 2162,
+        "selectComposition": 1708,
+        "renderAndEncode": 3640
+      }
+    },
+    {
+      "path": "docs/studios/research/editor-oss-20261002/spatial-effects-native12-exposure-regression/samples-8-shutter-180/exposure.mp4",
+      "videoSha256": "4f9bf78104790852e8b818572f5d64f0129f7667c2c7db6c5e651196a381b5b7",
+      "bytes": 8789,
+      "evidencePath": "docs/studios/research/editor-oss-20261002/spatial-effects-native12-exposure-regression/samples-8-shutter-180/evidence.json",
+      "evidenceSha256": "6690590ec63ba4fd2ba4f72f7b5d55ec97962de1485106faf8396621132ae146",
+      "jobId": "9b7f8448-c0d4-43c5-bb9f-55e68b7127ad",
+      "documentId": "427c4c09-22a8-44dc-a778-5add7bbcebba",
+      "revision": 2,
+      "providerVersion": "4.0.527-native.12",
+      "qc": "passed",
+      "humanReview": "pending",
+      "graphicsBackend": "chromium_swangle",
+      "quality": "high",
+      "renderDurationMs": 8594,
+      "timingsMs": {
+        "assetPreparation": 0,
+        "bundle": 2167,
+        "selectComposition": 950,
+        "renderAndEncode": 3980
+      }
+    },
+    {
+      "path": "docs/studios/research/editor-oss-20261002/spatial-effects-native12-typography-regression/unicode/typography.mp4",
+      "videoSha256": "17dec9979f4e3d38309f12374d4810f9bae18f8b9d538f794acd9efab75a05e4",
+      "bytes": 19841,
+      "evidencePath": "docs/studios/research/editor-oss-20261002/spatial-effects-native12-typography-regression/unicode/evidence.json",
+      "evidenceSha256": "3b647c5379728c8bb2da573c36fef546ca9e34463a69c711761cdeaa4a8c31ba",
+      "jobId": "f61cbd5a-0927-4cee-8481-c83d2cb6feff",
+      "documentId": "4c4a5630-fcba-46d1-97db-2bfaf0414860",
+      "revision": 2,
+      "providerVersion": "4.0.527-native.12",
+      "qc": "passed",
+      "humanReview": "pending",
+      "graphicsBackend": "chromium_swangle",
+      "quality": "high",
+      "renderDurationMs": 10297,
+      "timingsMs": {
+        "assetPreparation": 5,
+        "bundle": 2262,
+        "selectComposition": 1388,
+        "renderAndEncode": 4367
+      }
+    },
+    {
+      "path": "docs/studios/research/editor-oss-20261002/spatial-effects-native12-typography-regression/wrapped_words/typography.mp4",
+      "videoSha256": "0d09cc5f9ab4675a01ef1e4d304a2eb5c9f0e3a1c6ce538729d5c393be3719f9",
+      "bytes": 72410,
+      "evidencePath": "docs/studios/research/editor-oss-20261002/spatial-effects-native12-typography-regression/wrapped_words/evidence.json",
+      "evidenceSha256": "4609803ba14964163a6e04881b45ff103cb13dacb89fc5e538d6f4c892ce0c30",
+      "jobId": "33c3c8bd-6e6a-42d6-8da9-2fae0fe81334",
+      "documentId": "64603245-1055-4baa-8664-0ff149fa06c1",
+      "revision": 2,
+      "providerVersion": "4.0.527-native.12",
+      "qc": "passed",
+      "humanReview": "pending",
+      "graphicsBackend": "chromium_swangle",
+      "quality": "high",
+      "renderDurationMs": 9782,
+      "timingsMs": {
+        "assetPreparation": 7,
+        "bundle": 2407,
+        "selectComposition": 1127,
+        "renderAndEncode": 4675
+      }
+    },
+    {
+      "path": "docs/studios/research/editor-oss-20261002/spatial-effects-native12-matte-regression/alpha-inverted/matte.mp4",
+      "videoSha256": "80fe358ffa47d706f1a8de535bb3429fc630e77dbe6d8e7ff380d0d4218378d6",
+      "bytes": 9324,
+      "evidencePath": "docs/studios/research/editor-oss-20261002/spatial-effects-native12-matte-regression/alpha-inverted/evidence.json",
+      "evidenceSha256": "5ead2ad18d9c44a9bc73f73e35351481782011f2d9ddaf3e30e745ccaad64fdc",
+      "jobId": "d50dbe25-27a0-4cfe-b58a-39cf02ed2afb",
+      "documentId": "9cbac3e2-5169-422c-8b14-9368e7dc7414",
+      "revision": 2,
+      "providerVersion": "4.0.527-native.12",
+      "qc": "passed",
+      "humanReview": "pending",
+      "graphicsBackend": "chromium_swangle",
+      "quality": "standard",
+      "renderDurationMs": 7203,
+      "timingsMs": {
+        "assetPreparation": 3,
+        "bundle": 2145,
+        "selectComposition": 1037,
+        "renderAndEncode": 2418
+      }
+    },
+    {
+      "path": "docs/studios/research/editor-oss-20261002/spatial-effects-native12-matte-regression/alpha-normal/matte.mp4",
+      "videoSha256": "e8f85a13353a655aab22a015c2a44db0ab85b2a40b837596f807b34add422095",
+      "bytes": 7951,
+      "evidencePath": "docs/studios/research/editor-oss-20261002/spatial-effects-native12-matte-regression/alpha-normal/evidence.json",
+      "evidenceSha256": "2496d1c42a164d87beaa0309c69168fd01635dee4c1925b6826494995b8cfe44",
+      "jobId": "9157df05-e82b-40c4-a224-8e7ff832f715",
+      "documentId": "b7eb3b9e-3d3f-42ff-b74b-82d024a34e57",
+      "revision": 2,
+      "providerVersion": "4.0.527-native.12",
+      "qc": "passed",
+      "humanReview": "pending",
+      "graphicsBackend": "chromium_swangle",
+      "quality": "standard",
+      "renderDurationMs": 6906,
+      "timingsMs": {
+        "assetPreparation": 9,
+        "bundle": 2206,
+        "selectComposition": 1003,
+        "renderAndEncode": 2208
+      }
+    },
+    {
+      "path": "docs/studios/research/editor-oss-20261002/spatial-effects-native12-matte-regression/alpha-wide-contain/matte.mp4",
+      "videoSha256": "024bb566917bd036dd4d0178b8befa704cf4f3fe405d71c0eb3559f704405476",
+      "bytes": 6377,
+      "evidencePath": "docs/studios/research/editor-oss-20261002/spatial-effects-native12-matte-regression/alpha-wide-contain/evidence.json",
+      "evidenceSha256": "16ce5fa1c1bc258e47745e89280c7b99c6228707f4d2aca2942cb4c418cf722f",
+      "jobId": "b50cbfe8-96df-47a3-8cef-a4cbd9ac2811",
+      "documentId": "93703873-4d52-4570-ac87-521f0d80dccc",
+      "revision": 2,
+      "providerVersion": "4.0.527-native.12",
+      "qc": "passed",
+      "humanReview": "pending",
+      "graphicsBackend": "chromium_swangle",
+      "quality": "standard",
+      "renderDurationMs": 6562,
+      "timingsMs": {
+        "assetPreparation": 3,
+        "bundle": 2098,
+        "selectComposition": 1013,
+        "renderAndEncode": 2111
+      }
+    },
+    {
+      "path": "docs/studios/research/editor-oss-20261002/spatial-effects-native12-matte-regression/alpha-wide-cover/matte.mp4",
+      "videoSha256": "24d8b7d85beab4c5bbb0f34d53f24bc916b88e5f72c8f8a82c169ce754cef699",
+      "bytes": 5902,
+      "evidencePath": "docs/studios/research/editor-oss-20261002/spatial-effects-native12-matte-regression/alpha-wide-cover/evidence.json",
+      "evidenceSha256": "b5d84aaffa0cd44ade3a2851a9d53310a8823e0343d0c37de41062eb6998346f",
+      "jobId": "f5ff9103-39dd-4a7d-9b12-a78f0e7c8a25",
+      "documentId": "c13332cb-b959-4471-b4b6-f5560d7ea5a4",
+      "revision": 2,
+      "providerVersion": "4.0.527-native.12",
+      "qc": "passed",
+      "humanReview": "pending",
+      "graphicsBackend": "chromium_swangle",
+      "quality": "standard",
+      "renderDurationMs": 7156,
+      "timingsMs": {
+        "assetPreparation": 7,
+        "bundle": 2199,
+        "selectComposition": 980,
+        "renderAndEncode": 2384
+      }
+    },
+    {
+      "path": "docs/studios/research/editor-oss-20261002/spatial-effects-native12-matte-regression/luminance-inverted/matte.mp4",
+      "videoSha256": "bcd3967890624b3c056df84b7507352c62195d2bf2e62ae367563896901936d7",
+      "bytes": 8303,
+      "evidencePath": "docs/studios/research/editor-oss-20261002/spatial-effects-native12-matte-regression/luminance-inverted/evidence.json",
+      "evidenceSha256": "5177897988951530d4144e7bd07c6b1507c527c1f7b93584ab718f5d07387393",
+      "jobId": "a341a0dc-8394-4ee4-a543-993ac18269ff",
+      "documentId": "7442216e-d533-4757-8243-7474431b8f10",
+      "revision": 2,
+      "providerVersion": "4.0.527-native.12",
+      "qc": "passed",
+      "humanReview": "pending",
+      "graphicsBackend": "chromium_swangle",
+      "quality": "standard",
+      "renderDurationMs": 6828,
+      "timingsMs": {
+        "assetPreparation": 2,
+        "bundle": 2140,
+        "selectComposition": 1080,
+        "renderAndEncode": 2310
+      }
+    },
+    {
+      "path": "docs/studios/research/editor-oss-20261002/spatial-effects-native12-matte-regression/luminance-normal/matte.mp4",
+      "videoSha256": "38dcde12ce01225c3a767bf11a4e1d0379eb050bd7cbb869e402ef67e1227d7e",
+      "bytes": 6613,
+      "evidencePath": "docs/studios/research/editor-oss-20261002/spatial-effects-native12-matte-regression/luminance-normal/evidence.json",
+      "evidenceSha256": "4f3e1552a1860784085d0ebe0bd36467eb89d362889644ba40f344a355fa1988",
+      "jobId": "85d43e8d-3dd9-44ab-8ec0-273456deb8df",
+      "documentId": "5fd11458-c55e-4c19-a6b3-2f019db5ef7c",
+      "revision": 2,
+      "providerVersion": "4.0.527-native.12",
+      "qc": "passed",
+      "humanReview": "pending",
+      "graphicsBackend": "chromium_swangle",
+      "quality": "standard",
+      "renderDurationMs": 7063,
+      "timingsMs": {
+        "assetPreparation": 7,
+        "bundle": 2202,
+        "selectComposition": 1011,
+        "renderAndEncode": 2489
+      }
+    },
+    {
+      "path": "docs/studios/research/editor-oss-20261002/spatial-effects-native12-command-regression/rig/edited.mp4",
+      "videoSha256": "098cace6194118cd2c8974d0f8ace75bdf01f1f256c278135dc95e9e64c01a94",
+      "bytes": 3950,
+      "evidencePath": "docs/studios/research/editor-oss-20261002/spatial-effects-native12-command-regression/rig/evidence.json",
+      "evidenceSha256": "e6e005f22ebef650d1505373999e4da7b5ad827b0e30a3e9d239032a63e9b45c",
+      "jobId": "930ec727-4ed1-4a34-af63-fd9a9f1b015c",
+      "documentId": "170e79f9-1cc3-46b5-8c90-ad8a65d7d6fb",
+      "revision": 3,
+      "providerVersion": "4.0.527-native.12",
+      "qc": "passed",
+      "humanReview": "pending",
+      "graphicsBackend": "chromium_swangle",
+      "quality": "standard",
+      "renderDurationMs": 6610,
+      "timingsMs": {
+        "assetPreparation": 0,
+        "bundle": 2146,
+        "selectComposition": 966,
+        "renderAndEncode": 2008
+      }
+    },
+    {
+      "path": "docs/studios/research/editor-oss-20261002/spatial-effects-native12-command-regression/shape/edited.mp4",
+      "videoSha256": "09d4f427862714acb391deee20f2489b1d1ccbeb79aa360b7c463feecff03d3b",
+      "bytes": 3909,
+      "evidencePath": "docs/studios/research/editor-oss-20261002/spatial-effects-native12-command-regression/shape/evidence.json",
+      "evidenceSha256": "9b63a166baa57eab0cb4dc139d5c4e77f70b5fec25dc9bf804f60ab681ef8154",
+      "jobId": "461d6b6a-665b-4fc6-ba8b-7867ae2e2724",
+      "documentId": "7ae948a8-71bb-4e9d-b7b0-72aa6d6b4f7a",
+      "revision": 3,
+      "providerVersion": "4.0.527-native.12",
+      "qc": "passed",
+      "humanReview": "pending",
+      "graphicsBackend": "chromium_swangle",
+      "quality": "standard",
+      "renderDurationMs": 6047,
+      "timingsMs": {
+        "assetPreparation": 0,
+        "bundle": 2068,
+        "selectComposition": 981,
+        "renderAndEncode": 1745
+      }
+    }
+  ],
+  "negativeAPIJobs": [
+    {
+      "path": "docs/studios/research/editor-oss-20261002/spatial-effects-native12-matte-regression/animated-negative/evidence.json",
+      "sha256": "3fe19339206d2ffbf5bca068938ada77842db3515c5f066aa0898ef409da6b47",
+      "diagnostic": "remotion_render_failed:file:///C:/Users/edugu/Downloads/res/workers/remotion-benchmark/render-hybrid.mjs:47\n    catch(error){throw new Error(`${String(error)}:asset=${id}`);}\n                       ^\n\nError: Error: hybrid_asset_matte_animated_png_pending:asset=69ed9712-a159-4f45-b21e-0320e243bc53\n    at file:///C:/Users/edugu/Downloads/res/workers/remotion-benchmark/render-hybrid.mjs:47:24\n\nNode.js v22.15.0\nfull_log:C:\\Users\\edugu\\Downloads\\res\\workers\\remotion-benchmark\\output\\diagnostics\\fd9921fa40f9c776eaca08cf4ba5485dec3c00f712265ca017110333baf4d31d.log",
+      "publishedArtifact": false
+    }
+  ],
+  "historicalFailedDiagnostics": [
+    {
+      "path": "docs/studios/research/editor-oss-20261002/spatial-effects-native10-baseline/spatial/evidence.json",
+      "sha256": "0be9a5b13f37c7289857287ce36cc52199b3b72d5ca2091af362d2b429e3c984",
+      "providerVersion": "4.0.527-native.10",
+      "failedProbes": 55,
+      "qualification": "historical_failed_diagnostic"
+    },
+    {
+      "path": "docs/studios/research/editor-oss-20261002/spatial-effects-fast-stage-diagnostic/exposure/evidence.json",
+      "sha256": "791ef05ca975210debeafa7d79238ae2bdbfd31e43fbc4478a5b4b92e85271e8",
+      "providerVersion": "4.0.527-native.11",
+      "failedProbes": 1,
+      "qualification": "historical_failed_diagnostic"
+    },
+    {
+      "path": "docs/studios/research/editor-oss-20261002/spatial-effects-small-sigma-diagnostic/spatial/evidence.json",
+      "sha256": "4ccb89092fe1e8f0b974bd14c6f02d699c5a112772e1ea9138811d06dc2a423f",
+      "providerVersion": "4.0.527-native.11",
+      "failedProbes": 6,
+      "qualification": "historical_failed_diagnostic"
+    }
+  ],
+  "zeroShutterControlDecodedEquality": {
+    "frames": 60,
+    "rgbBytes": 18432000,
+    "maximumChannelDifference": 0
+  },
+  "fontOverflow": {
+    "reportedFrame": 0,
+    "publishedOutput": false
+  },
+  "sources": {
+    "backend/app/domain/studios/temporal_exposure.py": "d9b28d5f3f71c72e05e77e4de3a3659c98b756c4f99f2cfbf64d26a445caeb69",
+    "backend/app/domain/studios/motion_recipes.py": "8122f1c2f2a9a8030bd1b5407a7a8d2ed22cad7225bcba94ffe29fefd886861b",
+    "backend/app/services/studios/native_motion_recipes.py": "9f9083f3747f442737b35336eed12f36bb283e4abed40594d68c9566b0fe3f1f",
+    "backend/app/providers/studios/remotion_projection.py": "ae148ca325f4112a8595fcca9b0578aacad14daca2899498ebaf4577d7e8f149",
+    "backend/app/providers/studios/remotion_render.py": "7a0674b32328ba307d8878d87ee1ae806265b18de517d91455d57488c549e3b2",
+    "backend/app/providers/studios/contextual_render.py": "41da67ed3c9e74afee3585f504fa507aa32da72c27f9d61a7cd2f40028e6c2c6",
+    "workers/remotion-benchmark/src/hybrid.tsx": "3e158b300bacc4a1ce5859ce2e8c3b5ab53f561096dda3e7fd5a76a430a3c06c",
+    "workers/remotion-benchmark/src/temporal-exposure.tsx": "48a609ab733ee2e5c4e6be07f8073a483ff986b235dcb1c34d365f1b4fcc2fc1",
+    "workers/remotion-benchmark/render-hybrid.mjs": "1e41e72cbf8a50b9623d707a37fac6d85184258d4b6aa2dfeacf32985d386b76",
+    "backend/tests/test_temporal_rig_render.py": "ae696a2eb7f18364e3103bd2391cc1f9b172e8929755e5de9b7f685577330e28",
+    "backend/tests/test_temporal_exposure.py": "b064e4aac79e451b35f4824c6c5771d73d3d527d57a97319a9cf64d8733167b5",
+    "backend/tests/test_spatial_effects_render.py": "199f550bd6b726714944b65d6b78f8ad3e3b846edb8597c782966002af57d3ce",
+    "backend/app/domain/studios/contextual_editing_v2.py": "37acb13095b740386501649dbdd9d1a70f91a7a14c500c90299e4b60ed6cc8ce",
+    "workers/remotion-benchmark/src/spatial-effects.ts": "cab39ac4863a50bcec80760cb85d969507865f2461fb855c39c1adc105530a9c",
+    "backend/tests/test_spatial_effects.py": "af6721e973275ba8a62437f6feca3eaf33a61d23b29f953f042938c3d1858938",
+    "backend/tests/test_spatial_effects_oracle.py": "33709042ef5de611028d59336f3ab8732e5ad3a5cc609a4a3e999b6da8bbd7af",
+    "backend/tests/spatial_effects_kernel_diagnostic.py": "03f609d8dc758516a8dabd770e67584cf5062bd2da78dd3b9a4b855edfebeb06"
+  },
+  "browserResearch": {
+    "scope": "selected_primary_sources_read_in_memory_no_repository_clone_no_source_code_copied",
+    "installedBrowserVersion": "Google Chrome for Testing 149.0.7790.0",
+    "installedBrowserSha256": "ec76dc3e69ffab9daddf0bbe7bf0a9e0a034b2d086741a0ae2ef6358a597537b",
+    "browserPath": "C:\\Users\\edugu\\Downloads\\res\\workers\\remotion-benchmark\\node_modules\\.remotion\\chrome-headless-shell\\win64\\chrome-headless-shell-win64\\chrome-headless-shell.exe",
+    "skiaRevisionFromChromiumDeps": "0cb35533022b3912904831c2290680bb8eea0363",
+    "license": "Skia BSD-style; no implementation copied",
+    "sources": [
+      {
+        "url": "https://chromium.googlesource.com/chromium/src/+/refs/tags/149.0.7790.0/DEPS",
+        "sha256": "b3ba6e672b4f78eab2dfebd2739a601e2f6ddb958ea1e20bcfabe80c1de240dd",
+        "bytes": 186396
+      },
+      {
+        "url": "https://skia.googlesource.com/skia/+/0cb35533022b3912904831c2290680bb8eea0363/src/core/SkBlurEngine.cpp",
+        "sha256": "79077dda720301317687be492b9e1fedc5a285276794cb43e100d1a1a0dc1672",
+        "bytes": 73694,
+        "lines": 1740
+      },
+      {
+        "url": "https://skia.googlesource.com/skia/+/0cb35533022b3912904831c2290680bb8eea0363/src/core/SkBlurEngine.h",
+        "sha256": "56d524c90403ef9debd9f826d1161b05471e761e5c2a1456743ddd46c78286e8",
+        "bytes": 15487,
+        "lines": 285
+      },
+      {
+        "url": "https://skia.googlesource.com/skia/+/0cb35533022b3912904831c2290680bb8eea0363/src/effects/imagefilters/SkBlurImageFilter.cpp",
+        "sha256": "1a6bd9c49920f232c4f46bf3c80b5f728fc207db25d93ceb83cbc6454078ea6f",
+        "bytes": 10257,
+        "lines": 241
+      },
+      {
+        "url": "https://skia.googlesource.com/skia/+/0cb35533022b3912904831c2290680bb8eea0363/LICENSE",
+        "sha256": "5f787c1dee3c56547f09ccc2906ab5f5293c4d8dd6c8654e573216c38e908dbd",
+        "bytes": 1507,
+        "lines": 29
+      }
+    ],
+    "inference": "Source has backend/build-dependent kernels; exact branch executed is not observed",
+    "experiment": "Controlled actual job sigma .25/.75 had sharp edges under default GL; explicit swangle passed strong temporal fixture"
+  },
+  "consolidatorSha256": "7633b71b93b04a0c59768255aeb6be0aeef772e6f770785173ac999be508aba7",
+  "limitations": [
+    "Technical fixtures provide no human scores or blind preference.",
+    "No qualification of every blur/sigma/content/hardware; standalone subpixel blur remains a finite raster approximation.",
+    "Parents outside the exposed subtree stay at center frame; overlapping nested exposures remain explicitly rejected.",
+    "Moving-external-ancestor matte and legacy CSS-mask combinations remain pending.",
+    "PNG capture is lossless; intermediate H264/444/CRF1 and final H264/420/CRF14 still have finite losses.",
+    "Aligned 2x2 SDR luminance oracle does not qualify linear-light HDR.",
+    "Three fresh briefs/autonomy and human four-axis blind review remain pending.",
+    "Previously rejected recursive research cleanup remains pending; no bypass was attempted."
+  ]
+}

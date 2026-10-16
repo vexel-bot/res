@@ -1,0 +1,3 @@
+.vs-study-dialog::backdrop { background: rgb(0 0 0 / 78%); }
+.vs-study-dialog label { display: block; margin: .75rem 0; }
+.vs-study-dialog input[type="number"], .vs-study-dialog textarea, .vs-study-dialog select { display: block; max-width: 100%; }

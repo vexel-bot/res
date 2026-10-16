@@ -1,0 +1,33 @@
+{
+  "schemaVersion": "clicko.research-modality-map.v1",
+  "caseId": "HZ-YT-03",
+  "source": "https://www.youtube.com/watch?v=XsWSvz-aewA",
+  "coverage": {
+    "text": "located-excerpts",
+    "visual": "not-reviewed",
+    "audio": "not-reviewed",
+    "completeAudiovisual": false
+  },
+  "editorialCuts": [],
+  "visualChangeCandidates": [],
+  "locatedTextUnits": [
+    {
+      "locator": "8:39–9:23; 10:37–11:06",
+      "kind": "teaching"
+    },
+    {
+      "locator": "11:54–13:26",
+      "kind": "teaching"
+    },
+    {
+      "locator": "2:06–3:20",
+      "kind": "interpretation"
+    },
+    {
+      "locator": "banco de evidências da marca",
+      "kind": "clicko_hypothesis"
+    }
+  ],
+  "reviewGap": "Cuts, timing and audio not fully annotated; text locators are not cut boundaries",
+  "distributedMedia": false
+}

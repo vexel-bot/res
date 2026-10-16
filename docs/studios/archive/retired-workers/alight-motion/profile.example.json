@@ -1,0 +1,16 @@
+{
+  "profileId": "UNQUALIFIED-physical-android",
+  "serial": "UNCONFIGURED",
+  "package": "REPLACE_WITH_OBSERVED_PACKAGE",
+  "appVersion": "UNQUALIFIED",
+  "androidVersion": "UNQUALIFIED",
+  "locale": "pt-BR",
+  "resolution": "1080x1920",
+  "enabledFeatures": [],
+  "compilerVersion": "UNQUALIFIED",
+  "driverFile": "calibrated-driver.py",
+  "driverSha256": "REPLACE_WITH_VERIFIED_SHA256",
+  "calibrationFile": "real-device-calibration.json",
+  "calibrationSha256": "REPLACE_WITH_VERIFIED_SHA256",
+  "testedCapabilities": []
+}

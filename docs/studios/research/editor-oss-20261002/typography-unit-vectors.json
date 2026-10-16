@@ -1,0 +1,474 @@
+[
+  {
+    "text": "AÇÃO",
+    "spec": {
+      "version": 2,
+      "segmentation": {
+        "schemaVersion": "studio.typography-units.v1",
+        "policy": "unicode17.regex2026.1.15.whitespace-v1",
+        "unit": "character",
+        "textChecksumSha256": "3ff066e4e9b343a35f51a8fa7bbf1beec0d288ffece8009acb24caadcb1767b6",
+        "units": [
+          {
+            "text": "A",
+            "animationIndex": 0
+          },
+          {
+            "text": "Ç",
+            "animationIndex": 1
+          },
+          {
+            "text": "Ã",
+            "animationIndex": 2
+          },
+          {
+            "text": "O",
+            "animationIndex": 3
+          }
+        ],
+        "animatedCount": 4
+      },
+      "startFrame": 0,
+      "unit": "character",
+      "staggerFrames": 3,
+      "entranceFrames": 10,
+      "readingHoldFrames": 15,
+      "completeFrame": 19
+    },
+    "nativeCompositionDigest": "f4d73c895aa36858c587ff6a4c91c84bc7098a90ea4911bd91f115219ad7d65a"
+  },
+  {
+    "text": "AÇÃO",
+    "spec": {
+      "version": 2,
+      "segmentation": {
+        "schemaVersion": "studio.typography-units.v1",
+        "policy": "unicode17.regex2026.1.15.whitespace-v1",
+        "unit": "word",
+        "textChecksumSha256": "3ff066e4e9b343a35f51a8fa7bbf1beec0d288ffece8009acb24caadcb1767b6",
+        "units": [
+          {
+            "text": "AÇÃO",
+            "animationIndex": 0
+          }
+        ],
+        "animatedCount": 1
+      },
+      "startFrame": 0,
+      "unit": "word",
+      "staggerFrames": 3,
+      "entranceFrames": 10,
+      "readingHoldFrames": 15,
+      "completeFrame": 10
+    },
+    "nativeCompositionDigest": "dc73c790ac7344f5e502a4886fd37c23b5976f68f7514c0f1191e9a6c3148631"
+  },
+  {
+    "text": "AÇÃO",
+    "spec": {
+      "version": 2,
+      "segmentation": {
+        "schemaVersion": "studio.typography-units.v1",
+        "policy": "unicode17.regex2026.1.15.whitespace-v1",
+        "unit": "character",
+        "textChecksumSha256": "a7dcea41709282a47026ff614f2288f364c695da2967e30fe7a82632f37114e5",
+        "units": [
+          {
+            "text": "A",
+            "animationIndex": 0
+          },
+          {
+            "text": "Ç",
+            "animationIndex": 1
+          },
+          {
+            "text": "Ã",
+            "animationIndex": 2
+          },
+          {
+            "text": "O",
+            "animationIndex": 3
+          }
+        ],
+        "animatedCount": 4
+      },
+      "startFrame": 0,
+      "unit": "character",
+      "staggerFrames": 3,
+      "entranceFrames": 10,
+      "readingHoldFrames": 15,
+      "completeFrame": 19
+    },
+    "nativeCompositionDigest": "cb969fdfe216c2314a980573ec236b6a70ec2c3eb7bb8021dfa6e282db488aef"
+  },
+  {
+    "text": "AÇÃO",
+    "spec": {
+      "version": 2,
+      "segmentation": {
+        "schemaVersion": "studio.typography-units.v1",
+        "policy": "unicode17.regex2026.1.15.whitespace-v1",
+        "unit": "word",
+        "textChecksumSha256": "a7dcea41709282a47026ff614f2288f364c695da2967e30fe7a82632f37114e5",
+        "units": [
+          {
+            "text": "AÇÃO",
+            "animationIndex": 0
+          }
+        ],
+        "animatedCount": 1
+      },
+      "startFrame": 0,
+      "unit": "word",
+      "staggerFrames": 3,
+      "entranceFrames": 10,
+      "readingHoldFrames": 15,
+      "completeFrame": 10
+    },
+    "nativeCompositionDigest": "6e0f7ed611ab9f3a0339e43d57955daeb5ee650963751bf21740ca193044bb7c"
+  },
+  {
+    "text": "👨‍👩‍👧‍👦",
+    "spec": {
+      "version": 2,
+      "segmentation": {
+        "schemaVersion": "studio.typography-units.v1",
+        "policy": "unicode17.regex2026.1.15.whitespace-v1",
+        "unit": "character",
+        "textChecksumSha256": "32b7d42dae221e37043eef14ee3525ad7c3c081364c26eb3652709873ee78f15",
+        "units": [
+          {
+            "text": "👨‍👩‍👧‍👦",
+            "animationIndex": 0
+          }
+        ],
+        "animatedCount": 1
+      },
+      "startFrame": 0,
+      "unit": "character",
+      "staggerFrames": 3,
+      "entranceFrames": 10,
+      "readingHoldFrames": 15,
+      "completeFrame": 10
+    },
+    "nativeCompositionDigest": "3753a64ff18d8131c04e8bd6f642e6c096c4f5102e19137cd29cf677ae338e2f"
+  },
+  {
+    "text": "👨‍👩‍👧‍👦",
+    "spec": {
+      "version": 2,
+      "segmentation": {
+        "schemaVersion": "studio.typography-units.v1",
+        "policy": "unicode17.regex2026.1.15.whitespace-v1",
+        "unit": "word",
+        "textChecksumSha256": "32b7d42dae221e37043eef14ee3525ad7c3c081364c26eb3652709873ee78f15",
+        "units": [
+          {
+            "text": "👨‍👩‍👧‍👦",
+            "animationIndex": 0
+          }
+        ],
+        "animatedCount": 1
+      },
+      "startFrame": 0,
+      "unit": "word",
+      "staggerFrames": 3,
+      "entranceFrames": 10,
+      "readingHoldFrames": 15,
+      "completeFrame": 10
+    },
+    "nativeCompositionDigest": "1f9413cedde58761b1f76621fc05e8504448699f94a6d229c332f578a7995caa"
+  },
+  {
+    "text": "👍🏽🇧🇷",
+    "spec": {
+      "version": 2,
+      "segmentation": {
+        "schemaVersion": "studio.typography-units.v1",
+        "policy": "unicode17.regex2026.1.15.whitespace-v1",
+        "unit": "character",
+        "textChecksumSha256": "128ee210aed9d01ab70259aa59b8ad96d61697d367ad2831521a00f75d4155bf",
+        "units": [
+          {
+            "text": "👍🏽",
+            "animationIndex": 0
+          },
+          {
+            "text": "🇧🇷",
+            "animationIndex": 1
+          }
+        ],
+        "animatedCount": 2
+      },
+      "startFrame": 0,
+      "unit": "character",
+      "staggerFrames": 3,
+      "entranceFrames": 10,
+      "readingHoldFrames": 15,
+      "completeFrame": 13
+    },
+    "nativeCompositionDigest": "48e107dae7ef9be3fc62e07671741c74d60c74fb6d6c827d6b0ffdcbe7b8aebb"
+  },
+  {
+    "text": "👍🏽🇧🇷",
+    "spec": {
+      "version": 2,
+      "segmentation": {
+        "schemaVersion": "studio.typography-units.v1",
+        "policy": "unicode17.regex2026.1.15.whitespace-v1",
+        "unit": "word",
+        "textChecksumSha256": "128ee210aed9d01ab70259aa59b8ad96d61697d367ad2831521a00f75d4155bf",
+        "units": [
+          {
+            "text": "👍🏽🇧🇷",
+            "animationIndex": 0
+          }
+        ],
+        "animatedCount": 1
+      },
+      "startFrame": 0,
+      "unit": "word",
+      "staggerFrames": 3,
+      "entranceFrames": 10,
+      "readingHoldFrames": 15,
+      "completeFrame": 10
+    },
+    "nativeCompositionDigest": "a720dc3d322d64ce83f6a61fea024584f51ffd9d8b6153f08bc1c1ae4d8da23d"
+  },
+  {
+    "text": " A  B \t\r\n",
+    "spec": {
+      "version": 2,
+      "segmentation": {
+        "schemaVersion": "studio.typography-units.v1",
+        "policy": "unicode17.regex2026.1.15.whitespace-v1",
+        "unit": "character",
+        "textChecksumSha256": "5ead07263e45ac5f1e9cc842efb0d493b91a89949d1c8f9b6a012b7f7bf4c1a8",
+        "units": [
+          {
+            "text": " ",
+            "animationIndex": null
+          },
+          {
+            "text": "A",
+            "animationIndex": 0
+          },
+          {
+            "text": " ",
+            "animationIndex": null
+          },
+          {
+            "text": " ",
+            "animationIndex": null
+          },
+          {
+            "text": "B",
+            "animationIndex": 1
+          },
+          {
+            "text": " ",
+            "animationIndex": null
+          },
+          {
+            "text": "\t",
+            "animationIndex": null
+          },
+          {
+            "text": "\r\n",
+            "animationIndex": null
+          }
+        ],
+        "animatedCount": 2
+      },
+      "startFrame": 0,
+      "unit": "character",
+      "staggerFrames": 3,
+      "entranceFrames": 10,
+      "readingHoldFrames": 15,
+      "completeFrame": 13
+    },
+    "nativeCompositionDigest": "f5afe790270fdc75bb69579e9bd2863ac97cbb9f55f36d53bcfaf251b25334e3"
+  },
+  {
+    "text": " A  B \t\r\n",
+    "spec": {
+      "version": 2,
+      "segmentation": {
+        "schemaVersion": "studio.typography-units.v1",
+        "policy": "unicode17.regex2026.1.15.whitespace-v1",
+        "unit": "word",
+        "textChecksumSha256": "5ead07263e45ac5f1e9cc842efb0d493b91a89949d1c8f9b6a012b7f7bf4c1a8",
+        "units": [
+          {
+            "text": " ",
+            "animationIndex": null
+          },
+          {
+            "text": "A",
+            "animationIndex": 0
+          },
+          {
+            "text": "  ",
+            "animationIndex": null
+          },
+          {
+            "text": "B",
+            "animationIndex": 1
+          },
+          {
+            "text": " \t\r\n",
+            "animationIndex": null
+          }
+        ],
+        "animatedCount": 2
+      },
+      "startFrame": 0,
+      "unit": "word",
+      "staggerFrames": 3,
+      "entranceFrames": 10,
+      "readingHoldFrames": 15,
+      "completeFrame": 13
+    },
+    "nativeCompositionDigest": "4ca0475872bf22f90ebcfae369b2b11b90c61a9015b08d6beb539bebbc862369"
+  },
+  {
+    "text": "Uma palavra inteira",
+    "spec": {
+      "version": 2,
+      "segmentation": {
+        "schemaVersion": "studio.typography-units.v1",
+        "policy": "unicode17.regex2026.1.15.whitespace-v1",
+        "unit": "character",
+        "textChecksumSha256": "a9a2fffe033d61e8e3e32edb25a07fb4b66f25e65ae8d76acb6f58f0bf325c25",
+        "units": [
+          {
+            "text": "U",
+            "animationIndex": 0
+          },
+          {
+            "text": "m",
+            "animationIndex": 1
+          },
+          {
+            "text": "a",
+            "animationIndex": 2
+          },
+          {
+            "text": " ",
+            "animationIndex": null
+          },
+          {
+            "text": "p",
+            "animationIndex": 3
+          },
+          {
+            "text": "a",
+            "animationIndex": 4
+          },
+          {
+            "text": "l",
+            "animationIndex": 5
+          },
+          {
+            "text": "a",
+            "animationIndex": 6
+          },
+          {
+            "text": "v",
+            "animationIndex": 7
+          },
+          {
+            "text": "r",
+            "animationIndex": 8
+          },
+          {
+            "text": "a",
+            "animationIndex": 9
+          },
+          {
+            "text": " ",
+            "animationIndex": null
+          },
+          {
+            "text": "i",
+            "animationIndex": 10
+          },
+          {
+            "text": "n",
+            "animationIndex": 11
+          },
+          {
+            "text": "t",
+            "animationIndex": 12
+          },
+          {
+            "text": "e",
+            "animationIndex": 13
+          },
+          {
+            "text": "i",
+            "animationIndex": 14
+          },
+          {
+            "text": "r",
+            "animationIndex": 15
+          },
+          {
+            "text": "a",
+            "animationIndex": 16
+          }
+        ],
+        "animatedCount": 17
+      },
+      "startFrame": 0,
+      "unit": "character",
+      "staggerFrames": 3,
+      "entranceFrames": 10,
+      "readingHoldFrames": 15,
+      "completeFrame": 58
+    },
+    "nativeCompositionDigest": "d940066de413e2067d058bbe5bd45abf65b09bc9f6b22137b051bbd37388b081"
+  },
+  {
+    "text": "Uma palavra inteira",
+    "spec": {
+      "version": 2,
+      "segmentation": {
+        "schemaVersion": "studio.typography-units.v1",
+        "policy": "unicode17.regex2026.1.15.whitespace-v1",
+        "unit": "word",
+        "textChecksumSha256": "a9a2fffe033d61e8e3e32edb25a07fb4b66f25e65ae8d76acb6f58f0bf325c25",
+        "units": [
+          {
+            "text": "Uma",
+            "animationIndex": 0
+          },
+          {
+            "text": " ",
+            "animationIndex": null
+          },
+          {
+            "text": "palavra",
+            "animationIndex": 1
+          },
+          {
+            "text": " ",
+            "animationIndex": null
+          },
+          {
+            "text": "inteira",
+            "animationIndex": 2
+          }
+        ],
+        "animatedCount": 3
+      },
+      "startFrame": 0,
+      "unit": "word",
+      "staggerFrames": 3,
+      "entranceFrames": 10,
+      "readingHoldFrames": 15,
+      "completeFrame": 16
+    },
+    "nativeCompositionDigest": "018bc0d6b4b281d5f48d8fd97cef9d3d0f99fa9a3742fe1a6776d2d30444222e"
+  }
+]

@@ -1,0 +1,3216 @@
+{
+  "scope": "lossless_browser_png_composition_diagnostic",
+  "fixture": "child-inverted",
+  "productionAdmission": "pending",
+  "receipt": {
+    "scope": "lossless_browser_png_composition_diagnostic",
+    "canonicalManifestSha256": "bab6f76fe23c45ef4ebf26d1741e0a03b2da385e1ed533e50a3bc3b37f2cada9",
+    "maskSha256": "ee10f031a17421859e3af5f725273644b8534709cb23173c6e1bf0ac8787e2c2",
+    "fixture": "child-inverted",
+    "derivation": {
+      "sampledTarget": "hero",
+      "externalRigFrame": 0,
+      "matteMode": "alpha",
+      "matteInvert": true
+    },
+    "sourceHashes": {
+      "workers/remotion-benchmark/src/hybrid.tsx": "69f66dbfd02be683fe9e6a0d6559ad9e9487c8d7ee48f9fbabf44f0884f5f170",
+      "workers/remotion-benchmark/src/asset-matte.tsx": "f14ea79323d8261197180db6824bcef707e4b9481154cb2d6beed16342c49a99",
+      "workers/remotion-benchmark/src/temporal-exposure.tsx": "48a609ab733ee2e5c4e6be07f8073a483ff986b235dcb1c34d365f1b4fcc2fc1",
+      "scripts/validation/editor-temporal-matte-png-capture.mjs": "4f6912024fc04f2faae28f7a0e51e4de8e8c065b0f148cbfa7f46dbd7f0e0756"
+    },
+    "records": [
+      {
+        "name": "temporal",
+        "manifestSha256": "5baaa1a3108709c640fb7c84b7d47db54ee6f9cd4387e23aa4be93f2af805646",
+        "pngSha256": "d646f3f72977322585b77f0d298273b774d24d533464cbc1aadc104fd7a15b91"
+      },
+      {
+        "name": "center",
+        "manifestSha256": "464a5090456844f89d7d1749e7c0893ae19e06b88646f736e625de9a4f686605",
+        "pngSha256": "46df6e5eae67090d1a05bbbc7671d60a7a277f130583a3670f7158f3c01fd129"
+      },
+      {
+        "name": "sample-1",
+        "manifestSha256": "a09dd98f3149893d3640e84db3df2b4374802868277bfc4f507d8b5da568b714",
+        "pngSha256": "78be03af4eda4f4ac972bdeabd98e9e24bc7de3fac56a6f72b20135516cb2630"
+      },
+      {
+        "name": "sample-2",
+        "manifestSha256": "78f2e7ce93cb3082d727c77ded43ec8de1f1c8061f66d025210254129bae6c6f",
+        "pngSha256": "a7e41724c2b91532cfa0fb7e0a56af2003430bfac1edc4bae105739fe9c5a98d"
+      },
+      {
+        "name": "sample-3",
+        "manifestSha256": "e45e615de4c14f0fdae44e36a0c33dfdb69cff365f103d2ea68a5b4d2bb0c3ff",
+        "pngSha256": "57e9dd83e17b37fab2f7d23f9d632c4fd12e47901c5d69f07c6d81fbb88b539f"
+      },
+      {
+        "name": "sample-4",
+        "manifestSha256": "97d05a1e246925316f1b6465b592cdf3f9b85a695ffc64bfaed02ff0497568bd",
+        "pngSha256": "6a772d23a37de35c25d06e3cb60a507408817ddb6cd860c627dec31a5c9e6374"
+      },
+      {
+        "name": "sample-5",
+        "manifestSha256": "36cd4167d206ac779cdb206638d8058ebfc0b550304986749030cc8be1e54422",
+        "pngSha256": "01e13fe98a2c9f3ee7400cec11953febb7ed9e172d4db04ded8d8c95d7a09504"
+      },
+      {
+        "name": "sample-6",
+        "manifestSha256": "3e5f447ed46d0b6332ce25dac203f7da84c7cf298a7c487e8208df5142d24478",
+        "pngSha256": "2cd2b409e5d9f9d16e0e655a6f81a55a4b6872bfedb02da375a7b8d22ccf8d12"
+      },
+      {
+        "name": "sample-7",
+        "manifestSha256": "fda515266c54bc2cc8c883a766e070f81593477e56b0cc1c27b8b1d9386a5d1f",
+        "pngSha256": "7e02218301f902f8c43d46e3523c4899a65980261a5c827bb1cacebd2db06fc0"
+      },
+      {
+        "name": "sample-8",
+        "manifestSha256": "155f96ec4d499854a9a5b0c279ade954d2a49149d77276dae2df49e82f18b227",
+        "pngSha256": "c59e5f06d274e82e9d65b41f5723f7097d2eb5827a587f35fce9e6276de46874"
+      }
+    ]
+  },
+  "isolated": [
+    {
+      "sample": "center",
+      "time": 0,
+      "maximumChannelError": 8.01628125000002,
+      "failedProbes": [
+        {
+          "x": 138,
+          "y": 82,
+          "expectedChannel": 168.98371874999998,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 8.01628125000002
+        }
+      ],
+      "checks": [
+        {
+          "x": 44,
+          "y": 96,
+          "expectedChannel": 87.78375,
+          "observedRgb": [
+            88.5,
+            88.5,
+            88.5
+          ],
+          "maximumChannelError": 0.7162500000000023
+        },
+        {
+          "x": 46,
+          "y": 96,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 94,
+          "y": 44,
+          "expectedChannel": 0.0,
+          "observedRgb": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "maximumChannelError": 0.0
+        },
+        {
+          "x": 94,
+          "y": 46,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 94,
+          "y": 194,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 94,
+          "y": 196,
+          "expectedChannel": 0.0,
+          "observedRgb": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "maximumChannelError": 0.0
+        },
+        {
+          "x": 98,
+          "y": 94,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 100,
+          "y": 94,
+          "expectedChannel": 70.22699999999992,
+          "observedRgb": [
+            70.0,
+            70.0,
+            70.0
+          ],
+          "maximumChannelError": 0.2269999999999186
+        },
+        {
+          "x": 104,
+          "y": 78,
+          "expectedChannel": 70.22699999999992,
+          "observedRgb": [
+            70.0,
+            70.0,
+            70.0
+          ],
+          "maximumChannelError": 0.2269999999999186
+        },
+        {
+          "x": 108,
+          "y": 134,
+          "expectedChannel": 122.69069999999986,
+          "observedRgb": [
+            123.0,
+            123.0,
+            123.0
+          ],
+          "maximumChannelError": 0.30930000000013536
+        },
+        {
+          "x": 120,
+          "y": 72,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 120,
+          "y": 74,
+          "expectedChannel": 70.22699999999992,
+          "observedRgb": [
+            70.0,
+            70.0,
+            70.0
+          ],
+          "maximumChannelError": 0.2269999999999186
+        },
+        {
+          "x": 120,
+          "y": 86,
+          "expectedChannel": 122.89724999999996,
+          "observedRgb": [
+            123.5,
+            123.5,
+            123.5
+          ],
+          "maximumChannelError": 0.602750000000043
+        },
+        {
+          "x": 120,
+          "y": 104,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 120,
+          "y": 134,
+          "expectedChannel": 122.69069999999986,
+          "observedRgb": [
+            123.0,
+            123.0,
+            123.0
+          ],
+          "maximumChannelError": 0.30930000000013536
+        },
+        {
+          "x": 120,
+          "y": 168,
+          "expectedChannel": 122.69069999999986,
+          "observedRgb": [
+            123.0,
+            123.0,
+            123.0
+          ],
+          "maximumChannelError": 0.30930000000013536
+        },
+        {
+          "x": 120,
+          "y": 170,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 120,
+          "y": 172,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 138,
+          "y": 82,
+          "expectedChannel": 168.98371874999998,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 8.01628125000002
+        },
+        {
+          "x": 138,
+          "y": 134,
+          "expectedChannel": 125.99549999999995,
+          "observedRgb": [
+            123.0,
+            123.0,
+            123.0
+          ],
+          "maximumChannelError": 2.99549999999995
+        },
+        {
+          "x": 140,
+          "y": 82,
+          "expectedChannel": 76.81078124999989,
+          "observedRgb": [
+            70.0,
+            70.0,
+            70.0
+          ],
+          "maximumChannelError": 6.810781249999891
+        },
+        {
+          "x": 142,
+          "y": 82,
+          "expectedChannel": 70.22699999999992,
+          "observedRgb": [
+            70.0,
+            70.0,
+            70.0
+          ],
+          "maximumChannelError": 0.2269999999999186
+        },
+        {
+          "x": 144,
+          "y": 134,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 160,
+          "y": 82,
+          "expectedChannel": 70.22699999999992,
+          "observedRgb": [
+            70.0,
+            70.0,
+            70.0
+          ],
+          "maximumChannelError": 0.2269999999999186
+        },
+        {
+          "x": 160,
+          "y": 134,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 178,
+          "y": 94,
+          "expectedChannel": 70.22699999999992,
+          "observedRgb": [
+            70.0,
+            70.0,
+            70.0
+          ],
+          "maximumChannelError": 0.2269999999999186
+        },
+        {
+          "x": 180,
+          "y": 94,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 182,
+          "y": 94,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 214,
+          "y": 96,
+          "expectedChannel": 87.78375,
+          "observedRgb": [
+            88.5,
+            88.5,
+            88.5
+          ],
+          "maximumChannelError": 0.7162500000000023
+        }
+      ]
+    },
+    {
+      "sample": "sample-1",
+      "time": 0.015625,
+      "maximumChannelError": 8.01628125000002,
+      "failedProbes": [
+        {
+          "x": 138,
+          "y": 82,
+          "expectedChannel": 168.98371874999998,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 8.01628125000002
+        }
+      ],
+      "checks": [
+        {
+          "x": 44,
+          "y": 96,
+          "expectedChannel": 87.78375,
+          "observedRgb": [
+            80.5,
+            80.5,
+            80.5
+          ],
+          "maximumChannelError": 7.283749999999998
+        },
+        {
+          "x": 46,
+          "y": 96,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 94,
+          "y": 44,
+          "expectedChannel": 0.0,
+          "observedRgb": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "maximumChannelError": 0.0
+        },
+        {
+          "x": 94,
+          "y": 46,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            174.75,
+            174.75,
+            174.75
+          ],
+          "maximumChannelError": 0.8174999999999955
+        },
+        {
+          "x": 94,
+          "y": 194,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 94,
+          "y": 196,
+          "expectedChannel": 0.0,
+          "observedRgb": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "maximumChannelError": 0.0
+        },
+        {
+          "x": 98,
+          "y": 94,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 100,
+          "y": 94,
+          "expectedChannel": 70.22699999999992,
+          "observedRgb": [
+            70.0,
+            70.0,
+            70.0
+          ],
+          "maximumChannelError": 0.2269999999999186
+        },
+        {
+          "x": 104,
+          "y": 78,
+          "expectedChannel": 70.22699999999992,
+          "observedRgb": [
+            70.0,
+            70.0,
+            70.0
+          ],
+          "maximumChannelError": 0.2269999999999186
+        },
+        {
+          "x": 108,
+          "y": 134,
+          "expectedChannel": 122.69069999999986,
+          "observedRgb": [
+            123.0,
+            123.0,
+            123.0
+          ],
+          "maximumChannelError": 0.30930000000013536
+        },
+        {
+          "x": 120,
+          "y": 72,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 120,
+          "y": 74,
+          "expectedChannel": 70.22699999999992,
+          "observedRgb": [
+            70.0,
+            70.0,
+            70.0
+          ],
+          "maximumChannelError": 0.2269999999999186
+        },
+        {
+          "x": 120,
+          "y": 86,
+          "expectedChannel": 122.89724999999996,
+          "observedRgb": [
+            123.5,
+            123.5,
+            123.5
+          ],
+          "maximumChannelError": 0.602750000000043
+        },
+        {
+          "x": 120,
+          "y": 104,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 120,
+          "y": 134,
+          "expectedChannel": 122.69069999999986,
+          "observedRgb": [
+            123.0,
+            123.0,
+            123.0
+          ],
+          "maximumChannelError": 0.30930000000013536
+        },
+        {
+          "x": 120,
+          "y": 168,
+          "expectedChannel": 122.69069999999986,
+          "observedRgb": [
+            123.0,
+            123.0,
+            123.0
+          ],
+          "maximumChannelError": 0.30930000000013536
+        },
+        {
+          "x": 120,
+          "y": 170,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 120,
+          "y": 172,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 138,
+          "y": 82,
+          "expectedChannel": 168.98371874999998,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 8.01628125000002
+        },
+        {
+          "x": 138,
+          "y": 134,
+          "expectedChannel": 125.99549999999995,
+          "observedRgb": [
+            123.0,
+            123.0,
+            123.0
+          ],
+          "maximumChannelError": 2.99549999999995
+        },
+        {
+          "x": 140,
+          "y": 82,
+          "expectedChannel": 76.81078124999989,
+          "observedRgb": [
+            70.0,
+            70.0,
+            70.0
+          ],
+          "maximumChannelError": 6.810781249999891
+        },
+        {
+          "x": 142,
+          "y": 82,
+          "expectedChannel": 70.22699999999992,
+          "observedRgb": [
+            70.0,
+            70.0,
+            70.0
+          ],
+          "maximumChannelError": 0.2269999999999186
+        },
+        {
+          "x": 144,
+          "y": 134,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 160,
+          "y": 82,
+          "expectedChannel": 70.22699999999992,
+          "observedRgb": [
+            70.0,
+            70.0,
+            70.0
+          ],
+          "maximumChannelError": 0.2269999999999186
+        },
+        {
+          "x": 160,
+          "y": 134,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 178,
+          "y": 94,
+          "expectedChannel": 70.22699999999992,
+          "observedRgb": [
+            70.0,
+            70.0,
+            70.0
+          ],
+          "maximumChannelError": 0.2269999999999186
+        },
+        {
+          "x": 180,
+          "y": 94,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 182,
+          "y": 94,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 214,
+          "y": 96,
+          "expectedChannel": 89.15537109375,
+          "observedRgb": [
+            88.5,
+            88.5,
+            88.5
+          ],
+          "maximumChannelError": 0.6553710937500057
+        }
+      ]
+    },
+    {
+      "sample": "sample-2",
+      "time": 0.046875,
+      "maximumChannelError": 8.01628125000002,
+      "failedProbes": [
+        {
+          "x": 138,
+          "y": 82,
+          "expectedChannel": 168.98371874999998,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 8.01628125000002
+        }
+      ],
+      "checks": [
+        {
+          "x": 44,
+          "y": 96,
+          "expectedChannel": 67.20943359374999,
+          "observedRgb": [
+            64.75,
+            64.75,
+            64.75
+          ],
+          "maximumChannelError": 2.459433593749992
+        },
+        {
+          "x": 46,
+          "y": 96,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 94,
+          "y": 44,
+          "expectedChannel": 0.0,
+          "observedRgb": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "maximumChannelError": 0.0
+        },
+        {
+          "x": 94,
+          "y": 46,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            175.5,
+            175.5,
+            175.5
+          ],
+          "maximumChannelError": 0.06749999999999545
+        },
+        {
+          "x": 94,
+          "y": 194,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            176.0,
+            176.0,
+            176.0
+          ],
+          "maximumChannelError": 0.43250000000000455
+        },
+        {
+          "x": 94,
+          "y": 196,
+          "expectedChannel": 0.0,
+          "observedRgb": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "maximumChannelError": 0.0
+        },
+        {
+          "x": 98,
+          "y": 94,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 100,
+          "y": 94,
+          "expectedChannel": 70.22699999999992,
+          "observedRgb": [
+            70.0,
+            70.0,
+            70.0
+          ],
+          "maximumChannelError": 0.2269999999999186
+        },
+        {
+          "x": 104,
+          "y": 78,
+          "expectedChannel": 70.22699999999992,
+          "observedRgb": [
+            70.0,
+            70.0,
+            70.0
+          ],
+          "maximumChannelError": 0.2269999999999186
+        },
+        {
+          "x": 108,
+          "y": 134,
+          "expectedChannel": 122.69069999999986,
+          "observedRgb": [
+            123.0,
+            123.0,
+            123.0
+          ],
+          "maximumChannelError": 0.30930000000013536
+        },
+        {
+          "x": 120,
+          "y": 72,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 120,
+          "y": 74,
+          "expectedChannel": 70.22699999999992,
+          "observedRgb": [
+            70.0,
+            70.0,
+            70.0
+          ],
+          "maximumChannelError": 0.2269999999999186
+        },
+        {
+          "x": 120,
+          "y": 86,
+          "expectedChannel": 122.89724999999996,
+          "observedRgb": [
+            123.5,
+            123.5,
+            123.5
+          ],
+          "maximumChannelError": 0.602750000000043
+        },
+        {
+          "x": 120,
+          "y": 104,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 120,
+          "y": 134,
+          "expectedChannel": 122.69069999999986,
+          "observedRgb": [
+            123.0,
+            123.0,
+            123.0
+          ],
+          "maximumChannelError": 0.30930000000013536
+        },
+        {
+          "x": 120,
+          "y": 168,
+          "expectedChannel": 122.69069999999986,
+          "observedRgb": [
+            123.0,
+            123.0,
+            123.0
+          ],
+          "maximumChannelError": 0.30930000000013536
+        },
+        {
+          "x": 120,
+          "y": 170,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 120,
+          "y": 172,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 138,
+          "y": 82,
+          "expectedChannel": 168.98371874999998,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 8.01628125000002
+        },
+        {
+          "x": 138,
+          "y": 134,
+          "expectedChannel": 125.99549999999995,
+          "observedRgb": [
+            123.0,
+            123.0,
+            123.0
+          ],
+          "maximumChannelError": 2.99549999999995
+        },
+        {
+          "x": 140,
+          "y": 82,
+          "expectedChannel": 76.81078124999989,
+          "observedRgb": [
+            70.0,
+            70.0,
+            70.0
+          ],
+          "maximumChannelError": 6.810781249999891
+        },
+        {
+          "x": 142,
+          "y": 82,
+          "expectedChannel": 70.22699999999992,
+          "observedRgb": [
+            70.0,
+            70.0,
+            70.0
+          ],
+          "maximumChannelError": 0.2269999999999186
+        },
+        {
+          "x": 144,
+          "y": 134,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 160,
+          "y": 82,
+          "expectedChannel": 70.22699999999992,
+          "observedRgb": [
+            70.0,
+            70.0,
+            70.0
+          ],
+          "maximumChannelError": 0.2269999999999186
+        },
+        {
+          "x": 160,
+          "y": 134,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 178,
+          "y": 94,
+          "expectedChannel": 70.22699999999992,
+          "observedRgb": [
+            70.0,
+            70.0,
+            70.0
+          ],
+          "maximumChannelError": 0.2269999999999186
+        },
+        {
+          "x": 180,
+          "y": 94,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 182,
+          "y": 94,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 214,
+          "y": 96,
+          "expectedChannel": 93.270234375,
+          "observedRgb": [
+            88.5,
+            88.5,
+            88.5
+          ],
+          "maximumChannelError": 4.770234375000001
+        }
+      ]
+    },
+    {
+      "sample": "sample-3",
+      "time": 0.078125,
+      "maximumChannelError": 11.628339843749984,
+      "failedProbes": [
+        {
+          "x": 138,
+          "y": 82,
+          "expectedChannel": 168.98371874999998,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 8.01628125000002
+        },
+        {
+          "x": 214,
+          "y": 96,
+          "expectedChannel": 100.12833984374998,
+          "observedRgb": [
+            88.5,
+            88.5,
+            88.5
+          ],
+          "maximumChannelError": 11.628339843749984
+        }
+      ],
+      "checks": [
+        {
+          "x": 44,
+          "y": 96,
+          "expectedChannel": 49.378359375,
+          "observedRgb": [
+            52.0,
+            52.0,
+            52.0
+          ],
+          "maximumChannelError": 2.6216406249999977
+        },
+        {
+          "x": 46,
+          "y": 96,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 94,
+          "y": 44,
+          "expectedChannel": 0.0,
+          "observedRgb": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "maximumChannelError": 0.0
+        },
+        {
+          "x": 94,
+          "y": 46,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            173.25,
+            173.25,
+            173.25
+          ],
+          "maximumChannelError": 2.3174999999999955
+        },
+        {
+          "x": 94,
+          "y": 194,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 94,
+          "y": 196,
+          "expectedChannel": 0.0,
+          "observedRgb": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "maximumChannelError": 0.0
+        },
+        {
+          "x": 98,
+          "y": 94,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 100,
+          "y": 94,
+          "expectedChannel": 70.22699999999992,
+          "observedRgb": [
+            70.0,
+            70.0,
+            70.0
+          ],
+          "maximumChannelError": 0.2269999999999186
+        },
+        {
+          "x": 104,
+          "y": 78,
+          "expectedChannel": 70.22699999999992,
+          "observedRgb": [
+            70.0,
+            70.0,
+            70.0
+          ],
+          "maximumChannelError": 0.2269999999999186
+        },
+        {
+          "x": 108,
+          "y": 134,
+          "expectedChannel": 122.69069999999986,
+          "observedRgb": [
+            123.0,
+            123.0,
+            123.0
+          ],
+          "maximumChannelError": 0.30930000000013536
+        },
+        {
+          "x": 120,
+          "y": 72,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 120,
+          "y": 74,
+          "expectedChannel": 70.22699999999992,
+          "observedRgb": [
+            70.0,
+            70.0,
+            70.0
+          ],
+          "maximumChannelError": 0.2269999999999186
+        },
+        {
+          "x": 120,
+          "y": 86,
+          "expectedChannel": 122.89724999999996,
+          "observedRgb": [
+            123.5,
+            123.5,
+            123.5
+          ],
+          "maximumChannelError": 0.602750000000043
+        },
+        {
+          "x": 120,
+          "y": 104,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 120,
+          "y": 134,
+          "expectedChannel": 122.69069999999986,
+          "observedRgb": [
+            123.0,
+            123.0,
+            123.0
+          ],
+          "maximumChannelError": 0.30930000000013536
+        },
+        {
+          "x": 120,
+          "y": 168,
+          "expectedChannel": 122.69069999999986,
+          "observedRgb": [
+            123.0,
+            123.0,
+            123.0
+          ],
+          "maximumChannelError": 0.30930000000013536
+        },
+        {
+          "x": 120,
+          "y": 170,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 120,
+          "y": 172,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 138,
+          "y": 82,
+          "expectedChannel": 168.98371874999998,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 8.01628125000002
+        },
+        {
+          "x": 138,
+          "y": 134,
+          "expectedChannel": 125.99549999999995,
+          "observedRgb": [
+            123.0,
+            123.0,
+            123.0
+          ],
+          "maximumChannelError": 2.99549999999995
+        },
+        {
+          "x": 140,
+          "y": 82,
+          "expectedChannel": 76.81078124999989,
+          "observedRgb": [
+            70.0,
+            70.0,
+            70.0
+          ],
+          "maximumChannelError": 6.810781249999891
+        },
+        {
+          "x": 142,
+          "y": 82,
+          "expectedChannel": 70.22699999999992,
+          "observedRgb": [
+            70.0,
+            70.0,
+            70.0
+          ],
+          "maximumChannelError": 0.2269999999999186
+        },
+        {
+          "x": 144,
+          "y": 134,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 160,
+          "y": 82,
+          "expectedChannel": 70.22699999999992,
+          "observedRgb": [
+            70.0,
+            70.0,
+            70.0
+          ],
+          "maximumChannelError": 0.2269999999999186
+        },
+        {
+          "x": 160,
+          "y": 134,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 178,
+          "y": 94,
+          "expectedChannel": 70.22699999999992,
+          "observedRgb": [
+            70.0,
+            70.0,
+            70.0
+          ],
+          "maximumChannelError": 0.2269999999999186
+        },
+        {
+          "x": 180,
+          "y": 94,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 182,
+          "y": 94,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 214,
+          "y": 96,
+          "expectedChannel": 100.12833984374998,
+          "observedRgb": [
+            88.5,
+            88.5,
+            88.5
+          ],
+          "maximumChannelError": 11.628339843749984
+        }
+      ]
+    },
+    {
+      "sample": "sample-4",
+      "time": 0.109375,
+      "maximumChannelError": 21.22968750000001,
+      "failedProbes": [
+        {
+          "x": 138,
+          "y": 82,
+          "expectedChannel": 168.98371874999998,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 8.01628125000002
+        },
+        {
+          "x": 214,
+          "y": 96,
+          "expectedChannel": 109.72968750000001,
+          "observedRgb": [
+            88.5,
+            88.5,
+            88.5
+          ],
+          "maximumChannelError": 21.22968750000001
+        }
+      ],
+      "checks": [
+        {
+          "x": 44,
+          "y": 96,
+          "expectedChannel": 34.29052734375,
+          "observedRgb": [
+            40.75,
+            40.75,
+            40.75
+          ],
+          "maximumChannelError": 6.45947265625
+        },
+        {
+          "x": 46,
+          "y": 96,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 94,
+          "y": 44,
+          "expectedChannel": 0.0,
+          "observedRgb": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "maximumChannelError": 0.0
+        },
+        {
+          "x": 94,
+          "y": 46,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            170.75,
+            170.75,
+            170.75
+          ],
+          "maximumChannelError": 4.8174999999999955
+        },
+        {
+          "x": 94,
+          "y": 194,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 94,
+          "y": 196,
+          "expectedChannel": 0.0,
+          "observedRgb": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "maximumChannelError": 0.0
+        },
+        {
+          "x": 98,
+          "y": 94,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 100,
+          "y": 94,
+          "expectedChannel": 70.22699999999992,
+          "observedRgb": [
+            70.0,
+            70.0,
+            70.0
+          ],
+          "maximumChannelError": 0.2269999999999186
+        },
+        {
+          "x": 104,
+          "y": 78,
+          "expectedChannel": 70.22699999999992,
+          "observedRgb": [
+            70.0,
+            70.0,
+            70.0
+          ],
+          "maximumChannelError": 0.2269999999999186
+        },
+        {
+          "x": 108,
+          "y": 134,
+          "expectedChannel": 122.69069999999986,
+          "observedRgb": [
+            123.0,
+            123.0,
+            123.0
+          ],
+          "maximumChannelError": 0.30930000000013536
+        },
+        {
+          "x": 120,
+          "y": 72,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 120,
+          "y": 74,
+          "expectedChannel": 70.22699999999992,
+          "observedRgb": [
+            70.0,
+            70.0,
+            70.0
+          ],
+          "maximumChannelError": 0.2269999999999186
+        },
+        {
+          "x": 120,
+          "y": 86,
+          "expectedChannel": 122.89724999999996,
+          "observedRgb": [
+            123.5,
+            123.5,
+            123.5
+          ],
+          "maximumChannelError": 0.602750000000043
+        },
+        {
+          "x": 120,
+          "y": 104,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 120,
+          "y": 134,
+          "expectedChannel": 122.69069999999986,
+          "observedRgb": [
+            123.0,
+            123.0,
+            123.0
+          ],
+          "maximumChannelError": 0.30930000000013536
+        },
+        {
+          "x": 120,
+          "y": 168,
+          "expectedChannel": 122.69069999999986,
+          "observedRgb": [
+            123.0,
+            123.0,
+            123.0
+          ],
+          "maximumChannelError": 0.30930000000013536
+        },
+        {
+          "x": 120,
+          "y": 170,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 120,
+          "y": 172,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 138,
+          "y": 82,
+          "expectedChannel": 168.98371874999998,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 8.01628125000002
+        },
+        {
+          "x": 138,
+          "y": 134,
+          "expectedChannel": 125.99549999999995,
+          "observedRgb": [
+            123.0,
+            123.0,
+            123.0
+          ],
+          "maximumChannelError": 2.99549999999995
+        },
+        {
+          "x": 140,
+          "y": 82,
+          "expectedChannel": 76.81078124999989,
+          "observedRgb": [
+            70.0,
+            70.0,
+            70.0
+          ],
+          "maximumChannelError": 6.810781249999891
+        },
+        {
+          "x": 142,
+          "y": 82,
+          "expectedChannel": 70.22699999999992,
+          "observedRgb": [
+            70.0,
+            70.0,
+            70.0
+          ],
+          "maximumChannelError": 0.2269999999999186
+        },
+        {
+          "x": 144,
+          "y": 134,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 160,
+          "y": 82,
+          "expectedChannel": 70.22699999999992,
+          "observedRgb": [
+            70.0,
+            70.0,
+            70.0
+          ],
+          "maximumChannelError": 0.2269999999999186
+        },
+        {
+          "x": 160,
+          "y": 134,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 178,
+          "y": 94,
+          "expectedChannel": 70.22699999999992,
+          "observedRgb": [
+            70.0,
+            70.0,
+            70.0
+          ],
+          "maximumChannelError": 0.2269999999999186
+        },
+        {
+          "x": 180,
+          "y": 94,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 182,
+          "y": 94,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 214,
+          "y": 96,
+          "expectedChannel": 109.72968750000001,
+          "observedRgb": [
+            88.5,
+            88.5,
+            88.5
+          ],
+          "maximumChannelError": 21.22968750000001
+        }
+      ]
+    },
+    {
+      "sample": "sample-5",
+      "time": 0.140625,
+      "maximumChannelError": 8.01628125000002,
+      "failedProbes": [
+        {
+          "x": 138,
+          "y": 82,
+          "expectedChannel": 168.98371874999998,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 8.01628125000002
+        }
+      ],
+      "checks": [
+        {
+          "x": 44,
+          "y": 96,
+          "expectedChannel": 34.29052734375,
+          "observedRgb": [
+            30.0,
+            30.0,
+            30.0
+          ],
+          "maximumChannelError": 4.29052734375
+        },
+        {
+          "x": 46,
+          "y": 96,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 94,
+          "y": 44,
+          "expectedChannel": 0.0,
+          "observedRgb": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "maximumChannelError": 0.0
+        },
+        {
+          "x": 94,
+          "y": 46,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            172.5,
+            172.5,
+            172.5
+          ],
+          "maximumChannelError": 3.0674999999999955
+        },
+        {
+          "x": 94,
+          "y": 194,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 94,
+          "y": 196,
+          "expectedChannel": 0.0,
+          "observedRgb": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "maximumChannelError": 0.0
+        },
+        {
+          "x": 98,
+          "y": 94,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 100,
+          "y": 94,
+          "expectedChannel": 70.22699999999992,
+          "observedRgb": [
+            70.0,
+            70.0,
+            70.0
+          ],
+          "maximumChannelError": 0.2269999999999186
+        },
+        {
+          "x": 104,
+          "y": 78,
+          "expectedChannel": 70.22699999999992,
+          "observedRgb": [
+            70.0,
+            70.0,
+            70.0
+          ],
+          "maximumChannelError": 0.2269999999999186
+        },
+        {
+          "x": 108,
+          "y": 134,
+          "expectedChannel": 122.69069999999986,
+          "observedRgb": [
+            123.0,
+            123.0,
+            123.0
+          ],
+          "maximumChannelError": 0.30930000000013536
+        },
+        {
+          "x": 120,
+          "y": 72,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 120,
+          "y": 74,
+          "expectedChannel": 70.22699999999992,
+          "observedRgb": [
+            70.0,
+            70.0,
+            70.0
+          ],
+          "maximumChannelError": 0.2269999999999186
+        },
+        {
+          "x": 120,
+          "y": 86,
+          "expectedChannel": 122.89724999999996,
+          "observedRgb": [
+            123.5,
+            123.5,
+            123.5
+          ],
+          "maximumChannelError": 0.602750000000043
+        },
+        {
+          "x": 120,
+          "y": 104,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 120,
+          "y": 134,
+          "expectedChannel": 122.69069999999986,
+          "observedRgb": [
+            123.0,
+            123.0,
+            123.0
+          ],
+          "maximumChannelError": 0.30930000000013536
+        },
+        {
+          "x": 120,
+          "y": 168,
+          "expectedChannel": 122.69069999999986,
+          "observedRgb": [
+            123.0,
+            123.0,
+            123.0
+          ],
+          "maximumChannelError": 0.30930000000013536
+        },
+        {
+          "x": 120,
+          "y": 170,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 120,
+          "y": 172,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 138,
+          "y": 82,
+          "expectedChannel": 168.98371874999998,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 8.01628125000002
+        },
+        {
+          "x": 138,
+          "y": 134,
+          "expectedChannel": 125.99549999999995,
+          "observedRgb": [
+            123.0,
+            123.0,
+            123.0
+          ],
+          "maximumChannelError": 2.99549999999995
+        },
+        {
+          "x": 140,
+          "y": 82,
+          "expectedChannel": 76.81078124999989,
+          "observedRgb": [
+            70.0,
+            70.0,
+            70.0
+          ],
+          "maximumChannelError": 6.810781249999891
+        },
+        {
+          "x": 142,
+          "y": 82,
+          "expectedChannel": 70.22699999999992,
+          "observedRgb": [
+            70.0,
+            70.0,
+            70.0
+          ],
+          "maximumChannelError": 0.2269999999999186
+        },
+        {
+          "x": 144,
+          "y": 134,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 160,
+          "y": 82,
+          "expectedChannel": 70.22699999999992,
+          "observedRgb": [
+            70.0,
+            70.0,
+            70.0
+          ],
+          "maximumChannelError": 0.2269999999999186
+        },
+        {
+          "x": 160,
+          "y": 134,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 178,
+          "y": 94,
+          "expectedChannel": 70.22699999999992,
+          "observedRgb": [
+            70.0,
+            70.0,
+            70.0
+          ],
+          "maximumChannelError": 0.2269999999999186
+        },
+        {
+          "x": 180,
+          "y": 94,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 182,
+          "y": 94,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 214,
+          "y": 96,
+          "expectedChannel": 122.07427734375,
+          "observedRgb": [
+            117.75,
+            117.75,
+            117.75
+          ],
+          "maximumChannelError": 4.324277343749998
+        }
+      ]
+    },
+    {
+      "sample": "sample-6",
+      "time": 0.171875,
+      "maximumChannelError": 21.9459375,
+      "failedProbes": [
+        {
+          "x": 44,
+          "y": 96,
+          "expectedChannel": 21.9459375,
+          "observedRgb": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "maximumChannelError": 21.9459375
+        },
+        {
+          "x": 138,
+          "y": 82,
+          "expectedChannel": 168.98371874999998,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 8.01628125000002
+        }
+      ],
+      "checks": [
+        {
+          "x": 44,
+          "y": 96,
+          "expectedChannel": 21.9459375,
+          "observedRgb": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "maximumChannelError": 21.9459375
+        },
+        {
+          "x": 46,
+          "y": 96,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 94,
+          "y": 44,
+          "expectedChannel": 0.0,
+          "observedRgb": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "maximumChannelError": 0.0
+        },
+        {
+          "x": 94,
+          "y": 46,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            169.0,
+            169.0,
+            169.0
+          ],
+          "maximumChannelError": 6.5674999999999955
+        },
+        {
+          "x": 94,
+          "y": 194,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 94,
+          "y": 196,
+          "expectedChannel": 0.0,
+          "observedRgb": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "maximumChannelError": 0.0
+        },
+        {
+          "x": 98,
+          "y": 94,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 100,
+          "y": 94,
+          "expectedChannel": 70.22699999999992,
+          "observedRgb": [
+            70.0,
+            70.0,
+            70.0
+          ],
+          "maximumChannelError": 0.2269999999999186
+        },
+        {
+          "x": 104,
+          "y": 78,
+          "expectedChannel": 70.22699999999992,
+          "observedRgb": [
+            70.0,
+            70.0,
+            70.0
+          ],
+          "maximumChannelError": 0.2269999999999186
+        },
+        {
+          "x": 108,
+          "y": 134,
+          "expectedChannel": 122.69069999999986,
+          "observedRgb": [
+            123.0,
+            123.0,
+            123.0
+          ],
+          "maximumChannelError": 0.30930000000013536
+        },
+        {
+          "x": 120,
+          "y": 72,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 120,
+          "y": 74,
+          "expectedChannel": 70.22699999999992,
+          "observedRgb": [
+            70.0,
+            70.0,
+            70.0
+          ],
+          "maximumChannelError": 0.2269999999999186
+        },
+        {
+          "x": 120,
+          "y": 86,
+          "expectedChannel": 122.89724999999996,
+          "observedRgb": [
+            123.5,
+            123.5,
+            123.5
+          ],
+          "maximumChannelError": 0.602750000000043
+        },
+        {
+          "x": 120,
+          "y": 104,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 120,
+          "y": 134,
+          "expectedChannel": 122.69069999999986,
+          "observedRgb": [
+            123.0,
+            123.0,
+            123.0
+          ],
+          "maximumChannelError": 0.30930000000013536
+        },
+        {
+          "x": 120,
+          "y": 168,
+          "expectedChannel": 122.69069999999986,
+          "observedRgb": [
+            123.0,
+            123.0,
+            123.0
+          ],
+          "maximumChannelError": 0.30930000000013536
+        },
+        {
+          "x": 120,
+          "y": 170,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 120,
+          "y": 172,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 138,
+          "y": 82,
+          "expectedChannel": 168.98371874999998,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 8.01628125000002
+        },
+        {
+          "x": 138,
+          "y": 134,
+          "expectedChannel": 125.99549999999995,
+          "observedRgb": [
+            123.0,
+            123.0,
+            123.0
+          ],
+          "maximumChannelError": 2.99549999999995
+        },
+        {
+          "x": 140,
+          "y": 82,
+          "expectedChannel": 76.81078124999989,
+          "observedRgb": [
+            70.0,
+            70.0,
+            70.0
+          ],
+          "maximumChannelError": 6.810781249999891
+        },
+        {
+          "x": 142,
+          "y": 82,
+          "expectedChannel": 70.22699999999992,
+          "observedRgb": [
+            70.0,
+            70.0,
+            70.0
+          ],
+          "maximumChannelError": 0.2269999999999186
+        },
+        {
+          "x": 144,
+          "y": 134,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 160,
+          "y": 82,
+          "expectedChannel": 70.22699999999992,
+          "observedRgb": [
+            70.0,
+            70.0,
+            70.0
+          ],
+          "maximumChannelError": 0.2269999999999186
+        },
+        {
+          "x": 160,
+          "y": 134,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 178,
+          "y": 94,
+          "expectedChannel": 70.22699999999992,
+          "observedRgb": [
+            70.0,
+            70.0,
+            70.0
+          ],
+          "maximumChannelError": 0.2269999999999186
+        },
+        {
+          "x": 180,
+          "y": 94,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 182,
+          "y": 94,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 214,
+          "y": 96,
+          "expectedChannel": 137.162109375,
+          "observedRgb": [
+            131.0,
+            131.0,
+            131.0
+          ],
+          "maximumChannelError": 6.162109375
+        }
+      ]
+    },
+    {
+      "sample": "sample-7",
+      "time": 0.203125,
+      "maximumChannelError": 12.34458984375,
+      "failedProbes": [
+        {
+          "x": 44,
+          "y": 96,
+          "expectedChannel": 12.34458984375,
+          "observedRgb": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "maximumChannelError": 12.34458984375
+        },
+        {
+          "x": 138,
+          "y": 82,
+          "expectedChannel": 168.98371874999998,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 8.01628125000002
+        }
+      ],
+      "checks": [
+        {
+          "x": 44,
+          "y": 96,
+          "expectedChannel": 12.34458984375,
+          "observedRgb": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "maximumChannelError": 12.34458984375
+        },
+        {
+          "x": 46,
+          "y": 96,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 94,
+          "y": 44,
+          "expectedChannel": 0.0,
+          "observedRgb": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "maximumChannelError": 0.0
+        },
+        {
+          "x": 94,
+          "y": 46,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            170.5,
+            170.5,
+            170.5
+          ],
+          "maximumChannelError": 5.0674999999999955
+        },
+        {
+          "x": 94,
+          "y": 194,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 94,
+          "y": 196,
+          "expectedChannel": 0.0,
+          "observedRgb": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "maximumChannelError": 0.0
+        },
+        {
+          "x": 98,
+          "y": 94,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 100,
+          "y": 94,
+          "expectedChannel": 70.22699999999992,
+          "observedRgb": [
+            70.0,
+            70.0,
+            70.0
+          ],
+          "maximumChannelError": 0.2269999999999186
+        },
+        {
+          "x": 104,
+          "y": 78,
+          "expectedChannel": 70.22699999999992,
+          "observedRgb": [
+            70.0,
+            70.0,
+            70.0
+          ],
+          "maximumChannelError": 0.2269999999999186
+        },
+        {
+          "x": 108,
+          "y": 134,
+          "expectedChannel": 122.69069999999986,
+          "observedRgb": [
+            123.0,
+            123.0,
+            123.0
+          ],
+          "maximumChannelError": 0.30930000000013536
+        },
+        {
+          "x": 120,
+          "y": 72,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 120,
+          "y": 74,
+          "expectedChannel": 70.22699999999992,
+          "observedRgb": [
+            70.0,
+            70.0,
+            70.0
+          ],
+          "maximumChannelError": 0.2269999999999186
+        },
+        {
+          "x": 120,
+          "y": 86,
+          "expectedChannel": 122.89724999999996,
+          "observedRgb": [
+            123.5,
+            123.5,
+            123.5
+          ],
+          "maximumChannelError": 0.602750000000043
+        },
+        {
+          "x": 120,
+          "y": 104,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 120,
+          "y": 134,
+          "expectedChannel": 122.69069999999986,
+          "observedRgb": [
+            123.0,
+            123.0,
+            123.0
+          ],
+          "maximumChannelError": 0.30930000000013536
+        },
+        {
+          "x": 120,
+          "y": 168,
+          "expectedChannel": 122.69069999999986,
+          "observedRgb": [
+            123.0,
+            123.0,
+            123.0
+          ],
+          "maximumChannelError": 0.30930000000013536
+        },
+        {
+          "x": 120,
+          "y": 170,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 120,
+          "y": 172,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 138,
+          "y": 82,
+          "expectedChannel": 168.98371874999998,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 8.01628125000002
+        },
+        {
+          "x": 138,
+          "y": 134,
+          "expectedChannel": 125.99549999999995,
+          "observedRgb": [
+            123.0,
+            123.0,
+            123.0
+          ],
+          "maximumChannelError": 2.99549999999995
+        },
+        {
+          "x": 140,
+          "y": 82,
+          "expectedChannel": 76.81078124999989,
+          "observedRgb": [
+            70.0,
+            70.0,
+            70.0
+          ],
+          "maximumChannelError": 6.810781249999891
+        },
+        {
+          "x": 142,
+          "y": 82,
+          "expectedChannel": 70.22699999999992,
+          "observedRgb": [
+            70.0,
+            70.0,
+            70.0
+          ],
+          "maximumChannelError": 0.2269999999999186
+        },
+        {
+          "x": 144,
+          "y": 134,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 160,
+          "y": 82,
+          "expectedChannel": 70.22699999999992,
+          "observedRgb": [
+            70.0,
+            70.0,
+            70.0
+          ],
+          "maximumChannelError": 0.2269999999999186
+        },
+        {
+          "x": 160,
+          "y": 134,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 178,
+          "y": 94,
+          "expectedChannel": 70.22699999999992,
+          "observedRgb": [
+            70.0,
+            70.0,
+            70.0
+          ],
+          "maximumChannelError": 0.2269999999999186
+        },
+        {
+          "x": 180,
+          "y": 94,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 182,
+          "y": 94,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 214,
+          "y": 96,
+          "expectedChannel": 154.99318359375,
+          "observedRgb": [
+            149.0,
+            149.0,
+            149.0
+          ],
+          "maximumChannelError": 5.99318359374999
+        }
+      ]
+    },
+    {
+      "sample": "sample-8",
+      "time": 0.234375,
+      "maximumChannelError": 8.817499999999995,
+      "failedProbes": [
+        {
+          "x": 94,
+          "y": 46,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            166.75,
+            166.75,
+            166.75
+          ],
+          "maximumChannelError": 8.817499999999995
+        },
+        {
+          "x": 138,
+          "y": 82,
+          "expectedChannel": 168.98371874999998,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 8.01628125000002
+        },
+        {
+          "x": 214,
+          "y": 96,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            167.25,
+            167.25,
+            167.25
+          ],
+          "maximumChannelError": 8.317499999999995
+        }
+      ],
+      "checks": [
+        {
+          "x": 44,
+          "y": 96,
+          "expectedChannel": 5.486484375,
+          "observedRgb": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "maximumChannelError": 5.486484375
+        },
+        {
+          "x": 46,
+          "y": 96,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 94,
+          "y": 44,
+          "expectedChannel": 0.0,
+          "observedRgb": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "maximumChannelError": 0.0
+        },
+        {
+          "x": 94,
+          "y": 46,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            166.75,
+            166.75,
+            166.75
+          ],
+          "maximumChannelError": 8.817499999999995
+        },
+        {
+          "x": 94,
+          "y": 194,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 94,
+          "y": 196,
+          "expectedChannel": 0.0,
+          "observedRgb": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "maximumChannelError": 0.0
+        },
+        {
+          "x": 98,
+          "y": 94,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 100,
+          "y": 94,
+          "expectedChannel": 70.22699999999992,
+          "observedRgb": [
+            70.0,
+            70.0,
+            70.0
+          ],
+          "maximumChannelError": 0.2269999999999186
+        },
+        {
+          "x": 104,
+          "y": 78,
+          "expectedChannel": 70.22699999999992,
+          "observedRgb": [
+            70.0,
+            70.0,
+            70.0
+          ],
+          "maximumChannelError": 0.2269999999999186
+        },
+        {
+          "x": 108,
+          "y": 134,
+          "expectedChannel": 122.69069999999986,
+          "observedRgb": [
+            123.0,
+            123.0,
+            123.0
+          ],
+          "maximumChannelError": 0.30930000000013536
+        },
+        {
+          "x": 120,
+          "y": 72,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 120,
+          "y": 74,
+          "expectedChannel": 70.22699999999992,
+          "observedRgb": [
+            70.0,
+            70.0,
+            70.0
+          ],
+          "maximumChannelError": 0.2269999999999186
+        },
+        {
+          "x": 120,
+          "y": 86,
+          "expectedChannel": 122.89724999999996,
+          "observedRgb": [
+            123.5,
+            123.5,
+            123.5
+          ],
+          "maximumChannelError": 0.602750000000043
+        },
+        {
+          "x": 120,
+          "y": 104,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 120,
+          "y": 134,
+          "expectedChannel": 122.69069999999986,
+          "observedRgb": [
+            123.0,
+            123.0,
+            123.0
+          ],
+          "maximumChannelError": 0.30930000000013536
+        },
+        {
+          "x": 120,
+          "y": 168,
+          "expectedChannel": 122.69069999999986,
+          "observedRgb": [
+            123.0,
+            123.0,
+            123.0
+          ],
+          "maximumChannelError": 0.30930000000013536
+        },
+        {
+          "x": 120,
+          "y": 170,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 120,
+          "y": 172,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 138,
+          "y": 82,
+          "expectedChannel": 168.98371874999998,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 8.01628125000002
+        },
+        {
+          "x": 138,
+          "y": 134,
+          "expectedChannel": 125.99549999999995,
+          "observedRgb": [
+            123.0,
+            123.0,
+            123.0
+          ],
+          "maximumChannelError": 2.99549999999995
+        },
+        {
+          "x": 140,
+          "y": 82,
+          "expectedChannel": 76.81078124999989,
+          "observedRgb": [
+            70.0,
+            70.0,
+            70.0
+          ],
+          "maximumChannelError": 6.810781249999891
+        },
+        {
+          "x": 142,
+          "y": 82,
+          "expectedChannel": 70.22699999999992,
+          "observedRgb": [
+            70.0,
+            70.0,
+            70.0
+          ],
+          "maximumChannelError": 0.2269999999999186
+        },
+        {
+          "x": 144,
+          "y": 134,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 160,
+          "y": 82,
+          "expectedChannel": 70.22699999999992,
+          "observedRgb": [
+            70.0,
+            70.0,
+            70.0
+          ],
+          "maximumChannelError": 0.2269999999999186
+        },
+        {
+          "x": 160,
+          "y": 134,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 178,
+          "y": 94,
+          "expectedChannel": 70.22699999999992,
+          "observedRgb": [
+            70.0,
+            70.0,
+            70.0
+          ],
+          "maximumChannelError": 0.2269999999999186
+        },
+        {
+          "x": 180,
+          "y": 94,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 182,
+          "y": 94,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            177.0,
+            177.0,
+            177.0
+          ],
+          "maximumChannelError": 1.4325000000000045
+        },
+        {
+          "x": 214,
+          "y": 96,
+          "expectedChannel": 175.5675,
+          "observedRgb": [
+            167.25,
+            167.25,
+            167.25
+          ],
+          "maximumChannelError": 8.317499999999995
+        }
+      ]
+    }
+  ],
+  "compositeComparison": [
+    {
+      "x": 214,
+      "y": 96,
+      "temporalRgb": [
+        114.25,
+        114.25,
+        114.25
+      ],
+      "averageIsolatedRgb": [
+        114.875,
+        114.875,
+        114.875
+      ],
+      "expectedAverageChannel": 122.760087890625,
+      "temporalMinusIsolated": [
+        -0.625,
+        -0.625,
+        -0.625
+      ]
+    }
+  ]
+}

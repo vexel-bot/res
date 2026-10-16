@@ -1,0 +1,33 @@
+{
+  "schemaVersion": "clicko.research-modality-map.v1",
+  "caseId": "HZ-IG-01",
+  "source": "https://www.instagram.com/hormozi/p/DedJ5XkFEeG/",
+  "coverage": {
+    "text": "public-caption",
+    "visual": "cover-categories-conclusion-sampled",
+    "audio": "not-applicable",
+    "completeAudiovisual": false
+  },
+  "editorialCuts": [],
+  "visualChangeCandidates": [],
+  "locatedTextUnits": [
+    {
+      "locator": "capa → cartões de categorias → conclusão",
+      "kind": "observation"
+    },
+    {
+      "locator": "cartões observados",
+      "kind": "observation"
+    },
+    {
+      "locator": "sequência observada",
+      "kind": "interpretation"
+    },
+    {
+      "locator": "roteiro de carrossel",
+      "kind": "clicko_hypothesis"
+    }
+  ],
+  "reviewGap": "Cuts, timing and audio not fully annotated; text locators are not cut boundaries",
+  "distributedMedia": false
+}

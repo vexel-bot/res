@@ -1,0 +1,654 @@
+{
+  "schemaVersion": "res.temporal-matte-qualification-checkpoint.v1",
+  "generatedAt": "2026-10-03T20:35:36.841451+00:00",
+  "sourceDrift": false,
+  "sources": {
+    "providerVersion": "4.0.527-native.13",
+    "combinedAdmission": "pending",
+    "sources": {
+      "backend/app/domain/studios/contextual_editing_v2.py": "37acb13095b740386501649dbdd9d1a70f91a7a14c500c90299e4b60ed6cc8ce",
+      "backend/app/domain/studios/motion_recipes.py": "8122f1c2f2a9a8030bd1b5407a7a8d2ed22cad7225bcba94ffe29fefd886861b",
+      "backend/app/domain/studios/temporal_exposure.py": "29f544705762a3b694b141308249cc00680d877cd7709f9b7d0a35ea45108dd8",
+      "backend/app/providers/studios/contextual_render.py": "41da67ed3c9e74afee3585f504fa507aa32da72c27f9d61a7cd2f40028e6c2c6",
+      "backend/app/providers/studios/remotion_projection.py": "ae148ca325f4112a8595fcca9b0578aacad14daca2899498ebaf4577d7e8f149",
+      "backend/app/providers/studios/remotion_render.py": "7f106741b62414f824bc1e4e80183a2a7a6ab1d900f8f8b64e750f5ae8adc2ec",
+      "backend/app/services/studios/native_motion_recipes.py": "9f9083f3747f442737b35336eed12f36bb283e4abed40594d68c9566b0fe3f1f",
+      "backend/tests/spatial_effects_kernel_diagnostic.py": "03f609d8dc758516a8dabd770e67584cf5062bd2da78dd3b9a4b855edfebeb06",
+      "backend/tests/temporal_matte_kernel_diagnostic.py": "33f91e2a0da5f61ade7c69d66fb91de21526954cb15c779c64348547c1505eef",
+      "backend/tests/test_spatial_effects.py": "af6721e973275ba8a62437f6feca3eaf33a61d23b29f953f042938c3d1858938",
+      "backend/tests/test_spatial_effects_oracle.py": "33709042ef5de611028d59336f3ab8732e5ad3a5cc609a4a3e999b6da8bbd7af",
+      "backend/tests/test_spatial_effects_render.py": "199f550bd6b726714944b65d6b78f8ad3e3b846edb8597c782966002af57d3ce",
+      "backend/tests/test_temporal_exposure.py": "b064e4aac79e451b35f4824c6c5771d73d3d527d57a97319a9cf64d8733167b5",
+      "backend/tests/test_temporal_matte_oracle.py": "0e4d6bfc3f6004ff528aa37d0e5e0997bf97416b71ec2bde56337ef8389a50db",
+      "backend/tests/test_temporal_rig_render.py": "ae696a2eb7f18364e3103bd2391cc1f9b172e8929755e5de9b7f685577330e28",
+      "scripts/validation/editor-temporal-matte-regression.py": "c62d19e74ff910c6f167388937f93c6854cb2edd4d7fbaa0cba73ccf3caa4149",
+      "workers/remotion-benchmark/render-hybrid.mjs": "1e41e72cbf8a50b9623d707a37fac6d85184258d4b6aa2dfeacf32985d386b76",
+      "workers/remotion-benchmark/src/asset-matte.tsx": "f14ea79323d8261197180db6824bcef707e4b9481154cb2d6beed16342c49a99",
+      "workers/remotion-benchmark/src/hybrid.tsx": "69f66dbfd02be683fe9e6a0d6559ad9e9487c8d7ee48f9fbabf44f0884f5f170",
+      "workers/remotion-benchmark/src/spatial-effects.ts": "cab39ac4863a50bcec80760cb85d969507865f2461fb855c39c1adc105530a9c",
+      "workers/remotion-benchmark/src/temporal-exposure.tsx": "48a609ab733ee2e5c4e6be07f8073a483ff986b235dcb1c34d365f1b4fcc2fc1"
+    }
+  },
+  "currentRegressionCasesPassed": 188,
+  "admittedCapabilityMP4s": [
+    {
+      "path": "docs/studios/research/editor-oss-20261002/temporal-matte-native13-regression-spatial/control/spatial.mp4",
+      "sha256": "cf751be6689b2f28fde9a7affb6594a773d2d45269b7baa6815abf28e10d9cba",
+      "jobId": "bd273725-9012-438f-87f0-e3879abcbb44"
+    },
+    {
+      "path": "docs/studios/research/editor-oss-20261002/temporal-matte-native13-regression-spatial/exposure/spatial.mp4",
+      "sha256": "6ea761141f2d9fc65d60ef9fd46713616236a0c886ea7ba3629abff5661352ab",
+      "jobId": "9fa5f3fb-56f7-4ac8-9baf-bcf97cea195f"
+    },
+    {
+      "path": "docs/studios/research/editor-oss-20261002/temporal-matte-native13-regression-spatial/spatial/spatial.mp4",
+      "sha256": "bb64ba76b3071553cda1ec341c41656d2dce15e777654b6da0d952cd39ff23bd",
+      "jobId": "61128cbf-2c7c-4b36-aef2-b9e860fc5b70"
+    },
+    {
+      "path": "docs/studios/research/editor-oss-20261002/temporal-matte-native13-regression-rig/child/rig.mp4",
+      "sha256": "00c9ad3f4c000ed8712adad323b649c2695e379b21f6461de41a63ef63ef5e66",
+      "jobId": "309854f5-f9b0-4c86-a453-90099195077e"
+    },
+    {
+      "path": "docs/studios/research/editor-oss-20261002/temporal-matte-native13-regression-rig/control/rig.mp4",
+      "sha256": "553aa697ab8908f79bb8990a4e6f0bf565e5515a003d088335db33610c8afb7a",
+      "jobId": "1ace9f63-3367-4c24-b459-541df2d696f1"
+    },
+    {
+      "path": "docs/studios/research/editor-oss-20261002/temporal-matte-native13-regression-rig/disjoint/rig.mp4",
+      "sha256": "478fa32d49b11af8a56ce881908b72d872ac47ac78af05b031271916b950cee0",
+      "jobId": "dc381d44-3eba-47b2-8714-7d7a77cf799e"
+    },
+    {
+      "path": "docs/studios/research/editor-oss-20261002/temporal-matte-native13-regression-rig/rig/rig.mp4",
+      "sha256": "e4f2f31c99b1bf782a89ff1ac60314624dbd91042efaa74c6dd4e5f0963536c2",
+      "jobId": "37e1e545-8422-4b6d-8139-0b15fe645126"
+    },
+    {
+      "path": "docs/studios/research/editor-oss-20261002/temporal-matte-native13-regression-exposure/samples-0-shutter-180/exposure.mp4",
+      "sha256": "97ba27ecbb8a44eb43932006333807a09d78dc35bf55b0d17dec794c5c116605",
+      "jobId": "6f611ebb-ed3c-4139-9dbb-a54ca0979b96"
+    },
+    {
+      "path": "docs/studios/research/editor-oss-20261002/temporal-matte-native13-regression-exposure/samples-16-shutter-180/exposure.mp4",
+      "sha256": "c84080f07c80bb2f639104146bb74a1c8c5b8ed361dd424b3dd672bc87f3553d",
+      "jobId": "b3b03a4c-5a57-46e4-96be-3c6379348244"
+    },
+    {
+      "path": "docs/studios/research/editor-oss-20261002/temporal-matte-native13-regression-exposure/samples-2-shutter-180/exposure.mp4",
+      "sha256": "6702fd04e15d72870ffb8497c55ae19747ee651819abcbcf941eb5fcc885ff33",
+      "jobId": "5e0bfec5-a80b-4d43-a7f1-c6937a90f499"
+    },
+    {
+      "path": "docs/studios/research/editor-oss-20261002/temporal-matte-native13-regression-exposure/samples-8-shutter-0/exposure.mp4",
+      "sha256": "97ba27ecbb8a44eb43932006333807a09d78dc35bf55b0d17dec794c5c116605",
+      "jobId": "9e9d40d0-3a1e-4fb7-a9fc-24c0ac4d616b"
+    },
+    {
+      "path": "docs/studios/research/editor-oss-20261002/temporal-matte-native13-regression-exposure/samples-8-shutter-180/exposure.mp4",
+      "sha256": "4f9bf78104790852e8b818572f5d64f0129f7667c2c7db6c5e651196a381b5b7",
+      "jobId": "69f7ad7e-d55b-4134-8fa3-62c852ffb673"
+    },
+    {
+      "path": "docs/studios/research/editor-oss-20261002/temporal-matte-native13-regression-matte/alpha-inverted/matte.mp4",
+      "sha256": "1d23cd04e996172cafdeeb68fad6c1921f2364d13e2999428593e4127ed4cbd5",
+      "jobId": "035b3850-5572-4b0f-a633-3d12119d81ca"
+    },
+    {
+      "path": "docs/studios/research/editor-oss-20261002/temporal-matte-native13-regression-matte/alpha-normal/matte.mp4",
+      "sha256": "e8f85a13353a655aab22a015c2a44db0ab85b2a40b837596f807b34add422095",
+      "jobId": "b0789db3-20de-437e-bcba-c121e0d5e324"
+    },
+    {
+      "path": "docs/studios/research/editor-oss-20261002/temporal-matte-native13-regression-matte/alpha-wide-contain/matte.mp4",
+      "sha256": "024bb566917bd036dd4d0178b8befa704cf4f3fe405d71c0eb3559f704405476",
+      "jobId": "2058ff62-1e8f-4003-bf87-561f63380d6e"
+    },
+    {
+      "path": "docs/studios/research/editor-oss-20261002/temporal-matte-native13-regression-matte/alpha-wide-cover/matte.mp4",
+      "sha256": "24d8b7d85beab4c5bbb0f34d53f24bc916b88e5f72c8f8a82c169ce754cef699",
+      "jobId": "5ca205d6-099a-4f49-9f0e-27e0f6e556c3"
+    },
+    {
+      "path": "docs/studios/research/editor-oss-20261002/temporal-matte-native13-regression-matte/luminance-inverted/matte.mp4",
+      "sha256": "0f6cede12f318676d3c25adddd3155861e1f008d106919e519bc2e8ceb16f640",
+      "jobId": "f136f0e2-0e4c-4813-9e55-7e6a01603dea"
+    },
+    {
+      "path": "docs/studios/research/editor-oss-20261002/temporal-matte-native13-regression-matte/luminance-normal/matte.mp4",
+      "sha256": "38dcde12ce01225c3a767bf11a4e1d0379eb050bd7cbb869e402ef67e1227d7e",
+      "jobId": "5515b8c1-324f-47ea-9831-f227ed7a6b32"
+    },
+    {
+      "path": "docs/studios/research/editor-oss-20261002/temporal-matte-native13-regression-typography/unicode/typography.mp4",
+      "sha256": "17dec9979f4e3d38309f12374d4810f9bae18f8b9d538f794acd9efab75a05e4",
+      "jobId": "d08bcaf6-cd6c-4ea0-96ae-38cc681be79d"
+    },
+    {
+      "path": "docs/studios/research/editor-oss-20261002/temporal-matte-native13-regression-typography/wrapped_words/typography.mp4",
+      "sha256": "0d09cc5f9ab4675a01ef1e4d304a2eb5c9f0e3a1c6ce538729d5c393be3719f9",
+      "jobId": "ebf7921a-29e8-4dc0-adb2-7c7efeeb0e80"
+    },
+    {
+      "path": "docs/studios/research/editor-oss-20261002/temporal-matte-native13-regression-command/rig/edited.mp4",
+      "sha256": "098cace6194118cd2c8974d0f8ace75bdf01f1f256c278135dc95e9e64c01a94",
+      "jobId": "fe3cb229-096e-4e20-ab70-1867f48935cb"
+    },
+    {
+      "path": "docs/studios/research/editor-oss-20261002/temporal-matte-native13-regression-command/shape/edited.mp4",
+      "sha256": "09d4f427862714acb391deee20f2489b1d1ccbeb79aa360b7c463feecff03d3b",
+      "jobId": "e52a98cc-50ca-426e-af51-41e7b195b1d9"
+    }
+  ],
+  "negativeJobs": [
+    "docs/studios/research/editor-oss-20261002/temporal-matte-native13-regression-matte/animated-negative/evidence.json"
+  ],
+  "combinedAdmission": "pending",
+  "currentAPIRejection": {
+    "scope": "actual_API_current_native13_plan_rejection",
+    "httpStatus": 422,
+    "response": {
+      "detail": {
+        "code": "motion_recipe_temporal_matte_moving_external_ancestor_pending"
+      }
+    },
+    "publishedArtifact": false,
+    "historicalHarnessScope": "actual_API_native12_plan_rejection",
+    "runtimeVersionDuringTest": "4.0.527-native.13"
+  },
+  "experiments": [
+    {
+      "phase": "temporal-matte-native13-render",
+      "variant": "child-external-alpha-normal",
+      "jobId": "8b66dedb-6384-4960-9343-714104c69a88",
+      "video": "docs/studios/research/editor-oss-20261002/temporal-matte-native13-render/child-external-alpha-normal/matte-exposure.mp4",
+      "checksum": "c1106a9a82050adac3dafbad283197b3b660fe6ec0f61d0a56be039563cdea3a",
+      "qc": "passed",
+      "measurementStatus": "failed",
+      "probes": 168,
+      "maximumChannelError": 10.699528076170765,
+      "failures": [
+        [
+          "pixel",
+          7,
+          148,
+          92,
+          10.699528076170765
+        ],
+        [
+          "pixel",
+          8,
+          210,
+          94,
+          8.258384500981382
+        ],
+        [
+          "pixel",
+          10,
+          150,
+          148,
+          8.67219999999999
+        ],
+        [
+          "pixel",
+          10,
+          210,
+          94,
+          8.258384500981382
+        ],
+        [
+          "pixel",
+          15,
+          150,
+          148,
+          8.67219999999999
+        ],
+        [
+          "pixel",
+          15,
+          210,
+          94,
+          8.258384500981382
+        ]
+      ],
+      "matrixMaximumError": 0.00015526993207970463
+    },
+    {
+      "phase": "temporal-matte-native13-control-diagnostic",
+      "variant": "control-external-alpha-normal",
+      "jobId": "5763a258-6923-4ac3-8d8d-bf93926d9823",
+      "video": "docs/studios/research/editor-oss-20261002/temporal-matte-native13-control-diagnostic/control-external-alpha-normal/matte-exposure.mp4",
+      "checksum": "0a5d61f4ece707cc7fb4ab2f7b7d95faf2c921c484e8e219e63f4fbf60b54595",
+      "qc": "passed",
+      "measurementStatus": "failed",
+      "probes": 168,
+      "maximumChannelError": 12.346736816406263,
+      "failures": [
+        [
+          "pixel",
+          7,
+          148,
+          92,
+          12.346736816406263
+        ],
+        [
+          "pixel",
+          8,
+          150,
+          148,
+          9.42219999999999
+        ],
+        [
+          "pixel",
+          10,
+          150,
+          148,
+          9.42219999999999
+        ],
+        [
+          "pixel",
+          15,
+          150,
+          148,
+          9.42219999999999
+        ]
+      ],
+      "matrixMaximumError": 0.000274272036193679
+    },
+    {
+      "phase": "temporal-matte-native13-qualified-render",
+      "variant": "child-common-alpha-normal",
+      "jobId": "7c277e5a-455c-42f0-8622-bf07717cd9fd",
+      "video": "docs/studios/research/editor-oss-20261002/temporal-matte-native13-qualified-render/child-common-alpha-normal/matte-exposure.mp4",
+      "checksum": "f1b029150283fecc88b1030391a00d3e9208449ecb4667f5e907f05197571842",
+      "qc": "passed",
+      "measurementStatus": "passed",
+      "probes": 162,
+      "maximumChannelError": 6.583781250000002,
+      "failures": [],
+      "matrixMaximumError": 7.78962733534172e-05
+    },
+    {
+      "phase": "temporal-matte-native13-qualified-render",
+      "variant": "child-external-alpha-inverted",
+      "jobId": "ef38e25d-8109-42c1-a73f-1972edcefba7",
+      "video": "docs/studios/research/editor-oss-20261002/temporal-matte-native13-qualified-render/child-external-alpha-inverted/matte-exposure.mp4",
+      "checksum": "e310e61c91ba262903b5db198dcaf0b2056512edf300e77143e5e056a6f38b6a",
+      "qc": "passed",
+      "measurementStatus": "failed",
+      "probes": 168,
+      "maximumChannelError": 15.866274871826171,
+      "failures": [
+        [
+          "pixel",
+          0,
+          44,
+          96,
+          12.591201171875
+        ],
+        [
+          "pixel",
+          0,
+          214,
+          96,
+          12.76008789062503
+        ],
+        [
+          "pixel",
+          4,
+          102,
+          92,
+          8.887601165771486
+        ],
+        [
+          "pixel",
+          4,
+          110,
+          100,
+          8.017785644531216
+        ],
+        [
+          "pixel",
+          7,
+          142,
+          114,
+          8.039445247650146
+        ],
+        [
+          "pixel",
+          7,
+          180,
+          204,
+          12.949051227569583
+        ],
+        [
+          "pixel",
+          8,
+          162,
+          92,
+          8.671883487701393
+        ],
+        [
+          "pixel",
+          8,
+          228,
+          50,
+          13.581132698059086
+        ],
+        [
+          "pixel",
+          10,
+          162,
+          92,
+          8.645411834716796
+        ],
+        [
+          "pixel",
+          10,
+          228,
+          50,
+          15.866274871826171
+        ],
+        [
+          "pixel",
+          15,
+          162,
+          92,
+          8.645411834716796
+        ],
+        [
+          "pixel",
+          15,
+          228,
+          50,
+          15.866274871826171
+        ]
+      ],
+      "matrixMaximumError": 0.00015526993207970463
+    },
+    {
+      "phase": "temporal-matte-native13-qualified-render",
+      "variant": "child-external-alpha-normal",
+      "jobId": "cffd9ca6-a782-4371-9340-0c315d7bedee",
+      "video": "docs/studios/research/editor-oss-20261002/temporal-matte-native13-qualified-render/child-external-alpha-normal/matte-exposure.mp4",
+      "checksum": "c1106a9a82050adac3dafbad283197b3b660fe6ec0f61d0a56be039563cdea3a",
+      "qc": "passed",
+      "measurementStatus": "passed",
+      "probes": 168,
+      "maximumChannelError": 5.583781250000002,
+      "failures": [],
+      "matrixMaximumError": 0.00015526993207970463
+    },
+    {
+      "phase": "temporal-matte-native13-qualified-render",
+      "variant": "control-external-alpha-normal",
+      "jobId": "73008be5-681b-4aa9-9668-474fb45cb080",
+      "video": "docs/studios/research/editor-oss-20261002/temporal-matte-native13-qualified-render/control-external-alpha-normal/matte-exposure.mp4",
+      "checksum": "0a5d61f4ece707cc7fb4ab2f7b7d95faf2c921c484e8e219e63f4fbf60b54595",
+      "qc": "passed",
+      "measurementStatus": "passed",
+      "probes": 168,
+      "maximumChannelError": 6.243281249999882,
+      "failures": [],
+      "matrixMaximumError": 0.000274272036193679
+    },
+    {
+      "phase": "temporal-matte-native13-qualified-render",
+      "variant": "rig-common-luminance-normal",
+      "jobId": "604b604f-5bc0-479c-b138-2aa314bc31c3",
+      "video": "docs/studios/research/editor-oss-20261002/temporal-matte-native13-qualified-render/rig-common-luminance-normal/matte-exposure.mp4",
+      "checksum": "2081db8f2967d3a14d5eee49907200c0e56468c117b62a911374d5ca2c268ae9",
+      "qc": "passed",
+      "measurementStatus": "passed",
+      "probes": 162,
+      "maximumChannelError": 7.111630699291396,
+      "failures": [],
+      "matrixMaximumError": 0.00011529654032926828
+    },
+    {
+      "phase": "temporal-matte-native13-qualified-render",
+      "variant": "rig-external-alpha-normal",
+      "jobId": "1f33c16c-41c0-42fb-aafa-2cc115c71ee5",
+      "video": "docs/studios/research/editor-oss-20261002/temporal-matte-native13-qualified-render/rig-external-alpha-normal/matte-exposure.mp4",
+      "checksum": "572ec7c4c426ba35ef6615527806558393ae1f577f7c74528c96abdac8d5c0de",
+      "qc": "passed",
+      "measurementStatus": "failed",
+      "probes": 168,
+      "maximumChannelError": 9.243281249999882,
+      "failures": [
+        [
+          "pixel",
+          0,
+          138,
+          134,
+          8.428000000000011
+        ],
+        [
+          "pixel",
+          0,
+          140,
+          82,
+          9.243281249999882
+        ]
+      ],
+      "matrixMaximumError": 0.00012884263594514778
+    },
+    {
+      "phase": "temporal-matte-native13-qualified-render",
+      "variant": "rig-external-luminance-inverted",
+      "jobId": "0d251fcf-3df6-46b3-9a33-91f6178b59ce",
+      "video": "docs/studios/research/editor-oss-20261002/temporal-matte-native13-qualified-render/rig-external-luminance-inverted/matte-exposure.mp4",
+      "checksum": "c5fe361fa344aea2bb8d66c8a532c8e6ca5599c724103139bed65cc31854223e",
+      "qc": "passed",
+      "measurementStatus": "failed",
+      "probes": 168,
+      "maximumChannelError": 11.925798587799079,
+      "failures": [
+        [
+          "pixel",
+          0,
+          44,
+          96,
+          8.976337890625004
+        ],
+        [
+          "pixel",
+          7,
+          180,
+          204,
+          9.51468544006348
+        ],
+        [
+          "pixel",
+          8,
+          228,
+          50,
+          11.925798587799079
+        ],
+        [
+          "pixel",
+          10,
+          150,
+          148,
+          10.520349179687429
+        ],
+        [
+          "pixel",
+          10,
+          162,
+          92,
+          9.145411834716796
+        ],
+        [
+          "pixel",
+          10,
+          164,
+          88,
+          9.002004241943354
+        ],
+        [
+          "pixel",
+          10,
+          228,
+          50,
+          11.366274871826171
+        ],
+        [
+          "pixel",
+          15,
+          150,
+          148,
+          10.520349179687429
+        ],
+        [
+          "pixel",
+          15,
+          162,
+          92,
+          9.145411834716796
+        ],
+        [
+          "pixel",
+          15,
+          164,
+          88,
+          9.002004241943354
+        ],
+        [
+          "pixel",
+          15,
+          228,
+          50,
+          11.366274871826171
+        ]
+      ],
+      "matrixMaximumError": 0.00012884263594514778
+    },
+    {
+      "phase": "temporal-matte-native13-inversion-stage-diagnostic",
+      "variant": "child-external-alpha-inverted",
+      "jobId": "db41b872-564a-487b-b2e4-90c7667f6ce3",
+      "video": "docs/studios/research/editor-oss-20261002/temporal-matte-native13-inversion-stage-diagnostic/child-external-alpha-inverted/matte-exposure.mp4",
+      "checksum": "a58fe095a0ddc9fd9e725dbebd19bdf93684edb1f1041b673012d1d6155cf53b",
+      "qc": "passed",
+      "measurementStatus": "failed",
+      "probes": 168,
+      "maximumChannelError": 8.76008789062503,
+      "failures": [
+        [
+          "pixel",
+          0,
+          214,
+          96,
+          8.76008789062503
+        ]
+      ],
+      "matrixMaximumError": 0.00015526993207970463,
+      "intermediateFailureComparisons": [
+        {
+          "frame": 0,
+          "x": 214,
+          "y": 96,
+          "expected": 122.76008789062503,
+          "intermediateRgb": [
+            114.0,
+            114.0,
+            114.0
+          ],
+          "finalRgb": [
+            114.0,
+            114.0,
+            114.0
+          ]
+        }
+      ]
+    },
+    {
+      "phase": "temporal-matte-native13-inversion-stage-diagnostic",
+      "variant": "rig-external-alpha-normal",
+      "jobId": "b25bc333-8fc6-4557-aff1-782b1937f6aa",
+      "video": "docs/studios/research/editor-oss-20261002/temporal-matte-native13-inversion-stage-diagnostic/rig-external-alpha-normal/matte-exposure.mp4",
+      "checksum": "572ec7c4c426ba35ef6615527806558393ae1f577f7c74528c96abdac8d5c0de",
+      "qc": "passed",
+      "measurementStatus": "failed",
+      "probes": 168,
+      "maximumChannelError": 9.243281249999882,
+      "failures": [
+        [
+          "pixel",
+          0,
+          138,
+          134,
+          8.428000000000011
+        ],
+        [
+          "pixel",
+          0,
+          140,
+          82,
+          9.243281249999882
+        ]
+      ],
+      "matrixMaximumError": 0.00012884263594514778,
+      "intermediateFailureComparisons": [
+        {
+          "frame": 0,
+          "x": 138,
+          "y": 134,
+          "expected": 49.57199999999999,
+          "intermediateRgb": [
+            58.0,
+            58.0,
+            58.0
+          ],
+          "finalRgb": [
+            58.0,
+            58.0,
+            58.0
+          ]
+        },
+        {
+          "frame": 0,
+          "x": 140,
+          "y": 82,
+          "expected": 98.75671875000012,
+          "intermediateRgb": [
+            108.0,
+            108.0,
+            108.0
+          ],
+          "finalRgb": [
+            108.0,
+            108.0,
+            108.0
+          ]
+        }
+      ]
+    },
+    {
+      "phase": "temporal-matte-native13-inversion-stage-diagnostic",
+      "variant": "rig-external-luminance-inverted",
+      "jobId": "415a1fc9-eb24-4f78-84ec-b1fe6b2efb5c",
+      "video": "docs/studios/research/editor-oss-20261002/temporal-matte-native13-inversion-stage-diagnostic/rig-external-luminance-inverted/matte-exposure.mp4",
+      "checksum": "7170058c5e0c6c0752ff2dca151e5404f57b2e54d4cdb9395f74c882c3ec672f",
+      "qc": "passed",
+      "measurementStatus": "passed",
+      "probes": 168,
+      "maximumChannelError": 6.1233642578124545,
+      "failures": [],
+      "matrixMaximumError": 0.00012884263594514778,
+      "intermediateFailureComparisons": []
+    }
+  ],
+  "remainingExperimentalProbeFailures": 3,
+  "humanReview": "pending",
+  "limitations": [
+    "Combined experiments preceded restoration of the API admission gate",
+    "Experimental phases were not separately frozen; provider version alone does not identify their source bytes",
+    "Continuous and two-stage raster oracle attempts remain evidence, not broad mask qualification",
+    "Three edge probes remain unresolved; no tolerance was increased or probe removed",
+    "Human commercial comparisons and three fresh autonomy briefs remain pending"
+  ]
+}

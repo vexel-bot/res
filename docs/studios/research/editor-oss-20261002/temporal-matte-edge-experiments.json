@@ -1,0 +1,679 @@
+{
+  "scope": "research_only_actual_API_mask_edge_experiments",
+  "humanReview": "pending",
+  "productionCombinedAdmission": "pending",
+  "providerAfterExperiments": "4.0.527-native.13",
+  "tolerance": 8,
+  "originalOracleChanged": false,
+  "productionSourceHashes": {
+    "backend/app/domain/studios/contextual_editing_v2.py": "37acb13095b740386501649dbdd9d1a70f91a7a14c500c90299e4b60ed6cc8ce",
+    "backend/app/domain/studios/motion_recipes.py": "8122f1c2f2a9a8030bd1b5407a7a8d2ed22cad7225bcba94ffe29fefd886861b",
+    "backend/app/domain/studios/temporal_exposure.py": "29f544705762a3b694b141308249cc00680d877cd7709f9b7d0a35ea45108dd8",
+    "backend/app/providers/studios/contextual_render.py": "41da67ed3c9e74afee3585f504fa507aa32da72c27f9d61a7cd2f40028e6c2c6",
+    "backend/app/providers/studios/remotion_projection.py": "ae148ca325f4112a8595fcca9b0578aacad14daca2899498ebaf4577d7e8f149",
+    "backend/app/providers/studios/remotion_render.py": "7f106741b62414f824bc1e4e80183a2a7a6ab1d900f8f8b64e750f5ae8adc2ec",
+    "backend/app/services/studios/native_motion_recipes.py": "9f9083f3747f442737b35336eed12f36bb283e4abed40594d68c9566b0fe3f1f",
+    "backend/tests/spatial_effects_kernel_diagnostic.py": "03f609d8dc758516a8dabd770e67584cf5062bd2da78dd3b9a4b855edfebeb06",
+    "backend/tests/temporal_matte_kernel_diagnostic.py": "33f91e2a0da5f61ade7c69d66fb91de21526954cb15c779c64348547c1505eef",
+    "backend/tests/test_spatial_effects.py": "af6721e973275ba8a62437f6feca3eaf33a61d23b29f953f042938c3d1858938",
+    "backend/tests/test_spatial_effects_oracle.py": "33709042ef5de611028d59336f3ab8732e5ad3a5cc609a4a3e999b6da8bbd7af",
+    "backend/tests/test_spatial_effects_render.py": "199f550bd6b726714944b65d6b78f8ad3e3b846edb8597c782966002af57d3ce",
+    "backend/tests/test_temporal_exposure.py": "b064e4aac79e451b35f4824c6c5771d73d3d527d57a97319a9cf64d8733167b5",
+    "backend/tests/test_temporal_matte_oracle.py": "0e4d6bfc3f6004ff528aa37d0e5e0997bf97416b71ec2bde56337ef8389a50db",
+    "backend/tests/test_temporal_rig_render.py": "ae696a2eb7f18364e3103bd2391cc1f9b172e8929755e5de9b7f685577330e28",
+    "scripts/validation/editor-temporal-matte-regression.py": "c62d19e74ff910c6f167388937f93c6854cb2edd4d7fbaa0cba73ccf3caa4149",
+    "workers/remotion-benchmark/render-hybrid.mjs": "1e41e72cbf8a50b9623d707a37fac6d85184258d4b6aa2dfeacf32985d386b76",
+    "workers/remotion-benchmark/src/asset-matte.tsx": "f14ea79323d8261197180db6824bcef707e4b9481154cb2d6beed16342c49a99",
+    "workers/remotion-benchmark/src/hybrid.tsx": "69f66dbfd02be683fe9e6a0d6559ad9e9487c8d7ee48f9fbabf44f0884f5f170",
+    "workers/remotion-benchmark/src/spatial-effects.ts": "cab39ac4863a50bcec80760cb85d969507865f2461fb855c39c1adc105530a9c",
+    "workers/remotion-benchmark/src/temporal-exposure.tsx": "48a609ab733ee2e5c4e6be07f8073a483ff986b235dcb1c34d365f1b4fcc2fc1"
+  },
+  "consolidatorSha256": "2cd4062a7ed71262a4144b29b157635bb61ee498304c5909539837ebbdfd24af",
+  "phases": [
+    {
+      "mode": "padded-mask-viewport",
+      "run": {
+        "exitCode": 1,
+        "originalBytesRestored": true,
+        "conflictingConcurrentEdits": [],
+        "productionProviderAfterExperiment": "4.0.527-native.13",
+        "productionCombinedAdmission": "pending"
+      },
+      "tests": [
+        {
+          "name": "test_temporal_matte_actual_api_pixels[child-external-alpha-True]",
+          "failed": true,
+          "errored": false,
+          "skipped": false
+        },
+        {
+          "name": "test_temporal_matte_actual_api_pixels[rig-external-alpha-False]",
+          "failed": true,
+          "errored": false,
+          "skipped": false
+        },
+        {
+          "name": "test_temporal_matte_actual_api_pixels[rig-external-luminance-True]",
+          "failed": true,
+          "errored": false,
+          "skipped": false
+        }
+      ],
+      "records": [
+        {
+          "variant": "child-external-alpha-inverted",
+          "qc": "passed",
+          "measurementStatus": "failed",
+          "maximumChannelError": 14.866274871826171,
+          "maximumFrameZeroError": 11.26008789062503,
+          "maximumHoldError": 14.866274871826171,
+          "pixelProbeCount": 168,
+          "failures": [
+            [
+              "pixel",
+              0,
+              44,
+              96,
+              9.591201171875
+            ],
+            [
+              "pixel",
+              0,
+              214,
+              96,
+              11.26008789062503
+            ],
+            [
+              "pixel",
+              4,
+              102,
+              92,
+              8.137601165771486
+            ],
+            [
+              "pixel",
+              4,
+              110,
+              100,
+              8.017785644531216
+            ],
+            [
+              "pixel",
+              7,
+              150,
+              184,
+              8.036081250000024
+            ],
+            [
+              "pixel",
+              7,
+              180,
+              204,
+              12.699051227569583
+            ],
+            [
+              "pixel",
+              8,
+              228,
+              50,
+              12.581132698059086
+            ],
+            [
+              "pixel",
+              10,
+              162,
+              92,
+              10.145411834716796
+            ],
+            [
+              "pixel",
+              10,
+              228,
+              50,
+              14.866274871826171
+            ],
+            [
+              "pixel",
+              15,
+              162,
+              92,
+              10.145411834716796
+            ],
+            [
+              "pixel",
+              15,
+              228,
+              50,
+              14.866274871826171
+            ]
+          ],
+          "videoSha256": "1c92cfb977f72d117e2c9254b354b689f847995d648259ca91541f8263a38574",
+          "evidenceSha256": "1341363662372dc3fd66f6b771894a1b1200c635e118ce5e7c236bdc8b2499c9"
+        },
+        {
+          "variant": "rig-external-alpha-normal",
+          "qc": "passed",
+          "measurementStatus": "failed",
+          "maximumChannelError": 9.243281249999882,
+          "maximumFrameZeroError": 9.243281249999882,
+          "maximumHoldError": 6.271662500000048,
+          "pixelProbeCount": 168,
+          "failures": [
+            [
+              "pixel",
+              0,
+              138,
+              134,
+              8.428000000000011
+            ],
+            [
+              "pixel",
+              0,
+              140,
+              82,
+              9.243281249999882
+            ]
+          ],
+          "videoSha256": "45c053e036adec035586d5f863a598db46fa80a7c64cb44fa1b14169d6503f15",
+          "evidenceSha256": "4572844c44c3e2b4e049b3e5936274736f54e1409dd13934c395016aa3782e12"
+        },
+        {
+          "variant": "rig-external-luminance-inverted",
+          "qc": "passed",
+          "measurementStatus": "failed",
+          "maximumChannelError": 9.752004241943354,
+          "maximumFrameZeroError": 7.476337890625004,
+          "maximumHoldError": 9.752004241943354,
+          "pixelProbeCount": 168,
+          "failures": [
+            [
+              "pixel",
+              7,
+              180,
+              204,
+              9.01468544006348
+            ],
+            [
+              "pixel",
+              8,
+              228,
+              50,
+              8.925798587799079
+            ],
+            [
+              "pixel",
+              10,
+              164,
+              88,
+              9.752004241943354
+            ],
+            [
+              "pixel",
+              10,
+              228,
+              50,
+              8.616274871826171
+            ],
+            [
+              "pixel",
+              15,
+              164,
+              88,
+              9.752004241943354
+            ],
+            [
+              "pixel",
+              15,
+              228,
+              50,
+              8.616274871826171
+            ]
+          ],
+          "videoSha256": "6bff3b704ac2ccf97c8ebe1d615b797cb538b43456efed7a7c17d221462c5e91",
+          "evidenceSha256": "92b931ebe225e998c2bb1dfaf1baf3da5de84d51e5c178771136bb454d717414"
+        }
+      ]
+    },
+    {
+      "mode": "balanced-inverted-padded-rect",
+      "run": {
+        "exitCode": 1,
+        "originalBytesRestored": true,
+        "conflictingConcurrentEdits": [],
+        "productionProviderAfterExperiment": "4.0.527-native.13",
+        "productionCombinedAdmission": "pending"
+      },
+      "tests": [
+        {
+          "name": "test_temporal_matte_actual_api_pixels[child-external-alpha-True]",
+          "failed": true,
+          "errored": false,
+          "skipped": false
+        },
+        {
+          "name": "test_temporal_matte_actual_api_pixels[rig-external-alpha-False]",
+          "failed": false,
+          "errored": false,
+          "skipped": false
+        },
+        {
+          "name": "test_temporal_matte_actual_api_pixels[rig-external-luminance-True]",
+          "failed": true,
+          "errored": false,
+          "skipped": false
+        }
+      ],
+      "records": [
+        {
+          "variant": "child-external-alpha-inverted",
+          "qc": "passed",
+          "measurementStatus": "failed",
+          "maximumChannelError": 11.949051227569583,
+          "maximumFrameZeroError": 8.76008789062503,
+          "maximumHoldError": 11.116274871826171,
+          "pixelProbeCount": 168,
+          "failures": [
+            [
+              "pixel",
+              0,
+              44,
+              96,
+              8.091201171875
+            ],
+            [
+              "pixel",
+              0,
+              214,
+              96,
+              8.76008789062503
+            ],
+            [
+              "pixel",
+              7,
+              180,
+              204,
+              11.949051227569583
+            ],
+            [
+              "pixel",
+              8,
+              228,
+              50,
+              8.831132698059086
+            ],
+            [
+              "pixel",
+              10,
+              162,
+              92,
+              9.145411834716796
+            ],
+            [
+              "pixel",
+              10,
+              228,
+              50,
+              11.116274871826171
+            ],
+            [
+              "pixel",
+              15,
+              162,
+              92,
+              9.145411834716796
+            ],
+            [
+              "pixel",
+              15,
+              228,
+              50,
+              11.116274871826171
+            ]
+          ],
+          "videoSha256": "fb86ff9da7520d7d59c906ce4149538a3a0fd2e7593b67f257da7e783b477dc4",
+          "evidenceSha256": "ebb0ffc641fd2171b6fd2c21f0c93db9d3754a2cf849439572800035f244fbca"
+        },
+        {
+          "variant": "rig-external-alpha-normal",
+          "qc": "passed",
+          "measurementStatus": "passed",
+          "maximumChannelError": 6.243281249999882,
+          "maximumFrameZeroError": 6.243281249999882,
+          "maximumHoldError": 2.9210234812820417,
+          "pixelProbeCount": 168,
+          "failures": [],
+          "videoSha256": "74f2f476fa8ca0292fcd27be0a481d9890a0212a6832b7940269bb261bf3e76b",
+          "evidenceSha256": "0934f8351229b49b05ebb8493b541469a30c0a7eb5551a9c9001e6ed5b1778c3"
+        },
+        {
+          "variant": "rig-external-luminance-inverted",
+          "qc": "passed",
+          "measurementStatus": "failed",
+          "maximumChannelError": 11.425798587799079,
+          "maximumFrameZeroError": 6.476337890625004,
+          "maximumHoldError": 10.752004241943354,
+          "pixelProbeCount": 168,
+          "failures": [
+            [
+              "pixel",
+              7,
+              180,
+              204,
+              8.01468544006348
+            ],
+            [
+              "pixel",
+              8,
+              228,
+              50,
+              11.425798587799079
+            ],
+            [
+              "pixel",
+              10,
+              150,
+              148,
+              8.520349179687429
+            ],
+            [
+              "pixel",
+              10,
+              162,
+              92,
+              9.895411834716796
+            ],
+            [
+              "pixel",
+              10,
+              164,
+              88,
+              10.752004241943354
+            ],
+            [
+              "pixel",
+              10,
+              228,
+              50,
+              10.366274871826171
+            ],
+            [
+              "pixel",
+              15,
+              150,
+              148,
+              8.520349179687429
+            ],
+            [
+              "pixel",
+              15,
+              162,
+              92,
+              9.895411834716796
+            ],
+            [
+              "pixel",
+              15,
+              164,
+              88,
+              10.752004241943354
+            ],
+            [
+              "pixel",
+              15,
+              228,
+              50,
+              10.366274871826171
+            ]
+          ],
+          "videoSha256": "220455fb71191f8220f6996060a81b56f8921cd8ffd514e9f899dd6f111d16d5",
+          "evidenceSha256": "74da19a892c8d702d47f9505059783f773213638c373aa768bd0add8fc50dac6"
+        }
+      ]
+    },
+    {
+      "mode": "balanced-mask-guard-band",
+      "run": {
+        "exitCode": 1,
+        "originalBytesRestored": true,
+        "conflictingConcurrentEdits": [],
+        "productionProviderAfterExperiment": "4.0.527-native.13",
+        "productionCombinedAdmission": "pending"
+      },
+      "tests": [
+        {
+          "name": "test_temporal_matte_actual_api_pixels[child-external-alpha-True]",
+          "failed": true,
+          "errored": false,
+          "skipped": false
+        },
+        {
+          "name": "test_temporal_matte_actual_api_pixels[rig-external-alpha-False]",
+          "failed": false,
+          "errored": false,
+          "skipped": false
+        },
+        {
+          "name": "test_temporal_matte_actual_api_pixels[rig-external-luminance-True]",
+          "failed": true,
+          "errored": false,
+          "skipped": false
+        }
+      ],
+      "records": [
+        {
+          "variant": "child-external-alpha-inverted",
+          "qc": "passed",
+          "measurementStatus": "failed",
+          "maximumChannelError": 23.918867301940914,
+          "maximumFrameZeroError": 7.016281249999963,
+          "maximumHoldError": 21.63372512817383,
+          "pixelProbeCount": 168,
+          "failures": [
+            [
+              "pixel",
+              4,
+              278,
+              110,
+              8.481886940002425
+            ],
+            [
+              "pixel",
+              7,
+              150,
+              184,
+              9.286081250000024
+            ],
+            [
+              "pixel",
+              7,
+              180,
+              204,
+              17.800948772430417
+            ],
+            [
+              "pixel",
+              8,
+              162,
+              92,
+              14.578116512298607
+            ],
+            [
+              "pixel",
+              8,
+              228,
+              50,
+              23.918867301940914
+            ],
+            [
+              "pixel",
+              10,
+              162,
+              92,
+              18.104588165283204
+            ],
+            [
+              "pixel",
+              10,
+              164,
+              88,
+              12.242585675691743
+            ],
+            [
+              "pixel",
+              10,
+              228,
+              50,
+              21.63372512817383
+            ],
+            [
+              "pixel",
+              15,
+              162,
+              92,
+              18.104588165283204
+            ],
+            [
+              "pixel",
+              15,
+              164,
+              88,
+              12.242585675691743
+            ],
+            [
+              "pixel",
+              15,
+              228,
+              50,
+              21.63372512817383
+            ]
+          ],
+          "videoSha256": "d373f90047777d0022a299b8fa7e6647a263c524ca4748d7400fbed2535bd129",
+          "evidenceSha256": "8a38f42d35963e4d98be4bd2321f9600b38d5881b32fca1811dec4ca135d3142"
+        },
+        {
+          "variant": "rig-external-alpha-normal",
+          "qc": "passed",
+          "measurementStatus": "passed",
+          "maximumChannelError": 6.728337499999952,
+          "maximumFrameZeroError": 6.243281249999882,
+          "maximumHoldError": 6.728337499999952,
+          "pixelProbeCount": 168,
+          "failures": [],
+          "videoSha256": "af1ba284f5f525386c41ddfce20703803e4c3326ea7eacfea4ffdcd5c707a194",
+          "evidenceSha256": "9b379aa569ac1d13edcffe4843ee170f2783ed455b3c418dcca6eabad7f3cfe7"
+        },
+        {
+          "variant": "rig-external-luminance-inverted",
+          "qc": "passed",
+          "measurementStatus": "failed",
+          "maximumChannelError": 24.580811061859137,
+          "maximumFrameZeroError": 10.549890136718744,
+          "maximumHoldError": 22.104588165283204,
+          "pixelProbeCount": 168,
+          "failures": [
+            [
+              "pixel",
+              0,
+              94,
+              46,
+              10.549890136718744
+            ],
+            [
+              "pixel",
+              7,
+              180,
+              204,
+              19.98531455993652
+            ],
+            [
+              "pixel",
+              8,
+              150,
+              148,
+              9.001914018707325
+            ],
+            [
+              "pixel",
+              8,
+              162,
+              92,
+              24.580811061859137
+            ],
+            [
+              "pixel",
+              8,
+              164,
+              88,
+              12.749908466339065
+            ],
+            [
+              "pixel",
+              8,
+              228,
+              50,
+              16.82420141220092
+            ],
+            [
+              "pixel",
+              10,
+              150,
+              148,
+              10.229650820312571
+            ],
+            [
+              "pixel",
+              10,
+              162,
+              92,
+              22.104588165283204
+            ],
+            [
+              "pixel",
+              10,
+              164,
+              88,
+              11.747995758056646
+            ],
+            [
+              "pixel",
+              10,
+              228,
+              50,
+              17.88372512817383
+            ],
+            [
+              "pixel",
+              15,
+              150,
+              148,
+              10.229650820312571
+            ],
+            [
+              "pixel",
+              15,
+              162,
+              92,
+              22.104588165283204
+            ],
+            [
+              "pixel",
+              15,
+              164,
+              88,
+              11.747995758056646
+            ],
+            [
+              "pixel",
+              15,
+              228,
+              50,
+              17.88372512817383
+            ]
+          ],
+          "videoSha256": "b56343fbb6ae8d86a3fead9d394ec5aae90488c12cdf4914b82be58d6d3fad83",
+          "evidenceSha256": "5254d9b0dbd51d5ef814082066f722fb7ca8b85e0c842a79afbfd13f1fe5176b"
+        }
+      ]
+    }
+  ]
+}

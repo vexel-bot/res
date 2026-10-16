@@ -1,0 +1,22 @@
+{
+  "scope": "actual_API_controlled_filter_region_comparison",
+  "productionAdmission": "pending",
+  "onlyRendererDifference": "inverse filter region 0/100 percent versus -50/200 percent",
+  "checks": [
+    {
+      "variant": "child-external-alpha-inverted",
+      "maximumObservedProbeDifference": 0.0,
+      "probeCount": 168
+    },
+    {
+      "variant": "rig-external-alpha-normal",
+      "maximumObservedProbeDifference": 0.0,
+      "probeCount": 168
+    },
+    {
+      "variant": "rig-external-luminance-inverted",
+      "maximumObservedProbeDifference": 0.0,
+      "probeCount": 168
+    }
+  ]
+}

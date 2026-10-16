@@ -1,0 +1,53 @@
+{
+  "qualifiedFinalTests": {
+    "command": "python -m pytest tests/test_asset_read_projection.py tests/test_asset_catalog_api.py tests/test_asset_reference_projection.py tests/test_visual_quality_program.py tests/test_visual_study.py tests/test_editing_resources.py::test_catalog_deduplicates_and_isolates_tenants -q",
+    "sessionId": 41739,
+    "exitCode": 0,
+    "passed": 32
+  },
+  "priorCandidateTests": {
+    "projectionAndApi": {
+      "sessionId": 98360,
+      "exitCode": 0,
+      "passed": 8
+    },
+    "expandedCorrected": {
+      "sessionId": 78349,
+      "exitCode": 0,
+      "passed": 26
+    },
+    "reference": {
+      "sessionId": 1220,
+      "exitCode": 0,
+      "passed": 6
+    },
+    "nonexistentFileCommand": {
+      "sessionId": 21073,
+      "exitCode": 1,
+      "casesExecuted": 0
+    }
+  },
+  "typecheck": {
+    "command": "npm run lint",
+    "sessionId": 80892,
+    "exitCode": 0
+  },
+  "ruff": {
+    "finalExitCode": 0,
+    "oneEarlierLongLineFixed": true
+  },
+  "realApi": {
+    "oldSession": 86283,
+    "firstCandidateSession": 2802,
+    "finalSession": 90170,
+    "allTerminalExitCode": 0
+  },
+  "localApiActivation": {
+    "processIds": [
+      740,
+      20752,
+      7232
+    ],
+    "reason": "Two code checkpoints after successful tests; no restarts prompted by observation timeout"
+  }
+}

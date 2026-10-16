@@ -1,0 +1,73 @@
+{
+  "scope": "selected_primary_sources_read_in_memory_no_clone_no_source_code_copied",
+  "installedBrowserVersion": "Google Chrome for Testing 149.0.7790.0",
+  "installedBrowserSha256": "ec76dc3e69ffab9daddf0bbe7bf0a9e0a034b2d086741a0ae2ef6358a597537b",
+  "license": "Chromium BSD-style; no implementation copied",
+  "scriptSha256": "334f5541ecc62f19d96d4c91f5f266e68b8e666d9f89ae402c27b30bc6f58e19",
+  "sources": [
+    {
+      "url": "https://chromium.googlesource.com/chromium/src/+/149.0.7790.0/third_party/blink/renderer/core/paint/css_mask_painter.cc",
+      "sha256": "634fe56f8748e7d99d810994895708e90c6df33808a3c5d9e7475301b9d7a077",
+      "bytes": 3638,
+      "lines": 100,
+      "selectedSymbolLines": {
+        "CSSMaskPainter::MaskBoundingBox": [
+          44
+        ],
+        "EFillBox::kNoClip": [
+          71,
+          84
+        ],
+        "PhysicalBorderBoxRect": [
+          78
+        ]
+      }
+    },
+    {
+      "url": "https://chromium.googlesource.com/chromium/src/+/149.0.7790.0/third_party/blink/renderer/core/paint/svg_mask_painter.cc",
+      "sha256": "71f4676187a98ee59ebc6081d50724305d8583125914d7d952f4981ca053b668",
+      "bytes": 13181,
+      "lines": 337,
+      "selectedSymbolLines": {
+        "SVGMaskPainter::PaintSVGMaskLayer": [
+          132,
+          269
+        ],
+        "context.Clip(masker->ResourceBoundingBox": [
+          286
+        ],
+        "SVGMaskPainter::ResourceBoundsForSVGChild": [
+          309
+        ]
+      }
+    },
+    {
+      "url": "https://chromium.googlesource.com/chromium/src/+/149.0.7790.0/third_party/blink/renderer/core/paint/paint_layer.cc",
+      "sha256": "497a47b195fdc345cd6cbbe87cfefb8d59eaaa7defcc3dfa06bef06ef4007ff4",
+      "bytes": 108352,
+      "lines": 2816,
+      "selectedSymbolLines": {
+        "PhysicalRect PaintLayer::LocalBoundingBox()": [
+          2096
+        ],
+        "VisualOverflowRect()": [
+          149,
+          501,
+          2097,
+          2114
+        ],
+        "PhysicalRect PaintLayer::LocalBoundingBoxIncludingSelfPaintingDescendants()": [
+          2168
+        ]
+      }
+    }
+  ],
+  "findings": [
+    "CSSMaskPainter bounds ordinary boxes by the border box unless LayersClipMax is no-clip.",
+    "The no-clip path uses local visual overflow including self-painting descendants.",
+    "SVGMaskPainter also clips the mask paint record by its SVG resource bounds."
+  ],
+  "inference": "Two separate bounds can affect coverage; changing SVG mask attributes alone does not remove the HTML box bound.",
+  "limitation": "Source inspection does not establish which raster stage causes each observed pixel or prescribe a unique AA oracle.",
+  "productionAdmission": "pending"
+}

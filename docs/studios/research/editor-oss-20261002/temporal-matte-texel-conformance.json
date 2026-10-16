@@ -1,0 +1,422 @@
+{
+  "scope": "exact_1_to_1_translated_texel_conformance",
+  "productionAdmission": "pending",
+  "finding": "existing_oracle_integrates_texture_inside_pixels_and_broadens_identity_texel_boundaries",
+  "geometricEdgePresent": false,
+  "temporalAccumulationPresent": false,
+  "maskSha256": "ee10f031a17421859e3af5f725273644b8534709cb23173c6e1bf0ac8787e2c2",
+  "oracleSha256": "33f91e2a0da5f61ade7c69d66fb91de21526954cb15c779c64348547c1505eef",
+  "conformanceScriptSha256": "3a9bc3c9aacd7511717def787edc614e36c3fc2a1186a171d1099c5f59e1646c",
+  "cases": [
+    {
+      "invert": false,
+      "x": 138,
+      "y": 82,
+      "texels": [
+        {
+          "x": 38,
+          "y": 8,
+          "alphaByte": 0
+        },
+        {
+          "x": 38,
+          "y": 9,
+          "alphaByte": 0
+        },
+        {
+          "x": 39,
+          "y": 8,
+          "alphaByte": 0
+        },
+        {
+          "x": 39,
+          "y": 9,
+          "alphaByte": 0
+        }
+      ],
+      "exactTranslatedTexelChannel": 0.0,
+      "existingOracleChannel": 6.583781250000002,
+      "oracleMinusExactTexels": 6.583781250000002,
+      "observedRgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "observedMinusExactTexels": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "capturePngSha256": "9914008f3b5e7e5c2371a9f33f52d4bfff9705503319eb2cbb3570c9de2328eb"
+    },
+    {
+      "invert": false,
+      "x": 140,
+      "y": 82,
+      "texels": [
+        {
+          "x": 40,
+          "y": 8,
+          "alphaByte": 255
+        },
+        {
+          "x": 40,
+          "y": 9,
+          "alphaByte": 255
+        },
+        {
+          "x": 41,
+          "y": 8,
+          "alphaByte": 255
+        },
+        {
+          "x": 41,
+          "y": 9,
+          "alphaByte": 255
+        }
+      ],
+      "exactTranslatedTexelChannel": 105.3405,
+      "existingOracleChannel": 98.75671875000012,
+      "oracleMinusExactTexels": -6.583781249999888,
+      "observedRgb": [
+        106.0,
+        106.0,
+        106.0
+      ],
+      "observedMinusExactTexels": [
+        0.6594999999999942,
+        0.6594999999999942,
+        0.6594999999999942
+      ],
+      "capturePngSha256": "9914008f3b5e7e5c2371a9f33f52d4bfff9705503319eb2cbb3570c9de2328eb"
+    },
+    {
+      "invert": false,
+      "x": 138,
+      "y": 134,
+      "texels": [
+        {
+          "x": 38,
+          "y": 60,
+          "alphaByte": 128
+        },
+        {
+          "x": 38,
+          "y": 61,
+          "alphaByte": 128
+        },
+        {
+          "x": 39,
+          "y": 60,
+          "alphaByte": 128
+        },
+        {
+          "x": 39,
+          "y": 61,
+          "alphaByte": 128
+        }
+      ],
+      "exactTranslatedTexelChannel": 52.876799999999996,
+      "existingOracleChannel": 49.57199999999997,
+      "oracleMinusExactTexels": -3.3048000000000286,
+      "observedRgb": [
+        54.0,
+        54.0,
+        54.0
+      ],
+      "observedMinusExactTexels": [
+        1.1232000000000042,
+        1.1232000000000042,
+        1.1232000000000042
+      ],
+      "capturePngSha256": "9914008f3b5e7e5c2371a9f33f52d4bfff9705503319eb2cbb3570c9de2328eb"
+    },
+    {
+      "invert": false,
+      "x": 108,
+      "y": 134,
+      "texels": [
+        {
+          "x": 8,
+          "y": 60,
+          "alphaByte": 128
+        },
+        {
+          "x": 8,
+          "y": 61,
+          "alphaByte": 128
+        },
+        {
+          "x": 9,
+          "y": 60,
+          "alphaByte": 128
+        },
+        {
+          "x": 9,
+          "y": 61,
+          "alphaByte": 128
+        }
+      ],
+      "exactTranslatedTexelChannel": 52.876799999999996,
+      "existingOracleChannel": 52.87679999999995,
+      "oracleMinusExactTexels": -4.263256414560601e-14,
+      "observedRgb": [
+        54.0,
+        54.0,
+        54.0
+      ],
+      "observedMinusExactTexels": [
+        1.1232000000000042,
+        1.1232000000000042,
+        1.1232000000000042
+      ],
+      "capturePngSha256": "9914008f3b5e7e5c2371a9f33f52d4bfff9705503319eb2cbb3570c9de2328eb"
+    },
+    {
+      "invert": false,
+      "x": 142,
+      "y": 82,
+      "texels": [
+        {
+          "x": 42,
+          "y": 8,
+          "alphaByte": 255
+        },
+        {
+          "x": 42,
+          "y": 9,
+          "alphaByte": 255
+        },
+        {
+          "x": 43,
+          "y": 8,
+          "alphaByte": 255
+        },
+        {
+          "x": 43,
+          "y": 9,
+          "alphaByte": 255
+        }
+      ],
+      "exactTranslatedTexelChannel": 105.3405,
+      "existingOracleChannel": 105.34050000000013,
+      "oracleMinusExactTexels": 1.2789769243681803e-13,
+      "observedRgb": [
+        106.0,
+        106.0,
+        106.0
+      ],
+      "observedMinusExactTexels": [
+        0.6594999999999942,
+        0.6594999999999942,
+        0.6594999999999942
+      ],
+      "capturePngSha256": "9914008f3b5e7e5c2371a9f33f52d4bfff9705503319eb2cbb3570c9de2328eb"
+    },
+    {
+      "invert": true,
+      "x": 138,
+      "y": 82,
+      "texels": [
+        {
+          "x": 38,
+          "y": 8,
+          "alphaByte": 0
+        },
+        {
+          "x": 38,
+          "y": 9,
+          "alphaByte": 0
+        },
+        {
+          "x": 39,
+          "y": 8,
+          "alphaByte": 0
+        },
+        {
+          "x": 39,
+          "y": 9,
+          "alphaByte": 0
+        }
+      ],
+      "exactTranslatedTexelChannel": 175.5675,
+      "existingOracleChannel": 168.98371874999998,
+      "oracleMinusExactTexels": -6.5837812500000155,
+      "observedRgb": [
+        177.0,
+        177.0,
+        177.0
+      ],
+      "observedMinusExactTexels": [
+        1.4325000000000045,
+        1.4325000000000045,
+        1.4325000000000045
+      ],
+      "capturePngSha256": "46df6e5eae67090d1a05bbbc7671d60a7a277f130583a3670f7158f3c01fd129"
+    },
+    {
+      "invert": true,
+      "x": 140,
+      "y": 82,
+      "texels": [
+        {
+          "x": 40,
+          "y": 8,
+          "alphaByte": 255
+        },
+        {
+          "x": 40,
+          "y": 9,
+          "alphaByte": 255
+        },
+        {
+          "x": 41,
+          "y": 8,
+          "alphaByte": 255
+        },
+        {
+          "x": 41,
+          "y": 9,
+          "alphaByte": 255
+        }
+      ],
+      "exactTranslatedTexelChannel": 70.227,
+      "existingOracleChannel": 76.81078124999989,
+      "oracleMinusExactTexels": 6.583781249999888,
+      "observedRgb": [
+        70.0,
+        70.0,
+        70.0
+      ],
+      "observedMinusExactTexels": [
+        -0.22700000000000387,
+        -0.22700000000000387,
+        -0.22700000000000387
+      ],
+      "capturePngSha256": "46df6e5eae67090d1a05bbbc7671d60a7a277f130583a3670f7158f3c01fd129"
+    },
+    {
+      "invert": true,
+      "x": 138,
+      "y": 134,
+      "texels": [
+        {
+          "x": 38,
+          "y": 60,
+          "alphaByte": 128
+        },
+        {
+          "x": 38,
+          "y": 61,
+          "alphaByte": 128
+        },
+        {
+          "x": 39,
+          "y": 60,
+          "alphaByte": 128
+        },
+        {
+          "x": 39,
+          "y": 61,
+          "alphaByte": 128
+        }
+      ],
+      "exactTranslatedTexelChannel": 122.6907,
+      "existingOracleChannel": 125.99549999999995,
+      "oracleMinusExactTexels": 3.3047999999999433,
+      "observedRgb": [
+        123.0,
+        123.0,
+        123.0
+      ],
+      "observedMinusExactTexels": [
+        0.30929999999999325,
+        0.30929999999999325,
+        0.30929999999999325
+      ],
+      "capturePngSha256": "46df6e5eae67090d1a05bbbc7671d60a7a277f130583a3670f7158f3c01fd129"
+    },
+    {
+      "invert": true,
+      "x": 108,
+      "y": 134,
+      "texels": [
+        {
+          "x": 8,
+          "y": 60,
+          "alphaByte": 128
+        },
+        {
+          "x": 8,
+          "y": 61,
+          "alphaByte": 128
+        },
+        {
+          "x": 9,
+          "y": 60,
+          "alphaByte": 128
+        },
+        {
+          "x": 9,
+          "y": 61,
+          "alphaByte": 128
+        }
+      ],
+      "exactTranslatedTexelChannel": 122.6907,
+      "existingOracleChannel": 122.69069999999986,
+      "oracleMinusExactTexels": -1.4210854715202004e-13,
+      "observedRgb": [
+        123.0,
+        123.0,
+        123.0
+      ],
+      "observedMinusExactTexels": [
+        0.30929999999999325,
+        0.30929999999999325,
+        0.30929999999999325
+      ],
+      "capturePngSha256": "46df6e5eae67090d1a05bbbc7671d60a7a277f130583a3670f7158f3c01fd129"
+    },
+    {
+      "invert": true,
+      "x": 142,
+      "y": 82,
+      "texels": [
+        {
+          "x": 42,
+          "y": 8,
+          "alphaByte": 255
+        },
+        {
+          "x": 42,
+          "y": 9,
+          "alphaByte": 255
+        },
+        {
+          "x": 43,
+          "y": 8,
+          "alphaByte": 255
+        },
+        {
+          "x": 43,
+          "y": 9,
+          "alphaByte": 255
+        }
+      ],
+      "exactTranslatedTexelChannel": 70.227,
+      "existingOracleChannel": 70.22699999999992,
+      "oracleMinusExactTexels": -8.526512829121202e-14,
+      "observedRgb": [
+        70.0,
+        70.0,
+        70.0
+      ],
+      "observedMinusExactTexels": [
+        -0.22700000000000387,
+        -0.22700000000000387,
+        -0.22700000000000387
+      ],
+      "capturePngSha256": "46df6e5eae67090d1a05bbbc7671d60a7a277f130583a3670f7158f3c01fd129"
+    }
+  ]
+}

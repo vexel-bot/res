@@ -1,0 +1,20 @@
+--- before/backend/app/routers/studio_editor.py
++++ after/backend/app/routers/studio_editor.py
+@@ -1,3 +1,5 @@
++from typing import Literal
++
+ from fastapi import APIRouter, Depends, HTTPException, Query
+ from sqlalchemy.orm import Session
+ 
+@@ -28,9 +30,10 @@
+ 
+ @router.get("/{document_id}/editor/inspection")
+ def editor_inspection(document_id: str, frame: int = Query(default=0, ge=0),
++                      evaluation_detail: Literal["full", "summary"] = Query(default="full", alias="evaluationDetail"),
+                       db: Session = Depends(get_db), user: User = Depends(get_current_user)):
+     record = owned_document(db, user.id, document_id)
+     try:
+-        return inspect_editor(db, record, frame)
++        return inspect_editor(db, record, frame, evaluation_detail=evaluation_detail)
+     except ValueError as exc:
+         raise _error(exc) from exc

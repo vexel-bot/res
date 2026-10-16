@@ -1,0 +1,854 @@
+{
+  "workspaceId": "ce01f961-dd35-4e22-9c66-ab665a5b6606",
+  "documentId": "e5bb4d71-9853-4898-afe9-64e1fad7dfe8",
+  "inspection": {
+    "schemaVersion": "studio.editor-inspection.v1",
+    "document": {
+      "schemaVersion": "studio.creative-document.v1",
+      "documentId": "e5bb4d71-9853-4898-afe9-64e1fad7dfe8",
+      "workspaceId": "ce01f961-dd35-4e22-9c66-ab665a5b6606",
+      "title": "Comandos canônicos — estudo local",
+      "contentType": "video",
+      "status": "draft",
+      "revision": 2,
+      "version": 1,
+      "actorId": "c68b22dd-3c21-40a2-88de-04d9d32f2442",
+      "correlationId": "9a2cddd1-d2e2-4b05-aded-8211a58ba572",
+      "campaignRef": null,
+      "postRef": null,
+      "opportunityRef": null,
+      "brandMemoryRef": {
+        "id": "077225c4-b7c4-46f5-880a-28939582c6da",
+        "version": null,
+        "revision": 1
+      },
+      "brief": {
+        "schemaVersion": "studio.creative-brief.v1",
+        "objective": "Inspecionar o movimento e salvar ajustes rastreáveis",
+        "audience": "Equipe do editor",
+        "angle": "",
+        "promise": "",
+        "hook": "",
+        "cta": "",
+        "channel": "instagram",
+        "format": "post",
+        "tone": "",
+        "restrictions": [],
+        "hypotheses": [],
+        "evidence": []
+      },
+      "composition": {
+        "pages": [
+          {
+            "id": "editor-page",
+            "role": "content",
+            "width": 320,
+            "height": 320,
+            "safeArea": 16,
+            "background": "#10181c",
+            "durationMs": 3000,
+            "layers": [
+              {
+                "id": "ed2-6b38fce49805dd4c491c6ac5",
+                "kind": "group",
+                "name": "Layer",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 320.0,
+                "height": 320.0,
+                "rotation": 0.0,
+                "opacity": 1.0,
+                "visible": true,
+                "locked": false,
+                "zIndex": 1,
+                "properties": {
+                  "editorialTiming": {
+                    "startFrame": 0,
+                    "durationFrames": 90,
+                    "fps": 30.0,
+                    "reveal": "none"
+                  },
+                  "editorialAuditFrames": []
+                }
+              },
+              {
+                "id": "ed2-30fbc54d22b636981c90a39b",
+                "kind": "group",
+                "name": "Layer",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 320.0,
+                "height": 320.0,
+                "rotation": 0.0,
+                "opacity": 1.0,
+                "visible": true,
+                "locked": false,
+                "zIndex": 0,
+                "properties": {
+                  "editorialRole": "background",
+                  "editorialTiming": {
+                    "startFrame": 0,
+                    "durationFrames": 90,
+                    "fps": 30.0,
+                    "reveal": "none"
+                  }
+                }
+              },
+              {
+                "id": "ed2-8b3b6a0012ad58c0c17a2d3d",
+                "kind": "group",
+                "name": "Layer",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 320.0,
+                "height": 320.0,
+                "rotation": 0.0,
+                "opacity": 1.0,
+                "visible": true,
+                "locked": false,
+                "zIndex": 1,
+                "properties": {
+                  "editorialRole": "content",
+                  "editorialTiming": {
+                    "startFrame": 0,
+                    "durationFrames": 90,
+                    "fps": 30.0,
+                    "reveal": "none"
+                  }
+                }
+              },
+              {
+                "id": "ed2-01da172a96debce3d07ab978",
+                "kind": "group",
+                "name": "Layer",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 320.0,
+                "height": 320.0,
+                "rotation": 0.0,
+                "opacity": 1.0,
+                "visible": true,
+                "locked": false,
+                "zIndex": 2,
+                "properties": {
+                  "editorialRole": "text",
+                  "editorialTiming": {
+                    "startFrame": 0,
+                    "durationFrames": 90,
+                    "fps": 30.0,
+                    "reveal": "none"
+                  }
+                }
+              },
+              {
+                "id": "ed2-2922330a149823a8c2a820fc",
+                "kind": "shape",
+                "name": "Layer",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 320.0,
+                "height": 320.0,
+                "rotation": 0.0,
+                "opacity": 1.0,
+                "visible": true,
+                "locked": false,
+                "zIndex": 0,
+                "properties": {
+                  "fill": "#10212c",
+                  "editorialTiming": {
+                    "startFrame": 0,
+                    "durationFrames": 90,
+                    "fps": 30.0,
+                    "reveal": "none"
+                  }
+                }
+              },
+              {
+                "id": "ed2-ba4ec9b0a4e82c7a9d416a1f",
+                "kind": "shape",
+                "name": "hero",
+                "x": 120.0,
+                "y": 130.0,
+                "width": 80.0,
+                "height": 80.0,
+                "rotation": 0.0,
+                "opacity": 1.0,
+                "visible": true,
+                "locked": false,
+                "zIndex": 1,
+                "properties": {
+                  "editorialSceneId": "settle",
+                  "editorialOperationIds": [],
+                  "editorialTiming": {
+                    "startFrame": 0,
+                    "durationFrames": 90,
+                    "fps": 30.0,
+                    "reveal": "none",
+                    "revealFrames": 12
+                  },
+                  "fill": "#32cde5",
+                  "color": "#ffffff",
+                  "text": "",
+                  "fontSize": 48.0,
+                  "editorialTextFit": false,
+                  "editorialConnector": null,
+                  "fontWeight": 700,
+                  "letterSpacing": 0.0,
+                  "lineHeight": 1.1,
+                  "textAlign": "left",
+                  "editorialTextSpans": [],
+                  "editorialShadow": null,
+                  "editorialEffects": [],
+                  "editorialBlendMode": "normal",
+                  "editorialBorder": {
+                    "width": 0.0,
+                    "color": "#ffffff"
+                  },
+                  "fontAssetId": null,
+                  "borderRadius": 16.0,
+                  "shape": "rectangle",
+                  "assetId": null,
+                  "editorialContentIdentity": null,
+                  "editorialContentReferenceId": null,
+                  "editorialContentPartId": null,
+                  "maskAssetId": null,
+                  "objectFit": "contain",
+                  "editorialRegionOfInterest": null,
+                  "editorialCropIntentional": false,
+                  "sourceStartSeconds": 0.0,
+                  "playbackRate": 1.0,
+                  "editorialVisualRole": "hero",
+                  "editorialDepth": {
+                    "opacity": 1.0,
+                    "blurPx": 0.0,
+                    "parallax": 0.0
+                  }
+                }
+              },
+              {
+                "id": "ed2-117a1089d19b07db4d01eae9",
+                "kind": "text",
+                "name": "title",
+                "x": 24.0,
+                "y": 24.0,
+                "width": 272.0,
+                "height": 70.0,
+                "rotation": 0.0,
+                "opacity": 1.0,
+                "visible": true,
+                "locked": false,
+                "zIndex": 1,
+                "properties": {
+                  "editorialSceneId": "settle",
+                  "editorialOperationIds": [],
+                  "editorialTiming": {
+                    "startFrame": 0,
+                    "durationFrames": 90,
+                    "fps": 30.0,
+                    "reveal": "none",
+                    "revealFrames": 12
+                  },
+                  "fill": "#183343",
+                  "color": "#ffffff",
+                  "text": "Estudo de movimento",
+                  "fontSize": 24.0,
+                  "editorialTextFit": true,
+                  "editorialConnector": null,
+                  "fontWeight": 700,
+                  "letterSpacing": 0.0,
+                  "lineHeight": 1.1,
+                  "textAlign": "left",
+                  "editorialTextSpans": [],
+                  "editorialShadow": null,
+                  "editorialEffects": [],
+                  "editorialBlendMode": "normal",
+                  "editorialBorder": {
+                    "width": 0.0,
+                    "color": "#ffffff"
+                  },
+                  "fontAssetId": null,
+                  "borderRadius": 16.0,
+                  "shape": "rectangle",
+                  "assetId": null,
+                  "editorialContentIdentity": null,
+                  "editorialContentReferenceId": null,
+                  "editorialContentPartId": null,
+                  "maskAssetId": null,
+                  "objectFit": "contain",
+                  "editorialRegionOfInterest": null,
+                  "editorialCropIntentional": false,
+                  "sourceStartSeconds": 0.0,
+                  "playbackRate": 1.0,
+                  "editorialVisualRole": "text",
+                  "editorialDepth": {
+                    "opacity": 1.0,
+                    "blurPx": 0.0,
+                    "parallax": 0.0
+                  }
+                }
+              }
+            ]
+          }
+        ],
+        "narrative": {
+          "editorialV2": {
+            "planId": "168c9ec7-85e9-4f4b-84fd-1c0c535a753f",
+            "renderPolicy": "automatic_draft",
+            "operationBindings": [],
+            "motionRecipes": [
+              {
+                "sceneId": "settle",
+                "schemaVersion": "studio.motion-recipe.v1",
+                "id": "settle-motion",
+                "version": 1,
+                "technique": "motion_choreography",
+                "targetIds": [
+                  "hero"
+                ],
+                "startFrame": 0,
+                "endFrameExclusive": 90,
+                "intent": "Acomodar e permanecer",
+                "continuityAnchor": "Mesma forma e cor",
+                "parameters": {
+                  "tracks": [
+                    {
+                      "targetId": "hero",
+                      "property": "y",
+                      "keyframes": [
+                        {
+                          "frame": 0,
+                          "value": 48.0,
+                          "curve": [
+                            0.22,
+                            0.75,
+                            0.25,
+                            1.0
+                          ]
+                        },
+                        {
+                          "frame": 24,
+                          "value": 0.0,
+                          "curve": [
+                            0.2,
+                            0.0,
+                            0.2,
+                            1.0
+                          ]
+                        },
+                        {
+                          "frame": 89,
+                          "value": 0.0,
+                          "curve": [
+                            0.2,
+                            0.0,
+                            0.2,
+                            1.0
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "pivot": [
+                    0.5,
+                    0.5
+                  ],
+                  "parentTargetId": null,
+                  "maskAssetId": null,
+                  "occluderTargetId": null,
+                  "textUnit": "word",
+                  "staggerFrames": 3,
+                  "readingHoldFrames": 30,
+                  "shutterDegrees": 180.0,
+                  "temporalSamples": 8,
+                  "focusDistance": 1000.0,
+                  "depthOfField": 100.0,
+                  "displacementRatio": 0.01
+                },
+                "soundEvents": [],
+                "verification": [
+                  "Sem salto na chegada"
+                ]
+              }
+            ],
+            "motionRecipesDigest": "bae240ef459dff03217e8282885f67bf94f5c229d258cb83bd657d8b3d464592",
+            "nativeRecipeOperations": [
+              {
+                "id": "settle-motion",
+                "sceneId": "settle",
+                "technique": "motion_choreography",
+                "version": 1,
+                "compilerVersion": "res.native-recipes.v1",
+                "startFrame": 0,
+                "endFrameExclusive": 90,
+                "targetLayerIds": [
+                  "ed2-ba4ec9b0a4e82c7a9d416a1f"
+                ],
+                "parameters": {
+                  "tracks": [
+                    {
+                      "targetId": "hero",
+                      "property": "y",
+                      "keyframes": [
+                        {
+                          "frame": 0,
+                          "value": 48.0,
+                          "curve": [
+                            0.22,
+                            0.75,
+                            0.25,
+                            1.0
+                          ]
+                        },
+                        {
+                          "frame": 24,
+                          "value": 0.0,
+                          "curve": [
+                            0.2,
+                            0.0,
+                            0.2,
+                            1.0
+                          ]
+                        },
+                        {
+                          "frame": 89,
+                          "value": 0.0,
+                          "curve": [
+                            0.2,
+                            0.0,
+                            0.2,
+                            1.0
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "pivot": [
+                    0.5,
+                    0.5
+                  ],
+                  "parentTargetId": null,
+                  "maskAssetId": null,
+                  "occluderTargetId": null,
+                  "textUnit": "word",
+                  "staggerFrames": 3,
+                  "readingHoldFrames": 30,
+                  "shutterDegrees": 180.0,
+                  "temporalSamples": 8,
+                  "focusDistance": 1000.0,
+                  "depthOfField": 100.0,
+                  "displacementRatio": 0.01
+                },
+                "qualification": "implemented",
+                "knowledgeTechniqueId": "alight.motion_choreography",
+                "evidenceClassification": "documentation_and_editorial_inference"
+              }
+            ],
+            "renderer": "remotion.contextual-v2",
+            "nativeComponentVersion": 1,
+            "motionGraph": {
+              "schemaVersion": "studio.motion-graph.v1",
+              "graphId": "motion-e00cbf32bc813a4011c4ed7d",
+              "workspaceId": "ce01f961-dd35-4e22-9c66-ab665a5b6606",
+              "documentId": "e5bb4d71-9853-4898-afe9-64e1fad7dfe8",
+              "documentRevision": 2,
+              "frameRate": {
+                "numerator": 30,
+                "denominator": 1
+              },
+              "durationFrames": 90,
+              "canvasWidth": 320,
+              "canvasHeight": 320,
+              "realityMode": "graphic",
+              "completeness": "complete",
+              "status": "suggested",
+              "nodes": [
+                {
+                  "nodeId": "node-ed2-6b38fce49805dd4c491c6ac5",
+                  "targetLayerId": "ed2-6b38fce49805dd4c491c6ac5",
+                  "parentNodeId": null,
+                  "transformOriginX": 0.5,
+                  "transformOriginY": 0.5
+                },
+                {
+                  "nodeId": "node-ed2-30fbc54d22b636981c90a39b",
+                  "targetLayerId": "ed2-30fbc54d22b636981c90a39b",
+                  "parentNodeId": "node-ed2-6b38fce49805dd4c491c6ac5",
+                  "transformOriginX": 0.5,
+                  "transformOriginY": 0.5
+                },
+                {
+                  "nodeId": "node-ed2-8b3b6a0012ad58c0c17a2d3d",
+                  "targetLayerId": "ed2-8b3b6a0012ad58c0c17a2d3d",
+                  "parentNodeId": "node-ed2-6b38fce49805dd4c491c6ac5",
+                  "transformOriginX": 0.5,
+                  "transformOriginY": 0.5
+                },
+                {
+                  "nodeId": "node-ed2-01da172a96debce3d07ab978",
+                  "targetLayerId": "ed2-01da172a96debce3d07ab978",
+                  "parentNodeId": "node-ed2-6b38fce49805dd4c491c6ac5",
+                  "transformOriginX": 0.5,
+                  "transformOriginY": 0.5
+                },
+                {
+                  "nodeId": "node-ed2-2922330a149823a8c2a820fc",
+                  "targetLayerId": "ed2-2922330a149823a8c2a820fc",
+                  "parentNodeId": "node-ed2-30fbc54d22b636981c90a39b",
+                  "transformOriginX": 0.5,
+                  "transformOriginY": 0.5
+                },
+                {
+                  "nodeId": "node-ed2-ba4ec9b0a4e82c7a9d416a1f",
+                  "targetLayerId": "ed2-ba4ec9b0a4e82c7a9d416a1f",
+                  "parentNodeId": "node-ed2-8b3b6a0012ad58c0c17a2d3d",
+                  "transformOriginX": 0.5,
+                  "transformOriginY": 0.5
+                },
+                {
+                  "nodeId": "node-ed2-117a1089d19b07db4d01eae9",
+                  "targetLayerId": "ed2-117a1089d19b07db4d01eae9",
+                  "parentNodeId": "node-ed2-01da172a96debce3d07ab978",
+                  "transformOriginX": 0.5,
+                  "transformOriginY": 0.5
+                }
+              ],
+              "tracks": [
+                {
+                  "trackId": "ed2-117a1089d19b07db4d01eae9-static",
+                  "targetLayerId": "ed2-117a1089d19b07db4d01eae9",
+                  "property": "opacity",
+                  "unit": "ratio",
+                  "keyframes": [
+                    {
+                      "frame": 0,
+                      "value": 1.0,
+                      "easing": "linear",
+                      "cubicBezier": null
+                    }
+                  ]
+                },
+                {
+                  "trackId": "ed2-ba4ec9b0a4e82c7a9d416a1f-recipe-y",
+                  "targetLayerId": "ed2-ba4ec9b0a4e82c7a9d416a1f",
+                  "property": "position_y",
+                  "unit": "pixels",
+                  "keyframes": [
+                    {
+                      "frame": 0,
+                      "value": 48.0,
+                      "easing": "cubic_bezier",
+                      "cubicBezier": [
+                        0.22,
+                        0.75,
+                        0.25,
+                        1.0
+                      ]
+                    },
+                    {
+                      "frame": 24,
+                      "value": 0.0,
+                      "easing": "cubic_bezier",
+                      "cubicBezier": [
+                        0.2,
+                        0.0,
+                        0.2,
+                        1.0
+                      ]
+                    },
+                    {
+                      "frame": 89,
+                      "value": 0.0,
+                      "easing": "cubic_bezier",
+                      "cubicBezier": [
+                        0.2,
+                        0.0,
+                        0.2,
+                        1.0
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "transitions": [],
+              "audioEvents": [],
+              "reducedMotionSupported": true,
+              "constraints": [],
+              "sourceEvidenceIds": [],
+              "realityBinding": null,
+              "abstentions": [],
+              "createdBy": "c68b22dd-3c21-40a2-88de-04d9d32f2442",
+              "lineage": null,
+              "humanReviewRequired": true,
+              "createdAt": "2026-10-02T21:51:17.918271Z"
+            }
+          },
+          "contextualPlanId": "168c9ec7-85e9-4f4b-84fd-1c0c535a753f",
+          "editingPolicy": "draft-first-preserve-message"
+        },
+        "tracks": [],
+        "mediaTimeline": {
+          "schemaVersion": "studio.media-timeline.v1",
+          "frameRate": {
+            "numerator": 30,
+            "denominator": 1
+          },
+          "durationFrames": 90,
+          "tracks": []
+        }
+      },
+      "contentReferences": [],
+      "assets": [],
+      "identityRef": null,
+      "voiceRef": null,
+      "sceneRef": null,
+      "scriptRef": null,
+      "shotPlanRef": null,
+      "lineage": [],
+      "review": {
+        "status": "draft",
+        "requestedVersion": null,
+        "approvalId": null
+      },
+      "exports": [],
+      "createdAt": "2026-10-02T21:51:17.853025Z",
+      "updatedAt": "2026-10-02T21:51:17.998698"
+    },
+    "planId": "168c9ec7-85e9-4f4b-84fd-1c0c535a753f",
+    "planRevision": 2,
+    "documentDigest": "8c6fa70315403e3b5afb2e2b45d5668bce02e4b3ddd9562ef52eb9c35717058f",
+    "graphDigest": "83087412493be80196459a22c35105e40285c8eb85250dc70dfbc30d6a70d752",
+    "frame": 0,
+    "durationFrames": 90,
+    "frameRate": {
+      "numerator": 30,
+      "denominator": 1
+    },
+    "nodes": [
+      {
+        "nodeId": "node-ed2-6b38fce49805dd4c491c6ac5",
+        "targetLayerId": "ed2-6b38fce49805dd4c491c6ac5",
+        "parentNodeId": null,
+        "transformOriginX": 0.5,
+        "transformOriginY": 0.5
+      },
+      {
+        "nodeId": "node-ed2-30fbc54d22b636981c90a39b",
+        "targetLayerId": "ed2-30fbc54d22b636981c90a39b",
+        "parentNodeId": "node-ed2-6b38fce49805dd4c491c6ac5",
+        "transformOriginX": 0.5,
+        "transformOriginY": 0.5
+      },
+      {
+        "nodeId": "node-ed2-8b3b6a0012ad58c0c17a2d3d",
+        "targetLayerId": "ed2-8b3b6a0012ad58c0c17a2d3d",
+        "parentNodeId": "node-ed2-6b38fce49805dd4c491c6ac5",
+        "transformOriginX": 0.5,
+        "transformOriginY": 0.5
+      },
+      {
+        "nodeId": "node-ed2-01da172a96debce3d07ab978",
+        "targetLayerId": "ed2-01da172a96debce3d07ab978",
+        "parentNodeId": "node-ed2-6b38fce49805dd4c491c6ac5",
+        "transformOriginX": 0.5,
+        "transformOriginY": 0.5
+      },
+      {
+        "nodeId": "node-ed2-2922330a149823a8c2a820fc",
+        "targetLayerId": "ed2-2922330a149823a8c2a820fc",
+        "parentNodeId": "node-ed2-30fbc54d22b636981c90a39b",
+        "transformOriginX": 0.5,
+        "transformOriginY": 0.5
+      },
+      {
+        "nodeId": "node-ed2-ba4ec9b0a4e82c7a9d416a1f",
+        "targetLayerId": "ed2-ba4ec9b0a4e82c7a9d416a1f",
+        "parentNodeId": "node-ed2-8b3b6a0012ad58c0c17a2d3d",
+        "transformOriginX": 0.5,
+        "transformOriginY": 0.5
+      },
+      {
+        "nodeId": "node-ed2-117a1089d19b07db4d01eae9",
+        "targetLayerId": "ed2-117a1089d19b07db4d01eae9",
+        "parentNodeId": "node-ed2-01da172a96debce3d07ab978",
+        "transformOriginX": 0.5,
+        "transformOriginY": 0.5
+      }
+    ],
+    "tracks": [
+      {
+        "trackId": "ed2-117a1089d19b07db4d01eae9-static",
+        "targetLayerId": "ed2-117a1089d19b07db4d01eae9",
+        "property": "opacity",
+        "unit": "ratio",
+        "keyframes": [
+          {
+            "frame": 0,
+            "value": 1.0,
+            "easing": "linear",
+            "cubicBezier": null
+          }
+        ],
+        "evaluatedLocalValue": 1.0
+      },
+      {
+        "trackId": "ed2-ba4ec9b0a4e82c7a9d416a1f-recipe-y",
+        "targetLayerId": "ed2-ba4ec9b0a4e82c7a9d416a1f",
+        "property": "position_y",
+        "unit": "pixels",
+        "keyframes": [
+          {
+            "frame": 0,
+            "value": 48.0,
+            "easing": "cubic_bezier",
+            "cubicBezier": [
+              0.22,
+              0.75,
+              0.25,
+              1.0
+            ]
+          },
+          {
+            "frame": 24,
+            "value": 0.0,
+            "easing": "cubic_bezier",
+            "cubicBezier": [
+              0.2,
+              0.0,
+              0.2,
+              1.0
+            ]
+          },
+          {
+            "frame": 89,
+            "value": 0.0,
+            "easing": "cubic_bezier",
+            "cubicBezier": [
+              0.2,
+              0.0,
+              0.2,
+              1.0
+            ]
+          }
+        ],
+        "evaluatedLocalValue": 48.0
+      }
+    ],
+    "scenes": [
+      {
+        "sceneId": "settle",
+        "startFrame": 0,
+        "durationFrames": 90,
+        "purpose": "A forma se acomoda, preservando identidade",
+        "verification": [
+          "Movimento contínuo e pausa final"
+        ],
+        "sceneDigest": "a0b8225d8cf72146da2310c3780e15b5b7d019bbdd8373ff8189ed96b2525867",
+        "visualStates": [],
+        "observationCues": [],
+        "semanticAssertions": [],
+        "shotPlan": []
+      }
+    ],
+    "recipes": [
+      {
+        "sceneId": "settle",
+        "schemaVersion": "studio.motion-recipe.v1",
+        "id": "settle-motion",
+        "version": 1,
+        "technique": "motion_choreography",
+        "targetIds": [
+          "hero"
+        ],
+        "startFrame": 0,
+        "endFrameExclusive": 90,
+        "intent": "Acomodar e permanecer",
+        "continuityAnchor": "Mesma forma e cor",
+        "parameters": {
+          "tracks": [
+            {
+              "targetId": "hero",
+              "property": "y",
+              "keyframes": [
+                {
+                  "frame": 0,
+                  "value": 48.0,
+                  "curve": [
+                    0.22,
+                    0.75,
+                    0.25,
+                    1.0
+                  ]
+                },
+                {
+                  "frame": 24,
+                  "value": 0.0,
+                  "curve": [
+                    0.2,
+                    0.0,
+                    0.2,
+                    1.0
+                  ]
+                },
+                {
+                  "frame": 89,
+                  "value": 0.0,
+                  "curve": [
+                    0.2,
+                    0.0,
+                    0.2,
+                    1.0
+                  ]
+                }
+              ]
+            }
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "parentTargetId": null,
+          "maskAssetId": null,
+          "occluderTargetId": null,
+          "textUnit": "word",
+          "staggerFrames": 3,
+          "readingHoldFrames": 30,
+          "shutterDegrees": 180.0,
+          "temporalSamples": 8,
+          "focusDistance": 1000.0,
+          "depthOfField": 100.0,
+          "displacementRatio": 0.01
+        },
+        "soundEvents": [],
+        "verification": [
+          "Sem salto na chegada"
+        ]
+      }
+    ],
+    "versions": {
+      "compilerVersion": "res.scene-compiler.v2.16",
+      "runtimeVersion": "res.editorial-runtime.v2.5",
+      "componentLibraryVersion": "res.editorial-components.v2.20"
+    },
+    "hashes": {
+      "sourceDirection": "47572624ce38cbc1bdadcf58fc637294d0b70e5f78a2218538935d599d504259",
+      "executableDirection": "041cfed2639feee53d5ab0e0cd83d7b3969313de27a91960196b317a2bbb4b43",
+      "sourceDocument": "eae7ab1c99d5d5cbf6ec7dad99c7f50eba75fbedfdf299829918229daa4e5c02",
+      "executableComposition": "8660c93764dda94316411daf58714e3ae0f50103922a6074493fde061eab10a3",
+      "assets": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "fonts": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    "evaluation": {
+      "technical": "pending",
+      "audiovisual": "pending",
+      "human": "pending"
+    },
+    "pending": [
+      "evaluated_values_are_local_scalars",
+      "render_geometry_not_measured",
+      "human_visual_review_required"
+    ],
+    "history": []
+  },
+  "scope": "real-local-api-isolated-test-workspace",
+  "humanReview": "pending"
+}

@@ -1,0 +1,49 @@
+{
+  "scope": "supplied_pack_exact_license_bytes",
+  "repairRequested": true,
+  "licenses": [
+    {
+      "license": "OFL-ArchivoNarrow.txt",
+      "expectedSha256": "b2087ef3fb91248e346600d19021249152a9688efea72905aa1996bb16a4c8de",
+      "beforeSha256": "b2087ef3fb91248e346600d19021249152a9688efea72905aa1996bb16a4c8de",
+      "afterSha256": "b2087ef3fb91248e346600d19021249152a9688efea72905aa1996bb16a4c8de",
+      "repaired": false,
+      "textContentChanged": false
+    },
+    {
+      "license": "OFL-Inter.txt",
+      "expectedSha256": "5b9321a4298cfeb6b34354164a1c3afc3db114569984c502b9b35d988fd58c57",
+      "beforeSha256": "f14f2b95a38f4f20cad4d27f7710593f37534c046641be0348da7c28365f4e39",
+      "afterSha256": "5b9321a4298cfeb6b34354164a1c3afc3db114569984c502b9b35d988fd58c57",
+      "repaired": true,
+      "textContentChanged": false
+    },
+    {
+      "license": "OFL-Fraunces.txt",
+      "expectedSha256": "bdf4c22802eaf804f998195871c6b8938aac2ac14b2d78a8bd66a6f1eced833b",
+      "beforeSha256": "fcfa1cc090bc091e22db5f45230e064450892b5ba56e97b2469b55849c36f75b",
+      "afterSha256": "bdf4c22802eaf804f998195871c6b8938aac2ac14b2d78a8bd66a6f1eced833b",
+      "repaired": true,
+      "textContentChanged": false
+    },
+    {
+      "license": "OFL-IBMPlexMono.txt",
+      "expectedSha256": "7e6b2818edbd8f6a01ae80641cc8f16a51080d08fb4e532be3a0b6f74adb07da",
+      "beforeSha256": "7e6b2818edbd8f6a01ae80641cc8f16a51080d08fb4e532be3a0b6f74adb07da",
+      "afterSha256": "7e6b2818edbd8f6a01ae80641cc8f16a51080d08fb4e532be3a0b6f74adb07da",
+      "repaired": false,
+      "textContentChanged": false
+    },
+    {
+      "license": "LICENSE-PermanentMarker.txt",
+      "expectedSha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "beforeSha256": "3ddf9be5c28fe27dad143a5dc76eea25222ad1dd68934a047064e56ed2fa40c5",
+      "afterSha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "repaired": true,
+      "textContentChanged": false
+    }
+  ],
+  "manifestChanged": false,
+  "fontFilesChanged": false,
+  "checksumGateDisabled": false
+}

@@ -1,0 +1,199 @@
+{
+  "scope": "research_only_derived_lossless_residual_diagnostic",
+  "productionAdmission": "pending",
+  "canonicalManifestSha256": "bab6f76fe23c45ef4ebf26d1741e0a03b2da385e1ed533e50a3bc3b37f2cada9",
+  "maskSha256": "ee10f031a17421859e3af5f725273644b8534709cb23173c6e1bf0ac8787e2c2",
+  "browserVersion": "Google Chrome for Testing 149.0.7790.0",
+  "browserSha256": "ec76dc3e69ffab9daddf0bbe7bf0a9e0a034b2d086741a0ae2ef6358a597537b",
+  "cases": [
+    {
+      "name": "child-external-alpha-inverted",
+      "scope": "child",
+      "branch": "external",
+      "mode": "alpha",
+      "invert": true,
+      "frame": 4,
+      "sampleTimes": [
+        3.78125,
+        3.84375,
+        3.90625,
+        3.96875,
+        4.03125,
+        4.09375,
+        4.15625,
+        4.21875
+      ],
+      "sampledLayerIds": [
+        "ed2-dc4fb9af60c130fbb12fd888"
+      ],
+      "records": [
+        {
+          "name": "temporal",
+          "sampleTime": 4,
+          "renderFrame": 4,
+          "manifestSha256": "5baaa1a3108709c640fb7c84b7d47db54ee6f9cd4387e23aa4be93f2af805646",
+          "pngSha256": "5f51dd26d9fcd6735ee52e230e29a96d623897458b5c88fa1d3fc3680ec18939"
+        },
+        {
+          "name": "center",
+          "sampleTime": 4,
+          "renderFrame": 0,
+          "manifestSha256": "6b585737b1c04e1e93cebe140734277b2d4d2b066828bbae532219efa5f743d6",
+          "pngSha256": "dc37f2d46a8096d227ce30b44100def1a6ee7080e05b832fa423732736d0e794"
+        },
+        {
+          "name": "sample-1",
+          "sampleTime": 3.78125,
+          "renderFrame": 0,
+          "manifestSha256": "bd84a442b58ee2eca65949ed25810d730f1fcf53d32a495f74c279d754d42f88",
+          "pngSha256": "dae2b020b34e8be0844ed294bfa20e2eddd500416f1708ff16b4141b54afe6fe"
+        },
+        {
+          "name": "sample-2",
+          "sampleTime": 3.84375,
+          "renderFrame": 0,
+          "manifestSha256": "cfcf0fbd84b710fbe5ca570450d1fabf7ec3c38d5d08295361e781f29a986848",
+          "pngSha256": "f2991acc52793d63a751a3b788e62319189bc3267cca57ba7e67c92acf5203f1"
+        },
+        {
+          "name": "sample-3",
+          "sampleTime": 3.90625,
+          "renderFrame": 0,
+          "manifestSha256": "105a5a17cd0e580bf65980063dc39d4bcf79f02102c575eef2fe1af59ccaaf71",
+          "pngSha256": "e50e2ca8973529a3669a0eb0574e8949fb1ce194de242975968d75a6929dedfe"
+        },
+        {
+          "name": "sample-4",
+          "sampleTime": 3.96875,
+          "renderFrame": 0,
+          "manifestSha256": "1967acc172341e4dfc5079de46a8fa5b9d2e176632da2ecfc9709ebe10ffac86",
+          "pngSha256": "ece196dc495cee37dbb0cfe28a7764982b3b329183a6dcb5507a115836e79963"
+        },
+        {
+          "name": "sample-5",
+          "sampleTime": 4.03125,
+          "renderFrame": 0,
+          "manifestSha256": "1f991d419b25186ef4fa80bc3386196d7d1f10247ed7ccc772a1ce4242d6221b",
+          "pngSha256": "093a56f8003e74ea9179109603b82c98cd929ce46b534d17df6920c32a45ab33"
+        },
+        {
+          "name": "sample-6",
+          "sampleTime": 4.09375,
+          "renderFrame": 0,
+          "manifestSha256": "f854dc765a86bc8b15278bffeab157f552c39d26db2751dc63e828ea73317fd4",
+          "pngSha256": "dd8d8214e33cf129f9d0c0fb9327ed9f4f03a6c8b9f5910f01d7e666c4bcd991"
+        },
+        {
+          "name": "sample-7",
+          "sampleTime": 4.15625,
+          "renderFrame": 0,
+          "manifestSha256": "e68a1e4709dbdf4b22db43c4ab769db2c62fe6e4a85d0edd8a540b8abdc7b287",
+          "pngSha256": "56dced36ac51e224d5178ec2bd7283c9f6aa8814417aa0ed529af8a8d5088eb2"
+        },
+        {
+          "name": "sample-8",
+          "sampleTime": 4.21875,
+          "renderFrame": 0,
+          "manifestSha256": "0c36619dcc66e0c31de56072ebf09ee48d69bdf258c5cc9f738a67ea88d560c2",
+          "pngSha256": "6610c05ad1070922d212d7d96f67af582b5abddb5712245ec9a32dae2e5df754"
+        }
+      ]
+    },
+    {
+      "name": "rig-common-luminance-normal",
+      "scope": "rig",
+      "branch": "common",
+      "mode": "luminance",
+      "invert": false,
+      "frame": 7,
+      "sampleTimes": [
+        6.78125,
+        6.84375,
+        6.90625,
+        6.96875,
+        7.03125,
+        7.09375,
+        7.15625,
+        7.21875
+      ],
+      "sampledLayerIds": [
+        "ed2-cede67250799ff0e90550c70",
+        "ed2-dc4fb9af60c130fbb12fd888",
+        "ed2-51ffbf33502bd6873e59a4e0",
+        "ed2-e59dfae8dda971673bcc05cf"
+      ],
+      "records": [
+        {
+          "name": "temporal",
+          "sampleTime": 7,
+          "renderFrame": 7,
+          "manifestSha256": "16b817fa041e86f3e9215ffee0508f42b76f26df42b06be9552c062140a9d1b9",
+          "pngSha256": "20b4a95fdd8f5d87eff6a1f5d20536457654c69c9fcee7595439d0cd8c81a417"
+        },
+        {
+          "name": "center",
+          "sampleTime": 7,
+          "renderFrame": 0,
+          "manifestSha256": "473613ebf518c249b8694a05fc66177f35fc2dd1a5f4d240832a1f7e59e81591",
+          "pngSha256": "fed868d6d33ab85f67f601b2b6024da919b545a9375c966cdc60d94c9ddf284e"
+        },
+        {
+          "name": "sample-1",
+          "sampleTime": 6.78125,
+          "renderFrame": 0,
+          "manifestSha256": "2d866fbf12143c1576c3b6b3a259800d215dbefa03633ebec4a3cdf272f10cf6",
+          "pngSha256": "5952430219938654910e215f838abf8fb9aacbeaaa89270b79161370b98b9480"
+        },
+        {
+          "name": "sample-2",
+          "sampleTime": 6.84375,
+          "renderFrame": 0,
+          "manifestSha256": "9b0a48df5e3604174619dd90cd699dc341a30dd856245198fc28423ade54cce6",
+          "pngSha256": "d2284e2a8f0ac09130ed51db9d7934290a565b64fcb273e801b4c2439aeddb99"
+        },
+        {
+          "name": "sample-3",
+          "sampleTime": 6.90625,
+          "renderFrame": 0,
+          "manifestSha256": "5cca734f3d74dae6dd504d079c0b274b7b3883d3370310d0a84567e2a8b97823",
+          "pngSha256": "1ecefe83a0a6f9536cbb5098bf81000e2b503dc5b0af28b38b9524cda398e512"
+        },
+        {
+          "name": "sample-4",
+          "sampleTime": 6.96875,
+          "renderFrame": 0,
+          "manifestSha256": "71c8737e8d8592ded6d7cf62ac8eea4445b66ea2fb8aef679bd449390f1487fe",
+          "pngSha256": "6c709d778a463b6587dbc85daf7d091eefbe42f8bc3f198e07033bda44e2c269"
+        },
+        {
+          "name": "sample-5",
+          "sampleTime": 7.03125,
+          "renderFrame": 0,
+          "manifestSha256": "254e463504335e5719b76084b73786689a9dead2892a28ad949c2b47df10307a",
+          "pngSha256": "b6bc5c1d2a2f5079c68df55d216d62541f6172caab842ffa1e4a09c735d453a9"
+        },
+        {
+          "name": "sample-6",
+          "sampleTime": 7.09375,
+          "renderFrame": 0,
+          "manifestSha256": "43f89ed92acd91ca1c463092606c68eefaac8fcf658b6ef1bea70b43554deb40",
+          "pngSha256": "4ed04ad7f9122da205e01d2c6b51f0477456a4e8267c20fc5d3fb562b7d38b47"
+        },
+        {
+          "name": "sample-7",
+          "sampleTime": 7.15625,
+          "renderFrame": 0,
+          "manifestSha256": "6e8a12b18961edfefae9e195eb067a0bb63c481b4f990c9cbb50cbd3a65a730a",
+          "pngSha256": "c496a0a7a8ea1158393c8d9590fe987e364fa5d542dee8471b62d9efa939c33d"
+        },
+        {
+          "name": "sample-8",
+          "sampleTime": 7.21875,
+          "renderFrame": 0,
+          "manifestSha256": "849cd875347054c87c11a84462bc549e13b5ad159e7d3674ac5b4ed9c7f0ebf8",
+          "pngSha256": "581734008c03a1aa443dfe075c268125d9b5a5584a6f3d656ae7d2a72612e04f"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,416 @@
+{
+  "schemaVersion": "res.asset-matte-receipt.v1",
+  "generatedAt": "2026-10-03T00:41:55.491220+00:00",
+  "qualification": "implemented_with_technical_evidence",
+  "humanReview": "pending",
+  "compilerVersion": "res.native-recipes.v4",
+  "componentLibraryVersion": 6,
+  "providerVersion": "4.0.527-native.8",
+  "legacyVersionsReadable": [
+    1,
+    2,
+    3
+  ],
+  "uniquePassedPytestCases": 129,
+  "uniqueSkippedPytestCases": 1,
+  "skips": [
+    {
+      "case": [
+        "tests.test_editorial_v2_integration",
+        "test_actual_v2_job_keeps_draft_review_and_retries_idempotently"
+      ],
+      "status": "skipped",
+      "run": "asset-matte-editorial-regression-tests.xml",
+      "reason": "Explicit pinned HyperFrames runtime required for actual rendering"
+    }
+  ],
+  "testRuns": [
+    {
+      "path": "docs/studios/research/editor-oss-20261002/asset-matte-regression-tests.xml",
+      "cases": 78,
+      "failure": 0,
+      "error": 0,
+      "skipped": 0,
+      "sha256": "cfbc20ed62cdc5308ff128298b788630a50af9f8576767beab8e854f2412ce97"
+    },
+    {
+      "path": "docs/studios/research/editor-oss-20261002/asset-matte-editorial-regression-tests.xml",
+      "cases": 44,
+      "failure": 1,
+      "error": 0,
+      "skipped": 1,
+      "sha256": "e0e545ce8e5be2b325c4eb5fe9bc5217af1905cc470d158d0a2e0a5d587b2fb0"
+    },
+    {
+      "path": "docs/studios/research/editor-oss-20261002/asset-matte-font-license-tests.xml",
+      "cases": 1,
+      "failure": 0,
+      "error": 0,
+      "skipped": 0,
+      "sha256": "24ed88ef35154f67733bcf0609eb526c3e15cb9933e0e8787827d353663cb2b5"
+    },
+    {
+      "path": "docs/studios/research/editor-oss-20261002/asset-matte-contract-tests.xml",
+      "cases": 24,
+      "failure": 0,
+      "error": 0,
+      "skipped": 0,
+      "sha256": "94e2e15dff1c426b5a26f2be2a07c393a38ba00c5d4a1f2b22a0ecb35dbe2e69"
+    },
+    {
+      "path": "docs/studios/research/editor-oss-20261002/asset-matte-real-tests.xml",
+      "cases": 4,
+      "failure": 0,
+      "error": 0,
+      "skipped": 0,
+      "sha256": "9e345cc03e98e70760b15ae65e7aa0f42b8af795c9b21626d395e09f0f6ac046"
+    },
+    {
+      "path": "docs/studios/research/editor-oss-20261002/asset-matte-legacy-pixel-tests.xml",
+      "cases": 1,
+      "failure": 0,
+      "error": 0,
+      "skipped": 0,
+      "sha256": "5ea2380183e88ca9df9f12f2b11e6e4373c91fbed31b44a58901ce245fa15553"
+    },
+    {
+      "path": "docs/studios/research/editor-oss-20261002/asset-matte-final-runner-tests.xml",
+      "cases": 2,
+      "failure": 0,
+      "error": 0,
+      "skipped": 0,
+      "sha256": "5f0839a4ed11872a89459381903cfc3ed5b70ac5f69f42282c338324d5e85f24"
+    },
+    {
+      "path": "docs/studios/research/editor-oss-20261002/asset-matte-aspect-tests.xml",
+      "cases": 1,
+      "failure": 0,
+      "error": 0,
+      "skipped": 0,
+      "sha256": "80a03bafa16b44bcf356deac0712b7383f479467e27d78e02e4624f3824188cb"
+    },
+    {
+      "path": "docs/studios/research/editor-oss-20261002/asset-matte-cover-tests.xml",
+      "cases": 1,
+      "failure": 0,
+      "error": 0,
+      "skipped": 0,
+      "sha256": "68c18e485e2e513c42b09a15bd3c2ef63768f317c621bf7f35ba581799f3d4cf"
+    },
+    {
+      "path": "docs/studios/research/editor-oss-20261002/asset-matte-complete-render-tests.xml",
+      "cases": 6,
+      "failure": 0,
+      "error": 0,
+      "skipped": 0,
+      "sha256": "00bbe89a311684adc4c91d5e96b4e1d64d90afd02d96e0e13def5e7fe40fe43e"
+    },
+    {
+      "path": "docs/studios/research/editor-oss-20261002/asset-matte-animated-negative-tests.xml",
+      "cases": 1,
+      "failure": 0,
+      "error": 0,
+      "skipped": 0,
+      "sha256": "148fc5e8b44a084f35eb96ef6c4a1e363c3b8a331d01fd1fa9fdfbe8b3c0df6f"
+    }
+  ],
+  "testRunsOverlap": true,
+  "initialFontLicenseFailureCorrectedByLaterRun": true,
+  "pngHeaderChecks": 17,
+  "renders": [
+    {
+      "variant": "alpha-normal",
+      "scope": "actual_API_plan_apply_inspection_job_MP4_QC_decoded_pixels",
+      "jobId": "b489892b-bc4f-4a96-b396-9216e5fae417",
+      "documentId": "a4119f0d-26a7-4be3-8074-8a7ee969b084",
+      "documentRevision": 2,
+      "providerVersion": "4.0.527-native.8",
+      "videoSha256": "e4b5df2965f87e3c9287f62e088fd541af4569d9f95b33c0413c8b5522ade835",
+      "videoBytes": 8204,
+      "renderDurationMs": 20422,
+      "qc": "passed",
+      "frames": 15,
+      "fps": 30,
+      "width": 320,
+      "height": 320,
+      "maskAssetSha256": "e51593062f6c3ef4d9fe0d217a7b8bbdfb448f0d08a509efe7902a4ce2de9ee7",
+      "pixelProbes": 35,
+      "maximumObservedPixelChannelError": 3.0,
+      "evidenceSha256": "e515ed6e66d0db3a6dea9cbe6b33018efd94f3040d0d4505bd7549a189c0eed2",
+      "sourceBitmapSize": [
+        128,
+        128
+      ],
+      "sourceObjectFit": "contain",
+      "aspectProbeRgb": null,
+      "decodeProfile": {
+        "concurrency": 2,
+        "freeMemoryAtStart": 556728320,
+        "videoCacheBytes": null,
+        "matteAssetCount": 1,
+        "matteSourcePixels": 16384
+      }
+    },
+    {
+      "variant": "alpha-inverted",
+      "scope": "actual_API_plan_apply_inspection_job_MP4_QC_decoded_pixels",
+      "jobId": "122242a9-f231-43ea-9e7a-6f2cc48196fe",
+      "documentId": "23e8b0a9-451e-4d63-82d3-932d8c5a4ad9",
+      "documentRevision": 2,
+      "providerVersion": "4.0.527-native.8",
+      "videoSha256": "90085328100598e937b0f6b75883e4f348419d0fd4f3dafbb91c50e5bb68759d",
+      "videoBytes": 9460,
+      "renderDurationMs": 20187,
+      "qc": "passed",
+      "frames": 15,
+      "fps": 30,
+      "width": 320,
+      "height": 320,
+      "maskAssetSha256": "e51593062f6c3ef4d9fe0d217a7b8bbdfb448f0d08a509efe7902a4ce2de9ee7",
+      "pixelProbes": 35,
+      "maximumObservedPixelChannelError": 4.0,
+      "evidenceSha256": "2ec693d5ab789406003455b3239b4302ebb9764a9491068d888fec906bfbac6d",
+      "sourceBitmapSize": [
+        128,
+        128
+      ],
+      "sourceObjectFit": "contain",
+      "aspectProbeRgb": null,
+      "decodeProfile": {
+        "concurrency": 2,
+        "freeMemoryAtStart": 920395776,
+        "videoCacheBytes": null,
+        "matteAssetCount": 1,
+        "matteSourcePixels": 16384
+      }
+    },
+    {
+      "variant": "luminance-normal",
+      "scope": "actual_API_plan_apply_inspection_job_MP4_QC_decoded_pixels",
+      "jobId": "cc42bc0d-0261-479f-b41f-9f45a996a807",
+      "documentId": "9cd45591-b8e9-482a-97d7-475d1477e806",
+      "documentRevision": 2,
+      "providerVersion": "4.0.527-native.8",
+      "videoSha256": "d4af958e13fbe816a02e514f5ea2fb0e334a3dbc80f448ed82d05f9904ffc180",
+      "videoBytes": 6832,
+      "renderDurationMs": 21969,
+      "qc": "passed",
+      "frames": 15,
+      "fps": 30,
+      "width": 320,
+      "height": 320,
+      "maskAssetSha256": "e51593062f6c3ef4d9fe0d217a7b8bbdfb448f0d08a509efe7902a4ce2de9ee7",
+      "pixelProbes": 35,
+      "maximumObservedPixelChannelError": 2.999999999999986,
+      "evidenceSha256": "09f41a42b7f546d5ff611be0bd77643affd9039aed026b28205d3e1419add440",
+      "sourceBitmapSize": [
+        128,
+        128
+      ],
+      "sourceObjectFit": "contain",
+      "aspectProbeRgb": null,
+      "decodeProfile": {
+        "concurrency": 2,
+        "freeMemoryAtStart": 975372288,
+        "videoCacheBytes": null,
+        "matteAssetCount": 1,
+        "matteSourcePixels": 16384
+      }
+    },
+    {
+      "variant": "luminance-inverted",
+      "scope": "actual_API_plan_apply_inspection_job_MP4_QC_decoded_pixels",
+      "jobId": "58d98dd4-55d8-41fc-89f4-f1b3fb701e72",
+      "documentId": "c8807f7b-7b7f-468d-950d-2dbce3757cca",
+      "documentRevision": 2,
+      "providerVersion": "4.0.527-native.8",
+      "videoSha256": "9702020877b871aec1bb61688cf06856d2be124647acee6df097ea77d1871f7e",
+      "videoBytes": 8252,
+      "renderDurationMs": 18812,
+      "qc": "passed",
+      "frames": 15,
+      "fps": 30,
+      "width": 320,
+      "height": 320,
+      "maskAssetSha256": "e51593062f6c3ef4d9fe0d217a7b8bbdfb448f0d08a509efe7902a4ce2de9ee7",
+      "pixelProbes": 35,
+      "maximumObservedPixelChannelError": 3.0,
+      "evidenceSha256": "0c0fbdb6d003ca651003bf84843ee0f5ce7437476f639e4d9d624477f8b77b24",
+      "sourceBitmapSize": [
+        128,
+        128
+      ],
+      "sourceObjectFit": "contain",
+      "aspectProbeRgb": null,
+      "decodeProfile": {
+        "concurrency": 2,
+        "freeMemoryAtStart": 1021734912,
+        "videoCacheBytes": null,
+        "matteAssetCount": 1,
+        "matteSourcePixels": 16384
+      }
+    },
+    {
+      "variant": "alpha-wide-contain",
+      "scope": "actual_API_plan_apply_inspection_job_MP4_QC_decoded_pixels",
+      "jobId": "24d2e6ba-9e01-45ea-8e1d-cb6d17ff80b8",
+      "documentId": "c20cecf5-3974-4342-9e40-86434f32ac08",
+      "documentRevision": 2,
+      "providerVersion": "4.0.527-native.8",
+      "videoSha256": "421e783ed6c70859c66b6c2d536cc755d0f5e5c3f53300e6c18e38dc10c49a56",
+      "videoBytes": 6568,
+      "renderDurationMs": 18125,
+      "qc": "passed",
+      "frames": 15,
+      "fps": 30,
+      "width": 320,
+      "height": 320,
+      "maskAssetSha256": "07f4c8dd8fb92bf9a63c87eb4adf3327e6ba1f095467497773174e9bb6848bee",
+      "pixelProbes": 35,
+      "maximumObservedPixelChannelError": 5.0,
+      "evidenceSha256": "d4c8a3f0e321e9292f44179ea2d9420bc30d0a01f468fd2126297bf2456699bb",
+      "sourceBitmapSize": [
+        256,
+        128
+      ],
+      "sourceObjectFit": "contain",
+      "aspectProbeRgb": [
+        0,
+        0,
+        0
+      ],
+      "decodeProfile": {
+        "concurrency": 2,
+        "freeMemoryAtStart": 826003456,
+        "videoCacheBytes": null,
+        "matteAssetCount": 1,
+        "matteSourcePixels": 32768
+      }
+    },
+    {
+      "variant": "alpha-wide-cover",
+      "scope": "actual_API_plan_apply_inspection_job_MP4_QC_decoded_pixels",
+      "jobId": "6a5c550c-d576-4580-988b-742b09232eeb",
+      "documentId": "1d4292b0-d9ed-4746-b0c4-8993e258cdd0",
+      "documentRevision": 2,
+      "providerVersion": "4.0.527-native.8",
+      "videoSha256": "2c16e5215337f926b7781d9cd668b32ed99312a4f4df92a620c66a3c2d626f8c",
+      "videoBytes": 6172,
+      "renderDurationMs": 17859,
+      "qc": "passed",
+      "frames": 15,
+      "fps": 30,
+      "width": 320,
+      "height": 320,
+      "maskAssetSha256": "07f4c8dd8fb92bf9a63c87eb4adf3327e6ba1f095467497773174e9bb6848bee",
+      "pixelProbes": 35,
+      "maximumObservedPixelChannelError": 2,
+      "evidenceSha256": "1a697c91693218e6dc55089560c2813d80028fa8a1d9e142cafc24fef256e9a6",
+      "sourceBitmapSize": [
+        256,
+        128
+      ],
+      "sourceObjectFit": "cover",
+      "aspectProbeRgb": [
+        100,
+        102,
+        100
+      ],
+      "decodeProfile": {
+        "concurrency": 2,
+        "freeMemoryAtStart": 986669056,
+        "videoCacheBytes": null,
+        "matteAssetCount": 1,
+        "matteSourcePixels": 32768
+      }
+    }
+  ],
+  "fontLicenseIntegrity": {
+    "scope": "supplied_pack_exact_license_bytes",
+    "repairRequested": false,
+    "licenses": [
+      {
+        "license": "OFL-ArchivoNarrow.txt",
+        "expectedSha256": "b2087ef3fb91248e346600d19021249152a9688efea72905aa1996bb16a4c8de",
+        "beforeSha256": "b2087ef3fb91248e346600d19021249152a9688efea72905aa1996bb16a4c8de",
+        "afterSha256": "b2087ef3fb91248e346600d19021249152a9688efea72905aa1996bb16a4c8de",
+        "repaired": false,
+        "textContentChanged": false
+      },
+      {
+        "license": "OFL-Inter.txt",
+        "expectedSha256": "5b9321a4298cfeb6b34354164a1c3afc3db114569984c502b9b35d988fd58c57",
+        "beforeSha256": "5b9321a4298cfeb6b34354164a1c3afc3db114569984c502b9b35d988fd58c57",
+        "afterSha256": "5b9321a4298cfeb6b34354164a1c3afc3db114569984c502b9b35d988fd58c57",
+        "repaired": false,
+        "textContentChanged": false
+      },
+      {
+        "license": "OFL-Fraunces.txt",
+        "expectedSha256": "bdf4c22802eaf804f998195871c6b8938aac2ac14b2d78a8bd66a6f1eced833b",
+        "beforeSha256": "bdf4c22802eaf804f998195871c6b8938aac2ac14b2d78a8bd66a6f1eced833b",
+        "afterSha256": "bdf4c22802eaf804f998195871c6b8938aac2ac14b2d78a8bd66a6f1eced833b",
+        "repaired": false,
+        "textContentChanged": false
+      },
+      {
+        "license": "OFL-IBMPlexMono.txt",
+        "expectedSha256": "7e6b2818edbd8f6a01ae80641cc8f16a51080d08fb4e532be3a0b6f74adb07da",
+        "beforeSha256": "7e6b2818edbd8f6a01ae80641cc8f16a51080d08fb4e532be3a0b6f74adb07da",
+        "afterSha256": "7e6b2818edbd8f6a01ae80641cc8f16a51080d08fb4e532be3a0b6f74adb07da",
+        "repaired": false,
+        "textContentChanged": false
+      },
+      {
+        "license": "LICENSE-PermanentMarker.txt",
+        "expectedSha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+        "beforeSha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+        "afterSha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+        "repaired": false,
+        "textContentChanged": false
+      }
+    ],
+    "manifestChanged": false,
+    "fontFilesChanged": false,
+    "checksumGateDisabled": false
+  },
+  "animatedPngNegative": {
+    "scope": "actual_API_plan_apply_job_animated_PNG_rejection",
+    "jobId": "5d08284d-4c53-4a84-a97d-8cc6321f69ea",
+    "status": "retrying",
+    "errorCode": "ValueError",
+    "errorMessage": "remotion_render_failed:file:///C:/Users/edugu/Downloads/res/workers/remotion-benchmark/render-hybrid.mjs:38\n    catch(error){throw new Error(`${String(error)}:asset=${id}`);}\n                       ^\n\nError: Error: hybrid_asset_matte_animated_png_pending:asset=64369f0b-f728-4fd8-98db-aeb1cbdb9ef6\n    at file:///C:/Users/edugu/Downloads/res/workers/remotion-benchmark/render-hybrid.mjs:38:24\n\nNode.js v22.15.0\nfull_log:C:\\Users\\edugu\\Downloads\\res\\workers\\remotion-benchmark\\output\\diagnostics\\9344ffbf827b8c2f5c922727a611c50d204805f36f4c7ac189a1d664b458a82b.log",
+    "publishedArtifact": false,
+    "sourceSha256": "d6122034969fe1946219f1025db6ab8be5f8663954c087f8a3b3a2070ea8ab02",
+    "correction": "Supply a static PNG matte; APNG is unsupported by asset_matte v1."
+  },
+  "sources": {
+    "backend/app/domain/studios/asset_matte.py": "d63b626042a472ca9eea01557d3492c90e37d1708262df9ef240909ddc8d46a6",
+    "backend/app/domain/studios/motion_recipes.py": "9c7f83a7233fb5aef8283d169c9250e10ccff2c4208e01ad7b7eab9499d6f6e6",
+    "backend/app/domain/studios/contextual_editing_v2.py": "37acb13095b740386501649dbdd9d1a70f91a7a14c500c90299e4b60ed6cc8ce",
+    "backend/app/services/studios/native_motion_recipes.py": "1135e1848f5b08ad668d26421a5c9fc2dd79d361a1d8433fe9224cbec2b27b78",
+    "backend/app/providers/studios/remotion_projection.py": "605e0ec008959006dfc7d6d6ca64b23d0abd7965e5dfe509e27a361ba4b5741e",
+    "backend/app/providers/studios/remotion_render.py": "bd25d5607413957bc425e51e31a13f24599986868baa04db4693f1abcbfd2b31",
+    "backend/app/services/studios/contextual_editing_v2.py": "90a1f563ae1be09ac4b7ca9e881ec0516d9108c74406f596a3bd11c4196c62a7",
+    "workers/remotion-benchmark/src/hybrid.tsx": "e91c51af40d36f2de1615beea1d7228acd937f7d4d66c87b52f810111a6f2b6b",
+    "workers/remotion-benchmark/src/asset-matte.tsx": "cd677bcd2ac449c7572b4d6328bc11f968e4df2997bb9bc72d6fddb8ed622517",
+    "workers/remotion-benchmark/src/asset-matte-png.mjs": "ae1dfd474f2fee3e68b008c24da94856abb3bd863965bb8b2638f0418476c399",
+    "workers/remotion-benchmark/render-hybrid.mjs": "f73225a66a33204eaf4e7b90e8acfd022cd2fc359bda8eee3fb6ee73b36c148c",
+    "backend/tests/test_asset_matte.py": "5a2288d885b6c94741dda0a5a00772391c7a721170a19a3c65a9ffce3aca3df6",
+    "backend/tests/test_asset_matte_render.py": "f6a89153a72a1c4e6c88819f83eea07744c59e71a8c9d68d5fabad041b44d529",
+    ".gitattributes": "b71052157c88352922807796a1d356c948ba71a46cfd5e6cd616f3e0fb459526",
+    "scripts/validation/editor-font-license-integrity.py": "b40815dba41d610635f53fb51b5eb1aebad286845abd78f6a31a40f6ef8a1e2a",
+    "scripts/validation/editor-asset-matte-png-study.mjs": "222366a0879893b236cca5a0fe152e67897a664a016ba0ec61912c09b39da0e1",
+    "scripts/validation/editor-asset-matte-receipt.py": "c897bb1c5f913e8f3540e462d596614f4cccc6e5a02e43f49a7fa1889c570bf1"
+  },
+  "cleanup": "previous_research_and_DOM_bundles_blocked_by_policy",
+  "limitations": [
+    "PNG field geometry is arbitrary; this is not animated mask footage, roto, tracking or path morph.",
+    "One matte per target; no source-matte/filter/clip chain or transition over source lineage.",
+    "Explicit source_layer_only opacity; parent source opacity is not a mask input.",
+    "DOM observations are not coverage proof; decoded probes qualify only these fixtures.",
+    "Human visual/mobile/commercial/autonomy review remains pending; no human scores filled.",
+    "Observed 320x320 half-second renders do not establish p95 or realtime 1080p.",
+    "Separate legacy HyperFrames actual-render test skipped because its explicitly pinned runtime is unavailable."
+  ]
+}

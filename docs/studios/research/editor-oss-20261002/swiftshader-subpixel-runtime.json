@@ -1,0 +1,17 @@
+{
+  "scope": "fresh_pinned_renderer_browser_webgl_capabilities",
+  "productionAdmission": "pending",
+  "browserVersion": "Google Chrome for Testing 149.0.7790.0",
+  "browserSha256": "ec76dc3e69ffab9daddf0bbe7bf0a9e0a034b2d086741a0ae2ef6358a597537b",
+  "gl": "swangle",
+  "scriptSha256": "2d2ca86a6d4473b6272a0f0b4e51aede03155ae0e8c2252556feb5badf623836",
+  "values": {
+    "subpixelBits": 4,
+    "renderer": "WebKit WebGL",
+    "vendor": "WebKit",
+    "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+    "shadingLanguage": "WebGL GLSL ES 3.00 (OpenGL ES GLSL ES 3.0 Chromium)",
+    "unmaskedRenderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "unmaskedVendor": "Google Inc. (Google)"
+  }
+}

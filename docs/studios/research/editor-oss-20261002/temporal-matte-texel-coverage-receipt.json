@@ -1,0 +1,269 @@
+{
+  "scope": "actual_API_CRf10_and_independent_texel_coverage_evidence",
+  "productionAdmission": "pending",
+  "humanReview": "pending",
+  "originalOracleChanged": false,
+  "tolerance": 8,
+  "productionProvider": "4.0.527-native.13",
+  "productionFinalizer": "1.4.0",
+  "temporaryFinalizer": "1.4.1",
+  "temporaryHighCrf": 10,
+  "controlledEncoderOnlyDifferenceVerified": true,
+  "tests": [
+    {
+      "name": "test_temporal_matte_actual_api_pixels[control-external-alpha-False]",
+      "failed": false,
+      "errored": false,
+      "skipped": false
+    },
+    {
+      "name": "test_temporal_matte_actual_api_pixels[child-external-alpha-False]",
+      "failed": false,
+      "errored": false,
+      "skipped": false
+    },
+    {
+      "name": "test_temporal_matte_actual_api_pixels[child-external-alpha-True]",
+      "failed": true,
+      "errored": false,
+      "skipped": false
+    },
+    {
+      "name": "test_temporal_matte_actual_api_pixels[rig-external-alpha-False]",
+      "failed": false,
+      "errored": false,
+      "skipped": false
+    },
+    {
+      "name": "test_temporal_matte_actual_api_pixels[rig-external-luminance-True]",
+      "failed": false,
+      "errored": false,
+      "skipped": false
+    },
+    {
+      "name": "test_temporal_matte_actual_api_pixels[child-common-alpha-False]",
+      "failed": false,
+      "errored": false,
+      "skipped": false
+    },
+    {
+      "name": "test_temporal_matte_actual_api_pixels[rig-common-luminance-False]",
+      "failed": false,
+      "errored": false,
+      "skipped": false
+    }
+  ],
+  "records": [
+    {
+      "variant": "child-common-alpha-normal",
+      "videoSha256": "ad7227c324a1eec7ff4402403cc1407fbd3b856bdbd8587fbb6ceaf1b90b5f46",
+      "evidenceSha256": "17b5dc906330322877017a486281ba422e0c431a2de32076dc9ec025767692d2",
+      "qc": "passed",
+      "probeCount": 162,
+      "matrixCheckCount": 6,
+      "originalReferenceStatus": "passed",
+      "originalReferenceMaximumError": 6.743281249999882,
+      "originalReferenceFailures": [],
+      "researchReferences": {
+        "centerTexture": {
+          "maximumChannelError": 5.041248046875026,
+          "failedProbes": [],
+          "scope": "Independent research reference; not a revised admission test."
+        },
+        "quadClipTexture": {
+          "maximumChannelError": 4.873742437582408,
+          "failedProbes": [],
+          "scope": "Independent research reference; not a revised admission test."
+        }
+      },
+      "actualApiMatchesDerivativeProbePixels": true
+    },
+    {
+      "variant": "child-external-alpha-inverted",
+      "videoSha256": "d0d0cd3b9f5c50eaf34957daa44f0c7ee97be3e86524f8dc8cc9b38d3743f3fd",
+      "evidenceSha256": "8223c0e443fea8b5a6aab927648d88df09368e88839a8b458766c42f050d769b",
+      "qc": "passed",
+      "probeCount": 168,
+      "matrixCheckCount": 6,
+      "originalReferenceStatus": "failed",
+      "originalReferenceMaximumError": 9.016281249999963,
+      "originalReferenceFailures": [
+        [
+          "pixel",
+          0,
+          138,
+          82,
+          9.016281249999963
+        ]
+      ],
+      "researchReferences": {
+        "centerTexture": {
+          "maximumChannelError": 4.893341999790977,
+          "failedProbes": [],
+          "scope": "Independent research reference; not a revised admission test."
+        },
+        "quadClipTexture": {
+          "maximumChannelError": 4.893341999790977,
+          "failedProbes": [],
+          "scope": "Independent research reference; not a revised admission test."
+        }
+      },
+      "actualApiMatchesDerivativeProbePixels": true
+    },
+    {
+      "variant": "child-external-alpha-normal",
+      "videoSha256": "955042e87bbaef0046cad4b2f419b472093ec67d2332d2fcefbbe04dd9e7a11c",
+      "evidenceSha256": "e19278cab539b30b889313e8c91af5ce94ff22f23731e6087715608fc3f1a488",
+      "qc": "passed",
+      "probeCount": 168,
+      "matrixCheckCount": 6,
+      "originalReferenceStatus": "passed",
+      "originalReferenceMaximumError": 6.583781250000002,
+      "originalReferenceFailures": [],
+      "researchReferences": {
+        "centerTexture": {
+          "maximumChannelError": 2.8279028150774366,
+          "failedProbes": [],
+          "scope": "Independent research reference; not a revised admission test."
+        },
+        "quadClipTexture": {
+          "maximumChannelError": 2.955233936284074,
+          "failedProbes": [],
+          "scope": "Independent research reference; not a revised admission test."
+        }
+      },
+      "actualApiMatchesDerivativeProbePixels": true
+    },
+    {
+      "variant": "control-external-alpha-normal",
+      "videoSha256": "9ed624d3f82d75065ed1abeb8f26b4bb011c8dd918e2b6b3accc0471bf2c2af4",
+      "evidenceSha256": "566e2f6f0e04ab3089397bb5ca0f1b6bc98bea4ce0a51dd1ffb3c5646d8c16bd",
+      "qc": "passed",
+      "probeCount": 168,
+      "matrixCheckCount": 6,
+      "originalReferenceStatus": "passed",
+      "originalReferenceMaximumError": 6.583781250000002,
+      "originalReferenceFailures": [],
+      "researchReferences": {
+        "centerTexture": {
+          "maximumChannelError": 2.6720971849225634,
+          "failedProbes": [],
+          "scope": "Independent research reference; not a revised admission test."
+        },
+        "quadClipTexture": {
+          "maximumChannelError": 2.544766063715926,
+          "failedProbes": [],
+          "scope": "Independent research reference; not a revised admission test."
+        }
+      },
+      "actualApiMatchesDerivativeProbePixels": true
+    },
+    {
+      "variant": "rig-common-luminance-normal",
+      "videoSha256": "9a506aa662d52c39291d8e2afaecbe2f2270e54651f8c7f2a72375078c3df909",
+      "evidenceSha256": "987b330c35a8b0dcebbb0a39911d999fe4426903e2f634c92756195b57adccf1",
+      "qc": "passed",
+      "probeCount": 162,
+      "matrixCheckCount": 6,
+      "originalReferenceStatus": "passed",
+      "originalReferenceMaximumError": 5.361630699291396,
+      "originalReferenceFailures": [],
+      "researchReferences": {
+        "centerTexture": {
+          "maximumChannelError": 3.041248046875026,
+          "failedProbes": [],
+          "scope": "Independent research reference; not a revised admission test."
+        },
+        "quadClipTexture": {
+          "maximumChannelError": 2.8737424375823366,
+          "failedProbes": [],
+          "scope": "Independent research reference; not a revised admission test."
+        }
+      },
+      "actualApiMatchesDerivativeProbePixels": true
+    },
+    {
+      "variant": "rig-external-alpha-normal",
+      "videoSha256": "a834b3c04bc97cc69349109b33dc66d8d25f007e1bbac8c087cb6a740dee713d",
+      "evidenceSha256": "161dea206b7d4eb58993e206c4afa2ab146915ceba321c1889806b9dccef5df5",
+      "qc": "passed",
+      "probeCount": 168,
+      "matrixCheckCount": 6,
+      "originalReferenceStatus": "passed",
+      "originalReferenceMaximumError": 6.583781250000002,
+      "originalReferenceFailures": [],
+      "researchReferences": {
+        "centerTexture": {
+          "maximumChannelError": 4.288824296236037,
+          "failedProbes": [],
+          "scope": "Independent research reference; not a revised admission test."
+        },
+        "quadClipTexture": {
+          "maximumChannelError": 4.102363152156453,
+          "failedProbes": [],
+          "scope": "Independent research reference; not a revised admission test."
+        }
+      },
+      "actualApiMatchesDerivativeProbePixels": true
+    },
+    {
+      "variant": "rig-external-luminance-inverted",
+      "videoSha256": "4f1f329600d81493b1616b30f95f63e1786526787457e09f39e828b2d6a96baf",
+      "evidenceSha256": "6e91685154803f1e6840dc846d73282e07985c8b9385886507f4772ba81480d9",
+      "qc": "passed",
+      "probeCount": 168,
+      "matrixCheckCount": 6,
+      "originalReferenceStatus": "passed",
+      "originalReferenceMaximumError": 5.5559265518188,
+      "originalReferenceFailures": [],
+      "researchReferences": {
+        "centerTexture": {
+          "maximumChannelError": 5.5559265518188,
+          "failedProbes": [],
+          "scope": "Independent research reference; not a revised admission test."
+        },
+        "quadClipTexture": {
+          "maximumChannelError": 5.710729711553512,
+          "failedProbes": [],
+          "scope": "Independent research reference; not a revised admission test."
+        }
+      },
+      "actualApiMatchesDerivativeProbePixels": true
+    }
+  ],
+  "validNewPngControls": 60,
+  "exactTexelBlockComparisons": 57600,
+  "relatedEvidenceHashes": {
+    "temporal-matte-svg-subtract-frame0-controls/analysis.json": "67d9daa8f01461e920a277c93e67d895270c0c5f4ea9198b4c63b03c863605a1",
+    "temporal-matte-qualified-texel-reassessment.json": "1cc2f34768ffc14c72d745541b1cc74ac03d0432396ed9fd21c57f60f8c2da05",
+    "temporal-matte-ramp-reassessment.json": "b11c9b8d7ea33de6c4e5821e5bd8d7a1a1512bdb2e06548bd5ff9f3f387f127b",
+    "temporal-matte-edge-ramp-study.json": "0dcfd6908d551beb1f172a54f2e86b51461f05beaa234d79af371f8fa82bfb00",
+    "temporal-matte-mixed-coverage-study.json": "7669b8ff3201493e4f877ed19fed2bed058fe3b7ac31a00ef907319a0b920cc4",
+    "skia-quad-coverage-study.json": "8704bba0b257e8f470ea56dc22229070a189bace354666f1a82d6bbe53e3f716",
+    "temporal-matte-svg-subtract-uniform-controls/analysis.json": "838eaa7dd02f3c250b4b75c51bf9674f1806e23fc74712a4b705ac3d927066e7"
+  },
+  "productionSourceHashes": {
+    "backend/app/domain/studios/contextual_editing_v2.py": "37acb13095b740386501649dbdd9d1a70f91a7a14c500c90299e4b60ed6cc8ce",
+    "backend/app/domain/studios/motion_recipes.py": "8122f1c2f2a9a8030bd1b5407a7a8d2ed22cad7225bcba94ffe29fefd886861b",
+    "backend/app/domain/studios/temporal_exposure.py": "29f544705762a3b694b141308249cc00680d877cd7709f9b7d0a35ea45108dd8",
+    "backend/app/providers/studios/contextual_render.py": "41da67ed3c9e74afee3585f504fa507aa32da72c27f9d61a7cd2f40028e6c2c6",
+    "backend/app/providers/studios/remotion_projection.py": "ae148ca325f4112a8595fcca9b0578aacad14daca2899498ebaf4577d7e8f149",
+    "backend/app/providers/studios/remotion_render.py": "7f106741b62414f824bc1e4e80183a2a7a6ab1d900f8f8b64e750f5ae8adc2ec",
+    "backend/app/services/studios/native_motion_recipes.py": "9f9083f3747f442737b35336eed12f36bb283e4abed40594d68c9566b0fe3f1f",
+    "backend/tests/spatial_effects_kernel_diagnostic.py": "03f609d8dc758516a8dabd770e67584cf5062bd2da78dd3b9a4b855edfebeb06",
+    "backend/tests/temporal_matte_kernel_diagnostic.py": "33f91e2a0da5f61ade7c69d66fb91de21526954cb15c779c64348547c1505eef",
+    "backend/tests/test_spatial_effects.py": "af6721e973275ba8a62437f6feca3eaf33a61d23b29f953f042938c3d1858938",
+    "backend/tests/test_spatial_effects_oracle.py": "33709042ef5de611028d59336f3ab8732e5ad3a5cc609a4a3e999b6da8bbd7af",
+    "backend/tests/test_spatial_effects_render.py": "199f550bd6b726714944b65d6b78f8ad3e3b846edb8597c782966002af57d3ce",
+    "backend/tests/test_temporal_exposure.py": "b064e4aac79e451b35f4824c6c5771d73d3d527d57a97319a9cf64d8733167b5",
+    "backend/tests/test_temporal_matte_oracle.py": "0e4d6bfc3f6004ff528aa37d0e5e0997bf97416b71ec2bde56337ef8389a50db",
+    "backend/tests/test_temporal_rig_render.py": "ae696a2eb7f18364e3103bd2391cc1f9b172e8929755e5de9b7f685577330e28",
+    "scripts/validation/editor-temporal-matte-regression.py": "c62d19e74ff910c6f167388937f93c6854cb2edd4d7fbaa0cba73ccf3caa4149",
+    "workers/remotion-benchmark/render-hybrid.mjs": "1e41e72cbf8a50b9623d707a37fac6d85184258d4b6aa2dfeacf32985d386b76",
+    "workers/remotion-benchmark/src/asset-matte.tsx": "f14ea79323d8261197180db6824bcef707e4b9481154cb2d6beed16342c49a99",
+    "workers/remotion-benchmark/src/hybrid.tsx": "69f66dbfd02be683fe9e6a0d6559ad9e9487c8d7ee48f9fbabf44f0884f5f170",
+    "workers/remotion-benchmark/src/spatial-effects.ts": "cab39ac4863a50bcec80760cb85d969507865f2461fb855c39c1adc105530a9c",
+    "workers/remotion-benchmark/src/temporal-exposure.tsx": "48a609ab733ee2e5c4e6be07f8073a483ff986b235dcb1c34d365f1b4fcc2fc1"
+  },
+  "scriptSha256": "4fbc7d41ec56f7e85902257ddd4e0253cc40add49d8536c62b35a1d270684d4d"
+}

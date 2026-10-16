@@ -1,0 +1,65 @@
+{
+  "repository": "https://github.com/blixvip/NullMotion",
+  "commit": "2795457432a63e7e28879210601cede25915e561",
+  "commitDate": "2026-10-04T17:38:36Z",
+  "licenseFiles": [],
+  "scope": "read selected code in memory; no clone/media/install/code incorporation",
+  "files": [
+    {
+      "path": "README.md",
+      "url": "https://raw.githubusercontent.com/blixvip/NullMotion/2795457432a63e7e28879210601cede25915e561/README.md",
+      "sha256": "0e80dd5e36c70fa4e941c6fb68c9acd21415bda9594211925b30d4cd6dcbe3f8",
+      "bytes": 11018,
+      "lines": 182
+    },
+    {
+      "path": "THIRD_PARTY_NOTICES.md",
+      "url": "https://raw.githubusercontent.com/blixvip/NullMotion/2795457432a63e7e28879210601cede25915e561/THIRD_PARTY_NOTICES.md",
+      "sha256": "c0631c467e0f75d5d750c1b3f4ce4905f080ae9df707b89359b14b386f6da3fb",
+      "bytes": 564,
+      "lines": 7
+    },
+    {
+      "path": "package.json",
+      "url": "https://raw.githubusercontent.com/blixvip/NullMotion/2795457432a63e7e28879210601cede25915e561/package.json",
+      "sha256": "d6e3ad6bb2ab1483f3e5a850f5716916933ddf94d8d5e1ae575ec97f733126f2",
+      "bytes": 519,
+      "lines": 16
+    },
+    {
+      "path": "server.js",
+      "url": "https://raw.githubusercontent.com/blixvip/NullMotion/2795457432a63e7e28879210601cede25915e561/server.js",
+      "sha256": "c5e1ea8a435cff559df37f69d254a41d3fb640cc902824699fbd54ced5e71a97",
+      "bytes": 7808,
+      "lines": 131
+    },
+    {
+      "path": "media.js",
+      "url": "https://raw.githubusercontent.com/blixvip/NullMotion/2795457432a63e7e28879210601cede25915e561/media.js",
+      "sha256": "8f5d4509ef379da17bb941ac1905f2efb678244dd641c0a23b7cc110891f4ea8",
+      "bytes": 3119,
+      "lines": 57
+    },
+    {
+      "path": "public/demo.mjs",
+      "url": "https://raw.githubusercontent.com/blixvip/NullMotion/2795457432a63e7e28879210601cede25915e561/public/demo.mjs",
+      "sha256": "1be8c2180ff73085935cd1cb32de66c68fd58b73c90128cf022e30637da16be5",
+      "bytes": 21719,
+      "lines": 350
+    },
+    {
+      "path": "public/drafts.mjs",
+      "url": "https://raw.githubusercontent.com/blixvip/NullMotion/2795457432a63e7e28879210601cede25915e561/public/drafts.mjs",
+      "sha256": "c47755e2b9b1ccffe209634a13fbee2660d1cc4508d6a903c4fb8bb3e7048044",
+      "bytes": 19981,
+      "lines": 254
+    },
+    {
+      "path": "scripts/plan-sections.mjs",
+      "url": "https://raw.githubusercontent.com/blixvip/NullMotion/2795457432a63e7e28879210601cede25915e561/scripts/plan-sections.mjs",
+      "sha256": "9cd12c96fce6bc016428e4c21793ee7b13f915095b0409a8a69a2c4b613f666e",
+      "bytes": 3095,
+      "lines": 50
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "scope": "failed_actual_api_svg_arithmetic_tree",
+  "records": [
+    {
+      "variant": "child-external-alpha-inverted",
+      "intermediateSha256": "81d0e9e836fb54674ac86617b8a4e26fa4d9c7d6beead09a24804a10646db07c",
+      "maximumRgbByFrame": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        178,
+        178,
+        178,
+        178,
+        178,
+        178,
+        178
+      ],
+      "allBlackFrames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "variant": "rig-external-alpha-normal",
+      "intermediateSha256": "d087c3c9b6a9d79c12fb6696e0fdc83915b5806c50128732f422b597338c3ded",
+      "maximumRgbByFrame": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        161,
+        161,
+        161,
+        161,
+        161,
+        161,
+        161
+      ],
+      "allBlackFrames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "variant": "rig-external-luminance-inverted",
+      "intermediateSha256": "ba2236d9551ae5c844a86dcbdaa35ee2100673d1b2ae0b9a1dc5ef2c88688464",
+      "maximumRgbByFrame": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        178,
+        178,
+        178,
+        178,
+        178,
+        178,
+        178
+      ],
+      "allBlackFrames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    }
+  ]
+}

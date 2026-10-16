@@ -20,7 +20,7 @@ def record_visual_review(db, document, asset, request, user):
     ):
         raise ValueError("visual_review_binding_conflict")
     minimum = VisualAuditPolicyV1().minimum_human_score
-    if metadata.get("provider") == "remotion.contextual-v2" and request.finish is None:
+    if metadata.get("provider") in {"remotion.contextual-v2", "alight-motion.contextual-v1"} and request.finish is None:
         raise ValueError("visual_review_finish_score_required")
     optional_scores = [request.hierarchy, request.motion_naturalness, request.material_relevance]
     supplied_optional_scores = [score for score in optional_scores if score is not None]

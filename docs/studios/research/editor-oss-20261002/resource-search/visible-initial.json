@@ -1,0 +1,1105 @@
+{
+  "success": true,
+  "data": {
+    "origin": "http://127.0.0.1:3000/content/7b95a586-c571-403a-a930-5ac7cb11819a/edit?mode=video",
+    "result": {
+      "cards": [
+        {
+          "assetId": "83be05f7-bc4c-4531-8962-5a7085f730cf",
+          "imageElements": 0,
+          "mediaType": "font/woff2",
+          "rights": "Fonte tipográfica · direitos verificados",
+          "thumbnailText": "Aa\nFONTE TIPOGRÁFICA",
+          "title": "Fonte tipográfica 1",
+          "videoElements": 0
+        },
+        {
+          "assetId": "a9264483-2f2c-4abb-8843-93c8a43e4177",
+          "imageElements": 0,
+          "mediaType": "audio/wav",
+          "rights": "Áudio · direitos verificados",
+          "thumbnailText": "Áudio\nÁUDIO",
+          "title": "Áudio 2",
+          "videoElements": 0
+        },
+        {
+          "assetId": "78221c57-92c0-4587-b061-e2044d6b0584",
+          "imageElements": 0,
+          "mediaType": "video/mp4",
+          "rights": "Vídeo · direitos verificados",
+          "thumbnailText": "VÍDEO",
+          "title": "Vídeo 3",
+          "videoElements": 1
+        },
+        {
+          "assetId": "b103665b-6507-4b60-ad63-0efe5ca40d2a",
+          "imageElements": 0,
+          "mediaType": "video/mp4",
+          "rights": "Vídeo · direitos verificados",
+          "thumbnailText": "VÍDEO",
+          "title": "Vídeo 4",
+          "videoElements": 1
+        },
+        {
+          "assetId": "55c8c866-2531-4a05-a6e3-09a2c2d14ac2",
+          "imageElements": 0,
+          "mediaType": "video/mp4",
+          "rights": "Vídeo · direitos verificados",
+          "thumbnailText": "VÍDEO",
+          "title": "Vídeo 5",
+          "videoElements": 1
+        }
+      ],
+      "catalog": {
+        "alerts": [],
+        "busy": "false",
+        "open": true,
+        "query": "",
+        "rows": [
+          {
+            "id": "83e06255-2a93-43db-b3d6-63c5b978642c",
+            "text": "Estudo native14 / interface-a — render v1 · video/mp4VisualizarUsar no projeto"
+          },
+          {
+            "id": "dd30c81a-429f-4f68-b375-97f0d9c59203",
+            "text": "Estudo native14 / interface-a — render v1 · video/mp4VisualizarUsar no projeto"
+          },
+          {
+            "id": "b3e6621c-df2e-48db-9b08-880719522bec",
+            "text": "Estudo native14 / interface-control — render v1 · video/mp4VisualizarUsar no projeto"
+          },
+          {
+            "id": "c6e35a2a-bfd5-4a0b-bfc5-4bad7042adba",
+            "text": "Estudo native14 / interface-b — render v1 · video/mp4VisualizarUsar no projeto"
+          },
+          {
+            "id": "98b7f4d5-c48d-4a08-aff4-d6483f456a1d",
+            "text": "Estudo native14 / interface-a — render v1 · video/mp4VisualizarUsar no projeto"
+          },
+          {
+            "id": "2325b3bd-ab88-44a7-951e-ac4fbf323c3f",
+            "text": "Estudo native14 / comparison-control — render v1 · video/mp4VisualizarUsar no projeto"
+          },
+          {
+            "id": "eec08ddb-e889-4c47-9053-2b65e33fd52d",
+            "text": "Estudo native14 / comparison-b — render v1 · video/mp4VisualizarUsar no projeto"
+          },
+          {
+            "id": "dc10e6a4-204f-410d-85c0-51eacb6eaa49",
+            "text": "Estudo native14 / comparison-a — render v1 · video/mp4VisualizarUsar no projeto"
+          },
+          {
+            "id": "e865743b-6061-4b50-8c22-a483e75c064a",
+            "text": "Estudo native14 / organization-control — render v1 · video/mp4VisualizarUsar no projeto"
+          },
+          {
+            "id": "b856aefe-1db9-43d3-ad88-995d5ab1b6c8",
+            "text": "Estudo native14 / organization-b — render v1 · video/mp4VisualizarUsar no projeto"
+          },
+          {
+            "id": "bc8d3578-02ec-4712-8bfb-a061e44a78c8",
+            "text": "Estudo native14 / organization-a — render v1 · video/mp4VisualizarUsar no projeto"
+          },
+          {
+            "id": "c4500e16-f4a3-4a85-a186-42546b1684a4",
+            "text": "Estudo interface · CONTROL · 15 s — render v1 · video/mp4VisualizarUsar no projeto"
+          },
+          {
+            "id": "689876b2-4fbd-4148-9063-56b4d40254b5",
+            "text": "Estudo interface · B · 15 s — render v1 · video/mp4VisualizarUsar no projeto"
+          },
+          {
+            "id": "6d2e6d09-315c-4944-801b-9dfb15cd0ed8",
+            "text": "Estudo interface · A · 15 s — render v1 · video/mp4VisualizarUsar no projeto"
+          },
+          {
+            "id": "55c8c866-2531-4a05-a6e3-09a2c2d14ac2",
+            "text": "interface-result · video/mp4VisualizarUsar no projeto"
+          },
+          {
+            "id": "b103665b-6507-4b60-ad63-0efe5ca40d2a",
+            "text": "interface-edit · video/mp4VisualizarUsar no projeto"
+          },
+          {
+            "id": "78221c57-92c0-4587-b061-e2044d6b0584",
+            "text": "interface-task · video/mp4VisualizarUsar no projeto"
+          },
+          {
+            "id": "aa21c460-e8b2-4849-857a-ddd72187e75f",
+            "text": "Estudo interface · CONTROL · 15 s — render v1 · video/mp4VisualizarUsar no projeto"
+          },
+          {
+            "id": "ee75b17c-7c3a-47d8-95fc-6117db374c09",
+            "text": "Estudo interface · B · 15 s — render v1 · video/mp4VisualizarUsar no projeto"
+          },
+          {
+            "id": "598d409f-5a63-4c43-ac1d-53ef2d0f136b",
+            "text": "Estudo interface · A · 15 s — render v1 · video/mp4VisualizarUsar no projeto"
+          },
+          {
+            "id": "e09d0683-b13f-4616-8851-a8770929803a",
+            "text": "interface-result · video/mp4VisualizarUsar no projeto"
+          },
+          {
+            "id": "225eae87-6b35-4971-9b6c-db8432e6922b",
+            "text": "interface-edit · video/mp4VisualizarUsar no projeto"
+          },
+          {
+            "id": "9b8bd38e-8942-45aa-8353-29dad417baf7",
+            "text": "interface-task · video/mp4VisualizarUsar no projeto"
+          },
+          {
+            "id": "e4157212-eca5-46f5-9794-8391fb737dab",
+            "text": "Estudo comparison · CONTROL · 15 s — render v1 · video/mp4VisualizarUsar no projeto"
+          },
+          {
+            "id": "4a63843b-3d93-4d0f-9a4c-b09b85a34ab8",
+            "text": "Estudo comparison · B · 15 s — render v1 · video/mp4VisualizarUsar no projeto"
+          },
+          {
+            "id": "9f39d1e6-0a04-473d-8102-9a0c125dd4e7",
+            "text": "Estudo comparison · A · 15 s — render v1 · video/mp4VisualizarUsar no projeto"
+          },
+          {
+            "id": "1d1568e9-d1a6-45b9-856e-4a55403b9cae",
+            "text": "Estudo organization · CONTROL · 15 s — render v1 · video/mp4VisualizarUsar no projeto"
+          },
+          {
+            "id": "527bd4ca-217d-4084-8c15-67c83efed530",
+            "text": "Estudo organization · B · 15 s — render v1 · video/mp4VisualizarUsar no projeto"
+          },
+          {
+            "id": "369c15ae-7f43-4078-ab77-4fc6ff264ec4",
+            "text": "Estudo organization · A · 15 s — render v1 · video/mp4VisualizarUsar no projeto"
+          },
+          {
+            "id": "603b48d4-13e0-4cbb-8284-c49a9ba46afc",
+            "text": "interface-result · video/mp4VisualizarUsar no projeto"
+          },
+          {
+            "id": "a81a0e88-f999-4c64-8fe4-aa1b1c6d8770",
+            "text": "interface-edit · video/mp4VisualizarUsar no projeto"
+          },
+          {
+            "id": "732e0c33-b2c0-4ce7-b573-2b24ce65c6bf",
+            "text": "interface-task · video/mp4VisualizarUsar no projeto"
+          },
+          {
+            "id": "9d814def-ba26-4171-8aba-62d24cece0f2",
+            "text": "interface-task · video/mp4VisualizarUsar no projeto"
+          },
+          {
+            "id": "86677c09-cb31-4301-b831-d5c1bc82be7d",
+            "text": "interface-task · video/mp4VisualizarUsar no projeto"
+          },
+          {
+            "id": "973d5947-338a-4482-8ef0-84ff85e2fa38",
+            "text": "capture-source · video/mp4VisualizarUsar no projeto"
+          },
+          {
+            "id": "1cfda9b6-1082-4d20-95c5-68bf022c508a",
+            "text": "Estudo comparison · CONTROL · 15 s — render v1 · video/mp4VisualizarUsar no projeto"
+          },
+          {
+            "id": "250336e3-294c-4909-a8d4-b2ea6c5c23e4",
+            "text": "Estudo comparison · B · 15 s — render v1 · video/mp4VisualizarUsar no projeto"
+          },
+          {
+            "id": "bb23c4e9-391b-4a8e-a018-64fa4d34f550",
+            "text": "Estudo comparison · A · 15 s — render v1 · video/mp4VisualizarUsar no projeto"
+          },
+          {
+            "id": "245bfd7a-0b19-4ce5-91fb-05830255d788",
+            "text": "Estudo organization · CONTROL · 15 s — render v1 · video/mp4VisualizarUsar no projeto"
+          },
+          {
+            "id": "6861773d-f03a-4e76-8752-af88471e95e3",
+            "text": "Estudo organization · B · 15 s — render v1 · video/mp4VisualizarUsar no projeto"
+          },
+          {
+            "id": "b7a221ca-c094-479c-90c1-25a5ca3f9782",
+            "text": "Estudo organization · A · 15 s — render v1 · video/mp4VisualizarUsar no projeto"
+          },
+          {
+            "id": "a9264483-2f2c-4abb-8843-93c8a43e4177",
+            "text": "graphic-events · audio/wavVisualizarUsar no projeto"
+          },
+          {
+            "id": "83be05f7-bc4c-4531-8962-5a7085f730cf",
+            "text": "manrope-latin-wght-normal · font/woff2Usar no projeto"
+          },
+          {
+            "id": "9a9047be-c5e9-4a6c-9b12-eec8426a4b31",
+            "text": "Dê forma à ideia — estudo de motion 15 s — render v1 · video/mp4VisualizarUsar no projeto"
+          },
+          {
+            "id": "cd2cf6af-8178-4814-8a9c-6e182057a1e0",
+            "text": "Dê forma à ideia — estudo de motion 15 s — render v1 · video/mp4VisualizarUsar no projeto"
+          },
+          {
+            "id": "8ce6aee8-f925-4eb5-89e5-ac60e7ba23f8",
+            "text": "Motion study — desenho sonoro original · audio/wavVisualizarUsar no projeto"
+          }
+        ],
+        "status": "ready",
+        "statuses": []
+      },
+      "directionDraft": "",
+      "directionMounted": true,
+      "directionVisible": true,
+      "inspectorFrame": "0",
+      "inspectorText": "Composição e movimento\n\nRevisão 2 · plano 2\n\nAtualizar inspeção\nFrame da composição\n\nPropriedades calculadas no frame 0. Valores locais ao nó; posição final e limites do texto dependem do render.\n\nCena\nstudy · [0, 450)\nCamada\nLayer · group · 728a08\nLayer · group · 07e34c\nLayer · group · 570188\nLayer · group · 3ca427\nLayer · shape · 440816\nsignature · text · 63616b\ntitle · text · 2ec080\nending · text · abff3b\ndisclosure · text · 0bf73c\ncapture · video · cc9f63\ncapture-result · video · 073ade\naction-label · text · 8d5d27\n\nTarget: ed2-c0b192b1157bfa33da728a08\nPai: raiz\nIntervalo: [0, 450)\nBase: x 0, y 0, 1080 × 1920, rotação 0°, opacidade 1\nPivô: 0.5, 0.5\n\nEfeitos espaciais\n\nDesfoque estático authored: 0 px.\nDesfoque no instante central do frame 0: 0 px · valor estático.\n\nSem sombra authored.\n\nTracks do target no frame 0\nPropriedade\tAvaliada\tKeyframes authored\n\nEsta camada não tem receita editável. Os tracks acima pertencem à composição atual.\n\nRenderizar esta revisão\n\nRender associado à revisão 2 · 1b856b62acb23b07d488c1c6f9582af75fa5cf074f49c465cdab0a40d6943925\n\nRenderer do MP4: remotion.contextual-v2 · versão 4.0.527-native.14.\n\nVersões, digests e materiais",
+      "localProbe": {
+        "alerts": [],
+        "capability": null,
+        "disabled": false,
+        "optionDisabled": true,
+        "selected": false,
+        "text": "Verificar gerador local"
+      },
+      "observedAt": "2026-10-05T22:13:47.765Z",
+      "overlays": 0,
+      "ready": true,
+      "resources": [
+        {
+          "durationMs": 415.199999988079,
+          "endMs": 2071.7999999821186,
+          "fetchStartMs": 1656.5999999940395,
+          "path": "/api/v1/bootstrap",
+          "query": "",
+          "requestStartMs": 1657.699999988079,
+          "responseStartMs": 2069.699999988079,
+          "startMs": 1656.5999999940395,
+          "status": 200
+        },
+        {
+          "durationMs": 46.39999997615814,
+          "endMs": 1704.899999976158,
+          "fetchStartMs": 1658.5,
+          "path": "/api/governance/session",
+          "query": "",
+          "requestStartMs": 1659.5999999940395,
+          "responseStartMs": 1704,
+          "startMs": 1658.5,
+          "status": 200
+        },
+        {
+          "durationMs": 444.09999999403954,
+          "endMs": 2108.7999999821186,
+          "fetchStartMs": 1664.699999988079,
+          "path": "/api/v1/bootstrap",
+          "query": "",
+          "requestStartMs": 2070.7999999821186,
+          "responseStartMs": 2107.699999988079,
+          "startMs": 1664.699999988079,
+          "status": 200
+        },
+        {
+          "durationMs": 54.19999998807907,
+          "endMs": 1719.399999976158,
+          "fetchStartMs": 1665.199999988079,
+          "path": "/api/governance/session",
+          "query": "",
+          "requestStartMs": 1704.699999988079,
+          "responseStartMs": 1718.399999976158,
+          "startMs": 1665.199999988079,
+          "status": 200
+        },
+        {
+          "durationMs": 466.39999997615814,
+          "endMs": 2132.899999976158,
+          "fetchStartMs": 1666.5,
+          "path": "/api/v1/bootstrap",
+          "query": "",
+          "requestStartMs": 2108.5999999940395,
+          "responseStartMs": 2132,
+          "startMs": 1666.5,
+          "status": 200
+        },
+        {
+          "durationMs": 588,
+          "endMs": 2254.899999976158,
+          "fetchStartMs": 1666.899999976158,
+          "path": "/api/v1/bootstrap",
+          "query": "",
+          "requestStartMs": 2132.699999988079,
+          "responseStartMs": 2253.899999976158,
+          "startMs": 1666.899999976158,
+          "status": 200
+        },
+        {
+          "durationMs": 4.399999976158142,
+          "endMs": 1723.399999976158,
+          "fetchStartMs": 1719,
+          "path": "/api/governance/workspace",
+          "query": "",
+          "requestStartMs": 1720.5,
+          "responseStartMs": 1722,
+          "startMs": 1719,
+          "status": 200
+        },
+        {
+          "durationMs": 3,
+          "endMs": 1725.0999999940395,
+          "fetchStartMs": 1722.0999999940395,
+          "path": "/api/governance/workspace",
+          "query": "",
+          "requestStartMs": 1723.199999988079,
+          "responseStartMs": 1724.199999988079,
+          "startMs": 1722.0999999940395,
+          "status": 200
+        },
+        {
+          "durationMs": 6.700000017881393,
+          "endMs": 1731.5,
+          "fetchStartMs": 1724.7999999821186,
+          "path": "/api/governance/users",
+          "query": "",
+          "requestStartMs": 1728.5999999940395,
+          "responseStartMs": 1730.5,
+          "startMs": 1724.7999999821186,
+          "status": 200
+        },
+        {
+          "durationMs": 11.900000005960464,
+          "endMs": 1737,
+          "fetchStartMs": 1725.0999999940395,
+          "path": "/api/governance/plans",
+          "query": "",
+          "requestStartMs": 1729.5999999940395,
+          "responseStartMs": 1736.0999999940395,
+          "startMs": 1725.0999999940395,
+          "status": 200
+        },
+        {
+          "durationMs": 15,
+          "endMs": 1740.399999976158,
+          "fetchStartMs": 1725.399999976158,
+          "path": "/api/governance/subscription",
+          "query": "",
+          "requestStartMs": 1733.399999976158,
+          "responseStartMs": 1739.5,
+          "startMs": 1725.399999976158,
+          "status": 200
+        },
+        {
+          "durationMs": 16.900000005960464,
+          "endMs": 1742.5999999940395,
+          "fetchStartMs": 1725.699999988079,
+          "path": "/api/governance/approvals",
+          "query": "",
+          "requestStartMs": 1734.199999988079,
+          "responseStartMs": 1741.7999999821186,
+          "startMs": 1725.699999988079,
+          "status": 200
+        },
+        {
+          "durationMs": 29.099999994039536,
+          "endMs": 1755.0999999940395,
+          "fetchStartMs": 1726,
+          "path": "/api/governance/audit-logs",
+          "query": "",
+          "requestStartMs": 1734.899999976158,
+          "responseStartMs": 1754.0999999940395,
+          "startMs": 1726,
+          "status": 200
+        },
+        {
+          "durationMs": 20.5,
+          "endMs": 1763.2999999821186,
+          "fetchStartMs": 1742.7999999821186,
+          "path": "/api/governance/users",
+          "query": "",
+          "requestStartMs": 1744.199999988079,
+          "responseStartMs": 1762.5,
+          "startMs": 1742.7999999821186,
+          "status": 200
+        },
+        {
+          "durationMs": 26.400000005960464,
+          "endMs": 1769.5999999940395,
+          "fetchStartMs": 1743.199999988079,
+          "path": "/api/governance/plans",
+          "query": "",
+          "requestStartMs": 1744.5999999940395,
+          "responseStartMs": 1768.7999999821186,
+          "startMs": 1743.199999988079,
+          "status": 200
+        },
+        {
+          "durationMs": 33.60000002384186,
+          "endMs": 1777,
+          "fetchStartMs": 1743.399999976158,
+          "path": "/api/governance/subscription",
+          "query": "",
+          "requestStartMs": 1744.7999999821186,
+          "responseStartMs": 1772.899999976158,
+          "startMs": 1743.399999976158,
+          "status": 200
+        },
+        {
+          "durationMs": 36.79999998211861,
+          "endMs": 1780.399999976158,
+          "fetchStartMs": 1743.5999999940395,
+          "path": "/api/governance/approvals",
+          "query": "",
+          "requestStartMs": 1746.0999999940395,
+          "responseStartMs": 1779.7999999821186,
+          "startMs": 1743.5999999940395,
+          "status": 200
+        },
+        {
+          "durationMs": 23.900000005960464,
+          "endMs": 1767.7999999821186,
+          "fetchStartMs": 1743.899999976158,
+          "path": "/api/governance/audit-logs",
+          "query": "",
+          "requestStartMs": 1754.899999976158,
+          "responseStartMs": 1767.199999988079,
+          "startMs": 1743.899999976158,
+          "status": 200
+        },
+        {
+          "durationMs": 2051.5,
+          "endMs": 4189.199999988079,
+          "fetchStartMs": 2137.699999988079,
+          "path": "/api/v1/assets/catalog",
+          "query": "?workspace_id=4812f2c0-1a2a-4f6d-967d-17b370c8d849",
+          "requestStartMs": 2138.7999999821186,
+          "responseStartMs": 4186.5,
+          "startMs": 2137.699999988079,
+          "status": 200
+        },
+        {
+          "durationMs": 312.40000000596046,
+          "endMs": 2452,
+          "fetchStartMs": 2139.5999999940395,
+          "path": "/api/v1/studios/v1/capabilities",
+          "query": "?workspace_id=4812f2c0-1a2a-4f6d-967d-17b370c8d849",
+          "requestStartMs": 2142.5,
+          "responseStartMs": 2451.0999999940395,
+          "startMs": 2139.5999999940395,
+          "status": 200
+        },
+        {
+          "durationMs": 176.09999999403954,
+          "endMs": 2316.199999988079,
+          "fetchStartMs": 2140.0999999940395,
+          "path": "/api/v1/campaigns",
+          "query": "?workspace_id=4812f2c0-1a2a-4f6d-967d-17b370c8d849",
+          "requestStartMs": 2148.399999976158,
+          "responseStartMs": 2315.0999999940395,
+          "startMs": 2140.0999999940395,
+          "status": 200
+        },
+        {
+          "durationMs": 162.2000000178814,
+          "endMs": 2302.5999999940395,
+          "fetchStartMs": 2140.399999976158,
+          "path": "/api/v1/posts",
+          "query": "?workspace_id=4812f2c0-1a2a-4f6d-967d-17b370c8d849",
+          "requestStartMs": 2151.5,
+          "responseStartMs": 2301.5,
+          "startMs": 2140.399999976158,
+          "status": 200
+        },
+        {
+          "durationMs": 395.59999999403954,
+          "endMs": 2536.199999988079,
+          "fetchStartMs": 2140.5999999940395,
+          "path": "/api/v1/creatives",
+          "query": "?workspace_id=4812f2c0-1a2a-4f6d-967d-17b370c8d849",
+          "requestStartMs": 2156.699999988079,
+          "responseStartMs": 2534.7999999821186,
+          "startMs": 2140.5999999940395,
+          "status": 200
+        },
+        {
+          "durationMs": 214.5,
+          "endMs": 2355.199999988079,
+          "fetchStartMs": 2140.699999988079,
+          "path": "/api/v1/posts/approval-events",
+          "query": "?workspace_id=4812f2c0-1a2a-4f6d-967d-17b370c8d849",
+          "requestStartMs": 2254.699999988079,
+          "responseStartMs": 2354.199999988079,
+          "startMs": 2140.699999988079,
+          "status": 200
+        },
+        {
+          "durationMs": 377.7000000178814,
+          "endMs": 2518.5999999940395,
+          "fetchStartMs": 2140.899999976158,
+          "path": "/api/v1/analytics/summary",
+          "query": "?workspace_id=4812f2c0-1a2a-4f6d-967d-17b370c8d849",
+          "requestStartMs": 2302.399999976158,
+          "responseStartMs": 2517.7999999821186,
+          "startMs": 2140.899999976158,
+          "status": 200
+        },
+        {
+          "durationMs": 361.2999999821186,
+          "endMs": 2502.399999976158,
+          "fetchStartMs": 2141.0999999940395,
+          "path": "/api/v1/radar/state",
+          "query": "?workspace_id=4812f2c0-1a2a-4f6d-967d-17b370c8d849",
+          "requestStartMs": 2316,
+          "responseStartMs": 2501.0999999940395,
+          "startMs": 2141.0999999940395,
+          "status": 200
+        },
+        {
+          "durationMs": 375.800000011921,
+          "endMs": 2517.0999999940395,
+          "fetchStartMs": 2141.2999999821186,
+          "path": "/api/v1/workspace-resources",
+          "query": "?workspace_id=4812f2c0-1a2a-4f6d-967d-17b370c8d849&kind=connected_account",
+          "requestStartMs": 2355,
+          "responseStartMs": 2515.899999976158,
+          "startMs": 2141.2999999821186,
+          "status": 200
+        },
+        {
+          "durationMs": 402.5,
+          "endMs": 2545,
+          "fetchStartMs": 2142.5,
+          "path": "/api/v1/workspace-resources",
+          "query": "?workspace_id=4812f2c0-1a2a-4f6d-967d-17b370c8d849&kind=presenter_session",
+          "requestStartMs": 2452.2999999821186,
+          "responseStartMs": 2543.899999976158,
+          "startMs": 2142.5,
+          "status": 200
+        },
+        {
+          "durationMs": 426.7000000178814,
+          "endMs": 2570,
+          "fetchStartMs": 2143.2999999821186,
+          "path": "/api/v1/workspace-resources",
+          "query": "?workspace_id=4812f2c0-1a2a-4f6d-967d-17b370c8d849&kind=factory_round",
+          "requestStartMs": 2501.7999999821186,
+          "responseStartMs": 2568.899999976158,
+          "startMs": 2143.2999999821186,
+          "status": 200
+        },
+        {
+          "durationMs": 4431.5999999940395,
+          "endMs": 6689.399999976158,
+          "fetchStartMs": 2257.7999999821186,
+          "path": "/api/v1/assets/catalog",
+          "query": "?workspace_id=4812f2c0-1a2a-4f6d-967d-17b370c8d849",
+          "requestStartMs": 4187.299999982119,
+          "responseStartMs": 6688.0999999940395,
+          "startMs": 2257.7999999821186,
+          "status": 200
+        },
+        {
+          "durationMs": 406.800000011921,
+          "endMs": 2665.5,
+          "fetchStartMs": 2258.699999988079,
+          "path": "/api/v1/studios/v1/capabilities",
+          "query": "?workspace_id=4812f2c0-1a2a-4f6d-967d-17b370c8d849",
+          "requestStartMs": 2544.7999999821186,
+          "responseStartMs": 2664.7999999821186,
+          "startMs": 2258.699999988079,
+          "status": 200
+        },
+        {
+          "durationMs": 327.59999999403954,
+          "endMs": 2586.699999988079,
+          "fetchStartMs": 2259.0999999940395,
+          "path": "/api/v1/campaigns",
+          "query": "?workspace_id=4812f2c0-1a2a-4f6d-967d-17b370c8d849",
+          "requestStartMs": 2518.7999999821186,
+          "responseStartMs": 2585.699999988079,
+          "startMs": 2259.0999999940395,
+          "status": 200
+        },
+        {
+          "durationMs": 344.19999998807907,
+          "endMs": 2603.7999999821186,
+          "fetchStartMs": 2259.5999999940395,
+          "path": "/api/v1/posts",
+          "query": "?workspace_id=4812f2c0-1a2a-4f6d-967d-17b370c8d849",
+          "requestStartMs": 2516.699999988079,
+          "responseStartMs": 2602.2999999821186,
+          "startMs": 2259.5999999940395,
+          "status": 200
+        },
+        {
+          "durationMs": 459.89999997615814,
+          "endMs": 2719.899999976158,
+          "fetchStartMs": 2260,
+          "path": "/api/v1/creatives",
+          "query": "?workspace_id=4812f2c0-1a2a-4f6d-967d-17b370c8d849",
+          "requestStartMs": 2603,
+          "responseStartMs": 2719.0999999940395,
+          "startMs": 2260,
+          "status": 200
+        },
+        {
+          "durationMs": 330.09999999403954,
+          "endMs": 2590.899999976158,
+          "fetchStartMs": 2260.7999999821186,
+          "path": "/api/v1/posts/approval-events",
+          "query": "?workspace_id=4812f2c0-1a2a-4f6d-967d-17b370c8d849",
+          "requestStartMs": 2535.5999999940395,
+          "responseStartMs": 2589.899999976158,
+          "startMs": 2260.7999999821186,
+          "status": 200
+        },
+        {
+          "durationMs": 464.40000000596046,
+          "endMs": 2725.7999999821186,
+          "fetchStartMs": 2261.399999976158,
+          "path": "/api/v1/analytics/summary",
+          "query": "?workspace_id=4812f2c0-1a2a-4f6d-967d-17b370c8d849",
+          "requestStartMs": 2590.699999988079,
+          "responseStartMs": 2724.899999976158,
+          "startMs": 2261.399999976158,
+          "status": 200
+        },
+        {
+          "durationMs": 389.699999988079,
+          "endMs": 2651.699999988079,
+          "fetchStartMs": 2262,
+          "path": "/api/v1/radar/state",
+          "query": "?workspace_id=4812f2c0-1a2a-4f6d-967d-17b370c8d849",
+          "requestStartMs": 2569.7999999821186,
+          "responseStartMs": 2650.5,
+          "startMs": 2262,
+          "status": 200
+        },
+        {
+          "durationMs": 373.09999999403954,
+          "endMs": 2635.399999976158,
+          "fetchStartMs": 2262.2999999821186,
+          "path": "/api/v1/workspace-resources",
+          "query": "?workspace_id=4812f2c0-1a2a-4f6d-967d-17b370c8d849&kind=connected_account",
+          "requestStartMs": 2586.5,
+          "responseStartMs": 2634.199999988079,
+          "startMs": 2262.2999999821186,
+          "status": 200
+        },
+        {
+          "durationMs": 453.40000000596046,
+          "endMs": 2715.7999999821186,
+          "fetchStartMs": 2262.399999976158,
+          "path": "/api/v1/workspace-resources",
+          "query": "?workspace_id=4812f2c0-1a2a-4f6d-967d-17b370c8d849&kind=presenter_session",
+          "requestStartMs": 2634.7999999821186,
+          "responseStartMs": 2714.7999999821186,
+          "startMs": 2262.399999976158,
+          "status": 200
+        },
+        {
+          "durationMs": 467.60000002384186,
+          "endMs": 2730.5,
+          "fetchStartMs": 2262.899999976158,
+          "path": "/api/v1/workspace-resources",
+          "query": "?workspace_id=4812f2c0-1a2a-4f6d-967d-17b370c8d849&kind=factory_round",
+          "requestStartMs": 2651.0999999940395,
+          "responseStartMs": 2729.699999988079,
+          "startMs": 2262.899999976158,
+          "status": 200
+        },
+        {
+          "durationMs": 79.69999998807907,
+          "endMs": 4462.199999988079,
+          "fetchStartMs": 4382.5,
+          "path": "/api/v1/studios/v1/documents",
+          "query": "?workspace_id=4812f2c0-1a2a-4f6d-967d-17b370c8d849&post_id=7b95a586-c571-403a-a930-5ac7cb11819a",
+          "requestStartMs": 4383.699999988079,
+          "responseStartMs": 4458.5999999940395,
+          "startMs": 4382.5,
+          "status": 200
+        },
+        {
+          "durationMs": 70.90000000596046,
+          "endMs": 4453.799999982119,
+          "fetchStartMs": 4382.899999976158,
+          "path": "/api/v1/studios/v1/media-ingests",
+          "query": "?workspace_id=4812f2c0-1a2a-4f6d-967d-17b370c8d849",
+          "requestStartMs": 4384.0999999940395,
+          "responseStartMs": 4448.799999982119,
+          "startMs": 4382.899999976158,
+          "status": 200
+        },
+        {
+          "durationMs": 112.90000000596046,
+          "endMs": 4496.5,
+          "fetchStartMs": 4383.5999999940395,
+          "path": "/api/v1/studios/v1/documents",
+          "query": "?workspace_id=4812f2c0-1a2a-4f6d-967d-17b370c8d849&post_id=7b95a586-c571-403a-a930-5ac7cb11819a",
+          "requestStartMs": 4459.399999976158,
+          "responseStartMs": 4495.699999988079,
+          "startMs": 4383.5999999940395,
+          "status": 200
+        },
+        {
+          "durationMs": 96.2000000178814,
+          "endMs": 4480.5,
+          "fetchStartMs": 4384.299999982119,
+          "path": "/api/v1/studios/v1/media-ingests",
+          "query": "?workspace_id=4812f2c0-1a2a-4f6d-967d-17b370c8d849",
+          "requestStartMs": 4449.5,
+          "responseStartMs": 4479,
+          "startMs": 4384.299999982119,
+          "status": 200
+        },
+        {
+          "durationMs": 42.5,
+          "endMs": 4543.799999982119,
+          "fetchStartMs": 4501.299999982119,
+          "path": "/api/v1/studios/v1/jobs",
+          "query": "?workspace_id=4812f2c0-1a2a-4f6d-967d-17b370c8d849&document_id=0ae12fe1-c3aa-4f42-a764-33d076ade8cd&job_type=video_render&limit=1",
+          "requestStartMs": 4502.5999999940395,
+          "responseStartMs": 4541.799999982119,
+          "startMs": 4501.299999982119,
+          "status": 200
+        },
+        {
+          "durationMs": 100.09999999403954,
+          "endMs": 4647.699999988079,
+          "fetchStartMs": 4547.5999999940395,
+          "path": "/api/v1/assets/83e06255-2a93-43db-b3d6-63c5b978642c/content",
+          "query": "",
+          "requestStartMs": 4548.399999976158,
+          "responseStartMs": 4548.5,
+          "startMs": 4547.5999999940395,
+          "status": 200
+        },
+        {
+          "durationMs": 58.80000001192093,
+          "endMs": 4697.0999999940395,
+          "fetchStartMs": 4638.299999982119,
+          "path": "/api/v1/assets/55c8c866-2531-4a05-a6e3-09a2c2d14ac2/content",
+          "query": "",
+          "requestStartMs": 4638.899999976158,
+          "responseStartMs": 4639,
+          "startMs": 4638.299999982119,
+          "status": 200
+        },
+        {
+          "durationMs": 5.799999982118607,
+          "endMs": 4644.799999982119,
+          "fetchStartMs": 4639,
+          "path": "/api/v1/assets/78221c57-92c0-4587-b061-e2044d6b0584/content",
+          "query": "",
+          "requestStartMs": 4639.5,
+          "responseStartMs": 4639.899999976158,
+          "startMs": 4639,
+          "status": 200
+        },
+        {
+          "durationMs": 23.5,
+          "endMs": 4663.199999988079,
+          "fetchStartMs": 4639.699999988079,
+          "path": "/api/v1/assets/b103665b-6507-4b60-ad63-0efe5ca40d2a/content",
+          "query": "",
+          "requestStartMs": 4640.399999976158,
+          "responseStartMs": 4641.0999999940395,
+          "startMs": 4639.699999988079,
+          "status": 200
+        },
+        {
+          "durationMs": 32.5,
+          "endMs": 4681.399999976158,
+          "fetchStartMs": 4648.899999976158,
+          "path": "/api/v1/studios/v1/documents/0ae12fe1-c3aa-4f42-a764-33d076ade8cd/editorial-readiness",
+          "query": "",
+          "requestStartMs": 4650,
+          "responseStartMs": 4680.399999976158,
+          "startMs": 4648.899999976158,
+          "status": 200
+        },
+        {
+          "durationMs": 324.40000000596046,
+          "endMs": 5023.299999982119,
+          "fetchStartMs": 4698.899999976158,
+          "path": "/api/v1/studios/v1/creative/casebook",
+          "query": "",
+          "requestStartMs": 4700.199999988079,
+          "responseStartMs": 5020.899999976158,
+          "startMs": 4698.899999976158,
+          "status": 200
+        },
+        {
+          "durationMs": 349.80000001192093,
+          "endMs": 5049,
+          "fetchStartMs": 4699.199999988079,
+          "path": "/api/v1/studios/v1/creative/assisted-intelligence",
+          "query": "",
+          "requestStartMs": 4700.5,
+          "responseStartMs": 5030.5,
+          "startMs": 4699.199999988079,
+          "status": 200
+        },
+        {
+          "durationMs": 244.60000002384183,
+          "endMs": 4944,
+          "fetchStartMs": 4699.399999976158,
+          "path": "/api/v1/studios/v1/creative/factory-program",
+          "query": "",
+          "requestStartMs": 4701,
+          "responseStartMs": 4940.799999982119,
+          "startMs": 4699.399999976158,
+          "status": 200
+        },
+        {
+          "durationMs": 336,
+          "endMs": 5035.5999999940395,
+          "fetchStartMs": 4699.5999999940395,
+          "path": "/api/v1/studios/v1/creative/replan-state",
+          "query": "",
+          "requestStartMs": 4701.5,
+          "responseStartMs": 5034.399999976158,
+          "startMs": 4699.5999999940395,
+          "status": 200
+        },
+        {
+          "durationMs": 261.59999999403954,
+          "endMs": 4961.399999976158,
+          "fetchStartMs": 4699.799999982119,
+          "path": "/api/v1/studios/v1/creative/advanced-capabilities",
+          "query": "",
+          "requestStartMs": 4703,
+          "responseStartMs": 4959.799999982119,
+          "startMs": 4699.799999982119,
+          "status": 200
+        },
+        {
+          "durationMs": 336.90000000596046,
+          "endMs": 5037,
+          "fetchStartMs": 4700.0999999940395,
+          "path": "/api/v1/studios/v1/creative/autonomy-audit",
+          "query": "",
+          "requestStartMs": 4941.5,
+          "responseStartMs": 5036.199999988079,
+          "startMs": 4700.0999999940395,
+          "status": 200
+        },
+        {
+          "durationMs": 274.30000001192093,
+          "endMs": 118899.59999999404,
+          "fetchStartMs": 118625.29999998212,
+          "path": "/api/v1/studios/v1/workspaces/4812f2c0-1a2a-4f6d-967d-17b370c8d849/render-engines",
+          "query": "",
+          "requestStartMs": 0,
+          "responseStartMs": 0,
+          "startMs": 118625.29999998212,
+          "status": 0
+        },
+        {
+          "durationMs": 271.80000001192093,
+          "endMs": 118899.59999999404,
+          "fetchStartMs": 118627.79999998212,
+          "path": "/api/v1/studios/v1/workspaces/4812f2c0-1a2a-4f6d-967d-17b370c8d849/engine-campaigns",
+          "query": "",
+          "requestStartMs": 0,
+          "responseStartMs": 0,
+          "startMs": 118627.79999998212,
+          "status": 0
+        },
+        {
+          "durationMs": 270.19999998807907,
+          "endMs": 118899.69999998808,
+          "fetchStartMs": 118629.5,
+          "path": "/api/v1/studios/v1/editing/ai",
+          "query": "",
+          "requestStartMs": 0,
+          "responseStartMs": 0,
+          "startMs": 118629.5,
+          "status": 0
+        },
+        {
+          "durationMs": 266.90000000596046,
+          "endMs": 118897.69999998808,
+          "fetchStartMs": 118630.79999998212,
+          "path": "/api/v1/studios/v1/workspaces/4812f2c0-1a2a-4f6d-967d-17b370c8d849/render-engines",
+          "query": "",
+          "requestStartMs": 0,
+          "responseStartMs": 0,
+          "startMs": 118630.79999998212,
+          "status": 0
+        },
+        {
+          "durationMs": 266.30000001192093,
+          "endMs": 118899.19999998808,
+          "fetchStartMs": 118632.89999997616,
+          "path": "/api/v1/studios/v1/editing/ai",
+          "query": "",
+          "requestStartMs": 0,
+          "responseStartMs": 0,
+          "startMs": 118632.89999997616,
+          "status": 0
+        },
+        {
+          "durationMs": 263.40000000596046,
+          "endMs": 118899.29999998212,
+          "fetchStartMs": 118635.89999997616,
+          "path": "/api/v1/studios/v1/transcripts",
+          "query": "?workspace_id=4812f2c0-1a2a-4f6d-967d-17b370c8d849",
+          "requestStartMs": 0,
+          "responseStartMs": 0,
+          "startMs": 118635.89999997616,
+          "status": 0
+        },
+        {
+          "durationMs": 262,
+          "endMs": 118899.39999997616,
+          "fetchStartMs": 118637.39999997616,
+          "path": "/api/v1/studios/v1/editing/repertoire",
+          "query": "?workspace_id=4812f2c0-1a2a-4f6d-967d-17b370c8d849",
+          "requestStartMs": 0,
+          "responseStartMs": 0,
+          "startMs": 118637.39999997616,
+          "status": 0
+        },
+        {
+          "durationMs": 261,
+          "endMs": 118899.5,
+          "fetchStartMs": 118638.5,
+          "path": "/api/v1/studios/v1/documents/0ae12fe1-c3aa-4f42-a764-33d076ade8cd/editing-plans/latest",
+          "query": "",
+          "requestStartMs": 0,
+          "responseStartMs": 0,
+          "startMs": 118638.5,
+          "status": 0
+        },
+        {
+          "durationMs": 534.5,
+          "endMs": 119182.29999998212,
+          "fetchStartMs": 118647.79999998212,
+          "path": "/api/v1/studios/v1/workspaces/4812f2c0-1a2a-4f6d-967d-17b370c8d849/render-engines",
+          "query": "",
+          "requestStartMs": 118908.59999999404,
+          "responseStartMs": 119181.5,
+          "startMs": 118647.79999998212,
+          "status": 200
+        },
+        {
+          "durationMs": 457.699999988079,
+          "endMs": 119106.89999997616,
+          "fetchStartMs": 118649.19999998808,
+          "path": "/api/v1/studios/v1/workspaces/4812f2c0-1a2a-4f6d-967d-17b370c8d849/engine-campaigns",
+          "query": "",
+          "requestStartMs": 118908.89999997616,
+          "responseStartMs": 119106.19999998808,
+          "startMs": 118649.19999998808,
+          "status": 200
+        },
+        {
+          "durationMs": 445,
+          "endMs": 119095.59999999404,
+          "fetchStartMs": 118650.59999999404,
+          "path": "/api/v1/studios/v1/editing/ai",
+          "query": "",
+          "requestStartMs": 118909,
+          "responseStartMs": 119094.79999998212,
+          "startMs": 118650.59999999404,
+          "status": 200
+        },
+        {
+          "durationMs": 574.2999999821186,
+          "endMs": 119226.29999998212,
+          "fetchStartMs": 118652,
+          "path": "/api/v1/studios/v1/workspaces/4812f2c0-1a2a-4f6d-967d-17b370c8d849/render-engines",
+          "query": "",
+          "requestStartMs": 119182.5,
+          "responseStartMs": 119225.5,
+          "startMs": 118652,
+          "status": 200
+        },
+        {
+          "durationMs": 1173.9000000059605,
+          "endMs": 119827,
+          "fetchStartMs": 118653.09999999404,
+          "path": "/api/v1/studios/v1/editing/ai",
+          "query": "",
+          "requestStartMs": 119095.79999998212,
+          "responseStartMs": 119124.29999998212,
+          "startMs": 118653.09999999404,
+          "status": 200
+        },
+        {
+          "durationMs": 455,
+          "endMs": 119109.29999998212,
+          "fetchStartMs": 118654.29999998212,
+          "path": "/api/v1/studios/v1/transcripts",
+          "query": "?workspace_id=4812f2c0-1a2a-4f6d-967d-17b370c8d849",
+          "requestStartMs": 118912.19999998808,
+          "responseStartMs": 119108.69999998808,
+          "startMs": 118654.29999998212,
+          "status": 200
+        },
+        {
+          "durationMs": 509.09999999403954,
+          "endMs": 119164.59999999404,
+          "fetchStartMs": 118655.5,
+          "path": "/api/v1/studios/v1/editing/repertoire",
+          "query": "?workspace_id=4812f2c0-1a2a-4f6d-967d-17b370c8d849",
+          "requestStartMs": 118912.39999997616,
+          "responseStartMs": 119161.39999997616,
+          "startMs": 118655.5,
+          "status": 200
+        },
+        {
+          "durationMs": 3710.2000000178814,
+          "endMs": 122366.5,
+          "fetchStartMs": 118656.29999998212,
+          "path": "/api/v1/studios/v1/documents/0ae12fe1-c3aa-4f42-a764-33d076ade8cd/editing-plans/latest",
+          "query": "",
+          "requestStartMs": 118909.09999999404,
+          "responseStartMs": 122322.89999997616,
+          "startMs": 118656.29999998212,
+          "status": 200
+        },
+        {
+          "durationMs": 3664.300000011921,
+          "endMs": 122587.19999998808,
+          "fetchStartMs": 118922.89999997616,
+          "path": "/api/v1/studios/v1/documents/0ae12fe1-c3aa-4f42-a764-33d076ade8cd/editor/inspection",
+          "query": "?frame=0&evaluationDetail=summary",
+          "requestStartMs": 119822.29999998212,
+          "responseStartMs": 122582.69999998808,
+          "startMs": 118922.89999997616,
+          "status": 200
+        },
+        {
+          "durationMs": 5347.5,
+          "endMs": 124288.19999998808,
+          "fetchStartMs": 118940.69999998808,
+          "path": "/api/v1/studios/v1/editing/resources",
+          "query": "?workspace_id=4812f2c0-1a2a-4f6d-967d-17b370c8d849&query=",
+          "requestStartMs": 119823,
+          "responseStartMs": 124284.89999997616,
+          "startMs": 118940.69999998808,
+          "status": 200
+        },
+        {
+          "durationMs": 5992.4000000059605,
+          "endMs": 125869.29999998212,
+          "fetchStartMs": 119876.89999997616,
+          "path": "/api/v1/studios/v1/workspaces/4812f2c0-1a2a-4f6d-967d-17b370c8d849/visual-quality",
+          "query": "",
+          "requestStartMs": 119878,
+          "responseStartMs": 125863.89999997616,
+          "startMs": 119876.89999997616,
+          "status": 200
+        }
+      ],
+      "reviewGateMounted": true,
+      "scope": "Public DOM and performance timings; no document edits",
+      "url": "http://127.0.0.1:3000/content/7b95a586-c571-403a-a930-5ac7cb11819a/edit?mode=video",
+      "video": {
+        "currentTime": 0,
+        "duration": 15,
+        "height": 1920,
+        "paused": true,
+        "readyState": 4,
+        "seeking": false,
+        "width": 1080
+      }
+    }
+  },
+  "error": null
+}

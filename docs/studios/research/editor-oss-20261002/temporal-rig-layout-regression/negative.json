@@ -1,0 +1,437 @@
+{
+  "scope": "actual_canonical_projection_font_Remotion_failure_before_output",
+  "notApiJobProof": true,
+  "outputPublished": false,
+  "humanReview": "pending",
+  "document": {
+    "schemaVersion": "studio.creative-document.v1",
+    "documentId": "native-test",
+    "workspaceId": "workspace",
+    "title": "Native test",
+    "contentType": "video",
+    "status": "draft",
+    "revision": 1,
+    "version": 1,
+    "actorId": null,
+    "correlationId": "test",
+    "campaignRef": null,
+    "postRef": null,
+    "opportunityRef": null,
+    "brandMemoryRef": {
+      "id": "brand",
+      "version": null,
+      "revision": 1
+    },
+    "brief": {
+      "schemaVersion": "studio.creative-brief.v1",
+      "objective": "Native proof",
+      "audience": "Reviewers",
+      "angle": "",
+      "promise": "",
+      "hook": "",
+      "cta": "",
+      "channel": "instagram",
+      "format": "post",
+      "tone": "",
+      "restrictions": [],
+      "hypotheses": [],
+      "evidence": []
+    },
+    "composition": {
+      "pages": [
+        {
+          "id": "page",
+          "role": "content",
+          "width": 320,
+          "height": 320,
+          "safeArea": 0,
+          "background": "#10181c",
+          "durationMs": 1000,
+          "layers": [
+            {
+              "id": "ed2-71e35aa88296f01a28320dfd",
+              "kind": "group",
+              "name": "Layer",
+              "x": 0.0,
+              "y": 0.0,
+              "width": 320.0,
+              "height": 320.0,
+              "rotation": 0.0,
+              "opacity": 1.0,
+              "visible": true,
+              "locked": false,
+              "zIndex": 1,
+              "properties": {
+                "editorialTiming": {
+                  "startFrame": 0,
+                  "durationFrames": 30,
+                  "fps": 30.0,
+                  "reveal": "none"
+                },
+                "editorialAuditFrames": []
+              }
+            },
+            {
+              "id": "ed2-71458a6a87beb6282676415f",
+              "kind": "group",
+              "name": "Layer",
+              "x": 0.0,
+              "y": 0.0,
+              "width": 320.0,
+              "height": 320.0,
+              "rotation": 0.0,
+              "opacity": 1.0,
+              "visible": true,
+              "locked": false,
+              "zIndex": 0,
+              "properties": {
+                "editorialRole": "background",
+                "editorialTiming": {
+                  "startFrame": 0,
+                  "durationFrames": 30,
+                  "fps": 30.0,
+                  "reveal": "none"
+                }
+              }
+            },
+            {
+              "id": "ed2-9244620fd8e5cecdf8791232",
+              "kind": "group",
+              "name": "Layer",
+              "x": 0.0,
+              "y": 0.0,
+              "width": 320.0,
+              "height": 320.0,
+              "rotation": 0.0,
+              "opacity": 1.0,
+              "visible": true,
+              "locked": false,
+              "zIndex": 1,
+              "properties": {
+                "editorialRole": "content",
+                "editorialTiming": {
+                  "startFrame": 0,
+                  "durationFrames": 30,
+                  "fps": 30.0,
+                  "reveal": "none"
+                }
+              }
+            },
+            {
+              "id": "ed2-931c01cc11886fe5194e8ac9",
+              "kind": "group",
+              "name": "Layer",
+              "x": 0.0,
+              "y": 0.0,
+              "width": 320.0,
+              "height": 320.0,
+              "rotation": 0.0,
+              "opacity": 1.0,
+              "visible": true,
+              "locked": false,
+              "zIndex": 2,
+              "properties": {
+                "editorialRole": "text",
+                "editorialTiming": {
+                  "startFrame": 0,
+                  "durationFrames": 30,
+                  "fps": 30.0,
+                  "reveal": "none"
+                }
+              }
+            },
+            {
+              "id": "ed2-ecda5251ec13adfcc27c9df5",
+              "kind": "shape",
+              "name": "Layer",
+              "x": 0.0,
+              "y": 0.0,
+              "width": 320.0,
+              "height": 320.0,
+              "rotation": 0.0,
+              "opacity": 1.0,
+              "visible": true,
+              "locked": false,
+              "zIndex": 0,
+              "properties": {
+                "fill": "#10181c",
+                "editorialTiming": {
+                  "startFrame": 0,
+                  "durationFrames": 30,
+                  "fps": 30.0,
+                  "reveal": "none"
+                }
+              }
+            },
+            {
+              "id": "ed2-7d4b81d3a7f71676bb8ab643",
+              "kind": "text",
+              "name": "hero",
+              "x": 22.400000000000006,
+              "y": 60.0,
+              "width": 275.2,
+              "height": 100.0,
+              "rotation": 0.0,
+              "opacity": 1.0,
+              "visible": true,
+              "locked": false,
+              "zIndex": 1,
+              "properties": {
+                "editorialSceneId": "action",
+                "editorialOperationIds": [],
+                "editorialTiming": {
+                  "startFrame": 0,
+                  "durationFrames": 30,
+                  "fps": 30.0,
+                  "reveal": "none",
+                  "revealFrames": 12
+                },
+                "fill": "#183343",
+                "color": "#ffffff",
+                "text": "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+                "fontSize": 17.066666666666666,
+                "editorialTextFit": true,
+                "editorialConnector": null,
+                "fontWeight": 400,
+                "letterSpacing": 0.0,
+                "lineHeight": 1.1,
+                "textAlign": "left",
+                "editorialTextSpans": [],
+                "editorialShadow": null,
+                "editorialEffects": [],
+                "editorialBlendMode": "normal",
+                "editorialBorder": {
+                  "width": 0.0,
+                  "color": "#ffffff"
+                },
+                "fontAssetId": "final-font",
+                "borderRadius": 16.0,
+                "shape": "rectangle",
+                "assetId": null,
+                "editorialContentIdentity": null,
+                "editorialContentReferenceId": null,
+                "editorialContentPartId": null,
+                "maskAssetId": null,
+                "objectFit": "contain",
+                "editorialRegionOfInterest": null,
+                "editorialCropIntentional": false,
+                "sourceStartSeconds": 0.0,
+                "playbackRate": 1.0,
+                "editorialVisualRole": "hero",
+                "editorialDepth": {
+                  "opacity": 1.0,
+                  "blurPx": 0.0,
+                  "parallax": 0.0
+                },
+                "recipeTextLayout": {
+                  "schemaVersion": "studio.typography-layout-policy.v1",
+                  "policy": "dom.units-fit.v1",
+                  "fitMode": "wrap_shrink",
+                  "minFontSizePx": 17.066666666666666,
+                  "maxMeasureSteps": 18,
+                  "maxLayoutUnits": 2000,
+                  "tolerancePx": 0.5,
+                  "fontQuantizationPx": 0.015625
+                },
+                "recipeTypography": {
+                  "version": 2,
+                  "segmentation": {
+                    "schemaVersion": "studio.typography-units.v1",
+                    "policy": "unicode17.regex2026.1.15.whitespace-v1",
+                    "unit": "word",
+                    "textChecksumSha256": "835ee28363d5a45ea0dfa147f77a91477e99c664c21cd403723517b7cf6548f4",
+                    "units": [
+                      {
+                        "text": "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+                        "animationIndex": 0
+                      }
+                    ],
+                    "animatedCount": 1
+                  },
+                  "startFrame": 0,
+                  "unit": "word",
+                  "staggerFrames": 0,
+                  "entranceFrames": 10,
+                  "readingHoldFrames": 20,
+                  "completeFrame": 10
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "narrative": {
+        "editorialV2": {
+          "planId": "plan",
+          "renderPolicy": "automatic_draft",
+          "operationBindings": [],
+          "motionRecipes": [
+            {
+              "sceneId": "action",
+              "schemaVersion": "studio.motion-recipe.v1",
+              "id": "entry",
+              "version": 1,
+              "technique": "integrated_type",
+              "targetIds": [
+                "hero"
+              ],
+              "startFrame": 0,
+              "endFrameExclusive": 30,
+              "intent": "Arrive and settle",
+              "continuityAnchor": "Same title",
+              "parameters": {
+                "tracks": [],
+                "pivot": [
+                  0.5,
+                  0.5
+                ],
+                "parentTargetId": null,
+                "maskAssetId": null,
+                "occluderTargetId": null,
+                "textUnit": "word",
+                "staggerFrames": 0,
+                "readingHoldFrames": 20,
+                "shutterDegrees": 180.0,
+                "temporalSamples": 8,
+                "focusDistance": 1000.0,
+                "depthOfField": 100.0,
+                "displacementRatio": 0.01
+              },
+              "soundEvents": [],
+              "verification": [
+                "Stable title at the end"
+              ]
+            }
+          ],
+          "motionRecipesDigest": "3d18c6c0a140d8be6fc70277994e279d5c0e585de2dc7074522e92f3d959e6a6",
+          "nativeRecipeOperations": [
+            {
+              "id": "entry",
+              "sceneId": "action",
+              "technique": "integrated_type",
+              "version": 1,
+              "compilerVersion": "res.native-recipes.v4",
+              "startFrame": 0,
+              "endFrameExclusive": 30,
+              "targetLayerIds": [
+                "ed2-7d4b81d3a7f71676bb8ab643"
+              ],
+              "parameters": {
+                "tracks": [],
+                "pivot": [
+                  0.5,
+                  0.5
+                ],
+                "parentTargetId": null,
+                "maskAssetId": null,
+                "occluderTargetId": null,
+                "textUnit": "word",
+                "staggerFrames": 0,
+                "readingHoldFrames": 20,
+                "shutterDegrees": 180.0,
+                "temporalSamples": 8,
+                "focusDistance": 1000.0,
+                "depthOfField": 100.0,
+                "displacementRatio": 0.01
+              },
+              "qualification": "implemented",
+              "knowledgeTechniqueId": "alight.integrated_type",
+              "evidenceClassification": "documentation_and_editorial_inference",
+              "typographyLayouts": {
+                "ed2-7d4b81d3a7f71676bb8ab643": {
+                  "schemaVersion": "studio.typography-layout-policy.v1",
+                  "policy": "dom.units-fit.v1",
+                  "fitMode": "wrap_shrink",
+                  "minFontSizePx": 17.066666666666666,
+                  "maxMeasureSteps": 18,
+                  "maxLayoutUnits": 2000,
+                  "tolerancePx": 0.5,
+                  "fontQuantizationPx": 0.015625
+                }
+              },
+              "typographyTargets": {
+                "ed2-7d4b81d3a7f71676bb8ab643": {
+                  "schemaVersion": "studio.typography-units.v1",
+                  "policy": "unicode17.regex2026.1.15.whitespace-v1",
+                  "unit": "word",
+                  "textChecksumSha256": "835ee28363d5a45ea0dfa147f77a91477e99c664c21cd403723517b7cf6548f4",
+                  "units": [
+                    {
+                      "text": "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+                      "animationIndex": 0
+                    }
+                  ],
+                  "animatedCount": 1
+                }
+              }
+            }
+          ],
+          "renderer": "remotion.contextual-v2",
+          "nativeComponentVersion": 1
+        }
+      },
+      "tracks": [],
+      "mediaTimeline": {
+        "schemaVersion": "studio.media-timeline.v1",
+        "frameRate": {
+          "numerator": 30,
+          "denominator": 1
+        },
+        "durationFrames": 30,
+        "tracks": []
+      }
+    },
+    "contentReferences": [],
+    "assets": [
+      {
+        "id": "final-font",
+        "version": null,
+        "mediaType": "font/ttf",
+        "checksum": "b3658eadae55e682b5f69eb64c439c1ecc8f196c0bb8d4756d145d13bc86476a",
+        "origin": "workspace",
+        "rightsStatus": "unknown",
+        "provenance": {}
+      }
+    ],
+    "identityRef": null,
+    "voiceRef": null,
+    "sceneRef": null,
+    "scriptRef": null,
+    "shotPlanRef": null,
+    "lineage": [],
+    "review": {
+      "status": "draft",
+      "requestedVersion": null,
+      "approvalId": null
+    },
+    "exports": [],
+    "createdAt": "2026-10-03T18:02:08.763344Z",
+    "updatedAt": "2026-10-03T18:02:08.763344Z"
+  },
+  "request": {
+    "schemaVersion": "studio.video-render-request.v1",
+    "workspaceId": "workspace",
+    "documentId": "native-test",
+    "documentRevision": 1,
+    "documentVersion": 1,
+    "pageIds": [
+      "page"
+    ],
+    "assetIds": [
+      "final-font"
+    ],
+    "output": {
+      "schemaVersion": "studio.video-render-spec.v1",
+      "format": "mp4",
+      "width": 320,
+      "height": 320,
+      "fps": 30.0,
+      "videoCodec": "h264",
+      "audioCodec": "none",
+      "quality": "standard"
+    },
+    "correlationId": "final-font-overflow"
+  },
+  "diagnostic": "remotion_render_failed:node:internal/modules/run_main:122\n    triggerUncaughtException(\n    ^\n\nSymbolicateableError: Error: hybrid_typography_does_not_fit_at_reading_floor:enlarge_box_or_shorten_text:target=ed2-7d4b81d3a7f71676bb8ab643:frame=1\n    at http://localhost:3001/bundle.js:298:28\n    at commitHookEffectListMount (http://localhost:3001/bundle.js:9818:24)\n    at commitLayoutEffectOnFiber (http://localhost:3001/bundle.js:10250:20)\n    at recursivelyTraverseLayoutEffects (http://localhost:3001/bundle.js:11139:7)\n    at commitLayoutEffectOnFiber (http://localhost:3001/bundle.js:10313:7)\n    at recursivelyTraverseLayoutEffects (http://localhost:3001/bundle.js:11139:7)\n    at commitLayoutEffectOnFiber (http://localhost:3001/bundle.js:10313:7)\n    at recursivelyTraverseLayoutEffects (http://localhost:3001/bundle.js:11139:7)\n    at commitLayoutEffectOnFiber (http://localhost:3001/bundle.js:10313:7)\n    at recursivelyTraverseLayoutEffects (http://localhost:3001/bundle.js:11139:7) {\n  stackFrame: [\n    {\n      columnNumber: 27,\n      fileName: 'http://localhost:3001/bundle.js',\n      functionName: '',\n      lineNumber: 297\n    },\n    {\n      columnNumber: 23,\n      fileName: 'http://localhost:3001/bundle.js',\n      functionName: 'commitHookEffectListMount',\n      lineNumber: 9817\n    },\n    {\n      columnNumber: 19,\n      fileName: 'http://localhost:3001/bundle.js',\n      functionName: 'commitLayoutEffectOnFiber',\n      lineNumber: 10249\n    },\n    {\n      columnNumber: 6,\n      fileName: 'http://localhost:3001/bundle.js',\n      functionName: 'recursivelyTraverseLayoutEffects',\n      lineNumber: 11138\n    },\n    {\n      columnNumber: 6,\n      fileName: 'http://localhost:3001/bundle.js',\n      functionName: 'commitLayoutEffectOnFiber',\n      lineNumber: 10312\n    },\n    {\n      columnNumber: 6,\n      fileName: 'http://localhost:3001/bundle.js',\n      functionName: 'recursivelyTraverseLayoutEffects',\n      lineNumber: 11138\n    },\n    {\n      columnNumber: 6,\n      fileName: 'http://localhost:3001/bundle.js',\n      functionName: 'commitLayoutEffectOnFiber',\n      lineNumber: 10312\n    },\n    {\n      columnNumber: 6,\n      fileName: 'http://localhost:3001/bundle.js',\n      functionName: 'r\n...\ncursivelyTraverseLayoutEffects',\n      lineNumber: 11138\n    },\n    {\n      columnNumber: 6,\n      fileName: 'http://localhost:3001/bundle.js',\n      functionName: 'commitLayoutEffectOnFiber',\n      lineNumber: 10248\n    },\n    {\n      columnNumber: 6,\n      fileName: 'http://localhost:3001/bundle.js',\n      functionName: 'recursivelyTraverseLayoutEffects',\n      lineNumber: 11138\n    },\n    {\n      columnNumber: 6,\n      fileName: 'http://localhost:3001/bundle.js',\n      functionName: 'commitLayoutEffectOnFiber',\n      lineNumber: 10284\n    },\n    {\n      columnNumber: 8,\n      fileName: 'http://localhost:3001/bundle.js',\n      functionName: 'flushLayoutEffects',\n      lineNumber: 12894\n    },\n    ... 5 more items\n  ],\n  delayRenderCall: null,\n  frame: 1,\n  chunk: null\n}\n\nNode.js v22.15.0\nfull_log:C:\\Users\\edugu\\Downloads\\res\\workers\\remotion-benchmark\\output\\diagnostics\\1b56373e6980d1115355faab074f133a06137d3fd29826668c3fc1a74e3c0ee2.log",
+  "reportedFrame": 1
+}

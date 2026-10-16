@@ -1,0 +1,32 @@
+{
+  "backend/app/schemas.py": {
+    "sha256": "f5174246ab1f9cfc1bc8f067e25767668e215e4154d6d55525e4d28c1f218fb0",
+    "bytes": 27739,
+    "backup": "backend--app--schemas.py.before"
+  },
+  "backend/app/routers/assets.py": {
+    "sha256": "8fe0af692380ff4afc87cf4662ab38e6e05058d7535207cc2909479686814cc9",
+    "bytes": 12471,
+    "backup": "backend--app--routers--assets.py.before"
+  },
+  "backend/app/services/studios/editing_resources.py": {
+    "sha256": "2067dd78cc0ff17b28c9f0e32487e796dce786346dbb5f049a43b20a47a5243a",
+    "bytes": 22904,
+    "backup": "backend--app--services--studios--editing_resources.py.before"
+  },
+  "backend/app/services/studios/visual_quality_program.py": {
+    "sha256": "680ef5e4abe22b06789c101c2ba6296a4c00bf5420a660802f157f3e5b5c7c1b",
+    "bytes": 18469,
+    "backup": "backend--app--services--studios--visual_quality_program.py.before"
+  },
+  "backend/app/services/studios/engine_qualification.py": {
+    "sha256": "4f162854e3c1f8f239bb02a283f29212cb258d7ac91c9e0c07973d8993f10c75",
+    "bytes": 30107,
+    "backup": "backend--app--services--studios--engine_qualification.py.before"
+  },
+  "src/api/productApi.ts": {
+    "sha256": "224e965723191dcbd6324c1c6e27be391c6505aa1d4ddd604f9bcabdb89495bf",
+    "bytes": 45285,
+    "backup": "src--api--productApi.ts.before"
+  }
+}

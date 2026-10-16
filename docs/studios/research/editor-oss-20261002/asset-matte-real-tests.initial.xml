@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="7.813" timestamp="2026-10-02T20:53:47.633425-03:00" hostname="Computador"><testcase classname="tests.test_asset_matte_render" name="test_asset_matte_real_api_job_and_intermediate_alpha_pixels[alpha-False]" time="6.425"><failure message="AssertionError: {&quot;detail&quot;:{&quot;code&quot;:&quot;1 validation error for ResourceMetadataV1\nkind\n  Input should be 'font', 'logo', 'image', 'video', 'wardrobe', 'sound_effect' or 'music' [type=literal_error, input_value='mask', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.11/v/literal_error&quot;}}&#10;assert 422 == 200&#10; +  where 422 = &lt;Response [422 Unprocessable Entity]&gt;.status_code">client = &lt;starlette.testclient.TestClient object at 0x0000018CA4028A10&gt;
+project = {'asset': '4bc37299-bafa-45db-b173-1c17d48d534d', 'document': 'ba7cc730-9f06-4060-aa45-d90ba1959c7e', 'token': 'eyJhbG...dHlwZSI6ImFjY2VzcyJ9.vsYEGmX8vkkCXc-xPybTudUPqMI1AjJZmVELuDpuTvA', 'workspace': '20fcd5dd-8863-4b8e-9fd9-202f096608ec'}
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x0000018CA65DF7D0&gt;
+tmp_path = WindowsPath('C:/Users/edugu/AppData/Local/Temp/pytest-of-edugu/pytest-110/test_asset_matte_real_api_job_0')
+mode = 'alpha', invert = False
+
+    @pytest.mark.parametrize("mode,invert", [("alpha", False), ("alpha", True), ("luminance", False), ("luminance", True)])
+    def test_asset_matte_real_api_job_and_intermediate_alpha_pixels(client, project, monkeypatch, tmp_path, mode, invert):
+        mask = Image.new("RGBA", (128, 128), (0, 0, 0, 0))
+        draw = ImageDraw.Draw(mask)
+        draw.polygon([(0, 0), (63, 0), (0, 63)], fill=(255, 255, 255, 255))
+        draw.ellipse((13, 13, 27, 27), fill=(255, 255, 255, 0))
+        draw.rectangle((64, 0, 127, 63), fill=(0, 0, 0, 255))
+        draw.rectangle((0, 64, 63, 127), fill=(128, 128, 128, 128))
+        image = tmp_path / "original-matte.png"
+        mask.save(image)
+        with SessionLocal() as db:
+            record = db.get(CreativeDocument, project["document"])
+            doc = record_to_contract(record)
+            doc.composition.media_timeline.tracks = []
+            persist_contract(record, doc)
+            db.commit()
+        headers = {"Authorization": "Bearer " + project["token"]}
+        with image.open("rb") as file:
+            uploaded = client.post("/api/v1/studios/v1/editing/resources/upload", headers=headers,
+                data={"workspace_id": project["workspace"], "title": "Original arbitrary matte fixture",
+                      "metadata": json.dumps({"kind": "mask", "usageEvidence": "Original synthetic fixture authored by test"})},
+                files={"file": (image.name, file, "image/png")})
+&gt;       assert uploaded.status_code == 200, uploaded.text
+E       AssertionError: {"detail":{"code":"1 validation error for ResourceMetadataV1\nkind\n  Input should be 'font', 'logo', 'image', 'video', 'wardrobe', 'sound_effect' or 'music' [type=literal_error, input_value='mask', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.11/v/literal_error"}}
+E       assert 422 == 200
+E        +  where 422 = &lt;Response [422 Unprocessable Entity]&gt;.status_code
+
+tests\test_asset_matte_render.py:50: AssertionError</failure></testcase></testsuite></testsuites>

@@ -1,0 +1,68 @@
+{
+  "observedAt": "2026-10-05T20:24:14.900802+00:00",
+  "scope": "Read-only three real latest-plan projections and direct API responses; no generation",
+  "workspacePlanEvents": 95,
+  "workspacePayloadCharacters": 186948201,
+  "eventMetadataDigestBefore": "617b3b7243cd4a4b720439c0beaddd2de38560206dea2dc8a5ea16b52d7217bc",
+  "eventMetadataDigestAfter": "617b3b7243cd4a4b720439c0beaddd2de38560206dea2dc8a5ea16b52d7217bc",
+  "eventMetadataUnchanged": true,
+  "samples": [
+    {
+      "study": "organization-a",
+      "documentId": "79f5a459-8278-4331-af17-60f41e042480",
+      "selectedEventId": "9514d32e-0fa7-4594-9bf0-27eac62e5f51",
+      "planId": "b12c7232-6849-4d8c-a52e-7220c1ed316c",
+      "planRevision": 2,
+      "hydratedEventIds": [
+        "9514d32e-0fa7-4594-9bf0-27eac62e5f51"
+      ],
+      "matchesPersistedOrderReference": true,
+      "canonicalPlanDigest": "974d232e54454dd0f5bdb729906a84d5e63f0ed1f14ec418dabfde4fbc94dd0e",
+      "computeMs": 1698.215500015067,
+      "httpMs": 2758.921000000555,
+      "httpStatus": 200,
+      "responseBytes": 9176858,
+      "selectedPayloadCharacters": 10139234
+    },
+    {
+      "study": "comparison-a",
+      "documentId": "377a8aa0-598c-44ca-aa71-a675133b5df6",
+      "selectedEventId": "3dc35421-db5c-4f02-bba3-960a4b24494b",
+      "planId": "62a4720d-6fbd-49c6-8785-35602a2c6159",
+      "planRevision": 2,
+      "hydratedEventIds": [
+        "3dc35421-db5c-4f02-bba3-960a4b24494b"
+      ],
+      "matchesPersistedOrderReference": true,
+      "canonicalPlanDigest": "64365aa469a0ccf0896c5450a8bf62bbb81058bfefdae9a9e4d323e2bba438ae",
+      "computeMs": 1236.8026000040118,
+      "httpMs": 2066.9574000057764,
+      "httpStatus": 200,
+      "responseBytes": 9452502,
+      "selectedPayloadCharacters": 10433438
+    },
+    {
+      "study": "interface-a",
+      "documentId": "0ae12fe1-c3aa-4f42-a764-33d076ade8cd",
+      "selectedEventId": "1230eb39-7e78-40fa-96a5-0782fb78bbad",
+      "planId": "364e858f-4334-4cb7-b384-38ef0207547a",
+      "planRevision": 2,
+      "hydratedEventIds": [
+        "1230eb39-7e78-40fa-96a5-0782fb78bbad"
+      ],
+      "matchesPersistedOrderReference": true,
+      "canonicalPlanDigest": "70dada594b7136d272b31aa730715d9d2403fdc9c10a4d4a34856ca05d551758",
+      "computeMs": 625.6401999853551,
+      "httpMs": 1254.871799988905,
+      "httpStatus": 200,
+      "responseBytes": 7247520,
+      "selectedPayloadCharacters": 7979589
+    }
+  ],
+  "limits": [
+    "No old full-workspace timing: memory cost avoided, no before/after speedup claimed",
+    "Reference streams SQL scalar document IDs, then validates only the selected full event",
+    "One sample per study, not p95 or browser concurrency benchmark",
+    "get_plan and full inspector response are unchanged; inspector latency not resolved"
+  ]
+}

@@ -141,9 +141,7 @@ def migrate_motion_budget_envelope(state):
     previous_policy = envelope.get("policy")
     if previous_policy == "res.motion-pilot.v5":
         expected = (
-            _V5_TWO_DOLLAR_MOTION_ALLOCATIONS
-            if float(envelope.get("limitUsd") or 0) >= 2
-            else _MOTION_ONLY_ALLOCATIONS
+            _V5_TWO_DOLLAR_MOTION_ALLOCATIONS if float(envelope.get("limitUsd") or 0) >= 2 else _MOTION_ONLY_ALLOCATIONS
         )
     elif previous_policy == "res.motion-pilot.v6":
         expected = (
@@ -160,11 +158,7 @@ def migrate_motion_budget_envelope(state):
         return False
     comparable = {key: allocations.get(key) for key in expected}
     extra_keys = set(allocations) - set(expected) - {"allowReserveSpillover"}
-    if (
-        generated_policy.get("mode") != "disabled"
-        or comparable != expected
-        or extra_keys
-    ):
+    if generated_policy.get("mode") != "disabled" or comparable != expected or extra_keys:
         return False
 
     previous = dict(allocations)
@@ -220,11 +214,18 @@ def save(db, record, user, state):
     return state
 
 
+def require_production_engine(db, record, request, user):
+    if request.render_engine == "alight_motion":
+        raise ValueError("editor_replaced_by_effectcraft")
+
+
 def create_run(db, record, request: ProductionRequestV1, user, key):
     from ...providers.studios.material_providers import provider_manifest
     from .hybrid_video import hybrid_capability_manifest
 
     settings = get_settings()
+    # Check the selected motor before planning/acquisition can spend money.
+    require_production_engine(db, record, request, user)
     if request.quality_phase_id and (
         not settings.studio_visual_quality_indicator_enabled or settings.environment == "production"
     ):
@@ -236,13 +237,11 @@ def create_run(db, record, request: ProductionRequestV1, user, key):
         readiness = material_readiness(payload)
         if readiness["blockers"]:
             raise ValueError("visual_quality_materials_pending:" + ",".join(readiness["blockers"]))
-        pages = ((payload.get("composition") or {}).get("pages") or [])
+        pages = (payload.get("composition") or {}).get("pages") or []
         if not pages or any(page.get("width", 0) * 16 != page.get("height", 0) * 9 for page in pages):
             raise ValueError("visual_quality_vertical_canvas_required")
         if not request.native_scene_editing:
             raise ValueError("visual_quality_native_editing_required")
-    if request.native_scene_editing and not settings.remotion_native_enabled:
-        raise ValueError("remotion_native_experiment_disabled")
     lock_editing_budget(db, record.workspace_id)
     run_id = str(uuid5(NAMESPACE_URL, f"res:production:{record.workspace_id}:{key}"))
     try:
@@ -274,14 +273,13 @@ def create_run(db, record, request: ProductionRequestV1, user, key):
         hybrid_policy.mode == "auto"
         and hybrid_policy.allow_remote_api
         and hybrid_policy.maximum_api_spend_usd > 0
-        and any(
-            profile_id.startswith(("veo-", "sora-"))
-            for profile_id in hybrid_policy.allowed_profile_ids
-        )
+        and any(profile_id.startswith(("veo-", "sora-")) for profile_id in hybrid_policy.allowed_profile_ids)
     )
-    paid_video = request.generated_video_policy == "single_short_clip" or (
-        generated_video.mode == "auto" and "sora-2" in generated_video.allowed_profile_ids
-    ) or hybrid_remote_video
+    paid_video = (
+        request.generated_video_policy == "single_short_clip"
+        or (generated_video.mode == "auto" and "sora-2" in generated_video.allowed_profile_ids)
+        or hybrid_remote_video
+    )
     allocations = (
         {
             "planning": 0.40,
@@ -298,9 +296,7 @@ def create_run(db, record, request: ProductionRequestV1, user, key):
         # generation-level one-dollar ceiling still had ample room. Keep the
         # hard total and reserve a realistic share for fail-closed planning.
         else motion_only_allocations(
-            settings.studio_production_test_budget_usd
-            if settings.environment != "production"
-            else None
+            settings.studio_production_test_budget_usd if settings.environment != "production" else None
         )
     )
     return save(
@@ -390,9 +386,7 @@ def advance_run(db, record, run_id, user, *, cancel=False):
     if (state.get("budgetEnvelope") or {}).get("policy") == MOTION_PILOT_BUDGET_POLICY:
         from .production_repair import recover_budget_rejected_correction
 
-        recovered = recover_budget_rejected_correction(
-            db, state, record.workspace_id, user.id
-        )
+        recovered = recover_budget_rejected_correction(db, state, record.workspace_id, user.id)
         if recovered:
             state = save(db, record, user, state)
             return dispatch(db, record, user, state, recovered)
@@ -429,13 +423,17 @@ def advance_run(db, record, run_id, user, *, cancel=False):
         state.update(status="blocked", blockers=["studio_document_conflict"])
         return save(db, record, user, state)
     request = ProductionRequestV1.model_validate(state["request"])
+    try:
+        require_production_engine(db, record, request, user)
+    except ValueError as error:
+        state.update(status="blocked", blockers=[str(error)])
+        return save(db, record, user, state)
     if state.get("artifacts", {}).get("plan") and state["stage"] not in {"direction", "animatic"}:
         from .contextual_editing import get_plan
 
         current_plan = get_plan(db, record.workspace_id, state["artifacts"]["plan"]["id"])
         unresolved_mandatory = any(
-            item.get("required") and item.get("status") != "resolved"
-            for item in current_plan.material_requests
+            item.get("required") and item.get("status") != "resolved" for item in current_plan.material_requests
         )
         if unresolved_mandatory:
             state["jobs"] = {
@@ -513,9 +511,7 @@ def advance_run(db, record, run_id, user, *, cancel=False):
                     ):
                         additional_diagnostic = prior.error_message
                         break
-            if prepare_response_correction(
-                state, job, additional_diagnostic=additional_diagnostic
-            ):
+            if prepare_response_correction(state, job, additional_diagnostic=additional_diagnostic):
                 return save(db, record, user, state)
             payload = job.result_payload or {}
             uncertain = (
@@ -572,9 +568,11 @@ def advance_run(db, record, run_id, user, *, cancel=False):
                         for item in state["productionGates"].get("sceneStages", [])
                     ]
 
-                if not isinstance(state["visualAudit"], dict) or state["visualAudit"].get(
-                    "status"
-                ) == "unavailable" or not state["visualAudit"].get("renderChecksum"):
+                if (
+                    not isinstance(state["visualAudit"], dict)
+                    or state["visualAudit"].get("status") == "unavailable"
+                    or not state["visualAudit"].get("renderChecksum")
+                ):
                     state.update(
                         status="awaiting_review",
                         blockers=["production_visual_audit_unavailable"],
@@ -770,9 +768,7 @@ def advance_run(db, record, run_id, user, *, cancel=False):
         settings = get_settings()
         adapter, _ = selected_adapter(settings, "plan")
         model_binding = (
-            settings.studio_gemini_planning_model
-            if adapter == "gemini"
-            else settings.studio_editing_ai_model
+            settings.studio_gemini_planning_model if adapter == "gemini" else settings.studio_editing_ai_model
         )
         correction = state.get("responseCorrection", {})
         if correction.get("stage") == stage:
@@ -861,16 +857,14 @@ def dispatch(db, record, user, state, job):
 
 def render_run(db, record, state, user):
     from ...domain.studios.contextual_editing import EditingApplyRequestV1
-    from ...domain.studios.contracts import CreateVideoRenderJobRequest
-    from ...providers.studios.video_render import VIDEO_RENDER_PROVIDERS
     from .contextual_editing import apply_plan, get_plan
-    from .video_render import create_video_render_job
 
     try:
         plan = get_plan(db, record.workspace_id, state["artifacts"]["plan"]["id"])
         if plan.document_id != record.id:
             raise ValueError("production_plan_document_conflict")
         request = ProductionRequestV1.model_validate(state["request"])
+        require_production_engine(db, record, request, user)
         if request.cinematic_direction_policy == "editorial_motion_v2":
             from ...domain.studios.contextual_editing_v2 import ContextualPlanRecompileRequestV1
             from .contextual_editing_v2 import (
@@ -922,8 +916,7 @@ def render_run(db, record, state, user):
             and plan.blockers
             and unresolved_optional_targets
             and all(
-                blocker.code == "verified_material_required"
-                and blocker.target_id in unresolved_optional_targets
+                blocker.code == "verified_material_required" and blocker.target_id in unresolved_optional_targets
                 for blocker in plan.blockers
             )
         ):
@@ -943,8 +936,7 @@ def render_run(db, record, state, user):
                 "plan": plan.model_dump(mode="json", by_alias=True),
             }
         unresolved_mandatory = any(
-            item.get("required") and item.get("status") != "resolved"
-            for item in plan.material_requests
+            item.get("required") and item.get("status") != "resolved" for item in plan.material_requests
         )
         if unresolved_mandatory or plan.status not in {"ready", "applied"}:
             from .production_materials import advance_materials
@@ -959,8 +951,7 @@ def render_run(db, record, state, user):
         from .production_audit import prepare_visual_correction
 
         executable_direction = ContextualPlanRequestV2.model_validate(
-            plan.manifest.get("executableDirection")
-            or plan.direction.model_dump(mode="json", by_alias=True)
+            plan.manifest.get("executableDirection") or plan.direction.model_dump(mode="json", by_alias=True)
         )
         request = ProductionRequestV1.model_validate(state["request"])
         if request.cinematic_direction_policy == "mixed_motion_v1":
@@ -992,8 +983,7 @@ def render_run(db, record, state, user):
                             if element.id not in delivery_path_ids:
                                 continue
                             element.purpose = (
-                                "Mostrar o caminho de entrega interrompido antes de qualquer "
-                                "confirmação de interação"
+                                "Mostrar o caminho de entrega interrompido antes de qualquer confirmação de interação"
                             )
                             repaired.append({"sceneId": scene.id, "elementId": element.id})
                     revised_direction.expected_document_revision = record.revision
@@ -1032,39 +1022,45 @@ def render_run(db, record, state, user):
         )
         if prepare_visual_correction(state, geometric_audit):
             return save(db, record, user, state)
-        from ...config import get_settings
+        from ...domain.studios.craft import CraftMigrationRequestV1, CraftRenderRequestV1
+        from .craft import create_render_job, migrate
 
-        native_renderer = (plan.draft_document.composition.narrative.get("editorialV2") or {}).get("renderer")
-        renderer_id = native_renderer or get_settings().studio_editorial_motion_provider
-        if request.native_scene_editing and renderer_id != "remotion.contextual-v2":
-            raise ValueError("production_native_components_missing")
-        if renderer_id not in VIDEO_RENDER_PROVIDERS:
-            raise ValueError("video_render_provider_unavailable")
         document = apply_plan(db, record, plan.id, EditingApplyRequestV1(expected_plan_revision=plan.revision), user)
+        if not document.native_editor_state:
+            engine = (
+                "effectcraft"
+                if any(page.layers for page in document.composition.pages) or getattr(plan, "motion_graph", None)
+                else "filmcraft"
+            )
+            converted = migrate(
+                db,
+                record,
+                CraftMigrationRequestV1(engine=engine, expected_revision=record.revision),
+                user,
+                f"production-native:{state['id']}:{state['stage']}:{plan.id}",
+            )
+            # A planner must never approve a partial conversion on behalf of the customer.
+            if converted.get("migrationWarnings"):
+                state.update(
+                    status="blocked",
+                    blockers=["production_native_conversion_requires_review"],
+                    migrationWarnings=converted["migrationWarnings"],
+                    documentRevision=record.revision,
+                )
+                return save(db, record, user, state)
         state["documentRevision"] = record.revision
         state["sourceChecksums"] = {a.id: a.checksum for a in document.assets}
         state = save(db, record, user, state)
-        page = document.composition.pages[0]
-        rate = document.composition.media_timeline.frame_rate
-        job, _ = create_video_render_job(
+        job, _ = create_render_job(
             db,
             record,
-            CreateVideoRenderJobRequest(
-                workspace_id=record.workspace_id,
-                document_id=record.id,
-                expected_document_revision=record.revision,
-                expected_document_version=record.version,
-                contextual_plan_id=plan.id,
-                provider=renderer_id,
-                output={
-                    "width": page.width,
-                    "height": page.height,
-                    "fps": rate.numerator / rate.denominator,
-                    "quality": "draft" if state["stage"] == "animatic" else "standard",
-                },
+            CraftRenderRequestV1(
+                expected_revision=record.revision,
+                format="mp4",
+                quality="draft" if state["stage"] == "animatic" else "standard",
             ),
-            f"production:{state['id']}:{state['stage']}:{plan.id}",
             user,
+            f"production:{state['id']}:{state['stage']}:{plan.id}",
         )
     except ValueError as error:
         state.update(status="blocked", blockers=[str(error)])

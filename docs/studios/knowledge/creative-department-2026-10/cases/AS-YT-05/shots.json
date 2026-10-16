@@ -1,0 +1,33 @@
+{
+  "schemaVersion": "clicko.research-modality-map.v1",
+  "caseId": "AS-YT-05",
+  "source": "https://www.youtube.com/watch?v=rFsfyjJTlc0",
+  "coverage": {
+    "text": "located-excerpts",
+    "visual": "not-reviewed",
+    "audio": "not-reviewed",
+    "completeAudiovisual": false
+  },
+  "editorialCuts": [],
+  "visualChangeCandidates": [],
+  "locatedTextUnits": [
+    {
+      "locator": "4:34–6:35",
+      "kind": "teaching"
+    },
+    {
+      "locator": "7:51–12:10",
+      "kind": "observation"
+    },
+    {
+      "locator": "4:34–6:35",
+      "kind": "interpretation"
+    },
+    {
+      "locator": "direção visual",
+      "kind": "clicko_hypothesis"
+    }
+  ],
+  "reviewGap": "Cuts, timing and audio not fully annotated; text locators are not cut boundaries",
+  "distributedMedia": false
+}

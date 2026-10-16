@@ -88,18 +88,18 @@ from ..domain.studios.creative_autonomy import (
     evaluate_preproduction_gate,
 )
 from ..domain.studios.creative_replan import CreativeReplanStateV1
-from ..domain.studios.hybrid_video import (
-    HybridCapabilityManifestV1,
-    HybridSelectionEnvelopeV1,
-    HybridSelectionResultV1,
-    select_hybrid_profile,
-)
 from ..domain.studios.editorial_review import (
     EditorialPlanRequestV1,
     EditorialPlanV1,
     EditorialReadinessV1,
     EditorialReviewRequestV1,
     EditorialReviewV1,
+)
+from ..domain.studios.hybrid_video import (
+    HybridCapabilityManifestV1,
+    HybridSelectionEnvelopeV1,
+    HybridSelectionResultV1,
+    select_hybrid_profile,
 )
 from ..domain.studios.motion import (
     CreateMotionGraphRequestV1,
@@ -2018,9 +2018,10 @@ def create_editorial_review(
 
 @router.get("/editing/capabilities")
 def editing_capabilities(user: User = Depends(get_current_user)):
-    from ..providers.studios.video_render import VIDEO_RENDER_PROVIDERS
+    from ..providers.studios.craft import ENGINES, engine_capability
 
-    return VIDEO_RENDER_PROVIDERS["builtin.ffmpeg-contextual-v1"].capabilities()
+    return {"schemaVersion": "studio.craft-engines.v1",
+            "engines": [engine_capability(engine) for engine in ENGINES]}
 
 
 @router.get("/editing/hybrid-capabilities", response_model=HybridCapabilityManifestV1)
@@ -2099,6 +2100,8 @@ def create_editing_plan(
     user: User = Depends(get_current_user),
 ):
     document = owned_document(db, user.id, document_id)
+    if isinstance(request, ContextualPlanRequestV2) and request.render_engine == "alight_motion":
+        raise HTTPException(status_code=410, detail={"code": "editor_replaced_by_effectcraft"})
     try:
         db.execute(select(Workspace).where(Workspace.id == document.workspace_id).with_for_update()).scalar_one()
         return (
@@ -2533,3 +2536,6 @@ def retry_studio_job(
         db.commit()
         db.refresh(job)
     return job_out(job)
+
+
+# Native Craft capabilities replace the retired editor experiment routes.

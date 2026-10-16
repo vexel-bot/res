@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="4" skipped="0" tests="4" time="62.400" timestamp="2026-10-03T14:18:16.994920-03:00" hostname="Computador"><testcase classname="tests.test_temporal_rig_render" name="test_temporal_rig_actual_api_affine_pixels[control]" time="16.526"><failure message="AssertionError: remotion_render_failed:node:internal/modules/run_main:122&#10;      triggerUncaughtException(&#10;      ^&#10;  &#10;  TypeError: Setting the CRF to 0 with a H264 codec is not supported anymore because of it's inconsistencies between platforms. Videos with CRF 0 cannot be played on iOS/macOS. 0 is a extreme value with inefficient settings which you probably do not want. Set CRF to a higher value to fix this error.&#10;      at validateQualitySettings (file:///C:/Users/edugu/Downloads/res/workers/remotion-benchmark/node_modules/@remotion/renderer/dist/esm/index.mjs:21671:11)&#10;      at internalRenderMediaRaw (file:///C:/Users/edugu/Downloads/res/workers/remotion-benchmark/node_modules/@remotion/renderer/dist/esm/index.mjs:24169:3)&#10;      at file:///C:/Users/edugu/Downloads/res/workers/remotion-benchmark/node_modules/@remotion/renderer/dist/esm/index.mjs:18805:20&#10;      at renderMedia (file:///C:/Users/edugu/Downloads/res/workers/remotion-benchmark/node_modules/@remotion/renderer/dist/esm/index.mjs:24700:10)&#10;      at file:///C:/Users/edugu/Downloads/res/workers/remotion-benchmark/render-hybrid.mjs:58:8&#10;  &#10;  Node.js v22.15.0&#10;  full_log:C:\Users\edugu\Downloads\res\workers\remotion-benchmark\output\diagnostics\9ecd5e16e052660180f873cf911a048fbdb3eb488049f02d92b2de08928c2b59.log&#10;assert 'retrying' == 'succeeded'&#10;  &#10;  - succeeded&#10;  + retrying">client = &lt;starlette.testclient.TestClient object at 0x0000025B7999B5D0&gt;
+project = {'asset': '8d80a732-08c4-4982-aa18-f8aab1edf50b', 'document': '826a5a6d-547b-482f-ae4f-6dcc3f8a1f2a', 'token': 'eyJhbG...dHlwZSI6ImFjY2VzcyJ9.SllJYdQORNPtlpbGuFpPE0G-5PAQT4lmSGIhLvZe4-8', 'workspace': 'cbddab74-741b-46d8-adb6-0cce91ea7918'}
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x0000025B7BF45DD0&gt;
+tmp_path = WindowsPath('C:/Users/edugu/AppData/Local/Temp/pytest-of-edugu/pytest-142/test_temporal_rig_actual_api_a0')
+scope = 'control'
+
+    @pytest.mark.parametrize("scope", ["control", "rig", "child", "disjoint"])
+    def test_temporal_rig_actual_api_affine_pixels(client, project, monkeypatch, tmp_path, scope):
+        with SessionLocal() as db:
+            record = db.get(CreativeDocument, project["document"])
+            doc = record_to_contract(record)
+            doc.composition.media_timeline.tracks = []
+            persist_contract(record, doc)
+            db.commit()
+        headers = {"Authorization": "Bearer " + project["token"]}
+        base = f"/api/v1/studios/v1/documents/{project['document']}"
+        response = client.post(base + "/editing-plans", headers={**headers, "Idempotency-Key": "rig-plan"},
+                               json=rig_direction(scope))
+        assert response.status_code == 200, response.text
+        plan = response.json()
+        assert plan["status"] == "ready", plan["blockers"]
+        applied = client.post(base + f"/editing-plans/{plan['id']}/apply", headers=headers,
+                              json={"expectedPlanRevision": plan["revision"]})
+        assert applied.status_code == 200, applied.text
+        inspection = client.get(base + "/editor/inspection?frame=4", headers=headers).json()
+        monkeypatch.setitem(VIDEO_RENDER_PROVIDERS, "remotion.contextual-v2", RemotionNativeContextualRenderProvider(
+            RemotionNativeGraphicsProvider("node", "ffmpeg", 180), VIDEO_RENDER_PROVIDERS["builtin.ffmpeg-contextual-v1"]))
+        monkeypatch.setattr("app.tasks.execute_studio_generation.delay", lambda *_: None)
+        submitted = client.post("/api/v1/studios/v1/video-renders", headers={**headers, "Idempotency-Key": "rig-render"},
+                                json={"workspaceId": project["workspace"], "documentId": project["document"],
+                                      "expectedDocumentRevision": applied.json()["revision"], "expectedDocumentVersion": 1,
+                                      "contextualPlanId": plan["id"], "provider": "remotion.contextual-v2",
+                                      "output": {"width": 320, "height": 320, "fps": 30, "quality": "high"}})
+        assert submitted.status_code == 202, submitted.text
+        deadline = time.monotonic() + 120
+        while _active(_read(lease_path())):
+            if time.monotonic() &gt;= deadline:
+                pytest.skip("Live local operation occupies heavy-media capacity")
+            time.sleep(1)
+        with SessionLocal() as db:
+            job = db.get(StudioGenerationJob, submitted.json()["id"])
+            execute_job_once(db, job)
+&gt;           assert job.status == "succeeded", job.error_message
+E           AssertionError: remotion_render_failed:node:internal/modules/run_main:122
+E                 triggerUncaughtException(
+E                 ^
+E             
+E             TypeError: Setting the CRF to 0 with a H264 codec is not supported anymore because of it's inconsistencies between platforms. Videos with CRF 0 cannot be played on iOS/macOS. 0 is a extreme value with inefficient settings which you probably do not want. Set CRF to a higher value to fix this error.
+E                 at validateQualitySettings (file:///C:/Users/edugu/Downloads/res/workers/remotion-benchmark/node_modules/@remotion/renderer/dist/esm/index.mjs:21671:11)
+E                 at internalRenderMediaRaw (file:///C:/Users/edugu/Downloads/res/workers/remotion-benchmark/node_modules/@remotion/renderer/dist/esm/index.mjs:24169:3)
+E                 at file:///C:/Users/edugu/Downloads/res/workers/remotion-benchmark/node_modules/@remotion/renderer/dist/esm/index.mjs:18805:20
+E                 at renderMedia (file:///C:/Users/edugu/Downloads/res/workers/remotion-benchmark/node_modules/@remotion/renderer/dist/esm/index.mjs:24700:10)
+E                 at file:///C:/Users/edugu/Downloads/res/workers/remotion-benchmark/render-hybrid.mjs:58:8
+E             
+E             Node.js v22.15.0
+E             full_log:C:\Users\edugu\Downloads\res\workers\remotion-benchmark\output\diagnostics\9ecd5e16e052660180f873cf911a048fbdb3eb488049f02d92b2de08928c2b59.log
+E           assert 'retrying' == 'succeeded'
+E             
+E             - succeeded
+E             + retrying
+
+tests\test_temporal_rig_render.py:202: AssertionError</failure></testcase><testcase classname="tests.test_temporal_rig_render" name="test_temporal_rig_actual_api_affine_pixels[rig]" time="16.933"><failure message="AssertionError: remotion_render_failed:node:internal/modules/run_main:122&#10;      triggerUncaughtException(&#10;      ^&#10;  &#10;  TypeError: Setting the CRF to 0 with a H264 codec is not supported anymore because of it's inconsistencies between platforms. Videos with CRF 0 cannot be played on iOS/macOS. 0 is a extreme value with inefficient settings which you probably do not want. Set CRF to a higher value to fix this error.&#10;      at validateQualitySettings (file:///C:/Users/edugu/Downloads/res/workers/remotion-benchmark/node_modules/@remotion/renderer/dist/esm/index.mjs:21671:11)&#10;      at internalRenderMediaRaw (file:///C:/Users/edugu/Downloads/res/workers/remotion-benchmark/node_modules/@remotion/renderer/dist/esm/index.mjs:24169:3)&#10;      at file:///C:/Users/edugu/Downloads/res/workers/remotion-benchmark/node_modules/@remotion/renderer/dist/esm/index.mjs:18805:20&#10;      at renderMedia (file:///C:/Users/edugu/Downloads/res/workers/remotion-benchmark/node_modules/@remotion/renderer/dist/esm/index.mjs:24700:10)&#10;      at file:///C:/Users/edugu/Downloads/res/workers/remotion-benchmark/render-hybrid.mjs:58:8&#10;  &#10;  Node.js v22.15.0&#10;  full_log:C:\Users\edugu\Downloads\res\workers\remotion-benchmark\output\diagnostics\9ecd5e16e052660180f873cf911a048fbdb3eb488049f02d92b2de08928c2b59.log&#10;assert 'retrying' == 'succeeded'&#10;  &#10;  - succeeded&#10;  + retrying">client = &lt;starlette.testclient.TestClient object at 0x0000025B7BE34990&gt;
+project = {'asset': '50cc510d-cb82-44f9-92f7-955b194387f7', 'document': '257db7fc-c4d9-4d1f-9e4d-69abadebd195', 'token': 'eyJhbG...dHlwZSI6ImFjY2VzcyJ9.iqVFqImSJORxqJ4TWYjDd4k38HuFCvvQKWBDhSwEHr4', 'workspace': 'df532324-b6df-4d68-bfbc-e8a26e86a63e'}
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x0000025B00455D90&gt;
+tmp_path = WindowsPath('C:/Users/edugu/AppData/Local/Temp/pytest-of-edugu/pytest-142/test_temporal_rig_actual_api_a1')
+scope = 'rig'
+
+    @pytest.mark.parametrize("scope", ["control", "rig", "child", "disjoint"])
+    def test_temporal_rig_actual_api_affine_pixels(client, project, monkeypatch, tmp_path, scope):
+        with SessionLocal() as db:
+            record = db.get(CreativeDocument, project["document"])
+            doc = record_to_contract(record)
+            doc.composition.media_timeline.tracks = []
+            persist_contract(record, doc)
+            db.commit()
+        headers = {"Authorization": "Bearer " + project["token"]}
+        base = f"/api/v1/studios/v1/documents/{project['document']}"
+        response = client.post(base + "/editing-plans", headers={**headers, "Idempotency-Key": "rig-plan"},
+                               json=rig_direction(scope))
+        assert response.status_code == 200, response.text
+        plan = response.json()
+        assert plan["status"] == "ready", plan["blockers"]
+        applied = client.post(base + f"/editing-plans/{plan['id']}/apply", headers=headers,
+                              json={"expectedPlanRevision": plan["revision"]})
+        assert applied.status_code == 200, applied.text
+        inspection = client.get(base + "/editor/inspection?frame=4", headers=headers).json()
+        monkeypatch.setitem(VIDEO_RENDER_PROVIDERS, "remotion.contextual-v2", RemotionNativeContextualRenderProvider(
+            RemotionNativeGraphicsProvider("node", "ffmpeg", 180), VIDEO_RENDER_PROVIDERS["builtin.ffmpeg-contextual-v1"]))
+        monkeypatch.setattr("app.tasks.execute_studio_generation.delay", lambda *_: None)
+        submitted = client.post("/api/v1/studios/v1/video-renders", headers={**headers, "Idempotency-Key": "rig-render"},
+                                json={"workspaceId": project["workspace"], "documentId": project["document"],
+                                      "expectedDocumentRevision": applied.json()["revision"], "expectedDocumentVersion": 1,
+                                      "contextualPlanId": plan["id"], "provider": "remotion.contextual-v2",
+                                      "output": {"width": 320, "height": 320, "fps": 30, "quality": "high"}})
+        assert submitted.status_code == 202, submitted.text
+        deadline = time.monotonic() + 120
+        while _active(_read(lease_path())):
+            if time.monotonic() &gt;= deadline:
+                pytest.skip("Live local operation occupies heavy-media capacity")
+            time.sleep(1)
+        with SessionLocal() as db:
+            job = db.get(StudioGenerationJob, submitted.json()["id"])
+            execute_job_once(db, job)
+&gt;           assert job.status == "succeeded", job.error_message
+E           AssertionError: remotion_render_failed:node:internal/modules/run_main:122
+E                 triggerUncaughtException(
+E                 ^
+E             
+E             TypeError: Setting the CRF to 0 with a H264 codec is not supported anymore because of it's inconsistencies between platforms. Videos with CRF 0 cannot be played on iOS/macOS. 0 is a extreme value with inefficient settings which you probably do not want. Set CRF to a higher value to fix this error.
+E                 at validateQualitySettings (file:///C:/Users/edugu/Downloads/res/workers/remotion-benchmark/node_modules/@remotion/renderer/dist/esm/index.mjs:21671:11)
+E                 at internalRenderMediaRaw (file:///C:/Users/edugu/Downloads/res/workers/remotion-benchmark/node_modules/@remotion/renderer/dist/esm/index.mjs:24169:3)
+E                 at file:///C:/Users/edugu/Downloads/res/workers/remotion-benchmark/node_modules/@remotion/renderer/dist/esm/index.mjs:18805:20
+E                 at renderMedia (file:///C:/Users/edugu/Downloads/res/workers/remotion-benchmark/node_modules/@remotion/renderer/dist/esm/index.mjs:24700:10)
+E                 at file:///C:/Users/edugu/Downloads/res/workers/remotion-benchmark/render-hybrid.mjs:58:8
+E             
+E             Node.js v22.15.0
+E             full_log:C:\Users\edugu\Downloads\res\workers\remotion-benchmark\output\diagnostics\9ecd5e16e052660180f873cf911a048fbdb3eb488049f02d92b2de08928c2b59.log
+E           assert 'retrying' == 'succeeded'
+E             
+E             - succeeded
+E             + retrying
+
+tests\test_temporal_rig_render.py:202: AssertionError</failure></testcase><testcase classname="tests.test_temporal_rig_render" name="test_temporal_rig_actual_api_affine_pixels[child]" time="13.743"><failure message="AssertionError: remotion_render_failed:node:internal/modules/run_main:122&#10;      triggerUncaughtException(&#10;      ^&#10;  &#10;  TypeError: Setting the CRF to 0 with a H264 codec is not supported anymore because of it's inconsistencies between platforms. Videos with CRF 0 cannot be played on iOS/macOS. 0 is a extreme value with inefficient settings which you probably do not want. Set CRF to a higher value to fix this error.&#10;      at validateQualitySettings (file:///C:/Users/edugu/Downloads/res/workers/remotion-benchmark/node_modules/@remotion/renderer/dist/esm/index.mjs:21671:11)&#10;      at internalRenderMediaRaw (file:///C:/Users/edugu/Downloads/res/workers/remotion-benchmark/node_modules/@remotion/renderer/dist/esm/index.mjs:24169:3)&#10;      at file:///C:/Users/edugu/Downloads/res/workers/remotion-benchmark/node_modules/@remotion/renderer/dist/esm/index.mjs:18805:20&#10;      at renderMedia (file:///C:/Users/edugu/Downloads/res/workers/remotion-benchmark/node_modules/@remotion/renderer/dist/esm/index.mjs:24700:10)&#10;      at file:///C:/Users/edugu/Downloads/res/workers/remotion-benchmark/render-hybrid.mjs:58:8&#10;  &#10;  Node.js v22.15.0&#10;  full_log:C:\Users\edugu\Downloads\res\workers\remotion-benchmark\output\diagnostics\9ecd5e16e052660180f873cf911a048fbdb3eb488049f02d92b2de08928c2b59.log&#10;assert 'retrying' == 'succeeded'&#10;  &#10;  - succeeded&#10;  + retrying">client = &lt;starlette.testclient.TestClient object at 0x0000025B00523210&gt;
+project = {'asset': 'f2b98eae-10dd-4828-88e5-a01655c40e8e', 'document': '21f4b9e4-56e4-4663-9576-ae8c9def5bb8', 'token': 'eyJhbG...dHlwZSI6ImFjY2VzcyJ9.Mw-irHrM5BtT6z5o9HStniF05qJ-W-aReHpqDyRvk-Q', 'workspace': 'a40d8305-9dc8-41ba-b745-78046d792b30'}
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x0000025B004F1C10&gt;
+tmp_path = WindowsPath('C:/Users/edugu/AppData/Local/Temp/pytest-of-edugu/pytest-142/test_temporal_rig_actual_api_a2')
+scope = 'child'
+
+    @pytest.mark.parametrize("scope", ["control", "rig", "child", "disjoint"])
+    def test_temporal_rig_actual_api_affine_pixels(client, project, monkeypatch, tmp_path, scope):
+        with SessionLocal() as db:
+            record = db.get(CreativeDocument, project["document"])
+            doc = record_to_contract(record)
+            doc.composition.media_timeline.tracks = []
+            persist_contract(record, doc)
+            db.commit()
+        headers = {"Authorization": "Bearer " + project["token"]}
+        base = f"/api/v1/studios/v1/documents/{project['document']}"
+        response = client.post(base + "/editing-plans", headers={**headers, "Idempotency-Key": "rig-plan"},
+                               json=rig_direction(scope))
+        assert response.status_code == 200, response.text
+        plan = response.json()
+        assert plan["status"] == "ready", plan["blockers"]
+        applied = client.post(base + f"/editing-plans/{plan['id']}/apply", headers=headers,
+                              json={"expectedPlanRevision": plan["revision"]})
+        assert applied.status_code == 200, applied.text
+        inspection = client.get(base + "/editor/inspection?frame=4", headers=headers).json()
+        monkeypatch.setitem(VIDEO_RENDER_PROVIDERS, "remotion.contextual-v2", RemotionNativeContextualRenderProvider(
+            RemotionNativeGraphicsProvider("node", "ffmpeg", 180), VIDEO_RENDER_PROVIDERS["builtin.ffmpeg-contextual-v1"]))
+        monkeypatch.setattr("app.tasks.execute_studio_generation.delay", lambda *_: None)
+        submitted = client.post("/api/v1/studios/v1/video-renders", headers={**headers, "Idempotency-Key": "rig-render"},
+                                json={"workspaceId": project["workspace"], "documentId": project["document"],
+                                      "expectedDocumentRevision": applied.json()["revision"], "expectedDocumentVersion": 1,
+                                      "contextualPlanId": plan["id"], "provider": "remotion.contextual-v2",
+                                      "output": {"width": 320, "height": 320, "fps": 30, "quality": "high"}})
+        assert submitted.status_code == 202, submitted.text
+        deadline = time.monotonic() + 120
+        while _active(_read(lease_path())):
+            if time.monotonic() &gt;= deadline:
+                pytest.skip("Live local operation occupies heavy-media capacity")
+            time.sleep(1)
+        with SessionLocal() as db:
+            job = db.get(StudioGenerationJob, submitted.json()["id"])
+            execute_job_once(db, job)
+&gt;           assert job.status == "succeeded", job.error_message
+E           AssertionError: remotion_render_failed:node:internal/modules/run_main:122
+E                 triggerUncaughtException(
+E                 ^
+E             
+E             TypeError: Setting the CRF to 0 with a H264 codec is not supported anymore because of it's inconsistencies between platforms. Videos with CRF 0 cannot be played on iOS/macOS. 0 is a extreme value with inefficient settings which you probably do not want. Set CRF to a higher value to fix this error.
+E                 at validateQualitySettings (file:///C:/Users/edugu/Downloads/res/workers/remotion-benchmark/node_modules/@remotion/renderer/dist/esm/index.mjs:21671:11)
+E                 at internalRenderMediaRaw (file:///C:/Users/edugu/Downloads/res/workers/remotion-benchmark/node_modules/@remotion/renderer/dist/esm/index.mjs:24169:3)
+E                 at file:///C:/Users/edugu/Downloads/res/workers/remotion-benchmark/node_modules/@remotion/renderer/dist/esm/index.mjs:18805:20
+E                 at renderMedia (file:///C:/Users/edugu/Downloads/res/workers/remotion-benchmark/node_modules/@remotion/renderer/dist/esm/index.mjs:24700:10)
+E                 at file:///C:/Users/edugu/Downloads/res/workers/remotion-benchmark/render-hybrid.mjs:58:8
+E             
+E             Node.js v22.15.0
+E             full_log:C:\Users\edugu\Downloads\res\workers\remotion-benchmark\output\diagnostics\9ecd5e16e052660180f873cf911a048fbdb3eb488049f02d92b2de08928c2b59.log
+E           assert 'retrying' == 'succeeded'
+E             
+E             - succeeded
+E             + retrying
+
+tests\test_temporal_rig_render.py:202: AssertionError</failure></testcase><testcase classname="tests.test_temporal_rig_render" name="test_temporal_rig_actual_api_affine_pixels[disjoint]" time="13.411"><failure message="AssertionError: remotion_render_failed:node:internal/modules/run_main:122&#10;      triggerUncaughtException(&#10;      ^&#10;  &#10;  TypeError: Setting the CRF to 0 with a H264 codec is not supported anymore because of it's inconsistencies between platforms. Videos with CRF 0 cannot be played on iOS/macOS. 0 is a extreme value with inefficient settings which you probably do not want. Set CRF to a higher value to fix this error.&#10;      at validateQualitySettings (file:///C:/Users/edugu/Downloads/res/workers/remotion-benchmark/node_modules/@remotion/renderer/dist/esm/index.mjs:21671:11)&#10;      at internalRenderMediaRaw (file:///C:/Users/edugu/Downloads/res/workers/remotion-benchmark/node_modules/@remotion/renderer/dist/esm/index.mjs:24169:3)&#10;      at file:///C:/Users/edugu/Downloads/res/workers/remotion-benchmark/node_modules/@remotion/renderer/dist/esm/index.mjs:18805:20&#10;      at renderMedia (file:///C:/Users/edugu/Downloads/res/workers/remotion-benchmark/node_modules/@remotion/renderer/dist/esm/index.mjs:24700:10)&#10;      at file:///C:/Users/edugu/Downloads/res/workers/remotion-benchmark/render-hybrid.mjs:58:8&#10;  &#10;  Node.js v22.15.0&#10;  full_log:C:\Users\edugu\Downloads\res\workers\remotion-benchmark\output\diagnostics\9ecd5e16e052660180f873cf911a048fbdb3eb488049f02d92b2de08928c2b59.log&#10;assert 'retrying' == 'succeeded'&#10;  &#10;  - succeeded&#10;  + retrying">client = &lt;starlette.testclient.TestClient object at 0x0000025B016F74D0&gt;
+project = {'asset': '7e5f526d-36c1-4a5e-a9fc-1bfbb90a6e45', 'document': 'de43871a-b037-427d-b431-e19ec34b6b01', 'token': 'eyJhbG...dHlwZSI6ImFjY2VzcyJ9.CMysDH3enqqFgubVBdK5odfGDoG8ahV9c9D-FHWqk6o', 'workspace': '5195b135-4e28-4539-a835-3e0173cd11f1'}
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x0000025B01700890&gt;
+tmp_path = WindowsPath('C:/Users/edugu/AppData/Local/Temp/pytest-of-edugu/pytest-142/test_temporal_rig_actual_api_a3')
+scope = 'disjoint'
+
+    @pytest.mark.parametrize("scope", ["control", "rig", "child", "disjoint"])
+    def test_temporal_rig_actual_api_affine_pixels(client, project, monkeypatch, tmp_path, scope):
+        with SessionLocal() as db:
+            record = db.get(CreativeDocument, project["document"])
+            doc = record_to_contract(record)
+            doc.composition.media_timeline.tracks = []
+            persist_contract(record, doc)
+            db.commit()
+        headers = {"Authorization": "Bearer " + project["token"]}
+        base = f"/api/v1/studios/v1/documents/{project['document']}"
+        response = client.post(base + "/editing-plans", headers={**headers, "Idempotency-Key": "rig-plan"},
+                               json=rig_direction(scope))
+        assert response.status_code == 200, response.text
+        plan = response.json()
+        assert plan["status"] == "ready", plan["blockers"]
+        applied = client.post(base + f"/editing-plans/{plan['id']}/apply", headers=headers,
+                              json={"expectedPlanRevision": plan["revision"]})
+        assert applied.status_code == 200, applied.text
+        inspection = client.get(base + "/editor/inspection?frame=4", headers=headers).json()
+        monkeypatch.setitem(VIDEO_RENDER_PROVIDERS, "remotion.contextual-v2", RemotionNativeContextualRenderProvider(
+            RemotionNativeGraphicsProvider("node", "ffmpeg", 180), VIDEO_RENDER_PROVIDERS["builtin.ffmpeg-contextual-v1"]))
+        monkeypatch.setattr("app.tasks.execute_studio_generation.delay", lambda *_: None)
+        submitted = client.post("/api/v1/studios/v1/video-renders", headers={**headers, "Idempotency-Key": "rig-render"},
+                                json={"workspaceId": project["workspace"], "documentId": project["document"],
+                                      "expectedDocumentRevision": applied.json()["revision"], "expectedDocumentVersion": 1,
+                                      "contextualPlanId": plan["id"], "provider": "remotion.contextual-v2",
+                                      "output": {"width": 320, "height": 320, "fps": 30, "quality": "high"}})
+        assert submitted.status_code == 202, submitted.text
+        deadline = time.monotonic() + 120
+        while _active(_read(lease_path())):
+            if time.monotonic() &gt;= deadline:
+                pytest.skip("Live local operation occupies heavy-media capacity")
+            time.sleep(1)
+        with SessionLocal() as db:
+            job = db.get(StudioGenerationJob, submitted.json()["id"])
+            execute_job_once(db, job)
+&gt;           assert job.status == "succeeded", job.error_message
+E           AssertionError: remotion_render_failed:node:internal/modules/run_main:122
+E                 triggerUncaughtException(
+E                 ^
+E             
+E             TypeError: Setting the CRF to 0 with a H264 codec is not supported anymore because of it's inconsistencies between platforms. Videos with CRF 0 cannot be played on iOS/macOS. 0 is a extreme value with inefficient settings which you probably do not want. Set CRF to a higher value to fix this error.
+E                 at validateQualitySettings (file:///C:/Users/edugu/Downloads/res/workers/remotion-benchmark/node_modules/@remotion/renderer/dist/esm/index.mjs:21671:11)
+E                 at internalRenderMediaRaw (file:///C:/Users/edugu/Downloads/res/workers/remotion-benchmark/node_modules/@remotion/renderer/dist/esm/index.mjs:24169:3)
+E                 at file:///C:/Users/edugu/Downloads/res/workers/remotion-benchmark/node_modules/@remotion/renderer/dist/esm/index.mjs:18805:20
+E                 at renderMedia (file:///C:/Users/edugu/Downloads/res/workers/remotion-benchmark/node_modules/@remotion/renderer/dist/esm/index.mjs:24700:10)
+E                 at file:///C:/Users/edugu/Downloads/res/workers/remotion-benchmark/render-hybrid.mjs:58:8
+E             
+E             Node.js v22.15.0
+E             full_log:C:\Users\edugu\Downloads\res\workers\remotion-benchmark\output\diagnostics\9ecd5e16e052660180f873cf911a048fbdb3eb488049f02d92b2de08928c2b59.log
+E           assert 'retrying' == 'succeeded'
+E             
+E             - succeeded
+E             + retrying
+
+tests\test_temporal_rig_render.py:202: AssertionError</failure></testcase></testsuite></testsuites>

@@ -1,0 +1,56 @@
+{
+  "scope": "actual_worker_PNG_header_validator_not_decoder",
+  "passed": 12,
+  "cases": [
+    {
+      "id": "fixture",
+      "status": "passed"
+    },
+    {
+      "id": "source-max",
+      "status": "passed"
+    },
+    {
+      "id": "aggregate-max",
+      "status": "passed"
+    },
+    {
+      "id": "short",
+      "status": "passed"
+    },
+    {
+      "id": "signature",
+      "status": "passed"
+    },
+    {
+      "id": "mime",
+      "status": "passed"
+    },
+    {
+      "id": "zero-width",
+      "status": "passed"
+    },
+    {
+      "id": "source-too-large",
+      "status": "passed"
+    },
+    {
+      "id": "aggregate-too-large",
+      "status": "passed"
+    },
+    {
+      "id": "negative-budget",
+      "status": "passed"
+    },
+    {
+      "id": "nonfinite-budget",
+      "status": "passed"
+    },
+    {
+      "id": "ihdr-length",
+      "status": "passed"
+    }
+  ],
+  "source": "workers/remotion-benchmark/src/asset-matte-png.mjs",
+  "sourceSha256": "e026eb35494466a3d031f17548a713c5a527d04bb1a476800725e0d7706d262e"
+}

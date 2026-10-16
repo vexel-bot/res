@@ -222,8 +222,12 @@ def test_shared_phase_budget_is_global_in_real_database(client, monkeypatch):
             correlation_id="first-run",
             status="retrying",
             request_payload={"environment": "test", "budgetGroupId": group, "input": {"operation": "plan"}},
-            result_payload={"testReservationUsd": 9.95, "budgetCategory": "planning",
-                            "submissionStarted": True, "submissionOutcome": "unknown"},
+            result_payload={
+                "testReservationUsd": 9.95,
+                "budgetCategory": "planning",
+                "submissionStarted": True,
+                "submissionOutcome": "unknown",
+            },
         )
         current = StudioGenerationJob(
             workspace_id=second_workspace,
@@ -234,9 +238,12 @@ def test_shared_phase_budget_is_global_in_real_database(client, monkeypatch):
             correlation_id="second-run",
             status="queued",
             request_payload={
-                "environment": "test", "budgetGroupId": group, "input": {"operation": "plan"},
+                "environment": "test",
+                "budgetGroupId": group,
+                "input": {"operation": "plan"},
                 "budgetAllocations": {"planning": 1, "image": 0, "critique": 0, "video": 0},
-                "maxPromptChars": 1000, "maxOutputTokens": 256,
+                "maxPromptChars": 1000,
+                "maxOutputTokens": 256,
                 "pricing": {"inputUsdPerMillion": 2, "outputUsdPerMillion": 8},
             },
             result_payload={},
@@ -319,8 +326,12 @@ def test_blind_comparison_binds_two_current_edits_and_fifteen_second_control(mon
             },
         ),
         **{
-            source_id: NS(workspace_id="workspace", lifecycle_status="active", checksum_sha256=checksum,
-                          object_metadata={"editingResource": {"technical": {"durationMicroseconds": 10_000_000}}})
+            source_id: NS(
+                workspace_id="workspace",
+                lifecycle_status="active",
+                checksum_sha256=checksum,
+                object_metadata={"editingResource": {"technical": {"durationMicroseconds": 10_000_000}}},
+            )
             for source_id, checksum in sources.items()
         },
     }
@@ -455,7 +466,7 @@ def test_comparison_projection_invalidates_after_new_render(monkeypatch):
         "sourceChecksums": sources,
     }
     events = [NS(aggregate_id=state["id"], payload=state) for state in states]
-    comparisons = [NS(aggregate_id="document", payload=receipt, created_at=datetime.now(UTC))]
+    comparisons = [NS(id="comparison-event", aggregate_id="document", payload=receipt, occurred_at=datetime.now(UTC))]
     control = NS(id="control", lifecycle_status="active", checksum_sha256="c" * 64)
     source_assets = [NS(id=key, lifecycle_status="active", checksum_sha256=value) for key, value in sources.items()]
 

@@ -1,4 +1,9 @@
 @import "tailwindcss";
+@source not "../third_party";
+@source not "../workers";
+@source not "../docs/studios/archive";
+@source not "../backend";
+@source not "../.codex-runtime";
 @import "./design-system/tokens.css";
 
 @layer base {

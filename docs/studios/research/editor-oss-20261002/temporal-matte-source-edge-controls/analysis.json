@@ -1,0 +1,1159 @@
+{
+  "scope": "research_only_source_viewport_alpha_controls",
+  "productionAdmission": "pending",
+  "originalOracleChanged": false,
+  "uniformAlpha": 128,
+  "originalAlphaPreservedInWhitenedControl": true,
+  "scriptSha256": "42eb04b9abd9ceb5810a119b8f5f19f3e79aefb2c8443bbdacb7f2849f881a78",
+  "polygonHelperSha256": "eac9b096c2db60422eddf3d1d4d394c6f72eb4ebad038a013bcc3f803f253f01",
+  "phases": [
+    {
+      "phase": "native13",
+      "captureReceiptSha256": "225256ce8569d16bc0b59006d0a011f523074fea3d6d501ac7d489f22af6037a",
+      "sourceLocalOpacity": 0.8624997015007525,
+      "targetOpacityProduct": 0.6885,
+      "checks": [
+        {
+          "x": 150,
+          "y": 184,
+          "sourceLocalBlockCenter": [
+            19.434224879347333,
+            95.18762573382513
+          ],
+          "sourceCoverageModels": {
+            "areaClampedTexels": 0.9448769813409126,
+            "areaTimesCenterDecalKernel": 0.882539059292449
+          },
+          "independentExpectedChannels": {
+            "areaClampedTexels": {
+              "directUniform50": 104.31438263826806,
+              "directUniform255": 207.81380916217464,
+              "normalUniform": 71.82045244644756,
+              "inverseUniform": 103.74704755355243
+            },
+            "areaTimesCenterDecalKernel": {
+              "directUniform50": 97.432278425919,
+              "directUniform255": 194.1033671766355,
+              "normalUniform": 67.08212369624523,
+              "inverseUniform": 108.48537630375476
+            }
+          },
+          "observed": {
+            "unmasked": [
+              177.0,
+              177.0,
+              177.0
+            ],
+            "normal-original": [
+              72.0,
+              72.0,
+              72.0
+            ],
+            "inverse-original": [
+              112.0,
+              112.0,
+              112.0
+            ],
+            "normal-uniform": [
+              72.0,
+              72.0,
+              72.0
+            ],
+            "inverse-uniform": [
+              112.0,
+              112.0,
+              112.0
+            ],
+            "direct-original-whitened": [
+              103.5,
+              103.5,
+              103.5
+            ],
+            "direct-uniform50": [
+              103.5,
+              103.5,
+              103.5
+            ],
+            "direct-uniform255": [
+              206.75,
+              206.75,
+              206.75
+            ]
+          },
+          "normalPlusInverseMinusUnmasked": {
+            "original": [
+              7.0,
+              7.0,
+              7.0
+            ],
+            "uniform": [
+              7.0,
+              7.0,
+              7.0
+            ]
+          },
+          "empiricalNormalPredictionFromDirectImage": {
+            "uniform": [
+              71.25975,
+              71.25975,
+              71.25975
+            ],
+            "original": [
+              71.25975,
+              71.25975,
+              71.25975
+            ]
+          },
+          "empiricalPredictionScope": "Uses captured direct-image pixels, not an independent color oracle."
+        },
+        {
+          "x": 160,
+          "y": 170,
+          "sourceLocalBlockCenter": [
+            30.129978099694966,
+            83.53065519152598
+          ],
+          "sourceCoverageModels": {
+            "areaClampedTexels": 1.0,
+            "areaTimesCenterDecalKernel": 1.0
+          },
+          "independentExpectedChannels": {
+            "areaClampedTexels": {
+              "directUniform50": 110.39996179209632,
+              "directUniform255": 219.9374238826919,
+              "normalUniform": 76.01037369385831,
+              "inverseUniform": 99.55712630614168
+            },
+            "areaTimesCenterDecalKernel": {
+              "directUniform50": 110.39996179209632,
+              "directUniform255": 219.9374238826919,
+              "normalUniform": 76.01037369385831,
+              "inverseUniform": 99.55712630614168
+            }
+          },
+          "observed": {
+            "unmasked": [
+              177.0,
+              177.0,
+              177.0
+            ],
+            "normal-original": [
+              77.0,
+              77.0,
+              77.0
+            ],
+            "inverse-original": [
+              100.0,
+              100.0,
+              100.0
+            ],
+            "normal-uniform": [
+              77.0,
+              77.0,
+              77.0
+            ],
+            "inverse-uniform": [
+              100.0,
+              100.0,
+              100.0
+            ],
+            "direct-original-whitened": [
+              110.0,
+              110.0,
+              110.0
+            ],
+            "direct-uniform50": [
+              110.0,
+              110.0,
+              110.0
+            ],
+            "direct-uniform255": [
+              220.0,
+              220.0,
+              220.0
+            ]
+          },
+          "normalPlusInverseMinusUnmasked": {
+            "original": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "uniform": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "empiricalNormalPredictionFromDirectImage": {
+            "uniform": [
+              75.735,
+              75.735,
+              75.735
+            ],
+            "original": [
+              75.735,
+              75.735,
+              75.735
+            ]
+          },
+          "empiricalPredictionScope": "Uses captured direct-image pixels, not an independent color oracle."
+        },
+        {
+          "x": 162,
+          "y": 92,
+          "sourceLocalBlockCenter": [
+            40.69631503624093,
+            12.565257675518978
+          ],
+          "sourceCoverageModels": {
+            "areaClampedTexels": 1.0,
+            "areaTimesCenterDecalKernel": 1.0
+          },
+          "independentExpectedChannels": {
+            "areaClampedTexels": {
+              "directUniform50": 110.39996179209632,
+              "directUniform255": 219.9374238826919,
+              "normalUniform": 76.01037369385831,
+              "inverseUniform": 99.55712630614168
+            },
+            "areaTimesCenterDecalKernel": {
+              "directUniform50": 110.39996179209632,
+              "directUniform255": 219.9374238826919,
+              "normalUniform": 76.01037369385831,
+              "inverseUniform": 99.55712630614168
+            }
+          },
+          "observed": {
+            "unmasked": [
+              177.0,
+              177.0,
+              177.0
+            ],
+            "normal-original": [
+              133.25,
+              133.25,
+              133.25
+            ],
+            "inverse-original": [
+              52.5,
+              52.5,
+              52.5
+            ],
+            "normal-uniform": [
+              77.0,
+              77.0,
+              77.0
+            ],
+            "inverse-uniform": [
+              100.0,
+              100.0,
+              100.0
+            ],
+            "direct-original-whitened": [
+              193.0,
+              193.0,
+              193.0
+            ],
+            "direct-uniform50": [
+              110.0,
+              110.0,
+              110.0
+            ],
+            "direct-uniform255": [
+              220.0,
+              220.0,
+              220.0
+            ]
+          },
+          "normalPlusInverseMinusUnmasked": {
+            "original": [
+              8.75,
+              8.75,
+              8.75
+            ],
+            "uniform": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "empiricalNormalPredictionFromDirectImage": {
+            "uniform": [
+              75.735,
+              75.735,
+              75.735
+            ],
+            "original": [
+              132.8805,
+              132.8805,
+              132.8805
+            ]
+          },
+          "empiricalPredictionScope": "Uses captured direct-image pixels, not an independent color oracle."
+        }
+      ]
+    },
+    {
+      "phase": "vector-guard",
+      "captureReceiptSha256": "b0786aa3e9aa1e101e6cd132348887c25966fdccc90156a11c550be81c8ef454",
+      "sourceLocalOpacity": 0.8624997015007525,
+      "targetOpacityProduct": 0.6885,
+      "checks": [
+        {
+          "x": 150,
+          "y": 184,
+          "sourceLocalBlockCenter": [
+            19.434224879347333,
+            95.18762573382513
+          ],
+          "sourceCoverageModels": {
+            "areaClampedTexels": 0.9448769813409126,
+            "areaTimesCenterDecalKernel": 0.882539059292449
+          },
+          "independentExpectedChannels": {
+            "areaClampedTexels": {
+              "directUniform50": 104.31438263826806,
+              "directUniform255": 207.81380916217464,
+              "normalUniform": 71.82045244644756,
+              "inverseUniform": 103.74704755355243
+            },
+            "areaTimesCenterDecalKernel": {
+              "directUniform50": 97.432278425919,
+              "directUniform255": 194.1033671766355,
+              "normalUniform": 67.08212369624523,
+              "inverseUniform": 108.48537630375476
+            }
+          },
+          "observed": {
+            "unmasked": [
+              177.0,
+              177.0,
+              177.0
+            ],
+            "normal-original": [
+              72.0,
+              72.0,
+              72.0
+            ],
+            "inverse-original": [
+              112.0,
+              112.0,
+              112.0
+            ],
+            "normal-uniform": [
+              72.0,
+              72.0,
+              72.0
+            ],
+            "inverse-uniform": [
+              112.0,
+              112.0,
+              112.0
+            ],
+            "direct-original-whitened": [
+              103.5,
+              103.5,
+              103.5
+            ],
+            "direct-uniform50": [
+              103.5,
+              103.5,
+              103.5
+            ],
+            "direct-uniform255": [
+              206.75,
+              206.75,
+              206.75
+            ]
+          },
+          "normalPlusInverseMinusUnmasked": {
+            "original": [
+              7.0,
+              7.0,
+              7.0
+            ],
+            "uniform": [
+              7.0,
+              7.0,
+              7.0
+            ]
+          },
+          "empiricalNormalPredictionFromDirectImage": {
+            "uniform": [
+              71.25975,
+              71.25975,
+              71.25975
+            ],
+            "original": [
+              71.25975,
+              71.25975,
+              71.25975
+            ]
+          },
+          "empiricalPredictionScope": "Uses captured direct-image pixels, not an independent color oracle."
+        },
+        {
+          "x": 160,
+          "y": 170,
+          "sourceLocalBlockCenter": [
+            30.129978099694966,
+            83.53065519152598
+          ],
+          "sourceCoverageModels": {
+            "areaClampedTexels": 1.0,
+            "areaTimesCenterDecalKernel": 1.0
+          },
+          "independentExpectedChannels": {
+            "areaClampedTexels": {
+              "directUniform50": 110.39996179209632,
+              "directUniform255": 219.9374238826919,
+              "normalUniform": 76.01037369385831,
+              "inverseUniform": 99.55712630614168
+            },
+            "areaTimesCenterDecalKernel": {
+              "directUniform50": 110.39996179209632,
+              "directUniform255": 219.9374238826919,
+              "normalUniform": 76.01037369385831,
+              "inverseUniform": 99.55712630614168
+            }
+          },
+          "observed": {
+            "unmasked": [
+              177.0,
+              177.0,
+              177.0
+            ],
+            "normal-original": [
+              77.0,
+              77.0,
+              77.0
+            ],
+            "inverse-original": [
+              100.0,
+              100.0,
+              100.0
+            ],
+            "normal-uniform": [
+              77.0,
+              77.0,
+              77.0
+            ],
+            "inverse-uniform": [
+              100.0,
+              100.0,
+              100.0
+            ],
+            "direct-original-whitened": [
+              110.0,
+              110.0,
+              110.0
+            ],
+            "direct-uniform50": [
+              110.0,
+              110.0,
+              110.0
+            ],
+            "direct-uniform255": [
+              220.0,
+              220.0,
+              220.0
+            ]
+          },
+          "normalPlusInverseMinusUnmasked": {
+            "original": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "uniform": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "empiricalNormalPredictionFromDirectImage": {
+            "uniform": [
+              75.735,
+              75.735,
+              75.735
+            ],
+            "original": [
+              75.735,
+              75.735,
+              75.735
+            ]
+          },
+          "empiricalPredictionScope": "Uses captured direct-image pixels, not an independent color oracle."
+        },
+        {
+          "x": 162,
+          "y": 92,
+          "sourceLocalBlockCenter": [
+            40.69631503624093,
+            12.565257675518978
+          ],
+          "sourceCoverageModels": {
+            "areaClampedTexels": 1.0,
+            "areaTimesCenterDecalKernel": 1.0
+          },
+          "independentExpectedChannels": {
+            "areaClampedTexels": {
+              "directUniform50": 110.39996179209632,
+              "directUniform255": 219.9374238826919,
+              "normalUniform": 76.01037369385831,
+              "inverseUniform": 99.55712630614168
+            },
+            "areaTimesCenterDecalKernel": {
+              "directUniform50": 110.39996179209632,
+              "directUniform255": 219.9374238826919,
+              "normalUniform": 76.01037369385831,
+              "inverseUniform": 99.55712630614168
+            }
+          },
+          "observed": {
+            "unmasked": [
+              177.0,
+              177.0,
+              177.0
+            ],
+            "normal-original": [
+              133.25,
+              133.25,
+              133.25
+            ],
+            "inverse-original": [
+              52.5,
+              52.5,
+              52.5
+            ],
+            "normal-uniform": [
+              77.0,
+              77.0,
+              77.0
+            ],
+            "inverse-uniform": [
+              100.0,
+              100.0,
+              100.0
+            ],
+            "direct-original-whitened": [
+              193.0,
+              193.0,
+              193.0
+            ],
+            "direct-uniform50": [
+              110.0,
+              110.0,
+              110.0
+            ],
+            "direct-uniform255": [
+              220.0,
+              220.0,
+              220.0
+            ]
+          },
+          "normalPlusInverseMinusUnmasked": {
+            "original": [
+              8.75,
+              8.75,
+              8.75
+            ],
+            "uniform": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "empiricalNormalPredictionFromDirectImage": {
+            "uniform": [
+              75.735,
+              75.735,
+              75.735
+            ],
+            "original": [
+              132.8805,
+              132.8805,
+              132.8805
+            ]
+          },
+          "empiricalPredictionScope": "Uses captured direct-image pixels, not an independent color oracle."
+        }
+      ]
+    },
+    {
+      "phase": "composite-inverse",
+      "captureReceiptSha256": "021eaf443258711f74f62150ef134e914ca126e710ebb06c9df6e61188546c63",
+      "sourceLocalOpacity": 0.8624997015007525,
+      "targetOpacityProduct": 0.6885,
+      "checks": [
+        {
+          "x": 150,
+          "y": 184,
+          "sourceLocalBlockCenter": [
+            19.434224879347333,
+            95.18762573382513
+          ],
+          "sourceCoverageModels": {
+            "areaClampedTexels": 0.9448769813409126,
+            "areaTimesCenterDecalKernel": 0.882539059292449
+          },
+          "independentExpectedChannels": {
+            "areaClampedTexels": {
+              "directUniform50": 104.31438263826806,
+              "directUniform255": 207.81380916217464,
+              "normalUniform": 71.82045244644756,
+              "inverseUniform": 103.74704755355243
+            },
+            "areaTimesCenterDecalKernel": {
+              "directUniform50": 97.432278425919,
+              "directUniform255": 194.1033671766355,
+              "normalUniform": 67.08212369624523,
+              "inverseUniform": 108.48537630375476
+            }
+          },
+          "observed": {
+            "unmasked": [
+              177.0,
+              177.0,
+              177.0
+            ],
+            "normal-original": [
+              72.0,
+              72.0,
+              72.0
+            ],
+            "inverse-original": [
+              104.5,
+              104.5,
+              104.5
+            ],
+            "normal-uniform": [
+              72.0,
+              72.0,
+              72.0
+            ],
+            "inverse-uniform": [
+              104.5,
+              104.5,
+              104.5
+            ],
+            "direct-original-whitened": [
+              103.5,
+              103.5,
+              103.5
+            ],
+            "direct-uniform50": [
+              103.5,
+              103.5,
+              103.5
+            ],
+            "direct-uniform255": [
+              206.75,
+              206.75,
+              206.75
+            ]
+          },
+          "normalPlusInverseMinusUnmasked": {
+            "original": [
+              -0.5,
+              -0.5,
+              -0.5
+            ],
+            "uniform": [
+              -0.5,
+              -0.5,
+              -0.5
+            ]
+          },
+          "empiricalNormalPredictionFromDirectImage": {
+            "uniform": [
+              71.25975,
+              71.25975,
+              71.25975
+            ],
+            "original": [
+              71.25975,
+              71.25975,
+              71.25975
+            ]
+          },
+          "empiricalPredictionScope": "Uses captured direct-image pixels, not an independent color oracle."
+        },
+        {
+          "x": 160,
+          "y": 170,
+          "sourceLocalBlockCenter": [
+            30.129978099694966,
+            83.53065519152598
+          ],
+          "sourceCoverageModels": {
+            "areaClampedTexels": 1.0,
+            "areaTimesCenterDecalKernel": 1.0
+          },
+          "independentExpectedChannels": {
+            "areaClampedTexels": {
+              "directUniform50": 110.39996179209632,
+              "directUniform255": 219.9374238826919,
+              "normalUniform": 76.01037369385831,
+              "inverseUniform": 99.55712630614168
+            },
+            "areaTimesCenterDecalKernel": {
+              "directUniform50": 110.39996179209632,
+              "directUniform255": 219.9374238826919,
+              "normalUniform": 76.01037369385831,
+              "inverseUniform": 99.55712630614168
+            }
+          },
+          "observed": {
+            "unmasked": [
+              177.0,
+              177.0,
+              177.0
+            ],
+            "normal-original": [
+              77.0,
+              77.0,
+              77.0
+            ],
+            "inverse-original": [
+              100.0,
+              100.0,
+              100.0
+            ],
+            "normal-uniform": [
+              77.0,
+              77.0,
+              77.0
+            ],
+            "inverse-uniform": [
+              100.0,
+              100.0,
+              100.0
+            ],
+            "direct-original-whitened": [
+              110.0,
+              110.0,
+              110.0
+            ],
+            "direct-uniform50": [
+              110.0,
+              110.0,
+              110.0
+            ],
+            "direct-uniform255": [
+              220.0,
+              220.0,
+              220.0
+            ]
+          },
+          "normalPlusInverseMinusUnmasked": {
+            "original": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "uniform": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "empiricalNormalPredictionFromDirectImage": {
+            "uniform": [
+              75.735,
+              75.735,
+              75.735
+            ],
+            "original": [
+              75.735,
+              75.735,
+              75.735
+            ]
+          },
+          "empiricalPredictionScope": "Uses captured direct-image pixels, not an independent color oracle."
+        },
+        {
+          "x": 162,
+          "y": 92,
+          "sourceLocalBlockCenter": [
+            40.69631503624093,
+            12.565257675518978
+          ],
+          "sourceCoverageModels": {
+            "areaClampedTexels": 1.0,
+            "areaTimesCenterDecalKernel": 1.0
+          },
+          "independentExpectedChannels": {
+            "areaClampedTexels": {
+              "directUniform50": 110.39996179209632,
+              "directUniform255": 219.9374238826919,
+              "normalUniform": 76.01037369385831,
+              "inverseUniform": 99.55712630614168
+            },
+            "areaTimesCenterDecalKernel": {
+              "directUniform50": 110.39996179209632,
+              "directUniform255": 219.9374238826919,
+              "normalUniform": 76.01037369385831,
+              "inverseUniform": 99.55712630614168
+            }
+          },
+          "observed": {
+            "unmasked": [
+              177.0,
+              177.0,
+              177.0
+            ],
+            "normal-original": [
+              133.25,
+              133.25,
+              133.25
+            ],
+            "inverse-original": [
+              43.0,
+              43.0,
+              43.0
+            ],
+            "normal-uniform": [
+              77.0,
+              77.0,
+              77.0
+            ],
+            "inverse-uniform": [
+              100.0,
+              100.0,
+              100.0
+            ],
+            "direct-original-whitened": [
+              193.0,
+              193.0,
+              193.0
+            ],
+            "direct-uniform50": [
+              110.0,
+              110.0,
+              110.0
+            ],
+            "direct-uniform255": [
+              220.0,
+              220.0,
+              220.0
+            ]
+          },
+          "normalPlusInverseMinusUnmasked": {
+            "original": [
+              -0.75,
+              -0.75,
+              -0.75
+            ],
+            "uniform": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "empiricalNormalPredictionFromDirectImage": {
+            "uniform": [
+              75.735,
+              75.735,
+              75.735
+            ],
+            "original": [
+              132.8805,
+              132.8805,
+              132.8805
+            ]
+          },
+          "empiricalPredictionScope": "Uses captured direct-image pixels, not an independent color oracle."
+        }
+      ]
+    },
+    {
+      "phase": "svg-subtract",
+      "captureReceiptSha256": "dbd2e6d18254d2bca09d8935306f040f02c57bfa34cf80bd528f27e8c95e1d86",
+      "sourceLocalOpacity": 0.8624997015007525,
+      "targetOpacityProduct": 0.6885,
+      "checks": [
+        {
+          "x": 150,
+          "y": 184,
+          "sourceLocalBlockCenter": [
+            19.434224879347333,
+            95.18762573382513
+          ],
+          "sourceCoverageModels": {
+            "areaClampedTexels": 0.9448769813409126,
+            "areaTimesCenterDecalKernel": 0.882539059292449
+          },
+          "independentExpectedChannels": {
+            "areaClampedTexels": {
+              "directUniform50": 104.31438263826806,
+              "directUniform255": 207.81380916217464,
+              "normalUniform": 71.82045244644756,
+              "inverseUniform": 103.74704755355243
+            },
+            "areaTimesCenterDecalKernel": {
+              "directUniform50": 97.432278425919,
+              "directUniform255": 194.1033671766355,
+              "normalUniform": 67.08212369624523,
+              "inverseUniform": 108.48537630375476
+            }
+          },
+          "observed": {
+            "unmasked": [
+              177.0,
+              177.0,
+              177.0
+            ],
+            "normal-original": [
+              72.0,
+              72.0,
+              72.0
+            ],
+            "inverse-original": [
+              104.5,
+              104.5,
+              104.5
+            ],
+            "normal-uniform": [
+              72.0,
+              72.0,
+              72.0
+            ],
+            "inverse-uniform": [
+              104.5,
+              104.5,
+              104.5
+            ],
+            "direct-original-whitened": [
+              103.5,
+              103.5,
+              103.5
+            ],
+            "direct-uniform50": [
+              103.5,
+              103.5,
+              103.5
+            ],
+            "direct-uniform255": [
+              206.75,
+              206.75,
+              206.75
+            ]
+          },
+          "normalPlusInverseMinusUnmasked": {
+            "original": [
+              -0.5,
+              -0.5,
+              -0.5
+            ],
+            "uniform": [
+              -0.5,
+              -0.5,
+              -0.5
+            ]
+          },
+          "empiricalNormalPredictionFromDirectImage": {
+            "uniform": [
+              71.25975,
+              71.25975,
+              71.25975
+            ],
+            "original": [
+              71.25975,
+              71.25975,
+              71.25975
+            ]
+          },
+          "empiricalPredictionScope": "Uses captured direct-image pixels, not an independent color oracle."
+        },
+        {
+          "x": 160,
+          "y": 170,
+          "sourceLocalBlockCenter": [
+            30.129978099694966,
+            83.53065519152598
+          ],
+          "sourceCoverageModels": {
+            "areaClampedTexels": 1.0,
+            "areaTimesCenterDecalKernel": 1.0
+          },
+          "independentExpectedChannels": {
+            "areaClampedTexels": {
+              "directUniform50": 110.39996179209632,
+              "directUniform255": 219.9374238826919,
+              "normalUniform": 76.01037369385831,
+              "inverseUniform": 99.55712630614168
+            },
+            "areaTimesCenterDecalKernel": {
+              "directUniform50": 110.39996179209632,
+              "directUniform255": 219.9374238826919,
+              "normalUniform": 76.01037369385831,
+              "inverseUniform": 99.55712630614168
+            }
+          },
+          "observed": {
+            "unmasked": [
+              177.0,
+              177.0,
+              177.0
+            ],
+            "normal-original": [
+              77.0,
+              77.0,
+              77.0
+            ],
+            "inverse-original": [
+              100.0,
+              100.0,
+              100.0
+            ],
+            "normal-uniform": [
+              77.0,
+              77.0,
+              77.0
+            ],
+            "inverse-uniform": [
+              100.0,
+              100.0,
+              100.0
+            ],
+            "direct-original-whitened": [
+              110.0,
+              110.0,
+              110.0
+            ],
+            "direct-uniform50": [
+              110.0,
+              110.0,
+              110.0
+            ],
+            "direct-uniform255": [
+              220.0,
+              220.0,
+              220.0
+            ]
+          },
+          "normalPlusInverseMinusUnmasked": {
+            "original": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "uniform": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "empiricalNormalPredictionFromDirectImage": {
+            "uniform": [
+              75.735,
+              75.735,
+              75.735
+            ],
+            "original": [
+              75.735,
+              75.735,
+              75.735
+            ]
+          },
+          "empiricalPredictionScope": "Uses captured direct-image pixels, not an independent color oracle."
+        },
+        {
+          "x": 162,
+          "y": 92,
+          "sourceLocalBlockCenter": [
+            40.69631503624093,
+            12.565257675518978
+          ],
+          "sourceCoverageModels": {
+            "areaClampedTexels": 1.0,
+            "areaTimesCenterDecalKernel": 1.0
+          },
+          "independentExpectedChannels": {
+            "areaClampedTexels": {
+              "directUniform50": 110.39996179209632,
+              "directUniform255": 219.9374238826919,
+              "normalUniform": 76.01037369385831,
+              "inverseUniform": 99.55712630614168
+            },
+            "areaTimesCenterDecalKernel": {
+              "directUniform50": 110.39996179209632,
+              "directUniform255": 219.9374238826919,
+              "normalUniform": 76.01037369385831,
+              "inverseUniform": 99.55712630614168
+            }
+          },
+          "observed": {
+            "unmasked": [
+              177.0,
+              177.0,
+              177.0
+            ],
+            "normal-original": [
+              133.25,
+              133.25,
+              133.25
+            ],
+            "inverse-original": [
+              43.0,
+              43.0,
+              43.0
+            ],
+            "normal-uniform": [
+              77.0,
+              77.0,
+              77.0
+            ],
+            "inverse-uniform": [
+              100.0,
+              100.0,
+              100.0
+            ],
+            "direct-original-whitened": [
+              193.0,
+              193.0,
+              193.0
+            ],
+            "direct-uniform50": [
+              110.0,
+              110.0,
+              110.0
+            ],
+            "direct-uniform255": [
+              220.0,
+              220.0,
+              220.0
+            ]
+          },
+          "normalPlusInverseMinusUnmasked": {
+            "original": [
+              -0.75,
+              -0.75,
+              -0.75
+            ],
+            "uniform": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "empiricalNormalPredictionFromDirectImage": {
+            "uniform": [
+              75.735,
+              75.735,
+              75.735
+            ],
+            "original": [
+              132.8805,
+              132.8805,
+              132.8805
+            ]
+          },
+          "empiricalPredictionScope": "Uses captured direct-image pixels, not an independent color oracle."
+        }
+      ]
+    }
+  ]
+}

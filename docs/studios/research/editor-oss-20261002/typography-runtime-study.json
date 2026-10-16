@@ -1,0 +1,174 @@
+{
+  "schemaVersion": "res.typography-runtime-study.v1",
+  "sourceSha256": "a48d4de56240a1911b4e254c71013d494f0c88f9291f1bb69ae1b95ed98c8f1b",
+  "extractedSymbolsSha256": "f344867b2934a527135519cd2b2d5adf93770a1c26bd8d535bc38bf2ea84d74e",
+  "vectorsSha256": "a035e3a31c7ef546ef273532ad5b6189e40b4a35b277c65cb786b194cbbff5a9",
+  "checks": [
+    {
+      "text": "AÇÃO",
+      "unit": "character",
+      "animatedCount": 4,
+      "textPreserved": true,
+      "sameUnits": true,
+      "startsInvisible": true,
+      "wholeHold": true,
+      "lastStillArriving": true,
+      "noBrowserResegmentation": true
+    },
+    {
+      "text": "AÇÃO",
+      "unit": "word",
+      "animatedCount": 1,
+      "textPreserved": true,
+      "sameUnits": true,
+      "startsInvisible": true,
+      "wholeHold": true,
+      "lastStillArriving": true,
+      "noBrowserResegmentation": true
+    },
+    {
+      "text": "AÇÃO",
+      "unit": "character",
+      "animatedCount": 4,
+      "textPreserved": true,
+      "sameUnits": true,
+      "startsInvisible": true,
+      "wholeHold": true,
+      "lastStillArriving": true,
+      "noBrowserResegmentation": true
+    },
+    {
+      "text": "AÇÃO",
+      "unit": "word",
+      "animatedCount": 1,
+      "textPreserved": true,
+      "sameUnits": true,
+      "startsInvisible": true,
+      "wholeHold": true,
+      "lastStillArriving": true,
+      "noBrowserResegmentation": true
+    },
+    {
+      "text": "👨‍👩‍👧‍👦",
+      "unit": "character",
+      "animatedCount": 1,
+      "textPreserved": true,
+      "sameUnits": true,
+      "startsInvisible": true,
+      "wholeHold": true,
+      "lastStillArriving": true,
+      "noBrowserResegmentation": true
+    },
+    {
+      "text": "👨‍👩‍👧‍👦",
+      "unit": "word",
+      "animatedCount": 1,
+      "textPreserved": true,
+      "sameUnits": true,
+      "startsInvisible": true,
+      "wholeHold": true,
+      "lastStillArriving": true,
+      "noBrowserResegmentation": true
+    },
+    {
+      "text": "👍🏽🇧🇷",
+      "unit": "character",
+      "animatedCount": 2,
+      "textPreserved": true,
+      "sameUnits": true,
+      "startsInvisible": true,
+      "wholeHold": true,
+      "lastStillArriving": true,
+      "noBrowserResegmentation": true
+    },
+    {
+      "text": "👍🏽🇧🇷",
+      "unit": "word",
+      "animatedCount": 1,
+      "textPreserved": true,
+      "sameUnits": true,
+      "startsInvisible": true,
+      "wholeHold": true,
+      "lastStillArriving": true,
+      "noBrowserResegmentation": true
+    },
+    {
+      "text": " A  B \t\r\n",
+      "unit": "character",
+      "animatedCount": 2,
+      "textPreserved": true,
+      "sameUnits": true,
+      "startsInvisible": true,
+      "wholeHold": true,
+      "lastStillArriving": true,
+      "noBrowserResegmentation": true
+    },
+    {
+      "text": " A  B \t\r\n",
+      "unit": "word",
+      "animatedCount": 2,
+      "textPreserved": true,
+      "sameUnits": true,
+      "startsInvisible": true,
+      "wholeHold": true,
+      "lastStillArriving": true,
+      "noBrowserResegmentation": true
+    },
+    {
+      "text": "Uma palavra inteira",
+      "unit": "character",
+      "animatedCount": 17,
+      "textPreserved": true,
+      "sameUnits": true,
+      "startsInvisible": true,
+      "wholeHold": true,
+      "lastStillArriving": true,
+      "noBrowserResegmentation": true
+    },
+    {
+      "text": "Uma palavra inteira",
+      "unit": "word",
+      "animatedCount": 3,
+      "textPreserved": true,
+      "sameUnits": true,
+      "startsInvisible": true,
+      "wholeHold": true,
+      "lastStillArriving": true,
+      "noBrowserResegmentation": true
+    }
+  ],
+  "negativeChecks": [
+    {
+      "mutation": "text",
+      "rejected": true,
+      "reason": "hybrid_typography_units_invalid"
+    },
+    {
+      "mutation": "indices",
+      "rejected": true,
+      "reason": "hybrid_typography_indices_invalid"
+    },
+    {
+      "mutation": "count",
+      "rejected": true,
+      "reason": "hybrid_typography_timing_invalid"
+    },
+    {
+      "mutation": "timing",
+      "rejected": true,
+      "reason": "hybrid_typography_timing_invalid"
+    },
+    {
+      "mutation": "policy",
+      "rejected": true,
+      "reason": "hybrid_typography_units_invalid"
+    },
+    {
+      "mutation": "version",
+      "rejected": true,
+      "reason": "hybrid_typography_version_unsupported"
+    }
+  ],
+  "passed": true,
+  "evidenceLevel": "actual_worker_JSX_function_execution; not_pixels_or_human_review"
+}

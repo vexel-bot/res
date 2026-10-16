@@ -1,0 +1,113 @@
+{
+  "scope": "SQLite scalar projection of root field lengths, no payload dump",
+  "fields": [
+    {
+      "key": "contextualEditing",
+      "characters": 156490865
+    },
+    {
+      "key": "visualAudit",
+      "characters": 2413970
+    },
+    {
+      "key": "videoRenderResult",
+      "characters": 206478
+    },
+    {
+      "key": "qualityEvaluation",
+      "characters": 143774
+    },
+    {
+      "key": "audiovisualObservations",
+      "characters": 37754
+    },
+    {
+      "key": "compositionProjection",
+      "characters": 25451
+    },
+    {
+      "key": "renderRequest",
+      "characters": 18070
+    },
+    {
+      "key": "sourceAssetBindings",
+      "characters": 15004
+    },
+    {
+      "key": "workerExecutionContext",
+      "characters": 11656
+    },
+    {
+      "key": "documentSnapshotSha256",
+      "characters": 1984
+    },
+    {
+      "key": "workspace-id",
+      "characters": 1656
+    },
+    {
+      "key": "generationJobId",
+      "characters": 1116
+    },
+    {
+      "key": "generation-job-id",
+      "characters": 1116
+    },
+    {
+      "key": "documentId",
+      "characters": 1116
+    },
+    {
+      "key": "document-id",
+      "characters": 1116
+    },
+    {
+      "key": "mediaProbeVersion",
+      "characters": 1001
+    },
+    {
+      "key": "schemaVersion",
+      "characters": 713
+    },
+    {
+      "key": "provider",
+      "characters": 682
+    },
+    {
+      "key": "providerVersion",
+      "characters": 507
+    },
+    {
+      "key": "role",
+      "characters": 372
+    },
+    {
+      "key": "derivation",
+      "characters": 372
+    },
+    {
+      "key": "mediaProbeSchema",
+      "characters": 231
+    },
+    {
+      "key": "source",
+      "characters": 165
+    },
+    {
+      "key": "mediaProbeProvider",
+      "characters": 165
+    },
+    {
+      "key": "renderedFromOriginal",
+      "characters": 31
+    },
+    {
+      "key": "documentVersion",
+      "characters": 31
+    },
+    {
+      "key": "documentRevision",
+      "characters": 31
+    }
+  ]
+}

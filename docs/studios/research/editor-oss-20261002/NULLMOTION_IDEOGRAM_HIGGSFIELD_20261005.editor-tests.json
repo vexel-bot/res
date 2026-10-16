@@ -1,0 +1,34 @@
+{
+  "commit": "2795457432a63e7e28879210601cede25915e561",
+  "scope": "Additional code windows and test source read only; tests not executed",
+  "files": [
+    {
+      "path": "public/editor-model.mjs",
+      "url": "https://raw.githubusercontent.com/blixvip/NullMotion/2795457432a63e7e28879210601cede25915e561/public/editor-model.mjs",
+      "sha256": "0a143694a39812d1a02974405eeb9a6c37ac8b45c7cf4aed12254dc685ea47cb",
+      "bytes": 1335,
+      "lines": 27
+    },
+    {
+      "path": "public/editor.mjs",
+      "url": "https://raw.githubusercontent.com/blixvip/NullMotion/2795457432a63e7e28879210601cede25915e561/public/editor.mjs",
+      "sha256": "5d50b2f8a4fc842e077be916ff63175aaba3654d4f0441530cc3219e55e4f276",
+      "bytes": 35429,
+      "lines": 516
+    },
+    {
+      "path": "test/editor.test.js",
+      "url": "https://raw.githubusercontent.com/blixvip/NullMotion/2795457432a63e7e28879210601cede25915e561/test/editor.test.js",
+      "sha256": "de99367adcc2c8209e57306a52b2e8ad64b24c77ab8c015f2eb287dc4c29e0a5",
+      "bytes": 1308,
+      "lines": 26
+    },
+    {
+      "path": "test/reference-policy.test.js",
+      "url": "https://raw.githubusercontent.com/blixvip/NullMotion/2795457432a63e7e28879210601cede25915e561/test/reference-policy.test.js",
+      "sha256": "2ddd48ae6ae260028e0edf473bd916127b85e78ed1e1093c65a806546220d923",
+      "bytes": 805,
+      "lines": 13
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+--- before/backend/app/services/studios/engine_qualification.py
++++ after/backend/app/services/studios/engine_qualification.py
+@@ -16,6 +16,7 @@
+ from ...providers.studios.alight_motion import refresh_registration
+ from ...providers.studios.alight_worker import NAME
+ from ...providers.studios.video_render import VIDEO_RENDER_PROVIDERS
++from .asset_read_projection import project_asset
+ from .compatibility import record_to_contract
+ from .contextual_editing import lock_editing_budget
+ from .kernel import emit_event
+@@ -195,7 +196,12 @@
+ 
+ def _reference(db, workspace_id, reference):
+     record, contract = _document(db, workspace_id, reference.document_id, reference.document_revision)
+-    asset = db.get(LibraryAsset, reference.asset_id)
++    asset = project_asset(db, reference.asset_id, [
++        ("generationJobId",), ("derivation",), ("documentId",), ("documentRevision",),
++        ("documentSnapshotSha256",), ("sourceAssetBindings",), ("qualityEvaluation",), ("visualHumanReview",),
++        ("contextualEditing", "manifest", "executableDirection"),
++        ("contextualEditing", "rendererChecks", "graphics", "alightReceipt"),
++    ])
+     if (
+         not asset
+         or asset.workspace_id != workspace_id

@@ -1,0 +1,96 @@
+{
+  "scope": "actual original React sampler/reducer; no browser or pixel claim",
+  "passed": 22,
+  "checks": [
+    {
+      "name": "centered two-point quadrature",
+      "status": "passed"
+    },
+    {
+      "name": "first-frame clipped and renormalized",
+      "status": "passed"
+    },
+    {
+      "name": "cut starts at its own interval",
+      "status": "passed"
+    },
+    {
+      "name": "zero shutter is the requested frame",
+      "status": "passed"
+    },
+    {
+      "name": "fractional end clips before exclusive endpoint",
+      "status": "passed"
+    },
+    {
+      "name": "outside interval",
+      "status": "passed"
+    },
+    {
+      "name": "empty interval",
+      "status": "passed"
+    },
+    {
+      "name": "nonfinite time",
+      "status": "passed"
+    },
+    {
+      "name": "one sample",
+      "status": "passed"
+    },
+    {
+      "name": "over sample cap",
+      "status": "passed"
+    },
+    {
+      "name": "fractional samples",
+      "status": "passed"
+    },
+    {
+      "name": "negative shutter",
+      "status": "passed"
+    },
+    {
+      "name": "over shutter cap",
+      "status": "passed"
+    },
+    {
+      "name": "same draw inputs have same fingerprint",
+      "status": "passed"
+    },
+    {
+      "name": "position changes cannot reduce",
+      "status": "passed"
+    },
+    {
+      "name": "opacity changes cannot reduce",
+      "status": "passed"
+    },
+    {
+      "name": "unregistered component cannot reduce",
+      "status": "passed"
+    },
+    {
+      "name": "unknown function prop cannot reduce",
+      "status": "passed"
+    },
+    {
+      "name": "stationary compositor uses center once",
+      "status": "passed"
+    },
+    {
+      "name": "moving compositor retains samples and normalized weights",
+      "status": "passed"
+    },
+    {
+      "name": "zero shutter bypasses averaging even for unknown component",
+      "status": "passed"
+    },
+    {
+      "name": "unregistered compositing is rejected",
+      "status": "passed"
+    }
+  ],
+  "source": "workers/remotion-benchmark/src/temporal-exposure.tsx",
+  "sourceSha256": "48a609ab733ee2e5c4e6be07f8073a483ff986b235dcb1c34d365f1b4fcc2fc1"
+}

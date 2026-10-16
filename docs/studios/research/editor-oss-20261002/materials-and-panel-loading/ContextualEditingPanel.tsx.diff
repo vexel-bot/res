@@ -1,0 +1,48 @@
+--- ContextualEditingPanel.tsx.before
++++ ContextualEditingPanel.tsx
+@@ -136,6 +136,9 @@
+   const [visualOnly, setVisualOnly] = React.useState(true);
+   const [useLocalDiffusion, setUseLocalDiffusion] = React.useState(false);
+   const [localDiffusion, setLocalDiffusion] = React.useState<LocalDiffusionCapability>();
++  const [localDiffusionProbe, setLocalDiffusionProbe] = React.useState(0);
++  const [localDiffusionChecking, setLocalDiffusionChecking] = React.useState(false);
++  const [localDiffusionError, setLocalDiffusionError] = React.useState("");
+   const [candidateVideo, setCandidateVideo] = React.useState("");
+   const [candidateScores, setCandidateScores] = React.useState<Record<keyof CandidateScores, string>>({
+     relevance: "", subjectIdentity: "", temporalContinuity: "", actionClarity: "",
+@@ -191,15 +194,16 @@
+     return () => controller.abort();
+   }, []);
+   React.useEffect(() => {
++    if (!localDiffusionProbe) return;
+     const controller = new AbortController();
++    setLocalDiffusionChecking(true); setLocalDiffusionError("");
++    setLocalDiffusion(undefined); setUseLocalDiffusion(false);
+     apiFetch<LocalDiffusionCapability>("/api/v1/studios/v1/scene-generation-capability", { signal: controller.signal })
+-      .then(value => { if (!controller.signal.aborted) {
+-        setLocalDiffusion(value);
+-        setUseLocalDiffusion(value.state !== "unavailable" && value.adapterSupport === "available");
+-      } })
+-      .catch(() => { if (!controller.signal.aborted) setUseLocalDiffusion(false); });
++      .then(value => { if (!controller.signal.aborted) setLocalDiffusion(value); })
++      .catch(() => { if (!controller.signal.aborted) setLocalDiffusionError("Não foi possível verificar o gerador local. Tente novamente."); })
++      .finally(() => { if (!controller.signal.aborted) setLocalDiffusionChecking(false); });
+     return () => controller.abort();
+-  }, []);
++  }, [localDiffusionProbe]);
+   const candidateJobId = production?.blockers
+     .find(code => code.startsWith("production_local_generation_review_required:"))?.split(":", 2)[1];
+   React.useEffect(() => {
+@@ -493,7 +497,11 @@
+     <label><input type="checkbox" checked={visualOnly} disabled={blocked} onChange={e => setVisualOnly(e.target.checked)} />
+       Desenvolver somente o visual nesta rodada, sem produzir narração, música ou efeitos sonoros
+     </label>
+-    <label><input type="checkbox" checked={useLocalDiffusion} disabled={blocked || localDiffusion?.adapterSupport !== "available"}
++    <button type="button" disabled={blocked || localDiffusionChecking} onClick={() => setLocalDiffusionProbe(value => value + 1)}>
++      {localDiffusionChecking ? "Verificando gerador local…" : localDiffusion ? "Verificar gerador local novamente" : "Verificar gerador local"}
++    </button>
++    {localDiffusionError && <p role="alert">{localDiffusionError}</p>}
++    <label><input type="checkbox" checked={useLocalDiffusion} disabled={blocked || localDiffusionChecking || localDiffusion?.adapterSupport !== "available"}
+       onChange={e => setUseLocalDiffusion(e.target.checked)} />
+       Incluir um trecho experimental criado pelo difusor local
+     </label>

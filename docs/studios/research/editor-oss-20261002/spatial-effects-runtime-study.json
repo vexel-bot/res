@@ -1,0 +1,100 @@
+{
+  "scope": "actual original TypeScript guard; no browser/pixel claim",
+  "passed": 23,
+  "checks": [
+    {
+      "name": "identity omits the effect surface",
+      "status": "passed"
+    },
+    {
+      "name": "canonical offsets and alpha affect only the shadow",
+      "status": "passed"
+    },
+    {
+      "name": "blur before shadow uses the registered order",
+      "status": "passed"
+    },
+    {
+      "name": "transparent shadow omits identity",
+      "status": "passed"
+    },
+    {
+      "name": "transparent shadow retains spatial blur",
+      "status": "passed"
+    },
+    {
+      "name": "graph blur range preserved",
+      "status": "passed"
+    },
+    {
+      "name": "invalid blur -1",
+      "status": "passed"
+    },
+    {
+      "name": "invalid blur 501",
+      "status": "passed"
+    },
+    {
+      "name": "invalid blur NaN",
+      "status": "passed"
+    },
+    {
+      "name": "invalid blur Infinity",
+      "status": "passed"
+    },
+    {
+      "name": "invalid blur 4",
+      "status": "passed"
+    },
+    {
+      "name": "missing fields",
+      "status": "passed"
+    },
+    {
+      "name": "unknown alias",
+      "status": "passed"
+    },
+    {
+      "name": "CSS injection",
+      "status": "passed"
+    },
+    {
+      "name": "outside x",
+      "status": "passed"
+    },
+    {
+      "name": "outside y",
+      "status": "passed"
+    },
+    {
+      "name": "negative sigma",
+      "status": "passed"
+    },
+    {
+      "name": "outside sigma",
+      "status": "passed"
+    },
+    {
+      "name": "outside opacity",
+      "status": "passed"
+    },
+    {
+      "name": "nonfinite opacity",
+      "status": "passed"
+    },
+    {
+      "name": "nonfinite offset",
+      "status": "passed"
+    },
+    {
+      "name": "array",
+      "status": "passed"
+    },
+    {
+      "name": "untyped string",
+      "status": "passed"
+    }
+  ],
+  "source": "workers/remotion-benchmark/src/spatial-effects.ts",
+  "sourceSha256": "cab39ac4863a50bcec80760cb85d969507865f2461fb855c39c1adc105530a9c"
+}

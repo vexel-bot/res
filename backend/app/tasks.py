@@ -261,6 +261,22 @@ def probe_studio_worker(
 
 
 @celery_app.task(bind=True, max_retries=3)
+def refresh_craft_compositions(self, document_id: str, actor_id: str) -> dict:
+    from .models import CreativeDocument, User
+    from .services.studios.craft import refresh_linked_compositions
+
+    with SessionLocal() as db:
+        source = db.get(CreativeDocument, document_id)
+        actor = db.get(User, actor_id)
+        if not source or not actor:
+            return {"status": "not-found"}
+        result = refresh_linked_compositions(db, source, actor)
+        if any(item["status"] == "failed" for item in result) and self.request.retries < 3:
+            raise self.retry(countdown=30)
+        return {"status": "updated", "documents": result}
+
+
+@celery_app.task(bind=True, max_retries=3)
 def execute_studio_generation(self, job_id: str) -> dict:
     from .services.studios.jobs import execute_job_once
 
