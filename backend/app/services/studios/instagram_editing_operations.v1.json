@@ -1,0 +1,429 @@
+{
+  "schema_version": "research.editing-operations.v1",
+  "observed_on": "2026-09-30",
+  "status": "catalogued_four_implemented_eight_knowledge_only",
+  "evidence_logs": [
+    "INSTAGRAM_EDITING_VIEWING_LOG_2026-09-30.md",
+    "INSTAGRAM_EDITING_VIEWING_LOG_EXPANSION_2026-09-30.md"
+  ],
+  "method_limits": [
+    "Temporal visual sampling; not frame-by-frame decoupage",
+    "Instagram player was muted; audio was not verified",
+    "Captions and tool names are author claims unless seen in editor UI",
+    "Reference assets are not licensed for reuse by res"
+  ],
+  "operations": [
+    {
+      "id": "action_progression",
+      "perceptual_goal": "The viewer follows a real task from action to consequence",
+      "narrative_functions": [
+        "demonstrate",
+        "prove",
+        "payoff"
+      ],
+      "evidence_reels": [
+        "DdtuxMNBtxr",
+        "DdcB5_Ux7Bw"
+      ],
+      "inputs": [
+        "observable action",
+        "at least two meaningful states",
+        "subject or task anchor"
+      ],
+      "plan_steps": [
+        "select action start",
+        "cut on gesture or change of state",
+        "show consequence"
+      ],
+      "reject_when": [
+        "only static photographs are available",
+        "the action has no visible consequence"
+      ],
+      "render_checks": [
+        "internal action is visible",
+        "action direction makes sense across cuts",
+        "the payoff is visible at normal speed"
+      ],
+      "qualification": "implemented"
+    },
+    {
+      "id": "motif_continuity",
+      "perceptual_goal": "One recognizable element links otherwise different shots",
+      "narrative_functions": [
+        "associate",
+        "connect",
+        "establish_identity"
+      ],
+      "evidence_reels": [
+        "DdW0UoSxXsX",
+        "Dd5Md7NMj7P"
+      ],
+      "inputs": [
+        "recurring object, person, shape, or color",
+        "recognizable appearance in each linked shot"
+      ],
+      "plan_steps": [
+        "name the motif",
+        "track its location and scale",
+        "vary camera or context while preserving recognition"
+      ],
+      "reject_when": [
+        "the motif is only an abstract category",
+        "the product never participates in an action"
+      ],
+      "render_checks": [
+        "motif can be named without reading captions",
+        "visual identity persists",
+        "each shot adds information"
+      ],
+      "qualification": "implemented"
+    },
+    {
+      "id": "gesture_occlusion_reveal",
+      "perceptual_goal": "A state changes while a gesture covers the changing region",
+      "narrative_functions": [
+        "transform",
+        "surprise"
+      ],
+      "evidence_reels": [
+        "Ddb0HfwRd93"
+      ],
+      "inputs": [
+        "before shot",
+        "after shot",
+        "compatible camera geometry",
+        "covering gesture"
+      ],
+      "plan_steps": [
+        "find maximum coverage frame",
+        "align landmarks",
+        "switch state under occlusion",
+        "tune timing"
+      ],
+      "reject_when": [
+        "gesture does not cover the target",
+        "subject landmarks cannot align"
+      ],
+      "render_checks": [
+        "no visible jump before coverage",
+        "hands and face remain coherent",
+        "the after state reads immediately"
+      ],
+      "qualification": "implemented"
+    },
+    {
+      "id": "moving_variant_mask",
+      "perceptual_goal": "A localized window reveals a second registered version of the same scene",
+      "narrative_functions": [
+        "reveal",
+        "explain",
+        "inspect"
+      ],
+      "evidence_reels": [
+        "Ddv4nmHIsWI"
+      ],
+      "inputs": [
+        "base plate",
+        "registered variant",
+        "mask trajectory",
+        "stable background"
+      ],
+      "plan_steps": [
+        "align source and variant",
+        "stack layers",
+        "animate mask center and size",
+        "inspect crossings"
+      ],
+      "reject_when": [
+        "poses or backgrounds do not align",
+        "the variant changes real brand text"
+      ],
+      "render_checks": [
+        "outside-mask pixels remain stable",
+        "no halo or pulsing edge",
+        "subject anatomy stays aligned"
+      ],
+      "qualification": "implemented"
+    },
+    {
+      "id": "subject_occluded_typography",
+      "perceptual_goal": "Type occupies scene depth behind a moving subject",
+      "narrative_functions": [
+        "identify",
+        "emphasize"
+      ],
+      "evidence_reels": [
+        "DdwS-6oRvL8"
+      ],
+      "inputs": [
+        "base video",
+        "synchronized subject cutout",
+        "text layer",
+        "legible space"
+      ],
+      "plan_steps": [
+        "duplicate base",
+        "segment foreground subject",
+        "put text between base and cutout",
+        "animate text only when needed"
+      ],
+      "reject_when": [
+        "segmentation is unstable",
+        "face or hands would be covered",
+        "text cannot be read on a phone"
+      ],
+      "render_checks": [
+        "no mask jitter",
+        "no text crossing foreground subject",
+        "legible during normal playback"
+      ],
+      "qualification": "knowledge_only"
+    },
+    {
+      "id": "windowed_content_scroll",
+      "perceptual_goal": "Content moves behind a stable cutout frame",
+      "narrative_functions": [
+        "explore",
+        "reveal_sequence"
+      ],
+      "evidence_reels": [
+        "DSUcRaKAXYb"
+      ],
+      "inputs": [
+        "frame with alpha window",
+        "content larger than window",
+        "keyframe positions"
+      ],
+      "plan_steps": [
+        "prepare clean window",
+        "place content behind it",
+        "keyframe position over time",
+        "check start and end"
+      ],
+      "reject_when": [
+        "content does not fill the window",
+        "important content lies outside the visible path"
+      ],
+      "render_checks": [
+        "no border leaks",
+        "frame remains fixed",
+        "movement finishes on meaningful content"
+      ],
+      "qualification": "knowledge_only"
+    },
+    {
+      "id": "interface_evidence_overlay",
+      "perceptual_goal": "A real interface appears when it helps prove or explain a claim",
+      "narrative_functions": [
+        "explain",
+        "prove",
+        "orient"
+      ],
+      "evidence_reels": [
+        "Dd6fcwKRC9V",
+        "Dd2EAaIBeRg",
+        "DRjjvOogSZg"
+      ],
+      "inputs": [
+        "presenter or anchor shot",
+        "relevant interface capture",
+        "readable safe area"
+      ],
+      "plan_steps": [
+        "locate claim",
+        "place matching interface at claim time",
+        "keep presenter or place context visible",
+        "remove overlay after its job"
+      ],
+      "reject_when": [
+        "the interface is decorative",
+        "capture is too small to read",
+        "the screenshot implies functionality not actually shown"
+      ],
+      "render_checks": [
+        "overlay supports adjacent statement",
+        "text is readable on a phone",
+        "no false UI affordance"
+      ],
+      "qualification": "knowledge_only"
+    },
+    {
+      "id": "world_to_world_identity",
+      "perceptual_goal": "The same character crosses a change of visual world or time",
+      "narrative_functions": [
+        "transport",
+        "metaphor",
+        "time_passage"
+      ],
+      "evidence_reels": [
+        "DdXSz0yMUdX",
+        "DdpXHPksYVm",
+        "DdRkmq4M_7e"
+      ],
+      "inputs": [
+        "character reference",
+        "world rules",
+        "before and after state",
+        "transition trigger"
+      ],
+      "plan_steps": [
+        "establish initial world",
+        "show trigger",
+        "preserve recognizable character",
+        "reveal changed world",
+        "pay off concept"
+      ],
+      "reject_when": [
+        "identity changes accidentally",
+        "the new world has no narrative function"
+      ],
+      "render_checks": [
+        "character recognizable across states",
+        "costume and movement continuity",
+        "change serves the concept"
+      ],
+      "qualification": "knowledge_only"
+    },
+    {
+      "id": "localized_generated_event",
+      "perceptual_goal": "A specific event occurs inside a recognizable plate",
+      "narrative_functions": [
+        "surprise",
+        "demonstrate",
+        "make_metaphor_visible"
+      ],
+      "evidence_reels": [
+        "DAD81xdOC8j",
+        "DdHHUNrRCch"
+      ],
+      "inputs": [
+        "reference frame or clip",
+        "event description",
+        "object reference",
+        "camera and environment constraints"
+      ],
+      "plan_steps": [
+        "preserve plate",
+        "define event entry, path and interaction",
+        "generate candidates",
+        "compare against source",
+        "compose or reject"
+      ],
+      "reject_when": [
+        "camera geometry shifts without cause",
+        "object scale, shadows or contact fail"
+      ],
+      "render_checks": [
+        "background remains coherent",
+        "event has visible beginning and consequence",
+        "no object mutation"
+      ],
+      "qualification": "knowledge_only"
+    },
+    {
+      "id": "layer_inventory_animation",
+      "perceptual_goal": "Named objects move while keeping their visual identity and depth relationships",
+      "narrative_functions": [
+        "display",
+        "personalize",
+        "surprise"
+      ],
+      "evidence_reels": [
+        "Dcy8nVrM7Wx",
+        "DdgvqW_oiBN"
+      ],
+      "inputs": [
+        "separate object references",
+        "background",
+        "character references",
+        "depth order",
+        "paths"
+      ],
+      "plan_steps": [
+        "catalog assets and rights",
+        "define initial placement",
+        "assign trajectories and occlusion",
+        "animate or generate",
+        "verify each object"
+      ],
+      "reject_when": [
+        "distinct assets cannot be identified",
+        "real product labels are synthesized incorrectly"
+      ],
+      "render_checks": [
+        "objects persist frame to frame",
+        "layer order is correct",
+        "logos and shapes stay faithful"
+      ],
+      "qualification": "knowledge_only"
+    },
+    {
+      "id": "continuous_panel_canvas",
+      "perceptual_goal": "A graphic motif continues across adjacent panels",
+      "narrative_functions": [
+        "connect",
+        "sequence"
+      ],
+      "evidence_reels": [
+        "Ddlg5vgIeTv"
+      ],
+      "inputs": [
+        "panel dimensions",
+        "panel count",
+        "continuous canvas",
+        "cross-panel motif"
+      ],
+      "plan_steps": [
+        "size continuous canvas",
+        "compose across boundaries",
+        "mark safe zones",
+        "slice panels"
+      ],
+      "reject_when": [
+        "a face or essential text falls on a seam",
+        "panel sequence has no readable progression"
+      ],
+      "render_checks": [
+        "edges join cleanly",
+        "content safe zones hold",
+        "panel order is legible"
+      ],
+      "qualification": "knowledge_only"
+    },
+    {
+      "id": "cutout_object_stack",
+      "perceptual_goal": "Independent cutouts form a coherent layered object scene",
+      "narrative_functions": [
+        "assemble",
+        "personalize",
+        "reveal"
+      ],
+      "evidence_reels": [
+        "DdWc6kgIXPH",
+        "DdrD9REI9kk"
+      ],
+      "inputs": [
+        "separately sourced objects",
+        "clean cutouts",
+        "perspective and shadow plan"
+      ],
+      "plan_steps": [
+        "remove backgrounds",
+        "assign depth order",
+        "place and scale",
+        "add contact and shadow",
+        "inspect composite"
+      ],
+      "reject_when": [
+        "cutout edges are visibly contaminated",
+        "object relationships become illegible"
+      ],
+      "render_checks": [
+        "no halos",
+        "plausible contact where intended",
+        "all key objects are identifiable"
+      ],
+      "qualification": "knowledge_only"
+    }
+  ]
+}

@@ -1,0 +1,434 @@
+{
+  "schemaVersion": "clicko.craft-full-clone-audit.v1",
+  "auditedAt": "2026-10-13T16:41:26.318451+00:00",
+  "upstreamRefsVerifiedAt": "2026-10-13T16:36:25.830091+00:00",
+  "scope": "Complete pinned source trees and all advertised Git refs/history; compiled GUIs and feature parity are qualified separately",
+  "totalSourceFiles": 4838,
+  "sources": [
+    {
+      "name": "photocraft",
+      "repository": "https://github.com/storytold/photocraft.git",
+      "commit": "a7f26522ff84cd427c8a5d54b0e8ded7b56fb296",
+      "gitTree": "bd77545d5fe8dc308c1cd326a3ef14805295a8b0",
+      "sourceDirectory": "third_party/craft/photocraft",
+      "sourceFileCount": 1569,
+      "inventorySha256": "7954c6b30371264d73327dc4df4a54004cc26b14f35323d3972a48c655572485",
+      "snapshotMatchesEntireUpstreamTree": true,
+      "trackedModesAndBlobsMatch": true,
+      "submodules": 0,
+      "unmaterializedLfsPointers": 0,
+      "sourceCategories": {
+        "apps/": 40,
+        "crates/": 1155,
+        "crates/ui-egui/": 342,
+        "assets/": 169,
+        "docs/": 66,
+        "docs/images/": 12
+      },
+      "registryDependenciesWithChecksums": 699,
+      "gitDependenciesFullyImported": [
+        "git+https://github.com/storytold/craft-libs?rev=5c874d51eeb3de70e735c8ce87a59a7dedd47675#5c874d51eeb3de70e735c8ce87a59a7dedd47675"
+      ],
+      "originalInterfaceReferences": [
+        {
+          "path": "third_party/craft/photocraft/docs/images/photocraft-adjustments.jpg",
+          "sha256": "75772fd4223a1cab9d28fa8bd88a1eeb4860b072e521c6b4c45a9afdc66f047c"
+        },
+        {
+          "path": "third_party/craft/photocraft/docs/images/photocraft-demo.jpg",
+          "sha256": "03fad7792789cf0fe20f8b44d9890696a34bb1e79a8e85cfacb1eb4b93617fd2"
+        },
+        {
+          "path": "third_party/craft/photocraft/docs/images/photocraft-export-light.jpg",
+          "sha256": "258bcd06f2f25ee65b38c0b66dd9e7c532441b56f53454ca5a218788ec687ccf"
+        },
+        {
+          "path": "third_party/craft/photocraft/docs/images/photocraft-filters.jpg",
+          "sha256": "aab81eb05b800f8f3fee00b130c27cea7004b67314e44e34f7d9f65168693d2c"
+        },
+        {
+          "path": "third_party/craft/photocraft/docs/images/photocraft-layer-styles.jpg",
+          "sha256": "8dc6c9d0cf04cc31764467dcf0ff9061f45166011971889c9942d0004fe1f092"
+        },
+        {
+          "path": "third_party/craft/photocraft/docs/images/photocraft-masks.jpg",
+          "sha256": "80304d4bde6b5a7237e5eedd114856be2c5d90c47ce3765e2eb813780fe9fd46"
+        },
+        {
+          "path": "third_party/craft/photocraft/docs/images/photocraft-transform.jpg",
+          "sha256": "54fc3f899427b96ce61760f4754a7d30349c9db8cc17e89bb25ba50791d82adf"
+        },
+        {
+          "path": "third_party/craft/photocraft/docs/images/photocraft-type.jpg",
+          "sha256": "9e97c972ccfdbbfd045e8ee39292c461f5c6959581cf51643792cc1e931950db"
+        },
+        {
+          "path": "third_party/craft/photocraft/docs/images/photocraft-vector.jpg",
+          "sha256": "825c4d8abd4809b73922b44ace819aa5655b8d6923433e38573181998f13582a"
+        },
+        {
+          "path": "third_party/craft/photocraft/docs/images/preferences-apply-after.png",
+          "sha256": "6030fd95fe79cdad42f86000370793472d4c9b9081450ade404460fc95a5bcd9"
+        },
+        {
+          "path": "third_party/craft/photocraft/docs/images/preferences-apply-before.png",
+          "sha256": "c689e4c243891f341a6f04436122ae86d7ed6e10c44a841a22d999ad6a283305"
+        }
+      ]
+    },
+    {
+      "name": "filmcraft",
+      "repository": "https://github.com/storytold/filmcraft.git",
+      "commit": "0800a8b0aa4a703ba42172f415b45a61f8d8a5e1",
+      "gitTree": "e6d6bbf9ac69db71f7b10528d509a1c4bd3d32f8",
+      "sourceDirectory": "third_party/craft/filmcraft",
+      "sourceFileCount": 1236,
+      "inventorySha256": "415749dfbdec5252a5ce9f6edb043a3591b19ef5f07a41fa926d4efa6ad1fc06",
+      "snapshotMatchesEntireUpstreamTree": true,
+      "trackedModesAndBlobsMatch": true,
+      "submodules": 0,
+      "unmaterializedLfsPointers": 0,
+      "sourceCategories": {
+        "apps/": 42,
+        "crates/": 1025,
+        "crates/ui-egui/": 166,
+        "assets/": 50,
+        "docs/": 59,
+        "docs/images/": 18
+      },
+      "registryDependenciesWithChecksums": 652,
+      "gitDependenciesFullyImported": [
+        "git+https://github.com/storytold/craft-libs?rev=5c874d51eeb3de70e735c8ce87a59a7dedd47675#5c874d51eeb3de70e735c8ce87a59a7dedd47675"
+      ],
+      "originalInterfaceReferences": [
+        {
+          "path": "third_party/craft/filmcraft/docs/images/filmcraft-assembly.png",
+          "sha256": "571184efe9db6b14e45db1db126bbac7bbe38dbd0c0be7e28f4700b4ab1b3c56"
+        },
+        {
+          "path": "third_party/craft/filmcraft/docs/images/filmcraft-color.png",
+          "sha256": "429b883b4d6531b4a826059ca84146c80f2138cdfa19e5abdee541dac964c1a4"
+        },
+        {
+          "path": "third_party/craft/filmcraft/docs/images/filmcraft-effects.png",
+          "sha256": "aef9d2488cba07f6002fe1c08a44ce8574234d4f587a441f31165d819f6e3cdd"
+        },
+        {
+          "path": "third_party/craft/filmcraft/docs/images/filmcraft-export.png",
+          "sha256": "d19c31c8bb3c9c0ddd73a6c969f3440a3af1b84b06484eae639d6571e426ab66"
+        },
+        {
+          "path": "third_party/craft/filmcraft/docs/images/filmcraft-hero.png",
+          "sha256": "0f046462e2ca77a3efa29d05c1680867b38ea98c250f76943906bb78ee8e4ed9"
+        },
+        {
+          "path": "third_party/craft/filmcraft/docs/images/filmcraft-keyframes.png",
+          "sha256": "041d02d8c5dea57b0408ec55227e7c2f83497d19f8e7c0fa2358c044b0b61203"
+        },
+        {
+          "path": "third_party/craft/filmcraft/docs/images/filmcraft-lumetri.png",
+          "sha256": "fbe0b72b1a3ed0210ca45be770c51cf17e0ec002494c1a3670c8e9f684cd1089"
+        },
+        {
+          "path": "third_party/craft/filmcraft/docs/images/filmcraft-scopes.png",
+          "sha256": "2bd8d2484e800808d5371a31ac97237bacf89cead1d9d2291a0ab572ac42f79b"
+        },
+        {
+          "path": "third_party/craft/filmcraft/docs/images/filmcraft-timeline.png",
+          "sha256": "73052e1d3b7cb4d1ff2716f6001923a8c2bba2515302dcd17325a3e8ea9f55fc"
+        }
+      ]
+    },
+    {
+      "name": "effectcraft",
+      "repository": "https://github.com/storytold/effectcraft.git",
+      "commit": "67434e90388b6dca4417555346fa6850b6f96033",
+      "gitTree": "74eef2e401dffcd2757a1e3444e0a697bb3e35a4",
+      "sourceDirectory": "third_party/craft/effectcraft",
+      "sourceFileCount": 1016,
+      "inventorySha256": "c880ced2266826295fae454fa14e1017a7bef07c2ca10b14a1653133fe4d99b5",
+      "snapshotMatchesEntireUpstreamTree": true,
+      "trackedModesAndBlobsMatch": true,
+      "submodules": 0,
+      "unmaterializedLfsPointers": 0,
+      "sourceCategories": {
+        "apps/": 40,
+        "crates/": 810,
+        "crates/ui-egui/": 134,
+        "assets/": 49,
+        "docs/": 52,
+        "docs/images/": 10
+      },
+      "registryDependenciesWithChecksums": 576,
+      "gitDependenciesFullyImported": [
+        "git+https://github.com/storytold/craft-libs?rev=5c874d51eeb3de70e735c8ce87a59a7dedd47675#5c874d51eeb3de70e735c8ce87a59a7dedd47675",
+        "git+https://github.com/storytold/filmcraft?rev=2c5ba7a72619935f0481f99d59409e0d1844b234#2c5ba7a72619935f0481f99d59409e0d1844b234"
+      ],
+      "originalInterfaceReferences": [
+        {
+          "path": "third_party/craft/effectcraft/docs/images/effectcraft-3d.png",
+          "sha256": "f6299e5f29011b393b306519d43b4822dfc70840c2adf0b0fe7abaa53160dd1f"
+        },
+        {
+          "path": "third_party/craft/effectcraft/docs/images/effectcraft-effects.png",
+          "sha256": "c7f0f5723409343e2ab66d73abf98662bbeac30e103315f9662abdd5225d4926"
+        },
+        {
+          "path": "third_party/craft/effectcraft/docs/images/effectcraft-graph-editor.png",
+          "sha256": "dfd2853d8d89b8aacd4e3998acff2f27577de646faea6e319ce24071a801502c"
+        },
+        {
+          "path": "third_party/craft/effectcraft/docs/images/effectcraft-hero.png",
+          "sha256": "e76ef6195d1d1a90014c9e1b92108681cd9fc2f0aecb131975db07121ec204f2"
+        },
+        {
+          "path": "third_party/craft/effectcraft/docs/images/effectcraft-render-queue.png",
+          "sha256": "67f39084bc047ea9c14858d9065a6006bc9e8915ed295df5ea56b2ca6d223b5b"
+        }
+      ]
+    },
+    {
+      "name": "craft-libs",
+      "repository": "https://github.com/storytold/craft-libs.git",
+      "commit": "5c874d51eeb3de70e735c8ce87a59a7dedd47675",
+      "gitTree": "4b253a0dabee3f27562cb1e31148db4ec2e71245",
+      "sourceDirectory": "third_party/craft/craft-libs",
+      "sourceFileCount": 41,
+      "inventorySha256": "832c94b35a73f32a523433e5bb9663c3958b19cb339f17f0c058e190cca05913",
+      "snapshotMatchesEntireUpstreamTree": true,
+      "trackedModesAndBlobsMatch": true,
+      "submodules": 0,
+      "unmaterializedLfsPointers": 0,
+      "sourceCategories": {
+        "apps/": 0,
+        "crates/": 24,
+        "crates/ui-egui/": 0,
+        "assets/": 0,
+        "docs/": 5,
+        "docs/images/": 0
+      },
+      "registryDependenciesWithChecksums": 340,
+      "gitDependenciesFullyImported": [],
+      "originalInterfaceReferences": []
+    },
+    {
+      "name": "craft-fonts",
+      "repository": "https://github.com/storytold/craft-fonts.git",
+      "commit": "abb83316d96aa59c1cf64784289e378fe9fa5695",
+      "gitTree": "ed4c0faa2e3729c9b84c72bd588f300708f4a71b",
+      "sourceDirectory": "third_party/craft/craft-fonts",
+      "sourceFileCount": 25,
+      "inventorySha256": "8e7045e30e9c260356fe53b7f0349242b247d0744f133b1452dcc7bd18143e70",
+      "snapshotMatchesEntireUpstreamTree": true,
+      "trackedModesAndBlobsMatch": true,
+      "submodules": 0,
+      "unmaterializedLfsPointers": 0,
+      "sourceCategories": {
+        "apps/": 0,
+        "crates/": 7,
+        "crates/ui-egui/": 0,
+        "assets/": 0,
+        "docs/": 1,
+        "docs/images/": 0
+      },
+      "registryDependenciesWithChecksums": 26,
+      "gitDependenciesFullyImported": [],
+      "originalInterfaceReferences": []
+    },
+    {
+      "name": "filmcraft-compat",
+      "repository": "https://github.com/storytold/filmcraft.git",
+      "commit": "2c5ba7a72619935f0481f99d59409e0d1844b234",
+      "gitTree": "fc1700716b4dcb9f2c6c13ea171e367bbd287111",
+      "sourceDirectory": "third_party/craft/filmcraft-compat",
+      "sourceFileCount": 951,
+      "inventorySha256": "1fe5cfc3f3b7969777a0f237eabf11593fabb5658d048f2780ae27596c5ca369",
+      "snapshotMatchesEntireUpstreamTree": true,
+      "trackedModesAndBlobsMatch": true,
+      "submodules": 0,
+      "unmaterializedLfsPointers": 0,
+      "sourceCategories": {
+        "apps/": 29,
+        "crates/": 784,
+        "crates/ui-egui/": 92,
+        "assets/": 50,
+        "docs/": 47,
+        "docs/images/": 18
+      },
+      "registryDependenciesWithChecksums": 643,
+      "gitDependenciesFullyImported": [],
+      "originalInterfaceReferences": [
+        {
+          "path": "third_party/craft/filmcraft-compat/docs/images/filmcraft-assembly.png",
+          "sha256": "571184efe9db6b14e45db1db126bbac7bbe38dbd0c0be7e28f4700b4ab1b3c56"
+        },
+        {
+          "path": "third_party/craft/filmcraft-compat/docs/images/filmcraft-color.png",
+          "sha256": "429b883b4d6531b4a826059ca84146c80f2138cdfa19e5abdee541dac964c1a4"
+        },
+        {
+          "path": "third_party/craft/filmcraft-compat/docs/images/filmcraft-effects.png",
+          "sha256": "aef9d2488cba07f6002fe1c08a44ce8574234d4f587a441f31165d819f6e3cdd"
+        },
+        {
+          "path": "third_party/craft/filmcraft-compat/docs/images/filmcraft-export.png",
+          "sha256": "d19c31c8bb3c9c0ddd73a6c969f3440a3af1b84b06484eae639d6571e426ab66"
+        },
+        {
+          "path": "third_party/craft/filmcraft-compat/docs/images/filmcraft-hero.png",
+          "sha256": "0f046462e2ca77a3efa29d05c1680867b38ea98c250f76943906bb78ee8e4ed9"
+        },
+        {
+          "path": "third_party/craft/filmcraft-compat/docs/images/filmcraft-keyframes.png",
+          "sha256": "041d02d8c5dea57b0408ec55227e7c2f83497d19f8e7c0fa2358c044b0b61203"
+        },
+        {
+          "path": "third_party/craft/filmcraft-compat/docs/images/filmcraft-lumetri.png",
+          "sha256": "fbe0b72b1a3ed0210ca45be770c51cf17e0ec002494c1a3670c8e9f684cd1089"
+        },
+        {
+          "path": "third_party/craft/filmcraft-compat/docs/images/filmcraft-scopes.png",
+          "sha256": "2bd8d2484e800808d5371a31ac97237bacf89cead1d9d2291a0ab572ac42f79b"
+        },
+        {
+          "path": "third_party/craft/filmcraft-compat/docs/images/filmcraft-timeline.png",
+          "sha256": "73052e1d3b7cb4d1ff2716f6001923a8c2bba2515302dcd17325a3e8ea9f55fc"
+        }
+      ]
+    }
+  ],
+  "repositories": [
+    {
+      "repository": "https://github.com/storytold/craft-fonts.git",
+      "advertisedRefsSha256": "4afeef28a56caf5d5141558a1470d24eb157a151ac6ccd824e702b8220169443",
+      "advertisedRefCount": 49,
+      "branches": 3,
+      "tags": 0,
+      "retainedRefCount": 1,
+      "commitCount": 58,
+      "pins": {
+        "craft-fonts": "abb83316d96aa59c1cf64784289e378fe9fa5695"
+      },
+      "shallow": false,
+      "partialClone": false,
+      "externalAlternates": false,
+      "fsckFull": "passed",
+      "advertisedRefsMatch": true,
+      "bundleSha256": "819d88d534d5874db286ad270a979e52ea6af0736e6608ec346226ffa089ca1c",
+      "bundleBytes": 75064563
+    },
+    {
+      "repository": "https://github.com/storytold/craft-libs.git",
+      "advertisedRefsSha256": "dd6759f458a309f8938647b39c073d752a80cd1a3d1e227d221a129a12cb0997",
+      "advertisedRefCount": 66,
+      "branches": 9,
+      "tags": 0,
+      "retainedRefCount": 5,
+      "commitCount": 247,
+      "pins": {
+        "craft-libs": "5c874d51eeb3de70e735c8ce87a59a7dedd47675"
+      },
+      "shallow": false,
+      "partialClone": false,
+      "externalAlternates": false,
+      "fsckFull": "passed",
+      "advertisedRefsMatch": true,
+      "bundleSha256": "d1a701d485015dfb07b0ea71b267c14d274b2ab36f06421a60e2dfd067483723",
+      "bundleBytes": 4616440
+    },
+    {
+      "repository": "https://github.com/storytold/effectcraft.git",
+      "advertisedRefsSha256": "0cac0b9770969452df286915f98ec882019b4b4109b21fed92dd53faf2b42877",
+      "advertisedRefCount": 847,
+      "branches": 68,
+      "tags": 10,
+      "retainedRefCount": 121,
+      "commitCount": 2615,
+      "pins": {
+        "effectcraft": "67434e90388b6dca4417555346fa6850b6f96033"
+      },
+      "shallow": false,
+      "partialClone": false,
+      "externalAlternates": false,
+      "fsckFull": "passed",
+      "advertisedRefsMatch": true,
+      "bundleSha256": "ccd2fe1ac8c444b79fc3cc0665794b2984c858b356865e85108a780f97a42ffe",
+      "bundleBytes": 35868461
+    },
+    {
+      "repository": "https://github.com/storytold/filmcraft.git",
+      "advertisedRefsSha256": "b31317b2de5baa26cbaa9a41c4c8cc1735da26ccc7f9e3bb7a17f5e555d175b4",
+      "advertisedRefCount": 1082,
+      "branches": 13,
+      "tags": 8,
+      "retainedRefCount": 80,
+      "commitCount": 2744,
+      "pins": {
+        "filmcraft": "0800a8b0aa4a703ba42172f415b45a61f8d8a5e1",
+        "filmcraft-compat": "2c5ba7a72619935f0481f99d59409e0d1844b234"
+      },
+      "shallow": false,
+      "partialClone": false,
+      "externalAlternates": false,
+      "fsckFull": "passed",
+      "advertisedRefsMatch": true,
+      "bundleSha256": "e9b5ac120f1fd4aeb098105be0e24a532e766e35aa5a66f6511296a1a08853be",
+      "bundleBytes": 37426159
+    },
+    {
+      "repository": "https://github.com/storytold/photocraft.git",
+      "advertisedRefsSha256": "3cd9ed5800a8f03d175e097405a595a908784b9d146aa12c09eb7cf7f8a8853c",
+      "advertisedRefCount": 3590,
+      "branches": 274,
+      "tags": 10,
+      "retainedRefCount": 192,
+      "commitCount": 10301,
+      "pins": {
+        "photocraft": "a7f26522ff84cd427c8a5d54b0e8ded7b56fb296"
+      },
+      "shallow": false,
+      "partialClone": false,
+      "externalAlternates": false,
+      "fsckFull": "passed",
+      "advertisedRefsMatch": true,
+      "bundleSha256": "dad7bbd20da00de00a963436bf955fab45852f46868607fd7037ff7a799238df",
+      "bundleBytes": 129204565
+    }
+  ],
+  "externalFontsVerified": [
+    {
+      "family": "Shippori Mincho",
+      "style": "Regular",
+      "path": "fonts/shippori-mincho/ShipporiMincho-Regular.ttf",
+      "sha256": "769b5269f0f9bc6534b352c0e6bd856a566e03ff788f107191c2d835863570b2",
+      "license": "OFL-1.1",
+      "source": "https://github.com/google/fonts/tree/9710da1eacb3be272583c3224dcb70f9da6eadbb/ofl/shipporimincho"
+    },
+    {
+      "family": "BIZ UDPGothic",
+      "style": "Regular",
+      "path": "fonts/biz-ud-pgothic/BIZUDPGothic-Regular.ttf",
+      "sha256": "258d7156c165f2ff774b6efee637c22c3b950de0d8a10e501137061bc8085d01",
+      "license": "OFL-1.1",
+      "source": "https://github.com/googlefonts/morisawa-biz-ud-gothic/tree/18934af56b9c003ca58c54bffbf226848cb11032"
+    },
+    {
+      "family": "BIZ UDPGothic",
+      "style": "Bold",
+      "path": "fonts/biz-ud-pgothic/BIZUDPGothic-Bold.ttf",
+      "sha256": "30eba52fc837e8b62c97d4b82e6706583149fb7294e3712dd71a655eaea80a90",
+      "license": "OFL-1.1",
+      "source": "https://github.com/googlefonts/morisawa-biz-ud-gothic/tree/18934af56b9c003ca58c54bffbf226848cb11032"
+    },
+    {
+      "family": "BIZ UDMincho",
+      "style": "Regular",
+      "path": "fonts/biz-ud-mincho/BIZUDMincho-Regular.ttf",
+      "sha256": "468ee6d9b149ca144809e03841bf18740ecf014e055a00da6ecaf1aaf4165af2",
+      "license": "OFL-1.1",
+      "source": "https://github.com/google/fonts/tree/63833b7d10bb1f86a8f0b91cba2d3ae1f68d1aa3/ofl/bizudmincho"
+    }
+  ],
+  "sharedOriginalInterface": "third_party/craft/craft-libs/crates/ui",
+  "visualRedesignStarted": false
+}

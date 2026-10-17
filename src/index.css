@@ -1,4 +1,10 @@
 @import "tailwindcss";
+@source not "../third_party";
+@source not "../workers";
+@source not "../backend";
+@source not "../.codex-runtime";
+@source not "../.venv";
+@source not "../docs/studios";
 
 :root {
   --clicko-accent: #FF7F50;

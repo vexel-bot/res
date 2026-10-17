@@ -1,0 +1,4 @@
+# Optional, offline acoustic evaluation only. Not part of the API/media worker.
+numpy==2.4.4
+onnxruntime==1.20.1
+webrtcvad-wheels==2.0.14

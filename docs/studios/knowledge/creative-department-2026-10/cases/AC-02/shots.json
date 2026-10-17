@@ -1,0 +1,33 @@
+{
+  "schemaVersion": "clicko.research-modality-map.v1",
+  "caseId": "AC-02",
+  "source": "https://www.orbitmedia.com/blog/orbit-media-content-strategy/",
+  "coverage": {
+    "text": "article-text-reviewed",
+    "visual": "not-reviewed",
+    "audio": "not-applicable",
+    "completeAudiovisual": false
+  },
+  "editorialCuts": [],
+  "visualChangeCandidates": [],
+  "locatedTextUnits": [
+    {
+      "locator": "seções 2007–2010, 2011–2014, 2015–2019 e 2020+",
+      "kind": "observation"
+    },
+    {
+      "locator": "conclusões e operação editorial",
+      "kind": "teaching"
+    },
+    {
+      "locator": "retrospectiva",
+      "kind": "interpretation"
+    },
+    {
+      "locator": "continuidade",
+      "kind": "clicko_hypothesis"
+    }
+  ],
+  "reviewGap": "Cuts, timing and audio not fully annotated; text locators are not cut boundaries",
+  "distributedMedia": false
+}

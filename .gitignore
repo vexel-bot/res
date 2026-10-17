@@ -10,6 +10,17 @@ coverage/
 .env*
 !.env.example
 .clicko-data/
+.codex-runtime/
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+*.sqlite*
+*.db
+target/
+public/craft/
+workers/craft/.runs/
 
 # Local/private credentials. Keep examples and application data models tracked;
 # real provider credentials belong outside the repository or in .secrets/.

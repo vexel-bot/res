@@ -1,0 +1,16 @@
+FROM debian:bookworm-slim
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ca-certificates libasound2 libfontconfig1 libxkbcommon0 libegl1 libvulkan1 \
+    && rm -rf /var/lib/apt/lists/* \
+    && useradd --uid 10001 --create-home clicko
+COPY .codex-runtime/craft/bin/ /opt/clicko/bin/
+COPY .codex-runtime/craft/licenses/ /opt/clicko/licenses/
+COPY .codex-runtime/craft/runtime-manifest.json /opt/clicko/runtime-manifest.json
+COPY third_party/craft/photocraft/LICENSE-* /opt/clicko/licenses/photocraft/
+COPY third_party/craft/filmcraft/LICENSE-* /opt/clicko/licenses/filmcraft/
+COPY third_party/craft/effectcraft/LICENSE-* /opt/clicko/licenses/effectcraft/
+COPY third_party/craft/photocraft/NOTICE /opt/clicko/licenses/photocraft/NOTICE
+COPY third_party/craft/filmcraft/NOTICE /opt/clicko/licenses/filmcraft/NOTICE
+COPY third_party/craft/effectcraft/NOTICE /opt/clicko/licenses/effectcraft/NOTICE
+USER clicko
+WORKDIR /job

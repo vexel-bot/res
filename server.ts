@@ -15,6 +15,8 @@ import { getKlicAiClient, assertKlicText } from './server/klic/provider';
 import { klicProviderConfig, klicTranscriptionModel } from './server/klic/providerConfig';
 import { logProviderFailure } from './server/klic/providerErrors';
 import { streamWithKlicRetry, withKlicRetry } from './server/klic/providerRetry';
+import { createStudiosProxy } from './server/studios/proxy';
+import { startLocalStudios } from './server/studios/runtime';
 
 dotenv.config();
 
@@ -26,11 +28,14 @@ async function startServer() {
   const app = express();
   const PORT = Number(process.env.PORT) || 3000;
   const isProduction = process.env.NODE_ENV === 'production' || path.basename(__dirname).toLowerCase() === 'dist';
+  const studiosProcess = isProduction ? undefined : await startLocalStudios();
 
   if (isProduction) app.set('trust proxy', 1);
   app.disable('x-powered-by');
   app.use(requestContext);
   app.use(securityHeaders);
+  // Stream uploads and native project responses before the JSON middleware.
+  app.use(['/api/v1/studios/v1', '/api/v1/assets'], createStudiosProxy());
   app.use(express.json({
     limit: '10mb',
     verify: (req, _res, buffer) => {
@@ -752,6 +757,7 @@ Monte automaticamente o planejamento completo com cronograma, lista de conteúdo
   const shutdown = async (signal: string) => {
     if (closing) return;
     closing = true;
+    studiosProcess?.kill();
     console.info('CLICKO_SERVER_SHUTDOWN', { signal });
     server.close(async () => {
       await closeSocialIntegrationRepository().catch(() => undefined);

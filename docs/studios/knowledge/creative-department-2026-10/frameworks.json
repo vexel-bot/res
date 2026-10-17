@@ -1,0 +1,653 @@
+{
+  "schemaVersion": "clicko.creative-frameworks.v1",
+  "frameworks": [
+    {
+      "id": "F01",
+      "title": "Diagnóstico editorial situado",
+      "originKind": "documented-teaching-not-named-framework",
+      "version": "caso Nardon, 2026",
+      "caseIds": [
+        "AS-YT-01",
+        "AS-YT-06"
+      ],
+      "sources": [
+        {
+          "url": "https://www.youtube.com/watch?v=2iFV3cfk4WE",
+          "caseId": "AS-YT-01"
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=q-nyNYyZw54",
+          "caseId": "AS-YT-06"
+        }
+      ],
+      "purpose": "Transformar repertório e contexto em uma linha editorial.",
+      "prerequisites": [
+        "Fatos e materiais reais da marca",
+        "Público e intenção conhecidos",
+        "Disponibilidade e limites do porta-voz"
+      ],
+      "clickoAdaptation": [
+        "Relacionar uma capacidade a uma pergunta real do público",
+        "Propor ângulos com profundidades diferentes",
+        "Vincular cada direção a uma fonte da marca"
+      ],
+      "limits": [
+        "Cadência e personalidade do caso não são universais",
+        "Não confundir visualizações acumuladas com pessoas únicas"
+      ],
+      "acceptanceTest": "A direção cita contexto específico; trocar só o nome da marca deve tornar o argumento inadequado.",
+      "counterexamples": [
+        "Uma marca sem porta-voz disponível pode construir autoridade com demonstrações de produto; não deve inventar uma personalidade de fundador.",
+        "Uma pessoa competente pode não ter renda alta; usar riqueza como validação excluiria especialistas e entidades relevantes."
+      ],
+      "empiricalEffect": "not-validated",
+      "attribution": "Source teaching and Clicko adaptation must remain distinct"
+    },
+    {
+      "id": "F02",
+      "title": "Funções de marketing e objetivo da peça",
+      "originKind": "documented-situated-model",
+      "version": "Advisor BC Energia, 2026",
+      "caseIds": [
+        "AS-YT-03"
+      ],
+      "sources": [
+        {
+          "url": "https://www.youtube.com/watch?v=CsivxdkrABQ",
+          "caseId": "AS-YT-03"
+        }
+      ],
+      "purpose": "Distinguir reputação, audiência e aquisição.",
+      "prerequisites": [
+        "Objetivo da marca",
+        "Jornada e público",
+        "Critério de sucesso compatível"
+      ],
+      "clickoAdaptation": [
+        "Escolher a função primária da peça",
+        "Definir sinal editorial e sinal de resultado separadamente",
+        "Permitir utilidade sem venda imediata"
+      ],
+      "limits": [
+        "Funções podem coexistir",
+        "Não transformar canal em garantia de objetivo"
+      ],
+      "acceptanceTest": "Uma peça educativa é avaliada por compreensão e pertinência; um anúncio também explicita oferta e ação.",
+      "counterexamples": [
+        "Uma peça de suporte pós-venda pode ser valiosa sem ampliar alcance ou gerar leads."
+      ],
+      "empiricalEffect": "not-validated",
+      "attribution": "Source teaching and Clicko adaptation must remain distinct"
+    },
+    {
+      "id": "F03",
+      "title": "Reutilização, reedição e nova derivação",
+      "originKind": "documented-teaching-not-named-framework",
+      "version": "Advisor aquisição, 2026",
+      "caseIds": [
+        "AS-YT-04",
+        "AC-02"
+      ],
+      "sources": [
+        {
+          "url": "https://www.youtube.com/watch?v=7w7175Qm3UU",
+          "caseId": "AS-YT-04"
+        },
+        {
+          "url": "https://www.orbitmedia.com/blog/orbit-media-content-strategy/",
+          "caseId": "AC-02"
+        }
+      ],
+      "purpose": "Decidir como continuar a partir de material existente.",
+      "prerequisites": [
+        "Material autorizado",
+        "Origem e validade",
+        "Objetivo da próxima entrega"
+      ],
+      "clickoAdaptation": [
+        "Classificar continuidade como republicação, adaptação ou nova ideia",
+        "Preservar a origem",
+        "Conferir se o novo canal exige contexto adicional"
+      ],
+      "limits": [
+        "Mudar formato não resolve argumento fraco",
+        "Atualizar informações vencidas antes de reutilizar"
+      ],
+      "acceptanceTest": "O revisor distingue mudança de embalagem de mudança de tese e localiza a peça de origem.",
+      "counterexamples": [
+        "Trocar apenas a cor de uma peça pode não resolver uma mensagem irrelevante; uma variante técnica não é nova direção editorial.",
+        "Atualizar um material irrelevante pode custar mais que aposentá-lo; continuidade deve considerar necessidade atual."
+      ],
+      "empiricalEffect": "not-validated",
+      "attribution": "Source teaching and Clicko adaptation must remain distinct"
+    },
+    {
+      "id": "F04",
+      "title": "Adequação de mídia ao negócio",
+      "originKind": "documented-teaching",
+      "version": "experimento autorrelatado 2024 e revisão 2026",
+      "caseIds": [
+        "HZ-YT-01",
+        "HZ-YT-02"
+      ],
+      "sources": [
+        {
+          "url": "https://www.youtube.com/watch?v=JOfsujnXxCg",
+          "caseId": "HZ-YT-01"
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=21flGkcZO3A",
+          "caseId": "HZ-YT-02"
+        }
+      ],
+      "purpose": "Alinhar conteúdo ao público que o negócio quer servir.",
+      "prerequisites": [
+        "Modelo de negócio",
+        "Padrões reais de compradores",
+        "Métricas com definição"
+      ],
+      "clickoAdaptation": [
+        "Separar negócio de mídia e negócio apoiado por mídia",
+        "Definir público capaz de usar a ideia",
+        "Tratar sinais de atenção e conversão como medidas distintas"
+      ],
+      "limits": [
+        "Experimento não isola causalidade",
+        "RPM e UTMs têm limites",
+        "Conteúdo amplo também pode contribuir"
+      ],
+      "acceptanceTest": "O objetivo não é substituído automaticamente por seguidores; a hipótese inclui um sinal observável e limites de atribuição.",
+      "counterexamples": [
+        "Uma campanha de serviço público pode priorizar alcance; monetização da audiência não é indicador apropriado.",
+        "Conteúdo amplo pode criar familiaridade útil para venda futura; ausência de venda por link não prova ausência de efeito."
+      ],
+      "empiricalEffect": "not-validated",
+      "attribution": "Source teaching and Clicko adaptation must remain distinct"
+    },
+    {
+      "id": "F05",
+      "title": "Prova e documentação do trabalho",
+      "originKind": "documented-teaching",
+      "version": "Short 2023; aula IA 2026",
+      "caseIds": [
+        "HZ-YT-03",
+        "HZ-YT-04",
+        "AS-YT-02"
+      ],
+      "sources": [
+        {
+          "url": "https://www.youtube.com/watch?v=XsWSvz-aewA",
+          "caseId": "HZ-YT-03"
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=R6gTKTFI-zA",
+          "caseId": "HZ-YT-04"
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=b2Fur8D7zQw",
+          "caseId": "AS-YT-02"
+        }
+      ],
+      "purpose": "Apoiar autoridade com atividade e evidência próprias.",
+      "prerequisites": [
+        "Permissão de uso",
+        "Fatos rastreáveis",
+        "Demonstração compatível com o benefício"
+      ],
+      "clickoAdaptation": [
+        "Localizar ocorrência ou material real",
+        "Separar demonstração de resultado comprovado",
+        "Usar exemplo fictício identificado quando não há caso publicável"
+      ],
+      "limits": [
+        "Experiência e riqueza não validam toda afirmação",
+        "Não adotar a escala de risco do autor como classificação de segurança",
+        "Nunca inventar prova social"
+      ],
+      "acceptanceTest": "Cada alegação material tem origem, escopo e autorização; ausência de prova não é preenchida por um testemunho sintético.",
+      "counterexamples": [
+        "Um produto confidencial pode demonstrar seu mecanismo com exemplo sintético identificado, sem expor clientes ou simular prova real.",
+        "Novas empresas podem ainda não ter casos; podem explicar uma decisão ou processo sem fingir histórico.",
+        "Um setor com obrigações especializadas pode exigir precisão antes de ampliar sua promessa de consultoria."
+      ],
+      "empiricalEffect": "not-validated",
+      "attribution": "Source teaching and Clicko adaptation must remain distinct"
+    },
+    {
+      "id": "F06",
+      "title": "Prova e variantes de anúncios",
+      "originKind": "documented-teaching",
+      "version": "Short e aula 2024",
+      "caseIds": [
+        "HZ-YT-05",
+        "HZ-YT-06"
+      ],
+      "sources": [
+        {
+          "url": "https://www.youtube.com/watch?v=9XIgalr9aWY",
+          "caseId": "HZ-YT-05"
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=fSbqaTlWaYI",
+          "caseId": "HZ-YT-06"
+        }
+      ],
+      "purpose": "Preparar anúncios críveis e variantes rastreáveis.",
+      "prerequisites": [
+        "Oferta confirmada",
+        "Evidência da promessa",
+        "Condição de teste e orçamento em etapa própria"
+      ],
+      "clickoAdaptation": [
+        "Definir argumento e mecanismo",
+        "Preparar variantes que declaram o que muda",
+        "Comparar depois com dados adequados ao objetivo"
+      ],
+      "limits": [
+        "Amostra e seleção dos anúncios do autor não são reproduzíveis",
+        "Percentuais e benchmarks não são padrão Clicko",
+        "Variante visual não é teste A/B executado"
+      ],
+      "acceptanceTest": "A variante conserva fatos, identifica a mudança e não promete melhoria de performance sem dados.",
+      "counterexamples": [
+        "Uma oferta nova não possui depoimentos; pode mostrar funcionamento real e condições transparentes, sem inventá-los.",
+        "Uma variante pode renovar atenção sem melhorar resultado; reutilizar até a exaustão pode prejudicar a marca."
+      ],
+      "empiricalEffect": "not-validated",
+      "attribution": "Source teaching and Clicko adaptation must remain distinct"
+    },
+    {
+      "id": "F07",
+      "title": "Writing GPS",
+      "originKind": "formal-author-framework",
+      "version": "2022: 17 passos, Go / Push / Shine; anterior 2014: 12",
+      "caseIds": [
+        "AH-01"
+      ],
+      "sources": [
+        {
+          "url": "https://www.marketingprofs.com/articles/2022/48188/writing-gps-writing-framework-ann-handley",
+          "caseId": "AH-01"
+        }
+      ],
+      "purpose": "Organizar preparação, rascunho e revisão da escrita.",
+      "prerequisites": [
+        "Leitor definido",
+        "Informações necessárias",
+        "Critério de voz e utilidade"
+      ],
+      "clickoAdaptation": [
+        "Preparar problema e evidências",
+        "Redigir antes de polir",
+        "Revisar utilidade, voz, clareza e continuidade por função separada"
+      ],
+      "limits": [
+        "Não exigir todos os passos para toda peça",
+        "Revisão humana do método não equivale à revisão por outro agente"
+      ],
+      "acceptanceTest": "O texto entrega o prometido na abertura e um revisor independente consegue identificar leitor, valor e lacunas.",
+      "counterexamples": [
+        "Uma correção curta pode dispensar várias etapas formais; o processo deve servir à necessidade."
+      ],
+      "empiricalEffect": "not-validated",
+      "attribution": "Source teaching and Clicko adaptation must remain distinct"
+    },
+    {
+      "id": "F08",
+      "title": "Voz apoiada em experiência",
+      "originKind": "clicko-adaptation-with-author-disagreement",
+      "version": "política proposta Clicko v1; relato de Handley sem data exata",
+      "caseIds": [
+        "AH-02",
+        "HZ-YT-03",
+        "AS-IG-06"
+      ],
+      "sources": [
+        {
+          "url": "https://annhandley.com/when-to-use-artificial-intelligence/",
+          "caseId": "AH-02"
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=XsWSvz-aewA",
+          "caseId": "HZ-YT-03"
+        },
+        {
+          "url": "https://www.instagram.com/alfredosoares/p/DNmAhVMtpjj/",
+          "caseId": "AS-IG-06"
+        }
+      ],
+      "purpose": "Preservar voz e repertório sem inventar uma vivência.",
+      "prerequisites": [
+        "Exemplos autorizados de linguagem",
+        "Fatos e limites da marca",
+        "Confirmação do cliente quando necessário"
+      ],
+      "clickoAdaptation": [
+        "Extrair padrões de linguagem dos materiais",
+        "Distinguir voz institucional de fala atribuída a uma pessoa",
+        "Revisar afirmações pessoais e assuntos excluídos"
+      ],
+      "limits": [
+        "Handley mantém sua escrita pessoal humana; não endossa esta automação",
+        "Família e intimidade não são requisitos de autenticidade"
+      ],
+      "acceptanceTest": "A revisão detecta uma história pessoal inventada e uma frase que contraria a voz definida; ambas são corrigidas antes da entrega.",
+      "counterexamples": [
+        "Uma voz de marca coletiva pode usar revisão distribuída; atribuir texto simulado a uma pessoa sem aprovação é inadequado.",
+        "Um produto confidencial pode demonstrar seu mecanismo com exemplo sintético identificado, sem expor clientes ou simular prova real.",
+        "Uma marca institucional pode construir confiança com processos e equipe, sem conteúdo familiar."
+      ],
+      "empiricalEffect": "not-validated",
+      "attribution": "Source teaching and Clicko adaptation must remain distinct"
+    },
+    {
+      "id": "F09",
+      "title": "Content Inc.",
+      "originKind": "formal-author-framework",
+      "version": "segunda edição 2021: 7 etapas; primeira edição/episódio 2015: 6",
+      "caseIds": [
+        "JP-01",
+        "JP-02"
+      ],
+      "sources": [
+        {
+          "url": "https://www.joepulizzi.com/wp-content/uploads/2021/05/contentinc_intro.pdf",
+          "caseId": "JP-01"
+        },
+        {
+          "url": "https://www.joepulizzi.com/news/find-your-people-sharpen-your-edge-why-community-tilt-real-momentum/",
+          "caseId": "JP-02"
+        }
+      ],
+      "purpose": "Investigar diferenciação editorial e continuidade de audiência.",
+      "prerequisites": [
+        "Conhecimento demonstrável",
+        "Interesse do público",
+        "Capacidade de manter um canal"
+      ],
+      "clickoAdaptation": [
+        "Definir contribuição específica no encontro entre repertório e necessidade",
+        "Escolher um canal inicial justificável",
+        "Planejar relação continuada sem presumir diversificação imediata"
+      ],
+      "limits": [
+        "Preservar a ordem histórica de cada versão",
+        "Modelo audiência-primeiro não substitui operação de produto existente",
+        "A fórmula de premissa citada no artigo de 2025 é atribuída a Jay Acunzo; não transferir sua autoria"
+      ],
+      "acceptanceTest": "A promessa editorial contém uma contribuição distinguível; versão e limite do método aparecem no raciocínio interno.",
+      "counterexamples": [
+        "Um varejista com estoque existente precisa atender demanda e operação enquanto desenvolve audiência.",
+        "Uma tese contrária apenas para provocar pode ser falsa ou prejudicial; a diferenciação deve servir uma necessidade real."
+      ],
+      "empiricalEffect": "not-validated",
+      "attribution": "Source teaching and Clicko adaptation must remain distinct"
+    },
+    {
+      "id": "F10",
+      "title": "Menor audiência viável",
+      "originKind": "documented-concept",
+      "version": "ensaio 2022",
+      "caseIds": [
+        "SG-01"
+      ],
+      "sources": [
+        {
+          "url": "https://seths.blog/2022/05/the-smallest-viable-audience/",
+          "caseId": "SG-01"
+        }
+      ],
+      "purpose": "Dar foco à relevância sem impor tamanho fixo de público.",
+      "prerequisites": [
+        "Pessoas que se pretende servir",
+        "Problema reconhecido",
+        "Viabilidade compatível com o negócio"
+      ],
+      "clickoAdaptation": [
+        "Descrever quem se beneficia",
+        "Excluir públicos para os quais a peça não serve",
+        "Avaliar a utilidade para o recorte escolhido"
+      ],
+      "limits": [
+        "Não define número mínimo de seguidores",
+        "Especificidade não impede crescimento"
+      ],
+      "acceptanceTest": "Uma pessoa fora do público pode entender a mensagem, mas o valor principal se dirige a alguém identificável.",
+      "counterexamples": [
+        "Uma comunicação de utilidade pública pode precisar de múltiplos recortes e distribuição ampla."
+      ],
+      "empiricalEffect": "not-validated",
+      "attribution": "Source teaching and Clicko adaptation must remain distinct"
+    },
+    {
+      "id": "F11",
+      "title": "Curadoria como ponto de entrada",
+      "originKind": "clicko-adaptation-from-observed-example",
+      "version": "exemplo de blog 2026; adaptação v1",
+      "caseIds": [
+        "SG-02"
+      ],
+      "sources": [
+        {
+          "url": "https://seths.blog/2026/02/a-starting-point-for-the-blog/",
+          "caseId": "SG-02"
+        }
+      ],
+      "purpose": "Reduzir esforço de escolha a partir de um acervo amplo.",
+      "prerequisites": [
+        "Objetivo e contexto",
+        "Critério editorial",
+        "Alternativas com diferenças reais"
+      ],
+      "clickoAdaptation": [
+        "Apresentar duas ou três direções explicadas",
+        "Mostrar benefício e implicação de cada uma",
+        "Manter fontes e catálogo interno acessíveis por justificativa resumida"
+      ],
+      "limits": [
+        "Número de opções é hipótese de UX",
+        "Especialistas podem precisar de busca adicional"
+      ],
+      "acceptanceTest": "O cliente explica com suas palavras por que escolheu uma direção sem conhecer ferramentas de produção.",
+      "counterexamples": [
+        "Uma equipe especialista pode desejar busca avançada; ela não precisa dominar a entrada do cliente."
+      ],
+      "empiricalEffect": "not-validated",
+      "attribution": "Source teaching and Clicko adaptation must remain distinct"
+    },
+    {
+      "id": "F12",
+      "title": "Preparação do posicionamento",
+      "originKind": "formal-method-preparation",
+      "version": "artigo de janeiro 2026: preparação + 5 passos centrais + posterior; não confundir com antigo processo de 10",
+      "caseIds": [
+        "AD-01"
+      ],
+      "sources": [
+        {
+          "url": "https://aprildunford.substack.com/p/positioning-prep-part-1-decisions",
+          "caseId": "AD-01"
+        }
+      ],
+      "purpose": "Delimitar objeto, público e grau de validação.",
+      "prerequisites": [
+        "Objeto da comunicação",
+        "Quem decide e quem usa",
+        "Fatos versus hipóteses"
+      ],
+      "clickoAdaptation": [
+        "Determinar se a peça trata de produto, linha ou empresa",
+        "Separar cliente, investidor e equipe",
+        "Marcar posicionamento inicial como revisável"
+      ],
+      "limits": [
+        "Artigo não contém todo o método",
+        "Pré-lançamento não oferece validação de demanda"
+      ],
+      "acceptanceTest": "O briefing não mistura promessa de produto com posicionamento para investidores; dúvidas continuam explícitas.",
+      "counterexamples": [
+        "Uma promoção simples para produto bem estabelecido pode não exigir refazer todo o posicionamento."
+      ],
+      "empiricalEffect": "not-validated",
+      "attribution": "Source teaching and Clicko adaptation must remain distinct"
+    },
+    {
+      "id": "F13",
+      "title": "Alternativas reais do comprador",
+      "originKind": "documented-method-component",
+      "version": "artigo 2020",
+      "caseIds": [
+        "AD-02"
+      ],
+      "sources": [
+        {
+          "url": "https://aprildunford.substack.com/p/positioning-and-competition",
+          "caseId": "AD-02"
+        }
+      ],
+      "purpose": "Investigar contra o que a oferta realmente é escolhida.",
+      "prerequisites": [
+        "Relatos ou dados de compradores",
+        "Processo atual",
+        "Contexto da decisão"
+      ],
+      "clickoAdaptation": [
+        "Listar alternativas observadas",
+        "Incluir solução manual e não decidir quando pertinente",
+        "Separar concorrente aparente de alternativa confirmada"
+      ],
+      "limits": [
+        "Não inventar shortlist",
+        "Diferenças de B2B e consumo exigem pesquisa própria"
+      ],
+      "acceptanceTest": "A peça compara uma dificuldade de uma alternativa real com benefício comprovável, sem atacar um concorrente presumido.",
+      "counterexamples": [
+        "Uma marca de consumo com compra impulsiva pode ter alternativas e jornadas diferentes de uma compra B2B."
+      ],
+      "empiricalEffect": "not-validated",
+      "attribution": "Source teaching and Clicko adaptation must remain distinct"
+    },
+    {
+      "id": "F14",
+      "title": "StoryBrand e marca como guia",
+      "originKind": "formal-author-framework",
+      "version": "guia SB7 sem edição confirmada; brochura em caminho 2014/02 não comprova data",
+      "caseIds": [
+        "DM-01",
+        "DM-02"
+      ],
+      "sources": [
+        {
+          "url": "https://storybrand.com/downloads/your-brand-is-not-the-hero.pdf",
+          "caseId": "DM-01"
+        },
+        {
+          "url": "https://storybrand.com/wp-content/uploads/2014/02/StoryBrand.pdf",
+          "caseId": "DM-02"
+        }
+      ],
+      "purpose": "Clarificar problema, ajuda e próximo passo na oferta.",
+      "prerequisites": [
+        "Desejo e problema confirmados",
+        "Capacidade da marca",
+        "Oferta e ação possíveis"
+      ],
+      "clickoAdaptation": [
+        "Definir o cliente e sua tarefa",
+        "Explicar ajuda e mecanismo com autoridade pertinente",
+        "Apresentar ação e condições claras quando a peça é de oferta"
+      ],
+      "limits": [
+        "Não impor sete elementos a toda peça",
+        "Resultados e afirmações sobre cinema no material comercial não são prova causal",
+        "Não inventar emoção ou inflar medo"
+      ],
+      "acceptanceTest": "O leitor entende para quem serve, o que a marca faz e como avançar; não recebe garantias não comprovadas.",
+      "counterexamples": [
+        "Nem todo conteúdo educativo precisa apresentar marca, risco de fracasso e convite de compra.",
+        "Uma história de origem pode ser pertinente quando explica uma decisão útil ao cliente; não banir toda narrativa da marca."
+      ],
+      "empiricalEffect": "not-validated",
+      "attribution": "Source teaching and Clicko adaptation must remain distinct"
+    },
+    {
+      "id": "F15",
+      "title": "Pesquisa original e validade",
+      "originKind": "documented-methods",
+      "version": "artigo de modalidades; datas de dados históricos preservadas nas fontes",
+      "caseIds": [
+        "AC-01"
+      ],
+      "sources": [
+        {
+          "url": "https://www.orbitmedia.com/blog/research-best-form-of-content/",
+          "caseId": "AC-01"
+        }
+      ],
+      "purpose": "Produzir informação verificável e evitar estatística fabricada.",
+      "prerequisites": [
+        "Pergunta",
+        "Método e amostra",
+        "Fonte, período e permissão"
+      ],
+      "clickoAdaptation": [
+        "Escolher observação, experimento, agregação, questionário ou entrevista conforme a pergunta",
+        "Distinguir primária de secundária",
+        "Explicar o que a amostra permite concluir"
+      ],
+      "limits": [
+        "LLM não substitui participantes ou medições",
+        "Amostra conveniente não representa automaticamente população",
+        "Não há autorização implícita para contatar terceiros"
+      ],
+      "acceptanceTest": "Um número sem origem é retirado ou qualificado; uma inferência respeita população, período e desenho da pesquisa.",
+      "counterexamples": [
+        "Uma amostra pequena e conveniente não sustenta uma conclusão sobre todo um setor."
+      ],
+      "empiricalEffect": "not-validated",
+      "attribution": "Source teaching and Clicko adaptation must remain distinct"
+    },
+    {
+      "id": "F16",
+      "title": "Manutenção do sistema editorial",
+      "originKind": "clicko-adaptation-from-case",
+      "version": "retrospectiva Orbit, fases 2007–2020+; adaptação v1",
+      "caseIds": [
+        "AC-02",
+        "AS-YT-04"
+      ],
+      "sources": [
+        {
+          "url": "https://www.orbitmedia.com/blog/orbit-media-content-strategy/",
+          "caseId": "AC-02"
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=7w7175Qm3UU",
+          "caseId": "AS-YT-04"
+        }
+      ],
+      "purpose": "Sustentar qualidade e continuidade de projetos.",
+      "prerequisites": [
+        "Inventário de materiais próprios",
+        "Capacidade e calendário",
+        "Validade dos fatos"
+      ],
+      "clickoAdaptation": [
+        "Distinguir criar, atualizar, adaptar e retirar",
+        "Vincular próximas peças à direção e origem",
+        "Revisar fatos vencidos e resultados disponíveis"
+      ],
+      "limits": [
+        "Relato empresarial não isola contribuição de conteúdo",
+        "Não copiar capacidade de uma equipe madura"
+      ],
+      "acceptanceTest": "Um material vencido não reaparece como atual; a próxima entrega usa contexto e fonte vigentes.",
+      "counterexamples": [
+        "Atualizar um material irrelevante pode custar mais que aposentá-lo; continuidade deve considerar necessidade atual.",
+        "Trocar apenas a cor de uma peça pode não resolver uma mensagem irrelevante; uma variante técnica não é nova direção editorial."
+      ],
+      "empiricalEffect": "not-validated",
+      "attribution": "Source teaching and Clicko adaptation must remain distinct"
+    }
+  ]
+}

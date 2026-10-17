@@ -1,0 +1,29 @@
+{
+  "schemaVersion": "clicko.research-modality-map.v1",
+  "caseId": "AS-IG-03",
+  "source": "https://www.instagram.com/alfredosoares/reel/DecgGsSvAoF/",
+  "coverage": {
+    "text": "public-caption",
+    "visual": "not-reviewed",
+    "audio": "not-reviewed",
+    "completeAudiovisual": false
+  },
+  "editorialCuts": [],
+  "visualChangeCandidates": [],
+  "locatedTextUnits": [
+    {
+      "locator": "legenda pública no perfil",
+      "kind": "teaching"
+    },
+    {
+      "locator": "legenda",
+      "kind": "interpretation"
+    },
+    {
+      "locator": "continuidade",
+      "kind": "clicko_hypothesis"
+    }
+  ],
+  "reviewGap": "Cuts, timing and audio not fully annotated; text locators are not cut boundaries",
+  "distributedMedia": false
+}

@@ -1,0 +1,132 @@
+.craft-studio { --craft-accent:#ff6666; --craft-muted:#8c909a; --craft-border:#ffffff10; color:#f4f3f3; background:#111214; border:1px solid var(--craft-border); border-radius:16px; min-height:calc(100vh - 100px); overflow:hidden; font-family:Inter Variable,Inter,sans-serif; }
+.craft-studio button,.craft-studio a,.craft-studio input,.craft-studio select,.craft-studio textarea { font:inherit; }
+.craft-studio button,.craft-studio a { display:inline-flex; align-items:center; justify-content:center; gap:7px; border:1px solid var(--craft-border); background:#202125; color:#e7e7e9; border-radius:8px; min-height:34px; padding:7px 11px; font-size:11px; cursor:pointer; text-decoration:none; }
+.craft-studio button:hover:not(:disabled),.craft-studio a:hover { background:#2a2b31; border-color:#ffffff26; }
+.craft-studio button:disabled { opacity:.4; cursor:not-allowed; }
+.craft-studio button:focus-visible,.craft-studio a:focus-visible,.craft-studio input:focus-visible,.craft-studio select:focus-visible,.craft-studio textarea:focus-visible,.craft-studio summary:focus-visible { outline:2px solid #ff8585; outline-offset:3px; }
+.craft-studio .craft-primary { background:var(--craft-accent); border-color:var(--craft-accent); color:#1b1010; font-weight:650; }
+.craft-studio .craft-primary:hover:not(:disabled) { background:#ff8b8b; }
+.craft-studio .craft-icon-button { width:34px; padding:6px; flex-shrink:0; }
+.craft-studio input,.craft-studio select,.craft-studio textarea { width:100%; min-width:0; padding:9px 10px; color:#ececee; border:1px solid #ffffff16; background:#15161a; border-radius:7px; font-size:12px; }
+.craft-studio input[type=checkbox] { width:18px; height:18px; padding:0; accent-color:var(--craft-accent); }
+.craft-studio input[type=color] { height:38px; padding:3px; }
+.craft-studio label { display:grid; gap:7px; font-size:11px; color:#c7c8ce; }
+.craft-studio h2 { margin:0; font-size:13px; font-weight:600; }
+.craft-studio h3 { margin:0 0 15px; font-size:12px; }
+.craft-studio p { line-height:1.6; }
+.craft-studio small { color:var(--craft-muted); font-size:10px; line-height:1.5; }
+.craft-header { display:flex; align-items:center; gap:12px; padding:15px 19px; border-bottom:1px solid var(--craft-border); background:#151619; flex-wrap:wrap; }
+.craft-heading { min-width:140px; flex:1; }
+.craft-heading>span,.craft-eyebrow { font-size:8px; letter-spacing:.2em; color:#ff9696; font-weight:650; }
+.craft-heading h1 { margin:4px 0; font-size:17px; font-weight:550; letter-spacing:-.03em; }
+.craft-engine-tabs { display:flex; gap:3px; border-radius:9px; padding:3px; background:#0e0f11; border:1px solid var(--craft-border); }
+.craft-engine-tabs button { border:0; background:none; color:#8c8f99; min-height:31px; }
+.craft-engine-tabs button[aria-pressed=true] { background:#292a30; color:#fafafa; }
+.craft-toolbar { display:flex; align-items:center; gap:5px; flex-wrap:wrap; }
+.craft-message { display:flex; align-items:center; gap:10px; padding:12px 19px; background:#192322; color:#c4e8dc; font-size:12px; border-bottom:1px solid var(--craft-border); flex-wrap:wrap; }
+.craft-message>span { flex:1; }
+.craft-message--error { color:#ffb6b6; background:#2b1a1d; }
+.craft-message--recovery { color:#ffe0ba; background:#30291f; }
+.craft-warnings { padding:12px 20px; color:#ddcbaa; font-size:11px; background:#242018; border-bottom:1px solid var(--craft-border); }
+.craft-warnings summary { cursor:pointer; }
+.craft-warnings li { margin:8px 0; }
+.craft-empty { min-height:560px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:15px; padding:30px; text-align:center; }
+.craft-empty>svg { color:#f38181; }
+.craft-empty h2 { font-size:21px; font-weight:550; letter-spacing:-.025em; }
+.craft-empty p { margin:0; max-width:570px; color:#969ba5; font-size:13px; }
+.craft-create { min-height:560px; display:grid; grid-template-columns:1fr 1fr; }
+.craft-create-art { background:radial-gradient(ellipse at 60% 40%,#4f2b33 0,#211b25 45%,#141419 80%); display:flex; gap:28px; align-items:center; justify-content:center; flex-direction:column; color:#e29da5; padding:35px; }
+.craft-create-art>span { font-family:Bricolage Grotesque Variable,Inter,sans-serif; font-size:27px; letter-spacing:-.04em; max-width:270px; text-align:center; color:#ffdadf; }
+.craft-create form { padding:60px 48px; display:flex; gap:20px; flex-direction:column; justify-content:center; max-width:480px; width:100%; }
+.craft-create h2 { font-size:26px; letter-spacing:-.04em; font-weight:550; }
+.craft-workspace { display:grid; grid-template-columns:236px minmax(260px,1fr) 265px; min-height:650px; }
+.craft-library { border-right:1px solid var(--craft-border); background:#151619; min-width:0; }
+.craft-library>nav { display:flex; padding:8px; gap:3px; border-bottom:1px solid var(--craft-border); }
+.craft-library>nav button { flex:1; padding:8px 3px; gap:5px; background:none; border:0; display:flex; flex-direction:column; font-size:8px; color:#999ba5; }
+.craft-library>nav button[aria-pressed=true] { color:#ffd0d0; background:#ff666610; }
+.craft-panel-content { padding:17px 13px; }
+.craft-pages { padding:17px 13px 12px; border-bottom:1px solid var(--craft-border); }
+.craft-page-list { display:grid; gap:5px; max-height:210px; overflow:auto; }
+.craft-page-list>button { display:grid; grid-template-columns:22px 1fr; justify-content:start; text-align:left; gap:4px 6px; padding:8px; background:transparent; }
+.craft-page-list>button>span { grid-row:1/3; color:#a9a3a9; font-size:10px; }
+.craft-page-list strong { font-size:10px; font-weight:500; overflow-wrap:anywhere; }
+.craft-page-list>button[aria-pressed=true] { border-color:#ff666645; background:#ff666610; }
+.craft-page-actions { display:flex; gap:5px; padding-top:9px; }
+.craft-page-actions>button { flex:1; min-height:28px; }
+.craft-panel-title { display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:16px; }
+.craft-panel-title>span { color:#7e838d; font-size:10px; }
+.craft-layer { display:flex!important; width:100%; justify-content:flex-start!important; text-align:left; background:none!important; border-color:transparent!important; margin-bottom:4px; }
+.craft-layer[aria-pressed=true] { background:#ff666610!important; border-color:#ff666635!important; }
+.craft-layer>span,.craft-asset>span:not(.craft-asset-icon) { display:grid; gap:4px; flex:1; min-width:0; overflow-wrap:anywhere; }
+.craft-asset { display:flex!important; text-align:left; justify-content:flex-start!important; width:100%; padding:9px 7px!important; margin-top:8px; font-size:10px!important; }
+.craft-asset-icon { display:grid; place-items:center; width:36px; height:38px; background:#343037; border-radius:5px; color:#bfa2b7; }
+.craft-muted { font-size:11px; color:#858b96; margin:12px 0; }
+.craft-details { margin-top:26px; padding-top:15px; border-top:1px solid var(--craft-border); display:grid; grid-template-columns:1fr 1fr; font-size:10px; gap:8px; color:#8b9099; }
+.craft-details dd { margin:0; text-align:right; color:#e1e1e4; }
+.craft-panel-content>button { margin:9px 0; }
+.craft-version { display:grid; gap:5px; border-bottom:1px solid var(--craft-border); padding:14px 0; font-size:11px; }
+.craft-version time { color:#808591; font-size:9px; }
+.craft-stage { min-width:0; background:#101114; }
+.craft-browser-state { color:#b1a68e; background:#231f18; font-size:10px; padding:10px 16px; margin:0; border-bottom:1px solid var(--craft-border); }
+.craft-stage-toolbar { padding:12px 17px; display:flex; align-items:center; gap:15px; min-height:54px; }
+.craft-stage-toolbar>span { display:flex; gap:10px; align-items:center; flex:1; font-size:11px; }
+.craft-stage-toolbar label { display:flex; align-items:center; gap:6px; font-size:9px; }
+.craft-stage-toolbar select { padding:5px 7px; width:70px; font-size:10px; }
+.craft-preview { min-height:420px; height:56vh; max-height:700px; position:relative; display:flex; align-items:center; justify-content:center; padding:16px; background-color:#1a1b1f; background-image:radial-gradient(#ffffff10 .75px,transparent .75px); background-size:13px 13px; overflow:hidden; }
+.craft-preview>img { display:block; object-fit:contain; box-shadow:0 14px 45px #0008; }
+.craft-preview-state { display:flex; flex-direction:column; align-items:center; padding:25px; gap:12px; max-width:440px; font-size:12px; text-align:center; color:#9b9daa; }
+.craft-pending-preview { position:absolute; bottom:12px; font-size:10px; color:#ead9bd; background:#28231aee; border:1px solid #69513a; border-radius:20px; padding:7px 12px; }
+.craft-timeline { padding:17px; border-top:1px solid var(--craft-border); min-height:155px; }
+.craft-timeline header { display:flex; align-items:center; gap:14px; font-size:10px; margin-bottom:16px; }
+.craft-timeline header strong { flex:1; font-size:11px; }
+.craft-timeline header label { display:flex; align-items:center; gap:8px; }
+.craft-timeline header input { width:75px; padding:5px 7px; font-size:10px; }
+.craft-timeline header span { color:#7c8592; }
+.craft-studio .craft-seek { padding:0; height:14px; accent-color:var(--craft-accent); margin:0 0 13px; }
+.craft-track { display:flex; align-items:center; gap:8px; padding:7px 0; border-top:1px solid var(--craft-border); overflow:auto; }
+.craft-track>strong { font-size:9px; min-width:80px; color:#9da0aa; }
+.craft-track>button { min-width:110px; background:#423649; border-color:#6b517e; font-size:9px; }
+.craft-track>button[aria-pressed=true] { background:#71436a; }
+.craft-inspector { padding:17px; border-left:1px solid var(--craft-border); background:#151619; min-width:0; }
+.craft-inspector>label { margin-bottom:18px; }
+.craft-inspector .craft-panel-title>svg { color:#ec989d; }
+.craft-fields { display:grid; gap:12px; }
+.craft-array { display:grid; gap:9px; }
+.craft-array-item { display:flex; align-items:flex-start; gap:6px; }
+.craft-array-item>.craft-fields { flex:1; }
+.craft-fields fieldset { min-width:0; padding:10px; margin:0; border:1px solid var(--craft-border); border-radius:7px; }
+.craft-fields legend { font-size:11px; padding:0 5px; color:#a4a4ae; }
+.craft-fields textarea { font-family:monospace; font-size:10px; min-height:80px; }
+.craft-command>button { width:100%; margin:17px 0; }
+.craft-properties { margin:12px 0; border-top:1px solid var(--craft-border); padding-top:14px; }
+.craft-properties summary { font-size:10px; color:#a8aab4; cursor:pointer; }
+.craft-properties dl { display:grid; grid-template-columns:1fr 1fr; gap:10px; font-size:10px; color:#868b95; }
+.craft-properties dd { margin:0; text-align:right; overflow-wrap:anywhere; color:#c4c4ce; }
+.craft-ai { border-top:1px solid var(--craft-border); margin-top:22px; padding-top:22px; }
+.craft-ai>div { display:flex; gap:8px; align-items:center; color:#f4b3b3; }
+.craft-ai p { color:#9599a3; font-size:10px; }
+.craft-ai textarea { min-height:110px; resize:vertical; line-height:1.7; font-size:11px; }
+.craft-ai button { width:100%; margin-top:10px; background:#ff666611; color:#ffd2d2; border-color:#ff666633; }
+.craft-export-options { border-top:1px solid var(--craft-border); margin:22px 0; padding-top:20px; display:grid; gap:15px; }
+.craft-export { padding:16px; display:flex; align-items:center; gap:15px; flex-wrap:wrap; font-size:10px; border-top:1px solid var(--craft-border); }
+.craft-export>div { display:grid; gap:9px; flex:1; min-width:170px; }
+.craft-export progress { width:100%; height:5px; accent-color:var(--craft-accent); }
+.craft-export>p { width:100%; color:#ffc0c0; }
+.craft-output-video { max-width:100%; display:block; background:#090909; margin:0 auto; max-height:420px; }
+.craft-sr-only { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; }
+.craft-spinner { animation:craft-spin 1s linear infinite; }
+@keyframes craft-spin { to { transform:rotate(360deg); } }
+@media (prefers-reduced-motion:reduce) { .craft-spinner { animation:none; } }
+@media (max-width:1280px) { .craft-workspace { grid-template-columns:195px minmax(240px,1fr) 235px; } .craft-engine-tabs { order:3; } .craft-heading { flex-basis:30%; } }
+@media (max-width:960px) { .craft-workspace { grid-template-columns:170px minmax(220px,1fr); } .craft-inspector { grid-column:1/-1; display:grid; gap:20px; grid-template-columns:1fr 1fr; border-top:1px solid var(--craft-border); } .craft-inspector .craft-panel-title { grid-column:1/-1; } .craft-inspector>label { grid-column:1/-1; } .craft-ai { margin:0; padding:0; border:0; } .craft-create form { padding:40px 25px; } }
+@media (max-width:640px) { .craft-studio { border-radius:8px; } .craft-header { padding:12px; gap:8px; } .craft-heading h1 { font-size:15px; } .craft-toolbar { order:4; width:100%; } .craft-engine-tabs { flex:1; width:100%; justify-content:center; } .craft-engine-tabs button { font-size:10px; } .craft-workspace { display:flex; flex-direction:column; } .craft-library { border-bottom:1px solid var(--craft-border); border-right:0; } .craft-panel-content { max-height:220px; overflow:auto; } .craft-library>nav button { flex-direction:row; } .craft-preview { height:50vh; min-height:310px; } .craft-inspector { display:block; border-left:0; } .craft-ai { border-top:1px solid var(--craft-border); padding-top:20px; margin-top:20px; } .craft-create { display:block; } .craft-create-art { min-height:200px; } .craft-create-art>span { font-size:22px; } .craft-create form { padding:30px 22px; max-width:100%; } .craft-empty { min-height:420px; } }
+
+.craft-ai>.craft-model-picker { display:grid; gap:10px; align-items:stretch; color:inherit; min-width:0; width:100%; margin-bottom:14px; }
+.craft-model-manager { border:1px solid var(--craft-border); border-radius:8px; padding:10px; min-width:0; max-height:480px; overflow:auto; }
+.craft-model-manager summary { cursor:pointer; font-size:12px; }
+.craft-connection-row { display:flex; flex-wrap:wrap; gap:6px; align-items:center; margin:10px 0; }
+.craft-connection-row span { width:100%; font-size:11px; overflow-wrap:anywhere; }
+.craft-connection-form { display:grid; gap:10px; margin-top:14px; }
+.craft-connection-form label { display:grid; gap:5px; }
+.craft-connection-form textarea { min-height:80px; }
+.craft-connection-form input[type=checkbox] { width:auto; }

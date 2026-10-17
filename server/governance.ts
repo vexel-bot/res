@@ -732,6 +732,14 @@ export function readGovernanceAccountType(auth: AuthContext) {
   return workspace.kind === 'personal' ? 'personal' as const : 'company' as const;
 }
 
+export function readStudioWorkspace(auth: AuthContext, clientId: string | null) {
+  assertGovernanceAccess(auth, { clientId });
+  const workspace = workspaces.find(item => item.id === auth.workspaceId)!;
+  const client = clientId ? registeredClients.find(item => item.id === clientId && item.workspaceId === workspace.id) : undefined;
+  if (clientId && !client) throw Object.assign(new Error('Cliente não encontrado neste ambiente.'), { status: 404, code: 'CLIENT_NOT_FOUND' });
+  return { name: client?.name || workspace.name };
+}
+
 /** Read-only KLIC adapter; unlike generic workspace readers, this requires the AI module. */
 export function readKlicGovernance(auth: AuthContext) {
   const user = assertGovernanceAccess(auth, { module: 'ai-chat' });

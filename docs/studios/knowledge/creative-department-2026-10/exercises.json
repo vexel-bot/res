@@ -1,0 +1,476 @@
+{
+  "schemaVersion": "clicko.creative-exercises.v1",
+  "exerciseMode": "fictional-tabletop",
+  "exercises": [
+    {
+      "id": "EX01",
+      "brandType": "b2b-service",
+      "brandName": "Fluxo Norte",
+      "goal": "education",
+      "simulation": true,
+      "briefFacts": [
+        "Cenário fictício: serviço de organização de inventário para pequenas distribuidoras, sem substituir seu ERP.",
+        "Responsável por operações usa planilhas e tem divergências entre contagem física e registro.",
+        "A marca dispõe, no exercício, de um processo documentado de reconciliação e de um exemplo anonimizado autorizado.",
+        "Tom direto; não promete zerar perdas nem divulgar estoque de clientes."
+      ],
+      "audience": "Responsável por operações de distribuidora que precisa explicar divergências antes de comprar outra ferramenta.",
+      "desiredDecision": "Identificar se a diferença de estoque nasce na contagem, no registro ou na conciliação.",
+      "frameworkIds": [
+        "F01",
+        "F07",
+        "F13",
+        "F15"
+      ],
+      "directions": [
+        {
+          "name": "Antes de trocar o sistema, localize a divergência",
+          "rationale": "Parte da alternativa real: comprar software quando o processo ainda não foi investigado.",
+          "format": "Carrossel diagnóstico"
+        },
+        {
+          "name": "Um percurso de uma divergência",
+          "rationale": "Demonstra uma ocorrência anonimizada, caso o detalhe necessário possa ser publicado.",
+          "format": "Vídeo demonstrativo"
+        }
+      ],
+      "recommendedDirection": "Antes de trocar o sistema, localize a divergência",
+      "outline": [
+        "Abrir com o problema de dois registros diferentes, sem inventar uma estatística setorial.",
+        "Separar três pontos de verificação em sequência.",
+        "Encerrar com uma tabela simples de origem, registro e responsável."
+      ],
+      "requiredEvidence": [
+        "Processo interno confirmado",
+        "Exemplo anonimizado autorizado; se inexistente, exemplo fictício rotulado"
+      ],
+      "cta": "Usar a tabela para conferir uma divergência; sem pedido de compra obrigatório.",
+      "rejectedDirection": "Lista genérica de cinco dicas de gestão: não responde à diferença de inventário nem ao processo atual.",
+      "reviewCriteria": [
+        "As verificações são compreensíveis sem conhecer ERP",
+        "Exemplo não revela cliente",
+        "Abertura é resolvida pela tabela"
+      ],
+      "measurementHypothesis": "Teste de compreensão: o leitor consegue indicar o próximo registro a conferir; salvamentos são sinal complementar, não prova de redução de perdas.",
+      "status": "authored-tabletop-application-not-user-tested",
+      "commercialResult": "not-tested"
+    },
+    {
+      "id": "EX02",
+      "brandType": "b2b-service",
+      "brandName": "Fluxo Norte",
+      "goal": "authority",
+      "simulation": true,
+      "briefFacts": [
+        "Cenário fictício: serviço de organização de inventário para pequenas distribuidoras, sem substituir seu ERP.",
+        "Responsável por operações usa planilhas e tem divergências entre contagem física e registro.",
+        "A marca dispõe, no exercício, de um processo documentado de reconciliação e de um exemplo anonimizado autorizado.",
+        "Tom direto; não promete zerar perdas nem divulgar estoque de clientes."
+      ],
+      "audience": "Responsável por operações de distribuidora que precisa explicar divergências antes de comprar outra ferramenta.",
+      "desiredDecision": "Entender como a marca investiga uma divergência e quais limites reconhece.",
+      "frameworkIds": [
+        "F05",
+        "F08",
+        "F15"
+      ],
+      "directions": [
+        {
+          "name": "Como uma divergência é investigada",
+          "rationale": "Mostra uma capacidade verificável, sem se apoiar em fama ou adjetivos.",
+          "format": "Caso visual comentado"
+        },
+        {
+          "name": "Por que o primeiro diagnóstico pode estar errado",
+          "rationale": "Expõe revisão de uma hipótese e responsabilidade técnica.",
+          "format": "Carrossel de caso"
+        }
+      ],
+      "recommendedDirection": "Como uma divergência é investigada",
+      "outline": [
+        "Apresentar situação e escopo autorizado.",
+        "Mostrar registro comparado, hipótese, verificação e ajuste.",
+        "Separar ação feita de resultado que ainda não foi medido."
+      ],
+      "requiredEvidence": [
+        "Documentação autorizada do processo",
+        "Limites do exemplo e identificação de eventual simulação"
+      ],
+      "cta": "Consultar como funciona a investigação ou enviar uma dúvida sobre o processo.",
+      "rejectedDirection": "Antes/depois com perda zerada inventada: falseia resultado e cria uma garantia inexistente.",
+      "reviewCriteria": [
+        "O leitor distingue hipótese e conclusão",
+        "O caso mostra ação concreta",
+        "Nenhum número ou depoimento é fabricado"
+      ],
+      "measurementHypothesis": "Perguntas qualificadas sobre o processo e compreensão do escopo; não prometer impacto financeiro.",
+      "status": "authored-tabletop-application-not-user-tested",
+      "commercialResult": "not-tested"
+    },
+    {
+      "id": "EX03",
+      "brandType": "b2b-service",
+      "brandName": "Fluxo Norte",
+      "goal": "offer",
+      "simulation": true,
+      "briefFacts": [
+        "Cenário fictício: serviço de organização de inventário para pequenas distribuidoras, sem substituir seu ERP.",
+        "Responsável por operações usa planilhas e tem divergências entre contagem física e registro.",
+        "A marca dispõe, no exercício, de um processo documentado de reconciliação e de um exemplo anonimizado autorizado.",
+        "Tom direto; não promete zerar perdas nem divulgar estoque de clientes."
+      ],
+      "audience": "Responsável por operações de distribuidora que precisa explicar divergências antes de comprar outra ferramenta.",
+      "desiredDecision": "Avaliar se um diagnóstico do processo serve ao momento da operação.",
+      "frameworkIds": [
+        "F02",
+        "F12",
+        "F13",
+        "F14"
+      ],
+      "directions": [
+        {
+          "name": "Um diagnóstico antes de outra ferramenta",
+          "rationale": "Conecta o serviço à alternativa manual e ao receio de trocar o ERP.",
+          "format": "Peça de oferta com página de escopo"
+        },
+        {
+          "name": "O que precisamos para investigar seu inventário",
+          "rationale": "Torna a entrada e as condições claras.",
+          "format": "Vídeo curto explicativo"
+        }
+      ],
+      "recommendedDirection": "Um diagnóstico antes de outra ferramenta",
+      "outline": [
+        "Nomear o problema e a operação atendida.",
+        "Explicar o que o diagnóstico examina e o que não substitui.",
+        "Informar documentos necessários e próximo passo."
+      ],
+      "requiredEvidence": [
+        "Escopo comercial aprovado",
+        "Capacidade de atendimento e condições confirmadas antes de publicar"
+      ],
+      "cta": "Solicitar avaliação de adequação ao serviço; não enviar dados confidenciais em comentário público.",
+      "rejectedDirection": "Resolver todo o estoque em um dia: prazo e garantia não presentes no briefing.",
+      "reviewCriteria": [
+        "O cliente entende quem atende e como começa",
+        "A oferta preserva ERP e privacidade conforme o escopo",
+        "Promessa coincide com capacidade"
+      ],
+      "measurementHypothesis": "Solicitações compatíveis com escopo e avanço de interessados; a receita só é avaliada com dados autorizados e atribuição qualificada.",
+      "status": "authored-tabletop-application-not-user-tested",
+      "commercialResult": "not-tested"
+    },
+    {
+      "id": "EX04",
+      "brandType": "retail",
+      "brandName": "Casa Clara",
+      "goal": "education",
+      "simulation": true,
+      "briefFacts": [
+        "Cenário fictício: loja de utensílios de preparo de café para uso doméstico.",
+        "Vende dois modelos de coador com requisitos diferentes de filtro e manutenção.",
+        "Dispõe, no exercício, de fotos próprias e demonstração real de montagem; não possui testes comparativos de sabor.",
+        "Tom acolhedor e preciso; não promete café melhor sem considerar grão, preparo e preferência."
+      ],
+      "audience": "Pessoa montando seu primeiro conjunto de café que se confunde com compatibilidade e rotina de limpeza.",
+      "desiredDecision": "Escolher um conjunto compatível com sua rotina de preparo e limpeza.",
+      "frameworkIds": [
+        "F07",
+        "F10",
+        "F15"
+      ],
+      "directions": [
+        {
+          "name": "Qual filtro cabe no seu coador?",
+          "rationale": "Resolve uma dúvida anterior à compra usando requisitos dos dois modelos.",
+          "format": "Guia visual estático ou carrossel"
+        },
+        {
+          "name": "A montagem sem peças faltando",
+          "rationale": "Uma demonstração responde a quem prefere ver a sequência.",
+          "format": "Vídeo de mãos com produto real"
+        }
+      ],
+      "recommendedDirection": "Qual filtro cabe no seu coador?",
+      "outline": [
+        "Abrir com a incompatibilidade concreta entre filtro e modelo.",
+        "Mostrar requisitos dos dois modelos com fotos próprias.",
+        "Encerrar com conferência de compatibilidade e limpeza."
+      ],
+      "requiredEvidence": [
+        "Ficha técnica de cada produto",
+        "Fotos autorizadas e conferência da montagem"
+      ],
+      "cta": "Conferir seu modelo antes de escolher o filtro.",
+      "rejectedDirection": "O coador que deixa todo café melhor: sabor não foi comparado nem definido.",
+      "reviewCriteria": [
+        "Cada recomendação corresponde ao modelo correto",
+        "Os nomes estão legíveis",
+        "Limpeza e compatibilidade são exatas"
+      ],
+      "measurementHypothesis": "Compreensão da escolha e dúvidas de compatibilidade; reduzir trocas é hipótese que exige dados posteriores.",
+      "status": "authored-tabletop-application-not-user-tested",
+      "commercialResult": "not-tested"
+    },
+    {
+      "id": "EX05",
+      "brandType": "retail",
+      "brandName": "Casa Clara",
+      "goal": "authority",
+      "simulation": true,
+      "briefFacts": [
+        "Cenário fictício: loja de utensílios de preparo de café para uso doméstico.",
+        "Vende dois modelos de coador com requisitos diferentes de filtro e manutenção.",
+        "Dispõe, no exercício, de fotos próprias e demonstração real de montagem; não possui testes comparativos de sabor.",
+        "Tom acolhedor e preciso; não promete café melhor sem considerar grão, preparo e preferência."
+      ],
+      "audience": "Pessoa montando seu primeiro conjunto de café que se confunde com compatibilidade e rotina de limpeza.",
+      "desiredDecision": "Reconhecer a precisão da orientação oferecida pela loja.",
+      "frameworkIds": [
+        "F05",
+        "F08",
+        "F16"
+      ],
+      "directions": [
+        {
+          "name": "O que conferimos antes de indicar um coador",
+          "rationale": "Mostra o processo de orientação ao cliente.",
+          "format": "Demonstração comentada"
+        },
+        {
+          "name": "Uma dúvida frequente, dois cenários",
+          "rationale": "Exibe o raciocínio de escolha conforme a rotina.",
+          "format": "Carrossel comparativo de uso"
+        }
+      ],
+      "recommendedDirection": "O que conferimos antes de indicar um coador",
+      "outline": [
+        "Apresentar duas rotinas de uso hipotéticas identificadas.",
+        "Conferir filtro, montagem e manutenção de cada modelo.",
+        "Declarar o que a demonstração não prova sobre sabor."
+      ],
+      "requiredEvidence": [
+        "Produto real e ficha técnica",
+        "Orientação conferida por responsável da loja"
+      ],
+      "cta": "Trazer sua dúvida de compatibilidade para a equipe.",
+      "rejectedDirection": "Inventar avaliações de clientes ou teste de sabor independente para reforçar autoridade.",
+      "reviewCriteria": [
+        "Demonstração preserva aparência e funcionamento do produto",
+        "Exemplo hipotético é identificado",
+        "A recomendação inclui limites"
+      ],
+      "measurementHypothesis": "Qualidade das perguntas e compreensão do método de orientação; confiança não é inferida automaticamente de curtidas.",
+      "status": "authored-tabletop-application-not-user-tested",
+      "commercialResult": "not-tested"
+    },
+    {
+      "id": "EX06",
+      "brandType": "retail",
+      "brandName": "Casa Clara",
+      "goal": "offer",
+      "simulation": true,
+      "briefFacts": [
+        "Cenário fictício: loja de utensílios de preparo de café para uso doméstico.",
+        "Vende dois modelos de coador com requisitos diferentes de filtro e manutenção.",
+        "Dispõe, no exercício, de fotos próprias e demonstração real de montagem; não possui testes comparativos de sabor.",
+        "Tom acolhedor e preciso; não promete café melhor sem considerar grão, preparo e preferência."
+      ],
+      "audience": "Pessoa montando seu primeiro conjunto de café que se confunde com compatibilidade e rotina de limpeza.",
+      "desiredDecision": "Escolher e comprar um conjunto compatível com o uso.",
+      "frameworkIds": [
+        "F06",
+        "F12",
+        "F14"
+      ],
+      "directions": [
+        {
+          "name": "Um conjunto que já combina",
+          "rationale": "A oferta se apoia em compatibilidade demonstrada, não em urgência fabricada.",
+          "format": "Peça de produto com variantes de abertura"
+        },
+        {
+          "name": "Escolha pela sua rotina",
+          "rationale": "Facilita a escolha entre os modelos com condições claras.",
+          "format": "Comparativo de oferta"
+        }
+      ],
+      "recommendedDirection": "Um conjunto que já combina",
+      "outline": [
+        "Mostrar os itens e para qual rotina cada conjunto serve.",
+        "Exibir compatibilidade e conteúdo real da embalagem.",
+        "Adicionar preço, disponibilidade, entrega e troca somente após confirmação."
+      ],
+      "requiredEvidence": [
+        "SKU e itens incluídos",
+        "Preço, estoque e políticas vigentes aprovados"
+      ],
+      "cta": "Ver opções e condições na página do produto.",
+      "rejectedDirection": "Últimas unidades ou desconto inventado: informação comercial precisa vir do sistema da loja.",
+      "reviewCriteria": [
+        "Oferta e produto exibidos correspondem",
+        "Não há preço ou escassez presumidos",
+        "Variantes conservam condições comerciais"
+      ],
+      "measurementHypothesis": "Avanço para produto e compras com dados de plataforma; teste de variante exige desenho e orçamento posteriores.",
+      "status": "authored-tabletop-application-not-user-tested",
+      "commercialResult": "not-tested"
+    },
+    {
+      "id": "EX07",
+      "brandType": "expert",
+      "brandName": "Lia Prado",
+      "goal": "education",
+      "simulation": true,
+      "briefFacts": [
+        "Cenário fictício: instrutora de apresentações para líderes de equipes técnicas.",
+        "Seu público prepara atualizações de projeto para diretorias e frequentemente repete a ordem do relatório.",
+        "Dispõe, no exercício, de um exemplo fictício identificado de relatório e de uma versão reorganizada; nenhuma fala de cliente foi autorizada.",
+        "Tom didático e sóbrio; não garante promoção, persuasão ou aumento de vendas."
+      ],
+      "audience": "Líder técnico que precisa explicar uma decisão de projeto para pessoas que não conhecem seus detalhes.",
+      "desiredDecision": "Reorganizar uma atualização técnica a partir da decisão que o público precisa tomar.",
+      "frameworkIds": [
+        "F01",
+        "F07",
+        "F10"
+      ],
+      "directions": [
+        {
+          "name": "Comece pela decisão, não pela ordem do relatório",
+          "rationale": "Usa a dificuldade específica do líder técnico.",
+          "format": "Carrossel com exemplo fictício"
+        },
+        {
+          "name": "O mesmo projeto em duas aberturas",
+          "rationale": "Demonstra duas escolhas de roteiro, sem alegar efeito de persuasão medido.",
+          "format": "Vídeo com comparação"
+        }
+      ],
+      "recommendedDirection": "Comece pela decisão, não pela ordem do relatório",
+      "outline": [
+        "Identificar a decisão necessária.",
+        "Comparar abertura cronológica com abertura centrada em decisão.",
+        "Oferecer estrutura de situação, decisão e evidência."
+      ],
+      "requiredEvidence": [
+        "Relatório fictício identificado",
+        "Revisão de coerência dos dados do exemplo"
+      ],
+      "cta": "Reescrever a primeira frase de uma apresentação com a decisão necessária.",
+      "rejectedDirection": "Truque universal para convencer qualquer diretoria: promessa não demonstrada.",
+      "reviewCriteria": [
+        "A estrutura cabe no contexto técnico",
+        "O exemplo mantém os mesmos fatos nas duas versões",
+        "O exercício pode ser realizado sem software especializado"
+      ],
+      "measurementHypothesis": "O participante consegue localizar a decisão e a evidência; retenção ou aprovação gerencial não são presumidas.",
+      "status": "authored-tabletop-application-not-user-tested",
+      "commercialResult": "not-tested"
+    },
+    {
+      "id": "EX08",
+      "brandType": "expert",
+      "brandName": "Lia Prado",
+      "goal": "authority",
+      "simulation": true,
+      "briefFacts": [
+        "Cenário fictício: instrutora de apresentações para líderes de equipes técnicas.",
+        "Seu público prepara atualizações de projeto para diretorias e frequentemente repete a ordem do relatório.",
+        "Dispõe, no exercício, de um exemplo fictício identificado de relatório e de uma versão reorganizada; nenhuma fala de cliente foi autorizada.",
+        "Tom didático e sóbrio; não garante promoção, persuasão ou aumento de vendas."
+      ],
+      "audience": "Líder técnico que precisa explicar uma decisão de projeto para pessoas que não conhecem seus detalhes.",
+      "desiredDecision": "Avaliar o raciocínio da instrutora ao revisar uma apresentação.",
+      "frameworkIds": [
+        "F05",
+        "F08",
+        "F15"
+      ],
+      "directions": [
+        {
+          "name": "Por que reorganizei este relatório",
+          "rationale": "Expõe decisões observáveis e limites de uma intervenção.",
+          "format": "Demonstração de revisão"
+        },
+        {
+          "name": "Quando começar pela decisão não basta",
+          "rationale": "Mostra uma situação que exige contexto adicional.",
+          "format": "Peça educativa com contraexemplo"
+        }
+      ],
+      "recommendedDirection": "Por que reorganizei este relatório",
+      "outline": [
+        "Identificar o material como fictício.",
+        "Anotar problema, mudança e justificativa em três pontos.",
+        "Mostrar um limite: público sem contexto pode precisar de introdução."
+      ],
+      "requiredEvidence": [
+        "Material próprio fictício",
+        "Critérios de revisão definidos e verificados"
+      ],
+      "cta": "Conhecer o método de revisão ou enviar uma pergunta sobre estrutura.",
+      "rejectedDirection": "Simular depoimento de executivo ou garantir promoção após o treinamento.",
+      "reviewCriteria": [
+        "As decisões são explicáveis",
+        "O contraexemplo é pertinente",
+        "Não há fala atribuída a cliente sem autorização"
+      ],
+      "measurementHypothesis": "Perguntas sobre o método e capacidade do público de reproduzir a revisão; o exercício não prova evolução profissional.",
+      "status": "authored-tabletop-application-not-user-tested",
+      "commercialResult": "not-tested"
+    },
+    {
+      "id": "EX09",
+      "brandType": "expert",
+      "brandName": "Lia Prado",
+      "goal": "offer",
+      "simulation": true,
+      "briefFacts": [
+        "Cenário fictício: instrutora de apresentações para líderes de equipes técnicas.",
+        "Seu público prepara atualizações de projeto para diretorias e frequentemente repete a ordem do relatório.",
+        "Dispõe, no exercício, de um exemplo fictício identificado de relatório e de uma versão reorganizada; nenhuma fala de cliente foi autorizada.",
+        "Tom didático e sóbrio; não garante promoção, persuasão ou aumento de vendas."
+      ],
+      "audience": "Líder técnico que precisa explicar uma decisão de projeto para pessoas que não conhecem seus detalhes.",
+      "desiredDecision": "Avaliar adequação de um treinamento à dificuldade da equipe.",
+      "frameworkIds": [
+        "F12",
+        "F13",
+        "F14"
+      ],
+      "directions": [
+        {
+          "name": "Um treinamento para reuniões que pedem decisão",
+          "rationale": "Especifica o público e a tarefa; não vende comunicação genérica.",
+          "format": "Página/peça de oferta"
+        },
+        {
+          "name": "O que sua equipe praticará",
+          "rationale": "Mostra o exercício e o formato do serviço para decisão informada.",
+          "format": "Vídeo explicativo curto"
+        }
+      ],
+      "recommendedDirection": "Um treinamento para reuniões que pedem decisão",
+      "outline": [
+        "Explicar quem participa e qual dificuldade será trabalhada.",
+        "Apresentar atividades e materiais exigidos, sem divulgar projetos sensíveis.",
+        "Informar formato, duração e condições apenas depois de aprovados."
+      ],
+      "requiredEvidence": [
+        "Escopo e formato comercial confirmados",
+        "Capacidade e condições de contratação aprovadas"
+      ],
+      "cta": "Solicitar escopo para a equipe ou consultar condições de inscrição.",
+      "rejectedDirection": "Do relatório à promoção em sete dias: transforma ensino em garantia profissional.",
+      "reviewCriteria": [
+        "O leitor entende o que pratica e recebe",
+        "Exemplos não substituem prova de resultado inexistente",
+        "A ação é coerente com a capacidade de atendimento"
+      ],
+      "measurementHypothesis": "Pedidos de escopo compatíveis e entendimento do treinamento; conversão será validada posteriormente.",
+      "status": "authored-tabletop-application-not-user-tested",
+      "commercialResult": "not-tested"
+    }
+  ]
+}

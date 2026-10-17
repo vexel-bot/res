@@ -9,8 +9,6 @@ import { appearance } from './theme/appearance';
 import { Sidebar } from './components/Sidebar';
 import { Header } from './components/Header';
 import { SpotlightModal } from './components/SpotlightModal';
-import { ImageStudioView } from './components/ImageStudioView';
-import { VideoEditorView } from './components/VideoEditorView';
 import { ClickoLoader } from './components/ClickoLoader';
 import { LoginView } from './components/LoginView';
 import { SubscriptionGateView } from './components/SubscriptionGateView';
@@ -47,6 +45,7 @@ const ApprovalsView = React.lazy(() => import('./components/ApprovalsView').then
 const SubscriptionView = React.lazy(() => import('./components/SubscriptionView').then(module => ({ default: module.SubscriptionView })));
 const FloatingAIAssistant = React.lazy(() => import('./components/FloatingAIAssistant').then(module => ({ default: module.FloatingAIAssistant })));
 const KlicOperationalBridge = React.lazy(() => import('./klic/KlicOperationalBridge').then(module => ({ default: module.KlicOperationalBridge })));
+const ClickoStudioView = React.lazy(() => import('./studios/ClickoStudioView').then(module => ({ default: module.ClickoStudioView })));
 
 const TAB_PATHS: Record<NavigationTab, string> = {
   dashboard: '/dashboard',
@@ -264,9 +263,9 @@ export default function App() {
 
           {hasAccessToCurrentTab && currentTab === 'library' && <LibraryView onOpenStudio={() => navigate('create-image')} />}
 
-          {hasAccessToCurrentTab && currentTab === 'create-image' && <ImageStudioView />}
+          {hasAccessToCurrentTab && currentTab === 'create-image' && <ClickoStudioView module="create-image" onNavigate={navigate} />}
 
-          {hasAccessToCurrentTab && currentTab === 'create-video' && <VideoEditorView />}
+          {hasAccessToCurrentTab && currentTab === 'create-video' && <ClickoStudioView module="create-video" onNavigate={navigate} />}
 
           {hasAccessToCurrentTab && currentTab === 'create-copy' && <CreationStudioView onSavePost={handleSaveSinglePost} />}
 

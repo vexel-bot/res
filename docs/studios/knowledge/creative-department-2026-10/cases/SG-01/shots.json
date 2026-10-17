@@ -1,0 +1,29 @@
+{
+  "schemaVersion": "clicko.research-modality-map.v1",
+  "caseId": "SG-01",
+  "source": "https://seths.blog/2022/05/the-smallest-viable-audience/",
+  "coverage": {
+    "text": "article-text-reviewed",
+    "visual": "not-reviewed",
+    "audio": "not-applicable",
+    "completeAudiovisual": false
+  },
+  "editorialCuts": [],
+  "visualChangeCandidates": [],
+  "locatedTextUnits": [
+    {
+      "locator": "texto principal",
+      "kind": "teaching"
+    },
+    {
+      "locator": "texto principal",
+      "kind": "interpretation"
+    },
+    {
+      "locator": "direção",
+      "kind": "clicko_hypothesis"
+    }
+  ],
+  "reviewGap": "Cuts, timing and audio not fully annotated; text locators are not cut boundaries",
+  "distributedMedia": false
+}

@@ -25,6 +25,7 @@
     "fflate": "^0.8.3",
     "lucide-react": "^0.546.0",
     "mammoth": "^1.12.2",
+    "openapi-fetch": "^0.17.0",
     "pdf-parse": "^2.4.5",
     "pg": "^8.23.0",
     "react": "^19.0.1",

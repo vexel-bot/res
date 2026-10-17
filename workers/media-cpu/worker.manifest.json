@@ -1,0 +1,116 @@
+{
+  "schemaVersion": "studio.worker-runtime-manifest.v1",
+  "runtimeName": "clicko-media-cpu",
+  "runtimeVersion": "1.0.2",
+  "capability": "media_cpu",
+  "queues": [
+    "studio.media.cpu"
+  ],
+  "resourceClasses": [
+    "cpu.media"
+  ],
+  "jobTypes": [
+    "media_probe",
+    "video_proxy",
+    "media_waveform",
+    "editing_gemini",
+    "editing_ai",
+    "craft_render"
+  ],
+  "providers": [
+    "builtin.ffprobe",
+    "builtin.ffmpeg-proxy",
+    "builtin.ffmpeg-waveform",
+    "google.gemini-editing",
+    "compatible.editing-planner",
+    "runway.editing-video",
+    "builtin.ffmpeg-qc-v1",
+    "craft.photocraft",
+    "craft.filmcraft",
+    "craft.effectcraft"
+  ],
+  "requiredEnvironment": [
+    "DATABASE_URL",
+    "REDIS_URL",
+    "OBJECT_STORAGE_BACKEND",
+    "STUDIO_ISOLATED_QUEUES_ENABLED",
+    "STUDIO_WORKER_MANIFEST_PATH",
+    "STUDIO_WORKER_CAPABILITY",
+    "FFMPEG_PATH",
+    "FFPROBE_PATH"
+  ],
+  "requiredPaths": [
+    "/usr/bin/ffmpeg",
+    "/usr/bin/ffprobe",
+    "/opt/clicko/bin/clicko-photocraft-adapter",
+    "/opt/clicko/bin/clicko-filmcraft-adapter",
+    "/opt/clicko/bin/clicko-effectcraft-adapter"
+  ],
+  "tools": [
+    {
+      "id": "python",
+      "command": [
+        "python",
+        "--version"
+      ],
+      "versionPattern": "Python 3\\.11\\.2"
+    },
+    {
+      "id": "celery",
+      "command": [
+        "celery",
+        "--version"
+      ],
+      "versionPattern": "5\\.6\\.2"
+    },
+    {
+      "id": "ffmpeg",
+      "command": [
+        "ffmpeg",
+        "-version"
+      ],
+      "versionPattern": "ffmpeg version 5\\.1\\.9"
+    },
+    {
+      "id": "ffprobe",
+      "command": [
+        "ffprobe",
+        "-version"
+      ],
+      "versionPattern": "ffprobe version 5\\.1\\.9"
+    },
+    {
+      "id": "photocraft",
+      "command": [
+        "/opt/clicko/bin/clicko-photocraft-adapter",
+        "--version"
+      ],
+      "versionPattern": "clicko-photocraft-1\\.0\\.0\\+a7f26522"
+    },
+    {
+      "id": "filmcraft",
+      "command": [
+        "/opt/clicko/bin/clicko-filmcraft-adapter",
+        "--version"
+      ],
+      "versionPattern": "clicko-filmcraft-1\\.0\\.0\\+0800a8b0"
+    },
+    {
+      "id": "effectcraft",
+      "command": [
+        "/opt/clicko/bin/clicko-effectcraft-adapter",
+        "--version"
+      ],
+      "versionPattern": "clicko-effectcraft-1\\.0\\.2\\+67434e90"
+    }
+  ],
+  "isolation": {
+    "runAsNonRoot": true,
+    "readOnlyRootFilesystem": true,
+    "allowPrivilegeEscalation": false,
+    "networkEgressPolicy": "private-dependencies-only",
+    "maxConcurrentJobs": 1,
+    "ephemeralTempPath": "/tmp/clicko-craft",
+    "minimumTempBytes": 4294967296
+  }
+}

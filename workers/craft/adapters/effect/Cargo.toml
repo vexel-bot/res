@@ -1,0 +1,28 @@
+[package]
+name = "clicko-effectcraft-adapter"
+version = "1.0.2"
+edition = "2024"
+license = "MIT"
+
+[workspace]
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[[bin]]
+name = "clicko-effectcraft-adapter"
+path = "src/main.rs"
+
+[dependencies]
+clicko-craft-protocol = { path = "../common" }
+effectcraft-engine = { path = "../../../../third_party/craft/effectcraft/crates/engine" }
+effectcraft-host = { path = "../../../../third_party/craft/effectcraft/crates/host" }
+effectcraft-media = { path = "../../../../third_party/craft/effectcraft/crates/media" }
+effectcraft-export = { path = "../../../../third_party/craft/effectcraft/crates/export" }
+effectcraft-model = { path = "../../../../third_party/craft/effectcraft/crates/model" }
+effectcraft-time = { path = "../../../../third_party/craft/effectcraft/crates/time" }
+image = { version = "0.25", default-features = false, features = ["png"] }
+serde_json = "1"
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+wasm-bindgen = "=0.2.129"
