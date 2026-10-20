@@ -1,0 +1,6 @@
+{
+  "name": "Círculo Pontilhado Interativo",
+  "description": "Animação interativa de um círculo pontilhado sobre fundo preto que se despedaça ao passar o mouse e se recompõe com física fluida.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
