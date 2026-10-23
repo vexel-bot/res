@@ -25,6 +25,7 @@ def test_media_worker_manifest_is_versioned_and_matches_execution_profiles() -> 
         "video_proxy",
         "media_waveform",
         "craft_render",
+        "timeline_render",
         "editing_gemini",
         "editing_ai",
     }

@@ -11,6 +11,8 @@ coverage/
 !.env.example
 .clicko-data/
 .codex-runtime/
+# FastAPI's default local upload store is runtime/user data, never source.
+/backend/data/
 .venv/
 __pycache__/
 *.py[cod]

@@ -1,15 +1,13 @@
 import json
 import logging
-import time
 from contextlib import asynccontextmanager
-from uuid import uuid4
 
-from fastapi import FastAPI, Request
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
 
 from .config import get_settings
 from .database import Base, engine
+from .http_middleware import install_http_middleware
 from .routers import (
     ai,
     analytics,
@@ -18,20 +16,17 @@ from .routers import (
     bootstrap,
     campaigns,
     creatives,
-    editing_resources,
     health,
     history,
     jobs,
     knowledge,
     posts,
     radar,
-    studio_craft,
-    studio_department,
-    studios,
     workspace_features,
     workspaces,
 )
-from .services.rate_limit import RateLimitBackendError, RedisRateLimiter, policy_for_request
+from .services.rate_limit import RedisRateLimiter
+from .studio_routes import include_studio_routes
 
 settings = get_settings()
 rate_limiter = RedisRateLimiter(settings.redis_url)
@@ -61,6 +56,9 @@ async def lifespan(_: FastAPI):
     settings.validate_for_startup()
     if settings.environment in {"development", "test"}:
         Base.metadata.create_all(bind=engine)
+    from .routers.studio_video import recover_interrupted_local_jobs
+
+    recover_interrupted_local_jobs()
     yield
 
 
@@ -74,69 +72,7 @@ app.add_middleware(
 )
 
 
-@app.middleware("http")
-async def correlation_and_access_log(request: Request, call_next):
-    correlation_id = request.headers.get("X-Correlation-ID", str(uuid4()))[:128]
-    started = time.perf_counter()
-    rate_headers: dict[str, str] = {}
-    try:
-        policy = None
-        if settings.environment == "production":
-            policy = policy_for_request(
-                request.method,
-                request.url.path,
-                default_limit=settings.rate_limit_requests,
-                auth_limit=settings.rate_limit_auth_requests,
-                intensive_limit=settings.rate_limit_intensive_requests,
-                upload_limit=settings.rate_limit_upload_requests,
-                window_seconds=settings.rate_limit_window_seconds,
-            )
-        if policy:
-            identity = request.client.host if request.client else "unknown"
-            try:
-                rate = rate_limiter.consume(identity, policy)
-            except RateLimitBackendError:
-                logger.exception(
-                    "rate_limit_backend_error correlation_id=%s path=%s policy=%s",
-                    correlation_id,
-                    request.url.path,
-                    policy.name,
-                )
-                if policy.name == "auth":
-                    response = JSONResponse(
-                        status_code=503, content={"detail": "Authentication temporarily unavailable"}
-                    )
-                else:
-                    response = await call_next(request)
-            else:
-                rate_headers = {
-                    "X-RateLimit-Limit": str(rate.limit),
-                    "X-RateLimit-Remaining": str(rate.remaining),
-                }
-                if rate.allowed:
-                    response = await call_next(request)
-                else:
-                    rate_headers["Retry-After"] = str(rate.retry_after)
-                    response = JSONResponse(status_code=429, content={"detail": "Rate limit exceeded"})
-        else:
-            response = await call_next(request)
-    except Exception:
-        logger.exception("unhandled_request_error correlation_id=%s path=%s", correlation_id, request.url.path)
-        response = JSONResponse(status_code=500, content={"detail": "Internal server error"})
-    response.headers["X-Correlation-ID"] = correlation_id
-    response.headers["X-Content-Type-Options"] = "nosniff"
-    response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
-    for name, value in rate_headers.items():
-        response.headers[name] = value
-    logger.info(
-        "request correlation_id=%s method=%s path=%s status=%s latency_ms=%s",
-        correlation_id,
-        request.method,
-        request.url.path,
-        response.status_code,
-        round((time.perf_counter() - started) * 1000, 2),
-    )
-    return response
+install_http_middleware(app, settings, rate_limiter, logger)
 
 
 app.include_router(health.router)
@@ -152,9 +88,6 @@ app.include_router(assets.router, prefix="/api/v1")
 app.include_router(jobs.router, prefix="/api/v1")
 app.include_router(knowledge.router, prefix="/api/v1")
 app.include_router(radar.router, prefix="/api/v1")
-app.include_router(studios.router, prefix="/api/v1")
-app.include_router(studio_craft.router, prefix="/api/v1")
-app.include_router(studio_department.router, prefix="/api/v1")
-app.include_router(editing_resources.router, prefix="/api/v1")
+include_studio_routes(app)
 app.include_router(workspace_features.router, prefix="/api/v1")
 app.include_router(ai.router, prefix="/api")

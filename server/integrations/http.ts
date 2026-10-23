@@ -34,6 +34,7 @@ function providerFailure(response: Response, body: Record<string, unknown>) {
 }
 
 export async function providerResponse<T>(fetcher: FetchLike, url: string, init: ProviderRequestInit = {}): Promise<{ response: Response; body: T }> {
+  if (process.env.CLICKO_DEV_MODE === 'true') throw new SocialIntegrationError('DEV_EXTERNAL_INTEGRATION_DISABLED', 503, 'Integrações externas estão desativadas no modo DEV.');
   const timeout = AbortSignal.timeout(15_000);
   const signal = init.signal ? AbortSignal.any([init.signal, timeout]) : timeout;
   const { retryTransient, ...requestInit } = init;
@@ -46,13 +47,15 @@ export async function providerResponse<T>(fetcher: FetchLike, url: string, init:
       if (signal.aborted) throw new SocialIntegrationError('SOCIAL_PROVIDER_TIMEOUT', 504, 'A plataforma demorou para responder. Tente novamente.');
       throw error;
     }
-    const body = await response.json().catch(() => ({})) as Record<string, unknown>;
+    const body: unknown = await response.json().catch(() => ({}));
+    const errorBody = body !== null && typeof body === 'object' ? body as Record<string, unknown> : {};
+    const failed = !response.ok || Boolean(errorBody.error);
     const transient = response.status === 429 || response.status === 408 || response.status >= 500;
-    if ((!response.ok || body.error) && transient && mayRetry && attempt < 3) {
+    if (failed && transient && mayRetry && attempt < 3) {
       await wait(retryDelay(response, attempt), signal);
       continue;
     }
-    if (!response.ok || body.error) throw providerFailure(response, body);
+    if (failed) throw providerFailure(response, errorBody);
     return { response, body: body as T };
   }
   throw new SocialIntegrationError('SOCIAL_PROVIDER_UNAVAILABLE', 502, 'A plataforma está temporariamente indisponível.');

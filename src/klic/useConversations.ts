@@ -99,7 +99,7 @@ export function useConversations() {
       setPhase('Enviando e processando…');
       const c=client.current;
       const source=KLIC_MODULES.includes(c.pageContext.module)?c.pageContext.module:'ai-chat';
-      const response=await fetch('/api/klic/conversations/send',{method:'POST',credentials:'same-origin',signal:controller.signal,headers:{'Content-Type':'application/json'},body:JSON.stringify({conversationId:active.id,requestId,message:content,actionId,attachments,retry:Boolean(retryId),workspaceId:c.workspaceId,clientId:c.clientId,source,pageContext:{...c.pageContext,module:source},context:c.snapshot})});
+      const response=await fetch('/api/klic/conversations/send',{method:'POST',credentials:'same-origin',signal:controller.signal,headers:{'Content-Type':'application/json'},body:JSON.stringify({conversationId:active.id,requestId,message:content,actionId,attachments,retry:Boolean(retryId),workspaceId:c.workspaceId,clientId:c.clientId,source,pageContext:{...c.pageContext,module:source},productionContext:c.studioContext,context:c.snapshot})});
       if(!response.ok)await readKlicJson(response);
       if(response.headers.get('content-type')?.includes('application/json')){const data=await readKlicJson<Conversation>(response);if(activeNow())select(data);return;}
       if(!response.body)throw new Error('A conexão não permite receber a resposta.');

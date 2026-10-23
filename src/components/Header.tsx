@@ -7,6 +7,7 @@ import { useOperations } from '../context/OperationsContext';
 import { AddAccountModal } from './AddAccountModal';
 import { useAuth } from '../context/AuthContext';
 import { ProfileAvatar } from './ProfileAvatar';
+import { DevEnvironmentBadge } from '../development/DevEnvironmentBadge';
 
 interface HeaderProps {
   currentTab: NavigationTab;
@@ -118,6 +119,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSpotlight, onNavigate }) =
 
       {/* Right Action Bar with Profile / Account Switcher */}
       <div className="flex items-center gap-2.5">
+        <DevEnvironmentBadge />
         {/* Notifications Button */}
         <div className="relative">
           <button

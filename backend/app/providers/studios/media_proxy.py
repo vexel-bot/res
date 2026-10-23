@@ -10,6 +10,7 @@ from ...config import get_settings
 from ...domain.studios.contracts import MediaProxyEncodeResultV1, MediaProxySpecV1
 from ...domain.studios.providers import MediaProxyProvider
 from .media_probe import MEDIA_PROBE_PROVIDERS
+from .media_runtime import h264_encoder, resolve_tool
 
 
 @lru_cache(maxsize=8)
@@ -44,7 +45,7 @@ class FFmpegMediaProxyProvider:
 
     @property
     def version(self) -> str:
-        return _binary_version(self.executable, self.timeout_seconds)
+        return _binary_version(resolve_tool("ffmpeg", self.executable), self.timeout_seconds)
 
     def transcode(
         self,
@@ -55,12 +56,19 @@ class FFmpegMediaProxyProvider:
         is_cancelled,
     ) -> MediaProxyEncodeResultV1:
         crf = "28" if spec.quality == "draft" else "23"
+        executable = resolve_tool("ffmpeg", self.executable)
+        encoder = h264_encoder(executable)
+        encoding = (
+            ["-preset", "veryfast", "-crf", crf]
+            if encoder == "libx264"
+            else ["-b:v", "1500k" if spec.quality == "draft" else "3000k"]
+        )
         scale = (
             f"scale=w='min({spec.max_width},iw)':h='min({spec.max_height},ih)':"
             "force_original_aspect_ratio=decrease:force_divisible_by=2"
         )
         command = [
-            self.executable,
+            executable,
             "-hide_banner",
             "-nostdin",
             "-y",
@@ -75,11 +83,8 @@ class FFmpegMediaProxyProvider:
             "-vf",
             f"{scale},fps={spec.target_fps}",
             "-c:v",
-            "libx264",
-            "-preset",
-            "veryfast",
-            "-crf",
-            crf,
+            encoder,
+            *encoding,
             "-pix_fmt",
             "yuv420p",
             "-c:a",
@@ -134,9 +139,7 @@ class FFmpegMediaProxyProvider:
             frame_rate=stream.frame_rate,
             video_start_microseconds=stream.start_microseconds - probe.start_microseconds,
             audio_start_microseconds=(
-                probe.audio_streams[0].start_microseconds - probe.start_microseconds
-                if probe.audio_streams
-                else 0
+                probe.audio_streams[0].start_microseconds - probe.start_microseconds if probe.audio_streams else 0
             ),
             duration_microseconds=probe.duration_microseconds,
             video_codec=stream.codec,

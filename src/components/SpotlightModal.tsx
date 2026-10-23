@@ -9,6 +9,8 @@ import './SpotlightModal.css';
 type CommandItem = SearchResultItem & { keywords: string; onSelect?: () => void };
 
 const navigationItems: Array<Omit<CommandItem, 'id'>> = [
+  { title: 'Studios · Imagem', subtitle: 'Gerar e editar imagens no ambiente unificado', type: 'action', tabToNavigate: 'create-image', keywords: 'studios imagem foto criar editar composição carrossel' },
+  { title: 'Studios · Vídeo', subtitle: 'Vídeo, timeline, motion design e anúncios', type: 'action', tabToNavigate: 'create-video', keywords: 'studios vídeo video editor motion anúncio audiovisual' },
   { title: 'Criar conteúdo', subtitle: 'Abrir o estúdio de criação textual', type: 'action', tabToNavigate: 'create-copy', keywords: 'novo post copy carrossel roteiro' },
   { title: 'Calendário editorial', subtitle: 'Planejar, revisar e agendar conteúdos', type: 'action', tabToNavigate: 'calendar', keywords: 'agenda programação publicação' },
   { title: 'Contas conectadas', subtitle: 'Gerenciar redes e permissões', type: 'action', tabToNavigate: 'connected-accounts', keywords: 'instagram facebook tiktok youtube linkedin threads pinterest x oauth' },

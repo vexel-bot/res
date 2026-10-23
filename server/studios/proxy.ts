@@ -1,27 +1,16 @@
-import { createHmac, randomBytes, randomUUID } from 'node:crypto';
-import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
-import path from 'node:path';
+import { createHmac, randomUUID } from 'node:crypto';
 import { Readable } from 'node:stream';
 import { pipeline } from 'node:stream/promises';
 import express from 'express';
 import { authenticate, assertGovernanceAccess, readStudioWorkspace, type AuthContext } from '../governance';
 import { canAccessNavigation } from '../../src/security/accessControl';
+import { forwardMeteredImageRequest } from './imageQuota';
+import { forwardMeteredVideoRequest } from './videoQuota';
+import { reconcileStudioVideoJob } from '../governance';
+import { studioBridgeSecret } from './bridgeKey';
+export { studioBridgeSecret } from './bridgeKey';
 
-export function studioBridgeSecret() {
-  if (process.env.CLICKO_STUDIOS_BRIDGE_SECRET) {
-    if (process.env.CLICKO_STUDIOS_BRIDGE_SECRET.length < 32) throw new Error('STUDIOS_BRIDGE_KEY_INVALID');
-    return process.env.CLICKO_STUDIOS_BRIDGE_SECRET;
-  }
-  const filename = path.resolve('.clicko-data/studios/bridge-key');
-  mkdirSync(path.dirname(filename), { recursive: true });
-  try { writeFileSync(filename, randomBytes(48).toString('hex'), { flag: 'wx', mode: 0o600 }); }
-  catch (error) { if ((error as NodeJS.ErrnoException).code !== 'EEXIST') throw error; }
-  const key = readFileSync(filename, 'utf8').trim();
-  if (key.length < 32) throw new Error('STUDIOS_BRIDGE_KEY_INVALID');
-  return key;
-}
-
-export function studioBridgeToken(auth: AuthContext, clientId: string | null, module: string, secret: string) {
+export function studioBridgeToken(auth: AuthContext, clientId: string | null, module: string, secret: string, mediaAdmission?: Record<string, unknown>) {
   const now = Math.floor(Date.now() / 1000);
   const scope = readStudioWorkspace(auth, clientId);
   const encode = (value: unknown) => Buffer.from(JSON.stringify(value)).toString('base64url');
@@ -33,6 +22,7 @@ export function studioBridgeToken(auth: AuthContext, clientId: string | null, mo
     allowedModules: ['create-image', 'create-video'].filter(tab => canAccessNavigation(auth.user, tab as 'create-image' | 'create-video')),
     role: auth.user.role === 'master' ? 'Owner' : auth.user.role === 'administrator' ? 'Admin' : 'Member',
     iat: now, exp: now + 60,
+    ...(mediaAdmission ? { mediaAdmission } : {}),
   });
   const signature = createHmac('sha256', secret).update(`${header}.${payload}`).digest('base64url');
   return `${header}.${payload}.${signature}`;
@@ -44,7 +34,40 @@ export function createStudiosProxy(options: { origin?: string; secret?: string; 
   const origin = new URL(options.origin || process.env.CLICKO_STUDIOS_ORIGIN || 'http://127.0.0.1:8000');
   const secret = options.secret || studioBridgeSecret();
   const upstreamFetch = options.fetch || fetch;
+  const imageJobRoute = (req: express.Request) => {
+    if (req.method !== 'POST' || req.header('x-clicko-studio-module') !== 'create-image') return null;
+    // FastAPI matches decoded paths too; encoded static segments must not bypass metering.
+    try { return decodeURIComponent(req.path).match(/^\/documents\/([^/]+)\/editing-ai-jobs\/?$/); }
+    catch { return null; }
+  };
+  const editingJobRoute = (req: express.Request) => {
+    if (req.method !== 'POST') return null;
+    try { return decodeURIComponent(req.path).match(/^\/documents\/([^/]+)\/editing-ai-jobs\/?$/); }
+    catch { return null; }
+  };
+  // Media elements cannot attach custom headers. Only this read-only, scoped
+  // video delivery route accepts equivalent query context; session checks remain mandatory.
+  router.use((req, _res, next) => {
+    if (req.method === 'GET' && /^\/video\/library\/[^/]+\/content$/.test(req.path)) {
+      req.headers['x-clicko-studio-module'] = 'create-video';
+      if (typeof req.query.workspaceId === 'string') req.headers['x-workspace-id'] = req.query.workspaceId;
+      if (typeof req.query.clientId === 'string') req.headers['x-clicko-client-id'] = req.query.clientId;
+    }
+    next();
+  });
   router.use(authenticate);
+  // Only the small image-job JSON is buffered. Uploads, native files and all
+  // other media responses keep their existing streaming path.
+  router.use((req, res, next) => {
+    if (!editingJobRoute(req)) return next();
+    express.json({ limit: '128kb' })(req, res, next);
+  });
+  router.use((error: { type?: string }, _req: express.Request, res: express.Response, next: express.NextFunction) => {
+    const kind = _req.header('x-clicko-studio-module') === 'create-video' ? 'VIDEO' : 'IMAGE';
+    if (error.type === 'entity.too.large') return res.status(413).json({ detail: 'A solicitação de mídia ultrapassa o limite permitido.', code: `${kind}_REQUEST_TOO_LARGE` });
+    if (error.type === 'entity.parse.failed') return res.status(400).json({ detail: 'A solicitação de mídia não contém JSON válido.', code: `${kind}_REQUEST_INVALID` });
+    next(error);
+  });
   router.use(async (req, res) => {
     const requestId = randomUUID();
     const auth = (req as express.Request & { auth: AuthContext }).auth;
@@ -79,11 +102,28 @@ export function createStudiosProxy(options: { origin?: string; secret?: string; 
     try {
       const target = new URL(req.originalUrl, origin);
       if (target.origin !== origin.origin) return res.status(400).json({ detail: 'Destino inválido.' });
-      const upstream = await upstreamFetch(target, {
+      const imageRoute = imageJobRoute(req);
+      const editingRoute = editingJobRoute(req);
+      const forward = (receiptId?: string) => {
+        if (receiptId && editingRoute) headers.set('authorization', `Bearer ${studioBridgeToken(auth, clientId, module, secret, {
+          id: receiptId, documentId: editingRoute[1], key: req.header('idempotency-key'), operation: req.body.operation,
+          ...(req.body.operation === 'generate_video' ? { seconds: Number(req.body.durationSeconds ?? 8) } : {}),
+        })}`);
+        return upstreamFetch(target, {
         method: req.method, headers, signal: controller.signal,
-        body: ['GET', 'HEAD'].includes(req.method) ? undefined : req as unknown as BodyInit,
+        body: editingRoute ? JSON.stringify(req.body) : ['GET', 'HEAD'].includes(req.method) ? undefined : req as unknown as BodyInit,
         duplex: ['GET', 'HEAD'].includes(req.method) ? undefined : 'half',
       } as RequestInit & { duplex?: 'half' });
+      };
+      const upstream = imageRoute ? await forwardMeteredImageRequest({
+        auth, clientId, documentId: imageRoute[1], key: req.header('idempotency-key'), body: req.body, signal: controller.signal, forward,
+      }) : editingRoute && module === 'create-video' ? await forwardMeteredVideoRequest({
+        auth, clientId, documentId: editingRoute[1], key: req.header('idempotency-key'), body: req.body, forward,
+      }) : await forward();
+      if (upstream.ok && module === 'create-video' && /\/jobs\/[^/]+(?:\/(?:cancel|retry))?\/?$/.test(req.path)) {
+        const job = await upstream.clone().json();
+        if (job && typeof job.id === 'string') reconcileStudioVideoJob(auth, job);
+      }
       res.status(upstream.status);
       for (const name of ['content-type', 'content-disposition', 'content-range', 'accept-ranges', 'etag']) {
         const value = upstream.headers.get(name); if (value) res.setHeader(name, value);
@@ -91,8 +131,10 @@ export function createStudiosProxy(options: { origin?: string; secret?: string; 
       res.setHeader('cache-control', 'no-store');
       if (upstream.body) await pipeline(Readable.fromWeb(upstream.body as Parameters<typeof Readable.fromWeb>[0]), res);
       else res.end();
-    } catch {
+    } catch (error) {
       if (res.headersSent) { res.destroy(); return; }
+      const failure = error as Error & { status?: number; code?: string };
+      if (failure.status && failure.code) return res.status(failure.status).json({ detail: failure.message, code: failure.code, requestId });
       res.status(503).json({ detail: 'O serviço de Imagem e Vídeo está temporariamente indisponível. Tente novamente.', code: 'STUDIOS_UNAVAILABLE', requestId });
     } finally {
       clearTimeout(timer); req.off('aborted', abort); res.off('close', abort);

@@ -62,8 +62,8 @@ export function createKlicVoiceRouter() {
       res.send(result.audio);
     } catch (error) {
       const code = error instanceof Error ? error.message : 'KLIC_TTS_UNKNOWN_ERROR';
-      console.error('Falha na síntese de voz da KLIC:', code);
-      res.status(502).json({ error: 'KLIC_VOICE_SYNTHESIS_FAILED' });
+      console.error('KLIC_TTS_FAILURE', { code: /^(FINANCE_|KLIC_TTS_)[A-Z_]+$/.test(code) ? code : 'KLIC_TTS_UPSTREAM_FAILURE' });
+      res.status(code.startsWith('FINANCE_') ? 503 : 502).json({ error: 'KLIC_VOICE_SYNTHESIS_FAILED' });
     }
   });
 

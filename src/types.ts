@@ -159,7 +159,7 @@ export interface WorkspaceMember {
 }
 
 export interface SaaSPlan {
-  id: 'solo' | 'team' | 'business' | 'enterprise';
+  id: 'solo' | 'team' | 'business' | 'enterprise' | 'development';
   name: string;
   maxUsers: number | null;
   monthlyPrice: number | null;

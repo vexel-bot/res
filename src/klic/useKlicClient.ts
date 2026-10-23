@@ -17,6 +17,12 @@ export function useKlicClient(level: 'client' | 'workspace' = 'client') {
   const clientId = level === 'workspace' ? null : activeClient?.id || null;
   const userId = currentUser?.id || '';
   const scope = JSON.stringify([workspaceId, userId, clientId]);
+  const studioContext = React.useMemo(() => {
+    if (!['create-image', 'create-video'].includes(page.module) || !canAccess(page.module)
+      || page.registration?.module !== page.module || page.registration.scope !== klicPageScope(workspaceId, clientId)) return undefined;
+    return { module: page.module, selected: page.registration.details.selected,
+      selectedLayerIds: page.registration.details.selectedLayerIds };
+  }, [page, workspaceId, clientId, canAccess]);
   const pageContext = React.useMemo<KlicPageContext>(() => ({
     module: KLIC_MODULES.includes(page.module) && canAccess(page.module) ? page.module : 'ai-chat',
     workspaceId,
@@ -67,5 +73,5 @@ export function useKlicClient(level: 'client' | 'workspace' = 'client') {
     if (!mounted.current || currentScope.current !== requestScope) throw new DOMException('O contexto ativo mudou.', 'AbortError');
     return data as T;
   }, [scope, snapshot, workspaceId, clientId, userId, activeAccount.workspaceId, activeClient?.access?.view, canAccess, pageContext]);
-  return { request, snapshot, scope, workspaceId, userId, clientId, pageContext };
+  return { request, snapshot, scope, workspaceId, userId, clientId, pageContext, studioContext };
 }

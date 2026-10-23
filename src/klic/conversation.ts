@@ -10,6 +10,8 @@ export const FILE_ACCEPT = Object.keys(FILE_TYPES).map(extension => '.' + extens
 export type ChatAttachmentInput = { name: string; type: string; size: number; dataUrl?: string };
 export type ChatFile = { id: string; name: string; type: string; size: number; dataUrl?: string; text?: string };
 export type ChatMessage = {
+  localProduction?: boolean;
+  production?: { documentId: string; module: 'create-image' | 'create-video'; taskId: string };
   favorite?: boolean; brandScore?: number; researchedExternally?: boolean;
   actions?: import('../types').AIChatMessage['actions'];
   id: string; role: 'user' | 'assistant'; content: string; createdAt: string; module: 'ai-chat';

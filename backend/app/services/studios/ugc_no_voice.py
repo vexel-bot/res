@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import hashlib
 import json
-import shutil
 import subprocess
 from datetime import UTC, datetime
 from pathlib import Path
@@ -18,6 +17,7 @@ from ...domain.studios.ugc_no_voice import (
     UgcNoVoiceSoundEvidenceV1,
     UgcNoVoiceVideoEvidenceV1,
 )
+from ...providers.studios.media_runtime import resolve_tool
 
 MAX_CAPTION_CHARACTERS_PER_SECOND = 18.0
 REQUIRED_PLAN_CHECKS = {
@@ -130,10 +130,8 @@ def _sound_assets_ready(
             return False
         try:
             report = json.loads(report_path.read_text(encoding="utf-8"))
-            ffprobe = shutil.which("ffprobe")
-            ffmpeg = shutil.which("ffmpeg")
-            if not ffprobe or not ffmpeg:
-                return False
+            ffprobe = resolve_tool("ffprobe")
+            ffmpeg = resolve_tool("ffmpeg")
             probed = subprocess.run(
                 [
                     ffprobe,
@@ -218,9 +216,7 @@ def _video_ready(
         return False
     try:
         report = json.loads(report_path.read_text(encoding="utf-8"))
-        ffprobe = shutil.which("ffprobe")
-        if not ffprobe:
-            return False
+        ffprobe = resolve_tool("ffprobe")
         completed = subprocess.run(
             [ffprobe, "-v", "error", "-show_streams", "-show_format", "-of", "json", str(video_path)],
             capture_output=True,

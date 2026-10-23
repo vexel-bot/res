@@ -23,7 +23,7 @@ export class ConversationStore {
     this.summaries.set(filename, { revision: this.revision(filename), value });
     return value;
   }
-  constructor(readonly root = path.resolve('.clicko-data/conversations')) {
+  constructor(readonly root = process.env.CLICKO_CONVERSATIONS_DIR || path.resolve('.clicko-data/conversations')) {
     for (const publicRoot of ['public','dist']) {
       const relative = path.relative(path.resolve(publicRoot), path.resolve(root));
       if (!relative || (!relative.startsWith('..' + path.sep) && relative !== '..' && !path.isAbsolute(relative))) throw new Error('KLIC_PRIVATE_STORAGE_REQUIRED');

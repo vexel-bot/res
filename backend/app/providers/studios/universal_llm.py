@@ -113,8 +113,12 @@ class UniversalLLMPlanner:
             body = {"model": model, "messages": messages, "max_tokens": tokens,
                     "response_format": {"type": "json_object"}, "stream": False}
         elif protocol == "ollama_chat":
-            body = {"model": model, "messages": messages, "format": "json", "stream": False,
+            body = {"model": model, "messages": messages,
+                    "format": context.get("outputSchema", "json"), "stream": False,
                     "options": {"num_predict": tokens}}
+            if context.get("localExecution"):
+                body["keep_alive"] = 0
+                body["options"].update(num_ctx=4096, temperature=0)
         else:
             body = substitute(self.config["requestTemplate"], {
                 "model": model, "prompt": SYSTEM + "\n\n" + prompt, "system": SYSTEM, "max_tokens": tokens,
@@ -183,6 +187,10 @@ class UniversalLLMPlanner:
                 raise ValueError("llm_provider_incomplete_response")
             text = "".join(part.get("text", "") for part in candidate["content"]["parts"] if not part.get("thought"))
             usage = payload.get("usageMetadata", {})
+            # Gemini bills thinking separately from visible candidates. Normalize
+            # both into completion_tokens exactly once for the shared cost path.
+            usage = {**usage, "completion_tokens": int(usage.get("candidatesTokenCount", 0) or 0)
+                     + int(usage.get("thoughtsTokenCount", 0) or 0)}
         elif protocol == "cohere_chat":
             if payload.get("finish_reason") not in {"COMPLETE", "STOP"}:
                 raise ValueError("llm_provider_incomplete_response")

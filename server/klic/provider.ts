@@ -1,6 +1,7 @@
 import { GoogleGenAI } from '@google/genai';
 import { createHash } from 'node:crypto';
 import { klicProviderConfig } from './providerConfig';
+import { governGemini } from '../finance/gemini';
 
 let cached: { configuration: string; client: GoogleGenAI } | undefined;
 export function getKlicAiClient() {
@@ -15,7 +16,7 @@ export function getKlicAiClient() {
     const client = config.mode === 'vertex'
       ? new GoogleGenAI({ vertexai: true, project: config.project, location: config.location, httpOptions })
       : new GoogleGenAI({ vertexai: false, apiKey: config.apiKey, httpOptions });
-    cached = { configuration, client };
+    cached = { configuration, client: governGemini(client) };
   }
   return cached.client;
 }

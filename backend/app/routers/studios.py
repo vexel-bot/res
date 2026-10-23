@@ -2523,11 +2523,15 @@ def retry_studio_job(
     from ..tasks import execute_studio_generation
 
     try:
-        enqueue_job_task(
-            execute_studio_generation,
-            job,
-            isolated_queues_enabled=get_settings().studio_isolated_queues_enabled,
-        )
+        if job.job_type == "timeline_render":
+            from .studio_video import dispatch
+            dispatch(job)
+        else:
+            enqueue_job_task(
+                execute_studio_generation,
+                job,
+                isolated_queues_enabled=get_settings().studio_isolated_queues_enabled,
+            )
     except Exception as error:
         job.status = "failed"
         job.error_code = "queue_unavailable"

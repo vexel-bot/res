@@ -34,6 +34,7 @@ import {
   type StudioFormat,
 } from "./departmentApi";
 import "./department.css";
+import { matchesStudioDraft, readStudioSession, writeStudioSession } from '../studioSession';
 
 export interface DepartmentStudioProps {
   pathname?: string;
@@ -177,21 +178,34 @@ function StudioRoom({
       previous?.focus();
     };
   }, [contextOpen]);
+  const navigationScope = JSON.stringify(['editorial', data.bootstrap?.user.id, workspaceId, linkedPost || null, linkedCampaign || null]);
   const [form, setForm] = React.useState<
     Omit<ProjectInput, "workspaceId" | "requestKey">
-  >({
+  >(() => {
+    const initial = {
     title: initialBrief?.title || post?.title || "",
     objective: initialBrief?.objective || post?.copy?.slice(0, 1000) || "",
     audience: "",
     tone: "Claro e preciso",
     evidence: "",
-    front: query.get("front") === "ads" ? "ads" : "content",
-    intent: "education",
+    front: query.get("front") === "ads" ? 'ads' as const : 'content' as const,
+    intent: 'education' as const,
     format: initialFormat,
     campaignId: linkedCampaign,
     postId: post?.id,
     sourceAssetId,
+    };
+    const saved = readStudioSession<typeof initial>(navigationScope);
+    return matchesStudioDraft(saved, initial) ? saved! : initial;
   });
+  React.useEffect(() => { writeStudioSession(navigationScope, form); }, [navigationScope, form]);
+  React.useEffect(() => {
+    const beforeLeave = (event: Event) => {
+      if (busy) { event.preventDefault(); setNotice('Aguarde a confirmação da operação editorial antes de trocar de ferramenta.'); }
+    };
+    window.addEventListener('clicko:studio-before-leave', beforeLeave);
+    return () => window.removeEventListener('clicko:studio-before-leave', beforeLeave);
+  }, [busy]);
   const requestKey = React.useRef(crypto.randomUUID());
   const alive = React.useRef(true);
   const operation = React.useRef(0);

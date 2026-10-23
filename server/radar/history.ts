@@ -21,7 +21,7 @@ export class RadarHistoryStore {
   private readonly local?: AtomicJsonStore<State>;
   private state?: State;
 
-  constructor(filename = path.resolve('.clicko-data/radar-history.json')) {
+  constructor(filename = process.env.CLICKO_RADAR_DATA_FILE || path.resolve('.clicko-data/radar-history.json')) {
     if (process.env.NODE_ENV === 'production') {
       const connectionString = process.env.SOCIAL_DATABASE_URL;
       if (!connectionString) throw new Error('RADAR_DATABASE_REQUIRED');

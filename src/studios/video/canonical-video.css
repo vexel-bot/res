@@ -1,0 +1,266 @@
+.vs-root .cv-editor {
+  --vs-border: var(--vs-line);
+  --vs-text: var(--vs-ink);
+  display: grid;
+  gap: 16px;
+}
+.vs-root .cv-editor fieldset { border: 0; padding: 0; margin: 0; min-width: 0; display: grid; gap: 10px; }
+.vs-root .cv-editor[hidden] {
+  display: none;
+}
+.vs-root .cv-toolbar,
+.vs-root .cv-editor header,
+.vs-root .cv-monitor footer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.vs-root .cv-toolbar > div {
+  margin-right: auto;
+}
+.vs-root .cv-toolbar small,
+.vs-root .cv-media-item small {
+  display: block;
+  color: var(--vs-muted, #888);
+  font-size: 12px;
+  margin-top: 4px;
+}
+.vs-root .cv-panels {
+  display: grid;
+  grid-template-columns: minmax(170px, 0.7fr) minmax(240px, 2fr) minmax(
+      190px,
+      0.8fr
+    );
+  gap: 12px;
+  align-items: start;
+}
+.vs-root .cv-panels > *,
+.vs-root .cv-timeline {
+  min-width: 0;
+  border: 1px solid var(--vs-border, #292929);
+  border-radius: 14px;
+  background: var(--vs-panel, #111);
+  padding: 16px;
+}
+.vs-root .cv-editor h3 {
+  font-size: 14px;
+  margin: 0 0 12px;
+}
+.vs-root .cv-editor p,
+.vs-root .cv-editor small {
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--vs-muted, #999);
+}
+.vs-root .cv-media {
+  display: grid;
+  gap: 8px;
+}
+.vs-root .cv-media header {
+  justify-content: space-between;
+}
+.vs-root .cv-media-item {
+  display: flex;
+  align-items: center;
+  text-align: left;
+  gap: 8px;
+  min-width: 0;
+}
+.vs-root .cv-media-item > span:nth-child(2) {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.vs-root .cv-monitor video {
+  width: 100%;
+  max-height: 420px;
+  background: #000;
+  border-radius: 8px;
+}
+.vs-root .cv-monitor-empty {
+  min-height: 260px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 12px;
+  padding: 24px;
+}
+.vs-root .cv-monitor footer {
+  justify-content: space-between;
+  font-size: 12px;
+  margin-top: 12px;
+}
+.vs-root .cv-monitor a {
+  color: var(--vs-text, inherit);
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.vs-root .cv-inspector {
+  display: grid;
+  gap: 12px;
+  max-height: 650px;
+  overflow: auto;
+}
+.vs-root .cv-editor label {
+  display: grid;
+  gap: 6px;
+  font-size: 12px;
+  min-width: 0;
+}
+.vs-root .cv-editor input:not([type="range"]),
+.vs-root .cv-editor textarea {
+  min-height: 40px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px 10px;
+  border: 1px solid var(--vs-border, #333);
+  border-radius: 8px;
+  background: var(--vs-input, #191919);
+  color: inherit;
+  font: inherit;
+}
+.vs-root .cv-title-add {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin: 14px 0;
+}
+.vs-root .cv-title-add input {
+  flex: 1;
+  min-width: 0;
+}
+.vs-root .cv-tracks {
+  display: grid;
+  gap: 10px;
+  overflow: auto;
+}
+.vs-root .cv-track {
+  display: grid;
+  grid-template-columns: 110px minmax(200px, 1fr);
+  gap: 12px;
+  min-width: 340px;
+}
+.vs-root .cv-track strong {
+  display: block;
+  font-size: 12px;
+}
+.vs-root .cv-track > div > button {
+  font-size: 11px;
+  margin-top: 6px;
+}
+.vs-root .cv-lane {
+  position: relative;
+  min-height: 64px;
+  background: var(--vs-input, #191919);
+  border-radius: 7px;
+  overflow: hidden;
+}
+.vs-root .cv-lane > button {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  overflow: hidden;
+  text-align: left;
+  font-size: 11px !important;
+  margin: 0 !important;
+  background: color-mix(in srgb, #ff7f50 18%, var(--vs-panel, #111));
+  border-color: color-mix(in srgb, #ff7f50 40%, transparent);
+  min-width: 20px;
+  padding: 6px !important;
+  display: block;
+}
+.vs-root .cv-lane > button.is-selected {
+  outline: 1px solid #ff7f50;
+  z-index: 2;
+}
+.vs-root .cv-lane small {
+  display: block;
+  white-space: nowrap;
+  font-size: 10px;
+}
+.vs-root .cv-playhead {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: #ff7f50;
+  z-index: 3;
+  pointer-events: none;
+}
+.vs-root .cv-job {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 14px;
+  font-size: 12px;
+}
+.vs-root .cv-job progress {
+  max-width: 150px;
+  accent-color: #ff7f50;
+}
+.vs-root .cv-timeline header {
+  justify-content: space-between;
+}
+.vs-root .cv-editor button {
+  min-height: 36px;
+}
+.vs-root .cv-editor button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+@media (max-width: 1200px) {
+  .vs-root .cv-panels {
+    grid-template-columns: minmax(150px, 0.7fr) minmax(240px, 2fr);
+  }
+  .vs-root .cv-inspector {
+    grid-column: 1/-1;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    max-height: none;
+  }
+  .vs-root .cv-inspector h3 {
+    grid-column: 1/-1;
+  }
+}
+@media (max-width: 640px) {
+  .vs-root .cv-panels {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .vs-root .cv-inspector {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .vs-root .cv-toolbar {
+    align-items: stretch;
+  }
+  .vs-root .cv-toolbar > div {
+    width: 100%;
+  }
+  .vs-root .cv-toolbar > button {
+    flex: 1;
+  }
+  .vs-root .cv-title-add {
+    flex-wrap: wrap;
+  }
+  .vs-root .cv-title-add input {
+    min-width: 180px;
+  }
+  .vs-root .cv-editor input:not([type="range"]),
+  .vs-root .cv-editor textarea {
+    font-size: 16px;
+  }
+  .vs-root .cv-editor button {
+    min-height: 44px;
+  }
+  .vs-root .cv-monitor-empty {
+    min-height: 210px;
+  }
+  .vs-root .cv-panels > *,
+  .vs-root .cv-timeline {
+    padding: 12px;
+  }
+}

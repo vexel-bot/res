@@ -415,7 +415,10 @@ def automatic_corrections(critique, rounds):
 def validate_direction(direction: EditorialDirectionV1, request: ProductionRequestV1):
     """Source excerpts are verbatim. Semantic faithfulness still requires review."""
     source = request.direction.intent.script
-    if request.cinematic_direction_policy in {"mixed_motion_v1", "editorial_motion_v2"} and direction.art_direction is None:
+    if (
+        request.cinematic_direction_policy in {"mixed_motion_v1", "editorial_motion_v2"}
+        and direction.art_direction is None
+    ):
         raise ValueError("production_cinematic_art_direction_required")
     if request.cinematic_direction_policy == "editorial_motion_v2" and not direction.art_direction.motion_system:
         raise ValueError("production_editorial_motion_system_required")

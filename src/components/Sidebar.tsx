@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  LayoutDashboard, Image, Video, CalendarDays, CheckCircle2,
+  LayoutDashboard, Clapperboard, CalendarDays, CheckCircle2,
   ChartNoAxesCombined, Workflow, Link2, User, Users,
   Settings, ChevronLeft, FolderKanban, CreditCard, Gauge
 } from 'lucide-react';
@@ -9,6 +9,7 @@ import { ClickoLogo } from './ClickoLogo';
 import { KlicSymbol } from './KlicSymbol';
 import { useGovernance } from '../context/GovernanceContext';
 import { hasPermission } from '../security/accessControl';
+import { isStudioModule } from '../studios/studioNavigation';
 
 interface SidebarProps {
   currentTab: NavigationTab;
@@ -35,8 +36,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onSelectTab, isCom
 
   const navItems: NavItem[] = [
     { label: 'Dashboard', id: 'dashboard', icon: LayoutDashboard },
-    { label: 'Imagem', id: 'create-image', icon: Image },
-    { label: 'Vídeo', id: 'create-video', icon: Video },
+    { label: 'Studios', id: canAccess('create-image') ? 'create-image' : 'create-video', icon: Clapperboard },
     { label: 'Klic AI', id: 'ai-chat', icon: KlicSymbol },
     { label: 'Biblioteca', id: 'library', icon: FolderKanban },
     { label: 'Calendário', id: 'calendar', icon: CalendarDays },
@@ -53,7 +53,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onSelectTab, isCom
 
   const renderItem = (item: NavItem) => {
     const Icon = item.icon;
-    const selected = currentTab === item.id;
+    const selected = currentTab === item.id || (item.label === 'Studios' && isStudioModule(currentTab));
     const badge = item.id === 'approvals' ? approvals.filter((approval) => ['in_review', 'pending_approval'].includes(approval.stage)).length : 0;
     
     if (currentUser && !canAccess(item.id)) return null;

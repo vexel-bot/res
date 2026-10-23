@@ -89,13 +89,13 @@ def runtime_argv(engine: str) -> list[str]:
         if not executable.is_file():
             raise CraftRuntimeError("craft_runtime_binary_unavailable")
         return [str(executable)]
-    wrapper = REPOSITORY_ROOT / "workers" / "craft" / "run_adapter.py"
-    if wrapper.is_file():
-        return [sys.executable, str(wrapper), engine]
     suffix = ".exe" if os.name == "nt" else ""
     adapter = REPOSITORY_ROOT / "workers" / "craft" / "bin" / f"clicko-{engine}-adapter{suffix}"
     if adapter.is_file():
         return [str(adapter)]
+    wrapper = REPOSITORY_ROOT / "workers" / "craft" / "run_adapter.py"
+    if wrapper.is_file():
+        return [sys.executable, str(wrapper), engine]
     raise CraftRuntimeError("craft_runtime_not_built")
 
 

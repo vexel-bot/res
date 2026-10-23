@@ -1,7 +1,8 @@
 import React from 'react';
 import type { UserAccount, WorkspaceMember } from '../types';
+import { DEV_WORKSPACE_ID, type DevelopmentSession } from '../development/contracts';
 
-type AuthPayload = { account: UserAccount; accounts: UserAccount[]; user: WorkspaceMember };
+type AuthPayload = { account: UserAccount; accounts: UserAccount[]; user: WorkspaceMember; development?: DevelopmentSession };
 type AuthResponse = AuthPayload & { verificationRequired?: false };
 type SignupResponse = Partial<AuthPayload> & { verificationRequired: boolean; deliveryConfigured?: boolean; developmentToken?: string };
 type RecoveryResponse = { message: string; deliveryConfigured?: boolean; developmentToken?: string };
@@ -12,6 +13,7 @@ type AuthContextValue = {
   account?: UserAccount;
   accounts: UserAccount[];
   user?: WorkspaceMember;
+  development?: DevelopmentSession;
   refresh: () => Promise<boolean>;
   uploadAvatar: (file: File, workspaceId: string, signal?: AbortSignal) => Promise<string>;
   login: (email: string, password: string, remember: boolean) => Promise<void>;
@@ -56,7 +58,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         return old && JSON.stringify(old) === JSON.stringify(account) ? old : account;
       });
       const account = accounts.find(item => item.id === value.account.id)!;
-      return { ...value, account, accounts };
+      return { ...value, development: value.development || (account.workspaceId === DEV_WORKSPACE_ID ? previous?.development : undefined), account, accounts };
     });
     // These keys contain display metadata only. They are never accepted by the
     // server as proof of identity; the session lives in an HTTP-only cookie.
@@ -123,7 +125,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   }, []);
 
-  return <AuthContext.Provider value={{ loading, authenticated: Boolean(payload), account: payload?.account, accounts: payload?.accounts || [], user: payload?.user, refresh, uploadAvatar, login, signup, forgotPassword, resetPassword, verifyEmail, switchAccount, removeAccount, logout }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ loading, authenticated: Boolean(payload), account: payload?.account, accounts: payload?.accounts || [], user: payload?.user, development: payload?.development, refresh, uploadAvatar, login, signup, forgotPassword, resetPassword, verifyEmail, switchAccount, removeAccount, logout }}>{children}</AuthContext.Provider>;
 };
 
 export function useAuth() {

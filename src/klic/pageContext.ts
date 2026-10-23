@@ -1,11 +1,13 @@
 import React from 'react';
 import type { NavigationTab } from '../types';
+import { studioToolForPath } from '../studios/studioNavigation';
 
 export type KlicPageDetails = {
   view?: string;
   period?: string;
   filters?: Record<string, string>;
   selected?: { kind: string; id: string };
+  selectedLayerIds?: string[];
 };
 export const klicPageScope = (workspaceId: string, clientId?: string | null) => JSON.stringify([workspaceId, clientId || null]);
 
@@ -18,7 +20,7 @@ const notify = () => { snapshot = { module: activeModule, registration }; listen
 const subscribe = (listener: () => void) => { listeners.add(listener); return () => { listeners.delete(listener); }; };
 const getSnapshot = () => snapshot;
 
-export const klicModuleForPath = (path: string): NavigationTab => ({
+export const klicModuleForPath = (path: string): NavigationTab => studioToolForPath(path)?.module || ({
   '/dashboard': 'dashboard', '/klic': 'ai-chat', '/clients': 'workspace', '/strategy': 'strategy',
   '/calendar': 'calendar', '/library': 'library', '/analytics': 'analytics',
   '/connected-accounts': 'connected-accounts', '/approvals': 'approvals', '/team': 'team',

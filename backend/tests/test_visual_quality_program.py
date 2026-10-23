@@ -106,8 +106,14 @@ def test_indicator_is_flagged_and_owner_only(client, monkeypatch):
     assert client.get(url, headers={"Authorization": f"Bearer {owner_token}"}).status_code == 404
     monkeypatch.setattr(settings, "studio_visual_quality_indicator_enabled", True)
     response = client.get(url, headers={"Authorization": f"Bearer {owner_token}"})
-    assert response.status_code == 200, response.text
-    assert response.json()["phaseStatus"] == "pending"
+    from app.services.studios.visual_quality_program import BASELINE_PATH
+
+    if BASELINE_PATH.is_file():
+        assert response.status_code == 200, response.text
+        assert response.json()["phaseStatus"] == "pending"
+    else:
+        assert response.status_code == 503, response.text
+        assert response.json()["detail"]["code"] == "visual_quality_baseline_unavailable"
     with SessionLocal() as db:
         viewer = db.scalar(select(User).where(User.email == "quality-viewer@example.com"))
         db.add(Membership(user_id=viewer.id, workspace_id=workspace, role="Viewer"))
@@ -211,6 +217,10 @@ def test_shared_phase_budget_is_global_in_real_database(client, monkeypatch):
     settings = get_settings()
     monkeypatch.setattr(settings, "studio_gemini_test_budget_usd", 10)
     monkeypatch.setattr(settings, "studio_production_test_budget_usd", 10)
+    for key in ("studio_external_monthly_budget_usd", "studio_external_workspace_monthly_budget_usd",
+                "studio_external_user_monthly_budget_usd"):
+        monkeypatch.setattr(settings, key, 20)
+    monkeypatch.setattr(settings, "studio_external_model_monthly_budgets", {"qa-planner": 20})
     group = "visual-quality-2026-10-01"
     with SessionLocal() as db:
         previous = StudioGenerationJob(
@@ -221,7 +231,8 @@ def test_shared_phase_budget_is_global_in_real_database(client, monkeypatch):
             payload_hash="a" * 64,
             correlation_id="first-run",
             status="retrying",
-            request_payload={"environment": "test", "budgetGroupId": group, "input": {"operation": "plan"}},
+            request_payload={"environment": "test", "budgetGroupId": group, "input": {"operation": "plan"},
+                             "model": "qa-planner"},
             result_payload={
                 "testReservationUsd": 9.95,
                 "budgetCategory": "planning",
@@ -240,6 +251,7 @@ def test_shared_phase_budget_is_global_in_real_database(client, monkeypatch):
             request_payload={
                 "environment": "test",
                 "budgetGroupId": group,
+                "model": "qa-planner",
                 "input": {"operation": "plan"},
                 "budgetAllocations": {"planning": 1, "image": 0, "critique": 0, "video": 0},
                 "maxPromptChars": 1000,

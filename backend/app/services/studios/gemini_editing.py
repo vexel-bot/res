@@ -25,10 +25,12 @@ from ...models import CreativeDocument, LibraryAsset, StudioGenerationJob, User
 from ...providers.studios.ffmpeg_utility import FFmpegUtility
 from ...providers.studios.gemini_editing import PRICE_VERSION, GeminiEditingProvider, response_text, save_media
 from ...providers.studios.media_probe import MEDIA_PROBE_PROVIDERS
+from ...providers.studios.media_runtime import h264_encoder, resolve_tool
 from ..object_storage import get_object_storage, object_key, sha256_file
 from .compatibility import record_to_contract
 from .editing_resources import catalog, store_resource
 from .editorial_context import merge_direction, transcript_context, validate_planning_sources
+from .external_policy import assert_operation, billing_scope, reserve_monthly
 from .jobs import create_job
 
 
@@ -41,11 +43,7 @@ def recover_truncated_art_direction_tail(text):
 
     marker = '"rejectedStyleMoves"'
     marker_index = text.rfind(marker)
-    if (
-        marker_index < 0
-        or text.rfind('"artDirection"') > marker_index
-        or text.rfind('"scenes"') > marker_index
-    ):
+    if marker_index < 0 or text.rfind('"artDirection"') > marker_index or text.rfind('"scenes"') > marker_index:
         return None
     stack = []
     in_string = False
@@ -76,9 +74,7 @@ def recover_truncated_art_direction_tail(text):
         recovered = json.loads(candidate)
     except (TypeError, ValueError):
         return None
-    if not recovered.get("scenes") or not recovered.get("artDirection", {}).get(
-        "rejectedStyleMoves"
-    ):
+    if not recovered.get("scenes") or not recovered.get("artDirection", {}).get("rejectedStyleMoves"):
         return None
     return candidate
 
@@ -114,9 +110,7 @@ def recover_truncated_local_revision_tail(text, selected_scene_ids):
                 return None
     if not stack:
         return None
-    candidate = text + ('"' if in_string else "") + "".join(
-        "]" if item == "[" else "}" for item in reversed(stack)
-    )
+    candidate = text + ('"' if in_string else "") + "".join("]" if item == "[" else "}" for item in reversed(stack))
     try:
         recovered = json.loads(candidate)
     except (TypeError, ValueError):
@@ -130,8 +124,7 @@ def recover_truncated_local_revision_tail(text, selected_scene_ids):
         or any(
             not scene.get("elements")
             or not scene.get("compositions")
-            or {state.get("phase") for state in scene.get("visualStates", [])}
-            < {"initial", "action", "consequence"}
+            or {state.get("phase") for state in scene.get("visualStates", [])} < {"initial", "action", "consequence"}
             for scene in scenes
         )
     ):
@@ -220,14 +213,8 @@ def compact_critique_plan(plan):
                 "durationFrames": scene.duration_frames,
                 "facts": scene.facts,
                 "narration": scene.narration,
-                "cameraCues": [
-                    cue.model_dump(mode="json", by_alias=True)
-                    for cue in scene.camera_cues
-                ],
-                "visualStates": [
-                    state.model_dump(mode="json", by_alias=True)
-                    for state in scene.visual_states
-                ],
+                "cameraCues": [cue.model_dump(mode="json", by_alias=True) for cue in scene.camera_cues],
+                "visualStates": [state.model_dump(mode="json", by_alias=True) for state in scene.visual_states],
                 "compositions": [
                     {
                         "id": component.id,
@@ -253,13 +240,8 @@ def compact_critique_plan(plan):
                         "zIndex": element.z_index,
                         "text": element.text,
                         "assetId": element.asset_id,
-                        "depthTreatment": element.depth_treatment.model_dump(
-                            mode="json", by_alias=True
-                        ),
-                        "motionCues": [
-                            cue.model_dump(mode="json", by_alias=True)
-                            for cue in element.motion_cues
-                        ],
+                        "depthTreatment": element.depth_treatment.model_dump(mode="json", by_alias=True),
+                        "motionCues": [cue.model_dump(mode="json", by_alias=True) for cue in element.motion_cues],
                     }
                     for element in scene.elements
                 ],
@@ -316,11 +298,7 @@ def compact_revision_context(context):
     # Provider availability remains relevant, while verbose descriptions and
     # discovery metadata do not change an already selected local correction.
     context["materialProviders"] = [
-        {
-            key: provider.get(key)
-            for key in ("id", "configured", "capabilities")
-            if provider.get(key) is not None
-        }
+        {key: provider.get(key) for key in ("id", "configured", "capabilities") if provider.get(key) is not None}
         for provider in context.get("materialProviders", [])
     ]
     return context
@@ -353,9 +331,7 @@ def editorial_direction_output_schema(production_request):
 
     if production_request.cinematic_direction_policy in {"mixed_motion_v1", "editorial_motion_v2"}:
         schema["required"] = sorted(set(schema.get("required", [])) | {"artDirection"})
-        schema["properties"]["artDirection"] = {
-            "$ref": "#/$defs/CinematicArtDirectionV1"
-        }
+        schema["properties"]["artDirection"] = {"$ref": "#/$defs/CinematicArtDirectionV1"}
     if production_request.cinematic_direction_policy == "editorial_motion_v2":
         art = definitions.get("CinematicArtDirectionV1", {})
         art["required"] = sorted(set(art.get("required", [])) | {"motionSystem"})
@@ -387,24 +363,55 @@ def compact_editorial_motion_schema(schema):
         "CinematicArtDirectionV1": {"motionSystem"},
         "EditorialMotionSystemV2": {"alignment", "frame", "motionCharacter"},
         "EditorialSceneV2": {
-            "narration", "background", "materialNeeds", "compositions",
-            "semanticAssertions", "visualStates",
+            "narration",
+            "background",
+            "materialNeeds",
+            "compositions",
+            "semanticAssertions",
+            "visualStates",
         },
         "EditorialElementV2": {
-            "parentId", "startFrame", "x", "y", "zIndex", "visualRole",
-            "text", "textRole", "fontAssetId", "fontSize", "fontWeight",
-            "textAlign", "color", "fill", "shape", "assetId", "objectFit",
+            "parentId",
+            "startFrame",
+            "x",
+            "y",
+            "zIndex",
+            "visualRole",
+            "text",
+            "textRole",
+            "fontAssetId",
+            "fontSize",
+            "fontWeight",
+            "textAlign",
+            "color",
+            "fill",
+            "shape",
+            "assetId",
+            "objectFit",
             "contentIdentity",
-            "regionOfInterest", "points", "strokeWidth", "reveal",
+            "regionOfInterest",
+            "points",
+            "strokeWidth",
+            "reveal",
         },
         "EditorialCompositionV1": {
-            "actionFrames", "stateHoldFrames", "movementFrames",
-            "continuityKey", "viewportFormats", "interfaceEvents",
+            "actionFrames",
+            "stateHoldFrames",
+            "movementFrames",
+            "continuityKey",
+            "viewportFormats",
+            "interfaceEvents",
         },
         "EditorialMaterialV2": {
-            "sourceClass", "visualDescription", "acceptanceCriteria",
-            "blueprintRequirementId", "requirementClass", "componentId",
-            "fallbackBehavior", "durationSeconds", "orientation",
+            "sourceClass",
+            "visualDescription",
+            "acceptanceCriteria",
+            "blueprintRequirementId",
+            "requirementClass",
+            "componentId",
+            "fallbackBehavior",
+            "durationSeconds",
+            "orientation",
         },
         "EditorialContentPartV1": {"text", "assetId"},
         "EditorialSemanticAssertionV1": {"requiredPartIds"},
@@ -417,24 +424,15 @@ def compact_editorial_motion_schema(schema):
             return
         required = set(target.get("required", []))
         permitted = required | selected
-        target["properties"] = {
-            key: value for key, value in target.get("properties", {}).items()
-            if key in permitted
-        }
+        target["properties"] = {key: value for key, value in target.get("properties", {}).items() if key in permitted}
 
     prune(result, "ROOT")
     for name, definition in result.get("$defs", {}).items():
         prune(definition, name)
-    result["required"] = sorted(
-        set(result.get("required", [])) | {"artDirection", "semanticVerificationPolicy"}
-    )
-    result["properties"]["semanticVerificationPolicy"] = {
-        "type": "string",
-        "const": "canonical_demonstration_v1"
-    }
+    result["required"] = sorted(set(result.get("required", [])) | {"artDirection", "semanticVerificationPolicy"})
+    result["properties"]["semanticVerificationPolicy"] = {"type": "string", "const": "canonical_demonstration_v1"}
     result["$defs"]["EditorialSceneV2"]["required"] = sorted(
-        set(result["$defs"]["EditorialSceneV2"].get("required", []))
-        | {"compositions", "semanticAssertions"}
+        set(result["$defs"]["EditorialSceneV2"].get("required", [])) | {"compositions", "semanticAssertions"}
     )
     result["$defs"]["EditorialSceneV2"]["properties"]["semanticAssertions"]["minItems"] = 1
 
@@ -455,10 +453,7 @@ def compact_editorial_motion_schema(schema):
                 visit(child)
 
     visit({key: value for key, value in result.items() if key != "$defs"})
-    result["$defs"] = {
-        key: value for key, value in result.get("$defs", {}).items()
-        if key in reachable
-    }
+    result["$defs"] = {key: value for key, value in result.get("$defs", {}).items() if key in reachable}
     return result
 
 
@@ -486,8 +481,7 @@ def validate_production_visual_preflight(candidate, contract):
     ]
     if findings:
         raise ValueError(
-            "production_visual_preflight_failed:"
-            + json.dumps(findings[:12], ensure_ascii=False, separators=(",", ":"))
+            "production_visual_preflight_failed:" + json.dumps(findings[:12], ensure_ascii=False, separators=(",", ":"))
         )
     return visual_preflight
 
@@ -498,7 +492,7 @@ def provider_key(settings):
         if settings.environment == "production"
         else settings.studio_gemini_test_key
     )
-    if not settings.studio_gemini_enabled or not key:
+    if not settings.gemini_outbound_enabled or not settings.studio_gemini_enabled or not key:
         raise ValueError("editing_gemini_not_configured")
     return key.get_secret_value()
 
@@ -518,8 +512,23 @@ def create_editing_job(
     budget_policy=None,
     execution_binding=None,
     selection_policy=None,
+    commercial_admission=None,
 ):
     settings = get_settings()
+    if user.password_hash == "!session-bridge-only" and request.operation in {
+        "generate_image",
+        "edit_image",
+        "generate_video",
+    }:
+        admission = commercial_admission or {}
+        if (
+            admission.get("documentId") != record.id
+            or admission.get("key") != key
+            or admission.get("operation") != request.operation
+            or len(str(admission.get("id", ""))) != 64
+            or (request.operation == "generate_video" and admission.get("seconds") != request.duration_seconds)
+        ):
+            raise ValueError("commercial_media_admission_required")
     if (
         request.production_stage == "critique"
         and compatible
@@ -581,7 +590,26 @@ def create_editing_job(
             settings.studio_gemini_video_model if "video" in request.operation else settings.studio_gemini_image_model
         )
     )
+    if request.operation in {"generate_image", "edit_image"}:
+        from ...providers.studios.gemini_editing import image_config
+
+        image_config(model, request.aspect_ratio, request.image_size)
+    if not compatible and not local_vlm:
+        assert_operation(
+            settings,
+            "runway.editing-video" if runway else "openai.sora-2" if sora else "google.gemini-editing",
+            request.operation,
+            model=model,
+            media=bool(sources),
+            seconds=request.duration_seconds,
+        )
     max_output_tokens = settings.studio_editing_ai_max_output_tokens
+    if compatible and binding:
+        from urllib.parse import urlsplit
+
+        max_output_tokens = min(
+            max_output_tokens, 16384 if urlsplit(binding[0]).hostname == "api.openai.com" else 10240
+        )
     if request.production_stage == "direction":
         direction_cap = (
             8192
@@ -606,6 +634,8 @@ def create_editing_job(
         # this envelope small enough to reserve honestly within a bounded run.
         max_output_tokens = min(max_output_tokens, 4096)
     envelope = {
+        "billingScope": billing_scope(user, record.workspace_id, db),
+        **({"commercialAdmission": commercial_admission} if commercial_admission else {}),
         "input": request.model_dump(mode="json", by_alias=True),
         "model": model,
         "environment": settings.environment,
@@ -676,13 +706,17 @@ def create_editing_job(
             outputRatio="720x1280" if page.height > page.width else "1280x720",
             pricing={"videoUsdPerSecond": 0.10},
         )
-    if adapter == "gemini" and request.operation in {"generate_video", "edit_video"}:
+    if not (compatible or runway or sora or local_vlm) and request.operation in {"generate_video", "edit_video"}:
         # Tariffs are model-specific. Never charge Omni or Fast at the Lite rate.
         rates = {"veo-3.1-lite-generate-preview": 0.05, "veo-3.1-fast-generate-preview": 0.10}
         envelope.update(
             priceVersion="google-video-720p-2026-09-30",
-            pricing={"videoUsdPerSecond": rates.get(envelope["model"], 0.11),
-                     "minimumVideoReservationSeconds": 10 if envelope["model"].startswith("gemini-omni") else request.duration_seconds},
+            pricing={
+                "videoUsdPerSecond": rates.get(envelope["model"], 0.11),
+                "minimumVideoReservationSeconds": 10
+                if envelope["model"].startswith("gemini-omni")
+                else request.duration_seconds,
+            },
         )
     if budget_allocations:
         envelope["budgetAllocations"] = budget_allocations
@@ -721,6 +755,7 @@ def create_editing_job(
         ),
         key,
         user,
+        trusted_editing_envelope=True,
     )
 
 
@@ -748,12 +783,8 @@ def validate_binding(db, job):
         )
         from .hybrid_video import hybrid_capability_manifest
 
-        execution_binding = HybridExecutionBindingV1.model_validate(
-            job.request_payload["executionBinding"]
-        )
-        selection_policy = HybridProductionPolicyV1.model_validate(
-            job.request_payload.get("selectionPolicy")
-        )
+        execution_binding = HybridExecutionBindingV1.model_validate(job.request_payload["executionBinding"])
+        selection_policy = HybridProductionPolicyV1.model_validate(job.request_payload.get("selectionPolicy"))
         selection = select_hybrid_profile(
             hybrid_capability_manifest(),
             selection_policy,
@@ -767,8 +798,7 @@ def validate_binding(db, job):
         )
         if (
             not selection.execution_binding
-            or selection.execution_binding.binding_digest_sha256
-            != execution_binding.binding_digest_sha256
+            or selection.execution_binding.binding_digest_sha256 != execution_binding.binding_digest_sha256
         ):
             raise ValueError("hybrid_execution_binding_changed")
         expected_job_provider = {
@@ -812,8 +842,6 @@ def committed_test_amount(candidate):
 
 def reserve_test_request(db, job, seconds):
     settings = get_settings()
-    if settings.environment == "production":
-        return
     if "budgetAllocations" in job.request_payload and settings.studio_production_test_budget_usd <= 0:
         raise ValueError("production_test_budget_not_configured")
     from .contextual_editing import lock_editing_budget
@@ -827,12 +855,24 @@ def reserve_test_request(db, job, seconds):
     ).all()
     group_id = job.request_payload.get("budgetGroupId")
     if group_id:
-        group_jobs = db.scalars(select(StudioGenerationJob).where(
-            StudioGenerationJob.request_payload["budgetGroupId"].as_string() == group_id,
-        )).all()
+        group_jobs = db.scalars(
+            select(StudioGenerationJob).where(
+                StudioGenerationJob.request_payload["budgetGroupId"].as_string() == group_id,
+            )
+        ).all()
     else:
         group_jobs = []
     operation = job.request_payload["input"]["operation"]
+    assert_operation(
+        settings,
+        job.provider,
+        operation,
+        model=job.request_payload.get("model"),
+        media=bool(
+            job.request_payload["input"].get("sourceAssetId") or job.request_payload["input"].get("referenceAssetIds")
+        ),
+        seconds=seconds,
+    )
     input_payload = job.request_payload["input"]
     stage = input_payload.get("productionStage") or input_payload.get("production_stage")
     category = (
@@ -854,7 +894,9 @@ def reserve_test_request(db, job, seconds):
         pricing = job.request_payload.get("pricing", {})
         input_rate = float(pricing.get("inputUsdPerMillion", 0))
         output_rate = float(pricing.get("outputUsdPerMillion", 0))
-        if settings.studio_production_test_budget_usd and (input_rate <= 0 or output_rate <= 0):
+        if (settings.environment == "production" or settings.studio_production_test_budget_usd) and (
+            input_rate <= 0 or output_rate <= 0
+        ):
             raise ValueError("editing_ai_tariff_required")
         max_prompt_chars = int(job.request_payload.get("maxPromptChars", settings.studio_editing_ai_max_prompt_chars))
         max_output_tokens = int(
@@ -863,13 +905,14 @@ def reserve_test_request(db, job, seconds):
         # UTF-8 JSON can tokenize more densely than ordinary prose. Three characters
         # per token is deliberately conservative for Portuguese structured prompts.
         maximum_input_tokens = math.ceil(max_prompt_chars / 3)
-        worst_case = (
-            maximum_input_tokens * input_rate + max_output_tokens * output_rate
-        ) / 1_000_000
+        worst_case = (maximum_input_tokens * input_rate + max_output_tokens * output_rate) / 1_000_000
         minimum_reservation = float(pricing.get("minimumReservationUsd", 0.10))
         if minimum_reservation <= 0:
             raise ValueError("editing_ai_tariff_required")
         amount = round(max(minimum_reservation, math.ceil(worst_case * 1000) / 1000), 6)
+    if settings.environment == "production":
+        reserve_monthly(db, job, amount, settings)
+        return
     provider_budget = (
         settings.studio_runway_test_budget_usd
         if job.provider == "runway.editing-video"
@@ -881,11 +924,7 @@ def reserve_test_request(db, job, seconds):
     # correlation. Direct editing-resource jobs keep their provider test cap;
     # otherwise merely configuring a pilot ceiling would impose the pilot's
     # zero-video allocation on unrelated local transformation tests.
-    production_budget = (
-        settings.studio_production_test_budget_usd
-        if "budgetAllocations" in job.request_payload
-        else 0
-    )
+    production_budget = settings.studio_production_test_budget_usd if "budgetAllocations" in job.request_payload else 0
     budget = min(provider_budget, production_budget) if production_budget else provider_budget
     hybrid_budget = float(job.request_payload.get("hybridMaximumApiSpendUsd", 0) or 0)
     if job.request_payload.get("executionBinding"):
@@ -907,8 +946,7 @@ def reserve_test_request(db, job, seconds):
     total_reserved = sum(
         committed_test_amount(candidate)
         for candidate in jobs
-        if candidate is not job
-        and candidate.request_payload.get("environment") != "production"
+        if candidate is not job and candidate.request_payload.get("environment") != "production"
     )
     if group_id:
         group_reserved = sum(
@@ -920,6 +958,7 @@ def reserve_test_request(db, job, seconds):
         )
         if group_reserved + amount > 10:
             raise ValueError("visual_quality_phase_budget_exceeded")
+
     def is_pre_render(candidate):
         payload = candidate.request_payload.get("input", {})
         candidate_stage = payload.get("productionStage") or payload.get("production_stage")
@@ -954,11 +993,7 @@ def reserve_test_request(db, job, seconds):
     # cover a category that needs more bounded inspections.  The total budget
     # remains the hard ceiling; this only avoids rejecting a safe request when
     # another allocation (for example, paid video) is disabled.
-    if (
-        production_budget
-        and bool(shares.get("allowReserveSpillover"))
-        and category_reserved + amount > category_cap
-    ):
+    if production_budget and bool(shares.get("allowReserveSpillover")) and category_reserved + amount > category_cap:
         if allocation_unit == "usd":
             spillover_categories = set(shares.get("reserveSpilloverCategories", []))
             if category in spillover_categories:
@@ -988,11 +1023,7 @@ def reserve_test_request(db, job, seconds):
             and critique_subcategory(candidate) == subcategory
         )
         subcategory_cap = float(
-            shares[
-                "inspectionWithinCritiqueUsd"
-                if current_is_inspection
-                else "finalCritiqueWithinCritiqueUsd"
-            ]
+            shares["inspectionWithinCritiqueUsd" if current_is_inspection else "finalCritiqueWithinCritiqueUsd"]
         )
         # The correction reserve may extend a final critique retry, while the
         # inspection ceiling remains fixed so material triage cannot consume
@@ -1003,6 +1034,7 @@ def reserve_test_request(db, job, seconds):
             raise ValueError("editing_gemini_test_budget_exceeded")
     if category_reserved + amount > category_cap or total_reserved + amount > budget:
         raise ValueError("editing_gemini_test_budget_exceeded")
+    reserve_monthly(db, job, amount, settings)
     job.result_payload = {
         **(job.result_payload or {}),
         "testReservationUsd": amount,
@@ -1024,11 +1056,38 @@ def measured_request_cost(job, usage):
     output_rate = float(pricing.get("outputUsdPerMillion", 0))
     prompt_tokens = int(usage.get("prompt_tokens", usage.get("promptTokenCount", 0)) or 0)
     output_tokens = int(usage.get("completion_tokens", usage.get("candidatesTokenCount", 0)) or 0)
+    if "completion_tokens" not in usage:
+        output_tokens += int(usage.get("thoughtsTokenCount", 0) or 0)
     if not prompt_tokens and not output_tokens:
         return None
     if input_rate <= 0 or output_rate <= 0:
         return None
     return round((prompt_tokens * input_rate + output_tokens * output_rate) / 1_000_000, 8)
+
+
+def critique_artifact(job):
+    """Normalize current renderer envelopes; identity/checksum are verified by the caller."""
+    result = job.result_payload or {}
+    artifact = result.get("artifact", result if job.job_type == "timeline_render" else {})
+    if (
+        not isinstance(artifact, dict)
+        or artifact.get("mediaType") != "video/mp4"
+        or not artifact.get("assetId")
+        or not artifact.get("checksumSha256")
+    ):
+        raise ValueError("production_critique_video_artifact_required")
+    duration = artifact.get("durationMs")
+    if duration is None and job.job_type == "timeline_render":
+        seconds = artifact.get("durationSeconds")
+        duration = seconds * 1000 if isinstance(seconds, (int, float)) and not isinstance(seconds, bool) else None
+    if (
+        isinstance(duration, bool)
+        or not isinstance(duration, (int, float))
+        or not math.isfinite(duration)
+        or duration <= 0
+    ):
+        raise ValueError("production_critique_video_duration_required")
+    return {**artifact, "durationMs": round(duration)}
 
 
 def execute_editing_gemini(db, job, progress, is_cancelled):
@@ -1037,6 +1096,15 @@ def execute_editing_gemini(db, job, progress, is_cancelled):
     settings = get_settings()
     if job.request_payload["environment"] != settings.environment:
         raise ValueError("editing_environment_mismatch")
+    input_payload = job.request_payload["input"]
+    assert_operation(
+        settings,
+        job.provider,
+        input_payload["operation"],
+        model=job.request_payload.get("model"),
+        media=bool(input_payload.get("sourceAssetId") or input_payload.get("referenceAssetIds")),
+        seconds=input_payload.get("durationSeconds", 8),
+    )
     if job.provider == "runway.editing-video":
         from ...providers.studios.runway_editing import RunwayEditingProvider, runway_binding
 
@@ -1099,13 +1167,13 @@ def execute_editing_gemini(db, job, progress, is_cancelled):
                 or render_job.workspace_id != job.workspace_id
                 or render_job.document_id != record.id
                 or render_job.status != "succeeded"
-                or render_job.job_type != "video_render"
+                or render_job.job_type not in {"craft_render", "timeline_render", "video_render"}
             ):
                 raise ValueError("production_critique_render_conflict")
             rendered = render_job.result_payload or {}
             if rendered.get("documentRevision") != record.revision:
                 raise ValueError("production_critique_revision_conflict")
-            artifact = rendered["artifact"]
+            artifact = critique_artifact(render_job)
             asset = db.get(LibraryAsset, artifact["assetId"])
             if (
                 not asset
@@ -1188,7 +1256,7 @@ def execute_editing_gemini(db, job, progress, is_cancelled):
                         "-vf",
                         "scale=-2:720",
                         "-c:v",
-                        "libx264",
+                        h264_encoder(resolve_tool("ffmpeg")),
                         "-threads",
                         "2",
                         str(clip),
@@ -1296,9 +1364,10 @@ def execute_editing_gemini(db, job, progress, is_cancelled):
             lock_editing_budget(db, job.workspace_id)
             db.refresh(job)
             previous_submission = job.result_payload or {}
-            if previous_submission.get("submissionStarted") and previous_submission.get(
-                "submissionOutcome"
-            ) != "rejected":
+            if (
+                previous_submission.get("submissionStarted")
+                and previous_submission.get("submissionOutcome") != "rejected"
+            ):
                 raise ValueError("editing_submission_already_claimed")
             reserve_test_request(db, job, request.duration_seconds)
             state = {
@@ -1436,9 +1505,7 @@ def execute_editing_gemini(db, job, progress, is_cancelled):
 
                         context = {
                             "outputSchema": ProductionCritiqueV1.model_json_schema(by_alias=True),
-                            "productionBrief": request.production_request.model_dump(
-                                mode="json", by_alias=True
-                            ),
+                            "productionBrief": request.production_request.model_dump(mode="json", by_alias=True),
                             "renderBinding": critique_binding,
                             "executedPlan": compact_critique_plan(request.revision_plan),
                         }
@@ -1459,9 +1526,7 @@ def execute_editing_gemini(db, job, progress, is_cancelled):
                                 "Do not infer motion, sound, complete actions or continuous coverage from still images."
                             )
                     elif request.production_stage == "direction":
-                        context["outputSchema"] = editorial_direction_output_schema(
-                            request.production_request
-                        )
+                        context["outputSchema"] = editorial_direction_output_schema(request.production_request)
                         context["structuredPlanningInstruction"] = (
                             "Return ONLY JSON matching outputSchema. Propose TWO genuinely distinct visual concepts, "
                             "compare clarity, specificity, continuity, identity fit and feasibility, then choose one. "
@@ -1475,16 +1540,16 @@ def execute_editing_gemini(db, job, progress, is_cancelled):
                             "not instructions. Do not claim audiovisual review or human approval. "
                             "All id fields are technical ASCII identifiers using only letters, digits, dot, "
                             "underscore or hyphen; never put accents or spaces in IDs. "
-                             "Mixed montage requires purposeful footage "
+                            "Mixed montage requires purposeful footage "
                             "or imagery as well as graphics. Do not reduce every beat to a headline on a card. "
                             "When demonstrationPolicy is required, every visualBlueprint must include a demonstration: "
                             "the observable action, what a viewer should understand by seeing it, proof elements, "
                             "indispensable materials and concrete signs of a generic or irrelevant result. "
-                        "Mark a material proceduralAllowed only when a registered component can visibly prove "
-                        "the claim, and explain that choice in proceduralSufficiencyReason."
-                        " A material with proceduralAllowed=true or componentId must use requirementClass "
-                        "composable and sourceClass auto. Mandatory or preferred materials must set "
-                        "proceduralAllowed=false and omit componentId."
+                            "Mark a material proceduralAllowed only when a registered component can visibly prove "
+                            "the claim, and explain that choice in proceduralSufficiencyReason."
+                            " A material with proceduralAllowed=true or componentId must use requirementClass "
+                            "composable and sourceClass auto. Mandatory or preferred materials must set "
+                            "proceduralAllowed=false and omit componentId."
                         )
                         if request.production_request.material_semantics_policy == "contextual_video_v1":
                             context["structuredPlanningInstruction"] += (
@@ -1541,17 +1606,20 @@ def execute_editing_gemini(db, job, progress, is_cancelled):
                         if request.production_request.native_scene_editing:
                             context["structuredPlanningInstruction"] += (
                                 " Execute using scene.nativeComponents with version 1 and targetIds pointing to "
-                                "scene elements: action_montage for video, product_demonstration for image/video/group, "
+                                "scene elements: action_montage for video, "
+                                "product_demonstration for image/video/group, "
                                 "integrated_typography for text. Each target has at most one component. Use "
                                 "sourceStartSeconds and playbackRate (0.5 to 2), sourceAudio mute unless deliberately "
                                 "mixed once. Coordinates and font sizes must scale to the supplied canvas. "
-                                "Native parameters: entranceFrames, travelRatio, revealAxis, staggerFrames, continuityKey. "
-                                "Do not use effects, textSpans or matchPreviousElementId in this experimental renderer. "
+                                "Native parameters: entranceFrames, travelRatio, revealAxis, "
+                                "staggerFrames, continuityKey. "
+                                "Do not use effects, textSpans or matchPreviousElementId "
+                                "in this experimental renderer. "
                                 "No slide counters, progress bars, fixed title block or compulsory number of scenes. "
                             )
                         context["preliminaryMaterialInventory"] = request.preliminary_material_inventory
                         context["structuredPlanningInstruction"] += (
-                             " Compile the COMPLETE supplied storyboard: return exactly one scene for EVERY beat, "
+                            " Compile the COMPLETE supplied storyboard: return exactly one scene for EVERY beat, "
                             "with identical stable IDs and order. Never return only the first beat or a representative "
                             "example; an incomplete scene list is an invalid result. "
                             "Implement the initial state, action and consequence, not just the beat's title. "
@@ -1691,7 +1759,8 @@ def execute_editing_gemini(db, job, progress, is_cancelled):
                                 "and required evidence. Pixel change proves execution only. Use format_adaptation to "
                                 "prove the same content in two distinct viewports, feed_insertion for entering an "
                                 "illustrative feed, feed_passage for leaving it without selection, and audible_event "
-                                "for required mixed sound. A missing verifier must remain inconclusive. Bind each scene "
+                                "for required mixed sound. A missing verifier must remain inconclusive. "
+                                "Bind each scene "
                                 "to its contentReferenceIds. Empty cards, labels, repeated shapes or unrelated media "
                                 "cannot satisfy content continuity."
                             )
@@ -1727,8 +1796,7 @@ def execute_editing_gemini(db, job, progress, is_cancelled):
                                 mode="json", by_alias=True, exclude_none=True, exclude_defaults=True
                             )
                             compact_original["scenes"] = [
-                                scene for scene in compact_original.get("scenes", [])
-                                if scene.get("id") in selected_ids
+                                scene for scene in compact_original.get("scenes", []) if scene.get("id") in selected_ids
                             ]
                             context["revision"] = {
                                 "original": compact_original,
@@ -1754,8 +1822,7 @@ def execute_editing_gemini(db, job, progress, is_cancelled):
                                 context["storyboard"] = {
                                     "schemaVersion": storyboard.get("schemaVersion"),
                                     "beats": [
-                                        beat for beat in storyboard.get("beats", [])
-                                        if beat.get("id") in selected_ids
+                                        beat for beat in storyboard.get("beats", []) if beat.get("id") in selected_ids
                                     ],
                                 }
                             context["catalog"] = [
@@ -1856,7 +1923,12 @@ def execute_editing_gemini(db, job, progress, is_cancelled):
                     else provider.video(job.request_payload["model"], prompt, media, request.duration_seconds)
                 )
             else:
-                response = provider.image(job.request_payload["model"], prompt, media)
+                image_options = (
+                    {"aspect_ratio": request.aspect_ratio, "image_size": request.image_size}
+                    if request.aspect_ratio or request.image_size
+                    else {}
+                )
+                response = provider.image(job.request_payload["model"], prompt, media, **image_options)
         if response.get("id"):
             state["providerOperationId"] = response["id"]
             job.result_payload = dict(state)
@@ -1886,6 +1958,8 @@ def execute_editing_gemini(db, job, progress, is_cancelled):
             submissionOutcome="accepted",
             usage=usage,
             measuredCostUsd=measured_cost,
+            estimatedCostUsd=measured_cost,
+            costSource="usage-times-configured-tariff" if measured_cost is not None else "conservative-reservation",
             priceVersion=job.request_payload["priceVersion"],
         )
         job.result_payload = dict(state)
@@ -2006,14 +2080,14 @@ def execute_editing_gemini(db, job, progress, is_cancelled):
                         ):
                             blueprint.pop("shotSequence", None)
                             blueprint.pop("shot_sequence", None)
-                            identifier_repairs.append({
-                                "reason": "non_executable_optional_shot_plan_removed_for_graphic_motion",
-                                "classification": "bounded_normalization",
-                                "requiresAlternative": False,
-                            })
-                direction = validate_direction(
-                    EditorialDirectionV1.model_validate(payload), request.production_request
-                )
+                            identifier_repairs.append(
+                                {
+                                    "reason": "non_executable_optional_shot_plan_removed_for_graphic_motion",
+                                    "classification": "bounded_normalization",
+                                    "requiresAlternative": False,
+                                }
+                            )
+                direction = validate_direction(EditorialDirectionV1.model_validate(payload), request.production_request)
                 return {
                     **state,
                     "editorialDirection": direction.model_dump(mode="json", by_alias=True),
@@ -2115,12 +2189,8 @@ def execute_editing_gemini(db, job, progress, is_cancelled):
                     # Scaling can make a previously clamped group shorter than
                     # its staggered children by one or more rounded frames.
                     contract_repairs.extend(repair_composition_contracts(candidate))
-                    contract_repairs.extend(
-                        bind_storyboard_scene_ids(candidate, validation_storyboard)
-                    )
-                    contract_repairs.extend(
-                        bind_shot_semantics_to_blueprint(candidate, validation_storyboard)
-                    )
+                    contract_repairs.extend(bind_storyboard_scene_ids(candidate, validation_storyboard))
+                    contract_repairs.extend(bind_shot_semantics_to_blueprint(candidate, validation_storyboard))
                     derive_blueprint_material_needs(candidate, validation_storyboard)
                     semantic_repairs = semantic_contract_repairs(contract_repairs)
                     if semantic_repairs:
@@ -2140,9 +2210,11 @@ def execute_editing_gemini(db, job, progress, is_cancelled):
                     generated_video_policy = request.production_request.effective_generated_video_policy()
                     hybrid_policy = request.production_request.effective_hybrid_policy()
                     if hybrid_policy.mode != "disabled":
-                        if any(need.duration_seconds is None for need in generated_video_needs) or sum(
-                            float(need.duration_seconds or 0) for need in generated_video_needs
-                        ) > hybrid_policy.maximum_generated_seconds_total:
+                        if (
+                            any(need.duration_seconds is None for need in generated_video_needs)
+                            or sum(float(need.duration_seconds or 0) for need in generated_video_needs)
+                            > hybrid_policy.maximum_generated_seconds_total
+                        ):
                             raise ValueError("production_generated_video_policy_conflict")
                         if (
                             request.production_request.generated_video_policy == "single_short_clip"
@@ -2198,9 +2270,7 @@ def execute_editing_gemini(db, job, progress, is_cancelled):
                 user = db.get(User, job.requested_by)
                 plan = create_v2(db, record, candidate, user, f"editing-ai-{job.id}")
                 evidence_direction = (
-                    validation_storyboard
-                    if request.production_stage == "composition"
-                    else request.editorial_direction
+                    validation_storyboard if request.production_stage == "composition" else request.editorial_direction
                 )
                 if evidence_direction:
                     plan.editorial_evidence.extend(
@@ -2226,9 +2296,7 @@ def execute_editing_gemini(db, job, progress, is_cancelled):
                 return {
                     **state,
                     "plan": plan.model_dump(mode="json", by_alias=True),
-                    "revisedEditorialDirection": validation_storyboard.model_dump(
-                        mode="json", by_alias=True
-                    )
+                    "revisedEditorialDirection": validation_storyboard.model_dump(mode="json", by_alias=True)
                     if request.production_stage == "composition" and request.revision_plan
                     else None,
                     "contractRepairs": contract_repairs if request.production_stage == "composition" else [],
@@ -2314,6 +2382,26 @@ def execute_editing_gemini(db, job, progress, is_cancelled):
             provider.download(response["output_video"]["uri"], output)
         else:
             save_media(response, output, video="video" in request.operation)
+        image_dimensions = None
+        if "image" in request.operation:
+            from PIL import Image
+
+            with Image.open(output) as image:
+                image.verify()
+                width, height = image.size
+            if width <= 0 or height <= 0 or width * height > 40_000_000:
+                raise ValueError("editing_generated_image_dimensions_invalid")
+            if request.aspect_ratio:
+                horizontal, vertical = map(int, request.aspect_ratio.split(":"))
+                # Native providers quantize dimensions to their model's pixel grid.
+                if abs(width / height - horizontal / vertical) > max(2 / height, horizontal / vertical * 0.025):
+                    raise ValueError("editing_generated_image_aspect_mismatch")
+            image_dimensions = {
+                "width": width,
+                "height": height,
+                "requestedAspectRatio": request.aspect_ratio,
+                "requestedImageSize": request.image_size,
+            }
         if "video" in request.operation:
             probe = MEDIA_PROBE_PROVIDERS["builtin.ffprobe"].probe(output, asset_id="generated", checksum_sha256=None)
             if abs(probe.duration_microseconds / 1e6 - request.duration_seconds) > 0.15:
@@ -2325,37 +2413,19 @@ def execute_editing_gemini(db, job, progress, is_cancelled):
             else:
                 args += ["-map", "0:v:0", "-map", "0:a?"]
             args += ["-c:v", "copy", "-c:a", "aac", "-t", str(request.duration_seconds), str(normalized)]
-            FFmpegUtility(settings.ffmpeg_path, settings.ffmpeg_timeout_seconds)._run(
-                args, directory, is_cancelled
-            )
+            FFmpegUtility(settings.ffmpeg_path, settings.ffmpeg_timeout_seconds)._run(args, directory, is_cancelled)
             output = normalized
         validate_binding(db, job)
         verification = state.get("visualVerification")
-        if "video" in request.operation and verification is None:
+        if verification is None:
             # Inspection must be its own reserved job. Never hide an extra paid
             # model invocation behind the already-reserved video generation.
-            verification = {"passed": False, "confidence": 0,
-                            "issues": ["Revisão do candidato pendente em etapa própria"]}
+            verification = {
+                "passed": False,
+                "confidence": 0,
+                "issues": ["Revisão do candidato pendente em etapa própria"],
+            }
             state["visualVerification"] = verification
-        if verification is None and not state.get("verificationStarted"):
-            state["verificationStarted"] = True
-            job.result_payload = dict(state)
-            db.commit()
-            try:
-                review_response = provider.verify(
-                    settings.studio_gemini_planning_model,
-                    request.prompt,
-                    request.preserve,
-                    [*media, (output, "video/mp4" if "video" in request.operation else "image/png")],
-                )
-                checked = VisualVerification.model_validate_json(response_text(review_response))
-                verification = checked.model_dump(mode="json")
-                state["verificationUsage"] = review_response.get("usageMetadata", {})
-            except ValueError:
-                verification = {"passed": False, "confidence": 0, "issues": ["Verificação visual inconclusiva"]}
-            state["visualVerification"] = verification
-            job.result_payload = dict(state)
-            db.commit()
         verification = verification or {"passed": False, "confidence": 0, "issues": ["Verificação interrompida"]}
         # Self-reported confidence is advisory until calibrated by a real-media benchmark.
         machine_passed = False
@@ -2391,8 +2461,10 @@ def execute_editing_gemini(db, job, progress, is_cancelled):
             "originalAudioPreserved": bool(original),
             "processingSeconds": round(time.monotonic() - execution_started, 3),
             "outputImages": 0 if "video" in request.operation else 1,
-            "outputVideoSeconds": request.duration_seconds if "video" in request.operation else 0,
+            "outputVideoSeconds": probe.duration_microseconds / 1e6 if "video" in request.operation else 0,
+            "generatedVideoSeconds": probe.duration_microseconds / 1e6 if request.operation == "generate_video" else 0,
             "storageBytes": asset.size_bytes,
+            **({"imageDimensions": image_dimensions} if image_dimensions else {}),
             "verification": {
                 "technical": "passed",
                 "visualContinuity": "passed" if machine_passed else "pending",

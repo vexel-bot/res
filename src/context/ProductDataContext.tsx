@@ -3,6 +3,7 @@ import { apiFetch, setStudioScope } from '../api';
 import type { AssetRecord } from '../api/productApi';
 import { useGovernance } from './GovernanceContext';
 import { useOperations } from './OperationsContext';
+import { stableStudioContext } from './stableStudioContext';
 
 type Session = {
   user: { id: string; name: string };
@@ -18,7 +19,10 @@ type StudioData = {
   snapshot?: Pick<Session, 'assets' | 'posts'>;
   refresh: () => Promise<void>;
 };
-const Context = React.createContext<StudioData | null>(null);
+const hotData = (import.meta as ImportMeta & {
+  hot?: { data: { studioProductDataContext?: React.Context<StudioData | null> } };
+}).hot?.data;
+const Context = stableStudioContext(hotData, () => React.createContext<StudioData | null>(null));
 
 /** Adapter for the imported Studios. Existing Clicko providers remain in charge. */
 export function ProductDataProvider({ children, module }: { children: React.ReactNode; module: 'create-image' | 'create-video' }) {

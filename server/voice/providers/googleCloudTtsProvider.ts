@@ -1,10 +1,12 @@
 import { TextToSpeechClient } from '@google-cloud/text-to-speech';
 import { klicTtsEnabled } from '../config';
 import type { TtsProvider, TtsSynthesisRequest, TtsSynthesisResult } from '../types';
+import { financialAdmission, requestFingerprint, type FinancialAdmission } from '../../finance/admission';
 
 export class GoogleCloudTtsProvider implements TtsProvider {
   readonly id = 'google' as const;
   private client?: TextToSpeechClient;
+  constructor(private admission: FinancialAdmission = financialAdmission) {}
 
   isEnabled() {
     return klicTtsEnabled();
@@ -25,6 +27,9 @@ export class GoogleCloudTtsProvider implements TtsProvider {
       throw new Error('KLIC_TTS_DISABLED');
     }
 
+    const receipt = await this.admission.reserve({ provider: 'google.cloud-tts', model: voice.voiceName,
+      operation: 'synthesize', fingerprint: requestFingerprint({ text, voice }), units: Buffer.byteLength(text, 'utf8') });
+    try {
     const [response] = await this.getClient().synthesizeSpeech({
       input: { text },
       voice: {
@@ -32,7 +37,7 @@ export class GoogleCloudTtsProvider implements TtsProvider {
         name: voice.voiceName,
       },
       audioConfig: { audioEncoding: 'MP3' },
-    }, { timeout: 20000 });
+    }, { timeout: 20000, retry: null });
 
     if (!response.audioContent) {
       throw new Error('KLIC_TTS_EMPTY_AUDIO');
@@ -42,6 +47,11 @@ export class GoogleCloudTtsProvider implements TtsProvider {
       ? Buffer.from(response.audioContent, 'base64')
       : Buffer.from(response.audioContent);
 
+    await receipt.settle({ outcome: 'completed' });
     return { audio, contentType: 'audio/mpeg' };
+    } catch (error) {
+      await receipt.settle({ outcome: 'unknown' }).catch(() => undefined);
+      throw error;
+    }
   }
 }

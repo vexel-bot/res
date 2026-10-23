@@ -407,19 +407,6 @@
 .clicko-creative-workspace .clicko-analytics-trend :is([class*="text-[#808080]"], [class*="text-[rgba(255,255,255,.62)]"]) { color: var(--cw-secondary) !important; }
 .clicko-creative-workspace .clicko-analytics-trend :is([class*="text-white"], [class*="text-[rgba(255,255,255,.68)]"]) { color: var(--cw-ink) !important; }
 
-/* The same blue family becomes KLIC through light, depth and motion, not by
-   borrowing Clicko's solid selected-state treatment. */
-.clicko-creative-workspace[data-theme="light"] .klic-plasma-wrap .klic-plasma__aura {
-  opacity: .46;
-  filter: blur(16px);
-}
-.clicko-creative-workspace[data-theme="light"] .klic-plasma-wrap .klic-plasma__body {
-  border-color: rgba(47, 117, 174, .38);
-  box-shadow: inset 0 0 22px rgba(65, 145, 207, .13), 0 8px 28px rgba(35, 106, 163, .14);
-}
-.clicko-creative-workspace[data-theme="light"] .klic-plasma-wrap .klic-plasma__orbit { border-color: rgba(47, 117, 174, .19); }
-.clicko-creative-workspace[data-theme="light"] .klic-plasma-wrap .klic-plasma__core { opacity: .58; }
-
 /* The subscription illustration depicts Clicko's interface, so it follows the
    workspace theme instead of retaining dark mock panels in light mode. */
 .clicko-creative-workspace .clicko-billing-page .cb-scene-panel { animation-play-state: paused; }

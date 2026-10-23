@@ -85,9 +85,9 @@ class Settings(BaseSettings):
     studio_gemini_planning_model: Literal[
         "gemini-3.5-flash", "gemini-3.6-flash", "gemini-3.7-flash", "gemini-3.8-flash"
     ] = "gemini-3.8-flash"
-    studio_gemini_image_model: Literal[
-        "gemini-3.1-flash-lite-image", "gemini-3.1-flash-image"
-    ] = "gemini-3.1-flash-lite-image"
+    studio_gemini_image_model: Literal["gemini-3.1-flash-lite-image", "gemini-3.1-flash-image"] = (
+        "gemini-3.1-flash-lite-image"
+    )
     studio_gemini_video_model: Literal[
         "gemini-omni-1.1-flash",
         "veo-3.1-lite-generate-preview",
@@ -97,6 +97,15 @@ class Settings(BaseSettings):
     studio_gemini_input_usd_per_million: float = Field(default=0, ge=0)
     studio_gemini_output_usd_per_million: float = Field(default=0, ge=0)
     studio_gemini_image_reservation_usd: float = Field(default=0.10, ge=0, le=1)
+    # Financial USD envelopes, separate from commercial image/minute quotas.
+    # Zero fails closed for paid production; local free tools do not require them.
+    studio_external_monthly_budget_usd: float = Field(default=0, ge=0)
+    studio_external_workspace_monthly_budget_usd: float = Field(default=0, ge=0)
+    studio_external_user_monthly_budget_usd: float = Field(default=0, ge=0)
+    studio_external_model_monthly_budgets: dict[str, float] = Field(default_factory=dict)
+    studio_node_outbound_enabled: bool = False
+    # Server-owned, versioned tariffs. Empty means no Node paid model is admitted.
+    studio_node_tariffs: dict[str, dict] = Field(default_factory=dict)
     studio_resource_hosts: list[str] = Field(default_factory=lambda: ["fonts.gstatic.com"])
     google_fonts_api_key: SecretStr | None = None
     pexels_api_key: SecretStr | None = None
@@ -164,9 +173,13 @@ class Settings(BaseSettings):
     radar_contextual_v2_shadow_mode: bool = False
 
     @field_validator(
-        "hyperframes_enabled", "hyperframes_local_qualification_enabled",
-        "motion_canvas_enabled", "remotion_enabled", "remotion_native_enabled",
-        "studio_alight_motion_enabled", mode="before",
+        "hyperframes_enabled",
+        "hyperframes_local_qualification_enabled",
+        "motion_canvas_enabled",
+        "remotion_enabled",
+        "remotion_native_enabled",
+        "studio_alight_motion_enabled",
+        mode="before",
     )
     @classmethod
     def retired_editor_flags_are_disabled(cls, value: object) -> bool:
@@ -221,25 +234,24 @@ class Settings(BaseSettings):
                 "STUDIO_ACOUSTIC_PROMOTION_HMAC_SECRET and STUDIO_ACOUSTIC_PROMOTION_KEY_ID must be configured together"
             )
         if self.gemini_outbound_enabled and not (
-            self.gemini_api_key_1 or self.gemini_api_key_2
+            self.gemini_api_key_1
+            or self.gemini_api_key_2
+            or self.studio_gemini_test_key
+            or self.studio_gemini_production_key
         ):
             raise RuntimeError("Gemini outbound calls require at least one configured API key")
         if self.gemini_video_generation_enabled:
             if not self.gemini_outbound_enabled:
                 raise RuntimeError("Gemini video generation requires GEMINI_OUTBOUND_ENABLED=true")
             if self.gemini_max_external_spend_usd <= 0:
-                raise RuntimeError(
-                    "Gemini video generation requires an explicit positive external spend limit"
-                )
+                raise RuntimeError("Gemini video generation requires an explicit positive external spend limit")
         if self.openai_outbound_enabled and not self.openai_api_key:
             raise RuntimeError("OpenAI outbound calls require OPENAI_API_KEY")
         if self.openai_video_generation_enabled:
             if not self.openai_outbound_enabled:
                 raise RuntimeError("OpenAI video generation requires OPENAI_OUTBOUND_ENABLED=true")
             if self.openai_max_external_spend_usd <= 0:
-                raise RuntimeError(
-                    "OpenAI video generation requires an explicit positive external spend limit"
-                )
+                raise RuntimeError("OpenAI video generation requires an explicit positive external spend limit")
         if self.studio_worker_capability:
             if not self.studio_isolated_queues_enabled:
                 raise RuntimeError("Studio workers require STUDIO_ISOLATED_QUEUES_ENABLED=true")

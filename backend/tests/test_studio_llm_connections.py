@@ -109,6 +109,12 @@ def encryption(monkeypatch):
     monkeypatch.setattr(
         get_settings(), "studio_llm_credential_key", SecretStr("test-only-credential-encryption-key-" * 2),
     )
+    # Explicit finite envelopes for this suite's offline provider doubles.
+    settings = get_settings()
+    for key in ("studio_external_monthly_budget_usd", "studio_external_workspace_monthly_budget_usd",
+                "studio_external_user_monthly_budget_usd"):
+        monkeypatch.setattr(settings, key, 5)
+    monkeypatch.setattr(settings, "studio_external_model_monthly_budgets", {"chosen-model": 5})
 
 
 def test_catalog_contains_official_sources_for_at_least_ten_models(client):

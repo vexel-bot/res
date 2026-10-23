@@ -5,7 +5,7 @@ import json
 from datetime import UTC, datetime
 
 from pydantic import ValidationError
-from sqlalchemy import select
+from sqlalchemy import select, update
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 
@@ -391,9 +391,7 @@ def require_avatar_v2_media_binding(
     assets = db.scalars(
         select(LibraryAsset).where(
             LibraryAsset.workspace_id == workspace_id,
-            LibraryAsset.id.in_(
-                [request.reference_image_asset_id, request.driving_audio_asset_id]
-            ),
+            LibraryAsset.id.in_([request.reference_image_asset_id, request.driving_audio_asset_id]),
             LibraryAsset.lifecycle_status == "active",
         )
     ).all()
@@ -406,12 +404,7 @@ def require_avatar_v2_media_binding(
         raise ValueError("avatar_reference_image_media_invalid")
     if not audio.media_type or not audio.media_type.startswith("audio/"):
         raise ValueError("avatar_driving_audio_media_invalid")
-    if (
-        not image.storage_key
-        or not audio.storage_key
-        or not image.checksum_sha256
-        or not audio.checksum_sha256
-    ):
+    if not image.storage_key or not audio.storage_key or not image.checksum_sha256 or not audio.checksum_sha256:
         raise ValueError("avatar_input_asset_not_stored")
     if image.checksum_sha256.lower() != request.reference_image_checksum_sha256.lower():
         raise ValueError("avatar_reference_image_checksum_mismatch")
@@ -424,16 +417,10 @@ def require_avatar_v2_media_binding(
     }:
         if not isinstance(speech_result, dict):
             raise ValueError("avatar_driving_audio_provenance_missing")
-        expected_job_type = (
-            "voice_clone"
-            if request.driving_audio_origin == "cloned_voice_synthesis"
-            else "stock_voice"
-        )
+        expected_job_type = "voice_clone" if request.driving_audio_origin == "cloned_voice_synthesis" else "stock_voice"
         if speech_result.get("jobType") != expected_job_type:
             raise ValueError("avatar_driving_audio_origin_mismatch")
-        if speech_result.get("scriptDigestSha256") != hashlib.sha256(
-            request.script.encode()
-        ).hexdigest():
+        if speech_result.get("scriptDigestSha256") != hashlib.sha256(request.script.encode()).hexdigest():
             raise ValueError("avatar_driving_audio_script_mismatch")
         produced_duration = (speech_result.get("speech") or {}).get("durationMs")
         if produced_duration != request.driving_audio_duration_ms:
@@ -576,37 +563,74 @@ def job_out(job: StudioGenerationJob) -> GenerationJobV1:
 
 
 def create_job(
-    db: Session, request: CreateGenerationJobRequest, idempotency_key: str, user: User, *, commit: bool = True
+    db: Session,
+    request: CreateGenerationJobRequest,
+    idempotency_key: str,
+    user: User,
+    *,
+    commit: bool = True,
+    trusted_editing_envelope: bool = False,
 ) -> tuple[StudioGenerationJob, bool]:
+    if request.job_type in {"editing_ai", "editing_gemini"} and not trusted_editing_envelope:
+        # Pricing, financial identity and provider bindings are server-owned.
+        # A generic job payload is not authority to select them, even in app.main.
+        raise ValueError("use_editing_jobs_endpoint")
+    if getattr(user, "password_hash", None) == "!session-bridge-only" and request.job_type in {
+        "scene_generation",
+        "avatar_video",
+    }:
+        # Orchestrated paid scenes need the same commercial admission as the
+        # public media endpoint. Never route around that boundary internally.
+        raise ValueError("commercial_media_admission_required")
+    if request.job_type == "timeline_render":
+        from .timeline_editor import validate_admission
+
+        validate_admission(db, request)
     if request.job_type == "video_render":
         raise ValueError("craft_editors_replaced_legacy_renderer_use_craft_render_jobs")
     if request.job_type == "craft_render":
         from ...domain.studios.contracts import NativeEditorStateV1
         from ...providers.studios.craft import require_capability
-        from .craft import assert_build, scoped_asset
         from .compatibility import record_to_contract
+        from .craft import assert_build, scoped_asset
 
         state = NativeEditorStateV1.model_validate(request.request.get("nativeEditorState"))
         if request.provider != "craft." + state.engine:
             raise ValueError("craft_render_provider_mismatch")
         snapshot = CreativeDocumentV1.model_validate(request.request.get("documentSnapshot"))
         record = db.get(CreativeDocument, request.document_id)
-        if (not record or record.workspace_id != request.workspace_id or snapshot.document_id != record.id
-                or snapshot.workspace_id != record.workspace_id or snapshot.revision != record.revision
-                or snapshot.native_editor_state != state or snapshot != record_to_contract(record)):
+        if (
+            not record
+            or record.workspace_id != request.workspace_id
+            or snapshot.document_id != record.id
+            or snapshot.workspace_id != record.workspace_id
+            or snapshot.revision != record.revision
+            or snapshot.native_editor_state != state
+            or snapshot != record_to_contract(record)
+        ):
             raise ValueError("craft_render_snapshot_conflict")
-        if any(item.engine == "effectcraft" and item.source_document_id and not item.rendered_asset_id for item in state.dependencies):
+        if any(
+            item.engine == "effectcraft" and item.source_document_id and not item.rendered_asset_id
+            for item in state.dependencies
+        ):
             raise ValueError("craft_pending_composition_requires_link")
         scoped_asset(db, record.workspace_id, state.project_asset_id, state.checksum_sha256)
         assert_build(state, require_capability(state.engine))
     if request.provider == "alight-motion.contextual-v1":
         from ...models import Membership
 
-        member = db.scalar(select(Membership).where(
-            Membership.workspace_id == request.workspace_id, Membership.user_id == user.id,
-        ))
-        if (not get_settings().studio_alight_motion_enabled or request.job_type != "video_render"
-                or not member or member.role.lower() not in {"owner", "admin"}):
+        member = db.scalar(
+            select(Membership).where(
+                Membership.workspace_id == request.workspace_id,
+                Membership.user_id == user.id,
+            )
+        )
+        if (
+            not get_settings().studio_alight_motion_enabled
+            or request.job_type != "video_render"
+            or not member
+            or member.role.lower() not in {"owner", "admin"}
+        ):
             raise ValueError("alight_experiment_access_denied")
         from ...providers.studios.alight_motion import refresh_registration
         from ...providers.studios.video_render import VIDEO_RENDER_PROVIDERS
@@ -804,8 +828,44 @@ def create_job(
 
 
 def enqueue_job_task(task, job: StudioGenerationJob, *, isolated_queues_enabled: bool) -> None:
+    settings = get_settings()
+    if settings.environment == "development" and settings.celery_task_always_eager:
+        import os
+
+        from sqlalchemy.orm import object_session
+
+        from ...providers.studios.heavy_media_lease import _identity
+        from .local_queue import dispatch
+
+        # Persist the queue owner before starting a thread, including work still
+        # waiting for a slot. Another local API must not steal a live queue.
+        context = worker_execution_context(
+            job_type=job.job_type, capability=job.execution_capability, queue_name=job.queue_name
+        )
+        pid = os.getpid()
+        prefix = "local-timeline" if job.job_type == "timeline_render" else "local-studios"
+        context = context.model_copy(
+            update={
+                "process_id": pid,
+                "worker_instance_id": f"{prefix}:{_identity(pid)}",
+            }
+        )
+        job.worker_execution_context = context.model_dump(by_alias=True, mode="json")
+        owner = object_session(job)
+        if owner:
+            owner.commit()
+        dispatch(task, job.id)
+        return
     if not isolated_queues_enabled:
-        task.delay(job.id)
+        if not settings.celery_task_always_eager and settings.environment != "test":
+            task.apply_async(
+                args=[job.id],
+                task_id=job.id,
+                soft_time_limit=max(60, job.hard_time_limit_seconds - 60),
+                time_limit=job.hard_time_limit_seconds,
+            )
+        else:
+            task.delay(job.id)
         return
     task.apply_async(
         args=[job.id],
@@ -846,6 +906,10 @@ def request_cancel(db: Session, job: StudioGenerationJob, reason: str, actor_id:
 
 
 def retry_job(db: Session, job: StudioGenerationJob, actor_id: str) -> StudioGenerationJob:
+    if job.job_type in {"external_call", "agent_plan"}:
+        raise ValueError(
+            "agent_plan_not_executable" if job.job_type == "agent_plan" else "financial_receipt_not_executable"
+        )
     transition(job, "queued")
     job.progress = 0
     if job.job_type not in {"editing_gemini", "editing_ai"}:
@@ -872,17 +936,39 @@ def retry_job(db: Session, job: StudioGenerationJob, actor_id: str) -> StudioGen
 
 
 def execute_job_once(db: Session, job: StudioGenerationJob) -> str:
+    if job.job_type in {"external_call", "agent_plan"}:
+        raise ValueError(
+            "agent_plan_not_executable" if job.job_type == "agent_plan" else "financial_receipt_not_executable"
+        )
+    import time
+
+    execution_started = time.monotonic()
     if job.status in TERMINAL_STATES:
         return job.status
     if job.status == "cancel_requested":
         transition(job, "cancelled")
         db.commit()
         return job.status
-    transition(job, "running")
-    job.attempts += 1
-    job.error_code = None
-    job.error_message = None
+    # A duplicate queue delivery cannot start the same executor concurrently.
+    claimed = db.execute(
+        update(StudioGenerationJob)
+        .where(
+            StudioGenerationJob.id == job.id,
+            StudioGenerationJob.status.in_(["queued", "retrying"]),
+        )
+        .values(
+            status="running",
+            attempts=StudioGenerationJob.attempts + 1,
+            started_at=job.started_at or datetime.now(UTC),
+            error_code=None,
+            error_message=None,
+        ),
+        execution_options={"synchronize_session": False},
+    )
     db.commit()
+    db.refresh(job)
+    if claimed.rowcount != 1:
+        return job.status
     provider = None
     document = None
     speech_job = job.job_type in {"stock_voice", "voice_clone"}
@@ -903,6 +989,7 @@ def execute_job_once(db: Session, job: StudioGenerationJob) -> str:
             "avatar_video",
             "scene_generation",
             "craft_render",
+            "timeline_render",
         }
     ):
         provider = PROVIDERS.get(job.provider)
@@ -927,11 +1014,25 @@ def execute_job_once(db: Session, job: StudioGenerationJob) -> str:
         return job.status == "cancel_requested"
 
     try:
-        job.worker_execution_context = worker_execution_context(
+        context = worker_execution_context(
             job_type=job.job_type,
             capability=job.execution_capability,
             queue_name=job.queue_name,
-        ).model_dump(by_alias=True, mode="json")
+        )
+        if context.mode == "embedded":
+            import os
+
+            from ...providers.studios.heavy_media_lease import _identity
+
+            pid = os.getpid()
+            prefix = "local-timeline" if job.job_type == "timeline_render" else "local-studios"
+            context = context.model_copy(
+                update={
+                    "process_id": pid,
+                    "worker_instance_id": f"{prefix}:{_identity(pid)}",
+                }
+            )
+        job.worker_execution_context = context.model_dump(by_alias=True, mode="json")
         db.commit()
         if job.provider == "local.smolvlm-material-inspection":
             from .local_material_inspection import execute_local_material_inspection
@@ -957,6 +1058,10 @@ def execute_job_once(db: Session, job: StudioGenerationJob) -> str:
             from .media_waveform import execute_media_waveform
 
             result = execute_media_waveform(db, job, progress, is_cancelled)
+        elif job.job_type == "timeline_render":
+            from .timeline_editor import execute
+
+            result = execute(db, job, progress, is_cancelled)
         elif job.job_type == "craft_render":
             from .craft import execute_render_job
 
@@ -1000,13 +1105,22 @@ def execute_job_once(db: Session, job: StudioGenerationJob) -> str:
             transition(job, target)
             job.result_payload = result
             job.error_code = "scene_generation_" + outcome
-            job.error_message = str(
-                result.get("reason")
-                or result.get("errorMessage")
-                or outcome
-            )[:2000]
+            job.error_message = str(result.get("reason") or result.get("errorMessage") or outcome)[:2000]
         else:
             transition(job, "succeeded")
+            if isinstance(result, dict) and job.job_type in {"timeline_render", "craft_render"}:
+                artifact = result.get("artifact", result)
+                result = {
+                    **result,
+                    "processingSeconds": round(time.monotonic() - execution_started, 3),
+                    "storageBytes": artifact.get("sizeBytes", 0),
+                    "outputVideoSeconds": float(artifact.get("durationMs", 0) or 0) / 1000
+                    if "durationMs" in artifact
+                    else float(artifact.get("durationSeconds", 0) or 0),
+                    "generatedVideoSeconds": 0,
+                    "externalCostUsd": 0,
+                    "costSource": "local-processing-not-provider-invoice",
+                }
             job.result_payload = result
         emit_event(
             db,
@@ -1028,9 +1142,11 @@ def execute_job_once(db: Session, job: StudioGenerationJob) -> str:
         db.refresh(job)
         job.error_code = type(error).__name__
         job.error_message = str(error)[:2000]
-        provider_error_kind = str(
-            (job.result_payload or {}).get("providerErrorKind") or ""
-        ).lower()
+        job.result_payload = {
+            **(job.result_payload or {}),
+            "processingSeconds": round(time.monotonic() - execution_started, 3),
+        }
+        provider_error_kind = str((job.result_payload or {}).get("providerErrorKind") or "").lower()
         provider_quota_terminal = provider_error_kind in {
             "insufficient_quota",
             "credit_balance_exhausted",
@@ -1042,14 +1158,15 @@ def execute_job_once(db: Session, job: StudioGenerationJob) -> str:
             and isinstance(error, ValueError)
             and (
                 provider_quota_terminal
-                or
-                isinstance(error, ValidationError)
+                or isinstance(error, ValidationError)
                 or any(
                     marker in str(error)
                     for marker in ("conflict", "mismatch", "outcome_unknown", "unsupported", "required", "invalid")
                 )
             )
         )
+        if job.job_type == "timeline_render" and isinstance(error, ValueError):
+            editing_terminal = True
         transition(
             job,
             "cancelled"

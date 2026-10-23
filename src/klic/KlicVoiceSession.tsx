@@ -4,12 +4,14 @@ import { Mic, MicOff, X, MessageSquareText } from 'lucide-react';
 import { KlicPlasma, type KlicPlasmaState } from '../components/KlicPlasma';
 import { ClickoLoader } from '../components/ClickoLoader';
 import type { ChatMessage } from './conversation';
+import type { KlicAudioSignal } from './hologramDynamics';
 import './KlicVoiceSession.css';
 
 type Props = {
   phase: KlicPlasmaState;
   status?: string;
   intensity: number;
+  audioSignal?: React.RefObject<KlicAudioSignal>;
   muted: boolean;
   error?: string;
   profile: 'female' | 'male';
@@ -28,7 +30,7 @@ const phaseLabel: Record<KlicPlasmaState, string> = {
   error: 'Conexão interrompida',
 };
 
-export function KlicVoiceSession({ phase, status, intensity, muted, error, profile, messages, onMute, onEnd, onRetry }: Props) {
+export function KlicVoiceSession({ phase, status, intensity, audioSignal, muted, error, profile, messages, onMute, onEnd, onRetry }: Props) {
   const [transcriptOpen, setTranscriptOpen] = React.useState(false);
   const endRef = React.useRef<HTMLButtonElement>(null);
   React.useEffect(() => {
@@ -58,7 +60,7 @@ export function KlicVoiceSession({ phase, status, intensity, muted, error, profi
         <button ref={endRef} type="button" onClick={onEnd} aria-label="Encerrar conversa por voz" className="klic-voice-session__close"><X size={18} /></button>
       </div>
       <div className="klic-voice-session__center">
-        <KlicPlasma state={muted ? 'idle' : phase} intensity={intensity} showIdentity={false} />
+        <KlicPlasma appearance="signature" hologramTheme="dark" state={muted && phase !== 'speaking' ? 'idle' : phase} intensity={intensity} audioSignal={audioSignal} showIdentity={false} />
         <div className="klic-voice-session__status" aria-live="polite">
           {phase === 'connecting' || phase === 'processing' ? <ClickoLoader size="tiny" tone="dark" label={statusText} /> : <span className={`klic-voice-session__dot klic-voice-session__dot--${phase}`} />}
           {statusText}

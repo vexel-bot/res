@@ -4,7 +4,7 @@ import { fileURLToPath } from 'url';
 import { createServer as createViteServer } from 'vite';
 import { GoogleGenAI, Type } from '@google/genai';
 import dotenv from 'dotenv';
-import { assertGovernanceAccess, consumeGovernanceUsage, createGovernanceRouter, authenticate, readKlicGovernance } from './server/governance';
+import { assertGovernanceAccess, createGovernanceRouter, authenticate, readKlicGovernance } from './server/governance';
 import { canAccessNavigation } from './src/security/accessControl';
 import { closeSocialIntegrationRepository, createIntegrationsRouter, socialIntegrationReadiness } from './server/integrations';
 import { requestContext, securityHeaders, validateProductionEnvironment } from './server/production';
@@ -16,24 +16,36 @@ import { klicProviderConfig, klicTranscriptionModel } from './server/klic/provid
 import { logProviderFailure } from './server/klic/providerErrors';
 import { streamWithKlicRetry, withKlicRetry } from './server/klic/providerRetry';
 import { createStudiosProxy } from './server/studios/proxy';
-import { startLocalStudios } from './server/studios/runtime';
+import { startLocalStudios, stopLocalStudios } from './server/studios/runtime';
+import { studiosReadiness } from './server/studios/readiness';
+import { retiredEditing } from './server/studios/legacyEditing';
+import { financialContext } from './server/finance/admission';
+import { governGemini } from './server/finance/gemini';
+import { devConfiguration, devNetworkBoundary } from './server/devMode';
+import { createDevelopmentRouter, devBridgeStatus } from './server/developmentRouter';
 
 dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+let ownedStudiosProcess: Awaited<ReturnType<typeof startLocalStudios>>;
+let developmentVite: Awaited<ReturnType<typeof createViteServer>> | undefined;
 
 async function startServer() {
   validateProductionEnvironment();
   const app = express();
   const PORT = Number(process.env.PORT) || 3000;
   const isProduction = process.env.NODE_ENV === 'production' || path.basename(__dirname).toLowerCase() === 'dist';
+  devConfiguration(process.env, isProduction);
   const studiosProcess = isProduction ? undefined : await startLocalStudios();
+  ownedStudiosProcess = studiosProcess;
 
   if (isProduction) app.set('trust proxy', 1);
   app.disable('x-powered-by');
   app.use(requestContext);
+  app.use(financialContext);
   app.use(securityHeaders);
+  app.use(devNetworkBoundary);
   // Stream uploads and native project responses before the JSON middleware.
   app.use(['/api/v1/studios/v1', '/api/v1/assets'], createStudiosProxy());
   app.use(express.json({
@@ -49,14 +61,15 @@ async function startServer() {
     if (!apiKey) {
       return null;
     }
-    return new GoogleGenAI({
+    return governGemini(new GoogleGenAI({
       apiKey,
       httpOptions: {
+        retryOptions: { attempts: 1 },
         headers: {
           'User-Agent': 'aistudio-build',
         },
       },
-    });
+    }));
   };
 
   // Legacy Clicko AI tools use the same configured KLIC model and transient retry policy.
@@ -118,6 +131,7 @@ async function startServer() {
   app.use(klic.observe);
   app.use('/api/governance', createGovernanceRouter());
   app.use('/api/integrations', createIntegrationsRouter());
+  app.use('/api/development', createDevelopmentRouter());
   app.use('/api/klic/voice', createKlicVoiceRouter());
   app.use('/api/klic', klic.router);
 
@@ -130,8 +144,10 @@ async function startServer() {
   app.get('/api/ready', async (_req, res) => {
     res.setHeader('Cache-Control', 'no-store');
     try {
-      const social = await socialIntegrationReadiness();
-      res.json({ status: 'ready', socialStorage: social.storage, timestamp: new Date().toISOString() });
+      const [social, studios] = await Promise.all([socialIntegrationReadiness(), studiosReadiness()]);
+      const development = await devBridgeStatus();
+      const ready = studios.status === 'ready' && (!development || development.bridge);
+      res.status(ready ? 200 : 503).json({ status: ready ? 'ready' : 'not_ready', socialStorage: social.storage, studios: studios.status, development, timestamp: new Date().toISOString() });
     } catch {
       res.status(503).json({ status: 'not_ready', timestamp: new Date().toISOString() });
     }
@@ -562,61 +578,8 @@ Diferencie dados recebidos, cálculos e inferências. Não faça alegações cau
     }
   });
 
-  // 5. Image Generation Proxy
-  app.post('/api/ai/generate-image', async (req, res) => {
-    try {
-      const auth = (req as Parameters<typeof authenticate>[0]).auth!;
-      assertGovernanceAccess(auth, { module: 'create-image', permission: 'content.create', clientId: req.body?.clientContext?.id || req.body?.clientId || null });
-      const { prompt, aspectRatio = '1:1' } = req.body;
-      const ai = getAiClient();
-
-      if (!ai) {
-        return res.json({
-          imageUrl: null,
-          message: 'Chave Gemini API não configurada.'
-        });
-      }
-
-      try {
-        const response = await ai.models.generateContent({
-          model: 'gemini-3.1-flash-lite-image',
-          contents: `${prompt}${operatingContext(req.body)}`,
-          config: {
-            imageConfig: {
-              aspectRatio: aspectRatio as any
-            }
-          }
-        });
-
-        let imageUrl: string | null = null;
-        if (response.candidates?.[0]?.content?.parts) {
-          for (const part of response.candidates[0].content.parts) {
-            if (part.inlineData) {
-              imageUrl = `data:${part.inlineData.mimeType || 'image/png'};base64,${part.inlineData.data}`;
-              break;
-            }
-          }
-        }
-
-        if (imageUrl) consumeGovernanceUsage(auth, 'image_generations', 1);
-        res.json({ imageUrl, message: imageUrl ? 'Imagem gerada com sucesso!' : 'Imagem não retornada.' });
-      } catch (imageErr: any) {
-        if (imageErr?.status || imageErr?.code?.includes('USAGE') || imageErr?.code?.includes('SCOPE') || imageErr?.code?.includes('PERMISSION')) return res.status(imageErr.status || 409).json({ imageUrl: null, error: imageErr.message, code: imageErr.code });
-        console.warn('Gemini image generation unavailable, returning message:', imageErr?.message);
-        res.json({
-          imageUrl: null,
-          message: 'Geração de imagem temporariamente indisponível devido à alta demanda. Foi utilizada a imagem modelo do estúdio.'
-        });
-      }
-    } catch (err: any) {
-      if (err?.status || err?.code?.includes('USAGE') || err?.code?.includes('SCOPE') || err?.code?.includes('PERMISSION') || err?.code === 'MODULE_DENIED') return res.status(err.status || 403).json({ imageUrl: null, error: err.message, code: err.code });
-      console.error('Error in /api/ai/generate-image:', err);
-      res.json({
-        imageUrl: null,
-        message: 'Erro ao conectar ao serviço de imagens.'
-      });
-    }
-  });
+  // Superseded by durable, metered, revision-bound Studios jobs.
+  app.post('/api/ai/generate-image', retiredEditing('create-image', 'content.create'));
 
   // 6. Creative Matrix AI Endpoint
   app.post('/api/ai/creative-matrix', requireAiAccess({ module: 'create-copy', permission: 'content.create' }), async (req, res) => {
@@ -702,43 +665,21 @@ Monte automaticamente o planejamento completo com cronograma, lista de conteúdo
     }
   });
 
-  // 8. AI Image Editing Endpoint
-  app.post('/api/ai/image-edit', async (req, res) => {
-    const auth = (req as Parameters<typeof authenticate>[0]).auth!;
-    try { assertGovernanceAccess(auth, { module: 'create-image', permission: 'content.edit', clientId: req.body?.clientId || null }); consumeGovernanceUsage(auth, 'image_generations', 1); }
-    catch (error) { const failure = error as Error & { status?: number; code?: string }; return res.status(failure.status || 409).json({ error: failure.message, code: failure.code }); }
-    const { action = 'remove_bg', sourceImage } = req.body;
-    res.json({
-      success: true,
-      actionApplied: action,
-      modifiedImageUrl: sourceImage || 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80',
-      message: `Ação da KLIC "${action}" executada com sucesso! Ajustes de iluminação e renderização final aplicados.`
-    });
-  });
+  app.post('/api/ai/image-edit', retiredEditing('create-image'));
+  app.post('/api/ai/video-edit', retiredEditing('create-video'));
 
-  // 9. AI Video Processing Endpoint
-  app.post('/api/ai/video-edit', async (req, res) => {
-    const auth = (req as Parameters<typeof authenticate>[0]).auth!;
-    const minutes = Math.max(0.1, Math.min(120, Number(req.body?.durationMinutes) || 1));
-    try { assertGovernanceAccess(auth, { module: 'create-video', permission: 'content.edit', clientId: req.body?.clientId || null }); consumeGovernanceUsage(auth, 'video_minutes', minutes); }
-    catch (error) { const failure = error as Error & { status?: number; code?: string }; return res.status(failure.status || 409).json({ error: failure.message, code: failure.code }); }
-    const { action = 'smart_cuts', videoUrl, subtitleStyle = 'Neon' } = req.body;
-    res.json({
-      success: true,
-      actionApplied: action,
-      videoUrl: videoUrl || 'https://assets.mixkit.co/videos/preview/mixkit-working-late-at-a-computer-43409-large.mp4',
-      subtitlesGenerated: true,
-      silenceRemovedSecs: 3.8,
-      message: `Edição de vídeo com a KLIC "${action}" concluída. Legendas estilo ${subtitleStyle} aplicadas.`
-    });
-  });
+  // Missing JS/WASM is a missing runtime, never an HTML SPA document.
+  app.use('/craft', express.static(path.join(process.cwd(), isProduction ? 'dist/craft' : 'public/craft'), { fallthrough: true }));
+  app.use('/craft', (_req, res) => res.status(404).json({ code: 'CRAFT_BROWSER_RUNTIME_NOT_BUILT' }));
 
   // Vite middleware for development vs static serve for production
+  let vite: Awaited<ReturnType<typeof createViteServer>> | undefined;
   if (!isProduction) {
-    const vite = await createViteServer({
+    vite = await createViteServer({
       server: { middlewareMode: true },
       appType: 'spa',
     });
+    developmentVite = vite;
     app.use(vite.middlewares);
   } else {
     const distPath = path.join(process.cwd(), 'dist');
@@ -749,25 +690,35 @@ Monte automaticamente o planejamento completo com cronograma, lista de conteúdo
   }
 
   if (isProduction) await socialIntegrationReadiness();
-  const server = app.listen(PORT, '0.0.0.0', () => {
-    console.log(`Clicko Studio Server running on http://0.0.0.0:${PORT}`);
+  const server = app.listen(PORT, process.env.CLICKO_PREVIEW_HOST || '0.0.0.0', () => {
+    console.log(`Clicko Studio Server running on http://${process.env.CLICKO_PREVIEW_HOST || '0.0.0.0'}:${PORT}`);
   });
 
   let closing = false;
-  const shutdown = async (signal: string) => {
+  const shutdown = async (signal: string, exitCode = 0) => {
     if (closing) return;
     closing = true;
-    studiosProcess?.kill();
     console.info('CLICKO_SERVER_SHUTDOWN', { signal });
-    server.close(async () => {
-      await closeSocialIntegrationRepository().catch(() => undefined);
-      process.exit(0);
-    });
-    setTimeout(() => process.exit(1), 10_000).unref();
+    const deadline = setTimeout(() => process.exit(1), 15_000).unref();
+    server.close();
+    server.closeIdleConnections();
+    await vite?.close();
+    await stopLocalStudios(studiosProcess);
+    await closeSocialIntegrationRepository().catch(() => undefined);
+    clearTimeout(deadline);
+    process.exit(exitCode);
   };
+  server.once('error', () => void shutdown('LISTEN_FAILED', 1));
+  process.on('message', message => { if (message === 'shutdown') void shutdown('PARENT_SHUTDOWN'); });
+  process.once('disconnect', () => void shutdown('PARENT_DISCONNECTED'));
   process.once('SIGTERM', () => void shutdown('SIGTERM'));
   process.once('SIGINT', () => void shutdown('SIGINT'));
 }
 
-startServer();
+startServer().catch(async (error) => {
+  console.error('CLICKO_STARTUP_FAILED', { code: error instanceof Error && /^[A-Z0-9_:]{1,160}$/.test(error.message) ? error.message : 'STARTUP_DEPENDENCY_ERROR' });
+  await developmentVite?.close().catch(() => undefined);
+  await stopLocalStudios(ownedStudiosProcess);
+  process.exit(1);
+});
 

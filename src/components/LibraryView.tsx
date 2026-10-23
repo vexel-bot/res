@@ -8,6 +8,7 @@ import { useOperations } from '../context/OperationsContext';
 import type { LibraryAsset } from '../types';
 import './LibraryView.css';
 import { ClickoLoader } from './ClickoLoader';
+import { VideoLibraryExports } from '../studios/video/VideoLibraryExports';
 
 type LibraryTab = 'files' | 'templates' | 'brand' | 'campaigns' | 'lineage';
 type SortMode = 'recent' | 'oldest' | 'name';
@@ -89,6 +90,8 @@ export function LibraryView({ onOpenStudio }: { onOpenStudio?: () => void }) {
         : new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
   }, [activeTab, assets, query, sortMode, typeFilter]);
 
+  const [videoExportCount, setVideoExportCount] = React.useState(0);
+  const hasVideoExports = activeTab === 'files' && (typeFilter === 'all' || typeFilter === 'video') && videoExportCount > 0;
   const selected = visibleAssets.find((asset) => asset.id === selectedId) || visibleAssets[0];
 
   React.useEffect(() => { setSelectedId(undefined); setPendingDelete(undefined); setTemplateModalOpen(false); setUploading(false); setQuery(''); setTypeFilter('all'); }, [activeWorkspace.id]);
@@ -173,6 +176,7 @@ export function LibraryView({ onOpenStudio }: { onOpenStudio?: () => void }) {
       <select value={sortMode} onChange={(event) => setSortMode(event.target.value as SortMode)} aria-label="Ordenar Biblioteca"><option value="recent">Mais recentes</option><option value="oldest">Mais antigos</option><option value="name">Nome A–Z</option></select>
     </div>
 
+    {activeTab === 'files' && (typeFilter === 'all' || typeFilter === 'video') && <VideoLibraryExports query={query} sort={sortMode} onCountChange={setVideoExportCount} />}
     {visibleAssets.length ? <div className="cx-library-layout">
       <main>
         <div className="cx-library-section-head"><h2>{tabs.find((tab) => tab.id === activeTab)?.label}</h2><span>{visibleAssets.length} {visibleAssets.length === 1 ? 'item' : 'itens'}</span></div>
@@ -189,7 +193,7 @@ export function LibraryView({ onOpenStudio }: { onOpenStudio?: () => void }) {
         <button className="cx-library-button is-wide" onClick={() => duplicate(selected)}>Duplicar item</button>
         <button className="cx-delete-asset" onClick={() => setPendingDelete(selected)}><Trash2 />Excluir arquivo</button>
       </aside>}
-    </div> : <div className="cx-library-empty"><strong>Nenhum item encontrado</strong><p>{query || typeFilter !== 'all' ? 'Revise a busca ou os filtros aplicados.' : activeTab === 'templates' ? 'Crie o primeiro modelo reutilizável deste workspace.' : 'Adicione arquivos para começar a organizar sua Biblioteca.'}</p><button onClick={() => { if (query || typeFilter !== 'all') { setQuery(''); setTypeFilter('all'); } else if (activeTab === 'templates') setTemplateModalOpen(true); else fileInput.current?.click(); }}>{query || typeFilter !== 'all' ? 'Limpar filtros' : activeTab === 'templates' ? 'Criar modelo' : 'Adicionar arquivo'}</button></div>}
+    </div> : hasVideoExports ? null : <div className="cx-library-empty"><strong>Nenhum item encontrado</strong><p>{query || typeFilter !== 'all' ? 'Revise a busca ou os filtros aplicados.' : activeTab === 'templates' ? 'Crie o primeiro modelo reutilizável deste workspace.' : 'Adicione arquivos para começar a organizar sua Biblioteca.'}</p><button onClick={() => { if (query || typeFilter !== 'all') { setQuery(''); setTypeFilter('all'); } else if (activeTab === 'templates') setTemplateModalOpen(true); else fileInput.current?.click(); }}>{query || typeFilter !== 'all' ? 'Limpar filtros' : activeTab === 'templates' ? 'Criar modelo' : 'Adicionar arquivo'}</button></div>}
 
     {templateModalOpen && <div className="cx-library-modal" role="dialog" aria-modal="true" aria-labelledby="new-template-title"><button className="cx-library-modal-backdrop" onClick={() => setTemplateModalOpen(false)} aria-label="Fechar" /><form onSubmit={(event) => { event.preventDefault(); createTemplate(); }}><header><div><h2 id="new-template-title">Novo modelo</h2><p>Salve uma estrutura reutilizável neste workspace.</p></div><button type="button" onClick={() => setTemplateModalOpen(false)} aria-label="Fechar"><X /></button></header><label>Nome<input autoFocus value={templateName} onChange={(event) => setTemplateName(event.target.value)} required maxLength={80} /></label><label>Categoria<select value={templateKind} onChange={(event) => setTemplateKind(event.target.value as TemplateCategory)}>{Object.entries(templateMeta).map(([id, [label]]) => <option key={id} value={id}>{label}</option>)}</select></label><label>Descrição<textarea rows={4} value={templateDescription} onChange={(event) => setTemplateDescription(event.target.value)} maxLength={240} placeholder="Explique quando e como usar este modelo." /></label><footer><button type="button" className="cx-library-button" onClick={() => setTemplateModalOpen(false)}>Cancelar</button><button className="cx-library-button is-primary" type="submit">Salvar modelo</button></footer></form></div>}
     {pendingDelete && <div className="cx-library-modal" role="dialog" aria-modal="true" aria-labelledby="delete-asset-title"><button className="cx-library-modal-backdrop" onClick={() => setPendingDelete(undefined)} aria-label="Cancelar exclusão" /><form onSubmit={(event) => { event.preventDefault(); removeAsset(pendingDelete.id); setPendingDelete(undefined); setSelectedId(undefined); setToast('Item excluído da Biblioteca.'); }}><header><div><h2 id="delete-asset-title">Excluir “{pendingDelete.title}”?</h2><p>O item será removido deste workspace e desvinculado dos conteúdos relacionados.</p></div><button type="button" onClick={() => setPendingDelete(undefined)} aria-label="Fechar"><X /></button></header><footer><button type="button" className="cx-library-button" onClick={() => setPendingDelete(undefined)}>Cancelar</button><button className="cx-library-button is-danger" type="submit">Excluir</button></footer></form></div>}

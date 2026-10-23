@@ -182,6 +182,10 @@ def test_real_ai_planner_boundary_validated_commands_and_replay(client, monkeypa
     monkeypatch.setattr(settings, "studio_editing_ai_test_budget_usd", 1.0)
     monkeypatch.setattr(settings, "studio_editing_ai_input_usd_per_million", 1.0)
     monkeypatch.setattr(settings, "studio_editing_ai_output_usd_per_million", 1.0)
+    for key in ("studio_external_monthly_budget_usd", "studio_external_workspace_monthly_budget_usd",
+                "studio_external_user_monthly_budget_usd"):
+        monkeypatch.setattr(settings, key, 5)
+    monkeypatch.setattr(settings, "studio_external_model_monthly_budgets", {"test-provider-model": 5})
     calls = []
 
     def plan(self, model, context, media):

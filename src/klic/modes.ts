@@ -1,4 +1,4 @@
-export type KlicModeId = 'create' | 'strategy' | 'research' | 'analyze' | 'ideas' | 'post' | 'image' | 'video';
+export type KlicModeId = 'create' | 'strategy' | 'research' | 'analyze' | 'ideas' | 'post' | 'image' | 'video' | 'local-production';
 
 export const klicModes: Array<{ id: KlicModeId; label: string; actionId: string }> = [
   { id: 'create', label: 'Criar', actionId: 'create.general' },
@@ -9,4 +9,5 @@ export const klicModes: Array<{ id: KlicModeId; label: string; actionId: string 
   { id: 'post', label: 'Post', actionId: 'create.post' },
   { id: 'image', label: 'Imagem', actionId: 'create.image' },
   { id: 'video', label: 'Vídeo', actionId: 'create.video' },
+  { id: 'local-production', label: 'Produção local', actionId: 'mode.local-production' },
 ];

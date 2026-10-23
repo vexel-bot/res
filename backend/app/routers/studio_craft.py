@@ -68,13 +68,18 @@ def llm_catalog(user: User = Depends(get_current_user)):
     legacy_ready = (
         selected == "compatible" and bool(settings.studio_editing_ai_base_url and settings.studio_editing_ai_model)
     ) or (selected == "gemini" and settings.studio_gemini_enabled)
-    return {"providers": PROVIDERS, "credentialStorageReady": bool(settings.studio_llm_credential_key),
-            "legacyPlanningAvailable": legacy_ready}
+    return {
+        "providers": PROVIDERS,
+        "credentialStorageReady": bool(settings.studio_llm_credential_key),
+        "legacyPlanningAvailable": legacy_ready,
+    }
 
 
 @router.get("/craft/llm-connections")
 def llm_connections(
-    workspace_id: str, db: Session = Depends(get_db), user: User = Depends(get_current_user),
+    workspace_id: str,
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
 ):
     from sqlalchemy import select
 
@@ -82,17 +87,22 @@ def llm_connections(
     from ..services.studios import llm_connections as service
 
     service.access(db, user.id, workspace_id)
-    role = db.scalar(select(Membership.role).where(
-        Membership.user_id == user.id, Membership.workspace_id == workspace_id,
-    ))
+    role = db.scalar(
+        select(Membership.role).where(
+            Membership.user_id == user.id,
+            Membership.workspace_id == workspace_id,
+        )
+    )
     rows = db.scalars(select(StudioLLMConnection).where(StudioLLMConnection.workspace_id == workspace_id))
     return {"connections": [service.public(row) for row in rows], "canManage": role.lower() in {"owner", "admin"}}
 
 
 @router.post("/craft/llm-connections", status_code=201)
 def create_llm_connection(
-    workspace_id: str, request: LLMConnectionRequest,
-    db: Session = Depends(get_db), user: User = Depends(get_current_user),
+    workspace_id: str,
+    request: LLMConnectionRequest,
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
 ):
     from ..services.studios.llm_connections import save
 
@@ -101,8 +111,11 @@ def create_llm_connection(
 
 @router.put("/craft/llm-connections/{connection_id}")
 def update_llm_connection(
-    connection_id: str, workspace_id: str, request: LLMConnectionRequest,
-    db: Session = Depends(get_db), user: User = Depends(get_current_user),
+    connection_id: str,
+    workspace_id: str,
+    request: LLMConnectionRequest,
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
 ):
     from ..services.studios.llm_connections import save
 
@@ -111,8 +124,11 @@ def update_llm_connection(
 
 @router.delete("/craft/llm-connections/{connection_id}")
 def disable_llm_connection(
-    connection_id: str, workspace_id: str, expected_revision: int = Query(ge=1),
-    db: Session = Depends(get_db), user: User = Depends(get_current_user),
+    connection_id: str,
+    workspace_id: str,
+    expected_revision: int = Query(ge=1),
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
 ):
     from sqlalchemy import update
 
@@ -121,9 +137,14 @@ def disable_llm_connection(
 
     service.access(db, user.id, workspace_id, owner=True)
     row = invoke(service.scoped, db, workspace_id, connection_id)
-    changed = db.execute(update(StudioLLMConnection).where(
-        StudioLLMConnection.id == row.id, StudioLLMConnection.revision == expected_revision,
-    ).values(config={**row.config, "enabled": False}, credential_ciphertext=None, revision=expected_revision + 1))
+    changed = db.execute(
+        update(StudioLLMConnection)
+        .where(
+            StudioLLMConnection.id == row.id,
+            StudioLLMConnection.revision == expected_revision,
+        )
+        .values(config={**row.config, "enabled": False}, credential_ciphertext=None, revision=expected_revision + 1)
+    )
     if changed.rowcount != 1:
         db.rollback()
         raise error(ValueError("llm_connection_revision_conflict"))
@@ -170,9 +191,11 @@ def execute_commands(
 
 @router.post("/documents/{document_id}/craft/upgrade-build")
 def upgrade_build(
-    document_id: str, request: CraftUpgradeRequestV1,
+    document_id: str,
+    request: CraftUpgradeRequestV1,
     key: str = Header(alias="Idempotency-Key", min_length=8, max_length=160),
-    db: Session = Depends(get_db), user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
 ):
     record = owned_document(db, user.id, document_id)
     result = invoke(craft.upgrade_build, db, record, request, user, key)
@@ -209,23 +232,34 @@ def execute_ai_commands(
 
 @router.get("/documents/{document_id}/craft/ai-requests/{key}")
 def reconcile_ai_request(
-    document_id: str, key: str, db: Session = Depends(get_db), user: User = Depends(get_current_user),
+    document_id: str,
+    key: str,
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
 ):
     from sqlalchemy import select
 
     from ..models import StudioGenerationJob
 
     record = owned_document(db, user.id, document_id)
-    job = db.scalar(select(StudioGenerationJob).where(
-        StudioGenerationJob.workspace_id == record.workspace_id,
-        StudioGenerationJob.document_id == record.id,
-        StudioGenerationJob.job_type == "craft_ai", StudioGenerationJob.idempotency_key == key,
-    ))
+    job = db.scalar(
+        select(StudioGenerationJob).where(
+            StudioGenerationJob.workspace_id == record.workspace_id,
+            StudioGenerationJob.document_id == record.id,
+            StudioGenerationJob.job_type == "craft_ai",
+            StudioGenerationJob.idempotency_key == key,
+        )
+    )
     if job is None:
         return {"status": "not_found"}
     committed = invoke(craft.receipt, db, record, key, job.payload_hash)
-    return {"status": "committed" if committed else job.status, "receipt": committed,
-            "responseReady": bool((job.result_payload or {}).get("commands")), "errorCode": job.error_code}
+    return {
+        "status": "committed" if committed else job.status,
+        "receipt": committed,
+        "responseReady": bool((job.result_payload or {}).get("commands")),
+        "errorCode": job.error_code,
+        "safeToStartNew": job.status == "failed" and not (job.result_payload or {}).get("submissionStarted"),
+    }
 
 
 def schedule_composition_refresh(db, record, user):

@@ -16,6 +16,7 @@ import type {
 import { useGovernance } from './GovernanceContext';
 import { connectedAccountsFromServer, type SocialConnectionSummary } from '../operations/socialConnections';
 import { buildBrandIntelligenceContext } from '../operations/brandIntelligence';
+import { DEV_WORKSPACE_ID } from '../development/contracts';
 
 type OperationsState = {
   clients: ClientIntelligenceProfile[];
@@ -143,7 +144,7 @@ function createInitialClients(ws: Workspace, context: AIContextSnapshot): Client
 
   if (ws.id !== 'ws-1') {
     return [{
-      id: `client-${ws.id}`, workspaceId: ws.id, name: ws.name, segment: ws.brandProfile.industry || '',
+      id: `client-${ws.id}`, workspaceId: ws.id, name: ws.id === DEV_WORKSPACE_ID ? 'Cliente DEV' : ws.name, segment: ws.brandProfile.industry || '',
       status: 'active', responsibleName: 'Administrador', lastActivityAt: now(),
       products: '', audience: ws.brandProfile.targetAudience || '', positioning: '', toneOfVoice: ws.brandProfile.tone || '',
       visualIdentity: '', differentiators: '', featuredOffer: '', currentObjective: '', highlightedContentIds: [],

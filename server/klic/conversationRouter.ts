@@ -10,6 +10,7 @@ import { publicAttachmentError } from './attachmentErrors';
 import { logProviderFailure, providerFailure } from './providerErrors';
 import { consumeGovernanceUsage } from '../governance';
 import { orchestrateKlic } from './orchestrator';
+import { prepareLocalProduction, shouldUseLocalProduction } from './localProduction';
 
 export type ConversationProvider = {
   stream: (system: string, prompt: string, files: Array<{ mimeType: string; data: string }>, signal: AbortSignal, requestId?: string) => AsyncIterable<string>;
@@ -114,11 +115,15 @@ export function registerConversationRoutes(router: Router, obtain: () => KlicCor
     const rate=rates.get(key) || { until:Date.now()+60000,count:0 }; if (++rate.count>12) throw new KlicError('KLIC_RATE_LIMIT',429); rates.set(key,rate);
     let conversation=store().read(actor,id);
     const previous=conversation.messages.find(m=>m.requestId===requestId && m.role==='assistant');
+    const hasStudioProject = Boolean(req.body.productionContext?.selected?.kind === 'studio-document'
+      || conversation.messages.some(message => message.production));
+    const localProduction = previous?.localProduction ?? shouldUseLocalProduction(req.body.actionId, content, hasStudioProject);
     if (previous?.status==='complete') return publicConversation(conversation);
     if (previous && !req.body.retry) return publicConversation(conversation);
     if (req.body.retry && (!previous || conversation.messages.at(-1)?.id!==previous.id)) throw new KlicError('KLIC_RETRY_LAST_ONLY',409);
     if (conversation.messages.length>=1000) throw new KlicError('KLIC_HISTORY_LIMIT',413);
-    try { consumeGovernanceUsage({ workspaceId: actor.workspaceId, user: actor.user }, 'klic_credits', 1); }
+    if (localProduction && req.body.attachments?.length) throw new KlicError('KLIC_LOCAL_USE_STUDIO_IMPORT');
+    try { if (!localProduction) consumeGovernanceUsage({ workspaceId: actor.workspaceId, user: actor.user }, 'klic_credits', 1); }
     catch (error) { const failure = error as Error & { status?: number; code?: string }; throw new KlicError(failure.code || 'KLIC_USAGE_DENIED', failure.status || 409); }
     const controller=new AbortController(); start(key,controller,requestId);
     const deadline=setTimeout(()=>controller.abort(new DOMException('KLIC_PROVIDER_TIMEOUT','TimeoutError')),90000);
@@ -132,12 +137,26 @@ export function registerConversationRoutes(router: Router, obtain: () => KlicCor
         const timestamp=new Date().toISOString();
         conversation=store().update(actor,id,c=> {
           if (!c.messages.length) c.title=(content || files[0]?.name || 'Nova conversa').slice(0,90);
-          c.messages.push({ id:userId,requestId,role:'user',content,attachments:files,createdAt:timestamp,module:'ai-chat',status:'complete' }, { id:assistantId,requestId,role:'assistant',content:'',createdAt:timestamp,module:'ai-chat',status:'pending' });
+          c.messages.push({ id:userId,requestId,role:'user',content,attachments:files,createdAt:timestamp,module:'ai-chat',status:'complete',localProduction }, { id:assistantId,requestId,role:'assistant',content:'',createdAt:timestamp,module:'ai-chat',status:'pending',localProduction });
         });
       } else conversation=store().update(actor,id,c=> { const m=c.messages.find(m=>m.id===previous.id)!; m.status='pending'; m.content=''; delete m.error; });
       persisted=true;
       res.status(200).set({ 'Content-Type':'application/x-ndjson; charset=utf-8','X-Accel-Buffering':'no' }); res.flushHeaders();
       emit('accepted',publicConversation(conversation));
+      if (localProduction) {
+        const lastProject = [...conversation.messages].reverse().find(message => message.production)?.production;
+        const result = await prepareLocalProduction({ req, actor,
+          instruction: conversation.messages.find(message => message.id === userId)!.content,
+          requestId, previous: lastProject, signal: controller.signal });
+        controller.signal.throwIfAborted(); authorize(req);
+        accumulated = result.reply;
+        conversation = store().update(actor, id, c => {
+          const answer = c.messages.find(message => message.id === assistantId)!;
+          answer.content = result.reply; answer.production = result.production; answer.status = 'complete';
+        });
+        emit('delta', accumulated); emit('done', publicConversation(conversation));
+        return;
+      }
       if (!provider) throw new Error('KLIC_PROVIDER_NOT_CONFIGURED');
       const user=conversation.messages.find(m=>m.id===userId)!;
       for (const file of user.attachments || []) {

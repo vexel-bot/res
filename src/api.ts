@@ -1,4 +1,3 @@
-const TOKEN_KEY = 'nexus_access_token';
 let studioScope: { module: 'create-image' | 'create-video'; clientId: string | null } | undefined;
 export function setStudioScope(value: typeof studioScope) { studioScope = value; }
 export function studioRequestHeaders(headers = new Headers()) {
@@ -21,12 +20,6 @@ export class APIError extends Error {
     super(message);
   }
 }
-
-export const authToken = {
-  get: () => localStorage.getItem(TOKEN_KEY),
-  set: (token: string) => localStorage.setItem(TOKEN_KEY, token),
-  clear: () => localStorage.removeItem(TOKEN_KEY),
-};
 
 export async function apiFetch<T>(path: string, init: RequestInit = {}): Promise<T> {
   const headers = studioRequestHeaders(new Headers(init.headers));

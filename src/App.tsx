@@ -22,6 +22,7 @@ import { useOperations } from './context/OperationsContext';
 import { useTheme } from './context/ThemeContext';
 import { useVisualViewport } from './hooks/useVisualViewport';
 import { setKlicActiveModule } from './klic/pageContext';
+import { defaultStudioTool, isStudioModule, studioNavigationAllowed, studioToolForPath, type StudioTool } from './studios/studioNavigation';
 import type { ApprovalStage } from './types';
 
 import {
@@ -45,12 +46,12 @@ const ApprovalsView = React.lazy(() => import('./components/ApprovalsView').then
 const SubscriptionView = React.lazy(() => import('./components/SubscriptionView').then(module => ({ default: module.SubscriptionView })));
 const FloatingAIAssistant = React.lazy(() => import('./components/FloatingAIAssistant').then(module => ({ default: module.FloatingAIAssistant })));
 const KlicOperationalBridge = React.lazy(() => import('./klic/KlicOperationalBridge').then(module => ({ default: module.KlicOperationalBridge })));
-const ClickoStudioView = React.lazy(() => import('./studios/ClickoStudioView').then(module => ({ default: module.ClickoStudioView })));
+const StudiosWorkspace = React.lazy(() => import('./studios/StudiosWorkspace').then(module => ({ default: module.StudiosWorkspace })));
 
 const TAB_PATHS: Record<NavigationTab, string> = {
   dashboard: '/dashboard',
-  'create-image': '/image',
-  'create-video': '/video',
+  'create-image': '/studios/image/generate',
+  'create-video': '/studios/video/create',
   'create-copy': '/create',
   'ai-chat': '/klic',
   'connected-accounts': '/connected-accounts',
@@ -72,7 +73,7 @@ const PATH_TABS = Object.fromEntries(
 
 const initialNavigationTab = (): NavigationTab => {
   const path = window.location.pathname.replace(/\/+$/, '') || '/';
-  return PATH_TABS[path] || 'dashboard';
+  return studioToolForPath(path)?.module || PATH_TABS[path] || 'dashboard';
 };
 
 export default function App() {
@@ -82,6 +83,7 @@ export default function App() {
   const { currentUser, canAccess, loading: governanceLoading } = useGovernance();
   const { activeWorkspace, posts, addPosts, updatePosts } = useOperations();
   const [currentTab, setCurrentTab] = React.useState<NavigationTab>(initialNavigationTab);
+  const [selectedStudioTool, setSelectedStudioTool] = React.useState<StudioTool>(() => studioToolForPath(window.location.pathname) || defaultStudioTool('create-image'));
 
   const [isSpotlightOpen, setIsSpotlightOpen] = React.useState(false);
   const [isCompact, setIsCompact] = React.useState(false);
@@ -89,14 +91,23 @@ export default function App() {
   const compliancePage = publicCompliancePage(window.location.pathname);
   const subscriptionAccessAllowed = auth.account?.subscriptionAccessAllowed ?? ['active', 'trialing'].includes(auth.account?.subscriptionStatus || '');
 
+  const navigateStudio = React.useCallback((tool: StudioTool, replace = false) => {
+    if (isStudioModule(currentTab) && tool.module !== currentTab && !studioNavigationAllowed()) return;
+    setKlicActiveModule(tool.module);
+    setSelectedStudioTool(tool);
+    setCurrentTab(tool.module);
+    if (window.location.pathname !== tool.path) window.history[replace ? 'replaceState' : 'pushState']({}, '', tool.path);
+  }, [currentTab]);
   const navigate = React.useCallback((tab: NavigationTab, replace = false) => {
+    if (isStudioModule(tab)) { navigateStudio(tab === currentTab ? selectedStudioTool : defaultStudioTool(tab), replace); return; }
+    if (isStudioModule(currentTab) && !studioNavigationAllowed()) return;
     setKlicActiveModule(tab);
     visualTransition('content', () => setCurrentTab(tab));
     const nextPath = TAB_PATHS[tab];
     if (window.location.pathname !== nextPath) {
       window.history[replace ? 'replaceState' : 'pushState']({}, '', nextPath);
     }
-  }, []);
+  }, [currentTab, navigateStudio, selectedStudioTool]);
 
   React.useEffect(() => {
     const openCommandCenter = (event: KeyboardEvent) => {
@@ -112,12 +123,25 @@ export default function App() {
   React.useEffect(() => {
     const onPopState = () => {
       const tab = initialNavigationTab();
+      const tool = studioToolForPath(window.location.pathname);
+      if (isStudioModule(currentTab) && (tab !== currentTab || tool?.id !== selectedStudioTool.id) && !studioNavigationAllowed()) {
+        window.history.replaceState({}, '', selectedStudioTool.path);
+        return;
+      }
+      if (tool) setSelectedStudioTool(tool);
       setKlicActiveModule(tab);
       visualTransition('content', () => setCurrentTab(tab));
     };
     window.addEventListener('popstate', onPopState);
     return () => window.removeEventListener('popstate', onPopState);
-  }, []);
+  }, [currentTab, selectedStudioTool]);
+
+  React.useEffect(() => {
+    if (!governanceLoading && currentUser && window.location.pathname.replace(/\/+$/, '') === '/studios') {
+      const module = canAccess('create-image') ? 'create-image' : canAccess('create-video') ? 'create-video' : undefined;
+      if (module) navigateStudio(defaultStudioTool(module), true);
+    }
+  }, [governanceLoading, currentUser, canAccess, navigateStudio]);
 
   React.useEffect(() => {
     if (!showSplash) return;
@@ -182,11 +206,9 @@ export default function App() {
     updatePosts((current) => current.map((post) => post.id === contentId ? { ...post, status: statusMap[stage] } : post));
   };
 
-  // Image/Video retain their existing flow: this audit explicitly excludes them.
+  // Studios groups navigation; original media module identities still enforce capabilities.
   const excludedMediaTab = currentTab === 'create-image' || currentTab === 'create-video';
-  const hasAccessToCurrentTab = excludedMediaTab
-    ? governanceLoading || !currentUser || canAccess(currentTab)
-    : !governanceLoading && Boolean(currentUser) && canAccess(currentTab);
+  const hasAccessToCurrentTab = !governanceLoading && Boolean(currentUser) && canAccess(currentTab);
 
   if (compliancePage) {
     return <PublicComplianceView page={compliancePage} />;
@@ -245,7 +267,7 @@ export default function App() {
         {/* Dynamic Tab View Area */}
         <main className="clicko-main-stage flex-1 overflow-x-hidden overflow-y-auto">
           <React.Suspense fallback={<ClickoLoader context="section" label="Carregando o módulo" />}>
-            {!hasAccessToCurrentTab && (governanceLoading ? <ClickoLoader context="section" label="Carregando o ambiente" /> : <AccessDeniedView onBack={() => navigate('dashboard')} />)}
+            {!hasAccessToCurrentTab && (!excludedMediaTab || governanceLoading || !currentUser) && (governanceLoading ? <ClickoLoader context="section" label="Carregando o ambiente" /> : <AccessDeniedView onBack={() => navigate('dashboard')} />)}
 
           {hasAccessToCurrentTab && currentTab === 'dashboard' && (
             <DashboardView
@@ -263,9 +285,7 @@ export default function App() {
 
           {hasAccessToCurrentTab && currentTab === 'library' && <LibraryView onOpenStudio={() => navigate('create-image')} />}
 
-          {hasAccessToCurrentTab && currentTab === 'create-image' && <ClickoStudioView module="create-image" onNavigate={navigate} />}
-
-          {hasAccessToCurrentTab && currentTab === 'create-video' && <ClickoStudioView module="create-video" onNavigate={navigate} />}
+          {!governanceLoading && currentUser && excludedMediaTab && <StudiosWorkspace tool={selectedStudioTool} onToolChange={navigateStudio} onNavigate={navigate} />}
 
           {hasAccessToCurrentTab && currentTab === 'create-copy' && <CreationStudioView onSavePost={handleSaveSinglePost} />}
 

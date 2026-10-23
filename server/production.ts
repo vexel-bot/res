@@ -15,6 +15,7 @@ const providerVariables = [
 const configured = (key: string) => Boolean(process.env[key]?.trim());
 
 export function validateProductionEnvironment() {
+  if (process.env.NODE_ENV === 'production' && process.env.CLICKO_DEV_MODE === 'true') throw new Error('DEV_FORBIDDEN_IN_PRODUCTION');
   if (process.env.NODE_ENV !== 'production') return;
 
   const failures: string[] = [];

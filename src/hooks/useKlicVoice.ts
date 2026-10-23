@@ -1,4 +1,6 @@
 import React from 'react';
+import { analyseKlicAudio, startKlicPlaybackAnalysis } from '../klic/audioAnalysis';
+import { SILENT_AUDIO, type KlicAudioSignal } from '../klic/hologramDynamics';
 import { useKlicClient } from '../klic/useKlicClient';
 import { shouldFinishVoiceTurn, shouldInterruptKlicSpeech, shouldRestartVoiceCapture, type KlicVoiceMode } from '../klic/voiceConversation';
 import { KlicVoiceFeedbackSession, prepareKlicVoiceFeedback } from '../klic/voiceFeedback';
@@ -103,7 +105,8 @@ export function useKlicVoice({ onInterim, onFinal, processing = false }: UseKlic
   const streamRef = React.useRef<MediaStream | null>(null);
   const audioContextRef = React.useRef<AudioContext | null>(null);
   const animationRef = React.useRef<number | null>(null);
-  const speechPulseRef = React.useRef<number | null>(null);
+  const playbackAnalysisRef = React.useRef<(() => void) | null>(null);
+  const audioSignal = React.useRef<KlicAudioSignal>(SILENT_AUDIO);
   const restartTimerRef = React.useRef<number | null>(null);
   const serverAudioRef = React.useRef<HTMLAudioElement | null>(null);
   const serverAudioUrlRef = React.useRef<string | undefined>(undefined);
@@ -147,6 +150,7 @@ export function useKlicVoice({ onInterim, onFinal, processing = false }: UseKlic
     streamRef.current = null;
     if (audioContextRef.current && audioContextRef.current.state !== 'closed') void audioContextRef.current.close();
     audioContextRef.current = null;
+    if (audioSignal.current.source === 'microphone') audioSignal.current = SILENT_AUDIO;
     setIntensity(0);
   }, []);
 
@@ -198,24 +202,22 @@ export function useKlicVoice({ onInterim, onFinal, processing = false }: UseKlic
     }
   }, [stopBargeInMonitor]);
 
-  const stopSpeechPulse = React.useCallback(() => {
-    if (speechPulseRef.current !== null) window.clearInterval(speechPulseRef.current);
-    speechPulseRef.current = null;
+  const stopPlaybackAnalysis = React.useCallback(() => {
+    playbackAnalysisRef.current?.(); playbackAnalysisRef.current = null;
+    if (audioSignal.current.source === 'playback') audioSignal.current = SILENT_AUDIO;
     setIntensity(0);
   }, []);
 
-  const startSpeechPulse = React.useCallback(() => {
-    if (speechPulseRef.current !== null) return;
-    let tick = 0;
-    speechPulseRef.current = window.setInterval(() => {
-      tick += 1;
-      const wave = (Math.sin(tick * 0.93) + Math.sin(tick * 0.37 + 1.2) + 2) / 4;
-      setIntensity(0.22 + wave * 0.63);
-    }, 76);
-  }, []);
+  const startPlaybackAnalysis = React.useCallback((audio: HTMLAudioElement) => {
+    stopPlaybackAnalysis();
+    playbackAnalysisRef.current = startKlicPlaybackAnalysis(audio, signal => {
+      audioSignal.current = signal; setIntensity(signal.level);
+    });
+  }, [stopPlaybackAnalysis]);
 
   const clearServerPlayback = React.useCallback(() => {
     stopBargeInMonitor();
+    stopPlaybackAnalysis();
     settlePlaybackRef.current?.();
     settlePlaybackRef.current = null;
     synthesisAbortRef.current?.abort();
@@ -231,7 +233,7 @@ export function useKlicVoice({ onInterim, onFinal, processing = false }: UseKlic
     }
     if (serverAudioUrlRef.current) URL.revokeObjectURL(serverAudioUrlRef.current);
     serverAudioUrlRef.current = undefined;
-  }, [stopBargeInMonitor]);
+  }, [stopBargeInMonitor, stopPlaybackAnalysis]);
 
   const clearRecognition = React.useCallback(() => {
     captureGeneration.current++;
@@ -252,11 +254,11 @@ export function useKlicVoice({ onInterim, onFinal, processing = false }: UseKlic
     setErrorMessage(message);
     clearRestartTimer();
     clearRecognition();
-    stopSpeechPulse();
+    stopPlaybackAnalysis();
     clearServerPlayback();
     window.speechSynthesis?.cancel();
     setPhase('error');
-  }, [clearRecognition, clearRestartTimer, clearServerPlayback, setPhase, stopSpeechPulse]);
+  }, [clearRecognition, clearRestartTimer, clearServerPlayback, setPhase, stopPlaybackAnalysis]);
 
   const startListening = React.useCallback(async () => {
     if (!sessionActiveRef.current || pausedRef.current || startInProgressRef.current || recorderRef.current || transcriptionRef.current || phaseRef.current==='speaking' || serverAudioRef.current || synthesisAbortRef.current) return;
@@ -318,12 +320,12 @@ export function useKlicVoice({ onInterim, onFinal, processing = false }: UseKlic
       };
       const context=new AudioContext();audioContextRef.current=context;
       const analyser=context.createAnalyser();analyser.fftSize=1024;context.createMediaStreamSource(stream).connect(analyser);
-      const samples=new Uint8Array(analyser.fftSize);const started=performance.now();let lastVoice=started;let heardVoice=false;
+      const samples=new Uint8Array(analyser.fftSize), bins=new Uint8Array(analyser.frequencyBinCount);const started=performance.now();let lastVoice=started;let heardVoice=false;
       const measure=()=>{
         if(generation!==captureGeneration.current || recorder.state!=='recording')return;
         analyser.getByteTimeDomainData(samples);let power=0;for(const sample of samples)power+=((sample-128)/128)**2;const rms=Math.sqrt(power/samples.length);
         const now=performance.now();
-        if(now-lastIntensityAtRef.current>=50){lastIntensityAtRef.current=now;setIntensity(Math.min(1,rms*12));}
+        if(now-lastIntensityAtRef.current>=50){lastIntensityAtRef.current=now;analyser.getByteFrequencyData(bins);const signal=analyseKlicAudio(samples,bins,context.sampleRate,'microphone',now);audioSignal.current=signal;setIntensity(signal.level);}
         if(rms>.025){heardVoice=true;lastVoice=now;}
         const boundary=shouldFinishVoiceTurn({elapsedMs:now-started,silenceMs:now-lastVoice,heardVoice});
         if(boundary==='no-speech'){
@@ -351,19 +353,19 @@ export function useKlicVoice({ onInterim, onFinal, processing = false }: UseKlic
     playbackGenerationRef.current += 1;
     clearServerPlayback();
     window.speechSynthesis?.cancel();
-    stopSpeechPulse();
+    stopPlaybackAnalysis();
     setPhase('idle');
     restartTimerRef.current = window.setTimeout(() => { void startListening(); }, 80);
-  }, [clearServerPlayback, setPhase, startListening, stopSpeechPulse]);
+  }, [clearServerPlayback, setPhase, startListening, stopPlaybackAnalysis]);
   interruptSpeechRef.current = interruptSpeech;
 
   const finishSpeech = React.useCallback((generation: number) => {
     if (generation !== playbackGenerationRef.current || !sessionActiveRef.current) return;
     clearServerPlayback();
-    stopSpeechPulse();
+    stopPlaybackAnalysis();
     setPhase(pausedRef.current ? 'paused' : 'idle');
     if (shouldRestartVoiceCapture(modeRef.current, pausedRef.current)) restartTimerRef.current = window.setTimeout(() => { void startListening(); }, 320);
-  }, [clearServerPlayback, setPhase, startListening, stopSpeechPulse]);
+  }, [clearServerPlayback, setPhase, startListening, stopPlaybackAnalysis]);
 
   const speakWithBrowser = React.useCallback((text: string, generation: number) => {
     if (!window.speechSynthesis || !('SpeechSynthesisUtterance' in window)) {
@@ -387,7 +389,7 @@ export function useKlicVoice({ onInterim, onFinal, processing = false }: UseKlic
       if (selectedVoice) utterance.voice = selectedVoice;
       utterance.onstart = () => {
         setPhase('speaking');
-        startSpeechPulse();
+        stopPlaybackAnalysis();
         void startBargeInMonitor();
       };
       utterance.onend = () => {
@@ -401,7 +403,7 @@ export function useKlicVoice({ onInterim, onFinal, processing = false }: UseKlic
       window.speechSynthesis.speak(utterance);
     };
     speakNext();
-  }, [finishSpeech, setPhase, showError, startBargeInMonitor, startSpeechPulse, voiceProfile]);
+  }, [finishSpeech, setPhase, showError, startBargeInMonitor, stopPlaybackAnalysis, voiceProfile]);
 
   const speak = React.useCallback((text: string) => {
     if (!sessionActiveRef.current || !text.trim()) return;
@@ -420,7 +422,7 @@ export function useKlicVoice({ onInterim, onFinal, processing = false }: UseKlic
     clearRecognition();
     clearServerPlayback();
     window.speechSynthesis?.cancel();
-    stopSpeechPulse();
+    stopPlaybackAnalysis();
 
     void (async () => {
       let chunkIndex = 0;
@@ -448,7 +450,7 @@ export function useKlicVoice({ onInterim, onFinal, processing = false }: UseKlic
           const audio = new Audio(audioUrl);
           serverAudioRef.current = audio;
           setPhase('speaking');
-          startSpeechPulse();
+          startPlaybackAnalysis(audio);
           void startBargeInMonitor();
           await new Promise<void>((resolve, reject) => {
             settlePlaybackRef.current = () => reject(new DOMException('Reprodução interrompida.', 'AbortError'));
@@ -457,6 +459,7 @@ export function useKlicVoice({ onInterim, onFinal, processing = false }: UseKlic
             void audio.play().catch(reject);
           });
           settlePlaybackRef.current = null;
+          stopPlaybackAnalysis();
           serverAudioRef.current = null;
           URL.revokeObjectURL(audioUrl);
           serverAudioUrlRef.current = undefined;
@@ -466,11 +469,11 @@ export function useKlicVoice({ onInterim, onFinal, processing = false }: UseKlic
         if (error instanceof DOMException && error.name === 'AbortError') return;
         if (!sessionActiveRef.current || generation !== playbackGenerationRef.current) return;
         clearServerPlayback();
-        stopSpeechPulse();
+        stopPlaybackAnalysis();
         speakWithBrowser(chunks.slice(chunkIndex).join(' '), generation);
       }
     })();
-  }, [clearRecognition, clearServerPlayback, finishSpeech, speakWithBrowser, startBargeInMonitor, startListening, startSpeechPulse, stopSpeechPulse, voiceProfile]);
+  }, [clearRecognition, clearServerPlayback, finishSpeech, speakWithBrowser, startBargeInMonitor, startListening, startPlaybackAnalysis, stopPlaybackAnalysis, voiceProfile]);
 
   const beginVoice = React.useCallback((mode: KlicVoiceMode) => {
     if (!voiceSupported) {
@@ -503,12 +506,12 @@ export function useKlicVoice({ onInterim, onFinal, processing = false }: UseKlic
     setErrorMessage(undefined);
     clearRestartTimer();
     clearRecognition();
-    stopSpeechPulse();
+    stopPlaybackAnalysis();
     playbackGenerationRef.current += 1;
     clearServerPlayback();
     window.speechSynthesis?.cancel();
     setPhase('ended');
-  }, [clearRecognition, clearRestartTimer, clearServerPlayback, setPhase, stopSpeechPulse]);
+  }, [clearRecognition, clearRestartTimer, clearServerPlayback, setPhase, stopPlaybackAnalysis]);
 
   React.useEffect(() => { endConversation(); }, [klic.scope, endConversation]);
 
@@ -552,7 +555,7 @@ export function useKlicVoice({ onInterim, onFinal, processing = false }: UseKlic
     playbackGenerationRef.current = generation;
     clearServerPlayback();
     window.speechSynthesis?.cancel();
-    stopSpeechPulse();
+    stopPlaybackAnalysis();
     setErrorMessage(undefined);
 
     const playBrowserPreview = () => {
@@ -570,16 +573,16 @@ export function useKlicVoice({ onInterim, onFinal, processing = false }: UseKlic
       utterance.onstart = () => {
         if (generation !== playbackGenerationRef.current) return;
         setPhase('speaking');
-        startSpeechPulse();
+        stopPlaybackAnalysis();
       };
       utterance.onend = () => {
         if (generation !== playbackGenerationRef.current) return;
-        stopSpeechPulse();
+        stopPlaybackAnalysis();
         setPhase('idle');
       };
       utterance.onerror = (event) => {
         if (event.error === 'canceled' || event.error === 'interrupted') return;
-        stopSpeechPulse();
+        stopPlaybackAnalysis();
         setPhase('idle');
         setErrorMessage('Não foi possível reproduzir a prévia de voz.');
       };
@@ -607,32 +610,32 @@ export function useKlicVoice({ onInterim, onFinal, processing = false }: UseKlic
       audio.onended = () => {
         if (generation !== playbackGenerationRef.current) return;
         clearServerPlayback();
-        stopSpeechPulse();
+        stopPlaybackAnalysis();
         setPhase('idle');
       };
       audio.onerror = () => {
         if (generation !== playbackGenerationRef.current) return;
         clearServerPlayback();
-        stopSpeechPulse();
+        stopPlaybackAnalysis();
         playBrowserPreview();
       };
       setPhase('speaking');
-      startSpeechPulse();
+      startPlaybackAnalysis(audio);
       await audio.play();
     } catch (error) {
       if (error instanceof DOMException && error.name === 'AbortError') return;
       if (generation !== playbackGenerationRef.current) return;
       clearServerPlayback();
-      stopSpeechPulse();
+      stopPlaybackAnalysis();
       playBrowserPreview();
     }
-  }, [clearRecognition, clearRestartTimer, clearServerPlayback, setPhase, startSpeechPulse, stopSpeechPulse]);
+  }, [clearRecognition, clearRestartTimer, clearServerPlayback, setPhase, startPlaybackAnalysis, stopPlaybackAnalysis]);
 
   React.useEffect(() => () => {
     feedbackRef.current?.listeningEnded();
     sessionActiveRef.current = false;
     clearRecognition();
-    if (speechPulseRef.current !== null) window.clearInterval(speechPulseRef.current);
+    stopPlaybackAnalysis();
     if (restartTimerRef.current !== null) window.clearTimeout(restartTimerRef.current);
     playbackGenerationRef.current += 1;
     clearServerPlayback();
@@ -642,6 +645,7 @@ export function useKlicVoice({ onInterim, onFinal, processing = false }: UseKlic
   return {
     phase,
     intensity,
+    audioSignal,
     voiceEnabled,
     voicePaused,
     voiceMode,

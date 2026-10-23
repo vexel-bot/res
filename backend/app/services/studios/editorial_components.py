@@ -2200,7 +2200,10 @@ def lower_compositions(direction, width, height):
     for scene in result.scenes:
         if motion_system and result.art_direction.palette:
             background_color = result.art_direction.palette[0]
-            if isinstance(background_color, str) and background_color.startswith("#") and len(background_color) in {4, 7}:
+            if (
+                isinstance(background_color, str)
+                and background_color.startswith("#") and len(background_color) in {4, 7}
+            ):
                 scene.background = background_color
         indexed = {e.id: e for e in scene.elements}
         generated_format_labels = []
@@ -2482,7 +2485,10 @@ def lower_compositions(direction, width, height):
                         )
                         if result.art_direction.palette:
                             candidate_color = result.art_direction.palette[-1]
-                            if isinstance(candidate_color, str) and candidate_color.startswith("#") and len(candidate_color) in {4, 7}:
+                            if (
+                                isinstance(candidate_color, str)
+                                and candidate_color.startswith("#") and len(candidate_color) in {4, 7}
+                            ):
                                 element.border_color = candidate_color
                     else:
                         element.border_width = max(2.0, min(width, height) * 0.006)
@@ -2667,7 +2673,10 @@ def lower_compositions(direction, width, height):
                         allow_upscale=True,
                     )
                     hero.object_fit = "contain"
-                    support_width = min(width * 0.24, (width - margin * 2 - gap * max(0, len(supports) - 1)) / max(1, len(supports)))
+                    support_width = min(
+                        width * 0.24,
+                        (width - margin * 2 - gap * max(0, len(supports) - 1)) / max(1, len(supports)),
+                    )
                     support_height = height * 0.16
                     support_total = len(supports) * support_width + max(0, len(supports) - 1) * gap
                     support_left = (width - support_total) / 2
@@ -2714,7 +2723,10 @@ def lower_compositions(direction, width, height):
                         element.font_size = min(120, max(element.font_size, width * 0.10))
                         if len(result.art_direction.palette) > 1:
                             candidate_color = result.art_direction.palette[1]
-                            if isinstance(candidate_color, str) and candidate_color.startswith("#") and len(candidate_color) in {4, 7}:
+                            if (
+                                isinstance(candidate_color, str)
+                                and candidate_color.startswith("#") and len(candidate_color) in {4, 7}
+                            ):
                                 element.color = candidate_color
                     elif element.kind in {"shape", "image", "video"}:
                         box_width = width * (0.78 if motion_system.layout == "graphic_motif" else 0.48)
@@ -2727,7 +2739,10 @@ def lower_compositions(direction, width, height):
                                    allow_upscale=element.kind in {"image", "video"})
                         if element.kind == "shape" and len(result.art_direction.palette) > 2:
                             candidate_color = result.art_direction.palette[2]
-                            if isinstance(candidate_color, str) and candidate_color.startswith("#") and len(candidate_color) in {4, 7}:
+                            if (
+                                isinstance(candidate_color, str)
+                                and candidate_color.startswith("#") and len(candidate_color) in {4, 7}
+                            ):
                                 element.fill = candidate_color
                 elif family in {"comparison", "sequence"} and not sequence_preserves_spatial_layout:
                     count = len(elements)

@@ -3,6 +3,8 @@ import { AVATAR_TYPES, MAX_AVATAR_BYTES, normalizeProfileAvatar, profileAvatarUr
 import path from 'node:path';
 import { createHash, createHmac, randomBytes, randomUUID, scryptSync, timingSafeEqual } from 'node:crypto';
 import { AtomicJsonStore } from './atomicJsonStore';
+import { devConfiguration, isLocalDevRequest, issueDevSession, resolveDevSession, revokeDevSession } from './devMode';
+import { DEV_WORKSPACE_ID, DEV_USER_ID, DEV_CLIENT_ID } from '../src/development/contracts';
 import { CLIENT_OPERATION_REQUIRED, type ClientOperationRecord } from '../src/clients/clientOperations';
 import { effectivePermissions, hasPermission, isPrivilegedRole, rolePresets } from '../src/security/accessControl';
 import {
@@ -102,6 +104,12 @@ const plans: SaaSPlan[] = [
   { id: 'enterprise', name: 'Corporativo', maxUsers: null, monthlyPrice: null, description: 'Capacidade, suporte e governança personalizados.', features: ['Usuários personalizados', 'SLA dedicado', 'Governança avançada'], audience: 'organization', includedLicenses: 1, entitlements: unlimitedEntitlements, capabilities: baseCapabilities, catalogVersion: CATALOG_VERSION },
 ];
 
+const developmentPlan: SaaSPlan = { id: 'development', name: 'Desenvolvimento', maxUsers: 100,
+  monthlyPrice: 0, description: 'Ambiente local isolado. Não é uma assinatura comercial.',
+  features: ['Ferramentas locais', 'Administração de teste', 'Gastos externos bloqueados'],
+  audience: 'organization', includedLicenses: 1, entitlements: unlimitedEntitlements,
+  capabilities: baseCapabilities, catalogVersion: 'local-dev-v1' };
+
 const workspaces: GovernanceWorkspace[] = [{
   id: 'ws-1',
   name: 'Clicko Studio',
@@ -148,6 +156,24 @@ const licenses: OrganizationLicense[] = Array.from({ length: 6 }, (_, index) => 
   ...(index === 0 ? { memberId: 'usr-master' } : {}), createdAt: '2026-05-18T12:00:00.000Z', updatedAt: '2026-05-18T12:00:00.000Z',
 }));
 const usagePools: UsagePool[] = [];
+
+// Image jobs reserve quota before crossing the async service boundary. The receipt
+// and counter share the existing atomic governance snapshot, including on restart.
+type StudioImageUsageReceipt = {
+  id: string;
+  workspaceId: string;
+  memberId: string;
+  periodStartedAt: string;
+  fingerprint: string;
+  status: 'reserved' | 'accepted';
+  createdAt: string;
+  jobId?: string;
+};
+const studioImageUsageReceipts: StudioImageUsageReceipt[] = [];
+type StudioVideoUsageReceipt = Omit<StudioImageUsageReceipt, 'status'> & {
+  status: 'reserved' | 'accepted' | 'settled' | 'released'; seconds: number; chargedMinutes: number;
+};
+const studioVideoUsageReceipts: StudioVideoUsageReceipt[] = [];
 
 const approvals: ContentApprovalItem[] = [];
 
@@ -382,6 +408,8 @@ function ensureGovernanceModel() {
 }
 
 type GovernanceSnapshot = {
+  studioVideoUsageReceipts?: StudioVideoUsageReceipt[];
+  studioImageUsageReceipts?: StudioImageUsageReceipt[];
   profileAvatars?: StoredProfileAvatar[];
   registeredClients?: RegisteredClient[];
   version: 4;
@@ -403,8 +431,10 @@ type LegacyGovernanceSnapshot = Omit<GovernanceSnapshot, 'version' | 'authCreden
 type GovernanceSnapshotV2 = Omit<GovernanceSnapshot, 'version' | 'licenses' | 'usagePools' | 'billingCheckoutSessions' | 'processedBillingEvents'> & { version: 2 };
 type GovernanceSnapshotV3 = Omit<GovernanceSnapshot, 'version' | 'billingCheckoutSessions' | 'processedBillingEvents'> & { version: 3 };
 type StoredGovernanceSnapshot = GovernanceSnapshot | GovernanceSnapshotV3 | GovernanceSnapshotV2 | LegacyGovernanceSnapshot;
-const snapshot = (): GovernanceSnapshot => structuredClone({ version: 4, workspaces, users, subscriptions, approvals, auditLogs, inviteTokens: [...inviteTokens], authCredentials, authSessions, authActionTokens, profileAvatars, registeredClients, licenses, usagePools, billingCheckoutSessions, processedBillingEvents });
+const snapshot = (): GovernanceSnapshot => structuredClone({ version: 4, workspaces, users, subscriptions, approvals, auditLogs, inviteTokens: [...inviteTokens], authCredentials, authSessions, authActionTokens, profileAvatars, registeredClients, licenses, usagePools, studioImageUsageReceipts, studioVideoUsageReceipts, billingCheckoutSessions, processedBillingEvents });
 function restore(value: StoredGovernanceSnapshot) {
+  studioVideoUsageReceipts.splice(0, studioVideoUsageReceipts.length, ...(value.studioVideoUsageReceipts || []));
+  studioImageUsageReceipts.splice(0, studioImageUsageReceipts.length, ...(value.studioImageUsageReceipts || []));
   profileAvatars.splice(0, profileAvatars.length, ...(value.profileAvatars || []));
   registeredClients.splice(0, registeredClients.length, ...(value.registeredClients || []));
   workspaces.splice(0, workspaces.length, ...value.workspaces);
@@ -425,6 +455,8 @@ function restore(value: StoredGovernanceSnapshot) {
 function validSnapshot(value: unknown): value is StoredGovernanceSnapshot {
   if (!value || typeof value !== 'object') return false;
   const state = value as StoredGovernanceSnapshot;
+  if (state.studioVideoUsageReceipts !== undefined && (!Array.isArray(state.studioVideoUsageReceipts) || !state.studioVideoUsageReceipts.every(item => item && /^[a-f0-9]{64}$/.test(item.id) && /^[a-f0-9]{64}$/.test(item.fingerprint) && typeof item.workspaceId === 'string' && typeof item.memberId === 'string' && typeof item.periodStartedAt === 'string' && Number.isFinite(item.seconds) && item.seconds > 0 && Number.isFinite(item.chargedMinutes) && item.chargedMinutes >= 0 && ['reserved', 'accepted', 'settled', 'released'].includes(item.status)))) return false;
+  if (state.studioImageUsageReceipts !== undefined && (!Array.isArray(state.studioImageUsageReceipts) || !state.studioImageUsageReceipts.every(item => item && /^[a-f0-9]{64}$/.test(item.id) && /^[a-f0-9]{64}$/.test(item.fingerprint) && typeof item.workspaceId === 'string' && typeof item.memberId === 'string' && typeof item.periodStartedAt === 'string' && typeof item.createdAt === 'string' && ['reserved', 'accepted'].includes(item.status) && (item.jobId === undefined || typeof item.jobId === 'string')))) return false;
   if (state.profileAvatars !== undefined && (!Array.isArray(state.profileAvatars) || !state.profileAvatars.every(item => item && typeof item.userId === 'string' && typeof item.workspaceId === 'string' && typeof item.data === 'string' && typeof item.version === 'string'))) return false;
   if (state.registeredClients !== undefined && (!Array.isArray(state.registeredClients) || !state.registeredClients.every(item => item && typeof item.id === 'string' && typeof item.name === 'string' && typeof item.workspaceId === 'string' && typeof item.updatedAt === 'string' && (!item.operationState || ['registered', 'invited', 'managed', 'independent'].includes(item.operationState))))) return false;
   if (![1, 2, 3, 4].includes(state.version) || !['workspaces', 'users', 'subscriptions', 'approvals', 'auditLogs', 'inviteTokens'].every(key => Array.isArray((state as any)[key]))) return false;
@@ -471,6 +503,47 @@ function configurePersistence(filename: string | null) {
     repository = store;
   }
   repositoryFile = resolved;
+}
+
+/** First-boot seed only. An existing store is loaded without replacing its projects or test members. */
+function prepareDevGovernance() {
+  if (!devConfiguration()) return;
+  if (!plans.some(plan => plan.id === 'development')) plans.push(developmentPlan);
+  if (repositoryFile !== undefined) return;
+  const created = new Date().toISOString();
+  workspaces.splice(0, workspaces.length, {
+    id: DEV_WORKSPACE_ID, name: 'Clicko DEV', logo: '', planId: 'development', maxUsers: 100, activeUsers: 1,
+    subscriptionDate: created, subscriptionStatus: 'active', kind: 'organization', ownerUserId: DEV_USER_ID,
+    settings: { inviteExpiryDays: 7, requireApproval: false, timezone: 'America/Sao_Paulo' },
+  });
+  users.splice(0, users.length, { id: DEV_USER_ID, workspaceId: DEV_WORKSPACE_ID, name: 'Clicko Developer',
+    email: 'developer@clicko.local', avatar: '', role: 'master', status: 'active', modules: [...moduleIds],
+    permissions: [...rolePresets.master.permissions], scope: allScope(), createdAt: created, lastAccess: created });
+  subscriptions.splice(0, subscriptions.length, { id: 'sub-dev-clicko', workspaceId: DEV_WORKSPACE_ID,
+    planId: 'development', status: 'active', startedAt: created, renewsAt: '', billingEmail: 'developer@clicko.local',
+    paymentMethod: 'Sem cobrança · somente desenvolvimento', provider: 'none', ownerType: 'organization',
+    addOns: [], entitlementSnapshot: captureEntitlements(developmentPlan) });
+  registeredClients.splice(0, registeredClients.length, { id: DEV_CLIENT_ID, workspaceId: DEV_WORKSPACE_ID,
+    name: 'Cliente DEV', operationState: 'managed', billingStatus: 'active', updatedAt: created });
+  licenses.splice(0); usagePools.splice(0); approvals.splice(0); auditLogs.splice(0); inviteTokens.clear();
+  authCredentials.splice(0); authSessions.splice(0); authActionTokens.splice(0); profileAvatars.splice(0);
+  billingCheckoutSessions.splice(0); processedBillingEvents.splice(0);
+  studioImageUsageReceipts.splice(0); studioVideoUsageReceipts.splice(0);
+  ensureGovernanceModel();
+}
+
+function devAuthPayload(expiresAt: string) {
+  const account = accountFromMembership({ userId: DEV_USER_ID, workspaceId: DEV_WORKSPACE_ID });
+  const user = users.find(item => item.id === DEV_USER_ID && item.workspaceId === DEV_WORKSPACE_ID && item.status === 'active');
+  if (!account || !user) throw new Error('DEV_IDENTITY_UNAVAILABLE');
+  return { account: { ...account, role: 'Administrador de desenvolvimento' }, accounts: [{ ...account, role: 'Administrador de desenvolvimento' }],
+    user, development: { enabled: true, workspaceId: DEV_WORKSPACE_ID, clientId: DEV_CLIENT_ID, expiresAt } };
+}
+
+export function developmentAuth(): AuthContext | undefined {
+  if (!devConfiguration()) return undefined;
+  const user = users.find(item => item.id === DEV_USER_ID && item.workspaceId === DEV_WORKSPACE_ID && item.status === 'active');
+  return user ? { user, workspaceId: DEV_WORKSPACE_ID } : undefined;
 }
 
 // All governance mutation handlers are synchronous. Commit before acknowledging
@@ -532,6 +605,7 @@ const cookieValue = (req: Request, name: string) => String(req.headers.cookie ||
 const sessionCookie = (value: string, maxAgeSeconds: number) => `${SESSION_COOKIE}=${value}; Path=/; HttpOnly; SameSite=Strict; Max-Age=${maxAgeSeconds}${process.env.NODE_ENV === 'production' ? '; Secure' : ''}`;
 const clearSessionCookie = () => `${SESSION_COOKIE}=; Path=/; HttpOnly; SameSite=Strict; Max-Age=0${process.env.NODE_ENV === 'production' ? '; Secure' : ''}`;
 const accountFromMembership = (membership: { userId: string; workspaceId: string }): UserAccount | null => {
+  if (membership.workspaceId === DEV_WORKSPACE_ID && !devConfiguration()) return null;
   const user = users.find(item => item.id === membership.userId && item.workspaceId === membership.workspaceId && item.status === 'active');
   const workspace = workspaces.find(item => item.id === membership.workspaceId);
   if (!user || !workspace) return null;
@@ -554,6 +628,7 @@ const accountFromMembership = (membership: { userId: string; workspaceId: string
   };
 };
 function resolveDevelopmentBypass(req: Request) {
+  if (process.env.CLICKO_DEV_MODE === 'true') return null;
   if (process.env.NODE_ENV !== 'development' || process.env.CLICKO_DEV_AUTH_BYPASS !== 'true') return null;
   const baseAccounts = (['personal', 'company'] as const).map(type => {
     const workspace = workspaces.find(item => !item.parentWorkspaceId && (item.planId === 'solo' ? 'personal' : 'company') === type);
@@ -626,6 +701,13 @@ function requireSameOrigin(req: Request, res: Response, next: NextFunction) {
 }
 
 export function authenticate(req: AuthenticatedRequest, res: Response, next: NextFunction) {
+  if (devConfiguration()) {
+    const expiresAt = resolveDevSession(req);
+    if (!expiresAt) return res.status(401).json({ code: 'DEV_SESSION_REQUIRED', error: 'Atualize a página para iniciar a sessão local DEV.' });
+    const payload = devAuthPayload(expiresAt);
+    req.auth = { workspaceId: DEV_WORKSPACE_ID, user: payload.user };
+    return next();
+  }
   const browserSession = resolveBrowserSession(req);
   if (browserSession) {
     req.auth = { workspaceId: browserSession.account.workspaceId, user: browserSession.user };
@@ -698,7 +780,7 @@ export function assertGovernanceAccess(auth: AuthContext, input: { permission?: 
   return user;
 }
 
-export function consumeGovernanceUsage(auth: AuthContext, resource: UsageResource, amount = 1) {
+function applyGovernanceUsage(auth: AuthContext, resource: UsageResource, amount = 1) {
   if (!Number.isFinite(amount) || amount <= 0) throw Object.assign(new Error('Consumo inválido.'), { status: 400, code: 'USAGE_AMOUNT_INVALID' });
   const user = assertGovernanceAccess(auth, {});
   const subscription = subscriptionForWorkspace(auth.workspaceId)!;
@@ -710,18 +792,120 @@ export function consumeGovernanceUsage(auth: AuthContext, resource: UsageResourc
   const memberLimit = pool.memberLimits[user.id]?.[resource];
   if (allowance.limit !== null && allowance.used + amount > allowance.limit) throw Object.assign(new Error('O limite contratado para este recurso foi atingido.'), { status: 409, code: 'USAGE_POOL_EXHAUSTED' });
   if (pool.allocationMode === 'member_limits' && memberLimit !== undefined && memberLimit !== null && memberUsed + amount > memberLimit) throw Object.assign(new Error('Seu limite individual para este recurso foi atingido.'), { status: 409, code: 'MEMBER_USAGE_EXHAUSTED' });
-  const before = repository ? snapshot() : undefined;
   allowance.used += amount;
   pool.memberUsage[user.id] ||= {};
   pool.memberUsage[user.id][resource] = memberUsed + amount;
-  if (repository) {
-    try { repository.save(snapshot()); }
-    catch {
-      if (before) restore(before);
-      throw Object.assign(new Error('Não foi possível registrar o consumo. Nenhum saldo foi alterado.'), { status: 503, code: 'USAGE_PERSISTENCE_UNAVAILABLE' });
-    }
-  }
   return { resource, amount, allowance: structuredClone(allowance), memberUsed: memberUsed + amount };
+}
+
+function persistUsageChange<T>(change: () => T): T {
+  const before = snapshot();
+  try {
+    const result = change();
+    repository?.save(snapshot());
+    return result;
+  } catch (error) {
+    restore(before);
+    const failure = error as { status?: number; code?: string };
+    if (failure.status >= 400 && failure.status < 600 && failure.code) throw error;
+    throw Object.assign(new Error('Não foi possível registrar o consumo. O saldo anterior foi preservado.'), { status: 503, code: 'USAGE_PERSISTENCE_UNAVAILABLE' });
+  }
+}
+
+export function consumeGovernanceUsage(auth: AuthContext, resource: UsageResource, amount = 1) {
+  return persistUsageChange(() => applyGovernanceUsage(auth, resource, amount));
+}
+
+/** Same workspace/client/key is one job, independently of browser retries or actor. */
+export function reserveStudioImageUsage(auth: AuthContext, receiptId: string, fingerprint: string) {
+  assertGovernanceAccess(auth, { module: 'create-image', capability: 'image_generation' });
+  if (!/^[a-f0-9]{64}$/.test(receiptId) || !/^[a-f0-9]{64}$/.test(fingerprint))
+    throw Object.assign(new Error('Identidade do pedido inválida.'), { status: 400, code: 'IMAGE_USAGE_ID_INVALID' });
+  const existing = studioImageUsageReceipts.find(item => item.workspaceId === auth.workspaceId && item.id === receiptId);
+  if (existing) {
+    if (existing.fingerprint !== fingerprint)
+      throw Object.assign(new Error('Esta chave já identifica outro pedido de imagem. Confira o pedido original.'), { status: 409, code: 'IMAGE_IDEMPOTENCY_CONFLICT' });
+    return existing.id;
+  }
+  return persistUsageChange(() => {
+    applyGovernanceUsage(auth, 'image_generations', 1);
+    const pool = usagePools.find(item => item.workspaceId === auth.workspaceId)!;
+    studioImageUsageReceipts.push({ id: receiptId, workspaceId: auth.workspaceId, memberId: auth.user.id, periodStartedAt: pool.periodStartedAt, fingerprint, status: 'reserved', createdAt: nowIso() });
+    return receiptId;
+  });
+}
+
+/** Only a confirmed pre-admission rejection releases quota. Job failures never do. */
+export function settleStudioImageUsage(auth: AuthContext, receiptId: string, jobId?: string) {
+  const receipt = studioImageUsageReceipts.find(item => item.workspaceId === auth.workspaceId && item.id === receiptId);
+  if (!receipt || receipt.status === 'accepted') return;
+  persistUsageChange(() => {
+    if (jobId) {
+      receipt.status = 'accepted';
+      receipt.jobId = jobId;
+      addAudit(auth, 'usage.image.accepted', 'image_generations', `Uma solicitação de imagem aceita: ${jobId}`);
+    } else {
+      const pool = usagePools.find(item => item.workspaceId === receipt.workspaceId && item.periodStartedAt === receipt.periodStartedAt);
+      if (pool) {
+        pool.resources.image_generations.used = Math.max(0, pool.resources.image_generations.used - 1);
+        const member = pool.memberUsage[receipt.memberId];
+        if (member) member.image_generations = Math.max(0, (member.image_generations || 0) - 1);
+      }
+      studioImageUsageReceipts.splice(studioImageUsageReceipts.indexOf(receipt), 1);
+    }
+  });
+}
+
+/** Only generated scenes consume minutes. Editor exports/previews never call this. */
+export function reserveStudioVideoUsage(auth: AuthContext, id: string, fingerprint: string, seconds: number) {
+  assertGovernanceAccess(auth, { module: 'create-video', capability: 'video_generation' });
+  if (!/^[a-f0-9]{64}$/.test(id) || !/^[a-f0-9]{64}$/.test(fingerprint) || !Number.isFinite(seconds) || seconds <= 0 || seconds > 3600)
+    throw Object.assign(new Error('Solicitação de vídeo inválida.'), { status: 422, code: 'VIDEO_REQUEST_INVALID' });
+  const existing = studioVideoUsageReceipts.find(row => row.workspaceId === auth.workspaceId && row.id === id);
+  if (existing) {
+    if (existing.fingerprint !== fingerprint) throw Object.assign(new Error('Chave já utilizada para outro vídeo.'), { status: 409, code: 'VIDEO_IDEMPOTENCY_CONFLICT' });
+    if (existing.status !== 'released') return;
+  }
+  persistUsageChange(() => {
+    // Covers the existing technical duration tolerance without exceeding a pre-authorized hold.
+    const minutes = (seconds + .15) / 60;
+    applyGovernanceUsage(auth, 'video_minutes', minutes);
+    const pool = usagePools.find(row => row.workspaceId === auth.workspaceId)!;
+    if (existing) studioVideoUsageReceipts.splice(studioVideoUsageReceipts.indexOf(existing), 1);
+    studioVideoUsageReceipts.push({ id, fingerprint, workspaceId: auth.workspaceId, memberId: auth.user.id,
+      periodStartedAt: pool.periodStartedAt, status: 'reserved', seconds, chargedMinutes: minutes, createdAt: nowIso() });
+  });
+}
+
+export function settleStudioVideoUsage(auth: AuthContext, id: string, outcome: { jobId?: string; seconds?: number; release?: boolean }) {
+  const receipt = studioVideoUsageReceipts.find(row => row.workspaceId === auth.workspaceId && row.id === id);
+  if (!receipt || receipt.status === 'settled' || receipt.status === 'released') return;
+  if (outcome.seconds !== undefined && (!Number.isFinite(outcome.seconds) || outcome.seconds < 0 || outcome.seconds > receipt.seconds + .15 + 1e-6))
+    throw Object.assign(new Error('Duração gerada fora da reserva autorizada.'), { status: 502, code: 'VIDEO_DURATION_UNCONFIRMED' });
+  persistUsageChange(() => {
+    if (outcome.jobId) { receipt.jobId = outcome.jobId; receipt.status = 'accepted'; }
+    if (!outcome.release && outcome.seconds === undefined) return;
+    const charged = outcome.release ? 0 : outcome.seconds! / 60;
+    const refund = Math.max(0, receipt.chargedMinutes - charged);
+    const pool = usagePools.find(row => row.workspaceId === receipt.workspaceId && row.periodStartedAt === receipt.periodStartedAt);
+    if (pool) {
+      pool.resources.video_minutes.used = Math.max(0, pool.resources.video_minutes.used - refund);
+      const member = pool.memberUsage[receipt.memberId];
+      if (member) member.video_minutes = Math.max(0, (member.video_minutes || 0) - refund);
+    }
+    receipt.chargedMinutes = charged;
+    receipt.status = outcome.release ? 'released' : 'settled';
+    addAudit(auth, 'usage.video.' + receipt.status, 'video_minutes', `Cenas geradas: ${outcome.seconds || 0} segundos. Editor não tarifado.`);
+  });
+}
+
+export function reconcileStudioVideoJob(auth: AuthContext, job: Record<string, any>) {
+  const receipt = studioVideoUsageReceipts.find(row => row.workspaceId === auth.workspaceId && row.jobId === job.id);
+  if (!receipt) return;
+  if (job.status === 'succeeded' && typeof job.result?.generatedVideoSeconds === 'number' && job.result?.assetId && job.result?.checksumSha256)
+    settleStudioVideoUsage(auth, receipt.id, { seconds: job.result.generatedVideoSeconds });
+  else if (['failed', 'cancelled'].includes(job.status) && (!job.result?.submissionStarted || job.result?.submissionOutcome === 'rejected' || job.result?.responseKey))
+    settleStudioVideoUsage(auth, receipt.id, { release: true });
 }
 
 /** Read-only adapter for internal orchestration; caller must hold a resolved session. */
@@ -862,14 +1046,15 @@ function stripeSignatureValid(req: Request, secret: string) {
 }
 
 function stripePriceId(planId: SaaSPlan['id']) {
-  return ({ solo: process.env.STRIPE_PRICE_SOLO, team: process.env.STRIPE_PRICE_TEAM, business: process.env.STRIPE_PRICE_BUSINESS, enterprise: process.env.STRIPE_PRICE_ENTERPRISE })[planId];
+  return ({ solo: process.env.STRIPE_PRICE_SOLO, team: process.env.STRIPE_PRICE_TEAM, business: process.env.STRIPE_PRICE_BUSINESS, enterprise: process.env.STRIPE_PRICE_ENTERPRISE, development: undefined })[planId];
 }
 
 function stripeAnnualPriceId(planId: SaaSPlan['id']) {
-  return ({ solo: process.env.STRIPE_PRICE_SOLO_ANNUAL, team: process.env.STRIPE_PRICE_TEAM_ANNUAL, business: process.env.STRIPE_PRICE_BUSINESS_ANNUAL, enterprise: process.env.STRIPE_PRICE_ENTERPRISE_ANNUAL })[planId];
+  return ({ solo: process.env.STRIPE_PRICE_SOLO_ANNUAL, team: process.env.STRIPE_PRICE_TEAM_ANNUAL, business: process.env.STRIPE_PRICE_BUSINESS_ANNUAL, enterprise: process.env.STRIPE_PRICE_ENTERPRISE_ANNUAL, development: undefined })[planId];
 }
 
 async function createStripeCheckout(req: Request, checkout: BillingCheckoutSession, billingEmail: string) {
+  if (process.env.CLICKO_DEV_MODE === 'true') throw Object.assign(new Error('DEV_EXTERNAL_PAYMENT_DISABLED'), { status: 403 });
   if (process.env.NODE_ENV === 'test' && process.env.STRIPE_TEST_CHECKOUT === 'true') {
     checkout.providerSessionId = `cs_test_${randomUUID()}`;
     return { id: checkout.providerSessionId, url: `https://checkout.stripe.test/${checkout.providerSessionId}` };
@@ -907,8 +1092,17 @@ async function createStripeCheckout(req: Request, checkout: BillingCheckoutSessi
 }
 
 export function createGovernanceRouter(options: { dataFile?: string | null } = {}) {
+  const dev = devConfiguration();
+  if (dev && options.dataFile !== undefined && path.resolve(options.dataFile || '') !== path.join(dev.root, 'governance.json'))
+    throw new Error('DEV_GOVERNANCE_STORE_MUST_BE_ISOLATED');
+  prepareDevGovernance();
   configurePersistence(options.dataFile === undefined ? process.env.CLICKO_GOVERNANCE_DATA_FILE || path.resolve('.clicko-data', 'governance.json') : options.dataFile);
+  if (dev && (workspaces.some(item => item.id !== DEV_WORKSPACE_ID)
+      || !workspaces.some(item => item.id === DEV_WORKSPACE_ID && item.planId === 'development')
+      || !registeredClients.some(item => item.id === DEV_CLIENT_ID && item.workspaceId === DEV_WORKSPACE_ID)))
+    throw new Error('DEV_STORE_CONTAINS_UNEXPECTED_IDENTITIES');
   ensureGovernanceModel();
+  if (dev) repository?.save(snapshot());
   const router = Router();
   // Decode before taking the mutation snapshot: the existing commit/rollback
   // boundary remains synchronous even when multiple uploads are in flight.
@@ -1073,7 +1267,7 @@ export function createGovernanceRouter(options: { dataFile?: string | null } = {
     addAudit(auth, 'profile.avatar.updated', `user:${auth.user.id}`, 'Foto de perfil atualizada');
     res.setHeader('Cache-Control', 'no-store');
     const development = resolveDevelopmentBypass(req);
-    res.json(current ? authPayload(current.credential, auth.workspaceId) : { account: development?.account, accounts: development?.accounts, user: auth.user });
+    res.json(devConfiguration() ? devAuthPayload(resolveDevSession(req)!) : current ? authPayload(current.credential, auth.workspaceId) : { account: development?.account, accounts: development?.accounts, user: auth.user });
   });
 
   router.get('/users/:userId/avatar', authenticate, (req: AuthenticatedRequest, res) => {
@@ -1091,6 +1285,11 @@ export function createGovernanceRouter(options: { dataFile?: string | null } = {
   });
 
   router.get('/auth/session', (req, res) => {
+    if (devConfiguration()) {
+      if (!isLocalDevRequest(req)) return res.status(403).json({ code: 'DEV_LOCAL_REQUEST_REQUIRED' });
+      try { return res.json(devAuthPayload(issueDevSession(req, res))); }
+      catch { return res.status(503).json({ code: 'DEV_SESSION_UNAVAILABLE', error: 'A sessão DEV não está disponível.' }); }
+    }
     const current = resolveBrowserSession(req);
     if (!current) {
       const developmentBypass = resolveDevelopmentBypass(req);
@@ -1164,6 +1363,7 @@ export function createGovernanceRouter(options: { dataFile?: string | null } = {
   });
 
   router.post('/auth/logout', requireSameOrigin, (req, res) => {
+    if (devConfiguration()) { revokeDevSession(req, res); return res.status(204).end(); }
     const token = cookieValue(req, SESSION_COOKIE);
     if (token) {
       const index = authSessions.findIndex(item => item.tokenHash === sha256(token));
@@ -1359,6 +1559,11 @@ export function createGovernanceRouter(options: { dataFile?: string | null } = {
   });
 
   router.post('/auth/session/workspace', requireSameOrigin, (req, res) => {
+    if (devConfiguration()) {
+      const expiresAt = resolveDevSession(req);
+      if (!expiresAt || req.body?.workspaceId !== DEV_WORKSPACE_ID) return res.status(403).json({ code: 'DEV_WORKSPACE_SCOPE_REQUIRED' });
+      return res.json(devAuthPayload(expiresAt));
+    }
     const current = resolveBrowserSession(req);
     const workspaceId = String(req.body?.workspaceId || '');
     if (!current) {

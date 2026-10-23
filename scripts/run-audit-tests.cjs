@@ -22,7 +22,9 @@ function collect(directory, suffix) {
 try {
   // Compile test dependencies only; no build of or edits to Image/Video modules.
   const status = run([require.resolve('typescript/bin/tsc'), ...sources, '--target', 'ES2022', '--module', 'commonjs', '--moduleResolution', 'node', '--esModuleInterop', '--skipLibCheck', '--outDir', output]);
-  process.exitCode = status || run(['--test', ...collect(output, '.test.js')], { ...process.env, NODE_ENV: 'test', NODE_PATH: path.join(project, 'node_modules') });
+  const concurrency = Number(process.env.CLICKO_TEST_CONCURRENCY);
+  const testOptions = Number.isInteger(concurrency) && concurrency >= 1 && concurrency <= 32 ? [`--test-concurrency=${concurrency}`] : [];
+  process.exitCode = status || run(['--test', ...testOptions, ...collect(output, '.test.js')], { ...process.env, NODE_ENV: 'test', NODE_PATH: path.join(project, 'node_modules') });
 } finally {
   // Delete only this run's verified temporary compilation directory.
   if (path.dirname(path.resolve(output)) === temporaryRoot && path.basename(output).startsWith('clicko-audit-')) rmSync(output, { recursive: true, force: true });

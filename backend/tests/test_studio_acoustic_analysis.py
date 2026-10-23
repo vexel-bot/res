@@ -3,12 +3,12 @@ from __future__ import annotations
 import io
 import wave
 from datetime import UTC, datetime
-from types import SimpleNamespace
 
 import pytest
 from conftest import register
 from test_studio_kernel import auth, create_document
 
+from app.config import get_settings
 from app.database import SessionLocal
 from app.domain.studios.acoustic_qualification import (
     AcousticAggregateMetricsV1,
@@ -100,10 +100,10 @@ def test_acoustic_analysis_requires_promotion_and_admits_only_same_final_render(
     monkeypatch.setattr(assets_router.settings, "storage_path", str(tmp_path))
     promotion_secret = "acoustic-service-test-secret-with-more-than-32-characters"
     promotion_key_id = "acoustic-service-test-key"
-    qualification_settings = SimpleNamespace(
-        studio_acoustic_promotion_hmac_secret=promotion_secret,
-        studio_acoustic_promotion_key_id=promotion_key_id,
-    )
+    qualification_settings = get_settings().model_copy(update={
+        "studio_acoustic_promotion_hmac_secret": promotion_secret,
+        "studio_acoustic_promotion_key_id": promotion_key_id,
+    })
     monkeypatch.setattr(acoustic_analysis_service, "get_settings", lambda: qualification_settings)
     monkeypatch.setattr(jobs_service, "get_settings", lambda: qualification_settings)
     token, workspace = register(client, "acoustic-owner@example.com", "Acoustic Owner")

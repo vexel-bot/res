@@ -852,7 +852,7 @@ class CaptionRenderStyleV1(StudioContract):
     position: Literal["lower-third"] = "lower-third"
     color: str = Field(default="#ffffff", pattern=r"^#[0-9a-fA-F]{6}$")
     font_size: int = Field(default=56, ge=16, le=240)
-    font_family: Literal["Liberation Sans"] = "Liberation Sans"
+    font_family: Literal["Liberation Sans", "system"] = "Liberation Sans"
     font_weight: Literal["bold"] = "bold"
     outline_color: str = Field(default="#000000", pattern=r"^#[0-9a-fA-F]{6}$")
     outline_width: int = Field(default=4, ge=0, le=24)
@@ -935,6 +935,9 @@ class CaptionCueV1(StudioContract):
     source_segment_id: str | None = Field(default=None, max_length=120)
     confidence: float | None = Field(default=None, ge=0, le=1)
     style: CaptionRenderStyleV1 = Field(default_factory=CaptionRenderStyleV1)
+    # Optional CPU-renderer motion; old captions remain unchanged and readable.
+    motion: dict[str, Any] = Field(default_factory=dict)
+    keyframes: list[dict[str, Any]] = Field(default_factory=list, max_length=32)
 
 
 class CaptionTrackV1(StudioContract):
@@ -1204,7 +1207,8 @@ class CreateVideoRenderJobRequest(StudioContract):
     output: VideoRenderSpecV1
     provider: Literal[
         "builtin.ffmpeg-ugc-v1", "hyperframes.cli", "builtin.ffmpeg-contextual-v1", "hyperframes.contextual-v2",
-        "motion-canvas.contextual-v1", "remotion.contextual-v1", "remotion.contextual-v2", "alight-motion.contextual-v1",
+        "motion-canvas.contextual-v1", "remotion.contextual-v1", "remotion.contextual-v2",
+        "alight-motion.contextual-v1",
     ] = "builtin.ffmpeg-ugc-v1"
     contextual_plan_id: str | None = Field(default=None, max_length=120)
     motion_graph_id: str | None = Field(default=None, max_length=120)
@@ -1221,9 +1225,11 @@ class CreateVideoRenderJobRequest(StudioContract):
             raise ValueError("Engine campaign and language must be supplied together")
         if self.engine_campaign_id and self.provider != "alight-motion.contextual-v1":
             raise ValueError("Engine trials require the Alight provider")
-        if (self.provider in {"builtin.ffmpeg-contextual-v1", "hyperframes.contextual-v2", "motion-canvas.contextual-v1", "remotion.contextual-v1", "remotion.contextual-v2", "alight-motion.contextual-v1"}) != bool(
-            self.contextual_plan_id
-        ):
+        contextual = self.provider in {
+            "builtin.ffmpeg-contextual-v1", "hyperframes.contextual-v2", "motion-canvas.contextual-v1",
+            "remotion.contextual-v1", "remotion.contextual-v2", "alight-motion.contextual-v1",
+        }
+        if contextual != bool(self.contextual_plan_id):
             raise ValueError("Contextual renders require a bound contextual plan")
         if bool(self.motion_graph_id) != bool(self.motion_graph_digest_sha256):
             raise ValueError("Motion graph id and digest must be supplied together")
@@ -1626,6 +1632,7 @@ class CreateGenerationJobRequest(StudioContract):
         "avatar_video",
         "scene_generation",
         "craft_render",
+        "timeline_render",
     ] = "document_snapshot"
     provider: str = Field(default="builtin.snapshot", min_length=1, max_length=240)
     request: dict[str, Any] = Field(default_factory=dict)
@@ -1634,6 +1641,7 @@ class CreateGenerationJobRequest(StudioContract):
     @model_validator(mode="after")
     def validate_job_provider(self) -> CreateGenerationJobRequest:
         expected = {
+            "timeline_render": {"ffmpeg.timeline-v1"},
             "craft_render": {"craft.photocraft", "craft.filmcraft", "craft.effectcraft"},
             "editing_gemini": {"google.gemini-editing"},
             "editing_ai": {

@@ -12,8 +12,8 @@ from pathlib import Path
 
 from PIL import Image, UnidentifiedImageError
 
-from ...domain.studios.motion import MotionGraphProjectionV1
 from ...domain.studios.contracts import CreativeDocumentV1
+from ...domain.studios.motion import MotionGraphProjectionV1
 
 SUPPORTED_PATHS = {
     "position.x",

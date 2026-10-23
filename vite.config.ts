@@ -29,7 +29,8 @@ export default defineConfig(() => {
     server: {
       fs: {
         // Never serve local governance records, backups, or pending writes.
-        deny: ['.env', '.env.*', '*.{crt,pem}', '**/.git/**', '**/.clicko-data/**', '**/.codex-runtime/**', '**/.venv/**', '**/backend/**', '**/*.sqlite*', '**/*.db',
+        deny: ['.env', '.env.*', '*.{crt,pem,key}', '**/.git/**', '**/.secrets/**', '**/.clicko-data/**', '**/.codex-runtime/**', '**/.venv/**', '**/backend/**', '**/*.sqlite*', '**/*.db',
+          '**/*service-account*.json', '**/*service_account*.json', '**/*oauth-credentials*.json', '**/*oauth_credentials*.json', '**/google-credentials*.json',
           ...(process.env.CLICKO_GOVERNANCE_DATA_FILE
             ? [`${path.resolve(process.env.CLICKO_GOVERNANCE_DATA_FILE).replace(/\\/g, '/')}*`]
             : []),
@@ -39,7 +40,7 @@ export default defineConfig(() => {
       hmr: process.env.DISABLE_HMR !== 'true',
       watch: process.env.DISABLE_HMR === 'true' ? null : {
         // Runtime persistence is not source code. Its atomic writes must never reload an active chat.
-        ignored: ['**/.clicko-data/**', '**/.codex-runtime/**', '**/.venv/**', '**/third_party/**', '**/workers/**', '**/backend/**', ...(process.env.CLICKO_GOVERNANCE_DATA_FILE
+        ignored: ['**/.secrets/**', '**/.clicko-data/**', '**/.codex-runtime/**', '**/.venv/**', '**/third_party/**', '**/workers/**', '**/backend/**', ...(process.env.CLICKO_GOVERNANCE_DATA_FILE
           ? [`${path.resolve(process.env.CLICKO_GOVERNANCE_DATA_FILE).replace(/\\/g, '/')}*`]
           : [])],
       },

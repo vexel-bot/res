@@ -66,8 +66,14 @@ test("studio routes select Craft motors and native frame units", () => {
 test("Clicko media tabs use the imported Studio while preserving previous module sources", () => {
   const app = readFileSync(resolve("src/App.tsx"), "utf8");
   const bridge = readFileSync(resolve("src/studios/ClickoStudioView.tsx"), "utf8");
-  assert.ok(app.includes('<ClickoStudioView module="create-image"'));
-  assert.ok(app.includes('<ClickoStudioView module="create-video"'));
-  assert.ok(bridge.includes("<DepartmentStudio"));
+  const workspace = readFileSync(resolve("src/studios/StudiosWorkspace.tsx"), "utf8");
+  assert.ok(app.includes('<StudiosWorkspace'));
+  assert.ok(workspace.includes('<ClickoStudioView'));
+  assert.ok(workspace.includes('module='));
+  assert.ok(bridge.includes("<ImageStudio"));
+  assert.ok(bridge.includes("<VideoStudio"));
+  const imageStudio = readFileSync(resolve("src/studios/image/ImageStudio.tsx"), "utf8");
+  assert.ok(imageStudio.includes("<DepartmentStudio"));
+  assert.ok(imageStudio.includes("<CraftStudio"));
   for (const file of ["src/components/ImageStudioView.tsx", "src/components/VideoEditorView.tsx"]) assert.equal(existsSync(resolve(file)), true, file);
 });

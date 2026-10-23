@@ -9,7 +9,8 @@ router = APIRouter(prefix="/ai", tags=["ai"])
 
 def provider_error(exc: Exception) -> HTTPException:
     if isinstance(exc, AIProviderUnavailable):
-        return HTTPException(status_code=503, detail="Configure AI_BASE_URL, AI_API_KEY and AI_MODEL")
+        return HTTPException(status_code=503, detail={"code": "legacy_ai_financial_admission_required",
+            "message": "Use a conexão LLM dos Studios com escopo, tarifa e orçamento verificados."})
     return HTTPException(status_code=502, detail="The configured AI provider failed")
 
 

@@ -109,6 +109,11 @@ export function FloatingAIAssistant({
   const presence = usePresence(open);
   const [input, setInput] = React.useState('');
   const [activeMode, setActiveMode] = React.useState<KlicModeId>('create');
+  React.useEffect(() => {
+    const production = () => { setOpen(true); setActiveMode('local-production'); };
+    window.addEventListener('clicko:klic-production-open', production);
+    return () => window.removeEventListener('clicko:klic-production-open', production);
+  }, []);
   const [historyOpen, setHistoryOpen] = React.useState(false);
   const [voiceSettingsOpen, setVoiceSettingsOpen] = React.useState(false);
   const [voiceSessionOpen, setVoiceSessionOpen] = React.useState(false);
@@ -164,7 +169,7 @@ export function FloatingAIAssistant({
     submitValue(transcript, true);
   }, [submitValue]);
   const {
-    phase: voicePhase, intensity: voiceIntensity, voiceEnabled, voicePaused, voiceMode,
+    phase: voicePhase, intensity: voiceIntensity, audioSignal, voiceEnabled, voicePaused, voiceMode,
     voiceProfile, voiceSupported, errorMessage: voiceError, failSession,
     startConversation, startDictation, finishDictation, pauseConversation, resumeConversation,
     endConversation, setVoiceProfile, previewVoice, speak,
@@ -358,7 +363,7 @@ export function FloatingAIAssistant({
   return (
     <div className={`klic-floating-root ${open ? 'is-open' : ''}`}>
       {voiceSessionOpen && <KlicVoiceSession
-        phase={plasmaState} status={voiceStatus} intensity={voiceIntensity}
+        phase={plasmaState} status={voiceStatus} intensity={voiceIntensity} audioSignal={audioSignal}
         muted={voicePaused} error={voiceError} profile={voiceProfile} messages={messages}
         onMute={() => voicePaused ? resumeConversation() : pauseConversation()}
         onEnd={closeVoiceSession} onRetry={startConversation}
@@ -373,7 +378,7 @@ export function FloatingAIAssistant({
         >
           <header className="klic-floating-header">
             <div className="flex min-w-0 items-center gap-3">
-              <KlicPlasma state={plasmaState} intensity={voiceIntensity} responding={plasmaResponding} interacting={Boolean(input.trim())} completionId={plasmaCompletion} scopeKey={chat.conversationId} compact />
+              <KlicPlasma state={plasmaState} intensity={voiceIntensity} audioSignal={audioSignal} motionActive={!voiceSessionOpen} responding={plasmaResponding} interacting={Boolean(input.trim())} completionId={plasmaCompletion} scopeKey={chat.conversationId} compact />
               <div className="min-w-0">
                 <div className="flex items-center gap-2">
                   <h2 className="klic-floating-title text-[13px] font-semibold tracking-[0.08em]">KLIC AI</h2>
@@ -497,7 +502,7 @@ export function FloatingAIAssistant({
         aria-expanded={open}
         aria-controls="klic-floating-dialog"
       >
-          <KlicPlasma appearance="signature" state={plasmaState} intensity={voiceIntensity} responding={plasmaResponding} interacting={open && Boolean(input.trim())} completionId={plasmaCompletion} scopeKey={chat.conversationId} compact />
+          <KlicPlasma appearance="signature" state={plasmaState} intensity={voiceIntensity} audioSignal={audioSignal} motionActive={!voiceSessionOpen} responding={plasmaResponding} interacting={open && Boolean(input.trim())} completionId={plasmaCompletion} scopeKey={chat.conversationId} compact />
         {proactiveMessage && (
           <span className={`klic-floating-trigger-hint${proactiveVisible ? ' is-proactive' : ''}`} aria-hidden="true">{proactiveMessage}</span>
         )}

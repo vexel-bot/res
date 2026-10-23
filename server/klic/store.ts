@@ -36,7 +36,7 @@ function valid(v: unknown): v is State {
 export class KlicMemory {
   private state: State = { version: 1, traces: [], preferences: [], events: [], goals: [], actions: [] };
   private repository?: AtomicJsonStore<State>;
-  constructor(filename: string | null = path.resolve('.clicko-data/klic.json')) {
+  constructor(filename: string | null = process.env.CLICKO_KLIC_DATA_FILE || path.resolve('.clicko-data/klic.json')) {
     if (filename === null) return;
     const resolved = path.resolve(filename);
     for (const root of ['public', 'dist']) {

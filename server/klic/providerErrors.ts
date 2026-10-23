@@ -1,40 +1,54 @@
 const googleCodes = new Set(['UNAVAILABLE', 'RESOURCE_EXHAUSTED', 'UNAUTHENTICATED', 'PERMISSION_DENIED', 'NOT_FOUND', 'INVALID_ARGUMENT', 'FAILED_PRECONDITION', 'INTERNAL', 'DEADLINE_EXCEEDED', 'CANCELLED']);
 const googleReasons = new Set(['SERVICE_DISABLED', 'API_DISABLED', 'API_KEY_INVALID', 'API_KEY_EXPIRED', 'API_KEY_SERVICE_BLOCKED', 'API_KEY_HTTP_REFERRER_BLOCKED', 'API_KEY_IP_ADDRESS_BLOCKED', 'BILLING_DISABLED', 'BILLING_NOT_ACTIVE', 'RATE_LIMIT_EXCEEDED', 'QUOTA_EXCEEDED', 'MODEL_NOT_FOUND', 'ACCESS_DENIED', 'CAPACITY_EXHAUSTED']);
 
+function errorRecord(value: unknown): Record<string, unknown> {
+  return value !== null && typeof value === 'object' ? value as Record<string, unknown> : {};
+}
+
+function numericStatus(value: unknown) {
+  return typeof value === 'number' || typeof value === 'string' ? Number(value) : Number.NaN;
+}
+
 /** Extract only known Google enums; never return messages, metadata, headers or SDK payloads. */
 export function safeGoogleFailure(error: unknown) {
-  const value = error as { status?: unknown; code?: unknown; message?: unknown; error?: unknown } | null;
-  let body: any = value?.error;
+  const value = errorRecord(error);
+  let body = errorRecord(value.error);
   if (typeof value?.message === 'string') {
     // The SDK prefixes errors received during streaming with "got status: CODE. ".
     const json = value.message.replace(/^got status: [A-Z_]+\.\s*/, '');
     try {
-      const parsed = JSON.parse(json);
+      const parsed: unknown = JSON.parse(json);
       // Streaming HTTP failures can be returned as a one-element JSON array by Google.
-      const envelope = Array.isArray(parsed) && parsed.length === 1 ? parsed[0] : parsed;
-      body = envelope?.error ?? envelope;
+      const envelope = errorRecord(Array.isArray(parsed) && parsed.length === 1 ? parsed[0] : parsed);
+      body = errorRecord(envelope.error ?? envelope);
     } catch { /* Non-JSON errors have no trusted upstream code. */ }
   }
-  const status = Number(value?.status ?? body?.code ?? value?.code);
+  const status = numericStatus(value.status ?? body.code ?? value.code);
   const upstreamStatus = Number.isInteger(status) && status >= 100 && status <= 599 ? status : undefined;
   const candidate = body?.status ?? value?.code;
-  const upstreamCode = googleCodes.has(candidate) ? String(candidate) : undefined;
-  const reasons = Array.isArray(body?.details) ? body.details.map((detail: any) => detail?.reason) : [];
-  const upstreamReason = reasons.find((reason: unknown) => googleReasons.has(reason as string)) as string | undefined;
+  const upstreamCode = typeof candidate === 'string' && googleCodes.has(candidate) ? candidate : undefined;
+  const reasons: unknown[] = Array.isArray(body.details) ? body.details.map(detail => errorRecord(detail).reason) : [];
+  const upstreamReason = reasons.find((reason): reason is string => typeof reason === 'string' && googleReasons.has(reason));
   return { upstreamStatus, upstreamCode, upstreamReason };
 }
 
 /** Only allowlisted diagnostics cross the provider boundary; never log SDK payloads or credentials. */
 export function providerFailure(error: unknown) {
-  const value = error as { status?: number; code?: string | number; name?: string; message?: string; cause?: { code?: string } } | null;
-  const status = Number(value?.status || value?.code) || undefined;
+  const value = errorRecord(error);
+  const status = numericStatus(value.status || value.code) || undefined;
   const message = typeof value?.message === 'string' ? value.message : '';
-  const diagnostic = `${message} ${value?.code || ''} ${value?.cause?.code || ''}`;
+  const codeValue = typeof value.code === 'string' || typeof value.code === 'number' ? value.code : '';
+  const causeCode = errorRecord(value.cause).code;
+  const diagnostic = `${message} ${codeValue} ${typeof causeCode === 'string' ? causeCode : ''}`;
   let code = 'KLIC_PROVIDER_UNAVAILABLE';
   let httpStatus = 503;
   let retryable = true;
   let text = 'O serviço de IA não respondeu. Tente novamente em instantes.';
-  if (message === 'KLIC_GEMINI_API_KEY_REQUIRED' || message === 'KLIC_PROVIDER_NOT_CONFIGURED') {
+  if (message.startsWith('FINANCE_')) {
+    code = 'KLIC_FINANCIAL_ADMISSION_REQUIRED'; retryable = false;
+    httpStatus = message.includes('CONFLICT') ? 409 : 503;
+    text = 'A operação não foi admitida pelo controle financeiro da Clicko. O responsável precisa revisar disponibilidade, tarifas e limites de orçamento.';
+  } else if (message === 'KLIC_GEMINI_API_KEY_REQUIRED' || message === 'KLIC_PROVIDER_NOT_CONFIGURED') {
     code = 'KLIC_GEMINI_API_KEY_REQUIRED'; retryable = false;
     text = 'A variável privada GEMINI_API_KEY precisa ser configurada no servidor da Clicko.';
   } else if (message === 'KLIC_VERTEX_CONFIGURATION_REQUIRED') {

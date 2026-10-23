@@ -163,6 +163,7 @@ export function AIChatView({ onNavigate }: { onNavigate?: (tab: NavigationTab) =
   const {
     phase: voicePhase,
     intensity: voiceIntensity,
+    audioSignal,
     voiceEnabled,
     voicePaused,
     voiceMode,
@@ -350,7 +351,7 @@ export function AIChatView({ onNavigate }: { onNavigate?: (tab: NavigationTab) =
 
   return (
     <div className="klic-chat-workspace mx-auto flex h-[calc(100dvh-82px)] min-h-[420px] w-full max-w-[1560px] flex-col px-4 py-3 sm:px-6 lg:px-8 lg:py-5">
-      {voiceSessionOpen && <KlicVoiceSession phase={plasmaState} status={voiceStatus} intensity={voiceIntensity} muted={voicePaused} error={voiceError} profile={voiceProfile} messages={visibleMessages} onMute={voicePaused ? resumeConversation : pauseConversation} onEnd={closeVoiceSession} onRetry={startConversation} />}
+      {voiceSessionOpen && <KlicVoiceSession phase={plasmaState} status={voiceStatus} intensity={voiceIntensity} audioSignal={audioSignal} muted={voicePaused} error={voiceError} profile={voiceProfile} messages={visibleMessages} onMute={voicePaused ? resumeConversation : pauseConversation} onEnd={closeVoiceSession} onRetry={startConversation} />}
       {mobilePanelOpen && (
         <div className="fixed inset-0 z-50">
           <button aria-label="Fechar painel da KLIC" onClick={() => setMobilePanelOpen(false)} className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
@@ -425,12 +426,12 @@ export function AIChatView({ onNavigate }: { onNavigate?: (tab: NavigationTab) =
           <div className={`relative mx-auto flex min-h-full w-full max-w-3xl flex-col space-y-7 py-3 sm:py-5 ${isInitial ? 'justify-center' : 'justify-end'}`}>
             {showIdlePlasma && (
               <div className={`absolute inset-0 flex items-center justify-center px-2 text-center transition-[opacity,transform] duration-[280ms] ${isInitial ? 'opacity-100' : 'pointer-events-none scale-[0.92] opacity-0'}`} aria-hidden={!isInitial}>
-                <KlicPlasma appearance="signature" state={plasmaState} intensity={voiceIntensity} interacting={Boolean(input.trim())} responding={plasmaResponding} completionId={plasmaCompletion} scopeKey={chat.conversationId} showIdentity={false} onActivate={isInitial ? openVoiceSession : undefined} />
+                <KlicPlasma appearance="signature" particleInteraction="full" particleSurface="viewport" motionActive={isInitial && !voiceSessionOpen} state={plasmaState} intensity={voiceIntensity} audioSignal={audioSignal} interacting={Boolean(input.trim())} responding={plasmaResponding} completionId={plasmaCompletion} scopeKey={chat.conversationId} showIdentity={false} />
               </div>
             )}
             {!isInitial && visibleMessages.map((message) => (
               <div key={message.id} className={`flex gap-3 sm:gap-4 ${message.role === 'user' ? 'justify-end pl-8 sm:pl-20' : 'justify-start pr-2 sm:pr-12'}`}>
-                {message.role === 'assistant' && <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center"><span className="scale-[0.88]"><KlicPlasma state={message.status === 'error' ? 'error' : message.status === 'streaming' || message.status === 'pending' ? 'processing' : message.id === messages.at(-1)?.id ? plasmaState : 'idle'} responding={message.status === 'streaming' && Boolean(message.content)} interacting={message.id === messages.at(-1)?.id && Boolean(input.trim())} intensity={message.id === messages.at(-1)?.id ? voiceIntensity : 0} completionId={message.status === 'complete' ? message.id : undefined} compact /></span></span>}
+                {message.role === 'assistant' && <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center"><span className="scale-[0.88]"><KlicPlasma state={message.status === 'error' ? 'error' : message.status === 'streaming' || message.status === 'pending' ? 'processing' : message.id === messages.at(-1)?.id ? plasmaState : 'idle'} audioSignal={message.id === messages.at(-1)?.id ? audioSignal : undefined} responding={message.status === 'streaming' && Boolean(message.content)} interacting={message.id === messages.at(-1)?.id && Boolean(input.trim())} intensity={message.id === messages.at(-1)?.id ? voiceIntensity : 0} completionId={message.status === 'complete' ? message.id : undefined} compact /></span></span>}
                 <div className={`${message.role === 'user' ? 'max-w-[85%] rounded-2xl rounded-br-md bg-white/[0.065] px-4 py-3 text-white' : 'min-w-0 flex-1 pt-1 text-[rgba(255,255,255,0.88)]'}`}>
                   {message.role === 'assistant' ? <KlicMarkdown content={message.content} /> : <p className="whitespace-pre-wrap break-words text-[13px] leading-[1.75] sm:text-[14px]">{message.content}</p>}
                   {!!message.attachments?.length && <div className="mt-2 flex flex-wrap gap-2">{message.attachments.map(file=><ChatAttachment key={file.id} file={file} conversationId={chat.conversationId!} />)}</div>}

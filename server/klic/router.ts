@@ -103,7 +103,6 @@ export function createKlicRuntime(options: Options = {}) {
     return engine.run(task, String(req.body.tool), req.body.input);
   }));
   router.post('/chat', handle(async (req, engine, actor) => {
-    consumeKlic(actor);
     if (typeof req.body.message !== 'string' || !req.body.message.trim() || req.body.message.length > 8000) throw new KlicError('KLIC_INVALID_MESSAGE');
     const { plan, sources } = await orchestrateKlic(engine, actor, req.body, req.body.pageContext);
     const history = (Array.isArray(req.body.conversationContext) ? req.body.conversationContext : []).slice(-6).map((entry: any) => ({ role: entry?.role === 'assistant' ? 'assistant' : 'user', content: String(entry?.content || '').slice(0, 1800) }));
@@ -122,6 +121,7 @@ export function createKlicRuntime(options: Options = {}) {
       }
     }
     let reply: string | null = null;
+    consumeKlic(actor);
     let status: 'ok' | 'unavailable' = 'unavailable';
     const started = Date.now();
     try {

@@ -54,8 +54,11 @@ test('authentication protects private routes and completes signup, verification,
   assert.equal((await (await json('/auth/session', 'GET', undefined, bypassProfileCookie)).json()).account.type, 'personal');
   process.env.NODE_ENV = 'production';
   assert.equal((await json('/auth/session', 'GET', undefined, bypassProfileCookie)).status, 401);
+  assert.equal((await json('/session', 'GET', undefined, bypassProfileCookie)).status, 401);
+  assert.equal((await fetch(base + '/session', { headers: { 'x-workspace-id': 'ws-1', 'x-user-id': 'usr-master' } })).status, 401);
   process.env.NODE_ENV = 'development';
   process.env.CLICKO_DEV_AUTH_BYPASS = 'false';
+  assert.equal((await json('/auth/session', 'GET', undefined, bypassProfileCookie)).status, 401);
   assert.equal((await fetch(base + '/session', { headers: { 'x-workspace-id': 'ws-1', 'x-user-id': 'usr-master' } })).status, 401);
   assert.equal((await json('/auth/signup', 'POST', { ...credentials, password: 'weak' })).status, 400);
   assert.equal((await json('/auth/signup', 'POST', { ...credentials, termsAccepted: false })).status, 400);

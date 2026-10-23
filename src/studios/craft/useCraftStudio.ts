@@ -196,8 +196,15 @@ export function useCraftStudio(options: Options) {
   React.useEffect(() => {
     const reconnect = () => { if (pendingRef.current) { setStatus("dirty"); setNotice("Conexão recuperada. Salvando alterações…"); } };
     const leave = (event: BeforeUnloadEvent) => { if (pendingRef.current || aiRecoveryRef.current || workingRef.current) { event.preventDefault(); event.returnValue = ""; } };
+    const beforeStudioLeave = (event: Event) => {
+      if (workingRef.current || pendingRef.current || aiRecoveryRef.current) {
+        event.preventDefault();
+        setNotice('Conclua ou confira a recuperação do editor antes de trocar de módulo.');
+      }
+    };
     window.addEventListener("online", reconnect); window.addEventListener("beforeunload", leave);
-    return () => { window.removeEventListener("online", reconnect); window.removeEventListener("beforeunload", leave); };
+    window.addEventListener('clicko:studio-before-leave', beforeStudioLeave);
+    return () => { window.removeEventListener("online", reconnect); window.removeEventListener("beforeunload", leave); window.removeEventListener('clicko:studio-before-leave', beforeStudioLeave); };
   }, []);
 
   const queue = (command: CraftCommand) => {
