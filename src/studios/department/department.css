@@ -1093,3 +1093,4 @@
     transition: none !important;
   }
 }
+.department-studio .ds-cast-summary{display:flex;gap:8px 20px;flex-wrap:wrap;margin-top:24px;padding:15px 18px;border:1px solid #ffffff1c;border-radius:6px;font-size:11px;color:#bdc9b4}.department-studio .ds-cast-summary b{font-weight:500;color:#e6e9e0}

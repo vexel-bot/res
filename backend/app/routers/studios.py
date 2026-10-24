@@ -834,7 +834,7 @@ def create_studio_document(
                 status_code=409,
                 detail={"code": str(error), "currentBrandRevision": revision},
             ) from error
-        raise
+        raise studio_identity_error(error) from error
 
 
 @router.get("/documents", response_model=list[CreativeDocumentV1])

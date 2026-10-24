@@ -114,6 +114,7 @@ const pattern = (
  * time. Matchers are non-overlapping so one URL can never have two owners.
  */
 export const ROUTE_REGISTRY: readonly RouteDefinition[] = [
+  exact("ROUTE-EVOLUTION", "/evolution", "evolution", "canonical", "operation"),
   exact("ROUTE-STUDIOS", "/studios", "editor", "canonical", "studio", true, "studio"),
   exact("ROUTE-ROOT", "/", "home", "canonical", "global", true, "dashboard"),
   exact("ROUTE-DASHBOARD", "/dashboard", "home", "canonical", "global", true, "dashboard"),

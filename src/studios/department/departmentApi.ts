@@ -25,6 +25,8 @@ export interface ProjectInput {
   campaignId?: string;
   postId?: string;
   sourceAssetId?: string;
+  identityVersionId?: string;
+  voiceVersionId?: string;
 }
 export interface DepartmentProject extends Omit<ProjectInput, "requestKey"> {
   id: string;
@@ -37,6 +39,10 @@ export interface DepartmentProject extends Omit<ProjectInput, "requestKey"> {
   status: "direction" | "producing" | "production_failed" | "delivery";
   planningBasis: string;
   updatedAt: string;
+  casting?: {
+    identity?: { id: string; version: number; consentGrantId: string | null };
+    voice?: { id: string; version: number; consentGrantId: string | null };
+  };
 }
 const base = "/api/v1/studios/v1/projects";
 const path = (id: string) => `${base}/${encodeURIComponent(id)}`;

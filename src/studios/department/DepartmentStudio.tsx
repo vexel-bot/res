@@ -24,6 +24,7 @@ import {
   type StudioReviewRecord,
 } from "../../api/productApi";
 import { craftApi } from "../craft/craftApi";
+import { identityApi, type IdentityCatalog } from "../identity/identityApi";
 import { ReviewSnapshotPreview } from "../ReviewSnapshotPreview";
 import {
   departmentApi,
@@ -187,7 +188,25 @@ function StudioRoom({
     campaignId: linkedCampaign,
     postId: post?.id,
     sourceAssetId,
+    identityVersionId: query.get("identityVersion") || undefined,
+    voiceVersionId: query.get("voiceVersion") || undefined,
   });
+  const [cast, setCast] = React.useState<IdentityCatalog>();
+  const [castError, setCastError] = React.useState<string>();
+  const [castRetry, setCastRetry] = React.useState(0);
+  React.useEffect(() => {
+    const controller = new AbortController();
+    setCastError(undefined);
+    void identityApi
+      .catalog(workspaceId, controller.signal)
+      .then((value) => {
+        if (!controller.signal.aborted) setCast(value);
+      })
+      .catch((error) => {
+        if (!controller.signal.aborted) setCastError(message(error));
+      });
+    return () => controller.abort();
+  }, [workspaceId, castRetry]);
   const requestKey = React.useRef(crypto.randomUUID());
   const alive = React.useRef(true);
   const operation = React.useRef(0);
@@ -742,6 +761,103 @@ function StudioRoom({
                       produção adicional.
                     </p>
                   )}
+                  <fieldset>
+                    <legend>Presença e voz (opcional)</legend>
+                    <div className="ds-form-row">
+                      <label>
+                        Quem aparece?
+                        <select
+                          aria-label="Pessoa ou personagem"
+                          value={form.identityVersionId || ""}
+                          onChange={(event) =>
+                            update(
+                              "identityVersionId",
+                              event.target.value || undefined,
+                            )
+                          }
+                        >
+                          <option value="">Sem pessoa ou personagem</option>
+                          {form.identityVersionId &&
+                            !cast?.identities.some(
+                              (item) =>
+                                item.selectedVersionId ===
+                                form.identityVersionId,
+                            ) && (
+                              <option value={form.identityVersionId}>
+                                Seleção precisa ser conferida
+                              </option>
+                            )}
+                          {cast?.identities
+                            .filter((item) => item.selectedVersionId)
+                            .map((item) => (
+                              <option
+                                key={item.profile.id}
+                                value={item.selectedVersionId!}
+                              >
+                                {item.profile.displayName}
+                              </option>
+                            ))}
+                        </select>
+                      </label>
+                      <label>
+                        Qual voz?
+                        <select
+                          aria-label="Voz do projeto"
+                          value={form.voiceVersionId || ""}
+                          onChange={(event) =>
+                            update(
+                              "voiceVersionId",
+                              event.target.value || undefined,
+                            )
+                          }
+                        >
+                          <option value="">Sem voz associada</option>
+                          {form.voiceVersionId &&
+                            !cast?.voices.some(
+                              (item) =>
+                                item.selectedVersionId === form.voiceVersionId,
+                            ) && (
+                              <option value={form.voiceVersionId}>
+                                Seleção precisa ser conferida
+                              </option>
+                            )}
+                          {cast?.voices
+                            .filter((item) => item.selectedVersionId)
+                            .map((item) => (
+                              <option
+                                key={item.profile.id}
+                                value={item.selectedVersionId!}
+                              >
+                                {item.profile.displayName}
+                              </option>
+                            ))}
+                        </select>
+                      </label>
+                    </div>
+                    <p className="ds-help">
+                      {form.format === "video"
+                        ? "O elenco escolhido fica salvo no pedido. A geração de personagem animado e locução aguarda um motor validado."
+                        : "A aparência aprovada entra na composição como retrato de referência. A voz fica associada para versões narradas; imagens não contêm áudio."}
+                    </p>
+                    {castError && (
+                      <div role="alert">
+                        <p>{castError}</p>
+                        <button
+                          type="button"
+                          onClick={() => setCastRetry((value) => value + 1)}
+                        >
+                          Recarregar elenco
+                        </button>
+                      </div>
+                    )}
+                    <button
+                      type="button"
+                      onClick={() => navigate("/library/identities")}
+                    >
+                      Gerenciar rostos, vozes e personagens{" "}
+                      <ArrowRight size={14} />
+                    </button>
+                  </fieldset>
                   <details>
                     <summary>Acrescentar contexto e referências</summary>
                     <label>
@@ -798,6 +914,34 @@ function StudioRoom({
               <p>
                 Escolha o ponto de partida que melhor representa a sua intenção.
               </p>
+              {(project.identityVersionId || project.voiceVersionId) && (
+                <div className="ds-cast-summary">
+                  <b>Elenco deste pedido</b>
+                  {project.identityVersionId && (
+                    <span>
+                      Aparência:{" "}
+                      {cast?.identities.find((item) =>
+                        item.versions.some(
+                          (version) => version.id === project.identityVersionId,
+                        ),
+                      )?.profile.displayName ||
+                        "Versão de aparência registrada"}
+                    </span>
+                  )}
+                  {project.voiceVersionId && (
+                    <span>
+                      Voz:{" "}
+                      {cast?.voices.find((item) =>
+                        item.versions.some(
+                          (version) => version.id === project.voiceVersionId,
+                        ),
+                      )?.profile.displayName || "Versão de voz registrada"}
+                      {project.format !== "video" &&
+                        " · associada para versões narradas"}
+                    </span>
+                  )}
+                </div>
+              )}
               <div className="ds-direction-grid">
                 {project.directions.map((item, index) => (
                   <article
@@ -1288,6 +1432,9 @@ function StudioRoom({
             </div>
           )}
           <footer className="ds-room-footer">
+            <button type="button" onClick={() => navigate("/evolution")}>
+              Evolução do sistema <ArrowRight size={12} />
+            </button>
             <span>
               <span className="ds-dot" />{" "}
               {project

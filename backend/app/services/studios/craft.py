@@ -26,6 +26,7 @@ from ...domain.studios.contracts import (
 from ...models import CreativeDocument, LibraryAsset, StudioDomainEvent, StudioGenerationJob, StudioMotionGraph
 from ...providers.studios.craft import ENGINES, EXTENSIONS, CraftRuntimeError, call_engine, require_capability
 from ..object_storage import get_object_storage, object_key, sha256_file
+from .casting import validate_document_cast
 from .compatibility import composition_to_canvas, record_to_contract
 from .kernel import emit_event
 from .review_binding import invalidate_linked_post_review
@@ -1066,6 +1067,7 @@ def save_native(
 
 
 def render_frame(db, record, state=None, *, frame=0, page_id=None) -> bytes:
+    validate_document_cast(db, record_to_contract(record))
     state = state or record_to_contract(record).native_editor_state
     if not state:
         raise ValueError("craft_native_project_required")
@@ -1113,6 +1115,8 @@ def validate_render_output(path, output_format):
 def create_render_job(db, record, request, user, key):
     from .jobs import create_job
 
+    validate_document_cast(db, record_to_contract(record))
+
     existing = db.scalar(
         select(StudioGenerationJob).where(
             StudioGenerationJob.workspace_id == record.workspace_id,
@@ -1144,6 +1148,10 @@ def create_render_job(db, record, request, user, key):
         workspace_id=record.workspace_id,
         document_id=record.id,
         job_type="craft_render",
+        identity_version_id=contract.identity_ref.id if contract.identity_ref else None,
+        voice_version_id=contract.voice_ref.id if contract.voice_ref else None,
+        consent_grant_id=(contract.identity_ref.consent_grant_id if contract.identity_ref else None)
+        or (contract.voice_ref.consent_grant_id if contract.voice_ref else None),
         provider="craft." + state.engine,
         correlation_id=contract.correlation_id,
         request={
@@ -1161,6 +1169,8 @@ def create_render_job(db, record, request, user, key):
 def execute_render_job(db, job, progress, is_cancelled):
     if job.provider not in {"craft." + engine for engine in ENGINES}:
         raise ValueError("craft_render_provider_invalid")
+    contract = CreativeDocumentV1.model_validate(job.request_payload["documentSnapshot"])
+    validate_document_cast(db, contract)
     state = NativeEditorStateV1.model_validate(job.request_payload["nativeEditorState"])
     if job.provider != "craft." + state.engine:
         raise ValueError("craft_render_provider_mismatch")
@@ -1178,7 +1188,6 @@ def execute_render_job(db, job, progress, is_cancelled):
                 if sha256_file(path) != cached_asset.checksum_sha256:
                     raise ValueError("craft_render_cached_artifact_changed")
             return cached
-    contract = CreativeDocumentV1.model_validate(job.request_payload["documentSnapshot"])
     record = db.get(CreativeDocument, job.document_id)
     if not record or record.workspace_id != job.workspace_id or contract.document_id != record.id:
         raise ValueError("craft_render_document_mismatch")
@@ -1300,6 +1309,7 @@ def execute_render_job(db, job, progress, is_cancelled):
                 title=f"{contract.title} · exportação {spec['format']}",
             )
             written = storage, storage_key
+            validate_document_cast(db, contract)
             db.flush()
             artifact = {
                 "assetId": asset.id,
@@ -1420,6 +1430,7 @@ def native_bundle(db, record, state):
 
 
 def verified_render(db, record, job_id):
+    validate_document_cast(db, record_to_contract(record))
     from ...models import StudioGenerationJob
 
     contract = record_to_contract(record)

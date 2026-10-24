@@ -18,10 +18,11 @@ from ..models import BrandProfile, LibraryAsset, Post, User, Workspace, Workspac
 from ..security import get_current_user
 from ..services.brand import brand_readiness
 from ..services.studios import craft
+from ..services.studios.casting import resolve_cast
 from ..services.studios.compatibility import record_to_contract
 from ..services.studios.kernel import create_document
 from .studio_craft import render_job
-from .studios import assert_access, validate_references
+from .studios import assert_access, studio_identity_error, validate_references
 
 router = APIRouter(prefix="/studios/v1/projects", tags=["studio-department"])
 KIND = "studio_department"
@@ -41,6 +42,8 @@ class ProjectInput(StudioContract):
     campaign_id: str | None = None
     post_id: str | None = None
     source_asset_id: str | None = None
+    identity_version_id: str | None = None
+    voice_version_id: str | None = None
 
 
 class ProjectChange(StudioContract):
@@ -163,7 +166,15 @@ def create_project(data: ProjectInput, db: Session = Depends(get_db), user: User
         post_id=data.post_id,
         asset_ids=[data.source_asset_id] if data.source_asset_id else [],
     )
-    fingerprint = sha256(data.model_dump_json(exclude={"request_key"}).encode()).hexdigest()
+    try:
+        casting = resolve_cast(db, data.workspace_id, data.identity_version_id, data.voice_version_id)
+    except ValueError as error:
+        raise studio_identity_error(error) from error
+    # Retain the original fingerprint for requests created before cast fields existed.
+    excluded = {"request_key"} | {
+        field for field in ("identity_version_id", "voice_version_id") if getattr(data, field) is None
+    }
+    fingerprint = sha256(data.model_dump_json(exclude=excluded).encode()).hexdigest()
     existing = db.scalar(
         select(WorkspaceResource).where(
             WorkspaceResource.workspace_id == data.workspace_id,
@@ -190,6 +201,7 @@ def create_project(data: ProjectInput, db: Session = Depends(get_db), user: User
         "updatedAt": now(),
         "creationFingerprint": fingerprint,
         "planningBasis": "Pesquisa editorial aplicada ao pedido; esboço sem geração por LLM.",
+        "casting": casting,
     }
     row = WorkspaceResource(
         id=str(uuid4()),
@@ -233,7 +245,7 @@ def select_direction(
     return out(change(db, row, data.expected_revision, {"directionId": data.direction_id}))
 
 
-def document_request(project, post_id, brand_revision, asset=None):
+def document_request(project, post_id, brand_revision, asset=None, portrait=None):
     direction = next(d for d in project["directions"] if d["id"] == project["directionId"])
     texts = [(direction["opening"], project["objective"])]
     if project["format"] == "carousel":
@@ -292,6 +304,22 @@ def document_request(project, post_id, brand_revision, asset=None):
                     "properties": {"assetId": asset.id},
                 }
             )
+    if portrait:
+        for page in pages:
+            page["layers"].append(
+                {
+                    "id": "cast-portrait",
+                    "kind": "image",
+                    "width": 400,
+                    "height": 500,
+                    "x": 605,
+                    "y": 775,
+                    "zIndex": 2,
+                    "properties": {"assetId": portrait.id},
+                }
+            )
+            next(layer for layer in page["layers"] if layer["id"].startswith("body-"))["width"] = 470
+    material = {item.id: item for item in (asset, portrait) if item}
     return CreateStudioDocumentRequest.model_validate(
         {
             "workspaceId": project["workspaceId"],
@@ -311,9 +339,12 @@ def document_request(project, post_id, brand_revision, asset=None):
                 "cta": direction["cta"],
                 "restrictions": ["Não inventar resultados, depoimentos ou condições comerciais."],
             },
-            "assets": [{"id": asset.id, "mediaType": asset.media_type, "checksum": asset.checksum_sha256}]
-            if asset
-            else [],
+            "assets": [
+                {"id": item.id, "mediaType": item.media_type, "checksum": item.checksum_sha256}
+                for item in material.values()
+            ],
+            "identityRef": project.get("casting", {}).get("identity"),
+            "voiceRef": project.get("casting", {}).get("voice"),
             "composition": {
                 "pages": pages,
                 "tracks": [],
@@ -333,6 +364,10 @@ def produce_project(
     project_id: str, data: ProductionRequest, db: Session = Depends(get_db), user: User = Depends(get_current_user)
 ):
     row = owned(db, user, project_id)
+    try:
+        resolve_cast(db, row.workspace_id, row.payload.get("identityVersionId"), row.payload.get("voiceVersionId"))
+    except ValueError as error:
+        raise studio_identity_error(error) from error
     if not row.payload.get("directionId"):
         raise HTTPException(422, "Escolha uma direção editorial primeiro.")
     if row.payload.get("jobId"):
@@ -358,6 +393,33 @@ def produce_project(
         raise HTTPException(422, "Escolha um material armazenado e compatível com o formato.")
     if row.payload["format"] == "video" and not asset:
         raise HTTPException(422, "Selecione um vídeo da biblioteca para preparar a primeira montagem.")
+    portrait = None
+    if row.payload.get("identityVersionId") or row.payload.get("voiceVersionId"):
+        if row.payload["format"] == "video":
+            raise HTTPException(
+                422,
+                "A produção do personagem e da locução aguarda um motor de geração validado. "
+                "O elenco escolhido está salvo no pedido.",
+            )
+        if row.payload.get("identityVersionId"):
+            from ..models import StudioIdentityVersion
+
+            version = db.get(StudioIdentityVersion, row.payload["identityVersionId"])
+            portrait = next(
+                (
+                    item
+                    for asset_id in version.sample_asset_ids
+                    if (item := db.get(LibraryAsset, asset_id))
+                    and item.workspace_id == row.workspace_id
+                    and item.lifecycle_status == "active"
+                    and item.storage_key
+                    and (item.media_type or "").startswith("image/")
+                    and item.checksum_sha256
+                ),
+                None,
+            )
+            if not portrait:
+                raise HTTPException(422, "A versão escolhida precisa de uma imagem de referência armazenada.")
     row = change(db, row, data.expected_revision, {"status": "producing"})
     try:
         project = out(row)
@@ -387,7 +449,7 @@ def produce_project(
         brand = db.scalar(select(BrandProfile).where(BrandProfile.workspace_id == row.workspace_id))
         if not brand:
             raise ValueError("Configure o contexto da marca antes de produzir.")
-        request = document_request(project, post_id, brand_readiness(brand)["revision"], asset)
+        request = document_request(project, post_id, brand_readiness(brand)["revision"], asset, portrait)
         document = create_document(db, request, user, creation_key=f"department:{project_id}")
         # Save the recoverable document before calling any runtime or queue.
         row = change(db, row, row.payload["revision"], {"documentId": document.id, "postId": post_id})

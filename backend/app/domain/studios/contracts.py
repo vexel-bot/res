@@ -1540,6 +1540,8 @@ class CreateStudioDocumentRequest(StudioContract):
     brief: CreativeBriefV1
     composition: CreativeCompositionV1
     assets: list[AssetReferenceV1] = Field(default_factory=list)
+    identity_ref: IdentityVersionReferenceV1 | None = None
+    voice_ref: VoiceVersionReferenceV1 | None = None
     correlation_id: str | None = Field(default=None, max_length=128)
 
     @model_validator(mode="after")

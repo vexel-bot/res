@@ -23,6 +23,7 @@ from ...domain.studios.contracts import (
 )
 from ...models import CreativeDocument, Post, StudioDomainEvent, StudioReviewRequest, User
 from .acoustic_analysis import require_current_natural_sound_admission
+from .casting import validate_publication_cast
 from .compatibility import record_to_contract
 from .editorial_review import editorial_readiness
 from .kernel import emit_event
@@ -97,6 +98,7 @@ def _validated_binding(
     post = db.get(Post, review.post_id)
     if not post or post.workspace_id != review.workspace_id:
         raise ValueError("studio_publication_post_missing")
+    validate_publication_cast(db, snapshot, post.platform)
     if lock:
         db.refresh(post, with_for_update=True)
     handoff = _handoff(snapshot)

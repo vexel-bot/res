@@ -1,0 +1,440 @@
+.evolution-view {
+  --ev-panel: #1d2021;
+  --ev-border: #ffffff16;
+  --ev-text: #ecece5;
+  --ev-muted: #a7aca4;
+  color: var(--ev-text);
+  padding: 36px;
+  max-width: 1600px;
+  margin: auto;
+  font-size: 13px;
+  line-height: 1.65;
+}
+.evolution-view * {
+  box-sizing: border-box;
+}
+.evolution-view button,
+.evolution-view input,
+.evolution-view select {
+  font: inherit;
+}
+.evolution-view button {
+  cursor: pointer;
+  border: 1px solid var(--ev-border);
+  border-radius: 7px;
+  background: #ffffff04;
+  color: inherit;
+  padding: 10px 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+}
+.evolution-view button:hover {
+  border-color: #f1857080;
+}
+.evolution-view button:disabled {
+  opacity: 0.5;
+  cursor: wait;
+}
+.evolution-view :focus-visible {
+  outline: 2px solid #f18570;
+  outline-offset: 4px;
+}
+.evolution-view h1,
+.evolution-view h2,
+.evolution-view h3,
+.evolution-view p {
+  margin: 0;
+}
+.evolution-view p {
+  color: var(--ev-muted);
+}
+.evolution-view > header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 25px;
+  margin-bottom: 30px;
+}
+.evolution-view header small {
+  letter-spacing: 1.8px;
+  color: #f18570;
+  font-size: 9px;
+}
+.evolution-view h1 {
+  font-size: 40px;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -1px;
+  margin: 15px 0;
+}
+.evolution-view h1 em {
+  font-family: Georgia, serif;
+  color: #cccec2;
+  font-weight: 400;
+}
+.evolution-view > header p {
+  font-size: 12px;
+}
+.ev-overview {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  border-block: 1px solid var(--ev-border);
+  padding: 18px 0;
+  margin-bottom: 22px;
+}
+.ev-overview > div {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+.ev-overview svg {
+  color: #f18570;
+}
+.ev-overview b {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ev-text);
+}
+.ev-overview span {
+  display: block;
+  font-size: 10px;
+}
+.ev-overview > p {
+  font-size: 10px;
+  text-align: right;
+}
+.ev-filters {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+.ev-filters label {
+  display: flex;
+  gap: 9px;
+  align-items: center;
+  font-size: 10px;
+  color: var(--ev-muted);
+}
+.ev-filters label:first-child {
+  flex: 1;
+  border: 1px solid var(--ev-border);
+  border-radius: 5px;
+  padding: 0 10px;
+  background: #161819;
+}
+.ev-filters input {
+  width: 100%;
+  min-width: 0;
+  background: transparent;
+  color: var(--ev-text);
+  border: 0;
+  padding: 10px 0;
+  outline: none;
+}
+.ev-filters select {
+  background: #161819;
+  color: var(--ev-text);
+  border: 1px solid var(--ev-border);
+  border-radius: 5px;
+  padding: 10px;
+  color-scheme: dark;
+  max-width: 220px;
+}
+.ev-grid {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.8fr) minmax(0, 1.2fr);
+  gap: 26px;
+  align-items: start;
+}
+.ev-list {
+  display: grid;
+  gap: 14px;
+}
+.evolution-view .ev-list > button {
+  display: block;
+  text-align: left;
+  width: 100%;
+  padding: 22px;
+  background: var(--ev-panel);
+}
+.ev-list > button[aria-pressed="true"] {
+  border-color: #f18570aa;
+}
+.ev-list > button > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+.ev-list time {
+  font-size: 10px;
+  color: var(--ev-muted);
+}
+.ev-badge {
+  display: inline-block;
+  padding: 3px 8px;
+  border: 1px solid #ffffff20;
+  border-radius: 4px;
+  color: #bfc5b7;
+  font-size: 9px;
+  white-space: normal;
+}
+.ev-integrated {
+  color: #bed0ae;
+  border-color: #b7cd9c44;
+  background: #b7cd9c08;
+}
+.ev-in_progress {
+  color: #f3bc8a;
+  border-color: #efb78c44;
+}
+.ev-planned {
+  color: #adb7c2;
+}
+.ev-implemented {
+  color: #d7bbf4;
+  border-color: #c4a3e344;
+}
+.ev-list > button > small {
+  font-size: 9px;
+  color: #f18570;
+  letter-spacing: 0.8px;
+}
+.ev-list h2 {
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1.4;
+  margin: 8px 0 10px;
+}
+.ev-list p {
+  font-size: 11px;
+}
+.ev-read {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  color: #d8dace;
+  font-size: 10px;
+  margin-top: 18px;
+}
+.ev-reader {
+  background: #181b1c;
+  border: 1px solid var(--ev-border);
+  border-radius: 8px;
+  padding: 28px;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.ev-reader-empty {
+  padding: 55px 12px;
+  text-align: center;
+}
+.ev-reader-empty > svg {
+  color: #7e8b78;
+  margin: auto;
+}
+.ev-reader-empty h2 {
+  font-family: Georgia, serif;
+  font-size: 27px;
+  font-weight: 400;
+  line-height: 1.2;
+  margin: 23px 0 15px;
+}
+.ev-reader-empty p {
+  font-size: 12px;
+  max-width: 340px;
+  margin: auto;
+}
+.ev-reader-empty button {
+  font-size: 11px;
+  margin-top: 22px;
+}
+.evolution-view .ev-back {
+  border: 0;
+  padding: 0;
+  font-size: 10px;
+  color: var(--ev-muted);
+  margin-bottom: 22px;
+}
+.ev-reader-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.ev-reader-top button {
+  font-size: 10px;
+}
+.ev-impact {
+  font-size: 12px;
+  border-left: 2px solid #f18570;
+  padding-left: 13px;
+  margin: 22px 0 !important;
+}
+.ev-document h2 {
+  font-size: 25px;
+  font-weight: 400;
+  letter-spacing: -0.5px;
+  line-height: 1.3;
+  margin: 24px 0 22px;
+}
+.ev-document h3 {
+  font-size: 14px;
+  font-weight: 500;
+  margin: 24px 0 10px;
+}
+.ev-document p,
+.ev-document li {
+  font-size: 12px;
+  color: #bec3b8;
+  margin: 12px 0;
+  white-space: pre-wrap;
+}
+.ev-document ul {
+  padding-left: 18px;
+}
+.evolution-view a {
+  color: #f3ad96;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.ev-requirements {
+  border-top: 1px solid var(--ev-border);
+  margin-top: 25px;
+  padding-top: 20px;
+}
+.ev-requirements h3 {
+  font-size: 12px;
+  margin-bottom: 15px;
+}
+.ev-requirements p {
+  display: flex;
+  gap: 9px;
+  margin: 8px 0;
+  font-size: 11px;
+}
+.ev-requirements svg {
+  flex: none;
+  margin-top: 4px;
+  color: #aab59b;
+}
+.ev-requirements small {
+  display: block;
+  color: var(--ev-muted);
+  font-size: 9px;
+  margin: 14px 0;
+}
+.ev-reader details {
+  font-size: 10px;
+  color: var(--ev-muted);
+  border-top: 1px solid var(--ev-border);
+  margin-top: 20px;
+  padding-top: 15px;
+}
+.ev-reader summary {
+  cursor: pointer;
+}
+.ev-reader details p,
+.ev-reader details code {
+  font-size: 9px;
+  overflow-wrap: anywhere;
+}
+.ev-reader details ul {
+  padding-left: 16px;
+}
+.ev-error {
+  padding: 18px;
+  border: 1px solid #f1857055;
+  border-radius: 5px;
+  margin: 15px 0;
+}
+.ev-error p {
+  font-size: 12px;
+}
+.ev-error button {
+  margin-top: 10px;
+  font-size: 11px;
+}
+@media (max-width: 1100px) {
+  .evolution-view {
+    padding: 24px;
+  }
+  .ev-grid {
+    grid-template-columns: minmax(230px, 0.8fr) minmax(0, 1.2fr);
+    gap: 16px;
+  }
+  .ev-reader {
+    padding: 20px;
+  }
+  .ev-filters {
+    flex-wrap: wrap;
+  }
+  .ev-filters label:first-child {
+    flex-basis: 100%;
+  }
+  .ev-list > button > div {
+    flex-wrap: wrap;
+  }
+}
+@media (max-width: 700px) {
+  .evolution-view {
+    padding: 20px 14px;
+  }
+  .evolution-view h1 {
+    font-size: 31px;
+  }
+  .evolution-view > header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .evolution-view > header > button {
+    font-size: 11px;
+  }
+  .ev-overview {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .ev-overview > p {
+    text-align: left;
+  }
+  .ev-filters {
+    gap: 12px;
+  }
+  .ev-filters > label {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .ev-filters > label:first-child {
+    flex-direction: row;
+    align-items: center;
+  }
+  .ev-filters select {
+    max-width: 100%;
+    font-size: 10px;
+  }
+  .ev-grid {
+    grid-template-columns: 1fr;
+  }
+  .ev-reader {
+    grid-row: 1;
+  }
+  .ev-reader-empty {
+    padding: 25px 5px;
+  }
+  .ev-list h2 {
+    font-size: 16px;
+  }
+  .evolution-view .ev-list > button {
+    padding: 18px;
+  }
+  .ev-reader-top {
+    flex-wrap: wrap;
+  }
+}

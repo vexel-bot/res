@@ -104,7 +104,7 @@ def identity_deletion_out(deletion: StudioIdentityDeletionRequest) -> IdentityDe
 
 
 def create_consent_grant(
-    db: Session, request: CreateConsentGrantRequest, user: User
+    db: Session, request: CreateConsentGrantRequest, user: User, *, commit: bool = True
 ) -> StudioConsentGrant:
     now = datetime.now(UTC)
     if _utc(request.expires_at) <= now:
@@ -136,7 +136,8 @@ def create_consent_grant(
         actor_id=user.id,
         payload={"policyVersion": grant.policy_version, "scopes": grant.scopes},
     )
-    db.commit()
+    if commit:
+        db.commit()
     db.refresh(grant)
     return grant
 
@@ -155,7 +156,7 @@ def require_consent(
         select(StudioConsentGrant).where(
             StudioConsentGrant.id == consent_grant_id,
             StudioConsentGrant.workspace_id == workspace_id,
-        )
+        ).execution_options(populate_existing=True)
     )
     if not grant:
         raise ValueError("consent_not_found")
@@ -211,7 +212,11 @@ def revoke_consent_grant(
 
     jobs = db.scalars(
         select(StudioGenerationJob).where(
-            StudioGenerationJob.consent_grant_id == grant.id,
+            or_(
+                StudioGenerationJob.consent_grant_id == grant.id,
+                StudioGenerationJob.identity_version_id.in_([version.id for version in identity_versions]),
+                StudioGenerationJob.voice_version_id.in_([version.id for version in voice_versions]),
+            ),
             StudioGenerationJob.status.in_(("queued", "running", "retrying")),
         )
     ).all()
@@ -244,7 +249,7 @@ def revoke_consent_grant(
 
 
 def create_identity_profile(
-    db: Session, request: CreateIdentityProfileRequest, user: User
+    db: Session, request: CreateIdentityProfileRequest, user: User, *, commit: bool = True
 ) -> StudioIdentityProfile:
     existing = db.scalar(
         select(StudioIdentityProfile).where(
@@ -275,13 +280,15 @@ def create_identity_profile(
         actor_id=user.id,
         payload={"identityType": profile.identity_type},
     )
-    db.commit()
+    if commit:
+        db.commit()
     db.refresh(profile)
     return profile
 
 
 def create_identity_version(
-    db: Session, profile: StudioIdentityProfile, request: CreateIdentityVersionRequest, user: User
+    db: Session, profile: StudioIdentityProfile, request: CreateIdentityVersionRequest,
+    user: User, *, commit: bool = True
 ) -> StudioIdentityVersion:
     if profile.status in {"revoked", "deleting", "deleted"}:
         raise ValueError("identity_profile_not_usable")
@@ -334,13 +341,14 @@ def create_identity_version(
         actor_id=user.id,
         payload={"versionId": version.id, "version": version.version},
     )
-    db.commit()
+    if commit:
+        db.commit()
     db.refresh(version)
     return version
 
 
 def create_voice_profile(
-    db: Session, request: CreateVoiceProfileRequest, user: User
+    db: Session, request: CreateVoiceProfileRequest, user: User, *, commit: bool = True
 ) -> StudioVoiceProfile:
     profile = StudioVoiceProfile(
         workspace_id=request.workspace_id,
@@ -363,13 +371,14 @@ def create_voice_profile(
         actor_id=user.id,
         payload={"voiceType": profile.voice_type, "locale": profile.locale},
     )
-    db.commit()
+    if commit:
+        db.commit()
     db.refresh(profile)
     return profile
 
 
 def create_voice_version(
-    db: Session, profile: StudioVoiceProfile, request: CreateVoiceVersionRequest, user: User
+    db: Session, profile: StudioVoiceProfile, request: CreateVoiceVersionRequest, user: User, *, commit: bool = True
 ) -> StudioVoiceVersion:
     if profile.status in {"revoked", "deleting", "deleted"}:
         raise ValueError("voice_profile_not_usable")
@@ -431,7 +440,8 @@ def create_voice_version(
         actor_id=user.id,
         payload={"versionId": version.id, "version": version.version},
     )
-    db.commit()
+    if commit:
+        db.commit()
     db.refresh(version)
     return version
 
@@ -608,7 +618,7 @@ def require_active_version_consent(
         return
     if consent_grant_id != version.consent_grant_id:
         raise ValueError("identity_version_consent_mismatch")
-    grant = db.get(StudioConsentGrant, version.consent_grant_id)
+    grant = db.get(StudioConsentGrant, version.consent_grant_id, populate_existing=True)
     if not grant or consent_status(grant) != "active":
         raise ValueError("consent_not_active")
 

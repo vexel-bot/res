@@ -93,9 +93,11 @@ import {
 } from "../api/productApi";
 import { BackendRequestError } from "../api/client";
 import { ReviewSnapshotPreview } from "../studios/ReviewSnapshotPreview";
+import { IdentityLibrary } from "../studios/identity/IdentityLibrary";
 import { STOCK_AVATAR_CANDIDATES } from "../studios/stockAvatars";
 import { studioHeadlines } from "../studios/craft/craftState";
 import { DepartmentStudio } from "../studios/department/DepartmentStudio";
+import { EvolutionView } from "../evolution/EvolutionView";
 import {
   demoCampaign,
   demoMedia,
@@ -255,6 +257,7 @@ const navItems = [
   ["/projects", FolderKanban, "Projetos"],
   ["/library/assets", Library, "Biblioteca"],
   ["/calendar", CalendarDays, "Publicar"],
+  ["/evolution", BookOpen, "Evolução"],
 ] as const;
 
 const createItems = [
@@ -743,6 +746,7 @@ function Header({
 function RouteSurface(props: AnyRecord) {
   const p = normalize(props.pathname);
   const mode = props.params.get("mode");
+  if (p === "/evolution") return <EvolutionView navigate={props.navigate} />;
   if (p === "/studios") return <DepartmentStudio pathname={props.pathname} search={props.search} navigate={props.navigate} />;
   if (p === "/" || p === "/dashboard" || p === "/today")
     return <HomeSurface {...props} />;
@@ -771,7 +775,7 @@ function RouteSurface(props: AnyRecord) {
     return <ApprovedRemixSurface {...props} />;
   if (/^\/content\/[^/]+$/.test(p)) return <ApprovedPostDetail {...props} />;
   if (p === "/brand-memory") return <BrandMemory {...props} />;
-  if (p === "/library/identities") return <IdentityLibrarySurface {...props} />;
+  if (p === "/library/identities") return <IdentityLibrary navigate={props.navigate} />;
   if (/^\/library\/assets\/[^/]+\/edit$/.test(p))
     return <DepartmentStudio mode="visual" pathname={props.pathname} search={props.search} navigate={props.navigate} sourceAssetId={decodeURIComponent(p.split("/")[3])} />;
   if (p === "/library/assets") return <ApprovedLibrarySurface {...props} />;
@@ -8607,318 +8611,6 @@ function SocialIntegrationSurface({
   );
 }
 
-function IdentityLibrarySurface({
-  navigate,
-  setToast,
-  data,
-  demo,
-  params,
-}: AnyRecord) {
-  const workspaceId = data.activeWorkspace?.id as string | undefined;
-  const [loading, setLoading] = React.useState(!demo);
-  const [error, setError] = React.useState<string>();
-  const [identities, setIdentities] = React.useState<AnyRecord[]>([]);
-  const [versions, setVersions] = React.useState<Record<string, AnyRecord[]>>({});
-  const [voices, setVoices] = React.useState<AnyRecord[]>([]);
-  const [voiceVersions, setVoiceVersions] = React.useState<Record<string, AnyRecord[]>>({});
-  const [consents, setConsents] = React.useState<AnyRecord[]>([]);
-  const [enrolling, setEnrolling] = React.useState(params?.get("enroll") === "1");
-  const [saving, setSaving] = React.useState(false);
-  const [name, setName] = React.useState("");
-  const [purpose, setPurpose] = React.useState("Criar amostras privadas para anúncios da marca");
-  const [expiresOn, setExpiresOn] = React.useState(() => {
-    const next = new Date();
-    next.setDate(next.getDate() + 30);
-    return next.toISOString().slice(0, 10);
-  });
-  const [capture, setCapture] = React.useState<File>();
-  const [voiceCapture, setVoiceCapture] = React.useState<File>();
-  const [declared, setDeclared] = React.useState(false);
-  const presenterCapability = data.snapshot?.studioCapabilities?.presenter;
-
-  const load = React.useCallback(async () => {
-    if (demo || !workspaceId) {
-      setLoading(false);
-      return;
-    }
-    setLoading(true);
-    setError(undefined);
-    try {
-      const [nextIdentities, nextConsents, nextVoices] = await Promise.all([
-        productApi.studioIdentities(workspaceId),
-        productApi.studioConsents(workspaceId),
-        productApi.studioVoices(workspaceId),
-      ]);
-      const [versionEntries, voiceVersionEntries] = await Promise.all([
-        Promise.all(
-          nextIdentities.map(async (identity) => [
-            identity.id,
-            await productApi.studioIdentityVersions(identity.id),
-          ] as const),
-        ),
-        Promise.all(
-          nextVoices.map(async (voice) => [
-            voice.id,
-            await productApi.studioVoiceVersions(voice.id),
-          ] as const),
-        ),
-      ]);
-      setIdentities(nextIdentities);
-      setVersions(Object.fromEntries(versionEntries));
-      setVoices(nextVoices);
-      setVoiceVersions(Object.fromEntries(voiceVersionEntries));
-      setConsents(nextConsents);
-    } catch (requestError) {
-      setError(requestError instanceof Error ? requestError.message : "Não foi possível carregar as identidades.");
-    } finally {
-      setLoading(false);
-    }
-  }, [demo, workspaceId]);
-
-  React.useEffect(() => {
-    void load();
-  }, [load]);
-
-  const submitEnrollment = async (event: React.FormEvent) => {
-    event.preventDefault();
-    if (!workspaceId || !capture || !voiceCapture || !name.trim() || !purpose.trim() || !declared) return;
-    setSaving(true);
-    setError(undefined);
-    try {
-      const evidence = await productApi.uploadStudioAsset(workspaceId, capture);
-      const voiceEvidence = await productApi.uploadStudioAsset(workspaceId, voiceCapture);
-      const subjectKey = `person/${crypto.randomUUID()}`;
-      const consent = await productApi.createStudioConsent({
-        workspaceId,
-        subjectKey,
-        subjectDisplayName: name.trim(),
-        purpose: purpose.trim(),
-        scopes: ["identity.enroll", "avatar.generate", "voice.enroll", "voice.clone"],
-        brandIds: data.activeWorkspace?.brandProfile?.id
-          ? [data.activeWorkspace.brandProfile.id]
-          : [],
-        channels: ["private-preview"],
-        policyVersion: "clicko.identity-consent.v1",
-        evidenceAssetId: evidence.id,
-        expiresAt: new Date(`${expiresOn}T23:59:59.000Z`).toISOString(),
-      });
-      const identity = await productApi.createStudioIdentity({
-        workspaceId,
-        subjectKey,
-        displayName: name.trim(),
-        identityType: "natural_person",
-        ownerUserId: null,
-      });
-      await productApi.createStudioIdentityVersion(identity.id, {
-        consentGrantId: consent.id,
-        capabilities: ["avatar.generate"],
-        sampleAssetIds: [evidence.id],
-        derivedArtifacts: [],
-      });
-      const voice = await productApi.createStudioVoice({
-        workspaceId,
-        identityProfileId: identity.id,
-        displayName: `${name.trim()} · PT-BR`,
-        locale: "pt-BR",
-        voiceType: "cloned",
-      });
-      await productApi.createStudioVoiceVersion(voice.id, {
-        consentGrantId: consent.id,
-        sampleAssetIds: [voiceEvidence.id],
-        derivedArtifacts: [],
-        pronunciationProfile: {},
-      });
-      setToast("Candidato privado criado. Ele continua bloqueado até avaliação e revisão independentes.");
-      setEnrolling(false);
-      setName("");
-      setCapture(undefined);
-      setVoiceCapture(undefined);
-      setDeclared(false);
-      await load();
-    } catch (requestError) {
-      setError(requestError instanceof Error ? requestError.message : "O cadastro foi bloqueado com segurança.");
-    } finally {
-      setSaving(false);
-    }
-  };
-
-  return (
-    <Page
-      eyebrow="Biblioteca de identidades"
-      title="Escolha presença sem perder o controle"
-      description="Avatares stock e pessoas reais seguem direitos, versões e gates diferentes. Nenhum candidato é liberado por aparência."
-      actions={
-        <Button
-          actionId="IDENTITY-START-ENROLLMENT"
-          tone="primary"
-          onClick={() => setEnrolling((current) => !current)}
-        >
-          Cadastrar identidade própria
-        </Button>
-      }
-    >
-      {loading && <HonestState state="loading" detail="Carregando versões e consentimentos…" />}
-      {error && (
-        <HonestState
-          state="recoverable-error"
-          detail={error}
-          actionLabel="Tentar novamente"
-          actionId="IDENTITY-RETRY-LOAD"
-          onAction={() => void load()}
-        />
-      )}
-
-      <section className="cx-identity-library" aria-label="Avatares stock pré-selecionados">
-        <header>
-          <div>
-            <small>CATÁLOGO STOCK · 3 MULHERES + 3 HOMENS</small>
-            <h2>Seis direções de presença</h2>
-          </div>
-          <p>
-            O slot visual pode ser explorado agora. Produção só habilita quando identidade sintética,
-            modelo, licença e provider estão ativos no workspace.
-          </p>
-        </header>
-        <div className="cx-stock-avatar-grid">
-          {STOCK_AVATAR_CANDIDATES.map((avatar) => {
-            const profile = identities.find((item) => item.subjectKey === avatar.subjectKey);
-            const activeVersion = profile
-              ? versions[profile.id]?.find((version) => version.status === "active")
-              : undefined;
-            const usable = Boolean(
-              activeVersion && profile?.status === "active" && presenterCapability?.providerReady,
-            );
-            return (
-              <article key={avatar.id} data-avatar-status={usable ? "ready" : "candidate"}>
-                <div className="cx-stock-avatar-mark" style={{ "--avatar-accent": avatar.accent } as React.CSSProperties}>
-                  <span>{avatar.displayName.slice(0, 1)}</span>
-                  <small>{avatar.presentation === "woman" ? "F" : "M"}</small>
-                </div>
-                <h3>{avatar.displayName}</h3>
-                <p>{avatar.direction}</p>
-                <small>{avatar.voiceLabel}</small>
-                <em>{usable ? `Ativo · identidade v${activeVersion.version}` : "Candidato · ativação pendente"}</em>
-                {usable ? (
-                  <Button
-                    actionId="IDENTITY-SELECT-STOCK"
-                    onClick={() =>
-                      navigate(
-                        `/content/post-ritual/edit?mode=presenter&avatar=${avatar.id}&identityVersion=${activeVersion.id}`,
-                      )
-                    }
-                  >
-                    Usar no Presenter
-                  </Button>
-                ) : (
-                  <Button
-                    actionId="IDENTITY-PREVIEW-STOCK"
-                    disabled={!demo}
-                    title={!demo ? "Provider, modelo, licença e IdentityVersion ativa são obrigatórios" : undefined}
-                    onClick={() =>
-                      navigate(`/content/post-ritual/edit?mode=presenter&avatar=${avatar.id}&preview=1`)
-                    }
-                  >
-                    {demo ? "Ver prévia local" : "Ativação pendente"}
-                  </Button>
-                )}
-              </article>
-            );
-          })}
-        </div>
-      </section>
-
-      {enrolling && (
-        <form className="cx-identity-enrollment" onSubmit={submitEnrollment}>
-          <header>
-            <div><small>CAPTURE & CONSENT</small><h2>Candidato privado, nunca ativação automática</h2></div>
-            <button
-              type="button"
-              data-action-id="IDENTITY-CLOSE-ENROLLMENT"
-              onClick={() => setEnrolling(false)}
-              aria-label="Fechar cadastro"
-            >
-              ×
-            </button>
-          </header>
-          <p>
-            Este fluxo registra escopo, expiração e evidência. A versão nasce como rascunho e exige avaliação e revisão independentes antes de qualquer amostra.
-          </p>
-          <div className="cx-identity-enrollment-grid">
-            <label htmlFor="identity-person-name">Nome da pessoa<input data-action-id="IDENTITY-EDIT-ENROLLMENT" id="identity-person-name" required value={name} onChange={(event) => setName(event.target.value)} /></label>
-            <label htmlFor="identity-consent-expiry">Válido até<input data-action-id="IDENTITY-EDIT-ENROLLMENT" id="identity-consent-expiry" required type="date" value={expiresOn} min={new Date().toISOString().slice(0, 10)} onChange={(event) => setExpiresOn(event.target.value)} /></label>
-            <label className="is-wide" htmlFor="identity-purpose">Finalidade<textarea data-action-id="IDENTITY-EDIT-ENROLLMENT" id="identity-purpose" required rows={3} value={purpose} onChange={(event) => setPurpose(event.target.value)} /></label>
-            <label className="is-wide" htmlFor="identity-private-capture">Vídeo privado de consentimento e captura<input data-action-id="IDENTITY-SELECT-PRIVATE-MEDIA" id="identity-private-capture" required type="file" accept="video/*" onChange={(event) => setCapture(event.target.files?.[0])} /><small>Usado como evidência e amostra privada; não é publicado.</small></label>
-            <label className="is-wide" htmlFor="identity-private-voice">Áudio privado para matrícula de voz<input data-action-id="IDENTITY-SELECT-PRIVATE-MEDIA" id="identity-private-voice" required type="file" accept="audio/*" onChange={(event) => setVoiceCapture(event.target.files?.[0])} /><small>Corpus separado para avaliação de voz; nunca é usado como prova visual.</small></label>
-          </div>
-          <label className="cx-identity-declaration">
-            <input data-action-id="IDENTITY-EDIT-ENROLLMENT" type="checkbox" checked={declared} onChange={(event) => setDeclared(event.target.checked)} />
-            Confirmo que a pessoa identificada autorizou identity.enroll, avatar.generate, voice.enroll e voice.clone para a finalidade e prazo informados.
-          </label>
-          <Button
-            actionId="IDENTITY-SUBMIT-ENROLLMENT"
-            tone="primary"
-            type="submit"
-            disabled={saving || !declared || !capture || !voiceCapture || !name.trim() || !purpose.trim()}
-          >
-            {saving ? "Protegendo captura…" : "Criar candidato para revisão"}
-          </Button>
-        </form>
-      )}
-
-      {!demo && !loading && (
-        <section className="cx-governed-identities">
-          <header><small>IDENTIDADES DO WORKSPACE</small><h2>Versões e consentimentos reais</h2></header>
-          {identities.length === 0 ? (
-            <HonestState state="empty" detail="Nenhuma identidade foi cadastrada neste workspace." />
-          ) : identities.map((identity) => {
-            const currentVersions = versions[identity.id] ?? [];
-            const consent = consents.find((item) => item.subjectKey === identity.subjectKey);
-            const linkedVoices = voices.filter((voice) => voice.identityProfileId === identity.id);
-            const activeIdentityVersion = currentVersions.find((version) => version.status === "active");
-            const activeVoice = linkedVoices.find((voice) => voice.status === "active");
-            const activeVoiceVersion = activeVoice
-              ? voiceVersions[activeVoice.id]?.find((version) => version.status === "active")
-              : undefined;
-            return (
-              <article key={identity.id}>
-                <div><b>{identity.displayName}</b><small>{identity.identityType} · {identity.status}</small></div>
-                <span>{currentVersions.length} versão(ões) · {currentVersions[0]?.status ?? "sem versão"}</span>
-                <span>{linkedVoices.length} voz(es) · {activeVoiceVersion ? `voz v${activeVoiceVersion.version} ativa` : "sem voz ativa"}</span>
-                <em>Consentimento: {consent?.status ?? "ausente"}{consent?.expiresAt ? ` · expira ${new Date(consent.expiresAt).toLocaleDateString("pt-BR")}` : ""}</em>
-                {activeIdentityVersion && activeVoiceVersion && consent?.status === "active" && (
-                  <Button
-                    actionId="IDENTITY-SELECT-STOCK"
-                    onClick={() =>
-                      navigate(
-                        `/content/post-ritual/edit?mode=presenter&identityVersion=${activeIdentityVersion.id}&voiceVersion=${activeVoiceVersion.id}&consent=${consent.id}`,
-                      )
-                    }
-                  >
-                    Usar identidade e voz no Presenter
-                  </Button>
-                )}
-                {consent?.status === "active" && (
-                  <Button
-                    actionId="IDENTITY-REVOKE-CONSENT"
-                    onClick={() => {
-                      if (!window.confirm("Revogar este consentimento bloqueará usos futuros e versões vinculadas. Continuar?")) return;
-                      void productApi.revokeStudioConsent(consent.id, "Revogado pelo responsável no Identity Library")
-                        .then(() => load())
-                        .then(() => setToast("Consentimento revogado; usos futuros foram bloqueados."))
-                        .catch((requestError) => setError(requestError instanceof Error ? requestError.message : "Não foi possível revogar."));
-                    }}
-                  >
-                    Revogar consentimento
-                  </Button>
-                )}
-              </article>
-            );
-          })}
-        </section>
-      )}
-    </Page>
-  );
-}
 
 function safeImageLabReturn(value: string | null) {
   if (!value) return "/library/assets";

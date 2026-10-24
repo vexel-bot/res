@@ -362,9 +362,10 @@ def test_carousel_export_creates_ordered_png_zip(client, tmp_path, monkeypatch):
         asset = db.get(LibraryAsset, response.json()["id"])
         archive_path = tmp_path / asset.storage_key
     with zipfile.ZipFile(archive_path) as archive:
-        assert archive.namelist() == ["manifest.json", "01.png", "02.png"]
+        assert set(archive.namelist()) == {"manifest.json", "001.png", "002.png"}
         manifest = json.loads(archive.read("manifest.json"))
     assert manifest["orderedPages"] == ["page-1", "page-2"]
+    assert manifest["pages"] == {"page-1": "001.png", "page-2": "002.png"}
 
 
 def test_studio_replace_is_allowed_by_cors(client):

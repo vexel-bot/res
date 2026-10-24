@@ -53,6 +53,7 @@ async function setup(
     const path = new URL(request.url()).pathname;
     const body = request.postData() ? request.postDataJSON() : undefined;
     requests.push({ method: request.method(), path, body });
+    if (path.endsWith("/identity-library")) return route.fulfill({ json: { workspaceId: workspace.id, identities: [], voices: [], consents: [] } });
     if (path.endsWith("/bootstrap"))
       return route.fulfill({
         json: {

@@ -18,6 +18,7 @@ from ...domain.studios.contracts import (
 from ...models import BrandProfile, CreativeDocument, ExternalSignal, Opportunity, StudioDomainEvent, User
 from ...services.brand import brand_readiness
 from .asset_rights import project_natural_sound_rights
+from .casting import validate_document_cast
 from .compatibility import composition_to_canvas, persist_contract, record_to_contract
 from .review_binding import invalidate_linked_post_review, reviewable_content
 
@@ -91,9 +92,12 @@ def create_document(
         brief=request.brief,
         composition=request.composition,
         assets=request.assets,
+        identity_ref=request.identity_ref,
+        voice_ref=request.voice_ref,
         created_at=now,
         updated_at=now,
     )
+    validate_document_cast(db, contract)
     contract = project_natural_sound_rights(db, contract)
     record = CreativeDocument(
         id=document_id,
@@ -144,6 +148,7 @@ def replace_document(
     if request.expected_revision != record.revision:
         raise ValueError("studio_document_conflict")
     incoming = project_natural_sound_rights(db, request.document)
+    validate_document_cast(db, incoming)
     current = record_to_contract(record)
     if incoming.native_editor_state != current.native_editor_state or incoming.composition != current.composition:
         raise ValueError("craft_project_content_requires_native_commands_or_migration")

@@ -24,9 +24,11 @@ from .routers import (
     jobs,
     knowledge,
     posts,
+    product_evolution,
     radar,
     studio_craft,
     studio_department,
+    studio_identity_library,
     studios,
     workspace_features,
     workspaces,
@@ -155,6 +157,8 @@ app.include_router(radar.router, prefix="/api/v1")
 app.include_router(studios.router, prefix="/api/v1")
 app.include_router(studio_craft.router, prefix="/api/v1")
 app.include_router(studio_department.router, prefix="/api/v1")
+app.include_router(studio_identity_library.router, prefix="/api/v1")
+app.include_router(product_evolution.router, prefix="/api/v1")
 app.include_router(editing_resources.router, prefix="/api/v1")
 app.include_router(workspace_features.router, prefix="/api/v1")
 app.include_router(ai.router, prefix="/api")

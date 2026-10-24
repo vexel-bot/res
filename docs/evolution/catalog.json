@@ -1,0 +1,142 @@
+{
+  "schemaVersion": "clicko.product-evolution.v1",
+  "updatedAt": "2026-10-24",
+  "entries": [
+    {
+      "id": "identity-library",
+      "date": "2026-10-24",
+      "category": "feature",
+      "status": "implemented",
+      "title": "Rostos, vozes e personagens na biblioteca",
+      "summary": "Cadastro separado, versões e escolha de elenco nos pedidos de imagem e vídeo.",
+      "impact": "Uma aparência e uma voz podem ser escolhidas para o projeto, com autorização e versão conferidas. A geração dos modelos continua em andamento.",
+      "document": "2026-10-24-identity-library.md",
+      "requirements": [
+        "Cadastrar rosto e voz separadamente.",
+        "Preservar a identidade e a voz escolhidas no projeto.",
+        "Conferir autorização antes de reutilizar versões."
+      ],
+      "evidence": [
+        "backend/app/routers/studio_identity_library.py",
+        "backend/app/services/studios/casting.py",
+        "src/studios/identity/IdentityLibrary.tsx",
+        "backend/tests/test_studio_identity_library.py",
+        "tests/craft/identity-library.spec.ts"
+      ]
+    },
+    {
+      "id": "evolution-area",
+      "date": "2026-10-21",
+      "category": "feature",
+      "status": "implemented",
+      "title": "Evolução visível no produto",
+      "summary": "Histórico, decisões, análises e pendências passam a ter uma área própria no sistema.",
+      "impact": "A equipe consulta a evolução e lê os documentos .md sem sair da aplicação.",
+      "document": "2026-10-21-evolution.md",
+      "requirements": [
+        "Criar documentos .md para registrar a evolução.",
+        "Documentar funcionalidades, atualizações, correções, exclusões, análises e pendências."
+      ],
+      "evidence": [
+        "backend/app/routers/product_evolution.py",
+        "src/evolution/EvolutionView.tsx"
+      ]
+    },
+    {
+      "id": "identity-research",
+      "date": "2026-10-21",
+      "category": "analysis",
+      "status": "in_progress",
+      "title": "Personagens, rosto e voz nos Studios",
+      "summary": "Pesquisa de motores e integração de identidades reutilizáveis para imagens e vídeos.",
+      "impact": "Aparência e voz serão escolhas independentes, vinculadas à peça e às autorizações da identidade.",
+      "document": "2026-10-21-identity-research.md",
+      "requirements": [
+        "Clonar rosto autorizado.",
+        "Clonar voz autorizada.",
+        "Disponibilizar personagens com aparência e voz pré-selecionadas.",
+        "Usar personagens nas imagens e nos vídeos escolhidos pelo cliente."
+      ],
+      "evidence": [
+        "backend/app/providers/studios/longcat_avatar.py",
+        "workers/longcat-avatar/model-manifest.json",
+        "backend/app/services/studios/identity.py"
+      ]
+    },
+    {
+      "id": "content-intelligence",
+      "date": "2026-10-21",
+      "category": "pending",
+      "status": "planned",
+      "title": "Pesquisa e materiais para criar conteúdo",
+      "summary": "Ampliar a inteligência editorial e a pesquisa de referências durante a produção.",
+      "impact": "Referências devem orientar roteiro e direção com origem e cobertura observada, preservando direitos dos materiais.",
+      "document": "2026-10-21-content-intelligence.md",
+      "requirements": [
+        "Melhorar a inteligência da IA na criação de conteúdos.",
+        "Implementar pesquisa e extração de materiais da internet para auxiliar a produção."
+      ],
+      "evidence": [
+        "docs/studios/knowledge/creative-department-2026-10/README.md",
+        "docs/studios/knowledge/creative-department-2026-10/REVIEW_AND_GAPS.md"
+      ]
+    },
+    {
+      "id": "studios-room",
+      "date": "2026-10-16",
+      "category": "update",
+      "status": "integrated",
+      "title": "Pedido, direção e entrega nos Studios",
+      "summary": "Conteúdo e anúncios passam pela sala de direção, com imagem, carrossel e vídeo como formatos.",
+      "impact": "As entradas de criação convergem para uma experiência orientada ao resultado do cliente.",
+      "document": "2026-10-16-studios.md",
+      "requirements": [
+        "Priorizar criação de conteúdo.",
+        "Preservar revisão de versões e retomada após falha."
+      ],
+      "evidence": [
+        "src/studios/department/DepartmentStudio.tsx",
+        "backend/app/routers/studio_department.py",
+        "https://github.com/vexel-bot/res/pull/1"
+      ]
+    },
+    {
+      "id": "craft-foundation",
+      "date": "2026-10-16",
+      "category": "update",
+      "status": "integrated",
+      "title": "PhotoCraft, FilmCraft e EffectCraft completos",
+      "summary": "Fontes integrais, adaptadores e procedência dos três projetos incorporados à main.",
+      "impact": "Os Crafts sustentam edição e composição; FFmpeg permanece como utilitário de mídia.",
+      "document": "2026-10-16-craft.md",
+      "requirements": [
+        "Preservar os repositórios completos.",
+        "Substituir os acessos aos editores anteriores."
+      ],
+      "evidence": [
+        "workers/craft/sources.lock.json",
+        "scripts/craft/provenance.py",
+        "https://github.com/vexel-bot/res/commit/8c089fbaaa4d92497eb650fc17c82160a7b228c9"
+      ]
+    },
+    {
+      "id": "ci-corrections",
+      "date": "2026-10-16",
+      "category": "fix",
+      "status": "integrated",
+      "title": "Instalação limpa e utilitários de mídia na CI",
+      "summary": "Dependências WASM e instalação do FFmpeg/ffprobe corrigidas nos testes do GitHub.",
+      "impact": "O runner consegue instalar o projeto e executar os testes reais de ingestão de áudio.",
+      "document": "2026-10-16-ci.md",
+      "requirements": [
+        "Corrigir a instalação limpa.",
+        "Manter a validação técnica fora das rotas de edição do cliente."
+      ],
+      "evidence": [
+        "package-lock.json",
+        ".github/workflows/studios-craft.yml",
+        "tests/fixtures/craft-validation.html"
+      ]
+    }
+  ]
+}
