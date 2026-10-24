@@ -2,15 +2,45 @@
 
 Frontend React/TypeScript com Express como BFF autenticado e FastAPI como serviço de projetos, mídia e jobs. A identidade e as permissões continuam pertencendo à sessão Clicko; o navegador não recebe chaves de provedores.
 
+## Revisão da experiência dos Studios · 24/10/2026
+
+Navegação horizontal permanente em **Imagem / Vídeo / Publicidade / Ferramentas
+adicionais**, com uma segunda linha de ferramentas. Até 1000 px, dois seletores
+compactos substituem as linhas sem esconder o catálogo em “Alterar Studio”.
+Criação com opções progressivas e editores de Motion/Imagem/Vídeo integrados à
+janela. Materiais, prévia, propriedades contextuais e timeline redimensionável
+compartilham os projetos,
+serviços e contratos já existentes. Em telas menores, os painéis aparecem por
+etapas. Projetos, histórico, recursos profissionais e editores nativos continuam
+acessíveis; a KLIC usa a conversa global, sem outro chat ou mudança de modelo/voz.
+Nos Studios, o acesso único fica no cabeçalho: a conversa ocupa uma faixa lateral
+reservada a partir de 1440 px; em janelas menores, apresenta temporariamente a
+vista de conversa, preservando o editor montado e restaurando-o ao fechar.
+Gerar/Salvar/Exportar, inputs e timeline não ficam sob o balão. A lista de
+projetos de vídeo não aguarda o preflight dos modelos de IA opcionais.
+
+O navegador ficou disponível em 24/10: criação, importação, edição, versões,
+PNG/MP4, reprodução e layouts claro/escuro foram exercitados com dados próprios
+no DEV. Isso supera o bloqueio visual registrado na auditoria histórica abaixo,
+mas **não homologa geração por IA, Craft ou produção comercial**.
+
+Veja o [relatório desta revisão](CLICKO_REVISAO_EXPERIENCIA_STUDIOS_2026-10-24.md),
+o [inventário anterior à revisão](docs/studios/UX_REVISION_INVENTORY_2026-10-24.md),
+o [relatório do redesign anterior](CLICKO_REDESIGN_STUDIOS_2026-10-24.md), o
+[inventário anterior às alterações](docs/studios/UX_INVENTORY_2026-10-23.md) e a
+[arquitetura visual](docs/studios/UX_ARCHITECTURE_2026-10-24.md).
+Nenhum push ou deploy foi realizado nesta etapa.
+
 ## Auditoria funcional e audiovisual · 23/10/2026
 
-O [relatório atual](CLICKO_AUDITORIA_FUNCIONAL_AUDIOVISUAL_2026-10-23.md) separa
+O [relatório de 23/10](CLICKO_AUDITORIA_FUNCIONAL_AUDIOVISUAL_2026-10-23.md) separa
 renderização local de geração por IA e conformidade técnica de qualidade artística.
 Novas provas reais cobrem motion de 15 s, comandos KLIC, montagem de material
 próprio, áudio, PNG e recuperação pós-reinício no perfil DEV isolado.
 O motion automático ainda é básico; Craft e geração IA permanecem indisponíveis.
-Não é uma declaração de homologação: QA visual atual está bloqueado pelo acesso
-ao navegador; Python registra **888 aprovados / 277 falhas / 112 pulados**,
+Naquela auditoria, a homologação visual estava bloqueada pelo acesso ao navegador;
+o bloqueio foi superado na revisão de 24/10 acima. A suíte Python global registrou
+**888 aprovados / 277 falhas / 112 pulados**,
 Ruff global tem 323 achados e `npm audit` reporta uma vulnerabilidade alta.
 Node (245 + 11 complementares), TypeScript e build passaram.
 Os scripts em `scripts/audits` mantêm evidências privadas em `.codex-runtime`;

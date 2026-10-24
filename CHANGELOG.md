@@ -1,5 +1,53 @@
 # Changelog
 
+## Não publicado — 2026-10-24
+
+### Revisão incremental da navegação e experiência dos Studios
+
+- “Alterar Studio” substituído no desktop por categorias e ferramentas sempre
+  visíveis; dois seletores compactos no tablet/celular. Nove rotas, permissões,
+  proteção de saída e descoberta honesta de recursos futuros preservadas.
+- Gerar imagem vem após ideia/formato/estilo, antes das opções recolhidas;
+  autorização e bloqueio do provedor indisponível continuam reais.
+- Reprodução do Motion na barra superior e altura inicial da timeline adaptada
+  ao notebook; timeline ainda redimensionável por ponteiro e teclado.
+- Um acesso KLIC no cabeçalho dos Studios. Desktop largo reserva espaço lateral;
+  janelas menores alternam temporariamente para a conversa existente, sem
+  desmontar o editor. Corrigida a largura herdada que cortava o Fechar no celular;
+  estado acessível e retorno do foco verificados no navegador.
+- Projetos de vídeo e renderer local carregam independentemente do preflight de
+  IA. Falhas ou serviços não confirmados não habilitam geração artificialmente.
+- QA no DEV com PNG/MP4 reais, recuperação dos projetos salvos, quatro tamanhos
+  de tela, teclado, temas e KLIC. Sem provedores pagos, backend novo, push ou deploy.
+- Relatório atualizado: `CLICKO_REVISAO_EXPERIENCIA_STUDIOS_2026-10-24.md`.
+
+### Simplificação e organização dos Studios
+
+- Ajuste posterior de dimensões do Gerar Imagem: ações em uma barra única,
+  formulário inicial mais largo, espaçamentos menores e opções recolhidas lado
+  a lado no desktop. Seções abertas usam largura completa; móvel mantém coluna
+  única e entrada de texto legível. Nenhum contrato ou processamento alterado.
+
+- Inventário funcional antes das mudanças; navegação única agrupada preserva
+  rotas, permissões, ferramentas adicionais e descoberta de opções futuras.
+- Workspace compartilhado com prévia central, materiais/camadas, inspector
+  contextual e timeline inferior redimensionável; painéis por etapas no móvel.
+- Motion e composição de imagem mantêm comandos, versões, keyframes, crop,
+  ajustes, originais e exportação. Seleção do canvas considera letterboxing.
+- Montagem de vídeo preserva cortes, áudio, títulos, efeitos, faixas, keyframes,
+  recuperação e MP4. Projetos/ajuda foram recolhidos; prévia e timeline cabem na
+  janela do notebook. Troca de documento protege a montagem não salva.
+- Briefings de imagem/vídeo usam opções progressivas e defaults locais
+  revisáveis. Publicidade prioriza produto, público e resultado, reutilizando
+  os editores e materiais existentes, sem simular publicação de campanhas.
+- Acesso discreto à KLIC global e atalhos de salvar/desfazer/refazer; não foram
+  alterados Gemini, voz, cotas, credenciais, backend ou contratos de API.
+- QA real no navegador DEV encontrou e corrigiu colisão de classe com CSS de
+  progresso, espaço insuficiente da prévia no notebook e sincronização da rota
+  após salvar. Capturas e artefatos ficam privados em `.codex-runtime`.
+- Relatório distingue regressões técnicas, fluxos reais locais e dependências
+  de IA/Craft ainda indisponíveis. Sem APIs pagas, push ou deploy.
+
 ## Não publicado — 2026-10-23
 
 ### Auditoria funcional e audiovisual

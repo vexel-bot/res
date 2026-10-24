@@ -106,6 +106,9 @@ export function FloatingAIAssistant({
   const klic = useKlicClient();
   const { messages, loading } = chat;
   const [open, setOpen] = React.useState(false);
+  React.useEffect(() => {
+    window.dispatchEvent(new CustomEvent('clicko:klic-panel-visibility', { detail: open }));
+  }, [open]);
   const presence = usePresence(open);
   const [input, setInput] = React.useState('');
   const [activeMode, setActiveMode] = React.useState<KlicModeId>('create');

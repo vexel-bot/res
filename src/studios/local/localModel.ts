@@ -1,5 +1,14 @@
 import type { LocalKey, LocalLayer, AgentTask } from './localApi';
 
+/** Map a contain-fit preview back to document coordinates, excluding letterboxing. */
+export function canvasDocumentPoint(x: number, y: number, boxWidth: number, boxHeight: number, width: number, height: number) {
+    if (Math.min(boxWidth, boxHeight, width, height) <= 0) return undefined;
+    const scale = Math.min(boxWidth / width, boxHeight / height);
+    const left = (boxWidth - width * scale) / 2, top = (boxHeight - height * scale) / 2;
+    if (x < left || y < top || x > left + width * scale || y > top + height * scale) return undefined;
+    return { x: (x - left) / scale, y: (y - top) / scale };
+}
+
 /** A concurrent history read may have observed a task before planning finished. */
 export function mergeAgentTasks(current: AgentTask[], incoming: AgentTask[]) {
     const terminal = (task: AgentTask) => ['succeeded', 'failed', 'cancelled'].includes(task.status);

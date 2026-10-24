@@ -59,11 +59,13 @@ import {
   validateBrief,
   VIDEO_KINDS,
   videoDocumentInput,
+  videoBriefDefaults,
   type VideoArea,
   type VideoBrief,
 } from "./videoModel";
 import "./video-studio.css";
 import { matchesStudioDraft, readStudioSession, writeStudioSession } from '../studioSession';
+import { StudioKlicButton, StudioUtilityPanel } from '../shared/StudioWorkspace';
 
 const AREAS = [
   { id: "ai", name: "Criar com IA", icon: Sparkles },
@@ -104,8 +106,9 @@ function VideoRoom({
   const [restored] = React.useState(() => readStudioSession<VideoNavigationState>(sessionKey));
   const recovered = restored && matchesStudioDraft(restored.brief, initialVideoBrief()) && Array.isArray(restored.assets) && Array.isArray(restored.materials) && (!restored.project || restored.project.workspaceId === data.activeWorkspace!.id) ? restored : undefined;
   const [area, updateArea] = React.useState<VideoArea>(requestedArea || 'ai');
-  const setArea = (next: VideoArea) => { updateArea(next); onAreaChange?.(next); };
-  React.useEffect(() => { if (requestedArea) updateArea(requestedArea); }, [requestedArea]);
+  const pendingArea = React.useRef<VideoArea | undefined>(undefined);
+  const setArea = (next: VideoArea) => { pendingArea.current = next; updateArea(next); };
+  React.useEffect(() => { if (requestedArea) { pendingArea.current = undefined; updateArea(requestedArea); } }, [requestedArea]);
   const [brief, setBrief] = React.useState(() =>
     recovered?.brief || initialVideoBrief(initialBrief),
   );
@@ -176,6 +179,7 @@ function VideoRoom({
     studio.document?.documentId === project?.documentId && studio.document && studio.document.revision >= (project?.revision || 0)
       ? studio.document
       : project;
+  const canonicalActive = area === 'editor' && Boolean(currentDoc && !currentDoc.nativeEditorState && currentDoc.composition.mediaTimeline);
   React.useEffect(() => {
     writeStudioSession(sessionKey, { brief, project:currentDoc, assets:addedAssets, materials, dirty } satisfies VideoNavigationState);
   }, [sessionKey, brief, currentDoc, addedAssets, materials, dirty]);
@@ -186,6 +190,13 @@ function VideoRoom({
     window.addEventListener('clicko:studio-before-leave', beforeLeave);
     return () => window.removeEventListener('clicko:studio-before-leave', beforeLeave);
   }, [busy, studio.busy]);
+  // A successful save may open the editor while its request is still settling.
+  // Notify navigation only after the real operation has released its leave guard.
+  React.useEffect(() => {
+    if (busy || studio.busy || actionRef.current || !pendingArea.current) return;
+    const next = pendingArea.current; pendingArea.current = undefined;
+    onAreaChange?.(next);
+  }, [area, busy, studio.busy, onAreaChange]);
   const available = Boolean(
     studio.engineInfo?.available &&
     currentDoc?.nativeEditorState?.engine === engine &&
@@ -218,33 +229,24 @@ function VideoRoom({
     const controller = new AbortController();
     setLoading(true);
     setCatalogError(undefined);
-    void Promise.allSettled([
-      productApi.studioDocuments(workspaceId),
-      productApi.studioCapabilities(workspaceId),
-      apiFetch<SceneCapability>(
-        "/api/v1/studios/v1/scene-generation-capability",
-        { signal: controller.signal },
-      ),
-      apiFetch<{ available: boolean }>("/api/v1/studios/v1/video/capabilities", { signal: controller.signal }),
-    ]).then(([documents, readiness, generation, cpu]) => {
-      if (controller.signal.aborted) return;
-      if (documents.status === "fulfilled")
-        setProjects(
-          (documents.value as CraftDocument[]).filter(
-            (doc) =>
-              doc.contentType === "video" || doc.contentType === "presenter",
-          ),
-        );
-      else setCatalogError(craftError(documents.reason));
-      if (readiness.status === "fulfilled") setCapabilities(readiness.value);
-      if (generation.status === "fulfilled") setScene(generation.value);
-      if (cpu.status === "fulfilled") setCpuRenderer(cpu.value);
-      if (readiness.status === "rejected" || generation.status === "rejected")
-        setNotice(
-          "Não foi possível verificar todos os serviços de geração. Os recursos não confirmados permanecem indisponíveis.",
-        );
-      setLoading(false);
-    });
+    // Local projects and FFmpeg must not wait for an optional AI model preflight.
+    void productApi.studioDocuments(workspaceId).then(documents => {
+      if (!controller.signal.aborted) setProjects((documents as CraftDocument[]).filter(doc => doc.contentType === "video" || doc.contentType === "presenter"));
+    }).catch(cause => {
+      if (!controller.signal.aborted) setCatalogError(craftError(cause));
+    }).finally(() => { if (!controller.signal.aborted) setLoading(false); });
+    const unconfirmed = () => {
+      if (!controller.signal.aborted) setNotice("Não foi possível verificar todos os serviços de geração. Os recursos não confirmados permanecem indisponíveis.");
+    };
+    void productApi.studioCapabilities(workspaceId).then(readiness => {
+      if (!controller.signal.aborted) setCapabilities(readiness);
+    }).catch(unconfirmed);
+    void apiFetch<SceneCapability>("/api/v1/studios/v1/scene-generation-capability", { signal: controller.signal }).then(generation => {
+      if (!controller.signal.aborted) setScene(generation);
+    }).catch(unconfirmed);
+    void apiFetch<{ available: boolean }>("/api/v1/studios/v1/video/capabilities", { signal: controller.signal }).then(cpu => {
+      if (!controller.signal.aborted) setCpuRenderer(cpu);
+    }).catch(() => { /* An unverified local renderer remains unavailable. */ });
     return () => controller.abort();
   }, [workspaceId, reload]);
   React.useEffect(() => {
@@ -317,7 +319,8 @@ function VideoRoom({
   }
   async function saveProject(motion = false) {
     if (!workspaceId) throw new Error("Aguarde o carregamento do ambiente.");
-    const validation = validateBrief(brief);
+    const resolvedBrief = videoBriefDefaults(brief, area === 'ad');
+    const validation = validateBrief(resolvedBrief);
     if (validation) throw new Error(validation);
     const savedBriefVersion = briefVersionRef.current;
     let next: CraftDocument;
@@ -337,7 +340,7 @@ function VideoRoom({
       next = await productApi.replaceStudioDocument(
         active.documentId,
         active.revision,
-        updateVideoBrief(active, brief),
+        updateVideoBrief(active, resolvedBrief),
       );
     } else {
       if (creationAttempt.current) {
@@ -354,12 +357,12 @@ function VideoRoom({
         next = await productApi.replaceStudioDocument(
           recovered.documentId,
           recovered.revision,
-          updateVideoBrief(recovered, brief),
+          updateVideoBrief(recovered, resolvedBrief),
         );
       } else {
         const input = videoDocumentInput(
           workspaceId,
-          brief,
+          resolvedBrief,
           assets.filter((asset) => materials.includes(asset.id)),
           motion,
         );
@@ -382,7 +385,7 @@ function VideoRoom({
     setProject(next);
     // Typing during a request must remain an unsaved change, not be cleared by
     // the acknowledgement for the older brief that was actually submitted.
-    if (briefVersionRef.current === savedBriefVersion) setDirty(false);
+    if (briefVersionRef.current === savedBriefVersion) { setBrief(resolvedBrief); setDirty(false); }
     setProjects((current) => [
       next,
       ...current.filter((doc) => doc.documentId !== next.documentId),
@@ -426,6 +429,7 @@ function VideoRoom({
     setArea("editor");
   }
   function newProject() {
+    if (!window.dispatchEvent(new Event('clicko:studio-before-leave', { cancelable:true }))) return;
     if (
       (dirty || studio.pending || creationAttempt.current) &&
       !window.confirm(
@@ -576,10 +580,11 @@ function VideoRoom({
   return (
     <section
       className="vs-root"
+      data-integrated-editor={canonicalActive}
       data-video-area={area}
       aria-label="Estúdio de vídeo Clicko"
     >
-      <header className="vs-header">
+      <header className="vs-header" hidden={canonicalActive}>
         <div>
           <div className="vs-eyebrow">
             <Clapperboard size={14} /> CLICKO STUDIOS
@@ -587,7 +592,7 @@ function VideoRoom({
           <h1>Estúdio de vídeo</h1>
           <p>Da ideia ao último corte. Seu audiovisual, em um só lugar.</p>
         </div>
-        <div className="vs-header-actions">
+        <div className="vs-header-actions"><StudioKlicButton/>
           <button
             onClick={() => setShowProjects((value) => !value)}
             aria-expanded={showProjects}
@@ -616,7 +621,7 @@ function VideoRoom({
           </button>
         ))}
       </nav>
-      <div className="vs-project-bar">
+      <div className="vs-project-bar" hidden={area === "editor" && Boolean(currentDoc && !currentDoc.nativeEditorState)}>
         <span className="vs-project-name">
           <span className="vs-status-dot" />
           <strong>
@@ -663,6 +668,7 @@ function VideoRoom({
           )}
         </div>
       </div>
+      <details className="studio-fold vs-workflow-disclosure" hidden={canonicalActive}><summary>Ajuda e recursos deste Studio</summary>
       <div
         className="vs-workflow-hint"
         aria-label="Orientação da área de trabalho"
@@ -696,6 +702,7 @@ function VideoRoom({
           </button>
         )}
       </div>
+      </details>
       {data.status === "loading" && (
         <div className="vs-banner" role="status">
           <LoaderCircle size={16} className="vs-spin" /> Carregando seu ambiente
@@ -729,7 +736,7 @@ function VideoRoom({
           </button>
         </div>
       )}
-      {(notice || studio.notice) && (
+      {(notice || studio.notice) && !(canonicalActive && notice === 'Projeto salvo no seu ambiente. O briefing não é um vídeo renderizado.') && (
         <div className="vs-banner" role="status">
           {notice || studio.notice}
         </div>
@@ -777,7 +784,11 @@ function VideoRoom({
           </button>
         </div>
       )}
-      {showProjects && (
+      <StudioUtilityPanel title="Projetos de vídeo" open={showProjects} onClose={() => setShowProjects(false)}>
+        {canonicalActive && <>
+          <button type="button" className="vs-primary" disabled={busy || studio.busy} onClick={() => { newProject(); setShowProjects(false); }}><Plus size={16}/>Novo projeto</button>
+          <details className="studio-fold"><summary>Ajuda e recursos deste Studio</summary><strong>{hint.title}</strong><p>{hint.text}</p></details>
+        </>}
         <section className="vs-projects">
           <div className="vs-panel-heading">
             <h2>Seus projetos</h2>
@@ -805,7 +816,7 @@ function VideoRoom({
                   className="vs-project-card"
                   key={doc.documentId}
                   disabled={busy || studio.busy}
-                  onClick={() => void run(() => openProject(doc))}
+                  onClick={() => { if (window.dispatchEvent(new Event('clicko:studio-before-leave', { cancelable:true }))) void run(() => openProject(doc)); }}
                 >
                   <span className="vs-project-thumb">
                     {doc.nativeEditorState?.engine === "effectcraft" ? (
@@ -858,7 +869,7 @@ function VideoRoom({
             />
           )}
         </section>
-      )}
+      </StudioUtilityPanel>
       <div hidden={area === "editor" || Boolean(area === "motion" && currentDoc && !currentDoc.nativeEditorState)} className="vs-create-grid">
         <main className="vs-create-main">
           <div className="vs-section-intro">
@@ -883,6 +894,7 @@ function VideoRoom({
             </p>
           </div>
           {area === "ad" ? (
+            <details className="vs-disclosure vs-start-options"><summary>Materiais de partida · {brief.adPath === "own" ? "Vídeo próprio" : brief.adPath === "assembly" ? "Montagem" : "Ver opções"}</summary>
             <div className="vs-ad-paths">
               {[
                 {
@@ -935,7 +947,9 @@ function VideoRoom({
                 </button>
               ))}
             </div>
+            </details>
           ) : area === "ai" ? (
+            <details className="vs-disclosure vs-start-options"><summary>Tipo de vídeo · {VIDEO_KINDS.find(kind => kind.id === brief.kind)?.name}</summary>
             <div className="vs-kind-cards">
               {VIDEO_KINDS.map((kind, index) => (
                 <button
@@ -955,6 +969,7 @@ function VideoRoom({
                 </button>
               ))}
             </div>
+            </details>
           ) : (
             <MotionTools
               studio={studio}
@@ -981,86 +996,27 @@ function VideoRoom({
                   : "Comece pelo essencial"}
               </span>
             </div>
-            <fieldset className="vs-fields" disabled={busy || studio.busy}>
-              <label>
-                Nome do projeto
-                <input
-                  value={brief.title}
-                  maxLength={180}
-                  onChange={(event) => change("title", event.target.value)}
-                  placeholder="Ex.: Apresentação da nova coleção"
-                />
+            <fieldset className="vs-fields vs-progressive-fields" disabled={busy || studio.busy}>
+              {area === 'ad' && <>
+                <label className="vs-full">O que será divulgado?<input value={brief.offer} maxLength={2000} onChange={event => change('offer',event.target.value)} placeholder="Produto, serviço ou oferta"/></label>
+                <label className="vs-full">Para quem?<input value={brief.audience} maxLength={2000} onChange={event => change('audience',event.target.value)} placeholder="Descreva seu público"/></label>
+              </>}
+              <label className="vs-full">{area === 'ad' ? 'Qual resultado deseja alcançar?' : 'Descreva sua ideia'}
+                <textarea rows={4} value={brief.objective} maxLength={1000} onChange={event => change('objective',event.target.value)} placeholder={area === 'ad' ? 'Ex.: apresentar a oferta e levar pessoas ao site.' : 'O que você quer mostrar neste vídeo?'}/>
               </label>
-              <label>
-                {area === "ad" ? "Objetivo da campanha" : "Objetivo do vídeo"}
-                <input
-                  value={brief.objective}
-                  maxLength={1000}
-                  onChange={(event) => change("objective", event.target.value)}
-                  placeholder="O que este vídeo precisa alcançar?"
-                />
-              </label>
-              <label>
-                Público-alvo
-                <input
-                  value={brief.audience}
-                  maxLength={2000}
-                  onChange={(event) => change("audience", event.target.value)}
-                  placeholder="Com quem você quer conversar?"
-                />
-              </label>
-              <label>
-                Estilo / tom
-                <input
-                  value={brief.style}
-                  maxLength={1000}
-                  onChange={(event) => change("style", event.target.value)}
-                  placeholder="Natural, editorial, dinâmico…"
-                />
-              </label>
-              {area === "ad" && (
-                <>
-                  <label>
-                    Produto, serviço ou oferta
-                    <input
-                      value={brief.offer}
-                      maxLength={2000}
-                      onChange={(event) => change("offer", event.target.value)}
-                      placeholder="O que você está oferecendo?"
-                    />
-                  </label>
-                  <label>
-                    Benefício principal
-                    <input
-                      value={brief.benefit}
-                      maxLength={1000}
-                      onChange={(event) =>
-                        change("benefit", event.target.value)
-                      }
-                      placeholder="Por que isso importa para o público?"
-                    />
-                  </label>
-                  <label className="vs-full">
-                    Chamada para ação
-                    <input
-                      value={brief.cta}
-                      maxLength={500}
-                      onChange={(event) => change("cta", event.target.value)}
-                      placeholder="Ex.: Conheça a coleção"
-                    />
-                  </label>
-                </>
-              )}
-              <label className="vs-full">
-                Roteiro / mensagem
-                <textarea
-                  rows={4}
-                  value={brief.script}
-                  maxLength={1000}
-                  onChange={(event) => change("script", event.target.value)}
-                  placeholder="Abertura, mensagem principal e fechamento. Você pode começar por uma ideia."
-                />
-              </label>
+              <details className="studio-fold vs-full"><summary>Direção e roteiro · opções</summary>
+                <div className="vs-fields">
+                  <label>Nome do projeto<input value={videoBriefDefaults(brief,area==='ad').title} maxLength={180} onChange={event => change('title',event.target.value)}/></label>
+                  {area !== 'ad' && <label>Público-alvo<input value={videoBriefDefaults(brief).audience} maxLength={2000} onChange={event => change('audience',event.target.value)}/></label>}
+                  <label>Estilo / tom<input value={brief.style} maxLength={1000} onChange={event => change('style',event.target.value)}/></label>
+                  {area === 'ad' && <>
+                    <label>Benefício principal<input value={brief.benefit} maxLength={1000} onChange={event => change('benefit',event.target.value)}/></label>
+                    <label className="vs-full">Chamada para ação<input value={brief.cta} maxLength={500} onChange={event => change('cta',event.target.value)}/></label>
+                  </>}
+                  <label className="vs-full">Roteiro / mensagem<textarea rows={3} value={brief.script} maxLength={1000} onChange={event => change('script',event.target.value)} placeholder="Abertura, mensagem e fechamento. Opcional."/></label>
+                </div>
+                <p className="vs-fine">Nome sugerido a partir da ideia. {area !== 'ad' ? 'Público geral por padrão; você pode alterar.' : 'Público e oferta são definidos por você.'} Nenhuma chamada de IA é feita para preencher estes campos.</p>
+              </details>
             </fieldset>
             <div className="vs-form-footer">
               <span>
@@ -1077,7 +1033,7 @@ function VideoRoom({
                   })
                 }
               >
-                Salvar e continuar <ArrowRight size={16} />
+                {currentDoc ? "Salvar e abrir editor" : "Criar e abrir editor"} <ArrowRight size={16} />
               </button>
             </div>
           </div>
@@ -1223,6 +1179,7 @@ function VideoRoom({
       </div>
       {currentDoc && !currentDoc.nativeEditorState && currentDoc.composition.mediaTimeline && data.bootstrap ?
         <CanonicalVideoEditor key={currentDoc.documentId} doc={currentDoc} assets={assets} visible={area === "editor" || area === "motion"}
+          projectActions={<button type="button" onClick={() => setShowProjects(value => !value)} aria-expanded={showProjects}><FolderOpen size={15}/>Projetos</button>}
           userId={data.bootstrap.user.id} onUpload={() => fileInput.current?.click()} onLibrary={() => void run(openLibrary)}
           onDocument={next => { setProject(next); setProjects(current => [next, ...current.filter(d => d.documentId !== next.documentId)]); }} /> : <div hidden={area !== "editor"}>
         <VideoEditor

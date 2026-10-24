@@ -9,6 +9,8 @@ import {
   Trash2,
   Type,
   Upload,
+  Undo2,
+  Redo2,
 } from "lucide-react";
 import { apiFetch, APIError } from "../../api";
 import {
@@ -20,6 +22,7 @@ import type { CraftDocument } from "../craft/craftApi";
 import { ClickoSelectMenu } from "../../components/ClickoSelectMenu";
 import { useGovernance } from "../../context/GovernanceContext";
 import { useOperations } from "../../context/OperationsContext";
+import { klicPageScope, useKlicPageDetails } from '../../klic/pageContext';
 import {
   animate,
   moveToTrack,
@@ -35,6 +38,8 @@ import {
 import { videoOutputUrl } from "./canonicalVideoApi";
 import { CraftModelPicker, type ModelSelection } from "../craft/CraftModelPicker";
 import "./canonical-video.css";
+import { StudioEditorFrame, StudioKlicButton, StudioUtilityPanel, useStudioShortcuts } from '../shared/StudioWorkspace';
+import type { StudioPane } from '../shared/studioWorkspaceModel';
 
 const base = "/api/v1/studios/v1/video";
 const active = (job?: StudioGenerationJobRecord) =>
@@ -47,6 +52,7 @@ export function CanonicalVideoEditor({
   onUpload,
   onLibrary,
   userId,
+  projectActions,
 }: {
   doc: CraftDocument;
   assets: AssetRecord[];
@@ -55,6 +61,7 @@ export function CanonicalVideoEditor({
   onUpload: () => void;
   onLibrary: () => void;
   userId: string;
+  projectActions?: React.ReactNode;
 }) {
   const { activeAccount } = useGovernance();
   const { activeClient } = useOperations();
@@ -63,6 +70,14 @@ export function CanonicalVideoEditor({
   );
   const [dirty, setDirty] = React.useState(false);
   const [selected, setSelected] = React.useState<string>();
+  const [pane, setPane] = React.useState<StudioPane>('preview');
+  const [assistanceOpen, setAssistanceOpen] = React.useState(false);
+  const editorRoot = React.useRef<HTMLElement>(null);
+  useStudioShortcuts(editorRoot, visible);
+  useKlicPageDetails('create-video', klicPageScope(activeAccount.workspaceId, activeClient?.id), {
+    view: 'Montagem de vídeo', selected: { kind: 'studio-document', id: doc.documentId },
+    selectedLayerIds: [], ...(selected ? { filters: { selectedClip: selected } } : {}),
+  });
   const [busy, setBusy] = React.useState(false);
   const [error, setError] = React.useState("");
   const [runtime, setRuntime] = React.useState<{
@@ -118,14 +133,14 @@ export function CanonicalVideoEditor({
   }, [aiRecoveryKey]);
   React.useEffect(() => {
     const beforeLeave = (event: Event) => {
-      if (inFlight.current || savePending.current || renderPending.current) {
+      if (dirty || aiPending || inFlight.current || savePending.current || renderPending.current) {
         event.preventDefault();
-        setError('Confira a confirmação do salvamento ou da exportação antes de trocar de módulo.');
+        setError(dirty ? 'Salve a montagem antes de trocar de módulo.' : 'Confira a confirmação do salvamento ou da exportação antes de trocar de módulo.');
       }
     };
     window.addEventListener('clicko:studio-before-leave', beforeLeave);
     return () => window.removeEventListener('clicko:studio-before-leave', beforeLeave);
-  }, []);
+  }, [dirty, aiPending]);
   const savedRevision = React.useRef(doc.revision);
   const revision = React.useRef(doc.revision);
   revision.current = doc.revision;
@@ -416,7 +431,7 @@ export function CanonicalVideoEditor({
         ? timeline.tracks.map((t) => (t.id === row.id ? updated : t))
         : [...timeline.tracks, updated],
     });
-    setSelected(value.id);
+    selectItem(value.id);
   }
   function updateItem(patch: Partial<Item>) {
     if (item)
@@ -468,82 +483,9 @@ export function CanonicalVideoEditor({
   const url = result
     ? videoOutputUrl(result, activeAccount.workspaceId, activeClient?.id)
     : undefined;
-  return (
-    <section
-      className="cv-editor"
-      hidden={!visible}
-      aria-label="Editor audiovisual Clicko"
-    >
-      <div className="cv-toolbar">
-        <div>
-          <strong>Edição e motion</strong>
-          <small>
-            {dirty ? "Alterações locais" : `Revisão ${doc.revision} salva`} ·
-            MP4 / H.264
-          </small>
-        </div>
-        <button
-          disabled={locked || !undo.length}
-          onClick={() => {
-            const next = undo.at(-1)!;
-            persist(next);
-            setRedo((r) => [timeline, ...r]);
-            setUndo((u) => u.slice(0, -1));
-            setTimeline(next);
-            setDirty(true);
-          }}
-        >
-          Desfazer
-        </button>
-        <button
-          disabled={locked || !redo.length}
-          onClick={() => {
-            const next = redo[0];
-            persist(next);
-            setUndo((u) => [...u, timeline]);
-            setRedo((r) => r.slice(1));
-            setTimeline(next);
-            setDirty(true);
-          }}
-        >
-          Refazer
-        </button>
-        <button
-          disabled={busy || active(job) || Boolean(recovery) || Boolean(aiPending)}
-          onClick={() => void run(save)}
-        >
-          <Save size={15} />{" "}
-          {savePending.current ? "Verificar salvamento" : "Salvar edição"}
-        </button>
-        <button
-          className="vs-primary"
-          disabled={
-            busy || active(job) || Boolean(recovery) || Boolean(aiPending) || !runtime?.available ||
-            !timeline.tracks.some((row) => items(row).length > 0)
-          }
-          onClick={() => void run(render)}
-        >
-          <Film size={15} />
-          {renderPending.current
-            ? "Verificar exportação"
-            : "Gerar prévia / MP4"}
-        </button>
-      </div>
-      <details className="vs-disclosure">
-        <summary>Montagem assistida por IA · timeline FFmpeg</summary>
-        <div className="vs-disclosure-body">
-          <p>Aplica cortes, textos, sobreposições, fades e ajustes de áudio aos materiais vinculados. Não gera cenas, voz ou transcrições.</p>
-          <CraftModelPicker workspaceId={doc.workspaceId} userId={userId} disabled={locked} onChange={setModel} />
-          <label>Pedido de edição
-            <textarea rows={2} maxLength={4000} value={instruction} disabled={locked}
-              onChange={event => setInstruction(event.target.value)} placeholder="Ex.: encurte a abertura e adicione um título…" />
-          </label>
-          <button disabled={busy || active(job) || dirty || Boolean(recovery) || (!aiPending && (!model.available || !instruction.trim()))}
-            onClick={() => void run(applyAI)}>{aiPending ? "Conferir mesmo pedido de IA" : "Aplicar à timeline salva"}</button>
-          {aiPending && <small>Pedido preservado. Conferir reutiliza a mesma identidade; um resultado externo desconhecido exige conciliação, sem nova cobrança automática.</small>}
-        </div>
-      </details>
-      {error && (
+  function selectItem(id: string) { setSelected(id); setPane('properties'); }
+  return <section ref={editorRoot} className="cv-editor cv-integrated" hidden={!visible} aria-label="Editor audiovisual Clicko">
+    {error && (
         <p role="alert" className="vs-banner">
           {error}
           <button
@@ -602,14 +544,70 @@ export function CanonicalVideoEditor({
           para continuar depois.
         </p>
       )}
-      <div className="cv-panels">
-        <aside className="cv-media">
+    {aiPending && <p role="status" className="vs-banner">Pedido de montagem aguardando confirmação. <button onClick={() => setAssistanceOpen(true)}>Conferir pedido</button></p>}
+    <StudioEditorFrame pane={pane} onPaneChange={setPane}
+      toolbar={<><div className="cv-toolbar-wrap"><div className="cv-toolbar">
+        <div>
+          <strong title={doc.title}>{doc.title}</strong>
+          <small>
+            {dirty ? "Alterações locais" : `Revisão ${doc.revision} salva`} ·
+            MP4 / H.264
+          </small>
+        </div>
+        <button
+          data-studio-action="undo" aria-label="Desfazer" title="Desfazer · Ctrl/Cmd+Z" disabled={locked || !undo.length}
+          onClick={() => {
+            const next = undo.at(-1)!;
+            persist(next);
+            setRedo((r) => [timeline, ...r]);
+            setUndo((u) => u.slice(0, -1));
+            setTimeline(next);
+            setDirty(true);
+          }}
+        >
+          <Undo2 size={15}/>
+        </button>
+        <button
+          data-studio-action="redo" aria-label="Refazer" title="Refazer · Ctrl/Cmd+Shift+Z" disabled={locked || !redo.length}
+          onClick={() => {
+            const next = redo[0];
+            persist(next);
+            setUndo((u) => [...u, timeline]);
+            setRedo((r) => r.slice(1));
+            setTimeline(next);
+            setDirty(true);
+          }}
+        >
+          <Redo2 size={15}/>
+        </button>
+        <button
+          data-studio-action="save" disabled={busy || active(job) || Boolean(recovery) || Boolean(aiPending)}
+          onClick={() => void run(save)}
+        >
+          <Save size={15} />{" "}
+          {savePending.current ? "Verificar salvamento" : "Salvar edição"}
+        </button>
+        <button
+          className="vs-primary"
+          disabled={
+            busy || active(job) || Boolean(recovery) || Boolean(aiPending) || !runtime?.available ||
+            !timeline.tracks.some((row) => items(row).length > 0)
+          }
+          onClick={() => void run(render)}
+        >
+          <Film size={15} />
+          {renderPending.current
+            ? "Verificar exportação"
+            : "Gerar prévia / MP4"}
+        </button>
+      </div></div>{projectActions}<button type="button" onClick={() => setAssistanceOpen(true)}>Assistência</button><StudioKlicButton/></>}
+      materials={<aside className="cv-media">
           <header>
             <h3>Materiais</h3>
             <button
               disabled={locked}
               onClick={onUpload}
-              aria-label="Importar mídia"
+              aria-label="Importar mídia" title="Importar mídia"
             >
               <Upload size={16} />
             </button>
@@ -641,9 +639,9 @@ export function CanonicalVideoEditor({
           <button disabled={locked} onClick={onUpload}>
             <Upload size={15} /> Importar arquivo
           </button>
-          <button onClick={onLibrary}>Abrir Biblioteca</button>
-        </aside>
-        <main className="cv-monitor">
+          <button disabled={locked || dirty} onClick={onLibrary}>Abrir Biblioteca</button>
+        </aside>}
+      preview={<main className="cv-monitor">
           <header>
             <h3>Monitor de composição</h3>
             <small>
@@ -734,12 +732,15 @@ export function CanonicalVideoEditor({
               ) : null}
             </div>
           )}
-        </main>
-        <aside className="cv-inspector">
+        </main>}
+      inspector={item ? <aside className="cv-inspector">
           <h3>Propriedades</h3>
           {item ? (
             <>
               <strong>{item.text || item.label}</strong>
+              {track && <fieldset disabled={locked || Boolean(track.locked) || Boolean(item.locked)}><ClickoSelectMenu label="Faixa do elemento" value={track.id}
+                options={timeline.tracks.filter(row => row.kind === track.kind && (!row.locked || row.id === track.id)).map(row => [row.id,row.name])}
+                onChange={id => change(moveToTrack(timeline,item.id,id,item.timeline.startFrame))}/></fieldset>}
               {number(
                 "Posição na timeline (s)",
                 item.timeline.startFrame / fps,
@@ -1071,9 +1072,8 @@ export function CanonicalVideoEditor({
           ) : (
             <p>Selecione um clipe ou título para ajustar seus parâmetros.</p>
           )}
-        </aside>
-      </div>
-      <section className="cv-timeline">
+        </aside> : undefined}
+      timeline={<section className="cv-timeline">
         <header>
           <h3>Timeline multipista</h3>
           <label>
@@ -1135,6 +1135,7 @@ export function CanonicalVideoEditor({
             <Plus size={15} /> Faixa
           </button>
         </header>
+        <details className="studio-fold cv-title-entry"><summary>Adicionar título ou chamada à ação</summary>
         <div className="cv-title-add">
           <Type size={17} />
           <input
@@ -1184,18 +1185,21 @@ export function CanonicalVideoEditor({
                   },
                 ],
               });
-              setSelected(id);
+              selectItem(id);
               setTitle("");
             }}
           >
             <Plus size={15} /> Adicionar título
           </button>
         </div>
+        </details>
+        <details className="studio-fold cv-timeline-help"><summary>Ajuda da timeline</summary>
         <p className="vs-fine">
           As faixas inferiores são compostas sobre as anteriores. Sobreponha
           clipes e aplique fade para criar uma transição. Arraste um clipe para
           reposicioná-lo.
         </p>
+        </details>
         <div className="cv-tracks">
           {timeline.tracks
             .filter((t) => t.kind !== "marker")
@@ -1254,7 +1258,7 @@ export function CanonicalVideoEditor({
                         left: `${(clip.timeline.startFrame / timeline.durationFrames) * 100}%`,
                         width: `${(clip.timeline.durationFrames / timeline.durationFrames) * 100}%`,
                       }}
-                      onClick={() => setSelected(clip.id)}
+                      onClick={() => selectItem(clip.id)}
                     >
                       {clip.text || clip.label}
                       <small>
@@ -1269,7 +1273,24 @@ export function CanonicalVideoEditor({
             <p>Adicione um material para começar a montagem.</p>
           )}
         </div>
-      </section>
-    </section>
-  );
+      </section>}
+    />
+    <StudioUtilityPanel title="Ferramentas de montagem assistida" open={assistanceOpen} onClose={() => setAssistanceOpen(false)}>
+      <StudioKlicButton/><p>A conversa KLIC usa o projeto aberto. Os controles abaixo aplicam ferramentas à timeline salva.</p>
+      <details className="vs-disclosure">
+        <summary>Montagem assistida por IA · timeline FFmpeg</summary>
+        <div className="vs-disclosure-body">
+          <p>Aplica cortes, textos, sobreposições, fades e ajustes de áudio aos materiais vinculados. Não gera cenas, voz ou transcrições.</p>
+          <CraftModelPicker workspaceId={doc.workspaceId} userId={userId} disabled={locked} onChange={setModel} />
+          <label>Pedido de edição
+            <textarea rows={2} maxLength={4000} value={instruction} disabled={locked}
+              onChange={event => setInstruction(event.target.value)} placeholder="Ex.: encurte a abertura e adicione um título…" />
+          </label>
+          <button disabled={busy || active(job) || dirty || Boolean(recovery) || (!aiPending && (!model.available || !instruction.trim()))}
+            onClick={() => void run(applyAI)}>{aiPending ? "Conferir mesmo pedido de IA" : "Aplicar à timeline salva"}</button>
+          {aiPending && <small>Pedido preservado. Conferir reutiliza a mesma identidade; um resultado externo desconhecido exige conciliação, sem nova cobrança automática.</small>}
+        </div>
+      </details>
+    </StudioUtilityPanel>
+  </section>;
 }

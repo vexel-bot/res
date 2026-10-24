@@ -4,6 +4,32 @@
   display: grid;
   gap: 16px;
 }
+.vs-root .cv-integrated { display:block; }
+.vs-root .cv-integrated .cv-toolbar-wrap,.vs-root .cv-integrated .cv-toolbar { display:contents; }
+.vs-root .cv-integrated .cv-toolbar>div { flex:1;min-width:110px;max-width:210px;margin-right:auto; }
+.vs-root .cv-integrated .studio-editor-toolbar>button { padding:8px; }
+.vs-root .cv-integrated .cv-toolbar strong { display:block;max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap; }
+.vs-root .cv-integrated .cv-toolbar small { font-size:10px;margin-top:2px; }
+.vs-root .cv-integrated .cv-media,.vs-root .cv-integrated .cv-inspector { display:flex;flex-direction:column;gap:10px;padding:0;border:0;max-height:none;overflow:visible; }
+.vs-root .cv-integrated .cv-media-item { width:100%;flex-shrink:0; }
+.vs-root .cv-integrated .cv-monitor { display:flex;flex-direction:column;height:100%;min-height:0; }
+.vs-root .cv-integrated .cv-monitor>header { flex-shrink:0; }
+.vs-root .cv-integrated .cv-monitor>header h3 { margin:0;margin-right:auto; }
+.vs-root .cv-integrated .cv-monitor video { flex:1;min-height:0;max-height:none;object-fit:contain; }
+.vs-root .cv-integrated .cv-monitor-empty { flex:1;min-height:0;padding:16px; }
+.vs-root .cv-integrated .cv-monitor-empty svg { width:28px;height:28px; }
+.vs-root .cv-integrated .cv-monitor footer,.vs-root .cv-integrated .cv-job { flex-shrink:0; }
+.vs-root .cv-integrated .cv-timeline { margin:0;padding:0;border:0;min-width:0; }
+.vs-root .cv-integrated .cv-timeline>header { gap:8px;align-items:center; }
+.vs-root .cv-integrated .cv-timeline>header h3 { margin:0; }
+.vs-root .cv-integrated .cv-timeline>header>label { display:flex;align-items:center;gap:8px; }
+.vs-root .cv-integrated .cv-timeline>header>label>input[type=number] { width:70px; }
+.vs-root .cv-integrated .cv-timeline .studio-fold { display:inline-block;vertical-align:top;margin:3px 10px 8px 0;max-width:100%; }
+.vs-root .cv-integrated .studio-fold>summary { padding:6px 0;font-size:11px;cursor:pointer; }
+.vs-root .cv-integrated .cv-tracks { overflow:visible; }
+.vs-root .cv-integrated .cv-track { grid-template-columns:100px minmax(140px,1fr);min-width:0; }
+.vs-root .cv-integrated .cv-lane { min-height:44px; }
+@media(max-width:640px){.vs-root .cv-integrated .cv-toolbar>div{width:100%}.vs-root .cv-integrated .cv-toolbar>button{flex:initial}.vs-root .cv-integrated .cv-track{grid-template-columns:80px minmax(120px,1fr)}.vs-root .cv-integrated .cv-title-add input{min-width:0}}
 .vs-root .cv-editor fieldset { border: 0; padding: 0; margin: 0; min-width: 0; display: grid; gap: 10px; }
 .vs-root .cv-editor[hidden] {
   display: none;

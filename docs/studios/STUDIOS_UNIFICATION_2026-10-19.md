@@ -1,5 +1,13 @@
 # Studios — unificação da navegação
 
+> Atualização de 24/10/2026: as rotas e identidades técnicas abaixo permanecem,
+> e a revisão mais recente mantém categorias/ferramentas visíveis no desktop,
+> substituindo o seletor oculto **Alterar Studio**. Tablet/celular usam dois
+> seletores compactos com os mesmos destinos e permissões.
+> Motion, edição de imagem e montagem usam o workspace integrado descrito em
+> [Arquitetura visual atual](UX_ARCHITECTURE_2026-10-24.md). O restante deste
+> documento registra a entrega histórica de 19/10.
+
 Entrega local: 19/10/2026. Escopo: navegação e adaptação dos componentes de Imagem/Vídeo existentes, sem reconstruir os editores ou alterar regras comerciais.
 
 ## Organização implementada

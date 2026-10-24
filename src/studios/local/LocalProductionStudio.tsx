@@ -1,5 +1,5 @@
 import React from 'react';
-import { Download, Layers, Pause, Play, Plus, Save, Sparkles, Type, Upload, Undo2, Redo2 } from 'lucide-react';
+import { Download, FolderOpen, History, Layers, Pause, Play, Plus, Save, Sparkles, Type, Upload, Undo2, Redo2, Settings2 } from 'lucide-react';
 import { apiFetch, apiFetchBlob, APIError } from '../../api';
 import { productApi, type AssetRecord, type StudioGenerationJobRecord, type StudioDocumentVersionRecord } from '../../api/productApi';
 import { useProductData } from '../../context/ProductDataContext';
@@ -13,7 +13,9 @@ import { videoOutputUrl } from '../video/canonicalVideoApi';
 import { LocalMonitor } from './LocalMonitor';
 import { localApi, localBase, type LocalDocument, type LocalLayer, type LocalOperation, type AgentTask, type AgentRoles } from './localApi';
 import { localError, newLayer, duplicateLayer, localScenes, localRecoveryMatchesProject, mergeAgentTasks } from './localModel';
-import { LocalLayerControls } from './LocalLayerControls';
+import { LocalInspector } from './LocalInspector';
+import { StudioEditorFrame, StudioKlicButton, StudioUtilityPanel, useStudioShortcuts } from '../shared/StudioWorkspace';
+import type { StudioPane } from '../shared/studioWorkspaceModel';
 import './local-production.css';
 import type { NavigationTab } from '../../types';
 type Pending = {
@@ -53,7 +55,7 @@ function LocalRoom({ module, workspaceId, userId }: {
     const [dirty, setDirty] = React.useState(false);
     const [undo, setUndo] = React.useState<LocalDocument['composition'][]>([]);
     const [redo, setRedo] = React.useState<LocalDocument['composition'][]>([]);
-    const [instruction, setInstruction] = React.useState(video ? 'Crie um motion design de 12 segundos sobre inteligência artificial.' : 'Crie um cartão com o título "Ideias que ganham forma".');
+    const [instruction, setInstruction] = React.useState('');
     const [title, setTitle] = React.useState(video ? 'Meu motion design' : 'Minha composição');
     const [tasks, setTasks] = React.useState<AgentTask[]>([]);
     const [roles, setRoles] = React.useState<AgentRoles>();
@@ -68,6 +70,12 @@ function LocalRoom({ module, workspaceId, userId }: {
     const [playing, setPlaying] = React.useState(false);
     const [download, setDownload] = React.useState<string>();
     const [mediaOpen, setMediaOpen] = React.useState(false);
+    const [utility, setUtility] = React.useState<'projects' | 'history' | 'project' | 'production' | 'output' | null>(null);
+    const [pane, setPane] = React.useState<StudioPane>('preview');
+    const [leftTab, setLeftTab] = React.useState<'layers' | 'materials'>('layers');
+    const [format, setFormat] = React.useState(video ? '16:9' : '1:1');
+    const editorRoot = React.useRef<HTMLElement>(null);
+    useStudioShortcuts(editorRoot, !mediaOpen);
     const [pending, setPending] = React.useState<Pending>();
     const pendingRef = React.useRef<Pending | undefined>(undefined);
     const inFlight = React.useRef(false);
@@ -82,8 +90,8 @@ function LocalRoom({ module, workspaceId, userId }: {
     const rendering = Boolean(job && !['succeeded', 'failed', 'cancelled'].includes(job.status));
     const locked = busy || Boolean(pending) || rendering || mediaOpen;
     useKlicPageDetails(module, klicPageScope(activeAccount.workspaceId, activeClient?.id), {
-        view: video ? 'Motion Design Studio' : 'Image Studio local', ...(doc ? { selected: { kind: 'studio-document', id: doc.documentId },
-            selectedLayerIds: selected && layer ? [selected] : [] } : {})
+        view: mediaOpen ? 'Montagem audiovisual' : video ? 'Motion Design Studio' : 'Image Studio local', ...(doc ? { selected: { kind: 'studio-document', id: doc.documentId },
+            selectedLayerIds: !mediaOpen && selected && layer ? [selected] : [] } : {})
     });
     React.useEffect(() => {
         mounted.current = true;
@@ -286,21 +294,24 @@ function LocalRoom({ module, workspaceId, userId }: {
     async function plan() {
         let current = await save();
         if (!current) {
-            current = await write<LocalDocument>(`${localBase}/agents/projects`, { workspaceId, title, contentType: video ? 'video' : 'visual', width: video ? 1280 : 1080, height: video ? 720 : 1080 });
-            adopt(current);
+            current = await createEmptyProject();
         }
         const task = await write<AgentTask>(`${localBase}/documents/${current.documentId}/agent-tasks`, { expectedRevision: current.revision, instruction, role: 'auto',
             selectedLayerIds: selected && current.composition.pages[0].layers.some(row=>row.id===selected) ? [selected] : [] });
         setTasks(rows => [task, ...rows.filter(row => row.id !== task.id)]);
+        setUtility('production');
         if (task.status === 'failed')
             throw new Error(task.errorCode || 'O planejamento falhou.');
     }
     async function apply(task: AgentTask) { if (!doc)
         return; const value = await write<LocalDocument>(`${localBase}/documents/${doc.documentId}/agent-tasks/${task.id}/apply`, { expectedRevision: task.documentRevision }); adopt(value); setNotice('Plano aplicado. Os elementos continuam editáveis.'); }
-    async function upload(selectedFile: File) {
-        if (!doc || !page)
-            return;
-        const current = await save();
+    async function createEmptyProject() {
+        const [width, height] = format === '1:1' ? [1080, 1080] : format === '9:16' ? [720, 1280] : [1280, 720];
+        const current = await write<LocalDocument>(`${localBase}/agents/projects`, { workspaceId, title: title.trim() || (video ? 'Meu motion design' : 'Minha composição'), contentType: video ? 'video' : 'visual', width, height });
+        adopt(current); setPane('preview'); return current;
+    }
+    async function upload(selectedFile: File, saved?: LocalDocument) {
+        const current = saved || await save();
         if (!current)
             return;
         if (selectedFile.size > 32 * 1024 * 1024)
@@ -344,6 +355,7 @@ function LocalRoom({ module, workspaceId, userId }: {
             return;
         if (video) {
             setJob(await write<StudioGenerationJobRecord>(`${localBase}/video/documents/${current.documentId}/render-jobs`, { expectedRevision: current.revision }));
+            setUtility('output');
         }
         else {
             const result = await write<{
@@ -359,36 +371,131 @@ function LocalRoom({ module, workspaceId, userId }: {
         rows.findIndex(row=>row.id===asset.id)===index && /^(image|video|audio)\//.test(asset.mediaType || '')
         && (video || asset.mediaType?.startsWith('image/')));
     const scenes = localScenes(doc?.composition.narrative);
-    return <section className="lp-root vs-root" aria-label={video ? 'Motion Design Studio local' : 'Image Studio local'}>
-    <header className="lp-header"><div><small>PRODUÇÃO LOCAL · CUSTO EXTERNO R$ 0</small><h2>{video ? 'Motion Design Studio' : 'Image Studio'}</h2><p>Crie, ajuste e exporte um projeto com elementos editáveis.</p></div><button onClick={() => window.dispatchEvent(new Event('clicko:klic-production-open'))}><Sparkles size={16}/>KLIC</button></header>
-    {error && <p role="alert" className="lp-error">{error}</p>}{notice && <p role="status">{notice}</p>}
-    {doc && dirty && !pending && <button disabled={busy} onClick={()=>void run(async()=>{localStorage.setItem(storageKey+':previous',JSON.stringify(doc));adopt(await localApi.document(doc.documentId));setNotice('Versão salva recarregada. O rascunho anterior foi guardado como backup local.');})}>Recarregar versão salva</button>}
-    {pending && <aside className="lp-recovery"><p>Uma operação aguarda confirmação. Repetir utiliza a mesma identificação.</p><button disabled={busy} onClick={() => void run(confirmPending)}>Confirmar operação pendente</button></aside>}
-    {selected && <div className="lp-actions"><span>Alvo dos comandos: {layer?.name || 'camada selecionada'}</span><button disabled={locked} onClick={()=>setSelected(undefined)}>Desmarcar · editar projeto inteiro</button></div>}
-    {doc && <section className="lp-materials"><h3>Biblioteca compartilhada · materiais deste ambiente</h3><p>Reutilize imagens, composições PNG, vídeos e áudio sem alterar o original. Os direitos e o escopo são verificados no servidor.</p><div className="lp-actions">{materials.length ? materials.map(asset=><button key={asset.id} disabled={locked} onClick={()=>void run(()=>insertAsset(asset))}>{asset.title || asset.id} · {asset.mediaType}</button>) : <p>Importe um material próprio para começar.</p>}</div></section>}
-    {scenes.length > 0 && <nav className="lp-scenes" aria-label="Cenas do motion">{scenes.map((scene,index)=><button key={scene.id} onClick={()=>{setPlaying(false);setFrame(scene.startFrame);setSelected(undefined);}}>Cena {index+1} · {scene.title}</button>)}</nav>}
-    {tasks.length > 0 && <details className="lp-task-history"><summary>Histórico dos agentes · {tasks.length} tarefas</summary>{tasks.map(task=><article key={task.id}><strong>{task.role} · {task.status}{task.appliedRevision ? ` · aplicado na revisão ${task.appliedRevision}` : ''}</strong><p>{task.instruction}</p><small>{task.id} · {task.provider} · custo externo R$ 0</small>{task.history?.map((event,index)=><p key={index}>{event.type} · {event.at}</p>)}</article>)}</details>}
-    <div className="lp-toolbar"><div className="lp-project-picker"><ClickoSelectMenu value={doc?.documentId || ''} options={[{ value: '', label: 'Selecionar projeto' }, ...options]} onChange={id => { if (!locked && !dirty) {
-        const found = projects.find(row => row.documentId === id);
-        if (found)
-            adopt(found);
-    } }} ariaLabel="Projeto local" disabled={locked || dirty}/></div><button disabled={locked || dirty} onClick={() => { setDoc(undefined); setTasks([]); setSelected(undefined); setDownload(undefined); setJob(undefined); }}>Novo projeto</button>{doc && <><button disabled={locked || !dirty} onClick={() => void run(save)}><Save size={15}/>Salvar</button><button disabled={locked} onClick={() => void run(exportProject)}><Download size={15}/>Exportar {video ? 'MP4' : 'PNG'}</button><span>v{doc.version} · revisão {doc.revision}{dirty ? ' · alterações locais' : ''}</span></>}</div>
-    <section className="lp-brief"><label>{doc ? 'Comando para o projeto' : 'Nome do projeto'}{!doc && <input value={title} maxLength={120} onChange={event => setTitle(event.target.value)}/>}</label><textarea aria-label="Briefing ou comando de produção" value={instruction} maxLength={8000} onChange={event => setInstruction(event.target.value)} rows={3}/><button disabled={locked || !instruction.trim() || (!doc && !title.trim())} onClick={() => void run(plan)}><Sparkles size={15}/>{busy ? 'Processando…' : 'Preparar plano'}</button><p>{roles?.[video ? 'audiovisual' : 'image'].mode === 'local_model' ? 'Modelo local configurado; a aplicação do plano continua sujeita à validação.' : 'Regras locais: criar motion/cartão, alterar o primeiro título entre aspas, cores em #hex e duração. Não há inferência de IA neste modo.'}</p></section>
-    {tasks[0] && <section className="lp-plan" aria-label="Plano do agente"><strong>{tasks[0].role === 'image' ? 'Agente visual' : 'Agente audiovisual'}</strong><p>{tasks[0].result?.rationale || tasks[0].errorCode}</p><small>{tasks[0].provider} · {tasks[0].result?.commands?.length || 0} operações · {tasks[0].result?.state}</small><button disabled={locked || dirty || !tasks[0].result?.commands?.length || tasks[0].status !== 'succeeded' || tasks[0].documentRevision !== doc?.revision} onClick={() => void run(() => apply(tasks[0]))}>Aplicar plano</button></section>}
-    {doc && page && <><div className="lp-grid"><aside className="lp-layers"><h3>Camadas</h3><div className="lp-actions"><button disabled={locked} onClick={() => { const layer = newLayer('text', page.width, page.height, video ? duration : undefined); change({ ...doc.composition, pages: [{ ...page, layers: [...page.layers, layer] }] }); setSelected(layer.id); }}><Type size={15}/>Texto</button><button disabled={locked} onClick={() => { const layer = newLayer('shape', page.width, page.height, video ? duration : undefined); change({ ...doc.composition, pages: [{ ...page, layers: [...page.layers, layer] }] }); setSelected(layer.id); }}><Plus size={15}/>Forma</button><button disabled={locked} onClick={() => file.current?.click()}><Upload size={15}/>Importar</button></div><input ref={file} type="file" hidden accept={video ? 'image/png,image/jpeg,image/webp,video/mp4,audio/wav,audio/mpeg' : 'image/png,image/jpeg,image/webp'} onChange={event => { const chosen = event.target.files?.[0]; event.target.value = ''; if (chosen)
-            void run(() => upload(chosen)); }}/>{[...page.layers].sort((a, b) => b.zIndex - a.zIndex).map(row => <button key={row.id} className={selected === row.id ? 'is-active' : ''} onClick={() => setSelected(row.id)}><Layers size={14}/><span>{row.name}</span>{row.locked && <small>Bloqueada</small>}</button>)}<div className="lp-actions"><button aria-label="Desfazer edição local" disabled={locked || !undo.length} onClick={() => { const previous = undo.at(-1)!; setRedo(items => [doc.composition, ...items]); setUndo(items => items.slice(0, -1)); setDoc({ ...doc, composition: previous }); setDirty(true); }}><Undo2 size={15}/></button><button aria-label="Refazer edição local" disabled={locked || !redo.length} onClick={() => { setUndo(items => [...items, doc.composition]); setDoc({ ...doc, composition: redo[0] }); setRedo(items => items.slice(1)); setDirty(true); }}><Redo2 size={15}/></button></div></aside>
-      <main className="lp-view"><LocalMonitor doc={doc} frame={frame} selected={selected} onSelect={setSelected}/>{video && <div className="lp-playback"><button aria-label={playing ? 'Pausar prévia' : 'Reproduzir prévia'} onClick={() => setPlaying(value => !value)}>{playing ? <Pause size={16}/> : <Play size={16}/>}</button><input type="range" aria-label="Posição na timeline" min={0} max={duration - 1} value={frame} onChange={event => { setPlaying(false); setFrame(Number(event.target.value)); }}/><span>{(frame / fps).toFixed(1)} / {(duration / fps).toFixed(1)} s</span></div>}{timeline?.tracks.some(track => (track.clips?.length || track.cues?.length)) && <p>Os materiais e o áudio aparecem juntos na exportação canônica abaixo.</p>}</main>
-      <aside className="lp-properties"><h3>Propriedades</h3>{layer ? <fieldset disabled={locked || layer.locked}><label>Nome<input value={layer.name} onChange={event => patch({ name: event.target.value })}/></label>{layer.kind === 'text' && <><label>Texto<textarea value={layer.properties.text || ''} onChange={event => patch({}, { text: event.target.value })}/></label><label>Tamanho da fonte<input type="number" min={8} max={240} value={layer.properties.fontSize || 48} onChange={event => patch({}, { fontSize: Number(event.target.value) })}/></label><label>Cor<input type="color" value={layer.properties.color || '#FFFFFF'} onChange={event => patch({}, { color: event.target.value })}/></label></>}{layer.kind === 'shape' && <><label>Preenchimento<input type="color" value={layer.properties.fill || '#FF7F50'} onChange={event => patch({}, { fill: event.target.value })}/></label><label>Forma<ClickoSelectMenu value={layer.properties.shape || 'rectangle'} options={[{ value: 'rectangle', label: 'Retângulo' }, { value: 'ellipse', label: 'Elipse' }]} onChange={shape => patch({}, { shape: shape as 'rectangle' | 'ellipse' })} ariaLabel="Forma" disabled={locked}/></label><label>Cantos<input type="number" min={0} max={240} value={layer.properties.radius || 0} onChange={event => patch({}, { radius: Number(event.target.value) })}/></label></>}{(['x', 'y', 'width', 'height', 'rotation', 'opacity', 'zIndex'] as const).map(property => <label key={property}>{({ x: 'Posição X', y: 'Posição Y', width: 'Largura', height: 'Altura', rotation: 'Rotação', opacity: 'Opacidade', zIndex: 'Ordem' })[property]}<input type="number" step={property === 'opacity' ? 0.05 : 1} min={property === 'opacity' ? 0 : property === 'width' || property === 'height' ? 1 : undefined} max={property === 'opacity' ? 1 : undefined} value={layer[property]} onChange={event => patch({ [property]: Number(event.target.value) })}/></label>)}{layer.kind === 'image' && <>{(['brightness', 'contrast', 'saturation'] as const).map(property => <label key={property}>{({ brightness: 'Brilho', contrast: 'Contraste', saturation: 'Saturação' })[property]}<input type="range" min={property === 'saturation' ? 0 : 0.25} max={2} step={.05} value={layer.properties[property] ?? 1} onChange={event => patch({}, { [property]: Number(event.target.value) })}/></label>)}<button onClick={() => patch({}, { crop: { x: .1, y: .1, width: .8, height: .8 } })}>Recortar 10% nas bordas</button><button onClick={() => patch({}, { crop: null })}>Restaurar recorte original</button></>}{video && <><label>Início (quadros)<input type="number" min={0} max={duration - 1} value={layer.properties.startFrame || 0} onChange={event => patch({}, { startFrame: Number(event.target.value) })}/></label><label>Duração (quadros)<input type="number" min={1} max={duration} value={layer.properties.durationFrames || duration} onChange={event => patch({}, { durationFrames: Number(event.target.value) })}/></label><button onClick={() => patch({}, { keyframes: [{ property: 'x', frame: 0, value: -50 }, { property: 'x', frame: Math.min(24, layer.properties.durationFrames || duration), value: 0, easing: 'ease-out' }] })}>Animar entrada pela esquerda</button><details><summary>Keyframes</summary>{(layer.properties.keyframes || []).map((key, index) => <label key={index}>{key.property} · quadro {key.frame}<input type="number" value={key.value} step={.05} onChange={event => patch({}, { keyframes: layer.properties.keyframes!.map((item, i) => i === index ? { ...item, value: Number(event.target.value) } : item) })}/></label>)}</details></>}<button onClick={() => change({ ...doc.composition, pages: [{ ...page, layers: page.layers.filter(item => item.id !== layer.id) }] })}>Remover elemento</button></fieldset> : <p>Selecione uma camada para editar.</p>}<label>Fundo do projeto<input disabled={locked} type="color" value={page.background.slice(0, 7)} onChange={event => change({ ...doc.composition, pages: [{ ...page, background: event.target.value }] })}/></label></aside></div>
-      {video && <section className="lp-timeline"><h3>Timeline editável</h3>{page.layers.map(layer => <div key={layer.id}><button onClick={() => setSelected(layer.id)}>{layer.name}</button><div><button aria-label={`Selecionar ${layer.name} na timeline`} style={{ marginLeft: `${(layer.properties.startFrame || 0) / duration * 100}%`, width: `${(layer.properties.durationFrames || duration) / duration * 100}%` }} onClick={() => setSelected(layer.id)}>{((layer.properties.durationFrames || duration) / fps).toFixed(1)} s</button></div></div>)}</section>}
-      {layer && <details className="lp-animation-settings"><summary>Tipografia, acabamento e keyframes · {layer.name}</summary><LocalLayerControls layer={layer} disabled={locked} video={video} duration={duration} patch={patch} duplicate={()=>{
-        try { const copy=duplicateLayer(layer,page.layers);change({...doc.composition,pages:[{...page,layers:[...page.layers,copy]}]});setSelected(copy.id); }
-        catch(error) {setError(error instanceof Error ? error.message : 'Não foi possível duplicar.');}
-      }}/></details>}
-      {rendering && <p role="status">Renderizando… {job?.progress}% <button onClick={() => void run(async () => { setJob(await apiFetch(`${localBase}/jobs/${job!.id}/cancel`, { method: 'POST', body: JSON.stringify({ reason: 'Cancelado pelo usuário' }) })); })}>Cancelar</button></p>}{job?.status === 'failed' && <p role="alert">{job.errorMessage || job.errorCode}</p>}{download && <section className="lp-output"><h3>Exportação MP4</h3><video controls src={download}/><a href={download + (download.includes('?') ? '&' : '?') + 'download=1'} download>Baixar MP4</a></section>}
-      {video && <section className="lp-advanced"><button disabled={busy || Boolean(pending) || dirty || rendering} onClick={() => { if (window.dispatchEvent(new Event('clicko:studio-before-leave', { cancelable: true })))
-            setMediaOpen(value => !value); }}>{mediaOpen ? 'Voltar à composição' : 'Cortes, materiais e áudio · abrir editor canônico'}</button>{mediaOpen && <CanonicalVideoEditor key={doc.documentId} doc={doc as unknown as CraftDocument} assets={[...extraAssets,...(data.snapshot?.assets || [])].filter((asset,index,rows)=>rows.findIndex(item=>item.id===asset.id)===index)} visible onDocument={value => adopt(value as unknown as LocalDocument)} onUpload={() => file.current?.click()} onLibrary={() => file.current?.click()} userId={userId}/>}</section>}
-      <details><summary>Histórico do projeto · {versions.length} versões</summary>{versions.map(version => <div className="lp-version" key={version.number}><span>v{version.number} · {version.label}</span><button disabled={locked || dirty} onClick={() => void run(async () => adopt(await productApi.restoreStudioDocumentVersion(doc.documentId, version.number, doc.revision) as LocalDocument))}>Restaurar</button></div>)}</details></>}
-    <details className="lp-settings"><summary>Modelos dos agentes</summary><p>A KLIC mantém sua configuração Gemini. Cada especialista pode usar regras locais ou uma conexão Ollama já instalada. Nenhum modelo é baixado por este painel.</p>{roles && (['audiovisual', 'image'] as const).map(role => <label key={role}>{role === 'audiovisual' ? 'Audiovisual' : 'Imagem'}<ClickoSelectMenu ariaLabel={`Modelo do agente ${role}`} disabled={busy || !canConfigure} value={roles[role].mode === 'local_model' ? `${roles[role].connectionId}|${roles[role].model}` : 'local_tools'} options={[{ value: 'local_tools', label: 'Ferramentas locais · sem inferência' }, ...usableConnections.flatMap(connection => connection.config.models.filter(model => !model.toLowerCase().includes('cloud')).map(model => ({ value: `${connection.id}|${model}`, label: `${connection.label} · ${model}` })))]} onChange={value => { const [connectionId, model] = value.split('|'); setRoles({ ...roles, [role]: value === 'local_tools' ? { mode: 'local_tools' } : { mode: 'local_model', connectionId, model } }); }}/></label>)}<button disabled={busy || !roles || !canConfigure} onClick={() => void run(async () => { setRoles(await localApi.configure(workspaceId, roles!)); setNotice('Configuração dos agentes salva.'); })}>Salvar configuração</button><details><summary>Registrar Ollama local existente</summary><label>ID do modelo instalado<input ref={modelField} placeholder="qwen3:0.6b"/></label><button disabled={busy || !canConfigure} onClick={() => void run(async () => { const model = modelField.current?.value.trim(); if (!model)
+    function selectLayer(id: string) { setSelected(id); setPane('properties'); }
+    function undoLocal() {
+        if (!doc || locked || !undo.length) return;
+        setRedo(items => [doc.composition, ...items]); setDoc({ ...doc, composition: undo.at(-1)! }); setUndo(items => items.slice(0, -1)); setDirty(true); setDownload(undefined);
+    }
+    function redoLocal() {
+        if (!doc || locked || !redo.length) return;
+        setUndo(items => [...items, doc.composition]); setDoc({ ...doc, composition: redo[0] }); setRedo(items => items.slice(1)); setDirty(true); setDownload(undefined);
+    }
+    function addElement(kind: 'text' | 'shape') {
+        if (!doc || !page || locked) return;
+        const item = newLayer(kind, page.width, page.height, video ? duration : undefined);
+        change({ ...doc.composition, pages: [{ ...page, layers: [...page.layers, item] }] }); selectLayer(item.id);
+    }
+    const projectButtons = <>
+        <button type="button" onClick={() => setUtility('projects')}><FolderOpen size={15}/>Projetos</button>
+        {doc && <button type="button" onClick={() => setUtility('history')} aria-label="Histórico do projeto"><History size={15}/></button>}
+        <button type="button" onClick={() => setUtility('project')} aria-label="Configurações do projeto"><Settings2 size={15}/></button>
+        <StudioKlicButton/>
+    </>;
+    const planningForm = <>
+        <label>{doc ? 'Pedido de edição' : 'Descreva sua ideia'}<textarea className="studio-start__idea" aria-label="Briefing ou comando de produção" value={instruction} maxLength={8000} onChange={event => setInstruction(event.target.value)} rows={3} placeholder={video ? 'Ex.: três cenas sobre inovação, com títulos e cartões animados.' : 'Ex.: um cartão com o título “Ideias que ganham forma”.'}/></label>
+        <button type="button" disabled={locked || !instruction.trim()} onClick={() => void run(plan)}><Sparkles size={15}/>{busy ? 'Preparando…' : 'Preparar plano'}</button>
+        <p className="studio-compact-note">{roles?.[video ? 'audiovisual' : 'image'].mode === 'local_model' ? 'Modelo local configurado. Revise o plano antes de aplicar.' : 'Produção por regras locais, sem inferência de IA. Você também pode editar manualmente.'}</p>
+    </>;
+    const library = <div className="lp-material-list">
+        <button type="button" disabled={locked} onClick={() => file.current?.click()}><Upload size={15}/>Importar arquivo</button>
+        {materials.map(asset => <button type="button" key={asset.id} disabled={locked} onClick={() => void run(() => insertAsset(asset))}><span>{asset.title || 'Material sem título'}</span><small>{asset.mediaType?.split('/')[0] === 'audio' ? 'Áudio' : asset.mediaType?.startsWith('video/') ? 'Vídeo' : 'Imagem'}</small></button>)}
+        {!materials.length && <p>Importe seus materiais para reutilizá-los aqui.</p>}
+    </div>;
+    return <section ref={editorRoot} className="lp-root vs-root lp-integrated" aria-label={video ? 'Motion Design Studio local' : 'Image Studio local'}>
+        {error && <p role="alert" className="lp-error">{error}</p>}{notice && <p role="status" className="lp-notice">{notice}</p>}
+        {pending && <aside className="lp-recovery"><p>Uma operação aguarda confirmação.</p><button disabled={busy} onClick={() => void run(confirmPending)}>Confirmar operação pendente</button></aside>}
+        <input ref={file} type="file" hidden accept={video ? 'image/png,image/jpeg,image/webp,video/mp4,audio/wav,audio/mpeg' : 'image/png,image/jpeg,image/webp'} onChange={event => {
+            const chosen = event.target.files?.[0]; event.target.value = '';
+            if (chosen && !busy && !pending && !rendering) void run(async () => { const current = doc ? await save() : await createEmptyProject(); if (current) await upload(chosen, current); });
+        }}/>
+        {!doc && <div className="studio-start">
+            <h2>{video ? 'O que vamos colocar em movimento?' : 'O que você quer criar?'}</h2>
+            <p>Descreva uma ideia para revisar um plano, ou deixe em branco para editar manualmente.</p>
+            <label>Descreva sua ideia <small>Opcional</small><textarea className="studio-start__idea" aria-label="Ideia inicial do projeto" value={instruction} maxLength={8000} rows={3} onChange={event => setInstruction(event.target.value)} placeholder={video ? "Ex.: três cenas sobre inovação, com títulos animados." : "Ex.: um cartão com o título “Ideias que ganham forma”."}/></label>
+            <div className="studio-start__actions"><button type="button" className="lp-primary" disabled={locked} onClick={() => void run(instruction.trim() ? plan : createEmptyProject)}><Plus size={16}/>Criar projeto</button><button type="button" disabled={locked} onClick={() => file.current?.click()}><Upload size={15}/>Importar materiais</button>{projectButtons}</div>
+            <details className="studio-fold"><summary>Nome e formato · opções</summary>
+                <label>Nome do projeto<input value={title} maxLength={120} onChange={event => setTitle(event.target.value)}/></label>
+                <label>Formato<ClickoSelectMenu value={format} options={[{ value:'1:1',label:'Quadrado · 1:1' },{ value:'16:9',label:'Horizontal · 16:9' },{ value:'9:16',label:'Vertical · 9:16' }]} onChange={setFormat} ariaLabel="Formato do projeto local" disabled={locked}/></label>
+                {video && <p>Composição inicial de 12 s, a 24 fps. Duração e animações continuam editáveis.</p>}
+            </details>
+        </div>}
+        {doc && page && !mediaOpen && <StudioEditorFrame pane={pane} onPaneChange={setPane}
+            toolbar={<>
+                <strong className="studio-project-title" title={doc.title}>{doc.title}</strong>
+                <button type="button" data-studio-action="undo" aria-label="Desfazer edição local" title="Desfazer · Ctrl+Z" disabled={locked || !undo.length} onClick={undoLocal}><Undo2 size={15}/></button>
+                <button type="button" data-studio-action="redo" aria-label="Refazer edição local" title="Refazer · Ctrl+Shift+Z" disabled={locked || !redo.length} onClick={redoLocal}><Redo2 size={15}/></button>
+                <button type="button" data-studio-action="save" disabled={locked || !dirty} onClick={() => void run(save)}><Save size={15}/>Salvar</button>
+                {video && <button type="button" aria-label={playing ? 'Pausar prévia' : 'Reproduzir prévia'} title={playing ? 'Pausar prévia' : 'Reproduzir prévia'} onClick={() => setPlaying(value => !value)}>{playing ? <Pause size={15}/> : <Play size={15}/>}</button>}
+                <button type="button" className="lp-primary" disabled={locked} onClick={() => void run(exportProject)}><Download size={15}/>Exportar {video ? 'MP4' : 'PNG'}</button>
+                <button type="button" onClick={() => setUtility('production')}>Produção{tasks[0]?.result?.commands?.length && !tasks[0]?.appliedRevision ? ' · plano' : ''}</button>
+                {projectButtons}
+                <span className="studio-save-state">{dirty ? 'Alterações não salvas' : 'Salvo'} · v{doc.version}{rendering ? ' · renderizando' : ''}</span>
+            </>}
+            materials={<>
+                <nav className="studio-region-tabs" aria-label="Conteúdo lateral"><button type="button" aria-pressed={leftTab === 'layers'} onClick={() => setLeftTab('layers')}>Camadas</button><button type="button" aria-pressed={leftTab === 'materials'} onClick={() => setLeftTab('materials')}>Materiais</button></nav>
+                {leftTab === 'materials' ? library : <div className="lp-layer-list">
+                    <div className="lp-actions"><button type="button" disabled={locked} onClick={() => addElement('text')}><Type size={15}/>Texto</button><button type="button" disabled={locked} onClick={() => addElement('shape')}><Plus size={15}/>Forma</button><button type="button" disabled={locked} onClick={() => file.current?.click()} aria-label="Importar material"><Upload size={15}/></button></div>
+                    {[...page.layers].sort((a,b) => b.zIndex - a.zIndex).map(row => <button type="button" key={row.id} className={selected === row.id ? 'is-active' : ''} onClick={() => selectLayer(row.id)}><Layers size={14}/><span>{row.name}</span>{row.locked && <small>Bloqueada</small>}</button>)}
+                    {!page.layers.length && <p>Adicione texto, formas ou materiais. Selecione um elemento para editar suas propriedades.</p>}
+                </div>}
+                {video && <details className="studio-fold"><summary>Vídeo e áudio</summary><p>Cortes e mixagem usam a mesma composição salva.</p><button type="button" disabled={locked || dirty} onClick={() => {
+                    if (window.dispatchEvent(new Event('clicko:studio-before-leave', { cancelable:true }))) setMediaOpen(true);
+                }}>Editar cortes, materiais e áudio</button></details>}
+            </>}
+            preview={<>
+                <div className="lp-canvas-stage" onDragOver={event => { if (!locked && event.dataTransfer.types.includes('Files')) event.preventDefault(); }} onDrop={event => {
+                    if (!event.dataTransfer.files.length) return; event.preventDefault();
+                    if (event.dataTransfer.files.length > 1) { setError('Importe um arquivo por vez para confirmar cada material no projeto.'); return; }
+                    const picked = event.dataTransfer.files[0];
+                    if (!locked) void run(() => upload(picked));
+                }}><LocalMonitor doc={doc} frame={frame} selected={selected} onSelect={selectLayer}/></div>
+                {video && <div className="lp-playback"><input type="range" aria-label="Posição na timeline" min={0} max={duration-1} value={frame} onChange={event => {setPlaying(false);setFrame(Number(event.target.value));}}/><span>{(frame/fps).toFixed(1)} / {(duration/fps).toFixed(1)} s</span></div>}
+                {timeline?.tracks.some(track => track.clips?.length || track.cues?.length) && <p className="studio-compact-note">Prévia de camadas. Confira vídeo e áudio juntos na exportação ou em “Vídeo e áudio”.</p>}
+                {download && <button type="button" onClick={() => setUtility('output')}>Visualizar MP4 exportado</button>}
+            </>}
+            inspector={layer ? <LocalInspector layer={layer} locked={locked} video={video} duration={duration} patch={patch} deselect={() => {setSelected(undefined);setPane('preview');}} duplicate={() => {
+                try { const copy=duplicateLayer(layer,page.layers);change({...doc.composition,pages:[{...page,layers:[...page.layers,copy]}]});selectLayer(copy.id); }
+                catch(e) {setError(e instanceof Error ? e.message : 'Não foi possível duplicar.');}
+            }} remove={() => {change({...doc.composition,pages:[{...page,layers:page.layers.filter(item => item.id !== layer.id)}]});setSelected(undefined);setPane('preview');}}/> : undefined}
+            timeline={video ? <section className="lp-integrated-timeline" aria-label="Timeline editável">
+                <header><h3>Timeline</h3><small>{(duration/fps).toFixed(1)} s · {fps} fps</small></header>
+                {scenes.length > 0 && <nav className="lp-scenes" aria-label="Cenas do motion">{scenes.map((scene,index) => <button type="button" title={scene.title} key={scene.id} onClick={() => {setPlaying(false);setFrame(scene.startFrame);setSelected(undefined);}}>Cena {index+1}</button>)}</nav>}
+                {page.layers.map(row => <div className="lp-time-row" key={row.id}><button type="button" onClick={() => selectLayer(row.id)}>{row.name}</button><div><button type="button" aria-label={'Selecionar '+row.name+' na timeline'} className={selected===row.id?'is-active':''} style={{left:((row.properties.startFrame||0)/duration*100)+'%',width:Math.min((row.properties.durationFrames||duration),duration-(row.properties.startFrame||0))/duration*100+'%'}} onClick={() => selectLayer(row.id)}>{((row.properties.durationFrames||duration)/fps).toFixed(1)} s</button></div></div>)}
+                {!page.layers.length && <p>As camadas adicionadas aparecem aqui.</p>}
+            </section> : undefined}
+        />}
+        {doc && mediaOpen && <><div className="lp-media-return"><button type="button" onClick={() => {if(window.dispatchEvent(new Event('clicko:studio-before-leave',{cancelable:true})))setMediaOpen(false);}}>Voltar ao canvas de camadas</button>{projectButtons}</div>
+            <CanonicalVideoEditor key={doc.documentId} doc={doc as unknown as CraftDocument} assets={[...extraAssets,...(data.snapshot?.assets||[])].filter((asset,index,rows)=>rows.findIndex(row=>row.id===asset.id)===index)} visible onDocument={value=>adopt(value as unknown as LocalDocument)} onUpload={()=>file.current?.click()} onLibrary={()=>file.current?.click()} userId={userId}/>
+        </>}
+        <StudioUtilityPanel title="Projetos" open={utility==='projects'} onClose={()=>setUtility(null)}>
+            <div className="lp-project-picker"><ClickoSelectMenu value={doc?.documentId||''} options={[{value:'',label:'Selecionar projeto'},...options]} onChange={id=>{
+                if(!locked&&!dirty){const found=projects.find(row=>row.documentId===id);if(found){adopt(found);setUtility(null);}}
+            }} ariaLabel="Projeto local" disabled={locked||dirty}/></div>
+            <button type="button" disabled={locked||dirty} onClick={()=>{setDoc(undefined);setTasks([]);setSelected(undefined);setDownload(undefined);setJob(undefined);setUtility(null);}}>Novo projeto</button>
+            {dirty && <p>Salve as alterações antes de abrir outro projeto.</p>}
+        </StudioUtilityPanel>
+        <StudioUtilityPanel title="Histórico" open={utility==='history'} onClose={()=>setUtility(null)}>
+            <h3>Versões do projeto · {versions.length}</h3>
+            {versions.map(version=><div className="lp-version" key={version.number}><span>v{version.number} · {version.label}</span><button type="button" disabled={locked||dirty} onClick={()=>void run(async()=>adopt(await productApi.restoreStudioDocumentVersion(doc!.documentId,version.number,doc!.revision) as LocalDocument))}>Restaurar</button></div>)}
+            <details className="lp-task-history"><summary>Histórico dos agentes · {tasks.length} tarefas</summary>{tasks.map(task=><article key={task.id}><strong>{task.role} · {task.status}{task.appliedRevision ? ' · aplicado na revisão '+task.appliedRevision : ''}</strong><p>{task.instruction}</p><small>{task.id} · {task.provider} · custo externo R$ 0</small>{task.history?.map((event,index)=><p key={index}>{event.type} · {event.at}</p>)}</article>)}</details>
+        </StudioUtilityPanel>
+        <StudioUtilityPanel title="Projeto e ferramentas" open={utility==='project'} onClose={()=>setUtility(null)}>
+            {page && doc && <><p>{doc.title} · revisão {doc.revision}</p><label>Fundo do projeto<input disabled={locked} type="color" value={page.background.slice(0,7)} onChange={event=>change({...doc.composition,pages:[{...page,background:event.target.value}]})}/></label>
+                {dirty&&!pending&&<button type="button" disabled={busy} onClick={()=>void run(async()=>{localStorage.setItem(storageKey+':previous',JSON.stringify(doc));adopt(await localApi.document(doc.documentId));setNotice('Versão salva recarregada. Rascunho anterior preservado como backup local.');})}>Recarregar versão salva</button>}</>}
+            <details className="lp-settings"><summary>Modelos dos agentes</summary><p>A KLIC mantém sua configuração Gemini. Cada especialista pode usar regras locais ou uma conexão Ollama já instalada. Nenhum modelo é baixado por este painel.</p>{roles && (['audiovisual', 'image'] as const).map(role => <label key={role}>{role === 'audiovisual' ? 'Audiovisual' : 'Imagem'}<ClickoSelectMenu ariaLabel={`Modelo do agente ${role}`} disabled={busy || !canConfigure} value={roles[role].mode === 'local_model' ? `${roles[role].connectionId}|${roles[role].model}` : 'local_tools'} options={[{ value: 'local_tools', label: 'Ferramentas locais · sem inferência' }, ...usableConnections.flatMap(connection => connection.config.models.filter(model => !model.toLowerCase().includes('cloud')).map(model => ({ value: `${connection.id}|${model}`, label: `${connection.label} · ${model}` })))]} onChange={value => { const [connectionId, model] = value.split('|'); setRoles({ ...roles, [role]: value === 'local_tools' ? { mode: 'local_tools' } : { mode: 'local_model', connectionId, model } }); }}/></label>)}<button disabled={busy || !roles || !canConfigure} onClick={() => void run(async () => { setRoles(await localApi.configure(workspaceId, roles!)); setNotice('Configuração dos agentes salva.'); })}>Salvar configuração</button><details><summary>Registrar Ollama local existente</summary><label>ID do modelo instalado<input ref={modelField} placeholder="qwen3:0.6b"/></label><button disabled={busy || !canConfigure} onClick={() => void run(async () => { const model = modelField.current?.value.trim(); if (!model)
         throw new Error('Informe o ID exato de um modelo já instalado.'); const connection = await craftApi.saveLLMConnection(workspaceId, { label: 'Ollama local', provider: 'ollama', protocol: 'ollama_chat', baseUrl: 'http://127.0.0.1:11434', models: [model], authHeader: 'Authorization', authPrefix: 'Bearer', enabled: true, billingMode: 'local_free', budgetUsd: 0, inputUsdPerMillion: 0, outputUsdPerMillion: 0, maxOutputTokens: 3000 }); setConnections(rows => [...rows, connection]); setNotice('Conexão registrada. A disponibilidade será verificada antes da inferência.'); })}>Registrar conexão</button></details></details>
-  </section>;
+        </StudioUtilityPanel>
+        <StudioUtilityPanel title="Produção assistida" open={utility==='production'} onClose={()=>setUtility(null)}>
+            <StudioKlicButton/><p>A conversa KLIC é compartilhada com a plataforma. Use abaixo apenas para preparar e revisar um plano de ferramentas.</p>
+            {selected&&<p>Alvo: {layer?.name||'camada selecionada'} <button type="button" disabled={locked} onClick={()=>setSelected(undefined)}>Desmarcar · editar projeto inteiro</button></p>}
+            {planningForm}
+            {tasks[0]&&<section className="lp-plan" aria-label="Plano do agente"><strong>{tasks[0].role==='image'?'Agente visual':'Agente audiovisual'}</strong><p>{tasks[0].result?.rationale||tasks[0].errorCode}</p><details><summary>Detalhes do plano</summary><small>{tasks[0].provider} · {tasks[0].result?.commands?.length||0} operações · {tasks[0].result?.state}</small></details><button type="button" disabled={locked||dirty||!tasks[0].result?.commands?.length||tasks[0].status!=='succeeded'||tasks[0].documentRevision!==doc?.revision} onClick={()=>void run(()=>apply(tasks[0]))}>Aplicar plano</button></section>}
+        </StudioUtilityPanel>
+        <StudioUtilityPanel title="Exportação" open={utility==='output'} onClose={()=>setUtility(null)}>
+            {rendering&&<p role="status">Renderizando… {job?.progress}% <button type="button" onClick={()=>void run(async()=>setJob(await apiFetch(localBase+'/jobs/'+job!.id+'/cancel',{method:'POST',body:JSON.stringify({reason:'Cancelado pelo usuário'})})))}>Cancelar</button></p>}
+            {job?.status==='failed'&&<p role="alert">{job.errorMessage||job.errorCode}</p>}
+            {download&&<section className="lp-output"><video controls playsInline src={download}/><a href={download+(download.includes('?')?'&':'?')+'download=1'} download>Baixar MP4</a></section>}
+            {!rendering&&!download&&job?.status!=='failed'&&<p>A exportação concluída aparecerá aqui.</p>}
+        </StudioUtilityPanel>
+    </section>;
 }

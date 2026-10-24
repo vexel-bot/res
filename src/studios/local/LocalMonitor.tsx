@@ -1,7 +1,7 @@
 import React from 'react';
 import { apiFetchBlob } from '../../api';
 import type { LocalDocument } from './localApi';
-import { valueAt, containsPoint } from './localModel';
+import { valueAt, containsPoint, canvasDocumentPoint } from './localModel';
 export function LocalMonitor({ doc, frame, selected, onSelect }: {
     doc: LocalDocument;
     frame: number;
@@ -131,12 +131,14 @@ export function LocalMonitor({ doc, frame, selected, onSelect }: {
     const visibleLayers = page.layers.filter(layer => layer.visible && frame >= (layer.properties.startFrame || 0) && frame < (layer.properties.startFrame || 0) + (layer.properties.durationFrames || doc.composition.mediaTimeline?.durationFrames || 1));
     function choose(event: React.MouseEvent<HTMLCanvasElement>) {
         const box = event.currentTarget.getBoundingClientRect();
-        const x = (event.clientX - box.left) * page.width / box.width, y = (event.clientY - box.top) * page.height / box.height;
+        const point = canvasDocumentPoint(event.clientX - box.left, event.clientY - box.top, box.width, box.height, page.width, page.height);
+        if (!point) return;
+        const { x, y } = point;
         const layer = [...visibleLayers].sort((a, b) => b.zIndex - a.zIndex).find(layer => {
             return containsPoint(layer, frame, x, y);
         });
         if (layer)
             onSelect(layer.id);
     }
-    return <div className="lp-monitor"><canvas ref={canvas} onClick={choose} aria-label="Prévia de edição do projeto"/>{imageError && <p role="alert">{imageError}</p>}<p>{selected ? `Elemento: ${page.layers.find(layer => layer.id === selected)?.name || ''}` : 'Selecione um elemento na prévia ou em Camadas.'}</p></div>;
+    return <div className="lp-monitor"><canvas ref={canvas} tabIndex={0} onClick={choose} aria-label="Prévia de edição do projeto"/>{imageError && <p role="alert">{imageError}</p>}<p>{selected ? `Elemento: ${page.layers.find(layer => layer.id === selected)?.name || ''}` : 'Selecione um elemento na prévia ou em Camadas.'}</p></div>;
 }

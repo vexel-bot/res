@@ -19,6 +19,47 @@
   min-width: 0;
   width: 100%;
 }
+.studios-workspace .is-focused .is-studio-grid { align-items:start; }
+.studios-workspace .is-focused .is-header { padding:0 0 8px;margin-bottom:0; }
+.studios-workspace .is-focused .is-workspace-bar { padding:0 0 10px;border-top:0;gap:8px;flex-wrap:wrap; }
+.studios-workspace .is-focused .is-workspace-bar>span { flex:1;min-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap; }
+.studios-workspace .is-focused .is-header-actions { gap:8px;flex-wrap:wrap;justify-content:flex-end; }
+.studios-workspace .is-focused .is-workspace-bar button { min-height:36px;padding:8px 11px; }
+.studios-workspace .is-focused[data-creation-state=idea] .is-studio-grid { grid-template-columns:minmax(0,1fr);max-width:920px;margin-inline:auto;gap:16px; }
+.studios-workspace .is-focused[data-creation-state=idea] .is-controls { grid-row:1; }
+.studios-workspace .is-focused[data-creation-state=idea] .is-visual-panel { grid-row:2; }
+.studios-workspace .is-focused[data-creation-state=idea] .is-stage { height:auto;min-height:140px; }
+.studios-workspace .is-focused[data-creation-state=idea] .is-empty-stage { padding:20px; }
+.studios-workspace .is-focused[data-creation-state=idea] .is-empty-symbol { width:38px;height:38px;margin:0; }
+.studios-workspace .is-focused .is-controls-title { margin-bottom:0; }
+.studios-workspace .is-focused .is-controls { gap:10px;padding:18px; }
+.studios-workspace .is-focused .is-controls>fieldset:first-of-type { gap:6px; }
+.studios-workspace .is-focused .is-prompt { min-height:100px;height:108px;line-height:1.6; }
+.studios-workspace .is-focused .is-essential-fields { grid-template-columns:repeat(2,minmax(0,1fr));gap:12px!important; }
+.studios-workspace .is-focused .is-creation-details { display:grid;grid-template-columns:minmax(0,1fr);gap:0 14px;min-width:0; }
+.studios-workspace .is-focused .is-creation-details>.is-details[open] { grid-column:1/-1; }
+.studios-workspace .is-focused .is-creation-details summary { min-height:42px;flex-wrap:wrap;line-height:1.4;gap:4px; }
+.studios-workspace .is-focused .is-creation-details summary>span { margin-left:0; }
+.studios-workspace .is-focused .is-creation-details summary:after { margin-left:auto; }
+@media(min-width:701px) { .studios-workspace .is-focused[data-creation-state=idea] .is-creation-details { grid-template-columns:repeat(3,minmax(0,1fr)); } }
+.studios-workspace .is-focused .is-controls-title h2 { font-size:21px; }
+.studios-workspace .is-focused .is-ad-questions { display:grid;gap:12px;margin:10px 0; }
+.studios-workspace .is-focused .studio-utility-panel .is-history { margin:0;padding:0;border:0; }
+.studios-workspace .is-focused .studio-utility-panel .is-project-list { grid-template-columns:1fr; }
+.studios-workspace .is-focused .is-native-details>summary { font-size:11px; }
+@media(min-width:1000px){.studios-workspace .is-focused[data-creation-state=review] .is-controls{max-height:calc(100dvh - 200px);overflow:auto;overscroll-behavior:contain;scrollbar-width:thin}.studios-workspace .is-focused[data-creation-state=review] .is-stage{min-height:260px;max-height:calc(100dvh - 280px)}.studios-workspace .is-focused[data-creation-state=review] .is-stage img{max-height:calc(100dvh - 300px);object-fit:contain}}
+.studios-workspace .is-focused[data-creation-state=review] .is-stage:fullscreen { height:100dvh;max-height:none;min-height:0; }.studios-workspace .is-focused[data-creation-state=review] .is-stage:fullscreen img { max-height:100%; }
+@media(max-width:700px) {
+  .studios-workspace .is-focused .is-workspace-bar>span { flex-basis:100%; }
+  .studios-workspace .is-focused .is-header-actions { display:contents; }
+  .studios-workspace .is-focused .is-workspace-bar button { min-height:44px;padding:8px 10px; }
+  .studios-workspace .is-focused .is-workspace-bar>.is-text { margin-left:0; }
+  .studios-workspace .is-focused .is-controls { padding:16px;gap:12px; }
+  .studios-workspace .is-focused .is-controls .is-prompt { font-size:16px;min-height:120px;height:132px; }
+  .studios-workspace .is-focused .is-creation-details { grid-template-columns:minmax(0,1fr); }
+  .studios-workspace .is-focused .is-creation-details summary { min-height:44px; }
+}
+@media(max-width:460px) { .studios-workspace .is-focused .is-essential-fields { grid-template-columns:minmax(0,1fr); } }
 [data-theme="light"] .is-root {
   --is-bg: #f8f8f8;
   --is-panel: #fff;

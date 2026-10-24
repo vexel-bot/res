@@ -84,6 +84,13 @@ export function dimensions(aspect: VideoBrief["aspect"]) {
       ? [1080, 1080]
       : [1080, 1920];
 }
+/** Safe, visible creation defaults. Never invent an advertising audience or offer. */
+export function videoBriefDefaults(brief: VideoBrief, advertising = false): VideoBrief {
+  return { ...brief,
+    title: brief.title.trim() || brief.objective.trim().slice(0, 80) || 'Meu vídeo',
+    audience: brief.audience.trim() || (advertising ? '' : 'Público geral'),
+  };
+}
 export function validateBrief(brief: VideoBrief) {
   if (brief.title.trim().length < 3)
     return "Dê um nome ao projeto com pelo menos 3 caracteres.";

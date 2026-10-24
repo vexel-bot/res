@@ -23,6 +23,22 @@
   line-height: 1.5;
   color-scheme: dark;
 }
+.studios-workspace .vs-root .vs-create-grid { grid-template-columns:minmax(0,1fr) 270px;gap:18px;max-width:1040px;margin-inline:auto; }
+.studios-workspace .vs-root .vs-section-intro { margin-bottom:16px; }
+.studios-workspace .vs-root .vs-section-intro h2 { font-size:22px; }
+.studios-workspace .vs-root .vs-form-panel { padding:20px; }
+.studios-workspace .vs-root .vs-progressive-fields { grid-template-columns:minmax(0,1fr); }
+.studios-workspace .vs-root .vs-start-options { margin:0 0 14px;border:1px solid var(--vs-line);border-radius:9px;padding:10px 14px; }
+.studios-workspace .vs-root .vs-start-options>summary { font-size:12px;cursor:pointer; }
+.studios-workspace .vs-root .vs-start-options .vs-kind-cards,.studios-workspace .vs-root .vs-start-options .vs-ad-paths { margin-top:14px; }
+.studios-workspace .vs-root .vs-workflow-disclosure { margin:0 0 10px;border:0; }
+.studios-workspace .vs-root .vs-workflow-disclosure>summary { font-size:11px;color:var(--vs-muted);cursor:pointer;padding:5px 0; }
+.studios-workspace .vs-root .vs-workflow-disclosure .vs-workflow-hint { margin:8px 0; }
+.studios-workspace .vs-root .studio-utility-panel .vs-projects { margin:0;padding:0;border:0; }
+.studios-workspace .vs-root .studio-utility-panel .vs-project-grid { grid-template-columns:1fr; }
+.studios-workspace .vs-root[data-integrated-editor=true]>.vs-banner { padding:7px 12px;margin-bottom:8px;font-size:11px; }
+@media(max-width:900px){.studios-workspace .vs-root .vs-create-grid{grid-template-columns:minmax(0,1fr)}.studios-workspace .vs-root .vs-create-sidebar{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:640px){.studios-workspace .vs-root .vs-create-sidebar{grid-template-columns:minmax(0,1fr)}.studios-workspace .vs-root .vs-form-panel{padding:15px}.studios-workspace .vs-root .vs-section-intro h2{font-size:20px}}
 [data-theme="light"] .vs-root {
   --vs-bg: #f8f8f8;
   --vs-panel: #ffffff;

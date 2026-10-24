@@ -12,9 +12,10 @@ type ClickoSelectMenuProps = {
   className?: string;
   triggerClassName?: string;
   menuClassName?: string;
+  ariaLabel?: string;
 };
 
-export function ClickoSelectMenu({ label, value, options, onChange, className = '', triggerClassName = '', menuClassName = '' }: ClickoSelectMenuProps) {
+export function ClickoSelectMenu({ label, value, options, onChange, className = '', triggerClassName = '', menuClassName = '', ariaLabel }: ClickoSelectMenuProps) {
   const [open, setOpen] = React.useState(false);
   const rootRef = React.useRef<HTMLDivElement>(null);
   const optionRefs = React.useRef<Array<HTMLButtonElement | null>>([]);
@@ -78,6 +79,7 @@ export function ClickoSelectMenu({ label, value, options, onChange, className = 
       type="button"
       className={`clicko-select-menu__trigger ${triggerClassName}`.trim()}
       aria-haspopup="listbox"
+      aria-label={ariaLabel ? ariaLabel + ': ' + selectedName : undefined}
       aria-controls={menuId}
       aria-expanded={open}
       onClick={() => setOpen(current => !current)}

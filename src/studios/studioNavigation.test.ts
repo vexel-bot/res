@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { defaultStudioTool, isStudioModule, permittedStudioTools, studioCategories, studioNavigationAllowed, studioToolForPath, studioTools } from './studioNavigation';
+import { categoryStudioTool, futureStudioTools, defaultStudioTool, isStudioModule, permittedStudioTools, studioCategories, studioNavigationAllowed, studioToolForPath, studioTools } from './studioNavigation';
 import { canAccessNavigation } from '../security/accessControl';
 import type { WorkspaceMember } from '../types';
 
@@ -50,4 +50,20 @@ test('pending editor operations can prevent navigation without changing their re
     target.removeEventListener('clicko:studio-before-leave', block);
     assert.equal(studioNavigationAllowed(), true);
   } finally { Object.defineProperty(globalThis, 'window', { configurable:true, value:previous }); }
+});
+
+test('visible categories reopen a permitted remembered tool or a safe first entry', () => {
+  assert.equal(categoryStudioTool(studioTools,'video','video-motion')?.id,'video-motion');
+  assert.equal(categoryStudioTool(studioTools,'image','video-motion')?.id,'image-generate');
+  assert.equal(categoryStudioTool(studioTools,'advertising')?.id,'ad-create');
+  assert.equal(categoryStudioTool(studioTools,'tools','image-editorial')?.id,'image-editorial');
+});
+
+test('category selection cannot restore a tool outside the current permissions', () => {
+  const imageOnly = permittedStudioTools(module => module === 'create-image');
+  assert.equal(categoryStudioTool(imageOnly,'video','video-motion'),undefined);
+  assert.equal(categoryStudioTool(imageOnly,'advertising','ad-create')?.id,'ad-creatives');
+  assert.equal(categoryStudioTool([],'image','image-edit'),undefined);
+  assert.deepEqual(futureStudioTools.advertising,['Variações de Criativos']);
+  assert.ok(!studioTools.some(tool => futureStudioTools.tools?.includes(tool.label)));
 });

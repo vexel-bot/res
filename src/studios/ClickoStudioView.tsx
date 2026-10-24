@@ -6,6 +6,7 @@ import type { NavigationTab } from '../types';
 import { useGovernance } from '../context/GovernanceContext';
 import type { StudioTool, StudioToolId } from './studioNavigation';
 import './clicko-studio.css';
+import './shared/studio-experience.css';
 
 const VideoStudio = React.lazy(() => import('./video/VideoStudio').then(module => ({ default: module.VideoStudio })));
 const ImageStudio = React.lazy(() => import('./image/ImageStudio').then(module => ({ default: module.ImageStudio })));
@@ -32,7 +33,11 @@ export function ClickoStudioView({ module, onNavigate, tool, onToolChange }: { m
   };
   return <div data-clicko-studio={module} data-clicko-studio-client={activeClient?.id || ''} className="mx-auto w-full max-w-[1560px] p-3 sm:p-6" key={`${currentUser?.id}:${activeAccount.workspaceId}:${module}:${activeClient?.id || ''}`}>
     <ProductDataProvider module={module}>
-      {localEligible && <nav className="lp-editor-choice" aria-label="Editor"><button aria-pressed={!advanced} onClick={() => { if (window.dispatchEvent(new Event('clicko:studio-before-leave', { cancelable:true }))) setAdvanced(false); }}>Edição local</button><button aria-pressed={advanced} onClick={() => { if (window.dispatchEvent(new Event('clicko:studio-before-leave', { cancelable:true }))) setAdvanced(true); }}>Editor avançado existente</button></nav>}
+      {localEligible && <details className="lp-editor-choice"><summary>Ferramentas do Studio</summary><div>
+        <button aria-pressed={!advanced} onClick={event => { if (window.dispatchEvent(new Event('clicko:studio-before-leave', { cancelable:true }))) {setAdvanced(false);event.currentTarget.closest('details')?.removeAttribute('open');} }}>Canvas de camadas local</button>
+        <button aria-pressed={advanced} onClick={event => { if (window.dispatchEvent(new Event('clicko:studio-before-leave', { cancelable:true }))) {setAdvanced(true);event.currentTarget.closest('details')?.removeAttribute('open');} }}>Recursos nativos existentes</button>
+        <p>Os motores nativos dependem de runtime. Seus formatos e projetos existentes são preservados, sem conversão automática.</p>
+      </div></details>}
       {localEligible && !advanced
         ? <React.Suspense fallback={<p role="status">Carregando produção local…</p>}><LocalProductionStudio module={module} onNavigate={onNavigate}/></React.Suspense>
         : module === 'create-video'

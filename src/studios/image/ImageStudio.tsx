@@ -57,6 +57,7 @@ import {
 } from "./imageModel";
 import "./image-studio.css";
 import { matchesStudioDraft, readStudioSession, writeStudioSession } from '../studioSession';
+import { StudioKlicButton, StudioUtilityPanel } from '../shared/StudioWorkspace';
 
 type ImageEntry = 'create' | 'edit' | 'advertising' | 'composition' | 'editorial';
 type ImageNavigationState = { draft: ImageDraft; doc?: CraftDocument; sourceId?: string; references: string[]; assets: AssetRecord[]; job?: StudioGenerationJobRecord; dirty: boolean };
@@ -836,7 +837,7 @@ function ImageRoom({
   const displayed = result || (mode === "edit" ? source : undefined);
 
   return (
-    <section className="is-root" aria-label="Estúdio de imagens Clicko">
+    <section className="is-root is-focused" data-creation-state={previewUrl || activeJob ? 'review' : 'idea'} aria-label="Estúdio de imagens Clicko">
       <div hidden={view === "studio"} className="is-advanced-top">
         <button disabled={busy} onClick={() => void run(returnToStudio)}>
           <ArrowLeft size={16} /> Voltar ao estúdio de imagens
@@ -873,7 +874,7 @@ function ImageRoom({
         </React.Suspense>
       )}
       <div hidden={view !== "studio"}>
-        <header className="is-header">
+        <header className="is-header" hidden={embedded}>
           <div>
             <span className="is-eyebrow">CLICKO STUDIOS / IMAGENS</span>
             <h1>
@@ -881,17 +882,6 @@ function ImageRoom({
               <br className="is-mobile-break" /> Edite com precisão.
             </h1>
             <p>Da primeira ideia ao último detalhe, no seu espaço criativo.</p>
-          </div>
-          <div className="is-header-actions">
-            <button
-              onClick={() => setProjectsOpen((value) => !value)}
-              aria-expanded={projectsOpen}
-            >
-              <History size={16} /> Projetos e histórico
-            </button>
-            <button className="is-primary" disabled={locked} onClick={newDraft}>
-              <Plus size={16} /> Nova criação
-            </button>
           </div>
         </header>
         <div className="is-workspace-bar">
@@ -925,6 +915,17 @@ function ImageRoom({
               : "Seu próximo projeto"}
             {dirty && <small>Alterações não salvas</small>}
           </span>
+          <div className="is-header-actions"><StudioKlicButton/>
+            <button
+              onClick={() => setProjectsOpen((value) => !value)}
+              aria-expanded={projectsOpen}
+            >
+              <History size={16} /> Projetos e histórico
+            </button>
+            <button className="is-primary" disabled={locked} onClick={newDraft}>
+              <Plus size={16} /> Nova criação
+            </button>
+          </div>
           <button
             className="is-text"
             disabled={locked}
@@ -979,7 +980,7 @@ function ImageRoom({
             </button>
           </div>
         )}
-        {projectsOpen && (
+        <StudioUtilityPanel title="Projetos e histórico" open={projectsOpen} onClose={() => setProjectsOpen(false)}>
           <section className="is-history">
             <div className="is-section-title">
               <h2>Suas criações, preservadas</h2>
@@ -1083,7 +1084,7 @@ function ImageRoom({
               </button>
             </div>
           </section>
-        )}
+        </StudioUtilityPanel>
         <div className="is-studio-grid">
           <main className="is-visual-panel">
             <div className="is-stage-heading">
@@ -1148,7 +1149,7 @@ function ImageRoom({
                       ? "Você acompanha o estado real do processamento abaixo. A imagem só aparece após a confirmação do servidor."
                       : mode === "edit"
                         ? "Envie uma imagem ou use um arquivo da Biblioteca. O original permanece intacto."
-                        : "Descreva o que imagina no painel ao lado. A visualização será ocupada apenas por resultados reais."}
+                        : "Seu resultado real aparece aqui depois da geração."}
                   </p>
                   {mode === "edit" && !activeJob && (
                     <button
@@ -1491,10 +1492,10 @@ function ImageRoom({
             </div>
             <fieldset disabled={locked}>
               <label>
-                {mode === "edit" ? "Alteração desejada" : "Descreva sua imagem"}
+                {mode === "edit" ? "Alteração desejada" : draft.purpose === "Anúncio" ? "O que será divulgado?" : "Descreva sua ideia"}
                 <textarea
                   className="is-prompt"
-                  rows={6}
+                  rows={4}
                   maxLength={1000}
                   value={draft.prompt}
                   onChange={(event) => change("prompt", event.target.value)}
@@ -1505,7 +1506,12 @@ function ImageRoom({
                   }
                 />
               </label>
-              <div className="is-prompt-meta">
+              {draft.purpose === 'Anúncio' && <div className="is-ad-questions">
+              <label>Para quem?<input value={draft.audience || ''} maxLength={2000} onChange={event => change('audience',event.target.value)} placeholder="Público do anúncio"/></label>
+              <label>Qual resultado deseja alcançar?<input value={draft.campaignGoal || ''} maxLength={1000} onChange={event => change('campaignGoal',event.target.value)} placeholder="Ex.: apresentar o produto e levar visitas ao site"/></label>
+              <small>Criação de peças visuais. Não publica nem gerencia campanhas.</small>
+            </div>}
+            <div className="is-prompt-meta">
                 <small>{draft.prompt.length}/1000</small>
                 <button
                   className="is-klic-button"
@@ -1578,23 +1584,92 @@ function ImageRoom({
               </div>
             )}
             <fieldset disabled={locked} className="is-essential-fields">
-              <ClickoSelectMenu
-                label="Finalidade"
-                value={draft.purpose}
-                options={IMAGE_PURPOSES.map((value) => [value, value])}
-                onChange={(value) => change("purpose", value)}
-              />
+
               <ClickoSelectMenu
                 label="Enquadramento desejado"
                 value={draft.aspect}
                 options={IMAGE_FORMATS}
                 onChange={(value) => change("aspect", value)}
               />
+                <ClickoSelectMenu
+                  label="Estilo visual"
+                  value={draft.style}
+                  options={IMAGE_STYLES.map((value) => [
+                    value,
+                    value || "Deixar a descrição orientar",
+                  ])}
+                  onChange={(value) => change("style", value)}
+                />
+            </fieldset>
+            {hasInputs && (
+              <div className="is-authorization">
+                <label>
+                  Autorização de uso das imagens
+                  <textarea
+                    rows={2}
+                    disabled={locked}
+                    maxLength={1000}
+                    value={usageEvidence}
+                    onChange={(event) => {
+                      setUsageEvidence(event.target.value);
+                      setAuthorized(false);
+                    }}
+                    placeholder="Ex.: fotografias próprias do catálogo, com autorização para este uso."
+                  />
+                </label>
+                <label className="is-check">
+                  <input
+                    type="checkbox"
+                    disabled={locked || usageEvidence.trim().length < 3}
+                    checked={authorized}
+                    onChange={(event) => setAuthorized(event.target.checked)}
+                  />{" "}
+                  Confirmo a autorização declarada e o envio da
+                  origem/referências ao provedor de IA.
+                </label>
+              </div>
+            )}
+            <div className="is-generate">
+              <button
+                className="is-primary"
+                disabled={
+                  locked ||
+                  !ready ||
+                  !draft.prompt.trim() ||
+                  (mode === "edit" && !source) ||
+                  (hasInputs && !authorized)
+                }
+                onClick={() => void run(generate)}
+              >
+                {busy || activeJob ? (
+                  <LoaderCircle size={17} className="is-spin" />
+                ) : (
+                  <Sparkles size={17} />
+                )}
+                {mode === "edit" ? "Aplicar edição com IA" : "Gerar imagem"}
+                <ArrowRight size={16} />
+              </button>
+              <small>
+                {ready
+                  ? "Cada solicitação aceita consome 1 imagem da cota, mesmo se falhar ou for cancelada."
+                  : loading
+                    ? "Conferindo o serviço de imagens…"
+                    : "Geração indisponível neste ambiente. Consulte Serviço e utilização."}
+              </small>
+            </div>
+            <div className="is-creation-details">
+            <details className="is-details"><summary>Finalidade e formato técnico</summary>              <ClickoSelectMenu
+                label="Finalidade"
+                value={draft.purpose}
+                options={IMAGE_PURPOSES.map((value) => [value, value])}
+                onChange={(value) => change("purpose", value)}
+              />
               <small className="is-field-note">
                 Proporção enviada nativamente ao modelo e conferida no arquivo
                 recebido. Resolução de geração: 1K; o tamanho do projeto não altera a resolução do provedor.
               </small>
-            </fieldset>
+            </details>
+
             <details className="is-details">
               <summary>
                 Referências visuais <span>{references.length}/3 imagens</span>
@@ -1636,7 +1711,7 @@ function ImageRoom({
             </details>
             <details className="is-details">
               <summary>
-                Ajustes da criação <span>Estilo, preservação e marca</span>
+                Configurações avançadas <span>Preservação e marca</span>
               </summary>
               <fieldset disabled={locked}>
                 <label>
@@ -1648,15 +1723,7 @@ function ImageRoom({
                     placeholder="Opcional · sua descrição também pode dar nome ao projeto"
                   />
                 </label>
-                <ClickoSelectMenu
-                  label="Estilo visual"
-                  value={draft.style}
-                  options={IMAGE_STYLES.map((value) => [
-                    value,
-                    value || "Deixar a descrição orientar",
-                  ])}
-                  onChange={(value) => change("style", value)}
-                />
+
                 <label>
                   Instruções adicionais
                   <textarea
@@ -1711,61 +1778,6 @@ function ImageRoom({
                 </p>
               </fieldset>
             </details>
-            {hasInputs && (
-              <div className="is-authorization">
-                <label>
-                  Autorização de uso das imagens
-                  <textarea
-                    rows={2}
-                    disabled={locked}
-                    maxLength={1000}
-                    value={usageEvidence}
-                    onChange={(event) => {
-                      setUsageEvidence(event.target.value);
-                      setAuthorized(false);
-                    }}
-                    placeholder="Ex.: fotografias próprias do catálogo, com autorização para este uso."
-                  />
-                </label>
-                <label className="is-check">
-                  <input
-                    type="checkbox"
-                    disabled={locked || usageEvidence.trim().length < 3}
-                    checked={authorized}
-                    onChange={(event) => setAuthorized(event.target.checked)}
-                  />{" "}
-                  Confirmo a autorização declarada e o envio da
-                  origem/referências ao provedor de IA.
-                </label>
-              </div>
-            )}
-            <div className="is-generate">
-              <button
-                className="is-primary"
-                disabled={
-                  locked ||
-                  !ready ||
-                  !draft.prompt.trim() ||
-                  (mode === "edit" && !source) ||
-                  (hasInputs && !authorized)
-                }
-                onClick={() => void run(generate)}
-              >
-                {busy || activeJob ? (
-                  <LoaderCircle size={17} className="is-spin" />
-                ) : (
-                  <Sparkles size={17} />
-                )}
-                {mode === "edit" ? "Aplicar edição com IA" : "Gerar imagem"}
-                <ArrowRight size={16} />
-              </button>
-              <small>
-                {ready
-                  ? "Cada solicitação aceita consome 1 imagem da cota, mesmo se falhar ou for cancelada."
-                  : loading
-                    ? "Conferindo o serviço de imagens…"
-                    : "Geração indisponível: configure um provedor com suporte a esta operação no servidor."}
-              </small>
             </div>
             <details className="is-details is-service-details">
               <summary>

@@ -16,6 +16,8 @@ export interface ImageDraft {
   additional: string;
   preserve: string;
   brand: boolean;
+  audience?: string;
+  campaignGoal?: string;
 }
 export const initialImageDraft = (initial?: {
   title: string;
@@ -90,7 +92,7 @@ export function imageDraftError(draft: ImageDraft) {
     draft.prompt.length > 1000 ||
     draft.additional.length > 1000 ||
     draft.style.length > 1000 ||
-    draft.title.length > 180
+    draft.title.length > 180 || (draft.audience?.length || 0) > 2000 || (draft.campaignGoal?.length || 0) > 1000
   )
     return "O texto ultrapassa o limite do briefing salvo. Reduza a descrição ou os ajustes adicionais.";
   const preserve = draft.preserve.split("\n").filter((line) => line.trim());
@@ -109,6 +111,8 @@ export function imagePrompt(draft: ImageDraft, brandContext = "") {
   return [
     draft.prompt.trim(),
     `Finalidade: ${draft.purpose}.`,
+    draft.audience?.trim() && `Público: ${draft.audience.trim()}.`,
+    draft.campaignGoal?.trim() && `Resultado desejado: ${draft.campaignGoal.trim()}.`,
     draft.style && `Direção visual: ${draft.style}.`,
     `Enquadramento desejado: ${draft.aspect}.`,
     draft.additional.trim(),
@@ -124,7 +128,7 @@ function brief(draft: ImageDraft): StudioDocumentCreate["brief"] {
   return {
     schemaVersion: "studio.creative-brief.v1",
     objective: draft.prompt.trim(),
-    audience: "Público a definir",
+    audience: draft.audience?.trim() || "Público a definir",
     angle: draft.prompt.trim(),
     hook: draft.purpose,
     promise: draft.additional,

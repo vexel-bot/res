@@ -30,6 +30,14 @@ export function studioToolForPath(pathname: string): StudioTool | undefined {
 }
 export const permittedStudioTools = (canAccess: (module: StudioModule) => boolean) => studioTools.filter(tool => canAccess(tool.module));
 
+export function categoryStudioTool(tools: readonly StudioTool[], category: StudioCategory, preferredId?: StudioToolId) {
+  return tools.find(tool => tool.category === category && tool.id === preferredId) || tools.find(tool => tool.category === category);
+}
+export const futureStudioTools: Partial<Record<StudioCategory, readonly string[]>> = {
+  advertising: ['Variações de Criativos'],
+  tools: ['Variações de imagem e vídeo', 'Adaptação para redes sociais'],
+};
+
 /** Internal module identities remain unchanged: Studios is navigation, not a new entitlement. */
 export function studioNavigationAllowed() {
   return window.dispatchEvent(new Event('clicko:studio-before-leave', { cancelable: true }));

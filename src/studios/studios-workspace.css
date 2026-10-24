@@ -1,19 +1,62 @@
-.studios-workspace { width:100%; max-width:1560px; min-width:0; margin:0 auto; padding:24px; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; color:var(--clicko-text-primary); }
-.studios-workspace__heading { display:flex; align-items:center; gap:12px; padding-bottom:20px; margin-bottom:20px; border-bottom:1px solid var(--clicko-border-soft); }
-.studios-workspace__heading > svg { width:32px; height:32px; padding:7px; box-sizing:border-box; border-radius:8px; background:color-mix(in srgb,var(--clicko-accent) 8%,transparent); color:var(--clicko-accent-ink); }
-.studios-workspace__heading h1 { margin:0; font-size:20px; line-height:1.3; font-weight:600; letter-spacing:-.025em; }
-.studios-workspace__heading p { margin:5px 0 0; font-size:12px; color:var(--clicko-text-muted); }
-.studios-workspace .studios-categories { margin-bottom:12px; }
-.studios-workspace .studios-categories button:disabled { opacity:.4; cursor:not-allowed; }
-.studios-tools { overflow-x:auto; max-width:100%; margin:0 0 20px; overscroll-behavior-inline:contain; scrollbar-width:thin; }
-.studios-tools > div { display:flex; align-items:center; gap:8px; width:max-content; min-width:100%; padding:3px 2px 8px; }
-.studios-tools button { display:inline-flex; align-items:center; gap:7px; min-height:40px; padding:8px 13px; border:1px solid var(--clicko-border-soft); border-radius:8px; font-family:inherit; font-size:12px; font-weight:500; line-height:1.4; white-space:nowrap; background:var(--clicko-ui-surface-muted); color:var(--clicko-text-muted); cursor:pointer; }
-.studios-tools button[aria-current="page"] { color:var(--clicko-accent-ink); border-color:color-mix(in srgb,var(--clicko-accent) 35%,transparent); background:color-mix(in srgb,var(--clicko-accent) 8%,transparent); }
-.studios-tools button:focus-visible { outline:2px solid var(--clicko-accent); outline-offset:1px; }
-.studios-tools button:disabled { cursor:not-allowed; opacity:.5; }
-.studios-tools small { font-size:10px; }
-.studios-tool-note { padding:12px 14px; margin:0 0 16px; border:1px solid var(--clicko-border-soft); border-radius:9px; color:var(--clicko-text-muted); font-size:12px; line-height:1.6; }
-.studios-workspace > [data-clicko-studio] { padding:0; }
-.studios-workspace .is-header > div:first-child, .studios-workspace .vs-header > div:first-child { display:none; }
-.studios-workspace .is-header, .studios-workspace .vs-header { justify-content:flex-end; }
-@media(max-width:640px) { .studios-workspace { padding:16px 12px; } .studios-workspace__heading { padding-bottom:16px; margin-bottom:16px; } .studios-workspace__heading p { max-width:240px; } .studios-tools button { min-height:44px; } }
+.studios-workspace { width:100%;max-width:1560px;min-width:0;margin:0 auto;padding:12px 20px;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--clicko-text-primary); }
+.studios-workspace>[data-clicko-studio] { padding:0; }
+.studios-workspace__bar { display:flex;align-items:center;gap:8px;min-height:32px;margin-bottom:6px; }
+.studios-workspace__bar>svg { color:var(--clicko-accent-ink);flex-shrink:0; }
+.studios-workspace__brand,.studios-workspace__divider { color:var(--clicko-text-muted);font-size:12px; }
+.studios-workspace__bar h1 { margin:0;min-width:0;font-size:15px;font-weight:600;letter-spacing:-.02em; }
+.studios-workspace__bar>.studio-klic-access { margin-left:auto;display:inline-flex;align-items:center;gap:6px;min-height:32px;padding:6px 10px;border:1px solid var(--clicko-border-soft);border-radius:8px;background:var(--clicko-ui-surface-muted);font:inherit;font-size:11px;cursor:pointer; }
+.studios-workspace>[data-clicko-studio] .studio-klic-access { display:none; }
+.studios-navigation { margin-bottom:12px;min-width:0; }
+.studios-category-nav,.studios-tool-nav { display:flex;align-items:center;gap:4px;flex-wrap:wrap; }
+.studios-category-nav { padding:3px;background:var(--clicko-ui-surface-muted);border:1px solid var(--clicko-border-soft);border-radius:9px; }
+.studios-tool-nav { padding:5px 1px 0; }
+.studios-category-nav button,.studios-tool-nav button { display:inline-flex;align-items:center;gap:6px;min-height:30px;padding:6px 11px;border:1px solid transparent;border-radius:6px;background:transparent;color:var(--clicko-text-muted);font:inherit;font-size:11px;line-height:1.3;cursor:pointer; }
+.studios-category-nav button[aria-pressed=true] { color:var(--clicko-accent-ink);background:color-mix(in srgb,var(--clicko-accent) 9%,transparent);border-color:color-mix(in srgb,var(--clicko-accent) 24%,transparent); }
+.studios-tool-nav button[aria-current=page] { color:var(--clicko-accent-ink);background:color-mix(in srgb,var(--clicko-accent) 7%,transparent); }
+.studios-category-nav button:hover:not(:disabled),.studios-tool-nav button:hover:not(:disabled) { background:var(--clicko-ui-surface);color:var(--clicko-text-primary); }
+.studios-category-nav button:disabled,.studios-tool-nav button:disabled { opacity:.45;cursor:not-allowed; }
+.studios-tool-nav small { font-size:9px; }
+.studios-workspace button:focus-visible,.studios-workspace summary:focus-visible { outline:2px solid var(--clicko-accent);outline-offset:2px; }
+.studios-compact-navigation { display:none; }
+.studios-workspace .is-header>div:first-child,.studios-workspace .vs-header>div:first-child { display:none; }
+.studios-workspace .is-header,.studios-workspace .vs-header { justify-content:flex-end;margin-bottom:8px; }
+.studios-workspace .lp-editor-choice { display:block;position:relative;margin:0 0 6px;font-size:11px;color:var(--clicko-text-muted);z-index:10; }
+.studios-workspace .lp-editor-choice>summary { width:fit-content;cursor:pointer;padding:4px 0; }
+.studios-workspace .lp-editor-choice:not([open])>div { display:none; }
+.studios-workspace .lp-editor-choice>div { position:absolute;top:100%;left:0;width:min(360px,100%);padding:14px;background:var(--clicko-ui-surface);border:1px solid var(--clicko-border-soft);border-radius:10px;box-shadow:0 12px 40px #0003; }
+.studios-workspace .lp-editor-choice button { display:block;width:100%;text-align:left;margin-bottom:6px; }
+.studios-workspace .lp-editor-choice p { margin:10px 0 0;font-size:11px;line-height:1.5; }
+@media(max-width:1000px) {
+ .studios-category-nav,.studios-tool-nav { display:none; }
+ .studios-compact-navigation { display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.35fr);gap:8px; }
+ .studios-compact-navigation .clicko-select-menu { min-width:0; }
+ .studios-compact-navigation .clicko-select-menu__label { font-size:10px;margin-bottom:4px; }
+ .studios-compact-navigation .clicko-select-menu__trigger { min-height:38px;padding:8px 10px;font-size:11px; }
+ .studios-compact-navigation .clicko-select-menu__popover { z-index:45;max-height:min(260px,var(--clicko-select-available-height,260px)); }
+ .studios-future-note { grid-column:1/-1;font-size:10px;color:var(--clicko-text-muted);line-height:1.5; }
+}
+@media(max-width:640px) {
+ .studios-workspace { padding:10px; }
+ .studios-workspace__brand,.studios-workspace__divider { display:none; }
+ .studios-workspace__bar h1 { font-size:14px; }
+ .studios-workspace__bar>.studio-klic-access,.studios-compact-navigation .clicko-select-menu__trigger { min-height:42px; }
+ .studios-compact-navigation { grid-template-columns:minmax(0,1fr) minmax(0,1.25fr); }
+ .studios-compact-navigation .clicko-select-menu__option { min-height:44px; }
+}
+
+/* One reserved KLIC entry, not a second floating control over the canvas. */
+.clicko-app-shell:has(.studios-workspace) .klic-floating-root>.klic-floating-trigger { display:none; }
+.clicko-app-shell:has(.studios-workspace) .klic-floating-root.is-open { top:80px;bottom:16px;right:20px;gap:0; }
+.clicko-app-shell:has(.studios-workspace) .klic-floating-root.is-open>.klic-floating-panel { width:360px;height:100%;max-height:100%;min-height:0; }
+@media(min-width:1440px) {
+ .clicko-app-shell:has(.klic-floating-root.is-open) .studios-workspace { width:calc(100% - 380px);margin-left:0;margin-right:380px; }
+}
+@media(max-width:1439px) {
+ /* Narrow windows use a conversation view. Editors stay mounted and recover on close. */
+ .clicko-app-shell:has(.klic-floating-root.is-open) .studios-workspace { visibility:hidden; }
+ .clicko-app-shell:has(.studios-workspace) .klic-floating-root.is-open { left:252px;right:20px;width:auto;max-width:none; }
+ .clicko-app-shell:has(.studios-workspace):has(.clicko-sidebar button[aria-label="Expandir barra lateral"]) .klic-floating-root.is-open { left:100px; }
+ .clicko-app-shell:has(.studios-workspace) .klic-floating-root.is-open>.klic-floating-panel { width:100%; }
+}
+@media(max-width:900px) { .clicko-app-shell:has(.studios-workspace):has(.klic-floating-root.is-open) .klic-floating-root.is-open { left:100px;right:16px;top:72px; } }
+@media(max-width:640px) { .clicko-app-shell:has(.studios-workspace):has(.klic-floating-root.is-open) .klic-floating-root.is-open { left:74px;right:10px;top:64px;bottom:max(10px,env(safe-area-inset-bottom)); } }
