@@ -35,19 +35,19 @@ export function useCraftStudio(options: Options) {
   const [documents, setDocuments] = React.useState<CraftDocument[]>([]);
   const [inspection, setInspection] = React.useState<CraftInspection>();
   const [activePageId, setActivePageId] = React.useState<string>();
-  const activePageRef = React.useRef<string>();
+  const activePageRef = React.useRef<string | undefined>(undefined);
   const [status, setStatus] = React.useState<CraftStatus>("loading");
   const [error, setError] = React.useState<string>();
   const [notice, setNotice] = React.useState<string>();
   const [pending, setPending] = React.useState<CraftRecovery>();
   const [recovery, setRecovery] = React.useState<CraftRecovery>();
   const [aiRecovery, setAIRecovery] = React.useState<CraftAIRecovery>();
-  const aiRecoveryRef = React.useRef<CraftAIRecovery>();
+  const aiRecoveryRef = React.useRef<CraftAIRecovery | undefined>(undefined);
   const [job, setJob] = React.useState<StudioGenerationJobRecord>();
   const [jobRevision, setJobRevision] = React.useState<number>();
   const [versions, setVersions] = React.useState<StudioDocumentVersionRecord[]>([]);
-  const documentRef = React.useRef<CraftDocument>();
-  const pendingRef = React.useRef<CraftRecovery>();
+  const documentRef = React.useRef<CraftDocument | undefined>(undefined);
+  const pendingRef = React.useRef<CraftRecovery | undefined>(undefined);
   const workingRef = React.useRef(false);
   const scopeRef = React.useRef(0);
   const [reload, setReload] = React.useState(0);
@@ -196,8 +196,15 @@ export function useCraftStudio(options: Options) {
   React.useEffect(() => {
     const reconnect = () => { if (pendingRef.current) { setStatus("dirty"); setNotice("Conexão recuperada. Salvando alterações…"); } };
     const leave = (event: BeforeUnloadEvent) => { if (pendingRef.current || aiRecoveryRef.current || workingRef.current) { event.preventDefault(); event.returnValue = ""; } };
+    const beforeStudioLeave = (event: Event) => {
+      if (workingRef.current || pendingRef.current || aiRecoveryRef.current) {
+        event.preventDefault();
+        setNotice('Conclua ou confira a recuperação do editor antes de trocar de módulo.');
+      }
+    };
     window.addEventListener("online", reconnect); window.addEventListener("beforeunload", leave);
-    return () => { window.removeEventListener("online", reconnect); window.removeEventListener("beforeunload", leave); };
+    window.addEventListener('clicko:studio-before-leave', beforeStudioLeave);
+    return () => { window.removeEventListener("online", reconnect); window.removeEventListener("beforeunload", leave); window.removeEventListener('clicko:studio-before-leave', beforeStudioLeave); };
   }, []);
 
   const queue = (command: CraftCommand) => {

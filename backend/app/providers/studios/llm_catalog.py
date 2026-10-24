@@ -48,8 +48,9 @@ PROVIDERS = [
         ("accounts/fireworks/models/kimi-k3", "Kimi K3"),
         ("accounts/fireworks/models/glm-5p3-flash", "GLM 5.3 Flash"),
     ], "https://docs.fireworks.ai/getting-started/quickstart"),
-    preset("openrouter", "OpenRouter", "openai_chat", "https://openrouter.ai/api/v1", [],
-           "https://openrouter.ai/docs/guides/overview/models"),
+    preset("openrouter", "OpenRouter", "openai_chat", "https://openrouter.ai/api/v1", [
+        ("anthropic/claude-opus-5.5", "Claude Opus 5.5 · OpenRouter"),
+    ], "https://openrouter.ai/anthropic/claude-opus-5.5", verifiedAt="2026-10-21"),
     preset("ollama", "Ollama · local", "ollama_chat", "http://127.0.0.1:11434", [
         ("qwen3:8b", "Qwen3 8B · local"), ("gpt-oss:20b", "GPT-OSS 20B · local"),
     ], "https://docs.ollama.com/api/openai-compatibility", authPrefix="", billingMode="local_free"),

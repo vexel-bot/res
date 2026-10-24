@@ -1,7 +1,7 @@
 {
   "schemaVersion": "studio.worker-runtime-manifest.v1",
   "runtimeName": "clicko-media-cpu",
-  "runtimeVersion": "1.0.2",
+  "runtimeVersion": "1.0.3",
   "capability": "media_cpu",
   "queues": [
     "studio.media.cpu"
@@ -15,7 +15,8 @@
     "media_waveform",
     "editing_gemini",
     "editing_ai",
-    "craft_render"
+    "craft_render",
+    "timeline_render"
   ],
   "providers": [
     "builtin.ffprobe",
@@ -27,7 +28,8 @@
     "builtin.ffmpeg-qc-v1",
     "craft.photocraft",
     "craft.filmcraft",
-    "craft.effectcraft"
+    "craft.effectcraft",
+    "ffmpeg.timeline-v1"
   ],
   "requiredEnvironment": [
     "DATABASE_URL",

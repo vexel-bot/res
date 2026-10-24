@@ -1,6 +1,7 @@
 import React from "react";
 import {
   ArrowDownToLine,
+  Upload,
   ArrowLeft,
   ArrowRight,
   Check,
@@ -22,6 +23,7 @@ import {
   type StudioDocumentRecord,
   type StudioGenerationJobRecord,
   type StudioReviewRecord,
+  type AssetRecord,
 } from "../../api/productApi";
 import { craftApi } from "../craft/craftApi";
 import { identityApi, type IdentityCatalog } from "../identity/identityApi";
@@ -33,6 +35,7 @@ import {
   type StudioFormat,
 } from "./departmentApi";
 import "./department.css";
+import { matchesStudioDraft, readStudioSession, writeStudioSession } from '../studioSession';
 
 export interface DepartmentStudioProps {
   pathname?: string;
@@ -41,6 +44,7 @@ export interface DepartmentStudioProps {
   mode?: string;
   sourceAssetId?: string;
   campaignId?: string;
+  initialBrief?: { title: string; objective: string };
 }
 const labels = { image: "Imagem", carousel: "Carrossel", video: "Vídeo" };
 const statuses: Record<string, string> = {
@@ -107,6 +111,7 @@ function StudioRoom({
   mode,
   sourceAssetId,
   campaignId,
+  initialBrief,
 }: DepartmentStudioProps & { workspaceId: string; brandName: string }) {
   const data = useProductData();
   const query = new URLSearchParams(search);
@@ -174,23 +179,36 @@ function StudioRoom({
       previous?.focus();
     };
   }, [contextOpen]);
+  const navigationScope = JSON.stringify(['editorial', data.bootstrap?.user.id, workspaceId, linkedPost || null, linkedCampaign || null, initialFormat, query.get('identityVersion'), query.get('voiceVersion')]);
   const [form, setForm] = React.useState<
     Omit<ProjectInput, "workspaceId" | "requestKey">
-  >({
-    title: post?.title || "",
-    objective: post?.copy?.slice(0, 1000) || "",
+  >(() => {
+    const initial = {
+    title: initialBrief?.title || post?.title || "",
+    objective: initialBrief?.objective || post?.copy?.slice(0, 1000) || "",
     audience: "",
     tone: "Claro e preciso",
     evidence: "",
-    front: query.get("front") === "ads" ? "ads" : "content",
-    intent: "education",
+    front: query.get("front") === "ads" ? 'ads' as const : 'content' as const,
+    intent: 'education' as const,
     format: initialFormat,
     campaignId: linkedCampaign,
     postId: post?.id,
     sourceAssetId,
     identityVersionId: query.get("identityVersion") || undefined,
     voiceVersionId: query.get("voiceVersion") || undefined,
+    };
+    const saved = readStudioSession<typeof initial>(navigationScope);
+    return matchesStudioDraft(saved, initial, ['identityVersionId', 'voiceVersionId', 'postId', 'sourceAssetId', 'campaignId']) ? saved! : initial;
   });
+  React.useEffect(() => { writeStudioSession(navigationScope, form); }, [navigationScope, form]);
+  React.useEffect(() => {
+    const beforeLeave = (event: Event) => {
+      if (busy) { event.preventDefault(); setNotice('Aguarde a confirmação da operação editorial antes de trocar de ferramenta.'); }
+    };
+    window.addEventListener('clicko:studio-before-leave', beforeLeave);
+    return () => window.removeEventListener('clicko:studio-before-leave', beforeLeave);
+  }, [busy]);
   const [cast, setCast] = React.useState<IdentityCatalog>();
   const [castError, setCastError] = React.useState<string>();
   const [castRetry, setCastRetry] = React.useState(0);
@@ -228,10 +246,12 @@ function StudioRoom({
   const [previewError, setPreviewError] = React.useState<string>();
   const [previewAttempt, setPreviewAttempt] = React.useState(0);
   const [mediaReady, setMediaReady] = React.useState(false);
+  const [uploadedAssets, setUploadedAssets] = React.useState<AssetRecord[]>([]);
+  const materialInput = React.useRef<HTMLInputElement>(null);
   const [comment, setComment] = React.useState("");
   const [position, setPosition] = React.useState(0);
   const [versionsOpen, setVersionsOpen] = React.useState(false);
-  const activeId = React.useRef<string>();
+  const activeId = React.useRef<string | undefined>(undefined);
   activeId.current = project?.id;
   const chooseProject = React.useCallback((next?: DepartmentProject) => {
     operation.current++;
@@ -314,7 +334,7 @@ function StudioRoom({
       if (jobs.status === "fulfilled") setJob(jobs.value);
       else setError(message(jobs.reason));
       if (reviews.status === "fulfilled") setReview(reviews.value);
-      if (versions.status === "fulfilled") setHistory(versions.value);
+      if (versions.status === "fulfilled") setHistory(versions.value.map(item => ({ version: item.number, label: item.label })));
     },
     [workspaceId],
   );
@@ -403,7 +423,7 @@ function StudioRoom({
   const direction = project?.directions.find(
     (d) => d.id === project.directionId,
   );
-  const assets = (data.snapshot?.assets || []).filter((asset) =>
+  const assets = [...uploadedAssets, ...(data.snapshot?.assets || [])].filter((asset) =>
     (asset.mediaType || "").startsWith(
       form.format === "video" ? "video/" : "image/",
     ),
@@ -761,6 +781,17 @@ function StudioRoom({
                       produção adicional.
                     </p>
                   )}
+                  <input ref={materialInput} type="file" hidden accept={form.format === "video" ? "video/mp4,video/quicktime,video/webm" : "image/png,image/jpeg,image/webp"} onChange={(event) => {
+                    const file = event.target.files?.[0]; event.target.value = "";
+                    if (!file) return;
+                    void run(async () => {
+                      const asset = await craftApi.uploadAsset(workspaceId, file);
+                      if (!alive.current) return;
+                      setUploadedAssets(rows => [asset, ...rows.filter(item => item.id !== asset.id)]);
+                      update("sourceAssetId", asset.id);
+                    });
+                  }} />
+                  <button type="button" className="ds-secondary" disabled={busy} onClick={() => materialInput.current?.click()}><Upload size={15} />Adicionar material</button>
                   <fieldset>
                     <legend>Presença e voz (opcional)</legend>
                     <div className="ds-form-row">
@@ -1252,6 +1283,7 @@ function StudioRoom({
                         {project.format === "carousel" ? "completa (ZIP)" : ""}
                       </button>
                     )}
+                  {document && <button className="ds-secondary" onClick={() => navigate(`/studios/native?document=${encodeURIComponent(document.documentId)}&mode=${video ? 'video' : 'visual'}`)}>Abrir edição avançada</button>}
                   {previewUrl && mediaReady && (
                     <a
                       className="ds-download"

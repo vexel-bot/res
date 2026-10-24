@@ -97,6 +97,10 @@ def composition_page_to_canvas(document: CreativeDocumentV1, page_index: int = 0
     layers = []
     for layer in page.layers:
         raw = dict(layer.properties)
+        if raw.get("schemaVersion") == "studio.local-layer.v1" and "fontWeight" in raw:
+            # Legacy navigation canvas uses labels, canonical local documents use
+            # numeric CSS weights. Adapt only this projection, never the saved layer.
+            raw["fontWeight"] = "normal" if raw["fontWeight"] == 400 else "bold"
         raw.update(
             {
                 "id": layer.id,

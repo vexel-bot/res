@@ -8,6 +8,9 @@ from pathlib import Path
 os.environ["ENVIRONMENT"] = "test"
 _test_db_dir = Path(tempfile.mkdtemp(prefix="res-studio-tests-")).resolve()
 os.environ["DATABASE_URL"] = "sqlite:///" + (_test_db_dir / "nexus-test.db").as_posix()
+# Upload fixtures belong to this run, alongside its isolated database. Never
+# inherit the developer's local asset directory from .env.
+os.environ["STORAGE_PATH"] = str(_test_db_dir / "uploads")
 os.environ["SECRET_KEY"] = "test-secret-key-not-for-production"
 os.environ.pop("AI_API_KEY", None)
 # Unit/integration tests must never inherit a paid local provider from .env.

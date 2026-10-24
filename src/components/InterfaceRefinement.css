@@ -1,0 +1,726 @@
+/*
+ * Clicko interface refinement
+ * ---------------------------
+ * A presentation-only layer for the authenticated product. Authentication is
+ * intentionally excluded because every rule is scoped to .clicko-app-shell.
+ */
+.clicko-app-shell {
+  --clicko-ui-canvas: #000000;
+  --clicko-ui-surface: #050505;
+  --clicko-ui-surface-raised: #090909;
+  --clicko-ui-popover: rgba(7, 7, 7, 0.92);
+  --clicko-ui-surface-muted: rgba(128, 128, 128, 0.1);
+  --clicko-ui-text: #ffffff;
+  --clicko-ui-text-secondary: rgba(255, 255, 255, 0.72);
+  --clicko-ui-muted: #808080;
+  --clicko-ui-border: rgba(255, 255, 255, 0.08);
+  --clicko-ui-border-strong: rgba(255, 255, 255, 0.14);
+  --clicko-ui-page-x: clamp(18px, 2.2vw, 30px);
+  --clicko-ui-page-y: clamp(20px, 2.3vw, 30px);
+  --clicko-ui-radius-panel: 12px;
+  --clicko-ui-radius-control: 8px;
+  --clicko-ui-control-height: 36px;
+  background: var(--clicko-ui-canvas);
+}
+
+.clicko-app-shell[data-theme="light"] {
+  --clicko-ui-canvas: #f5f5f3;
+  --clicko-ui-surface: #ffffff;
+  --clicko-ui-surface-raised: #ffffff;
+  --clicko-ui-popover: rgba(255, 255, 255, 0.94);
+  --clicko-ui-surface-muted: rgba(17, 17, 17, 0.05);
+  --clicko-ui-text: #151515;
+  --clicko-ui-text-secondary: #454545;
+  --clicko-ui-muted: #626262;
+  --clicko-ui-border: rgba(17, 17, 17, 0.12);
+  --clicko-ui-border-strong: rgba(17, 17, 17, 0.19);
+}
+
+/* Theme chooser must preview both palettes faithfully in light mode. */
+.clicko-app-shell[data-theme="light"] .clicko-theme-option {
+  background: #ffffff !important;
+  color: var(--clicko-ui-text-secondary);
+  border-color: var(--clicko-ui-border) !important;
+}
+
+.clicko-app-shell[data-theme="light"] .clicko-theme-option:hover {
+  background: #fafaf8 !important;
+  border-color: var(--clicko-ui-border-strong) !important;
+}
+
+.clicko-app-shell[data-theme="light"] .clicko-theme-option.is-selected {
+  background: #fff8f5 !important;
+  border-color: rgba(185, 71, 34, 0.42) !important;
+}
+
+.clicko-app-shell[data-theme="light"] .clicko-theme-preview.is-dark {
+  background: #000000 !important;
+  border-color: rgba(0, 0, 0, 0.82) !important;
+}
+
+.clicko-app-shell[data-theme="light"] .clicko-theme-preview.is-light {
+  background: #ffffff !important;
+  border-color: rgba(17, 17, 17, 0.16) !important;
+}
+
+/* Product frame */
+.clicko-app-shell .clicko-sidebar {
+  border-radius: 14px;
+  border-color: var(--clicko-ui-border) !important;
+  box-shadow: none !important;
+}
+
+.clicko-app-shell .clicko-sidebar-brand {
+  height: 58px !important;
+}
+
+.clicko-app-shell .clicko-sidebar-nav {
+  padding-top: 12px !important;
+  padding-bottom: 12px !important;
+}
+
+.clicko-app-shell .clicko-sidebar-nav > div {
+  gap: 12px !important;
+}
+
+.clicko-app-shell .clicko-nav-group {
+  padding-top: 0 !important;
+}
+
+.clicko-app-shell .clicko-nav-item {
+  min-height: 32px;
+  border-radius: 7px;
+  box-shadow: none !important;
+}
+
+.clicko-app-shell .clicko-nav-item:not([aria-current="page"]) {
+  background: transparent !important;
+}
+
+.clicko-app-shell .clicko-nav-item:not([aria-current="page"]):hover {
+  background: var(--clicko-ui-surface-muted) !important;
+}
+
+.clicko-app-shell .clicko-nav-item::after {
+  display: none;
+}
+
+.clicko-app-shell .clicko-nav-item[aria-current="page"] {
+  background: rgba(255, 127, 80, 0.085) !important;
+  border-color: rgba(255, 127, 80, 0.22) !important;
+}
+
+.clicko-app-shell .clicko-nav-active-indicator {
+  box-shadow: none;
+}
+
+.clicko-app-shell .clicko-topbar {
+  top: 8px;
+  height: 52px !important;
+  border-radius: 14px;
+  border-color: var(--clicko-ui-border) !important;
+  background: var(--clicko-ui-surface-raised) !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+
+.clicko-app-shell .clicko-command-search,
+.clicko-app-shell .clicko-topbar > div:last-child > div > button {
+  height: 34px;
+  border-radius: var(--clicko-ui-radius-control);
+  border-color: var(--clicko-ui-border) !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.clicko-app-shell .clicko-command-search:hover,
+.clicko-app-shell .clicko-topbar > div:last-child > div > button:hover {
+  background: var(--clicko-ui-surface-muted) !important;
+  border-color: var(--clicko-ui-border-strong) !important;
+}
+
+.clicko-app-shell #clicko-profile-menu {
+  width: min(304px, calc(100vw - 24px)) !important;
+  padding: 12px !important;
+  border-radius: 12px !important;
+  border-color: var(--clicko-ui-border-strong) !important;
+  background-color: var(--clicko-ui-popover) !important;
+  background-image: none !important;
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.28) !important;
+  backdrop-filter: blur(12px) !important;
+}
+
+/* Pages and shared controls */
+.clicko-app-shell.clicko-creative-workspace .clicko-main-stage:has(
+  [role="dialog"].fixed.inset-0,
+  .cx-library-modal,
+  .cx-client-dialog-backdrop
+) {
+  z-index: 50;
+}
+
+.clicko-app-shell .clicko-main-stage > div:not(.clicko-dashboard-editorial):not(.clicko-studio-immersive) {
+  max-width: 1480px !important;
+  padding: var(--clicko-ui-page-y) var(--clicko-ui-page-x) 40px !important;
+}
+
+.clicko-app-shell .clicko-main-stage > .space-y-6 > * + * {
+  margin-top: 16px !important;
+}
+
+.clicko-app-shell .clicko-main-stage :is(input:not([type="range"]), select, textarea) {
+  min-height: var(--clicko-ui-control-height);
+  border-radius: var(--clicko-ui-radius-control);
+  border-color: var(--clicko-ui-border) !important;
+  box-shadow: none !important;
+}
+
+.clicko-app-shell .clicko-main-stage :is(input:not([type="range"]), select, textarea):focus {
+  border-color: rgba(255, 127, 80, 0.58) !important;
+  box-shadow: 0 0 0 3px rgba(255, 127, 80, 0.08) !important;
+}
+
+.clicko-app-shell .clicko-main-stage button[class*="bg-[#FF7F50]"] {
+  border-color: #ff7f50 !important;
+  background: #ff7f50 !important;
+  color: #000000 !important;
+  box-shadow: none !important;
+}
+
+.clicko-app-shell .clicko-main-stage button[class*="bg-[#FF7F50]"]:hover {
+  border-color: #f28500 !important;
+  background: #f28500 !important;
+}
+
+.clicko-app-shell .clicko-interactive-surface {
+  box-shadow: none !important;
+  transform: none;
+}
+
+.clicko-app-shell .clicko-interactive-surface:hover {
+  transform: none;
+}
+
+.clicko-app-shell .clicko-main-stage :is(h1, h2, h3, h4) {
+  text-wrap: balance;
+}
+
+.clicko-app-shell .clicko-main-stage > div:not(.clicko-dashboard-editorial) h1 {
+  font-size: clamp(24px, 2.25vw, 26px) !important;
+  line-height: 1.16 !important;
+  letter-spacing: -0.035em !important;
+}
+
+.clicko-app-shell .clicko-main-stage :is(p, small, span) {
+  text-rendering: optimizeLegibility;
+}
+
+/* Dashboard */
+.clicko-app-shell .clicko-dashboard-editorial {
+  width: min(100%, 1500px) !important;
+  padding: 24px var(--clicko-ui-page-x) 40px !important;
+}
+
+.clicko-app-shell .clicko-dashboard-hero {
+  min-height: 146px;
+  padding: 26px 28px !important;
+  border-radius: var(--clicko-ui-radius-panel);
+  border-color: var(--clicko-ui-border) !important;
+  background: var(--clicko-ui-surface) !important;
+  box-shadow: none !important;
+}
+
+.clicko-app-shell .clicko-dashboard-hero::before,
+.clicko-app-shell .clicko-dashboard-hero::after {
+  display: none !important;
+}
+
+.clicko-app-shell .clicko-dashboard-hero h1 {
+  font-size: clamp(29px, 3vw, 40px) !important;
+  letter-spacing: -0.045em !important;
+}
+
+.clicko-app-shell .clicko-dashboard-metrics {
+  margin-top: 14px;
+  border-radius: var(--clicko-ui-radius-panel);
+  border-color: var(--clicko-ui-border) !important;
+  background: var(--clicko-ui-surface) !important;
+  box-shadow: none !important;
+}
+
+.clicko-app-shell .clicko-metric-cell {
+  min-height: 108px;
+  padding: 18px 20px !important;
+  border-color: var(--clicko-ui-border) !important;
+}
+
+.clicko-app-shell .clicko-metric-cell::after {
+  display: none;
+}
+
+.clicko-app-shell .clicko-dashboard-body {
+  margin-top: 14px;
+  border-radius: var(--clicko-ui-radius-panel);
+  border-color: var(--clicko-ui-border) !important;
+  background: var(--clicko-ui-surface) !important;
+  box-shadow: none !important;
+}
+
+.clicko-app-shell .clicko-dashboard-calendar,
+.clicko-app-shell .clicko-dashboard-side {
+  padding: 22px !important;
+}
+
+.clicko-app-shell .clicko-dashboard-side {
+  border-color: var(--clicko-ui-border) !important;
+  background: var(--clicko-ui-surface) !important;
+}
+
+.clicko-app-shell .clicko-dashboard-flow {
+  padding-top: 22px !important;
+}
+
+.clicko-app-shell .clicko-dashboard-flow > div:last-child {
+  border-radius: var(--clicko-ui-radius-panel);
+  border-color: var(--clicko-ui-border) !important;
+  background: var(--clicko-ui-surface) !important;
+}
+
+.clicko-app-shell .clicko-dashboard-flow .clicko-interactive-surface {
+  min-height: 54px;
+  padding: 13px 14px !important;
+  border-color: var(--clicko-ui-border) !important;
+}
+
+/* Analytics */
+.clicko-app-shell .clicko-analytics-workspace {
+  padding: 24px var(--clicko-ui-page-x) 40px !important;
+}
+
+.clicko-app-shell .clicko-analytics-workspace .aw-header {
+  margin-bottom: 20px;
+}
+
+.clicko-app-shell .clicko-analytics-workspace h1 {
+  font-size: 25px;
+}
+
+.clicko-app-shell .clicko-analytics-workspace .aw-panel {
+  padding: 18px;
+  border-radius: var(--clicko-ui-radius-panel);
+  border-color: var(--clicko-ui-border) !important;
+  background: var(--clicko-ui-surface) !important;
+}
+
+.clicko-app-shell .clicko-analytics-workspace .aw-panel-heading {
+  margin-bottom: 16px;
+}
+
+.clicko-app-shell .clicko-analytics-workspace .aw-metrics {
+  gap: 10px;
+}
+
+.clicko-app-shell .clicko-analytics-workspace .aw-metric {
+  padding: 15px;
+  border-radius: 9px;
+  border-color: var(--clicko-ui-border) !important;
+  background: transparent !important;
+}
+
+.clicko-app-shell .clicko-analytics-workspace .aw-metric > strong {
+  margin: 13px 0 8px;
+  font-size: clamp(21px, 2vw, 27px);
+}
+
+.clicko-app-shell .clicko-analytics-workspace :is(.aw-button, select, input[type="date"], .aw-search) {
+  min-height: 34px;
+  border-radius: var(--clicko-ui-radius-control);
+  box-shadow: none !important;
+}
+
+/* Automations */
+.clicko-app-shell .clicko-automation-workspace {
+  padding: 24px var(--clicko-ui-page-x) 40px !important;
+}
+
+.clicko-app-shell .clicko-automation-workspace .au-header {
+  margin-bottom: 20px;
+}
+
+.clicko-app-shell .clicko-automation-workspace h1 {
+  font-size: 25px;
+}
+
+.clicko-app-shell .clicko-automation-workspace .au-stats {
+  gap: 10px;
+}
+
+.clicko-app-shell .clicko-automation-workspace .au-stats > div {
+  padding: 15px;
+  border-radius: 9px;
+  border-color: var(--clicko-ui-border) !important;
+  background: var(--clicko-ui-surface) !important;
+}
+
+.clicko-app-shell .clicko-automation-workspace .au-stats strong {
+  margin-top: 12px;
+  font-size: 24px;
+}
+
+.clicko-app-shell .clicko-automation-workspace .au-tabs {
+  margin: 10px 0 20px;
+  border-color: var(--clicko-ui-border) !important;
+}
+
+.clicko-app-shell .clicko-automation-workspace .au-tabs button {
+  padding: 14px 0 11px;
+}
+
+.clicko-app-shell .clicko-automation-workspace :is(.au-klic, .au-template, .au-flow-row, .au-step, .au-empty) {
+  border-radius: var(--clicko-ui-radius-panel);
+  border-color: var(--clicko-ui-border) !important;
+  background: var(--clicko-ui-surface) !important;
+  box-shadow: none !important;
+}
+
+.clicko-app-shell .clicko-automation-workspace .au-klic,
+.clicko-app-shell .clicko-automation-workspace .au-flow-row,
+.clicko-app-shell .clicko-automation-workspace .au-template {
+  padding: 17px;
+}
+
+/* Library */
+.clicko-app-shell .cx-library-approved {
+  max-width: 1480px;
+  padding: 24px var(--clicko-ui-page-x) 40px;
+}
+
+.clicko-app-shell .cx-library-approved h1 {
+  font-size: 26px;
+}
+
+.clicko-app-shell .cx-library-approved > nav {
+  height: 50px;
+  gap: 24px;
+  border-color: var(--clicko-ui-border);
+}
+
+.clicko-app-shell .cx-library-toolbar {
+  margin: 12px 0 16px;
+}
+
+.clicko-app-shell :is(.cx-library-button, .cx-library-toolbar label, .cx-library-toolbar select) {
+  height: 36px;
+  border-radius: var(--clicko-ui-radius-control);
+  border-color: var(--clicko-ui-border);
+}
+
+.clicko-app-shell :is(.cx-library-assets button, .cx-template-grid > article, .cx-library-layout > aside) {
+  border-radius: 9px;
+  border-color: var(--clicko-ui-border);
+  box-shadow: none;
+}
+
+.clicko-app-shell .cx-library-layout > aside {
+  padding: 16px;
+}
+
+.clicko-app-shell .cx-library-modal > form {
+  width: min(440px, 100%);
+  padding: 18px;
+  border-radius: var(--clicko-ui-radius-panel);
+  border-color: var(--clicko-ui-border-strong);
+  background: var(--clicko-ui-surface-raised) !important;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.3);
+}
+
+/* Clients / corporate workspace */
+.clicko-app-shell .cx-clients-shell {
+  width: min(100%, 1480px);
+  padding: 24px var(--clicko-ui-page-x) 40px;
+}
+
+.clicko-app-shell :is(.cx-clients-page-header, .cx-client-detail-header) {
+  gap: 18px;
+  padding-bottom: 20px;
+}
+
+.clicko-app-shell :is(.cx-clients-page-header, .cx-client-detail-header) h1 {
+  font-size: clamp(24px, 2.2vw, 29px);
+}
+
+.clicko-app-shell .cx-client-toolbar {
+  padding: 10px;
+  border-radius: 11px;
+  border-color: var(--clicko-ui-border);
+  background: var(--clicko-ui-surface) !important;
+}
+
+.clicko-app-shell .cx-client-list,
+.clicko-app-shell .cx-client-row,
+.clicko-app-shell .cx-client-panel,
+.clicko-app-shell .cx-client-metrics article {
+  border-color: var(--clicko-ui-border) !important;
+  background: var(--clicko-ui-surface) !important;
+  box-shadow: none !important;
+}
+
+.clicko-app-shell .cx-client-list {
+  border-radius: var(--clicko-ui-radius-panel);
+}
+
+.clicko-app-shell .cx-client-row {
+  min-height: 78px;
+  padding: 11px 16px;
+}
+
+.clicko-app-shell .cx-client-metrics article {
+  min-height: 94px;
+  padding: 14px;
+  border-radius: 11px;
+}
+
+.clicko-app-shell .cx-client-panel {
+  padding: 16px;
+  border-radius: 11px;
+}
+
+.clicko-app-shell .cx-client-dialog {
+  width: min(420px, 100%);
+  padding: 18px;
+  border-radius: var(--clicko-ui-radius-panel);
+  border-color: var(--clicko-ui-border-strong);
+  background: var(--clicko-ui-surface-raised) !important;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.3);
+}
+
+/* Shared overlays */
+.clicko-app-shell .clicko-search-panel {
+  width: min(620px, calc(100vw - 32px));
+  border-radius: var(--clicko-ui-radius-panel);
+  border-color: var(--clicko-ui-border-strong);
+  background-color: var(--clicko-ui-surface-raised) !important;
+  background-image: none !important;
+  box-shadow: 0 20px 56px rgba(0, 0, 0, 0.32);
+}
+
+.clicko-app-shell .clicko-search-overlay {
+  padding: clamp(64px, 9vh, 92px) 16px 20px;
+  background: rgba(0, 0, 0, 0.62);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.clicko-app-shell .clicko-search-heading {
+  gap: 18px;
+  padding: 17px 18px 12px;
+}
+
+.clicko-app-shell .clicko-search-field {
+  min-height: 48px;
+  margin-inline: 18px;
+  padding-inline: 12px;
+  border-radius: 10px;
+  box-shadow: none;
+}
+
+.clicko-app-shell .clicko-search-meta {
+  padding: 11px 20px 7px;
+}
+
+.clicko-app-shell .clicko-search-results {
+  padding: 3px 10px 10px;
+}
+
+.clicko-app-shell .clicko-search-result {
+  gap: 10px;
+  padding: 9px;
+}
+
+.clicko-app-shell :is(.clicko-search-result, [role="option"]) {
+  min-height: 46px;
+  border-radius: 9px;
+}
+
+.clicko-app-shell .clicko-topbar div.relative > button[aria-label="Notificações"] + div[class*="absolute"][class*="z-50"] {
+  width: min(304px, calc(100vw - 24px)) !important;
+  padding: 12px !important;
+  border-radius: var(--clicko-ui-radius-panel) !important;
+  border-color: var(--clicko-ui-border-strong) !important;
+  background-color: var(--clicko-ui-popover) !important;
+  background-image: none !important;
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.28) !important;
+  backdrop-filter: blur(12px) !important;
+}
+
+.clicko-app-shell .clicko-main-stage [class*="rounded-2xl"] {
+  border-radius: var(--clicko-ui-radius-panel) !important;
+}
+
+.clicko-app-shell .clicko-main-stage [class*="rounded-xl"] {
+  border-radius: 10px !important;
+}
+
+.clicko-app-shell:not([data-current-tab="ai-chat"]):not([data-current-tab="create-image"]):not([data-current-tab="create-video"])
+  .clicko-main-stage [class*="shadow-"]:not(dialog) {
+  box-shadow: none !important;
+}
+
+.clicko-app-shell [class*="fixed"][class*="inset-0"]:not(.clicko-splash) > :is(div, section, aside, form),
+.clicko-app-shell dialog {
+  border-radius: var(--clicko-ui-radius-panel);
+  border-color: var(--clicko-ui-border-strong) !important;
+  box-shadow: 0 20px 56px rgba(0, 0, 0, 0.32) !important;
+}
+
+html[data-theme="light"] [role="dialog"][class*="max-w-lg"],
+body:has(.clicko-app-shell) [role="dialog"][class*="max-w-lg"] {
+  max-width: 480px !important;
+}
+
+/* Remove decorative treatments that made individual screens feel unrelated. */
+.clicko-app-shell :is(
+  .clicko-dashboard-hero,
+  .clicko-dashboard-metrics,
+  .clicko-dashboard-body,
+  .clicko-dashboard-side,
+  .clicko-dashboard-insight,
+  .clicko-dashboard-flow > div:last-child,
+  .aw-panel,
+  .au-stats > div,
+  .au-klic,
+  .au-template,
+  .cx-client-panel,
+  .cx-client-metrics article
+) {
+  background-image: none !important;
+  box-shadow: none !important;
+}
+
+/* Mobile and narrow workspaces */
+@media (max-width: 1180px) {
+  .clicko-app-shell {
+    --clicko-ui-page-x: 22px;
+    --clicko-ui-page-y: 22px;
+  }
+
+  .clicko-app-shell .clicko-dashboard-editorial {
+    padding: 22px var(--clicko-ui-page-x) 36px !important;
+  }
+
+  .clicko-app-shell .clicko-dashboard-hero {
+    min-height: 136px;
+    padding: 23px 24px !important;
+  }
+
+  .clicko-app-shell .clicko-dashboard-calendar,
+  .clicko-app-shell .clicko-dashboard-side {
+    padding: 20px !important;
+  }
+}
+
+@media (max-width: 900px) {
+  .clicko-app-shell {
+    --clicko-ui-page-x: 18px;
+    --clicko-ui-page-y: 20px;
+  }
+
+  .clicko-app-shell .clicko-topbar {
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+
+  .clicko-app-shell .clicko-main-stage > div:not(.clicko-dashboard-editorial):not(.clicko-studio-immersive) {
+    padding: var(--clicko-ui-page-y) var(--clicko-ui-page-x) 36px !important;
+  }
+
+  .clicko-app-shell .clicko-dashboard-editorial {
+    padding: 20px var(--clicko-ui-page-x) 34px !important;
+  }
+
+  .clicko-app-shell .cx-client-row {
+    min-height: 196px;
+  }
+}
+
+@media (max-width: 700px) {
+  .clicko-app-shell {
+    --clicko-ui-page-x: 14px;
+    --clicko-ui-page-y: 18px;
+  }
+
+  .clicko-app-shell .clicko-topbar {
+    top: 6px;
+    height: 48px !important;
+    margin-top: 6px;
+    border-radius: 12px;
+  }
+
+  .clicko-app-shell .clicko-dashboard-editorial {
+    padding: 16px var(--clicko-ui-page-x) 30px !important;
+  }
+
+  .clicko-app-shell .clicko-dashboard-hero {
+    min-height: auto;
+    padding: 20px 18px !important;
+  }
+
+  .clicko-app-shell .clicko-dashboard-hero h1 {
+    font-size: clamp(27px, 8vw, 34px) !important;
+  }
+
+  .clicko-app-shell .clicko-metric-cell {
+    min-height: 96px;
+    padding: 16px !important;
+  }
+
+  .clicko-app-shell .clicko-dashboard-calendar,
+.clicko-app-shell .clicko-dashboard-side {
+    padding: 17px !important;
+  }
+
+  .clicko-app-shell .clicko-analytics-workspace,
+  .clicko-app-shell .clicko-automation-workspace,
+  .clicko-app-shell .cx-library-approved,
+  .clicko-app-shell .cx-clients-shell {
+    padding: var(--clicko-ui-page-y) var(--clicko-ui-page-x) 32px !important;
+  }
+
+  .clicko-app-shell .clicko-analytics-workspace .aw-panel {
+    padding: 15px;
+  }
+
+  .clicko-app-shell .clicko-search-panel {
+    width: calc(100vw - 20px);
+  }
+}
+
+@media (max-width: 520px) {
+  .clicko-app-shell .clicko-dashboard-metrics,
+  .clicko-app-shell .clicko-automation-workspace .au-stats,
+  .clicko-app-shell .clicko-analytics-workspace .aw-metrics {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .clicko-app-shell .clicko-dashboard-metrics .clicko-metric-cell {
+    border-left: 0 !important;
+    border-top: 1px solid var(--clicko-ui-border) !important;
+  }
+
+  .clicko-app-shell .clicko-dashboard-metrics .clicko-metric-cell:first-child {
+    border-top: 0 !important;
+  }
+
+  .clicko-app-shell :is(.cx-library-modal, .cx-client-dialog-backdrop) {
+    padding: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .clicko-app-shell *,
+  .clicko-app-shell *::before,
+  .clicko-app-shell *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}

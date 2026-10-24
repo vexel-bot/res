@@ -16,6 +16,7 @@ from ...domain.studios.contracts import (
     VideoStreamV1,
 )
 from ...domain.studios.providers import MediaProbeProvider
+from .media_runtime import resolve_tool
 
 
 def _optional_int(value: object) -> int | None:
@@ -101,12 +102,12 @@ class FFprobeMediaProbeProvider:
 
     @property
     def version(self) -> str:
-        return _binary_version(self.executable, self.timeout_seconds)
+        return _binary_version(resolve_tool("ffprobe", self.executable), self.timeout_seconds)
 
     def probe(self, path: Path, *, asset_id: str, checksum_sha256: str | None) -> MediaProbeResultV1:
         completed = subprocess.run(
             [
-                self.executable,
+                resolve_tool("ffprobe", self.executable),
                 "-v",
                 "error",
                 "-protocol_whitelist",

@@ -3,6 +3,18 @@
   "updatedAt": "2026-10-24",
   "entries": [
     {
+      "id": "studios-team-sync-20261024",
+      "date": "2026-10-24",
+      "category": "update",
+      "status": "implemented",
+      "title": "Localhost atualizado com os Studios do time",
+      "summary": "Navegação e fluxos de 24/10 incorporados, mantendo evolução, identidades e os Crafts completos.",
+      "impact": "As telas mais recentes passam a conviver com os cadastros de aparência e voz no ambiente local.",
+      "document": "2026-10-24-team-sync.md",
+      "requirements": ["Incorporar as atualizações do GitHub.", "Preservar o trabalho local e os fontes completos dos motores."],
+      "evidence": ["CLICKO_REVISAO_EXPERIENCIA_STUDIOS_2026-10-24.md", "src/App.tsx", "server/evolution.ts", "backend/app/studio_routes.py"]
+    },
+    {
       "id": "avatar-independent-cast",
       "date": "2026-10-24",
       "category": "update",

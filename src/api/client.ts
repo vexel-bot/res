@@ -1,5 +1,5 @@
 import createClient, { type Middleware } from 'openapi-fetch';
-import { authToken } from '../api';
+import { studioRequestHeaders } from '../api';
 import type { components, paths } from './schema';
 
 export type BackendSchema<Name extends keyof components['schemas']> = components['schemas'][Name];
@@ -19,8 +19,7 @@ export const backendClient = createClient<paths>({ baseUrl: '' });
 
 const requestContextMiddleware: Middleware = {
   async onRequest({ request }) {
-    const token = authToken.get();
-    if (token) request.headers.set('Authorization', `Bearer ${token}`);
+    studioRequestHeaders(request.headers);
     request.headers.set('X-Correlation-ID', crypto.randomUUID());
     return request;
   },

@@ -1,0 +1,90 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import express from 'express';
+import sharp from 'sharp';
+import { existsSync, mkdtempSync, readFileSync, rmSync } from 'node:fs';
+import { spawnSync } from 'node:child_process';
+import { tmpdir } from 'node:os';
+import path from 'node:path';
+import { createGovernanceRouter } from './governance';
+
+test('profile photo survives upload, new login and repository reload; rejects invalid files and foreign sessions', async t => {
+  process.env.NODE_ENV = 'development';
+  process.env.CLICKO_DEV_AUTH_BYPASS = 'false';
+  process.env.AUTH_EMAIL_VERIFICATION_REQUIRED = 'false';
+  const folder = mkdtempSync(path.join(tmpdir(), 'clicko-avatar-'));
+  const filename = path.join(folder, 'governance.json');
+  const app = express(); app.use(express.json());
+  app.use('/api/governance', createGovernanceRouter({ dataFile: filename }));
+  const server = app.listen(0, '127.0.0.1');
+  await new Promise<void>(resolve => server.once('listening', resolve));
+  t.after(async () => {
+    await new Promise<void>(resolve => server.close(() => resolve()));
+    if (path.dirname(folder) === path.resolve(tmpdir()) && path.basename(folder).startsWith('clicko-avatar-')) rmSync(folder, { recursive: true, force: true });
+  });
+  const origin = `http://127.0.0.1:${(server.address() as { port: number }).port}`;
+  const json = (route: string, method = 'GET', data?: unknown, cookie = '') => fetch(origin + '/api/governance' + route, { method, headers: { 'Content-Type': 'application/json', cookie }, ...(data ? { body: JSON.stringify(data) } : {}) });
+  const credentials = { name: 'Avatar Test', email: 'avatar@example.test', password: 'PhotoTest123', confirmation: 'PhotoTest123', termsAccepted: true, privacyAccepted: true, remember: true };
+  const signup = await json('/auth/signup', 'POST', credentials);
+  assert.equal(signup.status, 201);
+  let cookie = signup.headers.get('set-cookie')!.split(';')[0];
+  const initial = await signup.json();
+  const png = await sharp({ create: { width: 800, height: 600, channels: 3, background: '#ff7f50' } }).png().toBuffer();
+  const upload = (body: Buffer, type = 'image/png', workspaceId = initial.account.workspaceId, session = cookie, requestOrigin = origin) => fetch(origin + '/api/governance/profile/avatar', { method: 'PUT', headers: { 'Content-Type': type, cookie: session, 'x-workspace-id': workspaceId, origin: requestOrigin }, body });
+  assert.equal((await upload(png, 'image/png', initial.account.workspaceId, '')).status, 401);
+  assert.equal((await upload(png, 'image/png', 'foreign')).status, 409);
+  assert.equal((await upload(png, 'image/png', initial.account.workspaceId, cookie, 'https://foreign.test')).status, 403);
+  assert.equal((await upload(Buffer.from('<svg/>'), 'image/svg+xml')).status, 415);
+  assert.equal((await upload(Buffer.from('not a png'))).status, 422);
+  assert.equal((await upload(Buffer.alloc(5 * 1024 * 1024 + 1))).status, 413);
+  const uploaded = await upload(png);
+  assert.equal(uploaded.status, 200);
+  const payload = await uploaded.json();
+  const url = payload.user.avatar;
+  assert.match(url, /^\/api\/governance\/users\/.+\/avatar\?v=[a-f0-9]{64}$/);
+  assert.equal(payload.account.avatar, url);
+  const photo = await fetch(origin + url, { headers: { cookie } });
+  assert.equal(photo.status, 200);
+  assert.equal(photo.headers.get('content-type'), 'image/webp');
+  assert.match(photo.headers.get('cache-control')!, /private, no-store/);
+  const metadata = await sharp(Buffer.from(await photo.arrayBuffer())).metadata();
+  assert.equal(metadata.width, 512); assert.equal(metadata.height, 384);
+  const state = JSON.parse(readFileSync(filename, 'utf8'));
+  assert.equal(state.users.find((u: { id: string }) => u.id === initial.user.id).avatar, url);
+  assert.ok(state.profileAvatars.find((p: { userId: string }) => p.userId === initial.user.id).data);
+  await json('/auth/logout', 'POST', undefined, cookie);
+  assert.equal((await fetch(origin + url, { headers: { cookie } })).status, 401);
+  const login = await json('/auth/login', 'POST', credentials);
+  cookie = login.headers.get('set-cookie')!.split(';')[0];
+  assert.equal((await login.json()).user.avatar, url);
+  // Reload the actual repository from disk, not browser/localStorage data.
+  const compiledRouter = typeof __dirname !== 'undefined' ? path.join(__dirname, 'governance.js') : '';
+  const compiled = Boolean(compiledRouter && existsSync(compiledRouter));
+  const child = spawnSync(process.execPath, [...(compiled ? [] : ['--import', 'tsx']), '-e', `
+    const express = require('express');
+    const { createGovernanceRouter } = require(${JSON.stringify(compiled ? compiledRouter : path.resolve('server/governance.ts'))});
+    const app = express(); app.use(express.json());
+    app.use('/api/governance', createGovernanceRouter({ dataFile: ${JSON.stringify(filename)} }));
+    const server = app.listen(0, '127.0.0.1', async () => {
+      try {
+        const base = 'http://127.0.0.1:' + server.address().port;
+        const session = await (await fetch(base + '/api/governance/auth/session', { headers: { cookie: ${JSON.stringify(cookie)} } })).json();
+        const photo = await fetch(base + session.user.avatar, { headers: { cookie: ${JSON.stringify(cookie)} } });
+        process.stdout.write(JSON.stringify({ avatar: session.user.avatar, status: photo.status, bytes: (await photo.arrayBuffer()).byteLength }));
+      } catch { process.exitCode = 1; } finally { server.close(); }
+    });
+  `], { encoding: 'utf8', timeout: 15000, env: process.env });
+  assert.equal(child.status, 0, child.stderr);
+  const restarted = JSON.parse(child.stdout);
+  assert.equal(restarted.avatar, url); assert.equal(restarted.status, 200); assert.ok(restarted.bytes > 0);
+  assert.equal((await (await json('/auth/session', 'GET', undefined, cookie)).json()).user.avatar, url);
+  assert.equal((await fetch(origin + url, { headers: { cookie } })).status, 200);
+  const stranger = await json('/auth/signup', 'POST', { ...credentials, email: 'stranger@example.test' });
+  const foreignCookie = stranger.headers.get('set-cookie')!.split(';')[0];
+  assert.equal((await fetch(origin + url, { headers: { cookie: foreignCookie } })).status, 404);
+  assert.equal((await upload(Buffer.from('corrupt'))).status, 422);
+  assert.equal((await (await json('/auth/session', 'GET', undefined, cookie)).json()).user.avatar, url);
+  const replacement = await sharp({ create: { width: 32, height: 32, channels: 3, background: '#808080' } }).png().toBuffer();
+  const replaced = await (await upload(replacement)).json();
+  assert.notEqual(replaced.user.avatar, url);
+});

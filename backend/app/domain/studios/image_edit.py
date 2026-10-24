@@ -16,7 +16,7 @@ class NormalizedRegionV1(StudioContract):
     height: float = Field(gt=0, le=1)
 
     @model_validator(mode="after")
-    def validate_bounds(self) -> "NormalizedRegionV1":
+    def validate_bounds(self) -> NormalizedRegionV1:
         if self.x + self.width > 1 or self.y + self.height > 1:
             raise ValueError("image_region_exceeds_canvas")
         return self

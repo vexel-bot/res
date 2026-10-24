@@ -1,4 +1,4 @@
-import { apiFetch, authToken, APIError } from "../../api";
+import { apiFetch, studioRequestHeaders, APIError } from "../../api";
 import type { AssetRecord, StudioDocumentRecord, StudioGenerationJobRecord } from "../../api/productApi";
 
 export type CraftEngine = "photocraft" | "filmcraft" | "effectcraft";
@@ -103,6 +103,7 @@ export interface CraftReceipt {
   document: CraftDocument;
   inspection: CraftInspection;
   receiptId: string;
+  compositionDocumentId?: string;
   aiTrace?: Record<string, unknown>;
 }
 export interface CraftAIRecovery {
@@ -120,11 +121,9 @@ function json(body: unknown, key?: string): RequestInit {
 
 /** Binary requests must not inherit the JSON content type used by apiFetch. */
 async function binary(url: string, init: RequestInit = {}): Promise<Response> {
-  const headers = new Headers(init.headers);
-  const token = authToken.get();
-  if (token) headers.set("Authorization", `Bearer ${token}`);
+  const headers = studioRequestHeaders(new Headers(init.headers));
   headers.set("X-Correlation-ID", crypto.randomUUID());
-  const response = await fetch(url, { ...init, headers });
+  const response = await fetch(url, { ...init, credentials: 'same-origin', headers });
   if (!response.ok) {
     let message = `Não foi possível acessar o projeto (${response.status}).`;
     try {

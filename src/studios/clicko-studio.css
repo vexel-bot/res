@@ -1,0 +1,13 @@
+/* Theme adaptation is scoped to the imported Studio room. */
+[data-theme="light"] .department-studio {
+  --ds-bg: #faf9f6;
+  --ds-panel: #f1efeb;
+  --ds-line: #24242420;
+  --ds-ink: #242424;
+  --ds-muted: #686862;
+  --ds-coral: #d8674e;
+}
+[data-theme="light"] .department-studio em { color: #55564f; }
+[data-theme="light"] .department-studio input,
+[data-theme="light"] .department-studio textarea,
+[data-theme="light"] .department-studio select { color: var(--ds-ink); background: var(--ds-panel); }

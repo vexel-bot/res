@@ -1,5 +1,5 @@
 import { expect, test, type Page } from "@playwright/test";
-import type { CraftCommand, CraftInspection } from "../../src/studios/craft/craftApi";
+import type { CraftCommand } from "../../src/studios/craft/craftApi";
 
 const native = { schemaVersion: "studio.native-editor-state.v1", engine: "photocraft", formatVersion: "1", buildId: "native-test-build", upstreamRevision: "revision", projectAssetId: "native-one", checksumSha256: "a".repeat(64), sizeBytes: 42, assetManifest: [], fontManifest: [], dependencies: [], migrationWarnings: [], pageProjects: [
   { pageId: "page-one", title: "Abertura", width: 1080, height: 1350, projectAssetId: "p1", checksumSha256: "a".repeat(64), sizeBytes: 21 },

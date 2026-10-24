@@ -1,48 +1,18 @@
-import type { ApprovalStage, NavigationTab, PostStatus, StrategyStatus } from '../types';
-
-export const navigationLabel: Record<NavigationTab, string> = {
-  dashboard: 'Painel',
-  'create-image': 'Criar imagem',
-  'create-video': 'Criar vídeo',
-  'create-copy': 'Criar texto',
-  'ai-chat': 'Chat com IA',
-  templates: 'Modelos',
-  'connected-accounts': 'Contas conectadas',
-  workspace: 'Ambiente de trabalho',
-  brain: 'Memória da marca',
-  strategy: 'Estratégia',
-  studio: 'Estúdio',
-  library: 'Biblioteca',
-  calendar: 'Calendário',
-  publisher: 'Publicações',
-  analytics: 'Análises',
-  automations: 'Automações',
-  approvals: 'Aprovações',
-  team: 'Equipe',
-  subscription: 'Assinatura',
-  'audit-logs': 'Registros de auditoria',
-  settings: 'Configurações',
-};
+import type { PostStatus, StrategyStatus } from '../types';
 
 export const postStatusLabel: Record<PostStatus, string> = {
   draft: 'Rascunho',
+  in_production: 'Em produção',
   in_review: 'Em revisão',
   pending_approval: 'Aguardando aprovação',
   approved: 'Aprovado',
   changes_requested: 'Ajustes solicitados',
   rejected: 'Reprovado',
   scheduled: 'Agendado',
+  processing: 'Processando',
   published: 'Publicado',
-};
-
-export const approvalStageLabel: Record<ApprovalStage, string> = {
-  draft: 'Rascunho',
-  in_review: 'Em revisão',
-  pending_approval: 'Aguardando aprovação',
-  approved: 'Aprovado',
-  changes_requested: 'Ajustes solicitados',
-  rejected: 'Reprovado',
-  published: 'Publicado',
+  error: 'Erro',
+  cancelled: 'Cancelado',
 };
 
 export const strategyStatusLabel: Record<StrategyStatus, string> = {

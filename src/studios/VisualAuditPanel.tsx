@@ -1,5 +1,3 @@
-import React from "react";
-
 export type VisualAudit = {
   status?: string;
   human?: string;

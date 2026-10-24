@@ -159,7 +159,11 @@ def test_signal_deduplication_ranking_and_evidence(client):
     assert top.status_code == 200 and len(top.json()) == 1
 
 
-def test_health_and_unconfigured_ai_are_honest(client):
+def test_health_and_unconfigured_ai_are_honest(client, monkeypatch):
+    from app.config import get_settings
+
+    # A real local execution profile, not an absent broker reported as ready.
+    monkeypatch.setattr(get_settings(), "celery_task_always_eager", True)
     token, _ = register(client, "health@example.com")
     assert client.get("/health/live").json() == {"status": "ok"}
     assert client.get("/health/ready").status_code == 200

@@ -1,33 +1,206 @@
 import React from 'react';
-import { FileText, FolderArchive, Image, Search, Sparkles, Upload, Video, X } from 'lucide-react';
+import { klicPageScope, useKlicPageDetails } from '../klic/pageContext';
+import {
+  CalendarDays, Copy, FileText, Heart, Image, LayoutTemplate, Megaphone, Palette,
+  Plus, Search, Share2, Trash2, Upload, Video, X,
+} from 'lucide-react';
 import { useOperations } from '../context/OperationsContext';
-import type { Post, PostFormat } from '../types';
+import type { LibraryAsset } from '../types';
+import './LibraryView.css';
+import { ClickoLoader } from './ClickoLoader';
+import { VideoLibraryExports } from '../studios/video/VideoLibraryExports';
+
+type LibraryTab = 'files' | 'templates' | 'brand' | 'campaigns' | 'lineage';
+type SortMode = 'recent' | 'oldest' | 'name';
+type TemplateCategory = 'image' | 'video' | 'copy' | 'campaign' | 'calendar' | 'prompt' | 'brand';
+
+const templateMeta: Record<TemplateCategory, readonly [string, React.ComponentType<{ className?: string }>]> = {
+  image: ['Imagem', Image], video: ['Vídeo', Video], copy: ['Texto', FileText], campaign: ['Campanha', Megaphone],
+  calendar: ['Calendário', CalendarDays], prompt: ['Comando', LayoutTemplate], brand: ['Identidade visual', Palette],
+};
+
+const tabs: Array<{ id: LibraryTab; label: string }> = [
+  { id: 'files', label: 'Arquivos' }, { id: 'templates', label: 'Modelos' },
+  { id: 'brand', label: 'Marca' }, { id: 'campaigns', label: 'Campanhas' }, { id: 'lineage', label: 'Linhagem' },
+];
+
+function humanSize(size?: number) {
+  if (!size) return 'Tamanho não informado';
+  if (size < 1024 * 1024) return `${Math.max(1, Math.round(size / 1024))} KB`;
+  return `${(size / (1024 * 1024)).toLocaleString('pt-BR', { maximumFractionDigits: 1 })} MB`;
+}
+
+function templateCategory(asset: LibraryAsset): TemplateCategory {
+  const value = asset.tags.find((tag) => tag.startsWith('template:'))?.split(':')[1];
+  return value && value in templateMeta ? value as TemplateCategory : 'copy';
+}
+
+function fileType(file: File): LibraryAsset['type'] {
+  if (file.type.startsWith('image/')) return 'image';
+  if (file.type.startsWith('video/')) return 'video';
+  if (file.type.includes('pdf') || file.type.startsWith('text/') || /\.(docx?|pdf|txt|md)$/i.test(file.name)) return 'document';
+  return 'upload';
+}
+
+function AssetPreview({ asset }: { asset: LibraryAsset }) {
+  if (asset.url && asset.type === 'video') return <video src={asset.url} muted playsInline preload="metadata" />;
+  if (asset.url && asset.type === 'image') return <img src={asset.url} alt={asset.title} />;
+  const Icon = asset.type === 'template' ? LayoutTemplate : asset.type === 'video' ? Video : asset.type === 'image' ? Image : FileText;
+  return <span className="cx-library-file-placeholder"><Icon /><small>{asset.type === 'template' ? 'Modelo' : asset.mimeType || 'Arquivo'}</small></span>;
+}
 
 export function LibraryView({ onOpenStudio }: { onOpenStudio?: () => void }) {
-  const { assets, posts, campaigns, addAsset, createRepurposeHandoff } = useOperations();
+  const { assets, addAsset, updateAsset, removeAsset, activeWorkspace, activeClient } = useOperations();
+  const workspaceRef = React.useRef(activeWorkspace.id);
+  workspaceRef.current = activeWorkspace.id;
+  React.useEffect(() => { workspaceRef.current = activeWorkspace.id; return () => { workspaceRef.current = ''; }; }, [activeWorkspace.id]);
+  const fileInput = React.useRef<HTMLInputElement>(null);
+  const [activeTab, setActiveTab] = React.useState<LibraryTab>('files');
   const [query, setQuery] = React.useState('');
-  const [filter, setFilter] = React.useState('all');
-  const [repurposePost, setRepurposePost] = React.useState<Post | null>(null);
-  const combined = [
-    ...assets,
-    ...posts.map((post) => ({ ...post, type: 'content' as const, tags: [post.platform, post.format, post.status], updatedAt: post.createdAt })),
-    ...campaigns.map((campaign) => ({ ...campaign, title: campaign.name, type: 'campaign' as const, tags: [campaign.status, ...campaign.channels], updatedAt: campaign.updatedAt })),
-  ];
-  const filtered = combined.filter((asset) => (filter === 'all' || asset.type === filter) && `${asset.title} ${asset.tags.join(' ')}`.toLowerCase().includes(query.toLowerCase()));
-  const icon = (type: string) => type === 'video' ? Video : type === 'image' ? Image : type === 'campaign' ? Sparkles : FileText;
+  const [typeFilter, setTypeFilter] = React.useState<'all' | LibraryAsset['type']>('all');
+  const [sortMode, setSortMode] = React.useState<SortMode>('recent');
+  const [selectedId, setSelectedId] = React.useState<string>();
+  const [toast, setToast] = React.useState('');
+  const [templateModalOpen, setTemplateModalOpen] = React.useState(false);
+  const [templateName, setTemplateName] = React.useState('');
+  const [templateDescription, setTemplateDescription] = React.useState('');
+  const [templateKind, setTemplateKind] = React.useState<TemplateCategory>('copy');
+  const [pendingDelete, setPendingDelete] = React.useState<LibraryAsset>();
+  const [uploading, setUploading] = React.useState(false);
+  useKlicPageDetails('library', klicPageScope(activeWorkspace.id, activeClient?.id), {
+    view: activeTab, filters: { busca: query, tipo: typeFilter, ordenacao: sortMode },
+    selected: selectedId ? { kind: 'arquivo', id: selectedId } : undefined,
+  });
 
-  const repurpose = (format: PostFormat) => {
-    if (!repurposePost) return;
-    createRepurposeHandoff(repurposePost, format);
-    setRepurposePost(null);
-    onOpenStudio?.();
+  const visibleAssets = React.useMemo(() => {
+    const normalized = query.trim().toLocaleLowerCase('pt-BR');
+    return assets.filter((asset) => {
+      const matchesTab = activeTab === 'files' ? asset.type !== 'template'
+        : activeTab === 'templates' ? asset.type === 'template'
+        : activeTab === 'brand' ? asset.tags.includes('marca') || asset.tags.includes('brand')
+        : activeTab === 'campaigns' ? Boolean(asset.campaignId)
+        : Boolean(asset.contentId || asset.campaignId);
+      const matchesType = typeFilter === 'all' || asset.type === typeFilter;
+      const matchesQuery = !normalized || `${asset.title} ${asset.description || ''} ${asset.tags.join(' ')}`.toLocaleLowerCase('pt-BR').includes(normalized);
+      return matchesTab && matchesType && matchesQuery;
+    }).sort((a, b) => sortMode === 'name'
+      ? a.title.localeCompare(b.title, 'pt-BR')
+      : sortMode === 'oldest'
+        ? new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+        : new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
+  }, [activeTab, assets, query, sortMode, typeFilter]);
+
+  const [videoExportCount, setVideoExportCount] = React.useState(0);
+  const hasVideoExports = activeTab === 'files' && (typeFilter === 'all' || typeFilter === 'video') && videoExportCount > 0;
+  const selected = visibleAssets.find((asset) => asset.id === selectedId) || visibleAssets[0];
+
+  React.useEffect(() => { setSelectedId(undefined); setPendingDelete(undefined); setTemplateModalOpen(false); setUploading(false); setQuery(''); setTypeFilter('all'); }, [activeWorkspace.id]);
+
+  React.useEffect(() => {
+    if (!toast) return;
+    const timer = window.setTimeout(() => setToast(''), 2600);
+    return () => window.clearTimeout(timer);
+  }, [toast]);
+
+  const uploadFiles = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const workspaceId = activeWorkspace.id;
+    const input = event.currentTarget;
+    const files = Array.from(input.files || []) as File[];
+    if (!files.length) return;
+    setUploading(true);
+    let added = 0;
+    for (const file of files.slice(0, 4)) {
+      if (file.size > 3 * 1024 * 1024) {
+        setToast(`${file.name} excede o limite de 3 MB para armazenamento local.`);
+        continue;
+      }
+      const dataUrl = await new Promise<string>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(String(reader.result));
+        reader.onerror = () => reject(reader.error);
+        reader.readAsDataURL(file);
+      }).catch(() => '');
+      if (workspaceId !== workspaceRef.current) return;
+      if (!dataUrl) continue;
+      const asset = addAsset({
+        title: file.name.replace(/\.[^.]+$/, ''), type: fileType(file),
+        tags: ['upload', file.name.split('.').pop()?.toLocaleLowerCase('pt-BR') || 'arquivo'],
+        url: dataUrl, mimeType: file.type || 'application/octet-stream', size: file.size,
+      });
+      setSelectedId(asset.id);
+      added += 1;
+    }
+    input.value = '';
+    setUploading(false);
+    if (added) setToast(`${added} ${added === 1 ? 'arquivo adicionado' : 'arquivos adicionados'} à Biblioteca.`);
   };
 
-  return <div className="clicko-content-library mx-auto w-full max-w-[1480px] space-y-5 p-6 2xl:p-10">
-    <header className="flex flex-wrap items-end justify-between gap-4"><div><p className="text-[10px] uppercase tracking-[0.24em] text-[#ff7a00]">Memória pesquisável</p><h1 className="mt-2 text-2xl font-semibold text-white">Biblioteca</h1><p className="mt-1 text-sm text-[#8f999f]">Encontre, reutilize e transforme o que a operação já produziu.</p></div><button onClick={() => addAsset({ title: 'Novo material enviado', type: 'upload', tags: ['upload'] })} className="flex items-center gap-2 rounded-lg bg-[#ff5c5c] px-4 py-2.5 text-[11px] font-bold text-white"><Upload className="h-4 w-4" />Adicionar material</button></header>
-    <div className="flex flex-wrap gap-2"><label className="flex h-10 min-w-[260px] flex-1 items-center gap-2 rounded-lg border border-white/[0.07] bg-[#111] px-3"><Search className="h-4 w-4 text-[#666]" /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Buscar por conteúdo, campanha, tag ou formato..." className="w-full bg-transparent text-[10px] text-white outline-none" /></label>{['all', 'content', 'image', 'video', 'campaign', 'template', 'document'].map((item) => <button key={item} onClick={() => setFilter(item)} className={`rounded-lg px-3 text-[9px] capitalize ${filter === item ? 'bg-[#ff5c5c] font-bold text-white' : 'border border-white/[0.07] bg-[#111] text-[#888]'}`}>{item === 'all' ? 'Todos' : item}</button>)}</div>
-    {filtered.length ? <section className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">{filtered.map((asset) => { const Icon = icon(asset.type); const post = asset.type === 'content' ? posts.find((item) => item.id === asset.id) : undefined; return <article key={`${asset.type}-${asset.id}`} className="group overflow-hidden rounded-xl border border-white/[0.07] bg-[#111]"><div className="grid h-28 place-items-center bg-black/25">{'url' in asset && asset.url && asset.type === 'image' ? <img src={asset.url} alt="" className="h-full w-full object-cover opacity-75" /> : <Icon className="h-8 w-8 text-[#ff7a00]/65" />}</div><div className="p-4"><div className="flex items-start justify-between gap-2"><h2 className="line-clamp-2 text-[11px] font-medium text-white">{asset.title}</h2><span className="rounded bg-white/[0.05] px-1.5 py-1 text-[7px] uppercase text-[#777]">{asset.type}</span></div><div className="mt-3 flex flex-wrap gap-1">{asset.tags.slice(0, 3).map((tag) => <span key={tag} className="rounded-full bg-[#ff7a00]/[0.07] px-2 py-1 text-[7px] text-[#ff9a3d]">{tag}</span>)}</div>{'campaignId' in asset && asset.campaignId && <div className="mt-3 flex items-center gap-1.5 text-[8px] text-[#666]"><FolderArchive className="h-3 w-3" />Vinculado à campanha</div>}{post && <button onClick={() => setRepurposePost(post)} className="mt-4 flex w-full items-center justify-center gap-2 rounded-lg border border-[#ff5c5c]/20 bg-[#ff5c5c]/[0.05] py-2 text-[8px] font-semibold text-[#ff8a8a]"><Sparkles className="h-3.5 w-3.5" />Reaproveitar conteúdo</button>}</div></article>; })}</section> : <section className="grid min-h-64 place-items-center rounded-xl border border-dashed border-white/[0.08]"><div className="text-center"><Search className="mx-auto h-7 w-7 text-[#555]" /><p className="mt-3 text-[10px] text-[#888]">Nenhum material corresponde aos filtros.</p><button onClick={() => { setQuery(''); setFilter('all'); }} className="mt-3 text-[9px] text-[#ff7a00]">Limpar busca</button></div></section>}
+  const createTemplate = () => {
+    if (!templateName.trim()) return;
+    const asset = addAsset({
+      title: templateName.trim(), type: 'template', description: templateDescription.trim(),
+      tags: [`template:${templateKind}`],
+    });
+    setSelectedId(asset.id);
+    setActiveTab('templates');
+    setTemplateModalOpen(false);
+    setTemplateName(''); setTemplateDescription(''); setTemplateKind('copy');
+    setToast('Modelo criado e salvo neste workspace.');
+  };
 
-    {repurposePost && <div className="fixed inset-0 z-50 grid place-items-center bg-black/70 p-4 backdrop-blur-sm"><section role="dialog" aria-modal="true" aria-label="Reaproveitar conteúdo" className="w-full max-w-md rounded-2xl border border-white/[0.08] bg-[#111] p-5 shadow-2xl"><div className="flex items-start justify-between gap-3"><div><span className="text-[8px] uppercase tracking-[0.16em] text-[#ff7a00]">Content Repurposing</span><h2 className="mt-1 text-base font-semibold text-white">Transformar sem recomeçar.</h2><p className="mt-2 text-[9px] leading-relaxed text-[#888]">O Studio receberá a mensagem, campanha e contexto de “{repurposePost.title}”.</p></div><button onClick={() => setRepurposePost(null)} aria-label="Fechar reaproveitamento" className="grid h-7 w-7 place-items-center rounded-lg text-[#777]"><X className="h-4 w-4" /></button></div><div className="mt-5 grid grid-cols-2 gap-2">{([['reels', 'Reels / cortes'], ['story', 'Stories'], ['carousel', 'Carrossel'], ['post', 'Nova publicação']] as Array<[PostFormat, string]>).map(([format, label]) => <button key={format} onClick={() => repurpose(format)} className="clicko-interactive-surface rounded-xl border border-white/[0.07] bg-black/25 p-4 text-left"><strong className="text-[10px] text-white">{label}</strong><span className="mt-1 block text-[8px] text-[#666]">Abrir no Studio</span></button>)}</div></section></div>}
-  </div>;
+  const duplicate = (asset: LibraryAsset) => {
+    const copy = addAsset({
+      title: `${asset.title} — cópia`, type: asset.type, tags: asset.tags.filter((tag) => tag !== 'shared'),
+      campaignId: asset.campaignId, clientId: asset.clientId, contentId: asset.contentId,
+      url: asset.url, description: asset.description, mimeType: asset.mimeType, size: asset.size,
+    });
+    setSelectedId(copy.id);
+    setToast('Cópia criada.');
+  };
+
+  const toggleTag = (asset: LibraryAsset, tag: 'favorite' | 'shared') => {
+    updateAsset(asset.id, { tags: asset.tags.includes(tag) ? asset.tags.filter((item) => item !== tag) : [...asset.tags, tag] });
+  };
+
+  return <section className="cx-library-approved">
+    <header>
+      <div><h1>Biblioteca</h1><p>Arquivos e modelos salvos no contexto atual, prontos para reutilização.</p></div>
+      <input ref={fileInput} type="file" hidden multiple accept="image/*,video/*,.pdf,.txt,.md,.doc,.docx" onChange={uploadFiles} />
+      <button className="cx-library-button" disabled={uploading} onClick={() => fileInput.current?.click()}>{uploading ? <ClickoLoader size="tiny" label="Enviando arquivos" /> : <Upload />}{uploading ? 'Enviando…' : 'Adicionar arquivos'}</button>
+      <button className="cx-library-button is-primary" onClick={() => setTemplateModalOpen(true)}><Plus />Criar modelo</button>
+    </header>
+    <nav aria-label="Seções da Biblioteca">{tabs.map((tab) => <button className={activeTab === tab.id ? 'is-active' : ''} onClick={() => { setActiveTab(tab.id); setSelectedId(undefined); }} key={tab.id}>{tab.label}</button>)}</nav>
+    <div className="cx-library-toolbar">
+      <label><Search /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Buscar por nome, descrição ou etiqueta…" /></label>
+      <select value={typeFilter} onChange={(event) => setTypeFilter(event.target.value as typeof typeFilter)} aria-label="Filtrar por tipo"><option value="all">Todos os tipos</option><option value="image">Imagens</option><option value="video">Vídeos</option><option value="document">Documentos</option><option value="content">Conteúdos</option><option value="template">Modelos</option></select>
+      <select value={sortMode} onChange={(event) => setSortMode(event.target.value as SortMode)} aria-label="Ordenar Biblioteca"><option value="recent">Mais recentes</option><option value="oldest">Mais antigos</option><option value="name">Nome A–Z</option></select>
+    </div>
+
+    {activeTab === 'files' && (typeFilter === 'all' || typeFilter === 'video') && <VideoLibraryExports query={query} sort={sortMode} onCountChange={setVideoExportCount} />}
+    {visibleAssets.length ? <div className="cx-library-layout">
+      <main>
+        <div className="cx-library-section-head"><h2>{tabs.find((tab) => tab.id === activeTab)?.label}</h2><span>{visibleAssets.length} {visibleAssets.length === 1 ? 'item' : 'itens'}</span></div>
+        {activeTab === 'templates'
+          ? <div className="cx-template-grid">{visibleAssets.map((asset) => { const [label, Icon] = templateMeta[templateCategory(asset)]; return <article key={asset.id} className={selected?.id === asset.id ? 'is-active' : ''} onClick={() => setSelectedId(asset.id)}><div className="cx-template-card-top"><span><Icon /></span><button onClick={(event) => { event.stopPropagation(); toggleTag(asset, 'favorite'); }} aria-label={asset.tags.includes('favorite') ? 'Remover dos favoritos' : 'Favoritar modelo'}><Heart className={asset.tags.includes('favorite') ? 'is-favorite' : ''} /></button></div><small>{label}</small><h3>{asset.title}</h3><p>{asset.description || 'Modelo sem descrição.'}</p><footer><span>Atualizado {new Date(asset.updatedAt).toLocaleDateString('pt-BR')}</span><div><button onClick={(event) => { event.stopPropagation(); duplicate(asset); }} aria-label="Duplicar modelo"><Copy /></button><button onClick={(event) => { event.stopPropagation(); toggleTag(asset, 'shared'); }} aria-label={asset.tags.includes('shared') ? 'Desativar compartilhamento' : 'Compartilhar modelo'}><Share2 className={asset.tags.includes('shared') ? 'is-shared' : ''} /></button></div></footer></article>; })}</div>
+          : <div className="cx-library-assets">{visibleAssets.map((asset) => <button className={selected?.id === asset.id ? 'is-active' : ''} onClick={() => setSelectedId(asset.id)} key={asset.id}><AssetPreview asset={asset} /><b>{asset.title}</b><small>{asset.tags.slice(0, 2).join(' · ') || asset.type}</small></button>)}</div>}
+      </main>
+      {selected && <aside>
+        <h2>{selected.title}</h2><p>{selected.description || 'Item salvo na Biblioteca.'}</p>
+        <div className="cx-library-preview"><AssetPreview asset={selected} /></div>
+        <small>DETALHES</small><KeyValue label="Tipo" value={selected.type} /><KeyValue label="Tamanho" value={humanSize(selected.size)} /><KeyValue label="Atualizado" value={new Date(selected.updatedAt).toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' })} />
+        <small>CONTEXTO</small><KeyValue label="Campanha" value={selected.campaignId || 'Sem campanha'} /><KeyValue label="Etiquetas" value={selected.tags.filter((tag) => !tag.startsWith('template:')).join(', ') || 'Sem etiquetas'} />
+        <button className="cx-library-button is-primary is-wide" onClick={onOpenStudio}>Usar na criação</button>
+        <button className="cx-library-button is-wide" onClick={() => duplicate(selected)}>Duplicar item</button>
+        <button className="cx-delete-asset" onClick={() => setPendingDelete(selected)}><Trash2 />Excluir arquivo</button>
+      </aside>}
+    </div> : hasVideoExports ? null : <div className="cx-library-empty"><strong>Nenhum item encontrado</strong><p>{query || typeFilter !== 'all' ? 'Revise a busca ou os filtros aplicados.' : activeTab === 'templates' ? 'Crie o primeiro modelo reutilizável deste workspace.' : 'Adicione arquivos para começar a organizar sua Biblioteca.'}</p><button onClick={() => { if (query || typeFilter !== 'all') { setQuery(''); setTypeFilter('all'); } else if (activeTab === 'templates') setTemplateModalOpen(true); else fileInput.current?.click(); }}>{query || typeFilter !== 'all' ? 'Limpar filtros' : activeTab === 'templates' ? 'Criar modelo' : 'Adicionar arquivo'}</button></div>}
+
+    {templateModalOpen && <div className="cx-library-modal" role="dialog" aria-modal="true" aria-labelledby="new-template-title"><button className="cx-library-modal-backdrop" onClick={() => setTemplateModalOpen(false)} aria-label="Fechar" /><form onSubmit={(event) => { event.preventDefault(); createTemplate(); }}><header><div><h2 id="new-template-title">Novo modelo</h2><p>Salve uma estrutura reutilizável neste workspace.</p></div><button type="button" onClick={() => setTemplateModalOpen(false)} aria-label="Fechar"><X /></button></header><label>Nome<input autoFocus value={templateName} onChange={(event) => setTemplateName(event.target.value)} required maxLength={80} /></label><label>Categoria<select value={templateKind} onChange={(event) => setTemplateKind(event.target.value as TemplateCategory)}>{Object.entries(templateMeta).map(([id, [label]]) => <option key={id} value={id}>{label}</option>)}</select></label><label>Descrição<textarea rows={4} value={templateDescription} onChange={(event) => setTemplateDescription(event.target.value)} maxLength={240} placeholder="Explique quando e como usar este modelo." /></label><footer><button type="button" className="cx-library-button" onClick={() => setTemplateModalOpen(false)}>Cancelar</button><button className="cx-library-button is-primary" type="submit">Salvar modelo</button></footer></form></div>}
+    {pendingDelete && <div className="cx-library-modal" role="dialog" aria-modal="true" aria-labelledby="delete-asset-title"><button className="cx-library-modal-backdrop" onClick={() => setPendingDelete(undefined)} aria-label="Cancelar exclusão" /><form onSubmit={(event) => { event.preventDefault(); removeAsset(pendingDelete.id); setPendingDelete(undefined); setSelectedId(undefined); setToast('Item excluído da Biblioteca.'); }}><header><div><h2 id="delete-asset-title">Excluir “{pendingDelete.title}”?</h2><p>O item será removido deste workspace e desvinculado dos conteúdos relacionados.</p></div><button type="button" onClick={() => setPendingDelete(undefined)} aria-label="Fechar"><X /></button></header><footer><button type="button" className="cx-library-button" onClick={() => setPendingDelete(undefined)}>Cancelar</button><button className="cx-library-button is-danger" type="submit">Excluir</button></footer></form></div>}
+    {toast && <div className="cx-library-toast" role="status">{toast}</div>}
+  </section>;
+}
+
+function KeyValue({ label, value }: { label: string; value: string }) {
+  return <div className="cx-library-kv"><span>{label}</span><b>{value}</b></div>;
 }

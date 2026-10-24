@@ -81,11 +81,14 @@ def latest_plan(db, document):
     # multi-megabyte manifests. Persisted timestamp/id, not client-created time
     # or plan revision, still determine the newest sibling or plan revision.
     newest = db.scalar(
-        select(StudioDomainEvent).where(
+        select(StudioDomainEvent)
+        .where(
             StudioDomainEvent.workspace_id == document.workspace_id,
             StudioDomainEvent.event_type == PLAN_EVENT,
             StudioDomainEvent.payload["plan"]["documentId"].as_string() == document.id,
-        ).order_by(StudioDomainEvent.occurred_at.desc(), StudioDomainEvent.id.desc()).limit(1)
+        )
+        .order_by(StudioDomainEvent.occurred_at.desc(), StudioDomainEvent.id.desc())
+        .limit(1)
     )
     if newest is None:
         return None
@@ -376,8 +379,6 @@ def reduced_resolution(document):
 
 def budget_remaining(db, workspace_id):
     settings = get_settings()
-    if settings.environment == "production":
-        return math.inf
     month = datetime.now(UTC).strftime("%Y-%m")
     # The configured R$500 envelope belongs to the deployment, not to each tenant.
     reservations = db.scalars(
@@ -1296,8 +1297,7 @@ def apply_plan(db, document, plan_id, request, user):
         if plan.status != "ready" or blockers:
             raise ValueError("editing_choice_required")
         executable_direction = ContextualPlanRequestV2.model_validate(
-            plan.manifest.get("executableDirection")
-            or plan.direction.model_dump(mode="json", by_alias=True)
+            plan.manifest.get("executableDirection") or plan.direction.model_dump(mode="json", by_alias=True)
         )
         visual = preflight_visual(
             executable_direction,

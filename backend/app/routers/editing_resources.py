@@ -1,7 +1,7 @@
 import tempfile
 from pathlib import Path
 
-from fastapi import APIRouter, Depends, File, Form, Header, HTTPException, Query, UploadFile
+from fastapi import APIRouter, Depends, File, Form, Header, HTTPException, Query, Request, UploadFile
 from sqlalchemy.orm import Session
 
 from ..config import get_settings
@@ -90,7 +90,12 @@ def get_visual_quality_program(
     assert_governance_access(db, user.id, workspace_id)
     from ..services.studios.visual_quality_program import project_quality_program
 
-    return project_quality_program(db, workspace_id)
+    try:
+        return project_quality_program(db, workspace_id)
+    except FileNotFoundError as error:
+        # Missing qualification evidence is an unavailable dependency, not a
+        # successful empty benchmark or an unhandled HTTP 500.
+        raise HTTPException(503, detail={"code": "visual_quality_baseline_unavailable"}) from error
 
 
 @router.post("/documents/{document_id}/visual-quality-comparison")
@@ -266,8 +271,8 @@ def revise_production_run(
 def editing_ai_status(user: User = Depends(get_current_user)):
     from dataclasses import asdict
 
-    from ..providers.studios.editing_ai import ADAPTERS, compatible_binding, selected_adapter
     from ..providers.studios.craft import ENGINES, engine_capability
+    from ..providers.studios.editing_ai import ADAPTERS, compatible_binding, selected_adapter
 
     settings = get_settings()
     providers = []
@@ -312,6 +317,11 @@ def editing_ai_status(user: User = Depends(get_current_user)):
         try:
             key, _ = selected_adapter(settings, operation)
             provider = next(p for p in providers if p["key"] == key)
+            from ..services.studios.external_policy import assert_operation
+
+            assert_operation(settings, provider["id"], operation)
+            if key == "gemini" and settings.studio_gemini_video_model.startswith("veo-") and operation == "edit_video":
+                raise ValueError("veo_edit_video_unsupported")
             stages[operation] = {"provider": key, "configured": provider["configured"], "label": provider["label"]}
         except ValueError as error:
             stages[operation] = {"provider": None, "configured": False, "reason": str(error)}
@@ -334,6 +344,7 @@ def editing_ai_status(user: User = Depends(get_current_user)):
 def create_ai_job(
     document_id: str,
     request: EditingAIRequestV1,
+    http_request: Request,
     idempotency_key: str = Header(alias="Idempotency-Key", min_length=8, max_length=160),
     db: Session = Depends(get_db),
     user: User = Depends(get_current_user),
@@ -372,7 +383,14 @@ def create_ai_job(
             },
         ) from error
     return _enqueue_editing_job(
-        document_id, request, idempotency_key, db, user, compatible=selected == "compatible", adapter=selected
+        document_id,
+        request,
+        idempotency_key,
+        db,
+        user,
+        compatible=selected == "compatible",
+        adapter=selected,
+        commercial_admission=getattr(http_request.state, "studio_media_admission", None),
     )
 
 
@@ -558,9 +576,9 @@ def gemini_status(user: User = Depends(get_current_user)):
         else settings.studio_gemini_test_key
     )
     return {
-        "configured": bool(settings.studio_gemini_enabled and key),
+        "configured": bool(settings.gemini_outbound_enabled and settings.studio_gemini_enabled and key),
         "environment": settings.environment,
-        "productionBudgetLimit": None,
+        "productionBudgetLimit": settings.studio_external_workspace_monthly_budget_usd,
         "qualification": "pending_real_media_validation",
         "models": {
             "plan": settings.studio_gemini_planning_model,
@@ -586,8 +604,14 @@ def editing_usage(workspace_id: str, db: Session = Depends(get_db), user: User =
         .order_by(StudioGenerationJob.created_at.desc())
         .limit(100)
     ).all()
+    settings = get_settings()
+    from ..services.studios.media_usage import metrics
+
     return {
-        "productionLimit": None,
+        "productionLimit": settings.studio_external_workspace_monthly_budget_usd,
+        "metrics": metrics(db, workspace_id, user.id),
+        "financialCurrency": "USD",
+        "commercialQuota": "managed_separately_by_clicko_governance",
         "jobs": [
             {
                 "id": job.id,
@@ -611,6 +635,12 @@ def editing_usage(workspace_id: str, db: Session = Depends(get_db), user: User =
                 "finishedAt": job.finished_at,
                 "attempts": job.attempts,
                 "testReservationUsd": (job.result_payload or {}).get("testReservationUsd"),
+                "financialReservationUsd": (job.result_payload or {}).get("financialReservationUsd"),
+                "estimatedCostUsd": (job.result_payload or {}).get(
+                    "estimatedCostUsd", (job.result_payload or {}).get("measuredCostUsd")
+                ),
+                "providerReportedCostUsd": (job.result_payload or {}).get("providerReportedCostUsd"),
+                "costSource": (job.result_payload or {}).get("costSource"),
             }
             for job in jobs
         ],
@@ -628,7 +658,9 @@ def create_gemini_job(
     return _enqueue_editing_job(document_id, request, idempotency_key, db, user)
 
 
-def _enqueue_editing_job(document_id, request, idempotency_key, db, user, *, compatible=False, adapter=None):
+def _enqueue_editing_job(
+    document_id, request, idempotency_key, db, user, *, compatible=False, adapter=None, commercial_admission=None
+):
     from ..services.studios.gemini_editing import create_editing_job
     from ..services.studios.jobs import enqueue_job_task, job_out
     from ..tasks import execute_studio_generation
@@ -636,7 +668,14 @@ def _enqueue_editing_job(document_id, request, idempotency_key, db, user, *, com
     record = owned_document(db, user.id, document_id)
     try:
         job, created = create_editing_job(
-            db, record, request, user, idempotency_key, compatible=compatible, adapter=adapter
+            db,
+            record,
+            request,
+            user,
+            idempotency_key,
+            compatible=compatible,
+            adapter=adapter,
+            commercial_admission=commercial_admission,
         )
         if created:
             try:

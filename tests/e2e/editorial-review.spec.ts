@@ -67,7 +67,7 @@ async function setup(request: APIRequestContext, page: Page, inStudio = false) {
   return { panel, document, asset, headers, base: `/api/v1/studios/v1/documents/${document.documentId}` };
 }
 
-async function registerInPanel(panel: ReturnType<Page["getByRole"]>, assetId: string) {
+async function registerInPanel(panel: ReturnType<Page["getByRole"]>, _assetId: string) {
   await panel.getByRole("button", { name: "Preparar inscrição UGC/avatar" }).click();
   await panel.getByLabel("CTA", { exact: true }).fill("Solicitar acesso ao piloto");
   await panel.getByRole("button", { name: "Adicionar beat" }).click();

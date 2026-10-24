@@ -34,7 +34,7 @@ function go(path: string) {
   window.history.pushState({}, "", path); window.dispatchEvent(new PopStateEvent("popstate"));
 }
 function safeReturn(value: string | null | undefined) {
-  return value && /^\/(?:library\/assets|content\/[^/?#]+\/edit)(?:\?[^#]*)?$/.test(value) ? value : "/library/assets";
+  return value && /^\/(?:image|video|library\/assets|content\/[^/?#]+\/edit)(?:\?[^#]*)?$/.test(value) ? value : "/library/assets";
 }
 
 function FlexibleValue({ id, value, onChange, disabled, depth = 0 }: {
@@ -313,6 +313,7 @@ export function CraftStudio({ mode, pathname = window.location.pathname, search 
         {engine === "filmcraft" && native.legacyArchiveAssetId && warnings.length > 0 && <button disabled={locked} onClick={() => void run(async () => {
           await studio.save();
           const recovered = await studio.recoverEffects();
+          if (!recovered.compositionDocumentId) throw new Error("A composição recuperada não foi confirmada pelo servidor.");
           const next = new URLSearchParams(search);
           next.set("mode", "effects");
           next.set("document", recovered.compositionDocumentId);

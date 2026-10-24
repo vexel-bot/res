@@ -1,0 +1,43 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { createHmac } from 'node:crypto';
+import express from 'express';
+import { createGovernanceRouter } from '../governance';
+import { createStudiosProxy } from './proxy';
+
+test('Studio proxy requires the current Clicko identity and signs only an authorized scoped request', async t => {
+  const app = express();
+  app.use('/api/governance', createGovernanceRouter({ dataFile: null }));
+  const key = 'private-studio-test-secret-with-more-than-32-characters';
+  let forwarded: RequestInit | undefined;
+  let calls = 0;
+  app.use('/api/v1/studios/v1', createStudiosProxy({ secret: key, fetch: async (_url, init) => {
+    calls++; forwarded = init;
+    return new Response(JSON.stringify({ ready: true }), { headers: { 'content-type': 'application/json' } });
+  } }));
+  const server = app.listen(0, '127.0.0.1');
+  await new Promise<void>(resolve => server.once('listening', resolve));
+  t.after(() => new Promise<void>(resolve => server.close(() => resolve())));
+  const url = `http://127.0.0.1:${(server.address() as { port: number }).port}/api/v1/studios/v1/bridge/session`;
+  const headers = { 'x-workspace-id': 'ws-1', 'x-user-id': 'usr-master', 'x-clicko-studio-module': 'create-image' };
+  assert.equal((await fetch(url)).status, 401);
+  assert.equal((await fetch(url, { headers: { ...headers, 'x-user-id': 'foreign' } })).status, 401);
+  assert.equal((await fetch(url, { headers: { ...headers, 'x-clicko-studio-module': 'dashboard' } })).status, 400);
+  assert.equal((await fetch(url, { headers: { ...headers, 'x-clicko-client-id': 'unregistered-client' } })).status, 404);
+  assert.equal(calls, 0);
+  const result = await fetch(url, { headers: { ...headers, authorization: 'Bearer untrusted-browser-token', cookie: 'private-cookie=value' } });
+  assert.equal(result.status, 200);
+  assert.deepEqual(await result.json(), { ready: true });
+  const upstream = new Headers(forwarded!.headers);
+  assert.equal(upstream.get('cookie'), null);
+  const token = upstream.get('authorization')!.slice(7);
+  const [header, payload, signature] = token.split('.');
+  assert.equal(signature, createHmac('sha256', key).update(`${header}.${payload}`).digest('base64url'));
+  const claims = JSON.parse(Buffer.from(payload, 'base64url').toString());
+  assert.equal(claims.workspaceId, 'ws-1');
+  assert.equal(claims.sub, 'usr-master');
+  assert.equal(claims.clientId, null);
+  assert.equal(claims.module, 'create-image');
+  assert.equal(claims.exp - claims.iat, 60);
+  assert.equal(result.headers.get('cache-control'), 'no-store');
+});

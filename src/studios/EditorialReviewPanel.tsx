@@ -30,8 +30,8 @@ function EvidencePreview({ document, comparison = false }: { document: StudioDoc
   const [url, setUrl] = React.useState<string>();
   const [error, setError] = React.useState<string>();
   const [loading, setLoading] = React.useState(false);
-  const pending = React.useRef<AbortController>();
-  const urlRef = React.useRef<string>();
+  const pending = React.useRef<AbortController | undefined>(undefined);
+  const urlRef = React.useRef<string | undefined>(undefined);
   const asset = document.assets.find((item) => item.id === assetId);
   function clear() {
     pending.current?.abort();
@@ -108,7 +108,7 @@ export function EditorialReviewPanel({ document, disabled, active, onGateChange 
   const [confirmed, setConfirmed] = React.useState(false);
   const [comparisonOpen, setComparisonOpen] = React.useState(false);
   const alive = React.useRef(true);
-  const readController = React.useRef<AbortController>();
+  const readController = React.useRef<AbortController | undefined>(undefined);
   const keys = React.useRef(new Map<string, string>());
   const documentId = document?.documentId;
   const revision = document?.revision;

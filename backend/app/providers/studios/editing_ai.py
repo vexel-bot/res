@@ -32,9 +32,9 @@ ADAPTERS = {
     ),
     "sora": EditingAdapterSpec(
         "openai.sora-2",
-        "OpenAI Sora 2 (temporário)",
+        "OpenAI Sora 2 (aposentado)",
         ("generate_video",),
-        "legacy_until_2026-09-24",
+        "retired_2026-09-24_do_not_activate",
         min_video_seconds=4,
         max_video_seconds=4,
     ),

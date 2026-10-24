@@ -12,7 +12,7 @@ export function useCraftBrowser(document: CraftDocument | undefined, pageId: str
   const [applying, setApplying] = React.useState(false);
   const [appliedCount, setAppliedCount] = React.useState(0);
   const applyingRef = React.useRef(false);
-  const sessionRef = React.useRef<CraftBrowserSession>();
+  const sessionRef = React.useRef<CraftBrowserSession | undefined>(undefined);
   const generation = React.useRef(0);
   React.useEffect(() => {
     const current = ++generation.current;

@@ -3,7 +3,6 @@ from __future__ import annotations
 import hashlib
 import io
 import json
-import shutil
 import subprocess
 import tempfile
 import zipfile
@@ -35,6 +34,7 @@ from ...domain.studios.ugc_acceptance import (
     UgcCriterionResultV1,
 )
 from ...providers.studios.craft import call_engine
+from ...providers.studios.media_runtime import h264_encoder, resolve_tool
 
 AVATAR_COLORS = {
     "lia": ("#ff8f70", "#3f1710"),
@@ -395,9 +395,7 @@ def verify_ad_kit(
                     raise ValueError("video_duration_mismatch")
                 if abs(float(probe["fps"]) - case.deliverables.video_fps) > 0.01 or probe["codec"] != "h264":
                     raise ValueError("video_fps_or_codec_mismatch")
-                ffmpeg = shutil.which("ffmpeg")
-                if not ffmpeg:
-                    raise ValueError("ffmpeg_decode_unavailable")
+                ffmpeg = resolve_tool("ffmpeg")
                 decoded = subprocess.run(
                     [ffmpeg, "-v", "error", "-xerror", "-i", str(path), "-f", "null", "-"],
                     capture_output=True,
@@ -869,9 +867,8 @@ def render_ad_kit(
 
 
 def encode_animatic(frame_paths: list[Path], output_path: Path, *, duration_seconds: int, fps: int) -> None:
-    ffmpeg = shutil.which("ffmpeg")
-    if not ffmpeg:
-        raise RuntimeError("ffmpeg_not_available")
+    ffmpeg = resolve_tool("ffmpeg")
+    encoder = h264_encoder(ffmpeg)
     if not frame_paths:
         raise ValueError("animatic_requires_frames")
     concat_path = output_path.with_suffix(".concat.txt")
@@ -904,11 +901,8 @@ def encode_animatic(frame_paths: list[Path], output_path: Path, *, duration_seco
         "-vf",
         f"fps={fps},format=yuv420p",
         "-c:v",
-        "libx264",
-        "-preset",
-        "veryfast",
-        "-crf",
-        "24",
+        encoder,
+        *(["-preset", "veryfast", "-crf", "24"] if encoder == "libx264" else ["-b:v", "3M"]),
         "-c:a",
         "aac",
         "-b:a",
@@ -923,9 +917,7 @@ def encode_animatic(frame_paths: list[Path], output_path: Path, *, duration_seco
 
 
 def probe_video(path: Path) -> dict[str, float | int | str]:
-    ffprobe = shutil.which("ffprobe")
-    if not ffprobe:
-        raise RuntimeError("ffprobe_not_available")
+    ffprobe = resolve_tool("ffprobe")
     completed = subprocess.run(
         [
             ffprobe,

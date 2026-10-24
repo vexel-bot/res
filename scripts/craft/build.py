@@ -185,6 +185,8 @@ def main():
         return
     if args.bindgen_only and args.package_only:
         parser.error("--bindgen-only and --package-only are mutually exclusive")
+    if not shutil.which("docker") and not (args.bindgen_only and os.name == "nt"):
+        parser.error("Docker with a Linux engine is required for Craft builds. No substitute renderer will be used.")
     args.wasm = args.wasm or args.bindgen_only
     if not args.package_only and not args.bindgen_only:
         command(

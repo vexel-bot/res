@@ -1,0 +1,20 @@
+/*
+ * Internal application canvas.
+ * Authentication is rendered outside .clicko-app-shell and remains untouched.
+ */
+.clicko-app-shell[data-atmosphere="solid"],
+.clicko-app-shell[data-atmosphere="solid"] .clicko-app-stage,
+.clicko-app-shell[data-atmosphere="solid"] .clicko-main-stage,
+.clicko-app-shell[data-atmosphere="solid"] .clicko-main-stage > div {
+  background-color: var(--clicko-canvas, #000000) !important;
+  background-image: none !important;
+}
+
+/* Remove only the global ambient canvas layers behind internal pages. */
+.clicko-app-shell[data-atmosphere="solid"] .clicko-main-stage::before,
+.clicko-app-shell[data-atmosphere="solid"] .clicko-main-stage::after {
+  content: none !important;
+  display: none !important;
+  background: none !important;
+  animation: none !important;
+}

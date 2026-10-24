@@ -20,6 +20,7 @@ from ...domain.studios.contracts import (
     AudioWaveformSpecV1,
 )
 from ...domain.studios.providers import MediaWaveformProvider
+from .media_runtime import resolve_tool
 
 
 @lru_cache(maxsize=8)
@@ -65,7 +66,7 @@ class FFmpegMediaWaveformProvider:
 
     @property
     def version(self) -> str:
-        return _binary_version(self.executable, self.timeout_seconds)
+        return _binary_version(resolve_tool("ffmpeg", self.executable), self.timeout_seconds)
 
     def generate(
         self,
@@ -85,7 +86,7 @@ class FFmpegMediaWaveformProvider:
         if is_cancelled():
             raise InterruptedError("media_waveform_cancelled")
         command = [
-            self.executable,
+            resolve_tool("ffmpeg", self.executable),
             "-hide_banner",
             "-nostdin",
             "-v",
@@ -229,9 +230,7 @@ class FFmpegMediaWaveformProvider:
                 destination.unlink(missing_ok=True)
                 raise
         finish_bucket()
-        duration_microseconds = (
-            total_samples * 1_000_000 + spec.sample_rate // 2
-        ) // spec.sample_rate
+        duration_microseconds = (total_samples * 1_000_000 + spec.sample_rate // 2) // spec.sample_rate
         manifest = AudioWaveformManifestV1(
             media_ingest_id=media_ingest_id,
             source_asset_id=source_asset_id,

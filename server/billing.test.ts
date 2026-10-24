@@ -1,0 +1,102 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import express from 'express';
+import { createHmac } from 'node:crypto';
+import { createGovernanceRouter } from './governance';
+
+test('billing gates access and only signed idempotent provider events activate a subscription', async t => {
+  const previous = { nodeEnv: process.env.NODE_ENV, verification: process.env.AUTH_EMAIL_VERIFICATION_REQUIRED, checkout: process.env.STRIPE_TEST_CHECKOUT, webhook: process.env.STRIPE_WEBHOOK_SECRET, managedPrice: process.env.STRIPE_MANAGED_OPERATION_PRICE_ID };
+  process.env.NODE_ENV = 'test';
+  process.env.AUTH_EMAIL_VERIFICATION_REQUIRED = 'false';
+  process.env.STRIPE_TEST_CHECKOUT = 'true';
+  process.env.STRIPE_WEBHOOK_SECRET = 'whsec_billing_test_only';
+  process.env.STRIPE_MANAGED_OPERATION_PRICE_ID = 'price_managed_test_only';
+  const app = express();
+  app.use(express.json({ verify: (req, _res, buffer) => { if (String(req.url).startsWith('/api/governance/billing/webhook')) (req as express.Request & { rawBody?: Buffer }).rawBody = Buffer.from(buffer); } }));
+  app.use('/api/governance', createGovernanceRouter({ dataFile: null }));
+  const server = app.listen(0, '127.0.0.1');
+  await new Promise<void>(resolve => server.once('listening', resolve));
+  t.after(async () => {
+    await new Promise<void>((resolve, reject) => server.close(error => error ? reject(error) : resolve()));
+    process.env.NODE_ENV = previous.nodeEnv; process.env.AUTH_EMAIL_VERIFICATION_REQUIRED = previous.verification; process.env.STRIPE_TEST_CHECKOUT = previous.checkout; process.env.STRIPE_WEBHOOK_SECRET = previous.webhook;
+    if (previous.managedPrice === undefined) delete process.env.STRIPE_MANAGED_OPERATION_PRICE_ID; else process.env.STRIPE_MANAGED_OPERATION_PRICE_ID = previous.managedPrice;
+  });
+  const base = `http://127.0.0.1:${(server.address() as { port: number }).port}/api/governance`;
+  const call = (path: string, method = 'GET', body?: unknown, cookie?: string) => fetch(base + path, { method, headers: { 'Content-Type': 'application/json', ...(cookie ? { cookie } : {}) }, ...(body === undefined ? {} : { body: JSON.stringify(body) }) });
+  const signup = await call('/auth/signup', 'POST', { name: 'Billing Test', email: 'billing@example.test', password: 'SenhaForte9', confirmation: 'SenhaForte9', termsAccepted: true, privacyAccepted: true, remember: true });
+  assert.equal(signup.status, 201);
+  const created = await signup.json();
+  const cookie = signup.headers.get('set-cookie')!.split(';')[0];
+  assert.equal(created.account.subscriptionStatus, 'no_plan');
+  assert.equal(created.account.subscriptionAccessAllowed, false);
+  assert.equal((await call('/usage', 'GET', undefined, cookie)).status, 402);
+  assert.equal((await call('/plans', 'GET', undefined, cookie)).status, 200);
+
+  const invalidCycle = await call('/billing/checkout', 'POST', { planId: 'solo', billingCycle: 'weekly' }, cookie);
+  assert.equal(invalidCycle.status, 400);
+  assert.equal((await invalidCycle.json()).code, 'BILLING_CYCLE_INVALID');
+
+  const checkoutResponse = await call('/billing/checkout', 'POST', { planId: 'solo', billingCycle: 'annual' }, cookie);
+  assert.equal(checkoutResponse.status, 201);
+  const checkout = await checkoutResponse.json();
+  const providerSessionId = String(checkout.checkoutUrl).split('/').pop();
+  const pending = await (await call('/billing/status', 'GET', undefined, cookie)).json();
+  assert.equal(pending.subscription.status, 'pending_checkout');
+  assert.equal(pending.subscription.pendingBillingCycle, 'annual');
+  assert.equal(pending.accessAllowed, false);
+
+  const sendEvent = async (event: unknown, valid = true) => {
+    const body = JSON.stringify(event);
+    const timestamp = Math.floor(Date.now() / 1000);
+    const signature = createHmac('sha256', valid ? process.env.STRIPE_WEBHOOK_SECRET! : 'wrong').update(`${timestamp}.${body}`).digest('hex');
+    return fetch(base + '/billing/webhook', { method: 'POST', headers: { 'Content-Type': 'application/json', 'stripe-signature': `t=${timestamp},v1=${signature}` }, body });
+  };
+  const completed = { id: 'evt_checkout_paid', type: 'checkout.session.completed', data: { object: { id: providerSessionId, payment_status: 'paid', customer: 'cus_test', subscription: 'sub_test', metadata: { checkoutId: checkout.checkoutSessionId, workspaceId: created.account.workspaceId, planId: 'solo' } } } };
+  assert.equal((await sendEvent(completed, false)).status, 400);
+  assert.equal((await sendEvent(completed)).status, 200);
+  assert.equal((await (await sendEvent(completed)).json()).duplicate, true);
+  const active = await (await call('/billing/status', 'GET', undefined, cookie)).json();
+  assert.equal(active.subscription.status, 'active');
+  assert.equal(active.subscription.billingCycle, 'annual');
+  assert.equal(active.subscription.pendingBillingCycle, undefined);
+  assert.equal(active.accessAllowed, true);
+  assert.equal(active.subscription.entitlementSnapshot.capabilities.video_generation, false);
+  assert.equal((await call('/usage', 'GET', undefined, cookie)).status, 200);
+
+  const failed = { id: 'evt_invoice_failed', type: 'invoice.payment_failed', data: { object: { subscription: 'sub_test', customer: 'cus_test', metadata: { workspaceId: created.account.workspaceId } } } };
+  assert.equal((await sendEvent(failed)).status, 200);
+  assert.equal((await call('/usage', 'GET', undefined, cookie)).status, 402);
+  const paid = { id: 'evt_invoice_paid', type: 'invoice.paid', data: { object: { subscription: 'sub_test', customer: 'cus_test', metadata: { workspaceId: created.account.workspaceId } } } };
+  assert.equal((await sendEvent(paid)).status, 200);
+  assert.equal((await call('/usage', 'GET', undefined, cookie)).status, 200);
+
+  const clientId = 'client-billing-managed';
+  assert.equal((await call('/clients/register', 'POST', { id: clientId, name: 'Cliente Gerenciado' }, cookie)).status, 201);
+  const managedCheckout = await call(`/clients/${clientId}/managed-checkout`, 'POST', {}, cookie);
+  assert.equal(managedCheckout.status, 201);
+  const managedSessionId = String((await managedCheckout.json()).checkoutUrl).split('/').pop();
+  assert.equal((await call(`/clients/${clientId}/operation-access`, 'GET', undefined, cookie)).status, 402);
+  const unpaidManaged = { id: 'evt_managed_unpaid', type: 'checkout.session.completed', data: { object: { id: managedSessionId, payment_status: 'unpaid', amount_total: 2500, customer: 'cus_managed', subscription: 'sub_managed' } } };
+  assert.equal((await sendEvent(unpaidManaged)).status, 409);
+  const paidManaged = { id: 'evt_managed_paid', type: 'checkout.session.completed', data: { object: { id: managedSessionId, payment_status: 'paid', amount_total: 2500, customer: 'cus_managed', subscription: 'sub_managed' } } };
+  assert.equal((await sendEvent(paidManaged, false)).status, 400);
+  assert.equal((await sendEvent(paidManaged)).status, 200);
+  assert.equal((await (await sendEvent(paidManaged)).json()).duplicate, true);
+  const managed = (await (await call('/clients', 'GET', undefined, cookie)).json()).find((item: { id: string }) => item.id === clientId);
+  assert.equal(managed.operationState, 'managed');
+  assert.equal(managed.billingStatus, 'active');
+  assert.match(managed.linkedWorkspaceId, /^ws-managed-/);
+  assert.equal((await call(`/clients/${clientId}/operation-access`, 'GET', undefined, cookie)).status, 200);
+  const accountSession = await (await call('/auth/session', 'GET', undefined, cookie)).json();
+  assert.equal(accountSession.accounts.some((account: { workspaceId: string }) => account.workspaceId === managed.linkedWorkspaceId), true);
+  const switched = await call('/auth/session/workspace', 'POST', { workspaceId: managed.linkedWorkspaceId }, cookie);
+  assert.equal(switched.status, 200);
+  assert.equal((await switched.json()).account.workspaceId, managed.linkedWorkspaceId);
+  const nestedCheckout = await call('/billing/checkout', 'POST', { planId: 'solo' }, cookie);
+  assert.equal(nestedCheckout.status, 409);
+  assert.equal((await nestedCheckout.json()).code, 'MANAGED_BILLING_PARENT_REQUIRED');
+  assert.equal((await call('/auth/session/workspace', 'POST', { workspaceId: created.account.workspaceId }, cookie)).status, 200);
+  const managedFailure = { id: 'evt_managed_failed', type: 'invoice.payment_failed', data: { object: { subscription: 'sub_managed', customer: 'cus_managed' } } };
+  assert.equal((await sendEvent(managedFailure)).status, 200);
+  assert.equal((await call(`/clients/${clientId}/operation-access`, 'GET', undefined, cookie)).status, 402);
+});

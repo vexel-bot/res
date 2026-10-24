@@ -2,14 +2,24 @@
 
 ## Iniciar o produto
 
-No checkout do Clicko, execute npm run build e depois scripts/craft/start_local.ps1.
-O script reutiliza o broker Redis dedicado, inicia o worker local, a API em
-127.0.0.1:8000 e a aplicação em http://127.0.0.1:3000. Ele preserva serviços já
-existentes e recusa reiniciar sobre portas ocupadas ou processos parciais.
+Após a atualização do time de 24/10, o perfil de desenvolvimento usa a sessão
+atual do Clicko e a ponte autenticada para o backend dos Studios. No PowerShell,
+com as dependências instaladas e o ambiente Python em `.venv`:
 
-Use scripts/craft/start_local.ps1 -StatusOnly para consultar os processos.
-Os logs locais ficam em .codex-runtime/craft/local. O arquivo .env e as chaves
-permanecem locais; não devem ser incluídos no Git.
+```powershell
+$env:PORT = '3000'
+$env:CLICKO_LOCAL_STUDIO_PORT = '8000'
+node scripts/dev-local.mjs
+```
+
+O perfil mantém dados privados em `.codex-runtime/clicko-dev`, recusa portas
+ocupadas e não herda autorização de gasto. O status e o encerramento usam
+`node scripts/dev-local.mjs status` e `node scripts/dev-local.mjs stop`.
+O log fica em `.codex-runtime/clicko-dev/service.log`.
+
+O launcher anterior `scripts/craft/start_local.ps1` continua disponível para
+execução com worker e broker dedicados. Ele não deve ser iniciado por cima do
+perfil DEV. Os dados anteriores, o `.env` e as chaves permanecem locais.
 
 ## Acessos
 

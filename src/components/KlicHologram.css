@@ -1,0 +1,33 @@
+.klic-hologram,
+.klic-hologram__canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  pointer-events: none;
+}
+.klic-hologram__canvas[hidden] { display: none; }
+
+/* Portaled out of the scroll/overflow/transform ancestors. Only the visible
+   browser edge bounds the shatter, while its original hit target stays local. */
+.klic-hologram__canvas--viewport {
+  position: fixed;
+  z-index: 40;
+}
+
+/* Keep a live new-view layer instead of crossfading two different particle
+   phases in the shell's theme snapshot. Only this named element is exempt. */
+html[data-clicko-transition="theme"] .klic-hologram[data-active="true"][data-detail="full"][data-surface="local"],
+html[data-clicko-transition="theme"] .klic-hologram__canvas--viewport[data-active="true"] {
+  view-transition-name: klic-hologram;
+}
+.klic-plasma-wrap--entity > .klic-plasma { touch-action: pan-y pinch-zoom; }
+html[data-clicko-transition="theme"]::view-transition-old(klic-hologram) {
+  display: none;
+}
+html[data-clicko-transition="theme"]::view-transition-new(klic-hologram) {
+  animation: none !important;
+  mix-blend-mode: normal;
+}

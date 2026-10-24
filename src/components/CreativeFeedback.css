@@ -1,0 +1,8 @@
+.clicko-creative-workspace .cw-loading-state {
+  width: min(100%, 1500px);
+  margin: 0 auto;
+  padding: 28px;
+}
+@media (max-width: 700px) {
+  .clicko-creative-workspace .cw-loading-state { padding: 20px 16px; }
+}

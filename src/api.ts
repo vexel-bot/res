@@ -1,4 +1,16 @@
-const TOKEN_KEY = 'nexus_access_token';
+let studioScope: { module: 'create-image' | 'create-video'; clientId: string | null } | undefined;
+export function setStudioScope(value: typeof studioScope) { studioScope = value; }
+export function studioRequestHeaders(headers = new Headers()) {
+  const root = typeof document === 'undefined' ? null : document.querySelector<HTMLElement>('[data-clicko-studio]');
+  const renderedModule = root?.dataset.clickoStudio;
+  const scope = renderedModule === 'create-image' || renderedModule === 'create-video'
+    ? { module: renderedModule, clientId: root?.dataset.clickoStudioClient || null } : studioScope;
+  if (scope) {
+    headers.set('x-clicko-studio-module', scope.module);
+    if (scope.clientId) headers.set('x-clicko-client-id', scope.clientId);
+  }
+  return headers;
+}
 
 export class APIError extends Error {
   constructor(
@@ -9,19 +21,11 @@ export class APIError extends Error {
   }
 }
 
-export const authToken = {
-  get: () => localStorage.getItem(TOKEN_KEY),
-  set: (token: string) => localStorage.setItem(TOKEN_KEY, token),
-  clear: () => localStorage.removeItem(TOKEN_KEY),
-};
-
 export async function apiFetch<T>(path: string, init: RequestInit = {}): Promise<T> {
-  const token = authToken.get();
-  const headers = new Headers(init.headers);
-  if (token) headers.set('Authorization', `Bearer ${token}`);
+  const headers = studioRequestHeaders(new Headers(init.headers));
   if (init.body && !(init.body instanceof FormData)) headers.set('Content-Type', 'application/json');
   headers.set('X-Correlation-ID', crypto.randomUUID());
-  const response = await fetch(path, { ...init, headers });
+  const response = await fetch(path, { ...init, credentials: 'same-origin', headers });
   if (!response.ok) {
     let message = `Erro HTTP ${response.status}`;
     try {
@@ -32,6 +36,7 @@ export async function apiFetch<T>(path: string, init: RequestInit = {}): Promise
         : typeof detail?.code === "string"
           ? detail.code
           : message;
+      if (/craft_runtime|craft_engine.*unavailable|craft_.*not_built/.test(message)) message = 'A produção avançada está indisponível neste ambiente. Seu pedido permanece salvo para continuar quando o serviço estiver pronto.';
     } catch {
       // The status remains the authoritative error when the response is not JSON.
     }
@@ -43,11 +48,9 @@ export async function apiFetch<T>(path: string, init: RequestInit = {}): Promise
 }
 
 export async function apiFetchBlob(path: string, signal?: AbortSignal): Promise<Blob> {
-  const token = authToken.get();
-  const headers = new Headers();
-  if (token) headers.set('Authorization', `Bearer ${token}`);
+  const headers = studioRequestHeaders();
   headers.set('X-Correlation-ID', crypto.randomUUID());
-  const response = await fetch(path, { headers, signal });
+  const response = await fetch(path, { headers, signal, credentials: 'same-origin' });
   if (!response.ok) throw new APIError(`Erro HTTP ${response.status}`, response.status);
   return response.blob();
 }

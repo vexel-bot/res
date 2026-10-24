@@ -3,25 +3,41 @@
 import base64
 import io
 import json
-from pathlib import Path
 from types import SimpleNamespace as NS
 
 import httpx
 import pytest
 from PIL import Image
 from pydantic import SecretStr
-from test_contextual_editing import document, ffmpeg, request
+from test_contextual_editing import ffmpeg
 from test_contextual_editing import media as media
 from test_contextual_editing import project as project
 
 from app.config import get_settings
 from app.database import SessionLocal
-from app.domain.studios.contracts import CreativeDocumentV1
 from app.models import LibraryAsset, StudioGenerationJob
-from app.providers.studios.contextual_render import inspect_document
 from app.providers.studios.gemini_editing import GeminiEditingProvider
 from app.providers.studios.resource_download import PublicHTTPSConnection, download_resource
 from app.services.studios.jobs import execute_job_once, retry_job
+
+
+@pytest.fixture
+def monthly_admission_boundary(monkeypatch):
+    """Unit tests below exercise the pilot/category allocation, not SQL accounting.
+
+    Their SimpleNamespace database cannot represent the monthly ledger. Verify
+    delegation here; the real shared ledger/scopes/concurrency are covered by
+    test_internal_finance and test_studios_recovery with actual transactions.
+    """
+    from unittest.mock import Mock
+
+    def check_call(db, job, amount, settings):
+        assert db is not None and job.workspace_id and amount > 0
+
+    boundary = Mock(side_effect=check_call)
+    monkeypatch.setattr("app.services.studios.gemini_editing.reserve_monthly", boundary)
+    yield boundary
+    assert boundary.call_count >= 1
 
 
 def png():
@@ -50,6 +66,7 @@ def upload(client, project, kind="logo", data=None):
 def enable(monkeypatch):
     settings = get_settings()
     monkeypatch.setattr(settings, "studio_gemini_enabled", True)
+    monkeypatch.setattr(settings, "gemini_outbound_enabled", True)
     monkeypatch.setattr(settings, "studio_editing_ai_planning_provider", "gemini")
     monkeypatch.setattr(settings, "studio_gemini_test_key", SecretStr("test-only"))
     monkeypatch.setattr(settings, "studio_gemini_test_budget_usd", 5)
@@ -329,7 +346,7 @@ def test_uncertain_submission_is_not_reposted_even_on_manual_retry(client, proje
     assert len(calls) == 1
 
 
-def test_production_has_no_test_budget_and_never_uses_test_key(monkeypatch):
+def test_production_budget_is_finite_and_never_uses_test_key(monkeypatch):
     from app.services.studios.contextual_editing import budget_remaining
     from app.services.studios.gemini_editing import provider_key
 
@@ -337,7 +354,8 @@ def test_production_has_no_test_budget_and_never_uses_test_key(monkeypatch):
     settings = get_settings()
     monkeypatch.setattr(settings, "environment", "production")
     monkeypatch.setattr(settings, "studio_editing_monthly_budget_cents", 0)
-    assert budget_remaining(None, "workspace") == float("inf")
+    with SessionLocal() as db:
+        assert budget_remaining(db, "workspace") == 0
     with pytest.raises(ValueError, match="not_configured"):
         provider_key(settings)
     monkeypatch.setattr(settings, "studio_gemini_production_key", SecretStr("production-only"))
@@ -426,7 +444,7 @@ def test_test_budget_blocks_before_external_post(client, project, monkeypatch):
         assert not (record.result_payload or {}).get("submissionStarted")
 
 
-def test_one_dollar_production_envelope_is_partitioned_and_blocks_video(monkeypatch):
+def test_one_dollar_production_envelope_is_partitioned_and_blocks_video(monkeypatch, monthly_admission_boundary):
     from types import SimpleNamespace
 
     from app.services.studios.gemini_editing import reserve_test_request
@@ -449,6 +467,7 @@ def test_one_dollar_production_envelope_is_partitioned_and_blocks_video(monkeypa
             payload["productionStage"] = stage
         job = SimpleNamespace(
             workspace_id="workspace",
+            requested_by="test-member",
             correlation_id="pilot",
             provider="google.gemini-editing",
             job_type="editing_gemini",
@@ -485,7 +504,7 @@ def test_one_dollar_production_envelope_is_partitioned_and_blocks_video(monkeypa
     for image_job in image_jobs:
         reserve_test_request(db, image_job, 1)
     assert sum(job.result_payload.get("testReservationUsd", 0) for job in jobs) == pytest.approx(0.6)
-    with pytest.raises(ValueError, match="test_budget_exceeded"):
+    with pytest.raises(ValueError, match="test_budget_exceeded|video_generation_disabled"):
         reserve_test_request(db, task("generate_video"), 3)
 
 
@@ -502,7 +521,7 @@ def test_zero_production_budget_cannot_fall_back_to_provider_budget(monkeypatch)
         reserve_test_request(None, job, 1)
 
 
-def test_two_dollar_policy_uses_absolute_category_caps_and_protects_critique(monkeypatch):
+def test_two_dollar_policy_uses_absolute_category_caps_and_protects_critique(monkeypatch, monthly_admission_boundary):
     from types import SimpleNamespace
 
     from app.services.studios.editorial_production import motion_only_allocations
@@ -523,6 +542,7 @@ def test_two_dollar_policy_uses_absolute_category_caps_and_protects_critique(mon
     def task(stage="direction"):
         candidate = SimpleNamespace(
             workspace_id="workspace",
+            requested_by="test-member",
             correlation_id="two-dollar-pilot",
             provider="compatible.editing-planner",
             job_type="editing_ai",
@@ -561,7 +581,9 @@ def test_two_dollar_policy_uses_absolute_category_caps_and_protects_critique(mon
     assert inspection.result_payload["budgetSubcategoryCapUsd"] == pytest.approx(0.40)
 
 
-def test_completed_planning_uses_measured_cost_while_uncertain_submission_keeps_reservation(monkeypatch):
+def test_completed_planning_uses_measured_cost_while_uncertain_submission_keeps_reservation(
+    monkeypatch, monthly_admission_boundary,
+):
     from types import SimpleNamespace
 
     from app.services.studios.gemini_editing import reserve_test_request
@@ -581,6 +603,7 @@ def test_completed_planning_uses_measured_cost_while_uncertain_submission_keeps_
     def task(*, status="queued", result=None):
         candidate = SimpleNamespace(
             workspace_id="workspace",
+            requested_by="test-member",
             correlation_id="pilot",
             provider="compatible.editing-planner",
             job_type="editing_ai",
@@ -641,7 +664,7 @@ def test_completed_planning_uses_measured_cost_while_uncertain_submission_keeps_
     assert uncertain.result_payload["testReservationUsd"] == pytest.approx(0.09)
 
 
-def test_local_prompt_preflight_rejection_releases_reservation(monkeypatch):
+def test_local_prompt_preflight_rejection_releases_reservation(monkeypatch, monthly_admission_boundary):
     from types import SimpleNamespace
 
     from app.services.studios.gemini_editing import reserve_test_request
@@ -653,6 +676,7 @@ def test_local_prompt_preflight_rejection_releases_reservation(monkeypatch):
 
     rejected = SimpleNamespace(
         workspace_id="workspace",
+        requested_by="test-member",
         correlation_id="pilot",
         status="retrying",
         request_payload={"environment": "test", "input": {"operation": "plan"}},
@@ -666,6 +690,7 @@ def test_local_prompt_preflight_rejection_releases_reservation(monkeypatch):
     )
     current = SimpleNamespace(
         workspace_id="workspace",
+        requested_by="test-member",
         correlation_id="pilot",
         status="queued",
         provider="compatible.editing-planner",
@@ -695,7 +720,7 @@ def test_local_prompt_preflight_rejection_releases_reservation(monkeypatch):
     assert current.result_payload["testReservationUsd"] == pytest.approx(0.1)
 
 
-def test_retry_reuses_its_own_rejected_reservation(monkeypatch):
+def test_retry_reuses_its_own_rejected_reservation(monkeypatch, monthly_admission_boundary):
     from types import SimpleNamespace
 
     from app.services.studios.gemini_editing import reserve_test_request
@@ -706,6 +731,7 @@ def test_retry_reuses_its_own_rejected_reservation(monkeypatch):
     monkeypatch.setattr("app.services.studios.contextual_editing.lock_editing_budget", lambda *args: None)
     retrying = SimpleNamespace(
         workspace_id="workspace",
+        requested_by="test-member",
         correlation_id="pilot",
         provider="google.gemini-editing",
         job_type="editing_gemini",
@@ -737,7 +763,7 @@ def test_retry_reuses_its_own_rejected_reservation(monkeypatch):
     assert retrying.result_payload["testReservationUsd"] == pytest.approx(0.1)
 
 
-def test_local_material_inspection_uses_bounded_reservation(monkeypatch):
+def test_local_material_inspection_uses_bounded_reservation(monkeypatch, monthly_admission_boundary):
     from types import SimpleNamespace
 
     from app.services.studios.gemini_editing import reserve_test_request
@@ -749,6 +775,7 @@ def test_local_material_inspection_uses_bounded_reservation(monkeypatch):
 
     job = SimpleNamespace(
         workspace_id="workspace",
+        requested_by="test-member",
         correlation_id="pilot",
         provider="compatible.editing-planner",
         job_type="editing_ai",

@@ -4,10 +4,12 @@ import subprocess
 import tempfile
 import time
 
+from .media_runtime import resolve_tool
+
 
 class FFmpegUtility:
     def __init__(self, executable: str, timeout_seconds: int):
-        self.executable = executable
+        self.executable = resolve_tool("ffmpeg", executable)
         self.timeout_seconds = timeout_seconds
 
     def _run(self, args, cwd, cancelled):

@@ -1,0 +1,693 @@
+/*
+ * Clicko internal theme system.
+ * Authentication is deliberately outside this scope: every selector starts at
+ * the authenticated application shell.
+ */
+.clicko-app-shell {
+  --clicko-canvas: #000000;
+  --clicko-bg: #000000;
+  --clicko-background-primary: #000000;
+  --clicko-background-secondary: #070707;
+  --clicko-surface: #0b0b0b;
+  --clicko-surface-0: #070707;
+  --clicko-surface-1: #0b0b0b;
+  --clicko-surface-2: #111111;
+  --clicko-surface-3: #171717;
+  --clicko-surface-hover: #171717;
+  --clicko-control: #101010;
+  --clicko-control-hover: #171717;
+  --clicko-text: #ffffff;
+  --clicko-text-primary: #ffffff;
+  --clicko-text-secondary: #b8b8b8;
+  --clicko-text-secondary-official: #b8b8b8;
+  --clicko-text-muted: #808080;
+  --clicko-muted: #808080;
+  --clicko-border: rgba(255, 255, 255, 0.1);
+  --clicko-border-soft: rgba(255, 255, 255, 0.075);
+  --clicko-border-strong: rgba(255, 255, 255, 0.17);
+  --clicko-border-official: rgba(255, 255, 255, 0.1);
+  --clicko-shadow: 0 18px 48px rgba(0, 0, 0, 0.42);
+  --clicko-accent: #ff7f50;
+  --clicko-accent-warm: #f28500;
+  --clicko-accent-ink: #ff9470;
+  --clicko-warm-ink: #f6a338;
+  --clicko-ui-canvas: var(--clicko-canvas);
+  --clicko-ui-surface: var(--clicko-surface-1);
+  --clicko-ui-surface-raised: var(--clicko-surface-2);
+  --clicko-ui-popover: rgba(7, 7, 7, 0.96);
+  --clicko-ui-surface-muted: rgba(255, 255, 255, 0.055);
+  --clicko-ui-text: var(--clicko-text-primary);
+  --clicko-ui-text-secondary: var(--clicko-text-secondary);
+  --clicko-ui-muted: var(--clicko-text-muted);
+  --clicko-ui-border: var(--clicko-border);
+  --clicko-ui-border-strong: var(--clicko-border-strong);
+  color: var(--clicko-text);
+  color-scheme: dark;
+  background: var(--clicko-canvas);
+}
+
+.clicko-app-shell[data-theme="light"] {
+  --clicko-canvas: #f5f5f3;
+  --clicko-bg: #f5f5f3;
+  --clicko-background-primary: #f5f5f3;
+  --clicko-background-secondary: #ffffff;
+  --clicko-surface: #ffffff;
+  --clicko-surface-0: #ffffff;
+  --clicko-surface-1: #ffffff;
+  --clicko-surface-2: #fafaf8;
+  --clicko-surface-3: #efefec;
+  --clicko-surface-hover: #f0f0ed;
+  --clicko-control: #fafaf8;
+  --clicko-control-hover: #f1f1ee;
+  --clicko-text: #151515;
+  --clicko-text-primary: #151515;
+  --clicko-text-secondary: #454545;
+  --clicko-text-secondary-official: #454545;
+  --clicko-text-muted: #626262;
+  --clicko-muted: #626262;
+  --clicko-border: rgba(17, 17, 17, 0.12);
+  --clicko-border-soft: rgba(17, 17, 17, 0.085);
+  --clicko-border-strong: rgba(17, 17, 17, 0.19);
+  --clicko-border-official: rgba(17, 17, 17, 0.12);
+  --clicko-shadow: 0 18px 48px rgba(17, 17, 17, 0.09);
+  --clicko-accent: #ff7f50;
+  --clicko-accent-warm: #f28500;
+  --clicko-accent-ink: #b94722;
+  --clicko-warm-ink: #925300;
+  --clicko-ui-canvas: var(--clicko-canvas);
+  --clicko-ui-surface: var(--clicko-surface-1);
+  --clicko-ui-surface-raised: var(--clicko-surface-2);
+  --clicko-ui-popover: rgba(255, 255, 255, 0.97);
+  --clicko-ui-surface-muted: rgba(17, 17, 17, 0.045);
+  --clicko-ui-text: var(--clicko-text-primary);
+  --clicko-ui-text-secondary: var(--clicko-text-secondary);
+  --clicko-ui-muted: var(--clicko-text-muted);
+  --clicko-ui-border: var(--clicko-border);
+  --clicko-ui-border-strong: var(--clicko-border-strong);
+  color: var(--clicko-text);
+  color-scheme: light;
+  background: var(--clicko-canvas);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .clicko-app-shell,
+  .clicko-app-shell :is(.clicko-sidebar, .clicko-topbar, .clicko-main-stage, .clicko-interactive-surface, input, textarea, select, button, dialog) {
+    transition-property: background-color, border-color, color, box-shadow;
+    transition-duration: 180ms;
+    transition-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+}
+
+/* Global application chrome */
+.clicko-app-shell[data-theme="light"] :is(.clicko-app-stage, .clicko-main-stage),
+.clicko-app-shell[data-theme="light"] .clicko-main-stage > div {
+  background-color: var(--clicko-canvas) !important;
+  color: var(--clicko-text);
+}
+
+.clicko-app-shell[data-theme="light"] .clicko-sidebar,
+.clicko-app-shell[data-theme="light"] .clicko-topbar {
+  background: rgba(255, 255, 255, 0.96) !important;
+  border-color: var(--clicko-border) !important;
+  color: var(--clicko-text);
+  box-shadow: none;
+}
+
+.clicko-app-shell[data-theme="light"] :is(.clicko-sidebar-brand, .clicko-sidebar-brand .clicko-brand-link, .clicko-sidebar-brand .clicko-logo) {
+  background: #ffffff !important;
+}
+
+.clicko-app-shell[data-theme="light"] .clicko-nav-item {
+  color: #4e4e4e;
+  border-color: transparent;
+}
+
+.clicko-app-shell[data-theme="light"] .clicko-nav-item:hover {
+  color: #171717;
+  background: rgba(17, 17, 17, 0.045);
+}
+
+.clicko-app-shell[data-theme="light"] .clicko-nav-item[aria-current="page"],
+.clicko-app-shell[data-theme="light"] .clicko-nav-item.is-active {
+  color: #171717;
+  background: rgba(255, 127, 80, 0.09);
+  border-color: rgba(255, 127, 80, 0.28);
+}
+
+.clicko-app-shell[data-theme="light"] :is(.clicko-nav-section-label, .clicko-kicker, .clicko-eyebrow) {
+  color: #626262 !important;
+}
+
+/* Text utilities authored for the dark interface */
+.clicko-app-shell[data-theme="light"] :is(.clicko-main-stage, .clicko-sidebar, .clicko-topbar)
+  :is(h1, h2, h3, h4, h5, h6, strong, [class~="text-white"], [class*="text-[#FFFFFF]"], [class*="text-[rgba(255,255,255"]):not([class*="text-[#6EB8F5]"]) {
+  color: #171717 !important;
+}
+
+.clicko-app-shell[data-theme="light"] :is(.clicko-main-stage, .clicko-sidebar, .clicko-topbar)
+  :is([class~="text-[#808080]"], [class*="text-white/"], [class*="text-[rgba(128,128,128"]):not([class*="text-[#6EB8F5]"]) {
+  color: var(--clicko-text-muted) !important;
+}
+
+/* Coral and tangerine remain the brand accents; their ink variants keep small
+   labels and icons legible on white surfaces. Solid fills remain unchanged. */
+.clicko-app-shell[data-theme="light"] :is(.clicko-main-stage, .clicko-sidebar, .clicko-topbar)
+  [class*="text-[#FF7F50]"] {
+  color: var(--clicko-accent-ink) !important;
+}
+
+.clicko-app-shell[data-theme="light"] :is(.clicko-main-stage, .clicko-sidebar, .clicko-topbar)
+  [class*="text-[#F28500]"] {
+  color: var(--clicko-warm-ink) !important;
+}
+
+/* Controls and native content surfaces */
+.clicko-app-shell[data-theme="light"] :is(input, textarea, select) {
+  background-color: var(--clicko-control);
+  color: var(--clicko-text-primary);
+  border-color: rgba(17, 17, 17, 0.15);
+}
+
+.clicko-app-shell[data-theme="light"] :is(input, textarea)::placeholder {
+  color: #737373;
+  opacity: 1;
+}
+
+.clicko-app-shell[data-theme="light"] select option {
+  background: #ffffff;
+  color: #171717;
+}
+
+/* The responsive Settings navigation is a native select. Explicitly declare
+   its popup palette because some browsers otherwise combine a light system
+   menu with the dark theme's white text. */
+.clicko-app-shell[data-current-tab="settings"][data-theme="dark"] select[class~="h-12"] {
+  color-scheme: dark !important;
+  background-color: #111111 !important;
+  color: #ffffff !important;
+}
+
+.clicko-app-shell[data-current-tab="settings"][data-theme="dark"] select[class~="h-12"] option {
+  background-color: #111111 !important;
+  color: #ffffff !important;
+}
+
+.clicko-app-shell[data-current-tab="settings"][data-theme="dark"] select[class~="h-12"] option:checked {
+  background-color: #2a1913 !important;
+  color: #ffffff !important;
+}
+
+.clicko-app-shell[data-current-tab="settings"][data-theme="light"] select[class~="h-12"],
+.clicko-app-shell[data-current-tab="settings"][data-theme="light"] select[class~="h-12"] option {
+  color-scheme: light !important;
+  background-color: #ffffff !important;
+  color: #171717 !important;
+}
+
+.clicko-app-shell[data-current-tab="settings"][data-theme="light"] select[class~="h-12"] option:checked {
+  background-color: #fff1eb !important;
+  color: #171717 !important;
+}
+
+.clicko-app-shell[data-theme="light"] :is(input, textarea, select):focus {
+  border-color: rgba(255, 127, 80, 0.72);
+  box-shadow: 0 0 0 3px rgba(255, 127, 80, 0.1);
+}
+
+.clicko-app-shell[data-theme="light"] [class*="border-white"] {
+  border-color: var(--clicko-border) !important;
+}
+
+.clicko-app-shell[data-theme="light"] [class*="divide-white"] > :not([hidden]) ~ :not([hidden]) {
+  border-color: rgba(17, 17, 17, 0.08) !important;
+}
+
+.clicko-app-shell[data-theme="light"] :is([class*="bg-white/["], [class*="bg-[rgba(255,255,255"], [class*="bg-[#111111]"], [class*="bg-[#0B0B0B]"]) {
+  background-color: rgba(17, 17, 17, 0.035) !important;
+  background-image: none !important;
+}
+
+.clicko-app-shell[data-theme="light"] :is([class*="bg-[#000000]"], [class~="bg-black"]):not(.clicko-sidebar-brand):not(.clicko-brand-link):not(.clicko-theme-preview) {
+  background-color: #ffffff !important;
+  background-image: none !important;
+}
+
+.clicko-app-shell[data-theme="light"] :is(.clicko-interactive-surface, [class*="rounded-xl"], [class*="rounded-2xl"]):not([class*="bg-[#FF7F50]"]):not([class*="bg-[#F28500]"]) {
+  border-color: var(--clicko-border);
+}
+
+.clicko-app-shell[data-theme="light"] :is(table, thead, tbody, tr, th, td) {
+  border-color: rgba(17, 17, 17, 0.09);
+}
+
+.clicko-app-shell[data-theme="light"] table {
+  color: #242424;
+}
+
+.clicko-app-shell[data-theme="light"] th {
+  color: #555555;
+  background: var(--clicko-surface-2);
+}
+
+/* Menus, dialogs, popovers, tooltips and global search */
+.clicko-app-shell[data-theme="light"] :is(#clicko-profile-menu, .clicko-search-panel, .clicko-notification-panel, [role="menu"], [role="listbox"], dialog) {
+  background-color: #ffffff !important;
+  background-image: none !important;
+  color: #171717 !important;
+  border-color: rgba(17, 17, 17, 0.12) !important;
+  box-shadow: var(--clicko-shadow) !important;
+}
+
+html[data-theme="light"] [role="dialog"] {
+  background-color: #ffffff !important;
+  background-image: none !important;
+  color: #171717 !important;
+  border-color: rgba(17, 17, 17, 0.12) !important;
+  box-shadow: 0 18px 48px rgba(17, 17, 17, 0.12) !important;
+}
+
+html[data-theme="light"] [role="dialog"] :is(h1, h2, h3, h4, strong, [class~="text-white"], [class*="text-[rgba(255,255,255"]) {
+  color: #171717 !important;
+}
+
+html[data-theme="light"] [role="dialog"] :is(p, small, [class~="text-[#808080]"], [class*="text-white/"]) {
+  color: #696969 !important;
+}
+
+html[data-theme="light"] [role="dialog"] [class*="border-white"] {
+  border-color: rgba(17, 17, 17, 0.1) !important;
+}
+
+html[data-theme="light"] [role="dialog"] :is([class*="bg-white/["], [class*="bg-[rgba(255,255,255"], [class*="bg-[rgba(10,10,10"]) {
+  background-color: rgba(17, 17, 17, 0.035) !important;
+  background-image: none !important;
+}
+
+.clicko-app-shell[data-theme="light"] :is(.clicko-search-field, .clicko-command-field) {
+  background: var(--clicko-surface-2) !important;
+  border-color: var(--clicko-border) !important;
+}
+
+.clicko-app-shell[data-theme="light"] :is(.clicko-search-result, [role="option"]):hover,
+.clicko-app-shell[data-theme="light"] :is(.clicko-search-result, [role="option"])[aria-selected="true"] {
+  background: rgba(255, 127, 80, 0.075) !important;
+}
+
+.clicko-app-shell[data-theme="light"] :is(.clicko-chart-tooltip, [role="tooltip"]) {
+  color: #171717 !important;
+  background: #ffffff !important;
+  border: 1px solid rgba(17, 17, 17, 0.12) !important;
+  box-shadow: 0 10px 30px rgba(17, 17, 17, 0.12) !important;
+}
+
+/* Dashboard */
+.clicko-app-shell[data-theme="light"] :is(
+  .clicko-dashboard-hero,
+  .clicko-dashboard-metrics,
+  .clicko-dashboard-body,
+  .clicko-dashboard-side,
+  .clicko-dashboard-insight,
+  .clicko-dashboard-flow > div:last-child,
+  .clicko-chart
+) {
+  background-color: #ffffff !important;
+  background-image: none !important;
+  border-color: rgba(17, 17, 17, 0.09) !important;
+  color: #171717;
+}
+
+.clicko-app-shell[data-theme="light"] .clicko-chart [stroke="rgba(255,255,255,0.05)"],
+.clicko-app-shell[data-theme="light"] .clicko-chart [stroke="rgba(255,255,255,.05)"] {
+  stroke: rgba(17, 17, 17, 0.08) !important;
+}
+
+/* Analytics: preserve coral/tangerine data colors while recalculating surfaces. */
+.clicko-app-shell[data-theme="light"] .clicko-analytics-workspace {
+  color: #171717;
+  color-scheme: light;
+}
+
+.clicko-app-shell[data-theme="light"] .clicko-analytics-workspace :is(.aw-panel, .aw-metric, .aw-content-row, .aw-table-wrap, .aw-ranked, .aw-funnel-stage, .aw-post, .aw-dialog) {
+  background-color: #ffffff !important;
+  background-image: none !important;
+  color: #171717 !important;
+  border-color: rgba(17, 17, 17, 0.1) !important;
+}
+
+.clicko-app-shell[data-theme="light"] .clicko-analytics-workspace :is(.aw-button, select, input[type="date"], .aw-search) {
+  background: #ffffff !important;
+  color: #171717 !important;
+  border-color: rgba(17, 17, 17, 0.12) !important;
+}
+
+.clicko-app-shell[data-theme="light"] .clicko-analytics-workspace :is(.aw-primary, [class*="is-selected"]) {
+  border-color: rgba(255, 127, 80, 0.42) !important;
+}
+
+.clicko-app-shell[data-theme="light"] .clicko-analytics-workspace :is(.aw-muted, .aw-eyebrow, p, small, label, .aw-metric-label, .aw-text-button) {
+  color: #686868;
+}
+
+.clicko-app-shell[data-theme="light"] .clicko-analytics-workspace :is(.aw-delta, .aw-klic-icon, .aw-klic .aw-eyebrow, .aw-feedback) {
+  color: var(--clicko-accent-ink) !important;
+}
+
+.clicko-app-shell[data-theme="light"] .clicko-analytics-workspace .aw-demo-label {
+  color: var(--clicko-warm-ink) !important;
+}
+
+.clicko-app-shell[data-theme="light"] .clicko-analytics-workspace :is(h1, h2, h3, strong, .aw-tabs button[aria-current]) {
+  color: #171717 !important;
+}
+
+/* Automation workspace */
+.clicko-app-shell[data-theme="light"] .clicko-automation-workspace {
+  color: #171717;
+  color-scheme: light;
+}
+
+.clicko-app-shell[data-theme="light"] .clicko-automation-workspace :is(
+  .au-klic,
+  .au-flow-list,
+  .au-flow-row,
+  .au-template,
+  .au-empty,
+  .au-step,
+  .au-step-picker button,
+  .au-log-step,
+  .au-dialog
+) {
+  background-color: #ffffff !important;
+  background-image: none !important;
+  color: #171717 !important;
+  border-color: rgba(17, 17, 17, 0.1) !important;
+}
+
+.clicko-app-shell[data-theme="light"] .clicko-automation-workspace .au-stats > div {
+  background: #ffffff !important;
+  color: #171717;
+  border-color: rgba(17, 17, 17, 0.1) !important;
+}
+
+.clicko-app-shell[data-theme="light"] .clicko-automation-workspace :is(.au-tabs, .au-log, .au-template footer, .au-editor-toolbar, .au-editor-aside) {
+  border-color: rgba(17, 17, 17, 0.09) !important;
+}
+
+.clicko-app-shell[data-theme="light"] .clicko-automation-workspace :is(.au-button, input, select, textarea, .au-search) {
+  background-color: #ffffff !important;
+  color: #171717 !important;
+  border-color: rgba(17, 17, 17, 0.12) !important;
+}
+
+.clicko-app-shell[data-theme="light"] .clicko-automation-workspace :is(h1, h2, h3, strong, .au-flow-description, .au-step-copy, .au-tabs button[aria-current]) {
+  color: #171717 !important;
+}
+
+.clicko-app-shell[data-theme="light"] .clicko-automation-workspace :is(p, small, label, .au-muted, .au-eyebrow) {
+  color: #686868;
+}
+
+.clicko-app-shell[data-theme="light"] .clicko-automation-workspace .au-steps li:not(:last-child)::after {
+  background: rgba(17, 17, 17, 0.14);
+}
+
+/* Content library */
+.clicko-app-shell[data-theme="light"] .cx-library-approved {
+  color: #171717;
+}
+
+.clicko-app-shell[data-theme="light"] .cx-library-approved > nav,
+.clicko-app-shell[data-theme="light"] .cx-template-grid footer {
+  border-color: rgba(17, 17, 17, 0.09);
+}
+
+.clicko-app-shell[data-theme="light"] .cx-library-approved > nav button.is-active,
+.clicko-app-shell[data-theme="light"] .cx-template-grid h3,
+.clicko-app-shell[data-theme="light"] .cx-library-kv b,
+.clicko-app-shell[data-theme="light"] .cx-library-empty strong {
+  color: #171717;
+}
+
+.clicko-app-shell[data-theme="light"] :is(
+  .cx-library-button,
+  .cx-library-toolbar label,
+  .cx-library-toolbar select,
+  .cx-library-assets button,
+  .cx-library-layout > aside,
+  .cx-template-grid > article,
+  .cx-library-toast,
+  .cx-library-modal > form
+) {
+  background: #ffffff !important;
+  color: #252525;
+  border-color: rgba(17, 17, 17, 0.11) !important;
+}
+
+.clicko-app-shell[data-theme="light"] .cx-library-button.is-primary {
+  background: #ff7f50 !important;
+  color: #111111;
+  border-color: #ff7f50 !important;
+}
+
+.clicko-app-shell[data-theme="light"] .cx-library-button.is-danger {
+  background: rgba(255, 127, 80, 0.08) !important;
+  color: #bd4722;
+  border-color: rgba(189, 71, 34, 0.28) !important;
+}
+
+.clicko-app-shell[data-theme="light"] :is(.cx-library-assets img, .cx-library-assets video, .cx-library-file-placeholder, .cx-library-preview > img, .cx-library-preview > video) {
+  background-color: #eeeeeb;
+}
+
+.clicko-app-shell[data-theme="light"] .cx-library-modal :is(input, select, textarea) {
+  background: #ffffff;
+  color: #171717;
+  border-color: rgba(17, 17, 17, 0.13);
+}
+
+.clicko-app-shell[data-theme="light"] .cx-library-modal form > label {
+  color: #505050;
+}
+
+/* Corporate workspace controls use the same quiet neutral hierarchy. */
+.clicko-app-shell[data-theme="light"] .cx-client-toolbar > :is(label, div) {
+  background: var(--clicko-surface-2) !important;
+  border-color: var(--clicko-border) !important;
+}
+
+.clicko-app-shell[data-theme="light"] .cx-client-toolbar :is(input, select) {
+  background: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.clicko-app-shell[data-theme="light"] .cx-clients-shell :is(.cx-client-status.is-active, .cx-client-identity em.is-active, .cx-client-context-note button, .cx-client-approval-list button) {
+  color: var(--clicko-accent-ink) !important;
+}
+
+.clicko-app-shell[data-theme="light"] .cx-clients-shell :is(.cx-client-status.is-approval, .cx-client-panel-heading span, .cx-client-date small, .cx-client-timeline em, .cx-client-strategy-form label > span) {
+  color: var(--clicko-warm-ink) !important;
+}
+
+/* Small operational labels need darker brand inks on a light canvas. */
+.clicko-app-shell[data-theme="light"] .clicko-automation-workspace :is(.au-coral, .au-status.error, .au-feedback > svg, .au-log-icon.is-blocked) {
+  color: var(--clicko-accent-ink) !important;
+}
+
+.clicko-app-shell[data-theme="light"] .clicko-automation-workspace :is(.au-status.active, .au-step-copy small) {
+  color: var(--clicko-warm-ink) !important;
+}
+
+.clicko-app-shell[data-theme="light"] :is(.cx-library-button.is-danger, .cx-delete-asset, .cx-library-empty button) {
+  color: var(--clicko-accent-ink) !important;
+}
+
+/* Brand accents remain official in both themes. */
+.clicko-app-shell[data-theme="light"] :is([class*="bg-[#FF7F50]"], [class*="bg-[#F28500]"]) {
+  color: #111111;
+}
+
+.clicko-app-shell[data-theme="light"] ::selection {
+  color: #111111;
+  background: rgba(255, 127, 80, 0.45);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .clicko-app-shell,
+  .clicko-app-shell * {
+    transition-duration: 0.01ms !important;
+  }
+}
+/* The destructive exit affordance stays red in either official theme. */
+.clicko-app-shell .clicko-topbar #clicko-profile-menu button.clicko-sign-out:is(:hover, :focus-visible),
+.clicko-app-shell .clicko-topbar #clicko-profile-menu button.clicko-sign-out:is(:hover, :focus-visible) svg {
+  color: #dc2626 !important;
+}
+.clicko-app-shell .clicko-topbar #clicko-profile-menu button.clicko-sign-out:is(:hover, :focus-visible) {
+  background-color: rgba(220, 38, 38, 0.08) !important;
+}
+/* Same slots and brand proportions during session verification and splash. */
+.clicko-session-loading[data-theme="light"],
+.clicko-app-shell[data-theme="light"] .clicko-splash {
+  background-color: #ffffff !important;
+  color: #171717;
+}
+
+/* Final dual-theme contract -------------------------------------------------
+   This section intentionally comes last in the CSS import graph. Components
+   may keep their existing utility classes, while every visual primitive is
+   resolved from the active Clicko palette in one atomic theme transaction. */
+html[data-theme="dark"],
+html[data-theme="dark"] body {
+  background-color: #000000 !important;
+  color-scheme: dark;
+}
+
+html[data-theme="light"],
+html[data-theme="light"] body {
+  background-color: #f5f5f3 !important;
+  color-scheme: light;
+}
+
+.clicko-app-shell[data-theme="dark"] .clicko-topbar {
+  border-color: var(--clicko-border) !important;
+  background-color: #050505 !important;
+  color: var(--clicko-text-primary);
+}
+
+.clicko-app-shell[data-theme="dark"] .clicko-sidebar,
+.clicko-app-shell[data-theme="dark"] .clicko-sidebar-brand,
+.clicko-app-shell[data-theme="dark"] .clicko-sidebar-brand :is(.clicko-brand-link, .clicko-logo) {
+  background: #000000 !important;
+}
+
+.clicko-app-shell[data-theme="dark"] .clicko-main-stage {
+  background-color: var(--clicko-canvas) !important;
+  color: var(--clicko-text-primary);
+}
+
+.clicko-app-shell[data-theme="light"] .clicko-topbar {
+  border-color: var(--clicko-border) !important;
+  background-color: rgba(255, 255, 255, 0.97) !important;
+  color: var(--clicko-text-primary);
+}
+
+.clicko-app-shell[data-theme="light"] .clicko-sidebar,
+.clicko-app-shell[data-theme="light"] .clicko-sidebar-brand,
+.clicko-app-shell[data-theme="light"] .clicko-sidebar-brand :is(.clicko-brand-link, .clicko-logo) {
+  background: #ffffff !important;
+}
+
+.clicko-app-shell[data-theme] .clicko-sidebar-brand,
+.clicko-app-shell[data-theme] .clicko-sidebar-brand :is(.clicko-brand-link, .clicko-logo) {
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.clicko-app-shell[data-theme="light"] .clicko-main-stage {
+  background-color: var(--clicko-canvas) !important;
+  background-image: none !important;
+  color: var(--clicko-text-primary);
+}
+
+.clicko-app-shell[data-theme="light"] .clicko-main-stage
+  :is([class*="bg-[rgba(128,128,128"], [class*="bg-[#0"], [class*="bg-[#1"]):not([class*="bg-[#FF7F50]"]):not([class*="bg-[#F28500]"]) {
+  background-color: var(--clicko-surface-1) !important;
+  background-image: none !important;
+}
+
+.clicko-app-shell[data-theme="light"]
+  :is(.clicko-main-stage, .clicko-sidebar, .clicko-topbar)
+  [class*="text-[rgba(255,255,255,0.72)]"] {
+  color: var(--clicko-text-secondary) !important;
+}
+
+.clicko-app-shell[data-theme="light"]
+  :is(.clicko-main-stage, .clicko-sidebar, .clicko-topbar)
+  :is([class*="text-[rgba(255,255,255,0.88)]"], [class~="text-white"], [class*="text-[#FFFFFF]"]) {
+  color: var(--clicko-text-primary) !important;
+}
+
+.clicko-app-shell[data-theme="light"]
+  :is(.clicko-main-stage, .clicko-sidebar, .clicko-topbar)
+  :is([class~="text-[#808080]"], [class*="text-[rgba(128,128,128"]):not([class*="text-[#6EB8F5]"]) {
+  color: var(--clicko-text-muted) !important;
+}
+
+.clicko-app-shell[data-theme] .clicko-main-stage :is(input, textarea, select),
+.clicko-app-shell[data-theme] :is(.clicko-sidebar, .clicko-topbar) :is(input, textarea, select) {
+  border-color: var(--clicko-border) !important;
+  background-color: var(--clicko-control) !important;
+  color: var(--clicko-text-primary) !important;
+  color-scheme: inherit;
+}
+
+.clicko-app-shell[data-theme] :is(input, textarea)::placeholder {
+  color: var(--clicko-text-muted) !important;
+  opacity: 1;
+}
+
+.clicko-app-shell[data-theme] select option,
+.clicko-app-shell[data-theme] select optgroup {
+  background-color: var(--clicko-surface-1);
+  color: var(--clicko-text-primary);
+}
+
+.clicko-app-shell[data-theme] :is(input, textarea, select):focus,
+.clicko-app-shell[data-theme] :is(input, textarea, select):focus-visible {
+  border-color: color-mix(in srgb, var(--clicko-accent) 72%, transparent) !important;
+  outline: none !important;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--clicko-accent) 12%, transparent) !important;
+}
+
+.clicko-app-shell :is(
+  #clicko-profile-menu,
+  .clicko-search-panel,
+  .clicko-notification-panel,
+  [role="menu"],
+  [role="listbox"],
+  [role="tooltip"],
+  dialog
+) {
+  border-color: var(--clicko-border-strong) !important;
+  background-color: var(--clicko-ui-popover) !important;
+  background-image: none !important;
+  color: var(--clicko-text-primary) !important;
+  box-shadow: var(--clicko-shadow) !important;
+}
+
+html[data-theme="light"] body > :is([role="dialog"], [role="menu"], [role="listbox"], [role="tooltip"]) {
+  border-color: rgba(17, 17, 17, 0.14) !important;
+  background-color: #ffffff !important;
+  color: #151515 !important;
+  color-scheme: light;
+}
+
+.clicko-app-shell[data-theme="light"] :is([aria-selected="true"], [aria-pressed="true"], [aria-current="page"]):not([class*="bg-[#6EB8F5]"]) {
+  border-color: rgba(255, 127, 80, 0.34) !important;
+  background-color: rgba(255, 127, 80, 0.09) !important;
+}
+
+.clicko-app-shell[data-theme="dark"] :is([aria-selected="true"], [aria-pressed="true"], [aria-current="page"]):not([class*="bg-[#6EB8F5]"]) {
+  border-color: rgba(255, 127, 80, 0.36) !important;
+  background-color: rgba(255, 127, 80, 0.1) !important;
+}
+
+.clicko-app-shell :is(button, a, input, textarea, select):focus-visible {
+  outline: 1px solid color-mix(in srgb, var(--clicko-accent) 76%, transparent) !important;
+  outline-offset: 2px;
+}
+
+/* The KLIC/Plasma blue remains isolated from the global palette. */
+html[data-theme="light"] body > .clicko-radar-dialog {
+  background-color: rgba(17, 17, 17, 0.48) !important;
+}
+
+html[data-theme="light"] .clicko-radar-dialog-panel {
+  background-color: #ffffff !important;
+  color: #171717;
+}
+
+.clicko-app-shell :is(.klic-workspace, .klic-floating-root, [data-klic-surface]) [class*="text-[#6EB8F5]"] {
+  color: #6eb8f5 !important;
+}

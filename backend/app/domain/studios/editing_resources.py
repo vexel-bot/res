@@ -99,6 +99,8 @@ class EditingAIRequestV1(StudioContract):
     prompt: str = Field(min_length=1, max_length=12000)
     source_asset_id: str | None = None
     reference_asset_ids: list[str] = Field(default_factory=list, max_length=3)
+    aspect_ratio: Literal["1:1", "3:2", "2:3", "3:4", "4:3", "4:5", "5:4", "9:16", "16:9", "21:9"] | None = None
+    image_size: Literal["1K", "2K", "4K"] | None = None
     source_start_seconds: float = Field(default=0, ge=0)
     duration_seconds: int = Field(default=8, ge=1, le=3600)
     preserve: list[str] = Field(default_factory=list, max_length=30)
@@ -106,6 +108,8 @@ class EditingAIRequestV1(StudioContract):
 
     @model_validator(mode="after")
     def required_inputs(self):
+        if (self.aspect_ratio or self.image_size) and self.operation not in {"generate_image", "edit_image"}:
+            raise ValueError("image_parameters_require_image_operation")
         if self.material_inspection and (self.operation != "plan" or self.production_stage):
             raise ValueError("material_inspection_requires_independent_planning_job")
         if self.production_stage:

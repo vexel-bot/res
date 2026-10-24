@@ -154,7 +154,7 @@ function IdentityRoom({
   const [evidence, setEvidence] = React.useState<File>();
   const alive = React.useRef(true);
   // The frozen submission is reused on a network retry; no second profile is minted.
-  const pending = React.useRef<Parameters<typeof identityApi.enroll>[0]>();
+  const pending = React.useRef<Parameters<typeof identityApi.enroll>[0] | undefined>(undefined);
   const uploadCache = React.useRef(new Map<File, string>());
   React.useEffect(() => {
     alive.current = true;
@@ -517,7 +517,7 @@ function IdentityRoom({
                               key={format}
                               onClick={() =>
                                 navigate(
-                                  `/studios?format=${format}&${tab === "identities" ? "identityVersion" : "voiceVersion"}=${encodeURIComponent(active.id)}`,
+                                  `${format === "image" ? "/studios/tools/editorial" : "/studios/video/create"}?format=${format}&${tab === "identities" ? "identityVersion" : "voiceVersion"}=${encodeURIComponent(active.id)}`,
                                 )
                               }
                             >

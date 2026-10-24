@@ -1,8 +1,4 @@
-import json
-import time
 from typing import Any
-
-import httpx
 
 from ..config import get_settings
 
@@ -23,27 +19,6 @@ class OpenAICompatibleProvider:
         return bool(self.base_url and self.api_key and self.model)
 
     def generate_json(self, system: str, prompt: str) -> tuple[dict[str, Any], dict[str, Any]]:
-        if not self.configured:
-            raise AIProviderUnavailable("No AI provider is configured")
-        started = time.perf_counter()
-        with httpx.Client(timeout=60) as client:
-            response = client.post(
-                f"{self.base_url}/chat/completions",
-                headers={"Authorization": f"Bearer {self.api_key}"},
-                json={
-                    "model": self.model,
-                    "messages": [{"role": "system", "content": system}, {"role": "user", "content": prompt}],
-                    "response_format": {"type": "json_object"},
-                    "temperature": 0.4,
-                },
-            )
-            response.raise_for_status()
-            payload = response.json()
-        content = payload["choices"][0]["message"]["content"]
-        trace = {
-            "provider": "openai-compatible",
-            "model": self.model,
-            "latencyMs": round((time.perf_counter() - started) * 1000),
-            "usage": payload.get("usage", {}),
-        }
-        return json.loads(content), trace
+        # Retained legacy adapter has no authenticated billing scope/reservation.
+        # Do not allow it to bypass the canonical, budgeted Studios LLM service.
+        raise AIProviderUnavailable("Use the budgeted Studios LLM connection service")

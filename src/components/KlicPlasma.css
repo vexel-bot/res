@@ -1,0 +1,9 @@
+/* Retain the existing wrapper dimensions, hit target and accessibility styling.
+   The face owns motion; no solid plasma layers, filters or CSS morphs remain. */
+.klic-plasma-wrap--entity .klic-plasma__physical {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+.klic-plasma-wrap--entity .klic-plasma { filter: none; }
+.klic-plasma-wrap--entity > .klic-plasma { touch-action: pan-y pinch-zoom; }

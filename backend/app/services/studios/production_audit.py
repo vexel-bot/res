@@ -82,7 +82,10 @@ def visual_correction_effect(previous, candidate, action):
                 or not set(original.get("requiredPartIds", [])) <= set(current.get("requiredPartIds", []))
                 or current.get("evidenceRequired") != original.get("evidenceRequired")
             ):
-                return {"status": "rejected", "reason": "production_visual_correction_weakened_verification", "assertionId": assertion_id}
+                return {
+                    "status": "rejected", "reason": "production_visual_correction_weakened_verification",
+                    "assertionId": assertion_id,
+                }
     if _visual_direction_fingerprint(previous) == _visual_direction_fingerprint(candidate):
         return {"status": "rejected", "reason": "production_visual_correction_no_render_delta"}
     return {"status": "accepted", "reason": "executable_visual_change_present"}

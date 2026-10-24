@@ -2,6 +2,44 @@ node_modules/
 build/
 dist/
 coverage/
+# Generated Playwright reports and screenshots (test sources stay tracked).
+/test-results/
+/playwright-report/
+.DS_Store
+*.log
+.env*
+!.env.example
+.clicko-data/
+.codex-runtime/
+# FastAPI's default local upload store is runtime/user data, never source.
+/backend/data/
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+*.sqlite*
+*.db
+target/
+public/craft/
+workers/craft/.runs/
+
+# Local/private credentials. Keep examples and application data models tracked;
+# real provider credentials belong outside the repository or in .secrets/.
+.secrets/
+*service-account*.json
+*service_account*.json
+*oauth-credentials*.json
+*oauth_credentials*.json
+google-credentials*.json
+*.pem
+*.key
+
+# Preserved local model, runtime and private artifacts
+node_modules/
+build/
+dist/
+coverage/
 artifacts/
 test-results/
 playwright-report/

@@ -1,0 +1,177 @@
+.clicko-automation-workspace {
+  --au-surface: var(--cw-surface, #101012);
+  --au-raised: var(--cw-raised, #151518);
+  --au-line: var(--cw-line, rgba(255,255,255,.08));
+  --au-line-strong: var(--cw-line-strong, rgba(255,255,255,.14));
+  --au-ink: var(--cw-ink, #fff);
+  --au-secondary: var(--cw-secondary, #a7a7ab);
+  --au-muted: var(--cw-muted, #77777d);
+  --au-coral: var(--cw-coral, #FF7F50);
+  --au-brand-subtle: var(--cw-brand-subtle, rgba(255,127,80,.08));
+  --au-brand-border: var(--cw-brand-border, rgba(255,127,80,.24));
+  min-width: 0;
+  padding: 36px 32px 64px;
+  color: var(--au-ink);
+  font-family: inherit;
+}
+.clicko-automation-workspace .au-shell { width: min(100%, 1180px); min-width: 0; margin: 0 auto; }
+.clicko-automation-workspace :is(h1,h2,h3,p) { margin: 0; }
+.clicko-automation-workspace h1 { font-size: clamp(28px,3vw,36px); font-weight: 620; letter-spacing: -1.15px; line-height: 1.12; }
+.clicko-automation-workspace h2 { font-size: 16px; font-weight: 600; letter-spacing: -.3px; }
+.clicko-automation-workspace h3 { font-size: 12px; font-weight: 500; }
+.clicko-automation-workspace :is(button,input,textarea,select) { font: inherit; }
+.clicko-automation-workspace button { cursor: pointer; }
+.clicko-automation-workspace :is(button,input,textarea,select,summary):focus-visible { outline: 2px solid #FF7F50; outline-offset: 3px; }
+.clicko-automation-workspace button:disabled { opacity: .35; cursor: not-allowed; }
+.clicko-automation-workspace svg { width: 16px; height: 16px; flex-shrink: 0; }
+.clicko-automation-workspace .au-header { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 20px; padding-bottom: 24px; border-bottom: 1px solid var(--au-line); }
+.clicko-automation-workspace .au-header > div { min-width: 0; max-width: 720px; }
+.clicko-automation-workspace .au-header p { max-width: 680px; font-size: 13px; line-height: 1.65; color: var(--au-secondary); margin-top: 10px; }
+.clicko-automation-workspace .au-header .au-button { min-height: 42px; padding-inline: 18px; }
+.clicko-automation-workspace .au-availability { display: flex; align-items: flex-start; gap: 10px; color: var(--au-secondary); font-size: 11px; line-height: 1.6; margin: 0 0 22px; padding: 11px 13px; border: 1px solid var(--au-line); border-radius: 10px; background: color-mix(in srgb, var(--au-surface) 78%, transparent); }
+.clicko-automation-workspace .au-availability svg { width: 15px; height: 15px; margin-top: 1px; color: var(--au-coral); }
+.clicko-automation-workspace .au-button { display: inline-flex; gap: 8px; justify-content: center; align-items: center; min-height: 38px; padding: 8px 13px; border: 1px solid var(--au-line); border-radius: 9px; background: var(--au-raised); color: var(--au-ink); font-size: 11px; transition: background 160ms,border-color 160ms,transform 160ms; }
+.clicko-automation-workspace .au-button:hover { border-color: var(--au-line-strong); transform: translateY(-1px); }
+.clicko-automation-workspace .au-primary { background: #FF7F50; color: #000; font-weight: 600; border-color: #FF7F50; }
+.clicko-automation-workspace .au-primary:hover { background: #FF7F50; border-color: #F28500; }
+.clicko-automation-workspace .au-text-button { display: inline-flex; gap: 7px; align-items: center; color: var(--au-secondary); border: 0; background: none; font-size: 11px; padding: 4px 0; }
+.clicko-automation-workspace .au-text-button:hover { color: #FF7F50; }
+.clicko-automation-workspace :is(.au-text-button,.au-button) svg { width: 14px; height: 14px; }
+.clicko-automation-workspace .au-muted { color: #808080; font-size: 11px; line-height: 1.8; }
+.clicko-automation-workspace .au-coral { color: #FF7F50; font-size: 11px; line-height: 1.8; }
+.clicko-automation-workspace .au-eyebrow { display: block; font-size: 9px; font-weight: 650; text-transform: uppercase; letter-spacing: 1.7px; color: var(--au-coral); margin-bottom: 9px; }
+.clicko-automation-workspace .au-feedback { display: flex; gap: 10px; align-items: center; padding: 12px 14px; border: 1px solid rgba(255,127,80,.18); background: rgba(255,127,80,.04); border-radius: 8px; font-size: 11px; line-height: 1.7; margin-bottom: 20px; }
+.clicko-automation-workspace .au-feedback > svg { color: #FF7F50; }
+.clicko-automation-workspace .au-feedback > span { flex: 1; }
+.clicko-automation-workspace .au-feedback button { background: none; border: 0; color: #808080; padding: 4px; }
+.clicko-automation-workspace .au-stats { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 0; padding: 8px; border: 1px solid var(--au-line); border-radius: 14px; background: var(--au-surface); }
+.clicko-automation-workspace .au-stats > div { min-width: 0; min-height: 92px; padding: 15px 16px; border: 0; border-right: 1px solid var(--au-line); border-radius: 9px; background: transparent; }
+.clicko-automation-workspace .au-stats > div:last-child { border-right: 0; }
+.clicko-automation-workspace .au-stats span { display: flex; justify-content: space-between; align-items: center; gap: 10px; color: var(--au-secondary); font-size: 10px; }
+.clicko-automation-workspace .au-stats span svg { color: var(--au-muted); }
+.clicko-automation-workspace .au-stats strong { display: block; margin-top: 13px; font-size: 25px; letter-spacing: -.6px; line-height: 1; font-weight: 560; }
+.clicko-automation-workspace .au-tabs { display: inline-flex; max-width: 100%; gap: 4px; margin: 18px 0 16px; padding: 4px; border: 1px solid var(--au-line); border-radius: 11px; background: var(--au-surface); }
+.clicko-automation-workspace .au-tabs button { background: transparent; color: var(--au-secondary); border: 1px solid transparent; border-radius: 7px; padding: 8px 13px; font-size: 11px; transition: color 160ms,background 160ms,border-color 160ms; }
+.clicko-automation-workspace .au-tabs button:hover { color: var(--au-ink); }
+.clicko-automation-workspace .au-tabs button[aria-current] { color: var(--au-ink); border-color: var(--au-brand-border); background: var(--au-brand-subtle); }
+.clicko-automation-workspace .au-list-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 0 0 12px; padding: 10px; border: 1px solid var(--au-line); border-radius: 12px; background: var(--au-surface); }
+.clicko-automation-workspace .au-list-toolbar > span { margin-left: auto; font-size: 10px; color: #808080; }
+.clicko-automation-workspace :is(input,textarea,select) { border: 1px solid var(--au-line); border-radius: 8px; background: var(--cw-canvas,#000); color: var(--au-ink); padding: 10px 12px; font-size: 12px; max-width: 100%; }
+.clicko-automation-workspace select option { background: var(--cw-canvas,#000); color: var(--au-ink); }
+.clicko-automation-workspace textarea { resize: vertical; }
+.clicko-automation-workspace .au-search { display: flex; align-items: center; gap: 10px; flex: 1 1 260px; max-width: none; border: 1px solid var(--au-line); border-radius: 8px; background: var(--cw-canvas,#000); padding: 0 12px; color: var(--au-muted); }
+.clicko-automation-workspace .au-search input { flex: 1; min-width: 0; border: 0; background: none; padding-left: 0; }
+.clicko-automation-workspace .au-flow-list { border: 1px solid var(--au-line); border-radius: 14px; overflow: hidden; background: var(--au-surface); }
+.clicko-automation-workspace .au-flow-row { display: flex; align-items: center; gap: 14px; min-height: 96px; padding: 16px 18px; border-bottom: 1px solid var(--au-line); background: transparent; transition: background 160ms; }
+.clicko-automation-workspace .au-flow-row:last-child { border: 0; }
+.clicko-automation-workspace .au-flow-row:hover { background: var(--au-raised); }
+.clicko-automation-workspace .au-flow-icon { display: grid; place-items: center; width: 40px; height: 40px; border: 1px solid var(--au-brand-border); border-radius: 10px; background: var(--au-brand-subtle); color: var(--au-coral); flex-shrink: 0; }
+.clicko-automation-workspace .au-flow-description { flex: 1; min-width: 0; border: 0; background: none; padding: 0; text-align: left; color: var(--au-ink); }
+.clicko-automation-workspace .au-flow-description strong { font-weight: 600; font-size: 13px; }
+.clicko-automation-workspace .au-flow-description p { color: #808080; font-size: 11px; margin: 6px 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.clicko-automation-workspace .au-flow-description small { font-size: 10px; color: #808080; }
+.clicko-automation-workspace .au-status { font-size: 10px; border: 1px solid rgba(255,255,255,.1); border-radius: 6px; color: #808080; padding: 4px 8px; white-space: nowrap; }
+.clicko-automation-workspace .au-status.active { color: #F28500; background: rgba(242,133,0,.045); border-color: rgba(242,133,0,.18); }
+.clicko-automation-workspace .au-status.error { color: #FF7F50; border-color: rgba(255,127,80,.3); }
+.clicko-automation-workspace .au-row-actions { display: flex; gap: 4px; padding-left: 4px; }
+.clicko-automation-workspace :is(.au-row-actions,.au-step-tools) button { display: grid; place-items: center; width: 32px; height: 32px; padding: 0; border: 1px solid transparent; background: transparent; color: var(--au-muted); border-radius: 7px; }
+.clicko-automation-workspace :is(.au-row-actions,.au-step-tools) button:hover { color: #FF7F50; background: rgba(255,255,255,.04); }
+.clicko-automation-workspace :is(.au-row-actions,.au-step-tools) svg { width: 13px; height: 13px; }
+.clicko-automation-workspace .au-empty { display: grid; justify-items: center; text-align: center; padding: 60px 20px; border: 1px solid rgba(255,255,255,.07); border-radius: 12px; }
+.clicko-automation-workspace .au-empty > svg { color: #FF7F50; width: 28px; height: 28px; margin-bottom: 20px; }
+.clicko-automation-workspace .au-empty p { max-width: 380px; margin: 10px 0 20px; color: #808080; font-size: 12px; line-height: 1.8; }
+.clicko-automation-workspace .au-empty > div { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+.clicko-automation-workspace .au-section-heading { margin-bottom: 22px; }
+.clicko-automation-workspace .au-section-heading p { color: #808080; font-size: 12px; margin-top: 7px; }
+.clicko-automation-workspace .au-template-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 16px; }
+.clicko-automation-workspace .au-template { display: flex; flex-direction: column; padding: 22px; border: 1px solid rgba(255,255,255,.07); border-radius: 12px; background: linear-gradient(135deg,rgba(255,255,255,.025),transparent); transition: border-color 160ms; }
+.clicko-automation-workspace .au-template:hover { border-color: rgba(255,127,80,.25); }
+.clicko-automation-workspace .au-template h2 { font-size: 15px; line-height: 1.5; }
+.clicko-automation-workspace .au-template p { color: #808080; font-size: 11px; line-height: 1.8; margin: 10px 0 20px; }
+.clicko-automation-workspace .au-template-path { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: auto; }
+.clicko-automation-workspace .au-template-path > span { display: grid; place-items: center; width: 30px; height: 30px; border: 1px solid rgba(255,255,255,.08); border-radius: 7px; color: #808080; }
+.clicko-automation-workspace .au-template-path > svg { width: 10px; height: 10px; color: #808080; }
+.clicko-automation-workspace .au-template footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 22px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,.06); }
+.clicko-automation-workspace .au-template footer > span { font-size: 10px; color: #808080; }
+.clicko-automation-workspace .au-journey-card dl { display: grid; gap: 9px; margin: 0; padding: 0; }
+.clicko-automation-workspace .au-goal-details { margin-top: auto; }
+.clicko-automation-workspace .au-goal-details summary { display: flex; align-items: center; justify-content: space-between; gap: 8px; color: #aaa; cursor: pointer; font-size: 11px; }
+.clicko-automation-workspace .au-goal-details[open] dl { margin-top: 14px; }
+.clicko-automation-workspace .au-goal-details summary svg { width: 12px; height: 12px; }
+.clicko-automation-workspace .au-journey-card dl > div { display: grid; gap: 3px; }
+.clicko-automation-workspace .au-journey-card dt { color: #ff916c; font-size: 9px; text-transform: uppercase; letter-spacing: .08em; }
+.clicko-automation-workspace .au-journey-card dd { margin: 0; color: #a1a1a1; font-size: 11px; line-height: 1.5; }
+.clicko-automation-workspace .au-legacy-models { margin-top: 28px; padding: 18px; border: 1px solid rgba(255,255,255,.08); border-radius: 10px; }
+.clicko-automation-workspace .au-legacy-models > summary { display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 12px; }
+.clicko-automation-workspace .au-legacy-models > p { margin: 12px 0 16px; color: #888; font-size: 11px; }
+.clicko-automation-workspace .au-legacy-models > .au-button { margin-top: 16px; }
+.clicko-automation-workspace .au-client-select, .clicko-automation-workspace .au-journey-fields label { display: grid; gap: 7px; margin-top: 16px; color: #888; font-size: 10px; }
+.clicko-automation-workspace .au-client-select select, .clicko-automation-workspace .au-journey-fields :is(input,textarea) { width: 100%; }
+.clicko-automation-workspace .au-license-warning { display: flex; align-items: flex-start; gap: 10px; margin-top: 12px; padding: 12px; border: 1px solid rgba(255,127,80,.28); border-radius: 8px; color: #ddd; font-size: 11px; line-height: 1.5; }
+.clicko-automation-workspace .au-license-warning > span { flex: 1; }
+.clicko-automation-workspace .au-license-warning > svg { color: #ff7f50; }
+.clicko-app-shell[data-theme="light"] .clicko-automation-workspace .au-journey-card dd { color: #555; }
+.clicko-app-shell[data-theme="light"] .clicko-automation-workspace .au-license-warning { color: #333; border-color: rgba(160,75,40,.3); }
+.clicko-app-shell[data-theme="light"] .clicko-automation-workspace :is(.au-legacy-models,.au-goal-details summary) { color: #555; border-color: rgba(0,0,0,.1); }
+.clicko-app-shell[data-theme="light"] .clicko-automation-workspace .au-search input { background: transparent !important; }
+.clicko-automation-workspace .au-recent { margin-top: 28px; padding: 18px 20px; border: 1px solid var(--au-line); border-radius: 14px; background: var(--au-surface); }
+.clicko-automation-workspace .au-between { display: flex; justify-content: space-between; gap: 12px; align-items: center; margin-bottom: 12px; }
+.clicko-automation-workspace .au-log { border-bottom: 1px solid rgba(255,255,255,.07); }
+.clicko-automation-workspace .au-log summary { display: flex; align-items: center; gap: 12px; padding: 16px 0; cursor: pointer; list-style: none; }
+.clicko-automation-workspace summary::-webkit-details-marker { display: none; }
+.clicko-automation-workspace .au-log summary > span:nth-child(2) { flex: 1; min-width: 0; }
+.clicko-automation-workspace .au-log strong { display: block; font-size: 11px; font-weight: 500; line-height: 1.7; }
+.clicko-automation-workspace .au-log small { display: block; color: #808080; font-size: 10px; margin-top: 4px; }
+.clicko-automation-workspace .au-log-icon { color: #808080; }
+.clicko-automation-workspace .au-log-icon.is-blocked { color: #FF7F50; }
+.clicko-automation-workspace .au-log-body { padding: 0 0 18px 28px; display: grid; gap: 12px; font-size: 11px; line-height: 1.8; }
+.clicko-automation-workspace .au-log-body .au-button { justify-self: start; }
+.clicko-automation-workspace .au-log-step { display: flex; gap: 10px; padding: 10px; border-radius: 8px; background: rgba(255,255,255,.025); }
+.clicko-automation-workspace .au-log-step p { color: #808080; }
+.clicko-automation-workspace .au-log-step svg { margin-top: 3px; width: 13px; height: 13px; }
+.clicko-automation-workspace .au-editor-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 0 0 18px; border-bottom: 1px solid rgba(255,255,255,.07); margin-bottom: 24px; }
+.clicko-automation-workspace .au-editor-toolbar > span { margin-left: auto; color: #808080; font-size: 10px; margin-right: 8px; }
+.clicko-automation-workspace .au-editor-layout { display: grid; grid-template-columns: minmax(0,1fr) 260px; gap: 28px; align-items: start; }
+.clicko-automation-workspace .au-builder { min-width: 0; }
+.clicko-automation-workspace .au-name-label { display: grid; gap: 8px; color: #808080; font-size: 10px; }
+.clicko-automation-workspace .au-name-label input { font-size: 17px; font-weight: 500; padding: 14px; }
+.clicko-automation-workspace .au-flow-intro { display: flex; gap: 12px; align-items: center; font-size: 10px; color: #808080; margin: 26px 0 16px; }
+.clicko-automation-workspace .au-flow-intro svg { width: 12px; }
+.clicko-automation-workspace .au-steps { padding: 0; margin: 0; list-style: none; }
+.clicko-automation-workspace .au-steps li { position: relative; padding-bottom: 20px; }
+.clicko-automation-workspace .au-steps li:not(:last-child)::after { content: ''; position: absolute; width: 1px; height: 20px; background: rgba(255,255,255,.14); bottom: 0; left: 34px; }
+.clicko-automation-workspace .au-step { display: flex; align-items: start; gap: 14px; border: 1px solid rgba(255,255,255,.09); background: rgba(255,255,255,.02); border-radius: 12px; padding: 18px; }
+.clicko-automation-workspace .au-step.is-trigger { border-color: rgba(255,127,80,.25); background: rgba(255,127,80,.03); }
+.clicko-automation-workspace .au-step-icon { display: grid; place-items: center; border-radius: 8px; width: 32px; height: 32px; flex-shrink: 0; color: #FF7F50; background: rgba(255,127,80,.07); }
+.clicko-automation-workspace .au-step-copy { min-width: 0; flex: 1; text-align: left; border: 0; padding: 0; background: none; color: #fff; }
+.clicko-automation-workspace .au-step-copy > span { font-size: 9px; color: #808080; }
+.clicko-automation-workspace .au-step-copy strong { display: block; font-size: 13px; font-weight: 500; margin-top: 5px; }
+.clicko-automation-workspace .au-step-copy p { font-size: 11px; line-height: 1.8; color: #808080; margin-top: 6px; overflow-wrap: anywhere; }
+.clicko-automation-workspace .au-step-copy small { display: inline-block; font-size: 10px; color: #F28500; margin-top: 8px; }
+.clicko-automation-workspace .au-step-tools { display: flex; flex-wrap: wrap; max-width: 60px; }
+.clicko-automation-workspace .au-add-step { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 14px; color: #808080; border: 1px dashed rgba(255,255,255,.15); border-radius: 10px; background: none; font-size: 12px; }
+.clicko-automation-workspace .au-add-step:hover { border-color: #FF7F50; color: #fff; }
+.clicko-automation-workspace .au-step-picker { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; margin-top: 12px; }
+.clicko-automation-workspace .au-step-picker button { display: flex; gap: 10px; align-items: start; border: 1px solid rgba(255,255,255,.08); border-radius: 9px; padding: 14px; background: #000; color: #808080; text-align: left; }
+.clicko-automation-workspace .au-step-picker button:hover { border-color: rgba(255,127,80,.3); }
+.clicko-automation-workspace .au-step-picker button span { min-width: 0; flex: 1; }
+.clicko-automation-workspace .au-step-picker strong { display: block; font-size: 11px; color: #fff; font-weight: 500; }
+.clicko-automation-workspace .au-step-picker small { display: block; font-size: 10px; line-height: 1.7; margin-top: 5px; }
+.clicko-automation-workspace .au-editor-aside { border-left: 1px solid rgba(255,255,255,.07); padding-left: 24px; min-width: 0; }
+.clicko-automation-workspace .au-editor-aside p { color: #808080; font-size: 11px; line-height: 1.8; margin-top: 10px; overflow-wrap: anywhere; }
+.clicko-automation-workspace .au-aside-note { display: flex; gap: 10px; margin: 22px 0; }
+.clicko-automation-workspace .au-aside-note svg { color: #808080; margin-top: 3px; }
+.clicko-automation-workspace .au-aside-note p { margin: 0; }
+.clicko-automation-workspace .au-editor-aside > details summary { display: flex; align-items: center; justify-content: space-between; gap: 8px; color: #808080; font-size: 10px; cursor: pointer; }
+.clicko-automation-workspace .au-editor-aside h3 { margin-top: 26px; }
+.clicko-automation-workspace .au-editor-aside .au-log-body { padding-left: 0; }
+.clicko-automation-workspace .au-dialog { margin: auto; width: min(520px,calc(100vw - 32px)); max-height: calc(100dvh - 40px); overflow: auto; border: 1px solid rgba(255,255,255,.14); border-radius: 14px; padding: 24px; background: #000; color: #fff; }
+.clicko-automation-workspace .au-dialog::backdrop { background: rgba(0,0,0,.78); backdrop-filter: blur(6px); }
+.clicko-automation-workspace .au-dialog > header { display: flex; gap: 14px; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+.clicko-automation-workspace .au-dialog label { display: grid; gap: 8px; font-size: 11px; color: #808080; margin-top: 18px; }
+.clicko-automation-workspace .au-dialog footer { display: flex; flex-wrap: wrap; justify-content: end; gap: 8px; margin-top: 24px; }
+.clicko-automation-workspace .au-dialog p { margin-top: 10px; }
+@media(max-width: 1100px) { .clicko-automation-workspace { padding: 30px 24px 52px; } .clicko-automation-workspace .au-template-grid { grid-template-columns: repeat(2,minmax(0,1fr)); } .clicko-automation-workspace .au-editor-layout { grid-template-columns: minmax(0,1fr); } .clicko-automation-workspace .au-editor-aside { padding: 20px 0 0; border-left: 0; border-top: 1px solid rgba(255,255,255,.07); } }
+@media(max-width: 760px) { .clicko-automation-workspace .au-header { align-items: flex-start; gap: 18px; } .clicko-automation-workspace .au-stats { grid-template-columns: repeat(2,minmax(0,1fr)); } .clicko-automation-workspace .au-stats > div:nth-child(2) { border-right: 0; } .clicko-automation-workspace .au-stats > div:nth-child(-n+2) { border-bottom: 1px solid var(--au-line); } .clicko-automation-workspace .au-flow-row { flex-wrap: wrap; gap: 12px; padding: 15px; } .clicko-automation-workspace .au-flow-description { flex-basis: calc(100% - 54px); } .clicko-automation-workspace .au-row-actions { margin-left: auto; } .clicko-automation-workspace .au-editor-toolbar > span { display: none; } .clicko-automation-workspace .au-editor-toolbar > .au-text-button { flex-basis: 100%; margin-bottom: 8px; } }
+@media(max-width: 520px) { .clicko-automation-workspace { padding: 24px 14px 40px; } .clicko-automation-workspace h1 { font-size: 29px; } .clicko-automation-workspace .au-header { display: grid; padding-bottom: 20px; } .clicko-automation-workspace .au-header .au-button { width: 100%; } .clicko-automation-workspace .au-template-grid { grid-template-columns: minmax(0,1fr); } .clicko-automation-workspace .au-step-picker { grid-template-columns: minmax(0,1fr); } .clicko-automation-workspace .au-tabs { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); width: 100%; } .clicko-automation-workspace .au-tabs button { min-width: 0; padding-inline: 8px; font-size: 10px; } .clicko-automation-workspace .au-step { flex-wrap: wrap; gap: 10px; padding: 14px; } .clicko-automation-workspace .au-step-copy { flex-basis: calc(100% - 44px); } .clicko-automation-workspace .au-step-tools { margin-left: 42px; max-width: none; } .clicko-automation-workspace .au-stats { padding: 6px; } .clicko-automation-workspace .au-stats > div { min-height: 84px; padding: 13px; } .clicko-automation-workspace .au-stats span { font-size: 9px; } .clicko-automation-workspace .au-stats strong { font-size: 23px; } .clicko-automation-workspace .au-list-toolbar > :is(.au-search,select) { width: 100%; flex-basis: 100%; } .clicko-automation-workspace .au-list-toolbar > span { display: none; } .clicko-automation-workspace .au-recent { padding: 15px; } }
+@media(prefers-reduced-motion: reduce) { .clicko-automation-workspace *, .clicko-automation-workspace *::before, .clicko-automation-workspace *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }

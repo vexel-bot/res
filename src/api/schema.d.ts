@@ -4228,8 +4228,6 @@ export interface components {
              * @enum {string}
              */
             contentType: "visual" | "carousel" | "video" | "presenter";
-            /** Engine */
-            engine?: ("photocraft" | "filmcraft" | "effectcraft") | null;
             /** Campaignid */
             campaignId?: string | null;
             /** Postid */
@@ -4245,8 +4243,6 @@ export interface components {
             composition: components["schemas"]["CreativeCompositionV1-Input"];
             /** Assets */
             assets?: components["schemas"]["AssetReferenceV1"][];
-            identityRef?: components["schemas"]["IdentityVersionReferenceV1"] | null;
-            voiceRef?: components["schemas"]["VoiceVersionReferenceV1"] | null;
             /** Correlationid */
             correlationId?: string | null;
         };

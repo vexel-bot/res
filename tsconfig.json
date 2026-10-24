@@ -1,5 +1,4 @@
 {
-  "exclude": ["node_modules", "dist", "tmp", "docs/studios/research", "docs/studios/archive", "third_party", "workers", ".codex-runtime"],
   "compilerOptions": {
     "target": "ES2022",
     "experimentalDecorators": true,
@@ -22,6 +21,10 @@
       ]
     },
     "allowImportingTsExtensions": true,
-    "noEmit": true
-  }
+    "noEmit": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true
+  },
+  "include": ["*.ts", "src/**/*", "server/**/*", "scripts/**/*.ts", "tests/**/*.ts"],
+  "exclude": ["node_modules", "dist", "third_party", "workers", "docs", "output", "benchmarks", "círculo-pontilhado-interativo"]
 }

@@ -1,0 +1,14 @@
+.klic-markdown { min-width:0; overflow-wrap:anywhere; font-size:14px; line-height:1.75; }
+.klic-markdown > :first-child { margin-top:0; }
+.klic-markdown > :last-child { margin-bottom:0; }
+.klic-markdown p,.klic-markdown ul,.klic-markdown ol,.klic-markdown blockquote,.klic-markdown pre,.klic-markdown .klic-table-scroll { margin:0.8em 0; }
+.klic-markdown h1,.klic-markdown h2,.klic-markdown h3,.klic-markdown h4 { margin:1.2em 0 .5em; font-weight:600; line-height:1.4; }
+.klic-markdown h1 {font-size:1.35em;} .klic-markdown h2 {font-size:1.2em;} .klic-markdown h3 {font-size:1.1em;}
+.klic-markdown ul { list-style:disc; padding-left:1.5em; } .klic-markdown ol { list-style:decimal; padding-left:1.5em; }
+.klic-markdown a { color:var(--clicko-accent,#ff7f50); text-decoration:underline; }
+.klic-markdown blockquote { border-left:2px solid #808080; padding-left:1em; opacity:.85; }
+.klic-markdown pre { overflow-x:auto; padding:12px; border-radius:8px; background:rgba(128,128,128,.12); }
+.klic-markdown code { font-family:monospace; font-size:.9em; } .klic-markdown :not(pre)>code {padding:.1em .3em;background:rgba(128,128,128,.12);border-radius:4px;}
+.klic-markdown .klic-table-scroll {overflow-x:auto;} .klic-markdown table {border-collapse:collapse;width:100%;font-size:.9em;}
+.klic-markdown th,.klic-markdown td {border-bottom:1px solid rgba(128,128,128,.25);padding:8px 12px;text-align:left;min-width:90px;}
+.klic-markdown hr {border:0;border-top:1px solid rgba(128,128,128,.25);margin:1.3em 0;}

@@ -61,9 +61,9 @@ export const OFFER_CONFIGURATIONS: OfferConfiguration[] = [
     contexts: ['first_subscription', 'renewal'],
     environment: 'personal', eligibleCurrentPlans: ['solo'], targetPlanId: 'solo',
     headline: 'Sua produção pessoal organizada em um único fluxo.',
-    description: 'O plano Solo reúne criação com IA e calendário editorial para uso individual.',
+    description: 'O plano Solo reúne criação com a KLIC e calendário editorial para uso individual.',
     ctaLabel: 'Continuar com o plano Solo',
-    benefits: ['Uso individual', 'Criação com IA', 'Calendário editorial'],
+    benefits: ['Uso individual', 'Criação com a KLIC', 'Calendário editorial'],
   },
 ];
 

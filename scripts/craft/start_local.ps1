@@ -33,7 +33,9 @@ $taskVariables = @{
     ENVIRONMENT='development'; REDIS_URL='redis://127.0.0.1:6383/0'; CELERY_TASK_ALWAYS_EAGER='false'
     STUDIO_ISOLATED_QUEUES_ENABLED='false'; OPENAI_OUTBOUND_ENABLED='false'; OPENAI_VIDEO_GENERATION_ENABLED='false'
     STUDIO_GEMINI_ENABLED='false'; STUDIO_EDITING_AI_PLANNING_PROVIDER='none'; STUDIO_PRODUCTION_TEST_BUDGET_USD='0'
-    PYTHONPATH='backend'; PORT='3000'; CLICKO_API_ORIGIN='http://127.0.0.1:8000'; NODE_ENV='production'
+    PYTHONPATH='backend'; PORT='3000'; CLICKO_STUDIOS_ORIGIN='http://127.0.0.1:8000'; NODE_ENV='production'
+    DATABASE_URL=('sqlite:///' + (Join-Path $taskRoot '.clicko-data\studios\records.sqlite').Replace('\','/'))
+    STORAGE_PATH=(Join-Path $taskRoot '.clicko-data\studios\uploads')
 }
 $taskOldVariables = @{}
 $taskProcesses = @()
@@ -42,11 +44,13 @@ try {
         $taskOldVariables[$taskName] = [Environment]::GetEnvironmentVariable($taskName, 'Process')
         [Environment]::SetEnvironmentVariable($taskName, $taskVariables[$taskName], 'Process')
     }
-    $taskPython = (Get-Command python).Source
+    $taskPython = Join-Path $taskRoot '.venv\Scripts\python.exe'
+    if (-not (Test-Path -LiteralPath $taskPython)) { $taskPython = (Get-Command python).Source }
+    New-Item -ItemType Directory -Path (Join-Path $taskRoot '.clicko-data\studios') -Force | Out-Null
     $taskNode = (Get-Command node).Source
     foreach ($taskService in @(
         @{name='worker';file=$taskPython;arguments='-u -m celery -A app.celery_app:celery_app worker --pool=solo --concurrency=1 --queues=celery,studio.media.cpu --loglevel=INFO --without-gossip --without-mingle --without-heartbeat'},
-        @{name='api';file=$taskPython;arguments='-u -m uvicorn app.main:app --app-dir backend --host 127.0.0.1 --port 8000'},
+        @{name='api';file=$taskPython;arguments='-u -m uvicorn app.studio_app:app --app-dir backend --host 127.0.0.1 --port 8000'},
         @{name='web';file=$taskNode;arguments='dist/server.js'}
     )) {
         $taskProcess = Start-Process -FilePath $taskService.file -ArgumentList $taskService.arguments -WorkingDirectory $taskRoot -WindowStyle Hidden -PassThru -RedirectStandardOutput (Join-Path $taskRuntime ($taskService.name+'.out.log')) -RedirectStandardError (Join-Path $taskRuntime ($taskService.name+'.err.log'))

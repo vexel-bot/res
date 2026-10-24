@@ -11,6 +11,7 @@ from ...config import get_settings
 from ...domain.studios.contracts import VoiceCloneReferenceV1
 from ...domain.studios.providers import VOICE_REFERENCE_NORMALIZERS
 from ...services.object_storage import sha256_file
+from .media_runtime import resolve_tool
 
 VOICE_REFERENCE_SAMPLE_RATE = 24_000
 VOICE_REFERENCE_MIN_DURATION_MS = 3_000
@@ -51,7 +52,7 @@ class FFmpegVoiceReferenceNormalizer:
 
     @property
     def version(self) -> str:
-        return _binary_version(self.executable, self.timeout_seconds)
+        return _binary_version(resolve_tool("ffmpeg", self.executable), self.timeout_seconds)
 
     def normalize(
         self,
@@ -68,7 +69,7 @@ class FFmpegVoiceReferenceNormalizer:
         if is_cancelled():
             raise InterruptedError("voice_reference_normalization_cancelled")
         command = [
-            self.executable,
+            resolve_tool("ffmpeg", self.executable),
             "-hide_banner",
             "-nostdin",
             "-y",
@@ -143,9 +144,7 @@ class FFmpegVoiceReferenceNormalizer:
 
 
 settings = get_settings()
-VOICE_REFERENCE_NORMALIZERS[FFmpegVoiceReferenceNormalizer.name] = (
-    FFmpegVoiceReferenceNormalizer(
-        settings.ffmpeg_path,
-        settings.ffmpeg_timeout_seconds,
-    )
+VOICE_REFERENCE_NORMALIZERS[FFmpegVoiceReferenceNormalizer.name] = FFmpegVoiceReferenceNormalizer(
+    settings.ffmpeg_path,
+    settings.ffmpeg_timeout_seconds,
 )
