@@ -83,6 +83,7 @@ output/alight-discovery-20261002/android-bridge/
 .codex-runtime/
 target/
 workers/craft/.runs/
+workers/longcat-avatar/.runs/
 third_party/craft/**/target/
 public/craft/
 # Preserved local experiments and rendered evidence are not distributable source.

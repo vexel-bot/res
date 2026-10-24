@@ -38,12 +38,17 @@ def evaluate(model_root: Path | None = None) -> dict:
                 candidate = repository_root / item["path"]
                 if not candidate.is_file():
                     missing.append(f"{model['repository']}:{item['path']}")
-                elif candidate.stat().st_size != item["sizeBytes"] or sha256_file(candidate) != item["sha256"]:
+                elif (
+                    candidate.stat().st_size != item["sizeBytes"]
+                    or sha256_file(candidate) != item["sha256"]
+                ):
                     mismatches.append(f"{model['repository']}:{item['path']}")
         evidence["missingArtifacts"] = missing
         evidence["checksumMismatches"] = mismatches
         if not missing:
-            reasons = [reason for reason in reasons if reason != "weights_not_installed"]
+            reasons = [
+                reason for reason in reasons if reason != "weights_not_installed"
+            ]
         if mismatches:
             reasons.append("weight_checksum_mismatch")
     reasons = sorted(set(reasons))

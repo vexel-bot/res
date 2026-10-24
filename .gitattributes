@@ -1,3 +1,4 @@
 # These licenses are immutable, checksum-bound bytes from the supplied pack.
 # Some originals use LF, others CRLF. Preserve each file exactly as authored.
 backend/app/resources/editorial_fonts/*.txt -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+workers/longcat-avatar/tests/fixtures/upstream_demo.py.txt -text

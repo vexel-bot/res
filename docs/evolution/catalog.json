@@ -3,6 +3,18 @@
   "updatedAt": "2026-10-24",
   "entries": [
     {
+      "id": "avatar-clean-audio-runner",
+      "date": "2026-10-24",
+      "category": "update",
+      "status": "in_progress",
+      "title": "Runner de avatar preparado para qualificação",
+      "summary": "Execução com fala final, fila e exportação implementadas; inferência do modelo ainda não validada.",
+      "impact": "O caminho de execução passa a ter testes de mídia e transporte, mantendo a geração indisponível até a qualificação.",
+      "document": "2026-10-24-avatar-runner.md",
+      "requirements": ["Integrar LongCat com imagem e fala final.", "Preservar o pedido, o áudio e o cancelamento durante a execução."],
+      "evidence": ["workers/longcat-avatar/runner.py", "workers/longcat-avatar/tests/test_runner.py", "backend/tests/test_longcat_avatar_integration.py"]
+    },
+    {
       "id": "studios-team-sync-20261024",
       "date": "2026-10-24",
       "category": "update",

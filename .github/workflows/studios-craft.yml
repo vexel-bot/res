@@ -27,6 +27,8 @@ jobs:
       - run: pip install -r backend/requirements-dev.txt
       - name: Install media probe utilities for the real audio ingest test
         run: sudo apt-get update && sudo apt-get install -y ffmpeg && ffprobe -version
+      - name: Avatar worker protocol and real media handling without model inference
+        run: python -m unittest discover -s workers/longcat-avatar/tests -v
       - run: >-
           python -m pytest backend/tests/test_craft*.py backend/tests/test_studio_department.py backend/tests/test_worker_runtime.py
           backend/tests/test_creatives.py backend/tests/test_studio_publication_preflight.py
@@ -34,6 +36,7 @@ jobs:
           backend/tests/test_product_evolution.py backend/tests/test_studio_identity_library.py
           backend/tests/test_avatar_independent_cast.py backend/tests/test_avatar_video_job_boundary.py
           backend/tests/test_speech_job_boundary.py backend/tests/test_speech_synthesis_execution.py
+          backend/tests/test_longcat_avatar_integration.py
         env:
           PYTHONPATH: backend
   engines:

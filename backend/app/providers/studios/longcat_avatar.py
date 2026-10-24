@@ -48,28 +48,33 @@ class LongCatAvatarProvider:
             raise ValueError("longcat_avatar_single_reference_required")
         if is_cancelled():
             raise InterruptedError("cancelled")
-        execution_id = hashlib.sha256(
-            f"{document.id}:{request.scene_id}:{request.requirement_id}:"
-            f"{request.reference_image_checksum_sha256}:{request.driving_audio_checksum_sha256}:"
-            f"{request.profile_id}:{request.seed}".encode()
-        ).hexdigest()[:40]
+        avatar_request = request.model_dump(by_alias=True, mode="json")
+        request_digest = hashlib.sha256(
+            json.dumps(avatar_request, sort_keys=True, separators=(",", ":")).encode()
+        ).hexdigest()
+        execution_id = hashlib.sha256(f"{document.id}:{request_digest}".encode()).hexdigest()[:40]
         timing = longcat_segment_timing(request.driving_audio_duration_ms)
         payload = {
             "execution_id": execution_id,
             "profile_id": request.profile_id,
-            "request_digest_sha256": hashlib.sha256(
-                json.dumps(
-                    request.model_dump(by_alias=True, mode="json"),
-                    sort_keys=True,
-                    separators=(",", ":"),
-                ).encode("utf-8")
-            ).hexdigest(),
+            "request_digest_sha256": request_digest,
+            "avatar_request": avatar_request,
             "reference_image_checksum_sha256": request.reference_image_checksum_sha256.lower(),
             "driving_audio_checksum_sha256": request.driving_audio_checksum_sha256.lower(),
             "segment_count": timing.segment_count,
             "produced_frames": timing.produced_frames,
             "trim_tail_ms": timing.trim_tail_ms,
         }
+
+        def verified_receipt(receipt):
+            if (
+                receipt.get("executionId") != execution_id
+                or receipt.get("requestDigestSha256") != request_digest
+                or receipt.get("profileId") != request.profile_id
+            ):
+                raise ValueError("longcat_avatar_receipt_binding_mismatch")
+            return receipt
+
         with httpx.Client(timeout=httpx.Timeout(30, read=120)) as client:
             with identity_samples[0].open("rb") as image_stream, driving_audio.open("rb") as audio_stream:
                 response = client.post(
@@ -85,7 +90,7 @@ class LongCatAvatarProvider:
                 detail = response.json().get("detail", {})
                 raise ValueError(str(detail.get("status") or detail.get("code") or "longcat_unavailable"))
             response.raise_for_status()
-            receipt = response.json()
+            receipt = verified_receipt(response.json())
             progress(20)
             for _ in range(720):
                 if is_cancelled():
@@ -97,19 +102,30 @@ class LongCatAvatarProvider:
                 if receipt.get("status") not in {"queued", "running"}:
                     break
                 time.sleep(10)
-                receipt_response = client.get(
-                    f"{self.base_url}/api/v1/executions/{execution_id}", headers=self.headers
-                )
+                receipt_response = client.get(f"{self.base_url}/api/v1/executions/{execution_id}", headers=self.headers)
                 receipt_response.raise_for_status()
-                receipt = receipt_response.json()
+                receipt = verified_receipt(receipt_response.json())
+                progress(min(89, max(20, int(receipt.get("progress", 20)))))
+            if receipt.get("status") in {"queued", "running", "cancel_requested"}:
+                client.post(f"{self.base_url}/api/v1/executions/{execution_id}/cancel", headers=self.headers)
+                raise ValueError("longcat_avatar_timeout")
             if receipt.get("status") != "succeeded":
                 raise ValueError(f"longcat_avatar_{receipt.get('status', 'timeout')}")
-            artifact = client.get(
-                f"{self.base_url}/api/v1/executions/{execution_id}/artifact",
-                headers=self.headers,
-            )
-            artifact.raise_for_status()
-            destination.write_bytes(artifact.content)
+            if abs(int(receipt["durationMs"]) - request.driving_audio_duration_ms) > 80:
+                raise ValueError("longcat_avatar_duration_mismatch")
+            try:
+                with client.stream(
+                    "GET", f"{self.base_url}/api/v1/executions/{execution_id}/artifact", headers=self.headers
+                ) as artifact:
+                    artifact.raise_for_status()
+                    with destination.open("wb") as stream:
+                        for chunk in artifact.iter_bytes():
+                            if is_cancelled():
+                                raise InterruptedError("cancelled")
+                            stream.write(chunk)
+            except Exception:
+                destination.unlink(missing_ok=True)
+                raise
         checksum = sha256_file(destination)
         if checksum != receipt.get("artifactChecksumSha256"):
             destination.unlink(missing_ok=True)
