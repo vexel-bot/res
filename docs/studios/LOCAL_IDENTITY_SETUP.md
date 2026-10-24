@@ -43,6 +43,18 @@ Os parâmetros STUDIO_LONGCAT_AVATAR_* estão documentados em .env.example. A
 flag permanece false até o runner, os pesos e o ambiente serem qualificados.
 Configurar endpoint e token não instala um modelo nem qualifica sua saída.
 
+O contrato de avatar V2 admite aparência e narrador independentes. O campo
+`consentGrantId` representa a autorização da aparência, ou a da voz quando a
+aparência é sintética; se ambos forem personagens/vozes licenciados, pode ser
+nulo. As autorizações próprias são resolvidas pelas versões e congeladas em
+`executionBinding.cast`. O contrato V1 conserva as regras anteriores.
+
+Uma versão de voz stock só pode ser usada para síntese identificada quando
+possui `pronunciationProfile.synthesisBinding` com `provider` e `voiceKey`
+correspondentes ao pedido. Esse vínculo pertence à versão revisada, não ao
+texto que o cliente fornece. Áudios sintetizados sem versão vinculada não
+podem ser apresentados como a voz de um perfil escolhido.
+
 Neste computador, a RTX 2050 tem aproximadamente 4 GB de VRAM. Os manifests
 atuais não admitem este host para os perfis generativos selecionados. O pedido
 de vídeo preserva o elenco e informa que a produção generativa está pendente,
@@ -60,6 +72,8 @@ acesso, instalação ou alteração na VPS nesta etapa.
 - Interface: npx playwright test --config playwright.craft.config.ts.
 - API: com PYTHONPATH=backend, executar pytest para test_product_evolution.py,
   test_studio_identity_library.py e test_studio_department.py.
+- Vínculo de geração: test_avatar_independent_cast.py,
+  test_avatar_video_job_boundary.py e test_speech_synthesis_execution.py.
 - PhotoCraft real: com PYTHONPATH=backend e o runtime Craft construído,
   python -m pytest backend/tests/native_identity_acceptance.py.
 

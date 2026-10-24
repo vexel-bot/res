@@ -3,6 +3,26 @@
   "updatedAt": "2026-10-24",
   "entries": [
     {
+      "id": "avatar-independent-cast",
+      "date": "2026-10-24",
+      "category": "update",
+      "status": "implemented",
+      "title": "Aparência e narração com autorizações independentes",
+      "summary": "O fluxo de avatar preserva a aparência e a voz escolhidas, mesmo quando pertencem a pessoas diferentes.",
+      "impact": "As duas versões são conferidas antes e depois da execução. A geração dos modelos continua em andamento.",
+      "document": "2026-10-24-avatar-casting.md",
+      "requirements": [
+        "Vincular a aparência e a narração independentemente.",
+        "Conferir o áudio final contra a voz selecionada.",
+        "Descartar resultados quando a autorização ou o projeto mudar."
+      ],
+      "evidence": [
+        "backend/app/services/studios/casting.py",
+        "backend/app/services/studios/avatar_video.py",
+        "backend/tests/test_avatar_independent_cast.py"
+      ]
+    },
+    {
       "id": "identity-library",
       "date": "2026-10-24",
       "category": "feature",

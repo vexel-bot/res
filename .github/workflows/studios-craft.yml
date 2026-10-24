@@ -32,6 +32,8 @@ jobs:
           backend/tests/test_creatives.py backend/tests/test_studio_publication_preflight.py
           backend/tests/test_natural_sound_render.py backend/tests/test_scene_compiler_v2.py
           backend/tests/test_product_evolution.py backend/tests/test_studio_identity_library.py
+          backend/tests/test_avatar_independent_cast.py backend/tests/test_avatar_video_job_boundary.py
+          backend/tests/test_speech_job_boundary.py backend/tests/test_speech_synthesis_execution.py
         env:
           PYTHONPATH: backend
   engines:

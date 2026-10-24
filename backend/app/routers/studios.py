@@ -2331,6 +2331,9 @@ def enqueue_studio_job(
     user: User = Depends(get_current_user),
 ) -> GenerationJobV1:
     assert_access(db, user.id, request.workspace_id)
+    independent_avatar_cast = request.job_type == "avatar_video" and (
+        request.request.get("schemaVersion") or request.request.get("schema_version")
+    ) == "studio.avatar-video-request.v2"
     record: CreativeDocument | None = None
     if request.job_type in {"media_probe", "video_proxy", "media_waveform", "video_render"}:
         endpoint = {
@@ -2350,7 +2353,7 @@ def enqueue_studio_job(
             (request.document_id, "document_required"),
             (request.identity_version_id, "identity_version_required"),
             (request.voice_version_id, "voice_version_required"),
-            (request.consent_grant_id, "consent_required"),
+            (request.consent_grant_id or independent_avatar_cast, "consent_required"),
         ):
             if not identifier:
                 raise HTTPException(status_code=422, detail={"code": code})
@@ -2401,7 +2404,7 @@ def enqueue_studio_job(
             require_active_version_consent(
                 db,
                 version,
-                consent_grant_id=request.consent_grant_id,
+                consent_grant_id=version.consent_grant_id if independent_avatar_cast else request.consent_grant_id,
             )
         except ValueError as error:
             raise studio_identity_error(error) from error
@@ -2414,7 +2417,7 @@ def enqueue_studio_job(
             raise HTTPException(status_code=422, detail={"code": "voice_clone_profile_required"})
         if not voice_version.consent_grant_id:
             raise HTTPException(status_code=422, detail={"code": "voice_clone_consent_required"})
-    if identity_version and voice_version:
+    if identity_version and voice_version and not independent_avatar_cast:
         voice_profile = db.get(StudioVoiceProfile, voice_version.profile_id)
         if not voice_profile or voice_profile.identity_profile_id != identity_version.profile_id:
             raise HTTPException(status_code=422, detail={"code": "voice_identity_version_mismatch"})
@@ -2438,6 +2441,11 @@ def enqueue_studio_job(
             "identity_version_not_active",
             "identity_capability_missing",
             "voice_identity_version_mismatch",
+            "identity_version_consent_mismatch",
+            "cast_version_reference_mismatch",
+            "identity_profile_not_active",
+            "voice_profile_not_active",
+            "voice_identity_not_usable",
         }
         raise HTTPException(
             status_code=422 if code in validation_codes else 409,

@@ -20,6 +20,7 @@ from ...domain.studios.contracts import (
     CreateGenerationJobRequest,
     CreativeDocumentV1,
     GenerationJobV1,
+    SpeechSynthesisRequestV1,
     TranscriptionRequestV1,
 )
 from ...domain.studios.execution import execution_profile
@@ -297,7 +298,8 @@ def require_avatar_video_binding(
     identity_version_id: str | None,
     voice_version_id: str | None,
     consent_grant_id: str | None,
-) -> None:
+    independent_cast: bool = False,
+) -> dict | None:
     """Bind one presenter job to content, active versions and live rights.
 
     This repeats the HTTP validation for direct task/CLI callers. No provider
@@ -306,10 +308,12 @@ def require_avatar_video_binding(
     if not document_id:
         raise ValueError("document_required")
     document = db.scalar(
-        select(CreativeDocument).where(
+        select(CreativeDocument)
+        .where(
             CreativeDocument.id == document_id,
             CreativeDocument.workspace_id == workspace_id,
         )
+        .execution_options(populate_existing=True)
     )
     if document is None:
         raise ValueError("document_not_found")
@@ -317,6 +321,10 @@ def require_avatar_video_binding(
         raise ValueError("identity_version_required")
     if not voice_version_id:
         raise ValueError("voice_version_required")
+    if independent_cast:
+        from .casting import resolve_avatar_cast
+
+        return resolve_avatar_cast(db, document, identity_version_id, voice_version_id, consent_grant_id)
     if not consent_grant_id:
         raise ValueError("consent_required")
 
@@ -373,10 +381,12 @@ def require_avatar_v2_media_binding(
 ) -> AvatarVideoRequestV2:
     request = AvatarVideoRequestV2.model_validate(payload)
     document = db.scalar(
-        select(CreativeDocument).where(
+        select(CreativeDocument)
+        .where(
             CreativeDocument.id == document_id,
             CreativeDocument.workspace_id == workspace_id,
         )
+        .execution_options(populate_existing=True)
     )
     if not document or document.revision != request.expected_document_revision:
         raise ValueError("studio_document_conflict")
@@ -438,11 +448,12 @@ def require_avatar_v2_media_binding(
         produced_duration = (speech_result.get("speech") or {}).get("durationMs")
         if produced_duration != request.driving_audio_duration_ms:
             raise ValueError("avatar_driving_audio_duration_mismatch")
-        if (
-            expected_job_type == "voice_clone"
-            and (audio.object_metadata or {}).get("voiceVersionId") != voice_version_id
-        ):
+        if (audio.object_metadata or {}).get("voiceVersionId") != voice_version_id:
             raise ValueError("avatar_driving_audio_voice_mismatch")
+        voice_profile = db.get(StudioVoiceProfile, voice_version.profile_id)
+        expected_voice_type = "cloned" if expected_job_type == "voice_clone" else "stock"
+        if not voice_profile or voice_profile.voice_type != expected_voice_type:
+            raise ValueError("avatar_driving_audio_voice_type_mismatch")
     elif isinstance(speech_result, dict):
         raise ValueError("avatar_driving_audio_origin_mismatch")
     for asset in (image, audio):
@@ -500,14 +511,16 @@ def require_voice_clone_binding(
     if not consent_grant_id:
         raise ValueError("consent_required")
     version = db.scalar(
-        select(StudioVoiceVersion).where(
+        select(StudioVoiceVersion)
+        .where(
             StudioVoiceVersion.id == voice_version_id,
             StudioVoiceVersion.workspace_id == workspace_id,
         )
+        .execution_options(populate_existing=True)
     )
     if not version:
         raise ValueError("voice_version_not_active")
-    profile = db.get(StudioVoiceProfile, version.profile_id)
+    profile = db.get(StudioVoiceProfile, version.profile_id, populate_existing=True)
     if not profile or profile.workspace_id != workspace_id or profile.voice_type != "cloned":
         raise ValueError("voice_clone_profile_required")
     if not profile.identity_profile_id:
@@ -525,6 +538,40 @@ def require_voice_clone_binding(
         raise ValueError("consent_subject_mismatch")
     if "voice.clone" not in set(grant.scopes):
         raise ValueError("consent_scope_missing")
+    return version
+
+
+def require_stock_voice_binding(
+    db: Session,
+    *,
+    workspace_id: str,
+    voice_version_id: str | None,
+    provider: str,
+    payload: dict,
+) -> StudioVoiceVersion | None:
+    """A named library voice must select its reviewed provider timbre exactly.
+
+    Unbound stock synthesis remains available for existing callers. Those
+    outputs cannot later impersonate a selected library voice in an avatar.
+    """
+    if not voice_version_id:
+        return None
+    from .casting import resolve_cast
+
+    resolve_cast(db, workspace_id, None, voice_version_id)
+    version = db.get(StudioVoiceVersion, voice_version_id)
+    profile = db.get(StudioVoiceProfile, version.profile_id)
+    if profile.voice_type != "stock":
+        raise ValueError("stock_voice_profile_required")
+    request = SpeechSynthesisRequestV1.model_validate(payload)
+    binding = (version.pronunciation_profile or {}).get("synthesisBinding") or {}
+    if (
+        not isinstance(binding, dict)
+        or binding.get("provider") != provider
+        or not binding.get("voiceKey")
+        or binding.get("voiceKey") != request.voice_key
+    ):
+        raise ValueError("stock_voice_synthesis_binding_mismatch")
     return version
 
 
@@ -583,8 +630,8 @@ def create_job(
     if request.job_type == "craft_render":
         from ...domain.studios.contracts import NativeEditorStateV1
         from ...providers.studios.craft import require_capability
-        from .craft import assert_build, scoped_asset
         from .compatibility import record_to_contract
+        from .craft import assert_build, scoped_asset
 
         state = NativeEditorStateV1.model_validate(request.request.get("nativeEditorState"))
         if request.provider != "craft." + state.engine:
@@ -595,7 +642,10 @@ def create_job(
                 or snapshot.workspace_id != record.workspace_id or snapshot.revision != record.revision
                 or snapshot.native_editor_state != state or snapshot != record_to_contract(record)):
             raise ValueError("craft_render_snapshot_conflict")
-        if any(item.engine == "effectcraft" and item.source_document_id and not item.rendered_asset_id for item in state.dependencies):
+        if any(
+            item.engine == "effectcraft" and item.source_document_id and not item.rendered_asset_id
+            for item in state.dependencies
+        ):
             raise ValueError("craft_pending_composition_requires_link")
         scoped_asset(db, record.workspace_id, state.project_asset_id, state.checksum_sha256)
         assert_build(state, require_capability(state.engine))
@@ -701,6 +751,14 @@ def create_job(
             or request.request.get("environment") != settings.environment
         ):
             raise ValueError("editing_ai_provider_binding_conflict")
+    if request.job_type == "stock_voice":
+        require_stock_voice_binding(
+            db,
+            workspace_id=request.workspace_id,
+            voice_version_id=request.voice_version_id,
+            provider=request.provider,
+            payload=request.request,
+        )
     if request.job_type == "voice_clone":
         require_voice_clone_binding(
             db,
@@ -709,16 +767,18 @@ def create_job(
             consent_grant_id=request.consent_grant_id,
         )
     if request.job_type == "avatar_video":
-        require_avatar_video_binding(
+        schema_version = request.request.get("schemaVersion") or request.request.get("schema_version")
+        is_v2 = schema_version == "studio.avatar-video-request.v2"
+        cast_binding = require_avatar_video_binding(
             db,
             workspace_id=request.workspace_id,
             document_id=request.document_id,
             identity_version_id=request.identity_version_id,
             voice_version_id=request.voice_version_id,
             consent_grant_id=request.consent_grant_id,
+            independent_cast=is_v2,
         )
-        schema_version = request.request.get("schemaVersion") or request.request.get("schema_version")
-        if schema_version == "studio.avatar-video-request.v2":
+        if is_v2:
             require_avatar_v2_media_binding(
                 db,
                 workspace_id=request.workspace_id,
@@ -737,6 +797,7 @@ def create_job(
                     "schemaVersion": "studio.avatar-execution-binding.v1",
                     "hybrid": hybrid_binding,
                     "provider": provider_binding,
+                    "cast": cast_binding,
                 },
             }
         else:

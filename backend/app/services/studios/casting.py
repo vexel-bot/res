@@ -68,6 +68,33 @@ def validate_document_cast(db: Session, document):
             raise ValueError("cast_version_reference_mismatch")
 
 
+def resolve_avatar_cast(db: Session, record, identity_id: str, voice_id: str, consent_id: str | None):
+    """Resolve the two separately authorized subjects of an image/audio avatar.
+
+    The legacy consent field is the appearance grant, or the narrator grant
+    when the appearance is synthetic. Neither grant substitutes for the other.
+    The returned versioned references are frozen in the execution binding.
+    """
+    from .compatibility import record_to_contract
+
+    refs = resolve_cast(db, record.workspace_id, identity_id, voice_id)
+    version = db.get(StudioIdentityVersion, identity_id)
+    if "avatar.generate" not in set(version.capabilities or []):
+        raise ValueError("identity_capability_missing")
+    primary = refs["identity"]["consentGrantId"] or refs["voice"]["consentGrantId"]
+    if primary != consent_id:
+        raise ValueError("identity_version_consent_mismatch")
+    document = record_to_contract(record)
+    for kind, saved in (("identity", document.identity_ref), ("voice", document.voice_ref)):
+        if saved and (
+            saved.id != refs[kind]["id"]
+            or str(saved.version) != str(refs[kind]["version"])
+            or saved.consent_grant_id != refs[kind]["consentGrantId"]
+        ):
+            raise ValueError("cast_version_reference_mismatch")
+    return {"schemaVersion": "studio.avatar-cast-binding.v1", **refs}
+
+
 def validate_publication_cast(db: Session, document, channel: str):
     from ...models import StudioConsentGrant
 

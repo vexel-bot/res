@@ -20,7 +20,7 @@ from ...domain.studios.providers import (
 from ...models import LibraryAsset, StudioGenerationJob, StudioVoiceVersion
 from ...providers.studios import voice_reference as _voice_reference  # noqa: F401
 from ..object_storage import get_object_storage, object_key, sha256_file
-from .jobs import require_voice_clone_binding
+from .jobs import require_stock_voice_binding, require_voice_clone_binding
 from .kernel import emit_event
 
 MEDIA_TYPES = {"wav": "audio/wav", "flac": "audio/flac", "mp3": "audio/mpeg"}
@@ -88,8 +88,7 @@ def _validate_clone_result_binding(
         provenance.voice_version_id != reference.voice_version_id
         or provenance.consent_grant_id != reference.consent_grant_id
         or provenance.voice_reference_checksum_sha256 is None
-        or provenance.voice_reference_checksum_sha256.lower()
-        != reference.normalized_checksum_sha256.lower()
+        or provenance.voice_reference_checksum_sha256.lower() != reference.normalized_checksum_sha256.lower()
     ):
         raise ValueError("voice_clone_result_reference_mismatch")
 
@@ -103,6 +102,14 @@ def execute_speech_synthesis(
     if job.job_type not in {"stock_voice", "voice_clone"}:
         raise ValueError("speech_job_type_required")
     voice_version = None
+    if job.job_type == "stock_voice":
+        require_stock_voice_binding(
+            db,
+            workspace_id=job.workspace_id,
+            voice_version_id=job.voice_version_id,
+            provider=job.provider,
+            payload=job.request_payload,
+        )
     if job.job_type == "voice_clone":
         voice_version = require_voice_clone_binding(
             db,
@@ -157,8 +164,7 @@ def execute_speech_synthesis(
                     )
                 if (
                     not normalized_reference.is_file()
-                    or sha256_file(normalized_reference).lower()
-                    != voice_reference.normalized_checksum_sha256.lower()
+                    or sha256_file(normalized_reference).lower() != voice_reference.normalized_checksum_sha256.lower()
                 ):
                     raise ValueError("voice_reference_normalized_checksum_mismatch")
                 result = provider.clone(
@@ -203,6 +209,21 @@ def execute_speech_synthesis(
         return {"cancelled": True}
     progress(90)
     try:
+        if job.job_type == "stock_voice":
+            require_stock_voice_binding(
+                db,
+                workspace_id=job.workspace_id,
+                voice_version_id=job.voice_version_id,
+                provider=job.provider,
+                payload=job.request_payload,
+            )
+        else:
+            require_voice_clone_binding(
+                db,
+                workspace_id=job.workspace_id,
+                voice_version_id=job.voice_version_id,
+                consent_grant_id=job.consent_grant_id,
+            )
         asset = LibraryAsset(
             workspace_id=job.workspace_id,
             title=f"Voz gerada — {job.id[:8]}",

@@ -53,9 +53,7 @@ def _existing_result(db: Session, job: StudioGenerationJob) -> dict | None:
                 if result.get("schemaVersion") == "studio.avatar-video-job-result.v2"
                 else AvatarVideoJobResultV1
             )
-            return result_type.model_validate(result).model_dump(
-                by_alias=True, mode="json"
-            )
+            return result_type.model_validate(result).model_dump(by_alias=True, mode="json")
     return None
 
 
@@ -136,23 +134,35 @@ def execute_avatar_video(
 ) -> dict:
     if job.job_type != "avatar_video":
         raise ValueError("avatar_video_job_type_required")
-    require_avatar_video_binding(
+    schema_version = job.request_payload.get("schemaVersion") or job.request_payload.get("schema_version")
+    is_v2 = schema_version == "studio.avatar-video-request.v2"
+    cast_binding = require_avatar_video_binding(
         db,
         workspace_id=job.workspace_id,
         document_id=job.document_id,
         identity_version_id=job.identity_version_id,
         voice_version_id=job.voice_version_id,
         consent_grant_id=job.consent_grant_id,
+        independent_cast=is_v2,
     )
+    if is_v2 and (job.request_payload.get("executionBinding") or {}).get("cast") != cast_binding:
+        raise ValueError("avatar_cast_binding_changed")
     existing = _existing_result(db, job)
     if existing:
+        if is_v2:
+            require_avatar_v2_media_binding(
+                db,
+                workspace_id=job.workspace_id,
+                document_id=str(job.document_id),
+                identity_version_id=str(job.identity_version_id),
+                voice_version_id=str(job.voice_version_id),
+                payload={key: value for key, value in job.request_payload.items() if key != "executionBinding"},
+            )
         return existing
     provider = AVATAR_VIDEO_PROVIDERS.get(job.provider)
     if provider is None:
         raise ValueError("avatar_video_provider_unavailable")
-    if not all(
-        [job.document_id, job.identity_version_id, job.voice_version_id, job.consent_grant_id]
-    ):
+    if not all([job.document_id, job.identity_version_id, job.voice_version_id]):
         raise ValueError("avatar_video_binding_missing")
     document_record = db.get(CreativeDocument, job.document_id)
     identity_version = db.get(StudioIdentityVersion, job.identity_version_id)
@@ -160,8 +170,6 @@ def execute_avatar_video(
     if not document_record or not identity_version or not voice_version:
         raise ValueError("avatar_video_binding_missing")
     document = record_to_contract(document_record)
-    schema_version = job.request_payload.get("schemaVersion") or job.request_payload.get("schema_version")
-    is_v2 = schema_version == "studio.avatar-video-request.v2"
     if is_v2:
         request = AvatarVideoRequestV2.model_validate(
             {key: value for key, value in job.request_payload.items() if key != "executionBinding"}
@@ -174,16 +182,12 @@ def execute_avatar_video(
             voice_version_id=str(job.voice_version_id),
             payload=request.model_dump(by_alias=True, mode="json"),
         )
-        expected_hybrid = _avatar_v2_hybrid_binding(
-            request.model_dump(by_alias=True, mode="json"), job.provider
-        )
+        expected_hybrid = _avatar_v2_hybrid_binding(request.model_dump(by_alias=True, mode="json"), job.provider)
         stored_execution = job.request_payload.get("executionBinding") or {}
         stored_hybrid = stored_execution.get("hybrid") or {}
         if stored_hybrid.get("bindingDigestSha256") != expected_hybrid.get("bindingDigestSha256"):
             raise ValueError("avatar_execution_profile_changed")
-        provider_binding = require_avatar_provider_admission(
-            db, provider_name=job.provider, require_runtime=True
-        )
+        provider_binding = require_avatar_provider_admission(db, provider_name=job.provider, require_runtime=True)
         stored_provider = stored_execution.get("provider") or {}
         if stored_provider.get("bindingDigestSha256") != provider_binding.get("bindingDigestSha256"):
             raise ValueError("avatar_provider_binding_changed")
@@ -290,6 +294,27 @@ def execute_avatar_video(
     script_digest = hashlib.sha256(request.script.encode("utf-8")).hexdigest()
     progress(92)
     try:
+        # Recheck both subjects after inference, before publishing an artifact.
+        latest_cast = require_avatar_video_binding(
+            db,
+            workspace_id=job.workspace_id,
+            document_id=job.document_id,
+            identity_version_id=job.identity_version_id,
+            voice_version_id=job.voice_version_id,
+            consent_grant_id=job.consent_grant_id,
+            independent_cast=is_v2,
+        )
+        if is_v2 and latest_cast != cast_binding:
+            raise ValueError("avatar_cast_binding_changed")
+        if is_v2:
+            require_avatar_v2_media_binding(
+                db,
+                workspace_id=job.workspace_id,
+                document_id=str(job.document_id),
+                identity_version_id=str(job.identity_version_id),
+                voice_version_id=str(job.voice_version_id),
+                payload=request.model_dump(by_alias=True, mode="json"),
+            )
         asset = LibraryAsset(
             workspace_id=job.workspace_id,
             title=f"{document.title} — amostra Presenter privada",
@@ -311,6 +336,7 @@ def execute_avatar_video(
                 "identityVersionId": job.identity_version_id,
                 "voiceVersionId": job.voice_version_id,
                 "consentGrantId": job.consent_grant_id,
+                **({"castBinding": cast_binding} if is_v2 else {}),
                 "scriptDigestSha256": script_digest,
                 **(
                     {

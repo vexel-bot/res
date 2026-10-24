@@ -753,7 +753,7 @@ class AvatarVideoJobResultV2(StudioContract):
     requirement_id: str
     identity_version_id: str
     voice_version_id: str
-    consent_grant_id: str
+    consent_grant_id: str | None = None
     reference_image_asset_id: str
     reference_image_checksum_sha256: str = Field(pattern=SHA256_PATTERN)
     driving_audio_asset_id: str
@@ -1204,7 +1204,8 @@ class CreateVideoRenderJobRequest(StudioContract):
     output: VideoRenderSpecV1
     provider: Literal[
         "builtin.ffmpeg-ugc-v1", "hyperframes.cli", "builtin.ffmpeg-contextual-v1", "hyperframes.contextual-v2",
-        "motion-canvas.contextual-v1", "remotion.contextual-v1", "remotion.contextual-v2", "alight-motion.contextual-v1",
+        "motion-canvas.contextual-v1", "remotion.contextual-v1", "remotion.contextual-v2",
+        "alight-motion.contextual-v1",
     ] = "builtin.ffmpeg-ugc-v1"
     contextual_plan_id: str | None = Field(default=None, max_length=120)
     motion_graph_id: str | None = Field(default=None, max_length=120)
@@ -1221,9 +1222,10 @@ class CreateVideoRenderJobRequest(StudioContract):
             raise ValueError("Engine campaign and language must be supplied together")
         if self.engine_campaign_id and self.provider != "alight-motion.contextual-v1":
             raise ValueError("Engine trials require the Alight provider")
-        if (self.provider in {"builtin.ffmpeg-contextual-v1", "hyperframes.contextual-v2", "motion-canvas.contextual-v1", "remotion.contextual-v1", "remotion.contextual-v2", "alight-motion.contextual-v1"}) != bool(
-            self.contextual_plan_id
-        ):
+        if (self.provider in {
+            "builtin.ffmpeg-contextual-v1", "hyperframes.contextual-v2", "motion-canvas.contextual-v1",
+            "remotion.contextual-v1", "remotion.contextual-v2", "alight-motion.contextual-v1",
+        }) != bool(self.contextual_plan_id):
             raise ValueError("Contextual renders require a bound contextual plan")
         if bool(self.motion_graph_id) != bool(self.motion_graph_digest_sha256):
             raise ValueError("Motion graph id and digest must be supplied together")
