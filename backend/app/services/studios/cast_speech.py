@@ -6,15 +6,14 @@ from dataclasses import dataclass
 from sqlalchemy import select
 
 from ...domain.studios.contracts import CreateGenerationJobRequest, SpeechSynthesisRequestV1, VoiceVersionReferenceV1
-from ...domain.studios.providers import SPEECH_PROVIDERS, VOICE_CLONE_PROVIDERS
 from ...models import LibraryAsset, StudioProviderRegistration, StudioVoiceProfile, StudioVoiceVersion
 from .casting import resolve_cast
 from .jobs import (
     create_job,
-    require_speech_provider_admission,
     require_stock_voice_binding,
     require_voice_clone_binding,
 )
+from .speech_runtime import resolve_speech_provider
 
 
 @dataclass(frozen=True)
@@ -46,7 +45,7 @@ def selected_speech(db, workspace_id: str, reference: VoiceVersionReferenceV1 | 
     if not isinstance(binding, dict):
         raise ValueError("stock_voice_synthesis_binding_mismatch")
     cloned = profile.voice_type == "cloned"
-    kind, registry = ("voice_clone", VOICE_CLONE_PROVIDERS) if cloned else ("stock_voice", SPEECH_PROVIDERS)
+    kind = "voice_clone" if cloned else "stock_voice"
     preferred = binding.get("provider")
     if preferred is not None and (not isinstance(preferred, str) or not preferred.strip()):
         raise ValueError("selected_voice_runtime_unavailable")
@@ -67,16 +66,14 @@ def selected_speech(db, workspace_id: str, reference: VoiceVersionReferenceV1 | 
         )
     )
     for provider in providers:
-        adapter = registry.get(provider)
-        # This automatic path runs local adapters only. It cannot opt into a
-        # remote paid service or substitute another voice for a licensed timbre.
-        if not adapter or getattr(adapter, "execution_environment", None) != "local":
-            continue
         try:
-            require_speech_provider_admission(db, job_type=kind, provider_name=provider)
+            adapter = resolve_speech_provider(db, job_type=kind, provider_name=provider)
         except ValueError:
             if preferred:
                 raise
+            continue
+        # Automatic production cannot select a paid remote adapter or another timbre.
+        if not adapter or getattr(adapter, "execution_environment", None) != "local":
             continue
         return SelectedSpeech(
             ref.id, ref.consent_grant_id, kind, provider, ref.id if cloned else binding["voiceKey"], profile.locale

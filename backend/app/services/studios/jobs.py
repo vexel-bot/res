@@ -75,36 +75,49 @@ def require_speech_provider_admission(
     *,
     job_type: str,
     provider_name: str,
+    provider_version: str | None = None,
+    model_digest_sha256: str | None = None,
 ) -> None:
     if job_type not in {"stock_voice", "voice_clone"}:
         return
-    registration = db.scalar(
+    registrations = db.scalars(
         select(StudioProviderRegistration).where(
             StudioProviderRegistration.provider == provider_name,
             StudioProviderRegistration.capability == job_type,
             StudioProviderRegistration.status == "approved",
+            *([StudioProviderRegistration.provider_version == provider_version] if provider_version else []),
         )
-    )
-    if registration is None:
+    ).all()
+    if not registrations:
         raise ValueError("speech_provider_not_approved")
-    manifest = registration.manifest or {}
-    if manifest.get("benchmarkStatus") != "passed":
+    benchmark_passed = advertised = False
+    for registration in registrations:
+        manifest = registration.manifest or {}
+        if manifest.get("benchmarkStatus") != "passed":
+            continue
+        benchmark_passed = True
+        if manifest.get("workerAdvertised") is not True:
+            continue
+        advertised = True
+        models = db.scalars(
+            select(StudioModelRegistration).where(
+                StudioModelRegistration.provider_registration_id == registration.id,
+                StudioModelRegistration.status == "approved",
+                *([StudioModelRegistration.digest_sha256 == model_digest_sha256] if model_digest_sha256 else []),
+            )
+        ).all()
+        if any(
+            model.commercial_use == "approved"
+            and job_type in (model.capabilities or [])
+            and (model.manifest or {}).get("benchmarkStatus") == "passed"
+            for model in models
+        ):
+            return
+    if not benchmark_passed:
         raise ValueError("speech_provider_benchmark_pending")
-    if manifest.get("workerAdvertised") is not True:
+    if not advertised:
         raise ValueError("speech_provider_not_advertised")
-    model = db.scalar(
-        select(StudioModelRegistration).where(
-            StudioModelRegistration.provider_registration_id == registration.id,
-            StudioModelRegistration.status == "approved",
-        )
-    )
-    if (
-        model is None
-        or model.commercial_use != "approved"
-        or job_type not in (model.capabilities or [])
-        or (model.manifest or {}).get("benchmarkStatus") != "passed"
-    ):
-        raise ValueError("speech_model_not_approved")
+    raise ValueError("speech_model_not_approved")
 
 
 def require_transcription_provider_admission(

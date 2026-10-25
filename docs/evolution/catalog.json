@@ -3,6 +3,18 @@
   "updatedAt": "2026-10-25",
   "entries": [
     {
+      "id": "isolated-speech-runtime",
+      "date": "2026-10-25",
+      "category": "update",
+      "status": "implemented",
+      "title": "Execução isolada de voz no localhost",
+      "summary": "Configuração dos adaptadores de voz, geração Kokoro em container e cancelamento real com limpeza verificada.",
+      "impact": "A API consegue usar o runtime de voz sem carregar as bibliotecas pesadas. Os modelos de clonagem e avatar continuam pendentes de qualificação.",
+      "document": "2026-10-25-isolated-speech-runtime.md",
+      "requirements": ["Conectar os runtimes de voz à produção sem substituir a voz escolhida.", "Preservar versões, homologação e limpeza na execução local."],
+      "evidence": ["backend/app/services/studios/speech_runtime.py", "backend/app/providers/studios/kokoro_docker.py", "backend/tests/test_speech_runtime.py", "backend/tests/test_kokoro_docker.py", "benchmarks/studios/identity/kokoro-local-sidecar-smoke-2026-10-25.v1.json"]
+    },
+    {
       "id": "selected-voice-material",
       "date": "2026-10-25",
       "category": "feature",

@@ -1,0 +1,7 @@
+**
+!backend/
+!backend/scripts/
+!backend/scripts/run_kokoro_stock_sidecar.py
+!workers/
+!workers/speech-cpu/
+!workers/speech-cpu/worker.manifest.json

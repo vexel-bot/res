@@ -1,0 +1,14 @@
+# syntax=docker/dockerfile:1.7
+# Supply a locally verified, immutable candidate image digest; never a floating tag.
+ARG SPEECH_BASE_IMAGE
+FROM ${SPEECH_BASE_IMAGE}
+
+LABEL io.clicko.sidecar.contract="clicko.kokoro-stock-sidecar.v1" \
+      io.clicko.providers="none" \
+      io.clicko.candidate.status="evaluation"
+
+COPY backend/scripts/run_kokoro_stock_sidecar.py /opt/clicko/backend/scripts/run_kokoro_stock_sidecar.py
+COPY workers/speech-cpu/worker.manifest.json /opt/clicko/worker-manifest.json
+
+USER clicko
+CMD ["python", "scripts/run_kokoro_stock_sidecar.py", "--help"]

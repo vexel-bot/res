@@ -142,6 +142,7 @@ class Settings(BaseSettings):
     studio_worker_capability: Literal["media_cpu", "speech_cpu", "speech_gpu", "vision_gpu"] | None = None
     studio_worker_instance_id: str | None = Field(default=None, max_length=160)
     studio_worker_image_digest: str | None = Field(default=None, pattern=r"^sha256:[a-f0-9]{64}$")
+    studio_speech_runtime_config_file: str | None = None
     studio_acoustic_promotion_hmac_secret: str | None = Field(default=None, min_length=32)
     studio_acoustic_promotion_key_id: str | None = Field(default=None, pattern=r"^[A-Za-z0-9][A-Za-z0-9._-]{0,159}$")
     identity_deletion_execution_enabled: bool = False

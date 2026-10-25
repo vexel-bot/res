@@ -1,0 +1,37 @@
+# Only inputs consumed by the pinned speech candidate. No private application
+# state, other model families, Craft sources or unrelated build artifacts.
+**
+!backend/
+!backend/**
+!workers/
+!workers/speech-cpu/
+!workers/speech-cpu/candidate/
+!workers/speech-cpu/candidate/**
+!workers/speech-cpu/worker.manifest.json
+!workers/speech-cpu/providers/
+!workers/speech-cpu/providers/kokoro-82m-stock.provider.json
+!workers/speech-cpu/providers/kokoro-82m-stock.artifacts.json
+!benchmarks/
+!benchmarks/studios/
+!benchmarks/studios/identity/
+!benchmarks/studios/identity/voice-stock-pt-br-policy.v1.json
+!.candidate-build/
+!.candidate-build/uv.lock
+!.candidate-build/kokoro-model-assets.json
+!.candidate-build/espeak-runtime.manifest.json
+!.candidate-build/espeak-runtime/
+!.candidate-build/espeak-runtime/**
+!.candidate-build/hf-home/
+!.candidate-build/hf-home/hub/
+!.candidate-build/hf-home/hub/models--hexgrad--Kokoro-82M/
+!.candidate-build/hf-home/hub/models--hexgrad--Kokoro-82M/**
+backend/**/.env*
+!backend/**/.env.example
+backend/**/.venv
+backend/**/.secrets
+backend/**/__pycache__
+backend/**/*.py[cod]
+backend/**/*.db
+backend/**/*.sqlite*
+backend/**/*.log
+backend/data

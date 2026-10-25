@@ -12,16 +12,13 @@ from ...domain.studios.contracts import (
     SpeechSynthesisRequestV1,
     VoiceCloneReferenceV1,
 )
-from ...domain.studios.providers import (
-    SPEECH_PROVIDERS,
-    VOICE_CLONE_PROVIDERS,
-    VOICE_REFERENCE_NORMALIZERS,
-)
+from ...domain.studios.providers import VOICE_REFERENCE_NORMALIZERS
 from ...models import LibraryAsset, StudioGenerationJob, StudioVoiceVersion
 from ...providers.studios import voice_reference as _voice_reference  # noqa: F401
 from ..object_storage import get_object_storage, object_key, sha256_file
 from .jobs import require_stock_voice_binding, require_voice_clone_binding
 from .kernel import emit_event
+from .speech_runtime import resolve_speech_provider
 
 MEDIA_TYPES = {"wav": "audio/wav", "flac": "audio/flac", "mp3": "audio/mpeg"}
 VOICE_REFERENCE_NORMALIZER = "builtin.ffmpeg-voice-reference-v1"
@@ -131,7 +128,7 @@ def execute_speech_synthesis(
         output_path = Path(temporary) / f"speech.{request.audio_format}"
         try:
             if job.job_type == "stock_voice":
-                provider = SPEECH_PROVIDERS.get(job.provider)
+                provider = resolve_speech_provider(db, job_type=job.job_type, provider_name=job.provider)
                 if provider is None:
                     raise ValueError("speech_provider_unavailable")
                 result = provider.synthesize(request, output_path, progress, is_cancelled)
@@ -140,7 +137,7 @@ def execute_speech_synthesis(
                     raise ValueError("voice_clone_binding_missing")
                 if request.voice_key != voice_version.id:
                     raise ValueError("voice_clone_request_version_mismatch")
-                provider = VOICE_CLONE_PROVIDERS.get(job.provider)
+                provider = resolve_speech_provider(db, job_type=job.job_type, provider_name=job.provider)
                 if provider is None:
                     raise ValueError("voice_clone_provider_unavailable")
                 normalizer = VOICE_REFERENCE_NORMALIZERS.get(VOICE_REFERENCE_NORMALIZER)

@@ -1,0 +1,89 @@
+{
+  "productionAdmissionChanged": false,
+  "schemaVersion": "clicko.speech-runtime-verification.v1",
+  "isolationObservation": {
+    "tmpfs": {
+      "/run/clicko-phonemizer": "rw,exec,nosuid,nodev,size=64m,mode=1777",
+      "/tmp": "rw,noexec,nosuid,size=256m,mode=1777"
+    },
+    "mounts": [
+      {
+        "destination": "/job/input",
+        "type": "bind",
+        "writable": false
+      },
+      {
+        "destination": "/job/output",
+        "type": "bind",
+        "writable": true
+      }
+    ],
+    "containerId": "e66658b9b029e80b78610a762e90fb799879ecdccefa0e6a2c0efb7561bf32b1",
+    "readonlyRootfs": true,
+    "capDrop": [
+      "ALL"
+    ],
+    "networkMode": "none",
+    "memoryBytes": 3221225472,
+    "user": "10001:10001",
+    "observedAt": "2026-10-25T19:52:14.6490059Z",
+    "nanoCpus": 4000000000,
+    "pidsLimit": 128,
+    "memorySwapBytes": 3221225472,
+    "imageReference": "sha256:f427b1045e9f76b0b1ccda831f21df398102398d30134345f32d5b08756139ab",
+    "securityOpt": [
+      "no-new-privileges"
+    ],
+    "schemaVersion": "clicko.speech-sidecar-observation.v1"
+  },
+  "cancellation": {
+    "schemaVersion": "clicko.speech-runtime-smoke.v1",
+    "generatedAt": "2026-10-25T16:53:26.166361-03:00",
+    "coverage": "real_container_start_and_cancel_not_model_qualification",
+    "status": "cancel_cleanup_verified",
+    "imageDigest": "sha256:f427b1045e9f76b0b1ccda831f21df398102398d30134345f32d5b08756139ab",
+    "outputPersisted": false
+  },
+  "coverage": {
+    "avatar": "not_exercised",
+    "clonedVoice": "not_exercised",
+    "fullBenchmark": "not_rerun_historical_latency_failure_preserved",
+    "realModel": "Kokoro stock pf_dora, one synthetic pt-BR sentence",
+    "qualityReview": "not_completed"
+  },
+  "recordedAt": "2026-10-25T19:57:34.2343027Z",
+  "candidateStatus": "evaluation",
+  "imageDigest": "sha256:f427b1045e9f76b0b1ccda831f21df398102398d30134345f32d5b08756139ab",
+  "sourceRevision": "dfb907a02bba8152ca444717ca5d78747ccb4bec",
+  "sbom": {
+    "format": "CycloneDX 1.7",
+    "storage": "private local evaluation evidence",
+    "generator": "Syft 1.51.0",
+    "checksumSha256": "12e1f626a06cce35c59e3d58e10b3ca27128ed3e1ea8819dc5dabbcde98cac90",
+    "scope": "squashed",
+    "licenseApproval": "pending",
+    "components": 846,
+    "ociProvenanceReview": "pending"
+  },
+  "synthesis": {
+    "sidecarWallSeconds": 20.604647300031502,
+    "torchImportedInHostProcess": false,
+    "checksumSha256": "3dfb78f6fedcac41a2380b5ffa1384156f7553e2b611e1649b7fad2ad242e321",
+    "durationMs": 2750,
+    "provenance": {
+      "schemaVersion": "studio.speech-provenance.v1",
+      "sourceRevision": "dfb907a02bba8152ca444717ca5d78747ccb4bec",
+      "modelDigestSha256": "4c738811001691c1640ec65230d9f5dc3008f80c8a7b8af027822c534be09af9",
+      "workerManifestDigestSha256": "36f45dd041744f671a68c8980711c44088592da1b06a3ce77c725bce074b4837",
+      "workerImageDigest": "sha256:f427b1045e9f76b0b1ccda831f21df398102398d30134345f32d5b08756139ab",
+      "syntheticContentDisclosed": true,
+      "provenanceMode": "clicko-auditable-sidecar-v1",
+      "voiceVersionId": null,
+      "consentGrantId": null,
+      "voiceReferenceChecksumSha256": null
+    },
+    "sampleRate": 24000,
+    "status": "passed",
+    "activeComputeSeconds": 1.7957928989999346
+  }
+}

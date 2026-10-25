@@ -4,7 +4,6 @@ import hashlib
 from datetime import UTC, datetime
 
 from ...domain.studios.contracts import AssetReferenceV1, CreateGenerationJobRequest, SpeechSynthesisRequestV1
-from ...domain.studios.providers import SPEECH_PROVIDERS
 from ...models import LibraryAsset, StudioGenerationJob
 from ...providers.studios.media_probe import MEDIA_PROBE_PROVIDERS
 from ..object_storage import get_object_storage, sha256_file
@@ -12,6 +11,7 @@ from .cast_speech import create_selected_speech_job, selected_speech, selected_s
 from .compatibility import persist_contract, record_to_contract
 from .jobs import create_job
 from .review_binding import invalidate_linked_post_review
+from .speech_runtime import resolve_speech_provider
 
 
 def measured_asset(db, record, asset_id, expected_checksum):
@@ -73,8 +73,10 @@ def prepare_narration(db, record, state, request, user):
                 "origin": "supplied",
             }
         ], None
-    if not document.voice_ref and request.stock_voice_provider not in SPEECH_PROVIDERS:
-        raise ValueError("production_qualified_narration_required")
+    if not document.voice_ref:
+        adapter = resolve_speech_provider(db, job_type="stock_voice", provider_name=request.stock_voice_provider)
+        if adapter is None:
+            raise ValueError("production_qualified_narration_required")
     measurements, assets = [], []
     for beat in beats:
         text = beat["narration"]
