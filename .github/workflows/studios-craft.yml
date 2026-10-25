@@ -1,7 +1,7 @@
 name: Studios Craft integration
 on:
   pull_request:
-    paths: ['third_party/craft/**', 'workers/craft/**', 'scripts/craft/**', 'scripts/validation/craft-*.mjs', 'backend/**', 'src/**', 'tests/**', 'docs/evolution/**', 'server.ts', 'package.json', 'package-lock.json', '.github/workflows/studios-craft.yml']
+    paths: ['third_party/craft/**', 'workers/craft/**', 'workers/longcat-avatar/**', 'scripts/craft/**', 'scripts/dev-local*', 'scripts/local-readiness*', 'scripts/validation/craft-*.mjs', 'backend/**', 'src/**', 'tests/**', 'docs/evolution/**', 'server.ts', 'package.json', 'package-lock.json', '.github/workflows/studios-craft.yml']
   workflow_dispatch:
 permissions:
   contents: read
@@ -22,6 +22,7 @@ jobs:
       - run: npm ci
       - run: npm run lint && npm run build
       - run: node --import tsx --test tests/unit/craft*.test.ts
+      - run: node --test scripts/local-readiness.test.mjs scripts/dev-local-control.test.mjs
       - run: npx playwright install --with-deps chromium
       - run: npx playwright test --config playwright.craft.config.ts
       - run: pip install -r backend/requirements-dev.txt
@@ -34,6 +35,7 @@ jobs:
           backend/tests/test_creatives.py backend/tests/test_studio_publication_preflight.py
           backend/tests/test_natural_sound_render.py backend/tests/test_scene_compiler_v2.py
           backend/tests/test_product_evolution.py backend/tests/test_studio_identity_library.py
+          backend/tests/test_identity_activation_gate.py
           backend/tests/test_avatar_independent_cast.py backend/tests/test_avatar_video_job_boundary.py
           backend/tests/test_speech_job_boundary.py backend/tests/test_speech_synthesis_execution.py
           backend/tests/test_longcat_avatar_integration.py

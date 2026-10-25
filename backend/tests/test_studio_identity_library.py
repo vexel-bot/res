@@ -9,12 +9,14 @@ from app.database import SessionLocal
 from app.models import (
     CreativeDocument,
     LibraryAsset,
+    Membership,
     StudioConsentGrant,
     StudioGenerationJob,
     StudioIdentityProfile,
     StudioIdentityVersion,
     StudioVoiceProfile,
     StudioVoiceVersion,
+    User,
     WorkspaceResource,
 )
 from app.routers import studio_department, studio_identity_library
@@ -64,6 +66,56 @@ def enroll(client, headers, body):
     response = client.post(f"{BASE}/enrollments", headers=headers, json=body)
     assert response.status_code == 201, response.text
     return response.json()
+
+
+@pytest.mark.parametrize("kind", ["identities", "voices"])
+def test_library_review_permissions_and_removed_preview_prevent_activation(client, kind):
+    headers, body = setup(client)
+    receipt = enroll(client, headers, body)
+    catalog = client.get(BASE, headers=headers, params={"workspace_id": body["workspaceId"]}).json()
+    assert catalog["permissions"] == {"canReview": True}
+    editor_token, _ = register(client, "cast-editor@example.com")
+    with SessionLocal() as db:
+        editor = db.scalar(select(User).where(User.email == "cast-editor@example.com"))
+        db.add(Membership(user_id=editor.id, workspace_id=body["workspaceId"], role="Editor"))
+        preview = LibraryAsset(
+            workspace_id=body["workspaceId"],
+            title="Fixture preview",
+            asset_type="upload",
+            media_type="video/mp4",
+            storage_key="test-review-preview",
+            checksum_sha256="b" * 64,
+        )
+        db.add(preview)
+        db.commit()
+        preview_id = preview.id
+    editor_headers = {"Authorization": f"Bearer {editor_token}"}
+    assert client.get(BASE, headers=editor_headers, params={"workspace_id": body["workspaceId"]}).json()[
+        "permissions"
+    ] == {"canReview": False}
+    prefix = "identity" if kind == "identities" else "voice"
+    path = f"/api/v1/studios/v1/{kind}/{receipt[prefix + 'ProfileId']}/versions/{receipt[prefix + 'VersionId']}"
+    evaluation = {
+        "status": "passed",
+        "evaluatorKind": "human",
+        "previewAssetIds": [preview_id],
+        "checks": [{"code": "fixture-observation", "passed": True}],
+        "notes": "Contract fixture only.",
+    }
+    assert client.post(f"{path}/evaluations", headers=editor_headers, json=evaluation).status_code == 403
+    saved = client.post(f"{path}/evaluations", headers=headers, json=evaluation)
+    assert saved.status_code == 201, saved.text
+    assert client.get(f"{path}/evaluations", headers=headers).json()[0]["id"] == saved.json()["id"]
+    review = {"action": "approve", "comment": "Fixture reviewed."}
+    assert client.post(f"{path}/review", headers=editor_headers, json=review).status_code == 403
+    with SessionLocal() as db:
+        db.get(LibraryAsset, preview_id).lifecycle_status = "deleted"
+        db.commit()
+    response = client.post(f"{path}/review", headers=headers, json=review)
+    assert response.status_code == 422, response.text
+    assert response.json()["detail"]["code"] == "private_preview_asset_required"
+    versions = client.get(f"{path.rsplit('/', 1)[0]}", headers=headers).json()
+    assert next(item for item in versions if item["id"] == receipt[prefix + "VersionId"])["status"] == "draft"
 
 
 @pytest.mark.parametrize("mode", ["face", "voice", "face_voice", "character", "stock_voice"])

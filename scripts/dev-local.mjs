@@ -5,6 +5,7 @@ import { mkdirSync, readFileSync, writeFileSync, createWriteStream, existsSync, 
 import { createServer, connect } from 'node:net';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { createReadinessProbe, READINESS_TIMEOUT_MS } from './local-readiness.mjs';
 
 const project = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 process.chdir(project);
@@ -25,9 +26,9 @@ mkdirSync(root, { recursive: true });
 const control = process.platform === 'win32' ? '\\\\.\\pipe\\clicko-local-' + createHash('sha256').update(root).digest('hex').slice(0, 32) : path.join(root, 'control.sock');
 if (command === 'status' || command === 'stop') {
   const socket = connect(control);
-  // The server's health probe may take 4 s. Do not silently close the control
+  // The server checks multiple dependencies. Do not close the control
   // socket first and report exit 0 with no status under CPU/memory pressure.
-  socket.setTimeout(7000, () => socket.destroy(new Error('CLICKO_LOCAL_CONTROL_TIMEOUT')));
+  socket.setTimeout(READINESS_TIMEOUT_MS + 3000, () => socket.destroy(new Error('CLICKO_LOCAL_CONTROL_TIMEOUT')));
   socket.on('connect', () => socket.write(command + '\n'));
   socket.on('data', data => process.stdout.write(data));
   socket.on('error', error => { console.error(error.message === 'CLICKO_LOCAL_CONTROL_TIMEOUT'
@@ -57,13 +58,12 @@ if (command === 'status' || command === 'stop') {
     return readFileSync(target, 'utf8').trim();
   }
   let child;
+  const readinessProbe = createReadinessProbe(`http://127.0.0.1:${port}/api/ready`);
   const server = createServer(socket => {
     socket.once('data', async data => {
       if (String(data).trim() === 'stop') { socket.end('CLICKO_LOCAL_STOPPING\n'); stop(); return; }
-      try {
-        const response = await fetch(`http://127.0.0.1:${port}/api/ready`, { signal: AbortSignal.timeout(4000) });
-        socket.end(JSON.stringify({ pid: child?.pid, ready: response.ok, health: await response.json(), dataDirectory: root }) + '\n');
-      } catch { socket.end('CLICKO_LOCAL_STARTING_OR_UNAVAILABLE\n'); }
+      const status = await readinessProbe();
+      socket.end(JSON.stringify({ pid: child?.pid, ...status, dataDirectory: root }) + '\n');
     });
   });
   await new Promise((resolve, reject) => server.once('error', reject).listen(control, resolve));
@@ -92,10 +92,7 @@ if (command === 'status' || command === 'stop') {
   }
   const startupDeadline = setTimeout(() => { console.error('CLICKO_LOCAL_STARTUP_TIMEOUT'); stop(); }, 120_000).unref();
   const startupProbe = setInterval(async () => {
-    try {
-      const response = await fetch(`http://127.0.0.1:${port}/api/ready`, { signal: AbortSignal.timeout(1000) });
-      if (response.ok) { clearTimeout(startupDeadline); clearInterval(startupProbe); }
-    } catch { /* Readiness, not an allocated process, completes startup. */ }
+    if ((await readinessProbe()).ready) { clearTimeout(startupDeadline); clearInterval(startupProbe); }
   }, 2000).unref();
   child.once('exit', (code, signal) => { clearTimeout(startupDeadline); clearInterval(startupProbe);
     console.info('CLICKO_LOCAL_SERVER_EXIT', { code, signal }); log.end(); server.close(); process.exitCode = code ?? 1; });

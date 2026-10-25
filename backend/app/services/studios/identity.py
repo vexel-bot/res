@@ -25,6 +25,7 @@ from ...domain.studios.contracts import (
     VoiceVersionV1,
 )
 from ...models import (
+    LibraryAsset,
     StudioConsentGrant,
     StudioGenerationJob,
     StudioIdentityDeletionRequest,
@@ -574,6 +575,20 @@ def review_identity_version(
         evaluation = _latest_evaluation(db, version, target_type)
         if not evaluation or evaluation.status != "passed":
             raise ValueError("passed_identity_evaluation_required")
+        # A passed record cannot authorize a version after its evidence was removed.
+        expected_previews = set(evaluation.preview_asset_ids or [])
+        available_previews = set(
+            db.scalars(
+                select(LibraryAsset.id).where(
+                    LibraryAsset.id.in_(expected_previews),
+                    LibraryAsset.workspace_id == version.workspace_id,
+                    LibraryAsset.lifecycle_status == "active",
+                    LibraryAsset.storage_key.is_not(None),
+                )
+            ).all()
+        )
+        if not expected_previews or available_previews != expected_previews:
+            raise ValueError("private_preview_asset_required")
         _activation_consent(db, version, profile, target_type)
         version_model = StudioIdentityVersion if target_type == "identity_version" else StudioVoiceVersion
         for active in db.scalars(

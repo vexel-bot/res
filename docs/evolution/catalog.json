@@ -3,6 +3,18 @@
   "updatedAt": "2026-10-24",
   "entries": [
     {
+      "id": "identity-library-review",
+      "date": "2026-10-24",
+      "category": "feature",
+      "status": "implemented",
+      "title": "Avaliação de rostos e vozes na biblioteca",
+      "summary": "Responsáveis podem examinar prévias, registrar avaliações e decidir sobre cada versão.",
+      "impact": "O cadastro passa a ter um caminho de revisão visível. Aprovar uma versão não habilita os modelos de geração.",
+      "document": "2026-10-24-identity-review.md",
+      "requirements": ["Permitir revisão humana de cada versão.", "Conferir permissões, autorização e disponibilidade das prévias antes da aprovação."],
+      "evidence": ["src/studios/identity/IdentityReview.tsx", "backend/tests/test_studio_identity_library.py", "backend/tests/test_identity_activation_gate.py", "tests/team-sync/identity-review.spec.ts"]
+    },
+    {
       "id": "avatar-clean-audio-runner",
       "date": "2026-10-24",
       "category": "update",

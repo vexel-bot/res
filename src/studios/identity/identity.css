@@ -333,6 +333,60 @@
   margin-top: 10px;
   font-size: 11px;
 }
+.identity-library .il-review {
+  border: 1px solid var(--il-border);
+  border-radius: 10px;
+  padding: clamp(16px, 3vw, 30px);
+  background: #171c19;
+  margin: 24px 0;
+}
+.identity-library .il-review header,
+.identity-library .il-review-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+.identity-library .il-review fieldset {
+  border: 1px solid var(--il-border);
+  border-radius: 7px;
+  padding: 18px;
+  margin: 24px 0;
+  min-width: 0;
+}
+.identity-library .il-review legend {
+  padding: 0 8px;
+}
+.identity-library .il-review label:not(.il-declaration) {
+  display: grid;
+  gap: 8px;
+  margin: 15px 0;
+}
+.identity-library .il-review textarea,
+.identity-library .il-review select,
+.identity-library .il-review input[type="file"] {
+  max-width: 100%;
+  background: #101512;
+  color: inherit;
+  color-scheme: dark;
+  border: 1px solid var(--il-border);
+  border-radius: 5px;
+  padding: 12px;
+  font: inherit;
+}
+.identity-library .il-review textarea { min-height: 90px; resize: vertical; }
+.identity-library .il-review-media { margin: 18px 0; }
+.identity-library .il-review-media img,
+.identity-library .il-review-media video { max-width: 100%; max-height: 340px; display: block; }
+.identity-library .il-review-media audio { width: min(100%, 500px); }
+.identity-library .il-review-history details { border-top: 1px solid var(--il-border); padding: 12px 0; }
+.identity-library .il-review-history summary { cursor: pointer; }
+.identity-library .il-review-history p { overflow-wrap: anywhere; }
+.identity-library .il-review-actions { justify-content: flex-start; margin-top: 18px; }
+.identity-library .il-version { margin: 10px 0; }
+.identity-library .il-version button { margin-top: 6px; }
 @media (max-width: 800px) {
   .identity-library {
     padding: 24px 16px;

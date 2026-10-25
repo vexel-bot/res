@@ -22,6 +22,7 @@ from ..domain.studios.contracts import (
 )
 from ..models import (
     LibraryAsset,
+    Membership,
     StudioConsentGrant,
     StudioIdentityProfile,
     StudioIdentityVersion,
@@ -302,9 +303,13 @@ def catalog(workspace_id: str, db: Session = Depends(get_db), user: User = Depen
         }
 
     grants = db.scalars(select(StudioConsentGrant).where(StudioConsentGrant.workspace_id == workspace_id)).all()
+    membership = db.scalar(
+        select(Membership).where(Membership.user_id == user.id, Membership.workspace_id == workspace_id)
+    )
     return {
         "schemaVersion": "clicko.identity-library.v1",
         "workspaceId": workspace_id,
+        "permissions": {"canReview": bool(membership and membership.role.lower() in {"owner", "admin"})},
         "identities": [card(profile, identity_versions, "identity") for profile in identities],
         "voices": [card(profile, voice_versions, "voice") for profile in voices],
         "consents": [identity.consent_out(grant) for grant in grants],

@@ -17,6 +17,7 @@ import {
   type IdentityCatalog,
 } from "./identityApi";
 import "./identity.css";
+import { IdentityReview, type ReviewSelection } from "./IdentityReview";
 
 const message = (e: unknown) =>
   e instanceof Error ? e.message : "Não foi possível concluir o cadastro.";
@@ -135,6 +136,7 @@ function IdentityRoom({
   const [tab, setTab] = React.useState<"identities" | "voices">("identities");
   const [retry, setRetry] = React.useState(0);
   const [loading, setLoading] = React.useState(true);
+  const [reviewing, setReviewing] = React.useState<ReviewSelection>();
   const [enrolling, setEnrolling] = React.useState(
     new URLSearchParams(window.location.search).get("enroll") === "1",
   );
@@ -442,6 +444,13 @@ function IdentityRoom({
           </fieldset>
         </form>
       )}
+      {reviewing && <IdentityReview
+        key={`${reviewing.kind}:${reviewing.versionId}`}
+        target={reviewing}
+        workspaceId={workspaceId}
+        onClose={() => setReviewing(undefined)}
+        onReviewed={(text) => { setReviewing(undefined); setNotice(text); setRetry(value => value + 1); }}
+      />}
       <nav aria-label="Coleções de identidade">
         <button
           aria-pressed={tab === "identities"}
@@ -473,6 +482,11 @@ function IdentityRoom({
                   (grant) => grant.id === latest?.consentGrantId,
                 );
                 const profile = item.profile;
+                const draft = item.versions.find(version => version.status === "draft");
+                const openReview = (version: typeof item.versions[number]) => setReviewing({
+                  kind: tab, profileId: profile.id, versionId: version.id, version: version.version,
+                  name: profile.displayName, capabilities: "capabilities" in version ? version.capabilities || [] : [],
+                });
                 return (
                   <article key={profile.id}>
                     <React.Fragment key={item.previewAssetId}>
@@ -533,16 +547,24 @@ function IdentityRoom({
                           ))}
                         </div>
                       )}
+                      {draft && catalog.permissions?.canReview && <button
+                        type="button" onClick={() => openReview(draft)}
+                      >Revisar cadastro</button>}
                       <details>
                         <summary>
                           {item.versions.length} versão(ões) · histórico
                         </summary>
                         {item.versions.map((version) => (
-                          <p key={version.id}>
-                            v{version.version} ·{" "}
-                            {statusLabel[version.status] || version.status}
-                          </p>
+                          <div className="il-version" key={version.id}>
+                            <p>v{version.version} · {statusLabel[version.status] || version.status}</p>
+                            {version.status === "draft" && catalog.permissions?.canReview && <button
+                              type="button"
+                              onClick={() => openReview(version)}
+                            >Avaliar versão {version.version}</button>}
+                          </div>
                         ))}
+                        {item.versions.some(version => version.status === "draft") && !catalog.permissions?.canReview &&
+                          <p>A avaliação desta versão deve ser feita por um responsável ou administrador da marca.</p>}
                         {consent && (
                           <p>
                             Autorização{" "}
