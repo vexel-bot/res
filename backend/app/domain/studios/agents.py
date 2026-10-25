@@ -41,12 +41,17 @@ class AgentTaskRequest(StudioContract):
     expected_revision: int = Field(ge=1)
     instruction: str = Field(min_length=1, max_length=8000)
     role: Literal["auto", "audiovisual", "image"] = "auto"
+    planner: Literal["current", "deterministic", "gemini_experimental"] = "current"
+    duration_seconds: int | None = Field(default=None, ge=3, le=120)
+    probe: bool = False
     selected_layer_ids: list[Annotated[str, Field(min_length=1, max_length=120)]] = Field(
         default_factory=list, max_length=24
     )
 
     @model_validator(mode="after")
     def unique_selection(self):
+        if self.probe and self.planner != "gemini_experimental":
+            raise ValueError("motion_gemini_probe_requires_experiment")
         if len(set(self.selected_layer_ids)) != len(self.selected_layer_ids):
             raise ValueError("agent_duplicate_selected_layer")
         return self

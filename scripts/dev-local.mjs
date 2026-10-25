@@ -72,6 +72,7 @@ if (command === 'status' || command === 'stop') {
     PUBLIC_APP_URL: `http://127.0.0.1:${port}`, CLICKO_DEV_MODE: String(developer), CLICKO_LOCAL_DATA_DIR: root,
     CLICKO_STUDIOS_ORIGIN: `http://127.0.0.1:${studioPort}`, CLICKO_STUDIOS_AUTOSTART: 'true',
     CLICKO_STUDIOS_DATA_DIR: path.join(root, 'studios'), CLICKO_STUDIOS_BRIDGE_SECRET: secret('bridge-key'),
+    STUDIO_LLM_CREDENTIAL_KEY: process.env.STUDIO_LLM_CREDENTIAL_KEY || secret('llm-credential-key'),
     CLICKO_GOVERNANCE_DATA_FILE: path.join(root, 'governance.json'), CLICKO_SOCIAL_DATA_FILE: path.join(root, 'social.json'),
     CLICKO_KLIC_DATA_FILE: path.join(root, 'klic.json'), CLICKO_CONVERSATIONS_DIR: path.join(root, 'conversations'),
     CLICKO_RADAR_DATA_FILE: path.join(root, 'radar.json'),

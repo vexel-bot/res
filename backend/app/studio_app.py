@@ -52,6 +52,9 @@ def bridge_user(
     db: Session = Depends(get_db),
 ):
     claims = bridge_claims(credentials)
+    request.state.motion_gemini_experimental = (
+        claims.get("motionGeminiExperimental") is True and claims["module"] == "create-video"
+    )
     request.state.studio_media_admission = claims.get("mediaAdmission")
     workspace_id, user_id = scoped_ids(claims)
     if request.url.path.startswith("/api/v1/studios/v1/video/") and claims["module"] != "create-video":

@@ -8,9 +8,10 @@ import { forwardMeteredImageRequest } from './imageQuota';
 import { forwardMeteredVideoRequest } from './videoQuota';
 import { reconcileStudioVideoJob } from '../governance';
 import { studioBridgeSecret } from './bridgeKey';
+import { isLocalDevRequest } from '../devMode';
 export { studioBridgeSecret } from './bridgeKey';
 
-export function studioBridgeToken(auth: AuthContext, clientId: string | null, module: string, secret: string, mediaAdmission?: Record<string, unknown>) {
+export function studioBridgeToken(auth: AuthContext, clientId: string | null, module: string, secret: string, mediaAdmission?: Record<string, unknown>, motionGeminiExperimental = false) {
   const now = Math.floor(Date.now() / 1000);
   const scope = readStudioWorkspace(auth, clientId);
   const encode = (value: unknown) => Buffer.from(JSON.stringify(value)).toString('base64url');
@@ -23,6 +24,7 @@ export function studioBridgeToken(auth: AuthContext, clientId: string | null, mo
     role: auth.user.role === 'master' ? 'Owner' : auth.user.role === 'administrator' ? 'Admin' : 'Member',
     iat: now, exp: now + 60,
     ...(mediaAdmission ? { mediaAdmission } : {}),
+    ...(motionGeminiExperimental ? { motionGeminiExperimental: true } : {}),
   });
   const signature = createHmac('sha256', secret).update(`${header}.${payload}`).digest('base64url');
   return `${header}.${payload}.${signature}`;
@@ -88,8 +90,9 @@ export function createStudiosProxy(options: { origin?: string; secret?: string; 
     if (!/^\/api\/v1\/(?:studios\/v1(?:\/|$)|assets(?:\/|$))/.test(req.originalUrl.split('?')[0])) {
       return res.status(404).json({ detail: 'Operação não disponível nos Studios.' });
     }
+    const experimental = process.env.CLICKO_MOTION_GEMINI_EXPERIMENTAL === 'true' && module === 'create-video' && isLocalDevRequest(req);
     const headers = new Headers({
-      authorization: `Bearer ${studioBridgeToken(auth, clientId, module, secret)}`,
+      authorization: `Bearer ${studioBridgeToken(auth, clientId, module, secret, undefined, experimental)}`,
       'x-correlation-id': requestId,
     });
     for (const name of ['content-type', 'accept', 'range', 'idempotency-key', 'if-match']) {

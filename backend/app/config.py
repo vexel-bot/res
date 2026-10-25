@@ -28,6 +28,9 @@ class Settings(BaseSettings):
     studio_craft_filmcraft_binary: str | None = None
     studio_craft_effectcraft_binary: str | None = None
     studio_llm_credential_key: SecretStr | None = Field(default=None, min_length=32)
+    clicko_dev_mode: bool = False
+    clicko_motion_gemini_experimental: bool = False
+    clicko_motion_gemini_free_tier_evidence_file: str | None = None
     studio_craft_timeout_seconds: int = Field(default=600, ge=5, le=3600)
     studio_craft_max_upload_bytes: int = Field(default=2 * 1024**3, ge=1024, le=20 * 1024**3)
     ai_embedding_model: str | None = None

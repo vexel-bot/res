@@ -18,6 +18,7 @@ import { StudioEditorFrame, StudioKlicButton, StudioUtilityPanel, useStudioShort
 import type { StudioPane } from '../shared/studioWorkspaceModel';
 import './local-production.css';
 import type { NavigationTab } from '../../types';
+import { MotionGeminiSettings, motionGeminiError, type MotionGeminiStatus } from './MotionGeminiSettings';
 type Pending = {
     path: string;
     body: unknown;
@@ -74,6 +75,10 @@ function LocalRoom({ module, workspaceId, userId }: {
     const [pane, setPane] = React.useState<StudioPane>('preview');
     const [leftTab, setLeftTab] = React.useState<'layers' | 'materials'>('layers');
     const [format, setFormat] = React.useState(video ? '16:9' : '1:1');
+    const [gemini, setGemini] = React.useState<MotionGeminiStatus>();
+    const [plannerMode, setPlannerMode] = React.useState<'deterministic'|'gemini_experimental'>('deterministic');
+    const [planDuration, setPlanDuration] = React.useState(15);
+    const [planningDocument, setPlanningDocument] = React.useState<string>();
     const editorRoot = React.useRef<HTMLElement>(null);
     useStudioShortcuts(editorRoot, !mediaOpen);
     const [pending, setPending] = React.useState<Pending>();
@@ -226,7 +231,7 @@ function LocalRoom({ module, workspaceId, userId }: {
     }
     catch (e) {
         if (mounted.current)
-                setError(e instanceof Error ? localError(e.message) : 'Não foi possível concluir.');
+                setError(e instanceof Error ? motionGeminiError(localError(e.message)) : 'Não foi possível concluir.');
     }
     finally {
         inFlight.current = false;
@@ -296,8 +301,13 @@ function LocalRoom({ module, workspaceId, userId }: {
         if (!current) {
             current = await createEmptyProject();
         }
-        const task = await write<AgentTask>(`${localBase}/documents/${current.documentId}/agent-tasks`, { expectedRevision: current.revision, instruction, role: 'auto',
+        setPlanningDocument(current.documentId);
+        let task:AgentTask;
+        try { task = await write<AgentTask>(`${localBase}/documents/${current.documentId}/agent-tasks`, { expectedRevision: current.revision,
+            instruction: gemini?.available && plannerMode==='deterministic' ? instruction+` Duração solicitada: ${planDuration} segundos.` : instruction, role: 'auto',
+            ...(gemini?.available ? {planner:plannerMode,durationSeconds:planDuration} : {}),
             selectedLayerIds: selected && current.composition.pages[0].layers.some(row=>row.id===selected) ? [selected] : [] });
+        } finally { setPlanningDocument(undefined); }
         setTasks(rows => [task, ...rows.filter(row => row.id !== task.id)]);
         setUtility('production');
         if (task.status === 'failed')
@@ -392,8 +402,18 @@ function LocalRoom({ module, workspaceId, userId }: {
         <StudioKlicButton/>
     </>;
     const planningForm = <>
+        {gemini?.available&&<><label>Planejador<ClickoSelectMenu ariaLabel="Planejador do Motion" value={plannerMode} disabled={locked}
+            options={[{value:'deterministic',label:'A · Planejador atual (regras locais)'},{value:'gemini_experimental',label:'B · Gemini experimental'}]} onChange={value=>setPlannerMode(value as typeof plannerMode)}/></label>
+            <label>Duração solicitada (s)<input type="number" min={3} max={120} value={planDuration} onChange={e=>setPlanDuration(Number(e.target.value))}/></label></>}
         <label>{doc ? 'Pedido de edição' : 'Descreva sua ideia'}<textarea className="studio-start__idea" aria-label="Briefing ou comando de produção" value={instruction} maxLength={8000} onChange={event => setInstruction(event.target.value)} rows={3} placeholder={video ? 'Ex.: três cenas sobre inovação, com títulos e cartões animados.' : 'Ex.: um cartão com o título “Ideias que ganham forma”.'}/></label>
-        <button type="button" disabled={locked || !instruction.trim()} onClick={() => void run(plan)}><Sparkles size={15}/>{busy ? 'Preparando…' : 'Preparar plano'}</button>
+        <button type="button" disabled={locked || !instruction.trim() || (gemini?.available&&plannerMode==='gemini_experimental'&&!gemini.inferenceReady)} onClick={() => void run(plan)}><Sparkles size={15}/>{busy ? 'Preparando…' : gemini?.available&&plannerMode==='gemini_experimental'?'Planejar com Gemini':'Preparar plano'}</button>
+        {planningDocument&&gemini?.available&&<button type="button" onClick={()=>{
+            const key=pendingRef.current?.key;if(!key)return;
+            void apiFetch(`${localBase}/agents/motion-gemini/cancel/${encodeURIComponent(planningDocument)}`,{method:'POST',body:JSON.stringify({requestKey:key})})
+                .then(()=>setNotice('Cancelamento solicitado. Uma chamada já enviada pode terminar, mas o plano não será aplicado.'))
+                .catch(()=>setError('A tarefa ainda não confirmou o cancelamento. Aguarde o resultado; nenhuma aplicação é automática.'));
+        }}>Cancelar planejamento</button>}
+        {gemini?.available&&plannerMode==='gemini_experimental'&&!gemini.inferenceReady&&<p>Gemini ainda não admitido: confira chave, modelo, ativação e comprovação gratuita nas Configurações do projeto.</p>}
         <p className="studio-compact-note">{roles?.[video ? 'audiovisual' : 'image'].mode === 'local_model' ? 'Modelo local configurado. Revise o plano antes de aplicar.' : 'Produção por regras locais, sem inferência de IA. Você também pode editar manualmente.'}</p>
     </>;
     const library = <div className="lp-material-list">
@@ -411,8 +431,8 @@ function LocalRoom({ module, workspaceId, userId }: {
         {!doc && <div className="studio-start">
             <h2>{video ? 'O que vamos colocar em movimento?' : 'O que você quer criar?'}</h2>
             <p>Descreva uma ideia para revisar um plano, ou deixe em branco para editar manualmente.</p>
-            <label>Descreva sua ideia <small>Opcional</small><textarea className="studio-start__idea" aria-label="Ideia inicial do projeto" value={instruction} maxLength={8000} rows={3} onChange={event => setInstruction(event.target.value)} placeholder={video ? "Ex.: três cenas sobre inovação, com títulos animados." : "Ex.: um cartão com o título “Ideias que ganham forma”."}/></label>
-            <div className="studio-start__actions"><button type="button" className="lp-primary" disabled={locked} onClick={() => void run(instruction.trim() ? plan : createEmptyProject)}><Plus size={16}/>Criar projeto</button><button type="button" disabled={locked} onClick={() => file.current?.click()}><Upload size={15}/>Importar materiais</button>{projectButtons}</div>
+            {gemini?.available ? planningForm : <label>Descreva sua ideia <small>Opcional</small><textarea className="studio-start__idea" aria-label="Ideia inicial do projeto" value={instruction} maxLength={8000} rows={3} onChange={event => setInstruction(event.target.value)} placeholder={video ? "Ex.: três cenas sobre inovação, com títulos animados." : "Ex.: um cartão com o título “Ideias que ganham forma”."}/></label>}
+            <div className="studio-start__actions"><button type="button" className="lp-primary" disabled={locked || Boolean(instruction.trim()&&gemini?.available&&plannerMode==='gemini_experimental'&&!gemini.inferenceReady)} onClick={() => void run(instruction.trim() ? plan : createEmptyProject)}><Plus size={16}/>Criar projeto</button><button type="button" disabled={locked} onClick={() => file.current?.click()}><Upload size={15}/>Importar materiais</button>{projectButtons}</div>
             <details className="studio-fold"><summary>Nome e formato · opções</summary>
                 <label>Nome do projeto<input value={title} maxLength={120} onChange={event => setTitle(event.target.value)}/></label>
                 <label>Formato<ClickoSelectMenu value={format} options={[{ value:'1:1',label:'Quadrado · 1:1' },{ value:'16:9',label:'Horizontal · 16:9' },{ value:'9:16',label:'Vertical · 9:16' }]} onChange={setFormat} ariaLabel="Formato do projeto local" disabled={locked}/></label>
@@ -480,6 +500,7 @@ function LocalRoom({ module, workspaceId, userId }: {
             <details className="lp-task-history"><summary>Histórico dos agentes · {tasks.length} tarefas</summary>{tasks.map(task=><article key={task.id}><strong>{task.role} · {task.status}{task.appliedRevision ? ' · aplicado na revisão '+task.appliedRevision : ''}</strong><p>{task.instruction}</p><small>{task.id} · {task.provider} · custo externo R$ 0</small>{task.history?.map((event,index)=><p key={index}>{event.type} · {event.at}</p>)}</article>)}</details>
         </StudioUtilityPanel>
         <StudioUtilityPanel title="Projeto e ferramentas" open={utility==='project'} onClose={()=>setUtility(null)}>
+            {video&&<MotionGeminiSettings workspaceId={workspaceId} documentId={doc?.documentId} revision={doc?.revision} onStatus={value=>{setGemini(value);if(!value?.enabled)setPlannerMode('deterministic');}}/>}
             {page && doc && <><p>{doc.title} · revisão {doc.revision}</p><label>Fundo do projeto<input disabled={locked} type="color" value={page.background.slice(0,7)} onChange={event=>change({...doc.composition,pages:[{...page,background:event.target.value}]})}/></label>
                 {dirty&&!pending&&<button type="button" disabled={busy} onClick={()=>void run(async()=>{localStorage.setItem(storageKey+':previous',JSON.stringify(doc));adopt(await localApi.document(doc.documentId));setNotice('Versão salva recarregada. Rascunho anterior preservado como backup local.');})}>Recarregar versão salva</button>}</>}
             <details className="lp-settings"><summary>Modelos dos agentes</summary><p>A KLIC mantém sua configuração Gemini. Cada especialista pode usar regras locais ou uma conexão Ollama já instalada. Nenhum modelo é baixado por este painel.</p>{roles && (['audiovisual', 'image'] as const).map(role => <label key={role}>{role === 'audiovisual' ? 'Audiovisual' : 'Imagem'}<ClickoSelectMenu ariaLabel={`Modelo do agente ${role}`} disabled={busy || !canConfigure} value={roles[role].mode === 'local_model' ? `${roles[role].connectionId}|${roles[role].model}` : 'local_tools'} options={[{ value: 'local_tools', label: 'Ferramentas locais · sem inferência' }, ...usableConnections.flatMap(connection => connection.config.models.filter(model => !model.toLowerCase().includes('cloud')).map(model => ({ value: `${connection.id}|${model}`, label: `${connection.label} · ${model}` })))]} onChange={value => { const [connectionId, model] = value.split('|'); setRoles({ ...roles, [role]: value === 'local_tools' ? { mode: 'local_tools' } : { mode: 'local_model', connectionId, model } }); }}/></label>)}<button disabled={busy || !roles || !canConfigure} onClick={() => void run(async () => { setRoles(await localApi.configure(workspaceId, roles!)); setNotice('Configuração dos agentes salva.'); })}>Salvar configuração</button><details><summary>Registrar Ollama local existente</summary><label>ID do modelo instalado<input ref={modelField} placeholder="qwen3:0.6b"/></label><button disabled={busy || !canConfigure} onClick={() => void run(async () => { const model = modelField.current?.value.trim(); if (!model)
@@ -489,7 +510,7 @@ function LocalRoom({ module, workspaceId, userId }: {
             <StudioKlicButton/><p>A conversa KLIC é compartilhada com a plataforma. Use abaixo apenas para preparar e revisar um plano de ferramentas.</p>
             {selected&&<p>Alvo: {layer?.name||'camada selecionada'} <button type="button" disabled={locked} onClick={()=>setSelected(undefined)}>Desmarcar · editar projeto inteiro</button></p>}
             {planningForm}
-            {tasks[0]&&<section className="lp-plan" aria-label="Plano do agente"><strong>{tasks[0].role==='image'?'Agente visual':'Agente audiovisual'}</strong><p>{tasks[0].result?.rationale||tasks[0].errorCode}</p><details><summary>Detalhes do plano</summary><small>{tasks[0].provider} · {tasks[0].result?.commands?.length||0} operações · {tasks[0].result?.state}</small></details><button type="button" disabled={locked||dirty||!tasks[0].result?.commands?.length||tasks[0].status!=='succeeded'||tasks[0].documentRevision!==doc?.revision} onClick={()=>void run(()=>apply(tasks[0]))}>Aplicar plano</button></section>}
+            {tasks[0]&&<section className="lp-plan" aria-label="Plano do agente"><strong>{tasks[0].role==='image'?'Agente visual':'Agente audiovisual'}</strong><p>{tasks[0].result?.rationale||motionGeminiError(tasks[0].errorCode||'')}</p><details><summary>Detalhes do plano</summary><small>{tasks[0].provider} · {tasks[0].result?.commands?.length||0} operações · {tasks[0].result?.state}</small><pre>{JSON.stringify(tasks[0].result,null,2)}</pre></details><button type="button" disabled={locked||dirty||!tasks[0].result?.commands?.length||tasks[0].status!=='succeeded'||tasks[0].documentRevision!==doc?.revision} onClick={()=>void run(()=>apply(tasks[0]))}>{tasks[0].provider==='google.motion-gemini'?'Criar Motion Design':'Aplicar plano'}</button></section>}
         </StudioUtilityPanel>
         <StudioUtilityPanel title="Exportação" open={utility==='output'} onClose={()=>setUtility(null)}>
             {rendering&&<p role="status">Renderizando… {job?.progress}% <button type="button" onClick={()=>void run(async()=>setJob(await apiFetch(localBase+'/jobs/'+job!.id+'/cancel',{method:'POST',body:JSON.stringify({reason:'Cancelado pelo usuário'})})))}>Cancelar</button></p>}

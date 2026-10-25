@@ -94,7 +94,10 @@ def llm_connections(
         )
     )
     rows = db.scalars(select(StudioLLMConnection).where(StudioLLMConnection.workspace_id == workspace_id))
-    return {"connections": [service.public(row) for row in rows], "canManage": role.lower() in {"owner", "admin"}}
+    return {
+        "connections": [service.public(row) for row in rows if row.provider != "google-motion-experimental"],
+        "canManage": role.lower() in {"owner", "admin"},
+    }
 
 
 @router.post("/craft/llm-connections", status_code=201)
