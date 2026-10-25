@@ -1108,7 +1108,20 @@ def validate_render_output(path, output_format):
             raise ValueError("craft_render_container_invalid")
         if output_format in {"mp4", "mov"} and (len(header) < 12 or header[4:8] not in {b"ftyp", b"wide", b"mdat"}):
             raise ValueError("craft_render_container_invalid")
-        return {"validation": "native-export-and-container-signature"}
+        from ...providers.studios.media_probe import MEDIA_PROBE_PROVIDERS
+
+        probe = MEDIA_PROBE_PROVIDERS["builtin.ffprobe"].probe(path, asset_id="native-export", checksum_sha256=None)
+        if not probe.video_streams or probe.duration_microseconds <= 0:
+            raise ValueError("craft_render_video_stream_invalid")
+        video = probe.video_streams[0]
+        return {
+            "validation": "native-export-and-media-probe",
+            "width": video.width,
+            "height": video.height,
+            "fps": video.frame_rate.numerator / video.frame_rate.denominator,
+            "durationMs": round(probe.duration_microseconds / 1000),
+            "hasAudio": bool(probe.audio_streams),
+        }
     return {"validation": "native-export-file-integrity"}
 
 
@@ -1187,7 +1200,8 @@ def execute_render_job(db, job, progress, is_cancelled):
             with get_object_storage(cached_asset.storage_backend).materialize(cached_asset.storage_key) as path:
                 if sha256_file(path) != cached_asset.checksum_sha256:
                     raise ValueError("craft_render_cached_artifact_changed")
-            return cached
+                metadata = validate_render_output(path, cached["format"])
+            return {**cached, "artifact": {**cached["artifact"], **metadata}}
     record = db.get(CreativeDocument, job.document_id)
     if not record or record.workspace_id != job.workspace_id or contract.document_id != record.id:
         raise ValueError("craft_render_document_mismatch")

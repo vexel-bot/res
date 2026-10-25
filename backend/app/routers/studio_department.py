@@ -21,6 +21,7 @@ from ..services.studios import craft
 from ..services.studios.casting import resolve_cast
 from ..services.studios.compatibility import record_to_contract
 from ..services.studios.kernel import create_document
+from ..services.studios.project_montage import native_imports, plan_video_montage
 from .studio_craft import render_job
 from .studios import assert_access, studio_identity_error, validate_references
 
@@ -251,6 +252,12 @@ def document_request(project, post_id, brand_revision, asset=None, portrait=None
     if project["format"] == "carousel":
         texts += [("O contexto", project["evidence"] or project["objective"]), ("O próximo passo", direction["cta"])]
     pages = []
+    duration_ms = None
+    if project["format"] == "video":
+        avatar_result = ((asset.object_metadata or {}).get("avatarVideoJobResult") or {}) if asset else {}
+        duration_ms = (project.get("montagePlan") or {}).get("durationMs") or (avatar_result.get("avatar") or {}).get(
+            "durationMs", 5000
+        )
     for i, (title, body) in enumerate(texts):
         pages.append(
             {
@@ -258,16 +265,7 @@ def document_request(project, post_id, brand_revision, asset=None, portrait=None
                 "width": 1080,
                 "height": 1350,
                 "background": "#e8e5dc",
-                "durationMs": (
-                    (asset.object_metadata or {})
-                    .get("avatarVideoJobResult", {})
-                    .get("avatar", {})
-                    .get("durationMs", 5000)
-                    if asset and project["format"] == "video"
-                    else 5000
-                    if project["format"] == "video"
-                    else None
-                ),
+                "durationMs": duration_ms,
                 "layers": [
                     {
                         "id": f"brand-{i}",
@@ -362,6 +360,7 @@ def document_request(project, post_id, brand_revision, asset=None, portrait=None
                     "front": project["front"],
                     "intent": project["intent"],
                     "direction": direction,
+                    **({"montage": project["montagePlan"]} if project.get("montagePlan") else {}),
                 },
             },
         }
@@ -438,7 +437,20 @@ def produce_project(
                 raise HTTPException(422, "A versão escolhida precisa de uma imagem de referência armazenada.")
     if row.payload["format"] == "video" and not asset:
         raise HTTPException(422, "Selecione um vídeo da biblioteca para preparar a primeira montagem.")
-    row = change(db, row, data.expected_revision, {"status": "producing"})
+    preparation = {"status": "producing"}
+    if row.payload["format"] == "video":
+        try:
+            montage = plan_video_montage(
+                row.workspace_id,
+                [clip for clip in (asset, additional_video) if clip],
+                avatar_asset_id=asset.id if row.payload.get("avatar") else None,
+            )
+        except ValueError as error:
+            raise studio_identity_error(error) from error
+        if row.payload.get("documentId") and row.payload.get("montagePlan") != montage:
+            raise HTTPException(409, "Os materiais da montagem mudaram. Preserve a entrega anterior em outro projeto.")
+        preparation["montagePlan"] = montage
+    row = change(db, row, data.expected_revision, preparation)
     try:
         project = out(row)
         post_id = project.get("postId") or str(uuid5(NAMESPACE_URL, f"clicko-department:{project_id}"))
@@ -498,11 +510,7 @@ def produce_project(
                 document,
                 CraftCommandRequestV1(
                     expected_revision=row.payload["sourceRevision"],
-                    commands=[
-                        {"id": "asset.import", "params": {"assetId": clip.id, "addToTimeline": True}}
-                        for clip in (asset, additional_video)
-                        if clip
-                    ],
+                    commands=native_imports(project["montagePlan"]),
                     label="Primeira montagem com material da marca",
                 ),
                 user,

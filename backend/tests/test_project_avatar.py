@@ -285,6 +285,19 @@ def test_completed_avatar_is_handed_to_native_montage_and_changed_audio_is_rejec
         row.payload = {**row.payload, "sourceAssetId": source_id}
         db.commit()
     imports = []
+    from app.services.studios import project_montage
+
+    # The HTTP/DB handoff fixture carries transport bytes, not a decoded video.
+    # Full byte/probe/native/export coverage lives in native_project_avatar_acceptance.py.
+    monkeypatch.setitem(
+        project_montage.MEDIA_PROBE_PROVIDERS,
+        "builtin.ffprobe",
+        SimpleNamespace(
+            probe=lambda *args, **kwargs: SimpleNamespace(
+                video_streams=[object()], audio_streams=[object()], duration_microseconds=2_800_000
+            )
+        ),
+    )
     # Native compilation/export is a separate acceptance test. This asserts the
     # real HTTP/DB handoff, not the quality or decoding of the transport fixture.
     monkeypatch.setattr(
@@ -300,10 +313,13 @@ def test_completed_avatar_is_handed_to_native_montage_and_changed_audio_is_rejec
     )
     assert produced.status_code == 200, produced.text
     assert imports[0].params["assetId"] == asset_id
-    assert imports[1].params["assetId"] == source_id
+    assert imports[0].params["seconds"] == 0
+    assert imports[1].id == "clip.fitToFrame"
+    assert imports[2].params["assetId"] == source_id
+    assert imports[2].params["seconds"] == 2.8
     with SessionLocal() as db:
         document = db.get(CreativeDocument, produced.json()["documentId"])
-        assert document.canonical_document["composition"]["pages"][0]["durationMs"] == 2800
+        assert document.canonical_document["composition"]["pages"][0]["durationMs"] == 5600
         assert document.canonical_document["voiceRef"]["id"] == case.payload["voiceVersionId"]
         row = db.get(WorkspaceResource, case.project["id"])
         row.payload = {**row.payload, "narrationDraft": "Uma nova fala ainda sem áudio."}

@@ -3,6 +3,18 @@
   "updatedAt": "2026-10-25",
   "entries": [
     {
+      "id": "native-avatar-montage",
+      "date": "2026-10-25",
+      "category": "fix",
+      "status": "implemented",
+      "title": "Apresentação e vídeo da marca em sequência",
+      "summary": "Posições e duração medidas, ajuste de enquadramento e exportação FilmCraft conferida com imagem e áudio de teste.",
+      "impact": "O vídeo original segue a apresentação na timeline, com a fala preservada. Os modelos reais continuam pendentes de qualificação.",
+      "document": "2026-10-25-native-avatar-montage.md",
+      "requirements": ["Preservar os dois materiais sem sobreposição acidental.", "Conferir a mídia exportada pelo motor nativo."],
+      "evidence": ["backend/app/services/studios/project_montage.py", "backend/app/services/studios/craft.py", "backend/tests/native_project_avatar_acceptance.py", "backend/tests/test_project_montage.py"]
+    },
+    {
       "id": "project-selected-avatar",
       "date": "2026-10-25",
       "category": "feature",

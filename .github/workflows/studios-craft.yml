@@ -40,6 +40,7 @@ jobs:
           backend/tests/test_speech_job_boundary.py backend/tests/test_speech_synthesis_execution.py
           backend/tests/test_project_narration.py
           backend/tests/test_project_avatar.py
+          backend/tests/test_project_montage.py
           backend/tests/test_longcat_avatar_integration.py
         env:
           PYTHONPATH: backend
@@ -107,6 +108,8 @@ jobs:
       - run: pip install -r backend/requirements-dev.txt && npm ci && npx playwright install --with-deps chromium
       - name: Install host media probe utilities
         run: sudo apt-get update && sudo apt-get install -y ffmpeg && ffprobe -version
+      - name: Native presenter and brand montage
+        run: PYTHONPATH=backend python -m pytest backend/tests/native_project_avatar_acceptance.py -o addopts='' -q
       - name: Real API, native exports and browser pixels
         run: |
           python -m uvicorn app.main:app --app-dir backend --host 127.0.0.1 --port 8018 > .codex-runtime/craft/qa-api.log 2>&1 &
@@ -141,3 +144,4 @@ jobs:
             .codex-runtime/craft/qa-*.log
             .codex-runtime/craft/media-worker-*.json
             .codex-runtime/craft/queue-qa-*/*.log
+            .codex-runtime/team-sync/native-avatar/*

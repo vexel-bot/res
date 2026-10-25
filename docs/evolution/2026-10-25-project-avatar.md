@@ -34,6 +34,8 @@ Esses testes não qualificam semelhança de rosto ou voz, naturalidade, portugu�
 - Geração de uma nova versão da montagem depois de uma entrega existente. Este caminho prepara a primeira montagem; os históricos existentes não são reescritos.
 - Fluxos de montagem com somente voz sobre material da marca, sem aparência, e criação generativa de novas poses/imagens com identidade.
 
+Atualização da montagem: a sequência, o enquadramento, a prévia e a exportação FilmCraft foram posteriormente exercitados com cartões de cor e tons de teste. Os resultados e a diferença entre essa aceitação e a qualificação dos modelos reais estão no registro “Apresentação e vídeo da marca em sequência”, na área Evolução.
+
 ## Fontes no sistema
 
 - backend/app/routers/studio_project_avatar.py
