@@ -1,7 +1,19 @@
 {
   "schemaVersion": "clicko.product-evolution.v1",
-  "updatedAt": "2026-10-24",
+  "updatedAt": "2026-10-25",
   "entries": [
+    {
+      "id": "all-remote-branches-sync",
+      "date": "2026-10-25",
+      "category": "update",
+      "status": "integrated",
+      "title": "Todas as branches do GitHub incorporadas",
+      "summary": "Cinco branches remotas conferidas; ai-studios-novo incorporada com seus 17 arquivos.",
+      "impact": "Os fontes publicados estão no checkout local, com o trabalho de narração e os Crafts preservados.",
+      "document": "2026-10-25-branch-sync.md",
+      "requirements": ["Buscar as alterações das demais branches.", "Preservar o trabalho local durante a integração."],
+      "evidence": ["ai-studios-novo/README.md", "ai-studios-novo/package.json", "ai-studios-novo/src/components/ParticleSphereCanvas.tsx"]
+    },
     {
       "id": "avatar-private-lifecycle",
       "date": "2026-10-24",
