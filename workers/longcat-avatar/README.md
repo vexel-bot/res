@@ -32,6 +32,43 @@ result to the immutable driving-audio duration.
 The backend transmits the complete V2 request, binds receipts to its digest,
 streams the result to disk and cancels the worker on its polling deadline.
 
+## Private execution lifecycle (API v0.3)
+
+The backend verifies the authenticated `/api/v1/lifecycle` contract before
+uploading private image/audio files. Each actual render attempt has its own
+execution ID; backend job idempotency and the stored result cache remain in
+charge of avoiding repeated inference. After the transfer, including errors,
+timeouts and cancellation, the backend requests `DELETE /api/v1/executions/{id}`.
+An accepted asynchronous deletion and a completed deletion are recorded
+separately. A cleanup outage is reported without repeating inference; the
+worker retention sweep is the fallback.
+
+The worker removes source uploads, normalized media, generated frames, scripts
+and logs after an execution ends. It retains only the receipt and, on success,
+the final artifact until it is consumed or expires. Deleting a running execution
+first cancels it; files are removed after the inference function stops. Locked
+files remain pending, stop being served and are retried by the sweeper.
+
+| Setting | Default | Maximum |
+| --- | --- | --- |
+| `LONGCAT_ARTIFACT_TTL_SECONDS` | 3600 (1 hour) | 86400 |
+| `LONGCAT_EXECUTION_TTL_SECONDS` | 10800 (3 hours) | 86400 |
+| `LONGCAT_TOMBSTONE_TTL_SECONDS` | 86400 (1 day) | 604800 |
+| `LONGCAT_SWEEP_INTERVAL_SECONDS` | 60 | 60 |
+
+Zero, negative, invalid and unbounded settings are rejected. Startup and periodic
+cleanup cover interrupted uploads and executions with missing in-process handles.
+A minimal deletion receipt contains the execution/profile IDs, request digest,
+deletion timestamp and reason; it contains no image, audio, script or model log.
+Deleted IDs cannot be replayed while that receipt exists. Expired receipts are
+also removed. Cleanup validates the run directory and does not follow symlinks
+or Windows junctions into model/source trees or other executions.
+
+These endpoints affect temporary worker files only. They do not delete the
+brand's original library assets, model weights or source checkouts. Qualification
+on the final CUDA host must still exercise abrupt container/process termination,
+storage permissions and process-tree cleanup; CPU/HTTP tests are not that proof.
+
 Run one API process per private run directory. Set `LONGCAT_SOURCE_ROOT` to a
 **full, clean upstream checkout** at `6b3f4b8582a8bc3f20f795735f5383716c4ba794` and
 `LONGCAT_MODEL_ROOT` to the directory containing the two pinned model folders.
@@ -62,7 +99,7 @@ by generated color frames in the media test and by a transport fixture in HTTP
 tests. These checks do not measure identity, acting or Portuguese lip sync.
 
 The CUDA dependency lock, immutable image, complete model/config inventory,
-runtime privacy/retention lifecycle and visual qualification remain pending.
+privacy/process qualification on that image and visual qualification remain pending.
 `requirements.in` is a resolver input, not an installation or promotion receipt.
 The audio pins come from the pinned upstream `requirements_avatar.txt`;
 the Torch/TorchVision pair follows the

@@ -3,6 +3,18 @@
   "updatedAt": "2026-10-24",
   "entries": [
     {
+      "id": "avatar-private-lifecycle",
+      "date": "2026-10-24",
+      "category": "update",
+      "status": "implemented",
+      "title": "Limpeza dos arquivos temporários de avatar",
+      "summary": "Exclusão autenticada e retenção de imagem, áudio e vídeo temporários implementadas no worker.",
+      "impact": "O backend confere o ciclo de limpeza antes de enviar materiais. A inferência do modelo segue pendente de qualificação.",
+      "document": "2026-10-24-avatar-retention.md",
+      "requirements": ["Remover arquivos temporários após a execução.", "Tratar exclusão, cancelamento, expiração e falhas sem declarar a remoção antes de concluí-la."],
+      "evidence": ["workers/longcat-avatar/api.py", "workers/longcat-avatar/tests/test_runner.py", "backend/app/providers/studios/longcat_avatar.py", "backend/tests/test_longcat_avatar_integration.py"]
+    },
+    {
       "id": "identity-library-review",
       "date": "2026-10-24",
       "category": "feature",

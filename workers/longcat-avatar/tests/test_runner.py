@@ -252,6 +252,9 @@ class ServiceTests(unittest.TestCase):
 
     def fake_run(self, root, _source, _models):
         self.calls += 1
+        (root / "generated").mkdir()
+        (root / "generated" / "private-frame").write_bytes(b"private-frame")
+        (root / "runner.log").write_text("private model diagnostics")
         (root / "artifact.mp4").write_bytes(b"transport-test-only")
         return {
             "artifactChecksumSha256": runner.sha256_file(root / "artifact.mp4"),
@@ -264,6 +267,11 @@ class ServiceTests(unittest.TestCase):
         self.assertEqual(response.status_code, 409)
         self.assertEqual(response.json()["detail"]["status"], "blocked_resources")
         self.assertFalse(self.root.exists())
+        self.assertEqual(self.client.get("/api/v1/lifecycle").status_code, 401)
+        policy = self.client.get("/api/v1/lifecycle", headers=self.headers).json()
+        self.assertTrue(policy["authenticatedDeletion"])
+        self.assertTrue(policy["removeInputsAfterExecution"])
+        self.assertEqual(policy["retention"]["artifactTtlSeconds"], 3600)
 
     def test_lifecycle_duplicate_replay_conflict_and_authenticated_artifact(self):
         with (
@@ -277,6 +285,10 @@ class ServiceTests(unittest.TestCase):
                 "/api/v1/executions/avatar-fixture-001", headers=self.headers
             ).json()
             self.assertEqual(result["status"], "succeeded")
+            self.assertEqual(
+                {entry.name for entry in (self.root / "avatar-fixture-001").iterdir()},
+                {"receipt.json", "artifact.mp4"},
+            )
             self.assertEqual(self.submit().json()["status"], "succeeded")
             self.assertEqual(self.calls, 1)
             self.assertEqual(self.submit(metadata(seed=999)).status_code, 409)
@@ -337,6 +349,240 @@ class ServiceTests(unittest.TestCase):
         runner.atomic_json(other / "receipt.json", {"status": "running"})
         service.recover_interrupted()
         self.assertEqual(service.read_receipt(other)["errorCode"], "worker_restarted")
+
+    def test_authenticated_deletion_removes_media_and_retains_only_a_minimal_receipt(
+        self,
+    ):
+        with (
+            patch.object(service, "evaluate", return_value={"usableNow": True}),
+            patch.object(service, "run", self.fake_run),
+        ):
+            self.assertEqual(self.submit().status_code, 202)
+            service._futures["avatar-fixture-001"].result(timeout=5)
+            path = "/api/v1/executions/avatar-fixture-001"
+            self.assertEqual(self.client.delete(path).status_code, 401)
+            response = self.client.delete(path, headers=self.headers)
+            self.assertEqual(response.status_code, 200, response.text)
+            self.assertEqual(response.json()["status"], "deleted")
+            self.assertNotIn("artifactChecksumSha256", response.json())
+            self.assertNotIn("durationMs", response.json())
+            self.assertEqual(
+                self.client.delete(path, headers=self.headers).json(), response.json()
+            )
+            self.assertEqual(self.submit().status_code, 410)
+            self.assertEqual(
+                self.client.get(path + "/artifact", headers=self.headers).status_code,
+                409,
+            )
+            self.assertEqual(
+                {p.name for p in (self.root / "avatar-fixture-001").iterdir()},
+                {"receipt.json"},
+            )
+
+    def test_running_deletion_waits_for_inference_to_stop_before_removing_its_inputs(
+        self,
+    ):
+        started, release = threading.Event(), threading.Event()
+        self.addCleanup(release.set)
+
+        def inference(root, _source, _models):
+            started.set()
+            release.wait(5)
+            self.assertTrue((root / "reference-image").is_file())
+            raise InterruptedError()
+
+        with (
+            patch.object(service, "evaluate", return_value={"usableNow": True}),
+            patch.object(service, "run", inference),
+        ):
+            self.assertEqual(self.submit().status_code, 202)
+            self.assertTrue(started.wait(2))
+            path = "/api/v1/executions/avatar-fixture-001"
+            response = self.client.delete(path, headers=self.headers)
+            self.assertEqual(response.status_code, 202)
+            self.assertTrue(response.json()["deletionRequested"])
+            directory = self.root / "avatar-fixture-001"
+            self.assertTrue((directory / "cancel").is_file())
+            self.assertTrue((directory / "reference-image").is_file())
+            release.set()
+            service._futures["avatar-fixture-001"].result(timeout=5)
+            self.assertEqual(service.read_receipt(directory)["status"], "deleted")
+            self.assertEqual({p.name for p in directory.iterdir()}, {"receipt.json"})
+
+    def test_expired_artifact_is_denied_before_download_and_tombstone_eventually_expires(
+        self,
+    ):
+        with (
+            patch.object(service, "evaluate", return_value={"usableNow": True}),
+            patch.object(service, "run", self.fake_run),
+        ):
+            self.assertEqual(self.submit().status_code, 202)
+            service._futures["avatar-fixture-001"].result(timeout=5)
+        directory = self.root / "avatar-fixture-001"
+        expiry = service.read_receipt(directory)["finishedAtUnix"] + 3601
+        with patch.object(service.time, "time", return_value=expiry):
+            response = self.client.get(
+                "/api/v1/executions/avatar-fixture-001/artifact", headers=self.headers
+            )
+            self.assertEqual(response.status_code, 410)
+            self.assertEqual(
+                service.read_receipt(directory)["deletionReason"], "expired"
+            )
+        with patch.object(service.time, "time", return_value=expiry + 86401):
+            service.sweep_retention()
+        self.assertFalse(directory.exists())
+
+    def test_locked_file_deletion_is_pending_and_retried_without_serving_the_artifact(
+        self,
+    ):
+        with (
+            patch.object(service, "evaluate", return_value={"usableNow": True}),
+            patch.object(service, "run", self.fake_run),
+        ):
+            self.assertEqual(self.submit().status_code, 202)
+            service._futures["avatar-fixture-001"].result(timeout=5)
+        path = "/api/v1/executions/avatar-fixture-001"
+        with patch.object(
+            service, "cleanup_files", side_effect=PermissionError("locked fixture")
+        ):
+            self.assertEqual(
+                self.client.delete(path, headers=self.headers).status_code, 202
+            )
+            self.assertEqual(
+                self.client.get(path + "/artifact", headers=self.headers).status_code,
+                409,
+            )
+        service.sweep_retention()
+        self.assertEqual(
+            service.read_receipt(self.root / "avatar-fixture-001")["status"], "deleted"
+        )
+
+    def test_interrupted_upload_and_corrupt_receipt_are_cleaned_without_touching_unrelated_directories(
+        self,
+    ):
+        for name in ("orphan-upload-001", "corrupt-receipt-001", "unrelated-dir"):
+            directory = self.root / name
+            directory.mkdir(parents=True)
+            (directory / "private-data").write_bytes(b"fixture")
+        (self.root / "orphan-upload-001" / ".initializing").touch()
+        (self.root / "corrupt-receipt-001" / "receipt.json").write_text("{invalid")
+        service.recover_interrupted()
+        service.sweep_retention()
+        self.assertFalse((self.root / "orphan-upload-001").exists())
+        self.assertEqual(
+            service.read_receipt(self.root / "corrupt-receipt-001")["status"], "deleted"
+        )
+        self.assertFalse((self.root / "corrupt-receipt-001" / "private-data").exists())
+        self.assertEqual(
+            (self.root / "unrelated-dir" / "private-data").read_bytes(), b"fixture"
+        )
+
+    def test_missing_execution_handle_does_not_keep_private_inputs_alive(self):
+        directory = self.root / "stale-active-001"
+        directory.mkdir(parents=True)
+        (directory / "reference-image").write_bytes(b"private fixture")
+        runner.atomic_json(
+            directory / "receipt.json",
+            {
+                "status": "running",
+                "executionId": directory.name,
+                "createdAtUnix": time.time() - 10801,
+            },
+        )
+        service.sweep_retention()
+        self.assertEqual(service.read_receipt(directory)["status"], "deleted")
+        self.assertEqual(
+            service.read_receipt(directory)["deletionReason"], "execution_missing"
+        )
+        self.assertFalse((directory / "reference-image").exists())
+
+    def test_cleanup_unlinks_symlinks_without_deleting_their_external_targets(self):
+        directory = self.root / "symlink-test-001"
+        directory.mkdir(parents=True)
+        external = Path(self.temporary.name) / "external-models"
+        external.mkdir()
+        (external / "model").write_bytes(b"must remain")
+        try:
+            (directory / "linked-models").symlink_to(external, target_is_directory=True)
+            (directory / "generated").mkdir()
+            (directory / "generated" / "nested-link").symlink_to(
+                external, target_is_directory=True
+            )
+        except OSError:
+            self.skipTest("Symlink creation is unavailable for this Windows user")
+        runner.atomic_json(directory / "receipt.json", {"status": "failed"})
+        service.cleanup_files(directory, keep_artifact=False)
+        self.assertEqual((external / "model").read_bytes(), b"must remain")
+        self.assertFalse((directory / "linked-models").exists())
+
+    def test_unbounded_or_invalid_retention_settings_are_rejected(self):
+        for value in ("0", "-1", "86401", "invalid"):
+            with patch.dict("os.environ", {"LONGCAT_ARTIFACT_TTL_SECONDS": value}):
+                with self.assertRaises(ValueError):
+                    service.retention_seconds(
+                        "LONGCAT_ARTIFACT_TTL_SECONDS", 3600, 86400
+                    )
+
+    def test_sweeper_cancels_an_expired_live_execution_before_removing_inputs(self):
+        started, release = threading.Event(), threading.Event()
+        self.addCleanup(release.set)
+
+        def inference(root, _source, _models):
+            started.set()
+            release.wait(5)
+            self.assertTrue((root / "reference-image").exists())
+            raise InterruptedError()
+
+        with (
+            patch.object(service, "evaluate", return_value={"usableNow": True}),
+            patch.object(service, "run", inference),
+        ):
+            self.assertEqual(self.submit().status_code, 202)
+            self.assertTrue(started.wait(2))
+            directory = self.root / "avatar-fixture-001"
+            with service._lock:
+                receipt = service.read_receipt(directory)
+                runner.atomic_json(
+                    directory / "receipt.json",
+                    {**receipt, "createdAtUnix": time.time() - 10801},
+                )
+            service.sweep_retention()
+            self.assertEqual(
+                service.read_receipt(directory)["status"], "cancel_requested"
+            )
+            self.assertTrue((directory / "reference-image").exists())
+            release.set()
+            service._futures["avatar-fixture-001"].result(timeout=5)
+            self.assertEqual(service.read_receipt(directory)["status"], "deleted")
+            self.assertFalse((directory / "reference-image").exists())
+
+    def test_background_sweeper_expires_media_while_the_api_is_running(self):
+        with (
+            patch.dict("os.environ", {"LONGCAT_SWEEP_INTERVAL_SECONDS": "1"}),
+            patch.object(service, "evaluate", return_value={"usableNow": True}),
+            patch.object(service, "run", self.fake_run),
+            TestClient(service.app),
+        ):
+            self.assertEqual(self.submit().status_code, 202)
+            service._futures["avatar-fixture-001"].result(timeout=5)
+            directory = self.root / "avatar-fixture-001"
+            with service._lock:
+                receipt = service.read_receipt(directory)
+                runner.atomic_json(
+                    directory / "receipt.json",
+                    {**receipt, "finishedAtUnix": time.time() - 3601},
+                )
+            deadline = time.monotonic() + 5
+            while time.monotonic() < deadline:
+                with service._lock:
+                    deleted = service.read_receipt(directory)["status"] == "deleted"
+                if deleted:
+                    break
+                time.sleep(0.05)
+            self.assertTrue(
+                deleted, "Background cleanup did not remove the expired media"
+            )
+            self.assertFalse((directory / "artifact.mp4").exists())
 
 
 if __name__ == "__main__":

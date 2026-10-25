@@ -25,8 +25,10 @@ e respostas simuladas. Isso não demonstra clonagem de rosto, qualidade de voz,
 sincronismo em português ou atuação de um avatar.
 
 Continuam pendentes o lock de dependências CUDA, a imagem imutável do worker,
-o inventário completo de pesos e configurações, o ciclo de retenção dos arquivos
-privados e a qualificação visual. O preflight continua indisponível, e os
+o inventário completo de pesos e configurações e a qualificação visual. O ciclo
+de retenção foi implementado posteriormente e está descrito no registro
+“Limpeza dos arquivos temporários de avatar”; sua qualificação no host CUDA
+continua pendente. O preflight continua indisponível, e os
 provedores generativos não foram promovidos nem habilitados no localhost.
 
 Referências e fontes:

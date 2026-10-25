@@ -102,17 +102,44 @@ def test_longcat_continuation_timing_accounts_for_overlap_and_trim():
     assert continued.trim_tail_ms == 120
 
 
-def transport_fixture(tmp_path, monkeypatch, *, bad_receipt=False, bad_artifact=False, waiting=False):
+def transport_fixture(
+    tmp_path,
+    monkeypatch,
+    *,
+    bad_receipt=False,
+    bad_artifact=False,
+    waiting=False,
+    cleanup_mode="deleted",
+    lost_submission=False,
+    bad_lifecycle=False,
+):
     """Network protocol fixture; no model is loaded or qualified."""
     image, audio, destination = tmp_path / "image", tmp_path / "audio", tmp_path / "artifact.mp4"
     image.write_bytes(b"portrait-fixture")
     audio.write_bytes(b"final-speech-fixture")
     artifact = b"transport-fixture-only"
-    submissions, cancellations = [], []
+    submissions, cancellations, deletions = [], [], []
     current = {}
 
     def handle(request):
         nonlocal current
+        if request.url.path.endswith("/lifecycle"):
+            return httpx.Response(
+                200,
+                json={}
+                if bad_lifecycle
+                else {
+                    "schemaVersion": "studio.longcat-lifecycle.v1",
+                    "authenticatedDeletion": True,
+                    "removeInputsAfterExecution": True,
+                    "retention": {
+                        "artifactTtlSeconds": 3600,
+                        "executionTtlSeconds": 10800,
+                        "tombstoneTtlSeconds": 86400,
+                        "sweepIntervalSeconds": 60,
+                    },
+                },
+            )
         if request.method == "POST" and request.url.path.endswith("/executions"):
             message = BytesParser().parsebytes(
                 b"Content-Type: " + request.headers["content-type"].encode() + b"\r\n\r\n" + request.read()
@@ -128,7 +155,25 @@ def transport_fixture(tmp_path, monkeypatch, *, bad_receipt=False, bad_artifact=
                 "durationMs": 3720,
                 "artifactChecksumSha256": "f" * 64 if bad_artifact else hashlib.sha256(artifact).hexdigest(),
             }
+            if lost_submission:
+                raise httpx.ReadError("Fixture response lost after accepting the inputs")
             return httpx.Response(202, json=current)
+        if request.method == "DELETE":
+            deletions.append(request.url.path)
+            if not current:
+                return httpx.Response(404, json={"detail": {"code": "execution_not_found"}})
+            if cleanup_mode == "unavailable":
+                return httpx.Response(503, json={"detail": "cleanup fixture unavailable"})
+            if cleanup_mode == "old_api":
+                return httpx.Response(404, json={"detail": "Not Found"})
+            return httpx.Response(
+                202 if cleanup_mode == "pending" else 200,
+                json={
+                    "executionId": "different-execution" if cleanup_mode == "wrong_receipt" else current["executionId"],
+                    "status": "cancel_requested" if cleanup_mode == "pending" else "deleted",
+                    "deletionRequested": cleanup_mode == "pending",
+                },
+            )
         if request.url.path.endswith("/artifact"):
             return httpx.Response(200, content=artifact)
         if request.url.path.endswith("/cancel"):
@@ -152,6 +197,7 @@ def transport_fixture(tmp_path, monkeypatch, *, bad_receipt=False, bad_artifact=
         request=request,
         submissions=submissions,
         cancellations=cancellations,
+        deletions=deletions,
         provider=LongCatAvatarProvider("http://127.0.0.1:8095", "x" * 32),
     )
 
@@ -173,8 +219,10 @@ def test_transport_sends_the_complete_request_and_separates_different_directions
         )
         assert result.duration_ms == request.driving_audio_duration_ms
         assert result.artifact_checksum_sha256 == hashlib.sha256(case.destination.read_bytes()).hexdigest()
+        assert result.metrics["workerCleanupCompleted"] == 1
     assert case.submissions[0]["avatar_request"] == case.request.model_dump(by_alias=True, mode="json")
     assert case.submissions[0]["execution_id"] != case.submissions[1]["execution_id"]
+    assert len(case.deletions) == 2
 
 
 @pytest.mark.parametrize(
@@ -193,6 +241,7 @@ def test_transport_rejects_a_result_bound_to_another_request_or_checksum(tmp_pat
             lambda: False,
         )
     assert not case.destination.exists()
+    assert len(case.deletions) == 1
 
 
 def test_transport_cancels_the_worker_after_the_polling_deadline(tmp_path, monkeypatch):
@@ -208,4 +257,127 @@ def test_transport_cancels_the_worker_after_the_polling_deadline(tmp_path, monke
             lambda: False,
         )
     assert len(case.cancellations) == 1
+    assert len(case.deletions) == 1
     assert not case.destination.exists()
+
+
+@pytest.mark.parametrize(
+    "mode,acknowledged,completed",
+    [
+        ("pending", 1, 0),
+        ("unavailable", 0, 0),
+        ("old_api", 0, 0),
+        ("wrong_receipt", 0, 0),
+    ],
+)
+def test_cleanup_outage_is_explicit_and_does_not_repeat_inference(tmp_path, monkeypatch, mode, acknowledged, completed):
+    case = transport_fixture(tmp_path, monkeypatch, cleanup_mode=mode)
+    result = case.provider.render(
+        SimpleNamespace(id="document"),
+        case.request,
+        [case.image],
+        case.audio,
+        case.destination,
+        lambda _: None,
+        lambda: False,
+    )
+    assert result.metrics["workerCleanupAcknowledged"] == acknowledged
+    assert result.metrics["workerCleanupCompleted"] == completed
+    assert len(case.submissions) == 1
+    assert len(case.deletions) == 1
+
+
+def test_lost_submission_response_still_requests_cleanup_of_accepted_inputs(tmp_path, monkeypatch):
+    case = transport_fixture(tmp_path, monkeypatch, lost_submission=True)
+    with pytest.raises(httpx.ReadError):
+        case.provider.render(
+            SimpleNamespace(id="document"),
+            case.request,
+            [case.image],
+            case.audio,
+            case.destination,
+            lambda _: None,
+            lambda: False,
+        )
+    assert len(case.deletions) == 1
+    assert case.deletions[0].endswith(case.submissions[0]["execution_id"])
+    assert not case.destination.exists()
+
+
+def test_another_render_attempt_uses_a_fresh_execution_after_media_was_consumed(tmp_path, monkeypatch):
+    case = transport_fixture(tmp_path, monkeypatch)
+    for _ in range(2):
+        case.provider.render(
+            SimpleNamespace(id="document"),
+            case.request,
+            [case.image],
+            case.audio,
+            case.destination,
+            lambda _: None,
+            lambda: False,
+        )
+    assert case.submissions[0]["execution_id"] != case.submissions[1]["execution_id"]
+    assert case.submissions[0]["request_digest_sha256"] == case.submissions[1]["request_digest_sha256"]
+    assert len(case.deletions) == 2
+
+
+def test_cancelled_backend_requests_remote_cancellation_and_deletion(tmp_path, monkeypatch):
+    case = transport_fixture(tmp_path, monkeypatch, waiting=True)
+    calls = 0
+
+    def cancelled():
+        nonlocal calls
+        calls += 1
+        return calls > 2
+
+    with pytest.raises(InterruptedError):
+        case.provider.render(
+            SimpleNamespace(id="document"),
+            case.request,
+            [case.image],
+            case.audio,
+            case.destination,
+            lambda _: None,
+            cancelled,
+        )
+    assert len(case.cancellations) == len(case.deletions) == 1
+    assert not case.destination.exists()
+
+
+def test_private_media_is_not_sent_to_a_worker_without_the_required_lifecycle(tmp_path, monkeypatch):
+    case = transport_fixture(tmp_path, monkeypatch, bad_lifecycle=True)
+    with pytest.raises(ValueError, match="longcat_worker_lifecycle_required"):
+        case.provider.render(
+            SimpleNamespace(id="document"),
+            case.request,
+            [case.image],
+            case.audio,
+            case.destination,
+            lambda _: None,
+            lambda: False,
+        )
+    assert not case.submissions
+    assert not case.deletions
+
+
+def test_cancellation_during_lifecycle_check_prevents_the_private_upload(tmp_path, monkeypatch):
+    case = transport_fixture(tmp_path, monkeypatch)
+    calls = 0
+
+    def cancelled():
+        nonlocal calls
+        calls += 1
+        return calls > 1
+
+    with pytest.raises(InterruptedError):
+        case.provider.render(
+            SimpleNamespace(id="document"),
+            case.request,
+            [case.image],
+            case.audio,
+            case.destination,
+            lambda _: None,
+            cancelled,
+        )
+    assert not case.submissions
+    assert not case.cancellations
