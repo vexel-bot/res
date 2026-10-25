@@ -20,6 +20,15 @@ O trabalho local de narração foi guardado antes do merge e restaurado depois, 
 
 Após a integração, a consulta `git rev-list --count HEAD..<branch-remota>` retornou zero para cada uma das cinco branches. Isso demonstra que não havia commits publicados nelas faltando neste checkout naquele momento. O merge foi feito na branch local `codex/evolution-and-identity`; esta etapa não publicou alterações nem mudou o remoto.
 
+Em uma nova consulta no mesmo dia, a branch
+`codex/klic-atualizacao-20260823` avançou para `30d115a39`. A atualização de 26
+arquivos foi incorporada no merge local `ff6e75523`, preservando as rotas de
+evolução, identidades, avatar e narração ao resolver o conflito no registro de
+rotas. Ela acrescenta a integração experimental Gemini para Motion Design.
+Todas as cinco referências remotas continuaram incorporadas após esse merge.
+O status visual deste registro é **Implementado nesta branch**: a sincronização
+não representa uma publicação dessas alterações na main do GitHub.
+
 Referências:
 
 - ai-studios-novo/README.md
