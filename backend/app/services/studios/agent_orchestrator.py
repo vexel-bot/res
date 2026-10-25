@@ -6,6 +6,7 @@ Ollama model. The existing Gemini KLIC and paid admission policy are untouched.
 
 import math
 import re
+import time
 from datetime import UTC, datetime
 from uuid import uuid4
 
@@ -22,7 +23,7 @@ from ...domain.studios.contracts import (
     ReviewReferenceV1,
 )
 from ...domain.studios.local_composition import LocalLayerStyle, validate_composition
-from ...models import CreativeDocument, StudioDomainEvent, StudioGenerationJob
+from ...models import BrandProfile, CreativeDocument, StudioDomainEvent, StudioGenerationJob
 from ...providers.studios.local_composition import raster
 from ...providers.studios.universal_llm import validate_endpoint
 from . import local_agents, timeline_editor
@@ -404,6 +405,12 @@ def require_installed_model(provider, model):
 
 def create_task(db, document, request, user, key):
     payload = request.model_dump(mode="json", by_alias=True)
+    if payload.get("planner") == "current":
+        payload.pop("planner")
+    if payload.get("durationSeconds") is None:
+        payload.pop("durationSeconds", None)
+    if not payload.get("probe"):
+        payload.pop("probe", None)
     if not payload.get("selectedLayerIds"):
         payload.pop("selectedLayerIds", None)  # Preserve replay hashes of pre-selection tasks.
     fingerprint = timeline_editor.digest(payload)
@@ -429,11 +436,22 @@ def create_task(db, document, request, user, key):
         raise ValueError("agent_role_project_mismatch")
     roles = configuration(db, contract.workspace_id)
     binding = roles[role]
-    history_output = local_agents.history_undo(
-        contract, request.instruction, document.versions, request.selected_layer_ids
+    experimental = request.planner == "gemini_experimental"
+    history_output = (
+        None
+        if experimental
+        else local_agents.history_undo(contract, request.instruction, document.versions, request.selected_layer_ids)
     )
     model, provider = None, None
-    if history_output is None and binding["mode"] == "local_model":
+    experiment_row, proof = None, None
+    if experimental:
+        from ...domain.studios.motion_gemini import MotionAgentOutput
+        from . import motion_gemini
+
+        if role != "audiovisual":
+            raise ValueError("motion_gemini_motion_only")
+        experiment_row, provider, model, proof = motion_gemini.admitted_planner(db, document, user)
+    elif history_output is None and binding["mode"] == "local_model" and request.planner != "deterministic":
         _connection, provider, model, _fingerprint = local_planner(db, contract.workspace_id, binding)
         require_installed_model(provider, model)
     lock_editing_budget(db, contract.workspace_id)
@@ -466,7 +484,7 @@ def create_task(db, document, request, user, key):
         requested_by=user.id,
         document_id=document.id,
         job_type="agent_plan",
-        provider="llm.ollama" if provider else "clicko.local-tools",
+        provider="google.motion-gemini" if experimental else "llm.ollama" if provider else "clicko.local-tools",
         execution_capability="media_cpu",
         queue_name="studio.control",
         resource_class="cpu.media",
@@ -482,11 +500,17 @@ def create_task(db, document, request, user, key):
             "instruction": request.instruction,
             "documentRevision": contract.revision,
             "roleRevision": roles["revision"],
-            "mode": "local_tools" if history_output is not None else binding["mode"],
+            "mode": "gemini_experimental"
+            if experimental
+            else "local_tools"
+            if history_output is not None or request.planner == "deterministic"
+            else binding["mode"],
             "model": model,
             "selectedLayerIds": request.selected_layer_ids,
         },
     )
+    if experimental:
+        motion_gemini.reserve(db, job, experiment_row, proof)
     db.add(job)
     emit_event(
         db,
@@ -509,6 +533,7 @@ def create_task(db, document, request, user, key):
     except IntegrityError as error:
         db.rollback()
         raise ValueError("agent_task_already_admitted") from error
+    started, response = time.monotonic(), None
     try:
         if provider:
             context = {
@@ -516,17 +541,79 @@ def create_task(db, document, request, user, key):
                 "agentRole": role,
                 "selectedLayerIds": request.selected_layer_ids,
                 "project": contract.model_dump(mode="json", by_alias=True),
-                "outputSchema": AgentOutput.model_json_schema(by_alias=True),
+                "outputSchema": (MotionAgentOutput if experimental else AgentOutput).model_json_schema(by_alias=True),
                 "layerStyleSchema": LocalLayerStyle.model_json_schema(by_alias=True),
-                "maxOutputTokens": 3000,
+                "maxOutputTokens": proof.max_output_tokens if experimental else 3000,
                 "maxPromptChars": 24000,
-                "localExecution": True,
+                "localExecution": not experimental,
+                "motionExperimental": experimental,
                 "structuredPlanningInstruction": "Return commands and rationale only. Use the declared local "
                 "operations. No shell, URLs, scripts, remote generation, new asset IDs or execution claims.",
             }
+            if experimental:
+                brand = db.scalar(select(BrandProfile).where(BrandProfile.workspace_id == contract.workspace_id))
+                context["brandIdentity"] = (
+                    {
+                        "name": brand.name,
+                        "primaryColor": brand.primary_color,
+                        "tone": brand.tone[:1000],
+                        "guidelines": brand.do_and_donts[:1500],
+                    }
+                    if brand
+                    else {}
+                )
+                context.update(
+                    requestedDurationSeconds=request.duration_seconds,
+                    renderer={
+                        "name": "Clicko local 2D / FFmpeg",
+                        "maxLayers": 24,
+                        "operations": [
+                            "composition.replace",
+                            "layer.upsert",
+                            "layer.remove",
+                            "project.duration",
+                            "project.background",
+                            "asset.attach",
+                        ],
+                        "kinds": ["text", "shape", "image"],
+                        "transitions": ["opacity fades via keyframes"],
+                        "easing": ["linear", "ease-out", "ease-in-out"],
+                        "true3D": False,
+                        "fonts": ["system", "Liberation Sans"],
+                        "audio": "recommendations only; do not synthesize or invent assets",
+                    },
+                    creativeBrief=(
+                        "Plan concept, narrative, scenes/durations, text, graphic layers, palette, typography, "
+                        "movement, keyframes, available transitions, rhythm and audio recommendations. "
+                        "Put review notes in direction; put scene metadata in "
+                        "composition.narrative.localProduction.scenes. "
+                        "Use only supplied schemas and authorized project asset IDs."
+                    ),
+                )
+            if experimental and request.probe:
+                context = {
+                    "instruction": "Connectivity check. Return commands:[] and rationale:ok. Do not propose edits.",
+                    "outputSchema": AgentOutput.model_json_schema(by_alias=True),
+                    "maxOutputTokens": 128,
+                    "maxPromptChars": 24000,
+                    "motionExperimental": True,
+                }
             response = provider.plan(model, context, [])
-            output = AgentOutput.model_validate_json(response["text"])
-            trace = {"inference": "local_model", "usage": response["usage"], "delegations": [role]}
+            if experimental:
+                from .llm_connections import decrypt
+
+                if decrypt(experiment_row) in response["text"]:
+                    raise ValueError("motion_gemini_response_credential_rejected")
+            output = (MotionAgentOutput if experimental and not request.probe else AgentOutput).model_validate_json(
+                response["text"]
+            )
+            if request.probe and output.commands:
+                raise ValueError("motion_gemini_probe_must_not_edit")
+            trace = {
+                "inference": "gemini_experimental" if experimental else "local_model",
+                "usage": response["usage"],
+                "delegations": [role],
+            }
         else:
             image_agent = local_agents.ImageAgent()
             agent = image_agent if role == "image" else local_agents.AudiovisualAgent(image_agent)
@@ -570,12 +657,24 @@ def create_task(db, document, request, user, key):
             raise ValueError("agent_task_no_longer_active")
         if output.commands:
             validate_selection_scope(output.commands, request.selected_layer_ids)
-            proposed_document(db, contract, output.commands)
+            proposal = proposed_document(db, contract, output.commands)
+            if experimental and request.duration_seconds:
+                t = proposal.composition.media_timeline
+                if (
+                    abs(
+                        t.duration_frames * t.frame_rate.denominator / t.frame_rate.numerator - request.duration_seconds
+                    )
+                    > 0.05
+                ):
+                    raise ValueError("motion_gemini_duration_mismatch")
         job.status, job.progress = "succeeded", 100
         job.result_payload = {
             **output.model_dump(mode="json", by_alias=True),
             **trace,
             "state": "planned" if output.commands else "unsupported",
+            "planningTimeMs": round((time.monotonic() - started) * 1000),
+            **({"connectionProbe": True} if request.probe else {}),
+            **({"billingAdmission": "verified_free_tier", "llmReservationUsd": 0} if experimental else {}),
         }
         for delegation in trace.get("delegateRequests", []):
             emit_event(
@@ -604,7 +703,12 @@ def create_task(db, document, request, user, key):
             ),
         )
         job.error_message = "Não foi possível concluir o plano; nenhuma edição foi aplicada."
-        job.result_payload = {"state": "cancelled" if cancelled else "failed", "inference": binding["mode"]}
+        job.result_payload = {
+            "state": "cancelled" if cancelled else "failed",
+            "inference": "gemini_experimental" if experimental else binding["mode"],
+            "usage": response.get("usage") if response else None,
+            "planningTimeMs": round((time.monotonic() - started) * 1000),
+        }
     job.finished_at = datetime.now(UTC)
     emit_event(
         db,

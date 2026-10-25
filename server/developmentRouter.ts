@@ -51,7 +51,8 @@ export function createDevelopmentRouter() {
       models: { specialistDefault: 'deterministic_rules_no_inference', remoteGeneration: 'disabled',
         roles, klicConfigured: klicProviderConfig().configured,
         configuration: 'Consulte Modelos dos agentes no Studio; conexão configurada não significa modelo homologado.' },
-      costs: { externalCallsEnabled: false, externalBudgetUsd: 0 },
+      costs: { externalCallsEnabled: false, externalBudgetUsd: 0,
+        motionGeminiExperimental: process.env.CLICKO_MOTION_GEMINI_EXPERIMENTAL === 'true' ? 'separate_free_tier_admission_required' : 'disabled' },
       studioWorkspaceId: studio?.bridge ? studio.studioWorkspaceId : undefined });
   });
   return router;

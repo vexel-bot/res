@@ -2,7 +2,7 @@ import React from 'react';
 import { useAuth } from '../context/AuthContext';
 import './development.css';
 
-type Status = { services: { express: string; studios: string; bridge: boolean }; costs: { externalBudgetUsd: number };
+type Status = { services: { express: string; studios: string; bridge: boolean }; costs: { externalBudgetUsd: number; motionGeminiExperimental?:string };
   models?: { roles?: Record<string, {mode:string;model?:string}>; klicConfigured?:boolean } };
 
 export function DevEnvironmentBadge() {
@@ -35,6 +35,7 @@ export function DevEnvironmentBadge() {
       {status?.models && <p>KLIC: {status.models.klicConfigured ? 'configuração preservada' : 'modelo externo não configurado'} · chamadas externas bloqueadas.</p>}
       <p>Modelos generativos e motores Craft: dependem de configuração e homologação. Recursos “Em breve” não estão implementados.</p>
       <p>Chamadas pagas e integrações externas desativadas · orçamento R$ 0.</p>
+      {status?.costs.motionGeminiExperimental==='separate_free_tier_admission_required'&&<p>Motion Gemini experimental disponível nas configurações do Motion: chave própria e admissão gratuita separada obrigatórias. Isso não libera a KLIC nem provedores pagos.</p>}
       <button type="button" disabled={loading} onClick={() => void refresh()}>Atualizar indicadores</button>
     </section>
   </details>;

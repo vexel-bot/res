@@ -5,7 +5,7 @@ from datetime import UTC, datetime
 from pathlib import Path
 from uuid import uuid4
 
-from fastapi import APIRouter, Depends, Header, HTTPException, Response
+from fastapi import APIRouter, Depends, Header, HTTPException, Request, Response
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
@@ -118,11 +118,16 @@ def configure_roles(
 def plan(
     document_id: str,
     request: AgentTaskRequest,
+    http_request: Request,
     key: str = Header(alias="Idempotency-Key", min_length=8, max_length=128),
     db: Session = Depends(get_db),
     user: User = Depends(get_current_user),
 ):
     try:
+        if request.planner == "gemini_experimental":
+            from ..services.studios.motion_gemini import require_dev
+
+            require_dev(http_request)
         return agents.create_task(db, owned_document(db, user.id, document_id), request, user, key)
     except ValueError as error:
         raise failure(db, error) from error

@@ -2,6 +2,7 @@
 
 from .routers import (
     editing_resources,
+    motion_gemini,
     product_evolution,
     studio_agents,
     studio_craft,
@@ -21,6 +22,7 @@ def include_studio_routes(app):
         studio_department.router,
         studio_video.router,
         studio_agents.router,
+        motion_gemini.router,
         editing_resources.router,
         studio_identity_library.router,
         studio_project_narration.router,

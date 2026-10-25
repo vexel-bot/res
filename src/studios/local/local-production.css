@@ -65,3 +65,4 @@
 .lp-integrated .lp-media-return { display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0 0 8px; }
 .lp-integrated .lp-playback span { font-variant-numeric:tabular-nums; }
 @media(max-width:900px){.lp-integrated .lp-time-row>button{width:110px}.lp-integrated .lp-time-row{min-height:40px}.lp-integrated .lp-time-row>div{min-height:40px}}
+.lp-plan pre { max-height:260px;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;font-size:11px; }

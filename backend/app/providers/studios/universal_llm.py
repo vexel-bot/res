@@ -15,9 +15,12 @@ SYSTEM = (
     "Write the rationale in Brazilian Portuguese."
 )
 PATHS = {
-    "openai_chat": "/chat/completions", "openai_responses": "/responses",
-    "anthropic_messages": "/messages", "gemini_generate": "/models/{model}:generateContent",
-    "cohere_chat": "/chat", "ollama_chat": "/api/chat",
+    "openai_chat": "/chat/completions",
+    "openai_responses": "/responses",
+    "anthropic_messages": "/messages",
+    "gemini_generate": "/models/{model}:generateContent",
+    "cohere_chat": "/chat",
+    "ollama_chat": "/api/chat",
 }
 
 
@@ -45,8 +48,15 @@ def validate_endpoint(config):
         if not re.fullmatch(r"[A-Za-z0-9-]{1,80}", name) or "\r" in value or "\n" in value:
             raise ValueError("llm_header_invalid")
         if name.lower() in {
-            "authorization", "proxy-authorization", "cookie", "host", "content-length",
-            "x-api-key", "api-key", "x-goog-api-key", config["authHeader"].lower(),
+            "authorization",
+            "proxy-authorization",
+            "cookie",
+            "host",
+            "content-length",
+            "x-api-key",
+            "api-key",
+            "x-goog-api-key",
+            config["authHeader"].lower(),
         }:
             raise ValueError("llm_secret_header_requires_credential_field")
     if len(json.dumps(config.get("requestTemplate"))) > 100000:
@@ -81,10 +91,112 @@ def substitute(value, bindings):
     return value
 
 
+def gemini_json_schema(schema):
+    """Provider subset only. Full Pydantic validation remains mandatory after inference."""
+    allowed = {
+        "$id",
+        "$defs",
+        "$ref",
+        "$anchor",
+        "type",
+        "format",
+        "title",
+        "description",
+        "enum",
+        "items",
+        "prefixItems",
+        "minItems",
+        "maxItems",
+        "minimum",
+        "maximum",
+        "anyOf",
+        "oneOf",
+        "properties",
+        "additionalProperties",
+        "required",
+    }
+    if isinstance(schema, list):
+        return [gemini_json_schema(item) for item in schema]
+    if not isinstance(schema, dict):
+        return schema
+    if "$ref" in schema:
+        return {"$ref": schema["$ref"]}
+    result = {
+        key: (
+            {name: gemini_json_schema(value) for name, value in item.items()}
+            if key in {"$defs", "properties"}
+            else gemini_json_schema(item)
+        )
+        for key, item in schema.items()
+        if key in allowed
+    }
+    if "const" in schema:
+        result["enum"] = [schema["const"]]
+    return result
+
+
 class UniversalLLMPlanner:
     def __init__(self, config, credential=None, *, client=None):
         validate_endpoint(config)
         self.config, self.credential, self.client = config, credential, client
+
+    def gemini_models(self):
+        """Metadata only; discovery is not an inference or proof of free billing."""
+        if (
+            self.config["protocol"] != "gemini_generate"
+            or self.config["baseUrl"] != "https://generativelanguage.googleapis.com/v1beta"
+        ):
+            raise ValueError("motion_gemini_endpoint_invalid")
+        client = self.client or httpx.Client(timeout=15, follow_redirects=False, trust_env=False)
+        found, token = {}, None
+        try:
+            for _page in range(10):
+                params = {"pageSize": 100}
+                if token:
+                    params["pageToken"] = token
+                with client.stream(
+                    "GET",
+                    self.config["baseUrl"] + "/models",
+                    params=params,
+                    headers={"x-goog-api-key": self.credential},
+                ) as response:
+                    if response.status_code >= 300:
+                        raise ValueError("llm_provider_http_" + str(response.status_code))
+                    chunks, size = [], 0
+                    for chunk in response.iter_bytes():
+                        size += len(chunk)
+                        if size > MAX_RESPONSE_BYTES:
+                            raise ValueError("llm_provider_response_too_large")
+                        chunks.append(chunk)
+                    data = json.loads(b"".join(chunks))
+                for item in data.get("models", []):
+                    name = item.get("name", "")
+                    identifier = name.removeprefix("models/")
+                    if (
+                        re.fullmatch(r"gemini-[a-z0-9.-]{1,140}", identifier)
+                        and "generateContent" in item.get("supportedGenerationMethods", [])
+                        and not any(word in identifier for word in ("image", "audio", "tts", "live", "robotics"))
+                    ):
+                        found[identifier] = {
+                            "id": identifier,
+                            "label": str(item.get("displayName", identifier))[:120],
+                            "outputTokenLimit": int(item.get("outputTokenLimit", 0)),
+                        }
+                token = data.get("nextPageToken")
+                if not token:
+                    return list(found.values())
+                if not isinstance(token, str) or len(token) > 2000:
+                    raise ValueError("llm_provider_invalid_response")
+            raise ValueError("motion_gemini_catalog_page_limit")
+        except httpx.TimeoutException as exc:
+            raise ValueError("motion_gemini_timeout") from exc
+        except httpx.HTTPError as exc:
+            raise ValueError("llm_provider_transport_failed") from exc
+        except (TypeError, json.JSONDecodeError, AttributeError) as exc:
+            raise ValueError("llm_provider_invalid_json") from exc
+        finally:
+            if self.client is None:
+                client.close()
 
     def plan(self, model, context, media):
         if media:
@@ -94,45 +206,76 @@ class UniversalLLMPlanner:
         prompt = json.dumps(context, ensure_ascii=False)
         if len(prompt) > context.get("maxPromptChars", 100000):
             raise ValueError("editing_ai_prompt_too_large")
+        if context.get("motionExperimental") and len((SYSTEM + prompt).encode("utf-8")) > 24000:
+            raise ValueError("editing_ai_prompt_too_large")
         tokens = min(context.get("maxOutputTokens", 4000), self.config.get("maxOutputTokens", 4000))
         protocol = self.config["protocol"]
         messages = [{"role": "system", "content": SYSTEM}, {"role": "user", "content": prompt}]
         if protocol == "openai_chat":
-            body = {"model": model, "messages": messages, "max_tokens": tokens,
-                    "response_format": {"type": "json_object"}, "stream": False}
+            body = {
+                "model": model,
+                "messages": messages,
+                "max_tokens": tokens,
+                "response_format": {"type": "json_object"},
+                "stream": False,
+            }
         elif protocol == "openai_responses":
-            body = {"model": model, "input": messages, "max_output_tokens": tokens,
-                    "text": {"format": {"type": "json_object"}}, "store": False, "stream": False}
+            body = {
+                "model": model,
+                "input": messages,
+                "max_output_tokens": tokens,
+                "text": {"format": {"type": "json_object"}},
+                "store": False,
+                "stream": False,
+            }
         elif protocol == "anthropic_messages":
             body = {"model": model, "system": SYSTEM, "messages": [messages[1]], "max_tokens": tokens}
         elif protocol == "gemini_generate":
-            body = {"systemInstruction": {"parts": [{"text": SYSTEM}]},
-                    "contents": [{"role": "user", "parts": [{"text": prompt}]}],
-                    "generationConfig": {"responseMimeType": "application/json", "maxOutputTokens": tokens}}
+            body = {
+                "systemInstruction": {"parts": [{"text": SYSTEM}]},
+                "contents": [{"role": "user", "parts": [{"text": prompt}]}],
+                "generationConfig": {"responseMimeType": "application/json", "maxOutputTokens": tokens},
+            }
+            if context.get("motionExperimental"):
+                body["generationConfig"]["responseJsonSchema"] = gemini_json_schema(context["outputSchema"])
         elif protocol == "cohere_chat":
-            body = {"model": model, "messages": messages, "max_tokens": tokens,
-                    "response_format": {"type": "json_object"}, "stream": False}
+            body = {
+                "model": model,
+                "messages": messages,
+                "max_tokens": tokens,
+                "response_format": {"type": "json_object"},
+                "stream": False,
+            }
         elif protocol == "ollama_chat":
-            body = {"model": model, "messages": messages,
-                    "format": context.get("outputSchema", "json"), "stream": False,
-                    "options": {"num_predict": tokens}}
+            body = {
+                "model": model,
+                "messages": messages,
+                "format": context.get("outputSchema", "json"),
+                "stream": False,
+                "options": {"num_predict": tokens},
+            }
             if context.get("localExecution"):
                 body["keep_alive"] = 0
                 body["options"].update(num_ctx=4096, temperature=0)
         else:
-            body = substitute(self.config["requestTemplate"], {
-                "model": model, "prompt": SYSTEM + "\n\n" + prompt, "system": SYSTEM, "max_tokens": tokens,
-                "context": {**context, "systemInstruction": SYSTEM}, "credential": self.credential,
-            })
+            body = substitute(
+                self.config["requestTemplate"],
+                {
+                    "model": model,
+                    "prompt": SYSTEM + "\n\n" + prompt,
+                    "system": SYSTEM,
+                    "max_tokens": tokens,
+                    "context": {**context, "systemInstruction": SYSTEM},
+                    "credential": self.credential,
+                },
+            )
         path = self.config.get("requestPath") or PATHS[protocol]
         path = path.replace("{model}", quote(model.removeprefix("models/"), safe=""))
         url = self.config["baseUrl"].rstrip("/") + path
         headers = {"Content-Type": "application/json", **self.config.get("extraHeaders", {})}
         if self.credential:
             prefix = self.config.get("authPrefix", "Bearer")
-            headers[self.config.get("authHeader", "Authorization")] = (
-                (prefix + " " if prefix else "") + self.credential
-            )
+            headers[self.config.get("authHeader", "Authorization")] = (prefix + " " if prefix else "") + self.credential
         if protocol == "anthropic_messages":
             headers.setdefault("anthropic-version", "2023-06-01")
         client = self.client or httpx.Client(timeout=180, follow_redirects=False, trust_env=False)
@@ -174,8 +317,11 @@ class UniversalLLMPlanner:
             if payload.get("status") != "completed":
                 raise ValueError("llm_provider_incomplete_response")
             text = "".join(
-                part["text"] for item in payload.get("output", []) if item.get("type") == "message"
-                for part in item.get("content", []) if part.get("type") == "output_text"
+                part["text"]
+                for item in payload.get("output", [])
+                if item.get("type") == "message"
+                for part in item.get("content", [])
+                if part.get("type") == "output_text"
             )
         elif protocol == "anthropic_messages":
             if payload.get("stop_reason") != "end_turn":
@@ -189,8 +335,11 @@ class UniversalLLMPlanner:
             usage = payload.get("usageMetadata", {})
             # Gemini bills thinking separately from visible candidates. Normalize
             # both into completion_tokens exactly once for the shared cost path.
-            usage = {**usage, "completion_tokens": int(usage.get("candidatesTokenCount", 0) or 0)
-                     + int(usage.get("thoughtsTokenCount", 0) or 0)}
+            usage = {
+                **usage,
+                "completion_tokens": int(usage.get("candidatesTokenCount", 0) or 0)
+                + int(usage.get("thoughtsTokenCount", 0) or 0),
+            }
         elif protocol == "cohere_chat":
             if payload.get("finish_reason") not in {"COMPLETE", "STOP"}:
                 raise ValueError("llm_provider_incomplete_response")
@@ -212,9 +361,16 @@ class UniversalLLMPlanner:
             text = match.group(1)
         usage = usage if isinstance(usage, dict) else {}
         model = payload.get("model", payload.get("modelVersion"))
-        return {"text": text, "usage": {
-            "prompt_tokens": usage.get("prompt_tokens", usage.get("input_tokens", usage.get("promptTokenCount", 0))),
-            "completion_tokens": usage.get(
-                "completion_tokens", usage.get("output_tokens", usage.get("candidatesTokenCount", 0)),
-            ),
-        }, "responseModel": model[:240] if isinstance(model, str) else None}
+        return {
+            "text": text,
+            "usage": {
+                "prompt_tokens": usage.get(
+                    "prompt_tokens", usage.get("input_tokens", usage.get("promptTokenCount", 0))
+                ),
+                "completion_tokens": usage.get(
+                    "completion_tokens",
+                    usage.get("output_tokens", usage.get("candidatesTokenCount", 0)),
+                ),
+            },
+            "responseModel": model[:240] if isinstance(model, str) else None,
+        }

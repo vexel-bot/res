@@ -1,6 +1,41 @@
 # Changelog
 
+## Atualização do repositório — 2026-10-25
+
+- Publicação da integração experimental do Gemini no Motion, por solicitação
+  posterior do usuário; feature flag desligada por padrão e sem deploy.
+- Revalidação: 273 testes Node/SSR/Vite, 23 contratos Gemini e 20 testes de
+  conexões/transporte universal aprovados; tipagem, build, Ruff dos arquivos
+  Python alterados e verificação de whitespace aprovados.
+- Inferência Gemini e comparação real continuam pendentes. A conferência local
+  do painel/backend mostrou chave experimental não configurada; nenhum vídeo
+  novo foi apresentado como resultado de Gemini.
+- Credenciais, dados locais, logs, capturas e arquivos pessoais não fazem parte
+  da publicação.
+
 ## Não publicado — 2026-10-24
+
+### Motion Gemini experimental, isolado no DEV
+
+- Correção posterior de compatibilidade: removida a exigência do formato legado
+  AIza/39 caracteres e o limite de 100 caracteres do input. Credenciais opacas,
+  incluindo auth keys novas, são aceitas até 8192 caracteres seguros; autenticação
+  real continua dependendo do Google. Cota/admissão gratuita não são relaxadas.
+- Feature flag desligada por padrão; sessão local e claim assinado da ponte,
+  escopo por criador/workspace, sem mudar a KLIC ou habilitar provedores pagos.
+- Chave própria com criptografia existente, cadastro/remoção e campos transitórios;
+  credencial nunca vai para recuperação do projeto, URLs, respostas ou exports.
+- Descoberta paginada de modelos via transporte Gemini existente. Catálogo não
+  equivale a Free Tier; inferência exige comprovação operacional privada, válida
+  e vinculada à chave/modelo, limites conservadores e autorização explícita.
+- Mesmo job `agent_plan` para planejamento JSON, teste mínimo, cancelamento,
+  revisão/aplicação e render local. Sem retries de inferência ou fallback silencioso.
+- Modos A/B discretos, duração, detalhes do plano e recuperação explícita do
+  planejador anterior. Projetos existentes e controles financeiros preservados.
+- Contratos com transporte falso, renderer real e QA no navegador sem chamada
+  externa; amostra A de 15 s preservada. Inferência/comparação Gemini real
+  pendentes da validação assistida escolhida pelo usuário. Sem deploy; publicação
+  posterior do código autorizada em 25/10/2026.
 
 ### Revisão incremental da navegação e experiência dos Studios
 

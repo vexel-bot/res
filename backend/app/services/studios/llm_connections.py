@@ -37,7 +37,7 @@ def scoped(db, workspace_id, connection_id):
             StudioLLMConnection.workspace_id == workspace_id,
         )
     )
-    if not row:
+    if not row or row.provider == "google-motion-experimental":
         raise ValueError("llm_connection_not_found")
     return row
 
@@ -89,6 +89,8 @@ def public(row):
 
 def save(db, workspace_id, request: LLMConnectionRequest, user, connection_id=None):
     access(db, user.id, workspace_id, owner=True)
+    if request.provider == "google-motion-experimental":
+        raise ValueError("motion_gemini_use_dev_configuration")
     config = request.model_dump(
         by_alias=True,
         mode="json",

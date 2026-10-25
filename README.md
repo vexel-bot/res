@@ -2,6 +2,31 @@
 
 Frontend React/TypeScript com Express como BFF autenticado e FastAPI como serviço de projetos, mídia e jobs. A identidade e as permissões continuam pertencendo à sessão Clicko; o navegador não recebe chaves de provedores.
 
+## Motion Gemini experimental · 24/10/2026
+
+Integração DEV opcional, **desligada por padrão**. Reutiliza o transporte Gemini,
+credenciais criptografadas, jobs/revisão do orquestrador e FFmpeg locais. Não
+altera o modelo/chave da KLIC. Ative somente no supervisor local:
+
+```powershell
+$env:CLICKO_MOTION_GEMINI_EXPERIMENTAL='true'
+npm run dev:local
+```
+
+Em Motion Design → Configurações do projeto → **IA Experimental — Gemini**,
+cadastre uma chave própria. Ela não passa pela recuperação em localStorage.
+“Testar conexão” lista modelos oficiais, **não comprova gratuidade**. Inferência,
+inclusive o teste mínimo, permanece bloqueada sem recibo operacional privado de
+Free Tier/faturamento desativado, quotas e autorização para a chave/modelo/usuário.
+Não há checkbox no navegador que conceda essa admissão. Nada deve ser faturado.
+
+Os modos A (regras locais) e B (Gemini) usam o mesmo editor e renderer; nenhum
+plano se aplica/renderiza automaticamente. A comparação com inferência real foi
+adiada pelo usuário para validação assistida; não foi simulada nem homologada.
+Veja [relatório, limites e reversão](CLICKO_MOTION_GEMINI_EXPERIMENTAL_2026-10-24.md).
+Publicação do código no GitHub autorizada em 25/10/2026. Isso não ativa o
+experimento, não comprova inferência real e não realiza deploy.
+
 ## Revisão da experiência dos Studios · 24/10/2026
 
 Navegação horizontal permanente em **Imagem / Vídeo / Publicidade / Ferramentas
