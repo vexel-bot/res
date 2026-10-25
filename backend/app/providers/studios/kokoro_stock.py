@@ -117,6 +117,7 @@ class KokoroStockVoiceProvider:
     """CPU-only, offline and allowlisted Kokoro adapter for stock pt-BR voices."""
 
     name = "kokoro-82m-stock"
+    execution_environment = "local"
 
     def __init__(
         self,

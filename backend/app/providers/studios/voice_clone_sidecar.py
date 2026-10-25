@@ -90,6 +90,8 @@ def _stop_process(process: subprocess.Popen[bytes]) -> None:
 class AuditedVoiceCloneSidecarProvider:
     """Offline candidate adapter; construction never registers or promotes it."""
 
+    execution_environment = "local"
+
     def __init__(self, config: VoiceCloneSidecarConfig, verify_assets: AssetVerifier) -> None:
         self.config = config
         self.name = config.provider_name

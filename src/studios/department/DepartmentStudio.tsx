@@ -1,4 +1,5 @@
 import React from "react";
+import { ProjectNarration } from "./ProjectNarration";
 import {
   ArrowDownToLine,
   Upload,
@@ -1463,6 +1464,12 @@ function StudioRoom({
               )}
             </div>
           )}
+          {project?.voiceVersionId && step > 0 && <ProjectNarration
+            key={`${project.id}:${project.voiceVersionId}`}
+            project={project}
+            voiceName={cast?.voices.find(item => item.versions.some(version => version.id === project.voiceVersionId))?.profile.displayName || "Voz selecionada"}
+            onProject={remember}
+          />}
           <footer className="ds-room-footer">
             <button type="button" onClick={() => navigate("/evolution")}>
               Evolução do sistema <ArrowRight size={12} />

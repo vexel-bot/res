@@ -3,6 +3,18 @@
   "updatedAt": "2026-10-25",
   "entries": [
     {
+      "id": "project-selected-narration",
+      "date": "2026-10-25",
+      "category": "feature",
+      "status": "implemented",
+      "title": "Narração com a voz escolhida no projeto",
+      "summary": "Texto salvo, pedidos retomáveis, cancelamento e áudio privado ligados à versão da voz selecionada.",
+      "impact": "A criação preserva a voz escolhida nos projetos e na narração editorial. A geração dos modelos segue pendente de qualificação real.",
+      "document": "2026-10-25-project-narration.md",
+      "requirements": ["Preservar a voz selecionada na produção da fala.", "Salvar o texto e recuperar o pedido sem duplicar a geração."],
+      "evidence": ["backend/app/routers/studio_project_narration.py", "backend/app/services/studios/cast_speech.py", "backend/tests/test_project_narration.py", "src/studios/department/ProjectNarration.tsx", "tests/team-sync/project-narration.spec.ts"]
+    },
+    {
       "id": "all-remote-branches-sync",
       "date": "2026-10-25",
       "category": "update",

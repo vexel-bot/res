@@ -44,9 +44,28 @@ export interface DepartmentProject extends Omit<ProjectInput, "requestKey"> {
     voice?: { id: string; version: number; consentGrantId: string | null };
   };
 }
+export interface NarrationState {
+  project: DepartmentProject;
+  text: string;
+  generatedText?: string | null;
+  requestKey: string | null;
+  canGenerate: boolean;
+  blocker: string | null;
+  assetId: string | null;
+  job: { id: string; status: string; progress: number; errorCode: string | null } | null;
+}
+export interface NarrationInput { expectedRevision: number; requestKey: string; text: string }
 const base = "/api/v1/studios/v1/projects";
 const path = (id: string) => `${base}/${encodeURIComponent(id)}`;
 export const departmentApi = {
+  saveNarration: (id: string, input: Omit<NarrationInput, "requestKey">) => apiFetch<NarrationState>(`${path(id)}/narration`, {
+    method: "PATCH", body: JSON.stringify(input),
+  }),
+  narration: (id: string, signal?: AbortSignal) => apiFetch<NarrationState>(`${path(id)}/narration`, { signal }),
+  narrate: (id: string, input: NarrationInput) => apiFetch<NarrationState>(`${path(id)}/narration`, {
+    method: "POST", body: JSON.stringify(input),
+  }),
+  cancelNarration: (id: string) => apiFetch<NarrationState>(`${path(id)}/narration/cancel`, { method: "POST" }),
   list: (workspace: string, signal?: AbortSignal) =>
     apiFetch<DepartmentProject[]>(
       `${base}?workspace_id=${encodeURIComponent(workspace)}`,

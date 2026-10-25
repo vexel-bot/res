@@ -1,0 +1,14 @@
+.ds-narration { border: 1px solid var(--ds-border, #ffffff20); border-radius: 8px; padding: 24px; margin: 28px 0; background: #ffffff03; }
+.ds-narration header { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-bottom: 14px; }
+.ds-narration h2 { font-size: 20px; margin: 8px 0; }
+.ds-narration p { font-size: 12px; line-height: 1.6; margin: 12px 0; color: inherit; opacity: .85; }
+.ds-narration label { display: grid; gap: 10px; margin: 20px 0; font-size: 12px; }
+.ds-narration textarea { font: inherit; line-height: 1.6; color: inherit; background: #101512; border: 1px solid #ffffff25; border-radius: 6px; padding: 14px; resize: vertical; min-height: 130px; width: 100%; }
+.ds-narration-actions, .ds-narration-audio { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-top: 14px; }
+.ds-narration-actions button, .ds-narration-audio button { cursor: pointer; }
+.ds-narration button:disabled { opacity: .5; cursor: default; }
+.ds-narration .ds-narration-error { border-left: 2px solid #eea486; padding-left: 12px; }
+.ds-narration audio { width: min(100%, 450px); }
+.ds-narration a { color: inherit; text-decoration: underline; }
+.ds-narration :focus-visible { outline: 2px solid #eea486; outline-offset: 3px; }
+@media (max-width: 700px) { .ds-narration { padding: 16px; } .ds-narration-actions { align-items: stretch; flex-direction: column; } }

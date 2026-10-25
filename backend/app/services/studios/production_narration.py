@@ -1,4 +1,4 @@
-"""Reuse admitted stock speech jobs and measure each beat before composing it."""
+"""Reuse admitted speech jobs, preserving selected voices and measured timing."""
 
 import hashlib
 from datetime import UTC, datetime
@@ -8,6 +8,7 @@ from ...domain.studios.providers import SPEECH_PROVIDERS
 from ...models import LibraryAsset, StudioGenerationJob
 from ...providers.studios.media_probe import MEDIA_PROBE_PROVIDERS
 from ..object_storage import get_object_storage, sha256_file
+from .cast_speech import create_selected_speech_job, selected_speech, selected_speech_asset
 from .compatibility import persist_contract, record_to_contract
 from .jobs import create_job
 from .review_binding import invalidate_linked_post_review
@@ -37,10 +38,12 @@ def measured_asset(db, record, asset_id, expected_checksum):
 
 def prepare_narration(db, record, state, request, user):
     """Return (measurements, queued job). No fabricated human review or provider admission."""
+    document = record_to_contract(record)
     if request.evaluation_scope == "visual_only":
+        if document.voice_ref:
+            raise ValueError("production_selected_voice_requires_audio")
         return [], None
     beats = state["artifacts"]["direction"]["beats"]
-    document = record_to_contract(record)
     if request.narration_asset_id:
         # A single recording cannot establish multiple beat boundaries without alignment.
         if len(beats) != 1:
@@ -49,6 +52,18 @@ def prepare_narration(db, record, state, request, user):
         if not ref or ref.rights_status != "verified":
             raise ValueError("production_qualified_narration_required")
         asset, seconds = measured_asset(db, record, ref.id, ref.checksum)
+        if document.voice_ref:
+            metadata = asset.object_metadata or {}
+            source_job = (
+                db.get(StudioGenerationJob, metadata.get("generationJobId"))
+                if metadata.get("generationJobId")
+                else None
+            )
+            selected = (
+                selected_speech_asset(db, source_job, document.voice_ref, beats[0]["narration"]) if source_job else None
+            )
+            if not selected or selected.id != asset.id:
+                raise ValueError("production_supplied_narration_voice_unverified")
         return [
             {
                 "beatId": beats[0]["id"],
@@ -58,7 +73,7 @@ def prepare_narration(db, record, state, request, user):
                 "origin": "supplied",
             }
         ], None
-    if request.stock_voice_provider not in SPEECH_PROVIDERS:
+    if not document.voice_ref and request.stock_voice_provider not in SPEECH_PROVIDERS:
         raise ValueError("production_qualified_narration_required")
     measurements, assets = [], []
     for beat in beats:
@@ -69,31 +84,48 @@ def prepare_narration(db, record, state, request, user):
         job = db.get(StudioGenerationJob, state["jobs"].get(key)) if state["jobs"].get(key) else None
         script_hash = hashlib.sha256(text.encode()).hexdigest()
         if job is None:
-            speech = SpeechSynthesisRequestV1(
-                text=text, script_digest_sha256=script_hash, voice_key=request.stock_voice_key, locale="pt-BR"
-            )
-            job, _ = create_job(
-                db,
-                CreateGenerationJobRequest(
+            if document.voice_ref:
+                selection = selected_speech(db, record.workspace_id, document.voice_ref)
+                job, _ = create_selected_speech_job(
+                    db,
+                    selection,
+                    text,
+                    user,
                     workspace_id=record.workspace_id,
                     document_id=record.id,
-                    job_type="stock_voice",
-                    provider=request.stock_voice_provider,
-                    request=speech.model_dump(mode="json", by_alias=True),
-                ),
-                f"production:{state['id']}:voice:{beat['id']}:{script_hash[:16]}",
-                user,
-            )
+                    key=f"production:{state['id']}:voice:{beat['id']}:{script_hash[:16]}",
+                    correlation_id=state["id"],
+                )
+            else:
+                speech = SpeechSynthesisRequestV1(
+                    text=text, script_digest_sha256=script_hash, voice_key=request.stock_voice_key, locale="pt-BR"
+                )
+                job, _ = create_job(
+                    db,
+                    CreateGenerationJobRequest(
+                        workspace_id=record.workspace_id,
+                        document_id=record.id,
+                        job_type="stock_voice",
+                        provider=request.stock_voice_provider,
+                        request=speech.model_dump(mode="json", by_alias=True),
+                    ),
+                    f"production:{state['id']}:voice:{beat['id']}:{script_hash[:16]}",
+                    user,
+                )
             state["jobs"] = {**state["jobs"], key: job.id}
             return None, job
         if job.workspace_id != record.workspace_id or job.document_id != record.id:
             raise ValueError("production_voice_job_conflict")
+        if document.voice_ref:
+            selected_speech_asset(db, job, document.voice_ref, text)
+        elif job.job_type != "stock_voice" or job.voice_version_id:
+            raise ValueError("production_voice_selection_conflict")
         if job.status in {"failed", "cancelled"}:
             raise ValueError("production_voice_job_failed")
         if job.status != "succeeded":
             return None, job
         result = job.result_payload or {}
-        if result.get("scriptDigestSha256") != script_hash or result.get("jobType") != "stock_voice":
+        if result.get("scriptDigestSha256") != script_hash or result.get("jobType") != job.job_type:
             raise ValueError("production_voice_script_conflict")
         asset, seconds = measured_asset(db, record, result["assetId"], result["checksumSha256"])
         if (asset.object_metadata or {}).get("generationJobId") != job.id:
@@ -106,7 +138,8 @@ def prepare_narration(db, record, state, request, user):
                 "durationSeconds": seconds,
                 "checksum": asset.checksum_sha256,
                 "jobId": job.id,
-                "origin": "stock_synthesis",
+                "origin": "cloned_voice_synthesis" if job.job_type == "voice_clone" else "stock_voice_synthesis",
+                "voiceVersionId": job.voice_version_id,
             }
         )
     changed = False

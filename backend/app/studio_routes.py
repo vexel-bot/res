@@ -7,6 +7,7 @@ from .routers import (
     studio_craft,
     studio_department,
     studio_identity_library,
+    studio_project_narration,
     studio_video,
     studios,
 )
@@ -21,6 +22,7 @@ def include_studio_routes(app):
         studio_agents.router,
         editing_resources.router,
         studio_identity_library.router,
+        studio_project_narration.router,
         product_evolution.router,
     ):
         app.include_router(router, prefix="/api/v1")
