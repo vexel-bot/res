@@ -3,6 +3,18 @@
   "updatedAt": "2026-10-25",
   "entries": [
     {
+      "id": "selected-voice-material",
+      "date": "2026-10-25",
+      "category": "feature",
+      "status": "implemented",
+      "title": "A voz escolhida sobre imagens e vídeos da marca",
+      "summary": "Montagem narrada sem exigir avatar, com fala integral, materiais preservados e manutenção da imagem final quando necessário.",
+      "impact": "O cliente pode usar sua voz autorizada ou uma voz licenciada com uma imagem ou um vídeo. Os modelos reais continuam pendentes de qualificação.",
+      "document": "2026-10-25-selected-voice-material.md",
+      "requirements": ["Preservar a voz escolhida durante toda a criação narrada.", "Permitir imagem ou vídeo como material sem exigir uma aparência animada."],
+      "evidence": ["backend/app/services/studios/project_voiceover.py", "backend/tests/test_project_voiceover.py", "backend/tests/native_project_voiceover_acceptance.py", "tests/team-sync/project-voiceover.spec.ts"]
+    },
+    {
       "id": "native-avatar-montage",
       "date": "2026-10-25",
       "category": "fix",

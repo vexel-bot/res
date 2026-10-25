@@ -136,7 +136,9 @@ export function ProjectNarration({ project, voiceName, onProject }: {
     </header>
     <p>{project.format === "image" || project.format === "carousel"
       ? "Prepare a fala como um material para a versão narrada desta criação. O arquivo de imagem continua sendo uma imagem."
-      : "Prepare a fala com a voz escolhida. A animação da aparência e a montagem do vídeo são etapas seguintes."}</p>
+      : project.identityVersionId
+        ? "Prepare a fala com a voz escolhida. A animação da aparência e a montagem do vídeo são etapas seguintes."
+        : "Prepare a fala para narrar o material escolhido. A montagem terá a duração desta narração; se o vídeo for curto, sua imagem final permanece até a fala terminar. O áudio original continua no arquivo de origem."}</p>
     {error && <p className="ds-narration-error" role="alert">{error}</p>}
     {notice && <p role="status">{notice}</p>}
     {!state ? <button type="button" onClick={() => { setError(undefined); setRefresh(value => value + 1); }}>Carregar narração</button> : <>

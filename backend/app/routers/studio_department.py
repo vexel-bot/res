@@ -22,6 +22,7 @@ from ..services.studios.casting import resolve_cast
 from ..services.studios.compatibility import record_to_contract
 from ..services.studios.kernel import create_document
 from ..services.studios.project_montage import native_imports, plan_video_montage
+from ..services.studios.project_voiceover import native_voiceover_commands, plan_voiceover
 from .studio_craft import render_job
 from .studios import assert_access, studio_identity_error, validate_references
 
@@ -355,6 +356,7 @@ def document_request(project, post_id, brand_revision, asset=None, portrait=None
             "composition": {
                 "pages": pages,
                 "tracks": [],
+                "mediaTimeline": (project.get("montagePlan") or {}).get("timeline"),
                 "narrative": {
                     "departmentProjectId": project["id"],
                     "front": project["front"],
@@ -393,16 +395,24 @@ def produce_project(
         post_id=row.payload.get("postId"),
         asset_ids=[row.payload["sourceAssetId"]] if row.payload.get("sourceAssetId") else [],
     )
+    voiceover = (
+        row.payload["format"] == "video"
+        and row.payload.get("voiceVersionId")
+        and not row.payload.get("identityVersionId")
+    )
+    narration_audio = None
     asset = db.get(LibraryAsset, row.payload["sourceAssetId"]) if row.payload.get("sourceAssetId") else None
     if asset and (
         not asset.storage_key
-        or not (asset.media_type or "").startswith("video/" if row.payload["format"] == "video" else "image/")
+        or not (asset.media_type or "").startswith(
+            ("video/", "image/") if voiceover else "video/" if row.payload["format"] == "video" else "image/"
+        )
     ):
         raise HTTPException(422, "Escolha um material armazenado e compatível com o formato.")
     additional_video = None
     portrait = None
     if row.payload.get("identityVersionId") or row.payload.get("voiceVersionId"):
-        if row.payload["format"] == "video":
+        if row.payload["format"] == "video" and not voiceover:
             from ..services.studios.project_avatar import completed_asset
 
             try:
@@ -436,15 +446,23 @@ def produce_project(
             if not portrait:
                 raise HTTPException(422, "A versão escolhida precisa de uma imagem de referência armazenada.")
     if row.payload["format"] == "video" and not asset:
-        raise HTTPException(422, "Selecione um vídeo da biblioteca para preparar a primeira montagem.")
+        raise HTTPException(
+            422,
+            "Selecione uma imagem ou um vídeo da biblioteca para narrar."
+            if voiceover
+            else "Selecione um vídeo da biblioteca para preparar a primeira montagem.",
+        )
     preparation = {"status": "producing"}
     if row.payload["format"] == "video":
         try:
-            montage = plan_video_montage(
-                row.workspace_id,
-                [clip for clip in (asset, additional_video) if clip],
-                avatar_asset_id=asset.id if row.payload.get("avatar") else None,
-            )
+            if voiceover:
+                montage, narration_audio = plan_voiceover(db, row, asset)
+            else:
+                montage = plan_video_montage(
+                    row.workspace_id,
+                    [clip for clip in (asset, additional_video) if clip],
+                    avatar_asset_id=asset.id if row.payload.get("avatar") else None,
+                )
         except ValueError as error:
             raise studio_identity_error(error) from error
         if row.payload.get("documentId") and row.payload.get("montagePlan") != montage:
@@ -480,12 +498,14 @@ def produce_project(
         if not brand:
             raise ValueError("Configure o contexto da marca antes de produzir.")
         request = document_request(project, post_id, brand_readiness(brand)["revision"], asset, portrait)
-        if additional_video:
+        for extra in (additional_video, narration_audio):
+            if not extra:
+                continue
             request.assets.append(
                 AssetReferenceV1(
-                    id=additional_video.id,
-                    media_type=additional_video.media_type,
-                    checksum=additional_video.checksum_sha256,
+                    id=extra.id,
+                    media_type=extra.media_type,
+                    checksum=extra.checksum_sha256,
                 )
             )
         document = create_document(db, request, user, creation_key=f"department:{project_id}")
@@ -510,8 +530,10 @@ def produce_project(
                 document,
                 CraftCommandRequestV1(
                     expected_revision=row.payload["sourceRevision"],
-                    commands=native_imports(project["montagePlan"]),
-                    label="Primeira montagem com material da marca",
+                    commands=native_voiceover_commands(project["montagePlan"])
+                    if voiceover
+                    else native_imports(project["montagePlan"]),
+                    label="Montagem com a voz escolhida" if voiceover else "Primeira montagem com material da marca",
                 ),
                 user,
                 f"department-source:{project_id}",

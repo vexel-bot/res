@@ -58,10 +58,19 @@ const statuses: Record<string, string> = {
   succeeded: "Primeira versão pronta",
   failed: "Produção interrompida",
 };
-const message = (error: unknown) =>
-  error instanceof Error
-    ? error.message
-    : "Não foi possível concluir. Recarregue para conferir o estado salvo.";
+const message = (error: unknown) => {
+  const code = error instanceof Error ? error.message : "";
+  const messages: Record<string, string> = {
+    voiceover_final_narration_required: "Conclua a narração com a voz escolhida antes de preparar a montagem.",
+    voiceover_narration_draft_not_generated: "O texto mudou. Gere e confira a nova narração antes de preparar a montagem.",
+    voiceover_narration_audio_required: "A narração precisa conter um áudio válido. O material original permanece salvo.",
+    voiceover_narration_duration_mismatch: "Não foi possível conferir a duração da fala final. Gere uma nova narração antes da montagem.",
+    voiceover_video_duration_unverified: "Não foi possível conferir a duração da imagem em movimento deste arquivo. Use uma versão do vídeo com duração verificável ou escolha uma imagem.",
+    studio_montage_material_unreadable: "Não foi possível ler os materiais da montagem. Eles permanecem salvos; confira os arquivos e tente novamente.",
+    studio_montage_material_checksum_mismatch: "Um material mudou desde que foi salvo. Reabra o projeto para conferir a versão correta.",
+  };
+  return messages[code] || code || "Não foi possível concluir. Recarregue para conferir o estado salvo.";
+};
 const isTerminal = (job?: StudioGenerationJobRecord) =>
   !job || ["failed", "cancelled", "succeeded"].includes(job.status);
 
@@ -425,17 +434,24 @@ function StudioRoom({
   const direction = project?.directions.find(
     (d) => d.id === project.directionId,
   );
-  const assets = [...uploadedAssets, ...(data.snapshot?.assets || [])].filter((asset) =>
-    (asset.mediaType || "").startsWith(
-      form.format === "video" ? "video/" : "image/",
-    ),
-  );
+  const allAssets = [...uploadedAssets, ...(data.snapshot?.assets || [])];
+  const voiceoverMaterial = form.format === "video" && !!form.voiceVersionId && !form.identityVersionId;
+  const assets = allAssets.filter((asset) => form.format === "video"
+    ? (asset.mediaType || "").startsWith("video/") || (voiceoverMaterial && (asset.mediaType || "").startsWith("image/"))
+    : (asset.mediaType || "").startsWith("image/"));
   const update = <K extends keyof typeof form>(
     key: K,
     value: (typeof form)[K],
   ) => {
     requestKey.current = crypto.randomUUID();
-    setForm((current) => ({ ...current, [key]: value }));
+    setForm((current) => {
+      const next = { ...current, [key]: value };
+      if (next.format === "video" && !(next.voiceVersionId && !next.identityVersionId)
+        && (allAssets.find(item => item.id === next.sourceAssetId)?.mediaType || "").startsWith("image/")) {
+        next.sourceAssetId = undefined;
+      }
+      return next;
+    });
   };
   const canApprove =
     !!review &&
@@ -755,18 +771,18 @@ function StudioRoom({
                     </div>
                   </fieldset>
                   <label>
-                    Material de origem {form.format !== "video" && "(opcional)"}
+                    Material de origem {(form.format !== "video" || !!form.identityVersionId) && "(opcional)"}
                     <select
                       aria-label="Material de origem"
                       value={form.sourceAssetId || ""}
                       onChange={(event) =>
                         update("sourceAssetId", event.target.value || undefined)
                       }
-                      required={form.format === "video"}
+                      required={form.format === "video" && !form.identityVersionId}
                     >
                       <option value="">
                         {form.format === "video"
-                          ? "Selecione um vídeo da biblioteca"
+                          ? voiceoverMaterial ? "Selecione uma imagem ou um vídeo para narrar" : form.identityVersionId ? "Sem vídeo de apoio" : "Selecione um vídeo da biblioteca"
                           : "Sem imagem de apoio"}
                       </option>
                       {assets.map((asset) => (
@@ -778,12 +794,14 @@ function StudioRoom({
                   </label>
                   {form.format === "video" && (
                     <p className="ds-help">
-                      A primeira montagem utiliza o vídeo selecionado. O roteiro
-                      organiza a direção; novas cenas e locução dependem de
-                      produção adicional.
+                      {voiceoverMaterial
+                        ? "A montagem usa a voz escolhida e terá a duração da narração. Uma imagem permanece em cena; um vídeo usa seu início e, se for curto, mantém a imagem final. O áudio original fica preservado no arquivo de origem e não entra nessa montagem."
+                        : form.identityVersionId
+                          ? "Prepare a fala e a apresentação com o elenco escolhido. O vídeo de apoio é opcional e entra depois da apresentação."
+                          : "A primeira montagem utiliza o vídeo selecionado. Escolha uma voz para preparar uma versão narrada."}
                     </p>
                   )}
-                  <input ref={materialInput} type="file" hidden accept={form.format === "video" ? "video/mp4,video/quicktime,video/webm" : "image/png,image/jpeg,image/webp"} onChange={(event) => {
+                  <input ref={materialInput} type="file" hidden accept={form.format === "video" ? voiceoverMaterial ? "video/mp4,video/quicktime,video/webm,image/png,image/jpeg,image/webp" : "video/mp4,video/quicktime,video/webm" : "image/png,image/jpeg,image/webp"} onChange={(event) => {
                     const file = event.target.files?.[0]; event.target.value = "";
                     if (!file) return;
                     void run(async () => {
@@ -869,7 +887,9 @@ function StudioRoom({
                     </div>
                     <p className="ds-help">
                       {form.format === "video"
-                        ? "O elenco escolhido fica salvo no pedido. A geração de personagem animado e locução aguarda um motor validado."
+                        ? voiceoverMaterial
+                          ? "A voz escolhida fica salva no pedido. Prepare a narração com essa voz para criar a montagem."
+                          : "As escolhas de aparência e voz ficam salvas no pedido. A produção confere a disponibilidade e as autorizações antes de iniciar."
                         : "A aparência aprovada entra na composição como retrato de referência. A voz fica associada para versões narradas; imagens não contêm áudio."}
                     </p>
                     {castError && (
