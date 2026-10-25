@@ -39,6 +39,7 @@ jobs:
           backend/tests/test_avatar_independent_cast.py backend/tests/test_avatar_video_job_boundary.py
           backend/tests/test_speech_job_boundary.py backend/tests/test_speech_synthesis_execution.py
           backend/tests/test_project_narration.py
+          backend/tests/test_project_avatar.py
           backend/tests/test_longcat_avatar_integration.py
         env:
           PYTHONPATH: backend

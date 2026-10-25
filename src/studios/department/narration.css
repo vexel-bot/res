@@ -12,3 +12,4 @@
 .ds-narration a { color: inherit; text-decoration: underline; }
 .ds-narration :focus-visible { outline: 2px solid #eea486; outline-offset: 3px; }
 @media (max-width: 700px) { .ds-narration { padding: 16px; } .ds-narration-actions { align-items: stretch; flex-direction: column; } }
+.ds-avatar video { display: block; width: 100%; max-width: 720px; max-height: 60vh; background: #111; border-radius: 12px; }

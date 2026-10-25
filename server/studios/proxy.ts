@@ -45,6 +45,11 @@ export function createStudiosProxy(options: { origin?: string; secret?: string; 
     try { return decodeURIComponent(req.path).match(/^\/documents\/([^/]+)\/editing-ai-jobs\/?$/); }
     catch { return null; }
   };
+  const avatarJobRoute = (req: express.Request) => {
+    if (req.method !== 'POST') return null;
+    try { return decodeURIComponent(req.path).match(/^\/projects\/([^/]+)\/avatar\/?$/); }
+    catch { return null; }
+  };
   // Media elements cannot attach custom headers. Only this read-only, scoped
   // video delivery route accepts equivalent query context; session checks remain mandatory.
   router.use((req, _res, next) => {
@@ -59,7 +64,7 @@ export function createStudiosProxy(options: { origin?: string; secret?: string; 
   // Only the small image-job JSON is buffered. Uploads, native files and all
   // other media responses keep their existing streaming path.
   router.use((req, res, next) => {
-    if (!editingJobRoute(req)) return next();
+    if (!editingJobRoute(req) && !avatarJobRoute(req)) return next();
     express.json({ limit: '128kb' })(req, res, next);
   });
   router.use((error: { type?: string }, _req: express.Request, res: express.Response, next: express.NextFunction) => {
@@ -104,23 +109,29 @@ export function createStudiosProxy(options: { origin?: string; secret?: string; 
       if (target.origin !== origin.origin) return res.status(400).json({ detail: 'Destino inválido.' });
       const imageRoute = imageJobRoute(req);
       const editingRoute = editingJobRoute(req);
+      const avatarRoute = avatarJobRoute(req);
+      if (avatarRoute && (module !== 'create-video' || req.body?.operation !== 'generate_avatar'
+        || typeof req.body?.documentId !== 'string')) {
+        return res.status(422).json({ detail: 'Solicite a apresentação pelo Studio de Vídeo.', code: 'VIDEO_REQUEST_INVALID' });
+      }
       const forward = (receiptId?: string) => {
-        if (receiptId && editingRoute) headers.set('authorization', `Bearer ${studioBridgeToken(auth, clientId, module, secret, {
-          id: receiptId, documentId: editingRoute[1], key: req.header('idempotency-key'), operation: req.body.operation,
-          ...(req.body.operation === 'generate_video' ? { seconds: Number(req.body.durationSeconds ?? 8) } : {}),
+        if (receiptId && (editingRoute || avatarRoute)) headers.set('authorization', `Bearer ${studioBridgeToken(auth, clientId, module, secret, {
+          id: receiptId, documentId: avatarRoute ? req.body.documentId : editingRoute![1], key: req.header('idempotency-key'), operation: req.body.operation,
+          ...(['generate_video', 'generate_avatar'].includes(req.body.operation) ? { seconds: Number(req.body.durationSeconds ?? 8) } : {}),
         })}`);
         return upstreamFetch(target, {
         method: req.method, headers, signal: controller.signal,
-        body: editingRoute ? JSON.stringify(req.body) : ['GET', 'HEAD'].includes(req.method) ? undefined : req as unknown as BodyInit,
+        body: editingRoute || avatarRoute ? JSON.stringify(req.body) : ['GET', 'HEAD'].includes(req.method) ? undefined : req as unknown as BodyInit,
         duplex: ['GET', 'HEAD'].includes(req.method) ? undefined : 'half',
       } as RequestInit & { duplex?: 'half' });
       };
       const upstream = imageRoute ? await forwardMeteredImageRequest({
         auth, clientId, documentId: imageRoute[1], key: req.header('idempotency-key'), body: req.body, signal: controller.signal, forward,
-      }) : editingRoute && module === 'create-video' ? await forwardMeteredVideoRequest({
-        auth, clientId, documentId: editingRoute[1], key: req.header('idempotency-key'), body: req.body, forward,
+      }) : (editingRoute || avatarRoute) && module === 'create-video' ? await forwardMeteredVideoRequest({
+        auth, clientId, documentId: avatarRoute ? req.body.documentId : editingRoute![1], key: req.header('idempotency-key'), body: req.body, forward,
       }) : await forward();
-      if (upstream.ok && module === 'create-video' && /\/jobs\/[^/]+(?:\/(?:cancel|retry))?\/?$/.test(req.path)) {
+      if (upstream.ok && module === 'create-video' && (/\/jobs\/[^/]+(?:\/(?:cancel|retry))?\/?$/.test(req.path)
+        || /\/projects\/[^/]+\/avatar\/cancel\/?$/.test(req.path))) {
         const job = await upstream.clone().json();
         if (job && typeof job.id === 'string') reconcileStudioVideoJob(auth, job);
       }

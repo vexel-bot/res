@@ -12,7 +12,7 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 from ..database import get_db
-from ..domain.studios.contracts import CreateStudioDocumentRequest, StudioContract
+from ..domain.studios.contracts import AssetReferenceV1, CreateStudioDocumentRequest, StudioContract
 from ..domain.studios.craft import CraftCommandRequestV1, CraftMigrationRequestV1, CraftRenderRequestV1
 from ..models import BrandProfile, LibraryAsset, Post, User, Workspace, WorkspaceResource
 from ..security import get_current_user
@@ -258,7 +258,16 @@ def document_request(project, post_id, brand_revision, asset=None, portrait=None
                 "width": 1080,
                 "height": 1350,
                 "background": "#e8e5dc",
-                "durationMs": 5000 if project["format"] == "video" else None,
+                "durationMs": (
+                    (asset.object_metadata or {})
+                    .get("avatarVideoJobResult", {})
+                    .get("avatar", {})
+                    .get("durationMs", 5000)
+                    if asset and project["format"] == "video"
+                    else 5000
+                    if project["format"] == "video"
+                    else None
+                ),
                 "layers": [
                     {
                         "id": f"brand-{i}",
@@ -391,17 +400,24 @@ def produce_project(
         or not (asset.media_type or "").startswith("video/" if row.payload["format"] == "video" else "image/")
     ):
         raise HTTPException(422, "Escolha um material armazenado e compatível com o formato.")
-    if row.payload["format"] == "video" and not asset:
-        raise HTTPException(422, "Selecione um vídeo da biblioteca para preparar a primeira montagem.")
+    additional_video = None
     portrait = None
     if row.payload.get("identityVersionId") or row.payload.get("voiceVersionId"):
         if row.payload["format"] == "video":
-            raise HTTPException(
-                422,
-                "A produção do personagem e da locução aguarda um motor de geração validado. "
-                "O elenco escolhido está salvo no pedido.",
-            )
-        if row.payload.get("identityVersionId"):
+            from ..services.studios.project_avatar import completed_asset
+
+            try:
+                avatar = completed_asset(db, row)
+            except ValueError as error:
+                raise studio_identity_error(error) from error
+            if not avatar:
+                raise HTTPException(
+                    422, "Conclua e revise a apresentação com a aparência e a voz escolhidas antes da montagem."
+                )
+            # The presenter leads the montage; an existing brand video remains
+            # a separate native clip instead of being silently discarded.
+            additional_video, asset = asset, avatar
+        elif row.payload.get("identityVersionId"):
             from ..models import StudioIdentityVersion
 
             version = db.get(StudioIdentityVersion, row.payload["identityVersionId"])
@@ -420,6 +436,8 @@ def produce_project(
             )
             if not portrait:
                 raise HTTPException(422, "A versão escolhida precisa de uma imagem de referência armazenada.")
+    if row.payload["format"] == "video" and not asset:
+        raise HTTPException(422, "Selecione um vídeo da biblioteca para preparar a primeira montagem.")
     row = change(db, row, data.expected_revision, {"status": "producing"})
     try:
         project = out(row)
@@ -450,6 +468,14 @@ def produce_project(
         if not brand:
             raise ValueError("Configure o contexto da marca antes de produzir.")
         request = document_request(project, post_id, brand_readiness(brand)["revision"], asset, portrait)
+        if additional_video:
+            request.assets.append(
+                AssetReferenceV1(
+                    id=additional_video.id,
+                    media_type=additional_video.media_type,
+                    checksum=additional_video.checksum_sha256,
+                )
+            )
         document = create_document(db, request, user, creation_key=f"department:{project_id}")
         # Save the recoverable document before calling any runtime or queue.
         row = change(db, row, row.payload["revision"], {"documentId": document.id, "postId": post_id})
@@ -472,7 +498,11 @@ def produce_project(
                 document,
                 CraftCommandRequestV1(
                     expected_revision=row.payload["sourceRevision"],
-                    commands=[{"id": "asset.import", "params": {"assetId": asset.id, "addToTimeline": True}}],
+                    commands=[
+                        {"id": "asset.import", "params": {"assetId": clip.id, "addToTimeline": True}}
+                        for clip in (asset, additional_video)
+                        if clip
+                    ],
                     label="Primeira montagem com material da marca",
                 ),
                 user,

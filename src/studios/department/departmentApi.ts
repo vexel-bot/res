@@ -55,9 +55,26 @@ export interface NarrationState {
   job: { id: string; status: string; progress: number; errorCode: string | null } | null;
 }
 export interface NarrationInput { expectedRevision: number; requestKey: string; text: string }
+export interface AvatarState extends Omit<NarrationState, 'text' | 'generatedText'> { performanceDirection?: string | null }
+export interface AvatarPlan {
+  operation: 'generate_avatar'; expectedRevision: number; documentId: string; durationSeconds: number;
+  planDigestSha256: string; performanceDirection: string;
+}
 const base = "/api/v1/studios/v1/projects";
 const path = (id: string) => `${base}/${encodeURIComponent(id)}`;
 export const departmentApi = {
+  avatar: (id: string, signal?: AbortSignal) => apiFetch<AvatarState>(`${path(id)}/avatar`, { signal }),
+  planAvatar: (id: string, performanceDirection: string) => apiFetch<AvatarPlan>(`${path(id)}/avatar/plan`, {
+    method: 'POST', body: JSON.stringify({ performanceDirection }),
+  }),
+  generateAvatar: (id: string, plan: AvatarPlan, key: string) => apiFetch<{ id: string }>(`${path(id)}/avatar`, {
+    method: 'POST', headers: { 'Idempotency-Key': key },
+    body: JSON.stringify({ operation: plan.operation, expectedRevision: plan.expectedRevision,
+      documentId: plan.documentId, durationSeconds: plan.durationSeconds, planDigestSha256: plan.planDigestSha256,
+      performanceDirection: plan.performanceDirection }),
+  }),
+  cancelAvatar: (id: string) => apiFetch<{ id: string }>(`${path(id)}/avatar/cancel`, { method: 'POST' }),
+  reconcileAvatar: (jobId: string, signal?: AbortSignal) => apiFetch<{ id: string }>(`/api/v1/studios/v1/jobs/${encodeURIComponent(jobId)}`, { signal }),
   saveNarration: (id: string, input: Omit<NarrationInput, "requestKey">) => apiFetch<NarrationState>(`${path(id)}/narration`, {
     method: "PATCH", body: JSON.stringify(input),
   }),

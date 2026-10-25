@@ -3,6 +3,18 @@
   "updatedAt": "2026-10-25",
   "entries": [
     {
+      "id": "project-selected-avatar",
+      "date": "2026-10-25",
+      "category": "feature",
+      "status": "implemented",
+      "title": "Apresentação com a aparência e a fala escolhidas",
+      "summary": "Plano vinculado à narração final, admissão de minutos, fila, cancelamento e prévia privada no projeto.",
+      "impact": "A apresentação concluída pode alimentar a primeira montagem. A qualificação dos modelos e a validação audiovisual completa permanecem pendentes.",
+      "document": "2026-10-25-project-avatar.md",
+      "requirements": ["Usar a aparência e a fala final do projeto.", "Preservar autorizações, revisões e consumo de minutos durante a geração."],
+      "evidence": ["backend/app/routers/studio_project_avatar.py", "backend/app/services/studios/project_avatar.py", "backend/tests/test_project_avatar.py", "src/studios/department/ProjectAvatar.tsx", "server/studios/videoQuota.test.ts", "tests/team-sync/project-avatar.spec.ts"]
+    },
+    {
       "id": "project-selected-narration",
       "date": "2026-10-25",
       "category": "feature",

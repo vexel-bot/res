@@ -58,6 +58,8 @@ def bridge_user(
         raise HTTPException(403, "Abra o Studio de Vídeo para esta operação.")
     # Format and engine selection cannot escalate an image-only account into Video.
     selected = getattr(request.state, "studio_body", {})
+    if "/avatar" in request.url.path and "/projects/" in request.url.path and claims["module"] != "create-video":
+        raise HTTPException(403, "Abra o Studio de Vídeo para produzir a apresentação.")
     if request.url.path.endswith("/editing-gemini-jobs"):
         raise HTTPException(410, detail={"code": "use_image_editing_jobs_endpoint"})
     if "/production-runs" in request.url.path and claims["module"] != "create-video":

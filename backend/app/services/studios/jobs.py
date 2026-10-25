@@ -617,6 +617,7 @@ def create_job(
     *,
     commit: bool = True,
     trusted_editing_envelope: bool = False,
+    commercial_admission: dict | None = None,
 ) -> tuple[StudioGenerationJob, bool]:
     if request.job_type in {"editing_ai", "editing_gemini"} and not trusted_editing_envelope:
         # Pricing, financial identity and provider bindings are server-owned.
@@ -628,7 +629,21 @@ def create_job(
     }:
         # Orchestrated paid scenes need the same commercial admission as the
         # public media endpoint. Never route around that boundary internally.
-        raise ValueError("commercial_media_admission_required")
+        seconds = request.request.get("drivingAudioDurationMs", 0) / 1000
+        admission = commercial_admission or {}
+        if (
+            request.job_type != "avatar_video"
+            or request.request.get("schemaVersion") != "studio.avatar-video-request.v2"
+            or admission.get("operation") != "generate_avatar"
+            or admission.get("documentId") != request.document_id
+            or admission.get("key") != idempotency_key
+            or not isinstance(admission.get("id"), str)
+            or len(admission["id"]) != 64
+            or any(c not in "0123456789abcdef" for c in admission["id"])
+            or admission.get("seconds") != seconds
+            or seconds <= 0
+        ):
+            raise ValueError("commercial_media_admission_required")
     if request.job_type == "timeline_render":
         from .timeline_editor import validate_admission
 
@@ -819,6 +834,7 @@ def create_job(
                     "hybrid": hybrid_binding,
                     "provider": provider_binding,
                     "cast": cast_binding,
+                    **({"commercialAdmission": commercial_admission} if commercial_admission else {}),
                 },
             }
         else:

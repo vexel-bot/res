@@ -856,7 +856,7 @@ export function settleStudioImageUsage(auth: AuthContext, receiptId: string, job
   });
 }
 
-/** Only generated scenes consume minutes. Editor exports/previews never call this. */
+/** Generated scenes and avatars consume minutes. Editor exports/previews never call this. */
 export function reserveStudioVideoUsage(auth: AuthContext, id: string, fingerprint: string, seconds: number) {
   assertGovernanceAccess(auth, { module: 'create-video', capability: 'video_generation' });
   if (!/^[a-f0-9]{64}$/.test(id) || !/^[a-f0-9]{64}$/.test(fingerprint) || !Number.isFinite(seconds) || seconds <= 0 || seconds > 3600)
@@ -904,6 +904,13 @@ export function reconcileStudioVideoJob(auth: AuthContext, job: Record<string, a
   if (!receipt) return;
   if (job.status === 'succeeded' && typeof job.result?.generatedVideoSeconds === 'number' && job.result?.assetId && job.result?.checksumSha256)
     settleStudioVideoUsage(auth, receipt.id, { seconds: job.result.generatedVideoSeconds });
+  else if (job.status === 'succeeded' && job.jobType === 'avatar_video'
+    && job.result?.schemaVersion === 'studio.avatar-video-job-result.v2'
+    && job.result?.generationJobId === job.id && job.result?.documentId === job.documentId
+    && typeof job.result?.avatar?.durationMs === 'number' && job.result.avatar.durationMs > 0
+    && job.result?.assetId && /^[a-f0-9]{64}$/i.test(job.result?.checksumSha256 || '')
+    && job.result.avatar.artifactChecksumSha256 === job.result.checksumSha256)
+    settleStudioVideoUsage(auth, receipt.id, { seconds: job.result.avatar.durationMs / 1000 });
   else if (['failed', 'cancelled'].includes(job.status) && (!job.result?.submissionStarted || job.result?.submissionOutcome === 'rejected' || job.result?.responseKey))
     settleStudioVideoUsage(auth, receipt.id, { release: true });
 }

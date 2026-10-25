@@ -1,5 +1,6 @@
 import React from "react";
 import { ProjectNarration } from "./ProjectNarration";
+import { ProjectAvatar } from "./ProjectAvatar";
 import {
   ArrowDownToLine,
   Upload,
@@ -1468,6 +1469,11 @@ function StudioRoom({
             key={`${project.id}:${project.voiceVersionId}`}
             project={project}
             voiceName={cast?.voices.find(item => item.versions.some(version => version.id === project.voiceVersionId))?.profile.displayName || "Voz selecionada"}
+            onProject={remember}
+          />}
+          {project?.format === "video" && project.identityVersionId && project.voiceVersionId && step > 0 && <ProjectAvatar
+            key={`${project.id}:avatar`}
+            project={project}
             onProject={remember}
           />}
           <footer className="ds-room-footer">

@@ -48,7 +48,13 @@ def emit_event(
 
 
 def create_document(
-    db: Session, request: CreateStudioDocumentRequest, user: User, *, creation_key: str | None = None
+    db: Session,
+    request: CreateStudioDocumentRequest,
+    user: User,
+    *,
+    creation_key: str | None = None,
+    document_id: str | None = None,
+    commit: bool = True,
 ) -> CreativeDocument:
     creation_key = creation_key or (
         f"studio:{request.workspace_id}:post:{request.post_id}:{request.content_type}" if request.post_id else None
@@ -59,7 +65,7 @@ def create_document(
         existing = db.scalar(select(CreativeDocument).where(CreativeDocument.studio_creation_key == creation_key))
         if existing:
             return existing
-    document_id = str(uuid4())
+    document_id = document_id or str(uuid4())
     now = datetime.now(UTC)
     correlation_id = request.correlation_id or str(uuid4())
     brand = db.scalar(select(BrandProfile).where(BrandProfile.workspace_id == request.workspace_id))
@@ -128,7 +134,10 @@ def create_document(
         payload={"schemaVersion": contract.schema_version, "contentType": contract.content_type},
     )
     try:
-        db.commit()
+        if commit:
+            db.commit()
+        else:
+            db.flush()
     except IntegrityError:
         db.rollback()
         if not creation_key:

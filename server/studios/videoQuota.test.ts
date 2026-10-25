@@ -9,7 +9,7 @@ import { authenticate, createGovernanceRouter } from '../governance';
 import { createStudiosProxy } from './proxy';
 import { retiredEditing } from './legacyEditing';
 
-test('only generated scenes consume video minutes; holds, retries, release and exact settlement persist', async t => {
+test('generated scenes and avatars consume video minutes; holds, retries, release and exact settlement persist', async t => {
   const directory = mkdtempSync(path.join(tmpdir(), 'clicko-video-quota-'));
   const filename = path.join(directory, 'governance.json');
   const jobs = new Map<string, any>();
@@ -25,13 +25,16 @@ test('only generated scenes consume video minutes; holds, retries, release and e
     const body = JSON.parse(init!.body as string);
     const key = headers.get('idempotency-key')!;
     const token = JSON.parse(Buffer.from(headers.get('authorization')!.split('.')[1], 'base64url').toString());
-    if (body.operation === 'generate_video') {
+    if (body.operation === 'generate_video' || body.operation === 'generate_avatar') {
       assert.match(token.mediaAdmission.id, /^[a-f0-9]{64}$/);
       assert.equal(token.mediaAdmission.key, key);
-      assert.equal(token.mediaAdmission.seconds, 8);
+      assert.equal(token.mediaAdmission.seconds, body.operation === 'generate_avatar' ? 2.8 : 8);
     } else assert.equal(token.mediaAdmission, undefined);
-    if (!jobs.has(key)) jobs.set(key, { id: randomUUID(), jobType: 'editing_gemini', documentId: 'doc-1', idempotencyKey: key,
-      status: 'queued', request: { input: body } });
+    if (!jobs.has(key)) jobs.set(key, body.operation === 'generate_avatar'
+      ? { id: randomUUID(), jobType: 'avatar_video', documentId: body.documentId, idempotencyKey: key,
+        status: 'queued', request: { executionBinding: { commercialAdmission: token.mediaAdmission } } }
+      : { id: randomUUID(), jobType: 'editing_gemini', documentId: 'doc-1', idempotencyKey: key,
+        status: 'queued', request: { input: body } });
     if (lost) throw new Error('lost acknowledgement');
     return Response.json(jobs.get(key), { status: 202 });
   } }));
@@ -69,6 +72,32 @@ test('only generated scenes consume video minutes; holds, retries, release and e
   assert.equal((await send('rejected-scene-001')).status, 422);
   assert.ok(Math.abs(await used() - initial - 8 / 60) < 1e-8);
   deny = false;
+  const avatarInitial = await used();
+  const sendAvatar = (key: string, operation = 'generate_avatar') => fetch(origin + '/api/v1/studios/v1/projects/project-1/%61vatar/', {
+    method: 'POST', headers: { ...headers, 'idempotency-key': key },
+    body: JSON.stringify({ documentId: 'avatar-context-1', operation, durationSeconds: 2.8,
+      expectedRevision: 2, planDigestSha256: 'b'.repeat(64) }),
+  });
+  assert.equal((await sendAvatar('avatar-invalid-operation', 'edit_video')).status, 422);
+  assert.equal(await used(), avatarInitial);
+  lost = true;
+  assert.equal((await sendAvatar('avatar-lost-response-001')).status, 503);
+  assert.ok(Math.abs(await used() - avatarInitial - 2.95 / 60) < 1e-8);
+  lost = false;
+  assert.equal((await sendAvatar('avatar-lost-response-001')).status, 202);
+  assert.ok(Math.abs(await used() - avatarInitial - 2.95 / 60) < 1e-8);
+  const avatar = jobs.get('avatar-lost-response-001');
+  avatar.status = 'succeeded';
+  avatar.result = { schemaVersion: 'studio.avatar-video-job-result.v2', generationJobId: avatar.id,
+    documentId: avatar.documentId, assetId: 'avatar-output', checksumSha256: 'c'.repeat(64),
+    avatar: { durationMs: 2800, artifactChecksumSha256: 'c'.repeat(64) } };
+  for (let index = 0; index < 2; index++) await fetch(origin + '/api/v1/studios/v1/jobs/' + avatar.id, { headers });
+  assert.ok(Math.abs(await used() - avatarInitial - 2.8 / 60) < 1e-8);
+  assert.equal((await sendAvatar('avatar-cancelled-001')).status, 202);
+  const cancelled = jobs.get('avatar-cancelled-001');
+  cancelled.status = 'cancelled';
+  await fetch(origin + '/api/v1/studios/v1/jobs/' + cancelled.id, { headers });
+  assert.ok(Math.abs(await used() - avatarInitial - 2.8 / 60) < 1e-8);
   const allowance = await used();
   const policy = await fetch(origin + '/governance/usage/policy', { method: 'PATCH', headers,
     body: JSON.stringify({ allocationMode: 'member_limits', memberId: 'usr-master', limits: { video_minutes: allowance } }) });
@@ -80,5 +109,5 @@ test('only generated scenes consume video minutes; holds, retries, release and e
     assert.equal(response.status, 410);
     assert.equal((await response.json()).success, false);
   }
-  assert.ok(Math.abs(await used() - initial - 8 / 60) < 1e-8);
+  assert.ok(Math.abs(await used() - initial - 10.8 / 60) < 1e-8);
 });

@@ -273,6 +273,7 @@ def execute_avatar_video(
             or encoded.fps != request.fps
             or encoded.artifact_checksum_sha256.lower() != checksum
             or encoded.synthetic_content_disclosed is not True
+            or (is_v2 and abs(encoded.duration_ms - request.driving_audio_duration_ms) > 150)
         ):
             raise ValueError("avatar_video_result_binding_mismatch")
         key = object_key(job.workspace_id, "exports", ".mp4")
