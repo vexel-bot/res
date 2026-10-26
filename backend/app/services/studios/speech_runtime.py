@@ -8,10 +8,12 @@ from sqlalchemy import select
 
 from ...config import get_settings
 from ...domain.studios.contracts import StudioContract
+from ...domain.studios.execution import OPENVOICE_CPU_PROVIDER, execution_profile
 from ...domain.studios.providers import SPEECH_PROVIDERS, VOICE_CLONE_PROVIDERS
 from ...models import StudioProviderRegistration
 from ...providers.studios.kokoro_docker import KokoroDockerSpeechProvider
 from ...providers.studios.kokoro_stock import KokoroStockConfig
+from ...providers.studios.openvoice_cpu import create_openvoice_cpu_provider
 from ...providers.studios.voice_clone_sidecar import (
     create_chatterbox_sidecar_provider,
     create_openvoice_sidecar_provider,
@@ -83,9 +85,34 @@ class CloneRuntime(RuntimeBase):
         return "voice_clone"
 
 
+class OpenVoiceCPURuntime(RuntimeBase):
+    kind: Literal["kokoro-openvoice-cpu-docker"]
+    docker_executable: Path
+    manifest_path: Path
+    asset_root: Path
+    kokoro_manifest_path: Path
+    kokoro_repository: Path
+    cpu_hourly_cost_usd: float = Field(gt=0, allow_inf_nan=False)
+
+    @field_validator("docker_executable", "manifest_path", "asset_root", "kokoro_manifest_path", "kokoro_repository")
+    @classmethod
+    def absolute_cpu_paths(cls, value):
+        return cls.absolute_path(value)
+
+    @property
+    def provider(self):
+        return OPENVOICE_CPU_PROVIDER
+
+    @property
+    def job_type(self):
+        return "voice_clone"
+
+
 class SpeechRuntimeConfigurationV1(StudioContract):
     schema_version: Literal["studio.speech-runtime-config.v1"]
-    runtimes: list[Annotated[KokoroRuntime | CloneRuntime, Field(discriminator="kind")]] = Field(max_length=4)
+    runtimes: list[Annotated[KokoroRuntime | CloneRuntime | OpenVoiceCPURuntime, Field(discriminator="kind")]] = Field(
+        max_length=5
+    )
 
     @model_validator(mode="after")
     def unique_provider(self):
@@ -109,6 +136,18 @@ def load_speech_runtime_configuration():
 
 
 def _construct(spec, worker_digest):
+    if isinstance(spec, OpenVoiceCPURuntime):
+        return create_openvoice_cpu_provider(
+            manifest_path=spec.manifest_path,
+            asset_root=spec.asset_root,
+            kokoro_manifest_path=spec.kokoro_manifest_path,
+            kokoro_repository=spec.kokoro_repository,
+            worker_manifest_digest_sha256=worker_digest,
+            worker_image_digest=spec.worker_image_digest,
+            docker_executable=spec.docker_executable,
+            cpu_hourly_cost_usd=spec.cpu_hourly_cost_usd,
+            timeout_seconds=spec.timeout_seconds,
+        )
     if isinstance(spec, KokoroRuntime):
         return KokoroDockerSpeechProvider(
             KokoroStockConfig(
@@ -167,7 +206,7 @@ def resolve_speech_provider(db, *, job_type, provider_name):
     if (
         job_type not in worker.job_types
         or provider_name not in worker.providers
-        or worker.capability != ("speech_cpu" if job_type == "stock_voice" else "speech_gpu")
+        or worker.capability != execution_profile(job_type, provider_name).capability
     ):
         raise ValueError("speech_runtime_worker_not_advertised")
     digest = manifest_digest(worker)

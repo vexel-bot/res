@@ -8,7 +8,11 @@ import tempfile
 import time
 from pathlib import Path
 
-from app.domain.studios.contracts import SpeechSynthesisRequestV1, VoiceCloneReferenceV1
+from app.domain.studios.contracts import (
+    SpeechSynthesisRequestV1,
+    StudioWorkerRuntimeManifestV1,
+    VoiceCloneReferenceV1,
+)
 from app.domain.studios.speech_assets import (
     KokoroModelAssetManifestV1,
     OpenVoiceModelAssetManifestV1,
@@ -34,11 +38,25 @@ def main():
     with args.reference.open("rb") as source:
         if (
             hashlib.file_digest(source, "sha256").hexdigest()
-            != reference.normalized_checksum_sha256
+            != reference.normalized_checksum_sha256.lower()
         ):
             raise ValueError("openvoice_cpu_reference_checksum_mismatch")
     if speech.voice_key != reference.voice_version_id:
         raise ValueError("openvoice_cpu_voice_version_mismatch")
+    worker = StudioWorkerRuntimeManifestV1.model_validate_json(
+        Path("/opt/clicko/worker-manifest.json").read_text(encoding="utf-8")
+    )
+    worker_digest = hashlib.sha256(
+        json.dumps(
+            worker.model_dump(by_alias=True, mode="json"),
+            ensure_ascii=False,
+            sort_keys=True,
+            separators=(",", ":"),
+        ).encode()
+    ).hexdigest()
+    binding = descriptor.get("executionBinding") or {}
+    if binding.get("workerManifestDigestSha256") != worker_digest:
+        raise ValueError("openvoice_cpu_worker_manifest_mismatch")
     kokoro = KokoroModelAssetManifestV1.model_validate_json(
         Path("/opt/clicko/kokoro-model-assets.json").read_text(encoding="utf-8")
     )
@@ -75,6 +93,11 @@ def main():
                 "kokoroModelManifestDigestSha256": kokoro_digest,
                 "openvoiceModelManifestDigestSha256": converter_digest,
                 "wallSeconds": time.perf_counter() - started,
+                "voiceVersionId": reference.voice_version_id,
+                "consentGrantId": reference.consent_grant_id,
+                "voiceReferenceChecksumSha256": reference.normalized_checksum_sha256.lower(),
+                "workerManifestDigestSha256": worker_digest,
+                "workerImageDigest": binding.get("workerImageDigest"),
                 "peakResidentBytes": resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
                 * 1024,
             }

@@ -43,11 +43,17 @@ COPY workers/speech-gpu/sidecars/kokoro_openvoice_clone.py /opt/clicko/sidecars/
 COPY workers/speech-cpu/sidecars/openvoice_cpu.py /opt/clicko/sidecars/openvoice_cpu.py
 COPY workers/speech-gpu/openvoice-model-assets.v1.json /opt/clicko/openvoice-model-assets.json
 COPY .candidate-build/kokoro-model-assets.json /opt/clicko/kokoro-model-assets.json
+COPY workers/speech-cpu/openvoice.worker.manifest.json /opt/clicko/worker-manifest.json
+ARG CPU_WORKER_MANIFEST_DIGEST
+LABEL io.clicko.worker-manifest.digest="${CPU_WORKER_MANIFEST_DIGEST}" \
+      io.clicko.model-manifest.digest="035360cd1f63378a6bd0f8b951b6de859f2fb961a61a2f5d7dcf627a90459d7c" \
+      io.clicko.base-model-manifest.digest="4c738811001691c1640ec65230d9f5dc3008f80c8a7b8af027822c534be09af9"
 ENV PATH="/opt/clicko/candidate/.venv/bin:${PATH}" PYTHONPATH="/opt/clicko/backend" \
     HF_HUB_OFFLINE="1" TRANSFORMERS_OFFLINE="1" \
     OMP_NUM_THREADS="4" MKL_NUM_THREADS="4" OPENBLAS_NUM_THREADS="4" NUMEXPR_NUM_THREADS="4" \
     TMPDIR="/run/clicko-runtime" NUMBA_CACHE_DIR="/run/clicko-runtime/numba" \
     HF_HOME="/run/clicko-runtime/hf" XDG_CACHE_HOME="/run/clicko-runtime/cache"
+RUN python -c "import hashlib,json; from pathlib import Path; from app.domain.studios.contracts import StudioWorkerRuntimeManifestV1 as M; m=M.model_validate_json(Path('/opt/clicko/worker-manifest.json').read_text()); d=hashlib.sha256(json.dumps(m.model_dump(by_alias=True,mode='json'),ensure_ascii=False,sort_keys=True,separators=(',',':')).encode()).hexdigest(); assert d == '${CPU_WORKER_MANIFEST_DIGEST}'"
 USER clicko
 WORKDIR /opt/clicko/sidecars
 ENTRYPOINT ["python", "openvoice_cpu.py"]

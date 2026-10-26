@@ -3,13 +3,25 @@
   "updatedAt": "2026-10-25",
   "entries": [
     {
+      "id": "openvoice-cpu-project",
+      "date": "2026-10-25",
+      "category": "update",
+      "status": "implemented",
+      "title": "Clonagem em CPU conectada ao projeto",
+      "summary": "Adaptador de voz ligado à configuração e à fila CPU, com execução real, watermark e cancelamento verificados.",
+      "impact": "O fluxo preserva voz, autorização e histórico no projeto. A qualidade dos modelos permanece pendente de homologação.",
+      "document": "2026-10-25-openvoice-cpu-project.md",
+      "requirements": ["Conectar a clonagem em CPU sem substituir a voz selecionada.", "Conferir geração, isolamento e cancelamento no adaptador da aplicação."],
+      "evidence": ["backend/app/providers/studios/openvoice_cpu.py", "backend/app/services/studios/speech_runtime.py", "backend/app/domain/studios/execution.py", "backend/tests/test_openvoice_cpu_provider.py", "backend/scripts/check_openvoice_cpu_runtime.py", "workers/speech-cpu/openvoice.worker.manifest.json", "benchmarks/studios/identity/openvoice-cpu-adapter-local-run-2026-10-25.v1.json"]
+    },
+    {
       "id": "openvoice-cpu-evaluation",
       "date": "2026-10-25",
       "category": "analysis",
       "status": "in_progress",
       "title": "Clonagem de voz: conversão de timbre avaliada em CPU",
       "summary": "OpenVoice executado sem CUDA com referência sintética, watermark verificado e correções reproduzíveis de build e assets.",
-      "impact": "Há uma alternativa de execução local para avaliar a voz. A ligação do provider CPU ao backend e a homologação de qualidade seguem pendentes.",
+      "impact": "O teste inicial demonstrou execução local; a ligação ao backend foi implementada no registro seguinte. A homologação de qualidade segue pendente.",
       "document": "2026-10-25-openvoice-cpu-evaluation.md",
       "requirements": ["Avaliar a execução real de clonagem de timbre no computador local.", "Preservar modelos, referência, roteiro e limpeza sem fabricar uma homologação."],
       "evidence": ["workers/speech-gpu/sidecars/kokoro_openvoice_clone.py", "workers/speech-cpu/sidecars/openvoice_cpu.py", "backend/scripts/check_openvoice_cpu_runtime.py", "backend/tests/test_openvoice_cpu_runtime.py", "benchmarks/studios/identity/openvoice-cpu-local-run-2026-10-25.v1.json"]

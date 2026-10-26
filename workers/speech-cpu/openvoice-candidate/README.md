@@ -54,7 +54,10 @@ incompatíveis provocam erro; não são sobrescritos silenciosamente.
 1. Construa `workers/speech-gpu/Dockerfile.openvoice-candidate-v2` com target
    `source-audit`; registre o digest da imagem de fontes.
 2. Construa `workers/speech-cpu/Dockerfile.openvoice-candidate` passando
-   `OPENVOICE_SOURCE_IMAGE=nome-da-imagem@sha256:...`.
+   `OPENVOICE_SOURCE_IMAGE=nome-da-imagem@sha256:...` e
+   `CPU_WORKER_MANIFEST_DIGEST` com o hash canônico de
+   `workers/speech-cpu/openvoice.worker.manifest.json`. O build confere o
+   manifesto incluído e grava os digests nas labels da imagem.
 3. Execute `backend/scripts/check_openvoice_cpu_runtime.py` com os digests das
    imagens stock e clone, o repositório Kokoro regular, os assets OpenVoice e um
    diretório privado novo.
@@ -68,7 +71,8 @@ Argumentos da verificação:
 - `--output-directory`: caminho absoluto privado novo.
 - `--docker-executable`: executável Docker absoluto, se necessário.
 
-O script gera uma referência sintética, prepara um pedido tipado, executa o
+O script gera uma referência sintética, prepara um pedido tipado e chama
+`OpenVoiceCPUProvider`, o mesmo adaptador resolvido pelo backend. Ele executa o
 container sem rede e confere manifesto, referência, roteiro, WAV e watermark.
 O container usa 4 CPUs, 3 GiB, filesystem principal somente leitura, usuário não
 root e volumes de modelos/entrada somente leitura. O diretório temporário
@@ -81,16 +85,32 @@ conversão depois de verificar o recibo, o texto fixo, a imagem e o checksum da
 referência sintética. O recibo identifica o artefato sintético do teste; não é uma
 autorização de uso de voz humana.
 
+Com `--mode cancel`, a verificação observa no daemon que o container está em
+execução antes de cancelar. Exige a remoção verificada e a ausência de áudio de
+saída. Essa opção também aceita uma referência sintética anterior verificada.
+
 ## Resultado e trabalho pendente
 
 O teste de 25/10/2026 produziu 7,489 s de WAV com watermark verificado, a partir
 de uma referência sintética de 7,1 s. O pipeline CPU levou 176,656 s e registrou
 pico de 1.797.672.960 bytes de RSS. Esse caso não mede p95 nem qualidade humana.
 
-O perfil de execução dos jobs `voice_clone` do backend continua em `speech_gpu`.
-A imagem CPU é uma avaliação independente; ainda falta conectá-la a um provider
-e perfil CPU próprios no agendador. Os workers continuam sem providers anunciados.
-Qualidade, benchmark completo e revisão da cadeia de licenças seguem pendentes.
+Na verificação seguinte, o adaptador da aplicação produziu outra conversão de
+7,489 s. O pipeline mediu 120,007 s e pico de RSS de 1.812.307.968 bytes. O
+cancelamento também foi verificado em uma execução real. Os dois casos estão
+registrados separadamente em
+`benchmarks/studios/identity/openvoice-cpu-adapter-local-run-2026-10-25.v1.json`.
+Não são um benchmark completo ou uma avaliação de identidade humana.
+
+O backend agora resolve o kind `kokoro-openvoice-cpu-docker`, provider
+`candidate.kokoro-openvoice-v2-cpu`, com fila `studio.speech.cpu`. Os outros
+providers de clonagem preservam o perfil GPU. O teste de integração do projeto
+confere essa fila, a voz selecionada, a autorização, a idempotência e a reabertura
+do áudio privado, usando fixtures explícitas de admissão e daemon.
+
+Os workers de avaliação continuam sem providers anunciados. Qualidade, benchmark
+completo e revisão da cadeia de licenças seguem pendentes. A configuração não
+aprova modelos ou vozes. Veja `docs/studios/LOCAL_SPEECH_RUNTIMES.md`.
 
 Fontes primárias:
 

@@ -18,6 +18,7 @@ nos assets do frontend.
 | `chatterbox-multilingual-v3` | Clonagem a partir da referência autorizada | `manifestPath`, `assetRoot`, `command`, `gpuHourlyCostUsd` |
 | `chatterbox-pt-br` | Variante de clonagem em português | mesmos campos de clonagem |
 | `kokoro-openvoice-v2` | Síntese stock seguida de conversão para a voz autorizada | mesmos campos de clonagem |
+| `kokoro-openvoice-cpu-docker` | Conversão de timbre em CPU, isolada em container | `dockerExecutable`, `manifestPath`, `assetRoot`, `kokoroManifestPath`, `kokoroRepository`, `cpuHourlyCostUsd` |
 
 Todos exigem `workerManifestPath` absoluto e `workerImageDigest` no formato
 `sha256:<64 hex>`. `timeoutSeconds` é opcional, entre 1 e 7200 segundos.
@@ -107,3 +108,35 @@ a revisão de licenças ou a qualificação dos modelos de clonagem e de avatar.
 O benchmark histórico de Kokoro em CPU permanece reprovado em latência
 (`kokoro-pf-dora-local-run-2026-08-26.v1.json`). Os manifests de avaliação mantêm
 `providers: []`. Essas restrições não foram relaxadas pela configuração do runtime.
+
+## Clonagem Kokoro + OpenVoice em CPU
+
+O kind `kokoro-openvoice-cpu-docker` resolve o provider
+`candidate.kokoro-openvoice-v2-cpu`. Somente esse provider encaminha `voice_clone`
+para a capacidade `speech_cpu`, fila `studio.speech.cpu` e classe `cpu.speech`.
+Os providers GPU mantêm seus perfis. O manifesto do sidecar é
+`workers/speech-cpu/openvoice.worker.manifest.json`.
+
+Todos os caminhos específicos desse kind são absolutos. `manifestPath` e
+`assetRoot` identificam os assets OpenVoice/WavMark; `kokoroManifestPath` e
+`kokoroRepository` identificam a base Kokoro materializada sem links simbólicos.
+O manifesto de cada modelo é lido ao resolver a configuração. Os pesos são
+conferidos somente na execução, sem importar Torch no processo da API.
+
+A versão do provider inclui as revisões de fonte, modelo conversor e base.
+O binding de admissão segue o contrato acima, usando esse kind. A imagem deve
+conter os mesmos digests de ambos os modelos e do manifesto do worker. O
+adaptador confere no daemon a imagem, os mounts e os limites realmente criados.
+O retorno vincula voz selecionada, autorização, referência normalizada e roteiro.
+Um recibo incompatível não produz áudio persistido.
+
+O sidecar só aceita pt-BR, WAV mono PCM16 de 24 kHz e velocidade 1. A rotina de
+verificação `backend/scripts/check_openvoice_cpu_runtime.py` chama esse mesmo
+adaptador. `--mode cancel` espera observar o container em execução antes de
+cancelar e conferir a limpeza. A receita completa e os argumentos estão em
+`workers/speech-cpu/openvoice-candidate/README.md`.
+
+Configurar essa entrada prepara o localhost, mas não aprova o candidato nem
+altera o consentimento de uma voz. Os manifests de avaliação seguem com
+`providers: []`; a disponibilidade da geração continua condicionada às
+qualificações exigidas pelo sistema.

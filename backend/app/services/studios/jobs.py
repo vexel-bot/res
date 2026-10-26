@@ -867,7 +867,7 @@ def create_job(
         job_type=request.job_type,
         provider_name=request.provider,
     )
-    profile = execution_profile(request.job_type)
+    profile = execution_profile(request.job_type, request.provider)
     job = StudioGenerationJob(
         workspace_id=request.workspace_id,
         requested_by=user.id,

@@ -1,0 +1,77 @@
+{
+  "schemaVersion": "clicko.openvoice-cpu-adapter-evaluation.v1",
+  "recordedAt": "2026-10-26T00:49:01.850846+00:00",
+  "generationObservedAt": "2026-10-26T00:41:01.462543+00:00",
+  "runtimePath": "application_adapter",
+  "runtimeStatus": "passed_one_synthetic_reference_case",
+  "backendCpuRouting": "provider_specific_speech_cpu",
+  "humanSubjects": 0,
+  "providerPromoted": false,
+  "benchmarkStatus": "not_run",
+  "qualityReview": "not_completed",
+  "speech": {
+    "schemaVersion": "studio.speech-synthesis-result.v1",
+    "provider": "candidate.kokoro-openvoice-v2-cpu",
+    "providerVersion": "0.1.0+ov-74a1d147b17a.models-035360cd.base-4c738811.cpu",
+    "audioFormat": "wav",
+    "sampleRate": 24000,
+    "durationMs": 7489,
+    "artifactChecksumSha256": "44796f2bcf0e4e4a1f933d3810fd529d7939455db98d7f880855d8ed347e41d2",
+    "provenance": {
+      "schemaVersion": "studio.speech-provenance.v1",
+      "sourceRevision": "74a1d147b17a8c3092dd5430504bd83ef6c7eb23",
+      "modelDigestSha256": "035360cd1f63378a6bd0f8b951b6de859f2fb961a61a2f5d7dcf627a90459d7c",
+      "workerManifestDigestSha256": "9ab35a5349e347a49f8e9b3bfa413e67f7c01640ece8dc436aed9f5a4a0ca9c4",
+      "workerImageDigest": "sha256:7c923389d77263918518a92e0564138b83d69ce00356b91d40650d964e6367f0",
+      "syntheticContentDisclosed": true,
+      "provenanceMode": "clicko-offline-openvoice-cpu-v1",
+      "voiceVersionId": "synthetic-pm-alex-test",
+      "consentGrantId": "synthetic-only-no-human-consent",
+      "voiceReferenceChecksumSha256": "c8f12f763b682df91e1a7586546bdb72619d8e7b451ffa0ea198224a541e4d1d"
+    },
+    "metrics": {
+      "activeComputeSeconds": 130.47462659998564,
+      "directCostUsd": 0.0014497180733331737,
+      "watermarkVerified": 1.0,
+      "sidecarWallSeconds": 120.00659157900373,
+      "peakResidentBytes": 1812307968.0,
+      "containerNetworkDisabled": 1.0,
+      "containerReadonlyRoot": 1.0,
+      "containerCpuLimit": 4.0,
+      "containerMemoryLimitBytes": 3221225472.0
+    }
+  },
+  "isolation": {
+    "containerNetworkDisabled": 1.0,
+    "containerReadonlyRoot": 1.0,
+    "containerCpuLimit": 4.0,
+    "containerMemoryLimitBytes": 3221225472.0
+  },
+  "containerCleanup": "verified_by_daemon_inventory",
+  "reference": {
+    "kind": "generated_synthetic_stock_voice",
+    "voiceKey": "pm_alex",
+    "reused": true,
+    "durationMs": 7100,
+    "checksumSha256": "c8f12f763b682df91e1a7586546bdb72619d8e7b451ffa0ea198224a541e4d1d"
+  },
+  "cancellation": {
+    "schemaVersion": "clicko.openvoice-cpu-cancel.v1",
+    "generatedAt": "2026-10-26T00:41:43.786491+00:00",
+    "status": "cancel_cleanup_verified",
+    "daemonRunningObserved": true,
+    "imageDigest": "sha256:7c923389d77263918518a92e0564138b83d69ce00356b91d40650d964e6367f0",
+    "outputPersisted": false,
+    "humanSubjects": 0
+  },
+  "privateEvidenceChecksumsSha256": {
+    "generationReport": "6eb126af92a57aa7ec987fef4e877b6be539a4cfd0f5cb40d115648f4f3b614f",
+    "cancellationReport": "7d61f96b9fb745064de68b0cca26903a72831dd23266987af51945a8bb8d9794"
+  },
+  "limitations": [
+    "No human identity, intelligibility, accent or emotion qualification.",
+    "One CPU case does not establish p95 latency.",
+    "API integration uses explicit admission and daemon fixtures; it is not a live production ML qualification.",
+    "Provider/model approval, a complete benchmark and composite license review remain pending."
+  ]
+}

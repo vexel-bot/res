@@ -18,6 +18,7 @@ from pathlib import Path
 from ...domain.studios.contracts import SpeechSynthesisResultV1
 from ...services.object_storage import sha256_file
 from .kokoro_stock import KOKORO_SAMPLE_RATE, KokoroStockConfig, KokoroStockVoiceProvider
+from .offline_docker import OfflineDockerControl
 
 CONTRACT = "clicko.kokoro-stock-sidecar.v1"
 
@@ -30,34 +31,17 @@ class SpeechDockerExecutionError(RuntimeError):
         self.diagnostics = diagnostics
 
 
-class KokoroDockerSpeechProvider:
+class KokoroDockerSpeechProvider(OfflineDockerControl):
     name = KokoroStockVoiceProvider.name
     execution_environment = "local"
 
     def __init__(self, config: KokoroStockConfig, *, docker_executable: Path, timeout_seconds: float = 1800):
-        if not docker_executable.is_absolute() or not docker_executable.is_file():
-            raise ValueError("speech_docker_absolute_executable_required")
+        super().__init__(docker_executable)
         if not math.isfinite(timeout_seconds) or not 1 <= timeout_seconds <= 7200:
             raise ValueError("speech_docker_timeout_invalid")
         self.config = config
         self.version = KokoroStockVoiceProvider(config).version
-        self.docker_executable = str(docker_executable)
         self.timeout_seconds = timeout_seconds
-
-    def _docker(self, arguments, timeout=20):
-        try:
-            return subprocess.run(
-                [self.docker_executable, *arguments],
-                capture_output=True,
-                text=True,
-                encoding="utf-8",
-                errors="replace",
-                timeout=timeout,
-                check=False,
-                creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0),
-            )
-        except (OSError, subprocess.TimeoutExpired) as exc:
-            raise RuntimeError("speech_docker_control_unavailable") from exc
 
     def _require_image(self):
         inspected = self._docker(["image", "inspect", self.config.worker_image_digest])
@@ -74,13 +58,6 @@ class KokoroDockerSpeechProvider:
             valid = False
         if not valid:
             raise ValueError("speech_docker_image_binding_mismatch")
-
-    def _remove(self, name):
-        # Killing the Docker client alone does not stop inference in the daemon.
-        self._docker(["container", "rm", "--force", name])
-        inventory = self._docker(["container", "ls", "--all", "--filter", f"name=^/{name}$", "--format", "{{.Names}}"])
-        if inventory.returncode != 0 or inventory.stdout.strip():
-            raise RuntimeError("speech_docker_cleanup_unverified")
 
     def synthesize(self, request, destination, progress, is_cancelled):
         if request.locale != "pt-BR" or request.voice_key not in self.config.allowed_voices:

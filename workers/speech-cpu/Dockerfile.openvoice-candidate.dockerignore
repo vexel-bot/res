@@ -6,6 +6,7 @@
 !workers/speech-cpu/openvoice-candidate/uv.lock
 !workers/speech-cpu/sidecars/
 !workers/speech-cpu/sidecars/openvoice_cpu.py
+!workers/speech-cpu/openvoice.worker.manifest.json
 !workers/speech-gpu/
 !workers/speech-gpu/sidecars/
 !workers/speech-gpu/sidecars/kokoro_openvoice_clone.py

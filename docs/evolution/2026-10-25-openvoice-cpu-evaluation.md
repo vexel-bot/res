@@ -4,8 +4,9 @@ O pipeline Kokoro + OpenVoice foi executado com os modelos reais no computador
 local, sem CUDA. Uma referência sintética de 7,1 segundos foi usada para converter
 outra fala, de 7,489 segundos. O watermark foi conferido depois de salvar o WAV.
 
-Esta etapa avalia o motor. O provider CPU ainda precisa ser conectado ao
-agendador do backend, e a qualidade da clonagem continua sem homologação.
+Esta etapa registrou a avaliação inicial do motor. A ligação ao backend foi
+implementada depois, no registro "Clonagem em CPU conectada ao projeto". A
+qualidade da clonagem continua sem homologação.
 
 ## O que foi aprendido e corrigido
 
@@ -51,10 +52,10 @@ O OpenVoice converte o timbre. Sotaque e emoção dependem da voz-base, conforme
 explicado pelo próprio projeto. Não foi medida a semelhança com uma pessoa real,
 a inteligibilidade, a preservação de sotaque ou o p95 de desempenho.
 
-O backend ainda associa os jobs `voice_clone` ao perfil GPU. A imagem CPU é um
-candidato independente; falta ligar seu provider e perfil de execução à fila
-correta. Nenhum worker passou a anunciar esse modelo e nenhuma homologação foi
-criada nesta etapa.
+Na avaliação inicial descrita aqui, os jobs `voice_clone` ainda usavam o perfil
+GPU. A integração seguinte acrescentou um provider e uma fila CPU próprios,
+preservando os perfis GPU existentes. Nenhum worker passou a anunciar esse modelo
+e nenhuma homologação foi criada nesta etapa.
 
 A integração de rosto, personagens e avatar continua em andamento, incluindo a
 validação dos modelos e de suas entregas. Este teste de voz não comprova esses

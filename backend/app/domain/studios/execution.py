@@ -49,8 +49,25 @@ EXECUTION_PROFILES: dict[str, ExecutionProfile] = {
 }
 
 
-def execution_profile(job_type: str) -> ExecutionProfile:
+OPENVOICE_CPU_PROVIDER = "candidate.kokoro-openvoice-v2-cpu"
+PROVIDER_EXECUTION_PROFILES = {
+    ("voice_clone", OPENVOICE_CPU_PROVIDER): ExecutionProfile("speech_cpu", "studio.speech.cpu", "cpu.speech", 3600),
+}
+
+
+def execution_profile(job_type: str, provider: str | None = None) -> ExecutionProfile:
+    override = PROVIDER_EXECUTION_PROFILES.get((job_type, provider))
+    if override:
+        return override
     try:
         return EXECUTION_PROFILES[job_type]
     except KeyError as error:
         raise ValueError(f"unsupported_studio_job_type:{job_type}") from error
+
+
+def execution_profiles_for_job(job_type: str) -> tuple[ExecutionProfile, ...]:
+    """Runtime preflight accepts supported capabilities without advertising a provider."""
+    return (
+        execution_profile(job_type),
+        *(profile for (kind, _), profile in PROVIDER_EXECUTION_PROFILES.items() if kind == job_type),
+    )

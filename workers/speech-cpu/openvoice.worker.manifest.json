@@ -1,0 +1,28 @@
+{
+  "schemaVersion": "studio.worker-runtime-manifest.v1",
+  "runtimeName": "clicko-openvoice-cpu-sidecar",
+  "runtimeVersion": "0.1.0-evaluation",
+  "capability": "speech_cpu",
+  "queues": ["studio.speech.cpu"],
+  "resourceClasses": ["cpu.speech"],
+  "jobTypes": ["voice_clone"],
+  "providers": [],
+  "requiredEnvironment": ["HF_HUB_OFFLINE", "TRANSFORMERS_OFFLINE"],
+  "requiredPaths": [
+    "/opt/clicko/openvoice-model-assets.json",
+    "/opt/clicko/kokoro-model-assets.json",
+    "/opt/clicko/sidecars/openvoice_cpu.py"
+  ],
+  "tools": [
+    {"id": "python", "command": ["python", "--version"], "versionPattern": "Python 3\\.11\\.[0-9]+"}
+  ],
+  "isolation": {
+    "runAsNonRoot": true,
+    "readOnlyRootFilesystem": true,
+    "allowPrivilegeEscalation": false,
+    "networkEgressPolicy": "private-dependencies-only",
+    "maxConcurrentJobs": 1,
+    "ephemeralTempPath": "/run/clicko-runtime",
+    "minimumTempBytes": 268435456
+  }
+}

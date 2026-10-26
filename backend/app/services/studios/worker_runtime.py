@@ -15,7 +15,7 @@ from ...domain.studios.contracts import (
     StudioWorkerRuntimeManifestV1,
     WorkerExecutionContextV1,
 )
-from ...domain.studios.execution import execution_profile
+from ...domain.studios.execution import execution_profiles_for_job
 
 ToolRunner = Callable[[list[str]], str]
 
@@ -84,12 +84,14 @@ def validate_worker_manifest(
         raise ValueError("production_worker_image_digest_required")
 
     for job_type in manifest.job_types:
-        profile = execution_profile(job_type)
-        if profile.capability != manifest.capability:
+        profiles = [item for item in execution_profiles_for_job(job_type) if item.capability == manifest.capability]
+        if not profiles:
             raise ValueError(f"worker_job_capability_mismatch:{job_type}")
-        if profile.queue not in manifest.queues:
+        if not any(item.queue in manifest.queues for item in profiles):
             raise ValueError(f"worker_job_queue_mismatch:{job_type}")
-        if profile.resource_class not in manifest.resource_classes:
+        if not any(
+            item.queue in manifest.queues and item.resource_class in manifest.resource_classes for item in profiles
+        ):
             raise ValueError(f"worker_job_resource_mismatch:{job_type}")
 
     missing_environment = [name for name in manifest.required_environment if not os.getenv(name)]
@@ -138,8 +140,7 @@ def validate_worker_manifest(
             raise ValueError("worker_accelerator_requirements_unmet")
         name, driver, memory_mib, compute_capability = eligible[0]
         versions["accelerator"] = (
-            f"{accelerator.vendor}:{len(eligible)}x:{name}:driver-{driver}:"
-            f"{memory_mib}MiB:cc-{compute_capability:g}"
+            f"{accelerator.vendor}:{len(eligible)}x:{name}:driver-{driver}:{memory_mib}MiB:cc-{compute_capability:g}"
         )[:240]
     return versions
 

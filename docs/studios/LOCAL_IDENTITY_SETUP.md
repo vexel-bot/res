@@ -66,9 +66,16 @@ texto que o cliente fornece. Áudios sintetizados sem versão vinculada não
 podem ser apresentados como a voz de um perfil escolhido.
 
 Neste computador, a RTX 2050 tem aproximadamente 4 GB de VRAM. Os manifests
-atuais não admitem este host para os perfis generativos selecionados. O pedido
-de vídeo preserva o elenco e informa que a produção generativa está pendente,
-em vez de entregar um vídeo sem a aparência ou voz escolhida.
+atuais de avatar não admitem este host para os perfis GPU selecionados. O pedido
+de vídeo preserva o elenco e informa a pendência da produção generativa.
+
+A clonagem Kokoro + OpenVoice ganhou uma alternativa CPU, com adaptador, fila e
+configuração próprios. A execução real com referência sintética e o cancelamento
+foram verificados localmente. Isso não qualifica a semelhança com vozes humanas.
+O arquivo privado `speech-runtimes.json` pode conter o kind
+`kokoro-openvoice-cpu-docker`; configuração e builds não criam aprovações. Veja
+`docs/studios/LOCAL_SPEECH_RUNTIMES.md` e o registro de evolução
+`openvoice-cpu-project` para o estado e a cobertura dos testes.
 
 O inventário da VPS Oracle de agosto registra uma máquina sem GPU e com menos
 de 1 GiB de RAM. Esse registro é histórico; não constitui uma inspeção atual.
