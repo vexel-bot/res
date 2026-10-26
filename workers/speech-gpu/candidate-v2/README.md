@@ -11,6 +11,10 @@ replaces `candidate/` evidence in place.
   worker imports only `ToneColorConverter`.
 - `kokoro-lazy-language-g2p.patch` postpones annotations and imports the English G2P
   only for language codes `a`/`b`; the PT-BR `p` path keeps `misaki.espeak`.
+- `openvoice-explicit-watermark-toggle.patch` removes `enable_watermark` before
+  forwarding constructor arguments to the upstream base class. It lets the
+  existing converter path use Clicko's pinned local watermark without an
+  unexpected-argument error or the upstream implicit model download.
 - Patched OpenVoice and Kokoro wheels must be built from their pinned revisions and
   installed with `--no-deps`. Misaki remains pinned without the `en` extra.
 
@@ -23,6 +27,10 @@ English extra do not return. The OpenVoice stage also replaces the bytes bundled
 stdlib-only installer. No final v2 image, benchmark result or provider is approved
 by this evidence. The next gates are final isolated-image smoke, complete SBOM and
 notices review.
+
+`verification.v1.json` records the August dependency-stage build before the
+explicit watermark toggle fix. Rebuild images to include the new patch; that
+historical report does not qualify a changed image or CPU execution.
 
 The Kokoro source audit distinguishes the canonical Git blob digest of `LICENSE`
 (`c71d239d...`) from the normalized Apache-2.0 text digest (`1eb85fc9...`) already

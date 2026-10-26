@@ -3,6 +3,18 @@
   "updatedAt": "2026-10-25",
   "entries": [
     {
+      "id": "openvoice-cpu-evaluation",
+      "date": "2026-10-25",
+      "category": "analysis",
+      "status": "in_progress",
+      "title": "Clonagem de voz: conversão de timbre avaliada em CPU",
+      "summary": "OpenVoice executado sem CUDA com referência sintética, watermark verificado e correções reproduzíveis de build e assets.",
+      "impact": "Há uma alternativa de execução local para avaliar a voz. A ligação do provider CPU ao backend e a homologação de qualidade seguem pendentes.",
+      "document": "2026-10-25-openvoice-cpu-evaluation.md",
+      "requirements": ["Avaliar a execução real de clonagem de timbre no computador local.", "Preservar modelos, referência, roteiro e limpeza sem fabricar uma homologação."],
+      "evidence": ["workers/speech-gpu/sidecars/kokoro_openvoice_clone.py", "workers/speech-cpu/sidecars/openvoice_cpu.py", "backend/scripts/check_openvoice_cpu_runtime.py", "backend/tests/test_openvoice_cpu_runtime.py", "benchmarks/studios/identity/openvoice-cpu-local-run-2026-10-25.v1.json"]
+    },
+    {
       "id": "isolated-speech-runtime",
       "date": "2026-10-25",
       "category": "update",

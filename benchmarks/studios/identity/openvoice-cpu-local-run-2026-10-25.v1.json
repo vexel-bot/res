@@ -1,0 +1,90 @@
+{
+  "containerCleanup": "verified_by_daemon_inventory",
+  "backendCpuRouting": "not_implemented_voice_clone_profile_remains_speech_gpu",
+  "isolation": {
+    "containerId": "20ebd3a2c4606232c1f3f585d77e2852cf5100808fe9a4381218c38a68fc717d",
+    "networkMode": "none",
+    "readonlyRootfs": true,
+    "user": "10001:10001",
+    "memoryBytes": 3221225472,
+    "nanoCpus": 4000000000,
+    "mounts": [
+      {
+        "destination": "/job/input",
+        "writable": false
+      },
+      {
+        "destination": "/job/output",
+        "writable": true
+      },
+      {
+        "destination": "/models/kokoro-repo",
+        "writable": false
+      },
+      {
+        "destination": "/models/openvoice",
+        "writable": false
+      }
+    ]
+  },
+  "recordedAt": "2026-10-25T20:46:03.2933895Z",
+  "runtimeStatus": "passed_one_synthetic_reference_case",
+  "imageDigest": "sha256:210673d57ee6d87730a75e17d7866e284129644c582e7c56a525223fe195e42c",
+  "schemaVersion": "clicko.openvoice-cpu-evaluation.v1",
+  "watermarkConstructorPatchDigestSha256": "fbc61b661289010fe0815437c464351f71d1107066b2b3781255fc54916d2d92",
+  "humanSubjects": 0,
+  "providerPromoted": false,
+  "kokoroSourceRevision": "dfb907a02bba8152ca444717ca5d78747ccb4bec",
+  "reference": {
+    "voiceKey": "pm_alex",
+    "kind": "generated_synthetic_stock_voice",
+    "checksumSha256": "c8f12f763b682df91e1a7586546bdb72619d8e7b451ffa0ea198224a541e4d1d",
+    "reused": false,
+    "textDigestSha256": "50ee48a6228405206f3e63769fd1310f59ce328ae67b97b1d8e8ec2ad920d32a",
+    "durationMs": 7100
+  },
+  "openvoiceSourceRevision": "74a1d147b17a8c3092dd5430504bd83ef6c7eb23",
+  "cpuLockDigestSha256": "3255154038b7bd3896dc51ecec5b0fbb483d0767e592b79eff7f176b6590b6c1",
+  "sourceImageDigest": "sha256:a4d79023cd38c00f90e6e35cdfed444fb084439b95d2e80b0d13b1f2b39849f0",
+  "benchmarkStatus": "not_run",
+  "limitations": [
+    "No human identity, intelligibility, accent or emotion qualification.",
+    "One cold CPU case does not establish p95 latency.",
+    "The frozen clone benchmark and commercial promotion remain pending.",
+    "The CPU provider and job routing are not yet connected to the application."
+  ],
+  "conversion": {
+    "durationMs": 7489,
+    "result": {
+      "baseVoice": "pf_dora",
+      "executionDevice": "cpu",
+      "kokoroModelManifestDigestSha256": "4c738811001691c1640ec65230d9f5dc3008f80c8a7b8af027822c534be09af9",
+      "openvoiceModelManifestDigestSha256": "035360cd1f63378a6bd0f8b951b6de859f2fb961a61a2f5d7dcf627a90459d7c",
+      "peakResidentBytes": 1797672960,
+      "pipelineContract": "clicko.kokoro-openvoice-v2.pt-br.v1",
+      "schemaVersion": "clicko.voice-clone-sidecar-result.v1",
+      "scriptDigestSha256": "b806a1bc3747f739728857fba30a9a7a9af561e3df5e14b20ffba357c5264755",
+      "wallSeconds": 176.65586600799725,
+      "watermarkApplied": true,
+      "watermarkScheme": "wavmark-0.0.3-local-verified"
+    },
+    "format": "PCM16 WAV",
+    "baseVoice": "pf_dora",
+    "sampleRate": 24000,
+    "checksumSha256": "c25a751a3939e33b1ba644022f1f3c5b87ece574486de61b4ba83885870b4c42",
+    "channels": 1
+  },
+  "qualityReview": "not_completed",
+  "softwareInventory": {
+    "generator": "Syft 1.51.0",
+    "format": "CycloneDX 1.7",
+    "syftJsonChecksumSha256": "76ec4403cd028f38fd9292f7ec516ce1b10894f2f7265787f72611006ee9e537",
+    "storage": "private local evaluation evidence",
+    "manifestDigest": "sha256:62691a815865732cbc71de9b099a0df33615d91d3af8acd834e93de91d2029f8",
+    "components": 820,
+    "scope": "squashed",
+    "checksumSha256": "c26b2122db07eea77b7fda0cac2468cbbc1c54901d2f319a564af51a928bfe95",
+    "licenseApproval": "pending",
+    "imageID": "sha256:7b4b8f4f59288f7678905ac3391399ba990f5263df9c0a9f53dd34a9bcef820f"
+  }
+}

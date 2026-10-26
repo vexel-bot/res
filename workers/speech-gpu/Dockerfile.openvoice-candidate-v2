@@ -5,6 +5,7 @@ FROM python:3.11-slim@sha256:272efc3f94bec901e2bc7a5c9984b3d113c317839edca2714c6
 ARG OPENVOICE_REVISION=74a1d147b17a8c3092dd5430504bd83ef6c7eb23
 ARG OPENVOICE_LICENSE_DIGEST=bb3541f421e6273d3a3e3dd5bdba2bd3b79a3c2eadca65cde9c62c2467903ac0
 ARG OPENVOICE_PATCH_DIGEST=392e8c1dd20511bdc5b466a578daa04343a59931572f6ea27680603f1b3da0e0
+ARG OPENVOICE_WATERMARK_PATCH_DIGEST=fbc61b661289010fe0815437c464351f71d1107066b2b3781255fc54916d2d92
 ARG KOKORO_REVISION=dfb907a02bba8152ca444717ca5d78747ccb4bec
 ARG KOKORO_LICENSE_DIGEST=c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4
 ARG KOKORO_PATCH_DIGEST=bf31edc3e69ccdd6bad00b55d3d94d7566757244085f9b305716ca51fec707a9
@@ -26,11 +27,15 @@ RUN apt-get update \
     && test "$(sha256sum /src/kokoro/LICENSE | awk '{print $1}')" = "${KOKORO_LICENSE_DIGEST}"
 
 COPY workers/speech-gpu/candidate-v2/patches/openvoice-tone-color-only.patch /patches/openvoice.patch
+COPY workers/speech-gpu/candidate-v2/patches/openvoice-explicit-watermark-toggle.patch /patches/openvoice-watermark.patch
 COPY workers/speech-gpu/candidate-v2/patches/kokoro-lazy-language-g2p.patch /patches/kokoro.patch
 RUN test "$(sha256sum /patches/openvoice.patch | awk '{print $1}')" = "${OPENVOICE_PATCH_DIGEST}" \
     && test "$(sha256sum /patches/kokoro.patch | awk '{print $1}')" = "${KOKORO_PATCH_DIGEST}" \
+    && test "$(sha256sum /patches/openvoice-watermark.patch | awk '{print $1}')" = "${OPENVOICE_WATERMARK_PATCH_DIGEST}" \
     && git -C /src/openvoice apply --check /patches/openvoice.patch \
     && git -C /src/openvoice apply /patches/openvoice.patch \
+    && git -C /src/openvoice apply --check /patches/openvoice-watermark.patch \
+    && git -C /src/openvoice apply /patches/openvoice-watermark.patch \
     && git -C /src/kokoro apply --check /patches/kokoro.patch \
     && git -C /src/kokoro apply /patches/kokoro.patch \
     && python -m py_compile /src/openvoice/openvoice/api.py /src/kokoro/kokoro/pipeline.py \

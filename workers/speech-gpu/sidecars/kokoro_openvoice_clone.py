@@ -65,7 +65,9 @@ def _normalized_chunks(text: str, limit: int = 320) -> list[str]:
 
 
 class LocalKokoroOpenVoiceRuntime:
-    def __init__(self, kokoro_root: Path, openvoice_root: Path) -> None:
+    def __init__(self, kokoro_root: Path, openvoice_root: Path, *, device: str = "cuda:0") -> None:
+        if device not in {"cpu", "cuda:0"}:
+            raise ValueError("kokoro_openvoice_execution_device_invalid")
         try:
             import librosa
             import numpy as np
@@ -76,14 +78,14 @@ class LocalKokoroOpenVoiceRuntime:
             from openvoice.api import ToneColorConverter
         except ImportError as error:  # pragma: no cover - candidate image only
             raise RuntimeError("kokoro_openvoice_runtime_not_installed") from error
-        if not torch.cuda.is_available():
+        if device == "cuda:0" and not torch.cuda.is_available():
             raise RuntimeError("kokoro_openvoice_cuda_required")
         self.librosa = librosa
         self.np = np
         self.soundfile = soundfile
         self.torch = torch
         self.wavmark = wavmark
-        self.device = "cuda:0"
+        self.device = device
         model = KModel(
             repo_id="hexgrad/Kokoro-82M",
             config=str(kokoro_root / "config.json"),
@@ -304,6 +306,7 @@ def main() -> int:
     parser.add_argument("--result", required=True, type=Path)
     parser.add_argument("--kokoro-root", required=True, type=Path)
     parser.add_argument("--openvoice-root", required=True, type=Path)
+    parser.add_argument("--device", choices=("cpu", "cuda:0"), default="cuda:0")
     args = parser.parse_args()
     run(
         request_path=args.request,
@@ -312,6 +315,7 @@ def main() -> int:
         result_path=args.result,
         kokoro_root=args.kokoro_root,
         openvoice_root=args.openvoice_root,
+        runtime_factory=lambda kokoro, openvoice: LocalKokoroOpenVoiceRuntime(kokoro, openvoice, device=args.device),
     )
     return 0
 
