@@ -1,4 +1,5 @@
 import React from "react";
+import { AdCopyProcessPanel } from '../shared/AdCopyProcessPanel';
 import {
   ArrowRight,
   AudioLines,
@@ -180,6 +181,15 @@ function VideoRoom({
       ? studio.document
       : project;
   const canonicalActive = area === 'editor' && Boolean(currentDoc && !currentDoc.nativeEditorState && currentDoc.composition.mediaTimeline);
+  React.useEffect(()=>{
+    const open=(event:Event)=>{
+      const identifier=(event as CustomEvent).detail?.documentId;
+      if(typeof identifier!=='string'||!window.dispatchEvent(new Event('clicko:studio-before-leave',{cancelable:true})))return;
+      void run(async()=>openProject(await productApi.studioDocument(identifier) as CraftDocument));
+    };
+    window.addEventListener('clicko:open-prepared-document',open);
+    return()=>window.removeEventListener('clicko:open-prepared-document',open);
+  },[workspaceId,currentDoc?.documentId,busy,studio.busy,dirty]);
   React.useEffect(() => {
     writeStudioSession(sessionKey, { brief, project:currentDoc, assets:addedAssets, materials, dirty } satisfies VideoNavigationState);
   }, [sessionKey, brief, currentDoc, addedAssets, materials, dirty]);
@@ -584,6 +594,7 @@ function VideoRoom({
       data-video-area={area}
       aria-label="Estúdio de vídeo Clicko"
     >
+      <AdCopyProcessPanel targetKind="document" targetId={currentDoc?.documentId} disabled={busy || studio.busy} />
       <header className="vs-header" hidden={canonicalActive}>
         <div>
           <div className="vs-eyebrow">
@@ -1181,6 +1192,7 @@ function VideoRoom({
         <CanonicalVideoEditor key={currentDoc.documentId} doc={currentDoc} assets={assets} visible={area === "editor" || area === "motion"}
           projectActions={<button type="button" onClick={() => setShowProjects(value => !value)} aria-expanded={showProjects}><FolderOpen size={15}/>Projetos</button>}
           userId={data.bootstrap.user.id} onUpload={() => fileInput.current?.click()} onLibrary={() => void run(openLibrary)}
+          onGenerated={() => setReload(value => value + 1)}
           onDocument={next => { setProject(next); setProjects(current => [next, ...current.filter(d => d.documentId !== next.documentId)]); }} /> : <div hidden={area !== "editor"}>
         <VideoEditor
           visible={area === "editor"}

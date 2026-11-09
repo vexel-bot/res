@@ -1,7 +1,7 @@
 """Backend coordination over existing document, event, connection and job stores.
 
-This stage admits only deterministic tools or an explicitly configured local
-Ollama model. The existing Gemini KLIC and paid admission policy are untouched.
+The editorial workflow defaults to local tools. Optional Claude refinement
+uses a scoped connection and the shared external spending ledger.
 """
 
 import math
@@ -26,7 +26,7 @@ from ...domain.studios.local_composition import LocalLayerStyle, validate_compos
 from ...models import BrandProfile, CreativeDocument, StudioDomainEvent, StudioGenerationJob
 from ...providers.studios.local_composition import raster
 from ...providers.studios.universal_llm import validate_endpoint
-from . import local_agents, timeline_editor
+from . import local_agents, motion_editorial, timeline_editor
 from .compatibility import composition_to_canvas, record_to_contract
 from .contextual_editing import lock_editing_budget
 from .craft import scoped_asset
@@ -347,7 +347,7 @@ def task_out(job, db=None):
         "documentRevision": job.request_payload["documentRevision"],
         "provider": job.provider,
         "model": job.request_payload.get("model"),
-        "externalCostUsd": 0,
+        "externalCostUsd": (job.result_payload or {}).get("measuredCostUsd", 0),
         "result": job.result_payload,
         "errorCode": job.error_code,
         "requestedBy": job.requested_by,
@@ -413,6 +413,10 @@ def create_task(db, document, request, user, key):
         payload.pop("probe", None)
     if not payload.get("selectedLayerIds"):
         payload.pop("selectedLayerIds", None)  # Preserve replay hashes of pre-selection tasks.
+    if payload.get("editorial") is None:
+        payload.pop("editorial", None)  # Preserve hashes of earlier planner modes.
+    elif payload["editorial"].get("connectionId") is None:
+        payload["editorial"].pop("connectionId", None)
     fingerprint = timeline_editor.digest(payload)
     existing = db.scalar(
         select(StudioGenerationJob).where(
@@ -437,12 +441,23 @@ def create_task(db, document, request, user, key):
     roles = configuration(db, contract.workspace_id)
     binding = roles[role]
     experimental = request.planner == "gemini_experimental"
+    editorial = request.editorial is not None
+    claude = bool(editorial and request.editorial.connection_id)
+    claude_connection, claude_adapter = None, None
+    if claude:
+        from . import motion_claude
+
+        claude_connection, claude_adapter = motion_claude.binding(db, contract.workspace_id, request.editorial.connection_id)
+    if editorial and role != "audiovisual":
+        raise ValueError("editorial_experiment_video_required")
     history_output = (
         None
-        if experimental
+        if experimental or editorial
         else local_agents.history_undo(contract, request.instruction, document.versions, request.selected_layer_ids)
     )
     model, provider = None, None
+    if claude:
+        model = motion_claude.MODEL
     experiment_row, proof = None, None
     if experimental:
         from ...domain.studios.motion_gemini import MotionAgentOutput
@@ -451,7 +466,7 @@ def create_task(db, document, request, user, key):
         if role != "audiovisual":
             raise ValueError("motion_gemini_motion_only")
         experiment_row, provider, model, proof = motion_gemini.admitted_planner(db, document, user)
-    elif history_output is None and binding["mode"] == "local_model" and request.planner != "deterministic":
+    elif history_output is None and binding["mode"] == "local_model" and request.planner == "current":
         _connection, provider, model, _fingerprint = local_planner(db, contract.workspace_id, binding)
         require_installed_model(provider, model)
     lock_editing_budget(db, contract.workspace_id)
@@ -478,13 +493,18 @@ def create_task(db, document, request, user, key):
     ).all()
     if in_flight:
         raise ValueError("agent_workspace_busy_or_interrupted_task")
+    material_snapshot = motion_editorial.snapshot_materials(db, document, contract) if editorial else None
+    if editorial:
+        db.refresh(document)
+        if document.revision != request.expected_revision:
+            raise ValueError("studio_document_conflict")
     job = StudioGenerationJob(
         id=str(uuid4()),
         workspace_id=contract.workspace_id,
         requested_by=user.id,
         document_id=document.id,
         job_type="agent_plan",
-        provider="google.motion-gemini" if experimental else "llm.ollama" if provider else "clicko.local-tools",
+        provider="google.motion-gemini" if experimental else "llm.anthropic" if claude else "llm.ollama" if provider else "clicko.local-tools",
         execution_capability="media_cpu",
         queue_name="studio.control",
         resource_class="cpu.media",
@@ -502,13 +522,25 @@ def create_task(db, document, request, user, key):
             "roleRevision": roles["revision"],
             "mode": "gemini_experimental"
             if experimental
+            else "editorial_experimental"
+            if editorial
             else "local_tools"
             if history_output is not None or request.planner == "deterministic"
             else binding["mode"],
             "model": model,
             "selectedLayerIds": request.selected_layer_ids,
+            **({"editorialVariant": request.editorial.variant,
+                "materialDigest": motion_editorial.fingerprint(material_snapshot)} if editorial else {}),
         },
     )
+    if claude:
+        from .external_policy import billing_scope
+
+        job.request_payload = {**job.request_payload, "llmConnectionId": claude_connection.id,
+                               "llmConnectionRevision": claude_connection.revision,
+                               "billingScope": billing_scope(user, contract.workspace_id, db),
+                               "pricing": {name: claude_connection.config[name] for name in
+                                           ("inputUsdPerMillion", "outputUsdPerMillion")}}
     if experimental:
         motion_gemini.reserve(db, job, experiment_row, proof)
     db.add(job)
@@ -525,7 +557,7 @@ def create_task(db, document, request, user, key):
             "documentId": document.id,
             "documentRevision": contract.revision,
             "selectedLayerIds": request.selected_layer_ids,
-            "externalBudgetUsd": 0,
+            "externalBudgetUsd": claude_connection.config["budgetUsd"] if claude else 0,
         },
     )
     try:
@@ -534,6 +566,7 @@ def create_task(db, document, request, user, key):
         db.rollback()
         raise ValueError("agent_task_already_admitted") from error
     started, response = time.monotonic(), None
+    staged_previews = []
     try:
         if provider:
             context = {
@@ -617,23 +650,32 @@ def create_task(db, document, request, user, key):
         else:
             image_agent = local_agents.ImageAgent()
             agent = image_agent if role == "image" else local_agents.AudiovisualAgent(image_agent)
-            output = (
-                history_output
-                if history_output is not None
-                else agent.plan(contract, request.instruction, request.selected_layer_ids)
-            )
+            def baseline():
+                return agent.plan(contract, request.instruction, request.selected_layer_ids)
+
+            editorial_result = None
+            if editorial:
+                output, editorial_result = motion_editorial.plan(db, document, contract, request, material_snapshot, baseline)
+                if claude:
+                    output = motion_claude.refine(db, document, job, claude_connection, claude_adapter, output,
+                                                 editorial_result, request.instruction)
+            else:
+                output = history_output if history_output is not None else baseline()
             trace = {
-                "inference": "none",
+                "inference": "anthropic_messages" if claude else "none",
                 "planning": "deterministic_rules",
                 "delegations": [role] + (["image"] if role != "image" and image_agent.requests else []),
                 "delegateRequests": image_agent.requests,
             }
+            if editorial_result is not None:
+                trace.update(planning="editorial_" + request.editorial.variant, editorial=editorial_result)
         if len(output.model_dump_json()) > 160000:
             raise ValueError("agent_plan_too_large")
         db.refresh(job)
         if job.status in {"cancel_requested", "cancelled"}:
             job.status = "cancelled"
             job.result_payload = {
+                **((job.result_payload or {}) if claude else {}),
                 "state": "cancelled",
                 "commands": [],
                 "rationale": "Planejamento cancelado; nenhuma edição aplicada.",
@@ -658,6 +700,43 @@ def create_task(db, document, request, user, key):
         if output.commands:
             validate_selection_scope(output.commands, request.selected_layer_ids)
             proposal = proposed_document(db, contract, output.commands)
+            if editorial and request.editorial.variant == "orchestrated":
+                from .motion_editorial_review import persist_preview, render_and_review
+
+                def cancelled():
+                    db.refresh(job, attribute_names=["status"])
+                    return job.status != "running"
+
+                try:
+                    with render_and_review(db, document, proposal, editorial_result, cancelled) as (result, path):
+                        repaired = (
+                            motion_editorial.repair(proposal.composition, result["findings"])
+                            if result["status"] == "blocked" else None
+                        )
+                        if repaired is None and not cancelled():
+                            persist_preview(db, document, job, result, path, staged_previews)
+                    if repaired is not None:
+                        editorial_result["repairCount"] = 1
+                        editorial_result["initialFindings"] = result["findings"]
+                        output.commands[0].params["composition"] = repaired.model_dump(mode="json", by_alias=True)
+                        proposal = proposed_document(db, contract, output.commands)
+                        with render_and_review(db, document, proposal, editorial_result, cancelled) as (result, path):
+                            if not cancelled():
+                                persist_preview(db, document, job, result, path, staged_previews)
+                except InterruptedError:
+                    result = {"status": "cancelled", "findings": [{"code": "editorial_preview_cancelled"}]}
+                except (OSError, TimeoutError, ValueError) as error:
+                    if staged_previews:
+                        raise
+                    code = str(error).split(":", 1)[0]
+                    result = {"status": "inconclusive", "findings": [{
+                        "code": code if re.fullmatch(r"[a-z0-9_]{1,100}", code) else "editorial_preview_failed"
+                    }]}
+                editorial_result["preview"] = result
+                editorial_result["receipts"].append({"stage": "independent_technical_review", "status": result["status"]})
+                if result["status"] != "passed_technical":
+                    output.commands = []
+                    output.rationale = "A prévia precisa de revisão antes de aplicar a proposta."
             if experimental and request.duration_seconds:
                 t = proposal.composition.media_timeline
                 if (
@@ -667,11 +746,16 @@ def create_task(db, document, request, user, key):
                     > 0.05
                 ):
                     raise ValueError("motion_gemini_duration_mismatch")
-        job.status, job.progress = "succeeded", 100
+        db.refresh(job, attribute_names=["status"])
+        job.status, job.progress = ("cancelled" if job.status in {"cancelled", "cancel_requested"} else "succeeded"), 100
+        if job.status == "cancelled":
+            output.commands = []
         job.result_payload = {
+            **((job.result_payload or {}) if claude else {}),
             **output.model_dump(mode="json", by_alias=True),
             **trace,
-            "state": "planned" if output.commands else "unsupported",
+            "state": "cancelled" if job.status == "cancelled" else "planned" if output.commands else
+            "blocked" if editorial and editorial_result["preview"]["status"] in {"blocked", "inconclusive"} else "unsupported",
             "planningTimeMs": round((time.monotonic() - started) * 1000),
             **({"connectionProbe": True} if request.probe else {}),
             **({"billingAdmission": "verified_free_tier", "llmReservationUsd": 0} if experimental else {}),
@@ -689,6 +773,9 @@ def create_task(db, document, request, user, key):
             )
     except Exception as error:
         db.rollback()
+        for storage, key_path in staged_previews:
+            storage.delete(key_path)
+        staged_previews.clear()
         db.refresh(job)
         code = str(error)
         cancelled = job.status in {"cancel_requested", "cancelled"}
@@ -704,9 +791,10 @@ def create_task(db, document, request, user, key):
         )
         job.error_message = "Não foi possível concluir o plano; nenhuma edição foi aplicada."
         job.result_payload = {
+            **((job.result_payload or {}) if claude else {}),
             "state": "cancelled" if cancelled else "failed",
-            "inference": "gemini_experimental" if experimental else binding["mode"],
-            "usage": response.get("usage") if response else None,
+            "inference": "anthropic_messages" if claude else "gemini_experimental" if experimental else "none" if editorial else binding["mode"],
+            "usage": (job.result_payload or {}).get("usage") if claude else response.get("usage") if response else None,
             "planningTimeMs": round((time.monotonic() - started) * 1000),
         }
     job.finished_at = datetime.now(UTC)
@@ -722,10 +810,16 @@ def create_task(db, document, request, user, key):
             "role": role,
             "errorCode": job.error_code,
             "commandCount": len((job.result_payload or {}).get("commands", [])),
-            "externalCostUsd": 0,
+            "externalCostUsd": (job.result_payload or {}).get("measuredCostUsd", 0),
         },
     )
-    db.commit()
+    try:
+        db.commit()
+    except Exception:
+        db.rollback()
+        for storage, key_path in staged_previews:
+            storage.delete(key_path)
+        raise
     return task_out(job, db)
 
 
@@ -742,11 +836,26 @@ def apply_task(db, document, task, request, user):
     output = AgentOutput.model_validate({key: task.result_payload[key] for key in ("commands", "rationale")})
     if not output.commands:
         raise ValueError("agent_operation_unsupported")
+    commands = LocalCommandsRequest(expected_revision=request.expected_revision, commands=output.commands)
+    apply_key = "agent-apply:" + task.id
+    if task.request_payload.get("editorialVariant"):
+        lock_editing_budget(db, document.workspace_id)
+        fingerprint = timeline_editor.digest(commands.model_dump(mode="json", by_alias=True))
+        replay = command_receipt(db, document, apply_key, fingerprint)
+        if replay:
+            db.rollback()
+            return replay
+        db.refresh(document)
+        if document.revision != request.expected_revision:
+            raise ValueError("studio_document_conflict")
+        motion_editorial.verify_bound_materials(
+            db, document, record_to_contract(document), task.request_payload["materialDigest"]
+        )
     return commit_commands(
         db,
         document,
-        LocalCommandsRequest(expected_revision=request.expected_revision, commands=output.commands),
+        commands,
         user,
-        "agent-apply:" + task.id,
+        apply_key,
         selected_layer_ids=task.request_payload.get("selectedLayerIds", []),
     )

@@ -36,6 +36,7 @@ import {
   type Track,
 } from "./canonicalTimeline";
 import { videoOutputUrl } from "./canonicalVideoApi";
+import { OpenRouterMediaPanel } from './OpenRouterMediaPanel';
 import { CraftModelPicker, type ModelSelection } from "../craft/CraftModelPicker";
 import "./canonical-video.css";
 import { StudioEditorFrame, StudioKlicButton, StudioUtilityPanel, useStudioShortcuts } from '../shared/StudioWorkspace';
@@ -53,6 +54,7 @@ export function CanonicalVideoEditor({
   onLibrary,
   userId,
   projectActions,
+  onGenerated,
 }: {
   doc: CraftDocument;
   assets: AssetRecord[];
@@ -62,6 +64,7 @@ export function CanonicalVideoEditor({
   onLibrary: () => void;
   userId: string;
   projectActions?: React.ReactNode;
+  onGenerated?: () => void;
 }) {
   const { activeAccount } = useGovernance();
   const { activeClient } = useOperations();
@@ -79,6 +82,7 @@ export function CanonicalVideoEditor({
     selectedLayerIds: [], ...(selected ? { filters: { selectedClip: selected } } : {}),
   });
   const [busy, setBusy] = React.useState(false);
+  const [mediaBusy, setMediaBusy] = React.useState(false);
   const [error, setError] = React.useState("");
   const [runtime, setRuntime] = React.useState<{
     available: boolean;
@@ -91,9 +95,7 @@ export function CanonicalVideoEditor({
   const [instruction, setInstruction] = React.useState("");
   const [model, setModel] = React.useState<ModelSelection>({ available: false });
   const [aiPending, setAiPending] = React.useState<{ key: string; body: { expectedRevision: number; instruction: string; connectionId?: string; model?: string } }>();
-  const [keyProperty, setKeyProperty] = React.useState<
-    "x" | "y" | "scale" | "opacity"
-  >("opacity");
+  const [keyProperty, setKeyProperty] = React.useState<"x"|"y"|"scale"|"opacity"|"cropX"|"cropY"|"revealProgress">("opacity");
   const [keyStart, setKeyStart] = React.useState(0);
   const [keyEnd, setKeyEnd] = React.useState(1);
   const videoRef = React.useRef<HTMLVideoElement>(null);
@@ -123,7 +125,7 @@ export function CanonicalVideoEditor({
   const motion =
     (item && (track?.kind === "caption" ? item.motion : item.transform)) || {};
   const locked =
-    busy || active(job) || Boolean(recovery) || Boolean(savePending.current) || Boolean(renderPending.current) || Boolean(aiPending);
+    busy || mediaBusy || active(job) || Boolean(recovery) || Boolean(savePending.current) || Boolean(renderPending.current) || Boolean(aiPending);
   const aiRecoveryKey = `clicko:timeline-ai:v1:${userId}:${doc.workspaceId}:${doc.documentId}`;
   React.useEffect(() => {
     try {
@@ -133,14 +135,14 @@ export function CanonicalVideoEditor({
   }, [aiRecoveryKey]);
   React.useEffect(() => {
     const beforeLeave = (event: Event) => {
-      if (dirty || aiPending || inFlight.current || savePending.current || renderPending.current) {
+      if (dirty || mediaBusy || aiPending || inFlight.current || savePending.current || renderPending.current) {
         event.preventDefault();
         setError(dirty ? 'Salve a montagem antes de trocar de módulo.' : 'Confira a confirmação do salvamento ou da exportação antes de trocar de módulo.');
       }
     };
     window.addEventListener('clicko:studio-before-leave', beforeLeave);
     return () => window.removeEventListener('clicko:studio-before-leave', beforeLeave);
-  }, [dirty, aiPending]);
+  }, [dirty, aiPending, mediaBusy]);
   const savedRevision = React.useRef(doc.revision);
   const revision = React.useRef(doc.revision);
   revision.current = doc.revision;
@@ -195,6 +197,14 @@ export function CanonicalVideoEditor({
       savedRevision.current = doc.revision;
     }
   }, [doc.revision, dirty]);
+  React.useEffect(() => {
+    const applied = (event:Event) => {
+      if((event as CustomEvent).detail?.documentId!==doc.documentId)return;
+      void productApi.studioDocument(doc.documentId).then(next=>onDocument(next)).catch(e=>setError(e.message));
+    };
+    window.addEventListener('clicko:materials-composition-applied',applied);
+    return ()=>window.removeEventListener('clicko:materials-composition-applied',applied);
+  },[doc.documentId,onDocument]);
   React.useEffect(() => {
     if (!active(job)) return;
     const timer = window.setTimeout(
@@ -581,7 +591,7 @@ export function CanonicalVideoEditor({
           <Redo2 size={15}/>
         </button>
         <button
-          data-studio-action="save" disabled={busy || active(job) || Boolean(recovery) || Boolean(aiPending)}
+          data-studio-action="save" disabled={busy || mediaBusy || active(job) || Boolean(recovery) || Boolean(aiPending)}
           onClick={() => void run(save)}
         >
           <Save size={15} />{" "}
@@ -590,7 +600,7 @@ export function CanonicalVideoEditor({
         <button
           className="vs-primary"
           disabled={
-            busy || active(job) || Boolean(recovery) || Boolean(aiPending) || !runtime?.available ||
+            busy || mediaBusy || active(job) || Boolean(recovery) || Boolean(aiPending) || !runtime?.available ||
             !timeline.tracks.some((row) => items(row).length > 0)
           }
           onClick={() => void run(render)}
@@ -602,6 +612,7 @@ export function CanonicalVideoEditor({
         </button>
       </div></div>{projectActions}<button type="button" onClick={() => setAssistanceOpen(true)}>Assistência</button><StudioKlicButton/></>}
       materials={<aside className="cv-media">
+        <OpenRouterMediaPanel doc={doc} disabled={busy || dirty || active(job) || Boolean(aiPending) || Boolean(recovery)} onBusyChange={setMediaBusy} onComplete={fresh => { onDocument(fresh); onGenerated?.(); }} />
           <header>
             <h3>Materiais</h3>
             <button
@@ -859,6 +870,25 @@ export function CanonicalVideoEditor({
                     (v) => updateMotion({ rotation: v }),
                     1,
                   )}
+                  {track && ['video','overlay'].includes(track.kind) && <details>
+                    <summary>Recorte, revelação e máscara</summary>
+                    {number('Largura da janela (fração)',motion.crop?.width??1,.05,1,v=>updateMotion({crop:{...motion.crop,width:v}}),.05)}
+                    {number('Altura da janela (fração)',motion.crop?.height??1,.05,1,v=>updateMotion({crop:{...motion.crop,height:v}}),.05)}
+                    {number('Posição horizontal na fonte',motion.crop?.x??0,0,1,v=>updateMotion({crop:{...motion.crop,x:v}}),.05)}
+                    {number('Posição vertical na fonte',motion.crop?.y??0,0,1,v=>updateMotion({crop:{...motion.crop,y:v}}),.05)}
+                    {number('Fração revelada',motion.revealProgress??1,0,1,v=>updateMotion({revealProgress:v}),.05)}
+                    <label>Direção da revelação<select disabled={locked} value={motion.revealDirection||'left'} onChange={e=>updateMotion({revealDirection:e.target.value as Motion['revealDirection']})}>{[['left','Da esquerda'],['right','Da direita'],['top','De cima'],['bottom','De baixo']].map(([v,label])=><option value={v} key={v}>{label}</option>)}</select></label>
+                    <label>Máscara para esta trilha<select disabled={locked} value={timeline.tracks.find(t=>t.kind==='mask'&&t.targetTrackId===track.id)?.artifactAssetId||''} onChange={e=>{
+                      const prior=timeline.tracks.find(t=>t.kind==='mask'&&t.targetTrackId===track.id);
+                      const rest=timeline.tracks.filter(t=>t!==prior);
+                      change({...timeline,tracks:e.target.value?[...rest,{id:prior?.id||crypto.randomUUID(),name:'Máscara',kind:'mask',mode:prior?.mode||'luma',invert:prior?.invert||false,targetTrackId:track.id,artifactAssetId:e.target.value}]:rest});
+                    }}><option value="">Sem máscara</option>{assets.filter(a=>/^(image|video)\//.test(a.mediaType||'')).map(a=><option value={a.id} key={a.id}>{a.title}</option>)}</select></label>
+                    {timeline.tracks.filter(t=>t.kind==='mask'&&t.targetTrackId===track.id).map(mask=><fieldset key={mask.id} disabled={locked||mask.locked}>
+                      <label>Canal da máscara<select value={mask.mode||'luma'} onChange={e=>change({...timeline,tracks:timeline.tracks.map(t=>t.id===mask.id?{...t,mode:e.target.value as 'luma'|'alpha'}:t)})}><option value="luma">Cinza: branco mantém, preto remove</option><option value="alpha">Transparência do arquivo</option></select></label>
+                      <label><input type="checkbox" checked={mask.invert||false} onChange={e=>change({...timeline,tracks:timeline.tracks.map(t=>t.id===mask.id?{...t,invert:e.target.checked}:t)})}/>Inverter máscara</label>
+                    </fieldset>)}
+                    <small>Use fontes alinhadas. A máscara acompanha o tempo de origem dos clipes desta trilha. Confira o resultado na prévia renderizada.</small>
+                  </details>}
                   <fieldset disabled={locked}>
                     <ClickoSelectMenu
                       label="Animação de entrada e saída"
@@ -965,6 +995,9 @@ export function CanonicalVideoEditor({
                           ["y", "Posição Y"],
                           ["scale", "Escala"],
                           ["opacity", "Opacidade"],
+                          ["cropX", "Percurso horizontal do recorte (0–1)"],
+                          ["cropY", "Percurso vertical do recorte (0–1)"],
+                          ["revealProgress", "Revelação (0–1)"],
                         ]}
                         onChange={(v) => {
                           setKeyProperty(v as typeof keyProperty);
@@ -977,12 +1010,12 @@ export function CanonicalVideoEditor({
                         keyStart,
                         keyProperty === "scale"
                           ? 0.1
-                          : keyProperty === "opacity"
+                          : ["opacity","cropX","cropY","revealProgress"].includes(keyProperty)
                             ? 0
                             : -1920,
                         keyProperty === "scale"
                           ? 4
-                          : keyProperty === "opacity"
+                          : ["opacity","cropX","cropY","revealProgress"].includes(keyProperty)
                             ? 1
                             : 1920,
                         setKeyStart,
@@ -992,17 +1025,17 @@ export function CanonicalVideoEditor({
                         keyEnd,
                         keyProperty === "scale"
                           ? 0.1
-                          : keyProperty === "opacity"
+                          : ["opacity","cropX","cropY","revealProgress"].includes(keyProperty)
                             ? 0
                             : -1920,
                         keyProperty === "scale"
                           ? 4
-                          : keyProperty === "opacity"
+                          : ["opacity","cropX","cropY","revealProgress"].includes(keyProperty)
                             ? 1
                             : 1920,
                         setKeyEnd,
                       )}
-                      <button
+                      <button disabled={locked || (['cropX','cropY'].includes(keyProperty)&&!motion.crop)}
                         onClick={() =>
                           updateItem({
                             keyframes: [
@@ -1053,7 +1086,7 @@ export function CanonicalVideoEditor({
                   change({
                     ...timeline,
                     tracks: timeline.tracks.map((t) =>
-                      t.kind === "marker"
+                      t.kind === "marker" || t.kind === "mask"
                         ? t
                         : {
                             ...t,
@@ -1286,7 +1319,7 @@ export function CanonicalVideoEditor({
             <textarea rows={2} maxLength={4000} value={instruction} disabled={locked}
               onChange={event => setInstruction(event.target.value)} placeholder="Ex.: encurte a abertura e adicione um título…" />
           </label>
-          <button disabled={busy || active(job) || dirty || Boolean(recovery) || (!aiPending && (!model.available || !instruction.trim()))}
+          <button disabled={busy || mediaBusy || active(job) || dirty || Boolean(recovery) || (!aiPending && (!model.available || !instruction.trim()))}
             onClick={() => void run(applyAI)}>{aiPending ? "Conferir mesmo pedido de IA" : "Aplicar à timeline salva"}</button>
           {aiPending && <small>Pedido preservado. Conferir reutiliza a mesma identidade; um resultado externo desconhecido exige conciliação, sem nova cobrança automática.</small>}
         </div>

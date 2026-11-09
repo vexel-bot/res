@@ -84,6 +84,16 @@ export type AgentTask = {
         state: string;
         inference: string;
         planning?: string;
+        editorial?: {
+            variant: 'baseline' | 'knowledge' | 'orchestrated';
+            format: string;
+            knowledgeVersion?: string;
+            cardIds?: string[];
+            gaps?: unknown[];
+            receipts?: unknown[];
+            preview?: { downloadUrl?: string; status?: string };
+            humanVerdict?: string;
+        };
     };
 };
 export type RoleBinding = {
@@ -101,7 +111,7 @@ const post = (body: unknown, key?: string): RequestInit => ({ method: 'POST', bo
     headers: key ? { 'Idempotency-Key': key } : undefined });
 export const localApi = {
     create: (body: unknown, key: string) => apiFetch<LocalDocument>(`${localBase}/agents/projects`, post(body, key)),
-    document: (id: string) => apiFetch<LocalDocument>(`${localBase}/documents/${encodeURIComponent(id)}`),
+    document: (id: string, signal?: AbortSignal) => apiFetch<LocalDocument>(`${localBase}/documents/${encodeURIComponent(id)}`, { signal }),
     list: (workspace: string, signal?: AbortSignal) => apiFetch<LocalDocument[]>(`${localBase}/documents?workspace_id=${encodeURIComponent(workspace)}`, { signal }),
     roles: (workspace: string, signal?: AbortSignal) => apiFetch<AgentRoles>(`${localBase}/agents/roles?workspace_id=${encodeURIComponent(workspace)}`, { signal }),
     configure: (workspace: string, roles: AgentRoles) => apiFetch<AgentRoles>(`${localBase}/agents/roles?workspace_id=${encodeURIComponent(workspace)}`, {

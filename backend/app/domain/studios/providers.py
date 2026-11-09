@@ -4,6 +4,7 @@ from collections.abc import AsyncIterator, Callable
 from pathlib import Path
 from typing import Any, Protocol
 
+from .appearance_image import AppearanceImageRequestV1, AppearanceImageResultV1
 from .contracts import (
     AudioWaveformManifestV1,
     AudioWaveformSpecV1,
@@ -145,6 +146,23 @@ class VoiceCloneProvider(Protocol):
         progress: ProgressCallback,
         is_cancelled: CancellationCheck,
     ) -> SpeechSynthesisResultV1: ...
+
+
+class AppearanceImageProvider(Protocol):
+    """A selected, authorized appearance can condition a new image or scene edit."""
+
+    name: str
+    version: str
+
+    def generate(
+        self,
+        request: AppearanceImageRequestV1,
+        reference_path: Path,
+        source_path: Path | None,
+        destination: Path,
+        progress: ProgressCallback,
+        is_cancelled: CancellationCheck,
+    ) -> AppearanceImageResultV1: ...
 
 
 class VoiceReferenceNormalizer(Protocol):
@@ -502,6 +520,10 @@ PROVIDERS: dict[str, GenerationProvider] = {DocumentSnapshotProvider.name: Docum
 # Biometric adapters are promoted explicitly after rights, supply-chain and
 # benchmark gates. Production starts empty and therefore fails closed.
 AVATAR_VIDEO_PROVIDERS: dict[str, AvatarVideoProvider] = {}
+
+# Image synthesis is distinct from portrait composition and talking avatars.
+# Candidate construction never activates it for client jobs.
+APPEARANCE_IMAGE_PROVIDERS: dict[str, AppearanceImageProvider] = {}
 
 # External paid providers are injected only by explicit one-shot runners. Keeping
 # this empty prevents ordinary Studio jobs from spending through a generic route.

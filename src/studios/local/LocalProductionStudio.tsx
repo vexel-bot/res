@@ -70,13 +70,14 @@ function LocalRoom({ module, workspaceId, userId }: {
     const [frame, setFrame] = React.useState(0);
     const [playing, setPlaying] = React.useState(false);
     const [download, setDownload] = React.useState<string>();
+    const [planPreview, setPlanPreview] = React.useState<{taskId:string; url:string}>();
     const [mediaOpen, setMediaOpen] = React.useState(false);
     const [utility, setUtility] = React.useState<'projects' | 'history' | 'project' | 'production' | 'output' | null>(null);
     const [pane, setPane] = React.useState<StudioPane>('preview');
     const [leftTab, setLeftTab] = React.useState<'layers' | 'materials'>('layers');
     const [format, setFormat] = React.useState(video ? '16:9' : '1:1');
     const [gemini, setGemini] = React.useState<MotionGeminiStatus>();
-    const [plannerMode, setPlannerMode] = React.useState<'deterministic'|'gemini_experimental'>('deterministic');
+    const [plannerMode, setPlannerMode] = React.useState<'deterministic'|'gemini_experimental'|'knowledge'|'orchestrated'|'anthropic_editorial'>('deterministic');
     const [planDuration, setPlanDuration] = React.useState(15);
     const [planningDocument, setPlanningDocument] = React.useState<string>();
     const editorRoot = React.useRef<HTMLElement>(null);
@@ -94,6 +95,12 @@ function LocalRoom({ module, workspaceId, userId }: {
     const duration = timeline?.durationFrames || 1;
     const rendering = Boolean(job && !['succeeded', 'failed', 'cancelled'].includes(job.status));
     const locked = busy || Boolean(pending) || rendering || mediaOpen;
+    const claudeConnection = connections.find(row=>row.provider==='anthropic' && row.hasCredential && row.config.enabled
+        && row.config.protocol==='anthropic_messages' && row.config.baseUrl==='https://api.anthropic.com/v1'
+        && row.config.models.includes('claude-opus-5-5'));
+    const editorialVariant = !video ? undefined : plannerMode === 'anthropic_editorial' ? 'orchestrated' :
+        plannerMode === 'knowledge' || plannerMode === 'orchestrated' ? plannerMode : undefined;
+    const editorialPlan = tasks[0]?.result?.editorial;
     useKlicPageDetails(module, klicPageScope(activeAccount.workspaceId, activeClient?.id), {
         view: mediaOpen ? 'Montagem audiovisual' : video ? 'Motion Design Studio' : 'Image Studio local', ...(doc ? { selected: { kind: 'studio-document', id: doc.documentId },
             selectedLayerIds: !mediaOpen && selected && layer ? [selected] : [] } : {})
@@ -130,24 +137,25 @@ function LocalRoom({ module, workspaceId, userId }: {
             setError('A recuperação local não pôde ser lida. O projeto salvo continua no servidor.');
         }
         const controller = new AbortController();
+        const compatible = (row: LocalDocument) => row.workspaceId === workspaceId
+            && row.contentType === (video ? 'video' : 'visual') && !row.nativeEditorState && row.composition.pages.length === 1
+            && row.composition.pages[0].layers.every(layer => {
+                const style = layer.properties;
+                if (style?.schemaVersion === 'studio.local-layer.v1') return true;
+                // Older editorial proposals omitted the default marker on timed layers.
+                return video && Boolean(row.composition.mediaTimeline) && style?.schemaVersion === undefined
+                    && typeof style?.durationFrames === 'number' && ['text', 'image', 'shape'].includes(layer.kind);
+            });
+        const id = requestedId || rememberedId;
+        if (id && !recoveredId) void localApi.document(id, controller.signal).then(target => {
+            if (controller.signal.aborted) return;
+            if (!compatible(target)) throw new Error('O projeto solicitado não está disponível neste ambiente.');
+            setDoc(target);
+            setDirty(false);
+        }).catch(e=>{ if (!controller.signal.aborted) setError(e.message); });
         void localApi.list(workspaceId, controller.signal).then(rows => {
-            if (controller.signal.aborted)
-                return;
-            const compatible = rows.filter(row => row.contentType === (video ? 'video' : 'visual') && !row.nativeEditorState && row.composition.pages.length === 1
-                && row.composition.pages[0].layers.every(layer => layer.properties?.schemaVersion === 'studio.local-layer.v1'));
-            setProjects(compatible);
-            const id = requestedId || rememberedId;
-            if (id && !recoveredId) {
-                const target = compatible.find(row => row.documentId === id);
-                if (target) {
-                    setDoc(target);
-                    setDirty(false);
-                }
-                else
-                    setError('O projeto solicitado não está disponível neste ambiente.');
-            }
-        }).catch(e => { if (!controller.signal.aborted)
-            setError(e.message); });
+            if (!controller.signal.aborted) setProjects(rows.filter(compatible));
+        }).catch(e => { if (!controller.signal.aborted && !id) setError(e.message); });
         void localApi.roles(workspaceId, controller.signal).then(value => { if (!controller.signal.aborted)
             setRoles(value); }).catch(e => { if (!controller.signal.aborted)
             setError(e.message); });
@@ -297,6 +305,7 @@ function LocalRoom({ module, workspaceId, userId }: {
         return; if (!dirty)
         return doc; const updated = await write<LocalDocument>(`${localBase}/documents/${doc.documentId}/local-commands`, { expectedRevision: doc.revision, commands: [{ id: 'composition.replace', params: { composition: doc.composition } }] }); adopt(updated); return updated; }
     async function plan() {
+        if (plannerMode==='anthropic_editorial' && !claudeConnection) throw new Error('Configure a conexão direta do Claude para continuar.');
         let current = await save();
         if (!current) {
             current = await createEmptyProject();
@@ -305,8 +314,11 @@ function LocalRoom({ module, workspaceId, userId }: {
         let task:AgentTask;
         try { task = await write<AgentTask>(`${localBase}/documents/${current.documentId}/agent-tasks`, { expectedRevision: current.revision,
             instruction: gemini?.available && plannerMode==='deterministic' ? instruction+` Duração solicitada: ${planDuration} segundos.` : instruction, role: 'auto',
-            ...(gemini?.available ? {planner:plannerMode,durationSeconds:planDuration} : {}),
-            selectedLayerIds: selected && current.composition.pages[0].layers.some(row=>row.id===selected) ? [selected] : [] });
+            ...(editorialVariant
+                ? {planner:'editorial_experimental', editorial:{variant:editorialVariant,format:'auto',
+                    ...(plannerMode==='anthropic_editorial' ? {connectionId:claudeConnection!.id} : {})}}
+                : gemini?.available ? {planner:plannerMode,durationSeconds:planDuration} : {}),
+            selectedLayerIds: !editorialVariant && selected && current.composition.pages[0].layers.some(row=>row.id===selected) ? [selected] : [] });
         } finally { setPlanningDocument(undefined); }
         setTasks(rows => [task, ...rows.filter(row => row.id !== task.id)]);
         setUtility('production');
@@ -315,6 +327,12 @@ function LocalRoom({ module, workspaceId, userId }: {
     }
     async function apply(task: AgentTask) { if (!doc)
         return; const value = await write<LocalDocument>(`${localBase}/documents/${doc.documentId}/agent-tasks/${task.id}/apply`, { expectedRevision: task.documentRevision }); adopt(value); setNotice('Plano aplicado. Os elementos continuam editáveis.'); }
+    async function openPlanPreview(task: AgentTask) {
+        const match = task.result?.editorial?.preview?.downloadUrl?.match(/^\/api\/v1\/assets\/([a-f0-9-]+)\/content$/i);
+        if (!match)
+            throw new Error('A prévia renderizada não está disponível.');
+        setPlanPreview({taskId:task.id,url:videoOutputUrl(match[1],workspaceId,activeClient?.id)});
+    }
     async function createEmptyProject() {
         const [width, height] = format === '1:1' ? [1080, 1080] : format === '9:16' ? [720, 1280] : [1280, 720];
         const current = await write<LocalDocument>(`${localBase}/agents/projects`, { workspaceId, title: title.trim() || (video ? 'Meu motion design' : 'Minha composição'), contentType: video ? 'video' : 'visual', width, height });
@@ -402,19 +420,24 @@ function LocalRoom({ module, workspaceId, userId }: {
         <StudioKlicButton/>
     </>;
     const planningForm = <>
-        {gemini?.available&&<><label>Planejador<ClickoSelectMenu ariaLabel="Planejador do Motion" value={plannerMode} disabled={locked}
-            options={[{value:'deterministic',label:'A · Planejador atual (regras locais)'},{value:'gemini_experimental',label:'B · Gemini experimental'}]} onChange={value=>setPlannerMode(value as typeof plannerMode)}/></label>
-            <label>Duração solicitada (s)<input type="number" min={3} max={120} value={planDuration} onChange={e=>setPlanDuration(Number(e.target.value))}/></label></>}
+        {video&&<label>Planejador<ClickoSelectMenu ariaLabel="Planejador do Motion" value={plannerMode} disabled={locked}
+            options={[{value:'deterministic',label:'Planejador atual'},
+                {value:'knowledge',label:'Edição com fichas · experimental'},
+                {value:'orchestrated',label:'Edição com revisão renderizada · experimental'},
+                ...(claudeConnection ? [{value:'anthropic_editorial',label:'Claude Opus 5.5 · API direta'}] : []),
+                ...(gemini?.available ? [{value:'gemini_experimental',label:'Gemini experimental'}] : [])]}
+            onChange={value=>setPlannerMode(value as typeof plannerMode)}/></label>}
+        {gemini?.available&&!editorialVariant&&<label>Duração solicitada (s)<input type="number" min={3} max={120} value={planDuration} onChange={e=>setPlanDuration(Number(e.target.value))}/></label>}
         <label>{doc ? 'Pedido de edição' : 'Descreva sua ideia'}<textarea className="studio-start__idea" aria-label="Briefing ou comando de produção" value={instruction} maxLength={8000} onChange={event => setInstruction(event.target.value)} rows={3} placeholder={video ? 'Ex.: três cenas sobre inovação, com títulos e cartões animados.' : 'Ex.: um cartão com o título “Ideias que ganham forma”.'}/></label>
         <button type="button" disabled={locked || !instruction.trim() || (gemini?.available&&plannerMode==='gemini_experimental'&&!gemini.inferenceReady)} onClick={() => void run(plan)}><Sparkles size={15}/>{busy ? 'Preparando…' : gemini?.available&&plannerMode==='gemini_experimental'?'Planejar com Gemini':'Preparar plano'}</button>
-        {planningDocument&&gemini?.available&&<button type="button" onClick={()=>{
+        {planningDocument&&gemini?.available&&plannerMode==='gemini_experimental'&&<button type="button" onClick={()=>{
             const key=pendingRef.current?.key;if(!key)return;
             void apiFetch(`${localBase}/agents/motion-gemini/cancel/${encodeURIComponent(planningDocument)}`,{method:'POST',body:JSON.stringify({requestKey:key})})
                 .then(()=>setNotice('Cancelamento solicitado. Uma chamada já enviada pode terminar, mas o plano não será aplicado.'))
                 .catch(()=>setError('A tarefa ainda não confirmou o cancelamento. Aguarde o resultado; nenhuma aplicação é automática.'));
         }}>Cancelar planejamento</button>}
         {gemini?.available&&plannerMode==='gemini_experimental'&&!gemini.inferenceReady&&<p>Gemini ainda não admitido: confira chave, modelo, ativação e comprovação gratuita nas Configurações do projeto.</p>}
-        <p className="studio-compact-note">{roles?.[video ? 'audiovisual' : 'image'].mode === 'local_model' ? 'Modelo local configurado. Revise o plano antes de aplicar.' : 'Produção por regras locais, sem inferência de IA. Você também pode editar manualmente.'}</p>
+        <p className="studio-compact-note">{plannerMode==='anthropic_editorial' ? 'O Claude recebe amostras dos materiais para propor ajustes. A Clicko renderiza e revisa a proposta localmente. O planejamento consome créditos da Anthropic.' : editorialVariant ? 'A proposta considera o projeto inteiro e usa o briefing, a linha do tempo e os materiais disponíveis. Revise o resultado antes de aplicar. Custo de API zero.' : roles?.[video ? 'audiovisual' : 'image'].mode === 'local_model' ? 'Modelo local configurado. Revise o plano antes de aplicar.' : 'Produção por regras locais, sem inferência de IA. Você também pode editar manualmente.'}</p>
     </>;
     const library = <div className="lp-material-list">
         <button type="button" disabled={locked} onClick={() => file.current?.click()}><Upload size={15}/>Importar arquivo</button>
@@ -500,7 +523,7 @@ function LocalRoom({ module, workspaceId, userId }: {
             <details className="lp-task-history"><summary>Histórico dos agentes · {tasks.length} tarefas</summary>{tasks.map(task=><article key={task.id}><strong>{task.role} · {task.status}{task.appliedRevision ? ' · aplicado na revisão '+task.appliedRevision : ''}</strong><p>{task.instruction}</p><small>{task.id} · {task.provider} · custo externo R$ 0</small>{task.history?.map((event,index)=><p key={index}>{event.type} · {event.at}</p>)}</article>)}</details>
         </StudioUtilityPanel>
         <StudioUtilityPanel title="Projeto e ferramentas" open={utility==='project'} onClose={()=>setUtility(null)}>
-            {video&&<MotionGeminiSettings workspaceId={workspaceId} documentId={doc?.documentId} revision={doc?.revision} onStatus={value=>{setGemini(value);if(!value?.enabled)setPlannerMode('deterministic');}}/>}
+            {video&&<MotionGeminiSettings workspaceId={workspaceId} documentId={doc?.documentId} revision={doc?.revision} onStatus={value=>{setGemini(value);if(!value?.enabled)setPlannerMode(current=>current==='gemini_experimental'?'deterministic':current);}}/>}
             {page && doc && <><p>{doc.title} · revisão {doc.revision}</p><label>Fundo do projeto<input disabled={locked} type="color" value={page.background.slice(0,7)} onChange={event=>change({...doc.composition,pages:[{...page,background:event.target.value}]})}/></label>
                 {dirty&&!pending&&<button type="button" disabled={busy} onClick={()=>void run(async()=>{localStorage.setItem(storageKey+':previous',JSON.stringify(doc));adopt(await localApi.document(doc.documentId));setNotice('Versão salva recarregada. Rascunho anterior preservado como backup local.');})}>Recarregar versão salva</button>}</>}
             <details className="lp-settings"><summary>Modelos dos agentes</summary><p>A KLIC mantém sua configuração Gemini. Cada especialista pode usar regras locais ou uma conexão Ollama já instalada. Nenhum modelo é baixado por este painel.</p>{roles && (['audiovisual', 'image'] as const).map(role => <label key={role}>{role === 'audiovisual' ? 'Audiovisual' : 'Imagem'}<ClickoSelectMenu ariaLabel={`Modelo do agente ${role}`} disabled={busy || !canConfigure} value={roles[role].mode === 'local_model' ? `${roles[role].connectionId}|${roles[role].model}` : 'local_tools'} options={[{ value: 'local_tools', label: 'Ferramentas locais · sem inferência' }, ...usableConnections.flatMap(connection => connection.config.models.filter(model => !model.toLowerCase().includes('cloud')).map(model => ({ value: `${connection.id}|${model}`, label: `${connection.label} · ${model}` })))]} onChange={value => { const [connectionId, model] = value.split('|'); setRoles({ ...roles, [role]: value === 'local_tools' ? { mode: 'local_tools' } : { mode: 'local_model', connectionId, model } }); }}/></label>)}<button disabled={busy || !roles || !canConfigure} onClick={() => void run(async () => { setRoles(await localApi.configure(workspaceId, roles!)); setNotice('Configuração dos agentes salva.'); })}>Salvar configuração</button><details><summary>Registrar Ollama local existente</summary><label>ID do modelo instalado<input ref={modelField} placeholder="qwen3:0.6b"/></label><button disabled={busy || !canConfigure} onClick={() => void run(async () => { const model = modelField.current?.value.trim(); if (!model)
@@ -508,9 +531,13 @@ function LocalRoom({ module, workspaceId, userId }: {
         </StudioUtilityPanel>
         <StudioUtilityPanel title="Produção assistida" open={utility==='production'} onClose={()=>setUtility(null)}>
             <StudioKlicButton/><p>A conversa KLIC é compartilhada com a plataforma. Use abaixo apenas para preparar e revisar um plano de ferramentas.</p>
-            {selected&&<p>Alvo: {layer?.name||'camada selecionada'} <button type="button" disabled={locked} onClick={()=>setSelected(undefined)}>Desmarcar · editar projeto inteiro</button></p>}
+            {selected&&!editorialVariant&&<p>Alvo: {layer?.name||'camada selecionada'} <button type="button" disabled={locked} onClick={()=>setSelected(undefined)}>Desmarcar · editar projeto inteiro</button></p>}
             {planningForm}
-            {tasks[0]&&<section className="lp-plan" aria-label="Plano do agente"><strong>{tasks[0].role==='image'?'Agente visual':'Agente audiovisual'}</strong><p>{tasks[0].result?.rationale||motionGeminiError(tasks[0].errorCode||'')}</p><details><summary>Detalhes do plano</summary><small>{tasks[0].provider} · {tasks[0].result?.commands?.length||0} operações · {tasks[0].result?.state}</small><pre>{JSON.stringify(tasks[0].result,null,2)}</pre></details><button type="button" disabled={locked||dirty||!tasks[0].result?.commands?.length||tasks[0].status!=='succeeded'||tasks[0].documentRevision!==doc?.revision} onClick={()=>void run(()=>apply(tasks[0]))}>{tasks[0].provider==='google.motion-gemini'?'Criar Motion Design':'Aplicar plano'}</button></section>}
+            {tasks[0]&&<section className="lp-plan" aria-label="Plano do agente"><strong>{tasks[0].role==='image'?'Agente visual':'Agente audiovisual'}</strong><p>{tasks[0].result?.rationale||motionGeminiError(tasks[0].errorCode||'')}</p>
+                {editorialPlan&&<p>Formato proposto: {({motion:'motion',hybrid:'híbrido',footage:'filmagem',interface:'demonstração de interface'} as Record<string,string>)[editorialPlan.format] || editorialPlan.format}. {editorialPlan.cardIds?.length ?? 0} fichas consultadas. {editorialPlan.gaps?.length ? `${editorialPlan.gaps.length} lacunas para conferir.` : ''}</p>}
+                {editorialPlan?.preview?.downloadUrl&&<button type="button" disabled={locked} onClick={()=>void run(()=>openPlanPreview(tasks[0]))}>Ver prévia renderizada</button>}
+                {planPreview?.taskId===tasks[0].id&&<video controls playsInline preload="metadata" src={planPreview.url} className="lp-video-output" aria-label="Prévia do plano editorial" onError={()=>setError('Não foi possível abrir a prévia. Tente novamente.')}/>}
+                <details><summary>Detalhes do plano</summary><small>{tasks[0].provider} · {tasks[0].result?.commands?.length||0} operações · {tasks[0].result?.state}</small><pre>{JSON.stringify(tasks[0].result,null,2)}</pre></details><button type="button" disabled={locked||dirty||!tasks[0].result?.commands?.length||tasks[0].status!=='succeeded'||tasks[0].documentRevision!==doc?.revision} onClick={()=>void run(()=>apply(tasks[0]))}>{tasks[0].provider==='google.motion-gemini'?'Criar Motion Design':'Aplicar plano'}</button></section>}
         </StudioUtilityPanel>
         <StudioUtilityPanel title="Exportação" open={utility==='output'} onClose={()=>setUtility(null)}>
             {rendering&&<p role="status">Renderizando… {job?.progress}% <button type="button" onClick={()=>void run(async()=>setJob(await apiFetch(localBase+'/jobs/'+job!.id+'/cancel',{method:'POST',body:JSON.stringify({reason:'Cancelado pelo usuário'})})))}>Cancelar</button></p>}

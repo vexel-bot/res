@@ -137,7 +137,7 @@ def video_content(
         asset = scoped_asset(db, membership.workspace_id, asset_id)
     except ValueError as error:
         raise HTTPException(404, "Vídeo não encontrado.") from error
-    if "clicko-video-export" not in (asset.tags or []):
+    if "clicko-video-export" not in (asset.tags or []) and (asset.object_metadata or {}).get("editorialPreview") is not True:
         raise HTTPException(404, "Vídeo não encontrado.")
     response = download_asset(asset_id, db, user)
     if not request.query_params.get("download") and response.status_code != 307:

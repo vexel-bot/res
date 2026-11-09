@@ -93,7 +93,10 @@ if (command === 'status' || command === 'stop') {
     if (child.connected) child.send('shutdown');
     setTimeout(() => { if (child.exitCode === null) child.kill(); }, 20_000).unref();
   }
-  const startupDeadline = setTimeout(() => { console.error('CLICKO_LOCAL_STARTUP_TIMEOUT'); stop(); }, 120_000).unref();
+  // Cold starts on small development machines can take longer while the
+  // Studios service and Vite compete for memory. The control status remains
+  // available throughout, so keep waiting rather than stopping a live start.
+  const startupDeadline = setTimeout(() => { console.error('CLICKO_LOCAL_STARTUP_TIMEOUT'); stop(); }, 300_000).unref();
   const startupProbe = setInterval(async () => {
     if ((await readinessProbe()).ready) { clearTimeout(startupDeadline); clearInterval(startupProbe); }
   }, 2000).unref();

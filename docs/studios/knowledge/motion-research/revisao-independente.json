@@ -1,0 +1,154 @@
+{
+  "schemaVersion": "clicko.motion-corpus.independent-coding.v1",
+  "observedOn": "2026-11-09",
+  "observer": "/root/corpus_motion/reels_independent",
+  "scope": "Codificação independente dos seis Reels predesignados, usando somente os quadros do player público e os metadados de aquisição. A segunda leitura é independente, mas utiliza a mesma fonte e as mesmas capturas. As imagens não foram incluídas como material reutilizável.",
+  "coverage": "Seis quadros por Reel em pontos temporais descontínuos. Sem reprodução contínua ou escuta na segunda leitura.",
+  "sourceConfidence": "Evidência direta dos estados visíveis nas capturas. Procedência atribuída pelo metadado do próprio post, uma fonte primária única. Nenhuma afirmação sobre eficácia, sincronia, autoria individual da montagem ou causalidade de retenção.",
+  "entries": [
+    {
+      "id": "Dct4pAohiup",
+      "url": "https://www.instagram.com/reel/Dct4pAohiup/",
+      "publisher": "@creators",
+      "creditedCreator": "@moonsol.design",
+      "attribution": "A legenda do post atribui a demonstração de edição a @moonsol.design.",
+      "primaryStratum": "composicao-recortes",
+      "durationSeconds": 35.167,
+      "timestampsSeconds": [
+        0.35,
+        4.92,
+        11.25,
+        19.34,
+        27.78,
+        33.06
+      ],
+      "contactSheetSha256": "517f63078db3f001aece6dbe53325f4bfdfd2b0783409ed200287fc666e8fed3",
+      "visibleChange": "Em 0,35 s, a região da blusa contém faixas horizontais de uma paisagem. Em 11,25 s, a paisagem aparece no painel de edição. Em 19,34 s, um contorno branco marca a blusa. Em 27,78 s, a textura reaparece confinada à região da roupa no quadro do editor.",
+      "audio": {
+        "playerMuted": true,
+        "audition": "not_audited"
+      },
+      "limitation": "A série de quadros mostra etapas e estados, mas não permite verificar a fidelidade do contorno em todos os quadros nem distinguir todas as etapas do recorte."
+    },
+    {
+      "id": "DdtuxMNBtxr",
+      "url": "https://www.instagram.com/reel/DdtuxMNBtxr/",
+      "publisher": "@design",
+      "creditedCreator": "@natashahmedx",
+      "attribution": "O texto de @design identifica Natasha Ahmed como ilustradora e autora da atividade mostrada, sem identificar a montagem do Reel.",
+      "primaryStratum": "acao-transicoes",
+      "durationSeconds": 79.346,
+      "timestampsSeconds": [
+        0.35,
+        11.11,
+        25.39,
+        43.64,
+        62.68,
+        74.59
+      ],
+      "contactSheetSha256": "015917bdf824cbca8503a42b459de41f87fd948e586b7a7089b011c06346aa71",
+      "visibleChange": "Em 11,11 s, mãos trabalham com papéis sobre uma mesa rosa. Em 25,39 s, o enquadramento passa a pessoas juntas no espaço da atividade. Em 62,68 s, as mãos e os materiais reaparecem em plano de cima. Em 74,59 s, o nome da participante e imagens da atividade aparecem numa tela grande.",
+      "audio": {
+        "playerMuted": true,
+        "audition": "not_audited"
+      },
+      "limitation": "A amostra comprova a alternância de escalas e contextos. Não determina qual gesto motiva cada corte nem a ordem integral de confecção do caderno."
+    },
+    {
+      "id": "Ddg1mTHxotm",
+      "url": "https://www.instagram.com/reel/Ddg1mTHxotm/",
+      "publisher": "@creators",
+      "creditedCreator": null,
+      "attribution": "O metadado atribui a publicação a @creators, mas não identifica a pessoa que apresenta ou monta o Reel.",
+      "primaryStratum": "tipografia",
+      "durationSeconds": 47.482,
+      "timestampsSeconds": [
+        0.35,
+        6.65,
+        15.19,
+        26.12,
+        37.51,
+        44.63
+      ],
+      "contactSheetSha256": "2ce171a201a26337880c6153e5905ce7ec74e7529d989671f1c9ea786d09a094",
+      "visibleChange": "Nos quadros de 0,35 a 15,19 s, aparecem legendas pequenas sobre a apresentadora. Em 26,12 s, a chamada para gravar ocupa uma área maior e tem letra cursiva. Em 37,51 e 44,63 s, retornam as legendas pequenas. O enquadramento da pessoa continua semelhante.",
+      "audio": {
+        "playerMuted": true,
+        "audition": "not_audited"
+      },
+      "limitation": "O contraste de escala do texto é observável. A amostragem não permite medir a velocidade de animação nem atribuir o destaque a uma inflexão da voz."
+    },
+    {
+      "id": "Ddb0HfwRd93",
+      "url": "https://www.instagram.com/reel/Ddb0HfwRd93/",
+      "publisher": "@creators",
+      "creditedCreator": "@ishanimitraa",
+      "attribution": "A legenda do post credita Ishani Mitra como criadora da demonstração em colaboração com Instagram.",
+      "primaryStratum": "acao-transicoes",
+      "durationSeconds": 61.762,
+      "timestampsSeconds": [
+        0.35,
+        8.65,
+        19.76,
+        33.97,
+        48.79,
+        58.06
+      ],
+      "contactSheetSha256": "b966f000cc10fd148157e70e6a51b4eaaa4626555233eb058a8937563388fc09",
+      "visibleChange": "Em 19,76 s, o quadro sobreposto mostra a pessoa com as mãos na altura da boca e clarões no fundo. Em 33,97 s, a tela do editor mostra a mesma ação em uma faixa de vídeo. Em 48,79 s, vê-se uma sequência de miniaturas com as mãos diante do rosto. Em 58,06 s, a demonstração reaparece no quadro menor.",
+      "audio": {
+        "playerMuted": true,
+        "audition": "not_audited"
+      },
+      "limitation": "O gesto próximo do rosto é verificável. O quadro exato da troca e o grau de oclusão durante a emenda não podem ser determinados pelas seis capturas."
+    },
+    {
+      "id": "DdphYESNgZG",
+      "url": "https://www.instagram.com/reel/DdphYESNgZG/",
+      "publisher": "@ordinaryfolkco",
+      "creditedCreator": "@ordinaryfolkco",
+      "attribution": "A publicação e a legenda identificam a Ordinary Folk como estúdio participante do Doodle. Não há crédito individual legível nas capturas usadas.",
+      "primaryStratum": "tipografia",
+      "durationSeconds": 61.567,
+      "timestampsSeconds": [
+        0.35,
+        8.62,
+        19.7,
+        33.86,
+        48.64,
+        57.87
+      ],
+      "contactSheetSha256": "2d5c5dbbb0e48edaa806a1b4f2f3a8d8a6e2c492fa907aa3fe81f1020f9665cc",
+      "visibleChange": "Em 0,35 s, aparecem fotografias de futebol. Em 8,62 s, surgem estudos ilustrados. Em 19,70 s, o nome Google aparece em contorno sobre um campo. Em 33,86 e 48,64 s, jogadores desenhados passam a ocupar parte da palavra. Em 57,87 s, a versão em cores preserva o nome e incorpora a ação dos jogadores.",
+      "audio": {
+        "playerMuted": true,
+        "audition": "not_audited"
+      },
+      "limitation": "As capturas revelam estudos e estados da composição. Não mostram os quadros intermediários necessários para reconstruir o movimento de cada letra."
+    },
+    {
+      "id": "DfIbC4Vyz3o",
+      "url": "https://www.instagram.com/reel/DfIbC4Vyz3o/",
+      "publisher": "@buck_design",
+      "creditedCreator": "@buck_design",
+      "attribution": "A publicação credita a equipe 3D da BUCK e lista artistas individuais. A classificação diz respeito à montagem publicada pelo estúdio.",
+      "primaryStratum": "som-ritmo",
+      "durationSeconds": 61.042,
+      "timestampsSeconds": [
+        0.35,
+        8.55,
+        19.53,
+        33.57,
+        48.22,
+        57.38
+      ],
+      "contactSheetSha256": "20fb8897d2f3b6ad89e146a8ce0b2c0f4108bfe320b6dd76bad45a04a0b79775",
+      "visibleChange": "A abertura tipográfica de 0,35 s é seguida por um olho enquadrado numa máquina em 8,55 s, um cesto iluminado em 19,53 s, uma estrutura com luz verde em 33,57 s e uma figura roxa em 48,22 s. Os créditos aparecem em 57,38 s. Os estados alternam cor e motivo no interior do mesmo conjunto temático.",
+      "audio": {
+        "playerMuted": true,
+        "audition": "not_audited"
+      },
+      "limitation": "A classificação usa a variação visual entre amostras. Sem escuta e sem amostragem contínua, não é possível avaliar batidas, pontos de corte, tempo de permanência de cada plano ou sincronismo."
+    }
+  ]
+}

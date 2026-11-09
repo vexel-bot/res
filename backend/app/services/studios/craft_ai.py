@@ -155,13 +155,30 @@ def ai_commands(db, record, request, user, key):
         ),
         "maxOutputTokens": settings.studio_editing_ai_max_output_tokens,
     }
+    if contract.content_type == "video":
+        from .ad_copy_workflow import planning_context
+        context["adCopyPreparation"] = planning_context(db, record)
+        from .ad_materials import planning_context as material_context
+        context["productMaterials"] = material_context(db, record)
     if canonical:
         context["structuredPlanningInstruction"] += (
-            " This is the canonical FFmpeg timeline, not a native Craft project. Return exactly one timeline.replace "
-            "command with the complete updated timeline. Preserve all unaffected tracks, source ranges and IDs. "
+            " This is the canonical FFmpeg timeline, not a native Craft project. Prefer exactly one timeline.patch "
+            "command containing targeted item updates, especially for long timelines. Use timeline.replace only "
+            "when restructuring the sequence is necessary. Preserve all unaffected tracks, source ranges and IDs. "
             "Supported: cuts, trim, static speed, title/caption text, overlay, x/y/scale/opacity keyframes, "
-            "static rotation, fades, audio gain and audio fades. No arbitrary filters, expressions, paths, "
-            "new assets, ASR, masks or scene generation. Never invent speech or transcription."
+            "rotation, fades, audio gain, source crop windows, cropX/cropY progress keyframes, revealProgress "
+            "and luma/alpha mask tracks targeting video/overlay tracks. A mask uses the same source time/rate "
+            "as each target clip; static images loop. Only use existing, aligned mask assets. "
+            "No arbitrary filters, expressions, paths, new assets, ASR or scene generation. Never invent speech or transcription. "
+            "Use the existing narration track and its validated source range as the master clock. "
+            "Do not speed up narration or extend its source range to fit visuals. Source ranges refer to "
+            "absolute positions in the source media; keyframe frame numbers are relative to each clip or cue. "
+            "Each keyframe is {property,frame,value,easing}, with property x, y, scale, opacity or rotation. "
+            "For local edits retain IDs and all unrequested sections. Motion must support information hierarchy "
+            "and legibility: brief entrance, readable hold, purposeful exit. Use only executable capabilities."
+            " Do not equate refinement with adding identical fades to every title. Follow the brief's emotional "
+            "progression and cut motivations; vary framing and pacing when requested. Never infer full action, "
+            "speech or continuity from sampled still frames. State what the samples cannot establish."
         )
     if connection:
         context["maxOutputTokens"] = min(context["maxOutputTokens"], connection.config["maxOutputTokens"])
@@ -253,21 +270,43 @@ def ai_commands(db, record, request, user, key):
                 return replay
             raise ValueError("craft_ai_submission_outcome_requires_reconciliation") from exc
         try:
-            if connection:
-                from .llm_connections import reserve_request
+            from .timeline_evidence import visual_samples
 
-                reserve_request(
-                    db,
-                    job,
-                    connection,
-                    len(json.dumps(context, ensure_ascii=False).encode()) + 1024,
-                    context["maxOutputTokens"],
+            with visual_samples(
+                db,
+                record,
+                contract,
+                enabled=canonical
+                and selected == "universal"
+                and connection.provider == "openrouter"
+                and model.startswith("anthropic/claude"),
+            ) as (media, observations):
+                context["visualEvidence"] = {
+                    "samples": observations,
+                    "coverage": "sampled stills only; unobserved intervals unknown",
+                }
+                context["maxPromptChars"] = min(
+                    settings.studio_editing_ai_max_prompt_chars, len(json.dumps(context, ensure_ascii=False)) + 1024
                 )
-            else:
-                reserve_test_request(db, job, 0)
-            job.result_payload = {**(job.result_payload or {}), "submissionStarted": True}
-            db.commit()
-            response = provider.plan(model, context, [])
+                if connection:
+                    from .llm_connections import reserve_request
+
+                    reserve_request(
+                        db,
+                        job,
+                        connection,
+                        len(json.dumps(context, ensure_ascii=False).encode()) + 1024 + len(media) * 6000,
+                        context["maxOutputTokens"],
+                    )
+                else:
+                    reserve_test_request(db, job, 0)
+                job.result_payload = {
+                    **(job.result_payload or {}),
+                    "submissionStarted": True,
+                    "visualEvidence": observations,
+                }
+                db.commit()
+                response = provider.plan(model, context, media)
             text = response["text"] if selected in {"compatible", "universal"} else response_text(response)
             usage = (
                 response.get("usage", {})
@@ -288,6 +327,7 @@ def ai_commands(db, record, request, user, key):
                 "usage": usage,
                 "measuredCostUsd": measured_request_cost(job, usage),
                 "rationale": str(output.get("rationale", ""))[:4000],
+                "visualEvidence": (job.result_payload or {}).get("visualEvidence", []),
             }
             job.result_payload = {**(job.result_payload or {}), **output, "submissionOutcome": "response_received"}
             db.commit()
@@ -302,10 +342,15 @@ def ai_commands(db, record, request, user, key):
                 raise
             raise ValueError("craft_ai_provider_invalid_response") from exc
     try:
+        proposed_commands = output["commands"]
+        if canonical:
+            from .timeline_ai import normalize_commands
+
+            proposed_commands = normalize_commands(proposed_commands)
         command_request = CraftCommandRequestV1.model_validate(
             {
                 "expectedRevision": request.expected_revision,
-                "commands": output["commands"],
+                "commands": proposed_commands,
                 "label": "Alteração solicitada à IA",
                 "pageId": request.page_id,
             }

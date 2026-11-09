@@ -5,3 +5,4 @@ workers/longcat-avatar/tests/fixtures/upstream_demo.py.txt -text
 workers/speech-gpu/candidate-v2/patches/*.patch text eol=lf whitespace=-blank-at-eol
 workers/speech-gpu/candidate-v2/**/uv.lock text eol=lf
 workers/speech-cpu/openvoice-candidate/uv.lock -text
+workers/identity-image/candidate/uv.lock -text

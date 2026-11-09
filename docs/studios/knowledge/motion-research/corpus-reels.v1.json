@@ -1,0 +1,1210 @@
+{
+  "schemaVersion": "clicko.motion-corpus.v1",
+  "observedOn": "2026-11-09",
+  "studyType": "amostra intencional estratificada, sem inferência de representatividade",
+  "coverage": {
+    "attempted": 45,
+    "included": 24,
+    "strata": {
+      "tipografia": 6,
+      "composicao-recortes": 6,
+      "acao-transicoes": 6,
+      "som-ritmo": 6
+    },
+    "responsibleGroups": {
+      "@creators": 1,
+      "@ordinaryfolkco": 2,
+      "@buck_design": 3,
+      "@theratzcarlton_": 1,
+      "@schoolofmotion": 3,
+      "@moonsol.design": 2,
+      "@dudanascimento": 2,
+      "@paulo.ia": 3,
+      "@RVxMendoza": 1,
+      "@pikacodes": 1,
+      "@natashahmedx": 1,
+      "@ishanimitraa": 1,
+      "@martsromero": 1,
+      "@cubstudio": 1,
+      "@dana_grinberga": 1
+    },
+    "independentCodings": 6,
+    "auditedAudio": 0,
+    "continuousPlaybackVerified": 0,
+    "externalApiCostUsd": 0
+  },
+  "included": [
+    {
+      "id": "Ddg1mTHxotm",
+      "url": "https://www.instagram.com/reel/Ddg1mTHxotm/",
+      "publisher": "@creators",
+      "creditedCreator": null,
+      "attribution": "Publicação; apresentadora e edição não identificadas no metadado.",
+      "responsibleGroup": "@creators",
+      "primaryStratum": "tipografia",
+      "evidenceStatus": "observado",
+      "evidence": {
+        "method": "quadros-do-player-publico",
+        "coverage": "amostras-pontuais",
+        "durationSeconds": 47.48195,
+        "timestampsSeconds": [
+          0.35,
+          6.65,
+          15.19,
+          26.12,
+          37.51,
+          44.63
+        ],
+        "observationTimestampsSeconds": [
+          0.35,
+          26.12,
+          37.51
+        ],
+        "continuousPlaybackVerified": false,
+        "contactSheetSha256": "2ce171a201a26337880c6153e5905ce7ec74e7529d989671f1c9ea786d09a094",
+        "independentlyCoded": true,
+        "audio": {
+          "playerMuted": true,
+          "playerVolume": 1,
+          "audition": "not_audited"
+        }
+      },
+      "visibleChange": "Legendas pequenas sobre a apresentadora dão lugar a uma chamada cursiva que ocupa área maior; depois voltam à escala anterior.",
+      "hypothesis": {
+        "evidenceStatus": "hipótese",
+        "application": "Enfatizar uma decisão sem competir com o rosto.",
+        "counterexample": "Aumentar todos os textos da sequência apagaria a diferença de prioridade."
+      }
+    },
+    {
+      "id": "DdphYESNgZG",
+      "url": "https://www.instagram.com/reel/DdphYESNgZG/",
+      "publisher": "@ordinaryfolkco",
+      "creditedCreator": "@ordinaryfolkco",
+      "attribution": "Estúdio participante indicado pela própria publicação.",
+      "responsibleGroup": "@ordinaryfolkco",
+      "primaryStratum": "tipografia",
+      "evidenceStatus": "observado",
+      "evidence": {
+        "method": "quadros-do-player-publico",
+        "coverage": "amostras-pontuais",
+        "durationSeconds": 61.566708,
+        "timestampsSeconds": [
+          0.35,
+          8.62,
+          19.7,
+          33.86,
+          48.64,
+          57.87
+        ],
+        "observationTimestampsSeconds": [
+          0.35,
+          8.62,
+          19.7,
+          48.64,
+          57.87
+        ],
+        "continuousPlaybackVerified": false,
+        "contactSheetSha256": "2d5c5dbbb0e48edaa806a1b4f2f3a8d8a6e2c492fa907aa3fe81f1020f9665cc",
+        "independentlyCoded": true,
+        "audio": {
+          "playerMuted": true,
+          "playerVolume": 1,
+          "audition": "not_audited"
+        }
+      },
+      "visibleChange": "Fotos e estudos de futebol antecedem o contorno da marca sobre um campo. Nos estados posteriores, jogadores desenhados ocupam parte da palavra.",
+      "hypothesis": {
+        "evidenceStatus": "hipótese",
+        "application": "Fazer imagem e letra formarem um único motivo mantendo a marca legível.",
+        "counterexample": "Se o gesto encobrir letras indispensáveis, preservar a marca em um estado final separado."
+      }
+    },
+    {
+      "id": "De2LOGdyuHV",
+      "url": "https://www.instagram.com/reel/De2LOGdyuHV/",
+      "publisher": "@buck_design",
+      "creditedCreator": "@buck_design",
+      "attribution": "Publicação institucional do estúdio; autoria individual da montagem não determinada.",
+      "responsibleGroup": "@buck_design",
+      "primaryStratum": "tipografia",
+      "evidenceStatus": "observado",
+      "evidence": {
+        "method": "quadros-do-player-publico",
+        "coverage": "amostras-pontuais",
+        "durationSeconds": 12.041666666666666,
+        "timestampsSeconds": [
+          0.35,
+          1.69,
+          3.85,
+          6.62,
+          9.51,
+          11.32
+        ],
+        "observationTimestampsSeconds": [
+          0.35,
+          1.69,
+          9.51,
+          11.32
+        ],
+        "continuousPlaybackVerified": false,
+        "contactSheetSha256": "df61add1fb39fc4f384dbd90a1e3d513fdf73bc88fa6a371ed6b92e6f2773eac",
+        "independentlyCoded": false,
+        "audio": {
+          "playerMuted": true,
+          "playerVolume": 1,
+          "audition": "not_audited"
+        }
+      },
+      "visibleChange": "Uma lista compacta de empresas aparece ampliada no segundo quadro; o destaque muda para um selo de certificação na parte final.",
+      "hypothesis": {
+        "evidenceStatus": "hipótese",
+        "application": "Usar escala e contraste para transferir o foco de nomes a um selo.",
+        "counterexample": "O enquadramento ampliado corta nomes nas bordas. Isso não serve como única tela quando cada nome precisa ser lido."
+      }
+    },
+    {
+      "id": "DdUawEhvOVN",
+      "url": "https://www.instagram.com/reel/DdUawEhvOVN/",
+      "publisher": "@creators",
+      "creditedCreator": "@theratzcarlton_",
+      "attribution": "A legenda identifica Zizi como criadora da série mostrada; edição do Reel não determinada.",
+      "responsibleGroup": "@theratzcarlton_",
+      "primaryStratum": "tipografia",
+      "evidenceStatus": "observado",
+      "evidence": {
+        "method": "quadros-do-player-publico",
+        "coverage": "amostras-pontuais",
+        "durationSeconds": 54.355056,
+        "timestampsSeconds": [
+          0.35,
+          7.61,
+          17.39,
+          29.9,
+          42.94,
+          51.09
+        ],
+        "observationTimestampsSeconds": [
+          0.35,
+          7.61,
+          29.9,
+          42.94
+        ],
+        "continuousPlaybackVerified": false,
+        "contactSheetSha256": "b3e53495df81f92471a21d2dc721bc1fcf50a273b266d749311b2c92f89c7daf",
+        "independentlyCoded": false,
+        "audio": {
+          "playerMuted": true,
+          "playerVolume": 1,
+          "audition": "not_audited"
+        }
+      },
+      "visibleChange": "A chamada de série no topo cede a palavras breves próximas da cabeça; em alguns quadros entram diagrama e folha ilustrada em área separada.",
+      "hypothesis": {
+        "evidenceStatus": "hipótese",
+        "application": "Distinguir uma palavra de ênfase de uma prova ou ilustração.",
+        "counterexample": "Palavras isoladas não garantem que uma frase seja compreendida sem áudio."
+      }
+    },
+    {
+      "id": "Dd37R9XDkvN",
+      "url": "https://www.instagram.com/reel/Dd37R9XDkvN/",
+      "publisher": "@schoolofmotion",
+      "creditedCreator": "@schoolofmotion",
+      "attribution": "A instituição publica o material do curso; autoria individual da montagem não determinada.",
+      "responsibleGroup": "@schoolofmotion",
+      "primaryStratum": "tipografia",
+      "evidenceStatus": "observado",
+      "evidence": {
+        "method": "quadros-do-player-publico",
+        "coverage": "amostras-pontuais",
+        "durationSeconds": 20.92092,
+        "timestampsSeconds": [
+          0.35,
+          2.93,
+          6.69,
+          11.51,
+          16.53,
+          19.67
+        ],
+        "observationTimestampsSeconds": [
+          0.35,
+          2.93,
+          16.53,
+          19.67
+        ],
+        "continuousPlaybackVerified": false,
+        "contactSheetSha256": "f3de3e0cb150cbc78e2f1fee3b27ebb15569698a20bd171f853bedb2835074d8",
+        "independentlyCoded": false,
+        "audio": {
+          "playerMuted": true,
+          "playerVolume": 1,
+          "audition": "not_audited"
+        }
+      },
+      "visibleChange": "Um horário ocupa o centro de um mostrador; outra tela usa um número grande e uma legenda menor; os últimos quadros passam à interface e ao apresentador.",
+      "hypothesis": {
+        "evidenceStatus": "hipótese",
+        "application": "Hierarquizar dados com escala e manter unidades e contexto próximos.",
+        "counterexample": "A cifra fica fácil de achar, mas sozinha não identifica o que está sendo contado."
+      }
+    },
+    {
+      "id": "DfXUIYWjOo-",
+      "url": "https://www.instagram.com/reel/DfXUIYWjOo-/",
+      "publisher": "@schoolofmotion",
+      "creditedCreator": "@schoolofmotion",
+      "attribution": "Publicação da instituição; autoria individual da montagem não determinada.",
+      "responsibleGroup": "@schoolofmotion",
+      "primaryStratum": "tipografia",
+      "evidenceStatus": "observado",
+      "evidence": {
+        "method": "quadros-do-player-publico",
+        "coverage": "amostras-pontuais",
+        "durationSeconds": 49.516182849516184,
+        "timestampsSeconds": [
+          0.35,
+          6.93,
+          15.85,
+          27.23,
+          39.12,
+          46.55
+        ],
+        "observationTimestampsSeconds": [
+          0.35,
+          15.85,
+          39.12,
+          46.55
+        ],
+        "continuousPlaybackVerified": false,
+        "contactSheetSha256": "6be5f0c58e1ce66a3094514cd414a26b38440c01dcc31d74864535b7f3be9930",
+        "independentlyCoded": false,
+        "audio": {
+          "playerMuted": true,
+          "playerVolume": 1,
+          "audition": "not_audited"
+        }
+      },
+      "visibleChange": "A pessoa ocupa o quadro inteiro na abertura. Nas amostras intermediárias, exemplos de letras aparecem acima dela e legendas mantêm posição; o fechamento troca tudo por uma chamada.",
+      "hypothesis": {
+        "evidenceStatus": "hipótese",
+        "application": "Separar exemplo visual, fala e chamada por função e área.",
+        "counterexample": "Uma amostra de fonte recortada na borda não basta se a tarefa exige identificar o nome completo."
+      }
+    },
+    {
+      "id": "Dct4pAohiup",
+      "url": "https://www.instagram.com/reel/Dct4pAohiup/",
+      "publisher": "@creators",
+      "creditedCreator": "@moonsol.design",
+      "attribution": "A legenda atribui a demonstração de edição à criadora.",
+      "responsibleGroup": "@moonsol.design",
+      "primaryStratum": "composicao-recortes",
+      "evidenceStatus": "observado",
+      "evidence": {
+        "method": "quadros-do-player-publico",
+        "coverage": "amostras-pontuais",
+        "durationSeconds": 35.166666666666664,
+        "timestampsSeconds": [
+          0.35,
+          4.92,
+          11.25,
+          19.34,
+          27.78,
+          33.06
+        ],
+        "observationTimestampsSeconds": [
+          0.35,
+          11.25,
+          19.34,
+          27.78
+        ],
+        "continuousPlaybackVerified": false,
+        "contactSheetSha256": "517f63078db3f001aece6dbe53325f4bfdfd2b0783409ed200287fc666e8fed3",
+        "independentlyCoded": true,
+        "audio": {
+          "playerMuted": true,
+          "playerVolume": 1,
+          "audition": "not_audited"
+        }
+      },
+      "visibleChange": "Uma paisagem aparece dentro da blusa. A sequência mostra a paisagem no editor, o contorno da roupa e a textura de volta restrita à região.",
+      "hypothesis": {
+        "evidenceStatus": "hipótese",
+        "application": "Delimitar a área da substituição e manter o restante do quadro como referência.",
+        "counterexample": "Ver a máscara num quadro não garante que o contorno acompanhe a pessoa nos intervalos."
+      }
+    },
+    {
+      "id": "Dd4dfPnRkgb",
+      "url": "https://www.instagram.com/reel/Dd4dfPnRkgb/",
+      "publisher": "@creators",
+      "creditedCreator": "@dudanascimento",
+      "attribution": "A legenda atribui a demonstração à criadora.",
+      "responsibleGroup": "@dudanascimento",
+      "primaryStratum": "composicao-recortes",
+      "evidenceStatus": "observado",
+      "evidence": {
+        "method": "quadros-do-player-publico",
+        "coverage": "amostras-pontuais",
+        "durationSeconds": 28.2,
+        "timestampsSeconds": [
+          0.35,
+          3.95,
+          9.02,
+          15.51,
+          22.28,
+          26.51
+        ],
+        "observationTimestampsSeconds": [
+          0.35,
+          3.95,
+          9.02,
+          26.51
+        ],
+        "continuousPlaybackVerified": false,
+        "contactSheetSha256": "566ddebe58c84732b669222ea6e7fa12623e00cb8921088d89da444d7dda4c9c",
+        "independentlyCoded": false,
+        "audio": {
+          "playerMuted": true,
+          "playerVolume": 1,
+          "audition": "not_audited"
+        }
+      },
+      "visibleChange": "A câmera mostra um telefone com fotos de bolo. A edição seleciona a imagem da pessoa com o bolo e termina com esse recorte em primeiro plano.",
+      "hypothesis": {
+        "evidenceStatus": "hipótese",
+        "application": "Manter o bolo identificável quando a imagem passa a funcionar como camada.",
+        "counterexample": "Se o recorte cobrir o produto inteiro, a colagem perde a ligação com as fotos de origem."
+      }
+    },
+    {
+      "id": "DdRWGNexfwL",
+      "url": "https://www.instagram.com/reel/DdRWGNexfwL/",
+      "publisher": "@creators",
+      "creditedCreator": "@dudanascimento",
+      "attribution": "A legenda atribui a demonstração à criadora.",
+      "responsibleGroup": "@dudanascimento",
+      "primaryStratum": "composicao-recortes",
+      "evidenceStatus": "observado",
+      "evidence": {
+        "method": "quadros-do-player-publico",
+        "coverage": "amostras-pontuais",
+        "durationSeconds": 38.867346,
+        "timestampsSeconds": [
+          0.35,
+          5.44,
+          12.44,
+          21.38,
+          30.71,
+          36.54
+        ],
+        "observationTimestampsSeconds": [
+          0.35,
+          21.38,
+          36.54
+        ],
+        "continuousPlaybackVerified": false,
+        "contactSheetSha256": "e7f00a57d8e25f7eb3dd9403b68698e9b4ab96c15b40bee12e4481af925bd6d7",
+        "independentlyCoded": false,
+        "audio": {
+          "playerMuted": true,
+          "playerVolume": 1,
+          "audition": "not_audited"
+        }
+      },
+      "visibleChange": "O telefone começa com um retrato; depois recebe fundo de mar e, no último quadro, uma imagem de câmera digital sobre o conjunto.",
+      "hypothesis": {
+        "evidenceStatus": "hipótese",
+        "application": "Construir profundidade com fundo, retrato e adereço em funções diferentes.",
+        "counterexample": "Elementos que imitam um dispositivo podem ser confundidos com controles reais se esconderem a ação principal."
+      }
+    },
+    {
+      "id": "Dd2EAaIBeRg",
+      "url": "https://www.instagram.com/reel/Dd2EAaIBeRg/",
+      "publisher": "@paulo.ia",
+      "creditedCreator": "@paulo.ia",
+      "attribution": "Publicação da conta do criador; autoria individual de cada efeito não determinada.",
+      "responsibleGroup": "@paulo.ia",
+      "primaryStratum": "composicao-recortes",
+      "evidenceStatus": "observado",
+      "evidence": {
+        "method": "quadros-do-player-publico",
+        "coverage": "amostras-pontuais",
+        "durationSeconds": 91.23333333333332,
+        "timestampsSeconds": [
+          0.35,
+          12.77,
+          29.19,
+          50.18,
+          72.07,
+          85.76
+        ],
+        "observationTimestampsSeconds": [
+          0.35,
+          12.77,
+          29.19,
+          50.18,
+          72.07
+        ],
+        "continuousPlaybackVerified": false,
+        "contactSheetSha256": "234f433bee5da6ed533152284df95d1b78c114326879bc4f40923761762fc54c",
+        "independentlyCoded": false,
+        "audio": {
+          "playerMuted": true,
+          "playerVolume": 1,
+          "audition": "not_audited"
+        }
+      },
+      "visibleChange": "Ícones aparecem ao redor do apresentador; em estados seguintes, cartões de interface passam para a metade superior, deixando a pessoa visível abaixo.",
+      "hypothesis": {
+        "evidenceStatus": "hipótese",
+        "application": "Separar o espaço de leitura da interface e o espaço de presença humana.",
+        "counterexample": "Ícones em volta do rosto chamam atenção, mas não demonstram uma operação do aplicativo por si só."
+      }
+    },
+    {
+      "id": "Dd6fcwKRC9V",
+      "url": "https://www.instagram.com/reel/Dd6fcwKRC9V/",
+      "publisher": "@creators",
+      "creditedCreator": "@RVxMendoza",
+      "attribution": "A legenda atribui a explicação ao criador.",
+      "responsibleGroup": "@RVxMendoza",
+      "primaryStratum": "composicao-recortes",
+      "evidenceStatus": "observado",
+      "evidence": {
+        "method": "quadros-do-player-publico",
+        "coverage": "amostras-pontuais",
+        "durationSeconds": 32.249659,
+        "timestampsSeconds": [
+          0.35,
+          4.51,
+          10.32,
+          17.74,
+          25.48,
+          30.31
+        ],
+        "observationTimestampsSeconds": [
+          0.35,
+          4.51,
+          17.74,
+          25.48,
+          30.31
+        ],
+        "continuousPlaybackVerified": false,
+        "contactSheetSha256": "6c84c0813dfdc2403102a1aa63c2d7042184ebe01b0a1b5ce8273ca3448ec6b2",
+        "independentlyCoded": false,
+        "audio": {
+          "playerMuted": true,
+          "playerVolume": 1,
+          "audition": "not_audited"
+        }
+      },
+      "visibleChange": "O apresentador divide espaço primeiro com miniaturas de métricas e depois com janelas de perguntas e respostas; o texto final cresce sobre o rosto.",
+      "hypothesis": {
+        "evidenceStatus": "hipótese",
+        "application": "Ancorar uma explicação em evidência de tela ampliada no momento pertinente.",
+        "counterexample": "Painéis pequenos e múltiplas chamadas simultâneas podem exigir pausa para leitura em um telefone."
+      }
+    },
+    {
+      "id": "DdukdCRy51K",
+      "url": "https://www.instagram.com/reel/DdukdCRy51K/",
+      "publisher": "@threads",
+      "creditedCreator": "@pikacodes",
+      "attribution": "A publicação credita a criadora pela explicação do evento.",
+      "responsibleGroup": "@pikacodes",
+      "primaryStratum": "composicao-recortes",
+      "evidenceStatus": "observado",
+      "evidence": {
+        "method": "quadros-do-player-publico",
+        "coverage": "amostras-pontuais",
+        "durationSeconds": 45.06666666666667,
+        "timestampsSeconds": [
+          0.35,
+          6.31,
+          14.42,
+          24.79,
+          35.6,
+          42.36
+        ],
+        "observationTimestampsSeconds": [
+          0.35,
+          14.42,
+          35.6,
+          42.36
+        ],
+        "continuousPlaybackVerified": false,
+        "contactSheetSha256": "1d03946beb73449de71adbc233791d74a0945f9cf6848e0f4cc62d53ae45fa5e",
+        "independentlyCoded": false,
+        "audio": {
+          "playerMuted": true,
+          "playerVolume": 1,
+          "audition": "not_audited"
+        }
+      },
+      "visibleChange": "A apresentadora aparece no mesmo lugar com ponteiros gráficos na abertura; cartões claros em posição alta substituem esses adereços durante a explicação.",
+      "hypothesis": {
+        "evidenceStatus": "hipótese",
+        "application": "Reservar uma região fixa para cartões enquanto a pessoa mantém continuidade.",
+        "counterexample": "O cartão precisa de área suficiente para seus dados; um cartão pequeno não prova que o espectador leu a informação."
+      }
+    },
+    {
+      "id": "DdtuxMNBtxr",
+      "url": "https://www.instagram.com/reel/DdtuxMNBtxr/",
+      "publisher": "@design",
+      "creditedCreator": "@natashahmedx",
+      "attribution": "A legenda identifica a autora da atividade de colagem; autoria da edição não atribuída.",
+      "responsibleGroup": "@natashahmedx",
+      "primaryStratum": "acao-transicoes",
+      "evidenceStatus": "observado",
+      "evidence": {
+        "method": "quadros-do-player-publico",
+        "coverage": "amostras-pontuais",
+        "durationSeconds": 79.34601267934602,
+        "timestampsSeconds": [
+          0.35,
+          11.11,
+          25.39,
+          43.64,
+          62.68,
+          74.59
+        ],
+        "observationTimestampsSeconds": [
+          0.35,
+          11.11,
+          25.39,
+          62.68,
+          74.59
+        ],
+        "continuousPlaybackVerified": false,
+        "contactSheetSha256": "015917bdf824cbca8503a42b459de41f87fd948e586b7a7089b011c06346aa71",
+        "independentlyCoded": true,
+        "audio": {
+          "playerMuted": true,
+          "playerVolume": 1,
+          "audition": "not_audited"
+        }
+      },
+      "visibleChange": "A pessoa é apresentada, aparece trabalhando com papéis, passa a um encontro com outras pessoas e reaparece em plano de cima com os materiais.",
+      "hypothesis": {
+        "evidenceStatus": "hipótese",
+        "application": "Conectar pessoa, gesto e evidência do processo por mudanças de escala.",
+        "counterexample": "Os quadros não permitem inferir a ordem integral da fabricação nem que um gesto exato motiva cada corte."
+      }
+    },
+    {
+      "id": "Ddb0HfwRd93",
+      "url": "https://www.instagram.com/reel/Ddb0HfwRd93/",
+      "publisher": "@creators",
+      "creditedCreator": "@ishanimitraa",
+      "attribution": "A legenda credita a criadora pela demonstração em colaboração com Instagram.",
+      "responsibleGroup": "@ishanimitraa",
+      "primaryStratum": "acao-transicoes",
+      "evidenceStatus": "observado",
+      "evidence": {
+        "method": "quadros-do-player-publico",
+        "coverage": "amostras-pontuais",
+        "durationSeconds": 61.762222,
+        "timestampsSeconds": [
+          0.35,
+          8.65,
+          19.76,
+          33.97,
+          48.79,
+          58.06
+        ],
+        "observationTimestampsSeconds": [
+          8.65,
+          19.76,
+          33.97,
+          48.79,
+          58.06
+        ],
+        "continuousPlaybackVerified": false,
+        "contactSheetSha256": "b966f000cc10fd148157e70e6a51b4eaaa4626555233eb058a8937563388fc09",
+        "independentlyCoded": true,
+        "audio": {
+          "playerMuted": true,
+          "playerVolume": 1,
+          "audition": "not_audited"
+        }
+      },
+      "visibleChange": "Um quadro sobreposto mostra mãos na altura da boca e clarões no fundo; a tela do editor depois expõe a ação em miniaturas.",
+      "hypothesis": {
+        "evidenceStatus": "hipótese",
+        "application": "Escolher um gesto visível como candidato a âncora da emenda.",
+        "counterexample": "Amostras não revelam o quadro exato da troca. Sem os quadros adjacentes, o corte por oclusão permanece hipótese."
+      }
+    },
+    {
+      "id": "DdW0UoSxXsX",
+      "url": "https://www.instagram.com/reel/DdW0UoSxXsX/",
+      "publisher": "@creators",
+      "creditedCreator": "@martsromero",
+      "attribution": "A legenda credita o registro visual a @martsromero, sem atribuir individualmente a montagem.",
+      "responsibleGroup": "@martsromero",
+      "primaryStratum": "acao-transicoes",
+      "evidenceStatus": "observado",
+      "evidence": {
+        "method": "quadros-do-player-publico",
+        "coverage": "amostras-pontuais",
+        "durationSeconds": 34.833333333333336,
+        "timestampsSeconds": [
+          0.35,
+          4.88,
+          11.15,
+          19.16,
+          27.52,
+          32.74
+        ],
+        "observationTimestampsSeconds": [
+          0.35,
+          4.88,
+          11.15,
+          27.52,
+          32.74
+        ],
+        "continuousPlaybackVerified": false,
+        "contactSheetSha256": "076058060e6a2a119f94a3d91e56c179c040d44063233b868d460eb7f44dfbe8",
+        "independentlyCoded": false,
+        "audio": {
+          "playerMuted": true,
+          "playerVolume": 1,
+          "audition": "not_audited"
+        }
+      },
+      "visibleChange": "O copo de matcha começa em detalhe; pessoas diferentes aparecem carregando ou bebendo em planos abertos e fechados.",
+      "hypothesis": {
+        "evidenceStatus": "hipótese",
+        "application": "Usar o mesmo produto como ponte entre ações e escalas.",
+        "counterexample": "Manter só a cor verde entre planos não assegura que o objeto seja reconhecido."
+      }
+    },
+    {
+      "id": "Dd3k4cBtFrK",
+      "url": "https://www.instagram.com/reel/Dd3k4cBtFrK/",
+      "publisher": "@moonsol.design",
+      "creditedCreator": "@moonsol.design",
+      "attribution": "Publicação da criadora descreve o tutorial.",
+      "responsibleGroup": "@moonsol.design",
+      "primaryStratum": "acao-transicoes",
+      "evidenceStatus": "observado",
+      "evidence": {
+        "method": "quadros-do-player-publico",
+        "coverage": "amostras-pontuais",
+        "durationSeconds": 29.766666666666666,
+        "timestampsSeconds": [
+          0.35,
+          4.17,
+          9.53,
+          16.37,
+          23.52,
+          27.98
+        ],
+        "observationTimestampsSeconds": [
+          4.17,
+          9.53,
+          16.37,
+          23.52,
+          27.98
+        ],
+        "continuousPlaybackVerified": false,
+        "contactSheetSha256": "700fac62e27968b37be2d61fb31d3b88956f311c76c5038debe54636901232dd",
+        "independentlyCoded": false,
+        "audio": {
+          "playerMuted": true,
+          "playerVolume": 1,
+          "audition": "not_audited"
+        }
+      },
+      "visibleChange": "O copo filmado surge antes das telas de preparação. Depois de exemplos de comandos e interface, o copo volta a aparecer no editor.",
+      "hypothesis": {
+        "evidenceStatus": "hipótese",
+        "application": "Preservar o motivo do copo enquanto explica o processo.",
+        "counterexample": "O efeito de desenho para bebida é anunciado pela criadora, mas sua transição contínua não está comprovada nestas amostras."
+      }
+    },
+    {
+      "id": "DdXSz0yMUdX",
+      "url": "https://www.instagram.com/reel/DdXSz0yMUdX/",
+      "publisher": "@paulo.ia",
+      "creditedCreator": "@paulo.ia",
+      "attribution": "Publicação da conta do criador; autoria individual de efeitos não determinada.",
+      "responsibleGroup": "@paulo.ia",
+      "primaryStratum": "acao-transicoes",
+      "evidenceStatus": "observado",
+      "evidence": {
+        "method": "quadros-do-player-publico",
+        "coverage": "amostras-pontuais",
+        "durationSeconds": 62.365941,
+        "timestampsSeconds": [
+          8.73,
+          19.96,
+          34.3,
+          49.27,
+          58.62
+        ],
+        "observationTimestampsSeconds": [
+          8.73,
+          19.96,
+          34.3,
+          49.27,
+          58.62
+        ],
+        "continuousPlaybackVerified": false,
+        "contactSheetSha256": "18443d2dd83a7ac103644be707f0ec9af19e53ac40e7b6b55b93b7c5a6df71ac",
+        "independentlyCoded": false,
+        "audio": {
+          "playerMuted": true,
+          "playerVolume": 1,
+          "audition": "not_audited"
+        }
+      },
+      "visibleChange": "Um homem consulta o pulso; aparece um relógio deformado. Seguem figuras em idades diferentes e um enquadramento final muito fechado.",
+      "hypothesis": {
+        "evidenceStatus": "hipótese",
+        "application": "Usar um objeto recorrente para tornar legível uma mudança abstrata.",
+        "counterexample": "Vários rostos em sequência sem contexto não comprovam que seja o mesmo personagem nem que houve interpolação."
+      }
+    },
+    {
+      "id": "DfNbO_UI41V",
+      "url": "https://www.instagram.com/reel/DfNbO_UI41V/",
+      "publisher": "@cubstudio",
+      "creditedCreator": "@cubstudio",
+      "attribution": "A publicação atribui design e trabalho de personagens ao estúdio.",
+      "responsibleGroup": "@cubstudio",
+      "primaryStratum": "acao-transicoes",
+      "evidenceStatus": "observado",
+      "evidence": {
+        "method": "quadros-do-player-publico",
+        "coverage": "amostras-pontuais",
+        "durationSeconds": 30,
+        "timestampsSeconds": [
+          0.35,
+          4.2,
+          16.5,
+          23.7,
+          28.2
+        ],
+        "observationTimestampsSeconds": [
+          0.35,
+          4.2,
+          16.5,
+          23.7,
+          28.2
+        ],
+        "continuousPlaybackVerified": false,
+        "contactSheetSha256": "b25be02b8755e0f7c66cf0299f175ca0df6fa21bfba67a428393fa4fbced47e1",
+        "independentlyCoded": false,
+        "audio": {
+          "playerMuted": true,
+          "playerVolume": 1,
+          "audition": "not_audited"
+        }
+      },
+      "visibleChange": "O cenário escuro mostra a pessoa animada cercada de telas. Depois aparece uma demonstração de monitor em cenário claro e o fechamento retorna à marca.",
+      "hypothesis": {
+        "evidenceStatus": "hipótese",
+        "application": "Distinguir problema, demonstração e assinatura por estados de cena legíveis.",
+        "counterexample": "Mudar só a iluminação não demonstra que um fluxo foi resolvido; a interface precisa mostrar o estado relevante."
+      }
+    },
+    {
+      "id": "DfIbC4Vyz3o",
+      "url": "https://www.instagram.com/reel/DfIbC4Vyz3o/",
+      "publisher": "@buck_design",
+      "creditedCreator": "@buck_design",
+      "attribution": "Publicação atribui a peça à equipe 3D da BUCK e exibe créditos.",
+      "responsibleGroup": "@buck_design",
+      "primaryStratum": "som-ritmo",
+      "evidenceStatus": "observado",
+      "evidence": {
+        "method": "quadros-do-player-publico",
+        "coverage": "amostras-pontuais",
+        "durationSeconds": 61.041666666666664,
+        "timestampsSeconds": [
+          0.35,
+          8.55,
+          19.53,
+          33.57,
+          48.22,
+          57.38
+        ],
+        "observationTimestampsSeconds": [
+          0.35,
+          8.55,
+          19.53,
+          33.57,
+          48.22,
+          57.38
+        ],
+        "continuousPlaybackVerified": false,
+        "contactSheetSha256": "20fb8897d2f3b6ad89e146a8ce0b2c0f4108bfe320b6dd76bad45a04a0b79775",
+        "independentlyCoded": true,
+        "audio": {
+          "playerMuted": true,
+          "playerVolume": 1,
+          "audition": "not_audited"
+        }
+      },
+      "visibleChange": "A abertura escura precede motivos de olho, cesto, estrutura iluminada e figura roxa; a sequência termina com créditos.",
+      "hypothesis": {
+        "evidenceStatus": "hipótese",
+        "application": "Investigar variação de intensidade e agrupamento de cenas como candidatos a acentos.",
+        "counterexample": "Alternância de cor e motivo não comprova cortes no compasso, desenho sonoro ou tempo de permanência."
+      }
+    },
+    {
+      "id": "DfSRDbKSvZ2",
+      "url": "https://www.instagram.com/reel/DfSRDbKSvZ2/",
+      "publisher": "@buck_design",
+      "creditedCreator": "@buck_design",
+      "attribution": "O estúdio atribui a si a abertura e o logo. A legenda credita faixa original interpretada por Janelle Monáe.",
+      "responsibleGroup": "@buck_design",
+      "primaryStratum": "som-ritmo",
+      "evidenceStatus": "observado",
+      "evidence": {
+        "method": "quadros-do-player-publico",
+        "coverage": "amostras-pontuais",
+        "durationSeconds": 63.791666666666664,
+        "timestampsSeconds": [
+          0.35,
+          8.93,
+          20.41,
+          35.09,
+          50.4,
+          59.96
+        ],
+        "observationTimestampsSeconds": [
+          0.35,
+          8.93,
+          20.41,
+          35.09,
+          50.4,
+          59.96
+        ],
+        "continuousPlaybackVerified": false,
+        "contactSheetSha256": "0813706a88a2e706b7e4d279113175249678493f52b3d47acf6cdcfbe6b07176",
+        "independentlyCoded": false,
+        "audio": {
+          "playerMuted": true,
+          "playerVolume": 1,
+          "audition": "not_audited"
+        }
+      },
+      "visibleChange": "Composições escuras com linhas vermelhas alternam com figura central, estrela e silhuetas equestres.",
+      "hypothesis": {
+        "evidenceStatus": "hipótese",
+        "application": "Testar se acentos visuais agrupam motivos mesmo com o player mudo.",
+        "counterexample": "A faixa é mencionada pelo autor. As capturas não verificam sua execução, batida nem sincronia."
+      }
+    },
+    {
+      "id": "DdSHTkqyA8h",
+      "url": "https://www.instagram.com/reel/DdSHTkqyA8h/",
+      "publisher": "@ordinaryfolkco",
+      "creditedCreator": "@ordinaryfolkco",
+      "attribution": "O estúdio publica o trabalho e menciona a colaboração com Guillaume Roux.",
+      "responsibleGroup": "@ordinaryfolkco",
+      "primaryStratum": "som-ritmo",
+      "evidenceStatus": "observado",
+      "evidence": {
+        "method": "quadros-do-player-publico",
+        "coverage": "amostras-pontuais",
+        "durationSeconds": 51.127482,
+        "timestampsSeconds": [
+          0.35,
+          7.16,
+          16.36,
+          28.12,
+          40.39,
+          48.06
+        ],
+        "observationTimestampsSeconds": [
+          0.35,
+          7.16,
+          16.36,
+          28.12,
+          40.39,
+          48.06
+        ],
+        "continuousPlaybackVerified": false,
+        "contactSheetSha256": "70f9b4c26f367d9d586dc8b6d57d860b77bcf055b1408678c4bdcc88bc6a641a",
+        "independentlyCoded": false,
+        "audio": {
+          "playerMuted": true,
+          "playerVolume": 1,
+          "audition": "not_audited"
+        }
+      },
+      "visibleChange": "Uma figura pequena atravessa um quadro luminoso. Quadros posteriores mostram caranguejo, ave entre folhas e regiões de luz intensa.",
+      "hypothesis": {
+        "evidenceStatus": "hipótese",
+        "application": "Investigar contraste de densidade e luz na organização da atenção.",
+        "counterexample": "Uma imagem muito clara pode ser transição ou perda de detalhe. Não tratar como acento sonoro sem escuta."
+      }
+    },
+    {
+      "id": "DerbFldDIBj",
+      "url": "https://www.instagram.com/reel/DerbFldDIBj/",
+      "publisher": "@schoolofmotion",
+      "creditedCreator": "@schoolofmotion",
+      "attribution": "A instituição publica o Reel e anuncia o workshop com @alreadybeenchewed; autoria da montagem do post não indicada.",
+      "responsibleGroup": "@schoolofmotion",
+      "primaryStratum": "som-ritmo",
+      "evidenceStatus": "observado",
+      "evidence": {
+        "method": "quadros-do-player-publico",
+        "coverage": "amostras-pontuais",
+        "durationSeconds": 19.119118,
+        "timestampsSeconds": [
+          6.12,
+          10.52,
+          15.1,
+          17.97
+        ],
+        "observationTimestampsSeconds": [
+          6.12,
+          10.52,
+          15.1,
+          17.97
+        ],
+        "continuousPlaybackVerified": false,
+        "contactSheetSha256": "d099dafe0ffa6e735a285e8157df56afbb549cf3306eeeb063eae52429ff6850",
+        "independentlyCoded": false,
+        "audio": {
+          "playerMuted": true,
+          "playerVolume": 1,
+          "audition": "not_audited"
+        }
+      },
+      "visibleChange": "Planos com objetos e esporte alternam com fala para câmera e dão lugar a uma chamada em fundo roxo.",
+      "hypothesis": {
+        "evidenceStatus": "hipótese",
+        "application": "Separar demonstração, fala e CTA por mudança visual inequívoca.",
+        "counterexample": "O enquadramento permite reconhecer fala, mas não ouvir seu tempo. A amostra tem quatro quadros."
+      }
+    },
+    {
+      "id": "Dd5Md7NMj7P",
+      "url": "https://www.instagram.com/reel/Dd5Md7NMj7P/",
+      "publisher": "@paulo.ia",
+      "creditedCreator": "@paulo.ia",
+      "attribution": "Publicação da conta do criador; créditos individuais da montagem não determinados.",
+      "responsibleGroup": "@paulo.ia",
+      "primaryStratum": "som-ritmo",
+      "evidenceStatus": "observado",
+      "evidence": {
+        "method": "quadros-do-player-publico",
+        "coverage": "amostras-pontuais",
+        "durationSeconds": 25.052879,
+        "timestampsSeconds": [
+          0.35,
+          3.51,
+          8.02,
+          13.78,
+          19.79,
+          23.55
+        ],
+        "observationTimestampsSeconds": [
+          0.35,
+          3.51,
+          8.02,
+          13.78,
+          19.79,
+          23.55
+        ],
+        "continuousPlaybackVerified": false,
+        "contactSheetSha256": "0963c68e64bc542c5752ded53f4118e8eb281fe749b8449f72a00cc055132e0a",
+        "independentlyCoded": false,
+        "audio": {
+          "playerMuted": true,
+          "playerVolume": 1,
+          "audition": "not_audited"
+        }
+      },
+      "visibleChange": "O motivo de bola dourada reaparece em diferentes posições e escalas entre cais, praia e planos de pessoas.",
+      "hypothesis": {
+        "evidenceStatus": "hipótese",
+        "application": "Investigar a repetição de um motivo visual como organização de ritmo.",
+        "counterexample": "Repetição por si só não demonstra pulsação nem sincronia de corte."
+      }
+    },
+    {
+      "id": "DdcB5_Ux7Bw",
+      "url": "https://www.instagram.com/reel/DdcB5_Ux7Bw/",
+      "publisher": "@creators",
+      "creditedCreator": "@dana_grinberga",
+      "attribution": "A legenda credita a filmagem a @dana_grinberga; edição do post não atribuída.",
+      "responsibleGroup": "@dana_grinberga",
+      "primaryStratum": "som-ritmo",
+      "evidenceStatus": "observado",
+      "evidence": {
+        "method": "quadros-do-player-publico",
+        "coverage": "amostras-pontuais",
+        "durationSeconds": 6.299999,
+        "timestampsSeconds": [
+          0.35,
+          0.88,
+          2.02,
+          3.46,
+          4.98,
+          5.92
+        ],
+        "observationTimestampsSeconds": [
+          0.35,
+          0.88,
+          3.46,
+          4.98,
+          5.92
+        ],
+        "continuousPlaybackVerified": false,
+        "contactSheetSha256": "d8333820751d015a7d1317d5897a137d3966cbca419023cd2818c88b09d54a83",
+        "independentlyCoded": false,
+        "audio": {
+          "playerMuted": true,
+          "playerVolume": 1,
+          "audition": "not_audited"
+        }
+      },
+      "visibleChange": "A frase da reação fica fixa enquanto pessoa e telefone ganham escala e mudam de pose dentro da mesma situação.",
+      "hypothesis": {
+        "evidenceStatus": "hipótese",
+        "application": "Usar reação e escala em vez de acrescentar animações sem função.",
+        "counterexample": "Sem áudio não se pode atribuir a graça a fala, pausa ou batida. Funciona aqui como contrapeso visual ao excesso de efeitos."
+      }
+    }
+  ],
+  "excluded": [
+    {
+      "id": "DaSheQ1IMzm",
+      "url": "https://www.instagram.com/reel/DaSheQ1IMzm/",
+      "reason": "player-sem-evidencia-suficiente",
+      "observedFrames": 0
+    },
+    {
+      "id": "DcJj9oCJ4KV",
+      "url": "https://www.instagram.com/reel/DcJj9oCJ4KV/",
+      "reason": "timeout-do-player",
+      "observedFrames": 0
+    },
+    {
+      "id": "DcwBkOxyeA-",
+      "url": "https://www.instagram.com/reel/DcwBkOxyeA-/",
+      "reason": "fora-da-amostra-estratificada",
+      "observedFrames": 6
+    },
+    {
+      "id": "Dd4UL3vxl0P",
+      "url": "https://www.instagram.com/reel/Dd4UL3vxl0P/",
+      "reason": "fora-da-amostra-estratificada",
+      "observedFrames": 6
+    },
+    {
+      "id": "DdBdMHHigOb",
+      "url": "https://www.instagram.com/reel/DdBdMHHigOb/",
+      "reason": "timeout-do-player",
+      "observedFrames": 0
+    },
+    {
+      "id": "DdbnA4migyU",
+      "url": "https://www.instagram.com/reel/DdbnA4migyU/",
+      "reason": "timeout-do-player",
+      "observedFrames": 0
+    },
+    {
+      "id": "DdeO41ORd4p",
+      "url": "https://www.instagram.com/reel/DdeO41ORd4p/",
+      "reason": "fora-da-amostra-estratificada",
+      "observedFrames": 6
+    },
+    {
+      "id": "DdT_Q1GEtgL",
+      "url": "https://www.instagram.com/reel/DdT_Q1GEtgL/",
+      "reason": "fora-da-amostra-estratificada",
+      "observedFrames": 6
+    },
+    {
+      "id": "DdwS-6oRvL8",
+      "url": "https://www.instagram.com/reel/DdwS-6oRvL8/",
+      "reason": "timeout-do-player",
+      "observedFrames": 0
+    },
+    {
+      "id": "Deepy4Bxi-J",
+      "url": "https://www.instagram.com/reel/Deepy4Bxi-J/",
+      "reason": "timeout-do-player",
+      "observedFrames": 0
+    },
+    {
+      "id": "DePMx6iRh56",
+      "url": "https://www.instagram.com/reel/DePMx6iRh56/",
+      "reason": "timeout-do-player",
+      "observedFrames": 0
+    },
+    {
+      "id": "DeUnQ0wCChr",
+      "url": "https://www.instagram.com/reel/DeUnQ0wCChr/",
+      "reason": "timeout-do-player",
+      "observedFrames": 0
+    },
+    {
+      "id": "Dez88Adt2Wm",
+      "url": "https://www.instagram.com/reel/Dez88Adt2Wm/",
+      "reason": "timeout-do-player",
+      "observedFrames": 0
+    },
+    {
+      "id": "DfSnN9ejFwl",
+      "url": "https://www.instagram.com/reel/DfSnN9ejFwl/",
+      "reason": "timeout-do-player",
+      "observedFrames": 0
+    },
+    {
+      "id": "DfXVcQ-uz6W",
+      "url": "https://www.instagram.com/reel/DfXVcQ-uz6W/",
+      "reason": "timeout-do-player",
+      "observedFrames": 0
+    },
+    {
+      "id": "DHvzAsEtj4p",
+      "url": "https://www.instagram.com/reel/DHvzAsEtj4p/",
+      "reason": "timeout-do-player",
+      "observedFrames": 0
+    },
+    {
+      "id": "DUDvH1QiBBw",
+      "url": "https://www.instagram.com/reel/DUDvH1QiBBw/",
+      "reason": "timeout-do-player",
+      "observedFrames": 0
+    },
+    {
+      "id": "DUQu6UMjcdL",
+      "url": "https://www.instagram.com/reel/DUQu6UMjcdL/",
+      "reason": "timeout-do-player",
+      "observedFrames": 0
+    },
+    {
+      "id": "DZ0CU2soqg1",
+      "url": "https://www.instagram.com/reel/DZ0CU2soqg1/",
+      "reason": "timeout-do-player",
+      "observedFrames": 0
+    },
+    {
+      "id": "DZ9xA66oJ9m",
+      "url": "https://www.instagram.com/reel/DZ9xA66oJ9m/",
+      "reason": "timeout-do-player",
+      "observedFrames": 0
+    },
+    {
+      "id": "DZs-RlHNSPq",
+      "url": "https://www.instagram.com/reel/DZs-RlHNSPq/",
+      "reason": "player-sem-evidencia-suficiente",
+      "observedFrames": 0
+    }
+  ]
+}

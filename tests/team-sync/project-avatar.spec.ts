@@ -5,7 +5,7 @@ import type { AvatarState, DepartmentProject } from '../../src/studios/departmen
 
 // Current application and session are real. Cast/jobs below are explicit test
 // fixtures. FFmpeg creates a short silent clip, not a generated human/avatar.
-async function fixture(page: Page, options: { available?: boolean; lost?: boolean; complete?: boolean } = {}) {
+async function fixture(page: Page, options: { available?: boolean; lost?: boolean; complete?: boolean; brand?: boolean } = {}) {
   const project: DepartmentProject = { id: 'avatar-project-fixture', workspaceId: 'pending', revision: 3, brandName: 'Marca de teste',
     title: 'A origem do café', objective: 'Explicar a origem e os critérios de escolha.', audience: 'Pessoas que preparam café em casa',
     tone: 'Claro', evidence: 'Origem informada pelo produtor.', format: 'video', front: 'content', intent: 'education',
@@ -17,6 +17,8 @@ async function fixture(page: Page, options: { available?: boolean; lost?: boolea
   const state: AvatarState = { project, requestKey: null, canGenerate: options.available !== false,
     blocker: options.available === false ? 'avatar_provider_runtime_unavailable' : null, assetId: null, job: null };
   const submissions: { key: string; body: any }[] = [];
+  const production: any[] = [];
+  if (options.brand) project.sourceAssetId = 'brand-video-fixture';
   await page.route('**/api/v1/studios/v1/identity-library?**', route => {
     project.workspaceId = new URL(route.request().url()).searchParams.get('workspace_id')!;
     return route.fulfill({ json: { workspaceId: project.workspaceId, consents: [], identities: [{
@@ -32,6 +34,10 @@ async function fixture(page: Page, options: { available?: boolean; lost?: boolea
   });
   const base = `**/api/v1/studios/v1/projects/${project.id}`;
   await page.route(base, route => route.fulfill({ json: project }));
+  await page.route(base + '/produce', route => {
+    production.push(route.request().postDataJSON());
+    return route.fulfill({ status: 422, json: { detail: 'Apresentação de teste indisponível.' } });
+  });
   await page.route(base + '/narration', route => route.fulfill({ json: { project, text: 'Uma fala final de teste.', generatedText: 'Uma fala final de teste.',
     canGenerate: false, blocker: null, assetId: null, job: null, requestKey: null } }));
   await page.route(base + '/avatar/plan', route => route.fulfill({ json: { schemaVersion: 'clicko.project-avatar-plan.v1', operation: 'generate_avatar',
@@ -59,8 +65,17 @@ async function fixture(page: Page, options: { available?: boolean; lost?: boolea
   await page.goto(url);
   const panel = page.locator('.ds-avatar');
   await expect(panel.getByLabel('Como deve ser a apresentação?')).toBeVisible();
-  return { panel, submissions, state };
+  return { panel, submissions, state, production };
 }
+
+test('presenter window choice is sent with an explicit audio explanation', async ({ page }) => {
+  const scene = await fixture(page, { brand: true });
+  await page.getByRole('radio', { name: 'Em uma janela sobre o vídeo' }).check();
+  await expect(page.getByText('O áudio original do vídeo fica silenciado nesta versão', { exact: false })).toBeVisible();
+  await page.getByRole('button', { name: 'Preparar primeira versão' }).click();
+  await expect.poll(() => scene.production.length).toBe(1);
+  expect(scene.production[0].presentationLayout).toBe('picture_in_picture');
+});
 
 test('avatar preserves selections and explains unavailable local production', async ({ page }, testInfo) => {
   const scene = await fixture(page, { available: false });

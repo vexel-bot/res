@@ -2,6 +2,33 @@
 
 Estado: sequência e verificação de mídia implementadas. Os modelos de rosto e voz continuam pendentes de qualificação real.
 
+## Investigação de apresentação sobre o vídeo
+
+Foi acrescentado um planejador experimental para colocar a apresentação em uma
+janela sobre o vídeo da marca, com a fala em faixa separada. O plano preserva o
+vídeo original, desliga seu áudio na composição proposta e exige que ele seja
+ao menos tão longo quanto a fala. O vídeo gerado pelo LongCat tem fundo opaco:
+essa janela não recorta a pessoa nem a integra naturalmente ao cenário.
+
+Os testes usam vídeos e tons sintéticos reais para conferir durações, arquivos,
+faixas e recusa de apresentação sem áudio. Um teste adicional abriu o plano no
+FilmCraft real, reabriu o projeto nativo e verificou a posição das duas imagens,
+a correspondência da prévia com a exportação e o áudio da fala durante e após a
+apresentação. A verificação foi feita em 320 × 180, com cartões coloridos e tons;
+não é uma avaliação audiovisual de uma pessoa real. O teste foi acrescentado à
+CI, cuja execução remota ainda não foi conferida.
+
+O Studio agora permite escolher entre a sequência descrita abaixo e a janela.
+O cliente é informado de que o fundo retangular da apresentação permanece, de
+que o áudio original fica silenciado e de que o vídeo deve durar pelo menos o
+tempo da fala. A escolha fica vinculada à primeira montagem; uma entrega já
+criada não é alterada por uma solicitação posterior com outra opção.
+
+O fluxo de projeto até a exportação também foi exercitado com o FilmCraft real
+em 1080 × 1350, usando cartões coloridos e tons em lugar de pessoas e modelos.
+Os testes conferiram prévia, exportação, fala e silêncio após a apresentação.
+Isso não valida remoção de fundo nem a qualidade dos modelos de rosto e voz.
+
 ## Problema encontrado no teste real
 
 O primeiro teste com FilmCraft identificou que os dois vídeos eram inseridos na posição inicial da timeline. O material da marca podia encobrir a apresentação, e a exportação terminava com aproximadamente 2,8 segundos, embora os materiais somassem quatro segundos. O retorno da exportação também deixava a duração vazia.

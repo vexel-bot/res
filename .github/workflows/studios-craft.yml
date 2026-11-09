@@ -110,7 +110,7 @@ jobs:
       - name: Install host media probe utilities
         run: sudo apt-get update && sudo apt-get install -y ffmpeg && ffprobe -version
       - name: Native presenter, brand and narration montage
-        run: PYTHONPATH=backend python -m pytest backend/tests/native_project_avatar_acceptance.py backend/tests/native_project_voiceover_acceptance.py -o addopts='' -q
+        run: PYTHONPATH=backend python -m pytest backend/tests/native_project_avatar_acceptance.py backend/tests/native_project_voiceover_acceptance.py backend/tests/native_presenter_overlay_acceptance.py -o addopts='' -q
       - name: Real API, native exports and browser pixels
         run: |
           python -m uvicorn app.main:app --app-dir backend --host 127.0.0.1 --port 8018 > .codex-runtime/craft/qa-api.log 2>&1 &

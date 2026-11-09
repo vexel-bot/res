@@ -11,7 +11,7 @@ from .contracts import MediaTimelineV1, StudioContract
 
 
 class MotionKey(StudioContract):
-    property: Literal["x", "y", "scale", "opacity", "rotation"]
+    property: Literal["x", "y", "scale", "opacity", "rotation", "cropX", "cropY", "revealProgress"]
     frame: int = Field(ge=0, le=108_000)
     value: float = Field(ge=-8192, le=8192, allow_inf_nan=False)
     easing: Literal["linear", "ease-in-out", "ease-out"] = "linear"
@@ -24,7 +24,18 @@ class MotionKey(StudioContract):
             raise ValueError("timeline_opacity_invalid")
         if self.property == "rotation" and not -360 <= self.value <= 360:
             raise ValueError("timeline_rotation_invalid")
+        if self.property in {"cropX", "cropY", "revealProgress"} and not 0 <= self.value <= 1:
+            raise ValueError("timeline_normalized_motion_invalid")
         return self
+
+
+class CropWindow(StudioContract):
+    """Normalized viewport; X/Y motion is progress through the remaining source extent."""
+
+    width: float = Field(default=1, gt=0, le=1, allow_inf_nan=False)
+    height: float = Field(default=1, gt=0, le=1, allow_inf_nan=False)
+    x: float = Field(default=0, ge=0, le=1, allow_inf_nan=False)
+    y: float = Field(default=0, ge=0, le=1, allow_inf_nan=False)
 
 
 class VisualMotion(StudioContract):
@@ -35,6 +46,9 @@ class VisualMotion(StudioContract):
     scale: float = Field(default=1, ge=0.1, le=4, allow_inf_nan=False)
     opacity: float = Field(default=1, ge=0, le=1, allow_inf_nan=False)
     rotation: float = Field(default=0, ge=-360, le=360, allow_inf_nan=False)
+    crop: CropWindow | None = None
+    reveal_direction: Literal["left", "right", "top", "bottom"] = "left"
+    reveal_progress: float = Field(default=1, ge=0, le=1, allow_inf_nan=False)
     gain_db: float = Field(default=0, ge=-60, le=12, allow_inf_nan=False)
     fade_in_frames: int = Field(default=0, ge=0, le=108_000)
     fade_out_frames: int = Field(default=0, ge=0, le=108_000)

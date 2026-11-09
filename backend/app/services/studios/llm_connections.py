@@ -192,7 +192,7 @@ def reserve_request(db, job, connection, prompt_chars, tokens):
         for previous in db.scalars(
             select(StudioGenerationJob).where(
                 StudioGenerationJob.workspace_id == connection.workspace_id,
-                StudioGenerationJob.job_type == "craft_ai",
+                StudioGenerationJob.job_type.in_(["craft_ai", "agent_plan"]),
             )
         ):
             if previous.id != job.id and previous.request_payload.get("llmConnectionId") == connection.id:

@@ -963,6 +963,8 @@ class MaskTrackV1(StudioContract):
     name: str = Field(default="Masks", min_length=1, max_length=240)
     target_track_id: str = Field(min_length=1, max_length=120)
     artifact_asset_id: str = Field(min_length=1, max_length=120)
+    mode: Literal["luma", "alpha"] = "luma"
+    invert: bool = False
     locked: bool = False
 
 
@@ -1206,8 +1208,13 @@ class CreateVideoRenderJobRequest(StudioContract):
     page_ids: list[str] = Field(default_factory=list, max_length=100)
     output: VideoRenderSpecV1
     provider: Literal[
-        "builtin.ffmpeg-ugc-v1", "hyperframes.cli", "builtin.ffmpeg-contextual-v1", "hyperframes.contextual-v2",
-        "motion-canvas.contextual-v1", "remotion.contextual-v1", "remotion.contextual-v2",
+        "builtin.ffmpeg-ugc-v1",
+        "hyperframes.cli",
+        "builtin.ffmpeg-contextual-v1",
+        "hyperframes.contextual-v2",
+        "motion-canvas.contextual-v1",
+        "remotion.contextual-v1",
+        "remotion.contextual-v2",
         "alight-motion.contextual-v1",
     ] = "builtin.ffmpeg-ugc-v1"
     contextual_plan_id: str | None = Field(default=None, max_length=120)
@@ -1226,8 +1233,12 @@ class CreateVideoRenderJobRequest(StudioContract):
         if self.engine_campaign_id and self.provider != "alight-motion.contextual-v1":
             raise ValueError("Engine trials require the Alight provider")
         contextual = self.provider in {
-            "builtin.ffmpeg-contextual-v1", "hyperframes.contextual-v2", "motion-canvas.contextual-v1",
-            "remotion.contextual-v1", "remotion.contextual-v2", "alight-motion.contextual-v1",
+            "builtin.ffmpeg-contextual-v1",
+            "hyperframes.contextual-v2",
+            "motion-canvas.contextual-v1",
+            "remotion.contextual-v1",
+            "remotion.contextual-v2",
+            "alight-motion.contextual-v1",
         }
         if contextual != bool(self.contextual_plan_id):
             raise ValueError("Contextual renders require a bound contextual plan")
@@ -1632,9 +1643,11 @@ class CreateGenerationJobRequest(StudioContract):
         "transcription",
         "voice_clone",
         "avatar_video",
+        "appearance_image",
         "scene_generation",
         "craft_render",
         "timeline_render",
+        "material_effect",
     ] = "document_snapshot"
     provider: str = Field(default="builtin.snapshot", min_length=1, max_length=240)
     request: dict[str, Any] = Field(default_factory=dict)
@@ -1643,6 +1656,7 @@ class CreateGenerationJobRequest(StudioContract):
     @model_validator(mode="after")
     def validate_job_provider(self) -> CreateGenerationJobRequest:
         expected = {
+            "material_effect": {"local.material-effects-v1", "local.material-generative-v1"},
             "timeline_render": {"ffmpeg.timeline-v1"},
             "craft_render": {"craft.photocraft", "craft.filmcraft", "craft.effectcraft"},
             "editing_gemini": {"google.gemini-editing"},
@@ -1679,6 +1693,7 @@ class CreateGenerationJobRequest(StudioContract):
             "transcription",
             "voice_clone",
             "avatar_video",
+            "appearance_image",
         }:
             return self
         if self.provider not in expected[self.job_type]:

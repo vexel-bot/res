@@ -6,13 +6,16 @@ export type Motion = {
   scale?: number;
   opacity?: number;
   rotation?: number;
+  crop?: {width?:number;height?:number;x?:number;y?:number} | null;
+  revealDirection?: 'left'|'right'|'top'|'bottom';
+  revealProgress?: number;
   gainDb?: number;
   fadeInFrames?: number;
   fadeOutFrames?: number;
   backgroundColor?: string | null;
 };
 export type Key = {
-  property: "x" | "y" | "scale" | "opacity";
+  property: "x" | "y" | "scale" | "opacity" | "rotation" | "cropX" | "cropY" | "revealProgress";
   frame: number;
   value: number;
 };
@@ -43,7 +46,11 @@ export type Item = {
 };
 export type Track = {
   id: string;
-  kind: "video" | "audio" | "overlay" | "caption" | "marker";
+  kind: "video" | "audio" | "overlay" | "caption" | "marker" | "mask";
+  targetTrackId?: string;
+  artifactAssetId?: string;
+  mode?: 'luma'|'alpha';
+  invert?: boolean;
   name: string;
   muted?: boolean;
   locked?: boolean;
@@ -68,7 +75,7 @@ export function patchItem(
   return {
     ...timeline,
     tracks: timeline.tracks.map((track) =>
-      track.kind === "marker"
+      track.kind === "marker" || track.kind === "mask"
         ? track
         : {
             ...track,
@@ -91,7 +98,7 @@ export function split(
   return {
     ...timeline,
     tracks: timeline.tracks.map((track) => {
-      if (track.kind === "caption" || track.kind === "marker" || track.locked)
+      if (track.kind === "caption" || track.kind === "marker" || track.kind === "mask" || track.locked)
         return track;
       return {
         ...track,

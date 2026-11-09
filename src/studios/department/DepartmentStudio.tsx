@@ -1,6 +1,8 @@
 import React from "react";
+import { AdCopyProcessPanel } from '../shared/AdCopyProcessPanel';
 import { ProjectNarration } from "./ProjectNarration";
 import { ProjectAvatar } from "./ProjectAvatar";
+import { ProjectAppearance } from "./ProjectAppearance";
 import {
   ArrowDownToLine,
   Upload,
@@ -34,6 +36,7 @@ import {
   departmentApi,
   type DepartmentProject,
   type ProjectInput,
+  type PresentationLayout,
   type StudioFormat,
 } from "./departmentApi";
 import "./department.css";
@@ -68,6 +71,9 @@ const message = (error: unknown) => {
     voiceover_video_duration_unverified: "Não foi possível conferir a duração da imagem em movimento deste arquivo. Use uma versão do vídeo com duração verificável ou escolha uma imagem.",
     studio_montage_material_unreadable: "Não foi possível ler os materiais da montagem. Eles permanecem salvos; confira os arquivos e tente novamente.",
     studio_montage_material_checksum_mismatch: "Um material mudou desde que foi salvo. Reabra o projeto para conferir a versão correta.",
+    presenter_overlay_brand_video_too_short: "O vídeo da marca precisa ser pelo menos tão longo quanto a apresentação. Escolha outro vídeo ou use a apresentação em sequência.",
+    presenter_overlay_rotation_unverified: "Este vídeo precisa ser reorientado antes de usar a janela de apresentação. O original permanece salvo.",
+    presenter_overlay_requires_brand_video_and_avatar: "Para usar a janela, escolha um vídeo da marca e conclua a apresentação do personagem.",
   };
   return messages[code] || code || "Não foi possível concluir. Recarregue para conferir o estado salvo.";
 };
@@ -148,6 +154,10 @@ function StudioRoom({
       : "carousel";
   const [projects, setProjects] = React.useState<DepartmentProject[]>([]);
   const [project, setProject] = React.useState<DepartmentProject>();
+  const [presentationLayout, setPresentationLayout] = React.useState<PresentationLayout>('sequential');
+  React.useEffect(() => {
+    setPresentationLayout(project?.montagePlan?.mode === 'picture_in_picture' ? 'picture_in_picture' : 'sequential');
+  }, [project?.id]);
   const [step, setStep] = React.useState(0);
   const [loading, setLoading] = React.useState(true);
   const [busy, setBusy] = React.useState(false);
@@ -265,6 +275,7 @@ function StudioRoom({
   const activeId = React.useRef<string | undefined>(undefined);
   activeId.current = project?.id;
   const chooseProject = React.useCallback((next?: DepartmentProject) => {
+    if (!window.dispatchEvent(new Event('clicko:studio-before-leave', { cancelable: true }))) return;
     operation.current++;
     setBusy(false);
     setProject(next);
@@ -590,6 +601,7 @@ function StudioRoom({
           </button>
         </aside>
         <main className="ds-main">
+          <AdCopyProcessPanel targetKind="project" targetId={project?.id} disabled={busy} />
           <div className="ds-toolbar">
             <div className="ds-fronts" aria-label="Frente criativa">
               {(["content", "ads"] as const).map((front) => (
@@ -890,7 +902,7 @@ function StudioRoom({
                         ? voiceoverMaterial
                           ? "A voz escolhida fica salva no pedido. Prepare a narração com essa voz para criar a montagem."
                           : "As escolhas de aparência e voz ficam salvas no pedido. A produção confere a disponibilidade e as autorizações antes de iniciar."
-                        : "A aparência aprovada entra na composição como retrato de referência. A voz fica associada para versões narradas; imagens não contêm áudio."}
+                        : "Escolha uma aparência aprovada para usar a referência ou preparar uma nova cena. A voz fica associada para versões narradas; imagens não contêm áudio."}
                     </p>
                     {castError && (
                       <div role="alert">
@@ -1055,6 +1067,14 @@ function StudioRoom({
                 {project.planningBasis} As direções são esboços editoriais,
                 sujeitos à sua revisão.
               </p>
+              {project.format === 'video' && project.identityVersionId && project.voiceVersionId && project.sourceAssetId && <fieldset className="ds-presentation-layout">
+                <legend>Como apresentar o personagem?</legend>
+                <label><input type="radio" name="presentation-layout" checked={presentationLayout === 'sequential'}
+                  disabled={busy || !!project.documentId} onChange={() => setPresentationLayout('sequential')} /> Em sequência com o vídeo da marca</label>
+                <label><input type="radio" name="presentation-layout" checked={presentationLayout === 'picture_in_picture'}
+                  disabled={busy || !!project.documentId} onChange={() => setPresentationLayout('picture_in_picture')} /> Em uma janela sobre o vídeo</label>
+                <p>A janela mantém o fundo da apresentação. O áudio original do vídeo fica silenciado nesta versão; a fala escolhida é preservada. O vídeo precisa durar pelo menos o tempo da fala.</p>
+              </fieldset>}
               <div className="ds-production-bar">
                 <div>
                   <b>
@@ -1076,7 +1096,7 @@ function StudioRoom({
                       ? setStep(2)
                       : void run(async () => {
                           try {
-                            const next = await departmentApi.produce(project);
+                            const next = await departmentApi.produce(project, presentationLayout);
                             if (!alive.current) return;
                             remember(next);
                             setStep(2);
@@ -1263,7 +1283,7 @@ function StudioRoom({
                       disabled={busy}
                       onClick={() =>
                         void run(async () => {
-                          const next = await departmentApi.produce(project);
+                          const next = await departmentApi.produce(project, presentationLayout);
                           if (alive.current) remember(next);
                         })
                       }
@@ -1485,6 +1505,11 @@ function StudioRoom({
               )}
             </div>
           )}
+          {project && project.format !== "video" && project.identityVersionId && step > 0 && <ProjectAppearance
+            key={`${project.id}:appearance`}
+            project={project}
+            onProject={remember}
+          />}
           {project?.voiceVersionId && step > 0 && <ProjectNarration
             key={`${project.id}:${project.voiceVersionId}`}
             project={project}

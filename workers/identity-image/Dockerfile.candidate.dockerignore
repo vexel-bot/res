@@ -1,0 +1,13 @@
+**
+!backend/
+!backend/app/
+!backend/app/__init__.py
+!backend/app/domain/
+!backend/app/domain/**
+!workers/
+!workers/identity-image/
+!workers/identity-image/candidate/
+!workers/identity-image/candidate/pyproject.toml
+!workers/identity-image/candidate/uv.lock
+!workers/identity-image/runner.py
+!workers/identity-image/model-assets.v1.json

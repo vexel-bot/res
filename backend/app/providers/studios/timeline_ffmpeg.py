@@ -46,6 +46,7 @@ FILTERS = {
     "setsar",
     "fps",
     "colorchannelmixer",
+    "crop", "split", "alphaextract", "alphamerge", "blend", "negate",
 }
 
 
@@ -168,6 +169,7 @@ def title_png(cue, width, height, destination):
         else [
             Path("/usr/share/fonts/truetype/liberation2/LiberationSans-Bold.ttf"),
             Path("/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf"),
+            Path("C:/Windows/Fonts/arialbd.ttf"),
         ]
     )
     font_path = next((p for p in font_paths if p.is_file()), None)
@@ -297,8 +299,9 @@ def compile_plan(contract, paths, directory, media_info):
                        "rotation": layer.rotation, "opacity": layer.opacity},
         ))
     tracks = [*timeline.tracks, SimpleNamespace(kind="local", clips=local_items)]
+    masks = {t.target_track_id: t for t in timeline.tracks if t.kind == "mask"}
     for track in tracks:
-        if track.kind == "marker":
+        if track.kind in {"marker", "mask"}:
             continue
         items = track.cues if track.kind == "caption" else track.clips
         for item in items:
@@ -331,18 +334,55 @@ def compile_plan(contract, paths, directory, media_info):
                 and any(s["codec_type"] == "audio" for s in media_info[item.asset_id]["streams"])
             ):
                 audio_clip(index, item, track, f"a{index}", motion)
-            source_start = 0
+            mask = masks.get(getattr(track, "id", ""))
+            prefix = (
+                f"[{index}:v]trim=duration={num(length * rate)},"
+                f"setpts=(PTS-STARTPTS)/{num(rate)},fps={rate_value},setsar=1,format=rgba"
+            )
+            if mask:
+                mask_image = mask.artifact_asset_id not in media_info
+                mi = input_file(paths[mask.artifact_asset_id], mask_image, source_start, length * rate)
+                if image:
+                    with Image.open(path) as source_image:
+                        sw, sh = source_image.size
+                else:
+                    stream = next(s for s in media_info[item.asset_id]["streams"] if s["codec_type"] == "video")
+                    sw, sh = stream["width"], stream["height"]
+                filters.append(prefix + f",split=2[raw{index}][alphaSrc{index}]")
+                filters.append(f"[alphaSrc{index}]alphaextract[originalAlpha{index}]")
+                matte = (
+                    f"[{mi}:v]trim=duration={num(length * rate)},setpts=(PTS-STARTPTS)/{num(rate)},"
+                    f"fps={rate_value},scale={sw}:{sh},setsar=1,format=rgba,"
+                    + ("alphaextract" if mask.mode == "alpha" else "format=gray")
+                    + (",negate" if mask.invert else "")
+                )
+                filters.append(matte + f"[matte{index}]")
+                filters.append(f"[originalAlpha{index}][matte{index}]blend=all_expr='A*B/255':shortest=1[combinedAlpha{index}]")
+                prefix = f"[raw{index}][combinedAlpha{index}]alphamerge=shortest=1"
+            if motion.crop:
+                cx = curve(keys, "cropX", motion.crop.x, fps)
+                cy = curve(keys, "cropY", motion.crop.y, fps)
+                prefix += (
+                    f",crop=w='max(2,trunc(iw*{num(motion.crop.width)}/2)*2)':"
+                    f"h='max(2,trunc(ih*{num(motion.crop.height)}/2)*2)':"
+                    f"x='(iw-ow)*({cx})':y='(ih-oh)*({cy})'"
+                )
             fit = (
                 f"scale={max(2, round(item.local_layer.width))}:{max(2, round(item.local_layer.height))},"
                 if is_local else
                 f"scale={width}:{height}:force_original_aspect_ratio=decrease,"
                 f"pad={width}:{height}:(ow-iw)/2:(oh-ih)/2:color=black@0,"
             )
-            chain = (
-                f"[{index}:v]trim=start={num(source_start)}:duration={num(length * rate)},"
-                f"setpts=(PTS-STARTPTS)/{num(rate)},fps={rate_value},"
-                f"{fit}setsar=1,format=rgba"
-            )
+            chain = prefix + f",{fit}setsar=1,format=rgba"
+            if motion.reveal_progress != 1 or any(k.property == "revealProgress" for k in keys):
+                progress = curve(keys, "revealProgress", motion.reveal_progress, fps, "T")
+                expression = {
+                    "left": f"lt(X,W*({progress}))",
+                    "right": f"gte(X,W*(1-({progress})))",
+                    "top": f"lt(Y,H*({progress}))",
+                    "bottom": f"gte(Y,H*(1-({progress})))",
+                }[motion.reveal_direction]
+                chain += f",geq=r='r(X,Y)':g='g(X,Y)':b='b(X,Y)':a='alpha(X,Y)*({expression})'"
             if is_local:
                 style = LocalLayerStyle.model_validate(item.local_layer.properties)
                 if style.text_reveal == "words":
@@ -357,6 +397,13 @@ def compile_plan(contract, paths, directory, media_info):
                     ]
                     mask = "min(1," + "+".join(regions) + ")"
                     chain += f",geq=r='r(X,Y)':g='g(X,Y)':b='b(X,Y)':a='alpha(X,Y)*({mask})'"
+            # Alpha is independent of geometry. Apply it while dimensions are
+            # stable: geq can crash on reinitialization after per-frame scaling.
+            alpha = curve(keys, "opacity", motion.opacity, fps, "T")
+            if keys and any(k.property == "opacity" for k in keys):
+                chain += f",geq=r='r(X,Y)':g='g(X,Y)':b='b(X,Y)':a='alpha(X,Y)*({alpha})'"
+            elif motion.opacity != 1:
+                chain += f",colorchannelmixer=aa={num(motion.opacity)}"
             scale = curve(keys, "scale", motion.scale, fps)
             chain += f",scale=w='max(2,trunc(iw*({scale})/2)*2)':h='max(2,trunc(ih*({scale})/2)*2)':eval=frame"
             if any(key.property == "rotation" for key in keys):
@@ -365,11 +412,6 @@ def compile_plan(contract, paths, directory, media_info):
             elif motion.rotation:
                 angle = num(motion.rotation * math.pi / 180)
                 chain += f",rotate={angle}:c=none:ow=rotw({angle}):oh=roth({angle})"
-            alpha = curve(keys, "opacity", motion.opacity, fps, "T")
-            if keys and any(k.property == "opacity" for k in keys):
-                chain += f",geq=r='r(X,Y)':g='g(X,Y)':b='b(X,Y)':a='alpha(X,Y)*({alpha})'"
-            elif motion.opacity != 1:
-                chain += f",colorchannelmixer=aa={num(motion.opacity)}"
             if motion.fade_in_frames:
                 chain += f",fade=t=in:d={num(motion.fade_in_frames / fps)}:alpha=1"
             if motion.fade_out_frames:

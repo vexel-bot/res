@@ -66,3 +66,16 @@ def test_image_permission_cannot_create_a_video_project(monkeypatch):
         assert client.post("/api/v1/studios/v1/projects", json=payload, headers=auth).status_code == 403
         allowed = headers(module="create-video", allowed=["create-video"])
         assert client.post("/api/v1/studios/v1/projects", json=payload, headers=allowed).status_code == 201
+
+
+def test_appearance_generation_requires_the_metered_image_route(monkeypatch):
+    monkeypatch.setenv("CLICKO_STUDIOS_BRIDGE_SECRET", KEY)
+    with TestClient(app) as client:
+        video = headers(module="create-video")
+        response = client.post("/api/v1/studios/v1/projects/project-1/appearance", json={}, headers=video)
+        assert response.status_code == 403
+        response = client.post(
+            "/api/v1/studios/v1/jobs", json={"jobType": "appearance_image"}, headers=headers()
+        )
+        assert response.status_code == 422
+        assert response.json()["detail"]["code"] == "use_metered_media_endpoint"

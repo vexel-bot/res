@@ -41,3 +41,42 @@ test('Studio proxy requires the current Clicko identity and signs only an author
   assert.equal(claims.exp - claims.iat, 60);
   assert.equal(result.headers.get('cache-control'), 'no-store');
 });
+
+test('Canonical JSON is bounded and forwarded as a complete body while media uploads remain streams', async t => {
+  const app = express();
+  app.use('/api/governance', createGovernanceRouter({ dataFile: null }));
+  const bodies: unknown[] = [];
+  app.use('/api/v1/studios/v1', createStudiosProxy({
+    secret: 'private-studio-test-secret-with-more-than-32-characters',
+    fetch: async (_url, init) => {
+      bodies.push(init?.body);
+      return new Response('{}', { headers: { 'content-type': 'application/json' } });
+    },
+  }));
+  const server = app.listen(0, '127.0.0.1');
+  await new Promise<void>(resolve => server.once('listening', resolve));
+  t.after(() => new Promise<void>(resolve => server.close(() => resolve())));
+  const base = `http://127.0.0.1:${(server.address() as { port: number }).port}/api/v1/studios/v1`;
+  const headers = { 'x-workspace-id': 'ws-1', 'x-user-id': 'usr-master',
+    'x-clicko-studio-module': 'create-video', 'content-type': 'application/json' };
+  const body = JSON.stringify({ title: 'Vídeo', prompt: 'Uma cena com narração' });
+  for (const [method, route] of [
+    ['POST', '/documents'], ['POST', '/video/documents/doc/openrouter-media'],
+    ['POST', '/video/documents/doc/ai-commands'], ['POST', '/video/documents/doc/render-jobs'],
+    ['PUT', '/video/documents/doc/timeline'],
+  ]) {
+    const response = await fetch(base + route, { method, headers, body });
+    assert.equal(response.status, 200, route);
+    assert.equal(bodies.at(-1), body, route);
+  }
+  const before = bodies.length;
+  assert.equal((await fetch(base + '/documents', { method: 'POST', headers, body: '{broken' })).status, 400);
+  assert.equal((await fetch(base + '/documents', { method: 'POST', headers,
+    body: JSON.stringify({ title: 'x'.repeat(129 * 1024) }) })).status, 413);
+  assert.equal(bodies.length, before);
+  assert.equal((await fetch(base + '/craft/assets?filename=scene.mp4', {
+    method: 'POST', headers: { ...headers, 'content-type': 'video/mp4' }, body: 'video-bytes',
+  })).status, 200);
+  const upload = bodies.at(-1) as NodeJS.ReadableStream;
+  assert.equal(typeof upload.pipe, 'function');
+});

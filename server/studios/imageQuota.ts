@@ -20,6 +20,7 @@ export async function forwardMeteredImageRequest(input: {
   key?: string;
   body: unknown;
   signal?: AbortSignal;
+  targetType?: 'document' | 'project';
   forward: (receiptId?: string) => Promise<Response>;
 }) {
   const { auth, clientId, documentId, key, body } = input;
@@ -43,7 +44,12 @@ export async function forwardMeteredImageRequest(input: {
     const response = await input.forward(id);
     if (response.ok) {
       const job = await response.clone().json() as Record<string, any>;
-      if (typeof job.id !== 'string' || !job.id || job.documentId !== documentId || job.idempotencyKey !== key || !['editing_gemini', 'editing_ai'].includes(job.jobType) || job.request?.input?.operation !== request.operation)
+      const matchingJob = input.targetType === 'project'
+        ? job.jobType === 'appearance_image' && job.request?.plan?.projectId === documentId
+          && job.request?.commercialAdmission?.id === id && request.operation === 'generate_image'
+        : job.documentId === documentId && ['editing_gemini', 'editing_ai'].includes(job.jobType)
+          && job.request?.input?.operation === request.operation;
+      if (typeof job.id !== 'string' || !job.id || job.idempotencyKey !== key || !matchingJob)
         throw Object.assign(new Error('O servidor não confirmou o registro da imagem. Verifique o mesmo pedido antes de iniciar outro.'), { status: 502, code: 'IMAGE_ADMISSION_UNCONFIRMED' });
       settleStudioImageUsage(auth, id, job.id);
     } else if ([400, 401, 403, 404, 405, 409, 413, 415, 422, 429].includes(response.status)) {

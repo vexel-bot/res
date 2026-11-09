@@ -630,12 +630,45 @@ def create_job(
     *,
     commit: bool = True,
     trusted_editing_envelope: bool = False,
+    trusted_appearance_envelope: bool = False,
     commercial_admission: dict | None = None,
 ) -> tuple[StudioGenerationJob, bool]:
     if request.job_type in {"editing_ai", "editing_gemini"} and not trusted_editing_envelope:
         # Pricing, financial identity and provider bindings are server-owned.
         # A generic job payload is not authority to select them, even in app.main.
         raise ValueError("use_editing_jobs_endpoint")
+    if request.job_type == "appearance_image":
+        # Only the project endpoint with commercial admission may opt in.
+        # Generic API callers cannot supply their own trusted plan.
+        if not trusted_appearance_envelope:
+            raise ValueError("use_project_appearance_endpoint")
+        from ...models import WorkspaceResource
+        from .project_appearance import admitted_provider, plan_project_appearance
+
+        plan = request.request.get("plan")
+        if not isinstance(plan, dict):
+            raise ValueError("appearance_project_plan_required")
+        if getattr(user, "password_hash", None) == "!session-bridge-only":
+            admission = commercial_admission or {}
+            if (
+                admission.get("operation") != "generate_image"
+                or admission.get("documentId") != plan.get("projectId")
+                or admission.get("key") != idempotency_key
+                or not isinstance(admission.get("id"), str)
+                or len(admission["id"]) != 64
+                or any(c not in "0123456789abcdef" for c in admission["id"])
+                or request.request.get("commercialAdmission") != admission
+            ):
+                raise ValueError("commercial_media_admission_required")
+        row = db.get(WorkspaceResource, plan.get("projectId"))
+        if not row or row.kind != "studio_department" or row.workspace_id != request.workspace_id:
+            raise ValueError("appearance_project_not_found")
+        source = plan.get("request") or {}
+        if plan_project_appearance(db, row, source.get("direction"), seed=source.get("seed")) != plan:
+            raise ValueError("appearance_project_plan_changed")
+        if request.identity_version_id != (plan.get("casting", {}).get("identity") or {}).get("id"):
+            raise ValueError("appearance_identity_binding_mismatch")
+        admitted_provider(db, request.provider)
     if getattr(user, "password_hash", None) == "!session-bridge-only" and request.job_type in {
         "scene_generation",
         "avatar_video",
@@ -660,6 +693,9 @@ def create_job(
     if request.job_type == "timeline_render":
         from .timeline_editor import validate_admission
 
+        validate_admission(db, request)
+    if request.job_type == "material_effect":
+        from .material_effects import validate_admission
         validate_admission(db, request)
     if request.job_type == "video_render":
         raise ValueError("craft_editors_replaced_legacy_renderer_use_craft_render_jobs")
@@ -883,7 +919,9 @@ def create_job(
         hard_time_limit_seconds=(
             1890 if request.provider == "alight-motion.contextual-v1" else profile.hard_time_limit_seconds
         ),
-        max_attempts=1 if request.provider == "alight-motion.contextual-v1" else 3,
+        max_attempts=1
+        if request.provider == "alight-motion.contextual-v1" or request.job_type == "appearance_image"
+        else 3,
         idempotency_key=idempotency_key,
         payload_hash=digest,
         correlation_id=request.correlation_id or idempotency_key,
@@ -1074,9 +1112,11 @@ def execute_job_once(db: Session, job: StudioGenerationJob) -> str:
             "media_waveform",
             "video_render",
             "avatar_video",
+            "appearance_image",
             "scene_generation",
             "craft_render",
             "timeline_render",
+            "material_effect",
         }
     ):
         provider = PROVIDERS.get(job.provider)
@@ -1149,6 +1189,9 @@ def execute_job_once(db: Session, job: StudioGenerationJob) -> str:
             from .timeline_editor import execute
 
             result = execute(db, job, progress, is_cancelled)
+        elif job.job_type == "material_effect":
+            from .material_effects import execute
+            result = execute(db, job, progress, is_cancelled)
         elif job.job_type == "craft_render":
             from .craft import execute_render_job
 
@@ -1159,6 +1202,18 @@ def execute_job_once(db: Session, job: StudioGenerationJob) -> str:
             from .avatar_video import execute_avatar_video
 
             result = execute_avatar_video(db, job, progress, is_cancelled)
+        elif job.job_type == "appearance_image":
+            from ...models import WorkspaceResource
+            from .project_appearance import execute_project_appearance
+
+            plan = job.request_payload.get("plan") or {}
+            row = db.get(WorkspaceResource, plan.get("projectId"))
+            if not row or row.kind != "studio_department" or row.workspace_id != job.workspace_id:
+                raise ValueError("appearance_project_not_found")
+            asset = execute_project_appearance(
+                db, row, plan, job.provider, progress, is_cancelled, generation_job_id=job.id
+            )
+            result = {"assetId": asset.id, "checksumSha256": asset.checksum_sha256, "reviewRequired": True}
         elif job.job_type == "scene_generation":
             from .scene_generation import execute_scene_generation
 

@@ -9,6 +9,19 @@ from .contracts import StudioContract
 AgentRole = Literal["audiovisual", "image"]
 
 
+class EditorialExperiment(StudioContract):
+    variant: Literal["baseline", "knowledge", "orchestrated"] = "orchestrated"
+    format: Literal["auto", "motion", "hybrid", "footage", "interface"] = "auto"
+    objective: str | None = Field(default=None, min_length=1, max_length=240)
+    connection_id: str | None = Field(default=None, min_length=1, max_length=36)
+
+    @model_validator(mode="after")
+    def connection_requires_review(self):
+        if self.connection_id and self.variant != "orchestrated":
+            raise ValueError("editorial_claude_requires_render_review")
+        return self
+
+
 class LocalProjectRequest(StudioContract):
     workspace_id: str = Field(min_length=1, max_length=120)
     title: str = Field(min_length=1, max_length=120)
@@ -41,7 +54,8 @@ class AgentTaskRequest(StudioContract):
     expected_revision: int = Field(ge=1)
     instruction: str = Field(min_length=1, max_length=8000)
     role: Literal["auto", "audiovisual", "image"] = "auto"
-    planner: Literal["current", "deterministic", "gemini_experimental"] = "current"
+    planner: Literal["current", "deterministic", "gemini_experimental", "editorial_experimental"] = "current"
+    editorial: EditorialExperiment | None = None
     duration_seconds: int | None = Field(default=None, ge=3, le=120)
     probe: bool = False
     selected_layer_ids: list[Annotated[str, Field(min_length=1, max_length=120)]] = Field(
@@ -54,6 +68,10 @@ class AgentTaskRequest(StudioContract):
             raise ValueError("motion_gemini_probe_requires_experiment")
         if len(set(self.selected_layer_ids)) != len(self.selected_layer_ids):
             raise ValueError("agent_duplicate_selected_layer")
+        if (self.planner == "editorial_experimental") != (self.editorial is not None):
+            raise ValueError("editorial_experiment_configuration_required")
+        if self.editorial and self.selected_layer_ids:
+            raise ValueError("editorial_experiment_requires_project_scope")
         return self
 
 

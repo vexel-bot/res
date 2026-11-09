@@ -15,6 +15,7 @@ from io import BytesIO
 from pathlib import Path
 from types import SimpleNamespace
 
+import pytest
 from PIL import Image, ImageChops, ImageStat
 from test_avatar_independent_cast import TransportAvatar
 from test_project_avatar import BASE, prepare, submit
@@ -95,7 +96,8 @@ def power(samples, frequency):
     ) / len(samples)
 
 
-def test_presenter_then_brand_clip_preserve_picture_sound_and_native_reopen(client, monkeypatch, tmp_path):
+@pytest.mark.parametrize("layout", ["sequential", "picture_in_picture"])
+def test_presenter_then_brand_clip_preserve_picture_sound_and_native_reopen(client, monkeypatch, tmp_path, layout):
     case = prepare(client, monkeypatch, tmp_path)
     OUTPUT.mkdir(parents=True, exist_ok=True)
     speech = tmp_path / "selected-final.wav"
@@ -121,7 +123,8 @@ def test_presenter_then_brand_clip_preserve_picture_sound_and_native_reopen(clie
         avatar_id = job.result_payload["assetId"]
     brand = tmp_path / "brand.mp4"
     brand_audio = tmp_path / "brand.wav"
-    tone(brand_audio, 1.2, 880)
+    brand_duration = 4.0 if layout == "picture_in_picture" else 1.2
+    tone(brand_audio, brand_duration, 880)
     ffmpeg(
         "-f",
         "lavfi",
@@ -130,7 +133,7 @@ def test_presenter_then_brand_clip_preserve_picture_sound_and_native_reopen(clie
         "-i",
         brand_audio,
         "-t",
-        1.2,
+        brand_duration,
         "-threads",
         1,
         "-c:v",
@@ -168,10 +171,19 @@ def test_presenter_then_brand_clip_preserve_picture_sound_and_native_reopen(clie
     monkeypatch.setattr(studio_department, "render_job", render_here)
     current = client.get(f"{BASE}/{case.project['id']}", headers=case.headers).json()
     produced = client.post(
-        f"{BASE}/{case.project['id']}/produce", headers=case.headers, json={"expectedRevision": current["revision"]}
+        f"{BASE}/{case.project['id']}/produce",
+        headers=case.headers,
+        json={"expectedRevision": current["revision"], "presentationLayout": layout},
     )
     assert produced.status_code == 200, produced.text
     project = produced.json()
+    alternative = "sequential" if layout == "picture_in_picture" else "picture_in_picture"
+    changed = client.post(
+        f"{BASE}/{case.project['id']}/produce",
+        headers=case.headers,
+        json={"expectedRevision": project["revision"], "presentationLayout": alternative},
+    )
+    assert changed.status_code == 409
     with SessionLocal() as db:
         result = db.get(StudioGenerationJob, project["jobId"]).result_payload
         asset = db.get(LibraryAsset, result["artifact"]["assetId"])
@@ -210,16 +222,29 @@ def test_presenter_then_brand_clip_preserve_picture_sound_and_native_reopen(clie
         assert max(ImageStat.Stat(ImageChops.difference(native_preview, images[-1])).mean) < 3
     assert images[0].size == (1080, 1350)
     center = images[0].getpixel((540, 675))
-    assert center[0] > 180 and center[1] < 70 and center[2] < 70, center
+    if layout == "picture_in_picture":
+        assert center[2] > 180 and center[0] < 70, center
+        present = images[0].getpixel((840, 1190))
+        assert present[0] > 180 and present[1] < 70 and present[2] < 70, present
+        later = images[1].getpixel((840, 1190))
+        assert later[0] < 70, later
+    else:
+        assert center[0] > 180 and center[1] < 70 and center[2] < 70, center
     center = images[1].getpixel((540, 675))
     assert center[2] > 180 and center[0] < 70 and center[1] < 70, center
-    row = [images[0].getpixel((x, 675)) for x in range(1080)]
-    assert any(g > 180 and r < 70 and b < 70 for r, g, b in row), "left edge was cropped"
-    assert any(b > 180 and r < 70 and g < 70 for r, g, b in row), "right edge was cropped"
-    assert row[10][1] > 180 and row[-10][2] > 180, "the picture was not fitted to the output frame"
+    if layout == "sequential":
+        row = [images[0].getpixel((x, 675)) for x in range(1080)]
+        assert any(g > 180 and r < 70 and b < 70 for r, g, b in row), "left edge was cropped"
+        assert any(b > 180 and r < 70 and g < 70 for r, g, b in row), "right edge was cropped"
+        assert row[10][1] > 180 and row[-10][2] > 180, "the picture was not fitted to the output frame"
     pcm = ffmpeg("-i", OUTPUT / "montage.mp4", "-vn", "-f", "s16le", "-ac", 1, "-ar", 24000, "-")
     samples = struct.unpack(f"<{len(pcm) // 2}h", pcm)
-    for start, expected, other in [(0.5, 440, 880), (2.5, 440, 880), (3.1, 880, 440)]:
+    checks = [(0.5, 440, 880), (2.5, 440, 880)]
+    if layout == "sequential":
+        checks.append((3.1, 880, 440))
+    else:
+        assert max(abs(value) for value in samples[round(3.1 * 24000) : round(3.3 * 24000)]) < 100
+    for start, expected, other in checks:
         window = samples[round(start * 24000) : round((start + 0.2) * 24000)]
         assert len(window) == 4800
         assert power(window, expected) > 10 * max(power(window, other), 1), (start, expected)

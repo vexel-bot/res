@@ -5,7 +5,7 @@ from hashlib import sha256
 from typing import Literal
 from uuid import NAMESPACE_URL, uuid4, uuid5
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, Header, HTTPException, Request
 from pydantic import Field
 from sqlalchemy import select, update
 from sqlalchemy.exc import IntegrityError
@@ -55,6 +55,23 @@ class ProjectChange(StudioContract):
 
 class ProductionRequest(StudioContract):
     expected_revision: int = Field(ge=1)
+    presentation_layout: Literal["sequential", "picture_in_picture"] = "sequential"
+
+
+class AppearancePlanRequest(StudioContract):
+    expected_revision: int = Field(ge=1)
+    direction: str = Field(min_length=3, max_length=4000)
+    seed: int = Field(default=0, ge=0, lt=2**32)
+
+
+class AppearanceGenerationRequest(AppearancePlanRequest):
+    operation: Literal["generate_image"]
+    plan_digest_sha256: str = Field(pattern=r"^[a-f0-9]{64}$")
+
+
+class AppearanceSelection(StudioContract):
+    expected_revision: int = Field(ge=1)
+    job_id: str = Field(min_length=1, max_length=80)
 
 
 def now():
@@ -202,7 +219,7 @@ def create_project(data: ProjectInput, db: Session = Depends(get_db), user: User
         "createdAt": now(),
         "updatedAt": now(),
         "creationFingerprint": fingerprint,
-        "planningBasis": "Pesquisa editorial aplicada ao pedido; esboço sem geração por LLM.",
+        "planningBasis": "Esboço de template derivado do briefing. Pesquisa do produto e copy exigem preparação e revisão.",
         "casting": casting,
     }
     row = WorkspaceResource(
@@ -245,6 +262,149 @@ def select_direction(
     if row.payload.get("documentId") or row.payload.get("status") == "producing":
         raise HTTPException(409, "Crie outro projeto para explorar uma nova direção sem alterar a entrega existente.")
     return out(change(db, row, data.expected_revision, {"directionId": data.direction_id}))
+
+
+@router.post("/{project_id}/appearance/plan")
+def plan_appearance(
+    project_id: str, data: AppearancePlanRequest, db: Session = Depends(get_db), user: User = Depends(get_current_user)
+):
+    from ..services.studios.project_appearance import plan_project_appearance
+
+    row = owned(db, user, project_id)
+    if row.payload.get("revision") != data.expected_revision:
+        raise HTTPException(409, detail={"code": "studio_project_conflict"})
+    if row.payload.get("status") == "producing":
+        raise HTTPException(409, detail={"code": "appearance_project_producing"})
+    try:
+        return plan_project_appearance(db, row, data.direction, seed=data.seed)
+    except ValueError as error:
+        raise studio_identity_error(error) from error
+
+
+@router.get("/{project_id}/appearance")
+def get_appearance(project_id: str, db: Session = Depends(get_db), user: User = Depends(get_current_user)):
+    from ..domain.studios.appearance_image import PROVIDER
+    from ..models import StudioGenerationJob
+    from ..services.studios.jobs import job_out
+    from ..services.studios.project_appearance import admitted_provider
+
+    row = owned(db, user, project_id)
+    job = db.scalar(
+        select(StudioGenerationJob)
+        .where(
+            StudioGenerationJob.workspace_id == row.workspace_id,
+            StudioGenerationJob.job_type == "appearance_image",
+            StudioGenerationJob.correlation_id == f"department-appearance:{row.id}",
+        )
+        .order_by(StudioGenerationJob.created_at.desc(), StudioGenerationJob.id.desc())
+        .limit(1)
+    )
+    try:
+        admitted_provider(db, PROVIDER)
+        availability = {"available": True, "reason": None}
+    except ValueError as error:
+        availability = {"available": False, "reason": str(error)}
+    return {
+        "job": job_out(job) if job else None,
+        "selection": row.payload.get("appearanceSelection"),
+        "availability": availability,
+    }
+
+
+@router.post("/{project_id}/appearance/select")
+def select_appearance(
+    project_id: str, data: AppearanceSelection, db: Session = Depends(get_db), user: User = Depends(get_current_user)
+):
+    from ..models import StudioGenerationJob
+    from ..services.studios.project_appearance import plan_project_appearance, selected_appearance_asset
+
+    row = owned(db, user, project_id)
+    if (
+        row.payload.get("revision") != data.expected_revision
+        or row.payload.get("documentId")
+        or row.payload.get("status") == "producing"
+    ):
+        raise HTTPException(409, detail={"code": "studio_project_conflict"})
+    job = db.get(StudioGenerationJob, data.job_id)
+    if (
+        not job
+        or job.workspace_id != row.workspace_id
+        or job.job_type != "appearance_image"
+        or job.correlation_id != f"department-appearance:{row.id}"
+        or job.status != "succeeded"
+    ):
+        raise HTTPException(404, detail={"code": "appearance_result_unavailable"})
+    plan = (job.request_payload or {}).get("plan") or {}
+    request = plan.get("request") or {}
+    try:
+        if plan_project_appearance(db, row, request.get("direction"), seed=request.get("seed", 0)) != plan:
+            raise ValueError("appearance_project_plan_changed")
+        selection = {"jobId": job.id, "assetId": (job.result_payload or {}).get("assetId"), "plan": plan}
+        selected_appearance_asset(db, row, selection)
+        return out(change(db, row, data.expected_revision, {"appearanceSelection": selection}))
+    except ValueError as error:
+        raise studio_identity_error(error) from error
+
+
+@router.post("/{project_id}/appearance", status_code=202)
+def generate_appearance(
+    project_id: str,
+    data: AppearanceGenerationRequest,
+    request: Request,
+    idempotency_key: str = Header(min_length=8, max_length=160),
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
+):
+    from ..config import get_settings
+    from ..domain.studios.appearance_image import PROVIDER
+    from ..domain.studios.contracts import CreateGenerationJobRequest
+    from ..services.studios.jobs import create_job, enqueue_job_task, job_out
+    from ..services.studios.project_appearance import plan_project_appearance
+    from ..tasks import execute_studio_generation
+
+    row = owned(db, user, project_id)
+    if row.payload.get("revision") != data.expected_revision or row.payload.get("status") == "producing":
+        raise HTTPException(409, detail={"code": "studio_project_conflict"})
+    try:
+        plan = plan_project_appearance(db, row, data.direction, seed=data.seed)
+        if plan["planDigestSha256"] != data.plan_digest_sha256:
+            raise HTTPException(409, detail={"code": "appearance_project_plan_changed"})
+        admission = getattr(request.state, "studio_media_admission", None)
+        payload = {"plan": plan, **({"commercialAdmission": admission} if admission else {})}
+        job, created = create_job(
+            db,
+            CreateGenerationJobRequest(
+                workspace_id=row.workspace_id,
+                job_type="appearance_image",
+                provider=PROVIDER,
+                identity_version_id=plan["casting"]["identity"]["id"],
+                voice_version_id=(plan["casting"].get("voice") or {}).get("id"),
+                consent_grant_id=plan["casting"]["identity"].get("consentGrantId"),
+                request=payload,
+                correlation_id=f"department-appearance:{row.id}",
+            ),
+            idempotency_key,
+            user,
+            trusted_appearance_envelope=True,
+            commercial_admission=admission,
+        )
+        if created:
+            try:
+                enqueue_job_task(
+                    execute_studio_generation,
+                    job,
+                    isolated_queues_enabled=get_settings().studio_isolated_queues_enabled,
+                )
+            except Exception as error:
+                db.refresh(job)
+                if job.status == "queued":
+                    job.status, job.error_code, job.error_message = "failed", "queue_unavailable", type(error).__name__
+                    job.finished_at = datetime.now(UTC)
+                    db.commit()
+        return job_out(job)
+    except ValueError as error:
+        db.rollback()
+        raise studio_identity_error(error) from error
 
 
 def document_request(project, post_id, brand_revision, asset=None, portrait=None):
@@ -300,18 +460,21 @@ def document_request(project, post_id, brand_revision, asset=None, portrait=None
         )
     if asset and project["format"] != "video":
         for page in pages:
+            generated_scene = bool(project.get("appearanceSelection"))
             page["layers"].append(
                 {
                     "id": "source-material",
                     "kind": "image",
-                    "width": 420,
-                    "height": 360,
-                    "x": 585,
-                    "y": 940,
+                    "width": 600 if generated_scene else 420,
+                    "height": 600 if generated_scene else 360,
+                    "x": 405 if generated_scene else 585,
+                    "y": 690 if generated_scene else 940,
                     "zIndex": 1,
                     "properties": {"assetId": asset.id},
                 }
             )
+            if generated_scene:
+                next(layer for layer in page["layers"] if layer["id"].startswith("body-"))["width"] = 300
     if portrait:
         for page in pages:
             page["layers"].append(
@@ -383,6 +546,13 @@ def produce_project(
     if row.payload.get("jobId"):
         if row.payload["revision"] != data.expected_revision:
             raise HTTPException(409, "Recarregue o projeto antes de continuar.")
+        existing_layout = (
+            "picture_in_picture"
+            if (row.payload.get("montagePlan") or {}).get("mode") == "picture_in_picture"
+            else "sequential"
+        )
+        if existing_layout != data.presentation_layout:
+            raise HTTPException(409, "A entrega já foi criada com outra composição.")
         return out(row)
     if row.payload.get("status") == "producing":
         started = datetime.fromisoformat(row.payload["updatedAt"])
@@ -411,6 +581,7 @@ def produce_project(
         raise HTTPException(422, "Escolha um material armazenado e compatível com o formato.")
     additional_video = None
     portrait = None
+    original_image = None
     if row.payload.get("identityVersionId") or row.payload.get("voiceVersionId"):
         if row.payload["format"] == "video" and not voiceover:
             from ..services.studios.project_avatar import completed_asset
@@ -430,20 +601,29 @@ def produce_project(
             from ..models import StudioIdentityVersion
 
             version = db.get(StudioIdentityVersion, row.payload["identityVersionId"])
-            portrait = next(
-                (
-                    item
-                    for asset_id in version.sample_asset_ids
-                    if (item := db.get(LibraryAsset, asset_id))
-                    and item.workspace_id == row.workspace_id
-                    and item.lifecycle_status == "active"
-                    and item.storage_key
-                    and (item.media_type or "").startswith("image/")
-                    and item.checksum_sha256
-                ),
-                None,
-            )
-            if not portrait:
+            if row.payload.get("appearanceSelection"):
+                from ..services.studios.project_appearance import selected_appearance_asset
+
+                try:
+                    original_image = asset
+                    asset = selected_appearance_asset(db, row, row.payload["appearanceSelection"])
+                except ValueError as error:
+                    raise studio_identity_error(error) from error
+            else:
+                portrait = next(
+                    (
+                        item
+                        for asset_id in version.sample_asset_ids
+                        if (item := db.get(LibraryAsset, asset_id))
+                        and item.workspace_id == row.workspace_id
+                        and item.lifecycle_status == "active"
+                        and item.storage_key
+                        and (item.media_type or "").startswith("image/")
+                        and item.checksum_sha256
+                    ),
+                    None,
+                )
+            if not portrait and not row.payload.get("appearanceSelection"):
                 raise HTTPException(422, "A versão escolhida precisa de uma imagem de referência armazenada.")
     if row.payload["format"] == "video" and not asset:
         raise HTTPException(
@@ -453,10 +633,21 @@ def produce_project(
             else "Selecione um vídeo da biblioteca para preparar a primeira montagem.",
         )
     preparation = {"status": "producing"}
+    if data.presentation_layout == "picture_in_picture" and (
+        row.payload["format"] != "video"
+        or voiceover
+        or not row.payload.get("identityVersionId")
+        or not additional_video
+    ):
+        raise HTTPException(422, detail={"code": "presenter_overlay_requires_brand_video_and_avatar"})
     if row.payload["format"] == "video":
         try:
             if voiceover:
                 montage, narration_audio = plan_voiceover(db, row, asset)
+            elif data.presentation_layout == "picture_in_picture":
+                from ..services.studios.project_presenter_overlay import plan_presenter_overlay
+
+                montage = plan_presenter_overlay(row.workspace_id, additional_video, asset)
             else:
                 montage = plan_video_montage(
                     row.workspace_id,
@@ -498,7 +689,7 @@ def produce_project(
         if not brand:
             raise ValueError("Configure o contexto da marca antes de produzir.")
         request = document_request(project, post_id, brand_readiness(brand)["revision"], asset, portrait)
-        for extra in (additional_video, narration_audio):
+        for extra in (additional_video, narration_audio, original_image):
             if not extra:
                 continue
             request.assets.append(
@@ -521,7 +712,7 @@ def produce_project(
                 f"department-migrate:{project_id}",
             )
         db.refresh(document)
-        if project["format"] == "video":
+        if project["format"] == "video" and project["montagePlan"].get("mode") != "picture_in_picture":
             # Import is an idempotent native operation; a retry never duplicates the clip.
             if not row.payload.get("sourceRevision"):
                 row = change(db, row, row.payload["revision"], {"sourceRevision": document.revision})

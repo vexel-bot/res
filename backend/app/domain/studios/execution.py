@@ -26,6 +26,7 @@ class ExecutionProfile:
 
 
 EXECUTION_PROFILES: dict[str, ExecutionProfile] = {
+    "material_effect": ExecutionProfile("media_cpu", "studio.media.cpu", "cpu.media", 2400),
     "timeline_render": ExecutionProfile("media_cpu", "studio.media.cpu", "cpu.media", 3600),
     "craft_render": ExecutionProfile("media_cpu", "studio.media.cpu", "cpu.media", 3600),
     "editing_gemini": ExecutionProfile("media_cpu", "studio.media.cpu", "cpu.media", 1800),
@@ -40,6 +41,7 @@ EXECUTION_PROFILES: dict[str, ExecutionProfile] = {
     "voice_clone": ExecutionProfile("speech_gpu", "studio.gpu.speech", "gpu.speech", 3_600),
     "lip_sync": ExecutionProfile("vision_gpu", "studio.gpu.vision", "gpu.vision", 7_200),
     "avatar_video": ExecutionProfile("vision_gpu", "studio.gpu.vision", "gpu.vision", 7_200),
+    "appearance_image": ExecutionProfile("vision_gpu", "studio.gpu.vision", "gpu.vision", 7_200),
     "scene_generation": ExecutionProfile("vision_gpu", "studio.gpu.vision", "gpu.vision.local", 1_800),
     "reality_analysis": ExecutionProfile("vision_gpu", "studio.gpu.vision", "gpu.vision", 7_200),
     "video_physical_qc": ExecutionProfile("vision_gpu", "studio.gpu.vision", "gpu.vision", 7_200),
@@ -51,6 +53,7 @@ EXECUTION_PROFILES: dict[str, ExecutionProfile] = {
 
 OPENVOICE_CPU_PROVIDER = "candidate.kokoro-openvoice-v2-cpu"
 PROVIDER_EXECUTION_PROFILES = {
+    ("material_effect", "local.material-generative-v1"): ExecutionProfile("vision_gpu", "studio.gpu.vision", "gpu.vision.local", 2400),
     ("voice_clone", OPENVOICE_CPU_PROVIDER): ExecutionProfile("speech_cpu", "studio.speech.cpu", "cpu.speech", 3600),
 }
 

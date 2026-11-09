@@ -1,0 +1,31 @@
+# syntax=docker/dockerfile:1.7
+FROM python:3.11-slim@sha256:272efc3f94bec901e2bc7a5c9984b3d113c317839edca2714c6a388b9476f8fc AS dependencies
+COPY --from=ghcr.io/astral-sh/uv:0.12.3@sha256:dfd1e6972e100ca2fbf1f391effc3dd4aa57f319bf03c3e321e0a3f3341ed5af /uv /usr/local/bin/uv
+RUN apt-get update && apt-get install --yes --no-install-recommends ca-certificates libgomp1 \
+    && rm -rf /var/lib/apt/lists/*
+WORKDIR /opt/clicko/candidate
+COPY workers/identity-image/candidate/pyproject.toml ./pyproject.toml
+COPY workers/identity-image/candidate/uv.lock ./uv.lock
+RUN test "$(sha256sum uv.lock | awk '{print $1}')" = "2bc620e445e02453d2464801e2243c2803f55e9350777de4af00a16587798d1d" \
+    && uv sync --frozen --no-dev --no-install-project
+ENV HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 HF_DATASETS_OFFLINE=1
+RUN .venv/bin/python -c "import importlib.metadata as m; import torch; from diffusers import QwenImageEditPlusPipeline; assert m.version('diffusers') == '0.42.0'; assert m.version('transformers') == '5.16.1'; assert m.version('torch') == '2.6.0+cu124'"
+
+FROM python:3.11-slim@sha256:272efc3f94bec901e2bc7a5c9984b3d113c317839edca2714c6a388b9476f8fc
+LABEL io.clicko.candidate="qwen-image-edit-2511" io.clicko.candidate.status="evaluation" io.clicko.providers="none" \
+    io.clicko.model-manifest.digest="ea66f02ae33c246405fce577817515cdff2e458ecd8ee3adc38d3a02ed7121a3" \
+    io.clicko.dependency-lock.digest="2bc620e445e02453d2464801e2243c2803f55e9350777de4af00a16587798d1d"
+RUN apt-get update && apt-get install --yes --no-install-recommends libgomp1 \
+    && rm -rf /var/lib/apt/lists/* && useradd --create-home --uid 10001 clicko
+COPY --from=dependencies /opt/clicko/candidate /opt/clicko/candidate
+COPY backend/app/__init__.py /opt/clicko/backend/app/__init__.py
+COPY backend/app/domain /opt/clicko/backend/app/domain
+COPY workers/identity-image/runner.py /opt/clicko/runner.py
+COPY workers/identity-image/model-assets.v1.json /opt/clicko/model-assets.v1.json
+ENV PATH="/opt/clicko/candidate/.venv/bin:${PATH}" PYTHONPATH="/opt/clicko/backend" \
+    HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 HF_DATASETS_OFFLINE=1 \
+    HF_HOME="/tmp/huggingface" XDG_CACHE_HOME="/tmp/cache"
+USER clicko
+WORKDIR /opt/clicko
+ENTRYPOINT ["python", "runner.py"]
+CMD ["--help"]

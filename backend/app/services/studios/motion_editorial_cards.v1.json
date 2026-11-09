@@ -1,0 +1,181 @@
+{
+  "version": "clicko.motion-editorial.v1",
+  "cards": [
+    {
+      "id": "reveal-relationship",
+      "state": "hypothesis",
+      "formats": [
+        "motion",
+        "hybrid"
+      ],
+      "intent": "Revelar uma relação ou uma transformação por vez.",
+      "requires": [
+        "text",
+        "image-or-video"
+      ],
+      "initial": "Objeto identificável em seu estado inicial.",
+      "final": "Mesmo objeto e nova relação visível.",
+      "operations": [
+        "layer.upsert",
+        "timeline.replace",
+        "keyframes"
+      ],
+      "avoid": "Quando a ação já explica a mudança em tempo real.",
+      "counterexample": "Três caixas entram juntas sem deixar claro o que se relaciona.",
+      "test": "A descrição do espectador inclui o objeto e a relação, sem ajuda do título.",
+      "sources": [
+        "https://pubmed.ncbi.nlm.nih.gov/17968070/",
+        "https://arxiv.org/abs/2108.04385"
+      ]
+    },
+    {
+      "id": "preserve-motif",
+      "state": "observed",
+      "formats": [
+        "motion",
+        "hybrid"
+      ],
+      "intent": "Preservar a identidade visual enquanto muda o contexto.",
+      "requires": [
+        "image-or-video"
+      ],
+      "initial": "Embalagem, recorte ou símbolo reconhecível no quadro.",
+      "final": "O elemento permanece reconhecível no plano seguinte.",
+      "operations": [
+        "layer.upsert",
+        "keyframes",
+        "mask"
+      ],
+      "avoid": "Se a imagem seguinte exige inventar detalhes do produto.",
+      "counterexample": "Corte por semelhança de cor em que o produto parece outro.",
+      "test": "A forma, a posição ou o rótulo permite identificar o mesmo objeto nas duas pontas.",
+      "sources": [
+        "https://www.instagram.com/reel/DdW0UoSxXsX/"
+      ]
+    },
+    {
+      "id": "show-action",
+      "state": "observed",
+      "formats": [
+        "footage",
+        "hybrid"
+      ],
+      "intent": "Manter gesto e consequência em escala legível.",
+      "requires": [
+        "video"
+      ],
+      "initial": "Mão, pessoa ou instrumento começa uma ação.",
+      "final": "Consequência visível da ação.",
+      "operations": [
+        "timeline.replace",
+        "layer.upsert"
+      ],
+      "avoid": "Se o trecho disponível não mostra a consequência alegada.",
+      "counterexample": "Uma cartela descreve a ação enquanto o vídeo vira miniatura.",
+      "test": "Amostras antes e depois mantêm sujeito e gesto em evidência.",
+      "sources": [
+        "https://www.instagram.com/reel/DdtuxMNBtxr/"
+      ]
+    },
+    {
+      "id": "protect-interface",
+      "state": "hypothesis",
+      "formats": [
+        "interface"
+      ],
+      "intent": "Dar prioridade ao alvo e ao efeito real da operação na interface.",
+      "requires": [
+        "interface"
+      ],
+      "initial": "Estado inicial do aplicativo e alvo da ação identificáveis.",
+      "final": "A consequência na tela permanece tempo suficiente para leitura.",
+      "operations": [
+        "timeline.replace",
+        "layer.upsert"
+      ],
+      "avoid": "Quando o material é apenas uma arte de marca sem captura de interface.",
+      "counterexample": "Zoom sobre menus que esconde a resposta do sistema.",
+      "test": "O espectador identifica onde ocorreu a ação e o que mudou.",
+      "sources": [
+        "https://pubmed.ncbi.nlm.nih.gov/17968070/"
+      ]
+    },
+    {
+      "id": "readable-type",
+      "state": "hypothesis",
+      "formats": [
+        "motion",
+        "hybrid",
+        "footage",
+        "interface"
+      ],
+      "intent": "Permitir leitura em escala de celular durante a parte útil do plano.",
+      "requires": [
+        "text"
+      ],
+      "initial": "Texto associado a uma única etapa da sequência.",
+      "final": "Texto inteiro estável com fundo suficientemente distinto.",
+      "operations": [
+        "layer.upsert",
+        "keyframes"
+      ],
+      "avoid": "Se a informação é redundante e encobre a ação.",
+      "counterexample": "Texto com a mesma cor do fundo ou que só existe durante o deslocamento.",
+      "test": "Fonte, caixa, contraste conhecido e tempo de exposição permitem revisão objetiva; público confirma compreensão.",
+      "sources": [
+        "https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html",
+        "https://www.ordinaryfolk.co/process"
+      ]
+    },
+    {
+      "id": "honest-audio",
+      "state": "hypothesis",
+      "formats": [
+        "motion",
+        "hybrid",
+        "footage",
+        "interface"
+      ],
+      "intent": "Preservar locução e usar som em pontos com consequência visual.",
+      "requires": [
+        "audio"
+      ],
+      "initial": "O áudio autorizado está montado e tem uma função definida.",
+      "final": "A associação com gesto, mudança ou marca pode ser escutada.",
+      "operations": [
+        "timeline.replace"
+      ],
+      "avoid": "Se a única justificativa do som é preencher cada segundo.",
+      "counterexample": "Notificação sonora sem acontecimento correspondente na imagem.",
+      "test": "A trilha autorizada é preservada e a prévia tem sinal nos trechos de áudio esperados; revisar sincronismo por audição.",
+      "sources": [
+        "https://www.filmsound.org/murch/interview-with-walter-murch.htm"
+      ]
+    },
+    {
+      "id": "cutout-depth",
+      "state": "observed",
+      "formats": [
+        "motion",
+        "hybrid"
+      ],
+      "intent": "Pôr imagem ou tipografia atrás de um recorte coerente com a cena.",
+      "requires": [
+        "cutout"
+      ],
+      "initial": "Fundo, elemento intermediário e recorte alinhados.",
+      "final": "A oclusão torna a relação de profundidade legível.",
+      "operations": [
+        "layer.upsert",
+        "mask"
+      ],
+      "avoid": "Se não houver recorte alinhado ou se o texto perder sentido.",
+      "counterexample": "A máscara oscila e revela bordas que cruzam o objeto.",
+      "test": "Amostras ordenadas mantêm o objeto e não mostram vazamentos nas bordas.",
+      "sources": [
+        "https://www.instagram.com/reel/Dct4pAohiup/",
+        "https://www.instagram.com/reel/DdwS-6oRvL8/"
+      ]
+    }
+  ]
+}

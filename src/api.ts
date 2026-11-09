@@ -16,6 +16,7 @@ export class APIError extends Error {
   constructor(
     message: string,
     public status: number,
+    public detail?: unknown,
   ) {
     super(message);
   }
@@ -28,9 +29,11 @@ export async function apiFetch<T>(path: string, init: RequestInit = {}): Promise
   const response = await fetch(path, { ...init, credentials: 'same-origin', headers });
   if (!response.ok) {
     let message = `Erro HTTP ${response.status}`;
+    let errorDetail: unknown;
     try {
       const body = await response.json();
       const detail = body.detail || body.error;
+      errorDetail = detail;
       message = typeof detail === "string"
         ? detail
         : typeof detail?.code === "string"
@@ -41,7 +44,7 @@ export async function apiFetch<T>(path: string, init: RequestInit = {}): Promise
       // The status remains the authoritative error when the response is not JSON.
     }
     if (response.status === 401) window.dispatchEvent(new Event('nexus:unauthorized'));
-    throw new APIError(message, response.status);
+    throw new APIError(message, response.status, errorDetail);
   }
   if (response.status === 204) return undefined as T;
   return response.json() as Promise<T>;

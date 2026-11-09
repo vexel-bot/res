@@ -2,6 +2,8 @@
 
 Frontend React/TypeScript com Express como BFF autenticado e FastAPI como serviço de projetos, mídia e jobs. A identidade e as permissões continuam pertencendo à sessão Clicko; o navegador não recebe chaves de provedores.
 
+A [documentação central do sistema](docs/evolution/2026-10-29-documentacao-sistema.md) reúne áreas, arquitetura, fluxos, operação local e pendências. Ela também está disponível na área **Evolução** da aplicação.
+
 ## Motion Gemini experimental · 24/10/2026
 
 Integração DEV opcional, **desligada por padrão**. Reutiliza o transporte Gemini,

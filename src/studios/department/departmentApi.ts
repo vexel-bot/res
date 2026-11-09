@@ -1,6 +1,7 @@
 import { apiFetch } from "../../api";
 
 export type StudioFormat = "image" | "carousel" | "video";
+export type PresentationLayout = "sequential" | "picture_in_picture";
 export interface Direction {
   id: "guide" | "demonstrate";
   title: string;
@@ -39,6 +40,8 @@ export interface DepartmentProject extends Omit<ProjectInput, "requestKey"> {
   status: "direction" | "producing" | "production_failed" | "delivery";
   planningBasis: string;
   updatedAt: string;
+  appearanceSelection?: { jobId: string; assetId: string } | null;
+  montagePlan?: { mode?: string } | null;
   casting?: {
     identity?: { id: string; version: number; consentGrantId: string | null };
     voice?: { id: string; version: number; consentGrantId: string | null };
@@ -60,9 +63,38 @@ export interface AvatarPlan {
   operation: 'generate_avatar'; expectedRevision: number; documentId: string; durationSeconds: number;
   planDigestSha256: string; performanceDirection: string;
 }
+export interface AppearancePlan {
+  projectRevision: number;
+  planDigestSha256: string;
+  request: { direction: string; seed: number };
+}
+export interface AppearanceJob {
+  id: string;
+  status: string;
+  progress: number;
+  idempotencyKey: string;
+  errorCode: string | null;
+  result: { assetId?: string } | null;
+}
+export interface AppearanceState {
+  job: AppearanceJob | null;
+  selection: { jobId: string; assetId: string } | null;
+  availability: { available: boolean; reason: string | null };
+}
 const base = "/api/v1/studios/v1/projects";
 const path = (id: string) => `${base}/${encodeURIComponent(id)}`;
 export const departmentApi = {
+  appearance: (id: string, signal?: AbortSignal) => apiFetch<AppearanceState>(`${path(id)}/appearance`, { signal }),
+  planAppearance: (id: string, expectedRevision: number, direction: string) => apiFetch<AppearancePlan>(`${path(id)}/appearance/plan`, {
+    method: 'POST', body: JSON.stringify({ expectedRevision, direction, seed: 0 }),
+  }),
+  generateAppearance: (id: string, plan: AppearancePlan, key: string) => apiFetch<AppearanceJob>(`${path(id)}/appearance`, {
+    method: 'POST', headers: { 'Idempotency-Key': key }, body: JSON.stringify({ operation: 'generate_image',
+      expectedRevision: plan.projectRevision, direction: plan.request.direction, seed: plan.request.seed, planDigestSha256: plan.planDigestSha256 }),
+  }),
+  selectAppearance: (id: string, expectedRevision: number, jobId: string) => apiFetch<DepartmentProject>(`${path(id)}/appearance/select`, {
+    method: 'POST', body: JSON.stringify({ expectedRevision, jobId }),
+  }),
   avatar: (id: string, signal?: AbortSignal) => apiFetch<AvatarState>(`${path(id)}/avatar`, { signal }),
   planAvatar: (id: string, performanceDirection: string) => apiFetch<AvatarPlan>(`${path(id)}/avatar/plan`, {
     method: 'POST', body: JSON.stringify({ performanceDirection }),
@@ -99,9 +131,9 @@ export const departmentApi = {
       method: "PATCH",
       body: JSON.stringify({ expectedRevision: project.revision, directionId }),
     }),
-  produce: (project: DepartmentProject) =>
+  produce: (project: DepartmentProject, presentationLayout: PresentationLayout = 'sequential') =>
     apiFetch<DepartmentProject>(`${path(project.id)}/produce`, {
       method: "POST",
-      body: JSON.stringify({ expectedRevision: project.revision }),
+      body: JSON.stringify({ expectedRevision: project.revision, presentationLayout }),
     }),
 };

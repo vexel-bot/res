@@ -1,0 +1,19 @@
+{
+  "schemaVersion": "clicko.local-material-models.v1",
+  "rvm": {
+    "file": "models/rvm_mobilenetv3_fp32.onnx",
+    "sizeBytes": 14975696,
+    "sha256": "88d4531297118f595bf2fd60f6f566aec2e559393802d1f436c380f0cbbd2828",
+    "source": "https://github.com/PeterL1n/RobustVideoMatting/releases/download/v1.0.0/rvm_mobilenetv3_fp32.onnx",
+    "documentation": "https://github.com/PeterL1n/RobustVideoMatting/blob/master/documentation/inference.md",
+    "license": "GPL-3.0"
+  },
+  "diffusion": {
+    "profile": "animatediff-lightning-sd15-a-v1",
+    "repository": "stable-diffusion-v1-5/stable-diffusion-v1-5",
+    "revision": "451f4fe16113bff5a5d2269ed5ad43b0592e9a14",
+    "license": "CreativeML-OpenRAIL-M",
+    "operation": "image_to_image_background_or_region",
+    "downloadsDuringInference": false
+  }
+}

@@ -52,6 +52,22 @@ export function createStudiosProxy(options: { origin?: string; secret?: string; 
     try { return decodeURIComponent(req.path).match(/^\/projects\/([^/]+)\/avatar\/?$/); }
     catch { return null; }
   };
+  const appearanceJobRoute = (req: express.Request) => {
+    if (req.method !== 'POST') return null;
+    try { return decodeURIComponent(req.path).match(/^\/projects\/([^/]+)\/appearance\/?$/); }
+    catch { return null; }
+  };
+  const canonicalJsonRoute = (req: express.Request) => {
+    try {
+      const path = decodeURIComponent(req.path);
+      return (req.method === 'PUT' && /^\/copy\/(?:project|document)\/[^/]+\/?$/.test(path))
+        || (['PUT', 'POST'].includes(req.method) && /^\/materials\/(?:project|document)\/[^/]+\/(?:kits\/[^/]+|binding|preview|apply|cutout|import|effects)\/?$/.test(path))
+        || (req.method === 'POST' && /^\/documents\/?$/.test(path))
+        || (req.method === 'POST' && /^\/documents\/[^/]+\/(?:agent-tasks(?:\/[^/]+\/apply)?|local-commands)\/?$/.test(path))
+        || (req.method === 'POST' && /^\/video\/documents\/[^/]+\/(?:openrouter-media|ai-commands|render-jobs)\/?$/.test(path))
+        || (req.method === 'PUT' && /^\/video\/documents\/[^/]+\/timeline\/?$/.test(path));
+    } catch { return false; }
+  };
   // Media elements cannot attach custom headers. Only this read-only, scoped
   // video delivery route accepts equivalent query context; session checks remain mandatory.
   router.use((req, _res, next) => {
@@ -63,10 +79,10 @@ export function createStudiosProxy(options: { origin?: string; secret?: string; 
     next();
   });
   router.use(authenticate);
-  // Only the small image-job JSON is buffered. Uploads, native files and all
-  // other media responses keep their existing streaming path.
+  // Buffer bounded command JSON before asynchronous authorization/bridge work.
+  // Uploads, native files and media responses retain their streaming path.
   router.use((req, res, next) => {
-    if (!editingJobRoute(req) && !avatarJobRoute(req)) return next();
+    if (!editingJobRoute(req) && !avatarJobRoute(req) && !appearanceJobRoute(req) && !canonicalJsonRoute(req)) return next();
     express.json({ limit: '128kb' })(req, res, next);
   });
   router.use((error: { type?: string }, _req: express.Request, res: express.Response, next: express.NextFunction) => {
@@ -113,23 +129,27 @@ export function createStudiosProxy(options: { origin?: string; secret?: string; 
       const imageRoute = imageJobRoute(req);
       const editingRoute = editingJobRoute(req);
       const avatarRoute = avatarJobRoute(req);
+      const appearanceRoute = appearanceJobRoute(req);
       if (avatarRoute && (module !== 'create-video' || req.body?.operation !== 'generate_avatar'
         || typeof req.body?.documentId !== 'string')) {
         return res.status(422).json({ detail: 'Solicite a apresentação pelo Studio de Vídeo.', code: 'VIDEO_REQUEST_INVALID' });
       }
+      if (appearanceRoute && (module !== 'create-image' || req.body?.operation !== 'generate_image')) {
+        return res.status(422).json({ detail: 'Solicite a imagem pelo Studio de Imagem.', code: 'IMAGE_REQUEST_INVALID' });
+      }
       const forward = (receiptId?: string) => {
-        if (receiptId && (editingRoute || avatarRoute)) headers.set('authorization', `Bearer ${studioBridgeToken(auth, clientId, module, secret, {
-          id: receiptId, documentId: avatarRoute ? req.body.documentId : editingRoute![1], key: req.header('idempotency-key'), operation: req.body.operation,
+        if (receiptId && (editingRoute || avatarRoute || appearanceRoute)) headers.set('authorization', `Bearer ${studioBridgeToken(auth, clientId, module, secret, {
+          id: receiptId, documentId: appearanceRoute ? appearanceRoute[1] : avatarRoute ? req.body.documentId : editingRoute![1], key: req.header('idempotency-key'), operation: req.body.operation,
           ...(['generate_video', 'generate_avatar'].includes(req.body.operation) ? { seconds: Number(req.body.durationSeconds ?? 8) } : {}),
         })}`);
         return upstreamFetch(target, {
         method: req.method, headers, signal: controller.signal,
-        body: editingRoute || avatarRoute ? JSON.stringify(req.body) : ['GET', 'HEAD'].includes(req.method) ? undefined : req as unknown as BodyInit,
+        body: editingRoute || avatarRoute || appearanceRoute || canonicalJsonRoute(req) ? JSON.stringify(req.body) : ['GET', 'HEAD'].includes(req.method) ? undefined : req as unknown as BodyInit,
         duplex: ['GET', 'HEAD'].includes(req.method) ? undefined : 'half',
       } as RequestInit & { duplex?: 'half' });
       };
-      const upstream = imageRoute ? await forwardMeteredImageRequest({
-        auth, clientId, documentId: imageRoute[1], key: req.header('idempotency-key'), body: req.body, signal: controller.signal, forward,
+      const upstream = imageRoute || appearanceRoute ? await forwardMeteredImageRequest({
+        auth, clientId, documentId: appearanceRoute ? appearanceRoute[1] : imageRoute![1], targetType: appearanceRoute ? 'project' : 'document', key: req.header('idempotency-key'), body: req.body, signal: controller.signal, forward,
       }) : (editingRoute || avatarRoute) && module === 'create-video' ? await forwardMeteredVideoRequest({
         auth, clientId, documentId: avatarRoute ? req.body.documentId : editingRoute![1], key: req.header('idempotency-key'), body: req.body, forward,
       }) : await forward();

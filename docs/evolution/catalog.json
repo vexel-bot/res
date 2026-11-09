@@ -1,7 +1,31 @@
 {
   "schemaVersion": "clicko.product-evolution.v1",
-  "updatedAt": "2026-10-25",
+  "updatedAt": "2026-10-29",
   "entries": [
+    {
+      "id": "documentacao-sistema",
+      "date": "2026-10-29",
+      "category": "update",
+      "status": "implemented",
+      "title": "Documentação central do sistema",
+      "summary": "Mapa das áreas, arquitetura, criação nos Studios, ambiente local e estado das integrações.",
+      "impact": "Reúne um ponto de entrada para compreender o sistema e consultar as evidências e pendências na Evolução.",
+      "document": "2026-10-29-documentacao-sistema.md",
+      "requirements": ["Documentar as áreas e o funcionamento geral do sistema.", "Manter acessíveis a evolução e as pendências das integrações."],
+      "evidence": ["README.md", "src/components/Sidebar.tsx", "server/studios/proxy.ts", "backend/app/studio_routes.py", "backend/app/routers/product_evolution.py", "backend/app/routers/studio_department.py", "backend/app/services/studios/casting.py", "docs/studios/LOCAL_IDENTITY_SETUP.md", "docs/studios/LOCAL_SPEECH_RUNTIMES.md"]
+    },
+    {
+      "id": "appearance-image-worker",
+      "date": "2026-10-25",
+      "category": "update",
+      "status": "in_progress",
+      "title": "Rosto e personagens: geração de imagens em integração",
+      "summary": "Contrato, adaptador, worker e plano para usar a aparência escolhida com a imagem do projeto. Execução e validação generativa pendentes.",
+      "impact": "Prepara a geração de novas cenas com pessoa ou personagem, preservando as referências no pedido. O candidato ainda não está disponível para o cliente.",
+      "document": "2026-10-25-appearance-image-worker.md",
+      "requirements": ["Ligar uma aparência de referência à imagem escolhida.", "Distinguir testes de contrato da qualidade real de identidade."],
+      "evidence": ["backend/app/domain/studios/appearance_image.py", "backend/app/providers/studios/qwen_appearance.py", "backend/app/services/studios/project_appearance.py", "backend/app/routers/studio_department.py", "backend/tests/test_project_appearance_plan.py", "backend/tests/test_project_appearance_execution.py", "server/studios/appearanceQuota.test.ts", "backend/scripts/download_appearance_model_assets.py", "workers/identity-image/model-assets.v1.json", "workers/identity-image/runner.py", "workers/identity-image/tests/test_runner.py", "workers/identity-image/README.md"]
+    },
     {
       "id": "openvoice-cpu-project",
       "date": "2026-10-25",

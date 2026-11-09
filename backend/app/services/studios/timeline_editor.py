@@ -52,7 +52,15 @@ def validate(contract, *, require_content=False):
 
     ids = {layer.id for layer in page.layers}
     asset_ids = validate_composition(contract.composition, contract.content_type) if page.layers else set()
+    masked = set()
     for track in timeline.tracks:
+        if track.kind == "mask":
+            target = next((t for t in timeline.tracks if t.id == track.target_track_id), None)
+            if not target or target.kind not in {"video", "overlay"} or target.id in masked:
+                raise ValueError("timeline_mask_target_invalid")
+            masked.add(target.id)
+            asset_ids.add(track.artifact_asset_id)
+            continue
         if track.kind not in {"video", "audio", "overlay", "caption", "marker"}:
             raise ValueError("timeline_track_unsupported")
         items = track.cues if track.kind == "caption" else getattr(track, "clips", [])
@@ -80,6 +88,8 @@ def validate(contract, *, require_content=False):
                 raise ValueError("timeline_keyframes_invalid")
             if any(k.frame > item.timeline.duration_frames for k in keys):
                 raise ValueError("timeline_keyframe_exceeds_clip")
+            if any(k.property in {"cropX", "cropY"} for k in keys) and motion.crop is None:
+                raise ValueError("timeline_crop_motion_requires_window")
             if motion.fade_in_frames + motion.fade_out_frames > item.timeline.duration_frames:
                 raise ValueError("timeline_fade_exceeds_clip")
             if track.kind == "audio" and (
@@ -97,8 +107,10 @@ def digest(value):
     return sha256(json.dumps(value, sort_keys=True, ensure_ascii=False, separators=(",", ":")).encode()).hexdigest()
 
 
-def save(db, record, request, user, key, *, operation=None):
+def save(db, record, request, user, key, *, operation=None, extra_asset_ids=()):
     fingerprint = digest(request.model_dump(mode="json", by_alias=True))
+    if extra_asset_ids:
+        fingerprint = digest({"request": fingerprint, "importAssetIds": sorted(set(extra_asset_ids))})
     events = db.scalars(
         select(StudioDomainEvent).where(
             StudioDomainEvent.aggregate_id == record.id, StudioDomainEvent.event_type == "studio.video.timeline.saved"
@@ -123,7 +135,7 @@ def save(db, record, request, user, key, *, operation=None):
     ]
     composition = current.composition.model_copy(update={"media_timeline": request.timeline, "pages": pages})
     contract = current.model_copy(update={"composition": composition})
-    references = validate(contract)
+    references = validate(contract) | set(extra_asset_ids)
     assets = {a.id: a for a in current.assets}
     total = 0
     for identifier in references:
@@ -320,6 +332,22 @@ def execute(db, job, progress, is_cancelled):
                         raise ValueError("timeline_source_resolution_limit")
             timeline = contract.composition.media_timeline
             fps = timeline.frame_rate.numerator / timeline.frame_rate.denominator
+            for mask in (t for t in timeline.tracks if t.kind == "mask"):
+                target = next(t for t in timeline.tracks if t.id == mask.target_track_id)
+                mask_info = media_info.get(mask.artifact_asset_id)
+                if mask_info:
+                    if not any(s["codec_type"] == "video" for s in mask_info["streams"]):
+                        raise ValueError("timeline_mask_visual_required")
+                    # Moving mattes use the same source time/rate as each target clip.
+                    for clip in target.clips:
+                        start = clip.source.start_microseconds / 1e6 if clip.source else 0
+                        if start + clip.timeline.duration_frames / fps * clip.playback_rate > float(mask_info["format"]["duration"]) + 1 / fps:
+                            raise ValueError("timeline_mask_source_range_exceeded")
+                elif mask.mode == "alpha":
+                    from PIL import Image
+                    with Image.open(paths[mask.artifact_asset_id]) as image:
+                        if "A" not in image.getbands():
+                            raise ValueError("timeline_mask_alpha_missing")
             for track in timeline.tracks:
                 for clip in getattr(track, "clips", []):
                     if clip.asset_id not in media_info:

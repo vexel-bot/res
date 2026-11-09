@@ -63,6 +63,13 @@ def bridge_user(
     selected = getattr(request.state, "studio_body", {})
     if "/avatar" in request.url.path and "/projects/" in request.url.path and claims["module"] != "create-video":
         raise HTTPException(403, "Abra o Studio de Vídeo para produzir a apresentação.")
+    if (
+        request.method == "POST"
+        and request.url.path.rstrip("/").endswith("/appearance")
+        and "/projects/" in request.url.path
+        and claims["module"] != "create-image"
+    ):
+        raise HTTPException(403, "Abra o Studio de Imagem para produzir a imagem.")
     if request.url.path.endswith("/editing-gemini-jobs"):
         raise HTTPException(410, detail={"code": "use_image_editing_jobs_endpoint"})
     if "/production-runs" in request.url.path and claims["module"] != "create-video":
@@ -71,7 +78,7 @@ def bridge_user(
     if (
         request.url.path.rstrip("/") == "/api/v1/studios/v1/jobs"
         and request.method == "POST"
-        and generic_job_type in {"scene_generation", "avatar_video"}
+        and generic_job_type in {"scene_generation", "avatar_video", "appearance_image"}
     ):
         raise HTTPException(422, detail={"code": "use_metered_media_endpoint"})
     if generic_job_type == "timeline_render" and claims["module"] != "create-video":
