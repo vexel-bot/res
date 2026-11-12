@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "clicko.quality-baseline.v1",
+  "recordedDate": "2026-11-12",
+  "projectTheme": "ÓRBITA",
+  "artifact": {
+    "filename": "orbita-independente-previa-sem-audio.mp4",
+    "sha256": "040484f64c32e9d7d47aff43b5d1fe69626382dfc598ae0b217296ec7f490391",
+    "url": "https://github.com/vexel-bot/res/releases/download/orbita-independent-2026-11-12/orbita-independente-previa-sem-audio.mp4",
+    "durationSeconds": 16,
+    "audio": "absent",
+    "exportOrigin": "Codex local recovery of unmodified Opus renderer"
+  },
+  "ownerFeedback": {
+    "source": "project owner, conversation on 2026-11-12",
+    "comment": "Esse vídeo é nosso primeiro resultado positivo, mas ainda temos muito trabalho á fazer",
+    "classification": "positive_progress_needs_revision",
+    "firstPositiveResult": true,
+    "finalAdvertisementApproved": false,
+    "audienceStudy": false
+  },
+  "acceptedReferenceIds": [
+    "research.model.cinematic_motif",
+    "research.model.product_in_action",
+    "research.model.layered_collage"
+  ],
+  "pending": [
+    "Sound design and auditory review",
+    "Full-frame light peak around 8 seconds",
+    "Movement and typography refinement",
+    "Autonomous completed export",
+    "Transfer to another brief",
+    "Viewer comprehension evaluation"
+  ],
+  "accounting": {
+    "previousExperimentReportedUsd": 3.0205758,
+    "previousCostSource": "claude-code-receipt-list-pricing, not reconciled invoice",
+    "apiSpendForThisDocumentationUsd": 0,
+    "additionalPaidGenerationAuthorizedByThisRecord": false
+  },
+  "previousJobId": "2e418fc1-dd9d-4149-b450-b0d832cae866",
+  "playbook": "docs/studios/knowledge/playbooks/tres-referencias-storyboards-2026-11-12.md"
+}

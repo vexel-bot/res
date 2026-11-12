@@ -64,6 +64,8 @@ As perguntas abaixo são inferências editoriais a partir de práticas documenta
 
 ## 3. Consultar fichas e registrar a evidência
 
+Para os três exemplares escolhidos pelo usuário, consulte [os storyboards e os métodos reutilizáveis](tres-referencias-storyboards-2026-11-12.md). As fichas `research.model.cinematic_motif`, `research.model.product_in_action` e `research.model.layered_collage` podem ser recuperadas por objetivo e materiais. Escolha e justifique a linguagem em cada briefing. Os estados observados, a reconstrução proposta e a execução local ainda pendente estão separados nas fichas.
+
 Busque fichas por objetivo, formato e materiais disponíveis. Use poucas e registre por que cada uma cabe no projeto. Se duas sugerirem caminhos incompatíveis, escolha pela função do trecho e deixe a alternativa registrada. Se nenhuma ficha for adequada, descreva a lacuna. Quando uma técnica depender de uma operação indisponível, escolha uma operação equivalente verificável ou registre a limitação. [Fichas consultadas pelo editor](../../../../backend/app/services/studios/motion_editorial_cards.v1.json)
 
 Uma ficha precisa ligar a fonte ao comportamento esperado. Deve ter intenção, pré-requisitos de material, estados de entrada e saída, operações possíveis, contraindicação, contraexemplo e um teste observável. Registre seu estado com um dos seguintes rótulos.

@@ -25,7 +25,12 @@ def test_all_editorial_libraries_are_searchable_and_keep_their_evidence(client):
         card["id"] for card in craft_direction.reference_index()
     }
     assert len([card for card in cards.values() if card.get("kind") == "editing_language"]) == 15
-    assert len([card for card in cards if card.startswith("research.")]) == 37
+    assert len([card for card in cards if card.startswith("research.")]) >= 40
+    model_ids = {"research.model.cinematic_motif", "research.model.product_in_action", "research.model.layered_collage"}
+    assert model_ids <= cards.keys()
+    for identifier in model_ids:
+        assert cards[identifier]["evidence"]["audio"] == "not_audited"
+        assert cards[identifier]["state"] == "knowledge_only"
     target = cards["research.target.orbita.reference_triad"]
     assert target["scope"]["universalDefault"] is False
     assert target["primaryReference"]["creator"] == "@paulo.ia"
@@ -37,6 +42,15 @@ def test_all_editorial_libraries_are_searchable_and_keep_their_evidence(client):
     assert lesson["state"] == "reproduced locally"
     assert "abertura lateral" in lesson["demonstration"]["transferContraindication"]
     with SessionLocal() as db:
+        for query, expected in [
+            ("Perfume cinema motivo profundidade planos", "research.model.cinematic_motif"),
+            ("Casa Lume produto em ação filmagem demonstração", "research.model.product_in_action"),
+            ("Coleção colagem silhueta recorte transformação", "research.model.layered_collage"),
+        ]:
+            found = craft_direction.search_repertoire(db, workspace, query, limit=6)
+            model = next(card for card in found["matches"] if card["id"] == expected)
+            assert model["storyboard"] and model["counterexamples"]
+            assert model["evidence"]["localReproduction"] == "not_tested"
         targets = craft_direction.search_repertoire(db, workspace, "ÓRBITA meta referência cinematográfica", limit=6)
         assert target["id"] in {card["id"] for card in targets["matches"]}
         exercise = craft_direction.search_repertoire(db, workspace, "ÓRBITA recuo moldura colisão", limit=3)

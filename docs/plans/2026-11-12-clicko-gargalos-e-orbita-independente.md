@@ -79,3 +79,9 @@ Sem faixa de áudio, não se avaliam mixagem, ritmo audiovisual ou sincronismo. 
 Pasta para revisão: `C:/Users/edugu/OneDrive/Documentos/res/output/clicko-orbita-independente-2026-11-12`. Contém a prévia silenciosa, os fontes editáveis em ZIP, recibo, medições e quadros. O ZIP inclui as fontes e licenças do trabalho; não inclui chaves, `.env` ou logs brutos da sessão.
 
 Os próximos testes da ÓRBITA devem declarar a comparação com `research.target.orbita.reference_triad`, preservando a liberdade de direção. Não há frequência obrigatória de cortes ou número de efeitos. A referência serve para discutir e medir diferenças observáveis, e não para autorizar a reprodução de mídia de terceiros.
+
+## Atualização após o feedback do usuário
+
+Em 12/11/2026, o usuário confirmou as três referências e classificou a prévia independente como o primeiro resultado positivo, ainda com trabalho a fazer. Esse feedback passa a orientar a evolução estética. A versão foi preservada como baseline com o hash acima; a ausência de áudio e a recuperação da exportação permanecem no recibo técnico. A classificação é `positive_progress_needs_revision`, sem marcar aprovação de anúncio final ou estudo com espectadores.
+
+O [manual de storyboards e adaptação](../studios/knowledge/playbooks/tres-referencias-storyboards-2026-11-12.md) detalha as três linguagens, os critérios de escolha, procedimentos propostos e próximos passos. O feedback está ligado ao arquivo no [registro da primeira versão positiva](../studios/knowledge/orbita-quality-baseline.v1.json) e no contexto do projeto da Clicko. Essa entrega documental consumiu US$ 0 de API e não gerou outro vídeo.

@@ -1712,6 +1712,490 @@
           "Reference assets are not authorized production materials"
         ]
       }
+    },
+    {
+      "kind": "reusable_editing_model",
+      "state": "knowledge_only",
+      "version": 1,
+      "scope": {
+        "universalDefault": false,
+        "selection": "Choose by communication goal and available materials."
+      },
+      "evidence": {
+        "visual": "sampled_playback_frames",
+        "audio": "not_audited",
+        "sourceProductionPipeline": "not_fully_verified",
+        "localReproduction": "not_tested",
+        "timing": "Requested seek times precede captured frames; these are landmarks, not measured cut boundaries."
+      },
+      "sourceEvidence": {
+        "file": "docs/studios/knowledge/playbooks/tres-referencias-storyboards-2026-11-12.md",
+        "observationDate": "2026-11-12",
+        "limits": [
+          "Observed visual states and proposed production steps are separate.",
+          "No auditory analysis or exact easing measurement.",
+          "Reference media is for analysis, not an authorized production asset."
+        ]
+      },
+      "sound": {
+        "sourceObservation": "Não auditado; nenhuma batida, fala ou sincronismo foi confirmado.",
+        "transferProposal": "Definir o papel de voz, ambiente, música, efeitos e silêncio por ação. Vincular eventos a tempos do render e ouvir a mixagem final."
+      },
+      "handoff": [
+        "briefObjective",
+        "approvedCopy",
+        "materialsWithProvenance",
+        "chosenModelAndReason",
+        "shotStatesAndAttention",
+        "nativeOperationsToVerify",
+        "soundPlan",
+        "revision",
+        "acceptanceEvidence"
+      ],
+      "id": "research.model.cinematic_motif",
+      "label": "Cinema com motivo recorrente",
+      "intent": "Cinema, marca e campanha: motivo visual reconhecível em cenas variadas, escalas, profundidade, luz e continuidade",
+      "reference": {
+        "creator": "@paulo.ia",
+        "title": "Olise / bola dourada",
+        "url": "https://www.instagram.com/reel/Dd5Md7NMj7P/",
+        "durationSeconds": 25.05
+      },
+      "principle": "Um motivo permanece reconhecível enquanto espaço, escala e ponto de vista mudam.",
+      "useWhen": [
+        "Construir um universo para marca, evento ou produto",
+        "Um símbolo ou objeto pode unir cenas diferentes",
+        "Há planos de qualidade com luz, identidade e geometria coerentes"
+      ],
+      "avoidWhen": [
+        "Demonstrar uma tarefa exige passos exatos de interface",
+        "Só existe uma imagem e nenhuma possibilidade de criar outros estados",
+        "O espetáculo esconde a oferta ou sugere uma prova factual inexistente"
+      ],
+      "requires": [
+        "Motivo definido",
+        "Planos amplos, médios ou detalhes que acrescentem informações diferentes",
+        "Coerência de identidade, cor, espaço e material",
+        "Copy e destino do convite confirmados"
+      ],
+      "storyboard": [
+        {
+          "requestedSecond": 0.5,
+          "evidenceImage": "paulo-play-0.5.png",
+          "title": "Apresentar o motivo",
+          "observed": "Figura de vermelho no píer com elemento dourado na posição da cabeça.",
+          "functionHypothesis": "Estranhamento visual com uma âncora simples.",
+          "adaptation": "Apresentar um objeto ou símbolo próprio ligado à promessa."
+        },
+        {
+          "requestedSecond": 3,
+          "evidenceImage": "paulo-play-3.png",
+          "title": "Criar profundidade",
+          "observed": "Figura próxima à direita e outra ao fundo no píer.",
+          "functionHypothesis": "Variar relação de escala e distância sem perder o universo.",
+          "adaptation": "Construir primeiro plano e fundo com um motivo reconhecível."
+        },
+        {
+          "requestedSecond": 6,
+          "evidenceImage": "paulo-play-6.png",
+          "title": "Mudar a relação",
+          "observed": "Na praia, bola dourada em primeiro plano e pessoa de vermelho ao fundo.",
+          "functionHypothesis": "Relacionar o motivo à pessoa em outro contexto.",
+          "adaptation": "Mostrar outro aspecto do produto ou da experiência, preservando identidade."
+        },
+        {
+          "requestedSecond": 12,
+          "evidenceImage": "paulo-play-12.png",
+          "title": "Aproximar o sujeito",
+          "observed": "Rosto em plano próximo, com fundo azul e figurino vermelho.",
+          "functionHypothesis": "Dar presença humana e variar a escala.",
+          "adaptation": "Usar um detalhe ou reação que acrescente informação relevante."
+        },
+        {
+          "requestedSecond": 18,
+          "evidenceImage": "paulo-play-18.png",
+          "title": "Reabrir o espaço",
+          "observed": "Plano amplo do píer com as figuras pequenas na paisagem.",
+          "functionHypothesis": "Recuperar contexto e contrastar com o close.",
+          "adaptation": "Mostrar o ambiente ou o resultado maior da experiência."
+        },
+        {
+          "requestedSecond": 24,
+          "evidenceImage": "paulo-play-24.png",
+          "title": "Retornar à identidade",
+          "observed": "Pessoa de vermelho em plano médio sobre fundo azul escuro.",
+          "functionHypothesis": "Encerrar a amostra voltando ao sujeito reconhecível.",
+          "adaptation": "Reservar uma conclusão própria com marca, categoria e convite quando o briefing exigir."
+        }
+      ],
+      "procedure": [
+        "Definir promessa, público e um motivo visual que a represente.",
+        "Preparar planos que mostrem relações diferentes; não duplicar a mesma cena com zoom.",
+        "Conferir identidade e luz entre os materiais antes de compor.",
+        "Mapear foco inicial e final de cada passagem; escolher corte ou transformação pela relação entre planos.",
+        "Integrar texto, material, bordas e sombras conforme a cena; planejar o som.",
+        "Revisar o MP4 inteiro e os encontros críticos entre movimentos; concluir com oferta compreensível."
+      ],
+      "operationsToVerify": [
+        "Importação e reenquadramento sem deformação",
+        "Cortes e ordenação de planos",
+        "Correção de cor e exposição",
+        "Composição de recortes com luz e sombra se necessários",
+        "Texto legível e mixagem por eventos"
+      ],
+      "parameters": [
+        "motivo",
+        "produtoOuEvento",
+        "universo",
+        "planosDisponiveis",
+        "paletaDerivadaDaMarca",
+        "mensagem",
+        "convite"
+      ],
+      "counterexamples": [
+        "Um planeta genérico se move diante de cartões sem desenvolver a oferta.",
+        "Planos mudam o rosto ou o produto e a montagem trata isso como continuidade.",
+        "Uma sequência bonita termina sem situar o que é anunciado."
+      ],
+      "checks": [
+        "Descrever o que cada plano acrescenta.",
+        "Reconhecer o motivo sem depender de rótulos.",
+        "Comparar luz, escala e bordas nas emendas.",
+        "Conferir categoria e convite em tamanho de celular."
+      ],
+      "transferExamples": [
+        {
+          "brief": "ÓRBITA",
+          "application": "Preservar a tira de filme da versão positiva como motivo candidato; variar o mundo apresentado em suas janelas e tornar a mostra compreensível. Não reutilizar a bola ou o atleta."
+        },
+        {
+          "brief": "Perfume",
+          "application": "O mesmo frasco conecta detalhe do material, gesto de uso e ambiente da marca. Afirmações sobre desempenho dependem dos dados do produto."
+        }
+      ]
+    },
+    {
+      "kind": "reusable_editing_model",
+      "state": "knowledge_only",
+      "version": 1,
+      "scope": {
+        "universalDefault": false,
+        "selection": "Choose by communication goal and available materials."
+      },
+      "evidence": {
+        "visual": "sampled_playback_frames",
+        "audio": "not_audited",
+        "sourceProductionPipeline": "not_fully_verified",
+        "localReproduction": "not_tested",
+        "timing": "Requested seek times precede captured frames; these are landmarks, not measured cut boundaries."
+      },
+      "sourceEvidence": {
+        "file": "docs/studios/knowledge/playbooks/tres-referencias-storyboards-2026-11-12.md",
+        "observationDate": "2026-11-12",
+        "limits": [
+          "Observed visual states and proposed production steps are separate.",
+          "No auditory analysis or exact easing measurement.",
+          "Reference media is for analysis, not an authorized production asset."
+        ]
+      },
+      "sound": {
+        "sourceObservation": "Não auditado; nenhuma batida, fala ou sincronismo foi confirmado.",
+        "transferProposal": "Definir o papel de voz, ambiente, música, efeitos e silêncio por ação. Vincular eventos a tempos do render e ouvir a mixagem final."
+      },
+      "handoff": [
+        "briefObjective",
+        "approvedCopy",
+        "materialsWithProvenance",
+        "chosenModelAndReason",
+        "shotStatesAndAttention",
+        "nativeOperationsToVerify",
+        "soundPlan",
+        "revision",
+        "acceptanceEvidence"
+      ],
+      "id": "research.model.product_in_action",
+      "label": "Produto em ação",
+      "intent": "Anúncio com filmagem, produto, serviço, uso real e demonstração: ações reconhecíveis, diversidade de planos e prova da oferta",
+      "reference": {
+        "creator": "@creators / crédito a @martsromero",
+        "title": "Matcha na NYFW",
+        "url": "https://www.instagram.com/reel/DdW0UoSxXsX/",
+        "durationSeconds": 34.8517
+      },
+      "principle": "O produto conecta pessoas e contextos porque participa de ações visíveis.",
+      "useWhen": [
+        "Há um uso real que ajuda a entender a oferta",
+        "Mostrar pessoas, ambiente e detalhes cria contexto relevante",
+        "Uma demonstração de serviço ou interface pode mostrar ação e consequência reais"
+      ],
+      "avoidWhen": [
+        "Não há gravação utilizável da ação",
+        "A montagem transforma cenas genéricas em uma prova de desempenho",
+        "Trocar de pessoa remove uma etapa essencial de uma explicação"
+      ],
+      "requires": [
+        "Produto ou operação reconhecível",
+        "Material com a ação e seu resultado",
+        "Captação com planos abertos e detalhes úteis",
+        "Dados factuais e convite confirmados"
+      ],
+      "storyboard": [
+        {
+          "requestedSecond": 0.5,
+          "evidenceImage": "creators-0.5.png",
+          "title": "Produto em contexto",
+          "observed": "Pessoa na rua com copo verde na mão.",
+          "functionHypothesis": "Situar produto, pessoa e ambiente juntos.",
+          "adaptation": "Mostrar onde e por quem a oferta é usada."
+        },
+        {
+          "requestedSecond": 3,
+          "evidenceImage": "creators-3.png",
+          "title": "Ação reconhecível",
+          "observed": "Outra pessoa atravessa a rua bebendo do copo.",
+          "functionHypothesis": "Fazer o produto participar da ação.",
+          "adaptation": "Selecionar um gesto real que demonstre o uso."
+        },
+        {
+          "requestedSecond": 6,
+          "evidenceImage": "creators-6.png",
+          "title": "Aproximar o uso",
+          "observed": "Plano mais próximo de uma pessoa com o copo junto ao rosto.",
+          "functionHypothesis": "Preservar identidade em outra escala.",
+          "adaptation": "Aproximar produto, gesto ou interface quando houver informação nova."
+        },
+        {
+          "requestedSecond": 14,
+          "evidenceImage": "creators-14.png",
+          "title": "Variar a situação",
+          "observed": "Pessoa sorrindo na rua, com o copo e mais ambiente no quadro.",
+          "functionHypothesis": "Variar sujeito e contexto mantendo o motivo.",
+          "adaptation": "Mostrar outro contexto útil ou uma reação captada, sem inventar depoimento."
+        },
+        {
+          "requestedSecond": 22,
+          "evidenceImage": "creators-22.png",
+          "title": "Recuperar o produto",
+          "observed": "Pessoa e copo em plano próximo.",
+          "functionHypothesis": "Trazer o olhar de volta ao elemento recorrente.",
+          "adaptation": "Dar ao produto espaço legível após a variação de cenas."
+        },
+        {
+          "requestedSecond": 33,
+          "evidenceImage": "creators-33.png",
+          "title": "Sustentar a linguagem",
+          "observed": "Pessoa caminhando com o copo no ambiente urbano.",
+          "functionHypothesis": "Conservar a ligação entre uso, sujeito e lugar.",
+          "adaptation": "No anúncio adaptado, resolver a oferta e o convite; isso não foi observado como CTA nesta amostra."
+        }
+      ],
+      "procedure": [
+        "Definir qual ação permite entender a oferta e qual afirmação ela realmente sustenta.",
+        "Selecionar gravações que incluam início, gesto e consequência quando o assunto for um processo.",
+        "Marcar produto, rosto, direção do movimento e ponto de atenção em cada plano.",
+        "Alternar contexto e detalhe quando a informação mudar; preservar a ordem de ações que dependem umas das outras.",
+        "Usar texto para orientar a leitura; preservar fala ou som direto quando fizerem parte da prova.",
+        "Revisar continuidade, áudio e conclusão do anúncio em reprodução normal."
+      ],
+      "operationsToVerify": [
+        "Ingestão e inspeção da filmagem",
+        "Seleção de trechos por tempo de origem",
+        "Cortes e reenquadramento",
+        "Transcrição e legendagem quando houver fala",
+        "Correção de cor entre planos e mixagem"
+      ],
+      "parameters": [
+        "produtoOuOperacao",
+        "acao",
+        "consequencia",
+        "contextos",
+        "gravacoes",
+        "falaAprovada",
+        "convite"
+      ],
+      "counterexamples": [
+        "Mostrar um copo genérico enquanto a fala promete uma função nunca demonstrada.",
+        "Usar reação sintética como se fosse um depoimento real.",
+        "Cortar antes da consequência ou deixar o controle de interface ilegível."
+      ],
+      "checks": [
+        "Identificar a oferta a partir da ação.",
+        "Preservar dados e condições da copy.",
+        "Ver a consequência antes de sair da demonstração.",
+        "Ouvir fala e mixagem no MP4 final quando exigidas."
+      ],
+      "transferExamples": [
+        {
+          "brief": "Casa Lume",
+          "application": "Mostrar o produto real entrando no ambiente e seu uso; detalhe e plano aberto demonstram relações diferentes. A captação deve existir."
+        },
+        {
+          "brief": "Clicko",
+          "application": "Uma gravação real mostra material na timeline, a operação de montagem e a prévia resultante. A interface precisa permanecer legível."
+        }
+      ]
+    },
+    {
+      "kind": "reusable_editing_model",
+      "state": "knowledge_only",
+      "version": 1,
+      "scope": {
+        "universalDefault": false,
+        "selection": "Choose by communication goal and available materials."
+      },
+      "evidence": {
+        "visual": "sampled_playback_frames",
+        "audio": "not_audited",
+        "sourceProductionPipeline": "not_fully_verified",
+        "localReproduction": "not_tested",
+        "timing": "Requested seek times precede captured frames; these are landmarks, not measured cut boundaries."
+      },
+      "sourceEvidence": {
+        "file": "docs/studios/knowledge/playbooks/tres-referencias-storyboards-2026-11-12.md",
+        "observationDate": "2026-11-12",
+        "limits": [
+          "Observed visual states and proposed production steps are separate.",
+          "No auditory analysis or exact easing measurement.",
+          "Reference media is for analysis, not an authorized production asset."
+        ]
+      },
+      "sound": {
+        "sourceObservation": "Não auditado; nenhuma batida, fala ou sincronismo foi confirmado.",
+        "transferProposal": "Definir o papel de voz, ambiente, música, efeitos e silêncio por ação. Vincular eventos a tempos do render e ouvir a mixagem final."
+      },
+      "handoff": [
+        "briefObjective",
+        "approvedCopy",
+        "materialsWithProvenance",
+        "chosenModelAndReason",
+        "shotStatesAndAttention",
+        "nativeOperationsToVerify",
+        "soundPlan",
+        "revision",
+        "acceptanceEvidence"
+      ],
+      "id": "research.model.layered_collage",
+      "label": "Colagem com transformação",
+      "intent": "Motion graphics, tipografia e composição: recortes, silhuetas, hierarquia e transformação de estados em camadas",
+      "reference": {
+        "creator": "@moonsol.design",
+        "title": "Colagem “I’m just a girl”",
+        "url": "https://www.instagram.com/moonsol.design/reel/Dcys2J3MfYK/",
+        "durationSeconds": 53.7527
+      },
+      "principle": "Uma composição estável permite reconhecer a troca entre silhueta e objeto, com texto integrado.",
+      "useWhen": [
+        "Apresentar uma coleção ou componentes visuais de uma oferta",
+        "A transformação explica identidade, relação ou organização",
+        "Há fotos ou recortes de qualidade e copy curta"
+      ],
+      "avoidWhen": [
+        "É preciso demonstrar uma ação física ou fluxo de serviço que não aparece nos materiais",
+        "Há muito texto factual para fragmentar",
+        "Os recortes disponíveis não mantêm identidade ou resolução"
+      ],
+      "requires": [
+        "Recortes com transparência ou materiais para prepará-los",
+        "Fonte disponível com os glifos necessários",
+        "Layout com hierarquia e áreas de leitura",
+        "Estado inicial e final verificáveis"
+      ],
+      "storyboard": [
+        {
+          "requestedSecond": 0.25,
+          "evidenceImage": "moonsol-0.25.png",
+          "title": "Mostrar a composição",
+          "observed": "Retrato central, texto rosa e vários objetos em silhueta.",
+          "functionHypothesis": "Estabelecer identidade e a organização que será transformada.",
+          "adaptation": "Definir âncora, título e lugares dos componentes da sua oferta."
+        },
+        {
+          "requestedSecond": 3,
+          "evidenceImage": "moonsol-3.png",
+          "title": "Revelar os objetos",
+          "observed": "No mesmo arranjo, vários objetos aparecem com fotografia e textura.",
+          "functionHypothesis": "Transformar estados preservando posições reconhecíveis.",
+          "adaptation": "Trocar silhueta e recorte correspondente com alinhamento de escala e contorno."
+        },
+        {
+          "requestedSecond": 14,
+          "evidenceImage": "moonsol-14.png",
+          "title": "Preparar o recorte",
+          "observed": "O tutorial mostra o retrato isolado no editor.",
+          "functionHypothesis": "Evidenciar uma parte da preparação em camadas.",
+          "adaptation": "Preparar alfa limpo e ponto de ancoragem antes da animação."
+        },
+        {
+          "requestedSecond": 27,
+          "evidenceImage": "moonsol-27.png",
+          "title": "Construir as silhuetas",
+          "observed": "O editor mostra o arranjo de formas rosas e texto.",
+          "functionHypothesis": "Mostrar o estado-base da composição.",
+          "adaptation": "Derivar a silhueta do próprio recorte e reservar a área do texto."
+        },
+        {
+          "requestedSecond": 40,
+          "evidenceImage": "moonsol-40.png",
+          "title": "Repetir por componente",
+          "observed": "Um objeto já aparece fotografado no layout enquanto outros seguem em silhueta.",
+          "functionHypothesis": "Permitir transformação seletiva em cada componente.",
+          "adaptation": "Separar objetos em camadas e escolher a ordem pela função, não pelo acaso."
+        },
+        {
+          "requestedSecond": 52,
+          "evidenceImage": "moonsol-52.png",
+          "title": "Rever o resultado",
+          "observed": "A colagem aparece com objetos fotografados, retrato e texto.",
+          "functionHypothesis": "Conferir o conjunto após as substituições.",
+          "adaptation": "Manter uma pausa legível de resultado; acrescentar a conclusão adequada ao seu anúncio."
+        }
+      ],
+      "procedure": [
+        "Definir a mensagem central e quais componentes ajudam a entendê-la.",
+        "Preparar recortes com transparência e derivar as silhuetas mantendo contorno e bounding box.",
+        "Resolver o quadro final com texto e hierarquia antes de animar.",
+        "Construir estados em camadas: silhueta, revelação e imagem final; verificar máscara ou troca de opacidade no motor.",
+        "Escolher antecipação, ordem e assentamento conforme leitura e atenção; a indicação de 0,5 s vista no tutorial é daquele exemplo.",
+        "Renderizar, inspecionar o pico de transformação e ouvir a relação com os acentos sonoros propostos."
+      ],
+      "operationsToVerify": [
+        "Importar imagens com alfa",
+        "Tintura ou preenchimento respeitando o alfa do recorte",
+        "Alinhar silhueta e recorte no mesmo espaço",
+        "Revelar por troca de estado, opacidade ou máscara verificada",
+        "Curvas, texto e revisão temporal"
+      ],
+      "parameters": [
+        "ancora",
+        "componentes",
+        "recortes",
+        "silhuetas",
+        "texto",
+        "ordemDeRevelacao",
+        "hierarquia",
+        "somProposto"
+      ],
+      "counterexamples": [
+        "Retângulos genéricos se movimentam sem virar os objetos anunciados.",
+        "A troca altera escala e posição tanto que parece um salto acidental.",
+        "O tutorial de interface é tratado como o anúncio final ou como prova de domínio do EffectCraft."
+      ],
+      "checks": [
+        "Reconhecer o mesmo objeto antes e depois.",
+        "Conservar o texto legível a 300 px na maior escala animada.",
+        "Examinar bordas, alinhamento e o quadro intermediário.",
+        "A composição revela informação em vez de apenas multiplicar elementos."
+      ],
+      "transferExamples": [
+        {
+          "brief": "ÓRBITA",
+          "application": "Janelas da tira de filme podem revelar mundos ou pôsteres próprios enquanto título e categoria mantêm hierarquia. Dados de programação precisam ser fornecidos."
+        },
+        {
+          "brief": "Coleção de produtos",
+          "application": "Recortes reais da coleção ocupam silhuetas correspondentes; cada revelação destaca uma diferença confirmada entre os itens."
+        }
+      ]
     }
   ]
 }
