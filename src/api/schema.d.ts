@@ -1320,23 +1320,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/v1/studios/v1/motion-graphs/{graph_id}/projection/{target}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get Studio Motion Graph Projection */
-        get: operations["get_studio_motion_graph_projection_api_v1_studios_v1_motion_graphs__graph_id__projection__target__get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/api/v1/studios/v1/documents/{document_id}/reviews": {
         parameters: {
             query?: never;
@@ -13600,40 +13583,6 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["MotionGraphRecordV1"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    get_studio_motion_graph_projection_api_v1_studios_v1_motion_graphs__graph_id__projection__target__get: {
-        parameters: {
-            query?: {
-                reduced_motion?: boolean;
-            };
-            header?: never;
-            path: {
-                graph_id: string;
-                target: "hyperframes" | "motion_canvas";
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MotionGraphProjectionV1"];
                 };
             };
             /** @description Validation Error */

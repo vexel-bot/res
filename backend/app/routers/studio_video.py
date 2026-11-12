@@ -5,7 +5,6 @@ from sqlalchemy.orm import Session
 
 from ..config import get_settings
 from ..database import get_db
-from ..domain.studios.craft import CraftAICommandRequestV1
 from ..domain.studios.timeline_editor import TimelineEditRequest, TimelineRenderRequest
 from ..models import User
 from ..providers.studios.timeline_ffmpeg import capability, probe
@@ -56,7 +55,9 @@ def recover_interrupted_local_jobs():
                 and not (job.result_payload or {}).get("providerOperationId")
             )
             job.error_code = (
-                "editing_submission_outcome_unknown_manual_reconciliation_required"
+                "craft_agent_interrupted"
+                if job.job_type == "craft_ai" and job.request_payload.get("input", {}).get("operation") == "native_tool_session"
+                else "editing_submission_outcome_unknown_manual_reconciliation_required"
                 if unknown
                 else "timeline_interrupted_restart"
                 if job.job_type == "timeline_render"
@@ -80,26 +81,6 @@ def failure(error):
 @router.get("/capabilities")
 def capabilities(user: User = Depends(get_current_user)):
     return capability()
-
-
-@router.post("/documents/{document_id}/ai-commands")
-def ai_commands(
-    document_id: str,
-    request: CraftAICommandRequestV1,
-    key: str = Header(alias="Idempotency-Key", min_length=8, max_length=160),
-    db: Session = Depends(get_db),
-    user: User = Depends(get_current_user),
-):
-    from ..services.studios.craft_ai import ai_commands as apply_ai
-
-    record = owned_document(db, user.id, document_id)
-    if record_to_contract(record).native_editor_state:
-        raise HTTPException(422, detail={"code": "timeline_requires_canonical_video_project"})
-    try:
-        return apply_ai(db, record, request, user, key)
-    except ValueError as error:
-        db.rollback()
-        raise failure(error) from error
 
 
 @router.get("/library")

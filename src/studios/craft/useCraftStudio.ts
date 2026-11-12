@@ -1,7 +1,7 @@
 import React from "react";
 import { APIError } from "../../api";
 import { productApi, type StudioDocumentCreate, type StudioGenerationJobRecord, type StudioDocumentVersionRecord } from "../../api/productApi";
-import { craftApi, type CraftAIRecovery, type CraftCommand, type CraftDocument, type CraftEngine, type CraftEngineDescriptor, type CraftInspection, type CraftReceipt } from "./craftApi";
+import { craftApi, type CraftAIRecovery, type CraftDirectionEffort, type CraftCommand, type CraftDocument, type CraftEngine, type CraftEngineDescriptor, type CraftInspection, type CraftReceipt } from "./craftApi";
 import { craftRecoveryKey, readCraftRecovery, type CraftRecovery } from "./craftState";
 
 type CraftStatus = "loading" | "ready" | "working" | "dirty" | "offline" | "conflict" | "error";
@@ -23,6 +23,8 @@ interface Options {
 }
 
 export function craftError(cause: unknown) {
+  if (cause instanceof Error && /llm_(connection|generation)_budget_exceeded|external_(model|monthly)_budget_exceeded/.test(cause.message)) return "A sessão não cabe no saldo reservado para este modelo. Confira o limite da conexão e os pedidos com cobrança pendente.";
+  if (cause instanceof Error && /craft_native_ai_required|craft_native_project_required/.test(cause.message)) return "Abra ou converta o projeto no Craft correspondente para editar com IA.";
   if (cause instanceof Error && cause.message.includes("craft_pending_composition_requires_link")) return "Revise a composição de efeitos e use-a na montagem antes de exportar.";
   if (cause instanceof Error && cause.message.includes("craft_legacy_visual_layers_missing")) return "O arquivo original não contém camadas visuais recuperáveis. Revise os avisos de migração.";
   return cause instanceof Error ? cause.message : "Não foi possível concluir a operação do Studio.";
@@ -42,6 +44,7 @@ export function useCraftStudio(options: Options) {
   const [pending, setPending] = React.useState<CraftRecovery>();
   const [recovery, setRecovery] = React.useState<CraftRecovery>();
   const [aiRecovery, setAIRecovery] = React.useState<CraftAIRecovery>();
+  const [aiDraft, setAIDraft] = React.useState<{ batches: number; canResume: boolean }>();
   const aiRecoveryRef = React.useRef<CraftAIRecovery | undefined>(undefined);
   const [job, setJob] = React.useState<StudioGenerationJobRecord>();
   const [jobRevision, setJobRevision] = React.useState<number>();
@@ -164,6 +167,15 @@ export function useCraftStudio(options: Options) {
   const accept = React.useCallback((receipt: CraftReceipt) => {
     rememberDocument(receipt.document); setInspection(receipt.inspection); setStatus("ready");
     setActivePageId(receipt.inspection.activePageId); activePageRef.current = receipt.inspection.activePageId;
+    if (receipt.exportJobId) {
+      const generation = scopeRef.current;
+      void productApi.studioGenerationJob(receipt.exportJobId).then((render) => {
+        if (scopeRef.current !== generation) return;
+        setJob(render); setJobRevision(receipt.document.revision);
+      }).catch(() => {
+        if (scopeRef.current === generation) setNotice("O corte foi salvo. Reabra o projeto para consultar a exportação.");
+      });
+    }
   }, [rememberDocument]);
 
   const save = React.useCallback(async () => {
@@ -236,21 +248,21 @@ export function useCraftStudio(options: Options) {
     } finally { if (scopeRef.current === generation) workingRef.current = false; }
   }
 
-  async function applyAI(instruction: string, connectionId?: string, model?: string) {
+  async function applyAI(instruction: string, connectionId?: string, model?: string, directionEffort?: CraftDirectionEffort, workflow?: 'native' | 'motion_swarm') {
     const generation = scopeRef.current;
     return operate(async (active) => {
       const request: CraftAIRecovery = { schemaVersion: "clicko.craft-ai-recovery.v1", userId: userId!,
         workspaceId: workspaceId!, documentId: active.documentId, engine, expectedRevision: active.revision,
-        instruction, idempotencyKey: crypto.randomUUID(), pageId: activePageRef.current, connectionId, model };
+        instruction, idempotencyKey: crypto.randomUUID(), pageId: activePageRef.current, connectionId, model, directionEffort, workflow };
       persistAI(request);
       const result = await craftApi.ai(active.documentId, request.expectedRevision, instruction,
-        request.idempotencyKey, request.pageId, connectionId, model);
-      if (scopeRef.current === generation) persistAI(undefined);
+        request.idempotencyKey, request.pageId, connectionId, model, directionEffort, workflow);
+      if (scopeRef.current === generation && result.exportStatus !== "pending") persistAI(undefined);
       return result;
     }, accept);
   }
 
-  async function reconcileAI() {
+  async function reconcileAI(resume = false) {
     const request = aiRecoveryRef.current;
     if (!request || workingRef.current) return;
     const generation = scopeRef.current;
@@ -258,13 +270,24 @@ export function useCraftStudio(options: Options) {
     try {
       const outcome = await craftApi.aiRequest(request.documentId, request.idempotencyKey);
       if (scopeRef.current !== generation) return;
-      if (outcome.receipt) { accept(outcome.receipt); persistAI(undefined); }
-      else if (outcome.status === "failed" || outcome.status === "cancelled") {
+      if (outcome.draftBatches) setAIDraft({ batches: outcome.draftBatches, canResume: Boolean(outcome.canResume) });
+      if (outcome.receipt && !outcome.exportPending) { accept(outcome.receipt); persistAI(undefined); }
+      else if (outcome.exportPending || (resume && outcome.canResume) || outcome.responseReady) {
+        const result = await craftApi.ai(request.documentId, request.expectedRevision, request.instruction,
+          request.idempotencyKey, request.pageId, request.connectionId, request.model, request.directionEffort, request.workflow);
+        if (scopeRef.current === generation) {
+          accept(result);
+          if (result.exportStatus !== "pending") persistAI(undefined);
+        }
+      } else if (outcome.draftBatches) {
+        setStatus("ready");
+        setNotice(`A Clicko guardou ${outcome.draftBatches} lote(s) no rascunho. ${outcome.canResume ? "Retome a edição com o orçamento restante ou baixe o projeto." : "O projeto está disponível para baixar."}`);
+      } else if (outcome.status === "failed" || outcome.status === "cancelled") {
         persistAI(undefined); setStatus("ready");
         setNotice(`O pedido terminou sem aplicar alterações (${outcome.errorCode || outcome.status}). A cobrança eventualmente reservada permanece no histórico.`);
-      } else if (outcome.status === "not_found" || outcome.responseReady) {
+      } else if (outcome.status === "not_found") {
         const result = await craftApi.ai(request.documentId, request.expectedRevision, request.instruction,
-          request.idempotencyKey, request.pageId, request.connectionId, request.model);
+          request.idempotencyKey, request.pageId, request.connectionId, request.model, request.directionEffort, request.workflow);
         if (scopeRef.current === generation) { accept(result); persistAI(undefined); }
       } else {
         setStatus("ready"); setNotice("O servidor ainda não confirmou o resultado deste pedido. Verifique novamente; o pedido não será duplicado.");
@@ -346,7 +369,13 @@ export function useCraftStudio(options: Options) {
     refresh: () => setReload((value) => value + 1),
     undo: () => operate((active) => craftApi.commands(active.documentId, active.revision, [{ id: "host.history.undo", params: {} }], crypto.randomUUID(), undefined, activePageRef.current), accept),
     redo: () => operate((active) => craftApi.commands(active.documentId, active.revision, [{ id: "host.history.redo", params: {} }], crypto.randomUUID(), undefined, activePageRef.current), accept),
-    applyAI, reconcileAI,
+    applyAI, reconcileAI, aiDraft,
+    downloadAIDraft: () => {
+      const request = aiRecoveryRef.current;
+      if (!request) throw new Error("Nenhum pedido com rascunho disponível.");
+      return craftApi.aiDraft(request.documentId, request.idempotencyKey);
+    },
+    closeAIDraft: () => { persistAI(undefined); setNotice("O rascunho permanece salvo na Clicko."); },
     upgradeBuild: () => operate((active) => craftApi.upgradeBuild(active.documentId, active.revision, engineInfo!.buildId, crypto.randomUUID()), accept),
     exportProject: (format: string, frame: number) => operate(async (active) => ({ job: await craftApi.render(active.documentId, active.revision, format, crypto.randomUUID(), frame, activePageRef.current), revision: active.revision }), (value) => { setJob(value.job); setJobRevision(value.revision); }),
     cancelJob: async () => { if (job) setJob(await productApi.cancelStudioGenerationJob(job.id)); },

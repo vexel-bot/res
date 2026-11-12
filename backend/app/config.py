@@ -154,11 +154,6 @@ class Settings(BaseSettings):
     studio_editing_monthly_budget_cents: int = Field(default=50_000, ge=0)
     studio_editing_infrastructure_reserve_cents: int = Field(default=15_000, ge=0)
     studio_editing_estimated_cents_per_minute: int = Field(default=50, ge=1)
-    hyperframes_enabled: bool = False
-    hyperframes_local_qualification_enabled: bool = False
-    hyperframes_node_path: str = "node"
-    hyperframes_cli_path: str | None = None
-    hyperframes_timeout_seconds: int = Field(default=7_200, ge=60, le=21_600)
     motion_canvas_enabled: bool = False
     motion_canvas_node_path: str = "node"
     motion_canvas_timeout_seconds: int = Field(default=7_200, ge=60, le=21_600)
@@ -177,8 +172,6 @@ class Settings(BaseSettings):
     radar_contextual_v2_shadow_mode: bool = False
 
     @field_validator(
-        "hyperframes_enabled",
-        "hyperframes_local_qualification_enabled",
         "motion_canvas_enabled",
         "remotion_enabled",
         "remotion_native_enabled",

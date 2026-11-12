@@ -27,6 +27,13 @@ export function localRecoveryMatchesProject(requestedId: string | null, recovere
 }
 export function localError(message: string) {
     const messages: Record<string,string> = {
+        open_edit_approved_product_and_copy_required: 'Complete e aprove o dossiê em Produto, estratégia e copy do anúncio antes de gerar.',
+        open_edit_visual_reference_required: 'Selecione o arquivo de referência visual para o planejamento.',
+        open_edit_reference_range_exceeds_source: 'O trecho escolhido ultrapassa o vídeo de referência. Ajuste início e duração.',
+        open_edit_copy_revision_conflict: 'O produto ou a copy mudou. Prepare uma nova proposta com a versão atual.',
+        open_edit_human_review_required: 'Assista à prévia e registre a avaliação editorial antes de aplicar.',
+        open_edit_preview_duration_exceeds_30_seconds: 'Este fluxo de teste aceita vídeos de até 30 segundos.',
+        open_edit_preview_conflict: 'A avaliação não corresponde à prévia atual. Abra novamente a prévia antes de avaliar.',
         studio_document_conflict: 'O projeto mudou no servidor. Recarregue a versão salva para continuar.',
         agent_local_model_unavailable: 'O modelo local não está disponível. Confira se o Ollama e o modelo escolhido estão instalados.',
         agent_media_duration_use_timeline_editor: 'Ajuste a duração dos materiais e do áudio no editor canônico.',

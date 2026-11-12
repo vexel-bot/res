@@ -130,3 +130,19 @@
 .craft-connection-form label { display:grid; gap:5px; }
 .craft-connection-form textarea { min-height:80px; }
 .craft-connection-form input[type=checkbox] { width:auto; }
+
+.craft-web-source { margin: 10px 0; }
+.craft-web-source summary { cursor: pointer; }
+.craft-web-source form { display: grid; gap: 8px; margin-top: 8px; }
+.craft-web-source label { display: grid; gap: 4px; }
+.craft-web-source label.craft-check { display: flex; align-items: center; gap: 6px; }
+.craft-web-source input:not([type="checkbox"]), .craft-web-source select, .craft-web-source textarea { width: 100%; min-width: 0; }
+.craft-editorial-guide { display:grid; gap:14px; margin-top:18px; }
+.craft-editorial-guide summary { cursor:pointer; padding:8px 0; font-size:13px; }
+.craft-editorial-guide form, .craft-editorial-guide label { display:grid; gap:6px; margin:8px 0; }
+.craft-editorial-guide input, .craft-editorial-guide select, .craft-editorial-guide textarea { width:100%; min-width:0; }
+.craft-editorial-guide textarea { min-height:60px; }
+.craft-editorial-lesson { border-bottom:1px solid var(--craft-border); padding:10px 0; font-size:12px; }
+.craft-editorial-lesson p { margin:5px 0; overflow-wrap:anywhere; }
+.craft-editorial-lesson small { display:block; }
+.craft-editorial-guide audio { width:100%; }

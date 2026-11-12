@@ -15,6 +15,9 @@ from ..config import get_settings
 from ..database import get_db
 from ..domain.studios.craft import (
     CraftAICommandRequestV1,
+    CraftClipReviewRequestV1,
+    CraftEditorialLessonRequestV1,
+    CraftEditorialFeedbackRequestV1,
     CraftCommandRequestV1,
     CraftLinkRequestV1,
     CraftMigrationRequestV1,
@@ -233,6 +236,103 @@ def execute_ai_commands(
     return result
 
 
+@router.get("/documents/{document_id}/craft/editorial-guide")
+def get_editorial_guide(document_id: str, db: Session = Depends(get_db), user: User = Depends(get_current_user)):
+    from ..services.studios import craft_direction
+    record = owned_document(db, user.id, document_id)
+    contract = record_to_contract(record)
+    engine = contract.native_editor_state.engine if contract.native_editor_state else "effectcraft"
+    context = invoke(craft_direction.editorial_context, db, record.workspace_id, record.id, record.title, engine)
+    return {"guides": context["styleGuides"], "referenceIndex": context["referenceIndex"],
+            "method": context["method"], "repertoireVersion": context["repertoireVersion"]}
+
+
+@router.post("/documents/{document_id}/craft/editorial-guide")
+def update_editorial_guide(document_id: str, request: CraftEditorialLessonRequestV1,
+                           db: Session = Depends(get_db), user: User = Depends(get_current_user)):
+    from ..services.studios.craft_learning import save_editorial_lesson
+    record = owned_document(db, user.id, document_id)
+    if record.revision != request.expected_revision:
+        raise HTTPException(status_code=409, detail={"code": "studio_document_conflict"})
+    guide = invoke(save_editorial_lesson, db, record.workspace_id,
+                   request.lesson.model_dump(mode="json", by_alias=True, exclude_none=True), request.expected_version,
+                   request.scope, record.id if request.scope == "document" else None, approved=True, actor_id=user.id)
+    db.commit()
+    return guide
+
+
+@router.post("/documents/{document_id}/craft/editorial-feedback")
+def save_editorial_feedback(document_id: str, request: CraftEditorialFeedbackRequestV1,
+                            db: Session = Depends(get_db), user: User = Depends(get_current_user)):
+    from ..models import StudioGenerationJob
+    from ..services.studios.craft_learning import record_viewer_feedback
+    record = owned_document(db, user.id, document_id)
+    if record.revision != request.expected_revision:
+        raise HTTPException(status_code=409, detail={"code": "studio_document_conflict"})
+    job = db.get(StudioGenerationJob, request.job_id)
+    if job is None or job.workspace_id != record.workspace_id or job.document_id != record.id or job.job_type != "craft_ai":
+        raise HTTPException(status_code=404, detail={"code": "craft_ai_request_unavailable"})
+    row = invoke(record_viewer_feedback, db, job, request.comment)
+    db.commit()
+    return {"id": row.id, "feedback": row.document_metadata["craftLearning"]["viewerFeedback"]}
+
+
+@router.post("/documents/{document_id}/craft/clip-review")
+def review_clip(document_id: str, request: CraftClipReviewRequestV1,
+                db: Session = Depends(get_db), user: User = Depends(get_current_user)):
+    import time
+    from ..services.studios.craft_agent import Draft
+    from ..services.studios.craft_editorial import persist_review
+    from ..services.studios.craft_review import review_draft
+    record = owned_document(db, user.id, document_id)
+    contract = record_to_contract(record)
+    if record.revision != request.expected_revision:
+        raise HTTPException(status_code=409, detail={"code": "studio_document_conflict"})
+    state = contract.native_editor_state
+    if state is None or state.engine not in {"effectcraft", "filmcraft"}:
+        raise HTTPException(status_code=422, detail={"code": "craft_review_video_engine_required"})
+    capability = invoke(craft.require_capability, state.engine)
+    args = request.model_dump(mode="json", by_alias=True, exclude_none=True)
+    with craft.workspace_files(db, record, state) as (directory, params, _manifests):
+        draft = invoke(Draft, state, directory, params, capability, request, time.monotonic() + 600)
+        review = invoke(review_draft, draft, args, db=db, workspace_id=record.workspace_id)
+        db.refresh(record)
+        if record.revision != request.expected_revision:
+            raise HTTPException(status_code=409, detail={"code": "studio_document_conflict"})
+        result = invoke(persist_review, db, record, review)
+        db.commit()
+    return result
+
+
+@router.get("/documents/{document_id}/craft/reviews/{asset_id}")
+def download_review(document_id: str, asset_id: str, db: Session = Depends(get_db), user: User = Depends(get_current_user)):
+    record = owned_document(db, user.id, document_id)
+    asset = invoke(craft.scoped_asset, db, record.workspace_id, asset_id)
+    if (asset.object_metadata or {}).get("craftReview", {}).get("documentId") != record.id:
+        raise HTTPException(status_code=404, detail={"code": "craft_review_unavailable"})
+    context = get_object_storage(asset.storage_backend).materialize(asset.storage_key)
+    source = context.__enter__()
+    if sha256_file(source) != asset.checksum_sha256:
+        context.__exit__(None, None, None)
+        raise HTTPException(status_code=409, detail={"code": "craft_review_checksum_mismatch"})
+    return FileResponse(source, media_type=asset.media_type,
+                        headers={"Cache-Control": "private, no-store"},
+                        background=BackgroundTask(context.__exit__, None, None, None))
+
+
+@router.get("/documents/{document_id}/craft/reviews")
+def list_reviews(document_id: str, db: Session = Depends(get_db), user: User = Depends(get_current_user)):
+    from sqlalchemy import select
+    from ..models import LibraryAsset
+    record = owned_document(db, user.id, document_id)
+    rows = db.scalars(select(LibraryAsset).where(
+        LibraryAsset.workspace_id == record.workspace_id, LibraryAsset.lifecycle_status == "active",
+        LibraryAsset.object_metadata["craftReview"]["documentId"].as_string() == record.id,
+    ).order_by(LibraryAsset.created_at.desc(), LibraryAsset.id.desc()).limit(10))
+    return {"reviews": [{"assetId": row.id, "mediaType": row.media_type,
+                         "checksumSha256": row.checksum_sha256, **row.object_metadata["craftReview"]} for row in rows]}
+
+
 @router.get("/documents/{document_id}/craft/ai-requests/{key}")
 def reconcile_ai_request(
     document_id: str,
@@ -255,14 +355,37 @@ def reconcile_ai_request(
     )
     if job is None:
         return {"status": "not_found"}
+    from ..services.studios import craft_agent, craft_drafts
+
     committed = invoke(craft.receipt, db, record, key, job.payload_hash)
+    state = job.result_payload or {}
+    author = job.requested_by == user.id
     return {
         "status": "committed" if committed else job.status,
-        "receipt": committed,
-        "responseReady": bool((job.result_payload or {}).get("commands")),
+        "receipt": craft_drafts.decorate_receipt(db, record, key, committed) if committed else None,
+        "responseReady": bool(state.get("commands")),
         "errorCode": job.error_code,
-        "safeToStartNew": job.status == "failed" and not (job.result_payload or {}).get("submissionStarted"),
+        "safeToStartNew": job.status == "failed" and not state.get("submissionStarted"),
+        "draftBatches": state.get("draft", {}).get("batches", 0),
+        "canResume": author and not committed and craft_agent.can_resume(job),
+        "exportPending": author and bool(committed and state.get("exportRequested")
+                                          and state.get("exportStatus") in {None, "pending", "queued", "retrying"}),
+        "reviewArtifacts": state.get("reviewArtifacts", []),
     }
+
+
+@router.get("/documents/{document_id}/craft/ai-requests/{key}/draft")
+def download_ai_draft(document_id: str, key: str, db: Session = Depends(get_db), user: User = Depends(get_current_user)):
+    from ..services.studios import craft_drafts
+
+    record = owned_document(db, user.id, document_id)
+    job = craft_drafts.session_job(db, record, key)
+    if not job or job.document_id != record.id or job.requested_by != user.id:
+        raise HTTPException(status_code=404, detail={"code": "craft_draft_unavailable"})
+    manager = craft_drafts.bundle(db, record, job)
+    artifact = invoke(manager.__enter__)
+    return FileResponse(artifact, media_type="application/zip", filename="rascunho-craft.zip",
+                        background=BackgroundTask(manager.__exit__, None, None, None))
 
 
 def schedule_composition_refresh(db, record, user):

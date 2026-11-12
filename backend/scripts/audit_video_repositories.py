@@ -35,25 +35,21 @@ PURPOSES = {
     "espeak-ng": "offline speech synthesis runtime and pronunciation fallback",
     "espeakng-loader": "runtime packaging and loading support for eSpeak NG",
     "fabric.js": "interactive canvas composition and object manipulation",
-    "hyperframes": "programmatic motion/video composition candidate",
-    "hyperframes-launch-video": "reference implementation for launch-video composition",
     "kimi-k2.5": "language-model planning research candidate",
     "konva": "interactive canvas scene graph for the editor",
     "lexical": "structured rich-text editing candidate",
     "misaki": "grapheme-to-phoneme and language preprocessing candidate",
-    "motion-canvas": "programmatic TypeScript motion design candidate",
     "opencut": "open-source video-editor product and architecture reference",
     "opencut-classic": "legacy OpenCut editor architecture reference",
     "perth": "candidate capability whose exact role must be established from code and benchmark",
     "qwen3": "language-model planning and critique candidate",
     "react-timeline-editor": "timeline interaction component candidate",
-    "remotion": "React-based deterministic video composition and rendering",
     "vane": "candidate capability whose exact role must be established from code and benchmark",
     "wan2.2": "generative video research candidate",
     "wavesurfer.js": "waveform visualization and audio navigation",
 }
 
-ADOPT = {"ffmpeg", "opencv", "opentimelineio", "pyscenedetect", "remotion"}
+ADOPT = {"ffmpeg", "opencv", "opentimelineio", "pyscenedetect"}
 ADAPT = {
     "depth-anything-v2",
     "qwen3-vl",
@@ -67,10 +63,8 @@ ADAPT = {
     "chatterbox",
     "espeak-ng",
     "fabric.js",
-    "hyperframes",
     "konva",
     "misaki",
-    "motion-canvas",
     "react-timeline-editor",
     "wavesurfer.js",
 }
@@ -305,7 +299,9 @@ def main() -> int:
     repos = [path for path in args.evaluation_root.iterdir() if path.is_dir() and (path / ".git").exists()]
     if args.supervision_root.exists():
         repos.append(args.supervision_root)
-    audits = [audit(path) for path in sorted(repos, key=lambda item: item.name.lower())]
+    retired_editors = {"hyperframes", "hyperframes-launch-video", "motion-canvas", "remotion", "alight-motion"}
+    audits = [audit(path) for path in sorted(repos, key=lambda item: item.name.lower())
+              if path.name.lower() not in retired_editors]
     args.output_root.mkdir(parents=True, exist_ok=True)
     for item in audits:
         (args.output_root / f"{item['repository_id']}.md").write_text(markdown(item), encoding="utf-8")
@@ -313,7 +309,7 @@ def main() -> int:
         json.dumps(
             {
                 "schema_version": "studio.repository-audit-registry.v1",
-                "expected_count": 42,
+                "expected_count": 38,
                 "actual_count": len(audits),
                 "audits": audits,
             },
@@ -323,7 +319,7 @@ def main() -> int:
         + "\n",
         encoding="utf-8",
     )
-    return 0 if len(audits) == 42 else 2
+    return 0 if len(audits) == 38 else 2
 
 
 if __name__ == "__main__":

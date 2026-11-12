@@ -11,10 +11,16 @@ fs.mkdirSync(out,{recursive:true});
 const file=path.join(out,'recibo.json');
 const state=fs.existsSync(file)?JSON.parse(fs.readFileSync(file)):{};
 const save=()=>fs.writeFileSync(file,JSON.stringify(state,null,2));
-const name='Claude Opus 5.5 · API direta';
+const effort=process.argv[4];
+const source=effort&&process.argv[5] ? path.resolve(process.argv[5]) : null;
+if(effort&&(!['medium','high'].includes(effort)||!source))throw Error('Provide medium or high effort and the original Opus output folder.');
+const sourceDocument=source?JSON.parse(fs.readFileSync(path.join(source,'projeto-opus.json'))):null;
+const name=effort ? 'Claude Opus 5.5 · laboratório de corte' : 'Claude Opus 5.5 · API direta';
 const model='claude-opus-5-5';
-const key='clicko-claude-motion-test-'+local.run;
-const instruction='Refine a peça vertical de 12 segundos para comunicar a mesma embalagem saindo da fotografia. Dê hierarquia de pôster e presença ao recorte. A foto inicial ancora a identidade, o produto isolado ganha protagonismo com trajetória curta e a marca encerra estável e inteira. Use posição, escala ou opacidade com intenção distinta. Não mude materiais, palavras, intervalos, áudio ou duração.';
+const key='clicko-claude-motion-test-'+local.run+(effort?'-cut-'+effort+'-'+hash(JSON.stringify(sourceDocument.composition)).slice(0,12):'');
+const instruction=effort
+    ? 'Reedite o corte Bruma. Queremos que a embalagem pareça sair da fotografia e que a ação conduza até a marca, com um ritmo de anúncio vertical. Veja onde a troca parece só um corte entre cartelas. Melhore continuidade, sobreposição e contraste do produto com mudanças claras na montagem, evitando transições ornamentais. Preserve materiais, palavras, áudio e duração total.'
+    : 'Refine a peça vertical de 12 segundos para comunicar a mesma embalagem saindo da fotografia. Dê hierarquia de pôster e presença ao recorte. A foto inicial ancora a identidade, o produto isolado ganha protagonismo com trajetória curta e a marca encerra estável e inteira. Use posição, escala ou opacidade com intenção distinta. Não mude materiais, palavras, intervalos, áudio ou duração.';
 function assert(ok, message){if(!ok)throw Error(message);}
 
 async function connection(workspace) {
@@ -31,7 +37,7 @@ async function connection(workspace) {
     const created=await request('POST',endpoint,{label:name,provider:'anthropic',protocol:'anthropic_messages',
         baseUrl:'https://api.anthropic.com/v1',authHeader:'x-api-key',authPrefix:'',
         extraHeaders:{'anthropic-workspace-id':env.ANTHROPIC_WORKSPACE_ID},models:[model],apiKey:env.API_CLAUDE,
-        enabled:true,billingMode:'metered',budgetUsd:.45,inputUsdPerMillion:4,outputUsdPerMillion:20,maxOutputTokens:4096});
+        enabled:true,billingMode:'metered',budgetUsd:effort?1.5:.45,inputUsdPerMillion:4,outputUsdPerMillion:20,maxOutputTokens:effort?6000:4096});
     return created.id;
 }
 
@@ -46,7 +52,7 @@ async function main(){
     if(!state.document){
         const seed=await request('POST',base+'/documents',{workspaceId:workspace,contentType:'video',brandRevision:1,
             title:'Clicko · Bruma · Motion com Claude Opus 5.5',brief:{objective:brief.objective,audience:'Criadores de anúncios e pequenos negócios',
-                angle:brief.name,format:'video'},composition:composition(brief),
+                angle:brief.name,format:'video'},composition:sourceDocument?.composition||composition(brief),
             assets:[...new Set(brief.shots.map(row=>row[0]).concat('audio'))].map(k=>local.assets[k])},{key:key+'-doc'});
         state.document={id:seed.documentId,revision:seed.revision,seed:constraints(seed),compositionHash:hash(JSON.stringify(seed.composition))};
         assert(JSON.stringify(state.document.seed)===JSON.stringify(control.seed),'The test seed differs from the local control');
@@ -66,10 +72,16 @@ async function main(){
         state.blockedTasks=[state.task];
         delete state.task;save();
     }
+    if(effort&&process.env.CLICKO_CLAUDE_RETRY_ADMISSION==='1'&&!state.admissionRejected&&
+        state.task?.errorCode==='external_model_budget_exceeded'&&!state.task.result?.submissionStarted&&
+        state.task.externalCostUsd===0){
+        state.admissionRejected=state.task;
+        delete state.task;save();
+    }
     if(!state.task){
         const payload={expectedRevision:state.document.revision,instruction,role:'audiovisual',planner:'editorial_experimental',
-            editorial:{variant:'orchestrated',format:'auto',objective:brief.objective,connectionId:id}};
-        state.task=await request('POST',doc+'/agent-tasks',payload,{key:key+'-plan'+(state.blockedTasks?.length?'-retry':'')});save();
+            editorial:{variant:'orchestrated',format:'auto',objective:brief.objective,connectionId:id,...(effort?{cutEffort:effort}:{})}};
+        state.task=await request('POST',doc+'/agent-tasks',payload,{key:key+'-plan'+(state.blockedTasks?.length?'-retry':'')+(state.admissionRejected?'-admitted':'')});save();
         console.log('Claude task',state.task.id,state.task.status,state.task.errorCode,state.task.externalCostUsd);
     }
     const task=state.task;
@@ -80,6 +92,11 @@ async function main(){
         'Missing metered direct Claude receipt');
     assert(review.knowledgeDigest===control.task.result.editorial.knowledgeDigest,'Knowledge version differs');
     const previewUrl=base+'/video/library/'+review.preview.assetId+'/content?'+new URLSearchParams({workspaceId:workspace,clientId:client});
+    if(effort){
+        const original=fs.readFileSync(path.join(source,'clicko-motion-opus-55.mp4'));
+        assert(review.claude.cutEffort===effort&&review.claude.cutFrames.length>=5,'Missing render-based cut evidence');
+        assert(review.claude.sourceRenderChecksum===hash(original),'The analysis render differs from the original cut');
+    }
     if(!state.range){
         const range=await get(previewUrl,{withResponse:true,headers:{Range:'bytes=0-1023'}});
         assert(range.status===206&&range.bytes.length===1024&&range.headers['content-range']?.startsWith('bytes 0-1023/'),'Preview streaming range failed');
@@ -116,6 +133,11 @@ async function main(){
     const audioIdentical=pcm(final)===pcm(localVideo);
     assert(audioIdentical,'Decoded audio differed from the local control');
     assert(state.render.durationSeconds===control.renderResult.durationSeconds,'Render duration differs');
+    if(source) {
+        const original=path.join(source,'clicko-motion-opus-55.mp4');
+        assert(pcm(final)===pcm(original),'Audio changed compared with the original cut');
+        fs.copyFileSync(original,path.join(out,'corte-opus-anterior.mp4'));
+    }
     const usage=review.claude.usage;
     const blockedCost=(state.blockedTasks||[]).reduce((sum, attempt)=>sum+attempt.externalCostUsd,0);
     const total=Number((task.externalCostUsd+blockedCost).toFixed(8));
@@ -123,7 +145,8 @@ async function main(){
     save();
     const report=[
         '# Clicko · Opus 5.5 direto versus orquestrador local','',
-        'Mesmo brief, kit Bruma, fotos, copy, áudio e duração de 12 segundos. O mesmo orquestrador preparou ambos os cortes. No braço Claude, o Opus recebeu três amostras dos materiais e propôs ajustes em camadas existentes antes da prévia técnica. A Clicko validou e renderizou o resultado. O áudio decodificado é idêntico.','',
+        effort ? 'Mesmo brief Bruma, materiais, texto, duração e áudio. O Opus recebeu quadros do corte anterior, incluindo transições, e propôs mudanças na montagem. A Clicko aplicou e renderizou o projeto editável. Esforço: '+effort+'.'
+            : 'Mesmo brief, kit Bruma, fotos, copy, áudio e duração de 12 segundos. O mesmo orquestrador preparou ambos os cortes. No braço Claude, o Opus recebeu três amostras dos materiais e propôs ajustes em camadas existentes antes da prévia técnica. A Clicko validou e renderizou o resultado. O áudio decodificado é idêntico.','',
         '[Versão Opus](clicko-motion-opus-55.mp4) · [Versão local](clicko-motion-local.mp4) · [Recibo](recibo.json)','',
         'Ajustes propostos pelo modelo: '+task.result.rationale,'',
         '| Item | Local | Claude direto |','|---|---:|---:|',

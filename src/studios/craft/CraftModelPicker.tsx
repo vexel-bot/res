@@ -2,7 +2,7 @@ import React from "react";
 import { Plus, Save, X } from "lucide-react";
 import { craftApi, type LLMConnection, type LLMConnectionInput, type LLMCatalog, type LLMProtocol } from "./craftApi";
 
-export interface ModelSelection { connectionId?: string; model?: string; available: boolean }
+export interface ModelSelection { connectionId?: string; model?: string; available: boolean; swarmAvailable?: boolean }
 interface Props {
   workspaceId: string; userId: string; disabled: boolean;
   onChange: (value: ModelSelection) => void;
@@ -53,7 +53,12 @@ export function CraftModelPicker({ workspaceId, userId, disabled, onChange }: Pr
   React.useEffect(() => {
     const active = selected && selected.config.models.includes(model);
     const available = Boolean(active || (!choice && catalog?.legacyPlanningAvailable === true));
-    onChange({ connectionId: active ? selected.id : undefined, model: active ? model : undefined, available });
+    const swarmAvailable = Boolean(active && selected.provider === "anthropic"
+      && selected.config.baseUrl.replace(/\/$/, "") === "https://api.anthropic.com/v1"
+      && selected.config.protocol === "anthropic_messages" && selected.config.budgetUsd === 0
+      && model === "claude-opus-5-5"
+      && ["claude-sonnet-5-5", "claude-haiku-5-5"].every((id) => selected.config.models.includes(id)));
+    onChange({ connectionId: active ? selected.id : undefined, model: active ? model : undefined, available, swarmAvailable });
     if (catalog) {
       try { localStorage.setItem(preference, JSON.stringify({ connectionId: selected?.id, model })); } catch { /* No credentials are stored here. */ }
     }

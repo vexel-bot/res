@@ -63,15 +63,13 @@ test('editor undo/redo require modifiers and apply outside text controls', () =>
   assert.equal(studioShortcut('Z',true,true,false),'redo');
   assert.equal(studioShortcut('x',true,false,false),undefined);
 });
-test('canonical editor retains manual editing, recovery and real export entry points', () => {
-  const source = readFileSync('src/studios/video/CanonicalVideoEditor.tsx','utf8');
-  for (const entry of ['Dividir no cursor','Volume (dB)','Entrada no arquivo (s)','Velocidade','Keyframes essenciais','Limpar keyframes','Adicionar título','Ativar áudio','Recuperar','Gerar prévia / MP4','Cancelar','Tentar novamente']) assert.ok(source.includes(entry),entry);
-  assert.match(source,/inspector=\{item \?/); assert.match(source,/StudioEditorFrame/);
-});
-test('local workspace retains versions, agent plans, assets and same-document montage', () => {
-  const source = readFileSync('src/studios/local/LocalProductionStudio.tsx','utf8');
-  for (const entry of ['restoreStudioDocumentVersion','confirmPending','Aplicar plano','configure(workspaceId','insertAsset','CanonicalVideoEditor','expectedRevision','studio-before-leave','StudioKlicButton']) assert.ok(source.includes(entry),entry);
-  assert.doesNotMatch(source,/window\.fetch\(/);
+test('edit entries use the Craft engines without a secondary canvas', () => {
+  const source = readFileSync('src/studios/ClickoStudioView.tsx','utf8');
+  assert.match(source,/video-motion' \? 'effects'/);
+  assert.match(source,/video-edit' \? 'video'/);
+  assert.match(source,/image-composition' \? 'visual'/);
+  assert.doesNotMatch(source,/LocalProductionStudio|Canvas de camadas/);
+  assert.doesNotMatch(readFileSync('src/studios/video/VideoStudio.tsx','utf8'),/CanonicalVideoEditor/);
 });
 
 test('image creation container is not mistaken for a global progress bar', () => {

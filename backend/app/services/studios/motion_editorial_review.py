@@ -55,17 +55,42 @@ def _visible_source(comp, frame):
     return False
 
 
+def caption_findings(contract):
+    """Static title size is measurable; video contrast and timing still need playback."""
+    from ...domain.studios.timeline_editor import VisualMotion
+
+    page = contract.composition.pages[0]
+    findings = []
+    for track in contract.composition.media_timeline.tracks:
+        if track.kind != "caption":
+            continue
+        for cue in track.cues:
+            motion = VisualMotion.model_validate(cue.motion)
+            if cue.style.font_size * motion.scale * min(1, 360/page.width) < 14:
+                findings.append({"code": "caption_below_phone_floor", "cueId": cue.id,
+                                 "frame": cue.timeline.start_frame})
+    return findings
+
+
 def analyze_preview(contract, output, receipt):
     timeline = contract.composition.media_timeline
     fps = timeline.frame_rate.numerator / timeline.frame_rate.denominator
     beats = next((item["beats"] for item in receipt["receipts"] if item["stage"] == "direction"), [])
-    frames = _samples(timeline.duration_frames, beats)
+    frames = set(_samples(timeline.duration_frames, beats))
+    for track in timeline.tracks:
+        if track.kind == "video":
+            for clip in track.clips:
+                if clip.enabled:
+                    end = clip.timeline.start_frame + clip.timeline.duration_frames
+                    frames.update(frame for frame in (clip.timeline.start_frame, end-1, end)
+                                  if 0 <= frame < timeline.duration_frames)
+    frames = sorted(frames)
     selector = "+".join(f"eq(n,{frame})" for frame in frames)
     pixels = _raw(output, ["-an", "-vf", f"select='{selector}',scale=96:54", "-fps_mode", "passthrough",
                            "-c:v", "rawvideo", "-threads", "1", "-pix_fmt", "rgb24", "-f", "rawvideo"])
     if len(pixels) != SAMPLE_BYTES * len(frames):
         raise ValueError("editorial_preview_samples_incomplete")
-    findings = motion_editorial._text_legibility(contract.composition)
+    findings = motion_editorial._text_legibility(contract.composition) + caption_findings(contract)
     observations = []
     for i, frame in enumerate(frames):
         rgb = pixels[i*SAMPLE_BYTES:(i+1)*SAMPLE_BYTES]

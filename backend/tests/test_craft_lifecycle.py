@@ -207,3 +207,61 @@ def test_real_ai_planner_boundary_validated_commands_and_replay(client, monkeypa
     repeated = client.post(base + "/craft/ai-commands", headers=headers(token, "ai-command-contract-001"), json=payload)
     assert repeated.json()["receiptId"] == response.json()["receiptId"] and len(calls) == 1
     assert json.loads(client.get(base + "/native-project", headers=headers(token)).content)["color"] == "green"
+
+def test_direct_craft_session_edits_previews_corrects_and_commits_once(client, native_boundary, monkeypatch):
+    from types import SimpleNamespace
+
+    from app.services.studios import craft_agent, llm_connections
+
+    token, workspace = register(client, "native-tool-session@example.com")
+    document = create(client, token, workspace)
+    state = migrate(client, token, document)
+    monkeypatch.setattr(craft_ai, "require_capability", craft.require_capability)
+    monkeypatch.setattr(craft_agent, "call_engine", craft.call_engine)
+    connection = SimpleNamespace(id="native-tool-test", provider="anthropic", revision=1, config={
+        "enabled": True, "protocol": "anthropic_messages", "billingMode": "local_free",
+        "maxOutputTokens": 500, "inputUsdPerMillion": 1, "outputUsdPerMillion": 1,
+    })
+    real_refresh = SessionLocal.class_.refresh
+
+    def refresh(self, instance, *args, **kwargs):
+        if instance is not connection:
+            return real_refresh(self, instance, *args, **kwargs)
+
+    monkeypatch.setattr(SessionLocal.class_, "refresh", refresh)
+    calls = []
+
+    def turn(_model, _system, messages, _tools, _tokens, _seconds):
+        calls.append(messages.copy())
+        index = len(calls)
+        name, args = {
+            1: ("edit_project", {"commands": [{"id": "paint.set", "params": {"color": "blue"}}]}),
+            2: ("preview_frame", {"frame": 0}),
+            3: ("edit_project", {"commands": [{"id": "paint.set", "params": {"color": "green"}}]}),
+        }.get(index, (None, None))
+        if index == 3:
+            assert messages[-1]["content"][0]["content"][0]["type"] == "image"
+        if name:
+            content = [{"type": "tool_use", "id": f"tool-{index}", "name": name, "input": args}]
+        else:
+            content = [{"type": "text", "text": "Ajustei a cor depois de conferir a prévia."}]
+        return {"content": content, "stop_reason": "tool_use" if name else "end_turn",
+                "usage": {"input_tokens": 10, "output_tokens": 20}, "model": "test-opus"}
+
+    monkeypatch.setattr(llm_connections, "planner", lambda *_: (
+        connection, SimpleNamespace(craft_turn=turn), "test-opus", "endpoint",
+    ))
+    monkeypatch.setattr(craft_agent, "reserve_request", lambda _db, job, *_args, **_kwargs: setattr(job, "result_payload", {}))
+    base = f"/api/v1/studios/v1/documents/{document['documentId']}"
+    payload = {"expectedRevision": state["revision"], "instruction": "Revise e ajuste a cor", "connectionId": connection.id, "pageId": "page-0"}
+    original = client.get(base + "/native-project", headers=headers(token)).content
+    response = client.post(base + "/craft/ai-commands", headers=headers(token, "direct-native-session-1"), json=payload)
+    assert response.status_code == 200, response.text
+    result = response.json()
+    assert result["document"]["revision"] == state["revision"] + 1
+    assert [item["name"] for item in result["aiTrace"]["tools"]] == ["edit_project", "preview_frame", "edit_project"]
+    assert result["aiTrace"]["measuredCostUsd"] == 0.00012
+    assert json.loads(original)["color"] == "original"
+    assert json.loads(client.get(base + "/native-project", headers=headers(token)).content)["color"] == "green"
+    replay = client.post(base + "/craft/ai-commands", headers=headers(token, "direct-native-session-1"), json=payload)
+    assert replay.json()["receiptId"] == result["receiptId"] and len(calls) == 4

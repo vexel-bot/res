@@ -44,7 +44,7 @@ function request(method, url, body, opts={}) {
                 else try {resolve(JSON.parse(bytes.toString()));} catch(error){reject(error);}
             });
         });
-        req.setTimeout(240000,()=>req.destroy(Object.assign(Error('Local request timeout'),{code:'ETIMEDOUT'})));
+        req.setTimeout(opts.timeoutMs || 240000,()=>req.destroy(Object.assign(Error('Local request timeout'),{code:'ETIMEDOUT'})));
         req.on('error',reject);
         req.end(data);
     });

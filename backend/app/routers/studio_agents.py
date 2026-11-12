@@ -13,6 +13,7 @@ from ..database import get_db
 from ..domain.studios.agents import (
     AgentTaskRequest,
     ApplyAgentTaskRequest,
+    EditorialVerdictRequest,
     LocalCommandsRequest,
     LocalProjectRequest,
     RoleConfiguration,
@@ -177,6 +178,23 @@ def apply(
         raise HTTPException(404, "Tarefa não encontrada.")
     try:
         return agents.apply_task(db, document, task, request, user)
+    except ValueError as error:
+        raise failure(db, error) from error
+
+
+@router.post("/documents/{document_id}/agent-tasks/{task_id}/editorial-review")
+def editorial_review(
+    document_id: str, task_id: str, request: EditorialVerdictRequest,
+    db: Session = Depends(get_db), user: User = Depends(get_current_user),
+):
+    from ..services.studios.production_editing import record_verdict
+
+    document = owned_document(db, user.id, document_id)
+    task = db.get(StudioGenerationJob, task_id)
+    if not task or task.workspace_id != document.workspace_id or task.document_id != document.id:
+        raise HTTPException(404, "Tarefa não encontrada.")
+    try:
+        return record_verdict(db, document, task, request, user)
     except ValueError as error:
         raise failure(db, error) from error
 

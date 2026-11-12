@@ -1,0 +1,245 @@
+{
+  "schemaVersion": "clicko.craft-comparison.v1",
+  "date": "2026-11-12",
+  "model": "claude-opus-5-5",
+  "budgetUsdPerArm": 1.5,
+  "sourceSha256": "952761d2293a7ec4381a676eae22ef01c8fa5b1e2c02712ff3db5120e065f815",
+  "arms": {
+    "clickoOriginal": {
+      "measuredUsd": 0.9514642,
+      "uncertainUsd": 0.0,
+      "pendingUsd": null,
+      "error": "llm_generation_budget_exceeded",
+      "exportRequested": null,
+      "exported": null,
+      "lastAttemptSeconds": 29.203,
+      "elapsedSeconds": null
+    },
+    "clickoPaged": {
+      "measuredUsd": 0.3009552,
+      "uncertainUsd": 0.0,
+      "pendingUsd": null,
+      "error": "llm_generation_budget_exceeded",
+      "exportRequested": null,
+      "exported": null,
+      "lastAttemptSeconds": 52.515,
+      "elapsedSeconds": null
+    },
+    "mcp": {
+      "measuredUsd": 0.7543714,
+      "uncertainUsd": null,
+      "pendingUsd": 0,
+      "error": null,
+      "exportRequested": true,
+      "exported": true,
+      "lastAttemptSeconds": null,
+      "elapsedSeconds": 362.203
+    }
+  },
+  "totalMeasuredUsd": 2.0067908,
+  "reference": {
+    "sha256": "27135054d2d1dee398e80d75d6d8cfeefddf0f12c8e4b005a738024a8c6bb58e",
+    "size": [
+      540,
+      960
+    ],
+    "fps": 24.0,
+    "frames": 432,
+    "durationSeconds": 18.0,
+    "nearBlankFrames": 0,
+    "imageChanges": [
+      {
+        "seconds": 0.167,
+        "rgbDelta": 16.68
+      },
+      {
+        "seconds": 2.25,
+        "rgbDelta": 92.12
+      },
+      {
+        "seconds": 2.667,
+        "rgbDelta": 48.33
+      },
+      {
+        "seconds": 4.5,
+        "rgbDelta": 55.1
+      },
+      {
+        "seconds": 5.25,
+        "rgbDelta": 85.42
+      },
+      {
+        "seconds": 6.25,
+        "rgbDelta": 46.15
+      },
+      {
+        "seconds": 8.0,
+        "rgbDelta": 55.76
+      },
+      {
+        "seconds": 8.333,
+        "rgbDelta": 13.9
+      },
+      {
+        "seconds": 8.625,
+        "rgbDelta": 9.84
+      },
+      {
+        "seconds": 9.25,
+        "rgbDelta": 10.55
+      },
+      {
+        "seconds": 9.5,
+        "rgbDelta": 54.18
+      },
+      {
+        "seconds": 11.0,
+        "rgbDelta": 17.75
+      }
+    ],
+    "audio": {
+      "peakDbfs": -9.01,
+      "rmsDbfs": -25.4,
+      "accents": [
+        {
+          "seconds": 2.25,
+          "changeDb": 6.27
+        },
+        {
+          "seconds": 4.5,
+          "changeDb": 7.94
+        },
+        {
+          "seconds": 6.25,
+          "changeDb": 5.6
+        },
+        {
+          "seconds": 8.0,
+          "changeDb": 7.39
+        },
+        {
+          "seconds": 9.5,
+          "changeDb": 7.64
+        },
+        {
+          "seconds": 11,
+          "changeDb": 6.94
+        },
+        {
+          "seconds": 13.5,
+          "changeDb": 9.85
+        },
+        {
+          "seconds": 14.5,
+          "changeDb": 7.99
+        }
+      ]
+    }
+  },
+  "mcpRender": {
+    "sha256": "c9fa9fcb68b585b18a9c27898f2e30f96047e04f77618d3bfb8dfdee52855397",
+    "size": [
+      540,
+      960
+    ],
+    "fps": 24.0,
+    "frames": 432,
+    "durationSeconds": 18.0,
+    "nearBlankFrames": 0,
+    "imageChanges": [
+      {
+        "seconds": 2.5,
+        "rgbDelta": 107.35
+      },
+      {
+        "seconds": 2.75,
+        "rgbDelta": 21.97
+      },
+      {
+        "seconds": 4.5,
+        "rgbDelta": 38.88
+      },
+      {
+        "seconds": 4.75,
+        "rgbDelta": 59.07
+      },
+      {
+        "seconds": 6.458,
+        "rgbDelta": 78.27
+      },
+      {
+        "seconds": 6.75,
+        "rgbDelta": 26.94
+      },
+      {
+        "seconds": 7.792,
+        "rgbDelta": 21.57
+      },
+      {
+        "seconds": 9.0,
+        "rgbDelta": 68.59
+      },
+      {
+        "seconds": 9.958,
+        "rgbDelta": 50.13
+      },
+      {
+        "seconds": 11.25,
+        "rgbDelta": 41.69
+      },
+      {
+        "seconds": 13.5,
+        "rgbDelta": 84.58
+      },
+      {
+        "seconds": 13.75,
+        "rgbDelta": 25.71
+      }
+    ],
+    "audio": {
+      "peakDbfs": -9.39,
+      "rmsDbfs": -28.71,
+      "accents": [
+        {
+          "seconds": 2.25,
+          "changeDb": 2.99
+        },
+        {
+          "seconds": 4.5,
+          "changeDb": 6.97
+        },
+        {
+          "seconds": 6.25,
+          "changeDb": 6.17
+        },
+        {
+          "seconds": 8.0,
+          "changeDb": 8.14
+        },
+        {
+          "seconds": 9.5,
+          "changeDb": 8.43
+        },
+        {
+          "seconds": 11,
+          "changeDb": 7.65
+        },
+        {
+          "seconds": 13.5,
+          "changeDb": 12.38
+        },
+        {
+          "seconds": 14.5,
+          "changeDb": 8.3
+        }
+      ]
+    }
+  },
+  "methodLimits": [
+    "One brief, no spectator panel",
+    "MCP client through direct API, Claude Code app not run",
+    "Official v0.8.0 distribution versus Clicko engine four upstream commits later",
+    "Clicko repeated after paginated capabilities repair, within shared arm budget",
+    "Audible quality unverified; audio measured as signal"
+  ]
+}

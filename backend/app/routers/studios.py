@@ -103,11 +103,9 @@ from ..domain.studios.hybrid_video import (
 )
 from ..domain.studios.motion import (
     CreateMotionGraphRequestV1,
-    MotionGraphProjectionV1,
     MotionGraphRecordV1,
     ReplaceMotionGraphRequestV1,
     ReviewMotionGraphRequestV1,
-    project_motion_graph,
 )
 from ..domain.studios.scene_generation import (
     SceneGenerationAdmissionRequestV1,
@@ -1033,29 +1031,6 @@ def review_studio_motion_graph(
         return motion_graph_out(review_motion_graph(db, record, request, user))
     except ValueError as error:
         raise studio_identity_error(error) from error
-
-
-@router.get(
-    "/motion-graphs/{graph_id}/projection/{target}",
-    response_model=MotionGraphProjectionV1,
-)
-def get_studio_motion_graph_projection(
-    graph_id: str,
-    target: Literal["hyperframes", "motion_canvas"],
-    reduced_motion: bool = Query(default=False),
-    db: Session = Depends(get_db),
-    user: User = Depends(get_current_user),
-) -> MotionGraphProjectionV1:
-    item = motion_graph_out(owned_motion_graph(db, user.id, graph_id))
-    try:
-        return project_motion_graph(
-            item.graph,
-            target,
-            item.evaluation,
-            reduced_motion=reduced_motion,
-        )
-    except ValueError as error:
-        raise HTTPException(status_code=422, detail={"code": str(error)}) from error
 
 
 @router.post(

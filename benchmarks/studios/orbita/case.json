@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "id": "orbita",
+  "title": "ÓRBITA",
+  "fictional": true,
+  "brief": {
+    "category": "Mostra fictícia de curtas de ficção científica",
+    "audience": "Público de cinema independente",
+    "objective": "Reconhecer nome e categoria e entender o convite para conferir a programação",
+    "cta": "Confira a programação",
+    "excludeClaims": [
+      "data",
+      "local",
+      "patrocinador",
+      "filmes confirmados"
+    ]
+  },
+  "baseline": {
+    "width": 540,
+    "height": 960,
+    "fps": 24,
+    "durationSeconds": 12,
+    "sha256": "f9de6dae532365b843df4bb884c800da56b6289b5ea5237bffcec66184dd9c49"
+  },
+  "comparison": {
+    "control": "original_opus",
+    "rule": "Alterar uma variável por rodada quando a meta for atribuir causalidade",
+    "record": [
+      "estado inicial e final",
+      "tempo até reconhecer o evento",
+      "leitura em 300 px",
+      "evento sonoro e quadro",
+      "tempo de planejamento",
+      "tempo de render",
+      "custo medido",
+      "cobrança incerta",
+      "defeitos"
+    ]
+  },
+  "variants": [
+    "motion",
+    "filmagem",
+    "entrevista",
+    "página ou documento",
+    "híbrido"
+  ]
+}

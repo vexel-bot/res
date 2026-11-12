@@ -44,7 +44,6 @@ import {
   type ModelSelection,
 } from "../craft/CraftModelPicker";
 import { VideoEditor } from "./VideoEditor";
-import { CanonicalVideoEditor } from "./CanonicalVideoEditor";
 import { LegacyVideoProjects } from "./LegacyVideoProjects";
 import { VideoProjectTools } from "./VideoProjectTools";
 import { workflowHint } from "./videoUsability";
@@ -180,7 +179,6 @@ function VideoRoom({
     studio.document?.documentId === project?.documentId && studio.document && studio.document.revision >= (project?.revision || 0)
       ? studio.document
       : project;
-  const canonicalActive = area === 'editor' && Boolean(currentDoc && !currentDoc.nativeEditorState && currentDoc.composition.mediaTimeline);
   React.useEffect(()=>{
     const open=(event:Event)=>{
       const identifier=(event as CustomEvent).detail?.documentId;
@@ -590,12 +588,11 @@ function VideoRoom({
   return (
     <section
       className="vs-root"
-      data-integrated-editor={canonicalActive}
       data-video-area={area}
       aria-label="Estúdio de vídeo Clicko"
     >
       <AdCopyProcessPanel targetKind="document" targetId={currentDoc?.documentId} disabled={busy || studio.busy} />
-      <header className="vs-header" hidden={canonicalActive}>
+      <header className="vs-header">
         <div>
           <div className="vs-eyebrow">
             <Clapperboard size={14} /> CLICKO STUDIOS
@@ -679,7 +676,7 @@ function VideoRoom({
           )}
         </div>
       </div>
-      <details className="studio-fold vs-workflow-disclosure" hidden={canonicalActive}><summary>Ajuda e recursos deste Studio</summary>
+      <details className="studio-fold vs-workflow-disclosure"><summary>Ajuda e recursos deste Studio</summary>
       <div
         className="vs-workflow-hint"
         aria-label="Orientação da área de trabalho"
@@ -747,7 +744,7 @@ function VideoRoom({
           </button>
         </div>
       )}
-      {(notice || studio.notice) && !(canonicalActive && notice === 'Projeto salvo no seu ambiente. O briefing não é um vídeo renderizado.') && (
+      {(notice || studio.notice) && (
         <div className="vs-banner" role="status">
           {notice || studio.notice}
         </div>
@@ -796,10 +793,7 @@ function VideoRoom({
         </div>
       )}
       <StudioUtilityPanel title="Projetos de vídeo" open={showProjects} onClose={() => setShowProjects(false)}>
-        {canonicalActive && <>
-          <button type="button" className="vs-primary" disabled={busy || studio.busy} onClick={() => { newProject(); setShowProjects(false); }}><Plus size={16}/>Novo projeto</button>
-          <details className="studio-fold"><summary>Ajuda e recursos deste Studio</summary><strong>{hint.title}</strong><p>{hint.text}</p></details>
-        </>}
+
         <section className="vs-projects">
           <div className="vs-panel-heading">
             <h2>Seus projetos</h2>
@@ -1188,12 +1182,7 @@ function VideoRoom({
           </details>
         </aside>
       </div>
-      {currentDoc && !currentDoc.nativeEditorState && currentDoc.composition.mediaTimeline && data.bootstrap ?
-        <CanonicalVideoEditor key={currentDoc.documentId} doc={currentDoc} assets={assets} visible={area === "editor" || area === "motion"}
-          projectActions={<button type="button" onClick={() => setShowProjects(value => !value)} aria-expanded={showProjects}><FolderOpen size={15}/>Projetos</button>}
-          userId={data.bootstrap.user.id} onUpload={() => fileInput.current?.click()} onLibrary={() => void run(openLibrary)}
-          onGenerated={() => setReload(value => value + 1)}
-          onDocument={next => { setProject(next); setProjects(current => [next, ...current.filter(d => d.documentId !== next.documentId)]); }} /> : <div hidden={area !== "editor"}>
+      <div hidden={area !== "editor"}>
         <VideoEditor
           visible={area === "editor"}
           studio={studio}
@@ -1213,7 +1202,7 @@ function VideoRoom({
               : undefined
           }
         />
-      </div>}
+      </div>
       {(area === "ai" || area === "ad" || area === "editor") && Boolean(currentDoc?.nativeEditorState) && (
         <section className="vs-production">
           <div className="vs-ai-control">

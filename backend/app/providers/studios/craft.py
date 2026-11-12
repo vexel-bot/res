@@ -205,6 +205,30 @@ def call_engine(engine: str, method: str, params: dict | None = None, *, cancell
             stop_process()
 
 
+def filmcraft_command_schema(command):
+    """The native catalog flattens nested fields in the Move Clips signature."""
+    if command["id"] in {"captions.add", "captions.setStyle", "timeline.setTrack"}:
+        schema = command["inputSchema"]
+        return {**command, "inputSchema": {**schema, "properties": {
+            **schema["properties"], "track": {"type": ["string", "integer"]},
+        }}}
+    if command["id"] != "timeline.move":
+        return command
+    track = {"type": ["string", "integer"]}
+    ticks = {"type": ["string", "integer"]}
+    return {**command, "inputSchema": {
+        "type": "object",
+        "properties": {
+            "moves": {"type": "array", "minItems": 1, "items": {
+                "type": "object", "required": ["clip", "track", "time"],
+                "properties": {"clip": {"type": ["string", "integer"]}, "track": track, "time": ticks},
+            }},
+            "insert": {"type": "boolean"}, "linked": {"type": "boolean"}, "copy": {"type": "boolean"},
+        },
+        "required": ["moves"],
+    }}
+
+
 def engine_capability(engine: str) -> dict:
     try:
         result = call_engine(engine, "engine.capabilities")
@@ -217,6 +241,8 @@ def engine_capability(engine: str) -> dict:
         commands = result.get("commands")
         if not isinstance(commands, list):
             raise CraftRuntimeError("craft_runtime_command_schema_missing")
+        if engine == "filmcraft":
+            commands = [filmcraft_command_schema(command) for command in commands]
         return {
             **result,
             "available": True,

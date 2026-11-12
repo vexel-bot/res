@@ -1,4 +1,5 @@
 import React from "react";
+import { EditorialGuidePanel } from "./EditorialGuidePanel";
 import { ArrowLeft, Check, Download, Film, History, Image as ImageIcon, Layers3, LoaderCircle, Plus, Redo2, RefreshCw, Save, Send, Sparkles, Undo2, Upload, WandSparkles, X } from "lucide-react";
 import { useProductData } from "../../context/ProductDataContext";
 import { productApi, type AssetRecord } from "../../api/productApi";
@@ -119,6 +120,10 @@ export function CraftStudio({ mode, pathname = window.location.pathname, search 
   const [commandId, setCommandId] = React.useState("");
   const [commandParams, setCommandParams] = React.useState<Record<string, unknown>>({});
   const [instruction, setInstruction] = React.useState("");
+  const [deliberate, setDeliberate] = React.useState(false);
+  const [swarm, setSwarm] = React.useState(false);
+  const [sourceMessage, setSourceMessage] = React.useState("");
+  const [registeringSource, setRegisteringSource] = React.useState(false);
   const [modelSelection, setModelSelection] = React.useState<ModelSelection>({ available: true });
   const [localError, setLocalError] = React.useState<string>();
   const [frame, setFrame] = React.useState(0);
@@ -136,7 +141,7 @@ export function CraftStudio({ mode, pathname = window.location.pathname, search 
   const studio = useCraftStudio({ engine, workspaceId: data.activeWorkspace?.id, userId, postId, requestedDocumentId,
     campaignId: post?.campaignId ?? params.get("campaign") ?? undefined, contentType: selectedMode === "carousel" ? "carousel" : engine === "photocraft" ? "visual" : "video", title,
     objective: post?.objective ?? undefined, audience: data.activeWorkspace?.brandProfile?.targetAudience?.[0] || "Audiência da marca", brandRevision: 1,
-    enabled: data.status === "ready" || data.status === "refreshing", standalone: pathname.startsWith("/library/assets/"), onCreated: (id, linkedPostId) => {
+    enabled: data.status === "ready" || data.status === "refreshing", standalone: pathname === "/studios/native" || pathname.startsWith("/library/assets/"), onCreated: (id, linkedPostId) => {
       const next = new URLSearchParams(search); next.set("document", id);
       navigate(`${linkedPostId ? `/content/${encodeURIComponent(linkedPostId)}/edit` : pathname}?${next}`, { replace: true });
     },
@@ -235,21 +240,50 @@ export function CraftStudio({ mode, pathname = window.location.pathname, search 
     catch (cause) { setLocalError(craftError(cause)); }
     finally { setUploading(false); }
   };
+  async function registerWebSource(form: HTMLFormElement) {
+    const workspaceId = data.activeWorkspace?.id;
+    if (!workspaceId || registeringSource) return;
+    const fields = new FormData(form);
+    const read = (name: string) => String(fields.get(name) || "").trim();
+    const kind = read("kind") as Parameters<typeof craftApi.registerSource>[1]["kind"];
+    setRegisteringSource(true);
+    setSourceMessage("");
+    try {
+      const source = await craftApi.registerSource(workspaceId, {
+        title: read("title"), kind, url: read("url"), sourceUrl: read("sourceUrl"),
+        usageEvidence: read("usageEvidence"), autoAcquire: fields.get("autoAcquire") === "on",
+      });
+      form.reset();
+      setSourceMessage(source.autoAcquire ? "Fonte cadastrada para a direção com IA." : "Fonte cadastrada para consulta.");
+    } finally {
+      setRegisteringSource(false);
+    }
+  }
+
   const openEngine = (nextEngine: CraftEngine) => {
     const next = new URLSearchParams(search);
     next.set("mode", nextEngine === "photocraft" ? "visual" : nextEngine === "filmcraft" ? "video" : "effects");
     next.delete("document");
     if (nextEngine === "effectcraft" && doc?.nativeEditorState?.engine === "filmcraft") next.set("sourceDocument", doc.documentId);
-    navigate(`${/^\/content\/[^/]+\/edit$/.test(pathname) ? pathname : "/content/draft/edit"}?${next}`);
+    navigate(`${pathname === "/studios/native" || /^\/content\/[^/]+\/edit$/.test(pathname) ? pathname : "/content/draft/edit"}?${next}`);
   };
   const returnPath = safeReturn(returnTo || params.get("returnTo"));
+  const availableProjects = studio.documents.filter((item) => item.nativeEditorState
+    ? item.nativeEditorState.engine === engine
+    : engine === "photocraft" ? item.contentType !== "video" : item.contentType === "video");
+  const openProject = (id: string) => {
+    if (!id) return;
+    const next = new URLSearchParams(search);
+    next.set("document", id);
+    navigate(`${pathname}?${next}`);
+  };
   const statusText = studio.status === "loading" ? "Abrindo projeto…" : studio.status === "working" ? "Sincronizando…" : studio.status === "dirty" ? `${studio.pending?.commands.length ?? 0} ajustes pendentes` : studio.status === "offline" ? "Offline · recuperação guardada" : studio.status === "conflict" ? "Conflito de revisão" : studio.status === "error" ? "Sincronização interrompida" : native ? `Salvo · revisão ${doc?.revision}` : "Preparando projeto";
   const historyUndo = commands.some((command) => command.id === "host.history.undo");
   const historyRedo = commands.some((command) => command.id === "host.history.redo");
 
   return <section className="craft-studio" data-editor-engine={engine} aria-label={`Studio de ${engineNames[engine].toLowerCase()}`}>
     <header className="craft-header">
-      <button className="craft-icon-button" aria-label="Voltar" onClick={() => navigate(sourceAssetId ? returnPath : "/content")}><ArrowLeft size={18} /></button>
+      <button className="craft-icon-button" aria-label="Voltar" onClick={() => navigate(returnTo || sourceAssetId ? returnPath : "/content")}><ArrowLeft size={18} /></button>
       <div className="craft-heading"><span>CLICKO STUDIOS</span><h1>{doc?.title || `Studio de ${engineNames[engine].toLowerCase()}`}</h1><small aria-live="polite">{statusText}</small></div>
       <nav className="craft-engine-tabs" aria-label="Área de trabalho">{(["photocraft", "filmcraft", "effectcraft"] as CraftEngine[]).map((item) => <button key={item} aria-pressed={engine === item} disabled={studio.busy || browser.applying || Boolean(studio.pending)} onClick={() => openEngine(item)}>{engineNames[item]}</button>)}</nav>
       <div className="craft-toolbar">
@@ -260,18 +294,30 @@ export function CraftStudio({ mode, pathname = window.location.pathname, search 
         <button className="craft-primary" disabled={locked || !exportFormat} onClick={() => void run(() => studio.exportProject(exportFormat, frame))}><Download size={15} /> Exportar</button>
       </div>
     </header>
+    {doc && availableProjects.some((item) => item.documentId !== doc.documentId) && <label className="craft-project-picker">Projetos <select value={doc.documentId} onChange={(event) => openProject(event.target.value)} disabled={studio.busy || browser.applying || Boolean(studio.pending) || Boolean(studio.aiRecovery)}>
+      {availableProjects.map((item) => <option key={item.documentId} value={item.documentId}>{item.title}{item.nativeEditorState ? "" : " · converter"}</option>)}
+    </select></label>}
 
     {(studio.error || localError) && <div className="craft-message craft-message--error" role="alert"><X size={16} /><span>{localError || studio.error}</span><button disabled={studio.busy || browser.applying || Boolean(studio.pending)} onClick={studio.refresh}><RefreshCw size={14} /> Recarregar</button></div>}
     {studio.notice && <div className="craft-message" role="status"><Check size={16} /> {studio.notice}</div>}
     {studio.recovery && <div className="craft-message craft-message--recovery"><History size={17} /><span>Há {studio.recovery.commands.length} alterações recuperáveis desta sessão. Revisão {studio.recovery.expectedRevision}.</span><button disabled={studio.busy} onClick={studio.recover}>Recuperar</button><button onClick={() => download(new Blob([JSON.stringify(studio.recovery, null, 2)], { type: "application/json" }), "clicko-recuperacao.json")}>Guardar cópia</button><button disabled={studio.busy} onClick={studio.discardRecovery}>Descartar</button></div>}
-    {studio.aiRecovery && <div className="craft-message craft-message--recovery"><Sparkles size={17} /><span>Há um pedido de IA com resultado pendente. Verifique antes de continuar a edição.</span><button disabled={studio.busy} onClick={() => void run(studio.reconcileAI)}>Verificar pedido de IA</button></div>}
+    {studio.aiRecovery && <div className="craft-message craft-message--recovery">
+      <Sparkles size={17} />
+      <span>{studio.aiDraft ? `Rascunho salvo com ${studio.aiDraft.batches} lote(s).` : "Há um pedido de IA pendente."}</span>
+      <button disabled={studio.busy} onClick={() => void run(() => studio.reconcileAI())}>Verificar pedido</button>
+      {studio.aiDraft?.canResume && <button disabled={studio.busy} onClick={() => void run(() => studio.reconcileAI(true))}>Retomar edição com IA</button>}
+      {studio.aiDraft && <>
+        <button disabled={studio.busy} onClick={() => void run(async () => download(await studio.downloadAIDraft(), "rascunho-craft.zip"))}>Baixar rascunho</button>
+        <button disabled={studio.busy} onClick={studio.closeAIDraft}>Encerrar pedido</button>
+      </>}
+    </div>}
     {native?.engine === "effectcraft" && studio.engineInfo?.available && native.buildId !== studio.engineInfo.buildId && <div className="craft-message craft-message--recovery"><History size={17} /><span>Este projeto usa uma versão anterior do motor. A atualização preserva o arquivo e a revisão anteriores no histórico.</span><button disabled={studio.busy || Boolean(studio.aiRecovery)} onClick={() => void run(studio.upgradeBuild)}>Atualizar motor do projeto</button></div>}
     {warnings.length > 0 && <details className="craft-warnings"><summary>{warnings.length} observações sobre a conversão deste projeto</summary><ul>{warnings.map((warning) => <li key={warning}>{warning}</li>)}</ul></details>}
 
     {!data.activeWorkspace || !userId ? <div className="craft-empty"><Layers3 size={34} /><h2>Abra seu workspace para editar</h2><p>Os projetos e materiais são privados e vinculados à sua conta.</p><button onClick={() => navigate("/login")}>Entrar</button></div>
     : studio.status === "loading" ? <div className="craft-empty" role="status"><LoaderCircle className="craft-spinner" size={32} /><h2>Abrindo seu projeto</h2><p>Recuperando materiais, revisão e recursos de edição.</p></div>
     : !studio.engineInfo?.available ? <div className="craft-empty"><EngineIcon engine={engine} /><h2>Studio aguardando o motor de edição</h2><p>{studio.engineInfo?.reason || "O serviço de edição ainda não está disponível. Seu projeto permanece preservado."}</p><button onClick={studio.refresh}><RefreshCw size={15} /> Verificar novamente</button></div>
-    : !doc ? <div className="craft-create"><div className="craft-create-art"><Layers3 size={60} /><span>{engine === "photocraft" ? "Cada camada. Cada detalhe." : engine === "filmcraft" ? "Sua história, no seu ritmo." : "Movimento com intenção."}</span></div><form onSubmit={(event) => { event.preventDefault(); const [width, height] = format.split("x").map(Number); void studio.create(title, width, height); }}><span className="craft-eyebrow">UMA NOVA CRIAÇÃO</span><h2>Comece pelo seu projeto</h2><label>Nome<input required value={title} onChange={(event) => setTitle(event.target.value)} maxLength={200} /></label><label>Formato<select value={format} onChange={(event) => setFormat(event.target.value)}><option value="1080x1350">Retrato · 4:5</option><option value="1080x1080">Quadrado · 1:1</option><option value="1080x1920">Vertical · 9:16</option><option value="1920x1080">Horizontal · 16:9</option></select></label>{source && <p>Material recebido: {source.title}</p>}<button className="craft-primary" disabled={studio.busy || !title.trim()}><Plus size={16} /> Criar projeto</button>{studio.documents.filter((item) => item.nativeEditorState?.engine === engine).length > 0 && <label>Ou abra um projeto<select value="" onChange={(event) => { if (!event.target.value) return; const next = new URLSearchParams(search); next.set("document", event.target.value); navigate(`${pathname}?${next}`); }}><option value="">Escolher…</option>{studio.documents.filter((item) => item.nativeEditorState?.engine === engine).map((item) => <option key={item.documentId} value={item.documentId}>{item.title}</option>)}</select></label>}</form></div>
+    : !doc ? <div className="craft-create"><div className="craft-create-art"><Layers3 size={60} /><span>{engine === "photocraft" ? "Cada camada. Cada detalhe." : engine === "filmcraft" ? "Sua história, no seu ritmo." : "Movimento com intenção."}</span></div><form onSubmit={(event) => { event.preventDefault(); const [width, height] = format.split("x").map(Number); void studio.create(title, width, height); }}><span className="craft-eyebrow">UMA NOVA CRIAÇÃO</span><h2>Comece pelo seu projeto</h2><label>Nome<input required value={title} onChange={(event) => setTitle(event.target.value)} maxLength={200} /></label><label>Formato<select value={format} onChange={(event) => setFormat(event.target.value)}><option value="1080x1350">Retrato · 4:5</option><option value="1080x1080">Quadrado · 1:1</option><option value="1080x1920">Vertical · 9:16</option><option value="1920x1080">Horizontal · 16:9</option></select></label>{source && <p>Material recebido: {source.title}</p>}<button className="craft-primary" disabled={studio.busy || !title.trim()}><Plus size={16} /> Criar projeto</button>{availableProjects.length > 0 && <label>Ou abra um projeto<select value="" onChange={(event) => openProject(event.target.value)}><option value="">Escolher…</option>{availableProjects.map((item) => <option key={item.documentId} value={item.documentId}>{item.title}{item.nativeEditorState ? "" : " · converter"}</option>)}</select></label>}</form></div>
     : !native ? <div className="craft-empty"><Layers3 size={35} /><h2>Converter o projeto para o novo Studio</h2><p>O arquivo original será arquivado. A conversão registrará qualquer elemento que precise de ajuste.</p><button className="craft-primary" disabled={studio.busy} onClick={() => void run(studio.migrate)}>Converter e abrir</button></div>
     : native.engine !== engine ? <div className="craft-empty"><h2>Este projeto pertence a outra área de trabalho</h2><p>Abra a área correspondente para preservar sua edição.</p><button onClick={() => { const next = new URLSearchParams(search); next.set("mode", native.engine === "photocraft" ? "visual" : native.engine === "filmcraft" ? "video" : "effects"); navigate(`${pathname}?${next}`); }}>Abrir {engineNames[native.engine]}</button></div>
     : <div className="craft-workspace">
@@ -288,7 +334,21 @@ export function CraftStudio({ mode, pathname = window.location.pathname, search 
           </div>
         </div>}
         {panel === "layers" && <div className="craft-panel-content"><div className="craft-panel-title"><h2>Elementos</h2><span>{layers.length}</span></div>{layers.length ? layers.map((item) => <button className="craft-layer" key={item.id} aria-pressed={item.id === selectedLayer} onClick={() => selectLayer(item.id)}><Layers3 size={15} /><span>{item.name || item.id}<small>{item.kind || "Elemento"}</small></span></button>) : <p className="craft-muted">O motor ainda não retornou elementos. Use as ferramentas disponíveis para adicioná-los.</p>}{studio.inspection?.project.width && <dl className="craft-details"><dt>Formato</dt><dd>{studio.inspection.project.width} × {studio.inspection.project.height}</dd><dt>Revisão</dt><dd>{doc.revision}</dd></dl>}</div>}
-        {panel === "assets" && <div className="craft-panel-content"><div className="craft-panel-title"><h2>Materiais</h2><button className="craft-icon-button" aria-label="Enviar material" disabled={locked || uploading} onClick={() => assetInput.current?.click()}><Upload size={16} /></button></div><p className="craft-muted">Escolha um arquivo da biblioteca para inserir no projeto.</p>{assets.filter((asset) => ["image", "video", "audio", "document"].includes(asset.type)).map((asset) => <button className="craft-asset" key={asset.id} disabled={locked} aria-pressed={asset.id === selectedSourceId} onClick={() => importAsset(asset)}><span className="craft-asset-icon">{asset.type === "video" ? <Film size={21} /> : <ImageIcon size={21} />}</span><span>{asset.title}<small>{asset.type}</small></span><Plus size={14} /></button>)}{!assets.length && <p className="craft-muted">Sua biblioteca ainda está vazia.</p>}{uploading && <p role="status">Enviando arquivo…</p>}</div>}
+        {panel === "assets" && <div className="craft-panel-content"><div className="craft-panel-title"><h2>Materiais</h2><button className="craft-icon-button" aria-label="Enviar material" disabled={locked || uploading} onClick={() => assetInput.current?.click()}><Upload size={16} /></button></div><p className="craft-muted">Escolha um arquivo da biblioteca para inserir no projeto.</p>
+          {engine === "effectcraft" && <details className="craft-web-source">
+            <summary>Cadastrar fonte da web</summary>
+            <form onSubmit={(event) => { event.preventDefault(); const form = event.currentTarget; void run(() => registerWebSource(form)); }}>
+              <label>Nome<input name="title" required maxLength={240} /></label>
+              <label>Tipo<select name="kind"><option value="image">Imagem</option><option value="logo">Logo</option><option value="video">Vídeo MP4</option><option value="music">Música</option><option value="sound_effect">Efeito sonoro</option></select></label>
+              <label>Link direto do arquivo<input name="url" type="url" placeholder="https://" required /></label>
+              <label>Página de origem<input name="sourceUrl" type="url" placeholder="https://" required /></label>
+              <label>Crédito e condição de uso<textarea name="usageEvidence" required maxLength={4000} /></label>
+              <label className="craft-check"><input type="checkbox" name="autoAcquire" /> Permitir que a IA baixe este arquivo</label>
+              <button type="submit" disabled={locked || registeringSource}>Cadastrar fonte</button>
+              {sourceMessage && <small role="status">{sourceMessage}</small>}
+            </form>
+          </details>}
+{assets.filter((asset) => ["image", "video", "audio", "document"].includes(asset.type)).map((asset) => <button className="craft-asset" key={asset.id} disabled={locked} aria-pressed={asset.id === selectedSourceId} onClick={() => importAsset(asset)}><span className="craft-asset-icon">{asset.type === "video" ? <Film size={21} /> : <ImageIcon size={21} />}</span><span>{asset.title}<small>{asset.type}</small></span><Plus size={14} /></button>)}{!assets.length && <p className="craft-muted">Sua biblioteca ainda está vazia.</p>}{uploading && <p role="status">Enviando arquivo…</p>}</div>}
         {panel === "history" && <div className="craft-panel-content"><h2>Histórico do projeto</h2><p className="craft-muted">Cada salvamento conserva uma revisão. Desfazer e refazer usam o histórico do motor.</p>{studio.versions.map((version) => <div className="craft-version" key={version.number}><strong>Versão {version.number}</strong><small>{version.label || "Alteração salva"}</small><time>{new Date(version.createdAt).toLocaleString("pt-BR")}</time></div>)}{!studio.versions.length && <p className="craft-muted">Nenhuma versão adicional registrada.</p>}</div>}
         {panel === "review" && <div className="craft-panel-content"><h2>Revisão e publicação</h2><p className="craft-muted">{doc.postRef?.id ? "Envie a exportação da revisão atual para aprovação." : "Este projeto pertence à biblioteca. A exportação ficará disponível entre seus materiais."}</p><button disabled={!doc.postRef?.id || locked || gateBlocked || studio.job?.status !== "succeeded" || studio.jobRevision !== doc.revision || Boolean(studio.pending)} onClick={() => void run(async () => { const review = await studio.review(); navigate(`/approvals/${doc.postRef?.id || doc.documentId}?review=${encodeURIComponent(review.id)}`); })}><Send size={15} /> Enviar para revisão</button><button disabled={!doc.postRef?.id} onClick={() => navigate(`/publish/${doc.postRef?.id || doc.documentId}`)}>Abrir publicação</button></div>}
       </aside>
@@ -321,7 +381,22 @@ export function CraftStudio({ mode, pathname = window.location.pathname, search 
           navigate(`${pathname}?${next}`);
         })}><WandSparkles size={15} /> Converter camadas e efeitos</button>}
         {layer?.properties && <details className="craft-properties"><summary>Propriedades atuais</summary><dl>{Object.entries(layer.properties).filter(([, value]) => typeof value === "string" || typeof value === "number" || typeof value === "boolean").map(([key, value]) => <React.Fragment key={key}><dt>{friendlyFields[key] || key}</dt><dd>{String(value)}</dd></React.Fragment>)}</dl></details>}
-        <div className="craft-ai"><div><Sparkles size={17} /><h2>Direção com IA</h2></div><p>Descreva a mudança. A IA usa as mesmas ferramentas e registra suas alterações no histórico.</p><CraftModelPicker workspaceId={data.activeWorkspace.id} userId={userId} disabled={locked} onChange={setModelSelection} /><label htmlFor="craft-instruction" className="craft-sr-only">Pedido de edição com IA</label><textarea id="craft-instruction" value={instruction} onChange={(event) => setInstruction(event.target.value)} placeholder={engine === "photocraft" ? "Ajuste o título e deixe a composição mais leve…" : "Ajuste os cortes e crie uma abertura mais direta…"} disabled={locked} /><button disabled={locked || !instruction.trim() || !modelSelection.available} onClick={() => void run(async () => { await studio.applyAI(instruction.trim(), modelSelection.connectionId, modelSelection.model); setInstruction(""); })}><Sparkles size={15} /> Aplicar direção</button></div>
+        <div className="craft-ai">
+          <div><Sparkles size={17} /><h2>Direção com IA</h2></div>
+          <p>Descreva a mudança. A IA usa as mesmas ferramentas e registra suas alterações no histórico.</p>
+          <CraftModelPicker workspaceId={data.activeWorkspace.id} userId={userId} disabled={locked} onChange={setModelSelection} />
+          {engine !== "photocraft" && <label><input type="checkbox" checked={deliberate} disabled={locked} onChange={(event) => setDeliberate(event.target.checked)} /> Mais tempo para planejar</label>}
+          {engine === "effectcraft" && modelSelection.swarmAvailable && <label><input type="checkbox" checked={swarm} disabled={locked} onChange={(event) => setSwarm(event.target.checked)} /> Especialistas em paralelo · experimental · usa o saldo do Console Anthropic</label>}
+          <label htmlFor="craft-instruction" className="craft-sr-only">Pedido de edição com IA</label>
+          <textarea id="craft-instruction" value={instruction} onChange={(event) => setInstruction(event.target.value)} placeholder={engine === "photocraft" ? "Ajuste o título e deixe a composição mais leve…" : "Ajuste os cortes e crie uma abertura mais direta…"} disabled={locked} />
+          <button disabled={locked || !instruction.trim() || !modelSelection.available} onClick={() => void run(async () => {
+            const workflow = engine === "effectcraft" && modelSelection.swarmAvailable && swarm ? "motion_swarm" : "native";
+            await studio.applyAI(instruction.trim(), modelSelection.connectionId, modelSelection.model,
+              engine !== "photocraft" && deliberate ? "deliberate" : "standard", workflow);
+            setInstruction("");
+          })}><Sparkles size={15} /> Aplicar direção</button>
+        </div>
+        {engine !== "photocraft" && <EditorialGuidePanel key={doc.documentId} documentId={doc.documentId} revision={doc.revision} disabled={locked} />}
         <div className="craft-export-options"><h2>Saída</h2><label>Formato<select value={exportFormat} onChange={(event) => setExportFormat(event.target.value)} disabled={locked || !formats.length}>{formats.map((item) => <option key={item} value={item}>{item === "png_set" ? "Todas as páginas · PNG em ZIP" : item.toUpperCase()}</option>)}</select></label><small>Exportações são processadas no servidor a partir da revisão salva.</small></div>
         {engine === "effectcraft" && sourceDocumentId && <button disabled={locked} onClick={() => void run(async () => { await studio.save(); const montage = await productApi.studioDocument(sourceDocumentId); await craftApi.linkComposition(montage.documentId, montage.revision, doc.documentId, crypto.randomUUID()); const next = new URLSearchParams(search); next.set("mode", "video"); next.set("document", montage.documentId); next.delete("sourceDocument"); navigate(`${pathname}?${next}`); })}><Film size={15} /> Usar na montagem</button>}
       </aside>

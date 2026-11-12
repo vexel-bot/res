@@ -1,0 +1,590 @@
+{
+  "version": 1,
+  "method": {
+    "id": "reference-guided-editorial-learning.v1",
+    "sourceUrl": "https://matheusgobbi.com/edit",
+    "qualification": "documented procedure adapted to Clicko",
+    "steps": [
+      "Organize source recordings, reference material and editable exports.",
+      "Verify the available editing tools with reproducible local evidence.",
+      "Derive a scoped style guide from concrete references, including timing, image, type and sound coverage.",
+      "Review a storyboard connecting speech, image and duration; revise the guide with feedback and reuse it in later projects."
+    ],
+    "instruction": "Use the guide as scoped editorial knowledge. Missing audiovisual coverage and unsupported operations remain explicit."
+  },
+  "cards": [
+    {
+      "id": "style.talking-proof",
+      "kind": "editing_language",
+      "title": "Fala com prova visual",
+      "formats": [
+        "footage",
+        "interface",
+        "hybrid"
+      ],
+      "intent": "Demonstrar uma afirmação sem perder a pessoa que a apresenta.",
+      "requires": [
+        "fala utilizável",
+        "captura da operação",
+        "resultado verificável"
+      ],
+      "initial": "Briefing, materiais e estado inicial identificados.",
+      "final": "A informação e o convite necessários ficam compreensíveis.",
+      "workflow": [
+        "Estabelecer a afirmação na fala.",
+        "Mostrar a ação correspondente na interface.",
+        "Manter o resultado legível e retornar à explicação quando útil."
+      ],
+      "useWhen": [
+        "Software ou serviço com uma ação demonstrável."
+      ],
+      "avoid": "Interface meramente decorativa ou captura ilegível.",
+      "avoidWhen": [
+        "Interface meramente decorativa ou captura ilegível."
+      ],
+      "counterexample": "A fala promete uma ação enquanto a tela mostra outra.",
+      "test": "Identificar afirmação, ação e resultado no corte.",
+      "sources": [
+        "https://www.instagram.com/paulo.ia/reel/Dd2EAaIBeRg/"
+      ],
+      "state": "research hypothesis",
+      "coverageClass": "V",
+      "coverage": "Amostras anteriores dentro de aproximadamente 0–31 s de 91 s; áudio não auditado.",
+      "evidenceStatus": "Knowledge only. Observations and declarations have the coverage stated; transfer and audience comprehension remain unverified."
+    },
+    {
+      "id": "style.conversation-examples",
+      "kind": "editing_language",
+      "title": "Conversa com exemplos",
+      "formats": [
+        "footage",
+        "hybrid"
+      ],
+      "intent": "Ligar pergunta, exemplo e reação para fazer a explicação avançar.",
+      "requires": [
+        "conversa sincronizada",
+        "exemplos relacionados",
+        "reações disponíveis"
+      ],
+      "initial": "Briefing, materiais e estado inicial identificados.",
+      "final": "A informação e o convite necessários ficam compreensíveis.",
+      "workflow": [
+        "Preservar a pergunta necessária.",
+        "Inserir o exemplo na afirmação correspondente.",
+        "Retornar à resposta ou reação preservando o sentido."
+      ],
+      "useWhen": [
+        "Didática, bastidores e autoridade compartilhada."
+      ],
+      "avoid": "Quando o insert ou a retirada da pausa muda a intenção.",
+      "avoidWhen": [
+        "Quando o insert ou a retirada da pausa muda a intenção."
+      ],
+      "counterexample": "Um corte elimina a reação que dá sentido à resposta.",
+      "test": "Recontar a resposta com a pergunta e o exemplo.",
+      "sources": [
+        "https://www.instagram.com/creators/reel/Dc6O2ryRBP9/"
+      ],
+      "state": "research hypothesis",
+      "coverageClass": "V",
+      "coverage": "Amostras anteriores em 0,9; 5,5; 7,6; 25,1; 26,3; 48,3 s; áudio não auditado.",
+      "evidenceStatus": "Knowledge only. Observations and declarations have the coverage stated; transfer and audience comprehension remain unverified."
+    },
+    {
+      "id": "style.interface-tutorial",
+      "kind": "editing_language",
+      "title": "Tutorial de interface",
+      "formats": [
+        "interface"
+      ],
+      "intent": "Ensinar uma operação por mudanças verificáveis na mesma tela.",
+      "requires": [
+        "captura da interface",
+        "estado inicial",
+        "ação e resultado"
+      ],
+      "initial": "Briefing, materiais e estado inicial identificados.",
+      "final": "A informação e o convite necessários ficam compreensíveis.",
+      "workflow": [
+        "Localizar o controle e o estado inicial.",
+        "Mostrar o gesto que altera o sistema.",
+        "Dar tempo de leitura ao resultado."
+      ],
+      "useWhen": [
+        "Quando o espectador precisa repetir uma tarefa."
+      ],
+      "avoid": "Tela reduzida demais ou material sem a operação alegada.",
+      "avoidWhen": [
+        "Tela reduzida demais ou material sem a operação alegada."
+      ],
+      "counterexample": "O resultado aparece antes do comando ou o controle sai do quadro.",
+      "test": "Reconhecer onde agir e o que muda.",
+      "sources": [
+        "https://www.instagram.com/creators/reel/DcMFvawPPIl/"
+      ],
+      "state": "research hypothesis",
+      "coverageClass": "V",
+      "coverage": "Amostras anteriores dentro de 5–11 e 30–35 s, além de 39,7 e 46,7 s.",
+      "evidenceStatus": "Knowledge only. Observations and declarations have the coverage stated; transfer and audience comprehension remain unverified."
+    },
+    {
+      "id": "style.physical-process",
+      "kind": "editing_language",
+      "title": "Processo físico e bastidores",
+      "formats": [
+        "footage"
+      ],
+      "intent": "Mostrar como uma ação produz um artefato ou uma transformação real.",
+      "requires": [
+        "processo captado",
+        "detalhes do gesto",
+        "resultado correspondente"
+      ],
+      "initial": "Briefing, materiais e estado inicial identificados.",
+      "final": "A informação e o convite necessários ficam compreensíveis.",
+      "workflow": [
+        "Estabelecer material e operador.",
+        "Conservar a relação entre gesto e mudança.",
+        "Mostrar o resultado ou seu uso."
+      ],
+      "useWhen": [
+        "Artesanato, fabricação e serviço com processo demonstrável."
+      ],
+      "avoid": "Brutos de tarefas ou objetos diferentes.",
+      "avoidWhen": [
+        "Brutos de tarefas ou objetos diferentes."
+      ],
+      "counterexample": "Um insert de arquivo substitui o resultado por outro objeto.",
+      "test": "Ligar a mesma ação ao resultado mostrado.",
+      "sources": [
+        "https://www.instagram.com/reel/DdtuxMNBtxr/"
+      ],
+      "state": "research hypothesis",
+      "coverageClass": "V",
+      "coverage": "Amostras anteriores em 0,35; 11,11; 25,39; 43,64; 62,68; 74,59 s. Crédito a @natashahmedx no corpus, autoria da edição não determinada.",
+      "evidenceStatus": "Knowledge only. Observations and declarations have the coverage stated; transfer and audience comprehension remain unverified."
+    },
+    {
+      "id": "style.sensory-product",
+      "kind": "editing_language",
+      "title": "Produto sensorial filmado",
+      "formats": [
+        "footage",
+        "hybrid"
+      ],
+      "intent": "Revelar textura, manipulação e qualidades de um produto através de planos selecionados.",
+      "requires": [
+        "captação próxima",
+        "luz utilizável",
+        "interação com o produto",
+        "som específico"
+      ],
+      "initial": "Briefing, materiais e estado inicial identificados.",
+      "final": "A informação e o convite necessários ficam compreensíveis.",
+      "workflow": [
+        "Escolher qual propriedade cada plano revela.",
+        "Montar aproximação, contato e consequência.",
+        "Conferir continuidade, identidade e assinatura."
+      ],
+      "useWhen": [
+        "Produto físico ou alimento com bons brutos de interação."
+      ],
+      "avoid": "Materiais só com fotos gerais quando a ideia exige ação ou textura.",
+      "avoidWhen": [
+        "Materiais só com fotos gerais quando a ideia exige ação ou textura."
+      ],
+      "counterexample": "Uma sequência de beleza não deixa reconhecer o produto.",
+      "test": "Descrever a qualidade mostrada por cada plano.",
+      "sources": [
+        "https://www.youtube.com/watch?v=3ojDeNPP8SM"
+      ],
+      "state": "research hypothesis",
+      "coverageClass": "D",
+      "coverage": "Daniel Schiffer, comercial de café. Fonte documental; operações e tempos ainda por decupar.",
+      "evidenceStatus": "Knowledge only. Observations and declarations have the coverage stated; transfer and audience comprehension remain unverified."
+    },
+    {
+      "id": "style.argumentative-motion",
+      "kind": "editing_language",
+      "title": "Motion argumentativo",
+      "formats": [
+        "motion",
+        "hybrid"
+      ],
+      "intent": "Representar tese, prova e conclusão com funções gráficas distintas.",
+      "requires": [
+        "copy argumentada",
+        "voz ou texto",
+        "evidências",
+        "design consistente"
+      ],
+      "initial": "Briefing, materiais e estado inicial identificados.",
+      "final": "A informação e o convite necessários ficam compreensíveis.",
+      "workflow": [
+        "Explicitar a proposição de cada trecho.",
+        "Usar layout e material que demonstrem a relação.",
+        "Conduzir exemplos a uma conclusão e convite."
+      ],
+      "useWhen": [
+        "Explicação de ideia abstrata com evidência disponível."
+      ],
+      "avoid": "Quando movimento substitui a prova ou altera o argumento.",
+      "avoidWhen": [
+        "Quando movimento substitui a prova ou altera o argumento."
+      ],
+      "counterexample": "Cards trocam rapidamente sem mudar a informação.",
+      "test": "Distinguir tese, prova e conclusão em cada trecho.",
+      "sources": [
+        "https://www.instagram.com/reels/DciIBRYBHBK/"
+      ],
+      "state": "research hypothesis",
+      "coverageClass": "M",
+      "coverage": "Análise assistida por máquina, revisão humana pendente. Janelas 0–9; 9–28; 28–49; 49–69; 69–87 s.",
+      "evidenceStatus": "Knowledge only. Observations and declarations have the coverage stated; transfer and audience comprehension remain unverified."
+    },
+    {
+      "id": "style.kinetic-typography",
+      "kind": "editing_language",
+      "title": "Tipografia cinética",
+      "formats": [
+        "motion",
+        "hybrid"
+      ],
+      "intent": "Usar movimento para dar prioridade e consequência à palavra.",
+      "requires": [
+        "copy curta",
+        "fonte disponível",
+        "medidas reais dos glifos"
+      ],
+      "initial": "Briefing, materiais e estado inicial identificados.",
+      "final": "A informação e o convite necessários ficam compreensíveis.",
+      "workflow": [
+        "Estabelecer uma prioridade de leitura.",
+        "Transformar palavra ou composição mantendo reconhecimento.",
+        "Resolver a informação essencial em estado legível."
+      ],
+      "useWhen": [
+        "Slogan, frase curta, lançamento e ênfase verbal."
+      ],
+      "avoid": "Copy longa, palavra fragmentada ou muitos focos simultâneos.",
+      "avoidWhen": [
+        "Copy longa, palavra fragmentada ou muitos focos simultâneos."
+      ],
+      "counterexample": "Todos os textos se movem com igual intensidade e nenhum fica legível.",
+      "test": "Ler a palavra durante sua transformação no tamanho de celular.",
+      "sources": [
+        "https://www.youtube.com/shorts/bYWZ-kn839M"
+      ],
+      "state": "research hypothesis",
+      "coverageClass": "V",
+      "coverage": "NeverStillFX, somente quadros anteriores em 2,1 e 7 s. Curvas e sincronismo desconhecidos.",
+      "evidenceStatus": "Knowledge only. Observations and declarations have the coverage stated; transfer and audience comprehension remain unverified."
+    },
+    {
+      "id": "style.brand-manifesto",
+      "kind": "editing_language",
+      "title": "Motion de marca e manifesto",
+      "formats": [
+        "motion"
+      ],
+      "intent": "Fazer as transformações visuais expressarem a ideia central de uma identidade.",
+      "requires": [
+        "conceito",
+        "sistema visual",
+        "assinatura",
+        "direção de arte"
+      ],
+      "initial": "Briefing, materiais e estado inicial identificados.",
+      "final": "A informação e o convite necessários ficam compreensíveis.",
+      "workflow": [
+        "Relacionar o motivo à missão da marca.",
+        "Desenvolver o motivo por transformações reconhecíveis.",
+        "Resolver a ideia na assinatura ou convite."
+      ],
+      "useWhen": [
+        "Identidade, abertura e apresentação com conceito visual claro."
+      ],
+      "avoid": "Quando a abstração esconde a oferta que deveria explicar.",
+      "avoidWhen": [
+        "Quando a abstração esconde a oferta que deveria explicar."
+      ],
+      "counterexample": "Qualquer marca poderia substituir a assinatura sem mudar o filme.",
+      "test": "Relacionar a progressão visual à missão ou promessa.",
+      "sources": [
+        "https://www.ordinaryfolk.co/project/school-of-motion-manifesto"
+      ],
+      "state": "research hypothesis",
+      "coverageClass": "D",
+      "coverage": "Procedimento primário documentado. Estudo anterior amostrou 4,85 e 28,82 s; decupagem integral pendente.",
+      "evidenceStatus": "Knowledge only. Observations and declarations have the coverage stated; transfer and audience comprehension remain unverified."
+    },
+    {
+      "id": "style.editorial-collage",
+      "kind": "editing_language",
+      "title": "Colagem editorial",
+      "formats": [
+        "motion",
+        "hybrid"
+      ],
+      "intent": "Organizar arquivos e recortes sobre uma superfície coerente.",
+      "requires": [
+        "fotografias relacionadas",
+        "recortes",
+        "textura e hierarquia"
+      ],
+      "initial": "Briefing, materiais e estado inicial identificados.",
+      "final": "A informação e o convite necessários ficam compreensíveis.",
+      "workflow": [
+        "Definir a superfície e os níveis de leitura.",
+        "Ligar os arquivos pela relação que comunicam.",
+        "Animar conectores e mudanças de foco com função."
+      ],
+      "useWhen": [
+        "Portfólio, coleção e história com arquivos."
+      ],
+      "avoid": "Quando a animação compete com as fotos ou a marca.",
+      "avoidWhen": [
+        "Quando a animação compete com as fotos ou a marca."
+      ],
+      "counterexample": "Fotos apenas se acumulam, sem progressão.",
+      "test": "Explicar a relação que cada entrada acrescenta.",
+      "sources": [
+        "https://www.instagram.com/moonsol.design/reel/DdwecRoI4Bf/"
+      ],
+      "state": "research hypothesis",
+      "coverageClass": "V",
+      "coverage": "Observação anterior de composição, fotos, madeira, título e InShot. Comportamento temporal por verificar.",
+      "evidenceStatus": "Knowledge only. Observations and declarations have the coverage stated; transfer and audience comprehension remain unverified."
+    },
+    {
+      "id": "style.localized-vfx",
+      "kind": "editing_language",
+      "title": "Transformação VFX localizada",
+      "formats": [
+        "footage",
+        "hybrid"
+      ],
+      "intent": "Revelar produto ou mudança no mesmo espaço por correspondência geométrica.",
+      "requires": [
+        "produto identificável",
+        "placa limpa",
+        "fontes alinhadas",
+        "máscara",
+        "contato e sombra"
+      ],
+      "initial": "Briefing, materiais e estado inicial identificados.",
+      "final": "A informação e o convite necessários ficam compreensíveis.",
+      "workflow": [
+        "Preparar estados inicial e final na mesma geometria.",
+        "Vincular a troca a um gesto ou mudança visível.",
+        "Conferir contorno, perspectiva e contato temporalmente."
+      ],
+      "useWhen": [
+        "Transformação que expressa benefício ou consequência."
+      ],
+      "avoid": "Variante que muda identidade ou fontes sem alinhamento.",
+      "avoidWhen": [
+        "Variante que muda identidade ou fontes sem alinhamento."
+      ],
+      "counterexample": "O produto desliza e sua sombra troca de direção sem causa.",
+      "test": "Inspecionar antes, durante e depois da mudança.",
+      "sources": [
+        "https://www.instagram.com/moonsol.design/reel/Dd3k4cBtFrK/"
+      ],
+      "state": "research hypothesis",
+      "coverageClass": "V/D",
+      "coverage": "Preparação observada anteriormente por volta de 20 s; fonte primária identifica InVideo. Traço intermediário por verificar.",
+      "evidenceStatus": "Knowledge only. Observations and declarations have the coverage stated; transfer and audience comprehension remain unverified."
+    },
+    {
+      "id": "style.brand-documentary",
+      "kind": "editing_language",
+      "title": "Documentário curto de marca",
+      "formats": [
+        "footage",
+        "hybrid"
+      ],
+      "intent": "Construir origem e significado com presente, arquivo, processo e obra.",
+      "requires": [
+        "história real",
+        "arquivo correspondente",
+        "captação da pessoa ou projeto"
+      ],
+      "initial": "Briefing, materiais e estado inicial identificados.",
+      "final": "A informação e o convite necessários ficam compreensíveis.",
+      "workflow": [
+        "Estabelecer a questão ou trajetória.",
+        "Relacionar arquivo e processo aos fatos narrados.",
+        "Resolver a mudança no presente ou na obra."
+      ],
+      "useWhen": [
+        "Trajetória, propósito e bastidor com história verificável."
+      ],
+      "avoid": "Arquivo genérico que substitui a evidência específica.",
+      "avoidWhen": [
+        "Arquivo genérico que substitui a evidência específica."
+      ],
+      "counterexample": "A imagem poderia acompanhar uma história de outra pessoa sem alteração.",
+      "test": "Identificar o fato demonstrado por cada material.",
+      "sources": [
+        "https://www.instagram.com/creators/reel/DcRcZzhPGYV/"
+      ],
+      "state": "research hypothesis",
+      "coverageClass": "V",
+      "coverage": "Kayra Theodore, amostras anteriores em 5,7; 11,5; 22,1; 44 s. Voz e som não auditados.",
+      "evidenceStatus": "Knowledge only. Observations and declarations have the coverage stated; transfer and audience comprehension remain unverified."
+    },
+    {
+      "id": "style.personal-vlog",
+      "kind": "editing_language",
+      "title": "Montagem pessoal e vlog",
+      "formats": [
+        "footage"
+      ],
+      "intent": "Organizar uma experiência com ambiente, distância e retorno ao presente.",
+      "requires": [
+        "brutos relacionados",
+        "percurso reconhecível",
+        "trilha apropriada"
+      ],
+      "initial": "Briefing, materiais e estado inicial identificados.",
+      "final": "A informação e o convite necessários ficam compreensíveis.",
+      "workflow": [
+        "Ancorar a experiência no tempo e lugar necessários.",
+        "Variar escala para revelar uma observação.",
+        "Conservar continuidade do percurso e relato."
+      ],
+      "useWhen": [
+        "Memória, experiência ou relato pessoal."
+      ],
+      "avoid": "Quando a seleção de beleza rompe a geografia ou cronologia.",
+      "avoidWhen": [
+        "Quando a seleção de beleza rompe a geografia ou cronologia."
+      ],
+      "counterexample": "O plano seguinte muda de lugar sem que o relato sustente essa passagem.",
+      "test": "Recontar o percurso a partir da montagem.",
+      "sources": [
+        "https://www.instagram.com/creators/reel/Dc3qMrJxJcp/"
+      ],
+      "state": "research hypothesis",
+      "coverageClass": "V",
+      "coverage": "Alex Cisse, amostras anteriores em 0,8; 6,6; 22,7; 32,2 s. Sincronismo musical por verificar.",
+      "evidenceStatus": "Knowledge only. Observations and declarations have the coverage stated; transfer and audience comprehension remain unverified."
+    },
+    {
+      "id": "style.humor-microstory",
+      "kind": "editing_language",
+      "title": "Micro-história de humor",
+      "formats": [
+        "footage",
+        "hybrid"
+      ],
+      "intent": "Preparar uma expectativa e mudá-la com informação e reação.",
+      "requires": [
+        "performance",
+        "contexto",
+        "reação utilizável"
+      ],
+      "initial": "Briefing, materiais e estado inicial identificados.",
+      "final": "A informação e o convite necessários ficam compreensíveis.",
+      "workflow": [
+        "Estabelecer a situação.",
+        "Dar a informação que altera a expectativa.",
+        "Preservar a reação e a pausa que tornam o payoff legível."
+      ],
+      "useWhen": [
+        "Identificação cotidiana com ligação clara à oferta."
+      ],
+      "avoid": "Piada que exige explicação extra ou não serve ao objetivo.",
+      "avoidWhen": [
+        "Piada que exige explicação extra ou não serve ao objetivo."
+      ],
+      "counterexample": "Corte ou efeito remove a pausa cômica.",
+      "test": "Descrever a expectativa e o que a mudou.",
+      "sources": [
+        "https://www.instagram.com/creators/reel/Dcl3b2LR6NC/"
+      ],
+      "state": "research hypothesis",
+      "coverageClass": "V",
+      "coverage": "Amostras anteriores em 0; 3,5; 5,1; 9 s, de 10,73 s. Áudio não auditado.",
+      "evidenceStatus": "Knowledge only. Observations and declarations have the coverage stated; transfer and audience comprehension remain unverified."
+    },
+    {
+      "id": "style.long-interview",
+      "kind": "editing_language",
+      "title": "Entrevista longa em capítulos",
+      "formats": [
+        "footage"
+      ],
+      "intent": "Preservar pergunta, resposta e progressão temática em conversa longa.",
+      "requires": [
+        "conversa sincronizada",
+        "transcrição",
+        "contexto das respostas"
+      ],
+      "initial": "Briefing, materiais e estado inicial identificados.",
+      "final": "A informação e o convite necessários ficam compreensíveis.",
+      "workflow": [
+        "Conservar a pergunta e o argumento necessários.",
+        "Organizar mudanças temáticas em capítulos.",
+        "Extrair cortes mantendo a intenção e o contexto."
+      ],
+      "useWhen": [
+        "Entrevista, vídeo-podcast e conversa longa."
+      ],
+      "avoid": "Quando encurtar a resposta altera o argumento.",
+      "avoidWhen": [
+        "Quando encurtar a resposta altera o argumento."
+      ],
+      "counterexample": "Frases isoladas atribuem uma intenção diferente ao entrevistado.",
+      "test": "Conferir o corte contra pergunta e resposta completas.",
+      "sources": [
+        "https://www.colinandsamir.com/resources/an-honest-conversation-with-emma-chamberlain"
+      ],
+      "state": "research hypothesis",
+      "coverageClass": "D",
+      "coverage": "Fonte primária com capítulos. Planos, cortes e som ainda por observar.",
+      "evidenceStatus": "Knowledge only. Observations and declarations have the coverage stated; transfer and audience comprehension remain unverified."
+    },
+    {
+      "id": "style.generative-narrative",
+      "kind": "editing_language",
+      "title": "Narrativa com mídia generativa",
+      "formats": [
+        "motion",
+        "footage",
+        "hybrid"
+      ],
+      "intent": "Planejar continuidade e direção de arte antes de unir planos gerados.",
+      "requires": [
+        "briefing",
+        "referências de identidade",
+        "direção de arte",
+        "fontes de cada plano"
+      ],
+      "initial": "Briefing, materiais e estado inicial identificados.",
+      "final": "A informação e o convite necessários ficam compreensíveis.",
+      "workflow": [
+        "Definir o mundo visual e a ação de cada plano.",
+        "Preparar material consistente com o estado seguinte.",
+        "Compor, montar e revisar identidade, luz e contato."
+      ],
+      "useWhen": [
+        "Situações de difícil captação quando a mídia gerada serve ao briefing."
+      ],
+      "avoid": "Quando cada geração reinventa pessoa, produto ou cenário.",
+      "avoidWhen": [
+        "Quando cada geração reinventa pessoa, produto ou cenário."
+      ],
+      "counterexample": "As cenas têm beleza isolada e perdem continuidade da oferta.",
+      "test": "Reconhecer a mesma identidade e mudança ao longo da sequência.",
+      "sources": [
+        "https://www.instagram.com/paulo.ia/reel/DdZ6dY-M12g/"
+      ],
+      "state": "research hypothesis",
+      "coverageClass": "D",
+      "coverage": "Declaração primária e créditos relidos. Fidelidade entre planos exige análise temporal.",
+      "evidenceStatus": "Knowledge only. Observations and declarations have the coverage stated; transfer and audience comprehension remain unverified."
+    }
+  ]
+}

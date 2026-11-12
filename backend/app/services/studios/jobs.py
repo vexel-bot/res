@@ -1031,7 +1031,7 @@ def request_cancel(db: Session, job: StudioGenerationJob, reason: str, actor_id:
 
 
 def retry_job(db: Session, job: StudioGenerationJob, actor_id: str) -> StudioGenerationJob:
-    if job.job_type in {"external_call", "agent_plan"}:
+    if job.job_type in {"external_call", "agent_plan", "craft_ai"}:
         raise ValueError(
             "agent_plan_not_executable" if job.job_type == "agent_plan" else "financial_receipt_not_executable"
         )
@@ -1061,7 +1061,7 @@ def retry_job(db: Session, job: StudioGenerationJob, actor_id: str) -> StudioGen
 
 
 def execute_job_once(db: Session, job: StudioGenerationJob) -> str:
-    if job.job_type in {"external_call", "agent_plan"}:
+    if job.job_type in {"external_call", "agent_plan", "craft_ai"}:
         raise ValueError(
             "agent_plan_not_executable" if job.job_type == "agent_plan" else "financial_receipt_not_executable"
         )

@@ -427,7 +427,10 @@ def compile_plan(contract, paths, directory, media_info):
             filters.append(
                 f"[{current}][v{index}]overlay=x='(W-w)/2+({x})':y='(H-h)/2+({y})':"
                 f"enable='gte(t,{num(start)})*lt(t,{num(start + length)})':"
-                f"eof_action=pass:repeatlast=0[out{index}]"
+                # Keep the final decoded frame through the enabled interval.
+                # Source/frame-rate rounding can otherwise expose the canvas one
+                # frame before a clip ends. The enable expression still ends it.
+                f"eof_action=repeat:repeatlast=1[out{index}]"
             )
             current = f"out{index}"
     filters.append(f"[{current}]format=yuv420p[video]")

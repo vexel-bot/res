@@ -373,12 +373,15 @@ def _commit_project(
         references = {item.id: item for item in current.assets}
         for media in manifests:
             if media.asset_id not in references:
+                library = scoped_asset(db, record.workspace_id, media.asset_id, media.checksum_sha256)
+                provenance = (library.object_metadata or {}).get("editingResource")
                 references[media.asset_id] = AssetReferenceV1(
                     id=media.asset_id,
                     media_type=media.media_type,
                     checksum=media.checksum_sha256,
                     origin="workspace",
-                    rights_status="unknown",
+                    rights_status="verified" if provenance and provenance.get("usageEvidence") else "unknown",
+                    provenance={"editingResource": provenance} if provenance else {},
                 )
         updated = updated.model_copy(update={"assets": list(references.values())})
         if composition_override is not None:
@@ -681,16 +684,29 @@ def migrate(db, record, request, user, key: str) -> dict:
         )["inspection"]
 
 
+# The host owns opening/saving the stored project and importing bytes. Native
+# editing, including expressions and sandboxed scripts, is capability driven.
+HOST_OWNED_COMMANDS = {
+    "file.open", "file.openRecent", "file.save", "file.saveAs", "file.saveCopy",
+    "file.saveCopyAsXml", "file.import", "file.importMultiple", "file.importFile",
+}
+
+
+def editable_commands(capability):
+    return [
+        item for item in capability["commands"]
+        if item.get("available") is not False and item["id"] not in HOST_OWNED_COMMANDS
+    ]
+
+
 def validate_commands(commands, capability: dict) -> None:
     from jsonschema import Draft202012Validator, SchemaError, ValidationError
 
-    by_id = {value["id"]: value for value in capability["commands"]}
+    by_id = {value["id"]: value for value in editable_commands(capability)}
     for command in commands:
         spec = by_id.get(command.id)
         if not spec:
             raise ValueError("craft_command_not_supported:" + command.id)
-        if any(word in command.id.lower() for word in ("script", "plugin", "shell", "file.open", "file.save")):
-            raise ValueError("craft_command_requires_isolated_manual_session")
         try:
             Draft202012Validator.check_schema(spec["inputSchema"])
             Draft202012Validator(spec["inputSchema"]).validate(command.params)
@@ -767,6 +783,12 @@ def upgrade_build(db, record, request, user, key):
         )
 
 
+def require_command_success(response: dict) -> None:
+    for item in response.get("results", []):
+        if isinstance(item, dict) and (item.get("ok") is False or item.get("error")):
+            raise ValueError("craft_native_command_failed: " + str(item.get("error") or "engine rejected the command"))
+
+
 def commands(db, record, request, user, key: str, *, metadata=None, digest_override=None, dependencies=None) -> dict:
     digest = digest_override or operation_digest("commands", request.model_dump(mode="json"))
     existing = receipt(db, record, key, digest)
@@ -818,6 +840,7 @@ def commands(db, record, request, user, key: str, *, metadata=None, digest_overr
                 "commands": [command.model_dump(mode="json") for command in request.commands],
             },
         )
+        require_command_success(result)
         validation = call_engine(state.engine, "project.open", {**params, "nativePath": str(output)})
         return _commit_project(
             db,

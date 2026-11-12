@@ -25,6 +25,8 @@ class CraftAICommandRequestV1(StudioContract):
     page_id: str | None = Field(default=None, max_length=160)
     connection_id: str | None = Field(default=None, max_length=36)
     model: str | None = Field(default=None, min_length=1, max_length=240)
+    direction_effort: Literal["standard", "deliberate"] = "standard"
+    workflow: Literal["native", "motion_swarm"] = "native"
 
 
 class CraftMigrationRequestV1(StudioContract):
@@ -52,6 +54,39 @@ class CraftRenderRequestV1(StudioContract):
 class CraftPreviewRequestV1(StudioContract):
     frame: int = Field(default=0, ge=0)
     page_id: str | None = Field(default=None, max_length=160)
+
+
+class CraftClipReviewRequestV1(StudioContract):
+    expected_revision: int = Field(ge=1)
+    start_seconds: float = Field(default=0, ge=0, allow_inf_nan=False)
+    duration_seconds: float | None = Field(default=None, gt=0, allow_inf_nan=False)
+    fps: float | None = Field(default=None, gt=0, allow_inf_nan=False)
+    page: int = Field(default=0, ge=0)
+    page_size: int = Field(default=12, ge=1, le=12)
+    asset_id: str | None = Field(default=None, max_length=120)
+
+
+class CraftEditorialLessonV1(StudioContract):
+    id: str | None = Field(default=None, max_length=120)
+    situation: str = Field(min_length=1, max_length=2000)
+    correction: str = Field(min_length=1, max_length=4000)
+    use_when: list[str] = Field(min_length=1, max_length=20)
+    avoid_when: list[str] = Field(default_factory=list, max_length=20)
+    source_feedback: str | None = Field(default=None, max_length=4000)
+    source_url: str | None = Field(default=None, max_length=2000)
+
+
+class CraftEditorialLessonRequestV1(StudioContract):
+    expected_revision: int = Field(ge=1)
+    expected_version: int = Field(ge=0)
+    scope: Literal["workspace", "document"] = "document"
+    lesson: CraftEditorialLessonV1
+
+
+class CraftEditorialFeedbackRequestV1(StudioContract):
+    expected_revision: int = Field(ge=1)
+    job_id: str = Field(min_length=1, max_length=120)
+    comment: str = Field(min_length=1, max_length=4000)
 
 
 class CraftLinkRequestV1(StudioContract):

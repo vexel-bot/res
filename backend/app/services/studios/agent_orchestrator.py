@@ -415,8 +415,11 @@ def create_task(db, document, request, user, key):
         payload.pop("selectedLayerIds", None)  # Preserve replay hashes of pre-selection tasks.
     if payload.get("editorial") is None:
         payload.pop("editorial", None)  # Preserve hashes of earlier planner modes.
-    elif payload["editorial"].get("connectionId") is None:
-        payload["editorial"].pop("connectionId", None)
+    else:
+        for field in ("connectionId", "cutEffort", "creativeCut", "creativeReplayTaskId", "sceneDirection", "timelineProofAssetId",
+                      "openEdit", "purpose", "references"):
+            if payload["editorial"].get(field) is None:
+                payload["editorial"].pop(field, None)
     fingerprint = timeline_editor.digest(payload)
     existing = db.scalar(
         select(StudioGenerationJob).where(
@@ -442,12 +445,8 @@ def create_task(db, document, request, user, key):
     binding = roles[role]
     experimental = request.planner == "gemini_experimental"
     editorial = request.editorial is not None
-    claude = bool(editorial and request.editorial.connection_id)
-    claude_connection, claude_adapter = None, None
-    if claude:
-        from . import motion_claude
-
-        claude_connection, claude_adapter = motion_claude.binding(db, contract.workspace_id, request.editorial.connection_id)
+    if editorial and request.editorial.connection_id:
+        raise ValueError("craft_native_ai_required")
     if editorial and role != "audiovisual":
         raise ValueError("editorial_experiment_video_required")
     history_output = (
@@ -456,8 +455,6 @@ def create_task(db, document, request, user, key):
         else local_agents.history_undo(contract, request.instruction, document.versions, request.selected_layer_ids)
     )
     model, provider = None, None
-    if claude:
-        model = motion_claude.MODEL
     experiment_row, proof = None, None
     if experimental:
         from ...domain.studios.motion_gemini import MotionAgentOutput
@@ -504,7 +501,7 @@ def create_task(db, document, request, user, key):
         requested_by=user.id,
         document_id=document.id,
         job_type="agent_plan",
-        provider="google.motion-gemini" if experimental else "llm.anthropic" if claude else "llm.ollama" if provider else "clicko.local-tools",
+        provider="google.motion-gemini" if experimental else "llm.ollama" if provider else "clicko.local-tools",
         execution_capability="media_cpu",
         queue_name="studio.control",
         resource_class="cpu.media",
@@ -533,14 +530,6 @@ def create_task(db, document, request, user, key):
                 "materialDigest": motion_editorial.fingerprint(material_snapshot)} if editorial else {}),
         },
     )
-    if claude:
-        from .external_policy import billing_scope
-
-        job.request_payload = {**job.request_payload, "llmConnectionId": claude_connection.id,
-                               "llmConnectionRevision": claude_connection.revision,
-                               "billingScope": billing_scope(user, contract.workspace_id, db),
-                               "pricing": {name: claude_connection.config[name] for name in
-                                           ("inputUsdPerMillion", "outputUsdPerMillion")}}
     if experimental:
         motion_gemini.reserve(db, job, experiment_row, proof)
     db.add(job)
@@ -557,7 +546,7 @@ def create_task(db, document, request, user, key):
             "documentId": document.id,
             "documentRevision": contract.revision,
             "selectedLayerIds": request.selected_layer_ids,
-            "externalBudgetUsd": claude_connection.config["budgetUsd"] if claude else 0,
+            "externalBudgetUsd": 0,
         },
     )
     try:
@@ -656,13 +645,10 @@ def create_task(db, document, request, user, key):
             editorial_result = None
             if editorial:
                 output, editorial_result = motion_editorial.plan(db, document, contract, request, material_snapshot, baseline)
-                if claude:
-                    output = motion_claude.refine(db, document, job, claude_connection, claude_adapter, output,
-                                                 editorial_result, request.instruction)
             else:
                 output = history_output if history_output is not None else baseline()
             trace = {
-                "inference": "anthropic_messages" if claude else "none",
+                "inference": "none",
                 "planning": "deterministic_rules",
                 "delegations": [role] + (["image"] if role != "image" and image_agent.requests else []),
                 "delegateRequests": image_agent.requests,
@@ -675,7 +661,6 @@ def create_task(db, document, request, user, key):
         if job.status in {"cancel_requested", "cancelled"}:
             job.status = "cancelled"
             job.result_payload = {
-                **((job.result_payload or {}) if claude else {}),
                 "state": "cancelled",
                 "commands": [],
                 "rationale": "Planejamento cancelado; nenhuma edição aplicada.",
@@ -732,6 +717,13 @@ def create_task(db, document, request, user, key):
                     result = {"status": "inconclusive", "findings": [{
                         "code": code if re.fullmatch(r"[a-z0-9_]{1,100}", code) else "editorial_preview_failed"
                     }]}
+                if request.editorial.timeline_proof_asset_id and result["status"] == "passed_technical":
+                    proof = editorial_result.get("timelineProofReview", {})
+                    checks = (("visibleOperation", "timeline_operation_unconfirmed"),
+                              ("legibleAtPhoneSize", "timeline_phone_legibility_unconfirmed"))
+                    findings = [{"code":code} for field,code in checks if proof.get(field) is not True]
+                    if findings:
+                        result = {**result, "status":"blocked", "findings":[*result["findings"], *findings]}
                 editorial_result["preview"] = result
                 editorial_result["receipts"].append({"stage": "independent_technical_review", "status": result["status"]})
                 if result["status"] != "passed_technical":
@@ -751,7 +743,6 @@ def create_task(db, document, request, user, key):
         if job.status == "cancelled":
             output.commands = []
         job.result_payload = {
-            **((job.result_payload or {}) if claude else {}),
             **output.model_dump(mode="json", by_alias=True),
             **trace,
             "state": "cancelled" if job.status == "cancelled" else "planned" if output.commands else
@@ -791,10 +782,9 @@ def create_task(db, document, request, user, key):
         )
         job.error_message = "Não foi possível concluir o plano; nenhuma edição foi aplicada."
         job.result_payload = {
-            **((job.result_payload or {}) if claude else {}),
             "state": "cancelled" if cancelled else "failed",
-            "inference": "anthropic_messages" if claude else "gemini_experimental" if experimental else "none" if editorial else binding["mode"],
-            "usage": (job.result_payload or {}).get("usage") if claude else response.get("usage") if response else None,
+            "inference": "gemini_experimental" if experimental else "none" if editorial else binding["mode"],
+            "usage": response.get("usage") if response else None,
             "planningTimeMs": round((time.monotonic() - started) * 1000),
         }
     job.finished_at = datetime.now(UTC)
@@ -851,6 +841,16 @@ def apply_task(db, document, task, request, user):
         motion_editorial.verify_bound_materials(
             db, document, record_to_contract(document), task.request_payload["materialDigest"]
         )
+        if task.request_payload.get("openEditSnapshot"):
+            from . import production_editing
+
+            production_editing.verify_bound_context(db, document, record_to_contract(document), task.request_payload["openEditSnapshot"])
+            editorial = task.result_payload.get("editorial", {})
+            review = editorial.get("openEditing", {}).get("humanReview", {})
+            if (review.get("verdict") != "approved"
+                    or review.get("renderChecksum") != editorial.get("preview", {}).get("renderChecksum")
+                    or review.get("proposalDigest") != timeline_editor.digest(task.result_payload["commands"])):
+                raise ValueError("open_edit_human_review_required")
     return commit_commands(
         db,
         document,

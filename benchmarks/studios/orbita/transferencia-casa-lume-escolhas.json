@@ -1,0 +1,9 @@
+{
+  "briefing": "Anúncio vertical de seis segundos para uma biblioteca fictícia de bairro. As portas abrem para revelar os livros. Só então apresente CASA LUME, mantendo a abertura inteira, o nome legível e o convite 'Venha conhecer'. Preserve o movimento lateral das portas, a marca e a duração.",
+  "options": {
+    "A": {"description": "Manter CASA LUME visível antes da abertura e repetir a revelação com um recuo de escala.", "script": "var c=app.project.activeItem; var l=c.layer('CASA LUME'); l.inPoint=0.3; l.transform.scale.setValueAtTime(.625,[125,125,100]); l.transform.scale.setValueAtTime(2.125,[100,100,100]); 'Title before reveal';"},
+    "B": {"description": "Preservar a abertura lateral. Exibir o nome depois que os frisos saírem da região da leitura e reservar um fundo estável para ele.", "script": "var c=app.project.activeItem; var l=c.layer('CASA LUME'); l.inPoint=2.25; l.transform.position.setValue([270,158,0]); l.transform.opacity.setValueAtTime(2.25,0); l.transform.opacity.setValueAtTime(2.5,100); 'Reveal then title';"},
+    "C": {"description": "Exibir o nome durante a abertura e baixar a opacidade de toda a arte para disfarçar a interferência.", "script": "var c=app.project.activeItem; var l=c.layer('CASA LUME'); l.inPoint=.95; l.transform.opacity.setValue(55); 'Lower title opacity';"}
+  },
+  "evaluation": "Acompanhar abertura lateral intacta. Ausência de texto no intervalo de cruzamento 0.95–2.125 s. Nome integral em região sem frisos de 2.5 s em diante. O agente não recebe este gabarito."
+}

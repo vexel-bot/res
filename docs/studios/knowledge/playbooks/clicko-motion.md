@@ -2,6 +2,22 @@
 
 Este manual orienta a passagem do briefing para uma montagem editável e verificável na Clicko. Comece pelo efeito que a peça deve produzir no espectador. Escolha o formato e os movimentos a partir do que os materiais conseguem demonstrar. A prova inicial usa materiais existentes, render local e orçamento de API de US$ 0.
 
+## Consulta e revisão no Craft · atualização de 12/11/2026
+
+O editor nativo recebe o índice completo e consulta fichas por intenção com `search_repertoire` e `consult_repertoire`. A biblioteca inclui as 15 famílias do atlas e 36 fichas das observações anteriores, além das técnicas já existentes. Cada ficha conserva fonte, cobertura, contraexemplo e estado de evidência. Uma observação parcial ou hipótese não se torna técnica comprovada pela simples inclusão no contexto. Procedimentos do editor antigo precisam ser adaptados ao contrato nativo.
+
+O método de organização de materiais, guia de estilo, storyboard e revisão foi incorporado como repertório de trabalho. Sua sequência orienta o projeto; o diretor continua decidindo duração, linguagem, camadas e quando revisar e exportar. Nenhum editor retirado foi reativado.
+
+Na interface, **Preferências de edição** registra situação, correção, quando usar e quando evitar. Escolha este projeto ou os próximos projetos do espaço. O guia é versionado e recusa uma gravação baseada em versão desatualizada. O modelo pode propor uma lição; preferências aprovadas pelo usuário têm status separado. Comentários de rejeição permanecem no histórico mesmo quando um render passa nos testes técnicos.
+
+Para ritmo, movimento e som, use `review_clip`. Ele exporta a cópia atual, fornece um trecho reproduzível, quadros consecutivos paginados, níveis, silêncios e inícios de eventos sonoros. A taxa nativa é o padrão e pode ser reduzida para triagem. Consulte as páginas seguintes para cobrir o restante. Transcrição existente é evidência da fonte, não da mistura final. Níveis de áudio não comprovam escuta ou qualidade musical. A interface permite ouvir e assistir ao trecho.
+
+Os especialistas recebem descoberta de comandos, inspeção, scripts, prévias e erros corrigíveis em cópias isoladas. A entrega conserva comandos executados para que o diretor escolha o que reaplicar à timeline principal. `inspect_editor_capabilities` explicita o contrato desta versão e as diferenças documentadas dos Crafts. Confira o comportamento no render antes de generalizar uma compatibilidade.
+
+A busca de materiais aceita fontes do espaço e busca pública de imagens. A descoberta mantém origem e condições declaradas; aquisição continua passando pelo catálogo e importador verificado. O acesso ao Commons foi recusado por sua política de robôs nesta máquina. A alternativa NASA foi consultada com sucesso, mas fornece candidatos de pesquisa com direitos individuais pendentes. Essa integração ainda não constitui busca universal de vídeos, filmes, entrevistas, livros ou páginas.
+
+Veja os testes, resultados e limites no [registro da implementação](../../../plans/2026-11-12-clicko-correcoes-do-aprendizado-editorial.md).
+
 O [corpus visual de 24 Reels](../motion-research/README.md) traz tempos, observações, contraexemplos e hipóteses por estrato. Os exemplos de recorte, continuidade de objeto e progressão de ação orientam as fichas de seleção. Use o estrato de som como roteiro de perguntas até haver escuta e evidência temporal.
 
 ## 1. Ler o briefing e escolher a linguagem
@@ -80,7 +96,17 @@ Um problema localizado pode voltar uma vez à etapa responsável. Registre o ach
 
 No workspace da Clicko, cadastre uma conexão Anthropic Messages com modelo `claude-opus-5-5`, endpoint oficial `https://api.anthropic.com/v1`, chave no cabeçalho `x-api-key` sem prefixo e ID no cabeçalho `anthropic-workspace-id`. Configure a tarifa, o teto da conexão e os limites mensais do workspace antes de escolher **Claude Opus 5.5 · API direta** no fluxo de Motion. O roteiro de validação local lê `API_CLAUDE` e `ANTHROPIC_WORKSPACE_ID` do `.env` e usa o braço orquestrado do laboratório como controle.
 
-O modelo propõe ajustes nas camadas existentes com base no brief, nas fichas e em amostras dos materiais. A Clicko valida o contrato, revisa uma prévia e aplica somente a proposta aprovada para a revisão vigente do projeto. O registro inclui chamadas cobradas mesmo quando a revisão bloqueia a proposta. Prévia e exportação usam o renderizador local.
+Em **Claude Opus 5.5 · reeditar corte**, a Clicko renderiza o projeto atual e envia uma sequência de quadros com os tempos, incluindo amostras imediatamente antes e depois de cortes. O modelo pode propor ajustes de ritmo, sobreposição, cor e hierarquia nas camadas existentes. Clipes em faixas de vídeo silenciadas podem mudar o ponto de entrada da fonte mantendo sua duração. O plano conserva texto, materiais, áudio e duração do anúncio. As amostras permitem diagnóstico visual localizado. Som e movimento entre os quadros exigem verificação no player.
+
+Para comparar esforço médio e alto, duplique a mesma revisão e congele instrução, materiais, texto, áudio e duração. Registre por tentativa a cobrança medida, o tempo de planejamento e prévia, o tempo até exportar, a revisão técnica e o problema editorial que mudou. Considere o teto de US$ 1,50 por proposta e retenha a reserva se o provedor não confirmar o resultado. Julgue primeiro se o produto e a ação ficam claros e se o CTA continua legível. Use esforço alto quando a diferença visível justificar a espera e o custo. Duas tentativas sem ganho pedem diagnóstico da montagem antes de nova chamada.
+
+O modo anterior propõe ajustes nas camadas existentes com base no brief, nas fichas e em amostras dos materiais. A Clicko valida o contrato, revisa uma prévia e aplica somente a proposta aprovada para a revisão vigente do projeto. O registro inclui chamadas cobradas mesmo quando a revisão bloqueia a proposta. Prévia e exportação usam o renderizador local.
+
+### Prova de edição na interface
+
+Uma captura de edição pode entrar na cena central do anúncio com `timelineProofAssetId` no fluxo de direção por cenas. A captura precisa pertencer ao projeto e mostrar a operação. A Clicko reserva ao menos 4,5 s para essa cena, mantém seu enquadramento e verifica com o Opus a ação e a leitura no tamanho de celular. Uma avaliação inconclusiva ou negativa bloqueia a aplicação automática. O recibo técnico inclui amostras nas extremidades dos clipes para detectar flashes nas emendas.
+
+Quando a faixa é estreita, preserve uma visão geral e amplie a região da operação dentro da composição vertical. Conserve o vídeo capturado e as versões de apresentação. Confirme no projeto salvo que a operação registrada alterou a timeline.
 
 ### Mapa de capacidades
 
@@ -89,7 +115,6 @@ O modelo propõe ajustes nas camadas existentes com base no brief, nas fichas e 
 | Clicko local | Motor do experimento. A composição editável permite cortes, camadas, máscaras e keyframes conforme as capacidades registradas no projeto. |
 | After Effects | Referência de controles para velocidade e aceleração entre keyframes. [Documentação da Adobe](https://helpx.adobe.com/after-effects/desktop/animate-in-after-effects/speed-between-keyframes/speed.html) |
 | Premiere | Referência de automação de um editor por operações explícitas. [APIs UXP do Premiere](https://developer.adobe.com/premiere-pro/uxp/resources/fundamentals/apis/) |
-| HyperFrames | Candidato a ensaio separado de um segundo motor. Pode inspirar o ciclo de compor, conferir e renderizar sem que isso altere o contrato da Clicko. [Repositório oficial](https://github.com/heygen-com/hyperframes) |
 | Claude e Higgsfield | Candidatos separados para testar planejamento por comandos e criação de mídia. Conservar o mesmo brief e contabilizar tempo, custo e falhas em um ensaio próprio. Amostras de quadros dão contexto visual e deixam os intervalos não observados em aberto. [Claude Vision](https://platform.claude.com/docs/en/build-with-claude/vision) · [Higgsfield API](https://open.higgsfield.ai/quick-start) |
 
 ## 5. Julgar o render e medir compreensão

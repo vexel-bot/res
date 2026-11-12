@@ -1,7 +1,7 @@
 {
   "schema_version": "studio.repository-audit-registry.v1",
-  "expected_count": 42,
-  "actual_count": 42,
+  "expected_count": 38,
+  "actual_count": 38,
   "audits": [
     {
       "schema_version": "studio.repository-capability-audit.v1",
@@ -434,88 +434,6 @@
     },
     {
       "schema_version": "studio.repository-capability-audit.v1",
-      "repository_id": "hyperframes",
-      "path": "C:\\Users\\edugu\\Downloads\\clicko-oss-evaluation\\hyperframes",
-      "origin_url": "https://github.com/heygen-com/hyperframes.git",
-      "commit_sha": "2ca578f9455ca928ab168e7dd08a1a3a9d834788",
-      "license_spdx": "Apache-2.0",
-      "license_evidence": "LICENSE",
-      "purpose": "programmatic motion/video composition candidate",
-      "manifests": [
-        "package.json"
-      ],
-      "languages_sampled": [
-        "JavaScript",
-        "TypeScript"
-      ],
-      "readme_summary_unverified": "Write HTML. Render video. Built for agents. HyperFrames is an open source framework for turning HTML, CSS, media, and seekable animations into deterministic MP4 videos. Use it locally with the CLI, from AI coding agents with skills, or as the rendering core behind hosted authoring workflows. With an AI coding agent Install the HyperFrames skills, then describe the video you want: npx skills add heygen com/hyperframes The picker opens with nothing pre selected — the Core Skills group is all you need: the /hyperframes router installs each creation workflow on demand. Agents and non interactive r",
-      "capability_signals": {
-        "gpu_signal": true,
-        "container_recipe": false,
-        "test_directory": false,
-        "pt_br_signal": false
-      },
-      "inputs": [
-        "provider-specific; focused audit pending"
-      ],
-      "outputs": [
-        "provider-specific; must be projected to canonical contracts"
-      ],
-      "hardware": "GPU-related dependencies detected; exact VRAM/RAM envelope requires preflight",
-      "pt_br_support": "unknown",
-      "quality": "not inferred from README; benchmark required",
-      "determinism": "unknown",
-      "observability": "partial: git provenance and manifests inventoried",
-      "risks": [
-        "machine inventory does not validate model-weight or dataset licensing"
-      ],
-      "integration": "Evaluate behind an isolated worker/adapter; persist only canonical Clicko contracts.",
-      "decision": "adapt",
-      "benchmark": "license + dependency preflight, fixed fixture, resource envelope, output quality, repeatability, failure observability and PT-BR where relevant",
-      "audit_status": "machine_inventory_complete_human_review_pending",
-      "reviewed_at": "2026-09-01T19:55:11.577946+00:00"
-    },
-    {
-      "schema_version": "studio.repository-capability-audit.v1",
-      "repository_id": "hyperframes-launch-video",
-      "path": "C:\\Users\\edugu\\Downloads\\clicko-oss-evaluation\\hyperframes-launch-video",
-      "origin_url": "https://github.com/heygen-com/hyperframes-launch-video.git",
-      "commit_sha": "930f89186b8e155d632d9afe49054c02d4d7d85a",
-      "license_spdx": "NOASSERTION",
-      "license_evidence": "license file not found at repository root",
-      "purpose": "reference implementation for launch-video composition",
-      "manifests": [],
-      "languages_sampled": [],
-      "readme_summary_unverified": "HyperFrames Launch Video The composition source for HeyGen's HyperFrames launch video — a real production project you can clone, preview, and render yourself. Use it as a worked example of how to assemble a non trivial video in . Resolution: 1920×1080 @ 30fps Structure: 1 root composition ( index.html ) + 17 sub compositions wired together Techniques on display: CSS animations, GSAP, Lottie, shaders, Three.js, footage compositing, captions, SFX That's it. No package install step — HyperFrames runs via npx .",
-      "capability_signals": {
-        "gpu_signal": false,
-        "container_recipe": false,
-        "test_directory": false,
-        "pt_br_signal": false
-      },
-      "inputs": [
-        "provider-specific; focused audit pending"
-      ],
-      "outputs": [
-        "provider-specific; must be projected to canonical contracts"
-      ],
-      "hardware": "no GPU requirement established by static inventory; reproducible preflight still required",
-      "pt_br_support": "unknown",
-      "quality": "not inferred from README; benchmark required",
-      "determinism": "unknown",
-      "observability": "partial: git provenance and manifests inventoried",
-      "risks": [
-        "machine inventory does not validate model-weight or dataset licensing",
-        "root license not detected; fail closed"
-      ],
-      "integration": "Keep outside the production domain until license, model assets, hardware and quality pass focused review.",
-      "decision": "reference-only",
-      "benchmark": "license + dependency preflight, fixed fixture, resource envelope, output quality, repeatability, failure observability and PT-BR where relevant",
-      "audit_status": "machine_inventory_complete_human_review_pending",
-      "reviewed_at": "2026-09-01T19:55:11.769798+00:00"
-    },
-    {
-      "schema_version": "studio.repository-capability-audit.v1",
       "repository_id": "kimi-k2.5",
       "path": "C:\\Users\\edugu\\Downloads\\clicko-oss-evaluation\\Kimi-K2.5",
       "origin_url": "https://github.com/MoonshotAI/Kimi-K2.5.git",
@@ -811,50 +729,6 @@
       "benchmark": "license + dependency preflight, fixed fixture, resource envelope, output quality, repeatability, failure observability and PT-BR where relevant",
       "audit_status": "machine_inventory_complete_human_review_pending",
       "reviewed_at": "2026-09-01T19:55:14.597565+00:00"
-    },
-    {
-      "schema_version": "studio.repository-capability-audit.v1",
-      "repository_id": "motion-canvas",
-      "path": "C:\\Users\\edugu\\Downloads\\clicko-oss-evaluation\\motion-canvas",
-      "origin_url": "https://github.com/motion-canvas/motion-canvas.git",
-      "commit_sha": "7b91435c301d530351dcf5ebb91dd139c002e405",
-      "license_spdx": "MIT",
-      "license_evidence": "LICENSE",
-      "purpose": "programmatic TypeScript motion design candidate",
-      "manifests": [
-        "package.json"
-      ],
-      "languages_sampled": [
-        "TypeScript",
-        "TypeScript/React",
-        "JavaScript"
-      ],
-      "readme_summary_unverified": "Motion Canvas is two things: A TypeScript library that uses generators to program animations. An editor providing a real time preview of said animations. It's a specialized tool designed to create informative vector animations and synchronize them with voice overs. Aside from providing the preview, the editor allows you to edit certain aspects of the animation which could otherwise be tedious. Check out our [getting started][docs] guide to learn how to use Motion Canvas. Developing Motion Canvas locally",
-      "capability_signals": {
-        "gpu_signal": false,
-        "container_recipe": false,
-        "test_directory": false,
-        "pt_br_signal": false
-      },
-      "inputs": [
-        "provider-specific; focused audit pending"
-      ],
-      "outputs": [
-        "provider-specific; must be projected to canonical contracts"
-      ],
-      "hardware": "no GPU requirement established by static inventory; reproducible preflight still required",
-      "pt_br_support": "unknown",
-      "quality": "not inferred from README; benchmark required",
-      "determinism": "unknown",
-      "observability": "partial: git provenance and manifests inventoried",
-      "risks": [
-        "machine inventory does not validate model-weight or dataset licensing"
-      ],
-      "integration": "Evaluate behind an isolated worker/adapter; persist only canonical Clicko contracts.",
-      "decision": "adapt",
-      "benchmark": "license + dependency preflight, fixed fixture, resource envelope, output quality, repeatability, failure observability and PT-BR where relevant",
-      "audit_status": "machine_inventory_complete_human_review_pending",
-      "reviewed_at": "2026-09-01T19:55:15.498436+00:00"
     },
     {
       "schema_version": "studio.repository-capability-audit.v1",
@@ -1419,51 +1293,6 @@
       "benchmark": "license + dependency preflight, fixed fixture, resource envelope, output quality, repeatability, failure observability and PT-BR where relevant",
       "audit_status": "machine_inventory_complete_human_review_pending",
       "reviewed_at": "2026-09-01T19:55:23.323815+00:00"
-    },
-    {
-      "schema_version": "studio.repository-capability-audit.v1",
-      "repository_id": "remotion",
-      "path": "C:\\Users\\edugu\\Downloads\\clicko-oss-evaluation\\remotion",
-      "origin_url": "https://github.com/remotion-dev/remotion.git",
-      "commit_sha": "e624eb770082630dd596fa6783ee1be96db64bba",
-      "license_spdx": "OTHER",
-      "license_evidence": "LICENSE.md",
-      "purpose": "React-based deterministic video composition and rendering",
-      "manifests": [
-        "package.json"
-      ],
-      "languages_sampled": [
-        "TypeScript",
-        "TypeScript/React",
-        "JavaScript",
-        "Rust"
-      ],
-      "readme_summary_unverified": "Video tools for the agent era. Make videos agentically : Turn your idea into a video using your coding agent. Make videos interactively : Edit and animate using drag and drop. Make videos programmatically : Connect to data, and manage complexity with code. React Code is the source of truth. Switch your workflow at any point. Design systems : Create a library of animated assets for your organization. Batch rendering : Render millions of videos on your own infrastructure. Applications : Publish a simple tool or a complex video editor.",
-      "capability_signals": {
-        "gpu_signal": false,
-        "container_recipe": false,
-        "test_directory": false,
-        "pt_br_signal": false
-      },
-      "inputs": [
-        "provider-specific; focused audit pending"
-      ],
-      "outputs": [
-        "provider-specific; must be projected to canonical contracts"
-      ],
-      "hardware": "no GPU requirement established by static inventory; reproducible preflight still required",
-      "pt_br_support": "unknown",
-      "quality": "not inferred from README; benchmark required",
-      "determinism": "unknown",
-      "observability": "partial: git provenance and manifests inventoried",
-      "risks": [
-        "machine inventory does not validate model-weight or dataset licensing"
-      ],
-      "integration": "Use behind a provider-neutral adapter with pinned version, deterministic fixtures and artifact lineage.",
-      "decision": "adopt",
-      "benchmark": "license + dependency preflight, fixed fixture, resource envelope, output quality, repeatability, failure observability and PT-BR where relevant",
-      "audit_status": "machine_inventory_complete_human_review_pending",
-      "reviewed_at": "2026-09-01T19:55:25.592782+00:00"
     },
     {
       "schema_version": "studio.repository-capability-audit.v1",

@@ -82,6 +82,73 @@ def committed(job):
     return max(reservation, float(actual or 0), float(estimate or 0))
 
 
+def reconcile_craft_job(job):
+    """Release unused reserves only after every submitted native turn has known usage."""
+    state = job.result_payload or {}
+    if (job.job_type not in {"craft_ai", "agent_plan"} or job.provider != "llm.anthropic"
+            or job.status not in {"succeeded", "failed", "cancelled"}
+            or state.get("submissionOutcome") != "response_received" or state.get("pendingTurnBudget")
+            or state.get("uncertainCostUpperBoundUsd", 0) or not state.get("turns")
+            or state.get("reservationReconciliation")):
+        return None
+    measured = state.get("measuredCostUsd")
+    if not isinstance(measured, (int, float)) or not math.isfinite(measured) or measured < 0:
+        return None
+    costs = []
+    for turn in state["turns"]:
+        usage = turn.get("usage", {})
+        cost = turn.get("costUsd")
+        if (not isinstance(usage, dict) or type(usage.get("output_tokens")) is not int
+                or "input_tokens" not in usage or not isinstance(cost, (int, float))
+                or not math.isfinite(cost) or cost < 0
+                or any(type(value) is not int or value < 0 for name, value in usage.items()
+                       if name in {"input_tokens", "output_tokens", "cache_read_input_tokens", "cache_creation_input_tokens"})):
+            return None
+        costs.append(cost)
+    if abs(sum(costs) - measured) > 0.000001:
+        return None
+    old = committed(job)
+    fields = ("financialReservationUsd", "testReservationUsd", "llmReservationUsd")
+    original = {field: state[field] for field in fields if field in state}
+    reconciliation = {
+        "measuredUsd": measured, "releasedUsd": round(max(0, old - measured), 8),
+        "previousReservations": original, "turns": len(costs),
+        "basis": "received-provider-usage-and-pinned-tariff",
+        "at": datetime.now(UTC).isoformat(),
+    }
+    job.result_payload = {
+        **state, **{field: min(float(value or 0), measured) for field, value in original.items()},
+        "reservationReconciliation": reconciliation, "costSource": "provider-usage-tariff",
+    }
+    return reconciliation
+
+
+def reconcile_craft_reservations(db, workspace_id):
+    from .contextual_editing import lock_editing_budget
+
+    lock_editing_budget(db, workspace_id)
+    summary = {"reconciledJobs": 0, "releasedUsd": 0.0, "measuredUsd": 0.0,
+               "uncertainJobs": 0, "uncertainReservedUsd": 0.0}
+    for job in db.scalars(select(StudioGenerationJob).where(
+        StudioGenerationJob.workspace_id == workspace_id,
+        StudioGenerationJob.job_type.in_(["craft_ai", "agent_plan"]),
+        StudioGenerationJob.provider == "llm.anthropic",
+    )):
+        state = job.result_payload or {}
+        report = reconcile_craft_job(job)
+        if report:
+            summary["reconciledJobs"] += 1
+            summary["releasedUsd"] += report["releasedUsd"]
+            summary["measuredUsd"] += report["measuredUsd"]
+        elif state.get("submissionStarted") and (
+            state.get("submissionOutcome") == "unknown" or state.get("pendingTurnBudget")
+            or state.get("uncertainCostUpperBoundUsd", 0)
+        ):
+            summary["uncertainJobs"] += 1
+            summary["uncertainReservedUsd"] += committed(job)
+    return {key: round(value, 8) if isinstance(value, float) else value for key, value in summary.items()}
+
+
 def reserve_monthly(db, job, amount, settings):
     from .contextual_editing import lock_editing_budget
 

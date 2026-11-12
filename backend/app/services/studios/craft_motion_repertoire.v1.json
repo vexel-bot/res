@@ -1,0 +1,358 @@
+{
+  "version": 3,
+  "cards": [
+    {
+      "id": "orbita-reveal-protect-title",
+      "native": true,
+      "kind": "editing_exercise",
+      "formats": ["motion", "hybrid"],
+      "state": "reproduced locally",
+      "intent": "Evitar colisão de moldura com texto durante recuo, mudança de escala ou revelação, preservar legibilidade e verificar fade de áudio no render.",
+      "useWhen": "Quando a trajetória de uma borda, máscara, porta ou outro elemento passa pela área de leitura, e a revelação pode preceder a entrada da frase completa.",
+      "avoid": "Não transplante o zoom, duração, posição ou corte da ÓRBITA. Se a frase precisar permanecer em tela, proteja sua área por posição, contraste ou máscara e confira os quadros intermediários.",
+      "example": "ÓRBITA: em 2,625 s a moldura atravessava 'O futuro'. Reordenamos o texto e o recuo em camadas independentes. O movimento revela a sala e a frase completa reaparece legível acima da tela em 3,375 s.",
+      "operationRecipe": "Inspecione trajetórias de borda e texto em quadros consecutivos. Redesenhe o tempo ou o espaço entre elas. No EffectCraft, use setValueAtTime e setTemporalEaseAtKey para controlar posição e escala. Verifique a fonte efetiva antes de decidir o peso. Se a faixa precisa desaparecer, aplique chaves em ADBE Audio Levels e meça o MP4.",
+      "demonstration": {
+        "asset": "ÓRBITA, projeto de exercício de movimento, texto e áudio",
+        "nativeScript": "benchmarks/studios/orbita/recuo-reparo.jsx",
+        "renderer": "effectcraft",
+        "counterexample": "Imagem final legível com colisão no meio do recuo; fade descrito no plano e ausente no áudio exportado.",
+        "timeline": [
+          {"seconds": 2.625, "before": "Moldura cruza a primeira linha.", "after": "Texto fora da passagem durante o cruzamento."},
+          {"seconds": 3.375, "after": "Frase em duas linhas, estável e separada da tela."}
+        ],
+        "measurements": {"peakScaleBeforePercentagePointsPerSecond": 734.212, "peakScaleAfterPercentagePointsPerSecond": 226.548, "sourceFontFallback": "Inter Regular", "verifiedReplacement": "Inter Bold", "fadeRelativeToOriginalDbInFinalWindow": -27.03, "renderFrames": 426},
+        "transferContraindication": "Se o novo briefing pede uma abertura lateral de portas seguida de letreiro, preserve a abertura lateral e coordene a entrada do nome com a conclusão da revelação."
+      },
+      "test": "Amostre início, pico e repouso na mesma revisão. Leia a frase a 300 px. Verifique a fonte real, a posição da borda e o ganho antes e durante o fade. Avaliação estética e transferência são testes separados."
+    },
+    {
+      "id": "orbit-cause-and-reveal",
+      "native": true,
+      "state": "observed and adapted as hypothesis",
+      "intent": "Usar a mesma forma para revelar informação nova e ligar cenas.",
+      "example": "No Reel DdwS-6oRvL8 o corpo separa texto e fundo, depois a peça demonstra o assunto. Na ÓRBITA um arco pode virar a borda do plano revelado e depois sublinhar a chamada.",
+      "avoid": "Girar a mesma forma ao redor de um título durante todo o vídeo ou ocultar a parte que precisa ser lida.",
+      "test": "Descreva o que o objeto mudou e a informação revelada. Retire o texto temporariamente e confira se a ação permanece legível.",
+      "sources": [
+        "https://www.instagram.com/reel/DdwS-6oRvL8/",
+        "https://pubmed.ncbi.nlm.nih.gov/17968070/"
+      ]
+    },
+    {
+      "id": "scale-contrast",
+      "native": true,
+      "state": "adapted hypothesis",
+      "intent": "Contrastar um detalhe extremo, uma abertura espacial e uma assinatura calma.",
+      "example": "Use um plano dominante e um corte motivado por mudança de escala. Uma textura ou imagem registrada pode dar escala e materialidade à mesma ideia.",
+      "avoid": "Zoom em todos os planos, cartelas sempre centradas ou trocar textura sem consequência.",
+      "test": "Compare quadros antes e depois da transição a 300 px de largura. Identifique o mesmo ponto de atenção e leia a categoria do evento.",
+      "sources": [
+        "https://www.behance.net/gallery/23750367/FITC-Tokyo-titles-Typography"
+      ]
+    },
+    {
+      "id": "sound-markers-and-reading",
+      "native": true,
+      "state": "adapted hypothesis",
+      "intent": "Desenhar um acento sonoro para a ação principal e reservar tempo de leitura no fechamento.",
+      "example": "Use um ataque breve na revelação, menos textura sob informação essencial e um fim limpo.",
+      "avoid": "Confundir presença de faixa de áudio com sincronismo ou cobrir o CTA de efeitos.",
+      "test": "Ouça a exportação e compare o início do som com o quadro de revelação. Confira o CTA no celular e a faixa em nível normal.",
+      "sources": [
+        "https://www.youtube.com/watch?v=IL7xvpG3cCc"
+      ]
+    },
+    {
+      "native": true,
+      "state": "observed samples adapted as hypothesis",
+      "evidenceStatus": "candidate; pending local reproduction and audience test",
+      "id": "localized-light-reveal",
+      "intent": "Revelar volume por uma área de luz ligada à posição do objeto.",
+      "example": "No Reel II, em 28,18 s, a luz quente é localizada e deixa parte da forma no escuro. A ÓRBITA pode revelar um fotograma por luz e sombra.",
+      "avoid": "Clarear toda a tela para esconder uma passagem ou fazer a luz saltar sem relação com o objeto.",
+      "test": "Compare antes, auge e depois. A forma continua reconhecível, a área clara acompanha o objeto e o brilho não domina a leitura. Confira a 300 px.",
+      "operationRecipe": "Camadas separadas para objeto, luz e sombra, máscara ou gradiente de opacidade, posição e escala coordenadas.",
+      "referenceIds": [
+        "Y1",
+        "Y3"
+      ],
+      "sources": [
+        "https://www.youtube.com/watch?v=SJ4u5pPMtKs",
+        "https://www.youtube.com/watch?v=QJ9ZE6BEkNU"
+      ]
+    },
+    {
+      "native": true,
+      "state": "observed samples adapted as hypothesis",
+      "evidenceStatus": "candidate; pending local reproduction and audience test",
+      "id": "scale-and-density-staging",
+      "intent": "Variar a área ocupada e a densidade visual para preparar uma revelação.",
+      "example": "Manifesto tem formas ocupando o campo em 4,85 s e um pequeno símbolo entre planos em 28,82 s. A composição pode expandir o mundo e depois concentrar leitura na marca.",
+      "avoid": "Manter enquadramento idêntico em todas as cenas ou diminuir a informação até ficar ilegível.",
+      "test": "Amostre abertura, desenvolvimento e assinatura. Identifique o foco e a informação nova e leia a categoria a 300 px.",
+      "operationRecipe": "Animar grupos e planos com escala e posição distintas, introduzir texto após a mudança dominante e estabilizar a leitura.",
+      "referenceIds": [
+        "Y2"
+      ],
+      "sources": [
+        "https://www.youtube.com/watch?v=3nVgq7FlPzA"
+      ]
+    },
+    {
+      "native": true,
+      "state": "observed samples adapted as hypothesis",
+      "evidenceStatus": "candidate; pending local reproduction and audience test",
+      "id": "color-object-attention",
+      "intent": "Destacar um objeto que provoque a próxima mudança de cena.",
+      "example": "Em OFFF 24,82 s, a porta magenta domina o escritório cinza. Uma cor de acento pode marcar o objeto que inicia a passagem na ÓRBITA.",
+      "avoid": "Dar brilho equivalente a muitos objetos ou trocar toda a paleta sem ação correspondente.",
+      "test": "Mostre o quadro sem copy. Localize o objeto iniciador e confira a sua posição no quadro seguinte.",
+      "operationRecipe": "Objeto ou grupo com cor de acento, contraste relativo do fundo reduzido e saída ligada à entrada do plano seguinte.",
+      "referenceIds": [
+        "Y4"
+      ],
+      "sources": [
+        "https://www.youtube.com/watch?v=IL7xvpG3cCc"
+      ]
+    },
+    {
+      "native": true,
+      "state": "observed samples adapted as hypothesis",
+      "evidenceStatus": "candidate; pending local reproduction and audience test",
+      "id": "type-to-color-field",
+      "intent": "Usar a palavra como origem de uma mudança de área gráfica.",
+      "example": "As amostras do Short NeverStillFX têm frase amarela no branco e campo amarelo. A ÓRBITA pode expandir um detalhe da tipografia para virar plano.",
+      "avoid": "Salto breve de tela inteira para sugerir energia ou frase que sai antes da leitura.",
+      "test": "Leia a frase a 300 px antes da expansão. Confira cada quadro da passagem e localize o pico de brilho.",
+      "operationRecipe": "Texto e forma de apoio separados, área colorida animada continuamente e ponto de atenção levado à cena seguinte.",
+      "referenceIds": [
+        "S1"
+      ],
+      "sources": [
+        "https://www.youtube.com/shorts/bYWZ-kn839M"
+      ]
+    },
+    {
+      "native": true,
+      "state": "observed samples adapted as hypothesis",
+      "evidenceStatus": "candidate; pending local reproduction and audience test",
+      "id": "fragment-to-wordmark",
+      "intent": "Resolver o nome da marca por encaixe de partes reconhecíveis.",
+      "example": "As amostras do Galileo têm fragmentos que se tornam palavra. Na ÓRBITA, um elemento de cena pode assumir função numa letra.",
+      "avoid": "Dividir todas as letras sem orientar a recomposição ou deixar o nome instável no fechamento.",
+      "test": "Registre estado inicial, encaixe e nome resolvido. Leia o último estado a 300 px sem auxílio.",
+      "operationRecipe": "Camadas por peça com coordenadas de chegada compartilhadas. Estabilizar a palavra antes de categoria e convite.",
+      "referenceIds": [
+        "P1",
+        "P2"
+      ],
+      "sources": [
+        "https://www.pinterest.com/pin/505740233168774773/",
+        "https://www.pinterest.com/pin/6896205672930379/"
+      ]
+    },
+    {
+      "native": true,
+      "state": "candidate hypothesis; temporal coverage incomplete",
+      "evidenceStatus": "candidate; pending local reproduction and audience test",
+      "id": "depth-with-readable-type",
+      "intent": "Construir profundidade preservando a leitura da copy.",
+      "example": "Hipótese para investigar tipografia em planos e sombras de contato. S3 e P4 ainda precisam de amostra temporal.",
+      "avoid": "Perspectiva e desfoque em todo o texto durante a cena ou sombra que troca de direção entre planos.",
+      "test": "Compare amostra com e sem sombras. A leitura permanece, a sombra tem direção, contato e intensidade coerentes.",
+      "operationRecipe": "Planos ou grupos, escala, oclusão e sombra em camada separada quando não houver iluminação real disponível.",
+      "referenceIds": [
+        "S3",
+        "P4"
+      ],
+      "sources": [
+        "https://www.youtube.com/shorts/ZVmdaPgjTrY",
+        "https://www.pinterest.com/pin/293859944456486546/"
+      ]
+    },
+    {
+      "native": true,
+      "state": "candidate hypothesis; temporal coverage incomplete",
+      "evidenceStatus": "candidate; pending local reproduction and audience test",
+      "id": "continuous-curved-motif",
+      "intent": "Manter um gesto curvo reconhecível entre diferentes funções na peça.",
+      "example": "Hipótese a partir de espiral e ondulação encontradas na triagem. A curva pode passar de trajetória para recorte, moldura ou sublinhado.",
+      "avoid": "Somar onda, espiral e órbita sem consequência editorial ou repetir o mesmo giro em toda a peça.",
+      "test": "Localize o motivo dos dois lados da passagem e descreva sua mudança de função. Confira posição e sentido de deslocamento.",
+      "operationRecipe": "Caminho ou máscara animada com centro e coordenadas reaproveitados na próxima forma, usando curva de tempo legível.",
+      "referenceIds": [
+        "S2",
+        "S4",
+        "P3"
+      ],
+      "sources": [
+        "https://www.youtube.com/shorts/XFRPVIaX7eU",
+        "https://www.youtube.com/shorts/H3Ue-IHu6ng",
+        "https://www.pinterest.com/pin/210684088813163883/"
+      ]
+    }
+  ],
+  "researchVersion": "orbita.motion.references.2026-11-11.v2",
+  "referenceCases": [
+    {
+      "id": "Y1",
+      "platform": "youtube",
+      "title": "Ordinary Folk: Reel II",
+      "creator": "Ordinary Folk",
+      "url": "https://www.youtube.com/watch?v=SJ4u5pPMtKs",
+      "observedSeconds": [
+        8,
+        28.18
+      ],
+      "observation": "Quadros verificados. Em 8 s, linhas radiais e pontos cercam o nome. Em 28,18 s, luz quente localizada revela uma forma anelar sobre fundo azul escuro.",
+      "limits": "Som não avaliado. A transição completa entre os planos não foi acompanhada.",
+      "audio": "unassessed",
+      "status": "observed samples"
+    },
+    {
+      "id": "Y2",
+      "platform": "youtube",
+      "title": "School of Motion: Manifesto",
+      "creator": "Ordinary Folk",
+      "url": "https://www.youtube.com/watch?v=3nVgq7FlPzA",
+      "observedSeconds": [
+        4.85,
+        28.82
+      ],
+      "observation": "Quadros verificados. Em 4,85 s, geometria simétrica verde e roxa ocupa o campo. Em 28,82 s, um triângulo multicolorido pequeno aparece entre planos azuis com profundidade.",
+      "limits": "Som não avaliado. Duas amostras não medem a curva de ritmo.",
+      "audio": "unassessed",
+      "status": "observed samples"
+    },
+    {
+      "id": "Y3",
+      "platform": "youtube",
+      "title": "4 Tips for Magic in After Effects",
+      "creator": "Ben Marriott",
+      "url": "https://www.youtube.com/watch?v=QJ9ZE6BEkNU",
+      "observedSeconds": [],
+      "observation": "O autor descreve o tutorial como explicação de sombreado. O player abriu. A amostra solicitada em 139 e 145 s caiu inicialmente em anúncio e depois em seek sem quadro verificável.",
+      "limits": "Descrição primária, sem cobertura temporal. Não inferir os quatro passos ou a qualidade do som.",
+      "audio": "unassessed",
+      "status": "candidate; incomplete coverage"
+    },
+    {
+      "id": "Y4",
+      "platform": "youtube",
+      "title": "OFFF Barcelona 2016 Main Titles",
+      "creator": "Aardman / Gavin Strange e Merlin Crossingham",
+      "url": "https://www.youtube.com/watch?v=IL7xvpG3cCc",
+      "observedSeconds": [
+        24.82,
+        35.82
+      ],
+      "observation": "Quadros verificados. Em 24,82 s, porta magenta entre mesas e mãos num ambiente cinza. Em 35,82 s, um retrato fecha o enquadramento sob luminária linear.",
+      "limits": "Som não avaliado. O relato sobre música e rap vem dos diretores.",
+      "audio": "unassessed",
+      "status": "observed samples"
+    },
+    {
+      "id": "S1",
+      "platform": "youtube_shorts",
+      "title": "Kinetic Typography Animation | After Effects #Shorts",
+      "creator": "NeverStillFX",
+      "url": "https://www.youtube.com/shorts/bYWZ-kn839M",
+      "observedSeconds": [
+        2.1,
+        7
+      ],
+      "observation": "Quadros verificados na etapa anterior desta tarefa. Frase curta amarela num campo branco e depois campo ocupado por amarelo.",
+      "limits": "Som não avaliado. As amostras não definem easing ou duração da passagem.",
+      "audio": "unassessed",
+      "status": "observed samples"
+    },
+    {
+      "id": "S2",
+      "platform": "youtube_shorts",
+      "title": "Ben Marriott Master Motion Design Bonus Exercise #1",
+      "creator": "Exercício de terceiro, autoria individual pendente",
+      "url": "https://www.youtube.com/shorts/XFRPVIaX7eU",
+      "observedSeconds": [],
+      "observation": "Título confirmado no player. Tentativas de quadros em 1 e 4 s expiraram.",
+      "limits": "Candidato sem evidência temporal. Não atribuir técnica ao vídeo.",
+      "audio": "unassessed",
+      "status": "candidate; incomplete coverage"
+    },
+    {
+      "id": "S3",
+      "platform": "youtube_shorts",
+      "title": "3D Kinetic Text Animation – Motion Graphics in After Effects!",
+      "creator": "Autoria pendente",
+      "url": "https://www.youtube.com/shorts/ZVmdaPgjTrY",
+      "observedSeconds": [],
+      "observation": "Encontrado na triagem de Shorts de tipografia. Reprodução verificável indisponível.",
+      "limits": "Título apenas. Luz, sombra, perspectiva e movimento ficam sem avaliação.",
+      "audio": "unassessed",
+      "status": "candidate; incomplete coverage"
+    },
+    {
+      "id": "S4",
+      "platform": "youtube_shorts",
+      "title": "2D Liquid Water Ripple Effect Inspired by BenMarriott",
+      "creator": "Exercício de terceiro, autoria individual pendente",
+      "url": "https://www.youtube.com/shorts/H3Ue-IHu6ng",
+      "observedSeconds": [],
+      "observation": "Encontrado na triagem de ondas em 2D, com referência a Ben Marriott.",
+      "limits": "Título apenas. A operação fica como hipótese para pesquisa.",
+      "audio": "unassessed",
+      "status": "candidate; incomplete coverage"
+    },
+    {
+      "id": "P1",
+      "platform": "pinterest",
+      "title": "100 Best Motion Logos | Galileo",
+      "creator": "Compilação, autoria individual pendente",
+      "url": "https://www.pinterest.com/pin/505740233168774773/",
+      "observedSeconds": [
+        1.25,
+        5
+      ],
+      "observation": "Quadros verificados na etapa anterior. Fragmentos se reorganizam até formar o nome Galileo. Duração exposta de 6,87 s.",
+      "limits": "Som não avaliado. Estudo limitado ao trecho amostrado da compilação.",
+      "audio": "unassessed",
+      "status": "observed samples"
+    },
+    {
+      "id": "P2",
+      "platform": "pinterest",
+      "title": "Pivot — 10 eye-catching logo animations",
+      "creator": "Coleção ligada a uxdesign.cc, autor individual pendente",
+      "url": "https://www.pinterest.com/pin/6896205672930379/",
+      "observedSeconds": [],
+      "observation": "Título e descrição acessíveis. Palavra pivot em preto com gesto de pincel laranja.",
+      "limits": "Composição descrita. Player não expôs vídeo ou tempo, ritmo desconhecido.",
+      "audio": "unassessed",
+      "status": "candidate; incomplete coverage"
+    },
+    {
+      "id": "P3",
+      "platform": "pinterest",
+      "title": "Zignal — Logo Animation for Memorable Brand Identity",
+      "creator": "Autoria individual pendente",
+      "url": "https://www.pinterest.com/pin/210684088813163883/",
+      "observedSeconds": [],
+      "observation": "Título confirmado na página. O guia editorial do Pinterest aponta espiral branca e azul.",
+      "limits": "Motivo descrito. Movimento e som sem reprodução verificada.",
+      "audio": "unassessed",
+      "status": "candidate; incomplete coverage"
+    },
+    {
+      "id": "P4",
+      "platform": "pinterest",
+      "title": "Esfera em gradiente e linha fina",
+      "creator": "Autoria individual pendente",
+      "url": "https://www.pinterest.com/pin/293859944456486546/",
+      "observedSeconds": [],
+      "observation": "O guia editorial do Pinterest aponta esfera em gradiente com linha fina.",
+      "limits": "Candidato de composição. Sem reprodução direta ou intervalo observável.",
+      "audio": "unassessed",
+      "status": "candidate; incomplete coverage"
+    }
+  ]
+}

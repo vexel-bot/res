@@ -168,7 +168,7 @@ def planner(db, workspace_id, connection_id, model):
     return row, UniversalLLMPlanner(row.config, decrypt(row)), model, fingerprint
 
 
-def reserve_request(db, job, connection, prompt_chars, tokens):
+def reserve_request(db, job, connection, prompt_chars, tokens, *, max_amount=None, reserve_full=False, provider_only=False):
     """The configured lifetime ceiling includes requests with unknown outcomes."""
     lock_editing_budget(db, connection.workspace_id)
     db.refresh(connection)
@@ -182,12 +182,49 @@ def reserve_request(db, job, connection, prompt_chars, tokens):
         amount = 0.0
     else:
         in_rate, out_rate = config["inputUsdPerMillion"], config["outputUsdPerMillion"]
-        if in_rate <= 0 or out_rate <= 0 or config["budgetUsd"] <= 0:
+        if provider_only:
+            pricing = job.request_payload.get("pricing", {})
+            in_rate, out_rate = pricing.get("inputUsdPerMillion", 0), pricing.get("outputUsdPerMillion", 0)
+        if in_rate <= 0 or out_rate <= 0 or (not provider_only and config["budgetUsd"] <= 0):
             raise ValueError("llm_pricing_and_budget_required")
         amount = math.ceil(((prompt_chars / 3 * in_rate + tokens * out_rate) / 1000000) * 1000000) / 1000000
         # Reserve the full UTF-8 byte count as tokens: dense JSON and non-Latin
         # strings cannot bypass the configured ceiling via a chars/3 estimate.
         amount = max(amount, (prompt_chars * in_rate + tokens * out_rate) / 1000000)
+        if provider_only:
+            if not (
+                job.request_payload.get("billingPolicy") == "anthropic_console"
+                and job.request_payload.get("motionExperiment") == "orbita"
+                and job.job_type in {"craft_ai", "agent_plan"} and job.provider == "llm.anthropic"
+                and connection.provider == "anthropic"
+                and config["protocol"] == "anthropic_messages"
+                and config["baseUrl"].rstrip("/") == "https://api.anthropic.com/v1"
+                and config.get("requestPath") in {None, "", "/messages"}
+                and job.request_payload.get("model") in config["models"]
+                and connection.workspace_id == job.workspace_id
+            ):
+                raise ValueError("craft_provider_only_scope_invalid")
+            if not math.isfinite(amount) or amount <= 0:
+                raise ValueError("external_reservation_invalid")
+            from .external_policy import assert_operation
+
+            assert_operation(get_settings(), job.provider, "native_tool_session", model=job.request_payload["model"])
+            state = job.result_payload or {}
+            exposure = float(state.get("uncertainCostUpperBoundUsd", 0) or 0)
+            measured = float(state.get("measuredCostUsd", 0) or 0)
+            if not math.isfinite(exposure + measured) or min(exposure, measured) < 0:
+                raise ValueError("external_reservation_invalid")
+            cumulative = round(measured + exposure + amount, 8)
+            job.result_payload = {
+                **state, "llmReservationUsd": cumulative, "financialReservationUsd": cumulative,
+                "nextTurnReservationUsd": round(amount, 8), "costCurrency": "USD",
+                "costSource": "per-turn-reservation", "billingPolicy": "anthropic_console",
+            }
+            return
+        if max_amount is not None and amount > max_amount:
+            raise ValueError("llm_generation_budget_exceeded")
+        if reserve_full and max_amount is not None:
+            amount = max_amount
         used = 0.0
         for previous in db.scalars(
             select(StudioGenerationJob).where(

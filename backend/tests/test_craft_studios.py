@@ -29,13 +29,13 @@ def test_old_environment_cannot_reactivate_retired_renderers():
     )
     assert not any(
         (
-            settings.hyperframes_enabled,
             settings.motion_canvas_enabled,
             settings.remotion_enabled,
             settings.remotion_native_enabled,
             settings.studio_alight_motion_enabled,
         )
     )
+    assert not hasattr(settings, "hyperframes_enabled")
     assert settings.studio_editorial_motion_provider == "craft.effectcraft"
     assert VIDEO_RENDER_PROVIDERS == {}
 

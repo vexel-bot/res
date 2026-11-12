@@ -63,7 +63,7 @@ export function createStudiosProxy(options: { origin?: string; secret?: string; 
       return (req.method === 'PUT' && /^\/copy\/(?:project|document)\/[^/]+\/?$/.test(path))
         || (['PUT', 'POST'].includes(req.method) && /^\/materials\/(?:project|document)\/[^/]+\/(?:kits\/[^/]+|binding|preview|apply|cutout|import|effects)\/?$/.test(path))
         || (req.method === 'POST' && /^\/documents\/?$/.test(path))
-        || (req.method === 'POST' && /^\/documents\/[^/]+\/(?:agent-tasks(?:\/[^/]+\/apply)?|local-commands)\/?$/.test(path))
+        || (req.method === 'POST' && /^\/documents\/[^/]+\/(?:agent-tasks(?:\/[^/]+\/(?:apply|editorial-review))?|local-commands)\/?$/.test(path))
         || (req.method === 'POST' && /^\/video\/documents\/[^/]+\/(?:openrouter-media|ai-commands|render-jobs)\/?$/.test(path))
         || (req.method === 'PUT' && /^\/video\/documents\/[^/]+\/timeline\/?$/.test(path));
     } catch { return false; }
@@ -120,7 +120,15 @@ export function createStudiosProxy(options: { origin?: string; secret?: string; 
       const value = req.header(name); if (value) headers.set(name, value);
     }
     const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), 180_000);
+    const creativeCut = canonicalJsonRoute(req) && req.body?.editorial?.creativeCut === true;
+    const sceneDirection = creativeCut && req.body?.editorial?.sceneDirection === true;
+    const openEdit = req.body?.editorial?.openEdit === true;
+    const timelineProof = sceneDirection && typeof req.body?.editorial?.timelineProofAssetId === 'string';
+    const deepEdit = openEdit && req.body?.editorial?.cutEffort === 'xhigh';
+    const craftAI = req.method === 'POST' && /^\/documents\/[^/]+\/craft\/ai-commands\/?$/.test(req.path);
+    const swarmEdit = craftAI && req.body?.workflow === 'motion_swarm';
+    const craftClipReview = req.method === 'POST' && /^\/documents\/[^/]+\/craft\/clip-review\/?$/.test(req.path);
+    const timer = setTimeout(() => controller.abort(), swarmEdit ? 3_730_000 : craftAI ? 1_090_000 : craftClipReview || timelineProof || deepEdit ? 730_000 : sceneDirection || openEdit ? 490_000 : creativeCut ? 320_000 : 180_000);
     const abort = () => { if (!res.writableEnded) controller.abort(); };
     req.on('aborted', abort); res.on('close', abort);
     try {

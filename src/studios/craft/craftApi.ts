@@ -105,12 +105,29 @@ export interface CraftReceipt {
   receiptId: string;
   compositionDocumentId?: string;
   aiTrace?: Record<string, unknown>;
+  exportJobId?: string;
+  exportStatus?: string;
+}
+export type CraftDirectionEffort = "standard" | "deliberate";
+export interface EditorialLesson {
+  id?: string; situation: string; correction: string; useWhen: string[]; avoidWhen: string[];
+  sourceFeedback?: string; sourceUrl?: string; status?: "approved" | "candidate";
+}
+export interface EditorialGuide { scope: "workspace" | "document"; scopeId: string; version: number; lessons: EditorialLesson[] }
+export interface CraftReview {
+  assetId: string; mediaType: string; documentRevision: number; draftBatch?: number;
+  report: {
+    interval: { startSeconds: number; endSeconds: number; durationSeconds: number };
+    visual: { sampledSeconds: number[]; nextPage: number | null; sourceFps: number; sampleFps: number };
+    audio: { status: string; rmsDbfs?: number; peakDbfs?: number; onsetCount?: number };
+    limitations: string[];
+  };
 }
 export interface CraftAIRecovery {
   schemaVersion: "clicko.craft-ai-recovery.v1";
   userId: string; workspaceId: string; documentId: string; engine: CraftEngine;
   expectedRevision: number; instruction: string; idempotencyKey: string;
-  pageId?: string; connectionId?: string; model?: string;
+  pageId?: string; connectionId?: string; model?: string; directionEffort?: CraftDirectionEffort; workflow?: 'native' | 'motion_swarm';
 }
 
 const base = "/api/v1/studios/v1";
@@ -137,6 +154,15 @@ async function binary(url: string, init: RequestInit = {}): Promise<Response> {
 }
 
 export const craftApi = {
+  editorialGuides: (id: string, signal?: AbortSignal) => apiFetch<{ guides: EditorialGuide[] }>(`${path(id)}/craft/editorial-guide`, { signal }),
+  saveEditorialLesson: (id: string, revision: number, guide: EditorialGuide, lesson: EditorialLesson) =>
+    apiFetch<EditorialGuide>(`${path(id)}/craft/editorial-guide`, json({ expectedRevision: revision, expectedVersion: guide.version, scope: guide.scope, lesson })),
+  reviews: (id: string, signal?: AbortSignal) => apiFetch<{ reviews: CraftReview[] }>(`${path(id)}/craft/reviews`, { signal }),
+  reviewClip: (id: string, revision: number, startSeconds: number, durationSeconds: number) =>
+    apiFetch<CraftReview>(`${path(id)}/craft/clip-review`, json({ expectedRevision: revision, startSeconds, durationSeconds })),
+  async reviewMedia(id: string, assetId: string, signal?: AbortSignal) {
+    return (await binary(`${path(id)}/craft/reviews/${encodeURIComponent(assetId)}`, { signal })).blob();
+  },
   llmCatalog: (signal?: AbortSignal) => apiFetch<LLMCatalog>(`${base}/craft/llm-catalog`, { signal }),
   llmConnections: (workspaceId: string, signal?: AbortSignal) => apiFetch<{ connections: LLMConnection[]; canManage: boolean }>(`${base}/craft/llm-connections?workspace_id=${encodeURIComponent(workspaceId)}`, { signal }),
   saveLLMConnection: (workspaceId: string, body: LLMConnectionInput, id?: string) => apiFetch<LLMConnection>(`${base}/craft/llm-connections${id ? `/${encodeURIComponent(id)}` : ""}?workspace_id=${encodeURIComponent(workspaceId)}`, { method: id ? "PUT" : "POST", body: JSON.stringify(body) }),
@@ -147,8 +173,11 @@ export const craftApi = {
   migrate: (id: string, engine: CraftEngine, revision: number, key: string) => apiFetch<CraftInspection>(`${path(id)}/craft/migrate`, json({ engine, expectedRevision: revision }, key)),
   upgradeBuild: (id: string, revision: number, targetBuildId: string, key: string) => apiFetch<CraftReceipt>(`${path(id)}/craft/upgrade-build`, json({ expectedRevision: revision, targetBuildId }, key)),
   commands: (id: string, revision: number, commands: CraftCommand[], key: string, label?: string, pageId?: string) => apiFetch<CraftReceipt>(`${path(id)}/craft/commands`, json({ expectedRevision: revision, commands, label, pageId }, key)),
-  ai: (id: string, revision: number, instruction: string, key: string, pageId?: string, connectionId?: string, model?: string) => apiFetch<CraftReceipt>(`${path(id)}/craft/ai-commands`, json({ expectedRevision: revision, instruction, pageId, connectionId, model }, key)),
-  aiRequest: (id: string, key: string) => apiFetch<{ status: string; receipt?: CraftReceipt; responseReady?: boolean; errorCode?: string }>(`${path(id)}/craft/ai-requests/${encodeURIComponent(key)}`),
+  ai: (id: string, revision: number, instruction: string, key: string, pageId?: string, connectionId?: string, model?: string, directionEffort?: CraftDirectionEffort, workflow?: 'native' | 'motion_swarm') => apiFetch<CraftReceipt>(`${path(id)}/craft/ai-commands`, json({ expectedRevision: revision, instruction, pageId, connectionId, model, directionEffort, workflow }, key)),
+  aiRequest: (id: string, key: string) => apiFetch<{ status: string; receipt?: CraftReceipt; responseReady?: boolean; errorCode?: string; draftBatches?: number; canResume?: boolean; exportPending?: boolean }>(`${path(id)}/craft/ai-requests/${encodeURIComponent(key)}`),
+  async aiDraft(id: string, key: string) {
+    return (await binary(`${path(id)}/craft/ai-requests/${encodeURIComponent(key)}/draft`)).blob();
+  },
   render: (id: string, revision: number, format: string, key: string, frame = 0, pageId?: string) => apiFetch<StudioGenerationJobRecord>(`${path(id)}/craft/render-jobs`, json({ expectedRevision: revision, format, frame, pageId }, key)),
   linkComposition: (id: string, revision: number, compositionDocumentId: string, key: string) => apiFetch<CraftReceipt>(`${path(id)}/craft/link-composition`, json({ expectedRevision: revision, compositionDocumentId }, key)),
   recoverEffects: (id: string, revision: number, key: string) => apiFetch<CraftReceipt & { compositionDocumentId: string }>(`${path(id)}/craft/recover-effects`, json({ expectedRevision: revision }, key)),
@@ -169,6 +198,12 @@ export const craftApi = {
     const response = await binary(`${path(id)}/native-project?${query}`, { method: "PUT", body: file, headers: { "Content-Type": "application/octet-stream", "Idempotency-Key": key } });
     return response.json() as Promise<CraftReceipt>;
   },
+  registerSource: (workspaceId: string, source: {
+    title: string; kind: "image" | "video" | "logo" | "music" | "sound_effect";
+    url: string; sourceUrl: string; usageEvidence: string; autoAcquire: boolean;
+  }) => apiFetch<{ id: string; title: string; autoAcquire: boolean }>(
+    `${base}/editing/resource-sources?workspace_id=${encodeURIComponent(workspaceId)}`, json(source),
+  ),
   async uploadAsset(workspaceId: string, file: File) {
     const query = new URLSearchParams({ workspace_id: workspaceId, title: file.name, filename: file.name, media_type: file.type || "application/octet-stream" });
     const response = await binary(`${base}/craft/assets?${query}`, { method: "POST", body: file, headers: { "Content-Type": file.type || "application/octet-stream" } });

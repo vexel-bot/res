@@ -400,22 +400,6 @@ export const productApi = {
     );
   },
 
-  async studioMotionProjection(
-    graphId: string,
-    target: "hyperframes" | "motion_canvas",
-    reducedMotion = false,
-  ) {
-    return requireBackendData(
-      await backendClient.GET("/api/v1/studios/v1/motion-graphs/{graph_id}/projection/{target}", {
-        params: {
-          path: { graph_id: graphId, target },
-          query: { reduced_motion: reducedMotion },
-        },
-      }),
-      "Projeção provider-neutral do movimento",
-    );
-  },
-
   async createStudioProvider(input: StudioProviderInput) {
     return apiFetch<StudioProviderRecord>("/api/v1/studios/v1/providers", {
       method: "POST",

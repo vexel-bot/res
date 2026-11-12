@@ -72,6 +72,7 @@ export type AgentTask = {
     role: string;
     provider: string;
     model?: string;
+    externalCostUsd?: number | null;
     errorCode?: string;
     requestedBy?: string;
     instruction?: string;
@@ -84,6 +85,8 @@ export type AgentTask = {
         state: string;
         inference: string;
         planning?: string;
+        planningTimeMs?: number;
+        submissionOutcome?: string;
         editorial?: {
             variant: 'baseline' | 'knowledge' | 'orchestrated';
             format: string;
@@ -91,8 +94,22 @@ export type AgentTask = {
             cardIds?: string[];
             gaps?: unknown[];
             receipts?: unknown[];
-            preview?: { downloadUrl?: string; status?: string };
+            preview?: { downloadUrl?: string; status?: string; renderChecksum?: string };
             humanVerdict?: string;
+            openEditing?: {
+                version: string;
+                purpose: 'advertisement'|'reference_study';
+                creativeStatus: string;
+                copyRevision?: number;
+                modelReview?: { findings?: {timeMs:number;dimension:string;severity:string;evidence:string}[]; limitations?:string };
+            };
+            claude?: {
+                cutEffort?: 'medium' | 'high' | 'xhigh';
+                cutFrames?: number[];
+                creativeCut?: boolean;
+                replayedTaskId?: string;
+                originalMeasuredCostUsd?: number;
+            };
         };
     };
 };
