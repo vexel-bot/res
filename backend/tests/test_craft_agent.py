@@ -8,7 +8,7 @@ from app.providers.studios.universal_llm import read_craft_stream
 from app.providers.studios.craft import filmcraft_command_schema
 from app.domain.studios.craft import CraftCommandV1
 from app.services.studios.craft import editable_commands, validate_commands
-from app.services.studios.craft_agent import can_resume, preview_frames, token_allowance, trim_previews, turn_cost
+from app.services.studios.craft_agent import can_resume, preview_frames, project_inspection, token_allowance, trim_previews, turn_cost
 from app.services.studios.craft_compatibility import scripting_reference
 
 
@@ -26,6 +26,20 @@ def test_scripting_reference_pages_large_catalog_without_losing_filtered_command
     assert seen == commands
     result = scripting_reference("effectcraft", capability, query="script.run")
     assert result["nativeCommands"] == [{"id": "script.run"}]
+
+
+def test_project_inspection_can_focus_properties_without_duplicating_other_layers():
+    project = {"engine": "effectcraft", "raw": {"private": "serialization"},
+               "layers": [{"id": 1, "name": "Title", "properties": {"font": "Inter"}},
+                          {"id": 2, "name": "Background", "properties": {"many": "values"}}],
+               "timeline": [{"id": 1, "name": "Title", "inPoint": 2.5}, {"id": 2, "name": "Background"}]}
+    focused = project_inspection(project, True, layer_ids=["1"], limit=1)
+    assert focused["layers"] == project["layers"][:1]
+    assert focused["timeline"] == project["timeline"][:1]
+    assert focused["coverage"]["layers"]["matching"] == 1
+    assert "raw" not in focused
+    assert project_inspection(project, True)["layers"] == project["layers"]
+    assert project_inspection(project, query="background")["layers"] == [{"id": 2, "name": "Background"}]
 
 
 def test_stream_rebuilds_tool_call_and_usage():

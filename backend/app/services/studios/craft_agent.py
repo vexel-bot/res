@@ -1,5 +1,6 @@
 """Edit a private Craft draft, persist each valid batch and export the finished revision."""
 import base64
+import hashlib
 import json
 import math
 import time
@@ -13,7 +14,7 @@ from sqlalchemy import select, update
 from sqlalchemy.exc import IntegrityError
 
 from ...domain.studios.craft import CraftCommandRequestV1, CraftRenderRequestV1
-from ...models import LibraryAsset, StudioGenerationJob
+from ...models import LibraryAsset, StudioGenerationJob, StudioMediaIngest
 from ...providers.studios.craft import EXTENSIONS, call_engine
 from . import craft_direction, craft_drafts, craft_source_media, craft_swarm, craft_history
 from .ad_copy_workflow import planning_context as copy_context
@@ -46,6 +47,7 @@ SYSTEM = (
     "Compare a frame before and after the crucial transition and inspect the final mobile reading size. "
     "Use the rendered evidence to decide what to revise, then preview the affected section again. "
     "For temporal action and sound timing, review_clip provides consecutive frame pages, a playable interval and measured audio events. "
+    "Use review_clip sampling overview to see the whole cut, then inspect native-rate windows where timing remains uncertain. "
     "Choose temporal windows around crossings between text and moving edges, large scale changes, and requested audio fades. "
     "Compare the rendered change against your direction before delivery. Resolve any unusual font face or weight with inspect_motion_fonts when available. "
     "Use the relevant style guide and examples for this project. Propose actionable guide updates after editorial feedback. "
@@ -72,8 +74,12 @@ TOOLS = [
     tool("view_image_asset", "Inspect a registered still or reference sheet. Use its asset ID; this does not add it to the edit.", {
         "assetId": {"type": "string"},
     }, ("assetId",)),
-    tool("inspect_project", "Inspect the draft. The default returns dimensions, element IDs, track names and timing. Request full detail to inspect native properties, transforms or effects.", {
+    tool("inspect_project", "Inspect the draft. Use summary for overview. Use full with query or layerIds for specific native properties, transforms or effects. Optional offset and limit page matching elements.", {
         "detail": {"type": "string", "enum": ["summary", "full"]},
+        "query": {"type": "string", "maxLength": 240},
+        "layerIds": {"type": "array", "items": {"type": ["string", "integer"]}},
+        "offset": {"type": "integer", "minimum": 0},
+        "limit": {"type": "integer", "minimum": 1, "maximum": 100},
     }),
     tool("inspect_editor_capabilities", "Read this Craft build's native command contracts and documented scripting differences. Query by operation and follow nextOffset for more matches.", {
         "query": {"type": "string"},
@@ -100,6 +106,7 @@ SOURCE_MEDIA = [
         "durationSeconds": {"type": "number", "exclusiveMinimum": 0},
         "fps": {"type": "number", "exclusiveMinimum": 0}, "page": {"type": "integer", "minimum": 0},
         "pageSize": {"type": "integer", "minimum": 1, "maximum": 12},
+        "sampling": {"type": "string", "enum": ["native", "overview"]},
     }),
     tool("inspect_source_media", "Inspect a registered video or audio asset. Without seconds, returns duration and stream metadata. With up to six source times in seconds, also returns video stills. Source time is independent of the edit timeline.", {
         "assetId": {"type": "string"},
@@ -262,7 +269,8 @@ class Draft:
         if name == "describe_commands":
             return {item: self.catalog.get(item) for item in args["ids"]}
         if name == "inspect_project":
-            return project_inspection(self.project, args.get("detail") == "full")
+            return project_inspection(self.project, args.get("detail") == "full", query=args.get("query", ""),
+                                      layer_ids=args.get("layerIds"), offset=args.get("offset", 0), limit=args.get("limit"))
         if name == "edit_project":
             batch = CraftCommandRequestV1(
                 expectedRevision=self.request.expected_revision, commands=args["commands"],
@@ -354,16 +362,34 @@ def image_block(path):
     }]
 
 
-def project_inspection(project, full=False):
+def project_inspection(project, full=False, *, query="", layer_ids=None, offset=0, limit=None):
+    if (not isinstance(query, str) or len(query) > 240 or type(offset) is not int or offset < 0
+            or (limit is not None and (type(limit) is not int or not 1 <= limit <= 100))
+            or (layer_ids is not None and (not isinstance(layer_ids, list)
+                or any(type(identifier) not in {int, str} for identifier in layer_ids)))):
+        raise ValueError("craft_project_inspection_query_invalid")
+    selected = {str(identifier) for identifier in layer_ids} if layer_ids is not None else None
+    words = query.casefold().split()
+    focused = bool(words or selected is not None or offset or limit is not None)
     if full:
-        return {key: value for key, value in project.items() if key != "raw"}
-    result = {key: project[key] for key in ("engine", "name", "width", "height", "fps", "durationMs", "warnings")
-              if key in project}
+        result = {key: value for key, value in project.items() if key != "raw"}
+    else:
+        result = {key: project[key] for key in ("engine", "name", "width", "height", "fps", "durationMs", "warnings")
+                  if key in project}
+    coverage = {}
     for collection in ("layers", "timeline"):
-        result[collection] = [
+        items = project.get(collection, [])
+        matching = [item for item in items if (selected is None or str(item.get("id")) in selected)
+                    and all(word in str(item.get("name", "")).casefold() for word in words)]
+        page = matching[offset:] if limit is None else matching[offset:offset + limit]
+        result[collection] = page if full else [
             {key: item[key] for key in ("id", "name", "kind", "type", "trackId", "startMs", "durationMs", "inPoint", "outPoint")
-             if key in item} for item in project.get(collection, [])
-        ]
+             if key in item} for item in page]
+        if focused:
+            coverage[collection] = {"total": len(items), "matching": len(matching), "offset": offset,
+                                    "nextOffset": offset + len(page) if offset + len(page) < len(matching) else None}
+    if focused:
+        result["coverage"] = coverage
     return result
 
 
@@ -551,11 +577,40 @@ def registered_assets(db, workspace_id, manifests):
     ids = [item.asset_id for item in manifests]
     if not ids:
         return []
-    titles = dict(db.execute(select(LibraryAsset.id, LibraryAsset.title).where(
+    assets = {asset.id: asset for asset in db.scalars(select(LibraryAsset).where(
         LibraryAsset.workspace_id == workspace_id, LibraryAsset.id.in_(ids),
-    )).all())
-    return [{"assetId": item.asset_id, "mediaType": item.media_type, "title": titles.get(item.asset_id)}
-            for item in manifests]
+    ))}
+    ingests = {}
+    for ingest in db.scalars(select(StudioMediaIngest).where(
+        StudioMediaIngest.workspace_id == workspace_id, StudioMediaIngest.asset_id.in_(ids),
+        StudioMediaIngest.status == "ready",
+    ).order_by(StudioMediaIngest.created_at.desc())):
+        asset = assets.get(ingest.asset_id)
+        info = ingest.media_info or {}
+        if (asset and info.get("checksumSha256") == asset.checksum_sha256
+                and ingest.asset_id not in ingests):
+            ingests[ingest.asset_id] = info
+    result = []
+    for item in manifests:
+        asset = assets.get(item.asset_id)
+        info = {"assetId": item.asset_id, "mediaType": item.media_type,
+                "title": asset.title if asset else None}
+        if asset:
+            info["checksumSha256"] = asset.checksum_sha256
+            resource = (asset.object_metadata or {}).get("editingResource", {})
+            info.update({field: resource[field] for field in ("description", "editorialFunction", "motionDescription")
+                         if resource.get(field)})
+            technical = resource.get("technical") or {}
+            probe = technical.get("probe") or ingests.get(item.asset_id, {})
+            duration = technical.get("durationMicroseconds", probe.get("durationMicroseconds"))
+            if isinstance(duration, (int, float)) and duration >= 0:
+                info["durationSeconds"] = duration / 1_000_000
+            video = next(iter(probe.get("videoStreams") or []), {})
+            info.update({field: video[field] for field in ("width", "height", "frameRate") if field in video})
+            if "audioStreams" in probe:
+                info["hasAudio"] = bool(probe["audioStreams"])
+        result.append(info)
+    return result
 
 
 def direct(db, record, contract, request, user, key, digest, connection, provider, model, fingerprint, capability, *, budget=BUDGET_USD, motion_experiment=False):
@@ -731,7 +786,7 @@ def direct(db, record, contract, request, user, key, digest, connection, provide
                 )
                 if motion_experiment or recovering_budget:
                     context["draftSummary"] = project_inspection(draft.project)
-                    context["recentActions"] = tools_used[-8:]
+                    context["recentActions"] = craft_history.recent_actions(tools_used)
                     context["reviewState"] = craft_history.reviewed_draft(tools_used, draft.batches)
                     completed_previews = [
                         entry for entry in craft_history.draft_reviews(tools_used, draft.batches)
@@ -787,14 +842,14 @@ def direct(db, record, contract, request, user, key, digest, connection, provide
                 if not motion_experiment:
                     trim_previews(messages)
                 input_tokens = None
-                if motion_experiment and craft_history.should_compact(messages):
+                if (motion_experiment or prompt_cache) and craft_history.should_compact(messages):
                     messages = craft_history.compact_messages(
                         context, project_inspection(draft.project), draft.batches, job.result_payload or {},
                         messages=messages, prompt_cache=prompt_cache,
                     )
                     job.result_payload = {**job.result_payload, "contextCompactions": job.result_payload.get("contextCompactions", 0) + 1}
                     db.commit()
-                if (motion_experiment and config["billingMode"] != "local_free"
+                if ((motion_experiment or prompt_cache) and config["billingMode"] != "local_free"
                         and craft_history.should_count_tokens(messages)):
                     input_tokens = provider.count_craft_tokens(
                         model, SYSTEM, messages, tools, seconds_left, prompt_cache=prompt_cache,
@@ -833,10 +888,12 @@ def direct(db, record, contract, request, user, key, digest, connection, provide
                         if str(exc) != "llm_generation_budget_exceeded":
                             raise
                         tokens = 0
-                if config["billingMode"] != "local_free" and tokens < 2048 and len(messages) > 1 and draft.batches and not compacted:
+                if config["billingMode"] != "local_free" and tokens < 2048 and len(messages) > 1 and not compacted:
                     compacted = True
-                    context["continuation"] = "Continue from the saved draft. Inspect current state and use short tool calls."
-                    messages = start_messages()
+                    messages = craft_history.compact_messages(
+                        context, project_inspection(draft.project), draft.batches, job.result_payload or {},
+                        messages=messages, prompt_cache=prompt_cache,
+                    )
                     continue
                 if not tokens:
                     raise ValueError("llm_generation_budget_exceeded")
@@ -903,7 +960,10 @@ def direct(db, record, contract, request, user, key, digest, connection, provide
                     break
                 if reason == "max_tokens" and draft.batches and not context.get("shortContinuation"):
                     context["shortContinuation"] = "The previous response was truncated. Inspect the saved draft and finish with short tool calls."
-                    messages = start_messages()
+                    messages = craft_history.compact_messages(
+                        context, project_inspection(draft.project), draft.batches, job.result_payload or {},
+                        messages=messages, prompt_cache=prompt_cache,
+                    )
                     continue
                 if reason != "tool_use":
                     raise ValueError("craft_agent_incomplete")
@@ -923,12 +983,17 @@ def direct(db, record, contract, request, user, key, digest, connection, provide
                             if not draft.batches:
                                 raise ValueError("craft_ai_no_supported_commands")
                             rationale = str(call["input"].get("rationale", ""))[:4000]
-                            tools_used.append({"name": "finish_project", "ok": True})
+                            tools_used.append({
+                                "name": "finish_project", "ok": True, "toolUseId": call["id"],
+                                "inputDigest": hashlib.sha256(encoded(call["input"]).encode()).hexdigest(),
+                                "input": call["input"], "draftBatch": draft.batches,
+                            })
                             finished = True
                             break
                         name, args = call["name"], call["input"]
-                        inspection = (before, name, encoded(args)) if swarm and name in {
+                        inspection = (before, name, encoded(args)) if name in {
                             "inspect_project", "preview_frame", "preview_sequence", "read_contribution", "review_clip",
+                            "inspect_source_media", "view_image_asset", "inspect_editor_capabilities",
                         } else None
                         reused = inspection_ids.get(inspection)
                         if reused:
@@ -1017,7 +1082,12 @@ def direct(db, record, contract, request, user, key, digest, connection, provide
                         entry.update(is_error=True, content=message[:2000])
                     if draft.batches > before:
                         craft_drafts.save(db, job, draft)
-                    tools_used.append({"name": call["name"], "ok": not entry.get("is_error", False)})
+                    tools_used.append({
+                        "name": call["name"], "ok": not entry.get("is_error", False),
+                        "toolUseId": call["id"],
+                        "inputDigest": hashlib.sha256(encoded(call["input"]).encode()).hexdigest(),
+                        "input": call["input"],
+                    })
                     if entry.get("is_error"):
                         tools_used[-1]["error"] = entry["content"]
                     elif reused:

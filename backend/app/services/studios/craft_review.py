@@ -193,6 +193,25 @@ def _excerpt(path, directory, start, duration, has_video, has_audio, deadline):
     return output
 
 
+def _overview_frames(path, directory, start, duration, source_fps, page_size, deadline):
+    count = min(page_size, max(1, math.ceil(duration * (source_fps or 1))))
+    last = max(start, start + duration - 1 / (source_fps or 24))
+    times = [start + (last - start) * index / max(1, count - 1) for index in range(count)]
+    canvas = Image.new("RGB", (4 * 310, math.ceil(count / 4) * 430), "#11141a")
+    draw = ImageDraw.Draw(canvas)
+    for index, second in enumerate(times):
+        frame = directory / f"overview-{index:02d}.png"
+        _run([resolve_tool("ffmpeg"), "-v", "error", "-nostdin", "-y", "-threads", "1",
+              "-protocol_whitelist", "file,pipe", "-ss", str(second), "-i", str(path),
+              "-map", "0:v:0", "-an", "-frames:v", "1", "-vf", "scale=300:400:force_original_aspect_ratio=decrease",
+              "-threads", "1", str(frame)], deadline)
+        x, y = index % 4 * 310, index // 4 * 430
+        with Image.open(frame) as image:
+            canvas.paste(image, (x + (310 - image.width) // 2, y + 25))
+        draw.text((x + 8, y + 5), f"{second:.4f} s requested", fill="white")
+    return [round(second, 6) for second in times], _image_block(canvas)
+
+
 def review_draft(draft, args, *, db=None, workspace_id=None):
     """Inspect one temporal page and return a playable excerpt of the requested interval."""
     folder = Path(draft.directory) / "temporal-review"
@@ -227,6 +246,9 @@ def review_draft(draft, args, *, db=None, workspace_id=None):
     if type(page) is not int or page < 0 or type(page_size) is not int or not 1 <= page_size <= PAGE_SIZE:
         raise ValueError("craft_review_invalid_page")
     fps = _number(args, "fps", metadata["fps"] or 1, positive=True)
+    sampling = args.get("sampling", "native")
+    if sampling not in {"native", "overview"} or (sampling == "overview" and page):
+        raise ValueError("craft_review_sampling_invalid")
     if metadata["fps"] and fps > metadata["fps"] + 0.000001:
         raise ValueError("craft_review_fps_exceeds_source")
     total = max(1, math.ceil(duration * fps - 0.000001)) if metadata["video"] else 0
@@ -248,19 +270,24 @@ def review_draft(draft, args, *, db=None, workspace_id=None):
     if total:
         page_dir = interval_dir / f"frames-{fps:g}-{page}-{page_size}"
         page_dir.mkdir(exist_ok=True)
-        sampled, image = _frames(path, page_dir, start, duration, fps, page, page_size, total, draft.deadline)
+        if sampling == "overview":
+            sampled, image = _overview_frames(path, page_dir, start, duration, metadata["fps"], page_size, draft.deadline)
+        else:
+            sampled, image = _frames(path, page_dir, start, duration, fps, page, page_size, total, draft.deadline)
         images.append(image)
     transcript = {"status": "unavailable", "reason": "No registered source transcript was supplied for this render."}
     if asset is not None and db is not None and workspace_id is not None:
         transcript = craft_source_media.read_transcript(db, workspace_id, asset, args.get("transcriptOffset", 0), "segment")
-    next_page = page + 1 if total and (page + 1) * page_size < total else None
+    next_page = page + 1 if sampling == "native" and total and (page + 1) * page_size < total else None
     report = {
         "source": source, "draftBatch": draft.batches,
         "interval": {"startSeconds": start, "endSeconds": round(start + duration, 6), "durationSeconds": round(duration, 6)},
-        "visual": {"status": "ordered_samples" if sampled else "absent", "sourceFps": metadata["fps"], "sampleFps": fps,
+        "visual": {"status": "ordered_samples" if sampled else "absent", "sourceFps": metadata["fps"],
+                   "sampling": sampling, "sampleFps": fps if sampling == "native" else None,
                    "sampledSeconds": sampled, "page": page, "pageSize": page_size, "nextPage": next_page,
-                   "totalSamples": total, "consecutiveOnRequestedGrid": True,
-                   "nativeRateRequested": bool(metadata["fps"] and abs(fps - metadata["fps"]) < 0.000001)},
+                   "totalSamples": total if sampling == "native" else len(sampled),
+                   "consecutiveOnRequestedGrid": sampling == "native",
+                   "nativeRateRequested": sampling == "native" and bool(metadata["fps"] and abs(fps - metadata["fps"]) < 0.000001)},
         "audio": audio, "transcript": transcript,
         "artifact": {"checksumSha256": sha256_file(excerpt), "mediaType": "video/mp4" if metadata["video"] else "audio/wav"},
         "limitations": ["Visual evidence covers only the ordered frames listed on this page. Request subsequent pages or a denser grid for unresolved motion.",

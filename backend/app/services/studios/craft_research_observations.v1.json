@@ -1604,6 +1604,114 @@
         "checksumSha256": "a8335f24f3f5ef0a8aae8bbba9d50236c12ac5c9652216682e9245fdda3a68ce"
       },
       "qualification": "Observed sampled states; application is a hypothesis. No audio or continuous playback validation."
+    },
+    {
+      "id": "research.target.orbita.reference_triad",
+      "kind": "project_reference_target",
+      "intent": "ÓRBITA: meta de edição cinematográfica com cenas variadas, continuidade visual, motion tipográfico, luz, sombra e oferta compreensível",
+      "state": "knowledge_only",
+      "scope": {
+        "projectTheme": "ÓRBITA",
+        "universalDefault": false
+      },
+      "requires": [
+        "Briefing ÓRBITA ou pedido explícito de linguagem equivalente",
+        "Materiais próprios ou autorizados que sustentem as cenas propostas",
+        "Conferência das capacidades nativas e do MP4"
+      ],
+      "primaryReference": {
+        "creator": "@paulo.ia",
+        "url": "https://www.instagram.com/reel/Dd5Md7NMj7P/",
+        "durationSeconds": 25.05,
+        "requestedObservationSeconds": [
+          0.5,
+          3,
+          6,
+          9,
+          12,
+          15,
+          18,
+          21,
+          24
+        ],
+        "observed": "Bola dourada recorrente; píer, praia, rosto e corpo em escalas diferentes; profundidade e paleta vermelho/azul/dourado.",
+        "transfer": "Escolher um motivo ligado à mostra e desenvolvê-lo em cenas com mudança real de informação e perspectiva.",
+        "qualification": "Selected cinematic finish target; not a complete typographic motion ad exemplar."
+      },
+      "supportingReferences": [
+        {
+          "creator": "@creators / @martsromero",
+          "url": "https://www.instagram.com/reel/DdW0UoSxXsX/",
+          "durationSeconds": 34.8517,
+          "requestedObservationSeconds": [
+            0.5,
+            3,
+            6,
+            10,
+            14,
+            18,
+            22,
+            27,
+            33
+          ],
+          "observed": "Copo verde recorrente em ações reais, detalhes, rostos e corpos; contexto de rua.",
+          "transfer": "A oferta ou seu motivo participa das ações e liga os planos."
+        },
+        {
+          "creator": "@moonsol.design",
+          "url": "https://www.instagram.com/moonsol.design/reel/Dcys2J3MfYK/",
+          "durationSeconds": 53.7527,
+          "requestedObservationSeconds": [
+            0.25,
+            1.5,
+            3,
+            6,
+            14,
+            27,
+            40,
+            48,
+            52
+          ],
+          "observed": "Colagem com retrato recortado, texto e silhuetas que recebem objetos; miolo é tutorial de interface.",
+          "transfer": "Usar hierarquia de texto, composição em camadas e transformação reconhecível; consultar os trechos de resultado."
+        }
+      ],
+      "procedure": [
+        "Fixar a promessa e o convite da copy, sem inventar programação",
+        "Escolher a ideia e o motivo visual que ligam as cenas",
+        "Dar a cada mudança uma função e um estado novo",
+        "Compor tipografia e imagem com hierarquia para celular",
+        "Inspecionar o corte inteiro e os movimentos incertos em janelas consecutivas",
+        "Comparar o MP4 e registrar diferenças por tempo"
+      ],
+      "counterexamples": [
+        "Copiar atleta, bola, roteiro ou materiais do autor",
+        "Usar a referência fotográfica como prova de domínio de motion tipográfico",
+        "Aplicar esta estética a qualquer produto sem justificar",
+        "Multiplicar efeitos e cortes sem desenvolver a mensagem",
+        "Tratar um tutorial de edição inteiro como anúncio final"
+      ],
+      "checks": [
+        "A categoria curtas de ficção científica e o convite estão compreensíveis",
+        "O motivo liga cenas diferentes com progressão",
+        "Mudanças de escala e perspectiva têm intenção",
+        "Bordas, luz e sombra são coerentes nos planos pertinentes",
+        "Texto revisado a 300 px e em tempo real",
+        "Som ouvido antes de afirmar qualidade auditiva",
+        "Exportação e autoria das operações rastreáveis"
+      ],
+      "sourceEvidence": {
+        "file": "docs/studios/research/CLICKO_ORBITA_REFERENCIAS_META_2026-11-12.md",
+        "observationDate": "2026-11-12",
+        "method": "Public browser playback before each visual capture; requested seek times precede actual captured frames.",
+        "limits": [
+          "Visual samples, not exhaustive frame-by-frame analysis",
+          "Muted playback; no auditory assessment",
+          "Editorial selection among recovered exemplars, not all posts",
+          "No evidence of equivalent local reproduction yet",
+          "Reference assets are not authorized production materials"
+        ]
+      }
     }
   ]
 }

@@ -25,7 +25,11 @@ def test_all_editorial_libraries_are_searchable_and_keep_their_evidence(client):
         card["id"] for card in craft_direction.reference_index()
     }
     assert len([card for card in cards.values() if card.get("kind") == "editing_language"]) == 15
-    assert len([card for card in cards if card.startswith("research.")]) == 36
+    assert len([card for card in cards if card.startswith("research.")]) == 37
+    target = cards["research.target.orbita.reference_triad"]
+    assert target["scope"]["universalDefault"] is False
+    assert target["primaryReference"]["creator"] == "@paulo.ia"
+    assert "Muted playback; no auditory assessment" in target["sourceEvidence"]["limits"]
     legacy = next(card for card in cards.values() if "operations" in card)
     assert craft_direction.references([legacy["id"]])[legacy["id"]]["operations"] == legacy["operations"]
     assert legacy["operationBinding"]["requiresNativeAdaptation"]
@@ -33,6 +37,8 @@ def test_all_editorial_libraries_are_searchable_and_keep_their_evidence(client):
     assert lesson["state"] == "reproduced locally"
     assert "abertura lateral" in lesson["demonstration"]["transferContraindication"]
     with SessionLocal() as db:
+        targets = craft_direction.search_repertoire(db, workspace, "ÓRBITA meta referência cinematográfica", limit=6)
+        assert target["id"] in {card["id"] for card in targets["matches"]}
         exercise = craft_direction.search_repertoire(db, workspace, "ÓRBITA recuo moldura colisão", limit=3)
         assert "orbita-reveal-protect-title" in {card["id"] for card in exercise["matches"]}
         technique = editing_repertoire.seed_techniques()[0].model_dump(mode="json", by_alias=True)

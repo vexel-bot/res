@@ -45,6 +45,18 @@ def test_review_observes_consecutive_frames_and_measures_sound(source, tmp_path)
     assert result["path"].is_file()
 
 
+def test_overview_covers_the_last_frame_without_claiming_native_rate_observation(source, tmp_path):
+    draft = SimpleNamespace(directory=tmp_path, batches=0, deadline=time.monotonic() + 90,
+                            params={"media": [{"assetId": "source", "path": str(source), "mediaType": "video/mp4",
+                                               "checksumSha256": sha256_file(source)}]})
+    result = review_draft(draft, {"assetId": "source", "durationSeconds": 1, "sampling": "overview", "pageSize": 4})
+    visual = result["report"]["visual"]
+    assert visual["sampledSeconds"][0] == 0
+    assert visual["sampledSeconds"][-1] > .9
+    assert visual["totalSamples"] == 4 and visual["nextPage"] is None
+    assert not visual["nativeRateRequested"] and not visual["consecutiveOnRequestedGrid"]
+
+
 def test_draft_review_caches_render_and_invalidates_after_edit(source, tmp_path):
     native = tmp_path / "draft.ecproj"
     native.write_text("revision 1")

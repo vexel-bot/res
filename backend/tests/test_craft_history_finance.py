@@ -59,6 +59,10 @@ def test_context_renewal_preserves_plan_and_latest_batch_pixels_without_tool_pai
     assert first[0]["content"][0] == second[0]["content"][0]
     assert json.loads(first[0]["content"][1]["text"])["editorialPlan"] == "new plan"
     assert first[0]["content"][-1]["source"]["data"] == "latest"
+    renewed = craft_history.compact_messages(context, {"layers": [{"id": 12}]}, 4, result, messages=first)
+    assert renewed[0]["content"][-1]["source"]["data"] == "latest"
+    changed = craft_history.compact_messages(context, {"layers": []}, 5, result, messages=first)
+    assert "latest" not in json.dumps(changed)
     assert context["savedEditorialPlan"] == "old"
     assert craft_history.should_count_tokens(messages)
     assert craft_history.should_compact(messages, counted_tokens=50000)
@@ -116,6 +120,25 @@ def test_editorial_snapshot_is_cached_and_survives_temporal_review_compaction():
     assert compact[0]["content"][0] == first
     assert json.loads(first["text"])["editorialContext"]["styleGuides"][0]["version"] == 3
     assert compact[0]["content"][-1]["source"]["data"] == "temporal-page"
+
+
+def test_compaction_before_first_edit_retains_source_pixels_and_hides_audit_scripts():
+    evidence = [{"type": "image", "source": {"data": "actual-source"}}]
+    messages = [
+        {"role": "assistant", "content": [{"type": "tool_use", "id": "source", "name": "inspect_source_media",
+                                            "input": {"assetId": "source-id", "seconds": [1]}}]},
+        {"role": "user", "content": [{"type": "tool_result", "tool_use_id": "source", "content": evidence}]},
+    ]
+    result = {"tools": [{"name": "inspect_source_media", "ok": True, "input": {"code": "huge-audit-only-script"}}]}
+    compact = craft_history.compact_messages({"instruction": "Edit"}, {"layers": []}, 0, result, messages=messages)
+    serialized = json.dumps(compact)
+    assert "actual-source" in serialized and "source-id" in serialized
+    assert "huge-audit-only-script" not in serialized
+    assert "actual-source" in json.dumps(messages)
+    assert "native_draft" not in serialized
+    renewed = craft_history.compact_messages({"instruction": "Edit"}, {"layers": []}, 0, result, messages=compact)
+    assert "actual-source" in json.dumps(renewed)
+    assert "huge-audit-only-script" not in json.dumps(renewed)
 
 
 def test_technical_verification_keeps_the_owners_revision_request():

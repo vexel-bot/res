@@ -14,6 +14,37 @@ from app.models import Membership
 from app.services.studios import craft_direction, editing_resources
 
 
+def test_director_inventory_keeps_editorial_metadata_and_uses_checksum_bound_ingest(client):
+    from app.models import LibraryAsset, StudioMediaIngest
+    from app.services.studios.craft_agent import registered_assets
+
+    _, workspace = register(client, "inventory@example.com")
+    _, foreign = register(client, "inventory-foreign@example.com")
+    with SessionLocal() as db:
+        actor = db.scalar(select(Membership.user_id).where(Membership.workspace_id == workspace))
+        resource = LibraryAsset(workspace_id=workspace, title="Portal abre", asset_type="video",
+                                checksum_sha256="a" * 64, object_metadata={"editingResource": {
+                                    "description": "A porta revela o espaço", "editorialFunction": "reveal",
+                                    "technical": {"durationMicroseconds": 3_000_000, "probe": {
+                                        "videoStreams": [{"width": 540, "height": 960}], "audioStreams": []}}}})
+        upload = LibraryAsset(workspace_id=workspace, title="Filmagem", asset_type="video", checksum_sha256="b" * 64)
+        other = LibraryAsset(workspace_id=foreign, title="Private", asset_type="video", checksum_sha256="c" * 64)
+        db.add_all([resource, upload, other])
+        db.flush()
+        db.add(StudioMediaIngest(workspace_id=workspace, asset_id=upload.id, status="ready", requested_by=actor, idempotency_key="current",
+                                media_info={"checksumSha256": "b" * 64, "durationMicroseconds": 4_000_000,
+                                            "videoStreams": [{"width": 1920, "height": 1080}], "audioStreams": [{}]}))
+        db.add(StudioMediaIngest(workspace_id=workspace, asset_id=upload.id, status="ready", requested_by=actor, idempotency_key="stale",
+                                media_info={"checksumSha256": "d" * 64, "durationMicroseconds": 9_000_000}))
+        db.flush()
+        manifests = [SimpleNamespace(asset_id=asset.id, media_type="video/mp4") for asset in [resource, upload, other]]
+        known, ingested, inaccessible = registered_assets(db, workspace, manifests)
+        assert known["description"] == "A porta revela o espaço" and known["durationSeconds"] == 3
+        assert known["width"] == 540 and known["hasAudio"] is False
+        assert ingested["durationSeconds"] == 4 and ingested["width"] == 1920 and ingested["hasAudio"]
+        assert inaccessible["title"] is None and "checksumSha256" not in inaccessible
+
+
 def test_source_acquisition_stages_working_copy_with_provenance(client, tmp_path, monkeypatch):
     _token, workspace = register(client, "craft-direction-material@example.com")
     _other_token, other_workspace = register(client, "craft-direction-other@example.com")

@@ -1,0 +1,101 @@
+{
+  "session": {
+    "model": "claude-opus-5-5",
+    "code": 1,
+    "ceilingUsd": 3,
+    "elapsedSeconds": 1002.525,
+    "subtype": "error_max_budget_usd",
+    "reportedCostUsd": 3.0205758,
+    "usage": {
+      "input_tokens": 42,
+      "cache_creation_input_tokens": 122135,
+      "cache_read_input_tokens": 1242108,
+      "output_tokens": 103917,
+      "output_tokens_details": {
+        "thinking_tokens": 40720
+      },
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 122135
+      },
+      "inference_geo": "global",
+      "iterations": [],
+      "speed": "standard",
+      "fallback_credit": null
+    },
+    "modelUsage": {
+      "claude-opus-5-5": {
+        "inputTokens": 44,
+        "outputTokens": 104823,
+        "cacheReadInputTokens": 1355574,
+        "cacheCreationInputTokens": 130565,
+        "webSearchRequests": 0,
+        "costUSD": 3.0205758,
+        "contextWindow": 1000000,
+        "maxOutputTokens": 128000,
+        "thinkingTokens": 41039,
+        "cacheCreationEphemeral5mInputTokens": 130565,
+        "cacheCreationEphemeral1hInputTokens": 0,
+        "canonicalModel": "claude-opus-5-5",
+        "provider": "firstParty",
+        "costBasis": "list"
+      }
+    },
+    "turns": 26
+  },
+  "recovery": {
+    "durationSeconds": 16,
+    "fps": 30,
+    "frames": 480,
+    "dimensions": [
+      1080,
+      1920
+    ],
+    "audio": "absent",
+    "apiSpendForRecoveryUsd": 0,
+    "exportExecutor": "Codex recovery; Opus did not request final export",
+    "sha256": "040484f64c32e9d7d47aff43b5d1fe69626382dfc598ae0b217296ec7f490391",
+    "maxAbsoluteMeanLumaChangePerFrame": 107.22256944444445,
+    "maxThreeFrameMeanLumaChange": 187.81125,
+    "candidateLargeAreaChanges": [
+      {
+        "second": 7.9667,
+        "meanLumaChange": 57.09430555555556,
+        "fractionPixelsChangedAbove50": 0.7768055555555555
+      },
+      {
+        "second": 8.0,
+        "meanLumaChange": 107.22256944444445,
+        "fractionPixelsChangedAbove50": 1.0
+      }
+    ],
+    "limits": [
+      "Downsampled decoded-frame signal analysis; no perceptual verdict",
+      "No audio track was authored before the session stopped",
+      "Not a controlled renderer quality comparison"
+    ]
+  },
+  "clickoRecord": {
+    "jobId": "2e418fc1-dd9d-4149-b450-b0d832cae866",
+    "documentId": "273e5608-f162-4911-9c40-7df40fecf241",
+    "originRevision": 3,
+    "costUsd": 3.0205758,
+    "costSource": "claude-code-receipt-list-pricing",
+    "invoiceVerified": false,
+    "receiptSha256": "859a82a92609f760af2eeb836a92740c8035487cd73d1d4bd2c970efba6b80a3",
+    "exportByOpus": false,
+    "apiSpendDuringImportUsd": 0
+  },
+  "referenceTarget": "research.target.orbita.reference_triad",
+  "apiTrialsThisRound": 1,
+  "limitations": [
+    "No autonomous export or audio",
+    "Different materials and production method from earlier native comparison",
+    "No viewer validation or auditory evaluation"
+  ]
+}
