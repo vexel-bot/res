@@ -1,0 +1,13 @@
+{
+  "schemaVersion": "clicko.research-document-validation.v1",
+  "clientDate": "2026-11-13",
+  "markdownFiles": 14,
+  "jsonFiles": 4,
+  "localLinksChecked": 62,
+  "missingLocalLinks": [],
+  "credentialPatternMatches": 0,
+  "archiveFileCount": 11,
+  "archiveSha256Verified": true,
+  "scope": "Document integrity, not product behavior or aesthetic approval",
+  "apiSpendUsd": 0
+}

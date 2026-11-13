@@ -1,0 +1,87 @@
+{
+  "schemaVersion": "clicko.research-probe-archive.v1",
+  "clientDate": "2026-11-13",
+  "purpose": "Archive existing renderer and selected-frame probe; not a product implementation or new advertisement",
+  "repositoryCommit": "0d0832a6178881fd114e8cb60daadc73ff633711",
+  "environment": {
+    "node": "v22.15.0",
+    "platform": "win32",
+    "arch": "x64",
+    "playwright": "1.63.0",
+    "chromium": "153.0.8010.12",
+    "capturedAfterProbe": true
+  },
+  "apiSpendUsd": 0,
+  "sourceArchive": "orbita-runtime-source.zip",
+  "sourceArchiveSha256": "766261c4da7ca6b1d405cc7d2fbaf6530cea0fde439e8b64df07dbaa292af274",
+  "sourceFiles": [
+    {
+      "path": "orbita.html",
+      "bytes": 2607,
+      "sha256": "36e4f62c0dae0a4868b5d131d1e03e1934acc416ce90b5af1a7ed9a194f723c4"
+    },
+    {
+      "path": "orbita.js",
+      "bytes": 42377,
+      "sha256": "a7293698edb79b6a2363c269a218a1d0c2a11cf11a65b7178f02f783b5dee9b6"
+    },
+    {
+      "path": "timeline.js",
+      "bytes": 904,
+      "sha256": "ce70bf204de2705199891a165e13b5e64bd067055af8784082e722681b5561a8"
+    },
+    {
+      "path": "render.js",
+      "bytes": 2652,
+      "sha256": "68e60970e14dc6ad58d3e30306ad5759f160fac09b5b4a18bad0ae0e5d9e78a5"
+    },
+    {
+      "path": "fonts/OFL-SpaceGrotesk.txt",
+      "bytes": 4495,
+      "sha256": "564ce565c371c5e5bbf286006565a7c9aa55a9f56e7ca58d56e05d649dd61a72"
+    },
+    {
+      "path": "fonts/OFL-SpaceMono.txt",
+      "bytes": 4392,
+      "sha256": "8e4ee42b2553e1e01504e61cb0d46d148cd8c9e5eacaa3622a7df2d4f2955b9f"
+    },
+    {
+      "path": "fonts/OFL-Unbounded.txt",
+      "bytes": 4392,
+      "sha256": "31e5d4e83955e7103c34570dd49b0570ef490800bd65b42923c0dd02445263b3"
+    },
+    {
+      "path": "fonts/SpaceGrotesk.ttf",
+      "bytes": 136676,
+      "sha256": "acad6de1fc93436f5c0f1f4137751ef04f1aea3063e7036535970ffcfbd79f72"
+    },
+    {
+      "path": "fonts/SpaceMono-Bold.ttf",
+      "bytes": 98232,
+      "sha256": "405e73d41afb7e5906efce206a326af5c956f38e255f35421c260e861e599c59"
+    },
+    {
+      "path": "fonts/SpaceMono-Regular.ttf",
+      "bytes": 99356,
+      "sha256": "95837e182baeeada83368f7748db28357f0a1b75c6b84ff7065b5edf933c8e18"
+    },
+    {
+      "path": "fonts/Unbounded.ttf",
+      "bytes": 778272,
+      "sha256": "323b511be380c8d474ef030686b71aedde501f8d9cd46da558b7c40454372c3f"
+    }
+  ],
+  "probeResultSha256": "322d1b6aa8c6b1151f14a4ecb303a7e68f856568c0c5c1d66fd3fef857a0bbcf",
+  "probeScriptSha256": "5159c7cc0ff47aa48195d9797711adbcae5a4c863820adfc91e53ecd40372c98",
+  "scriptChangesForReplay": [
+    "HTML path and output path accept CLI arguments; rendering logic unchanged"
+  ],
+  "network": "HTTP/HTTPS requests blocked by Playwright routing during probe",
+  "limitations": [
+    "Six distinct times in eight main-loop requests, plus a fresh-page comparison at 3.4 seconds",
+    "Environment version captured immediately after probe, not instrumented in original run",
+    "Selected-frame hashes are not guaranteed identical across OS/browser/GPU/font runtimes",
+    "No full-motion or perceptual audio test, no engine comparison, no viewer study"
+  ],
+  "probeTextHashNormalization": "UTF-8 bytes with CRLF normalized to LF; archive and source-file hashes remain raw bytes"
+}

@@ -1,0 +1,97 @@
+{
+  "schemaVersion": "clicko.primary-evidence.v1",
+  "accessDate": "2026-11-13",
+  "reviewScope": "Short independent appraisal of coordinator-specified sources, not exhaustive systematic review",
+  "inferenceApiSpendUsd": 0,
+  "sources": [
+    {
+      "id": "CE-01",
+      "title": "Timeline-Bench: Evaluating Agents on Realistic Video-Editing Tasks, from Raw Footage to Final Cut",
+      "url": "https://arxiv.org/abs/2609.35143",
+      "version": "v1, 2026-09-28; preprint under review",
+      "kind": "original empirical preprint",
+      "coverage": "arXiv abstract and metadata, not full text or reproduced evaluation",
+      "supports": "Artifact delivery, requirement satisfaction and editing quality are distinct outcomes in realistic editing tasks.",
+      "limitations": "No reproduction or grader audit; aggregate results do not predict Clicko or a particular current model's success.",
+      "clickoImplication": "Use technical and craft acceptance criteria separately, with human calibration.",
+      "confidence": "High provenance; limited appraisal and external applicability; no causal evidence for the proposed hybrid"
+    },
+    {
+      "id": "CE-02",
+      "title": "MotionBench: Benchmarking and Improving Fine-grained Video Motion Understanding for Vision Language Models",
+      "url": "https://arxiv.org/abs/2501.02955",
+      "version": "v2, 2026-05-12; initial submission 2025-01-06",
+      "kind": "original empirical paper",
+      "coverage": "arXiv abstract and version metadata",
+      "supports": "Fine-motion understanding remains difficult in evaluated VLMs; denser frame input helped tested systems.",
+      "limitations": "Not a test of Opus 5.5 in Clicko; no universal frame-sampling threshold established for this application.",
+      "clickoImplication": "Inspect temporal windows and test the evaluator on correct and defective controls.",
+      "confidence": "High provenance; limited directness for the current model and ad-editing task"
+    },
+    {
+      "id": "CE-03",
+      "title": "VBench: Comprehensive Benchmark Suite for Video Generative Models",
+      "url": "https://arxiv.org/abs/2311.17982",
+      "version": "v1, 2023-11-29",
+      "kind": "original empirical paper",
+      "coverage": "arXiv abstract and metadata",
+      "supports": "Video generation evaluation can be decomposed into dimensions and checked against human judgments.",
+      "limitations": "Generating a clip is not equivalent to editing a persuasive ad; its aggregate scores do not certify copy, rhythm or CTA.",
+      "clickoImplication": "Keep motion, continuity, identity and message judgments separate.",
+      "confidence": "High provenance; indirect evidence for a local editorial rubric"
+    },
+    {
+      "id": "CE-04",
+      "title": "Our Motion Design & Animation Process",
+      "url": "https://www.ordinaryfolk.co/process",
+      "version": "Live page accessed 2026-11-13; publication date not supplied",
+      "kind": "primary practitioner process account",
+      "coverage": "Full visible Message, Design, Animation and Audio sections",
+      "supports": "The studio describes preparing message/design/storyboards and considering audio throughout production.",
+      "limitations": "Self-reported and promotional; not an intervention study or universal workflow validation.",
+      "clickoImplication": "Prepare styleframes, animatic and a sound plan before expensive full-piece refinement.",
+      "confidence": "High provenance for this studio's stated process; low causal certainty of a quality gain in Clicko"
+    },
+    {
+      "id": "CE-05",
+      "title": "Effective context engineering for AI agents",
+      "url": "https://www.anthropic.com/research/effective-context-engineering-for-ai-agents",
+      "version": "2025-09-29",
+      "kind": "primary vendor engineering guidance",
+      "coverage": "Context relevance and anatomy of effective context, especially tool contracts and prompt specificity",
+      "supports": "Useful context and clear tools matter; vague instructions and brittle over-specification both create problems.",
+      "limitations": "No controlled evidence about Clicko creative quality or renderer choice.",
+      "clickoImplication": "Keep the director free while exposing relevant materials, references, state and capabilities efficiently.",
+      "confidence": "High traceability; engineering rationale, not a measured ad-quality effect"
+    },
+    {
+      "id": "CE-06",
+      "title": "Demystifying evals for AI agents",
+      "url": "https://www.anthropic.com/research/demystifying-evals-for-ai-agents",
+      "version": "2026-01-09",
+      "kind": "primary vendor engineering account",
+      "coverage": "Outcome versus trace, grader types, Descript example and calibration/rigidity guidance",
+      "supports": "Different graders serve different outcomes; model judgments require human calibration and rigid paths can penalize valid solutions.",
+      "limitations": "Vendor cases do not independently validate a particular Clicko rubric or quality improvement.",
+      "clickoImplication": "Separate deterministic checks, editorial assessment and human comprehension; grade the delivered artifact without prescribing a fixed edit path.",
+      "confidence": "High traceability; conditional application to local evaluation design"
+    }
+  ],
+  "excludedAsSupport": [
+    {"type": "Generated paper summaries and duplicate mirrors", "reason": "Prefer original authors' pages and arXiv records"},
+    {"type": "Glossaries, Reddit opinions and news summaries", "reason": "Secondary discovery does not support technical claims here"},
+    {"type": "Additional harness and model-modality sources", "reason": "Outside the coordinator-limited recovery scope; no modality claim made"}
+  ],
+  "searches": [
+    "site:anthropic.com research effective context engineering agents long running harness evals",
+    "MotionBench 2501.02955 motion understanding video original paper",
+    "VBench 2311.17982 human video quality evaluation dimensions paper",
+    "site:platform.claude.com docs vision limitations audio image generation"
+  ],
+  "appraisalLimits": [
+    "Single appraiser; subsequent squad QA requested",
+    "No full-text appraisal or reproduction of the three research benchmarks",
+    "No complete screening counts, formal GRADE/RoB, PPV, meta-analysis or effect estimate",
+    "No original reference-video audio audit or new render in this task"
+  ]
+}

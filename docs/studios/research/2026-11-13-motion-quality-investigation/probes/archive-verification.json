@@ -1,0 +1,15 @@
+{
+  "schemaVersion": "clicko.probe-archive-verification.v1",
+  "clientDate": "2026-11-13",
+  "archiveSha256Verified": true,
+  "sourceFileHashesVerified": 11,
+  "replayedFromSeparateExtraction": true,
+  "sameSamplePngHashesAsOriginal": true,
+  "allRepeatedFramesIdentical": true,
+  "freshPageSameFrame": true,
+  "replayRendererSeconds": 4.067,
+  "apiSpendUsd": 0,
+  "productionFilesModified": false,
+  "newAdvertisementGenerated": false,
+  "limitations": "Same host and browser, selected-frame replay only; not independent hardware replication, full-motion, audio or editorial validation"
+}

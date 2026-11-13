@@ -1,0 +1,88 @@
+{
+  "probe": "existing-canvas-renderer-repeatability-and-alpha",
+  "apiSpendUsd": 0,
+  "sourceModified": false,
+  "newAdvertisementGenerated": false,
+  "source": "C:/Users/edugu/Downloads/clicko-orbita-independent-20261112/src/orbita.html",
+  "rendererSeconds": 4.26,
+  "allRepeatedFramesIdentical": true,
+  "freshPageSameFrame": true,
+  "samples": [
+    {
+      "second": 3.4,
+      "alphaMin": 255,
+      "alphaMax": 255,
+      "meanLuma": 28.75643777840718,
+      "pngSha256": "466870fbabb39053488e5dbcddb63e920fb107c1c8ec95025a58a1f4d45404be",
+      "repeated": false,
+      "sameAsEarlier": null
+    },
+    {
+      "second": 7.9666666667,
+      "alphaMin": 255,
+      "alphaMax": 255,
+      "meanLuma": 111.62521864044173,
+      "pngSha256": "042b7c537e062cccff40012393c7a368fd2edc9c03f8ea012d2c0f32943b73a5",
+      "repeated": false,
+      "sameAsEarlier": null
+    },
+    {
+      "second": 8,
+      "alphaMin": 255,
+      "alphaMax": 255,
+      "meanLuma": 219.55560081580538,
+      "pngSha256": "2ce85649e66c1c926811a1372bcf21d9cd1ff34fdc97ec1b7ebbd784fdf98911",
+      "repeated": false,
+      "sameAsEarlier": null
+    },
+    {
+      "second": 8.1,
+      "alphaMin": 255,
+      "alphaMax": 255,
+      "meanLuma": 131.32106882729684,
+      "pngSha256": "6ceb42cb05fd75725d9f7ed5bb59ccfc127319df8e7faea49e60e584ed894952",
+      "repeated": false,
+      "sameAsEarlier": null
+    },
+    {
+      "second": 11.4,
+      "alphaMin": 255,
+      "alphaMax": 255,
+      "meanLuma": 23.892444267955742,
+      "pngSha256": "230594208712543cdbcaae982b39c242cf4c2a768bb3686084c8c08097b55bb8",
+      "repeated": false,
+      "sameAsEarlier": null
+    },
+    {
+      "second": 15.9,
+      "alphaMin": 255,
+      "alphaMax": 255,
+      "meanLuma": 33.83784777515414,
+      "pngSha256": "19ed153830628da765e6dd9e901f898e170a306ce2f5c68ad9fe8a97e80c72af",
+      "repeated": false,
+      "sameAsEarlier": null
+    },
+    {
+      "second": 8,
+      "alphaMin": 255,
+      "alphaMax": 255,
+      "meanLuma": 219.55560081580538,
+      "pngSha256": "2ce85649e66c1c926811a1372bcf21d9cd1ff34fdc97ec1b7ebbd784fdf98911",
+      "repeated": true,
+      "sameAsEarlier": true
+    },
+    {
+      "second": 3.4,
+      "alphaMin": 255,
+      "alphaMax": 255,
+      "meanLuma": 28.75643777840718,
+      "pngSha256": "466870fbabb39053488e5dbcddb63e920fb107c1c8ec95025a58a1f4d45404be",
+      "repeated": true,
+      "sameAsEarlier": true
+    }
+  ],
+  "limitations": [
+    "Tests selected still-frame rendering only; not full motion, auditory review, engine parity, or viewer approval.",
+    "Opaque output may be correct for full-scene rendering; transparent layer compositing requires a separate contract and test."
+  ]
+}
