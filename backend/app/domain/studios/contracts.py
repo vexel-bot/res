@@ -1546,6 +1546,9 @@ class GenerationJobV1(StudioContract):
 
 
 class CreateStudioDocumentRequest(StudioContract):
+    source_document_id: str | None = None
+    source_revision: int | None = Field(default=None, ge=1)
+    branch_reason: str | None = Field(default=None, min_length=1)
     workspace_id: str
     title: str = Field(min_length=1, max_length=240)
     content_type: Literal["visual", "carousel", "video", "presenter"] = "visual"
@@ -1563,6 +1566,10 @@ class CreateStudioDocumentRequest(StudioContract):
 
     @model_validator(mode="after")
     def validate_carousel_pages(self) -> CreateStudioDocumentRequest:
+        if any((self.source_document_id, self.source_revision, self.branch_reason)) and not all(
+            (self.source_document_id, self.source_revision, self.branch_reason)
+        ):
+            raise ValueError("craft_lineage_complete_source_required")
         if self.content_type == "carousel" and len(self.composition.pages) < 2:
             raise ValueError("Carousel documents require at least two pages")
         return self

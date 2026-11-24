@@ -23,9 +23,10 @@ def test_scripting_reference_pages_large_catalog_without_losing_filtered_command
         assert page["totalCommands"] == len(commands)
         seen.extend(page["nativeCommands"])
         offset = page["nextOffset"]
-    assert seen == commands
+    assert [item["id"] for item in seen] == [item["id"] for item in commands]
+    assert all("describe_commands" in item["details"] for item in seen)
     result = scripting_reference("effectcraft", capability, query="script.run")
-    assert result["nativeCommands"] == [{"id": "script.run"}]
+    assert [item["id"] for item in result["nativeCommands"]] == ["script.run"]
 
 
 def test_project_inspection_can_focus_properties_without_duplicating_other_layers():

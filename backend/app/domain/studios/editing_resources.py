@@ -10,7 +10,7 @@ from .contracts import StudioContract, UgcTextLayerPropertiesV1
 from .editorial_production import EditorialDirectionV1, ProductionRequestV1
 from .material_inspection import MaterialInspectionRequestV1
 
-ResourceKind = Literal["font", "logo", "image", "video", "wardrobe", "sound_effect", "music"]
+ResourceKind = Literal["font", "logo", "image", "video", "wardrobe", "sound_effect", "music", "model", "environment"]
 
 
 class ResourceMetadataV1(StudioContract):

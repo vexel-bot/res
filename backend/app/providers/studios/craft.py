@@ -99,12 +99,67 @@ def runtime_argv(engine: str) -> list[str]:
     raise CraftRuntimeError("craft_runtime_not_built")
 
 
+# In the native object model Dashes belongs to a stroke. Motion scripts may
+# address the single stroke through its enclosing Contents group.
+_STROKE_DASH_COMPAT = """
+(function () {
+    var proto = PropertyGroup.prototype;
+    var add = proto.addProperty;
+    var canAdd = proto.canAddProperty;
+    function strokeFor(group) {
+        if (group.matchName === "ADBE Vector Graphic - Stroke") return group;
+        if (group.matchName !== "ADBE Vectors Group" && group.matchName !== "ADBE Root Vectors Group") return null;
+        var found = null;
+        for (var i = 1; i <= group.numProperties; i++) {
+            var child = group.property(i);
+            if (child.matchName === "ADBE Vector Graphic - Stroke") {
+                if (found) throw Error("Multiple strokes: select the stroke before enabling Dashes");
+                found = child;
+            }
+        }
+        return found;
+    }
+    proto.canAddProperty = function (name) {
+        if (name === "ADBE Vector Stroke Dashes") {
+            try { return !!strokeFor(this); } catch (e) { return false; }
+        }
+        return canAdd.call(this, name);
+    };
+    proto.addProperty = function (name) {
+        if (name === "ADBE Vector Stroke Dashes") {
+            var stroke = strokeFor(this);
+            if (stroke) {
+                var group = stroke.property(name);
+                var dash = group.property("Dash");
+                if (dash.numKeys === 0 && dash.value === 0) dash.setValue(10);
+                return group;
+            }
+        }
+        return add.call(this, name);
+    };
+})();
+"""
+
+
+def _motion_script_commands(commands):
+    result = []
+    for command in commands:
+        options = command.get("params", {})
+        code = options.get("code")
+        if command.get("id") == "script.run" and isinstance(code, str) and "ADBE Vector Stroke Dashes" in code:
+            command = {**command, "params": {**options, "code": _STROKE_DASH_COMPAT + code}}
+        result.append(command)
+    return result
+
+
 def call_engine(engine: str, method: str, params: dict | None = None, *, cancelled=None) -> dict:
     if not params or not params.get("mediaRoot"):
         with tempfile.TemporaryDirectory(prefix="craft-runtime-probe-") as directory:
             return call_engine(
                 engine, method, {**(params or {}), "mediaRoot": str(Path(directory).resolve())}, cancelled=cancelled
             )
+    if engine == "effectcraft" and method == "engine.execute" and params.get("commands"):
+        params = {**params, "commands": _motion_script_commands(params["commands"])}
     request_id = str(uuid4())
     request = {
         "protocolVersion": 1,
@@ -132,6 +187,19 @@ def call_engine(engine: str, method: str, params: dict | None = None, *, cancell
         }
     }
     environment["PHOTOCRAFT_NO_SYSTEM_FONTS"] = "1"
+    # Bound parallel full-resolution frame buffers, not the source resolution.
+    # Rayon defaults to every host core; dense 1080p comps can exhaust RAM.
+    if engine == "effectcraft":
+        environment["RAYON_NUM_THREADS"] = "1"
+    if engine == "effectcraft":
+        root = Path(params["mediaRoot"]).resolve()
+        font_dirs = {
+            path.parent for item in params.get("media", [])
+            if item.get("mediaType") in {"font/ttf", "font/otf"}
+            and (path := Path(item["path"]).resolve()).is_relative_to(root)
+        }
+        if font_dirs:
+            environment["EFFECTCRAFT_FONT_DIRS"] = os.pathsep.join(map(str, sorted(font_dirs)))
     kwargs = {
         "stdin": subprocess.PIPE,
         "stdout": subprocess.PIPE,

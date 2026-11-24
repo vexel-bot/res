@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "clicko.narrative-motion.evaluation.v1",
+  "language": "pt-BR",
+  "referenceId": "workspace.sol-altkid",
+  "briefings": [
+    {
+      "id": "startups-remontagem",
+      "durationSeconds": 30,
+      "format": "9:16",
+      "audience": "Pessoas que avaliam a primeira ideia de negócio",
+      "instruction": "Remonte em motion narrativo o anúncio de startups mantendo duração, formato e fatos. Uma oferta de marmita a R$ 25 teve 3 compras em 20 ofertas. A versão a R$ 18, com entrega até 11h30, teve 14 compras em 20 ofertas. A segunda oferta mudou duas condições. Escolha o gancho, a narrativa, os cortes, o motion e a direção sonora.",
+      "baseline": "startups-motion-dramatico.mp4"
+    },
+    {
+      "id": "recuperar-versao",
+      "durationSeconds": {
+        "min": 30,
+        "max": 45
+      },
+      "format": "9:16",
+      "audience": "Pessoas que trabalham com arquivos digitais e colaboram sob prazo",
+      "instruction": "Crie um motion com história sobre uma ferramenta fictícia que permite recuperar uma versão anterior de um arquivo. Alguém percebe que a versão atual perdeu uma parte importante e tem pouco tempo para recuperar o trabalho. A promessa é conseguir voltar à versão que procura. Escolha a história, o gancho, as cenas, o estilo e o som."
+    }
+  ],
+  "screening": {
+    "blind": true,
+    "alternateBaselineOrder": true,
+    "viewerQuestions": [
+      "O que você esperava que acontecesse depois da abertura?",
+      "Em que momento a sua leitura mudou? O que você entendeu?",
+      "Que detalhe do começo ganhou outro sentido?",
+      "O que o som fez naquele momento?"
+    ],
+    "startupComparison": [
+      "preferência de gancho",
+      "clareza da virada",
+      "clareza da tese",
+      "contribuição do som"
+    ],
+    "artifacts": [
+      "mp4",
+      "projeto_editável"
+    ]
+  }
+}

@@ -64,6 +64,10 @@ def restore(job, engine, directory, params):
 def decorate_receipt(db, record, key, answer):
     job = session_job(db, record, key)
     result = (job.result_payload or {}) if job else {}
+    if result.get("deliveryReview"):
+        answer = {**answer, "deliveryReview": result["deliveryReview"]}
+    if result.get("directorOperations"):
+        answer = {**answer, "directorOperations": result["directorOperations"]}
     export_id = result.get("exportJobId")
     render = db.get(StudioGenerationJob, export_id) if export_id else None
     if render is not None:

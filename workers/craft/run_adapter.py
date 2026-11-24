@@ -121,6 +121,16 @@ def run(request: dict, engine: str):
         image,
         f"/opt/clicko/bin/clicko-{engine}-adapter",
     ]
+    if engine == "effectcraft":
+        argv[argv.index(image):argv.index(image)] = ["--env", "RAYON_NUM_THREADS=1"]
+        font_dirs = sorted({
+            str(Path(item["path"]).parent).replace("\\", "/")
+            for item in payload["params"].get("media", [])
+            if item.get("mediaType") in {"font/ttf", "font/otf"}
+            and item.get("path", "").startswith("/job/")
+        })
+        if font_dirs:
+            argv[argv.index(image):argv.index(image)] = ["--env", "EFFECTCRAFT_FONT_DIRS=" + ":".join(font_dirs)]
     if hasattr(os, "getuid") and hasattr(os, "getgid"):
         # Native Linux temporary directories are private (0700); execute with
         # the materializing worker's uid, while retaining all container limits.

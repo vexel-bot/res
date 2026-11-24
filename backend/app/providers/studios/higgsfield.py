@@ -68,7 +68,44 @@ class _IdeogramInput(BaseModel):
     _validate_url = field_validator("image_url")(lambda v: _https_url(v) if v is not None else v)
 
 
-INPUTS = {TTV: _KlingInput, I2V: _KlingImageInput, IMAGE: _IdeogramInput}
+REFERENCE = "minimax/h3-lite/reference-to-video"
+
+
+class _ReferenceInput(BaseModel):
+    model_config = ConfigDict(extra="forbid", strict=True, hide_input_in_errors=True)
+    prompt: str = Field(min_length=1, max_length=7000)
+    duration: int = Field(default=5, ge=4, le=15)
+    resolution: Literal["480P", "768P"] = "768P"
+    aspect_ratio: Literal["21:9", "16:9", "4:3", "1:1", "3:4", "9:16"] = "16:9"
+    image_urls: list[str] = Field(default_factory=list, max_length=9)
+    video_urls: list[str] = Field(default_factory=list, max_length=3)
+    audio_urls: list[str] = Field(default_factory=list, max_length=3)
+
+    @model_validator(mode="after")
+    def validate_references(self):
+        refs = self.image_urls + self.video_urls + self.audio_urls
+        if not refs:
+            raise ValueError("higgsfield_reference_required")
+        for url in refs:
+            _https_url(url)
+        return self
+
+
+LTX = "lightricks/ltx-2.5/image-to-video/fast"
+
+
+class _LtxMotionInput(BaseModel):
+    model_config = ConfigDict(extra="forbid", strict=True, hide_input_in_errors=True)
+    prompt: str = Field(min_length=2, max_length=5000)
+    image_url: str
+    duration: Literal[8] = 8
+    resolution: Literal["4k"] = "4k"
+    aspect_ratio: Literal["9:16"] = "9:16"
+    generate_audio: Literal[False] = False
+    _validate_image = field_validator("image_url")(_https_url)
+
+
+INPUTS = {LTX: _LtxMotionInput, TTV: _KlingInput, I2V: _KlingImageInput, IMAGE: _IdeogramInput, REFERENCE: _ReferenceInput}
 
 
 def _canonical(value) -> str:
@@ -78,7 +115,7 @@ def _canonical(value) -> str:
 class PreparedGeneration(BaseModel):
     """Persistable immutable intent; never a document or an approval receipt."""
     model_config = ConfigDict(extra="forbid", frozen=True, hide_input_in_errors=True)
-    model: Literal["kling-video/v3.0/std/text-to-video", "kling-video/v3.0/std/image-to-video", "ideogram/v4.0"]
+    model: Literal["kling-video/v3.0/std/text-to-video", "kling-video/v3.0/std/image-to-video", "ideogram/v4.0", "minimax/h3-lite/reference-to-video", "lightricks/ltx-2.5/image-to-video/fast"]
     payload_json: str = Field(repr=False, max_length=65536)
     idempotency_key: str = Field(repr=False, min_length=1, max_length=255)
 

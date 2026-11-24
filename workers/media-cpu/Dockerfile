@@ -10,7 +10,11 @@ WORKDIR /opt/clicko
 COPY backend/requirements.txt ./backend/requirements.txt
 RUN python3 -m venv /opt/clicko/venv \
     && /opt/clicko/venv/bin/pip install --no-cache-dir --requirement backend/requirements.txt
+COPY backend/requirements-rea-video.txt ./backend/requirements-rea-video.txt
+RUN python3 -m venv /opt/clicko/rea-video \
+    && /opt/clicko/rea-video/bin/pip install --no-cache-dir --requirement backend/requirements-rea-video.txt
 COPY backend/app ./backend/app
+COPY docs/studios/knowledge/reference-evidence ./docs/studios/knowledge/reference-evidence
 COPY workers/media-cpu/worker.manifest.json ./worker-manifest.json
 RUN install -d -o clicko -g clicko /var/lib/clicko /tmp/clicko-craft
 
@@ -23,6 +27,7 @@ ENV PATH="/opt/clicko/venv/bin:${PATH}" \
     STUDIO_CRAFT_PHOTOCRAFT_BINARY="/opt/clicko/bin/clicko-photocraft-adapter" \
     STUDIO_CRAFT_FILMCRAFT_BINARY="/opt/clicko/bin/clicko-filmcraft-adapter" \
     STUDIO_CRAFT_EFFECTCRAFT_BINARY="/opt/clicko/bin/clicko-effectcraft-adapter" \
+    STUDIO_CRAFT_REA_VIDEO_BINARY="/opt/clicko/rea-video/bin/rea-video" \
     PHOTOCRAFT_NO_SYSTEM_FONTS="1" \
     FFMPEG_PATH="/usr/bin/ffmpeg" \
     FFPROBE_PATH="/usr/bin/ffprobe" \

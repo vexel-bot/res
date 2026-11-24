@@ -1,0 +1,22 @@
+{
+  "schemaVersion": "clicko.quality-transfer.v1",
+  "status": "prepared_not_executed",
+  "candidateTechnique": "Preserve a recognizable subject through a reveal and leave the new state enough room to read",
+  "sourceCycle": "orbita-quality-20261113",
+  "instruction": "Give the editor only the brief and assets. Keep the evaluation key out of its context.",
+  "cases": [
+    {
+      "id": "positive-new-product-in-action",
+      "brief": "Vídeo vertical de uma luminária de leitura fictícia. Mostre a luminária sendo acesa e a página se tornando legível. Termine com Conheça a luminária.",
+      "materialRequirements": ["Same real lamp and book before and after the action", "One continuous source with the switch gesture", "Mobile-readable call to action"],
+      "evaluationKey": ["A viewer can identify the same lamp before and after", "The switch and consequence remain legible", "No invented product claim", "Any lighting transition serves the action and preserves the page detail"]
+    },
+    {
+      "id": "counterexample-interface",
+      "brief": "Demonstre como exportar um projeto na Clicko usando uma gravação real da interface. Mostre o comando e a confirmação.",
+      "materialRequirements": ["Authorized interface capture with both action and confirmation", "No invented UI elements"],
+      "evaluationKey": ["The cursor and relevant control remain visible", "No decorative wipe hides the confirmation", "The method can be explained from the final edit", "An effect is optional and must not obscure the action"]
+    }
+  ],
+  "promotionRequires": ["Review both exported outputs", "Record retrieved evidence and applied decisions", "No material regression in factual accuracy, legibility or required sound", "A successful case and an appropriate adaptation or refusal in the counterexample"]
+}

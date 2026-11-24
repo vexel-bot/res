@@ -27,6 +27,7 @@ from ..domain.studios.craft import (
     CraftUpgradeRequestV1,
 )
 from ..domain.studios.llm import LLMConnectionRequest
+from ..domain.studios.craft_direction_v2 import HumanApproval
 from ..models import User
 from ..providers.studios.craft import ENGINES, EXTENSIONS, CraftRuntimeError, engine_capability
 from ..schemas import AssetOut
@@ -39,6 +40,21 @@ from .assets import assert_access, asset_out, validate_uploaded_content
 from .studios import owned_document
 
 router = APIRouter(prefix="/studios/v1", tags=["craft-studios-v1"])
+
+
+@router.get("/documents/{document_id}/craft/director-context")
+def director_context(document_id: str, db: Session = Depends(get_db), user: User = Depends(get_current_user)):
+    from ..services.studios.craft_project_context import context
+    record = owned_document(db, user.id, document_id)
+    return invoke(context, db, record, "")
+
+
+@router.post("/documents/{document_id}/craft/director-approval")
+def director_approval(document_id: str, request: HumanApproval,
+                      db: Session = Depends(get_db), user: User = Depends(get_current_user)):
+    from ..services.studios.craft_project_context import human_approval
+    record = owned_document(db, user.id, document_id)
+    return invoke(human_approval, db, record, user, request)
 
 
 def error(exc: ValueError) -> HTTPException:

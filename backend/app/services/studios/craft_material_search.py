@@ -68,25 +68,74 @@ def _nasa_images(db, workspace_id, user_id, query, deadline):
     return result
 
 
-def public_images(db, workspace_id, user_id, query, deadline):
+def _openverse_images(db, workspace_id, user_id, query, deadline):
+    data = _request("https://api.openverse.org/v1/images/", {"q": query, "page_size": 12,
+        "license": "cc0,pdm,by,by-sa"}, deadline)
+    result = []
+    for item in data.get("results", []):
+        url, page = item.get("url", ""), item.get("foreign_landing_url", "")
+        license_name = item.get("license", "").lower()
+        license_url, author = item.get("license_url", ""), item.get("creator", "")
+        if (license_name not in {"cc0", "pdm", "by", "by-sa"} or not license_url
+                or not all(urlsplit(u).scheme == "https" and urlsplit(u).hostname
+                           and not urlsplit(u).username for u in (url, page))):
+            continue
+        eligible = license_name in {"cc0", "pdm"} or bool(author)
+        evidence = f"Openverse index declares {license_name} {item.get('license_version', '')}. Credit: {author}. License: {license_url}. Source: {page}. Index metadata, not independent rights verification."
+        source = register_source(db, workspace_id, RegisteredEditingSourceV1(
+            title=_text(item.get("title") or "Openverse image")[:240], kind="image", url=url,
+            source_url=page, usage_evidence=evidence[:4000], description=_text(item.get("attribution", ""))[:4000],
+            tags=["openverse", license_name], auto_acquire=eligible), user_id)
+        result.append({"id": source["id"], "title": source["title"], "kind": "image", "sourceUrl": page,
+            "autoAcquire": eligible, "author": author, "license": license_name, "licenseUrl": license_url,
+            "width": item.get("width"), "height": item.get("height"), "discoveryProvider": "openverse",
+            "usageEvidence": evidence, "coverage": "Search metadata only; inspect the acquired file before judging suitability."})
+    return result
+
+
+COMMONS_FORMATS = {
+    "image": {"image/png", "image/jpeg", "image/webp"},
+    "video": {"video/mp4", "video/webm", "application/ogg", "video/ogg"},
+    "sound_effect": {"audio/wav", "audio/x-wav", "audio/mpeg", "audio/flac", "audio/ogg", "application/ogg"},
+    "music": {"audio/wav", "audio/x-wav", "audio/mpeg", "audio/flac", "audio/ogg", "application/ogg"},
+}
+
+
+def public_images(db, workspace_id, user_id, query, deadline, *, provider="commons", diagnostics=None, kind="image"):
     if not isinstance(query, str) or not query.strip() or len(query) > 250:
         raise ValueError("craft_material_query_invalid")
+    if provider == "openverse":
+        if kind != "image":
+            raise ValueError("craft_material_openverse_image_only")
+        return _openverse_images(db, workspace_id, user_id, query, deadline)
+    if provider == "polyhaven":
+        from .craft_polyhaven import search
+
+        return search(db, workspace_id, user_id, query, deadline, kind)
+    if provider != "commons":
+        raise ValueError("craft_material_provider_invalid")
+    if kind not in COMMONS_FORMATS:
+        raise ValueError("craft_material_commons_kind_unavailable")
+    media = {"image": "", "video": " filetype:video", "sound_effect": " filetype:audio", "music": " filetype:audio"}
     params = {"action": "query", "format": "json", "formatversion": 2, "generator": "search",
-              "gsrsearch": query, "gsrnamespace": 6, "gsrlimit": 12, "prop": "imageinfo",
+              "gsrsearch": query + media[kind], "gsrnamespace": 6, "gsrlimit": 12, "prop": "imageinfo",
               "iiprop": "url|mime|size|extmetadata", "iiurlwidth": 1600}
     try:
         data = _request(ENDPOINT, params, deadline)
     except ValueError as exc:
-        if str(exc) != "craft_material_public_search_unavailable":
+        if str(exc) != "craft_material_public_search_unavailable" or kind != "image":
             raise
+        if diagnostics is not None:
+            diagnostics.append({"provider": "commons", "status": "unavailable",
+                "fallback": "nasa_metadata_only", "alternative": "Choose provider=openverse to search a different index; do not infer that urban materials do not exist."})
         return _nasa_images(db, workspace_id, user_id, query, deadline)
     result = []
     for page in sorted(data.get("query", {}).get("pages", []), key=lambda item: item.get("index", 0)):
         info = next(iter(page.get("imageinfo", [])), {})
         # Only formats verified by the current native media importer are eligible.
-        if info.get("mime") not in {"image/png", "image/jpeg", "image/webp"}:
+        if info.get("mime") not in COMMONS_FORMATS[kind]:
             continue
-        url = info.get("thumburl") or info.get("url", "")
+        url = (info.get("thumburl") if kind == "image" else None) or info.get("url", "")
         parsed = urlsplit(url)
         if parsed.scheme != "https" or parsed.hostname != "upload.wikimedia.org" or parsed.username or parsed.password or parsed.port not in (None, 443):
             continue
@@ -101,11 +150,12 @@ def public_images(db, workspace_id, user_id, query, deadline):
         page_url = f"https://commons.wikimedia.org/?curid={page['pageid']}"
         evidence = f"Commons declares: {license_name or 'license not supplied'}. {license_url}. Author: {author}. Source: {page_url}."
         source = register_source(db, workspace_id, RegisteredEditingSourceV1(
-            title=_text(page.get("title", "Public image"))[:240], kind="image", url=url, source_url=page_url,
+            title=_text(page.get("title", "Public media"))[:240], kind=kind, url=url, source_url=page_url,
             usage_evidence=evidence[:4000], description=field("ImageDescription")[:4000],
             tags=["commons", license_name[:100]], auto_acquire=eligible,
         ), user_id)
-        result.append({"id": source["id"], "title": source["title"], "kind": "image", "sourceUrl": page_url,
+        result.append({"id": source["id"], "title": source["title"], "kind": kind, "sourceUrl": page_url,
+                       "width": info.get("width"), "height": info.get("height"),
                        "autoAcquire": eligible, "license": license_name, "licenseUrl": license_url, "author": author,
                        "description": source["description"], "discoveryProvider": "wikimedia_commons",
                        "usageEvidence": source["usageEvidence"],

@@ -167,6 +167,11 @@ export function useCraftStudio(options: Options) {
   const accept = React.useCallback((receipt: CraftReceipt) => {
     rememberDocument(receipt.document); setInspection(receipt.inspection); setStatus("ready");
     setActivePageId(receipt.inspection.activePageId); activePageRef.current = receipt.inspection.activePageId;
+    if (receipt.deliveryReview) setNotice(receipt.deliveryReview.status === "draft"
+      ? "Rascunho salvo. Há aspectos do vídeo que ainda precisam de revisão."
+      : receipt.deliveryReview.schemaVersion === "craft.delivery.v2"
+        ? "Revisão audiovisual e comparação registradas. Isso não equivale à sua aprovação final."
+        : "Revisão técnica concluída. A aprovação editorial e a escuta do áudio continuam separadas.");
     if (receipt.exportJobId) {
       const generation = scopeRef.current;
       void productApi.studioGenerationJob(receipt.exportJobId).then((render) => {
@@ -248,15 +253,15 @@ export function useCraftStudio(options: Options) {
     } finally { if (scopeRef.current === generation) workingRef.current = false; }
   }
 
-  async function applyAI(instruction: string, connectionId?: string, model?: string, directionEffort?: CraftDirectionEffort, workflow?: 'native' | 'motion_swarm') {
+  async function applyAI(instruction: string, connectionId?: string, model?: string, directionEffort?: CraftDirectionEffort, workflow?: 'native' | 'motion_swarm', generationBudgetUsd?: number, requireExport?: boolean, unlimitedBudget?: boolean, directionContract?: "v1" | "v2") {
     const generation = scopeRef.current;
     return operate(async (active) => {
       const request: CraftAIRecovery = { schemaVersion: "clicko.craft-ai-recovery.v1", userId: userId!,
         workspaceId: workspaceId!, documentId: active.documentId, engine, expectedRevision: active.revision,
-        instruction, idempotencyKey: crypto.randomUUID(), pageId: activePageRef.current, connectionId, model, directionEffort, workflow };
+        instruction, idempotencyKey: crypto.randomUUID(), pageId: activePageRef.current, connectionId, model, directionEffort, workflow, generationBudgetUsd, requireExport, unlimitedBudget, directionContract };
       persistAI(request);
       const result = await craftApi.ai(active.documentId, request.expectedRevision, instruction,
-        request.idempotencyKey, request.pageId, connectionId, model, directionEffort, workflow);
+        request.idempotencyKey, request.pageId, connectionId, model, directionEffort, workflow, generationBudgetUsd, requireExport, unlimitedBudget, directionContract);
       if (scopeRef.current === generation && result.exportStatus !== "pending") persistAI(undefined);
       return result;
     }, accept);
@@ -274,7 +279,7 @@ export function useCraftStudio(options: Options) {
       if (outcome.receipt && !outcome.exportPending) { accept(outcome.receipt); persistAI(undefined); }
       else if (outcome.exportPending || (resume && outcome.canResume) || outcome.responseReady) {
         const result = await craftApi.ai(request.documentId, request.expectedRevision, request.instruction,
-          request.idempotencyKey, request.pageId, request.connectionId, request.model, request.directionEffort, request.workflow);
+          request.idempotencyKey, request.pageId, request.connectionId, request.model, request.directionEffort, request.workflow, request.generationBudgetUsd, request.requireExport, request.unlimitedBudget, request.directionContract);
         if (scopeRef.current === generation) {
           accept(result);
           if (result.exportStatus !== "pending") persistAI(undefined);
@@ -287,7 +292,7 @@ export function useCraftStudio(options: Options) {
         setNotice(`O pedido terminou sem aplicar alterações (${outcome.errorCode || outcome.status}). A cobrança eventualmente reservada permanece no histórico.`);
       } else if (outcome.status === "not_found") {
         const result = await craftApi.ai(request.documentId, request.expectedRevision, request.instruction,
-          request.idempotencyKey, request.pageId, request.connectionId, request.model, request.directionEffort, request.workflow);
+          request.idempotencyKey, request.pageId, request.connectionId, request.model, request.directionEffort, request.workflow, request.generationBudgetUsd, request.requireExport, request.unlimitedBudget, request.directionContract);
         if (scopeRef.current === generation) { accept(result); persistAI(undefined); }
       } else {
         setStatus("ready"); setNotice("O servidor ainda não confirmou o resultado deste pedido. Verifique novamente; o pedido não será duplicado.");

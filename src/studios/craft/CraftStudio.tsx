@@ -1,5 +1,6 @@
 import React from "react";
 import { EditorialGuidePanel } from "./EditorialGuidePanel";
+import { CraftEditReviews } from "./CraftEditReviews";
 import { ArrowLeft, Check, Download, Film, History, Image as ImageIcon, Layers3, LoaderCircle, Plus, Redo2, RefreshCw, Save, Send, Sparkles, Undo2, Upload, WandSparkles, X } from "lucide-react";
 import { useProductData } from "../../context/ProductDataContext";
 import { productApi, type AssetRecord } from "../../api/productApi";
@@ -121,6 +122,11 @@ export function CraftStudio({ mode, pathname = window.location.pathname, search 
   const [commandParams, setCommandParams] = React.useState<Record<string, unknown>>({});
   const [instruction, setInstruction] = React.useState("");
   const [deliberate, setDeliberate] = React.useState(false);
+  const [openEnded, setOpenEnded] = React.useState(true);
+  const [generationBudget, setGenerationBudget] = React.useState(1.5);
+  const [unlimitedBudget, setUnlimitedBudget] = React.useState(true);
+  const [comparativeDirection, setComparativeDirection] = React.useState(false);
+  const [exportWithAI, setExportWithAI] = React.useState(false);
   const [swarm, setSwarm] = React.useState(false);
   const [sourceMessage, setSourceMessage] = React.useState("");
   const [registeringSource, setRegisteringSource] = React.useState(false);
@@ -383,19 +389,47 @@ export function CraftStudio({ mode, pathname = window.location.pathname, search 
         {layer?.properties && <details className="craft-properties"><summary>Propriedades atuais</summary><dl>{Object.entries(layer.properties).filter(([, value]) => typeof value === "string" || typeof value === "number" || typeof value === "boolean").map(([key, value]) => <React.Fragment key={key}><dt>{friendlyFields[key] || key}</dt><dd>{String(value)}</dd></React.Fragment>)}</dl></details>}
         <div className="craft-ai">
           <div><Sparkles size={17} /><h2>Direção com IA</h2></div>
-          <p>Descreva a mudança. A IA usa as mesmas ferramentas e registra suas alterações no histórico.</p>
+          <p>{engine !== "photocraft" && modelSelection.nativeVideoDirection && modelSelection.model?.startsWith("claude-")
+            ? "Descreva o resultado desejado. O Claude escolhe os cortes, os efeitos e os trechos que vai revisar na Clicko."
+            : "Descreva a mudança. A IA usa as mesmas ferramentas e registra suas alterações no histórico."}</p>
           <CraftModelPicker workspaceId={data.activeWorkspace.id} userId={userId} disabled={locked} onChange={setModelSelection} />
-          {engine !== "photocraft" && <label><input type="checkbox" checked={deliberate} disabled={locked} onChange={(event) => setDeliberate(event.target.checked)} /> Mais tempo para planejar</label>}
+          {engine !== "photocraft" && modelSelection.nativeVideoDirection && <label><input type="checkbox" checked={openEnded} disabled={locked} onChange={(event) => setOpenEnded(event.target.checked)} /> Edição e revisão sem prazo total</label>}
+          {engine !== "photocraft" && !(modelSelection.nativeVideoDirection && openEnded) && <label><input type="checkbox" checked={deliberate} disabled={locked} onChange={(event) => setDeliberate(event.target.checked)} /> Mais tempo para planejar</label>}
           {engine === "effectcraft" && modelSelection.swarmAvailable && <label><input type="checkbox" checked={swarm} disabled={locked} onChange={(event) => setSwarm(event.target.checked)} /> Especialistas em paralelo · experimental · usa o saldo do Console Anthropic</label>}
+          {engine !== "photocraft" && modelSelection.nativeVideoDirection && !swarm && openEnded && <label>
+            <input type="checkbox" checked={unlimitedBudget} disabled={locked} onChange={(event) => setUnlimitedBudget(event.target.checked)} />
+            Sem teto de gasto nesta edição
+            <small>O Claude decide quando concluir. O consumo fica registrado no histórico.</small>
+          </label>}
+          {engine !== "photocraft" && modelSelection.nativeVideoDirection && !swarm && !(openEnded && unlimitedBudget) && <label>Limite deste pedido (US$)
+            <input type="number" min={0.01} max={10} step={0.01} value={generationBudget} disabled={locked}
+              onChange={(event) => setGenerationBudget(event.currentTarget.valueAsNumber)} />
+            <small>Inclui direção, edição e revisão. Retomar usa o restante do mesmo limite.</small>
+          </label>}
+          {engine !== "photocraft" && modelSelection.nativeVideoDirection && !swarm && <label>
+            <input type="checkbox" checked={exportWithAI} disabled={locked} onChange={(event) => setExportWithAI(event.target.checked)} />
+            Revisar e exportar vídeo ao concluir
+          </label>}
+          {engine !== "photocraft" && modelSelection.nativeVideoDirection && !swarm && <label>
+            <input type="checkbox" checked={comparativeDirection} disabled={locked} onChange={(event) => setComparativeDirection(event.target.checked)} />
+            Direção com comparação de versões
+            <small>Preserva decisões e problemas entre revisões. Avaliações ainda indisponíveis ficam pendentes.</small>
+          </label>}
           <label htmlFor="craft-instruction" className="craft-sr-only">Pedido de edição com IA</label>
           <textarea id="craft-instruction" value={instruction} onChange={(event) => setInstruction(event.target.value)} placeholder={engine === "photocraft" ? "Ajuste o título e deixe a composição mais leve…" : "Ajuste os cortes e crie uma abertura mais direta…"} disabled={locked} />
-          <button disabled={locked || !instruction.trim() || !modelSelection.available} onClick={() => void run(async () => {
+          <button disabled={locked || !instruction.trim() || !modelSelection.available || (modelSelection.nativeVideoDirection && !swarm && !(openEnded && unlimitedBudget) && (!Number.isFinite(generationBudget) || generationBudget <= 0 || generationBudget > 10))} onClick={() => void run(async () => {
             const workflow = engine === "effectcraft" && modelSelection.swarmAvailable && swarm ? "motion_swarm" : "native";
-            await studio.applyAI(instruction.trim(), modelSelection.connectionId, modelSelection.model,
-              engine !== "photocraft" && deliberate ? "deliberate" : "standard", workflow);
+            const effort = engine === "photocraft" ? "standard"
+              : modelSelection.nativeVideoDirection && openEnded ? "open_ended" : deliberate ? "deliberate" : "standard";
+            const cappedVideo = engine !== "photocraft" && modelSelection.nativeVideoDirection && workflow === "native";
+            const freeVideo = cappedVideo && openEnded && unlimitedBudget;
+            await studio.applyAI(instruction.trim(), modelSelection.connectionId, modelSelection.model, effort, workflow,
+              cappedVideo && !freeVideo ? generationBudget : undefined, cappedVideo ? exportWithAI : undefined,
+              freeVideo || undefined, cappedVideo && comparativeDirection ? "v2" : undefined);
             setInstruction("");
           })}><Sparkles size={15} /> Aplicar direção</button>
         </div>
+        {engine === "effectcraft" && <CraftEditReviews key={doc.documentId} documentId={doc.documentId} revision={doc.revision} />}
         {engine !== "photocraft" && <EditorialGuidePanel key={doc.documentId} documentId={doc.documentId} revision={doc.revision} disabled={locked} />}
         <div className="craft-export-options"><h2>Saída</h2><label>Formato<select value={exportFormat} onChange={(event) => setExportFormat(event.target.value)} disabled={locked || !formats.length}>{formats.map((item) => <option key={item} value={item}>{item === "png_set" ? "Todas as páginas · PNG em ZIP" : item.toUpperCase()}</option>)}</select></label><small>Exportações são processadas no servidor a partir da revisão salva.</small></div>
         {engine === "effectcraft" && sourceDocumentId && <button disabled={locked} onClick={() => void run(async () => { await studio.save(); const montage = await productApi.studioDocument(sourceDocumentId); await craftApi.linkComposition(montage.documentId, montage.revision, doc.documentId, crypto.randomUUID()); const next = new URLSearchParams(search); next.set("mode", "video"); next.set("document", montage.documentId); next.delete("sourceDocument"); navigate(`${pathname}?${next}`); })}><Film size={15} /> Usar na montagem</button>}

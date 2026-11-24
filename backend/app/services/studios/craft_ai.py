@@ -55,6 +55,24 @@ def planning_schema(value):
 
 def ai_commands(db, record, request, user, key, *, native_budget=None, motion_experiment=False):
     payload = request.model_dump(mode="json")
+    explicit_budget = request.generation_budget_usd
+    if request.unlimited_budget and (explicit_budget is not None or request.workflow != "native"
+                                     or motion_experiment or request.direction_effort != "open_ended"
+                                     or request.execution_time_limit_seconds is not None):
+        raise ValueError("craft_unlimited_native_requires_open_ended_without_cap")
+    if explicit_budget is not None and (request.workflow != "native" or motion_experiment):
+        raise ValueError("craft_capped_swarm_not_supported")
+    # Omitted additive fields preserve receipts and resumptions created before
+    # per-task resource controls were introduced.
+    for field, default in (
+        ("generation_budget_usd", None), ("execution_time_limit_seconds", None), ("require_export", False),
+        ("review_windows", []),
+        ("unlimited_budget", False),
+        ("direction_contract", "v1"),
+        ("editorial_profile", "auto"),
+    ):
+        if payload.get(field) == default:
+            payload.pop(field, None)
     public_swarm = request.workflow == "motion_swarm" and not motion_experiment
     motion_experiment = motion_experiment or public_swarm
     if request.workflow == "native":
@@ -112,8 +130,19 @@ def ai_commands(db, record, request, user, key, *, native_budget=None, motion_ex
     elif selected != "universal":
         raise ValueError("craft_ai_planner_not_configured")
     capability = require_capability(contract.native_editor_state.engine)
-    available = editable_commands(capability)
+    available = [item for item in editable_commands(capability) if not item["id"].startswith("host.")]
     native_session = selected == "universal" and connection.config["protocol"] == "anthropic_messages"
+    if request.direction_effort == "open_ended" and (
+        not native_session or contract.native_editor_state.engine not in {"effectcraft", "filmcraft"}
+        or request.execution_time_limit_seconds is not None
+    ):
+        raise ValueError("craft_open_ended_requires_native_video_without_time_limit")
+    if not native_session and (
+        explicit_budget is not None or request.execution_time_limit_seconds is not None or request.require_export
+        or request.review_windows or request.unlimited_budget or request.direction_contract == "v2"
+        or request.editorial_profile == "narrative_motion"
+    ):
+        raise ValueError("craft_resource_controls_require_native_session")
     if public_swarm and not (
         native_session and connection.provider == "anthropic" and connection.config["budgetUsd"] == 0
         and contract.native_editor_state.engine == "effectcraft"

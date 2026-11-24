@@ -1,0 +1,11 @@
+{
+  "id": "effect-audio-levels-per-sample-v1",
+  "path": "third_party/craft/effectcraft/crates/render/src/audio.rs",
+  "sourceSha256": "89d9e8626828f9cce2475365a87b869abc3e99fe9d2b93f2a96e7b3d4946e65f",
+  "replacements": [
+    {
+      "before": "        if ll == 0.0 && lr == 0.0 {\n            continue;\n        }\n        let buf = env.layer_audio(l, s0 + a as i64, b - a);\n        for (i, f) in buf.as_chunks::<2>().0.iter().enumerate() {\n            out[(a + i) * 2] += f[0] * ll;\n            out[(a + i) * 2 + 1] += f[1] * lr;\n        }",
+      "after": "        // WAV export mixes whole seconds; levels must follow sample time.\n        let dynamic = l.props.prop(\"audio/levels\").is_some_and(|p| p.is_animated() || p.has_expression());\n        if !dynamic && ll == 0.0 && lr == 0.0 {\n            continue;\n        }\n        let buf = env.layer_audio(l, s0 + a as i64, b - a);\n        for (i, f) in buf.as_chunks::<2>().0.iter().enumerate() {\n            let (ll, lr) = if dynamic {\n                let (left, right) = levels(&env, l, sample_tick(s0 + (a + i) as i64, rate));\n                (left * gl, right * gr)\n            } else { (ll, lr) };\n            out[(a + i) * 2] += f[0] * ll;\n            out[(a + i) * 2 + 1] += f[1] * lr;\n        }"
+    }
+  ]
+}

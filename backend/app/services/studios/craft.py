@@ -2,6 +2,7 @@
 
 import hashlib
 import json
+import math
 import shutil
 import tempfile
 import zipfile
@@ -135,6 +136,9 @@ def workspace_files(db, record, state: NativeEditorStateV1 | None, *, extra_asse
                 raise ValueError("craft_media_manifest_path_conflict")
             paths.add(entry.path)
             asset = scoped_asset(db, record.workspace_id, entry.asset_id, entry.checksum_sha256)
+            from .editing_resources import analysis_only
+            if analysis_only(asset):
+                raise ValueError("craft_analysis_asset_not_production")
             source = stack.enter_context(get_object_storage(asset.storage_backend).materialize(asset.storage_key))
             if sha256_file(source).lower() != entry.checksum_sha256.lower():
                 raise ValueError("craft_asset_checksum_mismatch")
@@ -1228,7 +1232,8 @@ def execute_render_job(db, job, progress, is_cancelled):
     record = db.get(CreativeDocument, job.document_id)
     if not record or record.workspace_id != job.workspace_id or contract.document_id != record.id:
         raise ValueError("craft_render_document_mismatch")
-    assert_build(state, require_capability(state.engine))
+    capability = require_capability(state.engine)
+    assert_build(state, capability)
     if is_cancelled():
         return {"cancelled": True}
     progress(5)
@@ -1299,19 +1304,25 @@ def execute_render_job(db, job, progress, is_cancelled):
                     archive.writestr("manifest.json", json.dumps(manifest, ensure_ascii=False))
                 result = {"warnings": [], "frames": len(page_ids)}
             else:
-                result = call_engine(
-                    state.engine,
-                    "render.export",
-                    {
-                        **params,
-                        "outputPath": str(output),
-                        "format": "jpg" if spec["format"] == "jpeg" else spec["format"],
-                        "frame": spec.get("frame", 0),
-                        "quality": spec["quality"],
-                        "alpha": state.engine == "effectcraft" and spec["format"] == "webm",
-                    },
-                    cancelled=is_cancelled,
-                )
+                def render_native(method, **options):
+                    return call_engine(state.engine, method, {**params, **options}, cancelled=is_cancelled)
+
+                try:
+                    result = render_native("render.export", outputPath=str(output),
+                                           format="jpg" if spec["format"] == "jpeg" else spec["format"],
+                                           frame=spec.get("frame", 0), quality=spec["quality"],
+                                           alpha=state.engine == "effectcraft" and spec["format"] == "webm")
+                except CraftRuntimeError as error:
+                    from .craft_review import memory_failure, render_frame_ranges
+                    if (state.engine != "effectcraft" or spec["format"] != "mp4" or not memory_failure(error)
+                            or not capability.get("temporalReview", {}).get("frameRange")):
+                        raise
+                    project = render_native("project.open")["inspection"]
+                    fps = project["fps"]
+                    frames = max(1, math.ceil(project["durationMs"] * fps / 1000 - 1e-8))
+                    result = render_frame_ranges(render_native, output, {
+                        "firstFrame": 0, "endFrameExclusive": frames, "resolutionDivisor": 1,
+                    }, fps, spec["quality"], float("inf"))
             if not output.is_file() or not output.stat().st_size:
                 raise ValueError("craft_render_artifact_missing")
             verified_metadata = validate_render_output(output, spec["format"])
@@ -1445,6 +1456,10 @@ def native_bundle(db, record, state):
             for index, (_page_id, page_state) in enumerate(entries):
                 with workspace_files(db, record, page_state) as (_directory, params, _manifest):
                     archive.write(params["nativePath"], f"{index + 1:03d}{EXTENSIONS[state.engine]}")
+                    if state.engine == "effectcraft":
+                        from .craft_native_dependencies import font_requirements
+                        archive.writestr(f"requirements/{index + 1:03d}-fonts.json", json.dumps(
+                            font_requirements(Path(params["nativePath"]), state.engine, state.build_id)))
             copied = set()
             for reference in [*state.asset_manifest, *state.font_manifest]:
                 if reference.path in copied:
@@ -1456,6 +1471,21 @@ def native_bundle(db, record, state):
                     if sha256_file(path) != reference.checksum_sha256:
                         raise ValueError("craft_bundle_media_checksum_mismatch")
                     archive.write(path, reference.path)
+                blender_source = (asset.object_metadata or {}).get("craftBlenderSource", {})
+                if blender_source.get("assetId"):
+                    source = scoped_asset(db, record.workspace_id, blender_source["assetId"])
+                    if source.media_type != "application/x-blender":
+                        raise ValueError("craft_blender_scene_required")
+                    source_path = f"scenes/{source.id}.blend"
+                    if source_path not in copied:
+                        with get_object_storage(source.storage_backend).materialize(source.storage_key) as path:
+                            if sha256_file(path) != source.checksum_sha256:
+                                raise ValueError("craft_bundle_media_checksum_mismatch")
+                            archive.write(path, source_path)
+                        copied.add(source_path)
+                    archive.writestr(f"scenes/{asset.id}.json", json.dumps({
+                        **blender_source, "renderedAssetPath": reference.path, "scenePath": source_path,
+                    }))
                 copied.add(reference.path)
             for index, reference in enumerate(state.dependencies):
                 asset = scoped_asset(db, record.workspace_id, reference.project_asset_id, reference.checksum_sha256)

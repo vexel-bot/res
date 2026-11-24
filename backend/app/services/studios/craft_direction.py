@@ -12,10 +12,11 @@ from PIL import Image, ImageOps
 from ...domain.studios.contracts import NativeMediaReferenceV1
 from ...domain.studios.editing_resources import ResourceMetadataV1
 from ..object_storage import get_object_storage, sha256_file
-from .editing_resources import acquire_registered_source, registered_sources, store_resource
+from .editing_resources import acquire_registered_source, analysis_only, catalog, registered_sources, store_resource
 
-NATIVE_KINDS = {"image", "logo", "wardrobe", "video", "music", "sound_effect"}
-NATIVE_MEDIA = {"image/png", "image/jpeg", "image/webp", "video/mp4", "audio/wav", "audio/mpeg", "audio/flac"}
+NATIVE_KINDS = {"image", "logo", "wardrobe", "video", "music", "sound_effect", "model", "environment"}
+NATIVE_MEDIA = {"image/png", "image/jpeg", "image/webp", "video/mp4", "video/webm",
+                "audio/wav", "audio/mpeg", "audio/flac", "audio/ogg", "model/gltf-binary", "image/vnd.radiance"}
 
 
 def repertoire():
@@ -25,11 +26,15 @@ def repertoire():
     old = load("motion_editorial_cards.v1.json")
     styles = load("craft_editing_styles.v1.json")
     research = load("craft_research_observations.v1.json")
+    openmotion = load("craft_openmotion_recipes.v1.json")
+    stories = load("craft_story_repertoire.v1.json")
     cards = {}
     for source, entries in (("motion_editorial_cards.v1.json", old["cards"]),
                             ("craft_motion_repertoire.v1.json", native["cards"]),
                             ("craft_editing_styles.v1.json", styles["cards"]),
-                            ("craft_research_observations.v1.json", research["cards"])):
+                            ("craft_research_observations.v1.json", research["cards"]),
+                            ("craft_openmotion_recipes.v1.json", openmotion["cards"]),
+                            ("craft_story_repertoire.v1.json", stories["cards"])):
         for original in entries:
             card = dict(original)
             card["provenance"] = {"file": source, "evidenceState": card.get("state", "hypothesis")}
@@ -63,11 +68,22 @@ def repertoire_version():
     return hashlib.sha256(json.dumps(payload, ensure_ascii=False, sort_keys=True).encode()).hexdigest()
 
 
-def references(ids):
+def references(ids, workspace_id=None):
     if not isinstance(ids, list) or not 1 <= len(ids) <= 5 or not all(isinstance(item, str) for item in ids):
         raise ValueError("craft_reference_ids_invalid")
     cards = repertoire()
-    return {key: cards.get(key, {}) for key in ids}
+    return {key: reference_availability(cards[key], workspace_id) if key in cards else {} for key in ids}
+
+
+def reference_availability(card, workspace_id):
+    source = card.get("source", {})
+    reference_id = source.get("referenceId")
+    if not reference_id:
+        return card
+    from .craft_references import reference_index as evidence_index
+
+    available = any(item["id"] == reference_id and item["temporalAvailable"] for item in evidence_index(workspace_id))
+    return {**card, "source": {**source, "temporalAvailable": available}}
 
 
 def editing_method():
@@ -91,6 +107,7 @@ def search_repertoire(db, workspace_id, query, engine="effectcraft", limit=12):
     local = []
     for card in repertoire().values():
         score = len(wanted & terms(json.dumps(card, ensure_ascii=False)))
+        score += 2 * len(wanted & terms(" ".join(card.get("keywords", []))))
         local.append((score, card["id"], card))
     hits = editing_repertoire.search_repertoire(db, workspace_id, query) if query.strip() else []
     hit_documents = {hit["documentId"] for hit in hits}
@@ -116,11 +133,12 @@ def search_repertoire(db, workspace_id, query, engine="effectcraft", limit=12):
     ranked = sorted(local, key=lambda item: (-item[0], item[1]))
     matches = [card for score, _, card in ranked if score or not wanted]
     return {"query": query, "engine": engine, "repertoireVersion": repertoire_version(),
-            "matches": matches[:limit], "total": len(matches), "retrievedKnowledge": hits,
+            "matches": [reference_availability(card, workspace_id) for card in matches[:limit]],
+            "total": len(matches), "retrievedKnowledge": hits,
             "instruction": "Preserve evidence qualifications. Adapt editorial procedures to verified native commands."}
 
 
-def editorial_context(db, workspace_id, document_id, query="", engine="effectcraft", brand_id=None):
+def editorial_context(db, workspace_id, document_id, query="", engine="effectcraft", brand_id=None, *, suggest_techniques=True):
     from .craft_learning import project_feedback, style_guide
 
     # Retrieval has a short search contract. The full creative instruction is
@@ -132,8 +150,10 @@ def editorial_context(db, workspace_id, document_id, query="", engine="effectcra
     if brand_id:
         guides.append(style_guide(db, workspace_id, "brand", brand_id))
     return {
-        "method": editing_method(), "repertoireVersion": repertoire_version(), "referenceIndex": reference_index(),
-        "relevantReferences": search_repertoire(db, workspace_id, retrieval_query, engine, limit=6),
+        "repertoireVersion": repertoire_version(), "referenceIndex": reference_index(),
+        **({"method": editing_method(),
+            "relevantReferences": search_repertoire(db, workspace_id, retrieval_query, engine, limit=6)}
+           if suggest_techniques else {}),
         "retrievalQueryCoverage": {"sourceCharacters": len(query), "searchedCharacters": len(retrieval_query),
                                    "fullInstructionRetainedByDirector": True},
         "styleGuides": guides, "projectFeedback": project_feedback(db, workspace_id, document_id) if document_id else [],
@@ -149,6 +169,15 @@ def source_candidates(db, workspace_id, query):
         {key: candidate.get(key) for key in ("id", "title", "kind", "description", "sourceUrl", "autoAcquire")}
         for candidate in registered_sources(db, workspace_id, query) if candidate.get("kind") in NATIVE_KINDS
     ][:12]
+
+
+def media_candidates(db, workspace_id, query, kind):
+    candidates = [{"id": f"asset:{row['id']}", "title": row["title"], "kind": kind,
+                   "autoAcquire": True, "sourceUrl": row["resource"].get("sourceUrl"),
+                   "description": row["resource"].get("description"), "technical": row["resource"].get("technical")}
+                  for row in catalog(db, workspace_id, query, kind)
+                  if row["mediaType"] in NATIVE_MEDIA and row["resource"].get("usageEvidence")]
+    return [*candidates, *(row for row in source_candidates(db, workspace_id, query) if row["kind"] == kind)][:12]
 
 
 def working_copy(db, job, user, asset, maximum_side):
@@ -192,7 +221,15 @@ def acquire_material(db, job, user, draft, manifests, source_id, maximum_side=No
     acquisition_key = f"{source_id}:{maximum_side}" if maximum_side else source_id
     if acquisition_key in acquired:
         return acquired[acquisition_key]
-    asset = acquire_registered_source(db, job.workspace_id, source_id, user.id, automatic=True)
+    if source_id.startswith("asset:"):
+        from .craft import scoped_asset
+
+        asset = scoped_asset(db, job.workspace_id, source_id.removeprefix("asset:"))
+        if (not (asset.object_metadata or {}).get("editingResource", {}).get("usageEvidence")
+                or analysis_only(asset)):
+            raise ValueError("craft_material_restricted")
+    else:
+        asset = acquire_registered_source(db, job.workspace_id, source_id, user.id, automatic=True)
     if asset.media_type not in NATIVE_MEDIA:
         raise ValueError("craft_material_format_unavailable")
     if (asset.object_metadata or {}).get("rightsStatus") == "restricted":
@@ -204,6 +241,12 @@ def acquire_material(db, job, user, draft, manifests, source_id, maximum_side=No
         "sourceId": source_id, "originalAssetId": original_id, "assetId": asset.id, "title": asset.title, "mediaType": asset.media_type,
         "provenance": (asset.object_metadata or {}).get("editingResource", {}),
     }
+    return stage_material(db, job, draft, manifests, asset, acquisition_key, info)
+
+
+def stage_material(db, job, draft, manifests, asset, acquisition_key, info):
+    state = job.result_payload or {}
+    acquired = state.get("acquiredSources", {})
     entry = None
     if not any(entry.asset_id == asset.id for entry in manifests):
         relative_path = f"assets/{asset.id}{Path(asset.storage_key).suffix}"

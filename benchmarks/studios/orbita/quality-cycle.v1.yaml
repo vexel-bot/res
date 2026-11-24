@@ -1,0 +1,20 @@
+{
+  "schemaVersion": "clicko.quality-cycle.v1",
+  "cycleId": "orbita-quality-20261113",
+  "generationBudgetUsd": 5.0,
+  "executionTimeLimitSeconds": 3600,
+  "model": "claude-opus-5-5",
+  "connectionId": "9947192f-7acf-466c-b46b-a3eab369f618",
+  "sourceDocumentId": "273e5608-f162-4911-9c40-7df40fecf241",
+  "sourceJobId": "2e418fc1-dd9d-4149-b450-b0d832cae866",
+  "width": 1080,
+  "height": 1920,
+  "frameRate": 30,
+  "initialDurationSeconds": 30,
+  "copy": "O futuro cabe num curta. ÓRBITA, mostra de curtas de ficção científica. Confira a programação.",
+  "referenceIds": ["research.model.cinematic_motif", "research.model.product_in_action", "research.model.layered_collage", "orbita.quality.baseline"],
+  "technicalTolerances": {"geometryPixels": 2, "visualFrames": 1, "audioSeconds": 0.05},
+  "maxPaidGenerations": 1,
+  "audienceStudy": false,
+  "perceptualAudioApproval": "requires identified human listening"
+}

@@ -1,0 +1,284 @@
+{
+  "cards": [
+    {
+      "id": "story.sol-opening",
+      "intent": "Construir uma regra visual antes de surpreender",
+      "state": "knowledge_only",
+      "formats": [
+        "motion_narrative"
+      ],
+      "source": {
+        "title": "Sol",
+        "creator": "ALTKID",
+        "url": "https://www.instagram.com/reel/DeOan0hvOol/",
+        "referenceId": "workspace.sol-altkid",
+        "startSeconds": 0,
+        "durationSeconds": 19
+      },
+      "observed": "A voz nomeia categorias e a montagem percorre gerações de objetos.",
+      "adaptation": "Repetir uma relação fácil de reconhecer para preparar uma mudança de leitura.",
+      "avoid": "Evitar catálogos longos quando os exemplos não aumentam a expectativa.",
+      "keywords": [
+        "gancho",
+        "abertura",
+        "familiar",
+        "regra",
+        "expectativa",
+        "neofilia",
+        "aha"
+      ]
+    },
+    {
+      "id": "story.sol-accumulation",
+      "intent": "Acumular provas antes de mudar a interpretação",
+      "state": "knowledge_only",
+      "formats": [
+        "motion_narrative"
+      ],
+      "source": {
+        "title": "Sol",
+        "creator": "ALTKID",
+        "url": "https://www.instagram.com/reel/DeOan0hvOol/",
+        "referenceId": "workspace.sol-altkid",
+        "startSeconds": 19,
+        "durationSeconds": 20
+      },
+      "observed": "O e-mail passa por velocidade, anexos, notificações, organização e spam.",
+      "adaptation": "Deixar o espectador acreditar numa explicação que depois se revelará incompleta.",
+      "avoid": "Evitar repetir exemplos que não acrescentam uma dimensão nova.",
+      "keywords": [
+        "acumular",
+        "prova",
+        "repetição",
+        "expectativa",
+        "argumento"
+      ]
+    },
+    {
+      "id": "story.sol-turn",
+      "intent": "Adiar a revelação para o espectador formular a pergunta",
+      "state": "knowledge_only",
+      "formats": [
+        "motion_narrative"
+      ],
+      "source": {
+        "title": "Sol",
+        "creator": "ALTKID",
+        "url": "https://www.instagram.com/reel/DeOan0hvOol/",
+        "referenceId": "workspace.sol-altkid",
+        "startSeconds": 39,
+        "durationSeconds": 18.4
+      },
+      "observed": "A montagem muda do que o e-mail faz para a pessoa que ainda espera diante do computador.",
+      "adaptation": "Trocar a régua: o que parecia resolver o problema atendia apenas a uma parte dele.",
+      "avoid": "Dar contexto suficiente antes da virada; suspense sem uma pergunta legível vira espera.",
+      "keywords": [
+        "revelacao",
+        "cedo",
+        "cedo-demais",
+        "aha",
+        "virada",
+        "pergunta",
+        "surpresa",
+        "contraste",
+        "reinterpretação",
+        "conflito"
+      ]
+    },
+    {
+      "id": "story.sol-pause",
+      "intent": "Dar espaço à virada antes de apresentar o produto",
+      "state": "knowledge_only",
+      "formats": [
+        "motion_narrative"
+      ],
+      "source": {
+        "title": "Sol",
+        "creator": "ALTKID",
+        "url": "https://www.instagram.com/reel/DeOan0hvOol/",
+        "referenceId": "workspace.sol-altkid",
+        "startSeconds": 57.4,
+        "durationSeconds": 7.6
+      },
+      "observed": "Uma frase curta sobre fundo escuro antecede a aparição do símbolo da Sol.",
+      "adaptation": "Separar o instante de entender o problema do instante de ver a solução.",
+      "avoid": "Uma pausa sem expectativa nem consequência perde força.",
+      "keywords": [
+        "pausa",
+        "silencio",
+        "voz",
+        "ritmo",
+        "antecipação",
+        "produto"
+      ]
+    },
+    {
+      "id": "story.sol-return",
+      "intent": "Voltar à imagem inicial com outro significado",
+      "state": "knowledge_only",
+      "formats": [
+        "motion_narrative"
+      ],
+      "source": {
+        "title": "Sol",
+        "creator": "ALTKID",
+        "url": "https://www.instagram.com/reel/DeOan0hvOol/",
+        "referenceId": "workspace.sol-altkid",
+        "startSeconds": 88.4,
+        "durationSeconds": 15.8
+      },
+      "observed": "Uma galeria reúne objetos e fecha com a Sol em seu próprio lugar.",
+      "adaptation": "Reapresentar uma forma familiar depois que a história lhe acrescentar uma função.",
+      "avoid": "Repetir a abertura literalmente não produz virada por si só.",
+      "keywords": [
+        "encerramento",
+        "callback",
+        "motivo",
+        "final",
+        "volta",
+        "começo",
+        "significado"
+      ]
+    },
+    {
+      "id": "story.santiago-eye",
+      "intent": "Conduzir o olhar durante cortes rápidos",
+      "state": "knowledge_only",
+      "formats": [
+        "motion_narrative"
+      ],
+      "source": {
+        "title": "Can AI replace?",
+        "creator": "Santiago Gonzalez",
+        "url": "https://www.instagram.com/reel/DfTYoDthUQR/",
+        "startSeconds": 6,
+        "durationSeconds": 6
+      },
+      "observed": "Uma linha guia o olhar apesar da troca de composição, paleta e textura.",
+      "adaptation": "Manter o ponto de atenção entre cenas e trocar o contexto ao redor.",
+      "avoid": "Velocidade sem um ponto de chegada torna a leitura mais difícil.",
+      "keywords": [
+        "atravessar",
+        "cenas",
+        "conduzir",
+        "olhar",
+        "linha",
+        "atencao",
+        "corte",
+        "rapido",
+        "continuidade"
+      ]
+    },
+    {
+      "id": "story.velotile-word",
+      "intent": "Revelar o sentido pelo atraso de uma palavra",
+      "state": "knowledge_only",
+      "formats": [
+        "motion_narrative"
+      ],
+      "source": {
+        "title": "Velotile",
+        "creator": "Kirtan Limbani",
+        "url": "https://www.instagram.com/reel/DfUueC_J5xs/",
+        "startSeconds": 9,
+        "durationSeconds": 6
+      },
+      "observed": "A palavra final aparece depois de imagens de pessoas diante de computadores e muda a leitura da frase.",
+      "adaptation": "Atrasar a palavra decisiva somente enquanto a primeira leitura for plausível.",
+      "avoid": "Se as duas leituras parecerem artificiais, vale usar uma ação ou imagem para revelar.",
+      "keywords": [
+        "revelacao",
+        "cedo",
+        "palavra",
+        "suspense",
+        "tipografia",
+        "believe",
+        "entonação"
+      ]
+    },
+    {
+      "id": "story.ahmad-sound",
+      "intent": "Fazer o som preparar a próxima imagem",
+      "state": "knowledge_only",
+      "formats": [
+        "motion_narrative"
+      ],
+      "source": {
+        "title": "SFX Breakdown",
+        "creator": "Ahmad M",
+        "url": "https://www.instagram.com/reel/DgEmtVeSO0H/",
+        "startSeconds": 7,
+        "durationSeconds": 6
+      },
+      "observed": "Lente, cidade, película e figura colorida se sucedem acima de uma timeline em camadas.",
+      "adaptation": "Experimentar entradas e caudas que cruzam o corte, e conferir pela escuta.",
+      "avoid": "A timeline visível não permite identificar cada som ou seu roteamento.",
+      "keywords": [
+        "som",
+        "preparar",
+        "mudança",
+        "efeitos",
+        "sonoros",
+        "antecipação",
+        "sfx",
+        "transicao",
+        "j-cut",
+        "l-cut"
+      ]
+    },
+    {
+      "id": "story.seph-motif",
+      "intent": "Manter um motivo reconhecível enquanto muda de função",
+      "state": "knowledge_only",
+      "formats": [
+        "motion_narrative"
+      ],
+      "source": {
+        "title": "Intro de viagem",
+        "creator": "Seph",
+        "url": "https://www.instagram.com/reel/De3y3D1BpHZ/",
+        "startSeconds": 15,
+        "durationSeconds": 12
+      },
+      "observed": "O ponto azul conecta grade, nome de lugar e abertura para outra imagem.",
+      "adaptation": "Carregar um objeto entre cenas e alterar seu sentido pela nova relação visual.",
+      "avoid": "Um elo apenas decorativo vira truque se não transmite informação.",
+      "keywords": [
+        "motivo",
+        "ponto",
+        "mapa",
+        "atravessar",
+        "continuidade",
+        "morph",
+        "transformação",
+        "quadro"
+      ]
+    },
+    {
+      "id": "story.calista-demo",
+      "intent": "Mostrar a promessa no ritmo da demonstração",
+      "state": "knowledge_only",
+      "formats": [
+        "motion_narrative"
+      ],
+      "source": {
+        "title": "Templates de motion",
+        "creator": "Calista Suherman",
+        "url": "https://www.instagram.com/reel/DezTC68MC-O/",
+        "startSeconds": 16,
+        "durationSeconds": 5
+      },
+      "observed": "Drag, Drop e Done acompanham o gesto no notebook.",
+      "adaptation": "Fazer a duração e a sequência da demonstração comunicarem a promessa.",
+      "avoid": "A cadência não compensa uma etapa essencial omitida.",
+      "keywords": [
+        "demonstração",
+        "produto",
+        "gesto",
+        "ritmo",
+        "oferta",
+        "clique"
+      ]
+    }
+  ]
+}

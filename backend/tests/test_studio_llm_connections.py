@@ -26,6 +26,21 @@ def config(protocol="openai_chat"):
             "authHeader": "Authorization", "authPrefix": "Bearer", "maxOutputTokens": 1000}
 
 
+def test_craft_http_503_preserves_request_id_and_does_not_retry():
+    seen = []
+    def respond(request):
+        seen.append(request)
+        return httpx.Response(503, headers={"request-id": "req-fixture-503"}, json={"error": {"type": "overloaded_error"}})
+    settings = {**config("anthropic_messages"), "models": ["claude-opus-5-5"]}
+    with httpx.Client(transport=httpx.MockTransport(respond)) as client:
+        planner = UniversalLLMPlanner(settings, "test-credential", client=client)
+        with pytest.raises(ValueError, match="llm_provider_http_503") as caught:
+            planner.craft_turn("claude-opus-5-5", "test", [{"role": "user", "content": "test"}], [], 100, 15)
+    assert len(seen) == 1
+    assert caught.value.http_status == 503 and caught.value.provider_request_id == "req-fixture-503"
+    assert caught.value.response_stage == "before_stream"
+
+
 def payload(protocol):
     text = json.dumps(COMMAND)
     if protocol == "openai_chat":

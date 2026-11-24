@@ -9,6 +9,7 @@ import { forwardMeteredVideoRequest } from './videoQuota';
 import { reconcileStudioVideoJob } from '../governance';
 import { studioBridgeSecret } from './bridgeKey';
 import { isLocalDevRequest } from '../devMode';
+import { longStudioRequest } from './longRequest';
 export { studioBridgeSecret } from './bridgeKey';
 
 export function studioBridgeToken(auth: AuthContext, clientId: string | null, module: string, secret: string, mediaAdmission?: Record<string, unknown>, motionGeminiExperimental = false) {
@@ -64,6 +65,7 @@ export function createStudiosProxy(options: { origin?: string; secret?: string; 
         || (['PUT', 'POST'].includes(req.method) && /^\/materials\/(?:project|document)\/[^/]+\/(?:kits\/[^/]+|binding|preview|apply|cutout|import|effects)\/?$/.test(path))
         || (req.method === 'POST' && /^\/documents\/?$/.test(path))
         || (req.method === 'POST' && /^\/documents\/[^/]+\/(?:agent-tasks(?:\/[^/]+\/(?:apply|editorial-review))?|local-commands)\/?$/.test(path))
+        || (req.method === 'POST' && /^\/documents\/[^/]+\/craft\/ai-commands\/?$/.test(path))
         || (req.method === 'POST' && /^\/video\/documents\/[^/]+\/(?:openrouter-media|ai-commands|render-jobs)\/?$/.test(path))
         || (req.method === 'PUT' && /^\/video\/documents\/[^/]+\/timeline\/?$/.test(path));
     } catch { return false; }
@@ -125,10 +127,13 @@ export function createStudiosProxy(options: { origin?: string; secret?: string; 
     const openEdit = req.body?.editorial?.openEdit === true;
     const timelineProof = sceneDirection && typeof req.body?.editorial?.timelineProofAssetId === 'string';
     const deepEdit = openEdit && req.body?.editorial?.cutEffort === 'xhigh';
-    const craftAI = req.method === 'POST' && /^\/documents\/[^/]+\/craft\/ai-commands\/?$/.test(req.path);
+    const craftAI = canonicalJsonRoute(req) && req.method === 'POST'
+      && /^\/documents\/[^/]+\/craft\/ai-commands\/?$/.test(decodeURIComponent(req.path));
+    const openEndedCraft = craftAI && req.body?.directionEffort === 'open_ended';
+    const forwardRequest = openEndedCraft && !options.fetch ? longStudioRequest : upstreamFetch;
     const swarmEdit = craftAI && req.body?.workflow === 'motion_swarm';
     const craftClipReview = req.method === 'POST' && /^\/documents\/[^/]+\/craft\/clip-review\/?$/.test(req.path);
-    const timer = setTimeout(() => controller.abort(), swarmEdit ? 3_730_000 : craftAI ? 1_090_000 : craftClipReview || timelineProof || deepEdit ? 730_000 : sceneDirection || openEdit ? 490_000 : creativeCut ? 320_000 : 180_000);
+    const timer = openEndedCraft ? undefined : setTimeout(() => controller.abort(), swarmEdit ? 3_730_000 : craftAI ? 1_090_000 : craftClipReview || timelineProof || deepEdit ? 730_000 : sceneDirection || openEdit ? 490_000 : creativeCut ? 320_000 : 180_000);
     const abort = () => { if (!res.writableEnded) controller.abort(); };
     req.on('aborted', abort); res.on('close', abort);
     try {
@@ -150,7 +155,7 @@ export function createStudiosProxy(options: { origin?: string; secret?: string; 
           id: receiptId, documentId: appearanceRoute ? appearanceRoute[1] : avatarRoute ? req.body.documentId : editingRoute![1], key: req.header('idempotency-key'), operation: req.body.operation,
           ...(['generate_video', 'generate_avatar'].includes(req.body.operation) ? { seconds: Number(req.body.durationSeconds ?? 8) } : {}),
         })}`);
-        return upstreamFetch(target, {
+        return forwardRequest(target, {
         method: req.method, headers, signal: controller.signal,
         body: editingRoute || avatarRoute || appearanceRoute || canonicalJsonRoute(req) ? JSON.stringify(req.body) : ['GET', 'HEAD'].includes(req.method) ? undefined : req as unknown as BodyInit,
         duplex: ['GET', 'HEAD'].includes(req.method) ? undefined : 'half',

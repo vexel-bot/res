@@ -2,7 +2,7 @@ import React from "react";
 import { Plus, Save, X } from "lucide-react";
 import { craftApi, type LLMConnection, type LLMConnectionInput, type LLMCatalog, type LLMProtocol } from "./craftApi";
 
-export interface ModelSelection { connectionId?: string; model?: string; available: boolean; swarmAvailable?: boolean }
+export interface ModelSelection { connectionId?: string; model?: string; available: boolean; swarmAvailable?: boolean; nativeVideoDirection?: boolean }
 interface Props {
   workspaceId: string; userId: string; disabled: boolean;
   onChange: (value: ModelSelection) => void;
@@ -58,7 +58,8 @@ export function CraftModelPicker({ workspaceId, userId, disabled, onChange }: Pr
       && selected.config.protocol === "anthropic_messages" && selected.config.budgetUsd === 0
       && model === "claude-opus-5-5"
       && ["claude-sonnet-5-5", "claude-haiku-5-5"].every((id) => selected.config.models.includes(id)));
-    onChange({ connectionId: active ? selected.id : undefined, model: active ? model : undefined, available, swarmAvailable });
+    onChange({ connectionId: active ? selected.id : undefined, model: active ? model : undefined, available, swarmAvailable,
+      nativeVideoDirection: Boolean(active && selected.config.protocol === "anthropic_messages") });
     if (catalog) {
       try { localStorage.setItem(preference, JSON.stringify({ connectionId: selected?.id, model })); } catch { /* No credentials are stored here. */ }
     }

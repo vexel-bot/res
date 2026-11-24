@@ -69,6 +69,10 @@ test('Canonical JSON is bounded and forwarded as a complete body while media upl
     assert.equal(response.status, 200, route);
     assert.equal(bodies.at(-1), body, route);
   }
+  const craftBody = JSON.stringify({ directionEffort: 'open_ended', expectedRevision: 3, instruction: 'Revise o corte' });
+  const craft = await fetch(base + '/documents/doc/craft/ai-commands', { method: 'POST', headers, body: craftBody });
+  assert.equal(craft.status, 200);
+  assert.equal(bodies.at(-1), craftBody);
   const before = bodies.length;
   assert.equal((await fetch(base + '/documents', { method: 'POST', headers, body: '{broken' })).status, 400);
   assert.equal((await fetch(base + '/documents', { method: 'POST', headers,

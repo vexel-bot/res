@@ -192,10 +192,29 @@ def reserve_request(db, job, connection, prompt_chars, tokens, *, max_amount=Non
         # strings cannot bypass the configured ceiling via a chars/3 estimate.
         amount = max(amount, (prompt_chars * in_rate + tokens * out_rate) / 1000000)
         if provider_only:
-            if not (
+            from ...domain.studios.craft import MAX_GENERATION_BUDGET_USD
+
+            capped_native = job.request_payload.get("billingPolicy") == "anthropic_console_capped"
+            cap = job.request_payload.get("generationBudgetUsd")
+            valid_capped = (
+                capped_native and job.request_payload.get("boundedNativeSession") is True
+                and job.job_type == "craft_ai" and job.request_payload.get("motionExperiment") is None
+                and type(cap) in {int, float} and math.isfinite(cap) and 0 < cap <= MAX_GENERATION_BUDGET_USD
+            )
+            valid_unlimited = (
                 job.request_payload.get("billingPolicy") == "anthropic_console"
                 and job.request_payload.get("motionExperiment") == "orbita"
-                and job.job_type in {"craft_ai", "agent_plan"} and job.provider == "llm.anthropic"
+                and job.job_type in {"craft_ai", "agent_plan"}
+            )
+            valid_native_unlimited = (
+                job.request_payload.get("billingPolicy") == "anthropic_console_native"
+                and job.job_type == "craft_ai" and job.request_payload.get("unlimitedNativeSession") is True
+                and job.request_payload.get("boundedNativeSession") is False and cap is None
+                and job.request_payload.get("motionExperiment") is None
+                and job.request_payload.get("directionEffort") == "open_ended"
+            )
+            if not (
+                (valid_capped or valid_unlimited or valid_native_unlimited) and job.provider == "llm.anthropic"
                 and connection.provider == "anthropic"
                 and config["protocol"] == "anthropic_messages"
                 and config["baseUrl"].rstrip("/") == "https://api.anthropic.com/v1"
@@ -215,10 +234,12 @@ def reserve_request(db, job, connection, prompt_chars, tokens, *, max_amount=Non
             if not math.isfinite(exposure + measured) or min(exposure, measured) < 0:
                 raise ValueError("external_reservation_invalid")
             cumulative = round(measured + exposure + amount, 8)
+            if capped_native and cumulative > cap:
+                raise ValueError("llm_generation_budget_exceeded")
             job.result_payload = {
                 **state, "llmReservationUsd": cumulative, "financialReservationUsd": cumulative,
                 "nextTurnReservationUsd": round(amount, 8), "costCurrency": "USD",
-                "costSource": "per-turn-reservation", "billingPolicy": "anthropic_console",
+                "costSource": "per-turn-reservation", "billingPolicy": job.request_payload["billingPolicy"],
             }
             return
         if max_amount is not None and amount > max_amount:

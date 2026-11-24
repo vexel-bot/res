@@ -18,6 +18,7 @@ import subprocess
 import tarfile
 import time
 import urllib.request
+from source_patches import patched_sources, manifest as source_patch_manifest
 
 ROOT = Path(__file__).resolve().parents[2]
 ADAPTERS = {"photocraft": "photo", "filmcraft": "film", "effectcraft": "effect"}
@@ -346,7 +347,8 @@ def main():
         }
         (ROOT / ".codex-runtime/craft/runtime-manifest.json").write_text(
             json.dumps(
-                {"schemaVersion": "clicko.craft-runtime.v1", "engines": builds},
+                {"schemaVersion": "clicko.craft-runtime.v1", "engines": builds,
+                 "sourcePatches": [source_patch_manifest()["id"]]},
                 indent=2,
             )
             + "\n",
@@ -365,4 +367,5 @@ def main():
 
 if __name__ == "__main__":
     with build_lock():
-        main()
+        with patched_sources():
+            main()

@@ -1,0 +1,156 @@
+{
+  "schemaVersion": "clicko.reference-evidence.v1",
+  "references": [
+    {
+      "id": "research.model.cinematic_motif",
+      "file": "paulo-contact-play.jpg",
+      "sha256": "0028acd737fcff888a22dd281a6c3c04ce886bea656d29d1f3afae6596db6e7a",
+      "reference": {
+        "creator": "@paulo.ia",
+        "title": "Olise / bola dourada",
+        "url": "https://www.instagram.com/reel/Dd5Md7NMj7P/",
+        "durationSeconds": 25.05
+      },
+      "state": "observed_visual_samples",
+      "coverage": {
+        "visual": "sampled_playback_frames",
+        "requestedSampleSeconds": [
+          0.5,
+          3,
+          6,
+          9,
+          12,
+          15,
+          18,
+          21,
+          24
+        ],
+        "timing": "approximate_landmarks_not_cut_boundaries",
+        "audio": "not_audited",
+        "fullMotion": "not_audited",
+        "sourceProductionPipeline": "not_fully_verified",
+        "observationDate": "2026-11-12",
+        "limits": [
+          "Observed visual states and proposed production steps are separate.",
+          "No auditory analysis or exact easing measurement.",
+          "Reference media is for analysis, not an authorized production asset."
+        ]
+      }
+    },
+    {
+      "id": "research.model.product_in_action",
+      "file": "creators-contact.jpg",
+      "sha256": "7e1296b2a9dac8b4e180fa4498a7ae46b88445ae3e789a5ce1d1dcc7089c8017",
+      "reference": {
+        "creator": "@creators / crédito a @martsromero",
+        "title": "Matcha na NYFW",
+        "url": "https://www.instagram.com/reel/DdW0UoSxXsX/",
+        "durationSeconds": 34.8517
+      },
+      "state": "observed_visual_samples",
+      "coverage": {
+        "visual": "sampled_playback_frames",
+        "requestedSampleSeconds": [
+          0.5,
+          3,
+          6,
+          10,
+          14,
+          18,
+          22,
+          27,
+          33
+        ],
+        "timing": "approximate_landmarks_not_cut_boundaries",
+        "audio": "not_audited",
+        "fullMotion": "not_audited",
+        "sourceProductionPipeline": "not_fully_verified",
+        "observationDate": "2026-11-12",
+        "limits": [
+          "Observed visual states and proposed production steps are separate.",
+          "No auditory analysis or exact easing measurement.",
+          "Reference media is for analysis, not an authorized production asset."
+        ]
+      }
+    },
+    {
+      "id": "research.model.layered_collage",
+      "file": "moonsol-contact.jpg",
+      "sha256": "17e80a2594dc8f2822288338a5633668c676411d6139aeb9858359507882f69e",
+      "reference": {
+        "creator": "@moonsol.design",
+        "title": "Colagem “I’m just a girl”",
+        "url": "https://www.instagram.com/moonsol.design/reel/Dcys2J3MfYK/",
+        "durationSeconds": 53.7527
+      },
+      "state": "observed_visual_samples",
+      "coverage": {
+        "visual": "sampled_playback_frames",
+        "requestedSampleSeconds": [
+          0.25,
+          1.5,
+          3,
+          6,
+          14,
+          27,
+          40,
+          48,
+          52
+        ],
+        "timing": "approximate_landmarks_not_cut_boundaries",
+        "audio": "not_audited",
+        "fullMotion": "not_audited",
+        "sourceProductionPipeline": "not_fully_verified",
+        "observationDate": "2026-11-12",
+        "limits": [
+          "Observed visual states and proposed production steps are separate.",
+          "No auditory analysis or exact easing measurement.",
+          "Reference media is for analysis, not an authorized production asset."
+        ]
+      }
+    },
+    {
+      "id": "orbita.quality.baseline",
+      "file": "orbita-independente-quadros.jpg",
+      "sha256": "3f3be0f72eec6eb4be47b697b30d9ea48a0c49506b09774364c7e62f33283b75",
+      "reference": {
+        "title": "ÓRBITA · baseline visual reconhecido pelo proprietário",
+        "creator": "Clicko / Opus; exportação local de recuperação por Codex",
+        "url": "https://github.com/vexel-bot/res/releases/download/orbita-independent-2026-11-12/orbita-independente-previa-sem-audio.mp4",
+        "durationSeconds": 16
+      },
+      "state": "positive_progress_needs_revision",
+      "coverage": {
+        "visual": "sampled_rendered_frames",
+        "timing": "contact_sheet_landmarks_not_complete_motion_review",
+        "audio": "absent",
+        "fullMotion": "not_audited",
+        "observationDate": "2026-11-12",
+        "limits": [
+          "Owner feedback is not final advertisement approval or viewer comprehension.",
+          "The original video is silent, includes a broad light peak around 8 seconds and required manual export recovery."
+        ]
+      },
+      "baseline": {
+        "videoSha256": "040484f64c32e9d7d47aff43b5d1fe69626382dfc598ae0b217296ec7f490391",
+        "ownerFeedback": {
+          "source": "project owner, conversation on 2026-11-12",
+          "comment": "Esse vídeo é nosso primeiro resultado positivo, mas ainda temos muito trabalho á fazer",
+          "classification": "positive_progress_needs_revision",
+          "firstPositiveResult": true,
+          "finalAdvertisementApproved": false,
+          "audienceStudy": false
+        },
+        "exportOrigin": "Codex local recovery of unmodified Opus renderer",
+        "pending": [
+          "Sound design and auditory review",
+          "Full-frame light peak around 8 seconds",
+          "Movement and typography refinement",
+          "Autonomous completed export",
+          "Transfer to another brief",
+          "Viewer comprehension evaluation"
+        ]
+      }
+    }
+  ]
+}

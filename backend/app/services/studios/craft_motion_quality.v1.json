@@ -1,0 +1,134 @@
+{
+  "schemaVersion": "craft.motion-quality.v1",
+  "capabilities": [
+    {
+      "id": "curves",
+      "checks": [
+        "Native tangents and stroke caps/joins persist",
+        "Rendered continuity at delivery resolution",
+        "Object follows revealed path"
+      ]
+    },
+    {
+      "id": "movement",
+      "checks": [
+        "Temporal interpolation and pivot persist",
+        "Anticipation, impact and recovery observed at native rate"
+      ]
+    },
+    {
+      "id": "composition",
+      "checks": [
+        "Masks, clipping and layer order persist",
+        "Transition neighbors and occlusion observed"
+      ]
+    },
+    {
+      "id": "depth",
+      "checks": [
+        "Identify 2D simulation versus actual perspective",
+        "Observe parallax, occlusion and focus without assuming 3D"
+      ]
+    },
+    {
+      "id": "lighting_materials",
+      "checks": [
+        "Verify gradients/effect parameters",
+        "Observe surface and lighting coherence; glow alone is insufficient"
+      ]
+    },
+    {
+      "id": "shadows",
+      "checks": [
+        "Contact and shadow position agree",
+        "Softness and height response remain coherent during motion"
+      ]
+    },
+    {
+      "id": "typography",
+      "checks": [
+        "Resolve actual font and metrics",
+        "Observe mobile legibility and complete wordmark during transitions"
+      ]
+    },
+    {
+      "id": "sound",
+      "checks": [
+        "Verify cuts, envelopes, synchronization and exported signal",
+        "Perceptual balance and integration require actual listening"
+      ]
+    }
+  ],
+  "extensionPolicy": "Isolate implementation defect, incorrect use or absent capability. Integrate another engine only for a demonstrated unmet need; qualify it before quality claims. Never silently substitute a different visual operation.",
+  "exercises": [
+    {
+      "capability": "movement",
+      "goal": "Bring an element into view and let it settle on the intended accent.",
+      "counterexample": "A fast linear entry stops abruptly or moves the object around the wrong pivot.",
+      "parameterChange": "Delay the accent five frames while keeping the final position and the reading hold.",
+      "transfer": "Apply the timing to a different shape with an off-center visual mass.",
+      "evidence": "Inspect keys and pivot. Measure frame positions across arrival and verify the hold after reopening."
+    },
+    {
+      "capability": "composition",
+      "goal": "Use an animated edge to reveal a complete product silhouette.",
+      "counterexample": "A successful mask call leaves a rectangular slab or obscures the part that identifies the product.",
+      "parameterChange": "Reverse reveal direction while preserving the final visible region.",
+      "transfer": "Use existing product artwork with a different size and crop.",
+      "evidence": "Measure or inspect the visible region at onset, crossing and completion in both preview and export."
+    },
+    {
+      "capability": "typography",
+      "goal": "Emphasize a word and preserve one stable reading beat.",
+      "counterexample": "Default anchors crop letters or text remains moving for the whole reading window.",
+      "parameterChange": "Change the word and font weight while retaining the visual center.",
+      "transfer": "Recompose a longer two-line headline within the vertical frame.",
+      "evidence": "Resolve actual font, measure text bounds and review the first/last readable frames at mobile size."
+    },
+    {
+      "capability": "sound",
+      "goal": "Align a visual hit with a sound and taper the gain through the following action.",
+      "counterexample": "The command reports success while the exported audio stays flat or the hit is displaced after trimming.",
+      "parameterChange": "Lower the second hit by 6 dB and retain the onset positions.",
+      "transfer": "Repeat with a different source and frame rate, keeping the visual and audio offsets in one timebase.",
+      "evidence": "Compare rendered timestamps and gain. Record actual playback observations for perceptual judgment."
+    }
+  ],
+  "creativeAcceptance": {
+    "durationSeconds": [
+      6,
+      10
+    ],
+    "briefs": [
+      {
+        "id": "kinetic-type",
+        "instruction": "Reveal the provided headline in two beats. One word lands on the supplied audio marker. Use a stable readable hold after the accent.",
+        "criteria": [
+          "Matched emphasis and onset",
+          "Complete readable headline at mobile width",
+          "Native editable layers"
+        ]
+      },
+      {
+        "id": "product-reveal",
+        "instruction": "Make a moving edge reveal the supplied product, then let its identifying detail hold while the supporting copy enters.",
+        "criteria": [
+          "Silhouette does not jump",
+          "Identifying detail is legible after crossing",
+          "Mask and timing remain adjustable"
+        ]
+      },
+      {
+        "id": "continuity-cut",
+        "instruction": "Use movement in the final frame of the first asset to connect into the second asset. Keep geometry and direction coherent through the cut.",
+        "criteria": [
+          "Movement and geometry connect",
+          "No accidental flash or frozen frames",
+          "Cut can be revised and exported"
+        ]
+      }
+    ],
+    "measurement": "Use identical starting material and limits for baseline and current flows. Record first useful preview time, interventions, measured cost, project reopen and export. Randomize candidates for human review.",
+    "gate": "Technical pass in all three briefs and blind preference for the current flow in at least two."
+  }
+}

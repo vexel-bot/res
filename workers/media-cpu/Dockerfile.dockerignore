@@ -1,8 +1,14 @@
 **
 !backend/
 !backend/requirements.txt
+!backend/requirements-rea-video.txt
 !backend/app/
 !backend/app/**
+!docs/
+!docs/studios/
+!docs/studios/knowledge/
+!docs/studios/knowledge/reference-evidence/
+!docs/studios/knowledge/reference-evidence/**
 !workers/
 !workers/media-cpu/
 !workers/media-cpu/worker.manifest.json

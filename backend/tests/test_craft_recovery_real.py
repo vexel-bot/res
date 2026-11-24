@@ -77,6 +77,7 @@ def test_filmcraft_reads_source_before_editing_and_exports(client, monkeypatch, 
     monkeypatch.setattr(craft_agent, "reserve_request", lambda _db, job, *_args, **_kwargs:
                         setattr(job, "result_payload", {"llmReservationUsd": 0}))
     calls = iter([
+        ("scan_source_shots", {"assetId": asset_id}),
         ("inspect_source_media", {"assetId": asset_id, "seconds": [0.2, 1.3]}),
         ("read_source_transcript", {"assetId": asset_id, "unit": "word"}),
         ("edit_project", {"commands": [
@@ -88,10 +89,13 @@ def test_filmcraft_reads_source_before_editing_and_exports(client, monkeypatch, 
     ])
 
     def turn(_model, _system, messages, tools, _tokens, _seconds):
-        assert {"inspect_source_media", "read_source_transcript", "finish_project"} <= {
+        assert {"scan_source_shots", "inspect_source_media", "read_source_transcript", "finish_project"} <= {
             tool["name"] for tool in tools
         }
         name, args = next(calls)
+        if name == "inspect_source_media":
+            scan = json.loads(messages[-1]["content"][0]["content"])
+            assert scan["assetId"] == asset_id and scan["endSeconds"] == 2
         if name == "read_source_transcript":
             content = messages[-1]["content"][0]["content"]
             assert json.loads(content[0]["text"])["hasAudio"] is True
@@ -117,7 +121,8 @@ def test_filmcraft_reads_source_before_editing_and_exports(client, monkeypatch, 
     assert result.json()["exportStatus"] == "succeeded", result.text
 
 
-def test_effectcraft_checkpoint_survives_two_interruptions_and_exports_after_resume(client, monkeypatch):
+@pytest.mark.parametrize("direction_effort", ["standard", "open_ended"])
+def test_effectcraft_checkpoint_survives_two_interruptions_and_exports_after_resume(client, monkeypatch, direction_effort):
     token, workspace = register(client, "effectcraft-recovery@example.com")
     headers = {"Authorization": "Bearer " + token}
     root = "/api/v1/studios/v1"
@@ -151,14 +156,14 @@ def test_effectcraft_checkpoint_survives_two_interruptions_and_exports_after_res
     def edit_script(code):
         return ("edit_project", {"commands": [{"id": "script.run", "params": {"code": code}}]})
 
-    def turn(_model, _system, messages, tools, _tokens, _seconds):
+    def turn(_model, _system, messages, tools, _tokens, _seconds, **_options):
         calls.append(messages)
         number = len(calls)
         assert "finish_project" in {tool["name"] for tool in tools}
         if number in {2, 3}:
             raise ValueError("llm_provider_incomplete_response")
         if number == 4:
-            assert "last saved native draft" in messages[0]["content"]
+            assert "last saved native draft" in str(messages[0]["content"])
         if number == 5:
             assert "CHECKPOINT" in messages[-1]["content"][0]["content"]
         if number == 7:
@@ -180,7 +185,8 @@ def test_effectcraft_checkpoint_survives_two_interruptions_and_exports_after_res
         connection, SimpleNamespace(craft_turn=turn), "test-opus", "offline",
     ))
     key = "native-proof-edit-1"
-    payload = {"expectedRevision": revision, "instruction": "Anime e exporte", "connectionId": connection.id}
+    payload = {"expectedRevision": revision, "instruction": "Anime e exporte", "connectionId": connection.id,
+               "directionEffort": direction_effort}
     request_headers = {**headers, "Idempotency-Key": key}
     failure = client.post(base + "/ai-commands", headers=request_headers, json=payload)
     assert failure.status_code == 422, failure.text

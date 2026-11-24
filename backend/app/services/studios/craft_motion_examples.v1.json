@@ -1,0 +1,111 @@
+{
+  "schemaVersion": "craft.motion-examples.v1",
+  "buildId": "clicko-effectcraft-1.0.6+67434e90.audio-levels",
+  "limits": "Local mechanical examples only. Reproduce using scripts/validation/clicko-motion-*.py. Source reports are in output/motion-capability-cycle-2026-11-17. No professional finish, listening, full material system, physical shadows or volumetric CGI qualification. Different builds must be requalified.",
+  "examples": [
+    {
+      "operation": "position-interpolation",
+      "evidence": "v106-full-cadence/report.json",
+      "observation": "30 native frames; expected linear trajectory within 0.023 pixels; no adjacent identical frames. Does not measure interactive playback performance.",
+      "status": "local_observation_not_current_session_validation",
+      "evidenceBindings": [
+        {
+          "file": "v106-full-cadence/report.json",
+          "sha256": "2fa67e33885226eb3d5adac414bbf7f2814ffdbfabd88158281f948ecbfc988c"
+        }
+      ]
+    },
+    {
+      "operation": "mask-shape",
+      "evidence": "v106-capabilities/report.json",
+      "observation": "Rectangular mask clips a solid; animated width reveals it at frames 0,15,29. Other mask types/feather/mattes unqualified.",
+      "status": "local_observation_not_current_session_validation",
+      "evidenceBindings": [
+        {
+          "file": "v106-capabilities/report.json",
+          "sha256": "e0d15070663d87044fd8f2b049e132b5bdd1acab128e632371a0eb71285d98c6"
+        }
+      ]
+    },
+    {
+      "operation": "opacity-and-multiply",
+      "evidence": "v106-capabilities/report.json",
+      "observation": "50 percent opacity and Multiply alter solid compositing at frames 0,15,29.",
+      "status": "local_observation_not_current_session_validation",
+      "evidenceBindings": [
+        {
+          "file": "v106-capabilities/report.json",
+          "sha256": "e0d15070663d87044fd8f2b049e132b5bdd1acab128e632371a0eb71285d98c6"
+        }
+      ]
+    },
+    {
+      "operation": "gradient-and-drop-shadow",
+      "evidence": "v106-capabilities/report.json",
+      "observation": "Default Ramp and Drop Shadow produce visible changes. Surface shading and contact/height response not qualified.",
+      "status": "local_observation_not_current_session_validation",
+      "evidenceBindings": [
+        {
+          "file": "v106-capabilities/report.json",
+          "sha256": "e0d15070663d87044fd8f2b049e132b5bdd1acab128e632371a0eb71285d98c6"
+        }
+      ]
+    },
+    {
+      "operation": "text-anchor",
+      "evidence": "v106-capabilities/report.json",
+      "observation": "sourceRectAtTime-derived anchor centers full MOTION text at frames 0,15,29; uncorrected test crops initial letters. Exact chosen font and animated text still need inspection.",
+      "status": "local_observation_not_current_session_validation",
+      "evidenceBindings": [
+        {
+          "file": "v106-capabilities/report.json",
+          "sha256": "e0d15070663d87044fd8f2b049e132b5bdd1acab128e632371a0eb71285d98c6"
+        }
+      ]
+    },
+    {
+      "operation": "spatial-flat-layer-camera-light",
+      "evidence": "v106-capabilities/report.json",
+      "observation": "Y rotation changes a 3D-enabled plane's perspective; animated camera changes image; zero light intensity darkens plane. Not volumetric geometry or physical material qualification.",
+      "status": "local_observation_not_current_session_validation",
+      "evidenceBindings": [
+        {
+          "file": "v106-capabilities/report.json",
+          "sha256": "e0d15070663d87044fd8f2b049e132b5bdd1acab128e632371a0eb71285d98c6"
+        }
+      ]
+    },
+    {
+      "operation": "export-cadence",
+      "evidence": "v106-capabilities/export-probe.json",
+      "observation": "One-second native camera fixture exports 30 decoded frames at 30/1 fps with regular timestamps. Native versus MP4 differences measured at frames 0,15,29; no whole-film or UI playback guarantee.",
+      "status": "local_observation_not_current_session_validation",
+      "evidenceBindings": [
+        {
+          "file": "v106-capabilities/export-probe.json",
+          "sha256": "a5e2293600860f99d8a73e40f6cb790696124fb4ac24b9f13122d9b7a951c7d5"
+        }
+      ]
+    },
+    {
+      "operation": "audio-offset-and-levels",
+      "evidence": "audio-ab-before/report.json, audio-ab-after/report.json and audio-envelope-v106-final/report.json",
+      "observation": "Native WAV offset exports attacks at 0.200021 and 0.700021 seconds. Same-fixture A/B confirms keyed gains -6/-12 dB; old build holds -6 dB for both. Initially muted envelope also passes. PCM 48 kHz stereo, one second; no listening or mixing qualification.",
+      "status": "local_observation_not_current_session_validation",
+      "evidenceBindings": [
+        {
+          "file": "audio-ab-before/report.json",
+          "sha256": "4e97f461f5ac45c598053560a56a4e45bf12da94658707b2758ccb93461148c7"
+        },
+        {
+          "file": "audio-ab-after/report.json",
+          "sha256": "1e8788809c2310dcfe718780edebabe101da309f6ba48294d85ff215a805b350"
+        },
+        {
+          "file": "audio-envelope-v106-final/report.json",
+          "sha256": "8072d7da8d3dc9f6fafa0d530b9637e218185884a436dcc71b2f3831ae79e422"
+        }
+      ]
+    }
+  ]
+}

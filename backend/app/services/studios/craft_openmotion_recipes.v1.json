@@ -1,0 +1,98 @@
+{
+  "version": 1,
+  "cards": [
+    {
+      "id": "openmotion-ring-mask-reveal",
+      "intent": "Revelar produto ou palavra com máscara circular, arco, anel, íris, wipe ou forma que liga dois planos.",
+      "keywords": [
+        "ring mask reveal",
+        "máscara circular",
+        "revelação de produto",
+        "iris wipe",
+        "shape transition"
+      ],
+      "useWhen": "A borda visível pode dirigir o olhar e o segundo plano pode ocupar a área revelada.",
+      "operationRecipe": "Identifique o centro e a direção da forma no último momento do plano anterior. Coloque o produto em camada própria. No EffectCraft, inspecione máscaras e caminho animável, anime a máscara da camada do produto e confira que o contorno cobre as bordas antes do corte. Em outro motor, procure uma máscara animável equivalente antes de escolher a técnica.",
+      "avoid": "Evite uma máscara que divide o elemento principal durante a leitura ou uma dissolução que enfraqueça o movimento da borda.",
+      "test": "Compare o quadro em que a borda começa, o quadro em que ela cruza a silhueta e o primeiro quadro em que a revelação fica estável. Confira a leitura do produto em tamanho de celular.",
+      "sources": [
+        "https://github.com/nexu-io/openmotion/blob/1d5a15875969f6bd0b5f7e595fd34402e0333f33/library/skills/openmotion-ring-mask-reveal/SKILL.md"
+      ],
+      "kind": "motion_recipe",
+      "formats": [
+        "motion",
+        "hybrid"
+      ],
+      "native": true,
+      "state": "upstream technique adapted for native review; pending transfer validation",
+      "upstream": {
+        "repository": "nexu-io/openmotion",
+        "revision": "1d5a15875969f6bd0b5f7e595fd34402e0333f33",
+        "license": "Apache-2.0"
+      }
+    },
+    {
+      "id": "openmotion-container-morph",
+      "intent": "Conectar dois estados de um elemento por escala, posição e âncora, como container morph, match cut, continuidade de geometria ou card expand.",
+      "keywords": [
+        "match cut",
+        "corte por semelhança",
+        "geometria",
+        "container morph",
+        "continuity",
+        "easing"
+      ],
+      "useWhen": "Os dois planos compartilham uma forma ou enquadramento que o olho reconhece como continuação.",
+      "operationRecipe": "Meça primeiro a âncora, o tamanho e o sentido do movimento nos dois lados. Ajuste posição e escala da entrada para a borda principal chegar no lugar certo. Anime a saída para a pose final, incluindo um repouso claro. Prefira separar o movimento da forma do momento de revelar seu conteúdo. Teste a continuidade com cortes sem dissolução antes de adicionar opacidade.",
+      "avoid": "Evite herdar curvas e tempos do exemplo CSS. Se o centro e a borda não podem coincidir, escolha o que guia o olhar e confira se a diferença restante é visível.",
+      "test": "Compare centro, tamanho e direção em quadros consecutivos na troca. Observe quanto tempo a nova silhueta leva para ser reconhecível.",
+      "sources": [
+        "https://github.com/nexu-io/openmotion/blob/1d5a15875969f6bd0b5f7e595fd34402e0333f33/library/design/skills/ui-animation/references/transition-recipes.md#container-morph"
+      ],
+      "kind": "motion_recipe",
+      "formats": [
+        "motion",
+        "hybrid"
+      ],
+      "native": true,
+      "state": "upstream technique adapted for native review; pending transfer validation",
+      "upstream": {
+        "repository": "nexu-io/openmotion",
+        "revision": "1d5a15875969f6bd0b5f7e595fd34402e0333f33",
+        "license": "Apache-2.0"
+      }
+    },
+    {
+      "id": "openmotion-type-motion",
+      "intent": "Organizar tipografia cinética e entrada de palavras com hierarquia, acento no ritmo e tempo de leitura.",
+      "keywords": [
+        "tipografia cinética",
+        "kinetic typography",
+        "text state swap",
+        "beat",
+        "tipografia ritmo",
+        "word reveal"
+      ],
+      "useWhen": "O movimento ajuda o público a identificar uma palavra ou entender a progressão sem interromper a leitura.",
+      "operationRecipe": "Defina a unidade que deve ser lida e a palavra que recebe o acento. Confira fonte e peso no motor com a frase real. Separe as camadas por função quando precisarem de tempos diferentes. Assente o acento no evento de áudio observado ou no gesto visual, mantendo um estado estável para leitura. Ajuste a entrada com posição e, quando preciso, uma máscara verificada.",
+      "avoid": "Evite aplicar a mesma ênfase a toda palavra ou sincronizar apenas pela impressão de uma imagem estática. A evidência de um pico de áudio não identifica o som.",
+      "test": "Revise no tamanho de celular o primeiro quadro legível, a duração da leitura e a posição do acento em relação à marca de áudio.",
+      "sources": [
+        "https://github.com/nexu-io/openmotion/blob/1d5a15875969f6bd0b5f7e595fd34402e0333f33/skills/openmotion-production/references/typography.md",
+        "https://github.com/nexu-io/openmotion/blob/1d5a15875969f6bd0b5f7e595fd34402e0333f33/library/design/skills/ui-animation/references/transition-recipes.md#text-state-swap"
+      ],
+      "kind": "motion_recipe",
+      "formats": [
+        "motion",
+        "hybrid"
+      ],
+      "native": true,
+      "state": "upstream technique adapted for native review; pending transfer validation",
+      "upstream": {
+        "repository": "nexu-io/openmotion",
+        "revision": "1d5a15875969f6bd0b5f7e595fd34402e0333f33",
+        "license": "Apache-2.0"
+      }
+    }
+  ]
+}

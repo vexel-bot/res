@@ -24,7 +24,17 @@ use std::{
 use wasm_bindgen::prelude::*;
 
 pub const REVISION: &str = "67434e90388b6dca4417555346fa6850b6f96033";
-pub const BUILD: &str = "clicko-effectcraft-1.0.2+67434e90";
+pub const BUILD: &str = "clicko-effectcraft-1.0.6+67434e90.audio-levels";
+const MEDIA_CACHE_BUDGET_BYTES: usize = 128 * 1024 * 1024;
+
+fn export_profile(params: &Value) -> Result<(u32, u8)> {
+    match params.get("quality").and_then(Value::as_str).unwrap_or("standard") {
+        "draft" => Ok((4_000, 70)),
+        "standard" => Ok((10_000, 90)),
+        "high" => Ok((20_000, 95)),
+        other => Err(format!("unknown export quality `{other}`")),
+    }
+}
 
 #[derive(Default)]
 struct Store {
@@ -230,6 +240,9 @@ impl Default for Adapter {
             pool: Arc::new(effectcraft_media::MediaPool::new()),
             store: store.clone(),
         });
+        // The upstream decoded-frame LRU defaults to 1 GiB, independently of
+        // the exporter's layer cache. Bound retention without scaling pixels.
+        media.pool.set_budget(MEDIA_CACHE_BUDGET_BYTES);
         let mut session = effectcraft_host::session();
         session.services = store.clone();
         session.footage = media.clone();
@@ -250,7 +263,10 @@ impl Adapter {
         self.session.project = Arc::new(project);
         self.session.history = Default::default();
         self.session.state = Default::default();
-        let first_comp = self.session.project.comps().next().map(|(id, _)| *id);
+        let metadata: Value = serde_json::from_str(text).map_err(|e| e.to_string())?;
+        let saved_comp = metadata.get("clickoActiveComp").and_then(|value| serde_json::from_value(value.clone()).ok());
+        let first_comp = saved_comp.filter(|wanted| self.session.project.comps().any(|(id, _)| id == wanted))
+            .or_else(|| self.session.project.comps().next().map(|(id, _)| *id));
         if let Some(id) = first_comp {
             self.session.open_comp(id);
         }
@@ -258,11 +274,10 @@ impl Adapter {
         Ok(())
     }
     pub fn native_bytes(&self) -> Result<Vec<u8>> {
-        self.session
-            .project
-            .to_file_json()
-            .map(String::into_bytes)
-            .map_err(|e| e.to_string())
+        let text = self.session.project.to_file_json().map_err(|e| e.to_string())?;
+        let mut value: Value = serde_json::from_str(&text).map_err(|e| e.to_string())?;
+        value["clickoActiveComp"] = serde_json::to_value(self.session.active_comp_id()).map_err(|e| e.to_string())?;
+        serde_json::to_vec(&value).map_err(|e| e.to_string())
     }
     pub fn preview_png(&self, time: f64, max_side: u32) -> Result<Vec<u8>> {
         let comp = self
@@ -530,13 +545,36 @@ impl Adapter {
                         "wav" => OutputFormat::Wav,
                         _ => return Err(format!("unknown export format `{fmt}`")),
                     };
-                    let settings = RenderSettings {
+                    let (bitrate_kbps, quality) = export_profile(params)?;
+                    self.media.pool.set_budget(MEDIA_CACHE_BUDGET_BYTES);
+                    let mut settings = RenderSettings {
                         time_span: TimeSpan::LengthOfComp,
                         storage_overflow: false,
                         ..Default::default()
                     };
+                    if let Some(window) = params.get("reviewWindow") {
+                        if fmt != "mp4" {
+                            return Err("reviewWindow requires mp4".into());
+                        }
+                        let comp = self.session.active_comp().ok_or("no active comp")?;
+                        let first = window.get("firstFrame").and_then(Value::as_i64)
+                            .filter(|frame| *frame >= 0).ok_or("invalid review firstFrame")?;
+                        let end = window.get("endFrameExclusive").and_then(Value::as_i64)
+                            .filter(|frame| *frame > first).ok_or("invalid review endFrameExclusive")?;
+                        let start = comp.frame_rate.tick_of(first);
+                        let end = comp.frame_rate.tick_of(end);
+                        if start >= comp.duration || (end - start).seconds() > 31.0 {
+                            return Err("review window outside supported interval".into());
+                        }
+                        let divider = window.get("resolutionDivisor").and_then(Value::as_u64)
+                            .filter(|divider| matches!(divider, 1 | 2 | 4)).ok_or("invalid review resolutionDivisor")?;
+                        settings.time_span = TimeSpan::Custom { start, end };
+                        settings.resolution = 1.0 / divider as f64;
+                    }
                     let output = OutputModule {
                         format,
+                        bitrate_kbps,
+                        quality,
                         channels: if params
                             .get("alpha")
                             .and_then(Value::as_bool)
@@ -572,7 +610,7 @@ impl Adapter {
                         _ => "video/mp4",
                     };
                     return Ok(
-                        json!({"path":report.path,"artifact":{"path":report.path,"mediaType":media_type,"width":report.width,"height":report.height},"frames":report.frames,"bytes":report.bytes,"warnings":self.warnings}),
+                        json!({"path":report.path,"artifact":{"path":report.path,"mediaType":media_type,"width":report.width,"height":report.height},"frames":report.frames,"bytes":report.bytes,"warnings":self.warnings,"encoding":{"bitrateKbps":bitrate_kbps,"quality":quality},"resourcePolicy":{"decodedFrameCacheBudgetBytes":self.media.pool.budget()}}),
                     );
                 }
                 #[cfg(target_arch = "wasm32")]
@@ -743,7 +781,7 @@ pub fn capabilities() -> Value {
     commands.push(json!({"id":"asset.import","label":"Importar material","inputSchema":{"type":"object","properties":{"assetId":{"type":"string"},"addToComp":{"type":"boolean"}},"required":["assetId"],"additionalProperties":true}}));
     commands.push(json!({"id":"inspector.transform","label":"Transformar elemento","inputSchema":{"type":"object","properties":{"layer":{"type":"integer"},"position":{"type":"array","items":{"type":"number"},"minItems":3,"maxItems":3},"scale":{"type":"array","items":{"type":"number"},"minItems":3,"maxItems":3},"rotation":{"type":"number"},"opacity":{"type":"number","minimum":0,"maximum":100}},"required":["layer"],"additionalProperties":false}}));
     clicko_craft_protocol::capability_isolation(&mut commands);
-    json!({"engine":"effectcraft","buildId":BUILD,"upstreamRevision":REVISION,"formatVersion":effectcraft_engine::project::SCHEMA_VERSION,"commands":commands,"formats":["ecproj","mp4","mov","webm","gif","png","wav"]})
+    json!({"engine":"effectcraft","buildId":BUILD,"upstreamRevision":REVISION,"formatVersion":effectcraft_engine::project::SCHEMA_VERSION,"commands":commands,"formats":["ecproj","mp4","mov","webm","gif","png","wav"],"temporalReview":{"frameRange":true,"scales":[1,0.5,0.25]}})
 }
 
 #[cfg(target_arch = "wasm32")]
@@ -801,6 +839,19 @@ impl Adapter {
 
 #[cfg(test)]
 mod tests {
+    #[test]
+    fn selected_composition_survives_native_roundtrip() {
+        let mut adapter = super::Adapter::default();
+        adapter.session.execute("comp.new", serde_json::json!({"name":"A","width":32,"height":32})).unwrap();
+        adapter.session.execute("comp.new", serde_json::json!({"name":"B","width":64,"height":48})).unwrap();
+        let selected = adapter.session.active_comp_id().unwrap();
+        let pixels = adapter.preview_png(0.0, 64).unwrap();
+        let bytes = adapter.native_bytes().unwrap();
+        adapter.open_bytes(&bytes).unwrap();
+        assert_eq!(selected, adapter.session.active_comp_id().unwrap());
+        assert_eq!(pixels, adapter.preview_png(0.0, 64).unwrap());
+        assert_eq!(bytes, adapter.native_bytes().unwrap());
+    }
     use super::*;
     #[test]
     fn rgba_background_alpha_survives_native_reopening() {

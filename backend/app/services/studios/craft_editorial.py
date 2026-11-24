@@ -29,7 +29,10 @@ def persist_review(db, record, review, *, job_id=None, draft_batch=None):
         asset, storage, key = write_asset(
             db, record, path, suffix=".mp4" if media_type.startswith("video/") else ".wav",
             media_type=media_type, asset_type="video" if media_type.startswith("video/") else "audio",
-            metadata={"craftReview": origin}, title=record.title + " · prévia de edição",
+            metadata={"craftReview": origin, **({"rightsStatus": "restricted", "usageRole": "analysis/reference_only"}
+                      if review["report"].get("source", {}).get("kind") in
+                      {"reference_only", "candidate_review", "isolated_audio_review"} else {})},
+            title=record.title + " · prévia de edição",
         )
         try:
             db.flush()

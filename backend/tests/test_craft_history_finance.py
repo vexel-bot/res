@@ -141,6 +141,33 @@ def test_compaction_before_first_edit_retains_source_pixels_and_hides_audit_scri
     assert "huge-audit-only-script" not in json.dumps(renewed)
 
 
+def test_renewal_retains_reference_pixels_and_inspected_properties_for_the_same_batch():
+    context = {"instruction": "Edit"}
+    inspected = {"draftBatch": 0, "request": {"layerIds": [12]},
+                 "result": {"layers": [{"id": 12, "properties": {"position": [540, 960]}}]}}
+    tool = {"name": "describe_commands", "result": {"script.run": {"required": ["code"]}}}
+    result = {"nativeInspection": inspected, "nativeToolObservation": tool}
+    messages = [
+        {"role": "assistant", "content": [{"type": "tool_use", "id": "ref", "name": "inspect_reference",
+                                            "input": {"referenceId": "reference-id"}}]},
+        {"role": "user", "content": [{"type": "tool_result", "tool_use_id": "ref", "content": [
+            {"type": "text", "text": '{"referenceId":"reference-id"}'},
+            {"type": "image", "source": {"data": "reference-pixels"}},
+        ]}]},
+    ]
+    first = craft_history.compact_messages(context, {}, 0, result, messages=messages)
+    second = craft_history.compact_messages(context, {}, 0, result, messages=first)
+    for compact in (first, second):
+        checkpoint = json.loads(compact[0]["content"][1]["text"])
+        assert checkpoint["nativeInspection"] == inspected
+        assert checkpoint["nativeToolObservation"] == tool
+        assert checkpoint["inspectedSources"] == []
+        assert checkpoint["inspectedReferences"] == [{"referenceId": "reference-id"}]
+        assert compact[0]["content"][-1]["source"]["data"] == "reference-pixels"
+    changed = craft_history.compact_messages(context, {}, 1, result, messages=second)
+    assert "nativeInspection" not in json.loads(changed[0]["content"][1]["text"])
+
+
 def test_technical_verification_keeps_the_owners_revision_request():
     row = SimpleNamespace(status="draft", document_metadata={"craftLearning": {
         "artifact": {"checksumSha256": "verified"}, "viewerFeedback": {"comment": "The ad lost its meaning"},

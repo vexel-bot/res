@@ -315,3 +315,27 @@ def test_unparseable_acceptance_is_unknown_not_a_rejected_generation():
             provider(lambda request, response=response: response).submit(
                 prepared, quote(prepared), maximum_cost_usd="1")
         assert failure.value.outcome_unknown
+
+
+def test_reference_video_quote_and_result():
+    from app.providers.studios.higgsfield import REFERENCE
+    body = dict(prompt="Move around the coffee bag", duration=4, resolution="480P",
+                aspect_ratio="9:16", image_urls=["https://cdn.example/bag.png"])
+    prepared = PreparedGeneration.prepare(REFERENCE, body, KEY)
+    def handle(request):
+        assert json.loads(request.content) == body
+        if request.url.path == "/estimate/" + REFERENCE:
+            return httpx.Response(200, json={"usd": "0.10", "credits": "1"})
+        assert request.url.path == "/" + REFERENCE
+        return httpx.Response(200, json=receipt("completed", video={"url": "https://cdn.example/shot.mp4"}))
+    client = provider(handle)
+    result = client.submit(prepared, client.estimate(prepared), maximum_cost_usd="0.10")
+    assert result.candidate_urls == ("https://cdn.example/shot.mp4",)
+
+
+@pytest.mark.parametrize("params", [{}, {"image_urls": ["https://cdn.example/i"] * 10},
+                                     {"video_urls": ["http://example/video"]}])
+def test_invalid_reference_video(params):
+    from app.providers.studios.higgsfield import REFERENCE
+    with pytest.raises(HiggsfieldError):
+        PreparedGeneration.prepare(REFERENCE, {"prompt": "Pan", **params}, KEY)

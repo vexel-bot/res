@@ -123,6 +123,10 @@ def create_document(
         versions=[],
     )
     db.add(record)
+    if request.source_document_id:
+        from .craft_project_context import register_branch
+        db.flush()
+        register_branch(db, record, request.source_document_id, request.source_revision, request.branch_reason)
     emit_event(
         db,
         workspace_id=request.workspace_id,

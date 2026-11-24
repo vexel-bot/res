@@ -363,9 +363,15 @@ class UniversalLLMPlanner:
         try:
             with client.stream("POST", url, json=body, headers=self._craft_headers()) as response:
                 if response.status_code >= 300:
-                    raise ValueError("llm_provider_http_" + str(response.status_code))
+                    error = ValueError("llm_provider_http_" + str(response.status_code))
+                    error.http_status = response.status_code
+                    error.provider_request_id = response.headers.get("request-id")
+                    error.response_stage = "before_stream"
+                    raise error
                 result = read_craft_stream(response.iter_lines(), deadline)
                 result["request_id"] = response.headers.get("request-id")
+                result["requestParameters"] = {"model": model, "maxOutputTokens": tokens,
+                    "thinking": body.get("thinking"), "effort": body.get("output_config", {}).get("effort")}
                 return result
         except httpx.HTTPError as exc:
             raise ValueError("llm_provider_transport_failed") from exc

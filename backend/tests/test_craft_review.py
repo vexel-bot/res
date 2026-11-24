@@ -80,3 +80,52 @@ def test_draft_review_caches_render_and_invalidates_after_edit(source, tmp_path)
     changed = review_draft(draft, {})
     assert calls == ["render.export", "render.export"]
     assert changed["report"]["source"]["nativeChecksumSha256"] != first["report"]["source"]["nativeChecksumSha256"]
+
+
+def test_focused_native_review_rebases_samples_and_sound_to_composition(source, tmp_path):
+    native = tmp_path / "draft.ecproj"
+    native.write_text("revision 1")
+    calls = []
+
+    def render(method, **args):
+        assert method == "render.export"
+        calls.append(args["reviewWindow"])
+        if args["reviewWindow"]["resolutionDivisor"] == 2:
+            raise ValueError("out of memory")
+        shutil.copyfile(source, args["outputPath"])
+
+    draft = SimpleNamespace(engine="effectcraft", directory=tmp_path, batches=1, deadline=time.monotonic() + 90,
+                            capability={"temporalReview": {"frameRange": True}}, call=render,
+                            project={"fps": 12, "width": 1080, "height": 1920, "durationMs": 10000},
+                            params={"nativePath": str(native)})
+    result = review_draft(draft, {"startSeconds": 3, "durationSeconds": 1})
+    report = result["report"]
+    assert calls == [{"firstFrame": 36, "endFrameExclusive": 48, "resolutionDivisor": divisor}
+                     for divisor in (2, 4)]
+    assert report["source"]["reviewWindow"]["resolutionDivisor"] == 4
+    assert report["interval"] == {"startSeconds": 3, "endSeconds": 4, "durationSeconds": 1}
+    assert report["visual"]["sampledSeconds"][3] == 3.25
+    assert any(abs(event["timeSeconds"] - 3.25) < .05 for event in report["audio"]["onsets"])
+
+def test_segmented_export_retries_only_failed_ranges(source, tmp_path):
+    from app.services.studios.craft_review import _metadata, render_frame_ranges
+    from app.providers.studios.craft import CraftRuntimeError
+
+    ranges = []
+
+    def render(_method, **args):
+        window = args["reviewWindow"]
+        start, stop = window["firstFrame"], window["endFrameExclusive"]
+        ranges.append((start, stop))
+        if stop - start > 12:
+            raise CraftRuntimeError("craft_runtime_failed", "Adapter exited 137")
+        shutil.copyfile(source, args["outputPath"])
+
+    output = tmp_path / "recovered.mp4"
+    deadline = time.monotonic() + 90
+    render_frame_ranges(render, output, {"firstFrame": 0, "endFrameExclusive": 24, "resolutionDivisor": 1},
+                        12, "high", deadline)
+    info = _metadata(output, deadline)
+    assert ranges == [(0, 24), (0, 12), (12, 24)]
+    assert info["hasAudio"] and int(info["video"]["nb_frames"]) == 24
+    assert info["durationSeconds"] == pytest.approx(2)

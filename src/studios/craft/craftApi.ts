@@ -107,8 +107,19 @@ export interface CraftReceipt {
   aiTrace?: Record<string, unknown>;
   exportJobId?: string;
   exportStatus?: string;
+  deliveryReview?: {
+    schemaVersion?: "craft.delivery.v2";
+    status: "draft" | "reviewed"; missing: string[];
+    editorialApproval?: string; perceptualAudioListening?: string;
+    technical?: { status: "draft" | "reviewed"; missing: string[] };
+    semantic?: Record<string, "pass" | "fail" | "inconclusive">;
+    audiovisual?: "pass" | "fail" | "inconclusive";
+    comparison?: { status: "recorded" | "pending"; id?: string | null };
+    preferredCandidateId?: string | null;
+  };
+  directorOperations?: { measuredCostUsd: number; uncertainOperationIds: string[] };
 }
-export type CraftDirectionEffort = "standard" | "deliberate";
+export type CraftDirectionEffort = "standard" | "deliberate" | "open_ended";
 export interface EditorialLesson {
   id?: string; situation: string; correction: string; useWhen: string[]; avoidWhen: string[];
   sourceFeedback?: string; sourceUrl?: string; status?: "approved" | "candidate";
@@ -117,6 +128,7 @@ export interface EditorialGuide { scope: "workspace" | "document"; scopeId: stri
 export interface CraftReview {
   assetId: string; mediaType: string; documentRevision: number; draftBatch?: number;
   report: {
+    source?: { kind: string; label?: string };
     interval: { startSeconds: number; endSeconds: number; durationSeconds: number };
     visual: { sampledSeconds: number[]; nextPage: number | null; sourceFps: number; sampleFps: number };
     audio: { status: string; rmsDbfs?: number; peakDbfs?: number; onsetCount?: number };
@@ -128,6 +140,7 @@ export interface CraftAIRecovery {
   userId: string; workspaceId: string; documentId: string; engine: CraftEngine;
   expectedRevision: number; instruction: string; idempotencyKey: string;
   pageId?: string; connectionId?: string; model?: string; directionEffort?: CraftDirectionEffort; workflow?: 'native' | 'motion_swarm';
+  generationBudgetUsd?: number; requireExport?: boolean; unlimitedBudget?: boolean; directionContract?: "v1" | "v2";
 }
 
 const base = "/api/v1/studios/v1";
@@ -173,7 +186,7 @@ export const craftApi = {
   migrate: (id: string, engine: CraftEngine, revision: number, key: string) => apiFetch<CraftInspection>(`${path(id)}/craft/migrate`, json({ engine, expectedRevision: revision }, key)),
   upgradeBuild: (id: string, revision: number, targetBuildId: string, key: string) => apiFetch<CraftReceipt>(`${path(id)}/craft/upgrade-build`, json({ expectedRevision: revision, targetBuildId }, key)),
   commands: (id: string, revision: number, commands: CraftCommand[], key: string, label?: string, pageId?: string) => apiFetch<CraftReceipt>(`${path(id)}/craft/commands`, json({ expectedRevision: revision, commands, label, pageId }, key)),
-  ai: (id: string, revision: number, instruction: string, key: string, pageId?: string, connectionId?: string, model?: string, directionEffort?: CraftDirectionEffort, workflow?: 'native' | 'motion_swarm') => apiFetch<CraftReceipt>(`${path(id)}/craft/ai-commands`, json({ expectedRevision: revision, instruction, pageId, connectionId, model, directionEffort, workflow }, key)),
+  ai: (id: string, revision: number, instruction: string, key: string, pageId?: string, connectionId?: string, model?: string, directionEffort?: CraftDirectionEffort, workflow?: 'native' | 'motion_swarm', generationBudgetUsd?: number, requireExport?: boolean, unlimitedBudget?: boolean, directionContract?: "v1" | "v2") => apiFetch<CraftReceipt>(`${path(id)}/craft/ai-commands`, json({ expectedRevision: revision, instruction, pageId, connectionId, model, directionEffort, workflow, generationBudgetUsd, requireExport, unlimitedBudget, directionContract }, key)),
   aiRequest: (id: string, key: string) => apiFetch<{ status: string; receipt?: CraftReceipt; responseReady?: boolean; errorCode?: string; draftBatches?: number; canResume?: boolean; exportPending?: boolean }>(`${path(id)}/craft/ai-requests/${encodeURIComponent(key)}`),
   async aiDraft(id: string, key: string) {
     return (await binary(`${path(id)}/craft/ai-requests/${encodeURIComponent(key)}/draft`)).blob();

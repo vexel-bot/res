@@ -20,6 +20,13 @@ from .compatibility import persist_contract, record_to_contract
 from .review_binding import invalidate_linked_post_review
 
 
+def analysis_only(asset):
+    metadata = asset.object_metadata or {}
+    return metadata.get("usageRole") in ("analysis", "reference_only", "analysis/reference_only") or (
+        (metadata.get("craftReferenceEvidence") or {}).get("role") == "analysis/reference_only"
+    )
+
+
 def catalog(db, workspace_id, query="", kind=None, *, asset_id=None):
     import re
     import unicodedata
@@ -36,11 +43,14 @@ def catalog(db, workspace_id, query="", kind=None, *, asset_id=None):
     )
     if asset_id:
         statement = statement.where(LibraryAsset.id == asset_id)
-    items = project_assets(db, statement, [("editingResource",), ("visualReview",), ("generationJobId",)])
+    items = project_assets(db, statement, [("editingResource",), ("visualReview",), ("generationJobId",),
+                                           ("usageRole",), ("craftReferenceEvidence",)])
     if items is None:
         items = db.scalars(statement).yield_per(100)
     result = []
     for asset in items:
+        if analysis_only(asset):
+            continue
         metadata = (asset.object_metadata or {}).get("editingResource", {})
         if not asset.storage_key or (kind and metadata.get("kind") != kind):
             continue
@@ -91,6 +101,15 @@ def catalog(db, workspace_id, query="", kind=None, *, asset_id=None):
 def validate_resource(path: Path, metadata: ResourceMetadataV1):
     if path.stat().st_size > 100 * 1024 * 1024:
         raise ValueError("resource_too_large")
+    if metadata.kind == "model":
+        from .craft_models import inspect_glb
+
+        return "model/gltf-binary", inspect_glb(path)
+    if metadata.kind == "environment":
+        with path.open("rb") as source:
+            if source.read(10) != b"#?RADIANCE":
+                raise ValueError("craft_environment_hdr_required")
+        return "image/vnd.radiance", {}
     if metadata.kind == "font":
         try:
             with TTFont(path) as font:
@@ -115,13 +134,18 @@ def validate_resource(path: Path, metadata: ResourceMetadataV1):
     with path.open("rb") as source:
         header = source.read(12)
     if metadata.kind == "video":
-        if header[4:8] != b"ftyp":
+        if header[:4] == b"\x1aE\xdf\xa3":
+            mime = "video/webm"
+        elif header[4:8] == b"ftyp":
+            mime = "video/mp4"
+        else:
             raise ValueError("resource_mp4_required")
-        mime = "video/mp4"
     elif header[:4] == b"RIFF" and header[8:12] == b"WAVE":
         mime = "audio/wav"
     elif header[:4] == b"fLaC":
         mime = "audio/flac"
+    elif header[:4] == b"OggS":
+        mime = "audio/ogg"
     elif header[:3] == b"ID3" or (len(header) >= 2 and header[0] == 255 and header[1] & 224 == 224):
         mime = "audio/mpeg"
     else:
@@ -197,9 +221,13 @@ def store_resource(db, workspace_id, title, path, metadata, user_id, *, provenan
         "image/jpeg": ".jpg",
         "image/webp": ".webp",
         "video/mp4": ".mp4",
+        "video/webm": ".webm",
+        "model/gltf-binary": ".glb",
+        "image/vnd.radiance": ".hdr",
         "audio/wav": ".wav",
         "audio/mpeg": ".mp3",
         "audio/flac": ".flac",
+        "audio/ogg": ".ogg",
     }[mime]
     storage = get_object_storage()
     stored = storage.put_file(path, key=object_key(workspace_id, "raw", extension), media_type=mime)
@@ -212,6 +240,8 @@ def store_resource(db, workspace_id, title, path, metadata, user_id, *, provenan
             "wardrobe": "image",
             "music": "audio",
             "sound_effect": "audio",
+            "model": "document",
+            "environment": "document",
         }.get(metadata.kind, metadata.kind),
         tags=metadata.tags,
         storage_key=stored.key,
@@ -256,6 +286,8 @@ def attach_resource(db, record, asset_id, expected_revision):
     )
     if not asset or not asset.storage_key:
         raise ValueError("resource_not_found")
+    if analysis_only(asset):
+        raise ValueError("resource_analysis_only")
     if (asset.object_metadata or {}).get("derivation") and (asset.object_metadata or {}).get(
         "visualReview"
     ) != "passed":
@@ -394,6 +426,25 @@ def acquire_registered_source(db, workspace_id, source_id, user_id, *, automatic
         )
         metadata = ResourceMetadataV1.model_validate(source.model_dump(include=set(ResourceMetadataV1.model_fields)))
         metadata.source_url = source.source_url or url
+        if source.kind == "model" and "polyhaven" in source.tags:
+            from .craft_polyhaven import prepare_model
+
+            path = prepare_model(path, source)
+        if source.kind == "video":
+            with path.open("rb") as stream:
+                signature = stream.read(12)
+            if signature.startswith(b"OggS"):
+                import subprocess
+
+                converted = path.with_suffix(".mp4")
+                try:
+                    subprocess.run(["ffmpeg", "-v", "error", "-nostdin", "-i", str(path),
+                                    "-map", "0:v:0", "-map", "0:a?", "-c:v", "libx264", "-pix_fmt", "yuv420p",
+                                    "-c:a", "aac", "-threads", "2", str(converted)],
+                                   check=True, capture_output=True, timeout=180)
+                except (OSError, subprocess.SubprocessError) as error:
+                    raise ValueError("craft_public_video_conversion_failed") from error
+                path = converted
         item = store_resource(db, workspace_id, source.title, path, metadata, user_id)
     record.document_metadata = {
         **record.document_metadata,

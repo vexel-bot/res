@@ -27,7 +27,9 @@ class Settings(BaseSettings):
     studio_craft_photocraft_binary: str | None = None
     studio_craft_filmcraft_binary: str | None = None
     studio_craft_effectcraft_binary: str | None = None
+    studio_craft_rea_video_binary: str | None = None
     studio_llm_credential_key: SecretStr | None = Field(default=None, min_length=32)
+    studio_craft_claude_qualification_file: str | None = None
     clicko_dev_mode: bool = False
     clicko_motion_gemini_experimental: bool = False
     clicko_motion_gemini_free_tier_evidence_file: str | None = None

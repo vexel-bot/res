@@ -155,7 +155,7 @@ class MotionSwarm:
         try:
             options = {"tool_choice_name": forced} if forced else {}
             result = provider.craft_turn(
-                model, SYSTEM, messages, tools, output, self.draft.deadline - time.monotonic(), **options,
+                model, SYSTEM, messages, tools, output, self.draft.turn_seconds(), **options,
             )
         except (ValueError, OSError) as error:
             return None, str(error).split(":", 1)[0]
@@ -352,6 +352,8 @@ class MotionSwarm:
                             try:
                                 if self.draft.deadline <= time.monotonic():
                                     raise ValueError("craft_agent_deadline")
+                                if self.job.request_payload.get("directionEffort") == "open_ended":
+                                    self.job.updated_at = datetime.now(UTC)
                                 self.reserve_turn(session.job, session.call)
                                 active.append(session)
                                 continue

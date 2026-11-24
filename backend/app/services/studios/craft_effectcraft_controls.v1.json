@@ -1,0 +1,281 @@
+{
+  "schemaVersion": "craft.effectcraft-controls.v1",
+  "controls": [
+    {
+      "id": "navigation",
+      "label": "Voltar, entrar e trocar área",
+      "context": "Navegação entre páginas e motores",
+      "verification": "Rota e autenticação",
+      "reason": "Depende da sessão do operador."
+    },
+    {
+      "id": "panel",
+      "label": "Camadas, Materiais, Histórico e Revisão",
+      "context": "Selecionar painel da interface",
+      "verification": "Painel ativo",
+      "reason": "Estado visual local da interface."
+    },
+    {
+      "id": "layer",
+      "label": "Selecionar elemento ou trecho",
+      "context": "Elemento existente na timeline ou lista de camadas",
+      "verification": "ID presente em inspect_project e passado ao comando",
+      "binding": {
+        "tool": "inspect_project"
+      }
+    },
+    {
+      "id": "frame",
+      "label": "Escolher quadro pela timeline",
+      "context": "Índice inteiro de quadro na composição",
+      "verification": "Quadro devolvido pela prévia",
+      "binding": {
+        "tool": "preview_frame"
+      },
+      "aliases": [
+        "playhead",
+        "seek",
+        "scrub"
+      ]
+    },
+    {
+      "id": "zoom",
+      "label": "Zoom da prévia",
+      "context": "Escala de exibição em porcentagem",
+      "verification": "Escala aplicada na interface",
+      "reason": "Estado visual local. Para avaliar pixels, usar tamanho e recorte da prévia."
+    },
+    {
+      "id": "undo",
+      "label": "Desfazer e refazer",
+      "context": "Histórico de revisões do editor",
+      "verification": "Revisão ativa e inspeção do projeto",
+      "reason": "A interface usa histórico persistido. Falta uma operação equivalente de histórico no rascunho do agente.",
+      "missingAgentOperation": true
+    },
+    {
+      "id": "save",
+      "label": "Salvar alterações",
+      "context": "Rascunho com alterações e revisão válida",
+      "verification": "Recibo vinculado à revisão salva",
+      "binding": {
+        "tool": "finish_project"
+      }
+    },
+    {
+      "id": "download-project",
+      "label": "Baixar projeto editável",
+      "context": "Revisão salva ou rascunho recuperável",
+      "verification": "Arquivo nativo ou pacote abre no editor",
+      "reason": "Entrega ao operador pela interface."
+    },
+    {
+      "id": "output",
+      "label": "Selecionar formato e exportar",
+      "context": "Projeto salvo e MP4 habilitado no motor. Os demais formatos são selecionados pela interface.",
+      "verification": "Estado do trabalho, arquivo, dimensões, duração e fps",
+      "binding": {
+        "tool": "finish_project"
+      }
+    },
+    {
+      "id": "export-management",
+      "label": "Cancelar, baixar e reproduzir exportação",
+      "context": "Trabalho em execução ou resultado disponível",
+      "verification": "Estado do trabalho ou reprodução do arquivo",
+      "reason": "Controles de ciclo do trabalho e reprodução na interface."
+    },
+    {
+      "id": "reload",
+      "label": "Recarregar projeto e tentar novamente",
+      "context": "Falha de interface ou versão desatualizada",
+      "verification": "Estado recarregado",
+      "reason": "Controle da sessão do operador."
+    },
+    {
+      "id": "recovery",
+      "label": "Recuperar alterações ou descartá-las",
+      "context": "Alterações pendentes com estado recuperável",
+      "verification": "Revisão e alterações após escolha",
+      "reason": "Recuperação do rascunho do navegador."
+    },
+    {
+      "id": "ai-recovery",
+      "label": "Verificar, retomar, baixar ou encerrar pedido de IA",
+      "context": "Pedido de IA recuperável ou interrompido",
+      "verification": "Estado do pedido e revisão",
+      "reason": "Controle do ciclo da sessão pelo operador."
+    },
+    {
+      "id": "version",
+      "label": "Converter ou atualizar o projeto",
+      "context": "Projeto legado ou build incompatível",
+      "verification": "Reabrir na build alvo e conferir preservação da revisão anterior",
+      "reason": "A conversão é executada pelo fluxo de migração do Studio."
+    },
+    {
+      "id": "file-import",
+      "label": "Enviar material ou importar projeto nativo",
+      "context": "Arquivo selecionado no dispositivo",
+      "verification": "Material registrado ou projeto reaberto",
+      "reason": "Seleção de arquivo do operador. A importação de material já registrado tem operação própria."
+    },
+    {
+      "id": "asset",
+      "label": "Inserir material da biblioteca",
+      "context": "Asset registrado na área de trabalho",
+      "verification": "Material e camada presentes ou aviso explícito",
+      "binding": {
+        "command": "asset.import"
+      },
+      "aliases": [
+        "footage",
+        "mídia",
+        "biblioteca"
+      ]
+    },
+    {
+      "id": "web-source",
+      "label": "Cadastrar fonte da web",
+      "context": "Dados preenchidos pelo operador",
+      "verification": "Fonte disponível no catálogo",
+      "reason": "Cadastro de fonte na interface. Buscar fontes previamente registradas com find_material_sources."
+    },
+    {
+      "id": "publication",
+      "label": "Enviar para revisão ou abrir publicação",
+      "context": "Publicação vinculada e exportação válida quando exigida",
+      "verification": "Rota e recibo de revisão",
+      "reason": "Ação do operador no fluxo de aprovação."
+    },
+    {
+      "id": "command",
+      "label": "Escolher operação, editar parâmetros e aplicar ajuste",
+      "context": "Esquema do comando e IDs da seleção",
+      "verification": "Recibo e valores verificados após reabrir",
+      "binding": {
+        "tool": "edit_project"
+      }
+    },
+    {
+      "id": "ai",
+      "label": "Configurar modelo, modo, orçamento e instrução",
+      "context": "Conexão e solicitação do usuário",
+      "verification": "Configuração da solicitação de IA",
+      "reason": "O operador define as condições da própria sessão."
+    },
+    {
+      "id": "montage",
+      "label": "Usar na montagem",
+      "context": "Composição de motion e montagem vinculadas",
+      "verification": "Vínculo e revisão da montagem",
+      "reason": "A interface coordena alteração em outro documento."
+    },
+    {
+      "id": "editorial",
+      "label": "Editar, revisar e aprovar preferência",
+      "context": "Guia de workspace, de marca ou de projeto",
+      "verification": "Versão do guia e estado da proposta",
+      "reason": "O agente propõe por record_editorial_lesson. Aprovação pertence ao operador."
+    },
+    {
+      "id": "temporal",
+      "label": "Preparar, selecionar e reproduzir prévia de um trecho",
+      "context": "Intervalo na composição atual",
+      "verification": "Prévia reproduzível, quadros e medições",
+      "binding": {
+        "tool": "review_clip"
+      }
+    },
+    {
+      "id": "interpolation",
+      "label": "Interpolação, velocidade e influência",
+      "context": "Propriedade animável com pelo menos duas chaves",
+      "verification": "Inspecionar tipo e chaves. Medir deslocamento e velocidade quadro a quadro.",
+      "binding": {
+        "tool": "run_motion_script"
+      },
+      "aliases": [
+        "frear",
+        "aceleração",
+        "desaceleração",
+        "easing",
+        "bezier",
+        "curva de velocidade",
+        "ease in",
+        "ease out",
+        "repouso"
+      ]
+    },
+    {
+      "id": "shape-mask",
+      "label": "Animar caminho de máscara",
+      "context": "Camada com máscara e caminhos compatíveis",
+      "verification": "Checar contorno e silhueta antes, durante e após o movimento",
+      "binding": {
+        "tool": "run_motion_script"
+      },
+      "aliases": [
+        "revelação",
+        "máscara",
+        "mask path",
+        "wipe"
+      ]
+    },
+    {
+      "id": "audio",
+      "label": "Animar níveis de áudio",
+      "context": "Camada com áudio",
+      "verification": "Conferir chaves e o envelope no áudio exportado",
+      "binding": {
+        "tool": "run_motion_script"
+      },
+      "aliases": [
+        "fade",
+        "volume",
+        "ganho",
+        "decibéis"
+      ]
+    },
+    {
+      "id": "type",
+      "label": "Compor e animar tipografia",
+      "context": "Camada de texto com fonte resolvida",
+      "verification": "Conferir fonte, âncora, frase completa e tempo de leitura",
+      "binding": {
+        "tool": "run_motion_script"
+      },
+      "aliases": [
+        "texto cinético",
+        "leitura",
+        "tracking",
+        "font",
+        "tipografia"
+      ]
+    }
+  ],
+  "commandGuidance": {
+    "prop.set": {
+      "intent": "Definir um valor de propriedade",
+      "selection": "ID da camada e caminho ou UID inspecionado",
+      "units": "Posição em pixels, opacidade e escala em porcentagem, áudio em dB quando a propriedade usar essas unidades.",
+      "verify": "Reabra e confira o valor e o quadro afetado. Para propriedade com chaves, edite a chave pretendida."
+    },
+    "layer.timing": {
+      "intent": "Ajustar a presença de uma camada na composição",
+      "selection": "IDs das camadas",
+      "units": "Start, in e out em segundos da composição.",
+      "verify": "Confira vizinhança dos quadros de entrada e saída."
+    },
+    "script.run": {
+      "intent": "Combinar operações nativas em uma alteração editável",
+      "selection": "Composição ativa e nomes ou IDs confirmados",
+      "verify": "Verifique o recibo, reabra e renderize. Faça ensaio descartável para chamadas desconhecidas."
+    },
+    "asset.import": {
+      "intent": "Inserir material registrado",
+      "selection": "ID da biblioteca acessível no workspace",
+      "verify": "Confirme o ID da camada após inserir e renderize amostras do material."
+    }
+  }
+}

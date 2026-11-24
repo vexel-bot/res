@@ -11,6 +11,28 @@ from app.database import SessionLocal
 from app.services.studios import craft_material_search, editing_resources
 
 
+def test_openverse_is_explicit_and_retains_license_and_eligibility(client, monkeypatch):
+    token, workspace = register(client, "openverse-material@example.com")
+    actor = client.get("/api/v1/bootstrap", headers={"Authorization": "Bearer " + token}).json()["user"]["id"]
+    monkeypatch.setattr(craft_material_search, "_request", lambda endpoint, params, deadline: {"results": [
+        {"title": "Wet street", "url": "https://images.example.org/rain.jpg", "foreign_landing_url": "https://example.org/rain",
+         "license": "by", "license_url": "https://creativecommons.org/licenses/by/4.0/", "creator": "Photographer"},
+        {"title": "Restricted", "url": "https://images.example.org/other.jpg", "foreign_landing_url": "https://example.org/other",
+         "license": "by-nc", "license_url": "https://creativecommons.org/licenses/by-nc/4.0/"}]})
+    with SessionLocal() as db:
+        hits = craft_material_search.public_images(db, workspace, actor, "wet street", time.monotonic()+30, provider="openverse")
+        assert len(hits) == 1 and hits[0]["autoAcquire"]
+        assert hits[0]["author"] == "Photographer" and hits[0]["discoveryProvider"] == "openverse"
+
+
+def test_unavailable_commons_is_not_reported_as_exhaustive_empty_search(monkeypatch):
+    monkeypatch.setattr(craft_material_search, "_request", lambda *args: (_ for _ in ()).throw(ValueError("craft_material_public_search_unavailable")))
+    monkeypatch.setattr(craft_material_search, "_nasa_images", lambda *args: [])
+    diagnostics = []
+    assert craft_material_search.public_images(None, "workspace", "actor", "puddle", time.monotonic()+30, diagnostics=diagnostics) == []
+    assert diagnostics[0]["status"] == "unavailable" and diagnostics[0]["fallback"] == "nasa_metadata_only"
+
+
 def test_public_discovery_records_provenance_and_acquires_only_registered_eligible_sources(client, monkeypatch, tmp_path):
     token, workspace = register(client, "public-material@example.com")
     actor = client.get("/api/v1/bootstrap", headers={"Authorization": "Bearer " + token}).json()["user"]["id"]

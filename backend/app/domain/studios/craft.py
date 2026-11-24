@@ -6,6 +6,8 @@ from pydantic import Field
 
 from .contracts import CraftEngine, NativeMediaReferenceV1, StudioContract
 
+MAX_GENERATION_BUDGET_USD = 10
+
 
 class CraftCommandV1(StudioContract):
     id: str = Field(min_length=1, max_length=160)
@@ -19,14 +21,26 @@ class CraftCommandRequestV1(StudioContract):
     page_id: str | None = Field(default=None, max_length=160)
 
 
+class CraftReviewWindowV1(StudioContract):
+    start_seconds: float = Field(ge=0, allow_inf_nan=False)
+    duration_seconds: float = Field(gt=0, le=30, allow_inf_nan=False)
+
+
 class CraftAICommandRequestV1(StudioContract):
+    direction_contract: Literal["v1", "v2"] = "v1"
+    editorial_profile: Literal["auto", "narrative_motion", "general"] = "auto"
     expected_revision: int = Field(ge=1)
     instruction: str = Field(min_length=1, max_length=10000)
     page_id: str | None = Field(default=None, max_length=160)
     connection_id: str | None = Field(default=None, max_length=36)
     model: str | None = Field(default=None, min_length=1, max_length=240)
-    direction_effort: Literal["standard", "deliberate"] = "standard"
+    direction_effort: Literal["standard", "deliberate", "open_ended"] = "standard"
     workflow: Literal["native", "motion_swarm"] = "native"
+    generation_budget_usd: float | None = Field(default=None, gt=0, le=MAX_GENERATION_BUDGET_USD, allow_inf_nan=False, strict=True)
+    execution_time_limit_seconds: int | None = Field(default=None, ge=60, le=3600, strict=True)
+    require_export: bool = False
+    review_windows: list[CraftReviewWindowV1] = Field(default_factory=list, max_length=8)
+    unlimited_budget: bool = Field(default=False, strict=True)
 
 
 class CraftMigrationRequestV1(StudioContract):
@@ -57,6 +71,9 @@ class CraftPreviewRequestV1(StudioContract):
 
 
 class CraftClipReviewRequestV1(StudioContract):
+    sampling: Literal["native", "overview", "detail"] = "native"
+    maximum_side: int = Field(default=1920, ge=400, le=3840)
+    crop: list[float] | None = Field(default=None, min_length=4, max_length=4)
     expected_revision: int = Field(ge=1)
     start_seconds: float = Field(default=0, ge=0, allow_inf_nan=False)
     duration_seconds: float | None = Field(default=None, gt=0, allow_inf_nan=False)
