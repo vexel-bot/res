@@ -1,0 +1,25 @@
+name: Studios MoneyPrinterTurbo
+on:
+  pull_request:
+    paths: ['backend/**', 'workers/media-cpu/**', 'src/studios/**', 'server/studios/**', 'server.ts', 'package*.json', '.github/workflows/studios-moneyprinterturbo.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  assembly:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: sudo apt-get update && sudo apt-get install -y ffmpeg
+      - run: pip install -r backend/requirements-dev.txt
+      - run: python backend/scripts/provision_moneyprinterturbo.py
+      - run: PYTHONPATH=backend python -m pytest backend/tests/test_moneyprinterturbo_assembly.py
+      - run: npm ci
+      - run: npm run lint && npm run build

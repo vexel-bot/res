@@ -1,10 +1,10 @@
-ARG CRAFT_RUNTIME_IMAGE=clicko-craft-runtime:local
-FROM ${CRAFT_RUNTIME_IMAGE}
+FROM debian:bookworm-slim
 
 USER root
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates dumb-init ffmpeg python3 python3-pip python3-venv \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
+    && useradd --uid 10001 --create-home clicko
 
 WORKDIR /opt/clicko
 COPY backend/requirements.txt ./backend/requirements.txt
@@ -14,9 +14,11 @@ COPY backend/requirements-rea-video.txt ./backend/requirements-rea-video.txt
 RUN python3 -m venv /opt/clicko/rea-video \
     && /opt/clicko/rea-video/bin/pip install --no-cache-dir --requirement backend/requirements-rea-video.txt
 COPY backend/app ./backend/app
+COPY backend/scripts/provision_moneyprinterturbo.py ./backend/scripts/
 COPY docs/studios/knowledge/reference-evidence ./docs/studios/knowledge/reference-evidence
 COPY workers/media-cpu/worker.manifest.json ./worker-manifest.json
-RUN install -d -o clicko -g clicko /var/lib/clicko /tmp/clicko-craft
+RUN CLICKO_MPT_ROOT=/opt/clicko/moneyprinterturbo /opt/clicko/venv/bin/python backend/scripts/provision_moneyprinterturbo.py \
+    && install -d -o clicko -g clicko /var/lib/clicko /tmp/clicko-media
 
 ENV PATH="/opt/clicko/venv/bin:${PATH}" \
     PYTHONPATH="/opt/clicko/backend" \
@@ -24,14 +26,11 @@ ENV PATH="/opt/clicko/venv/bin:${PATH}" \
     STUDIO_ISOLATED_QUEUES_ENABLED="true" \
     STUDIO_WORKER_MANIFEST_PATH="/opt/clicko/worker-manifest.json" \
     STUDIO_WORKER_CAPABILITY="media_cpu" \
-    STUDIO_CRAFT_PHOTOCRAFT_BINARY="/opt/clicko/bin/clicko-photocraft-adapter" \
-    STUDIO_CRAFT_FILMCRAFT_BINARY="/opt/clicko/bin/clicko-filmcraft-adapter" \
-    STUDIO_CRAFT_EFFECTCRAFT_BINARY="/opt/clicko/bin/clicko-effectcraft-adapter" \
+    CLICKO_MPT_ROOT="/opt/clicko/moneyprinterturbo" \
     STUDIO_CRAFT_REA_VIDEO_BINARY="/opt/clicko/rea-video/bin/rea-video" \
-    PHOTOCRAFT_NO_SYSTEM_FONTS="1" \
     FFMPEG_PATH="/usr/bin/ffmpeg" \
     FFPROBE_PATH="/usr/bin/ffprobe" \
-    TMPDIR="/tmp/clicko-craft"
+    TMPDIR="/tmp/clicko-media"
 
 USER clicko
 WORKDIR /opt/clicko/backend

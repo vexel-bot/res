@@ -1,7 +1,7 @@
 {
   "schemaVersion": "studio.worker-runtime-manifest.v1",
   "runtimeName": "clicko-media-cpu",
-  "runtimeVersion": "1.0.3",
+  "runtimeVersion": "1.1.0",
   "capability": "media_cpu",
   "queues": [
     "studio.media.cpu"
@@ -15,7 +15,6 @@
     "media_waveform",
     "editing_gemini",
     "editing_ai",
-    "craft_render",
     "timeline_render"
   ],
   "providers": [
@@ -26,10 +25,8 @@
     "compatible.editing-planner",
     "runway.editing-video",
     "builtin.ffmpeg-qc-v1",
-    "craft.photocraft",
-    "craft.filmcraft",
-    "craft.effectcraft",
-    "ffmpeg.timeline-v1"
+    "ffmpeg.timeline-v1",
+    "moneyprinterturbo"
   ],
   "requiredEnvironment": [
     "DATABASE_URL",
@@ -44,9 +41,7 @@
   "requiredPaths": [
     "/usr/bin/ffmpeg",
     "/usr/bin/ffprobe",
-    "/opt/clicko/bin/clicko-photocraft-adapter",
-    "/opt/clicko/bin/clicko-filmcraft-adapter",
-    "/opt/clicko/bin/clicko-effectcraft-adapter"
+    "/opt/clicko/moneyprinterturbo/venv/bin/python"
   ],
   "tools": [
     {
@@ -80,30 +75,6 @@
         "-version"
       ],
       "versionPattern": "ffprobe version 5\\.1\\.9"
-    },
-    {
-      "id": "photocraft",
-      "command": [
-        "/opt/clicko/bin/clicko-photocraft-adapter",
-        "--version"
-      ],
-      "versionPattern": "clicko-photocraft-1\\.0\\.0\\+a7f26522"
-    },
-    {
-      "id": "filmcraft",
-      "command": [
-        "/opt/clicko/bin/clicko-filmcraft-adapter",
-        "--version"
-      ],
-      "versionPattern": "clicko-filmcraft-1\\.0\\.0\\+0800a8b0"
-    },
-    {
-      "id": "effectcraft",
-      "command": [
-        "/opt/clicko/bin/clicko-effectcraft-adapter",
-        "--version"
-      ],
-      "versionPattern": "clicko-effectcraft-1\\.0\\.2\\+67434e90"
     }
   ],
   "isolation": {
@@ -112,7 +83,7 @@
     "allowPrivilegeEscalation": false,
     "networkEgressPolicy": "private-dependencies-only",
     "maxConcurrentJobs": 1,
-    "ephemeralTempPath": "/tmp/clicko-craft",
+    "ephemeralTempPath": "/tmp/clicko-media",
     "minimumTempBytes": 4294967296
   }
 }

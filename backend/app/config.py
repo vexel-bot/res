@@ -140,6 +140,8 @@ class Settings(BaseSettings):
     object_storage_secret_key: str | None = None
     object_storage_signed_url_seconds: int = Field(default=900, ge=60, le=86_400)
     studio_isolated_queues_enabled: bool = False
+    studio_legacy_craft_enabled: bool = False
+    studio_moneyprinterturbo_worker_enabled: bool = False
     studio_worker_manifest_path: str | None = None
     studio_worker_capability: Literal["media_cpu", "speech_cpu", "speech_gpu", "vision_gpu"] | None = None
     studio_worker_instance_id: str | None = Field(default=None, max_length=160)

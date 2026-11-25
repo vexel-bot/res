@@ -1664,7 +1664,7 @@ class CreateGenerationJobRequest(StudioContract):
     def validate_job_provider(self) -> CreateGenerationJobRequest:
         expected = {
             "material_effect": {"local.material-effects-v1", "local.material-generative-v1"},
-            "timeline_render": {"ffmpeg.timeline-v1"},
+            "timeline_render": {"ffmpeg.timeline-v1", "moneyprinterturbo"},
             "craft_render": {"craft.photocraft", "craft.filmcraft", "craft.effectcraft"},
             "editing_gemini": {"google.gemini-editing"},
             "editing_ai": {

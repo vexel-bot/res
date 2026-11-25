@@ -66,7 +66,7 @@ export function createStudiosProxy(options: { origin?: string; secret?: string; 
         || (req.method === 'POST' && /^\/documents\/?$/.test(path))
         || (req.method === 'POST' && /^\/documents\/[^/]+\/(?:agent-tasks(?:\/[^/]+\/(?:apply|editorial-review))?|local-commands)\/?$/.test(path))
         || (req.method === 'POST' && /^\/documents\/[^/]+\/craft\/ai-commands\/?$/.test(path))
-        || (req.method === 'POST' && /^\/video\/documents\/[^/]+\/(?:openrouter-media|ai-commands|render-jobs)\/?$/.test(path))
+        || (req.method === 'POST' && /^\/video\/documents\/[^/]+\/(?:openrouter-media|ai-commands|render-jobs|assemblies)\/?$/.test(path))
         || (req.method === 'PUT' && /^\/video\/documents\/[^/]+\/timeline\/?$/.test(path));
     } catch { return false; }
   };

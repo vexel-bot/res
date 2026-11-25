@@ -1,12 +1,15 @@
 """Video-only canonical timeline boundary, reusing Clicko's session and jobs."""
 
-from fastapi import APIRouter, Depends, Header, HTTPException, Request
+from fastapi import APIRouter, Depends, File, Form, Header, HTTPException, Request, UploadFile
+from pydantic import ValidationError
 from sqlalchemy.orm import Session
 
 from ..config import get_settings
 from ..database import get_db
 from ..domain.studios.timeline_editor import TimelineEditRequest, TimelineRenderRequest
-from ..models import User
+from ..domain.studios.video_assembly import AssemblyRenderRequest
+from ..models import LibraryAsset, StudioGenerationJob, User
+from ..providers.studios import moneyprinterturbo
 from ..providers.studios.timeline_ffmpeg import capability, probe
 from ..security import get_current_user
 from ..services.object_storage import get_object_storage
@@ -14,9 +17,11 @@ from ..services.studios import timeline_editor
 from ..services.studios.compatibility import record_to_contract
 from ..services.studios.craft import scoped_asset
 from ..services.studios.jobs import enqueue_job_task, job_out
+from .assets import store_upload
 from .studios import owned_document
 
 router = APIRouter(prefix="/studios/v1/video", tags=["video-timeline"])
+archive_router = APIRouter(prefix="/studios/v1/documents", tags=["studio-archive"])
 
 
 def recover_interrupted_local_jobs():
@@ -179,6 +184,85 @@ def render_job(
     db: Session = Depends(get_db),
     user: User = Depends(get_current_user),
 ):
+    return submit_render(db, user, document_id, request, key)
+
+
+@router.post("/documents/{document_id}/assemblies", status_code=202)
+def assemble_video(
+    document_id: str,
+    request: AssemblyRenderRequest,
+    key: str = Header(alias="Idempotency-Key", min_length=8, max_length=128),
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
+):
+    return submit_render(db, user, document_id, request, key)
+
+
+@router.get("/assembly-capability")
+def assembly_capability(_user: User = Depends(get_current_user)):
+    try:
+        moneyprinterturbo.require_available()
+    except ValueError:
+        return {"available": False, "frameRate": moneyprinterturbo.FPS}
+    return {"available": True, "frameRate": moneyprinterturbo.FPS}
+
+
+@router.post("/documents/{document_id}/assembly-materials", status_code=201)
+async def upload_assembly_material(
+    document_id: str,
+    title: str = Form(min_length=1, max_length=240),
+    file: UploadFile = File(),
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
+):
+    record = owned_document(db, user.id, document_id)
+    document = record_to_contract(record)
+    if document.content_type != "video" or document.native_editor_state:
+        raise HTTPException(422, detail={"code": "moneyprinterturbo_requires_new_video_project"})
+    if not (file.content_type or "").startswith(("audio/", "video/")):
+        raise HTTPException(415, detail={"code": "moneyprinterturbo_material_type_mismatch"})
+    return await store_upload(db, record.workspace_id, title, "studio,source", file, 1024**3)
+
+
+@archive_router.get("/{document_id}/files")
+def project_files(document_id: str, db: Session = Depends(get_db), user: User = Depends(get_current_user)):
+    from sqlalchemy import select
+
+    record = owned_document(db, user.id, document_id)
+    contract = record_to_contract(record)
+    outputs = {entry.asset_id for entry in contract.exports}
+    materials = {entry.id for entry in contract.assets}
+    if contract.native_editor_state:
+        materials.update(entry.asset_id for entry in contract.native_editor_state.asset_manifest)
+        materials.update(entry.asset_id for entry in contract.native_editor_state.font_manifest)
+    jobs = db.scalars(select(StudioGenerationJob).where(
+        StudioGenerationJob.workspace_id == record.workspace_id,
+        StudioGenerationJob.document_id == record.id,
+        StudioGenerationJob.provider == moneyprinterturbo.PROVIDER,
+    ))
+    for job in jobs:
+        materials.update(job.request_payload.get("assemblyChecksums", {}))
+    identifiers = sorted(outputs | materials)
+    rows = {row.id: row for row in db.scalars(select(LibraryAsset).where(
+        LibraryAsset.workspace_id == record.workspace_id, LibraryAsset.id.in_(identifiers),
+    ))}
+    files = []
+    for identifier in identifiers:
+        row = rows.get(identifier)
+        available = False
+        if row and row.storage_key and row.lifecycle_status == "active":
+            storage = get_object_storage(row.storage_backend or "local")
+            available = row.storage_backend not in {"local", None} or storage.exists(row.storage_key)
+        files.append({
+            "assetId": identifier,
+            "title": row.title if row else "Arquivo sem registro",
+            "role": "export" if identifier in outputs else "material",
+            "available": available,
+        })
+    return files
+
+
+def submit_render(db, user, document_id, request, key):
     try:
         job, created = timeline_editor.create_render(db, owned_document(db, user.id, document_id), request, user, key)
         if created:
@@ -192,6 +276,9 @@ def render_job(
                 )
                 db.commit()
         return job_out(job)
+    except ValidationError as error:
+        db.rollback()
+        raise HTTPException(422, detail={"code": "invalid_video_assembly"}) from error
     except ValueError as error:
         db.rollback()
         raise failure(error) from error

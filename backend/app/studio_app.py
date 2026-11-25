@@ -213,12 +213,15 @@ app.include_router(internal_finance.router)
 
 @app.get("/api/v1/studios/v1/bridge/session")
 def session(user: User = Depends(bridge_user), db: Session = Depends(get_db)):
+    from .services.brand import brand_readiness
+
     membership = db.scalar(select(Membership).where(Membership.user_id == user.id))
     workspace = db.get(Workspace, membership.workspace_id)
+    brand = db.scalar(select(BrandProfile).where(BrandProfile.workspace_id == workspace.id))
     rows = db.scalars(select(LibraryAsset).where(LibraryAsset.workspace_id == workspace.id)).all()
     return {
         "user": {"id": user.id, "name": user.name},
-        "workspace": {"id": workspace.id, "name": workspace.name},
+        "workspace": {"id": workspace.id, "name": workspace.name, "brandRevision": brand_readiness(brand)["revision"] if brand else 1},
         "assets": [assets.asset_out(row) for row in rows],
         "posts": [],
     }

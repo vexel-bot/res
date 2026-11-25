@@ -671,8 +671,6 @@ Monte automaticamente o planejamento completo com cronograma, lista de conteúdo
   app.post('/api/ai/video-edit', retiredEditing('create-video'));
 
   // Missing JS/WASM is a missing runtime, never an HTML SPA document.
-  app.use('/craft', express.static(path.join(process.cwd(), isProduction ? 'dist/craft' : 'public/craft'), { fallthrough: true }));
-  app.use('/craft', (_req, res) => res.status(404).json({ code: 'CRAFT_BROWSER_RUNTIME_NOT_BUILT' }));
 
   // Vite middleware for development vs static serve for production
   let vite: Awaited<ReturnType<typeof createViteServer>> | undefined;

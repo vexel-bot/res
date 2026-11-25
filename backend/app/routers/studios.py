@@ -1993,6 +1993,8 @@ def create_editorial_review(
 
 @router.get("/editing/capabilities")
 def editing_capabilities(user: User = Depends(get_current_user)):
+    if not get_settings().studio_legacy_craft_enabled:
+        return {"schemaVersion": "studio.craft-engines.v1", "engines": []}
     from ..providers.studios.craft import ENGINES, engine_capability
 
     return {"schemaVersion": "studio.craft-engines.v1",

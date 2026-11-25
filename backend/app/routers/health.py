@@ -62,8 +62,14 @@ def ready(db: Session = Depends(get_db)):
     except Exception:
         dependencies["queue"] = "unavailable"
     from ..providers.studios.timeline_ffmpeg import capability
+    from ..providers.studios.moneyprinterturbo import require_available
 
     dependencies["ffmpeg"] = "ok" if capability()["available"] else "unavailable"
+    try:
+        require_available()
+        montage = "available"
+    except ValueError:
+        montage = "unavailable"
     ok = all(value in {"ok", "local-thread-pool"} for value in dependencies.values())
     return JSONResponse(
         status_code=200 if ok else 503,
@@ -71,6 +77,6 @@ def ready(db: Session = Depends(get_db)):
             "status": "ready" if ok else "not_ready",
             "service": "clicko-studios",
             "dependencies": dependencies,
-            "optionalRuntimes": {"craft": "check_authenticated_engine_capabilities"},
+            "optionalRuntimes": {"moneyprinterturbo": montage},
         },
     )

@@ -1325,7 +1325,6 @@ function StudioRoom({
                         {project.format === "carousel" ? "completa (ZIP)" : ""}
                       </button>
                     )}
-                  {document && <button className="ds-secondary" onClick={() => navigate(`/studios/native?document=${encodeURIComponent(document.documentId)}&mode=${video ? 'video' : 'visual'}`)}>Abrir edição avançada</button>}
                   {previewUrl && mediaReady && (
                     <a
                       className="ds-download"

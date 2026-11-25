@@ -62,11 +62,6 @@ import { StudioKlicButton, StudioUtilityPanel } from '../shared/StudioWorkspace'
 type ImageEntry = 'create' | 'edit' | 'advertising' | 'composition' | 'editorial';
 type ImageNavigationState = { draft: ImageDraft; doc?: CraftDocument; sourceId?: string; references: string[]; assets: AssetRecord[]; job?: StudioGenerationJobRecord; dirty: boolean };
 
-const CraftStudio = React.lazy(() =>
-  import("../craft/CraftStudio").then((module) => ({
-    default: module.CraftStudio,
-  })),
-);
 const DepartmentStudio = React.lazy(() =>
   import("../department/DepartmentStudio").then((module) => ({
     default: module.DepartmentStudio,
@@ -182,10 +177,9 @@ function ImageRoom({
   const [suggestion, setSuggestion] = React.useState("");
   const [reviewNotes, setReviewNotes] = React.useState("");
   const [reviewConfirmed, setReviewConfirmed] = React.useState(false);
-  const [view, setView] = React.useState<"studio" | "native" | "editorial">(
+  const [view, setView] = React.useState<"studio" | "editorial">(
     "studio",
   );
-  const [nativeSearch, setNativeSearch] = React.useState("");
   const [refresh, setRefresh] = React.useState(0);
   const recoveryKey = `clicko:image-job:v1:${JSON.stringify([userId, workspaceId])}`;
   const [pending, setPending] = React.useState(() => {
@@ -718,74 +712,15 @@ function ImageRoom({
       );
     if (alive.current) setSuggestion(reply.reply.trim());
   }
-  async function showNative() {
-    if (pendingRef.current || activeJob)
-      throw new Error(
-        "Aguarde ou confira o pedido em andamento antes de abrir a edição avançada.",
-      );
-    const nativeDraft =
-      draft.prompt.trim().length >= 8
-        ? draft
-        : {
-            ...draft,
-            title: draft.title || source?.title || "Nova composição",
-            prompt: source
-              ? `Edição da imagem ${source.title}.`
-              : "Nova composição de imagem em branco.",
-          };
-    let active = await saveDraft(nativeDraft);
-    if (!alive.current) return;
-    if (alive.current && nativeDraft !== draft) setDraft(nativeDraft);
-    if (result && !requiresImageReview(result)) {
-      active = await imageApi.attach(
-        active.documentId,
-        active.revision,
-        result.id,
-      );
-      remember(active);
-    }
-    setNativeSearch(
-      `?mode=visual&document=${encodeURIComponent(active.documentId)}`,
-    );
-    setView("native");
-  }
-  async function returnToStudio() {
-    const id =
-      new URLSearchParams(nativeSearch).get("document") ||
-      docRef.current?.documentId;
-    if (id) {
-      const next = (await productApi.studioDocument(id)) as CraftDocument;
-      if (next.workspaceId !== workspaceId)
-        throw new Error("Projeto fora do ambiente atual.");
-      remember(next);
-      setDraft(imageDraftFromDocument(next));
-      setDirty(false);
-      setSourceId(
-        next.assets.find((item) => item.provenance?.imageStudioRole === "source")
-          ?.id,
-      );
-      setReferences(
-        next.assets
-          .filter((item) => item.provenance?.imageStudioRole === "reference")
-          .map((item) => item.id)
-          .slice(0, 3),
-      );
-      if (job?.documentId !== id) setJob(undefined);
-    }
-    setRefresh((value) => value + 1);
-    setView("studio");
-    if (requestedEntry === 'editorial') onModeChange?.(mode);
-  }
-  const navigateNative = (url: string) => {
+  const navigateEditorial = (url: string) => {
     const target = new URL(url, window.location.origin);
-    if (target.pathname === "/studios/native") {
-      setNativeSearch(target.search);
-      setView("native");
-    } else if (target.pathname.startsWith("/approvals"))
-      onNavigate("approvals");
+    if (target.pathname.startsWith("/approvals")) onNavigate("approvals");
     else if (target.pathname.startsWith("/library")) onNavigate("library");
     else if (target.pathname === "/brand-memory") onNavigate("workspace");
-    else void run(returnToStudio);
+    else {
+      setView("studio");
+      if (requestedEntry === "editorial") onModeChange?.(mode);
+    }
   };
   async function leaveForLibrary() {
     if (dirty) {
@@ -839,27 +774,10 @@ function ImageRoom({
   return (
     <section className="is-root is-focused" data-creation-state={previewUrl || activeJob ? 'review' : 'idea'} aria-label="Estúdio de imagens Clicko">
       <div hidden={view === "studio"} className="is-advanced-top">
-        <button disabled={busy} onClick={() => void run(returnToStudio)}>
+        <button disabled={busy} onClick={() => navigateEditorial("/image")}>
           <ArrowLeft size={16} /> Voltar ao estúdio de imagens
         </button>
-        <small>
-          Ferramentas existentes da Clicko · projeto e originais preservados
-        </small>
       </div>
-      {view === "native" && (
-        <React.Suspense
-          fallback={<p role="status">Carregando editor PhotoCraft…</p>}
-        >
-          <CraftStudio
-            mode="visual"
-            pathname="/studios/native"
-            search={nativeSearch}
-            navigate={navigateNative}
-            returnTo="/image"
-            sourceAssetId={result?.id || sourceId}
-          />
-        </React.Suspense>
-      )}
       {view === "editorial" && (
         <React.Suspense
           fallback={<p role="status">Carregando produção editorial…</p>}
@@ -868,7 +786,7 @@ function ImageRoom({
             mode="image"
             pathname="/image"
               search={window.location.search}
-            navigate={navigateNative}
+            navigate={navigateEditorial}
             initialBrief={initialBrief}
           />
         </React.Suspense>
@@ -1444,35 +1362,9 @@ function ImageRoom({
                 </button>
               </div>
             )}
-            <details className="is-details is-native-details" open={requestedEntry === 'composition' ? true : undefined}>
-              <summary>
-                <Layers3 size={16} /> Edição avançada e produção editorial
-                <span>PhotoCraft · camadas · formatos · versões</span>
-              </summary>
-              <p>
-                Use as ferramentas já integradas para composição, textos, cores,
-                camadas e exportação. A disponibilidade depende do runtime
-                nativo. A geração por IA entrega um novo arquivo; não altera o
-                original.
-              </p>
-              <div className="is-button-row">
-                <button disabled={locked} onClick={() => void run(showNative)}>
-                  Abrir editor PhotoCraft <ArrowRight size={14} />
-                </button>
-                <button
-                  disabled={locked || dirty}
-                  onClick={() => { setView("editorial"); onEditorial?.(); }}
-                >
-                  Produção editorial e carrosséis
-                </button>
-              </div>
-              <p>
-                Um resultado aprovado é vinculado como material, não inserido
-                automaticamente na tela. Use o painel Materiais do PhotoCraft
-                para posicioná-lo. Revisão e aprovação de conteúdo permanecem no
-                fluxo editorial existente.
-              </p>
-            </details>
+            <button type="button" disabled={locked || dirty} onClick={() => { setView("editorial"); onEditorial?.(); }}>
+              <Layers3 size={16} /> Produção editorial e carrosséis
+            </button>
           </main>
           <aside className="is-controls">
             <div className="is-controls-title">

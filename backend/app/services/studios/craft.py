@@ -85,11 +85,12 @@ def write_asset(
     metadata: dict,
     title: str | None = None,
     asset_type: str = "document",
+    source_name: str = "clicko-craft",
 ):
     storage = get_object_storage()
     key = object_key(record.workspace_id, "derived", suffix)
     stored = storage.put_file(
-        source, key=key, media_type=media_type, metadata={"document-id": record.id, "source": "clicko-craft"}
+        source, key=key, media_type=media_type, metadata={"document-id": record.id, "source": source_name}
     )
     asset = LibraryAsset(
         id=str(uuid4()),
@@ -98,13 +99,13 @@ def write_asset(
         asset_type=asset_type,
         campaign_id=record.campaign_id,
         content_id=record.post_id,
-        tags=["craft", f"document:{record.id}"],
+        tags=["craft" if source_name == "clicko-craft" else source_name, f"document:{record.id}"],
         storage_key=key,
         storage_backend=stored.backend,
         media_type=media_type,
         size_bytes=stored.size_bytes,
         checksum_sha256=stored.checksum_sha256,
-        object_metadata={**metadata, "craftImmutable": True},
+        object_metadata={**metadata, "craftImmutable" if source_name == "clicko-craft" else "immutable": True},
     )
     db.add(asset)
     return asset, storage, key

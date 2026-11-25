@@ -3,8 +3,10 @@
 from __future__ import annotations
 
 import json
+from contextlib import ExitStack, contextmanager
 from datetime import UTC, datetime
 from hashlib import sha256
+from tempfile import TemporaryDirectory
 
 from sqlalchemy import select, update
 
@@ -16,8 +18,10 @@ from ...domain.studios.contracts import (
     ReviewReferenceV1,
 )
 from ...domain.studios.timeline_editor import JOB_TYPE, PROVIDER, MotionKey, VisualMotion
+from ...domain.studios.video_assembly import VideoAssembly
 from ...models import CreativeDocument, LibraryAsset, StudioDomainEvent, StudioGenerationJob
 from ...providers.studios import timeline_ffmpeg as renderer
+from ...providers.studios import moneyprinterturbo
 from ..object_storage import get_object_storage, sha256_file
 from .compatibility import composition_to_canvas, persist_contract, record_to_contract
 from .craft import scoped_asset, workspace_files, write_asset
@@ -232,12 +236,20 @@ def validate_admission(db, request):
     snapshot = CreativeDocumentV1.model_validate(request.request.get("documentSnapshot"))
     record = db.get(CreativeDocument, request.document_id)
     if (
-        request.provider != PROVIDER
+        request.provider not in {PROVIDER, moneyprinterturbo.PROVIDER}
         or not record
         or request.workspace_id != record.workspace_id
         or snapshot != record_to_contract(record)
     ):
         raise ValueError("timeline_render_snapshot_conflict")
+    if request.provider == moneyprinterturbo.PROVIDER:
+        plan = VideoAssembly.model_validate(request.request.get("assembly"))
+        if snapshot.content_type != "video" or snapshot.native_editor_state:
+            raise ValueError("moneyprinterturbo_requires_new_video_project")
+        if assembly_checksums(db, snapshot.workspace_id, plan) != request.request.get("assemblyChecksums"):
+            raise ValueError("moneyprinterturbo_material_changed")
+        moneyprinterturbo.require_available()
+        return
     validate(snapshot, require_content=True)
     known = {asset.id: asset.checksum for asset in snapshot.assets}
     for identifier in validate(snapshot):
@@ -248,9 +260,29 @@ def validate_admission(db, request):
         raise ValueError("timeline_runtime_unavailable")
 
 
+def assembly_checksums(db, workspace_id, plan):
+    checksums = {}
+    total = 0
+    for identifier in plan.asset_ids:
+        asset = scoped_asset(db, workspace_id, identifier)
+        expected = "audio/" if identifier == plan.audio_asset_id else "video/"
+        if not (asset.media_type or "").startswith(expected):
+            raise ValueError("moneyprinterturbo_material_type_mismatch")
+        if not asset.checksum_sha256 or not asset.storage_key:
+            raise ValueError("moneyprinterturbo_material_not_stored")
+        checksums[identifier] = asset.checksum_sha256
+        total += asset.size_bytes or 0
+    if total > 1024**3:
+        raise ValueError("timeline_media_size_limit")
+    return checksums
+
+
 def create_render(db, record, request, user, key):
     from .jobs import create_job
 
+    assembly = getattr(request, "assembly", None)
+    plan = assembly.model_dump(mode="json", by_alias=True) if assembly else None
+    provider = moneyprinterturbo.PROVIDER if assembly else PROVIDER
     # Replaying an admitted request remains safe after the project changes.
     previous = db.scalar(
         select(StudioGenerationJob).where(
@@ -263,35 +295,61 @@ def create_render(db, record, request, user, key):
         if (
             previous.document_id != record.id
             or previous.request_payload.get("documentRevision") != request.expected_revision
+            or previous.provider != provider
+            or previous.request_payload.get("assembly") != plan
         ):
             raise ValueError("idempotency_payload_conflict")
         return previous, False
     contract = record_to_contract(record)
     if contract.revision != request.expected_revision:
         raise ValueError("studio_document_conflict")
+    payload = {
+        "documentSnapshot": contract.model_dump(by_alias=True, mode="json"),
+        "documentRevision": contract.revision,
+    }
+    if assembly:
+        payload["assembly"] = plan
+        payload["assemblyChecksums"] = assembly_checksums(db, contract.workspace_id, assembly)
     return create_job(
         db,
         CreateGenerationJobRequest(
             workspace_id=record.workspace_id,
             document_id=record.id,
             job_type=JOB_TYPE,
-            provider=PROVIDER,
+            provider=provider,
             correlation_id=key,
-            request={
-                "documentSnapshot": contract.model_dump(by_alias=True, mode="json"),
-                "documentRevision": contract.revision,
-            },
+            request=payload,
         ),
         key,
         user,
     )
 
 
+@contextmanager
+def assembly_files(db, record, job, assembly):
+    with TemporaryDirectory(prefix="clicko-assembly-") as directory, ExitStack() as stack:
+        paths = {}
+        checksums = job.request_payload["assemblyChecksums"]
+        for identifier in assembly.asset_ids:
+            asset = scoped_asset(db, record.workspace_id, identifier, checksums[identifier])
+            storage = get_object_storage(asset.storage_backend)
+            path = stack.enter_context(storage.materialize(asset.storage_key))
+            if sha256_file(path) != checksums[identifier]:
+                raise ValueError("moneyprinterturbo_material_changed")
+            paths[identifier] = path
+        yield directory, paths
+
+
 def execute(db, job, progress, is_cancelled):
     contract = CreativeDocumentV1.model_validate(job.request_payload["documentSnapshot"])
     if contract.workspace_id != job.workspace_id or contract.document_id != job.document_id:
         raise ValueError("timeline_job_identity_mismatch")
-    references = validate(contract, require_content=True)
+    assembly = (
+        VideoAssembly.model_validate(job.request_payload["assembly"])
+        if job.provider == moneyprinterturbo.PROVIDER
+        else None
+    )
+    references = assembly.asset_ids if assembly else validate(contract, require_content=True)
     record = db.get(CreativeDocument, job.document_id)
     if not record or record.workspace_id != job.workspace_id:
         raise ValueError("timeline_document_unavailable")
@@ -307,66 +365,73 @@ def execute(db, job, progress, is_cancelled):
             return asset.object_metadata["result"]
     written = None
     try:
-        checksums = {a.id: a.checksum for a in contract.assets}
-        total = 0
-        for identifier in references:
-            asset = scoped_asset(db, contract.workspace_id, identifier, checksums.get(identifier))
-            total += asset.size_bytes or 0
-            if total > 1024**3:
-                raise ValueError("timeline_media_size_limit")
-        with workspace_files(db, record, None, extra_asset_ids=references) as (directory, params, _manifest):
-            paths = {entry["assetId"]: entry["path"] for entry in params["media"]}
-            media_info = {}
-            checksums = {a.id: a.checksum for a in contract.assets}
-            total = 0
-            for identifier in references:
-                asset = scoped_asset(db, contract.workspace_id, identifier, checksums.get(identifier))
-                total += asset.size_bytes or 0
-                if total > 1024**3:
-                    raise ValueError("timeline_media_size_limit")
-                if not (asset.media_type or "").startswith("image/"):
-                    media_info[identifier] = renderer.probe(paths[identifier])
-                    if any(
-                        s.get("width", 0) * s.get("height", 0) > 3840 * 2160 for s in media_info[identifier]["streams"]
-                    ):
-                        raise ValueError("timeline_source_resolution_limit")
-            timeline = contract.composition.media_timeline
-            fps = timeline.frame_rate.numerator / timeline.frame_rate.denominator
-            for mask in (t for t in timeline.tracks if t.kind == "mask"):
-                target = next(t for t in timeline.tracks if t.id == mask.target_track_id)
-                mask_info = media_info.get(mask.artifact_asset_id)
-                if mask_info:
-                    if not any(s["codec_type"] == "video" for s in mask_info["streams"]):
-                        raise ValueError("timeline_mask_visual_required")
-                    # Moving mattes use the same source time/rate as each target clip.
-                    for clip in target.clips:
+        with ExitStack() as stack:
+            if assembly:
+                directory, paths = stack.enter_context(assembly_files(db, record, job, assembly))
+                output, metadata = moneyprinterturbo.render(assembly, paths, directory, progress, is_cancelled)
+            else:
+                checksums = {a.id: a.checksum for a in contract.assets}
+                total = 0
+                for identifier in references:
+                    asset = scoped_asset(db, contract.workspace_id, identifier, checksums.get(identifier))
+                    total += asset.size_bytes or 0
+                    if total > 1024**3:
+                        raise ValueError("timeline_media_size_limit")
+                directory, params, _manifest = stack.enter_context(
+                    workspace_files(db, record, None, extra_asset_ids=references)
+                )
+                paths = {entry["assetId"]: entry["path"] for entry in params["media"]}
+                media_info = {}
+                checksums = {a.id: a.checksum for a in contract.assets}
+                total = 0
+                for identifier in references:
+                    asset = scoped_asset(db, contract.workspace_id, identifier, checksums.get(identifier))
+                    total += asset.size_bytes or 0
+                    if total > 1024**3:
+                        raise ValueError("timeline_media_size_limit")
+                    if not (asset.media_type or "").startswith("image/"):
+                        media_info[identifier] = renderer.probe(paths[identifier])
+                        if any(
+                            s.get("width", 0) * s.get("height", 0) > 3840 * 2160 for s in media_info[identifier]["streams"]
+                        ):
+                            raise ValueError("timeline_source_resolution_limit")
+                timeline = contract.composition.media_timeline
+                fps = timeline.frame_rate.numerator / timeline.frame_rate.denominator
+                for mask in (t for t in timeline.tracks if t.kind == "mask"):
+                    target = next(t for t in timeline.tracks if t.id == mask.target_track_id)
+                    mask_info = media_info.get(mask.artifact_asset_id)
+                    if mask_info:
+                        if not any(s["codec_type"] == "video" for s in mask_info["streams"]):
+                            raise ValueError("timeline_mask_visual_required")
+                        # Moving mattes use the same source time/rate as each target clip.
+                        for clip in target.clips:
+                            start = clip.source.start_microseconds / 1e6 if clip.source else 0
+                            if start + clip.timeline.duration_frames / fps * clip.playback_rate > float(mask_info["format"]["duration"]) + 1 / fps:
+                                raise ValueError("timeline_mask_source_range_exceeded")
+                    elif mask.mode == "alpha":
+                        from PIL import Image
+                        with Image.open(paths[mask.artifact_asset_id]) as image:
+                            if "A" not in image.getbands():
+                                raise ValueError("timeline_mask_alpha_missing")
+                for track in timeline.tracks:
+                    for clip in getattr(track, "clips", []):
+                        if clip.asset_id not in media_info:
+                            if track.kind == "audio":
+                                raise ValueError("timeline_audio_stream_missing")
+                            continue
+                        info = media_info[clip.asset_id]
+                        required = clip.timeline.duration_frames / fps * clip.playback_rate
                         start = clip.source.start_microseconds / 1e6 if clip.source else 0
-                        if start + clip.timeline.duration_frames / fps * clip.playback_rate > float(mask_info["format"]["duration"]) + 1 / fps:
-                            raise ValueError("timeline_mask_source_range_exceeded")
-                elif mask.mode == "alpha":
-                    from PIL import Image
-                    with Image.open(paths[mask.artifact_asset_id]) as image:
-                        if "A" not in image.getbands():
-                            raise ValueError("timeline_mask_alpha_missing")
-            for track in timeline.tracks:
-                for clip in getattr(track, "clips", []):
-                    if clip.asset_id not in media_info:
-                        if track.kind == "audio":
-                            raise ValueError("timeline_audio_stream_missing")
-                        continue
-                    info = media_info[clip.asset_id]
-                    required = clip.timeline.duration_frames / fps * clip.playback_rate
-                    start = clip.source.start_microseconds / 1e6 if clip.source else 0
-                    if clip.source and required > clip.source.duration_microseconds / 1e6 + 1 / fps:
-                        raise ValueError("timeline_source_range_exceeded")
-                    if start + required > float(info["format"]["duration"]) + 1 / fps:
-                        raise ValueError("timeline_source_range_exceeded")
-                    if not any(
-                        s["codec_type"] == ("audio" if track.kind == "audio" else "video") for s in info["streams"]
-                    ):
-                        raise ValueError("timeline_media_stream_missing")
-            progress(10)
-            output, metadata = renderer.render(contract, paths, directory, media_info, is_cancelled)
+                        if clip.source and required > clip.source.duration_microseconds / 1e6 + 1 / fps:
+                            raise ValueError("timeline_source_range_exceeded")
+                        if start + required > float(info["format"]["duration"]) + 1 / fps:
+                            raise ValueError("timeline_source_range_exceeded")
+                        if not any(
+                            s["codec_type"] == ("audio" if track.kind == "audio" else "video") for s in info["streams"]
+                        ):
+                            raise ValueError("timeline_media_stream_missing")
+                progress(10)
+                output, metadata = renderer.render(contract, paths, directory, media_info, is_cancelled)
             progress(90)
             if is_cancelled():
                 return {"cancelled": True}
@@ -377,6 +442,7 @@ def execute(db, job, progress, is_cancelled):
                 suffix=".mp4",
                 media_type="video/mp4",
                 asset_type="video",
+                source_name=moneyprinterturbo.PROVIDER if assembly else "clicko-craft",
                 title=f"{contract.title} · revisão {contract.revision}",
                 metadata={"timelineJobId": job.id, "documentRevision": contract.revision},
             )
@@ -395,7 +461,7 @@ def execute(db, job, progress, is_cancelled):
                 "downloadUrl": f"/api/v1/assets/{asset.id}/content",
                 **metadata,
             }
-            asset.object_metadata = {**asset.object_metadata, "result": result, "provider": PROVIDER}
+            asset.object_metadata = {**asset.object_metadata, "result": result, "provider": job.provider}
             asset.tags = [*asset.tags, "clicko-video-export"]
             if is_cancelled():
                 db.rollback()

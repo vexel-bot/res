@@ -10,7 +10,7 @@ export const studioTools = [
   { id: 'video-motion', category: 'video', label: 'Motion Design', path: '/studios/video/motion', module: 'create-video', entry: 'motion' },
   { id: 'ad-create', category: 'advertising', label: 'Criar Anúncio', path: '/studios/advertising/create', module: 'create-video', entry: 'ad' },
   { id: 'ad-creatives', category: 'advertising', label: 'Criativos para Anúncios', path: '/studios/advertising/creatives', module: 'create-image', entry: 'advertising' },
-  { id: 'image-composition', category: 'tools', label: 'Composição e formatos', path: '/studios/tools/composition', module: 'create-image', entry: 'composition' },
+  { id: 'image-composition', category: 'tools', label: 'Projetos anteriores de imagem', path: '/studios/tools/composition', module: 'create-image', entry: 'composition' },
   { id: 'image-editorial', category: 'tools', label: 'Produção editorial e carrosséis', path: '/studios/tools/editorial', module: 'create-image', entry: 'editorial' },
 ] as const;
 export type StudioTool = typeof studioTools[number];
@@ -25,10 +25,12 @@ export const defaultStudioTool = (module: StudioModule) => studioTool(module ===
 export function studioToolForPath(pathname: string): StudioTool | undefined {
   const path = pathname.replace(/\/+$/, '') || '/';
   if (path === '/studios' || path === '/image') return defaultStudioTool('create-image');
-  if (path === '/video') return defaultStudioTool('create-video');
+  if (path === '/video' || path === '/studios/video/edit' || path === '/studios/video/motion') return defaultStudioTool('create-video');
   return studioTools.find(tool => tool.path === path);
 }
-export const permittedStudioTools = (canAccess: (module: StudioModule) => boolean) => studioTools.filter(tool => canAccess(tool.module));
+export const permittedStudioTools = (canAccess: (module: StudioModule) => boolean) => studioTools.filter(
+  tool => canAccess(tool.module) && tool.id !== 'video-edit' && tool.id !== 'video-motion',
+);
 
 export function categoryStudioTool(tools: readonly StudioTool[], category: StudioCategory, preferredId?: StudioToolId) {
   return tools.find(tool => tool.category === category && tool.id === preferredId) || tools.find(tool => tool.category === category);

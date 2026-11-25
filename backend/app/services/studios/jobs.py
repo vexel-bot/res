@@ -700,6 +700,8 @@ def create_job(
     if request.job_type == "video_render":
         raise ValueError("craft_editors_replaced_legacy_renderer_use_craft_render_jobs")
     if request.job_type == "craft_render":
+        if not get_settings().studio_legacy_craft_enabled:
+            raise ValueError("studio_craft_retired")
         from ...domain.studios.contracts import NativeEditorStateV1
         from ...providers.studios.craft import require_capability
         from .compatibility import record_to_contract
@@ -1031,6 +1033,8 @@ def request_cancel(db: Session, job: StudioGenerationJob, reason: str, actor_id:
 
 
 def retry_job(db: Session, job: StudioGenerationJob, actor_id: str) -> StudioGenerationJob:
+    if job.job_type == "craft_render" and not get_settings().studio_legacy_craft_enabled:
+        raise ValueError("studio_craft_retired")
     if job.job_type in {"external_call", "agent_plan", "craft_ai"}:
         raise ValueError(
             "agent_plan_not_executable" if job.job_type == "agent_plan" else "financial_receipt_not_executable"

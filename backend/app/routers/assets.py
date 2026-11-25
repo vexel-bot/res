@@ -256,6 +256,10 @@ async def upload_asset(
     user: User = Depends(get_current_user),
 ) -> AssetOut:
     assert_access(db, user.id, workspace_id)
+    return await store_upload(db, workspace_id, title, tags, file, MAX_UPLOAD_BYTES)
+
+
+async def store_upload(db, workspace_id, title, tags, file, max_bytes):
     extension = ALLOWED_UPLOAD_TYPES.get(file.content_type or "")
     if not extension:
         raise HTTPException(status_code=415, detail="Unsupported file type")
@@ -269,8 +273,8 @@ async def upload_asset(
             with staged.open("xb") as output:
                 while chunk := await file.read(1024 * 1024):
                     size += len(chunk)
-                    if size > MAX_UPLOAD_BYTES:
-                        raise HTTPException(status_code=413, detail="File exceeds 20 MB limit")
+                    if size > max_bytes:
+                        raise HTTPException(status_code=413, detail=f"File exceeds {max_bytes // (1024**2)} MB limit")
                     output.write(chunk)
         finally:
             await file.close()

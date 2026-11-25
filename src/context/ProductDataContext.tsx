@@ -7,7 +7,7 @@ import { stableStudioContext } from './stableStudioContext';
 
 type Session = {
   user: { id: string; name: string };
-  workspace: { id: string; name: string; brandProfile?: { targetAudience?: string[] } };
+  workspace: { id: string; name: string; brandRevision?: number; brandProfile?: { targetAudience?: string[] } };
   assets: AssetRecord[];
   posts: Array<{ id: string; title: string; copy: string; objective?: string; campaignId?: string }>;
 };
