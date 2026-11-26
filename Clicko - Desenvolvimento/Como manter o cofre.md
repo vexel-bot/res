@@ -10,7 +10,7 @@ Guarde no Git as notas Markdown do cofre técnico. O diretório local `.obsidian
 
 ## Codex e Claude Code
 
-O repositório carrega as mesmas instruções nos dois assistentes. O Codex lê `AGENTS.md`, e o Claude Code usa `CLAUDE.md` para importar esse arquivo. As instruções dizem quando consultar cada cofre e quais aprendizados registrar ao concluir uma tarefa.
+O `AGENTS.md` contém a regra compartilhada de consulta e registro. O Codex e o Claude Code recente conseguem ler esse arquivo no projeto. Os métodos e as decisões ficam nas notas dos cofres.
 
 O cofre audiovisual costuma estar em `Documents/Clicko - Segundo Cérebro` na pasta pessoal. Se estiver em outro lugar, use a variável local `CLICKO_AUDIOVISUAL_VAULT` para indicar a pasta. A sessão precisa ter acesso a ela. Em uma sessão remota, disponibilize as notas necessárias no ambiente dessa tarefa.
 
