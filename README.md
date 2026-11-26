@@ -4,6 +4,8 @@ Frontend React/TypeScript com Express como BFF autenticado e FastAPI como servi�
 
 A [documentação central do sistema](docs/evolution/2026-10-29-documentacao-sistema.md) reúne áreas, arquitetura, fluxos, operação local e pendências. Ela também está disponível na área **Evolução** da aplicação.
 
+O [cofre Clicko — Desenvolvimento](Clicko%20-%20Desenvolvimento/00%20In%C3%ADcio.md) reúne o mapa do produto, o roadmap e o devlog. Para navegar pelas notas interligadas, abra a pasta `Clicko - Desenvolvimento` como cofre no Obsidian.
+
 ## Motion Gemini experimental · 24/10/2026
 
 Integração DEV opcional, **desligada por padrão**. Reutiliza o transporte Gemini,
