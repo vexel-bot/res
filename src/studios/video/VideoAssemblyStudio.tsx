@@ -3,16 +3,20 @@ import { apiFetch } from "../../api";
 import { productApi, type AssetRecord, type StudioDocumentRecord, type StudioDocumentCreate } from "../../api/productApi";
 import { useProductData } from "../../context/ProductDataContext";
 import { ProjectFiles, saveDownload, useProjectFiles } from "../shared/ProjectFiles";
+import { buildCopyHandoff, type CopyData, type SavedCopy } from "./adCopy";
 import { decoupageTopics, type DecoupageTopic } from "./decoupageTechniques";
 import { directionNotes, type DirectionTopic } from "./directionNotes";
 import { scriptFormats, scriptGuidance } from "./scriptDirection";
 import { initialVideoBrief, videoDocumentInput } from "./videoModel";
+import { VideoAdCopyPanel } from "./VideoAdCopyPanel";
 
 const videoApi = "/api/v1/studios/v1/video";
 type Job = Awaited<ReturnType<typeof productApi.studioGenerationJob>>;
 const pending = new Set(["queued", "running", "retrying", "cancel_requested"]);
 
-export function VideoAssemblyStudio({ initialBrief }: { initialBrief?: { title: string; objective: string } }) {
+type InitialBrief = { title: string; objective: string; angle?: string; hook?: string; copyCampaign?: CopyData };
+
+export function VideoAssemblyStudio({ initialBrief }: { initialBrief?: InitialBrief }) {
   const { activeWorkspace, status, error } = useProductData();
   if (!activeWorkspace) return <p role="status">{error || (status === "loading" ? "Carregando projetos…" : "Selecione o espaço de trabalho para abrir o estúdio.")}</p>;
   return <AssemblyWorkspace key={activeWorkspace.id} workspaceId={activeWorkspace.id} brandRevision={activeWorkspace.brandRevision || 1} initialBrief={initialBrief} />;
@@ -21,14 +25,23 @@ export function VideoAssemblyStudio({ initialBrief }: { initialBrief?: { title: 
 function AssemblyWorkspace({ workspaceId, brandRevision, initialBrief }: {
   workspaceId: string;
   brandRevision: number;
-  initialBrief?: { title: string; objective: string };
+  initialBrief?: InitialBrief;
 }) {
-  const [brief, setBrief] = React.useState(() => initialVideoBrief(initialBrief));
+  const [brief, setBrief] = React.useState(() => ({
+    ...initialVideoBrief(initialBrief),
+    audience: initialBrief?.copyCampaign?.audience?.slice(0, 2000) || "",
+  }));
   const [documents, setDocuments] = React.useState<StudioDocumentRecord[]>([]);
   const [active, setActive] = React.useState<StudioDocumentRecord>();
   const [materials, setMaterials] = React.useState<AssetRecord[]>([]);
   const [directionTopics, setDirectionTopics] = React.useState<DirectionTopic[]>([]);
   const [scriptFormat, setScriptFormat] = React.useState<typeof scriptFormats[number]>();
+  const [savedCopy, setSavedCopy] = React.useState<SavedCopy>();
+  const [copyLoaded, setCopyLoaded] = React.useState(false);
+  const receiveCopy = React.useCallback((value?: SavedCopy) => {
+    setSavedCopy(value);
+    setCopyLoaded(true);
+  }, []);
   const [selectedDecoupageTopics, setSelectedDecoupageTopics] = React.useState<DecoupageTopic[]>([]);
   const [plan, setPlan] = React.useState("");
   const [job, setJob] = React.useState<Job>();
@@ -42,6 +55,8 @@ function AssemblyWorkspace({ workspaceId, brandRevision, initialBrief }: {
   const docId = active?.documentId;
   const { files, error: archiveError } = useProjectFiles(docId, refresh);
   const editable = active?.composition.narrative?.assemblyEngine === "moneyprinterturbo";
+  const durationSeconds = (active?.composition.pages[0]?.durationMs || 15000) / 1000;
+  const commercialCopy = buildCopyHandoff(savedCopy);
 
   const report = (cause: unknown) => setError(cause instanceof Error ? cause.message : "Não foi possível concluir a operação.");
 
@@ -98,6 +113,12 @@ function AssemblyWorkspace({ workspaceId, brandRevision, initialBrief }: {
       const input = videoDocumentInput(workspaceId, brief, []);
       input.brandRevision = brandRevision;
       input.composition.narrative = { assemblyEngine: "moneyprinterturbo" };
+      if (initialBrief?.copyCampaign) {
+        const { audience: _audience, ...copyCampaign } = initialBrief.copyCampaign;
+        input.composition.narrative.copyCampaign = copyCampaign;
+        input.brief.angle = initialBrief.angle?.slice(0, 1000) || "";
+        input.brief.hook = initialBrief.hook?.slice(0, 2000) || "";
+      }
       draft.current = input;
     }
     const input = draft.current;
@@ -116,6 +137,8 @@ function AssemblyWorkspace({ workspaceId, brandRevision, initialBrief }: {
     setMaterials([]);
     setDirectionTopics([]);
     setScriptFormat(undefined);
+    setSavedCopy(undefined);
+    setCopyLoaded(false);
     setSelectedDecoupageTopics([]);
     setPlan("");
     setJob(undefined);
@@ -141,6 +164,8 @@ function AssemblyWorkspace({ workspaceId, brandRevision, initialBrief }: {
     if (!active) return;
     const selectedNotes = directionNotes.filter(note => directionTopics.includes(note.id));
     const decoupageNotes = decoupageTopics.filter(topic => selectedDecoupageTopics.includes(topic.id));
+    const copy = (!scriptFormat || scriptFormat.id === "ad") ? commercialCopy : undefined;
+    const format = scriptFormat || (copy ? scriptFormats[0] : undefined);
     const packet = {
       briefing: active.brief,
       materials: [...new Map([
@@ -148,13 +173,24 @@ function AssemblyWorkspace({ workspaceId, brandRevision, initialBrief }: {
         ...materials.map(asset => [asset.id, asset.title] as const),
       ]).entries()].map(([assetId, title]) => ({ assetId, title })),
       instructions: [
-        "Você dirige o roteiro e a edição. Use o repertório como referência e escolha o gancho, a ordem da revelação, os planos, as transições e o som conforme o briefing.",
+        copy
+          ? "Você dirige o roteiro e a edição. Use a abertura comercial escolhida como ponto de partida e decida como realizá-la em imagem e som."
+          : "Você dirige o roteiro e a edição. Use o repertório como referência e escolha o gancho, a ordem da revelação, os planos, as transições e o som conforme o briefing.",
         "Entregue as decisões de roteiro, decupagem e revisão em texto separado do JSON de montagem. Crie cenas especiais à parte e devolva os clipes prontos.",
         "Use os IDs dos arquivos enviados à Clicko. Envie novos clipes à Clicko para obter seus IDs.",
         "Devolva o plano no formato abaixo. Cada corte usa quadros a 30 fps. A ordem da lista é a ordem final.",
         "Use uma mixagem final na mesma duração do vídeo. Sem audioAssetId, a montagem sai muda.",
       ],
-      scriptDirection: { ...scriptGuidance, ...(scriptFormat ? { format: scriptFormat } : {}) },
+      scriptDirection: {
+        ...scriptGuidance,
+        ...(copy ? { approach: [copy.direction[0], ...scriptGuidance.approach.slice(1)] } : {}),
+        ...(format ? { format } : {}),
+      },
+      ...(copy ? { commercialCopy: { ...copy, durationSeconds } } : {}),
+      ...(!copy && format?.id === "ad" ? { commercialCopy: {
+        status: "pending",
+        instruction: "A copy comercial do projeto está pendente. Direcione o esqueleto audiovisual com o briefing disponível. Marque as lacunas de promessa, oferta, prova e CTA.",
+      } } : {}),
       ...(selectedNotes.length ? { directionNotes: selectedNotes } : {}),
       ...(decoupageNotes.length ? { decoupageNotes } : {}),
       assembly: { aspect: "9:16", clips: [{ assetId: "id-do-clipe", startFrame: 0, durationFrames: 60, fit: "contain" }], audioAssetId: null },
@@ -183,12 +219,14 @@ function AssemblyWorkspace({ workspaceId, brandRevision, initialBrief }: {
       <label className="grid gap-1">Título <input required maxLength={240} value={brief.title} onChange={event => setBrief({ ...brief, title: event.target.value })} /></label>
       <label className="grid gap-1">Público <input required maxLength={2000} value={brief.audience} onChange={event => setBrief({ ...brief, audience: event.target.value })} /></label>
       <label className="grid gap-1">Briefing <textarea required rows={5} maxLength={1000} value={brief.objective} onChange={event => setBrief({ ...brief, objective: event.target.value })} /></label>
+      <label className="grid gap-1">Duração desejada (segundos) <input required type="number" min={1} max={600} value={brief.duration || ""} onChange={event => setBrief({ ...brief, duration: Number(event.target.value) })} /></label>
       <button className="justify-self-start rounded-lg bg-blue-600 px-4 py-2 text-white" disabled={busy || !brief.title.trim() || !brief.audience.trim() || !brief.objective.trim()}>Salvar projeto</button>
     </form>}
     {active && <section className="space-y-4" aria-label="Detalhes do projeto">
       <h2 className="text-xl font-semibold">{active.title}</h2>
       <p>{active.brief.objective}</p>
       {editable && <>
+        <VideoAdCopyPanel key={active.documentId} project={active} durationSeconds={durationSeconds} onSaved={receiveCopy} disabled={busy || rendering} />
         <label className="grid gap-1">Enviar clipes prontos e áudio
           <input type="file" multiple accept=".mp4,.wav,.mp3,.flac" disabled={busy || rendering} onChange={event => {
             const selected = Array.from(event.currentTarget.files || []);
@@ -220,7 +258,7 @@ function AssemblyWorkspace({ workspaceId, brandRevision, initialBrief }: {
             const id = event.currentTarget.value;
             setScriptFormat(scriptFormats.find(format => format.id === id));
           }}>
-            <option value="">Claude define pelo briefing</option>
+            <option value="">{commercialCopy ? "Anúncio pela copy salva" : "Claude define pelo briefing"}</option>
             {scriptFormats.map(format => <option key={format.id} value={format.id}>{format.title}</option>)}
           </select>
         </div>
@@ -257,7 +295,7 @@ function AssemblyWorkspace({ workspaceId, brandRevision, initialBrief }: {
             </label>)}
           </fieldset>
         </details>
-        <button type="button" onClick={exportBrief}>Baixar briefing e formato do plano para o Claude</button>
+        <button type="button" disabled={!copyLoaded} onClick={exportBrief}>Baixar briefing e formato do plano para o Claude</button>
         <label className="grid gap-1">Importar o plano do Claude
           <input type="file" accept=".json,application/json" disabled={rendering} onChange={event => {
             const file = event.currentTarget.files?.[0];

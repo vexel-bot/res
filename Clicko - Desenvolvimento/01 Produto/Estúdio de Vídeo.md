@@ -24,6 +24,16 @@ O Claude devolve as decisões editoriais em texto e a montagem no formato `assem
 
 Os resumos de roteiro, decupagem e som estão em `scriptDirection.ts`, `decoupageTechniques.ts` e `directionNotes.ts` no diretório do Estúdio de Vídeo. Para ampliar o acervo, atualize as fontes e os ensaios no cofre audiovisual. Registre a evidência no aprendizado de produção.
 
+## Copy para anúncios em vídeo
+
+Abra **Copy para anúncios em vídeo** no projeto. O estúdio usa público, objetivo, canal e duração do briefing. Quando a ideia veio de uma campanha vinculada do mesmo cliente, o cadastro da campanha pode preencher produto, oferta, calendário, canal e CTA sugerido. Esses dados servem como contexto. Afirmações confirmadas são registradas à parte, com fonte, condições e validade quando aplicável.
+
+O tipo de oferta (produto, serviço ou evento) orienta a demonstração. O momento do público (descoberta, consideração ou decisão) orienta a abertura. Com contexto e evidência suficientes, **Gerar copy na Clicko** pede um ângulo, um corpo de copy e duas aberturas que testam uma única hipótese. A resposta deve citar uma evidência cadastrada, que a Clicko incorpora ao corpo. A qualidade argumentativa e as condições precisam ser conferidas ao revisar o texto.
+
+**Salvar contexto e copy** guarda a revisão no dossiê do projeto. O briefing de anúncio leva em `commercialCopy` a versão salva, argumento, evidências, condições, CTA e, quando definida, a hipótese alternativa. Há uma indicação de copy pendente quando o formato é anúncio e faltam dados. O Claude dirige roteiro e realização, incluindo ritmo, montagem e som. Se precisar mudar a promessa, condições ou ação, ele pode propor a mudança comercial à parte.
+
+O registro usa o serviço de copy versionada existente. A geração ocorre sob demanda em `POST /api/ai/generate-video-ad-copy` e usa o provedor KLIC com as permissões e a admissão financeira da Clicko.
+
 ## Verificação e continuidade
 
 O fluxo local foi validado em navegador e API. Houve teste real do worker em Linux e download de materiais de projeto antigo com as rotas Craft desativadas. A instalação e a validação no ambiente publicado seguem como próximas etapas. Consulte o [[Roadmap]], o [[Devlog]] e o [guia operacional](https://github.com/vexel-bot/res/blob/main/docs/studios/MONEYPRINTERTURBO.md).

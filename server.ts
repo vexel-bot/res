@@ -4,7 +4,7 @@ import { fileURLToPath } from 'url';
 import { createServer as createViteServer } from 'vite';
 import { GoogleGenAI, Type } from '@google/genai';
 import dotenv from 'dotenv';
-import { assertGovernanceAccess, createGovernanceRouter, authenticate, readKlicGovernance } from './server/governance';
+import { assertGovernanceAccess, createGovernanceRouter, authenticate, readKlicGovernance, readStudioWorkspace } from './server/governance';
 import { canAccessNavigation } from './src/security/accessControl';
 import { closeSocialIntegrationRepository, createIntegrationsRouter, socialIntegrationReadiness } from './server/integrations';
 import { requestContext, securityHeaders, validateProductionEnvironment } from './server/production';
@@ -24,6 +24,8 @@ import { governGemini } from './server/finance/gemini';
 import { devConfiguration, devNetworkBoundary } from './server/devMode';
 import { createDevelopmentRouter, devBridgeStatus } from './server/developmentRouter';
 import { createEvolutionRouter } from './server/evolution';
+import { copyContext } from './src/studios/video/adCopy';
+import { copyResponseSchema, copyWritingInstructions, parseVideoCopy } from './server/studios/videoAdCopy';
 
 dotenv.config();
 
@@ -525,6 +527,39 @@ Retorne um JSON com:
   });
 
   // 4. Analytics AI Explanation
+  app.post('/api/ai/generate-video-ad-copy', requireAiAccess({ module: 'create-video', permission: 'content.create' }), async (req, res) => {
+    const auth = (req as Parameters<typeof authenticate>[0]).auth!;
+    try {
+      readStudioWorkspace(auth, req.header('x-clicko-client-id') || null);
+    } catch (error) {
+      const failure = error as Error & { status?: number };
+      return res.status(failure.status || 403).json({ error: failure.message });
+    }
+    const context = copyContext(req.body?.data);
+    const objective = req.body?.objective;
+    const durationSeconds = req.body?.durationSeconds;
+    const { angleIdea = '', hookIdea = '', tone = '' } = req.body || {};
+    if (!context?.ready || typeof objective !== 'string' || objective.length > 1000
+      || typeof tone !== 'string' || tone.length > 1000
+      || typeof angleIdea !== 'string' || angleIdea.length > 1000 || typeof hookIdea !== 'string' || hookIdea.length > 2000
+      || typeof durationSeconds !== 'number' || !Number.isFinite(durationSeconds) || durationSeconds <= 0 || durationSeconds > 600) {
+      return res.status(422).json({ error: 'Revise o contexto, o objetivo do vídeo e as fontes da oferta.' });
+    }
+    try {
+      const response = await generateLegacyContent(getKlicAiClient(), {
+        contents: JSON.stringify({ context, objective, durationSeconds, tone, untestedIdeas: { angle: angleIdea, hook: hookIdea } }),
+        config: {
+          systemInstruction: copyWritingInstructions.join('\n'),
+          responseMimeType: 'application/json',
+          responseSchema: copyResponseSchema,
+        },
+      });
+      return res.json(parseVideoCopy(assertKlicText(response.text, Boolean(response.promptFeedback?.blockReason)), context));
+    } catch (error) {
+      return legacyAiFailure(res, error, 'generate-video-ad-copy');
+    }
+  });
+
   app.post('/api/ai/analyze-metrics', requireAiAccess({ module: 'analytics', permission: 'analytics.read' }), async (req, res) => {
     const { period = 'Últimos 30 dias' } = req.body;
     const metrics = Array.isArray(req.body?.metrics) ? req.body.metrics.filter((item: any) => item?.source === 'connected-api') : [];

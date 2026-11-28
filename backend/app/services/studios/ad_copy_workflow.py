@@ -61,6 +61,16 @@ FIELDS = {
     "visualPlan": "Roteiro visual por trecho",
     "reviewNotes": "Achados da revisão e correções",
 }
+VIDEO_FIELDS = {
+    "videoKind",
+    "videoMoment",
+    "videoChannel",
+    "videoDestination",
+    "videoTiming",
+    "videoEvidence",
+    "videoAlternateHook",
+    "videoHypothesis",
+}
 CHECKS = {
     "facts": "Afirmações conferidas com as fontes; sem promessa ou prova inventada.",
     "clear": "O público entende produto, benefício, oferta e próximo passo.",

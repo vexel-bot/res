@@ -19,6 +19,7 @@ try {
   await page.getByLabel('Título', { exact: true }).fill('Etiquetas da cozinha');
   await page.getByLabel('Público', { exact: true }).fill('Pessoas que dividem uma cozinha.');
   await page.getByLabel('Briefing', { exact: true }).fill('Mostre como etiquetas ajudam a achar o pote certo sem abrir três tampas.');
+  await page.getByRole('spinbutton', { name: 'Duração desejada (segundos)' }).fill('24');
   await page.getByRole('button', { name: 'Salvar projeto' }).click();
 
   const group = page.getByRole('group', { name: 'Conhecimentos de direção para incluir no briefing' });
@@ -67,13 +68,69 @@ try {
   for (const checkbox of await techniques.getByRole('checkbox').all()) await checkbox.check();
   const ad = await downloadBriefing();
   assert.equal(ad.scriptDirection.format.id, 'ad');
+  assert.equal(ad.commercialCopy.status, 'pending');
   assert.match(ad.scriptDirection.format.variation, /CTA/);
   assert.equal(ad.decoupageNotes.flatMap(topic => topic.techniques).length, 20);
   assert.equal(new Set(ad.decoupageNotes.flatMap(topic => topic.techniques.map(technique => technique.name))).size, 20);
   assert.deepEqual(ad.assembly, basic.assembly);
 
+  const copy = page.locator('details.ad-copy-process');
+  await copy.getByText('Copy para anúncios em vídeo', { exact: true }).click();
+  await expect(copy.getByRole('button', { name: 'Gerar copy na Clicko' })).toBeDisabled();
+  const badRequest = await page.request.post(`${origin}/api/ai/generate-video-ad-copy`, { data: { data: {} } });
+  assert.equal(badRequest.status(), 422);
+  await copy.getByLabel('Tipo de oferta', { exact: true }).selectOption('product');
+  await copy.getByLabel('Momento do público', { exact: true }).selectOption('consideration');
+  await expect(copy.getByText(/Mostre o produto em uso/)).toBeVisible();
+  await expect(copy.getByText(/Nomeie a dúvida/)).toBeVisible();
+  const context = {
+    'O que é anunciado': 'Etiquetas laváveis',
+    'Benefício para o público': 'Identificar o conteúdo do pote',
+    'Oferta': 'Kit de etiquetas para potes',
+    'Ação desejada': 'Abra a página do kit',
+    'Destino da ação': 'Página de produto',
+    'Condições e limites': 'Para recipientes lisos',
+  };
+  for (const [name, value] of Object.entries(context)) await copy.getByRole('textbox', { name, exact: true }).fill(value);
+  const evidence = copy.getByRole('textbox', { name: 'Afirmações confirmadas', exact: true });
+  await evidence.fill('As etiquetas aderem a recipientes lisos | Ficha do kit | 2000-01-01');
+  await expect(copy.getByRole('button', { name: 'Gerar copy na Clicko' })).toBeDisabled();
+  await evidence.fill('As etiquetas aderem a recipientes lisos | Ficha do kit');
+  await expect(copy.getByRole('button', { name: 'Gerar copy na Clicko' })).toBeEnabled();
+  await page.route('**/api/ai/generate-video-ad-copy', async route => {
+    const request = route.request().postDataJSON();
+    assert.equal(request.data.videoMoment, 'consideration');
+    assert.equal(request.data.videoKind, 'product');
+    assert.equal(request.durationSeconds, 24);
+    await route.fulfill({ json: {
+      angle: 'Resolva a busca vendo o rótulo',
+      hook: 'Qual dos potes tem arroz?',
+      alternateHook: 'Ache o pote sem tirar a tampa.',
+      body: 'As etiquetas aderem a recipientes lisos. Escreva o conteúdo e identifique o pote.',
+      hypothesis: 'Comparar começar pela dúvida ou pelo benefício.',
+    } });
+  });
+  await copy.getByRole('button', { name: 'Gerar copy na Clicko' }).click();
+  const selectedHook = copy.getByRole('textbox', { name: 'Gancho escolhido', exact: true });
+  await expect(selectedHook).toHaveValue('Qual dos potes tem arroz?');
+  await copy.getByRole('button', { name: 'Usar a outra abertura' }).click();
+  await copy.getByRole('button', { name: 'Salvar contexto e copy' }).click();
+  await expect(copy.getByRole('status')).toHaveText('Versão 1 incluída no briefing do anúncio.');
+  const withCopy = await downloadBriefing();
+  assert.equal(withCopy.commercialCopy.revision, 1);
+  assert.equal(withCopy.commercialCopy.durationSeconds, 24);
+  assert.equal(withCopy.commercialCopy.copy.hook, 'Ache o pote sem tirar a tampa.');
+  assert.equal(withCopy.commercialCopy.copy.cta, context['Ação desejada']);
+  assert.equal(withCopy.commercialCopy.context.evidence[0].source, 'Ficha do kit');
+  assert.equal(withCopy.commercialCopy.context.restrictions, 'Para recipientes lisos');
+  assert.equal(withCopy.commercialCopy.experiment.alternateHook, 'Qual dos potes tem arroz?');
+  assert.deepEqual(withCopy.assembly, basic.assembly);
+  await selectedHook.fill('Alteração não salva');
+  assert.equal((await downloadBriefing()).commercialCopy.copy.hook, withCopy.commercialCopy.copy.hook);
+
   await format.selectOption('brand');
   const brand = await downloadBriefing();
+  assert.ok(!('commercialCopy' in brand));
   assert.equal(brand.scriptDirection.format.id, 'brand');
   assert.match(brand.scriptDirection.format.example, /despertador/);
   await page.getByLabel('Importar o plano do Claude', { exact: true }).setInputFiles({
@@ -88,6 +145,7 @@ try {
   await expect(group.getByRole('checkbox', { name: 'Decupagem', exact: true })).not.toBeChecked();
   await expect(group.getByRole('checkbox', { name: 'Narração', exact: true })).not.toBeChecked();
   await expect(format).toHaveValue('');
+  assert.deepEqual((await downloadBriefing()).commercialCopy, withCopy.commercialCopy);
   await page.getByText('Técnicas práticas de decupagem', { exact: true }).click();
   for (const checkbox of await techniques.getByRole('checkbox').all()) await expect(checkbox).not.toBeChecked();
   process.stdout.write(JSON.stringify(packet, null, 2) + '\n');

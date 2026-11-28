@@ -28,7 +28,7 @@ class CopyRequest(StudioContract):
     @classmethod
     def bounded_data(cls, data):
         if (
-            not set(data) <= set(workflow.FIELDS)
+            not set(data) <= set(workflow.FIELDS) | workflow.VIDEO_FIELDS
             or any(len(value) > 6000 for value in data.values())
             or sum(map(len, data.values())) > 40000
         ):

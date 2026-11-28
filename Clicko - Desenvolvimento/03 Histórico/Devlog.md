@@ -2,6 +2,12 @@
 
 Adicione a entrada mais recente no topo. Quando uma mudança afetar um fluxo, atualize também a nota correspondente e o [[Roadmap]].
 
+## 28/11/2026 — Estratégia de copy para anúncios em vídeo
+
+- **Mudança.** O [[Estúdio de Vídeo]] usa briefing, campanha vinculada e evidência registrada para preparar o argumento comercial conforme o tipo de oferta e o momento do público. O fluxo sob demanda gera duas aberturas com o mesmo corpo. A revisão salva segue no briefing do Claude com as condições, a prova e o CTA.
+- **Verificação local.** No navegador em perfil DEV isolado, o teste conferiu contexto incompleto, validade das fontes, comparação das aberturas com resposta simulada, persistência por projeto e exportação da revisão escolhida. Passaram o TypeScript, os testes do contrato da copy e os cinco testes do serviço versionado. As duas falhas da suíte geral ligadas à navegação dos Crafts também ocorreram na versão anterior.
+- **Validação editorial.** A qualidade do texto do provedor e a primeira exibição do vídeo ficam para uma produção autorizada. A validação técnica usou uma oferta fictícia e a saída para o Claude foi conferida no JSON.
+
 ## 28/11/2026 — Roteiro e decupagem prática no briefing
 
 - **Mudança.** O [[Estúdio de Vídeo]] inclui orientação de roteiro em cada briefing. Há exemplos e hipóteses de A/B para anúncio de resposta direta, conteúdo explicativo e história de marca. Quatro grupos disponibilizam 20 técnicas de decupagem com exercícios e perguntas de revisão. O Claude escolhe quais aplicar.
