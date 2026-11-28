@@ -12,8 +12,14 @@
 
 O Claude define a ordem, os intervalos de origem e a duração em quadros a 30 fps. Uma cena com motion chega como clipe pronto. A faixa opcional de áudio contém a mixagem final, com a duração do filme.
 
+## Briefing com repertório audiovisual
+
+Selecione no projeto os conhecimentos de direção pertinentes e baixe `direcao-claude.json`. Os cartões escolhidos entram em `directionNotes`, com técnica, exemplo, verificação e fonte. A seleção vale para aquela exportação do projeto. O arquivo é autocontido para consulta dos cartões pelo Claude. As referências em vídeo ou fichas longas do cofre local podem acompanhar o briefing como anexos.
+
+Os cartões são resumos do cofre criativo revisados para uso fora do computador. Para publicar uma revisão, atualize o resumo correspondente em `src/studios/video/directionNotes.ts`. Para ampliar o acervo, atualize o cofre audiovisual e registre a evidência no aprendizado de produção. O Claude escolhe como aplicar o repertório. Use o formato `assembly` retornado pelo Claude para importar a montagem.
+
 ## Verificação e continuidade
 
 O fluxo local foi validado em navegador e API. Houve teste real do worker em Linux e download de materiais de projeto antigo com as rotas Craft desativadas. A instalação e a validação no ambiente publicado seguem como próximas etapas. Consulte o [[Roadmap]], o [[Devlog]] e o [guia operacional](https://github.com/vexel-bot/res/blob/main/docs/studios/MONEYPRINTERTURBO.md).
 
-Para voz, decupagem, trilha, ambiência e efeitos, consulte o [cofre audiovisual](obsidian://open?vault=Clicko%20-%20Segundo%20C%C3%A9rebro&file=00%20In%C3%ADcio).
+Para voz, narração, decupagem, trilha, ambiência e efeitos, consulte o [cofre audiovisual](obsidian://open?vault=Clicko%20-%20Segundo%20C%C3%A9rebro&file=00%20In%C3%ADcio).

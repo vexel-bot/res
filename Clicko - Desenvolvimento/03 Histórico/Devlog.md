@@ -2,6 +2,12 @@
 
 Adicione a entrada mais recente no topo. Quando uma mudança afetar um fluxo, atualize também a nota correspondente e o [[Roadmap]].
 
+## 28/11/2026 — Conhecimento audiovisual no briefing para Claude
+
+- **Mudança.** O [[Estúdio de Vídeo]] exporta os cartões selecionados de voz, narração, decupagem, efeitos, trilha e ambiência. O cofre criativo reúne as análises da Sol e de startups e seis comparações com material existente.
+- **Verificação local.** A validação de navegador em um perfil DEV isolado confirmou o download básico, a seleção de dois cartões completos e o retorno a um projeto com seleção vazia. Os exemplos de montagem permanecem compatíveis. O TypeScript passou na verificação.
+- **Validação do Claude.** O ensaio de transferência com briefing fictício chegou à tentativa de autenticação da assinatura, que retornou HTTP 401. A próxima validação depende de uma sessão válida. A resposta de uma pessoa à primeira exibição dos A/B também está em aberto.
+
 ## 26/11/2026 — Cofre de desenvolvimento
 
 - **Mudança.** Criado o cofre versionado de produto e engenharia. A primeira nota técnica descreve o [[Estúdio de Vídeo]]. O acervo audiovisual segue no cofre local **Clicko - Segundo Cérebro**.

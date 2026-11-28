@@ -3,6 +3,7 @@ import { apiFetch } from "../../api";
 import { productApi, type AssetRecord, type StudioDocumentRecord, type StudioDocumentCreate } from "../../api/productApi";
 import { useProductData } from "../../context/ProductDataContext";
 import { ProjectFiles, saveDownload, useProjectFiles } from "../shared/ProjectFiles";
+import { directionNotes, type DirectionTopic } from "./directionNotes";
 import { initialVideoBrief, videoDocumentInput } from "./videoModel";
 
 const videoApi = "/api/v1/studios/v1/video";
@@ -24,6 +25,7 @@ function AssemblyWorkspace({ workspaceId, brandRevision, initialBrief }: {
   const [documents, setDocuments] = React.useState<StudioDocumentRecord[]>([]);
   const [active, setActive] = React.useState<StudioDocumentRecord>();
   const [materials, setMaterials] = React.useState<AssetRecord[]>([]);
+  const [directionTopics, setDirectionTopics] = React.useState<DirectionTopic[]>([]);
   const [plan, setPlan] = React.useState("");
   const [job, setJob] = React.useState<Job>();
   const [error, setError] = React.useState("");
@@ -107,6 +109,7 @@ function AssemblyWorkspace({ workspaceId, brandRevision, initialBrief }: {
   function open(project?: StudioDocumentRecord) {
     setActive(project);
     setMaterials([]);
+    setDirectionTopics([]);
     setPlan("");
     setJob(undefined);
     attempt.current = undefined;
@@ -129,6 +132,7 @@ function AssemblyWorkspace({ workspaceId, brandRevision, initialBrief }: {
 
   function exportBrief() {
     if (!active) return;
+    const selectedNotes = directionNotes.filter(note => directionTopics.includes(note.id));
     const packet = {
       briefing: active.brief,
       materials: [...new Map([
@@ -137,10 +141,12 @@ function AssemblyWorkspace({ workspaceId, brandRevision, initialBrief }: {
       ]).entries()].map(([assetId, title]) => ({ assetId, title })),
       instructions: [
         "Dirija a edição a partir deste briefing. Crie cenas especiais à parte e devolva os clipes prontos.",
+        ...(selectedNotes.length ? ["Consulte as notas de direção como repertório. Escolha as técnicas que servem ao filme e verifique a decisão no trecho exportado."] : []),
         "Use os IDs dos arquivos enviados à Clicko. Envie novos clipes à Clicko para obter seus IDs.",
         "Devolva o plano no formato abaixo. Cada corte usa quadros a 30 fps. A ordem da lista é a ordem final.",
         "Use uma mixagem final na mesma duração do vídeo. Sem audioAssetId, a montagem sai muda.",
       ],
+      ...(selectedNotes.length ? { directionNotes: selectedNotes } : {}),
       assembly: { aspect: "9:16", clips: [{ assetId: "id-do-clipe", startFrame: 0, durationFrames: 60, fit: "contain" }], audioAssetId: null },
     };
     saveDownload(new Blob([JSON.stringify(packet, null, 2)], { type: "application/json" }), "direcao-claude.json");
@@ -198,6 +204,22 @@ function AssemblyWorkspace({ workspaceId, brandRevision, initialBrief }: {
           }} />
         </label>
         {materials.length > 0 && <ul>{materials.map(asset => <li key={asset.id}>{asset.title} · <code>{asset.id}</code></li>)}</ul>}
+        <fieldset className="space-y-2">
+          <legend>Conhecimentos de direção para incluir no briefing</legend>
+          <div className="flex flex-wrap gap-x-4 gap-y-2">
+            {directionNotes.map(note => <label key={note.id} className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                checked={directionTopics.includes(note.id)}
+                onChange={event => {
+                  const checked = event.currentTarget.checked;
+                  setDirectionTopics(topics => checked ? [...topics, note.id] : topics.filter(topic => topic !== note.id));
+                }}
+              />
+              {note.title}
+            </label>)}
+          </div>
+        </fieldset>
         <button type="button" onClick={exportBrief}>Baixar briefing e formato do plano para o Claude</button>
         <label className="grid gap-1">Importar o plano do Claude
           <input type="file" accept=".json,application/json" disabled={rendering} onChange={event => {
