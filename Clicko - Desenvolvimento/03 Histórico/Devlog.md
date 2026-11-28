@@ -2,6 +2,12 @@
 
 Adicione a entrada mais recente no topo. Quando uma mudança afetar um fluxo, atualize também a nota correspondente e o [[Roadmap]].
 
+## 28/11/2026 — Roteiro e decupagem prática no briefing
+
+- **Mudança.** O [[Estúdio de Vídeo]] inclui orientação de roteiro em cada briefing. Há exemplos e hipóteses de A/B para anúncio de resposta direta, conteúdo explicativo e história de marca. Quatro grupos disponibilizam 20 técnicas de decupagem com exercícios e perguntas de revisão. O Claude escolhe quais aplicar.
+- **Verificação local.** O teste de navegador abriu um projeto DEV isolado, baixou o briefing padrão, conferiu as três opções de roteiro, exportou um grupo e o conjunto das 20 técnicas, importou um plano de montagem e confirmou a limpeza das seleções ao reabrir o projeto.
+- **Validação editorial.** A primeira exibição deve verificar se o público reconhece o tema, identifica a consequência e entende a prova. A validação da integração verificou o conteúdo que chega ao arquivo de briefing.
+
 ## 28/11/2026 — Conhecimento audiovisual no briefing para Claude
 
 - **Mudança.** O [[Estúdio de Vídeo]] exporta os cartões selecionados de voz, narração, decupagem, efeitos, trilha e ambiência. O cofre criativo reúne as análises da Sol e de startups e seis comparações com material existente.

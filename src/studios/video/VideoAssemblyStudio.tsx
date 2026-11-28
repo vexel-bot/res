@@ -3,7 +3,9 @@ import { apiFetch } from "../../api";
 import { productApi, type AssetRecord, type StudioDocumentRecord, type StudioDocumentCreate } from "../../api/productApi";
 import { useProductData } from "../../context/ProductDataContext";
 import { ProjectFiles, saveDownload, useProjectFiles } from "../shared/ProjectFiles";
+import { decoupageTopics, type DecoupageTopic } from "./decoupageTechniques";
 import { directionNotes, type DirectionTopic } from "./directionNotes";
+import { scriptFormats, scriptGuidance } from "./scriptDirection";
 import { initialVideoBrief, videoDocumentInput } from "./videoModel";
 
 const videoApi = "/api/v1/studios/v1/video";
@@ -26,12 +28,15 @@ function AssemblyWorkspace({ workspaceId, brandRevision, initialBrief }: {
   const [active, setActive] = React.useState<StudioDocumentRecord>();
   const [materials, setMaterials] = React.useState<AssetRecord[]>([]);
   const [directionTopics, setDirectionTopics] = React.useState<DirectionTopic[]>([]);
+  const [scriptFormat, setScriptFormat] = React.useState<typeof scriptFormats[number]>();
+  const [selectedDecoupageTopics, setSelectedDecoupageTopics] = React.useState<DecoupageTopic[]>([]);
   const [plan, setPlan] = React.useState("");
   const [job, setJob] = React.useState<Job>();
   const [error, setError] = React.useState("");
   const [busy, setBusy] = React.useState(false);
   const [available, setAvailable] = React.useState<boolean>();
   const [refresh, setRefresh] = React.useState(0);
+  const scriptFormatId = React.useId();
   const attempt = React.useRef<{ key: string; body: string } | undefined>(undefined);
   const draft = React.useRef<StudioDocumentCreate | undefined>(undefined);
   const docId = active?.documentId;
@@ -110,6 +115,8 @@ function AssemblyWorkspace({ workspaceId, brandRevision, initialBrief }: {
     setActive(project);
     setMaterials([]);
     setDirectionTopics([]);
+    setScriptFormat(undefined);
+    setSelectedDecoupageTopics([]);
     setPlan("");
     setJob(undefined);
     attempt.current = undefined;
@@ -133,6 +140,7 @@ function AssemblyWorkspace({ workspaceId, brandRevision, initialBrief }: {
   function exportBrief() {
     if (!active) return;
     const selectedNotes = directionNotes.filter(note => directionTopics.includes(note.id));
+    const decoupageNotes = decoupageTopics.filter(topic => selectedDecoupageTopics.includes(topic.id));
     const packet = {
       briefing: active.brief,
       materials: [...new Map([
@@ -140,13 +148,15 @@ function AssemblyWorkspace({ workspaceId, brandRevision, initialBrief }: {
         ...materials.map(asset => [asset.id, asset.title] as const),
       ]).entries()].map(([assetId, title]) => ({ assetId, title })),
       instructions: [
-        "Dirija a edição a partir deste briefing. Crie cenas especiais à parte e devolva os clipes prontos.",
-        ...(selectedNotes.length ? ["Consulte as notas de direção como repertório. Escolha as técnicas que servem ao filme e verifique a decisão no trecho exportado."] : []),
+        "Você dirige o roteiro e a edição. Use o repertório como referência e escolha o gancho, a ordem da revelação, os planos, as transições e o som conforme o briefing.",
+        "Entregue as decisões de roteiro, decupagem e revisão em texto separado do JSON de montagem. Crie cenas especiais à parte e devolva os clipes prontos.",
         "Use os IDs dos arquivos enviados à Clicko. Envie novos clipes à Clicko para obter seus IDs.",
         "Devolva o plano no formato abaixo. Cada corte usa quadros a 30 fps. A ordem da lista é a ordem final.",
         "Use uma mixagem final na mesma duração do vídeo. Sem audioAssetId, a montagem sai muda.",
       ],
+      scriptDirection: { ...scriptGuidance, ...(scriptFormat ? { format: scriptFormat } : {}) },
       ...(selectedNotes.length ? { directionNotes: selectedNotes } : {}),
+      ...(decoupageNotes.length ? { decoupageNotes } : {}),
       assembly: { aspect: "9:16", clips: [{ assetId: "id-do-clipe", startFrame: 0, durationFrames: 60, fit: "contain" }], audioAssetId: null },
     };
     saveDownload(new Blob([JSON.stringify(packet, null, 2)], { type: "application/json" }), "direcao-claude.json");
@@ -204,6 +214,16 @@ function AssemblyWorkspace({ workspaceId, brandRevision, initialBrief }: {
           }} />
         </label>
         {materials.length > 0 && <ul>{materials.map(asset => <li key={asset.id}>{asset.title} · <code>{asset.id}</code></li>)}</ul>}
+        <div className="grid max-w-sm gap-1">
+          <label htmlFor={scriptFormatId}>Objetivo do roteiro no briefing</label>
+          <select id={scriptFormatId} value={scriptFormat?.id ?? ""} onChange={event => {
+            const id = event.currentTarget.value;
+            setScriptFormat(scriptFormats.find(format => format.id === id));
+          }}>
+            <option value="">Claude define pelo briefing</option>
+            {scriptFormats.map(format => <option key={format.id} value={format.id}>{format.title}</option>)}
+          </select>
+        </div>
         <fieldset className="space-y-2">
           <legend>Conhecimentos de direção para incluir no briefing</legend>
           <div className="flex flex-wrap gap-x-4 gap-y-2">
@@ -220,6 +240,23 @@ function AssemblyWorkspace({ workspaceId, brandRevision, initialBrief }: {
             </label>)}
           </div>
         </fieldset>
+        <details>
+          <summary className="cursor-pointer">Técnicas práticas de decupagem</summary>
+          <fieldset className="mt-2 grid gap-2">
+            <legend>Inclua os temas pertinentes ao corte</legend>
+            {decoupageTopics.map(topic => <label key={topic.id} className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                checked={selectedDecoupageTopics.includes(topic.id)}
+                onChange={event => {
+                  const checked = event.currentTarget.checked;
+                  setSelectedDecoupageTopics(topics => checked ? [...topics, topic.id] : topics.filter(id => id !== topic.id));
+                }}
+              />
+              {topic.title}
+            </label>)}
+          </fieldset>
+        </details>
         <button type="button" onClick={exportBrief}>Baixar briefing e formato do plano para o Claude</button>
         <label className="grid gap-1">Importar o plano do Claude
           <input type="file" accept=".json,application/json" disabled={rendering} onChange={event => {

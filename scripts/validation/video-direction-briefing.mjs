@@ -7,7 +7,7 @@ const origin = `http://127.0.0.1:${port}`;
 const browser = await chromium.launch();
 try {
   const page = await browser.newPage({ acceptDownloads: true });
-  await page.goto(`${origin}/studios/video/create`);
+  await page.goto(`${origin}/studios/video/create`, { waitUntil: 'domcontentloaded', timeout: 90_000 });
   const session = await page.request.get(`${origin}/api/governance/auth/session`);
   assert.ok(session.ok(), 'Start an isolated Clicko DEV profile.');
   const status = await page.request.get(`${origin}/api/development/status`).then(response => response.json());
@@ -34,12 +34,28 @@ try {
 
   const basic = await downloadBriefing();
   assert.ok(!('directionNotes' in basic));
+  assert.ok(!('decoupageNotes' in basic));
+  assert.ok(!('format' in basic.scriptDirection));
+  assert.equal(basic.scriptDirection.scenePlan.length, 3);
+  assert.equal(basic.scriptDirection.references.length, 2);
+
+  const format = page.getByLabel('Objetivo do roteiro no briefing', { exact: true });
+  const techniques = page.getByRole('group', { name: 'Inclua os temas pertinentes ao corte' });
+  await page.getByText('Técnicas práticas de decupagem', { exact: true }).click();
+  await expect(techniques.getByRole('checkbox')).toHaveCount(4);
+  await format.selectOption('explainer');
+  await techniques.getByRole('checkbox', { name: 'Tempo, comparação e interface', exact: true }).check();
   await group.getByRole('checkbox', { name: 'Decupagem', exact: true }).check();
   await group.getByRole('checkbox', { name: 'Narração', exact: true }).check();
   const packet = await downloadBriefing();
   assert.deepEqual(packet.briefing, basic.briefing);
   assert.deepEqual(packet.materials, basic.materials);
   assert.deepEqual(packet.assembly, basic.assembly);
+  assert.equal(packet.scriptDirection.format.id, 'explainer');
+  assert.match(packet.scriptDirection.format.question, /que dado mudou/);
+  assert.deepEqual(packet.decoupageNotes.map(topic => topic.id), ['reading']);
+  assert.equal(packet.decoupageNotes[0].techniques.length, 5);
+  assert.ok(packet.decoupageNotes[0].techniques.every(technique => technique.practice && technique.check));
   assert.deepEqual(packet.directionNotes.map(note => note.id), ['decupagem', 'narracao']);
   for (const note of packet.directionNotes) {
     assert.ok(note.technique && note.example && note.check);
@@ -47,11 +63,33 @@ try {
   }
   assert.ok(!JSON.stringify(packet).includes('file://'));
 
+  await format.selectOption('ad');
+  for (const checkbox of await techniques.getByRole('checkbox').all()) await checkbox.check();
+  const ad = await downloadBriefing();
+  assert.equal(ad.scriptDirection.format.id, 'ad');
+  assert.match(ad.scriptDirection.format.variation, /CTA/);
+  assert.equal(ad.decoupageNotes.flatMap(topic => topic.techniques).length, 20);
+  assert.equal(new Set(ad.decoupageNotes.flatMap(topic => topic.techniques.map(technique => technique.name))).size, 20);
+  assert.deepEqual(ad.assembly, basic.assembly);
+
+  await format.selectOption('brand');
+  const brand = await downloadBriefing();
+  assert.equal(brand.scriptDirection.format.id, 'brand');
+  assert.match(brand.scriptDirection.format.example, /despertador/);
+  await page.getByLabel('Importar o plano do Claude', { exact: true }).setInputFiles({
+    name: 'montagem.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify({ assembly: brand.assembly })),
+  });
+  const assemblyInput = page.getByRole('textbox', { name: 'Plano de montagem do Claude (JSON)', exact: true });
+  await expect(assemblyInput).toHaveValue(JSON.stringify({ assembly: brand.assembly }, null, 2));
+
   const projectId = await project.inputValue();
   await project.selectOption('');
   await project.selectOption(projectId);
   await expect(group.getByRole('checkbox', { name: 'Decupagem', exact: true })).not.toBeChecked();
   await expect(group.getByRole('checkbox', { name: 'Narração', exact: true })).not.toBeChecked();
+  await expect(format).toHaveValue('');
+  await page.getByText('Técnicas práticas de decupagem', { exact: true }).click();
+  for (const checkbox of await techniques.getByRole('checkbox').all()) await expect(checkbox).not.toBeChecked();
   process.stdout.write(JSON.stringify(packet, null, 2) + '\n');
 } finally {
   await browser.close();

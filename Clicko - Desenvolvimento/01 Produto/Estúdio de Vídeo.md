@@ -16,7 +16,13 @@ O Claude define a ordem, os intervalos de origem e a duração em quadros a 30 f
 
 Selecione no projeto os conhecimentos de direção pertinentes e baixe `direcao-claude.json`. Os cartões escolhidos entram em `directionNotes`, com técnica, exemplo, verificação e fonte. A seleção vale para aquela exportação do projeto. O arquivo é autocontido para consulta dos cartões pelo Claude. As referências em vídeo ou fichas longas do cofre local podem acompanhar o briefing como anexos.
 
-Os cartões são resumos do cofre criativo revisados para uso fora do computador. Para publicar uma revisão, atualize o resumo correspondente em `src/studios/video/directionNotes.ts`. Para ampliar o acervo, atualize o cofre audiovisual e registre a evidência no aprendizado de produção. O Claude escolhe como aplicar o repertório. Use o formato `assembly` retornado pelo Claude para importar a montagem.
+O arquivo inclui `scriptDirection` com a preparação da pergunta inicial, as evidências por cena e a verificação na primeira exibição. Em **Objetivo do roteiro no briefing**, escolha anúncio de resposta direta, conteúdo explicativo ou história de marca para incluir um exemplo e um ensaio A/B do formato. A opção **Claude define pelo briefing** é a inicial.
+
+Abra **Técnicas práticas de decupagem** e marque os temas do corte. Cada tema selecionado vai em `decoupageNotes`, com exercícios, perguntas de revisão e fontes. O Claude recebe o texto necessário mesmo fora do ambiente local e escolhe como usar o repertório. As seleções de roteiro, direção e decupagem começam vazias quando se abre um projeto.
+
+O Claude devolve as decisões editoriais em texto e a montagem no formato `assembly`. A Clicko aceita o objeto de montagem diretamente ou dentro da propriedade `assembly` de um JSON. O motor usa os IDs, os intervalos em quadros e a mixagem.
+
+Os resumos de roteiro, decupagem e som estão em `scriptDirection.ts`, `decoupageTechniques.ts` e `directionNotes.ts` no diretório do Estúdio de Vídeo. Para ampliar o acervo, atualize as fontes e os ensaios no cofre audiovisual. Registre a evidência no aprendizado de produção.
 
 ## Verificação e continuidade
 
